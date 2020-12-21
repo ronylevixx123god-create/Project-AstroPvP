@@ -32,12 +32,7 @@ public class ItemBuilder {
     private final HashMap<Enchantment, Integer> storedBookEnchants = new HashMap();
     private Color color;
     private Potion potion;
-    private CustomCrateType crateType;
     public ItemStack original;
-
-    public ItemBuilder(CustomCrateType crateType) {
-        this.crateType = crateType;
-    }
 
     public ItemBuilder(ItemStack original) {
         this.original = original;
@@ -134,17 +129,6 @@ public class ItemBuilder {
     }
 
     public ItemStack build() {
-        if (this.crateType != null) {
-            ItemStack crateItem = this.crateType.getCrateItem();
-            if (crateItem == null) {
-                Bukkit.getLogger().info("Unable to create crate item: " + (Object)((Object)this.crateType) + "!");
-                return new ItemStack(Material.AIR);
-            }
-            if (this.amount != 0) {
-                crateItem.setAmount(this.amount);
-            }
-            return crateItem;
-        }
         if (this.original != null) {
             if (this.amount != 0) {
                 this.original.setAmount(this.amount);

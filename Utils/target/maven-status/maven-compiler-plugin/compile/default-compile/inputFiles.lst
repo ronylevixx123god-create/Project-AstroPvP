@@ -24,7 +24,6 @@ C:\Users\brend\Documents\GitHub\ProjectAstro\Utils\src\main\java\com\cosmicpvp\c
 C:\Users\brend\Documents\GitHub\ProjectAstro\Utils\src\main\java\com\cosmicpvp\cosmicutils\math\Range.java
 C:\Users\brend\Documents\GitHub\ProjectAstro\Utils\src\main\java\com\cosmicpvp\cosmicutils\itembuilder\McMMOSkillVoucherBuilder.java
 C:\Users\brend\Documents\GitHub\ProjectAstro\Utils\src\main\java\com\cosmicpvp\cosmicutils\itembuilder\RankItemBuilder.java
-C:\Users\brend\Documents\GitHub\ProjectAstro\Utils\src\main\java\com\cosmicpvp\cosmicutils\utils\MojangUUIDFetcher.java
 C:\Users\brend\Documents\GitHub\ProjectAstro\Utils\src\main\java\com\cosmicpvp\cosmicutils\utils\TitleItems.java
 C:\Users\brend\Documents\GitHub\ProjectAstro\Utils\src\main\java\com\cosmicpvp\cosmicutils\nms\EntityUtils.java
 C:\Users\brend\Documents\GitHub\ProjectAstro\Utils\src\main\java\com\cosmicpvp\cosmicutils\exceptions\InCombatException.java
@@ -49,7 +48,6 @@ C:\Users\brend\Documents\GitHub\ProjectAstro\Utils\src\main\java\com\cosmicpvp\c
 C:\Users\brend\Documents\GitHub\ProjectAstro\Utils\src\main\java\com\cosmicpvp\cosmicutils\utils\MaskUtils.java
 C:\Users\brend\Documents\GitHub\ProjectAstro\Utils\src\main\java\com\cosmicpvp\cosmicutils\utils\WorldGuardUtils.java
 C:\Users\brend\Documents\GitHub\ProjectAstro\Utils\src\main\java\com\cosmicpvp\cosmicutils\exceptions\CosmicException.java
-C:\Users\brend\Documents\GitHub\ProjectAstro\Utils\src\main\java\com\cosmicpvp\cosmicutils\itembuilder\CustomCrateType.java
 C:\Users\brend\Documents\GitHub\ProjectAstro\Utils\src\main\java\com\cosmicpvp\cosmicutils\discord\DiscordAPI.java
 C:\Users\brend\Documents\GitHub\ProjectAstro\Utils\src\main\java\com\cosmicpvp\cosmicutils\itembuilder\PhoenixFeatherBuilder.java
 C:\Users\brend\Documents\GitHub\ProjectAstro\Utils\src\main\java\com\cosmicpvp\cosmicutils\itembuilder\EnchantDustBuilder.java
