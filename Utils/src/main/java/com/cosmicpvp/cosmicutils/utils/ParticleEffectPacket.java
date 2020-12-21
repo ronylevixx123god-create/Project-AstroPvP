@@ -1,13 +1,6 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.server.v1_7_R4.Packet
- */
 package com.cosmicpvp.cosmicutils.utils;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
-import net.minecraft.server.v1_7_R4.Packet;
+import net.minecraft.server.v1_8_R3.Packet;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 

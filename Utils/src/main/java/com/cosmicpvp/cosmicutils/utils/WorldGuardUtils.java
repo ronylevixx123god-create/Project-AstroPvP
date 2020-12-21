@@ -1,11 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.sk89q.worldedit.BlockVector
- *  com.sk89q.worldedit.Vector
- *  com.sk89q.worldedit.bukkit.BukkitUtil
- */
 package com.cosmicpvp.cosmicutils.utils;
 
 import com.cosmicpvp.cosmicutils.CosmicUtils;
