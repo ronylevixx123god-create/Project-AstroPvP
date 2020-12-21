@@ -188,8 +188,8 @@ public class CustomItemUtils {
     }
 
     public static ItemStack getRandomEnchantmentBook() {
-        CustomEnchantment ce = EnchantmentAPI.getEnchantments().toArray((T[])new CustomEnchantment[EnchantmentAPI.getEnchantments().size()])[new Random().nextInt(EnchantmentAPI.getEnchantments().size())];
-        return EnchantmentBook.getEnchantmentBook((CustomEnchantment)ce, (int)(new Random().nextInt(ce.getMaxLevel()) + 1));
+        CustomEnchantment ce = EnchantmentAPI.getEnchantments().toArray(new CustomEnchantment[0])[new Random().nextInt(EnchantmentAPI.getEnchantments().size())];
+        return EnchantmentBook.getEnchantmentBook(ce, (int)(new Random().nextInt(ce.getMaxLevel()) + 1));
     }
 
     public static ItemStack getMysterySoulEnchantmentBook() {
