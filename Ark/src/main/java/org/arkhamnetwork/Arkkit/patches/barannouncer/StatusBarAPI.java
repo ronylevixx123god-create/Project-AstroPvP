@@ -1,11 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  me.confuser.barapi.BarAPI
- *  org.bukkit.Bukkit
- *  org.bukkit.entity.Player
- */
 package org.arkhamnetwork.Arkkit.patches.barannouncer;
 
 import me.confuser.barapi.BarAPI;
@@ -14,18 +6,18 @@ import org.bukkit.entity.Player;
 
 public class StatusBarAPI {
     protected static boolean hasStatusBar(Player player) {
-        return BarAPI.hasBar((Player)player);
+        return BarAPI.hasBar(player);
     }
 
     protected static void removeStatusBar(Player player) {
-        if (BarAPI.hasBar((Player)player)) {
-            BarAPI.removeBar((Player)player);
+        if (BarAPI.hasBar(player)) {
+            BarAPI.removeBar(player);
         }
     }
 
     protected static void setStatusBar(Player player, String text, float percent) {
         StatusBarAPI.removeStatusBar(player);
-        BarAPI.setMessage((Player)player, (String)text, (float)percent);
+        BarAPI.setMessage(player, text, percent);
     }
 
     protected static void removeAllStatusBars() {

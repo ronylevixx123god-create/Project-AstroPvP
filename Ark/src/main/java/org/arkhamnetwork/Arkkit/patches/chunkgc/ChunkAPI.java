@@ -17,7 +17,7 @@ import org.arkhamnetwork.Arkkit.utils.LongHash;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_7_R4.CraftChunk;
+import org.bukkit.craftbukkit.v1_8_R3.CraftChunk;
 import org.bukkit.entity.EntityType;
 
 public class ChunkAPI {

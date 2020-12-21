@@ -17,11 +17,6 @@ import com.earth2me.essentials.Essentials;
 import com.google.common.collect.Lists;
 import net.milkbowl.vault.economy.Economy;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.balancetop.BalanceManager;
-import org.arkhamnetwork.Arkkit.patches.balancetop.CommandBalanceTop;
-import org.arkhamnetwork.Arkkit.patches.balancetop.CommandBalanceTopAbstract;
-import org.arkhamnetwork.Arkkit.patches.balancetop.PlayerListener;
-import org.arkhamnetwork.Arkkit.patches.balancetop.UnbanListener;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.arkhamnetwork.Arkkit.utils.CommandUtils;
 import org.bukkit.Bukkit;
@@ -70,7 +65,7 @@ extends ArkPlugin {
                 CommandUtils.unRegisterBukkitCommand((Plugin)ess, (Command)ess.getCommand("balancetop"));
             }
         } else {
-            this.registerCommand(new CommandBalanceTopAbstract("balancetop", "/<command>", "View top balances on the server.", Lists.newArrayList((Object[])new String[]{"baltop", "ebaltop", "ebalancetop"})));
+            this.registerCommand(new CommandBalanceTopAbstract("balancetop", "/<command>", "View top balances on the server.", Lists.newArrayList("baltop", "ebaltop", "ebalancetop")));
         }
     }
 

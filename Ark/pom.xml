@@ -38,6 +38,10 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
+        <repository>
+            <id>ess-repo</id>
+            <url>https://ci.ender.zone/plugin/repository/everything/</url>
+        </repository>
     </repositories>
 
 
@@ -46,6 +50,12 @@
             <groupId>com.conaxgames</groupId>
             <artifactId>server</artifactId>
             <version>1.8.8-R0.2-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.ess3</groupId>
+            <artifactId>EssentialsX</artifactId>
+            <version>2.17.2</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -76,6 +86,20 @@
             <artifactId>jedis</artifactId>
             <version>2.9.0</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>barapi</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/BarAPI.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>citizens</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/Citizens.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.comphenix.protocol</groupId>

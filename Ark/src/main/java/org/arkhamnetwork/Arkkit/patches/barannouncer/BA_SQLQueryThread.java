@@ -57,7 +57,6 @@ extends Thread {
                 }
                 BA_SQLManager.sql_query.remove(query);
             }
-            break;
         }
     }
 

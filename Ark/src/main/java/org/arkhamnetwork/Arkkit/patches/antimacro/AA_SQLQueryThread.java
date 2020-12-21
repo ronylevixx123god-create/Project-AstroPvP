@@ -52,7 +52,6 @@ extends Thread {
                 }
                 AntiMacro.sql_query.remove(query);
             }
-            break;
         }
     }
 

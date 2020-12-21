@@ -17,40 +17,27 @@
  */
 package org.arkhamnetwork.Arkkit.patches.balancetop;
 
-import com.compilex.MineBans.api.MineBanAPI;
 import com.google.common.collect.Lists;
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
+import org.arkhamnetwork.Arkkit.Arkkit;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import me.ifamasssxd.cosmicweblink.CosmicWebLinkAPI;
-import me.ifamasssxd.cosmicweblink.struct.DataTypeEnum;
-import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.balancetop.BalanceTop;
-import org.arkhamnetwork.Arkkit.patches.balancetop.CommandBalanceTop;
-import org.arkhamnetwork.Arkkit.patches.balancetop.NameDouble;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.craftbukkit.libs.com.google.gson.Gson;
-import org.bukkit.craftbukkit.libs.com.google.gson.reflect.TypeToken;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class BalanceManager {
-    public static ConcurrentHashMap<UUID, NameDouble> balanceMap = new ConcurrentHashMap();
+    public static ConcurrentHashMap<UUID, NameDouble> balanceMap = new ConcurrentHashMap<>();
     public static Gson gson = new Gson();
     private static File jsonFile;
     private static LinkedHashMap<String, Double> balancetop;
@@ -60,7 +47,6 @@ public class BalanceManager {
     public static long lastupdate;
     private static boolean minebansEnabled;
     private static DecimalFormat format;
-    private static List<String> exempt;
     private static HashSet<UUID> bannedCache;
     private static DecimalFormat df;
 
@@ -96,16 +82,13 @@ public class BalanceManager {
                 pages.add(page);
             }
             System.out.println("Updated /baltop in " + (System.currentTimeMillis() - start) + "ms");
-            if (Bukkit.getPluginManager().isPluginEnabled("CosmicWebLink")) {
-                CosmicWebLinkAPI.updateData((DataTypeEnum)DataTypeEnum.BALANCE_TOP, (Object[])new Object[]{balancetop.clone()});
-            }
         }
         return pages;
     }
 
     private static void loadOnlinePlayers() {
-        for (Player p : Lists.newArrayList((Iterable)Bukkit.getOnlinePlayers())) {
-            double cash = BalanceTop.getEconomy().getBalance((OfflinePlayer)p);
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            double cash = BalanceTop.getEconomy().getBalance(p);
             if (cash <= 0.0 && balanceMap.containsKey(p.getUniqueId())) {
                 balanceMap.remove(p.getUniqueId());
                 continue;
@@ -117,19 +100,15 @@ public class BalanceManager {
 
     private static LinkedHashMap<String, Double> sortByComparator(Map<UUID, NameDouble> unsortMap, final boolean order) {
         LinkedList<Map.Entry<UUID, NameDouble>> list = new LinkedList<Map.Entry<UUID, NameDouble>>(unsortMap.entrySet());
-        Collections.sort(list, new Comparator<Map.Entry<UUID, NameDouble>>(){
-
-            @Override
-            public int compare(Map.Entry<UUID, NameDouble> o1, Map.Entry<UUID, NameDouble> o2) {
-                if (order) {
-                    return o1.getValue().getAmount().compareTo(o2.getValue().getAmount());
-                }
-                return o2.getValue().getAmount().compareTo(o1.getValue().getAmount());
+        Collections.sort(list, (o1, o2) -> {
+            if (order) {
+                return o1.getValue().getAmount().compareTo(o2.getValue().getAmount());
             }
+            return o2.getValue().getAmount().compareTo(o1.getValue().getAmount());
         });
         LinkedHashMap<String, Double> sortedMap = new LinkedHashMap<String, Double>();
         for (Map.Entry entry : list) {
-            if (BalanceManager.isBanned((UUID)entry.getKey()) || ((NameDouble)entry.getValue()).getName() != null && (exempt.contains(((NameDouble)entry.getValue()).getName()) || ((NameDouble)entry.getValue()).getName().startsWith("faction_"))) {
+            if (BalanceManager.isBanned((UUID)entry.getKey()) || ((NameDouble)entry.getValue()).getName() != null && ((NameDouble)entry.getValue()).getName().startsWith("faction_")) {
                 balanceMap.remove(entry.getKey());
                 continue;
             }
@@ -140,10 +119,6 @@ public class BalanceManager {
 
     private static boolean isBanned(UUID uuid) {
         if (bannedCache.contains(uuid)) {
-            return true;
-        }
-        if (minebansEnabled && MineBanAPI.isBanned((UUID)uuid)) {
-            bannedCache.add(uuid);
             return true;
         }
         return false;
@@ -171,7 +146,7 @@ public class BalanceManager {
                     build.append(line);
                 }
                 try {
-                    balanceMap = (ConcurrentHashMap)gson.fromJson(build.toString(), new TypeToken<ConcurrentHashMap<UUID, NameDouble>>(){}.getType());
+                    balanceMap = gson.fromJson(build.toString(), new TypeToken<ConcurrentHashMap<UUID, NameDouble>>(){}.getType());
                 }
                 catch (Exception e) {
                     e.printStackTrace();
@@ -231,7 +206,6 @@ public class BalanceManager {
         lastupdate = System.currentTimeMillis();
         minebansEnabled = false;
         format = new DecimalFormat("#,###");
-        exempt = Lists.newArrayList((Object[])new String[]{"Vaquxine", "ypperin", "SoulXD", "Its_", "Mackyd7", "CriSis__", "Koeru"});
         bannedCache = new HashSet();
         df = new DecimalFormat("#,##0");
     }

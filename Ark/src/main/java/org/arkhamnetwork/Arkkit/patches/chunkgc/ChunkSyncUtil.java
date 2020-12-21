@@ -12,7 +12,8 @@ package org.arkhamnetwork.Arkkit.patches.chunkgc;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.concurrent.CopyOnWriteArrayList;
-import net.minecraft.server.v1_7_R4.Chunk;
+
+import net.minecraft.server.v1_8_R3.Chunk;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.patches.AntiCrash;
 import org.arkhamnetwork.Arkkit.patches.chunkgc.ChunkGC;
@@ -20,7 +21,7 @@ import org.arkhamnetwork.Arkkit.patches.chunkgc.ChunkGCTask;
 import org.arkhamnetwork.Arkkit.utils.LongHash;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_7_R4.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 
 public class ChunkSyncUtil {
     Arkkit plugin = Arkkit.get();

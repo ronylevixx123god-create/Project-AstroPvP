@@ -93,7 +93,7 @@ extends ArkPlugin {
                             } else {
                                 ArrayList ys;
                                 this.cancel();
-                                List<Object> list = ys = AntiKnockback.this.yChanges.containsKey(player.getUniqueId()) ? AntiKnockback.this.yChanges.get(player.getUniqueId()) : Lists.newArrayList();
+                                ArrayList list = ys = AntiKnockback.this.yChanges.containsKey(player.getUniqueId()) ? (ArrayList) AntiKnockback.this.yChanges.get(player.getUniqueId()) : Lists.newArrayList();
                                 if (!AntiKnockback.this.yChanges.containsKey(player.getUniqueId())) {
                                     AntiKnockback.this.yChanges.put(player.getUniqueId(), ys);
                                 }

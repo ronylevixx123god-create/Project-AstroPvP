@@ -10,17 +10,11 @@
  */
 package org.arkhamnetwork.Arkkit.patches.chunkgc;
 
-import org.arkhamnetwork.Arkkit.patches.chunkgc.ChunkGCListener;
-import org.arkhamnetwork.Arkkit.patches.chunkgc.ChunkGCLogger;
-import org.arkhamnetwork.Arkkit.patches.chunkgc.ChunkGCTask;
-import org.arkhamnetwork.Arkkit.patches.chunkgc.ChunkSyncUtil;
-import org.arkhamnetwork.Arkkit.patches.chunkgc.CommandForceChunkGC;
-import org.arkhamnetwork.Arkkit.patches.chunkgc.PlayerMoveTask;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_7_R4.CraftServer;
-import org.bukkit.craftbukkit.v1_7_R4.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.plugin.Plugin;
 
 public class ChunkGC

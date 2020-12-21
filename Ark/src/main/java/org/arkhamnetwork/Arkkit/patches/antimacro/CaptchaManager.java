@@ -30,7 +30,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
-import org.zencode.shortninja.staffplus.methods.Staff;
 
 final class CaptchaManager {
     private static Random random = new Random();
@@ -104,7 +103,6 @@ final class CaptchaManager {
                                 fp.setMetadata("noCombatLog", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)System.currentTimeMillis()));
                             }
                             FallbackServers.redirect("hacker", fp);
-                            Staff.sendStaffChatMessage((String)((Object)ChatColor.GOLD + fp.getName() + " has been kicked to \"hacker\" from " + localServer + " due to not entering valid captcha. CPS(" + CPS_A + "), CPS(" + CPS_B + ")"), (String)"CONSOLE");
                             AntiMacro.sql_query.add("INSERT INTO anti_macro(player_uuid, player_name, CPS_A, CPS_B, server_name, time) VALUES('" + fp.getUniqueId().toString() + "', '" + fp.getName() + "', " + CPS_A + ", " + CPS_B + ", '" + localServer + "', NOW())");
                             Bukkit.getLogger().info("[Arkkit (AntiMacro)] " + fp.getName() + " has been kicked due to failure to complete the captcha.");
                         }
@@ -130,7 +128,6 @@ final class CaptchaManager {
                 String localServer = FallbackServers.lily_username;
                 p.setMetadata("noCombatLog", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)System.currentTimeMillis()));
                 FallbackServers.redirect("hacker", p);
-                Staff.sendStaffChatMessage((String)((Object)ChatColor.GOLD + p.getName() + " has been kicked to \"hacker\" from " + localServer + " due to failing the captcha >5 times in 20 ticks. (Chest Steal Hack?)"), (String)"CONSOLE");
                 return;
             }
             p.openInventory(CaptchaManager.generateChallengeInventory(p));

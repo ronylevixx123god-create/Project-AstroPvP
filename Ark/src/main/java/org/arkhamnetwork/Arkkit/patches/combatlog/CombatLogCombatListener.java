@@ -1,50 +1,13 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.MaskUtils
- *  com.earth2me.essentials.Essentials
- *  com.earth2me.essentials.User
- *  com.wimbli.WorldBorder.WorldBorder
- *  net.minecraft.server.v1_7_R4.MinecraftServer
- *  org.arkhamnetwork.enchantments.Enchantments
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.Location
- *  org.bukkit.craftbukkit.v1_7_R4.entity.CraftLivingEntity
- *  org.bukkit.entity.Entity
- *  org.bukkit.entity.EntityType
- *  org.bukkit.entity.LivingEntity
- *  org.bukkit.entity.Player
- *  org.bukkit.entity.Projectile
- *  org.bukkit.event.EventHandler
- *  org.bukkit.event.EventPriority
- *  org.bukkit.event.Listener
- *  org.bukkit.event.entity.EntityDamageByEntityEvent
- *  org.bukkit.event.entity.EntityDamageEvent
- *  org.bukkit.event.entity.EntityDamageEvent$DamageCause
- *  org.bukkit.event.entity.EntityShootBowEvent
- *  org.bukkit.event.player.PlayerCommandPreprocessEvent
- *  org.bukkit.event.player.PlayerTeleportEvent
- *  org.bukkit.event.player.PlayerTeleportEvent$TeleportCause
- *  org.bukkit.metadata.FixedMetadataValue
- *  org.bukkit.metadata.MetadataValue
- *  org.bukkit.plugin.Plugin
- */
 package org.arkhamnetwork.Arkkit.patches.combatlog;
 
-import com.cosmicpvp.cosmicutils.utils.MaskUtils;
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
-import com.wimbli.WorldBorder.WorldBorder;
-import net.minecraft.server.v1_7_R4.MinecraftServer;
+import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
-import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftLivingEntity;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftLivingEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;

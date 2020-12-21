@@ -82,7 +82,7 @@ public class SpawnerLocation {
     }
 
     public SpawnerLocation(Block block) {
-        CreatureSpawner cs = (CreatureSpawner)((CraftBlock)block).getState();
+        CreatureSpawner cs = (CreatureSpawner) block.getState();
         this.x = block.getX();
         this.y = block.getY();
         this.z = block.getZ();

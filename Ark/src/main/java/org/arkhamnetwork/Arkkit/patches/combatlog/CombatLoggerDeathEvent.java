@@ -38,7 +38,7 @@ implements Cancellable {
         this.playerName = playerName;
         this.playerUUIDString = playerUUIDString;
         if (itemsFromMetadata != null) {
-            this.inventoryItems = Lists.newArrayList((Object[])itemsFromMetadata);
+            this.inventoryItems = Lists.newArrayList(itemsFromMetadata);
         }
     }
 
