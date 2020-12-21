@@ -1,6 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- */
 package com.cosmicpvp.cosmicutils.gui.listeners;
 
 import com.cosmicpvp.cosmicutils.CosmicUtils;
@@ -18,22 +15,11 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerListener
 implements Listener {
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerJoin(PlayerLoginEvent e) {
         CosmicUtils.get().getAsyncPlayerMap().put(e.getPlayer().getName(), e.getPlayer());
         CosmicUtils.get().getAsyncPlayerMapUUID().put(e.getPlayer().getUniqueId(), e.getPlayer());
         CosmicUtils.get().getPlayerLocations().put(e.getPlayer().getName(), e.getPlayer().getLocation());
-        try {
-            Player pl = e.getPlayer();
-            UUID cachedUUID = CompilexUUIDFetcher.getCachedUUIDOf(pl.getName(), false);
-            if (cachedUUID == null || !cachedUUID.equals(pl.getUniqueId())) {
-                Bukkit.getLogger().info("[CompilexUUIDFetcher] (LOGIN) Updating player " + pl.getName() + "'s cached name:UUID (data does not match player object!) FROM[" + cachedUUID + "] TO[" + pl.getUniqueId() + "]");
-                CompilexUUIDFetcher.cacheUUIDAndBroadcast(pl.getName(), pl.getUniqueId());
-            }
-        }
-        catch (Exception e1) {
-            e1.printStackTrace();
-        }
     }
 
     @EventHandler(priority=EventPriority.MONITOR)
