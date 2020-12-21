@@ -4,7 +4,6 @@
 package com.cosmicpvp.cosmicutils.gui.listeners;
 
 import com.cosmicpvp.cosmicutils.CosmicUtils;
-import com.cosmicpvp.cosmicutils.utils.CompilexUUIDFetcher;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import java.util.UUID;
 import org.bukkit.Bukkit;

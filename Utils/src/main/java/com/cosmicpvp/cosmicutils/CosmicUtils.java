@@ -5,8 +5,6 @@ import com.cosmicpvp.cosmicutils.gui.CosmicGUI;
 import com.cosmicpvp.cosmicutils.gui.listeners.GUIListener;
 import com.cosmicpvp.cosmicutils.gui.listeners.PlayerListener;
 import com.cosmicpvp.cosmicutils.gui.listeners.TitleItemListener;
-import com.cosmicpvp.cosmicutils.utils.CompilexUUIDFetcher;
-import com.cosmicpvp.cosmicutils.utils.CompilexUUIDFetcherListener;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
 import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
@@ -48,7 +46,6 @@ extends JavaPlugin {
     private boolean hcfGalaxy;
     private boolean seasonalGalaxy;
     private SeenDatabase seenDatabase;
-    private CompilexUUIDFetcherListener compilexUUIDFetcherListener;
 
     @Override
     public void onEnable() {
@@ -58,7 +55,6 @@ extends JavaPlugin {
         WorldGuardUtils.hook();
         FactionUtils.init();
         this.seenDatabase = new SeenDatabase(this);
-        CompilexUUIDFetcher.generatePlayerUUIDCache();
         if (this.doesPluginExist("CosmicHCF")) {
             this.hcfGalaxy = true;
         }
@@ -89,7 +85,6 @@ extends JavaPlugin {
         }, 0L, 40L);
         CosmicGUI.activeGUIs.entrySet();
         this.arkkitEnabled = new File("plugins/Arkkit.jar").exists();
-        this.compilexUUIDFetcherListener = new CompilexUUIDFetcherListener();
         if (new File("plugins/FactionUpgrades.jar").exists()) {
             UpgradeUtils.factionUpgradesEnabled = true;
         }
@@ -235,10 +230,6 @@ extends JavaPlugin {
 
     public SeenDatabase getSeenDatabase() {
         return this.seenDatabase;
-    }
-
-    public CompilexUUIDFetcherListener getCompilexUUIDFetcherListener() {
-        return this.compilexUUIDFetcherListener;
     }
 }
 

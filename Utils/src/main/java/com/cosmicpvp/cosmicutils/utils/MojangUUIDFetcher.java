@@ -3,7 +3,6 @@
  */
 package com.cosmicpvp.cosmicutils.utils;
 
-import com.cosmicpvp.cosmicutils.utils.CompilexUUIDFetcher;
 import com.google.common.collect.ImmutableList;
 import java.nio.ByteBuffer;
 import java.util.List;

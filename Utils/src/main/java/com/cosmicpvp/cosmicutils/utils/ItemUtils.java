@@ -69,19 +69,19 @@ public class ItemUtils {
     }
 
     public static ItemStack addDurability(ItemStack item, short durability) {
-        return CraftItemStack.modifyDurability((ItemStack)item, (int)durability);
+        return CraftItemStack.modifyDurability(item, durability);
     }
 
     public static ItemStack subtractDurability(ItemStack item, short durability) {
-        return CraftItemStack.modifyDurability((ItemStack)item, (int)(-durability));
+        return CraftItemStack.modifyDurability(item, -durability);
     }
 
     public static ItemStack addDurability(ItemStack item, int durability) {
-        return CraftItemStack.modifyDurability((ItemStack)item, (int)durability);
+        return CraftItemStack.modifyDurability(item, durability);
     }
 
     public static ItemStack subtractDurability(ItemStack item, int durability) {
-        return CraftItemStack.modifyDurability((ItemStack)item, (int)(-durability));
+        return CraftItemStack.modifyDurability(item, -durability);
     }
 
     public static boolean areItemsSimilarIgnoringIID(ItemStack item, ItemStack itemWithIID) {
