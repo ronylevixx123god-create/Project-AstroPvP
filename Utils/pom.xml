@@ -234,6 +234,13 @@
             <systemPath>${project.basedir}/lib/BarAPI.jar</systemPath>
         </dependency>
         <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>customcreepers</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/CosmicCustomCreepers.jar</systemPath>
+        </dependency>
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.16.18</version>
