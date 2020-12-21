@@ -344,7 +344,7 @@ public class JSONMessage {
     }
 
     public void sendToPlayer(Player p) {
-        ((CraftPlayer)p).getHandle().playerConnection.sendPacket(new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a(this.json.toString()), true));
+        ((CraftPlayer)p).getHandle().playerConnection.sendPacket(new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a(this.json.toString()), (byte) 0));
     }
 
     public void setColor(ChatColor color) {

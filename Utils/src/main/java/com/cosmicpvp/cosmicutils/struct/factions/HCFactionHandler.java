@@ -60,7 +60,7 @@ extends FactionHandler {
     private Field focusPlayerField;
 
     @Override
-    public void initHandler() {
+    public void initHandler() throws NoSuchMethodException {
         Method getInstance = ReflectionUtils.getMethod(FPlayers.class, "getInstance");
         try {
             this.fPlayers = (FPlayers)getInstance.invoke(null, new Object[0]);
@@ -83,7 +83,7 @@ extends FactionHandler {
             this.getPlayer = ReflectionUtils.getMethod(FPlayer.class, "getPlayer");
             this.getFactionTag = ReflectionUtils.getMethod(Faction.class, "getTag");
         }
-        catch (ClassNotFoundException | IllegalAccessException | InvocationTargetException e) {
+        catch (ClassNotFoundException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | NoSuchFieldException e) {
             e.printStackTrace();
         }
     }
@@ -295,7 +295,7 @@ extends FactionHandler {
     }
 
     @Override
-    public void setFocusing(Faction faction, FPlayer player) {
+    public void setFocusing(Faction faction, FPlayer player) throws IllegalAccessException {
         ReflectionUtils.setObject((Object)faction, this.focusPlayerField, (Object)player);
     }
 
@@ -388,7 +388,7 @@ extends FactionHandler {
     }
 
     @Override
-    public double getFactionBalance(Faction faction) {
+    public double getFactionBalance(Faction faction) throws NoSuchFieldException, IllegalAccessException {
         return (Double)ReflectionUtils.getObject(Faction.class, (Object)faction, "money");
     }
 

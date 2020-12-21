@@ -18,7 +18,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 public abstract class FactionHandler {
-    public abstract void initHandler();
+    public abstract void initHandler() throws NoSuchMethodException;
 
     public abstract boolean isInOwnFaction(Player var1);
 
@@ -68,7 +68,7 @@ public abstract class FactionHandler {
 
     public abstract Player getPlayer(FPlayer var1);
 
-    public abstract void setFocusing(Faction var1, FPlayer var2);
+    public abstract void setFocusing(Faction var1, FPlayer var2) throws IllegalAccessException;
 
     public abstract FPlayer getFocusing(Faction var1);
 
@@ -100,6 +100,6 @@ public abstract class FactionHandler {
 
     public abstract double getDTRMin(Faction var1);
 
-    public abstract double getFactionBalance(Faction var1);
+    public abstract double getFactionBalance(Faction var1) throws NoSuchFieldException, IllegalAccessException;
 }
 
