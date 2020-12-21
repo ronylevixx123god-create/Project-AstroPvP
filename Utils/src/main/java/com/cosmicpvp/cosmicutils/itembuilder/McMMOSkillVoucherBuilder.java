@@ -1,12 +1,5 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.gmail.nossr50.datatypes.skills.SkillType
- */
 package com.cosmicpvp.cosmicutils.itembuilder;
 
-import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.CustomItemUtils;
 import com.gmail.nossr50.datatypes.skills.SkillType;
 import java.util.concurrent.ThreadLocalRandom;

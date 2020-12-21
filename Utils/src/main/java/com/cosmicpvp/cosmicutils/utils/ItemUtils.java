@@ -49,7 +49,7 @@ public class ItemUtils {
         }
         Material type = item.getType();
         NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder builder = wrapper.getCompound("cosmicData");
+        NBTTagCompoundBuilder builder = wrapper.getCompound("conaxData");
         if (builder != null && builder.hasKey("durability") && builder.hasKey("maxDurability")) {
             return builder.getInt("maxDurability");
         }
@@ -61,7 +61,7 @@ public class ItemUtils {
             return 0;
         }
         NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder builder = wrapper.getCompound("cosmicData");
+        NBTTagCompoundBuilder builder = wrapper.getCompound("conaxData");
         if (builder != null && builder.hasKey("durability") && builder.hasKey("maxDurability")) {
             return builder.getInt("durability");
         }
