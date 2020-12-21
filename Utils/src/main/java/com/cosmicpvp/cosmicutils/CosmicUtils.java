@@ -11,17 +11,18 @@ import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.cosmicpvp.cosmicutils.utils.databases.SeenDatabase;
 import com.google.common.collect.MapMaker;
-import java.io.File;
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+
 public final class CosmicUtils
-extends JavaPlugin {
+        extends JavaPlugin {
     private static CosmicUtils instance;
     private Map<String, Player> asyncPlayerMap = new MapMaker().concurrencyLevel(32).weakValues().makeMap();
     private Map<UUID, Player> asyncPlayerMapUUID = new MapMaker().concurrencyLevel(32).weakValues().makeMap();
@@ -46,6 +47,10 @@ extends JavaPlugin {
     private boolean hcfGalaxy;
     private boolean seasonalGalaxy;
     private SeenDatabase seenDatabase;
+
+    public static CosmicUtils get() {
+        return instance;
+    }
 
     @Override
     public void onEnable() {
@@ -126,15 +131,10 @@ extends JavaPlugin {
         }
     }
 
-    public static CosmicUtils get() {
-        return instance;
-    }
-
     private void initStaticClasses() {
         try {
             Class.forName("com.cosmicpvp.cosmicutils.utils.ItemSerialization");
-        }
-        catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             Bukkit.getLogger().info("Error attempting to load class ItemSerialization.");
             e.printStackTrace();
         }
