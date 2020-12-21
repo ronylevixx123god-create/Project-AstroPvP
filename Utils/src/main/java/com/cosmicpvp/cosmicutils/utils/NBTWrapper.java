@@ -30,7 +30,7 @@ public class NBTWrapper {
     public NBTWrapper(ItemStack item, boolean useDefault) {
         this.defaultItem = item;
         if (!useDefault) {
-            this.nmsItem = item instanceof CraftItemStack ? ((CraftItemStack) item) : CraftItemStack.asNMSCopy(item);
+            this.nmsItem = item instanceof CraftItemStack ? ((CraftItemStack)item) : CraftItemStack.asNMSCopy((ItemStack)item);
             this.compound = this.nmsItem.getTag();
         }
     }
@@ -41,7 +41,7 @@ public class NBTWrapper {
     }
 
     private void load() {
-        this.nmsItem = this.defaultItem instanceof CraftItemStack ? this.defaultItem : CraftItemStack.asNMSCopy(this.defaultItem);
+        this.nmsItem = this.defaultItem instanceof CraftItemStack ? ((CraftItemStack)this.defaultItem) : CraftItemStack.asNMSCopy((ItemStack)this.defaultItem);
         this.compound = this.nmsItem.getTag();
     }
 

@@ -92,6 +92,7 @@ public class WorldGuardUtils {
             if (retr != null) {
                 retr.sort(Comparator.comparing(Map.Entry::getValue));
             }
+
             LinkedList linkedList2 = sorted = retr != null ? new LinkedList() : null;
             if (sorted != null) {
                 retr.forEach(ent -> sorted.add(ent.getKey()));
