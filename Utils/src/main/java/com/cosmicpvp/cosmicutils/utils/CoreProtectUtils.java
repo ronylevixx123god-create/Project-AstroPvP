@@ -38,7 +38,7 @@ public class CoreProtectUtils {
         return true;
     }
 
-    public static boolean logCommand(Player player, String msg, long time) {
+    public static boolean logCommand(Player player, String msg, long time) throws NoSuchMethodException {
         if (!coreProtectEnabled) {
             return false;
         }
