@@ -3,7 +3,6 @@
  */
 package com.cosmicpvp.cosmicutils.itembuilder;
 
-import com.cosmicpvp.cosmicutils.itembuilder.CustomCrateType;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
