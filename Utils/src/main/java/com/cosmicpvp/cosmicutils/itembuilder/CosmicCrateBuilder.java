@@ -55,7 +55,14 @@ extends ItemBuilder {
         } else if (Math.random() <= 0.4) {
             targetCrates = "versions2018";
         }
-        List version = (List)ReflectionUtils.getObject(HeroicMysteryCrateListener.class, null, targetCrates);
+        List version = null;
+        try {
+            version = (List) ReflectionUtils.getObject(HeroicMysteryCrateListener.class, null, targetCrates);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
         if (version == null || version.isEmpty()) {
             return null;
         }

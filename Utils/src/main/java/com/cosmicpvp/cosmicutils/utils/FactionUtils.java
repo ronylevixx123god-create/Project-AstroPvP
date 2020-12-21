@@ -14,7 +14,6 @@ import com.cosmicpvp.cosmicutils.compat.ParamBuilder;
 import com.cosmicpvp.cosmicutils.struct.factions.CosmicFactionHandler;
 import com.cosmicpvp.cosmicutils.struct.factions.FactionHandler;
 import com.cosmicpvp.cosmicutils.struct.factions.HCFactionHandler;
-import com.cosmicpvp.cosmicutils.utils.ReflectionUtils;
 import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.Faction;
@@ -37,7 +36,7 @@ public class FactionUtils {
         factionHandler = null;
     }
 
-    public static void init() {
+    public static void init() throws NoSuchMethodException {
         try {
             Class.forName("com.massivecraft.factions.Faction");
             getFactionTag = ReflectionUtils.getMethod(Faction.class, "getTag");
@@ -98,7 +97,7 @@ public class FactionUtils {
         return factionHandler.getDTRMin(faction);
     }
 
-    public static double getFactionBalance(Faction faction) {
+    public static double getFactionBalance(Faction faction) throws NoSuchFieldException, IllegalAccessException {
         return factionHandler.getFactionBalance(faction);
     }
 
@@ -293,11 +292,11 @@ public class FactionUtils {
         return factionHandler.getFocusing(faction);
     }
 
-    public static void setFocusing(Faction faction, Player player) {
+    public static void setFocusing(Faction faction, Player player) throws IllegalAccessException {
         FactionUtils.setFocusing(faction, FactionUtils.getFPlayer(player));
     }
 
-    public static void setFocusing(Faction faction, FPlayer player) {
+    public static void setFocusing(Faction faction, FPlayer player) throws IllegalAccessException {
         factionHandler.setFocusing(faction, player);
     }
 
@@ -326,7 +325,7 @@ public class FactionUtils {
         return ReflectionUtils.callReflectionMethod((Object)faction, factionHandler.getMainFactionClass(), method, builder);
     }
 
-    public static Map<String, Relation> getRelationWishes(Faction faction) {
+    public static Map getRelationWishes(Faction faction) throws NoSuchFieldException, IllegalAccessException {
         return (Map)ReflectionUtils.getObject(factionHandler.getMainFactionClass(), (Object)faction, "relationWish");
     }
 

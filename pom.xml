@@ -11,6 +11,7 @@
 
     <modules>
         <module>Utils</module>
+        <module>Ark</module>
     </modules>
 
     <build>

@@ -95,7 +95,7 @@ public class WorldGuardUtils {
                     LinkedList<String> sorted = (retr != null) ? new LinkedList<>() : null;
 
                     if (sorted != null) {
-                        retr.forEach(sorted.add());
+                        retr.forEach(ent -> sorted.add(ent.getKey()));
 
                         if (!sorted.isEmpty()) {
                             lastKnownPlayerRegions.put(player.getUniqueId(), sorted);

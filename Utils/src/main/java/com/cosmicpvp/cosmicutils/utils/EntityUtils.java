@@ -11,10 +11,6 @@
  */
 package com.cosmicpvp.cosmicutils.utils;
 
-import com.cosmicpvp.cosmicutils.utils.ReflectionUtils;
-import java.io.File;
-import java.lang.reflect.Field;
-
 import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.cosmicbosses.utils.BossUtils;
 import net.minecraft.server.v1_8_R3.Entity;
@@ -23,6 +19,9 @@ import net.minecraft.server.v1_8_R3.EntityLiving;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftGhast;
 import org.bukkit.entity.Ghast;
+
+import java.io.File;
+import java.lang.reflect.Field;
 
 public class EntityUtils {
     private static Class<?> endDragonClass;
@@ -46,14 +45,14 @@ public class EntityUtils {
         return bossesEnabled && !BossUtils.getAllBossesFromType((Class<? extends Boss>) endDragonClass).isEmpty();
     }
 
-    public static Field getGhastTarget() {
+    public static Field getGhastTarget() throws NoSuchFieldException {
         if (ghastTarget == null) {
             ghastTarget = ReflectionUtils.getField(EntityGhast.class, "target");
         }
         return ghastTarget;
     }
 
-    public static void setGhastTarget(org.bukkit.entity.Entity entity, org.bukkit.entity.Entity target) {
+    public static void setGhastTarget(org.bukkit.entity.Entity entity, org.bukkit.entity.Entity target) throws NoSuchFieldException, IllegalAccessException {
         if (entity instanceof Ghast) {
             Ghast ghast = (Ghast)entity;
             EntityGhast entGhast = ((CraftGhast)ghast).getHandle();
@@ -63,7 +62,7 @@ public class EntityUtils {
                 toSet = (EntityLiving)craftEnt.getHandle();
             }
             entGhast.setGoalTarget(toSet);
-            ReflectionUtils.setObject((Object)entGhast, EntityUtils.getGhastTarget(), toSet);
+            ReflectionUtils.setObject(entGhast, EntityUtils.getGhastTarget(), toSet);
         }
     }
 
@@ -75,7 +74,7 @@ public class EntityUtils {
                 Entity internal = (Entity)EntityUtils.getGhastTarget().get(entGhast);
                 return internal.getBukkitEntity();
             }
-            catch (IllegalAccessException e) {
+            catch (IllegalAccessException | NoSuchFieldException e) {
                 e.printStackTrace();
             }
         }

@@ -29,7 +29,15 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
 
 public class PlayerUtil {
-    static Method method = ReflectionUtils.getMethod(Bukkit.getServer().getClass(), "getOnlinePlayers");
+    static Method method;
+
+    static {
+        try {
+            method = ReflectionUtils.getMethod(Bukkit.getServer().getClass(), "getOnlinePlayers");
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static Player getPlayerFromString(String name) {
         if (name.length() > 16 && name.contains("-")) {

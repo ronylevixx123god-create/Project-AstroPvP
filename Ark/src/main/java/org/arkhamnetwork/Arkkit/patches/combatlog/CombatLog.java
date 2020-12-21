@@ -1,0 +1,265 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.cosmicpvp.cosmicutils.struct.DecimalFormatType
+ *  com.cosmicpvp.cosmicutils.utils.MaskUtils
+ *  com.cosmicpvp.cosmicutils.utils.NumberUtils
+ *  com.cosmicpvp.cosmicutils.utils.UpgradeUtils
+ *  com.sk89q.worldedit.Vector
+ *  com.sk89q.worldguard.bukkit.WorldGuardPlugin
+ *  com.sk89q.worldguard.protection.flags.DefaultFlag
+ *  com.sk89q.worldguard.protection.flags.StateFlag$State
+ *  net.citizensnpcs.api.CitizensAPI
+ *  net.citizensnpcs.api.npc.NPC
+ *  net.minecraft.server.v1_7_R4.MinecraftServer
+ *  org.arkhamnetwork.enchantments.enchantments.axes.Bleed
+ *  org.bukkit.Bukkit
+ *  org.bukkit.ChatColor
+ *  org.bukkit.Location
+ *  org.bukkit.block.Block
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.Event
+ *  org.bukkit.metadata.FixedMetadataValue
+ *  org.bukkit.metadata.MetadataValue
+ *  org.bukkit.plugin.Plugin
+ */
+package org.arkhamnetwork.Arkkit.patches.combatlog;
+
+import com.cosmicpvp.cosmicutils.struct.DecimalFormatType;
+import com.cosmicpvp.cosmicutils.utils.MaskUtils;
+import com.cosmicpvp.cosmicutils.utils.NumberUtils;
+import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
+import com.sk89q.worldedit.Vector;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.sk89q.worldguard.protection.flags.DefaultFlag;
+import com.sk89q.worldguard.protection.flags.StateFlag;
+import java.io.File;
+import java.lang.ref.WeakReference;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import net.citizensnpcs.api.CitizensAPI;
+import net.citizensnpcs.api.npc.NPC;
+import net.minecraft.server.v1_7_R4.MinecraftServer;
+import org.arkhamnetwork.Arkkit.Arkkit;
+import org.arkhamnetwork.Arkkit.patches.combatlog.CombatExpireTask;
+import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLogCombatListener;
+import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLogLogoutListener;
+import org.arkhamnetwork.Arkkit.patches.combatlog.CombatTagEvent;
+import org.arkhamnetwork.Arkkit.patches.combatlog.CommandLogout;
+import org.arkhamnetwork.Arkkit.patches.combatlog.DespawnNPCTask;
+import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
+import org.arkhamnetwork.Arkkit.utils.ScoreboardUtils;
+import org.arkhamnetwork.enchantments.enchantments.axes.Bleed;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.block.Block;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
+
+public class CombatLog
+extends ArkPlugin {
+    private static WorldGuardPlugin wg = null;
+    protected static boolean duel_plugin = false;
+    protected static boolean mask_plugin = false;
+    protected static boolean block_enderpearls = false;
+    protected static long tagDuration;
+    protected static boolean cosmicPVP;
+    protected static boolean displayOnScoreboard;
+
+    public CombatLog(Plugin p) {
+        super(p);
+    }
+
+    @Override
+    public void enable() {
+        wg = CombatLog.hookWorldGuard();
+        duel_plugin = new File("plugins/MCLegendsDuels.jar").exists();
+        mask_plugin = new File("plugins/CosmicMasks.jar").exists();
+        block_enderpearls = Arkkit.get().getConfig().getBoolean("settings.combat_log.block_enderpearls");
+        tagDuration = Arkkit.get().getConfig().getLong("settings.combat_log.combat_duration");
+        displayOnScoreboard = this.getBukkitPlugin().getConfig().getBoolean("settings.combat_log.show_on_scoreboard", false);
+        cosmicPVP = new File("plugins/CosmicCustomTNT.jar").exists();
+        for (String pName : this.getBukkitPlugin().getConfig().getStringList("settings.combatLog.playersToKill")) {
+            CombatLogLogoutListener.playersToKill.add(pName);
+        }
+        this.registerListener(new CombatLogCombatListener());
+        this.registerListener(new CombatLogLogoutListener(this));
+        this.registerCommand(new CommandLogout("logout", "/<command>", "Safetly logs you out of the server.", new ArrayList<String>(Arrays.asList("quit", "exit", "leave"))));
+        this.registerTask(new DespawnNPCTask().runTaskTimer((Plugin)Arkkit.get(), 20L, 20L), DespawnNPCTask.class);
+        this.registerTask(new CombatExpireTask().runTaskTimer((Plugin)Arkkit.get(), 10L, 10L), CombatExpireTask.class);
+    }
+
+    @Override
+    public void disable() {
+        for (Player pl : Bukkit.getOnlinePlayers()) {
+            pl.removeMetadata("cl_combat", (Plugin)Arkkit.get());
+        }
+        this.cleanNPCs();
+        this.getBukkitPlugin().getConfig().set("settings.combatLog.playersToKill", new ArrayList<String>(CombatLogLogoutListener.playersToKill));
+        this.getBukkitPlugin().saveConfig();
+        wg = null;
+    }
+
+    private void cleanNPCs() {
+        for (NPC n : CombatLogLogoutListener.combatNPCs.values()) {
+            n.despawn();
+            n.destroy();
+            CitizensAPI.getNPCRegistry().deregister(n);
+        }
+        for (NPC n : CitizensAPI.getNPCRegistry()) {
+            if (n.getEntity() == null || !n.getEntity().hasMetadata("combatNPC_PlayerName")) continue;
+            n.despawn();
+            n.destroy();
+            CitizensAPI.getNPCRegistry().deregister(n);
+        }
+    }
+
+    protected static WorldGuardPlugin getWorldGuard() {
+        return wg;
+    }
+
+    private static WorldGuardPlugin hookWorldGuard() {
+        Plugin plugin = Arkkit.get().getServer().getPluginManager().getPlugin("WorldGuard");
+        if (plugin == null || !(plugin instanceof WorldGuardPlugin)) {
+            return null;
+        }
+        return (WorldGuardPlugin)plugin;
+    }
+
+    protected static boolean isPvPDisabled(Location l) {
+        try {
+            Class<?> bukkitUtil = CombatLog.getWorldGuard().getClass().getClassLoader().loadClass("com.sk89q.worldguard.bukkit.BukkitUtil");
+            Method toVector = bukkitUtil.getMethod("toVector", Block.class);
+            Vector blockVector = (Vector)toVector.invoke(null, new Object[]{l.getBlock()});
+            List regionSet = CombatLog.getWorldGuard().getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs(blockVector);
+            if (regionSet == null || regionSet.size() < 1) {
+                try {
+                    return (StateFlag.State)CombatLog.getWorldGuard().getGlobalRegionManager().get(l.getWorld()).getRegion("__global__").getFlags().get((Object)DefaultFlag.PVP) == StateFlag.State.DENY;
+                }
+                catch (Exception err) {
+                    return false;
+                }
+            }
+            boolean return_flag = false;
+            int return_priority = -1;
+            for (String region : regionSet) {
+                if (!CombatLog.getWorldGuard().getGlobalRegionManager().get(l.getWorld()).getRegion(region).getFlags().containsKey((Object)DefaultFlag.PVP)) continue;
+                StateFlag.State pvp_flag = (StateFlag.State)CombatLog.getWorldGuard().getGlobalRegionManager().get(l.getWorld()).getRegion(region).getFlags().get((Object)DefaultFlag.PVP);
+                int region_priority = CombatLog.getWorldGuard().getGlobalRegionManager().get(l.getWorld()).getRegion(region).getPriority();
+                if (return_priority == -1) {
+                    return_flag = pvp_flag == StateFlag.State.DENY;
+                    return_priority = region_priority;
+                    continue;
+                }
+                if (region_priority <= return_priority) continue;
+                return_flag = pvp_flag == StateFlag.State.DENY;
+                return_priority = region_priority;
+            }
+            return return_flag;
+        }
+        catch (Exception exception) {
+            return false;
+        }
+    }
+
+    public static boolean inCombat(Player pl) {
+        try {
+            List val = pl.getMetadata("cl_combat");
+            if (val != null && !val.isEmpty() && System.currentTimeMillis() - ((MetadataValue)val.get(0)).asLong() <= CombatLog.getCombatTagDuration(pl)) {
+                return true;
+            }
+        }
+        catch (Exception err) {
+            err.printStackTrace();
+            pl.setMetadata("cl_combat", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)System.currentTimeMillis()));
+        }
+        return false;
+    }
+
+    public static long getTimeLeftInCombat(Player pl) {
+        try {
+            List values = pl.getMetadata("cl_combat");
+            if (values != null && values.size() > 0) {
+                Long time = ((MetadataValue)values.get(0)).asLong();
+                long duration = CombatLog.getCombatTagDuration(pl);
+                if (System.currentTimeMillis() - time <= duration) {
+                    return duration - (System.currentTimeMillis() - time);
+                }
+            }
+        }
+        catch (Exception err) {
+            err.printStackTrace();
+            pl.setMetadata("cl_combat", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)System.currentTimeMillis()));
+        }
+        return 0L;
+    }
+
+    public static long getCombatTagDuration(Player player) {
+        int combatDuration = UpgradeUtils.getUpgradeLevel((Player)player, (String)"HEROIC_COMBAT_TAG");
+        long toRetr = tagDuration;
+        if (combatDuration == 1) {
+            toRetr -= 250L;
+        } else if (combatDuration == 2) {
+            toRetr -= 500L;
+        } else if (combatDuration == 3) {
+            toRetr -= 1000L;
+        } else if (combatDuration == 4) {
+            toRetr -= 2000L;
+        }
+        if (mask_plugin && MaskUtils.hasMaskEquipped((Player)player, (String)"JOKER")) {
+            toRetr -= 3000L;
+        }
+        if (player.hasMetadata("affectedByJokerMask") && ((MetadataValue)player.getMetadata("affectedByJokerMask").get(0)).asLong() > (long)MinecraftServer.currentTick) {
+            toRetr += 4000L;
+        }
+        return toRetr;
+    }
+
+    public static synchronized void flagCombat(Player pl) {
+        boolean wasInCombat = CombatLog.inCombat(pl);
+        pl.setMetadata("cl_combat", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)System.currentTimeMillis()));
+        if (!wasInCombat) {
+            pl.setMetadata("cl_combat_monitor_task", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)CombatExpireTask.combatTagged.add(new WeakReference<Player>(pl))));
+            pl.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You have entered combat. Do not log out for " + NumberUtils.format((double)((double)CombatLog.getCombatTagDuration(pl) / 1000.0), (DecimalFormatType)DecimalFormatType.SECONDS) + "s.");
+        }
+        pl.setAllowFlight(false);
+        pl.setFlying(false);
+        if (pl.getOpenInventory() != null && (pl.getOpenInventory().getTopInventory().getName().startsWith("Shop") || pl.getOpenInventory().getTopInventory().getName().equals("Auction House"))) {
+            pl.closeInventory();
+        }
+        CombatTagEvent event = new CombatTagEvent(pl, wasInCombat);
+        Bukkit.getServer().getPluginManager().callEvent((Event)event);
+        if (displayOnScoreboard) {
+            ScoreboardUtils.startCombatPlaceholder(pl);
+        }
+    }
+
+    public static void unflagCombat(Player pl) {
+        if (pl.hasMetadata("cl_combat_monitor_task")) {
+            pl.removeMetadata("cl_combat_monitor_task", (Plugin)Arkkit.get());
+            if (Bukkit.getPluginManager().isPluginEnabled("Enchantments")) {
+                Bleed.clearBleedEffect((LivingEntity)pl);
+            }
+            pl.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "(!)" + (Object)ChatColor.GREEN + " You have left combat. You may now safely logout.");
+            if (pl.isOp()) {
+                pl.setAllowFlight(true);
+            }
+            pl.updateInventory();
+        }
+    }
+
+    static {
+        cosmicPVP = false;
+        displayOnScoreboard = false;
+    }
+}
+

@@ -1,0 +1,62 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  org.bukkit.Bukkit
+ *  org.bukkit.command.Command
+ *  org.bukkit.command.CommandExecutor
+ *  org.bukkit.command.CommandSender
+ *  org.bukkit.entity.Player
+ *  org.bukkit.plugin.Plugin
+ */
+package org.arkhamnetwork.Arkkit.commands;
+
+import org.arkhamnetwork.Arkkit.Arkkit;
+import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
+import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
+
+public class CommandArkReload
+implements CommandExecutor {
+    private Arkkit plugin = null;
+
+    public CommandArkReload(Plugin p) {
+        this.plugin = (Arkkit)p;
+    }
+
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        if (sender instanceof Player && !((Player)sender).isOp()) {
+            return true;
+        }
+        if (args.length != 1) {
+            sender.sendMessage("Usage: /arkreload <patch or *>");
+            sender.sendMessage("Loaded Patches: [" + ArkPlugins.getLoadedPatches() + "]");
+            return true;
+        }
+        String patch = args[0];
+        if (patch.equals("*")) {
+            this.plugin.reloadConfig();
+            for (String s : this.plugin.getConfig().getKeys(true)) {
+                if (!s.startsWith("patches.")) continue;
+                Bukkit.getLogger().info(s + ": " + this.plugin.getConfig().getBoolean(s));
+            }
+            sender.sendMessage("Configuration reloaded.");
+            sender.sendMessage("Killing patches...");
+            this.plugin.unregisterPatches();
+            sender.sendMessage("Injecting patches...");
+            this.plugin.registerPatches();
+        } else {
+            sender.sendMessage("Killing patch...");
+            Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)("arkunregister " + patch));
+            sender.sendMessage("Injecting patch...");
+            Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)("arkregister " + patch));
+            sender.sendMessage("Done!");
+        }
+        return true;
+    }
+}
+

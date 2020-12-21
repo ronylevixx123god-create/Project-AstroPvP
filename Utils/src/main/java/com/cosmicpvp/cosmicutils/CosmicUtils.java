@@ -11,6 +11,7 @@ import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.cosmicpvp.cosmicutils.utils.databases.SeenDatabase;
 import com.google.common.collect.MapMaker;
+import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -52,6 +53,7 @@ public final class CosmicUtils
         return instance;
     }
 
+    @SneakyThrows
     @Override
     public void onEnable() {
         instance = this;

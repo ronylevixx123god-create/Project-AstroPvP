@@ -42,6 +42,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import lombok.SneakyThrows;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -244,11 +246,13 @@ extends FactionHandler {
         return false;
     }
 
+    @SneakyThrows
     @Override
     public FPlayer getFocusing(Faction faction) {
         return (FPlayer)ReflectionUtils.getObject(Faction.class, (Object)faction, "focusedPlayer");
     }
 
+    @SneakyThrows
     @Override
     public void setFocusing(Faction faction, FPlayer player) {
         ReflectionUtils.setObject((Object)faction, this.focusPlayerField, (Object)player);

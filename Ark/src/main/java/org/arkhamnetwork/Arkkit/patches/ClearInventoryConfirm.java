@@ -1,0 +1,75 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.cosmicpvp.cosmicutils.utils.JSONUtils
+ *  com.earth2me.essentials.Essentials
+ *  org.bukkit.Bukkit
+ *  org.bukkit.configuration.file.FileConfiguration
+ *  org.bukkit.configuration.file.YamlConfiguration
+ *  org.bukkit.plugin.Plugin
+ */
+package org.arkhamnetwork.Arkkit.patches;
+
+import com.cosmicpvp.cosmicutils.utils.JSONUtils;
+import com.earth2me.essentials.Essentials;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Collectors;
+import org.arkhamnetwork.Arkkit.patches.ClearInventoryListener;
+import org.arkhamnetwork.Arkkit.patches.CommandToggleClearInventoryConfirm;
+import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
+import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.Plugin;
+
+public class ClearInventoryConfirm
+extends ArkPlugin {
+    public static final String clearInventoryPending = "compilex_clearinventory_pending";
+    public static final String clearInventoryConfirmed = "compilex_clearinventory_confirmed";
+    private File clearInventoryToggles;
+    private FileConfiguration config;
+    private Set<UUID> clearInventoryToggled = new HashSet<UUID>();
+    Essentials ess;
+
+    public ClearInventoryConfirm(Plugin p) {
+        super(p);
+    }
+
+    @Override
+    public void enable() {
+        this.ess = (Essentials)Bukkit.getPluginManager().getPlugin("Essentials");
+        this.registerListener(new ClearInventoryListener(this));
+        this.registerCommand(new CommandToggleClearInventoryConfirm(this));
+        this.clearInventoryToggles = JSONUtils.getOrCreateFile((File)this.getBukkitPlugin().getDataFolder(), (String)"ci_toggles.yml");
+        this.config = YamlConfiguration.loadConfiguration((File)this.clearInventoryToggles);
+        List toggled = this.config.getStringList("ci_toggled");
+        if (toggled != null) {
+            for (String toggle : toggled) {
+                this.clearInventoryToggled.add(UUID.fromString(toggle));
+            }
+        }
+    }
+
+    @Override
+    public void disable() {
+        List toggled = this.clearInventoryToggled.stream().map(UUID::toString).collect(Collectors.toList());
+        this.config.set("ci_toggled", toggled);
+        try {
+            this.config.save(this.clearInventoryToggles);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Set<UUID> getClearInventoryToggled() {
+        return this.clearInventoryToggled;
+    }
+}
+

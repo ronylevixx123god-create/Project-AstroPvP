@@ -21,7 +21,7 @@ public enum EntityAttribute {
         try {
             this.nmsEnumObject = ReflectionUtils.getField(ReflectionUtils.getGenericAttributesClass(), this.genericAttributeField).get(null);
         }
-        catch (IllegalAccessException e) {
+        catch (IllegalAccessException | NoSuchFieldException e) {
             Bukkit.getLogger().info("Unable to get NMS version of getGenericAttributes! Outdated version perhaps?");
             e.printStackTrace();
         }
