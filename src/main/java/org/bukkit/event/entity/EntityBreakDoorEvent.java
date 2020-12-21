@@ -1,0 +1,22 @@
+/*
+ * Decompiled with CFR 0.150.
+ */
+package org.bukkit.event.entity;
+
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.event.entity.EntityChangeBlockEvent;
+
+public class EntityBreakDoorEvent
+extends EntityChangeBlockEvent {
+    public EntityBreakDoorEvent(LivingEntity entity, Block targetBlock) {
+        super(entity, targetBlock, Material.AIR, (byte)0);
+    }
+
+    @Override
+    public LivingEntity getEntity() {
+        return (LivingEntity)this.entity;
+    }
+}
+

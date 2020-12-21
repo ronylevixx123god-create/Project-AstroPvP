@@ -1,0 +1,108 @@
+/*
+ * Decompiled with CFR 0.150.
+ */
+package com.google.common.collect;
+
+import com.google.common.annotations.GwtCompatible;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Iterators;
+import com.google.common.collect.ObjectArrays;
+import com.google.common.collect.UnmodifiableIterator;
+import java.util.Set;
+import javax.annotation.Nullable;
+
+/*
+ * This class specifies class file version 49.0 but uses Java 6 signatures.  Assumed Java 6.
+ */
+@GwtCompatible(serializable=true, emulated=true)
+final class SingletonImmutableSet<E>
+extends ImmutableSet<E> {
+    final transient E element;
+    private transient Integer cachedHashCode;
+
+    SingletonImmutableSet(E element) {
+        this.element = Preconditions.checkNotNull(element);
+    }
+
+    SingletonImmutableSet(E element, int hashCode) {
+        this.element = element;
+        this.cachedHashCode = hashCode;
+    }
+
+    @Override
+    public int size() {
+        return 1;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
+    @Override
+    public boolean contains(Object target) {
+        return this.element.equals(target);
+    }
+
+    @Override
+    public UnmodifiableIterator<E> iterator() {
+        return Iterators.singletonIterator(this.element);
+    }
+
+    @Override
+    boolean isPartialView() {
+        return false;
+    }
+
+    @Override
+    public Object[] toArray() {
+        return new Object[]{this.element};
+    }
+
+    @Override
+    public <T> T[] toArray(T[] array) {
+        if (array.length == 0) {
+            array = ObjectArrays.newArray(array, 1);
+        } else if (array.length > 1) {
+            array[1] = null;
+        }
+        T[] objectArray = array;
+        objectArray[0] = this.element;
+        return array;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object object) {
+        if (object == this) {
+            return true;
+        }
+        if (object instanceof Set) {
+            Set that = (Set)object;
+            return that.size() == 1 && this.element.equals(that.iterator().next());
+        }
+        return false;
+    }
+
+    @Override
+    public final int hashCode() {
+        Integer code = this.cachedHashCode;
+        if (code == null) {
+            this.cachedHashCode = this.element.hashCode();
+            return this.cachedHashCode;
+        }
+        return code;
+    }
+
+    @Override
+    boolean isHashCodeFast() {
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        String elementToString = this.element.toString();
+        return new StringBuilder(elementToString.length() + 2).append('[').append(elementToString).append(']').toString();
+    }
+}
+

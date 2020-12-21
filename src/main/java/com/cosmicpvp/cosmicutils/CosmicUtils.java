@@ -1,0 +1,245 @@
+package com.cosmicpvp.cosmicutils;
+
+import com.cosmicpvp.cosmicutils.commands.CommandCosmicDebug;
+import com.cosmicpvp.cosmicutils.gui.CosmicGUI;
+import com.cosmicpvp.cosmicutils.gui.listeners.GUIListener;
+import com.cosmicpvp.cosmicutils.gui.listeners.PlayerListener;
+import com.cosmicpvp.cosmicutils.gui.listeners.TitleItemListener;
+import com.cosmicpvp.cosmicutils.utils.CompilexUUIDFetcher;
+import com.cosmicpvp.cosmicutils.utils.CompilexUUIDFetcherListener;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
+import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
+import com.cosmicpvp.cosmicutils.utils.databases.SeenDatabase;
+import com.google.common.collect.MapMaker;
+import java.io.File;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
+
+public final class CosmicUtils
+extends JavaPlugin {
+    private static CosmicUtils instance;
+    private Map<String, Player> asyncPlayerMap = new MapMaker().concurrencyLevel(32).weakValues().makeMap();
+    private Map<UUID, Player> asyncPlayerMapUUID = new MapMaker().concurrencyLevel(32).weakValues().makeMap();
+    private Map<String, Location> playerLocations = new ConcurrentHashMap<String, Location>();
+    private boolean arkkitEnabled = false;
+    private boolean vanishNoPacketEnabled = false;
+    private boolean cosmicCrateEnabled = false;
+    private boolean evolutionKitEnabled = false;
+    private boolean hcfCrateEnabled = false;
+    private boolean conquestsEnabled = false;
+    private boolean enchantmentsEnabled = false;
+    private boolean dungeonsEnabled = false;
+    private boolean masksEnabled = false;
+    private boolean globalKitsEnabled;
+    private boolean rankQuestsEnabled;
+    private boolean outpostsEnabled = false;
+    private boolean armorsetEnabled = false;
+    private boolean lootboxesEnabled;
+    private String serverName;
+    private Connect connect;
+    private boolean vanillaGalaxy;
+    private boolean cosmicGalaxy;
+    private boolean hcfGalaxy;
+    private boolean seasonalGalaxy;
+    private SeenDatabase seenDatabase;
+    private CompilexUUIDFetcherListener compilexUUIDFetcherListener;
+
+    @Override
+    public void onEnable() {
+        instance = this;
+        this.registerCommands();
+        this.registerListeners();
+        WorldGuardUtils.hook();
+        FactionUtils.init();
+        this.seenDatabase = new SeenDatabase(this);
+        CompilexUUIDFetcher.generatePlayerUUIDCache();
+        if (this.doesPluginExist("CosmicHCF")) {
+            this.hcfGalaxy = true;
+        }
+        if (this.doesPluginExist("CosmicSpaceChests-Vanilla") || this.doesPluginExist("CosmicDropPackages_Vanilla")) {
+            this.vanillaGalaxy = true;
+        }
+        if (this.doesPluginExist("CosmicSpaceChests")) {
+            this.cosmicGalaxy = true;
+        }
+        if (new File("seasonal_galaxy").exists()) {
+            this.seasonalGalaxy = true;
+        }
+        if (this.doesPluginExist("CosmicGlobalKits")) {
+            this.globalKitsEnabled = true;
+        }
+        if (this.doesPluginExist("CosmicRankQuests")) {
+            this.rankQuestsEnabled = true;
+        }
+        for (Player player : PlayerUtil.getOnlinePlayers()) {
+            this.playerLocations.put(player.getName(), player.getLocation());
+            this.asyncPlayerMap.put(player.getName(), player);
+            this.asyncPlayerMapUUID.put(player.getUniqueId(), player);
+        }
+        Bukkit.getScheduler().runTaskTimer(this, () -> {
+            for (Player player : PlayerUtil.getOnlinePlayers()) {
+                this.playerLocations.put(player.getName(), player.getLocation());
+            }
+        }, 0L, 40L);
+        CosmicGUI.activeGUIs.entrySet();
+        this.arkkitEnabled = new File("plugins/Arkkit.jar").exists();
+        this.compilexUUIDFetcherListener = new CompilexUUIDFetcherListener();
+        if (new File("plugins/FactionUpgrades.jar").exists()) {
+            UpgradeUtils.factionUpgradesEnabled = true;
+        }
+        this.armorsetEnabled = new File("plugins/CosmicArmorSets.jar").exists();
+        this.outpostsEnabled = new File("plugins/CosmicOutposts.jar").exists();
+        this.evolutionKitEnabled = new File("plugins/CosmicEvolutionKit.jar").exists();
+        this.cosmicCrateEnabled = new File("plugins/CosmicCrate.jar").exists();
+        this.vanishNoPacketEnabled = new File("plugins/VanishNoPacket.jar").exists();
+        this.hcfCrateEnabled = new File("plugins/CosmicHCFCrate.jar").exists();
+        this.conquestsEnabled = new File("plugins/CosmicConquest.jar").exists();
+        this.enchantmentsEnabled = new File("plugins/Enchantments.jar").exists();
+        this.dungeonsEnabled = new File("plugins/CosmicDungeons.jar").exists();
+        this.masksEnabled = new File("plugins/CosmicMasks.jar").exists();
+        this.lootboxesEnabled = new File("plugins/CosmicMysteryChest.jar").exists();
+        this.initStaticClasses();
+    }
+
+    @Override
+    public void onDisable() {
+        instance = null;
+        CosmicGUI.activeGUIs.values().forEach(CosmicGUI::close);
+        FactionUtils.destroy();
+    }
+
+    private boolean doesPluginExist(String name) {
+        return new File("plugins/" + name + ".jar").exists();
+    }
+
+    private void registerCommands() {
+        this.getCommand("cosmicdebug").setExecutor(new CommandCosmicDebug());
+    }
+
+    private void registerListeners() {
+        this.getServer().getPluginManager().registerEvents(new GUIListener(), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
+        if (!new File("plugins/CosmicSpaceChests.jar").exists() && !new File("plugins/CosmicSpaceChests-Vanilla.jar").exists()) {
+            Bukkit.getLogger().info("Registering Title Listener..");
+            this.getServer().getPluginManager().registerEvents(new TitleItemListener(), this);
+        }
+    }
+
+    public static CosmicUtils get() {
+        return instance;
+    }
+
+    private void initStaticClasses() {
+        try {
+            Class.forName("com.cosmicpvp.cosmicutils.utils.ItemSerialization");
+        }
+        catch (ClassNotFoundException e) {
+            Bukkit.getLogger().info("Error attempting to load class ItemSerialization.");
+            e.printStackTrace();
+        }
+    }
+
+    public Map<String, Player> getAsyncPlayerMap() {
+        return this.asyncPlayerMap;
+    }
+
+    public Map<UUID, Player> getAsyncPlayerMapUUID() {
+        return this.asyncPlayerMapUUID;
+    }
+
+    public Map<String, Location> getPlayerLocations() {
+        return this.playerLocations;
+    }
+
+    public boolean isArkkitEnabled() {
+        return this.arkkitEnabled;
+    }
+
+    public boolean isVanishNoPacketEnabled() {
+        return this.vanishNoPacketEnabled;
+    }
+
+    public boolean isCosmicCrateEnabled() {
+        return this.cosmicCrateEnabled;
+    }
+
+    public boolean isEvolutionKitEnabled() {
+        return this.evolutionKitEnabled;
+    }
+
+    public boolean isHcfCrateEnabled() {
+        return this.hcfCrateEnabled;
+    }
+
+    public boolean isConquestsEnabled() {
+        return this.conquestsEnabled;
+    }
+
+    public boolean isEnchantmentsEnabled() {
+        return this.enchantmentsEnabled;
+    }
+
+    public boolean isDungeonsEnabled() {
+        return this.dungeonsEnabled;
+    }
+
+    public boolean isMasksEnabled() {
+        return this.masksEnabled;
+    }
+
+    public boolean isGlobalKitsEnabled() {
+        return this.globalKitsEnabled;
+    }
+
+    public boolean isRankQuestsEnabled() {
+        return this.rankQuestsEnabled;
+    }
+
+    public boolean isOutpostsEnabled() {
+        return this.outpostsEnabled;
+    }
+
+    public boolean isArmorsetEnabled() {
+        return this.armorsetEnabled;
+    }
+
+    public boolean isLootboxesEnabled() {
+        return this.lootboxesEnabled;
+    }
+
+    public String getServerName() {
+        return this.serverName;
+    }
+
+    public boolean isVanillaGalaxy() {
+        return this.vanillaGalaxy;
+    }
+
+    public boolean isCosmicGalaxy() {
+        return this.cosmicGalaxy;
+    }
+
+    public boolean isHcfGalaxy() {
+        return this.hcfGalaxy;
+    }
+
+    public boolean isSeasonalGalaxy() {
+        return this.seasonalGalaxy;
+    }
+
+    public SeenDatabase getSeenDatabase() {
+        return this.seenDatabase;
+    }
+
+    public CompilexUUIDFetcherListener getCompilexUUIDFetcherListener() {
+        return this.compilexUUIDFetcherListener;
+    }
+}
+

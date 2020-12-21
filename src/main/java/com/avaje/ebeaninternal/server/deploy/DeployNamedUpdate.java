@@ -1,0 +1,37 @@
+/*
+ * Decompiled with CFR 0.150.
+ */
+package com.avaje.ebeaninternal.server.deploy;
+
+import com.avaje.ebean.annotation.NamedUpdate;
+import com.avaje.ebeaninternal.server.deploy.DeployUpdateParser;
+
+public class DeployNamedUpdate {
+    private final String name;
+    private final String updateStatement;
+    private final boolean notifyCache;
+    private String sqlUpdateStatement;
+
+    public DeployNamedUpdate(NamedUpdate update) {
+        this.name = update.name();
+        this.updateStatement = update.update();
+        this.notifyCache = update.notifyCache();
+    }
+
+    public void initialise(DeployUpdateParser parser) {
+        this.sqlUpdateStatement = parser.parse(this.updateStatement);
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getSqlUpdateStatement() {
+        return this.sqlUpdateStatement;
+    }
+
+    public boolean isNotifyCache() {
+        return this.notifyCache;
+    }
+}
+

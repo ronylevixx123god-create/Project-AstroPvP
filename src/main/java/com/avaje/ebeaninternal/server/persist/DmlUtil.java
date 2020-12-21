@@ -1,0 +1,25 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  scala.Option
+ */
+package com.avaje.ebeaninternal.server.persist;
+
+import com.avaje.ebeaninternal.server.deploy.parse.DetectScala;
+import scala.Option;
+
+public class DmlUtil {
+    private static final boolean hasScalaSupport = DetectScala.hasScalaSupport();
+
+    public static boolean isNullOrZero(Object value) {
+        if (value == null) {
+            return true;
+        }
+        if (value instanceof Number) {
+            return ((Number)value).longValue() == 0L;
+        }
+        return hasScalaSupport && value instanceof Option && ((Option)value).isEmpty();
+    }
+}
+

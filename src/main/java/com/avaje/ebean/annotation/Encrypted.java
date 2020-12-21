@@ -1,0 +1,18 @@
+/*
+ * Decompiled with CFR 0.150.
+ */
+package com.avaje.ebean.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target(value={ElementType.FIELD, ElementType.METHOD})
+@Retention(value=RetentionPolicy.RUNTIME)
+public @interface Encrypted {
+    public boolean dbEncryption() default true;
+
+    public int dbLength() default 0;
+}
+
