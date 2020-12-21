@@ -1,14 +1,8 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.server.v1_7_R4.AttributeInstance
- */
 package com.cosmicpvp.cosmicutils.nms;
 
 import com.cosmicpvp.cosmicutils.nms.EntityAttribute;
 import com.cosmicpvp.cosmicutils.utils.ReflectionUtils;
-import net.minecraft.server.v1_7_R4.AttributeInstance;
+import net.minecraft.server.v1_8_R3.AttributeInstance;
 import org.bukkit.entity.Entity;
 
 public class EntityUtils {

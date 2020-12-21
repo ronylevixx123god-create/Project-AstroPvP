@@ -23,13 +23,10 @@ import java.io.DataOutputStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.server.v1_7_R4.NBTBase;
-import net.minecraft.server.v1_7_R4.NBTCompressedStreamTools;
-import net.minecraft.server.v1_7_R4.NBTReadLimiter;
-import net.minecraft.server.v1_7_R4.NBTTagCompound;
-import net.minecraft.server.v1_7_R4.NBTTagList;
-import org.bukkit.craftbukkit.v1_7_R4.inventory.CraftInventoryCustom;
-import org.bukkit.craftbukkit.v1_7_R4.inventory.CraftItemStack;
+
+import net.minecraft.server.v1_8_R3.*;
+import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftInventoryCustom;
+import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -64,15 +61,15 @@ public class ItemSerialization {
         for (ItemStack is : items) {
             NBTTagCompound outputObject = new NBTTagCompound();
             CraftItemStack craft = ItemSerialization.getCraftVersion(is);
-            net.minecraft.server.v1_7_R4.ItemStack nmsCopy = CraftItemStack.asNMSCopy((ItemStack)craft);
+            net.minecraft.server.v1_8_R3.ItemStack nmsCopy = CraftItemStack.asNMSCopy((ItemStack)craft);
             if (nmsCopy != null) {
                 nmsCopy.save(outputObject);
             }
-            itemList.add((NBTBase)outputObject);
+            itemList.add(outputObject);
         }
         root.setInt(NBT_VERSION, 1);
-        root.set(NBT_ITEMS, (NBTBase)itemList);
-        ItemSerialization.writeNbt((NBTBase)root, dataOutput);
+        root.set(NBT_ITEMS, itemList);
+        ItemSerialization.writeNbt(root, dataOutput);
         return Base64Coder.encodeLines(outputStream.toByteArray());
     }
 
@@ -87,7 +84,7 @@ public class ItemSerialization {
         for (int i = 0; i < itemList.size(); ++i) {
             NBTTagCompound inputObject = itemList.get(i);
             if (inputObject.isEmpty()) continue;
-            items.add((ItemStack)CraftItemStack.asCraftMirror((net.minecraft.server.v1_7_R4.ItemStack)net.minecraft.server.v1_7_R4.ItemStack.createStack((NBTTagCompound)inputObject)));
+            items.add(CraftItemStack.asCraftMirror(net.minecraft.server.v1_8_R3.ItemStack.createStack(inputObject)));
         }
         return items;
     }
@@ -104,7 +101,7 @@ public class ItemSerialization {
         for (int i = 0; i < size; ++i) {
             NBTTagCompound outputObject = new NBTTagCompound();
             CraftItemStack craft = ItemSerialization.getCraftVersion(items[i]);
-            net.minecraft.server.v1_7_R4.ItemStack nmsCopy = CraftItemStack.asNMSCopy((ItemStack)craft);
+            net.minecraft.server.v1_8_R3.ItemStack nmsCopy = CraftItemStack.asNMSCopy((ItemStack)craft);
             if (nmsCopy != null) {
                 nmsCopy.save(outputObject);
             }
@@ -131,7 +128,7 @@ public class ItemSerialization {
         }
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         DataOutputStream dataOutput = new DataOutputStream(outputStream);
-        net.minecraft.server.v1_7_R4.ItemStack nmsCopy = CraftItemStack.asNMSCopy((ItemStack)item);
+        net.minecraft.server.v1_8_R3.ItemStack nmsCopy = CraftItemStack.asNMSCopy((ItemStack)item);
         NBTTagCompound root = new NBTTagCompound();
         nmsCopy.save(root);
         ItemSerialization.writeNbt((NBTBase)root, dataOutput);
@@ -144,7 +141,7 @@ public class ItemSerialization {
         if (root.isEmpty()) {
             return null;
         }
-        return CraftItemStack.asCraftMirror((net.minecraft.server.v1_7_R4.ItemStack)net.minecraft.server.v1_7_R4.ItemStack.createStack((NBTTagCompound)root));
+        return CraftItemStack.asCraftMirror((net.minecraft.server.v1_8_R3.ItemStack)net.minecraft.server.v1_8_R3.ItemStack.createStack((NBTTagCompound)root));
     }
 
     public static Inventory parseInventoryFromByteArray(byte[] array, String inventoryName) {
@@ -175,7 +172,7 @@ public class ItemSerialization {
         for (int i = 0; i < size; ++i) {
             NBTTagCompound outputObject = new NBTTagCompound();
             CraftItemStack craft = ItemSerialization.getCraftVersion(inventory.getItem(i));
-            net.minecraft.server.v1_7_R4.ItemStack nmsCopy = CraftItemStack.asNMSCopy((ItemStack)craft);
+            net.minecraft.server.v1_8_R3.ItemStack nmsCopy = CraftItemStack.asNMSCopy((ItemStack)craft);
             if (nmsCopy != null) {
                 nmsCopy.save(outputObject);
             }
@@ -204,7 +201,7 @@ public class ItemSerialization {
         for (int i = 0; i < itemList.size(); ++i) {
             NBTTagCompound inputObject = itemList.get(i);
             if (i >= size || inputObject.isEmpty()) continue;
-            inventory.setItem(i, (ItemStack)CraftItemStack.asCraftMirror((net.minecraft.server.v1_7_R4.ItemStack)net.minecraft.server.v1_7_R4.ItemStack.createStack((NBTTagCompound)inputObject)));
+            inventory.setItem(i, (ItemStack)CraftItemStack.asCraftMirror((net.minecraft.server.v1_8_R3.ItemStack)net.minecraft.server.v1_8_R3.ItemStack.createStack((NBTTagCompound)inputObject)));
         }
         return inventory;
     }

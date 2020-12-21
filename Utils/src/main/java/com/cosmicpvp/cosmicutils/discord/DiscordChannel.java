@@ -1,9 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.google.gson.JsonObject
- */
 package com.cosmicpvp.cosmicutils.discord;
 
 import com.google.gson.JsonObject;

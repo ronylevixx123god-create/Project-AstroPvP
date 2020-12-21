@@ -15,7 +15,7 @@ import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.Relation;
-import net.minecraft.server.v1_7_R4.MinecraftServer;
+import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -45,7 +45,7 @@ public class GeneralUtil {
     public static Material[] weapons_and_tools = new Material[]{Material.WOOD_SWORD, Material.STONE_SWORD, Material.IRON_SWORD, Material.GOLD_SWORD, Material.DIAMOND_SWORD, Material.WOOD_AXE, Material.STONE_AXE, Material.IRON_AXE, Material.GOLD_AXE, Material.DIAMOND_AXE, Material.BOW, Material.WOOD_PICKAXE, Material.STONE_PICKAXE, Material.IRON_PICKAXE, Material.GOLD_PICKAXE, Material.DIAMOND_PICKAXE, Material.WOOD_HOE, Material.STONE_HOE, Material.IRON_HOE, Material.GOLD_HOE, Material.DIAMOND_HOE, Material.WOOD_SPADE, Material.STONE_SPADE, Material.IRON_SPADE, Material.GOLD_SPADE, Material.DIAMOND_SPADE, Material.WOOD_AXE, Material.STONE_AXE, Material.IRON_AXE, Material.GOLD_AXE, Material.DIAMOND_AXE};
 
     public static ItemStack getPlayerHead(String p_name) {
-        ItemStack is = new ItemStack(Material.SKULL_ITEM, 1, 3);
+        ItemStack is = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
         SkullMeta sm = (SkullMeta)is.getItemMeta();
         sm.setOwner(p_name);
         sm.setDisplayName((Object)((Object)ChatColor.WHITE) + "Skull of " + p_name);
@@ -165,7 +165,7 @@ public class GeneralUtil {
     }
 
     public static void pushAwayEntity(LivingEntity center, Entity entity, double speed) {
-        entity.setMetadata("pushAwayEntityEvent", new FixedMetadataValue((Plugin)Enchantments.getInstance(), MinecraftServer.currentTick));
+        entity.setMetadata("pushAwayEntityEvent", new FixedMetadataValue(Enchantments.getInstance(), MinecraftServer.currentTick));
         Vector unitVector = entity.getLocation().toVector().subtract(center.getLocation().toVector()).normalize();
         entity.setVelocity(unitVector.multiply(speed));
     }

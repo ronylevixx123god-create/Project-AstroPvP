@@ -1,9 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  me.cosmicpvp.CosmicGlobalKits.libs.MasteryKits
- */
 package com.cosmicpvp.cosmicutils.itembuilder;
 
 import com.cosmicpvp.cosmicutils.CosmicUtils;
@@ -11,6 +5,7 @@ import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.struct.EquipmentType;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+
 import me.cosmicpvp.CosmicGlobalKits.libs.MasteryKits;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -46,7 +41,7 @@ extends ItemBuilder {
         if (type == null) {
             type = EquipmentType.getRandomArmor();
         }
-        MasteryKits masteryKits = kits = this.random ? MasteryKits.values()[ThreadLocalRandom.current().nextInt(MasteryKits.values().length)] : MasteryKits.getFromName((String)this.armorsetName);
+        MasteryKits masteryKits = kits = this.random ? MasteryKits.values()[ThreadLocalRandom.current().nextInt(MasteryKits.values().length)] : MasteryKits.getFromName(this.armorsetName);
         if (kits != null) {
             List gear = MasteryKits.DEATH_KNIGHT.getKit().getMasteryItems(null, kits, false);
             if (type == EquipmentType.HELMET) {

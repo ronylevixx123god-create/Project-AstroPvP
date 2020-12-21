@@ -6,7 +6,7 @@
  */
 package com.cosmicpvp.cosmicutils.utils;
 
-import net.minecraft.server.v1_7_R4.PacketPlayOutWorldEvent;
+import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
 import org.bukkit.Location;
 
 final class QueuedWorldEventPacket {

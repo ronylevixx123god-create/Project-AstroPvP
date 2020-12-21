@@ -43,7 +43,6 @@ extends JavaPlugin {
     private boolean armorsetEnabled = false;
     private boolean lootboxesEnabled;
     private String serverName;
-    private Connect connect;
     private boolean vanillaGalaxy;
     private boolean cosmicGalaxy;
     private boolean hcfGalaxy;

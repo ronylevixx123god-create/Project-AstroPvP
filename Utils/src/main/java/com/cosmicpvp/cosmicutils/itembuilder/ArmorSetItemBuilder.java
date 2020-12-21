@@ -1,10 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.compilex.CosmicArmorSets.enums.ArmorSet
- *  com.compilex.CosmicArmorSets.enums.WeaponedArmorSet
- */
 package com.cosmicpvp.cosmicutils.itembuilder;
 
 import com.compilex.CosmicArmorSets.enums.ArmorSet;

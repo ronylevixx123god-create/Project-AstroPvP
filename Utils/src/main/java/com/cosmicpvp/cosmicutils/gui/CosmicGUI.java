@@ -37,7 +37,7 @@ public abstract class CosmicGUI {
     }
 
     public CosmicGUI(Player player, String title, int size, InventoryType type) {
-        this.inventory = type == InventoryType.CHEST ? Bukkit.createInventory(null, size, title) : Bukkit.createInventory(null, (InventoryType)type, (String)title);
+        this.inventory = type == InventoryType.CHEST ? Bukkit.createInventory(null, size, title) : Bukkit.createInventory(null, type);
         this.player = player;
         this.size = size;
         this.title = title;

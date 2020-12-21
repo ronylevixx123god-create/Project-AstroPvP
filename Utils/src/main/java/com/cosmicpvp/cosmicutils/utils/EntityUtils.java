@@ -14,12 +14,14 @@ package com.cosmicpvp.cosmicutils.utils;
 import com.cosmicpvp.cosmicutils.utils.ReflectionUtils;
 import java.io.File;
 import java.lang.reflect.Field;
+
+import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.cosmicbosses.utils.BossUtils;
-import net.minecraft.server.v1_7_R4.Entity;
-import net.minecraft.server.v1_7_R4.EntityGhast;
-import net.minecraft.server.v1_7_R4.EntityLiving;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftGhast;
+import net.minecraft.server.v1_8_R3.Entity;
+import net.minecraft.server.v1_8_R3.EntityGhast;
+import net.minecraft.server.v1_8_R3.EntityLiving;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftGhast;
 import org.bukkit.entity.Ghast;
 
 public class EntityUtils {
@@ -41,7 +43,7 @@ public class EntityUtils {
                 e.printStackTrace();
             }
         }
-        return bossesEnabled && !BossUtils.getAllBossesFromType(endDragonClass).isEmpty();
+        return bossesEnabled && !BossUtils.getAllBossesFromType((Class<? extends Boss>) endDragonClass).isEmpty();
     }
 
     public static Field getGhastTarget() {
@@ -70,7 +72,7 @@ public class EntityUtils {
             Ghast ghast = (Ghast)entity;
             EntityGhast entGhast = ((CraftGhast)ghast).getHandle();
             try {
-                Entity internal = (Entity)EntityUtils.getGhastTarget().get((Object)entGhast);
+                Entity internal = (Entity)EntityUtils.getGhastTarget().get(entGhast);
                 return internal.getBukkitEntity();
             }
             catch (IllegalAccessException e) {

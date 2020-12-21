@@ -1,11 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.coreprotect.CoreProtect
- *  net.coreprotect.CoreProtectAPI
- *  net.coreprotect.consumer.Queue
- */
 package com.cosmicpvp.cosmicutils.utils;
 
 import com.cosmicpvp.cosmicutils.utils.ReflectionUtils;

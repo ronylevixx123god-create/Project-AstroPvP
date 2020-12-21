@@ -1,36 +1,20 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.server.v1_7_R4.ChatSerializer
- *  net.minecraft.server.v1_7_R4.ItemStack
- *  net.minecraft.server.v1_7_R4.Packet
- *  net.minecraft.server.v1_7_R4.PacketPlayOutChat
- *  net.minecraft.util.com.google.gson.JsonArray
- *  net.minecraft.util.com.google.gson.JsonElement
- *  net.minecraft.util.com.google.gson.JsonObject
- *  net.minecraft.util.com.google.gson.JsonParser
- *  net.minecraft.util.org.apache.commons.lang3.StringUtils
- *  org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer
- *  org.bukkit.craftbukkit.v1_7_R4.inventory.CraftItemStack
- */
 package com.cosmicpvp.cosmicutils.utils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import net.minecraft.server.v1_7_R4.ChatSerializer;
-import net.minecraft.server.v1_7_R4.Packet;
-import net.minecraft.server.v1_7_R4.PacketPlayOutChat;
-import net.minecraft.util.com.google.gson.JsonArray;
-import net.minecraft.util.com.google.gson.JsonElement;
-import net.minecraft.util.com.google.gson.JsonObject;
-import net.minecraft.util.com.google.gson.JsonParser;
-import net.minecraft.util.org.apache.commons.lang3.StringUtils;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import net.minecraft.server.v1_8_R3.IChatBaseComponent;
+import net.minecraft.server.v1_8_R3.Packet;
+import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_7_R4.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -151,7 +135,7 @@ public class JSONMessage {
     }
 
     public void addItem(ItemStack item, String text, ChatColor color) {
-        net.minecraft.server.v1_7_R4.ItemStack nmsItem;
+        net.minecraft.server.v1_8_R3.ItemStack nmsItem;
         if (item == null || item.getType() == Material.AIR) {
             return;
         }
@@ -216,7 +200,7 @@ public class JSONMessage {
     public List<String> getEnchantsAsList(Map<Enchantment, Integer> map) {
         ArrayList<String> lore = new ArrayList<String>();
         for (Map.Entry<Enchantment, Integer> entry : map.entrySet()) {
-            lore.add((Object)((Object)ChatColor.GRAY) + StringUtils.capitalize((String)JSONMessage.getDisplayEnchantName(entry.getKey().getName())) + " " + JSONMessage.getNumber(entry.getValue()));
+            lore.add(ChatColor.GRAY + org.apache.commons.lang3.StringUtils.capitalize(JSONMessage.getDisplayEnchantName(entry.getKey().getName())) + " " + JSONMessage.getNumber(entry.getValue()));
         }
         return lore;
     }
@@ -360,7 +344,7 @@ public class JSONMessage {
     }
 
     public void sendToPlayer(Player p) {
-        ((CraftPlayer)p).getHandle().playerConnection.sendPacket((Packet)new PacketPlayOutChat(ChatSerializer.a((String)this.json.toString()), true));
+        ((CraftPlayer)p).getHandle().playerConnection.sendPacket(new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a(this.json.toString()), true));
     }
 
     public void setColor(ChatColor color) {

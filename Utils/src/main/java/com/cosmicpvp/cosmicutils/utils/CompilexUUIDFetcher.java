@@ -169,7 +169,7 @@ implements Callable<Map<String, UUID>> {
             fast_reverseCachedUUID.put(uuid, name);
             return name;
         }
-        Player op = Bukkit.getPlayer((UUID)uuid);
+        Player op = Bukkit.getPlayer(uuid);
         if (op != null && (op.getLastPlayed() != 0L || op.isOnline())) {
             String offlinePlayer_name = op.getName().toLowerCase();
             reverseCachedUUID.put(uuid, offlinePlayer_name);

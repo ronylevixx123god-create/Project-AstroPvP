@@ -1,14 +1,6 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest
- *  me.ifamasssxd.cosmicmysterychest.struct.MysteryChest
- */
 package com.cosmicpvp.cosmicutils.itembuilder;
 
 import com.cosmicpvp.cosmicutils.CosmicUtils;
-import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
 import org.bukkit.Material;
@@ -28,7 +20,7 @@ extends ItemBuilder {
         if (this.lootboxInternal == null || !CosmicUtils.get().isLootboxesEnabled()) {
             return null;
         }
-        MysteryChest chest = (MysteryChest)CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get(this.lootboxInternal);
+        MysteryChest chest = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get(this.lootboxInternal);
         if (chest == null) {
             return null;
         }

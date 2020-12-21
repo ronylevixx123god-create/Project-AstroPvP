@@ -1,6 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- */
 package com.cosmicpvp.cosmicutils.itembuilder;
 
 import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;

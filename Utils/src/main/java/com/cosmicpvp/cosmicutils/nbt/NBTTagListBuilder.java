@@ -1,22 +1,7 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.server.v1_7_R4.NBTBase
- *  net.minecraft.server.v1_7_R4.NBTTagDouble
- *  net.minecraft.server.v1_7_R4.NBTTagFloat
- *  net.minecraft.server.v1_7_R4.NBTTagInt
- *  net.minecraft.server.v1_7_R4.NBTTagList
- *  net.minecraft.server.v1_7_R4.NBTTagString
- */
 package com.cosmicpvp.cosmicutils.nbt;
 
-import net.minecraft.server.v1_7_R4.NBTBase;
-import net.minecraft.server.v1_7_R4.NBTTagDouble;
-import net.minecraft.server.v1_7_R4.NBTTagFloat;
-import net.minecraft.server.v1_7_R4.NBTTagInt;
-import net.minecraft.server.v1_7_R4.NBTTagList;
-import net.minecraft.server.v1_7_R4.NBTTagString;
+
+import net.minecraft.server.v1_8_R3.*;
 
 public class NBTTagListBuilder {
     private NBTTagList tagList;
@@ -60,7 +45,7 @@ public class NBTTagListBuilder {
         if (this.tagList == null) {
             return null;
         }
-        return Float.valueOf(((NBTTagFloat)this.get(index)).h());
+        return ((NBTTagFloat) this.get(index)).h();
     }
 
     public String getStringAt(int index) {

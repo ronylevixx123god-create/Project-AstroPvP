@@ -67,7 +67,7 @@ public class CosmicItemBuilder {
 
     public CosmicItemBuilder addLoreLines(List<String> line) {
         ItemMeta im = this.item.getItemMeta();
-        List<Object> lore = im.getLore() == null ? Lists.newArrayList() : im.getLore();
+        List<String> lore = im.getLore() == null ? Lists.newArrayList() : im.getLore();
         lore.addAll(line);
         im.setLore(lore);
         this.item.setItemMeta(im);

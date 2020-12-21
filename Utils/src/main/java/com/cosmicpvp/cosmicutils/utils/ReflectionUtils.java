@@ -12,6 +12,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+
 import lombok.NonNull;
 import org.bukkit.Bukkit;
 
@@ -24,7 +25,7 @@ public class ReflectionUtils {
     private static Class<?> iattributeInstanceClass;
     private static Class<?> attributeInstanceClass;
 
-    public static Field getField(Class<?> clazz, String field) {
+    public static Field getField(Class<?> clazz, String field) throws NoSuchFieldException {
         Field cached = cachedFields.get(clazz.getName() + ":" + field);
         if (cached != null) {
             return cached;
@@ -35,7 +36,7 @@ public class ReflectionUtils {
         return f;
     }
 
-    public static Method getMethod(Class<?> clazz, String field) {
+    public static Method getMethod(Class<?> clazz, String field) throws NoSuchMethodException {
         Method cached = cachedMethods.get(clazz.getName() + ":" + field);
         if (cached != null) {
             return cached;
@@ -66,7 +67,7 @@ public class ReflectionUtils {
         }
     }
 
-    public static Method getMethod(Class<?> clazz, String field, Class<?> ... paramaters) {
+    public static Method getMethod(Class<?> clazz, String field, Class<?> ... paramaters) throws NoSuchMethodException {
         Method cached = cachedMethods.get(clazz.getName() + ":" + field);
         if (cached != null) {
             return cached;
@@ -77,18 +78,18 @@ public class ReflectionUtils {
         return f;
     }
 
-    public static void setObject(Object object, String fieldName, Object value) {
+    public static void setObject(Object object, String fieldName, Object value) throws NoSuchFieldException, IllegalAccessException {
         Field field = ReflectionUtils.getField(object.getClass(), fieldName);
         ReflectionUtils.setObject(object, field, value);
     }
 
-    public static void setObject(Object object, Field field, Object value) {
+    public static void setObject(Object object, Field field, Object value) throws IllegalAccessException {
         if (field != null) {
             field.set(object, value);
         }
     }
 
-    public static Object getObject(Class<?> clazz, Object instance, String fieldName) {
+    public static Object getObject(Class<?> clazz, Object instance, String fieldName) throws NoSuchFieldException, IllegalAccessException {
         Field f = ReflectionUtils.getField(clazz, fieldName);
         return f.get(instance);
     }

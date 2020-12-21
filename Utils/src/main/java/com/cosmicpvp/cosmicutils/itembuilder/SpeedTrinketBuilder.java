@@ -1,9 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  org.arkhamnetwork.Arkkit.utils.ItemUtils
- */
 package com.cosmicpvp.cosmicutils.itembuilder;
 
 import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;

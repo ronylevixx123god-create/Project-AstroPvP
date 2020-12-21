@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  net.minecraft.server.v1_7_R4.NBTBase
  *  org.arkhamnetwork.Arkkit.utils.ItemUtils
@@ -11,6 +11,7 @@ import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import net.minecraft.server.v1_7_R4.NBTBase;
+import net.minecraft.server.v1_8_R3.NBTBase;
 import org.arkhamnetwork.Arkkit.utils.ItemUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

@@ -7,10 +7,11 @@
  */
 package com.cosmicpvp.cosmicutils.bytes;
 
+import io.netty.buffer.ByteBuf;
+import net.minecraft.server.v1_8_R3.PacketDataSerializer;
+
 import java.io.IOException;
 import java.util.UUID;
-import net.minecraft.server.v1_7_R4.PacketDataSerializer;
-import net.minecraft.util.io.netty.buffer.ByteBuf;
 
 public class ByteDataSerializer
 extends PacketDataSerializer {

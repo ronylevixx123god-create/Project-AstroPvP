@@ -13,13 +13,11 @@
 package com.cosmicpvp.cosmicutils.utils;
 
 import com.cosmicpvp.cosmicutils.utils.ReflectionUtils;
-import net.minecraft.server.v1_7_R4.ChatSerializer;
-import net.minecraft.server.v1_7_R4.IChatBaseComponent;
-import net.minecraft.server.v1_7_R4.Packet;
-import net.minecraft.server.v1_7_R4.PacketPlayOutChat;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
+import net.minecraft.server.v1_8_R3.IChatBaseComponent;
+import net.minecraft.server.v1_8_R3.Packet;
+import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
-import org.spigotmc.ProtocolInjector;
 
 public class TitleManager {
     private static Class<?> packetClass = ReflectionUtils.getNMSClass("Packet");
@@ -80,7 +78,7 @@ public class TitleManager {
         if (p.getHandle().playerConnection.networkManager.getVersion() != 47) {
             return;
         }
-        IChatBaseComponent cbc = ChatSerializer.a((String)("{\"text\": \"" + message + "\"}"));
+        IChatBaseComponent cbc = IChatBaseComponent.ChatSerializer.a((String)("{\"text\": \"" + message + "\"}"));
         PacketPlayOutChat ppoc = new PacketPlayOutChat(cbc, true);
         p.getHandle().playerConnection.sendPacket((Packet)ppoc);
     }

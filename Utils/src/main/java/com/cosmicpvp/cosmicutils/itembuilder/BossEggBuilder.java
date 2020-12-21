@@ -1,9 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  me.ifamasssxd.cosmicbosses.struct.enums.BossType
- */
 package com.cosmicpvp.cosmicutils.itembuilder;
 
 import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;

@@ -7,7 +7,6 @@
  */
 package com.cosmicpvp.cosmicutils.utils;
 
-import com.cosmicpvp.cosmicutils.utils.VanishUtils;
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
 import org.bukkit.Bukkit;

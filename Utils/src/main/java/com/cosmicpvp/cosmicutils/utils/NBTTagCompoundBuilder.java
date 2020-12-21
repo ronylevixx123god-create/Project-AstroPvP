@@ -7,8 +7,9 @@
  */
 package com.cosmicpvp.cosmicutils.utils;
 
-import net.minecraft.server.v1_7_R4.NBTBase;
-import net.minecraft.server.v1_7_R4.NBTTagCompound;
+
+import net.minecraft.server.v1_8_R3.NBTBase;
+import net.minecraft.server.v1_8_R3.NBTTagCompound;
 
 @Deprecated
 public class NBTTagCompoundBuilder {

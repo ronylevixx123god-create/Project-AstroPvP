@@ -14,15 +14,15 @@ package com.cosmicpvp.cosmicutils.utils;
 import com.cosmicpvp.cosmicutils.CosmicUtils;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagListBuilder;
-import net.minecraft.server.v1_7_R4.NBTBase;
-import net.minecraft.server.v1_7_R4.NBTTagCompound;
+import net.minecraft.server.v1_8_R3.NBTBase;
+import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
-import org.bukkit.craftbukkit.v1_7_R4.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 
 public class NBTWrapper {
-    private net.minecraft.server.v1_7_R4.ItemStack nmsItem;
+    private net.minecraft.server.v1_8_R3.ItemStack nmsItem;
     private NBTTagCompound compound;
     private ItemStack defaultItem;
     private Long foundIID;
@@ -128,7 +128,7 @@ public class NBTWrapper {
             return null;
         }
         this.nmsItem.setTag(this.compound);
-        return CraftItemStack.asCraftMirror((net.minecraft.server.v1_7_R4.ItemStack)this.nmsItem);
+        return CraftItemStack.asCraftMirror(this.nmsItem);
     }
 
     public String getString(String key) {

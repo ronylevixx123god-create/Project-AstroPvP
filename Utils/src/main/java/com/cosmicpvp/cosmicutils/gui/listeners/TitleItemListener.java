@@ -1,11 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  org.arkhamnetwork.Arkkit.patches.ItemID
- *  org.arkhamnetwork.Arkkit.plugins.ArkPlugins
- *  org.arkhamnetwork.permissions.ArkhamPermissions
- */
 package com.cosmicpvp.cosmicutils.gui.listeners;
 
 import com.cosmicpvp.cosmicutils.CosmicUtils;
@@ -44,12 +36,12 @@ implements Listener {
             e.setCancelled(true);
             e.setUseItemInHand(Event.Result.DENY);
             if (e.getItem().getAmount() > 1) {
-                p.sendMessage((Object)((Object)ChatColor.RED) + "You cannot redeem stacked title vouchers.");
+                p.sendMessage(ChatColor.RED + "You cannot redeem stacked title vouchers.");
                 return;
             }
             if (p.hasPermission(titlePerm)) {
-                p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)((Object)ChatColor.RED) + "You already have the " + title + " title unlocked!");
-                p.sendMessage((Object)((Object)ChatColor.GRAY) + "Use /title to equip it!");
+                p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You already have the " + title + " title unlocked!");
+                p.sendMessage(ChatColor.GRAY + "Use /title to equip it!");
                 return;
             }
             try {

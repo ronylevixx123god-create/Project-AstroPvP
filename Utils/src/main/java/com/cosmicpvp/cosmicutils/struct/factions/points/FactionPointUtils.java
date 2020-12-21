@@ -104,14 +104,14 @@ public class FactionPointUtils {
         if (!FactionPointUtils.isPointsEnabled()) {
             return 0L;
         }
-        return FactionsPointsAPI.giveFactionPoints((Faction)faction, (Player)player, (String)eventName, (Object)data);
+        return FactionsPointsAPI.giveFactionPoints(faction, player, eventName, data);
     }
 
     public static Long giveFactionPoints(Faction faction, Player player, String eventName, int points, Object data) {
         if (!FactionPointUtils.isPointsEnabled()) {
             return 0L;
         }
-        return FactionsPointsAPI.giveFactionPoints((Faction)faction, (Player)player, (String)eventName, (int)points, (Object)data);
+        return FactionsPointsAPI.giveFactionPoints(faction, player, eventName, points, data);
     }
 
     public static ItemStack getFactionPointsItem(Faction faction, Player player, String eventName, Object data) {
