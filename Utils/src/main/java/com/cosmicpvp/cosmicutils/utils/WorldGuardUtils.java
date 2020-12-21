@@ -74,26 +74,37 @@ public class WorldGuardUtils {
 
     public static void updateAllPlayerRegions() {
         CosmicUtils.get().getAsyncPlayerMap().values().forEach(player -> {
-            LinkedList sorted;
-            LinkedList retr;
-            List<ProtectedRegion> regionsList = cachedWorldRegions.get(player.getWorld().getName());
-            HashMap<String, Integer> regionsInside = null;
-            Location loc = player.getLocation();
-            if (regionsList != null) {
-                for (ProtectedRegion region : regionsList) {
-                    if (!region.contains(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ())) continue;
-                    if (regionsInside == null) {
-                        regionsInside = new HashMap<String, Integer>();
+                    List<ProtectedRegion> regionsList = cachedWorldRegions.get(player.getWorld().getName());
+                    HashMap<String, Integer> regionsInside = null;
+                    Location loc = player.getLocation();
+                    if (regionsList != null) {
+                        for (ProtectedRegion region : regionsList) {
+                            if (!region.contains(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ())) continue;
+                            if (regionsInside == null) {
+                                regionsInside = new HashMap<String, Integer>();
+                            }
+                            regionsInside.put(region.getId(), region.getPriority());
+                        }
                     }
-                    regionsInside.put(region.getId(), region.getPriority());
-                }
-            }
-            LinkedList linkedList = retr = regionsInside != null ? new LinkedList(regionsInside.entrySet()) : null;
-            if (retr != null) {
-                retr.sort(Comparator.comparing(Map.Entry::getValue));
-            }
+                    LinkedList<Map.Entry<String, Integer>> retr = (regionsInside != null) ? new LinkedList<>(regionsInside.entrySet()) : null;
 
-            LinkedList linkedList2 = sorted = retr != null ? new LinkedList() : null;
+                    if (retr != null) {
+                        retr.sort(Comparator.comparing(Map.Entry::getValue));
+                    }
+
+                    LinkedList<String> sorted = (retr != null) ? new LinkedList<>() : null;
+
+                    if (sorted != null) {
+                        retr.forEach(sorted.add());
+
+                        if (!sorted.isEmpty()) {
+                            lastKnownPlayerRegions.put(player.getUniqueId(), sorted);
+                            return;
+                        }
+                    }
+                    lastKnownPlayerRegions.remove(player.getUniqueId());
+                });
+           /* LinkedList linkedList2 = sorted = retr != null ? new LinkedList() : null;
             if (sorted != null) {
                 retr.forEach(ent -> sorted.add(ent.getKey()));
                 if (!sorted.isEmpty()) {
@@ -102,7 +113,7 @@ public class WorldGuardUtils {
                 }
             }
             lastKnownPlayerRegions.remove(player.getUniqueId());
-        });
+        }); */
     }
 
     public static List<ProtectedRegion> getRegionsStandingInside(Location location, List<ProtectedRegion> regions) {
