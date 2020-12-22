@@ -14,15 +14,16 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import java.util.ArrayList;
-import net.minecraft.server.v1_7_R4.DedicatedPlayerList;
-import net.minecraft.server.v1_7_R4.JsonListEntry;
-import net.minecraft.util.com.mojang.authlib.GameProfile;
+
+import com.mojang.authlib.GameProfile;
+import net.minecraft.server.v1_8_R3.DedicatedPlayerList;
+import net.minecraft.server.v1_8_R3.JsonListEntry;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.v1_7_R4.CraftServer;
+import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
 
 final class CommandWipeWhitelist
 extends AbstractCommand {
@@ -42,10 +43,10 @@ extends AbstractCommand {
         CraftServer CS = (CraftServer)Bukkit.getServer();
         DedicatedPlayerList DPL = CS.getHandle();
         int x = 0;
-        for (JsonListEntry entry : new ArrayList(DPL.getWhitelist().getValues())) {
+        for (JsonListEntry entry : DPL.getWhitelist().getValues()) {
             OfflinePlayer player = CS.getOfflinePlayer((GameProfile)entry.getKey());
             if (!player.isOp()) {
-                DPL.getWhitelist().getValues().remove((Object)entry);
+                DPL.getWhitelist().getValues().remove(entry);
                 sender.sendMessage("* Removed " + player.getName() + " (" + player.getUniqueId().toString() + ") from whitelist.");
                 ++x;
                 continue;

@@ -22,19 +22,7 @@ extends ArkPlugin {
 
     @Override
     public void enable() {
-        Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin)Arkkit.get(), new Runnable(){
-
-            @Override
-            public void run() {
-                Bukkit.getScheduler().runTask((Plugin)Arkkit.get(), new Runnable(){
-
-                    @Override
-                    public void run() {
-                        Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)"arkreboot");
-                    }
-                });
-            }
-        }, 864000L);
+        Bukkit.getScheduler().runTaskLaterAsynchronously(Arkkit.get(), () -> Bukkit.getScheduler().runTask(Arkkit.get(), () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "arkreboot")), 864000L);
     }
 
     @Override

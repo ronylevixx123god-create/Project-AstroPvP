@@ -15,7 +15,6 @@ import com.cosmicpvp.CosmicSpaceChests.libs.RankItems;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
-import org.arkhamnetwork.Arkkit.patches.AutoEntityClearLegacy;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;

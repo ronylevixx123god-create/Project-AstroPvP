@@ -16,7 +16,8 @@ import com.sk89q.worldedit.Vector;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import java.lang.reflect.Method;
 import java.util.List;
-import org.arkhamnetwork.ArkhamEnchantmentTokens.ArkhamEnchantmentTokens;
+
+import org.arkhamnetwork.Arkkit.Arkkit;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -67,8 +68,8 @@ final class NCF_WorldGuardUtils {
     }
 
     private static WorldGuardPlugin getWorldGuard() {
-        Plugin plugin = ArkhamEnchantmentTokens.getPlugin().getServer().getPluginManager().getPlugin("WorldGuard");
-        if (plugin == null || !(plugin instanceof WorldGuardPlugin)) {
+        Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("WorldGuard");
+        if (!(plugin instanceof WorldGuardPlugin)) {
             return null;
         }
         return (WorldGuardPlugin)plugin;

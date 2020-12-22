@@ -1,18 +1,16 @@
 package org.arkhamnetwork.Arkkit.patches.combatlog;
 
+import com.cosmicpvp.cosmicutils.utils.MaskUtils;
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
+import com.wimbli.WorldBorder.WorldBorder;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.arkhamnetwork.Arkkit.Arkkit;
+import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftLivingEntity;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -43,8 +41,8 @@ implements Listener {
                     if (leDamager.getType() == EntityType.MAGMA_CUBE || ((CraftLivingEntity)leDamager).getHandle().fromMobSpawner) {
                         return;
                     }
-                    if (leDamager instanceof Player && MaskUtils.hasMaskEquipped((Player)((Player)leDamager), (String)"JOKER")) {
-                        e.getEntity().setMetadata("affectedByJokerMask", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)(MinecraftServer.currentTick + 400)));
+                    if (leDamager instanceof Player && MaskUtils.hasMaskEquipped((Player)leDamager, "JOKER")) {
+                        e.getEntity().setMetadata("affectedByJokerMask", new FixedMetadataValue(Arkkit.get(), MinecraftServer.currentTick + 400));
                     }
                 }
                 this.disableFlight((Player)e.getEntity());
@@ -54,11 +52,11 @@ implements Listener {
                 Player pDamager = (Player)((EntityDamageByEntityEvent)e).getDamager();
                 if (e.getEntity() instanceof Player) {
                     Player pHurt = (Player)e.getEntity();
-                    pHurt.setMetadata("lastPlayerDamagerUUID", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)pDamager.getUniqueId()));
+                    pHurt.setMetadata("lastPlayerDamagerUUID", new FixedMetadataValue(Arkkit.get(), pDamager.getUniqueId()));
                     if (!pHurt.canSee(pDamager)) {
                         boolean allowedToOverride;
                         boolean hasFeignDeath = pDamager.hasMetadata("feign_vanish");
-                        boolean bl = allowedToOverride = hasFeignDeath && pDamager.hasMetadata("feign_hits") && pDamager.hasMetadata("feign_hits_max") && ((MetadataValue)pDamager.getMetadata("feign_hits").get(0)).asInt() < ((MetadataValue)pDamager.getMetadata("feign_hits_max").get(0)).asInt() || hasFeignDeath;
+                        boolean bl = allowedToOverride = hasFeignDeath && pDamager.hasMetadata("feign_hits") && pDamager.hasMetadata("feign_hits_max") && pDamager.getMetadata("feign_hits").get(0).asInt() < pDamager.getMetadata("feign_hits_max").get(0).asInt() || hasFeignDeath;
                         if (!allowedToOverride) {
                             User uDamager = ((Essentials)Bukkit.getPluginManager().getPlugin("Essentials")).getUser(pDamager);
                             User uHurt = ((Essentials)Bukkit.getPluginManager().getPlugin("Essentials")).getUser(pHurt);
@@ -135,8 +133,8 @@ implements Listener {
             if (e.getPlayer().isOp() || e.getPlayer().hasPermission("arkkit.combatlog.use_enderpearls")) {
                 return;
             }
-            if (e.getPlayer().hasMetadata("bypassCombatTeleport") && ((Location)((MetadataValue)e.getPlayer().getMetadata("bypassCombatTeleport").get(0)).value()).equals((Object)e.getTo())) {
-                e.getPlayer().removeMetadata("bypassCombatTeleport", (Plugin)Enchantments.getInstance());
+            if (e.getPlayer().hasMetadata("bypassCombatTeleport") && e.getPlayer().getMetadata("bypassCombatTeleport").get(0).value().equals((Object)e.getTo())) {
+                e.getPlayer().removeMetadata("bypassCombatTeleport", Enchantments.getInstance());
                 return;
             }
             if (!(!CombatLog.block_enderpearls && e.getCause() == PlayerTeleportEvent.TeleportCause.ENDER_PEARL || e.getCause() == PlayerTeleportEvent.TeleportCause.PLUGIN && CombatLog.duel_plugin)) {

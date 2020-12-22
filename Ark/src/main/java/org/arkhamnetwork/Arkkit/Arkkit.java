@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
+import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
 import org.apache.commons.io.FileUtils;
 import org.arkhamnetwork.Arkkit.commands.CommandArkConfig;
@@ -40,8 +41,11 @@ extends JavaPlugin {
     public boolean shutting_down = false;
     private ConcurrentHashMap<String, Player> asyncPlayerMap;
     private ConcurrentHashMap<String, Location> playerLocations;
+    @Getter
+    public Arkkit instance;
 
     public void onEnable() {
+        instance = this;
         this.shutting_down = false;
         me = this;
         this.loaded_patches = new HashMap();
@@ -213,20 +217,6 @@ extends JavaPlugin {
                         Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)"arkreload auto_entity_clear");
                     }
                 }, 20L);
-            }
-            catch (Exception err) {
-                err.printStackTrace();
-            }
-        }
-        if (new File("plugins/ArkhamTabTitle.jar").exists()) {
-            try {
-                if (Bukkit.getPluginManager().isPluginEnabled("ArkhamTabList")) {
-                    Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("ArkhamTabList"));
-                }
-                new File("plugins/ArkhamTabTitle.jar").delete();
-                FileUtils.deleteDirectory((File)new File("plugins/ArkhamTabList"));
-                this.getConfig().set("patches." + ArkPlugins.TAB_LIST.getConfigName(), (Object)true);
-                this.registerPatch(ArkPlugins.TAB_LIST.getArkPlugin());
             }
             catch (Exception err) {
                 err.printStackTrace();
@@ -490,19 +480,6 @@ extends JavaPlugin {
                 err.printStackTrace();
             }
         }
-        if (new File("plugins/ArkhamSyncAccount.jar").exists() && new File("plugins/Arkkit/XF_sqlconfig.yml").exists()) {
-            try {
-                if (Bukkit.getPluginManager().isPluginEnabled("ArkhamSyncAccount")) {
-                    Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("ArkhamSyncAccount"));
-                }
-                new File("plugins/ArkhamSyncAccount.jar").delete();
-                this.getConfig().set("patches." + ArkPlugins.XENFORO_SYNC_ACCOUNT.getConfigName(), (Object)true);
-                this.registerPatch(ArkPlugins.XENFORO_SYNC_ACCOUNT.getArkPlugin());
-            }
-            catch (Exception err) {
-                err.printStackTrace();
-            }
-        }
         if (new File("plugins/ArkhamTitleAPI.jar").exists()) {
             try {
                 this.getConfig().set("patches." + ArkPlugins.CREATE_TITLE.getConfigName(), (Object)true);
@@ -511,10 +488,6 @@ extends JavaPlugin {
             catch (Exception err) {
                 err.printStackTrace();
             }
-        }
-        if (new File("plugins/PlotMe.jar").exists()) {
-            this.getConfig().set("patches." + ArkPlugins.PLOTME_PATCHES.getConfigName(), (Object)true);
-            this.registerPatch(ArkPlugins.PLOTME_PATCHES.getArkPlugin());
         }
         if (new File("plugins/SimpleChat.jar").exists()) {
             try {
@@ -611,37 +584,6 @@ extends JavaPlugin {
             }
             this.getConfig().set("patches." + ArkPlugins.CUSTOM_MOTD.getConfigName(), (Object)true);
             this.registerPatch(ArkPlugins.CUSTOM_MOTD.getArkPlugin());
-        }
-        if (new File("plugins/ArkhamHubCommand.jar").exists() || new File("plugins/CosmicHubCommand.jar").exists() || new File("plugins/ExtronusHubCommand.jar").exists()) {
-            if (Bukkit.getPluginManager().isPluginEnabled("ArkhamHubCommand")) {
-                Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("ArkhamHubCommand"));
-            }
-            new File("plugins/ArkhamHubCommand.jar").delete();
-            new File("plugins/CosmicHubCommand.jar").delete();
-            new File("plugins/ExtronusHubCommand.jar").delete();
-            this.getConfig().set("patches." + ArkPlugins.HUB_COMMAND.getConfigName(), (Object)true);
-            this.registerPatch(ArkPlugins.HUB_COMMAND.getArkPlugin());
-        }
-        if (new File("plugins/LilyEssentials.jar").exists()) {
-            if (Bukkit.getPluginManager().isPluginEnabled("LilyEssentials")) {
-                Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("LilyEssentials"));
-            }
-            new File("plugins/LilyEssentials.jar").delete();
-            new File("plugins/LilyEssentials").delete();
-            this.getConfig().set("patches." + ArkPlugins.ALERT_SYSTEM.getConfigName(), (Object)true);
-            this.registerPatch(ArkPlugins.ALERT_SYSTEM.getArkPlugin());
-            this.getConfig().set("patches." + ArkPlugins.NETWORK_EVENTS.getConfigName(), (Object)true);
-            this.registerPatch(ArkPlugins.NETWORK_EVENTS.getArkPlugin());
-            Bukkit.getScheduler().runTaskLater(this, new Runnable(){
-
-                @Override
-                public void run() {
-                    Bukkit.getConsoleSender().sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "SERVER IS REBOOTING TO CLEAR LILY-ESSENTIALS CACHED LISTENERS!");
-                    Arkkit.get().saveConfig();
-                    Bukkit.shutdown();
-                }
-            }, 21L);
-            return;
         }
         if (new File("plugins/FactionAntiDupe-EXTRONUS.jar").exists()) {
             new File("plugins/FactionAntiDupe-EXTRONUS.jar").delete();

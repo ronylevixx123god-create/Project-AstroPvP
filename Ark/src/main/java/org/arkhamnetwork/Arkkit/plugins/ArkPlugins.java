@@ -27,7 +27,6 @@ import org.arkhamnetwork.Arkkit.patches.AntiTileEntityLag;
 import org.arkhamnetwork.Arkkit.patches.AsyncMonsters;
 import org.arkhamnetwork.Arkkit.patches.AsyncSpigot;
 import org.arkhamnetwork.Arkkit.patches.AutoCraftTNT;
-import org.arkhamnetwork.Arkkit.patches.AutoEntityClear;
 import org.arkhamnetwork.Arkkit.patches.AutoReboot;
 import org.arkhamnetwork.Arkkit.patches.AutoRespawn;
 import org.arkhamnetwork.Arkkit.patches.Balance;

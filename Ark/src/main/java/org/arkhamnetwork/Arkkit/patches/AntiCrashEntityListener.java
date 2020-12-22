@@ -32,7 +32,7 @@ implements Listener {
                 return;
             }
             Bukkit.getLogger().info("Rebooting due running out of entity ids: current id: " + id);
-            Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), "arkreboot");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "arkreboot");
         }
     }
 }

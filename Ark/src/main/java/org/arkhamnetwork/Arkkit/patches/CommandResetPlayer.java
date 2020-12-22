@@ -15,13 +15,11 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import com.drtshock.playervaults.vaultmanagement.UUIDVaultManager;
 import com.earth2me.essentials.User;
 import com.gmail.nossr50.mcMMO;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.UUID;
-import nl.rutgerkok.betterenderchest.BetterEnderChest;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
 import org.arkhamnetwork.Arkkit.utils.EssentialsUtils;
