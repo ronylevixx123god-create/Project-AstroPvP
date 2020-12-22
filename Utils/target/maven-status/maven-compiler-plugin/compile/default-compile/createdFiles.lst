@@ -1,0 +1,15 @@
+com\cosmicpvp\cosmicutils\struct\EquipmentType.class
+com\cosmicpvp\cosmicutils\sql\Database.class
+com\cosmicpvp\cosmicutils\discord\DiscordChannel.class
+com\cosmicpvp\cosmicutils\struct\ItemTier.class
+com\cosmicpvp\cosmicutils\itembuilder\FallenHeroBuilder.class
+com\cosmicpvp\cosmicutils\nbt\NBTTagListBuilder.class
+com\cosmicpvp\cosmicutils\itembuilder\ItemBuilder.class
+com\cosmicpvp\cosmicutils\itembuilder\EssentialsItemBuilder.class
+com\cosmicpvp\cosmicutils\gui\listeners\GUIListener.class
+com\cosmicpvp\cosmicutils\discord\CosmicDiscordChannels.class
+com\cosmicpvp\cosmicutils\itembuilder\ArmorSetItemBuilder.class
+com\cosmicpvp\cosmicutils\itembuilder\KillTrackerBuilder.class
+com\cosmicpvp\cosmicutils\itembuilder\SpawnerItemBuilder.class
+com\cosmicpvp\cosmicutils\utils\LocationUtils.class
+com\cosmicpvp\cosmicutils\math\Range.class

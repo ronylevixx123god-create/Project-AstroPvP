@@ -12,6 +12,7 @@
     <modules>
         <module>Utils</module>
         <module>Ark</module>
+        <module>Bosses</module>
     </modules>
 
     <build>

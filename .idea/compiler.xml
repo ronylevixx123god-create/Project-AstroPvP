@@ -7,8 +7,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Utils" />
+        <module name="Bosses" />
         <module name="Ark" />
+        <module name="Utils" />
         <module name="Arkkit" />
       </profile>
     </annotationProcessing>
