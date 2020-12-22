@@ -408,7 +408,7 @@ extends Boss {
 
     @Override
     public List<BossMessage> getGeneralMessages() {
-        return Lists.newArrayList((Object[])new BossMessage[]{new BossMessage("Are you challenging my rule?", false, 0), new BossMessage("You have slayed your last slime.", false, 0), new BossMessage("Ah, so you are [NAME], the infamous slime killer. Prepare to meet your doom!", false, -1), new BossMessage("You're making me angry die already!", true, 2)});
+        return Lists.newArrayList(new BossMessage("Are you challenging my rule?", false, 0), new BossMessage("You have slayed your last slime.", false, 0), new BossMessage("Ah, so you are [NAME], the infamous slime killer. Prepare to meet your doom!", false, -1), new BossMessage("You're making me angry die already!", true, 2));
     }
 }
 

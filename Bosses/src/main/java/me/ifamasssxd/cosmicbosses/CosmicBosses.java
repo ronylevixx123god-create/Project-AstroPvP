@@ -15,7 +15,6 @@
  */
 package me.ifamasssxd.cosmicbosses;
 
-import me.ifamasssxd.cosmicbosses.listeners.BossEggListener;
 import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,15 +27,7 @@ import me.ifamasssxd.cosmicbosses.commands.CommandBossRewards;
 import me.ifamasssxd.cosmicbosses.commands.CommandSpawnBoss;
 import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijki;
 import me.ifamasssxd.cosmicbosses.entities.CustomEntity;
-import me.ifamasssxd.cosmicbosses.listeners.BlockListener;
-import me.ifamasssxd.cosmicbosses.listeners.BossListener;
-import me.ifamasssxd.cosmicbosses.listeners.DungeonBossListener;
-import me.ifamasssxd.cosmicbosses.listeners.EggListener;
-import me.ifamasssxd.cosmicbosses.listeners.McmmoListener;
-import me.ifamasssxd.cosmicbosses.listeners.MinionListener;
-import me.ifamasssxd.cosmicbosses.listeners.PlayerListener;
-import me.ifamasssxd.cosmicbosses.listeners.SkeletonHorseListener;
-import me.ifamasssxd.cosmicbosses.listeners.WitherBossListener;
+import me.ifamasssxd.cosmicbosses.listeners.*;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.cosmicbosses.struct.MiniBoss;
 import me.ifamasssxd.cosmicbosses.struct.RewardInventory;
@@ -78,6 +69,8 @@ extends JavaPlugin {
     }
 
     public void onEnable() {
+        cbe = this;
+
         instance = this;
         this.saveDefaultConfig();
         mcMMOEnabled = Bukkit.getPluginManager().isPluginEnabled("mcMMO");
@@ -128,15 +121,17 @@ extends JavaPlugin {
     }
 
     private void registerListeners() {
-        this.getServer().getPluginManager().registerEvents((Listener)new MinionListener(), (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)new BossListener(), (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)new PlayerListener(), (Plugin)this);
         this.getServer().getPluginManager().registerEvents((Listener)new BlockListener(), (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)new SkeletonHorseListener(), (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)new WitherBossListener(), (Plugin)this);
+        this.getServer().getPluginManager().registerEvents((Listener)new BossEggListener(), (Plugin)this);
+        this.getServer().getPluginManager().registerEvents((Listener)new BossListener(), (Plugin)this);
         this.getServer().getPluginManager().registerEvents((Listener)new DungeonBossListener(), (Plugin)this);
         this.getServer().getPluginManager().registerEvents((Listener)new EggListener(), (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)new BossEggListener(), (Plugin)this);
+        this.getServer().getPluginManager().registerEvents((Listener)new MinionListener(), (Plugin)this);
+        this.getServer().getPluginManager().registerEvents((Listener)new PlayerListener(), (Plugin)this);
+        this.getServer().getPluginManager().registerEvents((Listener)new RewardInventoryListener(), (Plugin)this);
+        this.getServer().getPluginManager().registerEvents((Listener)new SkeletonHorseListener(), (Plugin)this);
+        this.getServer().getPluginManager().registerEvents((Listener)new WitherBossListener(), (Plugin)this);
+
         if (mcMMOEnabled) {
             this.getServer().getPluginManager().registerEvents((Listener)new McmmoListener(), (Plugin)this);
             System.out.println("Registering mcmmo listener.");
@@ -147,7 +142,7 @@ extends JavaPlugin {
         this.getCommand("boss").setExecutor((CommandExecutor)new CommandBoss());
         this.getCommand("spawnboss").setExecutor((CommandExecutor)new CommandSpawnBoss());
         this.getCommand("bossrewards").setExecutor((CommandExecutor)new CommandBossRewards());
-        this.getCommand("?").setExecutor((CommandExecutor)new CommandBossEgg());
+        //this.getCommand("???").setExecutor((CommandExecutor)new CommandBossEgg()); the fuck
     }
 
     private void registerTasks() {

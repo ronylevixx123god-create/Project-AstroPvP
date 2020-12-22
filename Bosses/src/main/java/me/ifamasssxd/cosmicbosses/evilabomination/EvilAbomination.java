@@ -6,15 +6,15 @@
  *  com.cosmicpvp.cosmicutils.utils.EssentialsUtils
  *  com.google.common.collect.Lists
  *  com.google.common.collect.MapMaker
- *  net.minecraft.server.v1_7_R4.AttributeInstance
- *  net.minecraft.server.v1_7_R4.Entity
- *  net.minecraft.server.v1_7_R4.EntityHorse
- *  net.minecraft.server.v1_7_R4.EntityInsentient
- *  net.minecraft.server.v1_7_R4.EntityZombie
- *  net.minecraft.server.v1_7_R4.GenericAttributes
- *  net.minecraft.server.v1_7_R4.IAttribute
- *  net.minecraft.server.v1_7_R4.World
- *  net.minecraft.server.v1_7_R4.WorldServer
+ *  net.minecraft.server.v1_8_R3.AttributeInstance
+ *  net.minecraft.server.v1_8_R3.Entity
+ *  net.minecraft.server.v1_8_R3.EntityHorse
+ *  net.minecraft.server.v1_8_R3.EntityInsentient
+ *  net.minecraft.server.v1_8_R3.EntityZombie
+ *  net.minecraft.server.v1_8_R3.GenericAttributes
+ *  net.minecraft.server.v1_8_R3.IAttribute
+ *  net.minecraft.server.v1_8_R3.World
+ *  net.minecraft.server.v1_8_R3.WorldServer
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
  *  org.bukkit.Location
@@ -22,9 +22,9 @@
  *  org.bukkit.Sound
  *  org.bukkit.block.Block
  *  org.bukkit.block.BlockFace
- *  org.bukkit.craftbukkit.v1_7_R4.CraftWorld
- *  org.bukkit.craftbukkit.v1_7_R4.entity.CraftHorse
- *  org.bukkit.craftbukkit.v1_7_R4.entity.CraftLivingEntity
+ *  org.bukkit.craftbukkit.v1_8_R3.CraftWorld
+ *  org.bukkit.craftbukkit.v1_8_R3.entity.CraftHorse
+ *  org.bukkit.craftbukkit.v1_8_R3.entity.CraftLivingEntity
  *  org.bukkit.enchantments.Enchantment
  *  org.bukkit.entity.Creature
  *  org.bukkit.entity.Entity
@@ -75,15 +75,15 @@ import me.ifamasssxd.cosmicbosses.utils.BossUtils;
 import me.ifamasssxd.cosmicbosses.utils.CustomItem;
 import me.ifamasssxd.cosmicbosses.utils.ItemBuilder;
 import me.ifamasssxd.cosmicbosses.utils.ReflectionUtils;
-import net.minecraft.server.v1_7_R4.AttributeInstance;
-import net.minecraft.server.v1_7_R4.Entity;
-import net.minecraft.server.v1_7_R4.EntityHorse;
-import net.minecraft.server.v1_7_R4.EntityInsentient;
-import net.minecraft.server.v1_7_R4.EntityZombie;
-import net.minecraft.server.v1_7_R4.GenericAttributes;
-import net.minecraft.server.v1_7_R4.IAttribute;
-import net.minecraft.server.v1_7_R4.World;
-import net.minecraft.server.v1_7_R4.WorldServer;
+import net.minecraft.server.v1_8_R3.AttributeInstance;
+import net.minecraft.server.v1_8_R3.Entity;
+import net.minecraft.server.v1_8_R3.EntityHorse;
+import net.minecraft.server.v1_8_R3.EntityInsentient;
+import net.minecraft.server.v1_8_R3.EntityZombie;
+import net.minecraft.server.v1_8_R3.GenericAttributes;
+import net.minecraft.server.v1_8_R3.IAttribute;
+import net.minecraft.server.v1_8_R3.World;
+import net.minecraft.server.v1_8_R3.WorldServer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -91,9 +91,9 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.craftbukkit.v1_7_R4.CraftWorld;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftHorse;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftLivingEntity;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftHorse;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftLivingEntity;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.EntityType;

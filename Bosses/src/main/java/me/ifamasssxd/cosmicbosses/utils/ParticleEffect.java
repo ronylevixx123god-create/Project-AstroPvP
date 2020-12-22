@@ -3,12 +3,13 @@
  */
 package me.ifamasssxd.cosmicbosses.utils;
 
-import me.ifamasssxd.cosmicbosses.CosmicBossEggsPlugin;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+
+import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -91,7 +92,7 @@ public enum ParticleEffect {
     public static void sendToLocation(ParticleEffect effect, Location location, float offsetX, float offsetY, float offsetZ, float speed, int count) throws Exception {
         Object packet = ParticleEffect.createPacket(effect, location, offsetX, offsetY, offsetZ, speed, count);
         double radius = 32.0;
-        for (Player player : CosmicBossEggsPlugin.getPlugin().getServer().getOnlinePlayers()) {
+        for (Player player : CosmicBosses.getInstance().getServer().getOnlinePlayers()) {
             if (!player.getWorld().getName().equalsIgnoreCase(location.getWorld().getName()) || !(player.getLocation().distanceSquared(location) <= Math.pow(radius, 2.0))) continue;
             ParticleEffect.sendPacket(player, packet);
         }

@@ -5,16 +5,16 @@
  *  com.cosmicpvp.cosmicutils.utils.EssentialsUtils
  *  com.cosmicpvp.cosmicutils.utils.ParticleEffect
  *  com.google.common.collect.Lists
- *  net.minecraft.server.v1_7_R4.Entity
- *  net.minecraft.server.v1_7_R4.GenericAttributes
- *  net.minecraft.server.v1_7_R4.World
- *  net.minecraft.server.v1_7_R4.WorldServer
+ *  net.minecraft.server.v1_8_R3.Entity
+ *  net.minecraft.server.v1_8_R3.GenericAttributes
+ *  net.minecraft.server.v1_8_R3.World
+ *  net.minecraft.server.v1_8_R3.WorldServer
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
  *  org.bukkit.Location
  *  org.bukkit.Sound
- *  org.bukkit.craftbukkit.v1_7_R4.CraftWorld
- *  org.bukkit.craftbukkit.v1_7_R4.entity.CraftMonster
+ *  org.bukkit.craftbukkit.v1_8_R3.CraftWorld
+ *  org.bukkit.craftbukkit.v1_8_R3.entity.CraftMonster
  *  org.bukkit.entity.Entity
  *  org.bukkit.entity.Player
  *  org.bukkit.event.Event
@@ -32,16 +32,16 @@ import java.util.concurrent.TimeUnit;
 import me.ifamasssxd.cosmicbosses.dungeonboss.DeathCurseBlaze;
 import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonAbility;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
-import net.minecraft.server.v1_7_R4.Entity;
-import net.minecraft.server.v1_7_R4.GenericAttributes;
-import net.minecraft.server.v1_7_R4.World;
-import net.minecraft.server.v1_7_R4.WorldServer;
+import net.minecraft.server.v1_8_R3.Entity;
+import net.minecraft.server.v1_8_R3.GenericAttributes;
+import net.minecraft.server.v1_8_R3.World;
+import net.minecraft.server.v1_8_R3.WorldServer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
-import org.bukkit.craftbukkit.v1_7_R4.CraftWorld;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftMonster;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftMonster;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.CreatureSpawnEvent;

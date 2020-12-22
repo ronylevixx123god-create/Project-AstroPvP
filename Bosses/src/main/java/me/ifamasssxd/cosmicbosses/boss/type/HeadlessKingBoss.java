@@ -3,7 +3,7 @@
  */
 package me.ifamasssxd.cosmicbosses.boss.type;
 
-import me.ifamasssxd.cosmicbosses.CosmicBossEggsPlugin;
+import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import me.ifamasssxd.cosmicbosses.utils.ParticleEffect;
 import me.ifamasssxd.cosmicbosses.utils.WorldGuardUtil;
 import java.util.ArrayList;
@@ -73,10 +73,10 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
         h.setHealth(this.max_hp);
         h.setTamed(true);
         this.entity = s;
-        h.setMetadata("cbe_boss_mount", new FixedMetadataValue((Plugin)CosmicBossEggsPlugin.getPlugin(), this.entity));
-        s.setMetadata("cbe_boss", new FixedMetadataValue((Plugin)CosmicBossEggsPlugin.getPlugin(), this.type.name()));
+        h.setMetadata("cbe_boss_mount", new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), this.entity));
+        s.setMetadata("cbe_boss", new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), this.type.name()));
         me.ifamasssxd.cosmicbosses.boss.type.Boss.boss_map.put(s, this);
-        this.particle_task_id = CosmicBossEggsPlugin.getPlugin().getServer().getScheduler().runTaskTimerAsynchronously((Plugin)CosmicBossEggsPlugin.getPlugin(), new Runnable(){
+        this.particle_task_id = CosmicBosses.getInstance().getServer().getScheduler().runTaskTimerAsynchronously((Plugin)CosmicBosses.getInstance(), new Runnable(){
 
             @Override
             public void run() {
@@ -92,7 +92,7 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
                 }
             }
         }, 20L, 20L).getTaskId();
-        this.target_task_id = CosmicBossEggsPlugin.getPlugin().getServer().getScheduler().runTaskTimer((Plugin)CosmicBossEggsPlugin.getPlugin(), new Runnable(){
+        this.target_task_id = CosmicBosses.getInstance().getServer().getScheduler().runTaskTimer((Plugin)CosmicBosses.getInstance(), new Runnable(){
 
             @Override
             public void run() {
@@ -107,7 +107,7 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
                 }
             }
         }, 20L, 20L).getTaskId();
-        this.anti_water_task_id = CosmicBossEggsPlugin.getPlugin().getServer().getScheduler().runTaskTimer((Plugin)CosmicBossEggsPlugin.getPlugin(), new Runnable(){
+        this.anti_water_task_id = CosmicBosses.getInstance().getServer().getScheduler().runTaskTimer((Plugin)CosmicBosses.getInstance(), new Runnable(){
 
             @Override
             public void run() {
@@ -121,7 +121,7 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
                 }
             }
         }, 20L, 20L).getTaskId();
-        this.exploding_pumpkin_task_id = CosmicBossEggsPlugin.getPlugin().getServer().getScheduler().runTaskTimerAsynchronously((Plugin)CosmicBossEggsPlugin.getPlugin(), new Runnable(){
+        this.exploding_pumpkin_task_id = CosmicBosses.getInstance().getServer().getScheduler().runTaskTimerAsynchronously((Plugin)CosmicBosses.getInstance(), new Runnable(){
             LivingEntity le;
             {
                 this.le = (LivingEntity)HeadlessKingBoss.this.entity;
@@ -143,7 +143,7 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
                 }
                 Random random = new Random();
                 if ((double)random.nextInt(100) <= chance) {
-                    Bukkit.getScheduler().runTask((Plugin)CosmicBossEggsPlugin.getPlugin(), new Runnable(){
+                    Bukkit.getScheduler().runTask((Plugin)CosmicBosses.getInstance(), new Runnable(){
 
                         @Override
                         public void run() {
@@ -152,14 +152,14 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
                             if (Math.random() <= 0.5) {
                                 tnt.setIsIncendiary(true);
                             }
-                            tnt.setMetadata("undead_tnt", new FixedMetadataValue((Plugin)CosmicBossEggsPlugin.getPlugin(), true));
+                            tnt.setMetadata("undead_tnt", new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), true));
                             HeadlessKingBoss.this.pullEntityToLocation(tnt, victim.getLocation());
                         }
                     });
                 }
             }
         }, 35L, 35L).getTaskId();
-        this.player_charge_task_id = CosmicBossEggsPlugin.getPlugin().getServer().getScheduler().runTaskTimerAsynchronously((Plugin)CosmicBossEggsPlugin.getPlugin(), new Runnable(){
+        this.player_charge_task_id = CosmicBosses.getInstance().getServer().getScheduler().runTaskTimerAsynchronously((Plugin)CosmicBosses.getInstance(), new Runnable(){
             Location nuke_location = null;
             List<Player> nuke_list = new ArrayList<Player>();
 
@@ -178,12 +178,12 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
                         if (HeadlessKingBoss.this.player_charge_task.iteration >= 10) {
                             Bukkit.getScheduler().cancelTask(HeadlessKingBoss.this.player_charge_task_id);
                             Location f_nuke_location = this.nuke_location;
-                            for (Player player : CosmicBossEggsPlugin.getPlugin().getServer().getOnlinePlayers()) {
+                            for (Player player : CosmicBosses.getInstance().getServer().getOnlinePlayers()) {
                                 if (player == null || player.getWorld() == null || this.nuke_location == null || !player.getWorld().equals(this.nuke_location.getWorld()) || !(player.getLocation().distanceSquared(this.nuke_location) <= 25.0)) continue;
                                 this.nuke_list.add(player);
                             }
                             final Player[] f_nuke_list = this.nuke_list.toArray(new Player[this.nuke_list.size()]);
-                            Bukkit.getScheduler().runTask((Plugin)CosmicBossEggsPlugin.getPlugin(), new Runnable(){
+                            Bukkit.getScheduler().runTask((Plugin)CosmicBosses.getInstance(), new Runnable(){
 
                                 @Override
                                 public void run() {
@@ -209,7 +209,7 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
                     this.nuke_location = victim.getLocation();
                     this.nuke_list.clear();
                     HeadlessKingBoss.this.player_charge_task = new FirepathTask((LivingEntity)HeadlessKingBoss.this.entity, victim.getLocation());
-                    HeadlessKingBoss.this.player_charge_task_id = Bukkit.getScheduler().runTaskTimer((Plugin)CosmicBossEggsPlugin.getPlugin(), HeadlessKingBoss.this.player_charge_task, 10L, 10L).getTaskId();
+                    HeadlessKingBoss.this.player_charge_task_id = Bukkit.getScheduler().runTaskTimer((Plugin)CosmicBosses.getInstance(), HeadlessKingBoss.this.player_charge_task, 10L, 10L).getTaskId();
                 }
             }
         }, 300L, 300L).getTaskId();
@@ -220,7 +220,7 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
     }
 
     private void cancelTaskSync(final int taskID) {
-        Bukkit.getScheduler().runTask((Plugin)CosmicBossEggsPlugin.getPlugin(), new Runnable(){
+        Bukkit.getScheduler().runTask((Plugin)CosmicBosses.getInstance(), new Runnable(){
 
             @Override
             public void run() {
@@ -249,7 +249,7 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
                 ((LivingEntity)this.entity).setHealth(dmg + hp);
             }
             this.entity.getWorld().playSound(this.entity.getLocation(), Sound.GHAST_MOAN, 1.0f, 3.0f);
-            Bukkit.getScheduler().runTaskAsynchronously((Plugin)CosmicBossEggsPlugin.getPlugin(), new Runnable(){
+            Bukkit.getScheduler().runTaskAsynchronously((Plugin)CosmicBosses.getInstance(), new Runnable(){
 
                 @Override
                 public void run() {
@@ -267,7 +267,7 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
             LivingEntity le_attacker = (LivingEntity)attacker;
             le_attacker.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 60, 0));
             if (!le_attacker.hasMetadata("undead_wither")) {
-                le_attacker.setMetadata("undead_wither", new FixedMetadataValue((Plugin)CosmicBossEggsPlugin.getPlugin(), System.currentTimeMillis()));
+                le_attacker.setMetadata("undead_wither", new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), System.currentTimeMillis()));
                 le_attacker.playEffect(EntityEffect.WITCH_MAGIC);
                 if (le_attacker instanceof Player) {
                     ((Player)le_attacker).sendMessage("");
@@ -277,7 +277,7 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
                 }
             }
             this.entity.setFireTicks(40);
-            Bukkit.getScheduler().runTaskAsynchronously((Plugin)CosmicBossEggsPlugin.getPlugin(), new Runnable(){
+            Bukkit.getScheduler().runTaskAsynchronously((Plugin)CosmicBosses.getInstance(), new Runnable(){
 
                 @Override
                 public void run() {
@@ -296,11 +296,11 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
 
     @Override
     public void onBossDeath(EntityDeathEvent e) {
-        CosmicBossEggsPlugin.getPlugin().getServer().getScheduler().cancelTask(this.target_task_id);
-        CosmicBossEggsPlugin.getPlugin().getServer().getScheduler().cancelTask(this.anti_water_task_id);
-        CosmicBossEggsPlugin.getPlugin().getServer().getScheduler().cancelTask(this.exploding_pumpkin_task_id);
-        CosmicBossEggsPlugin.getPlugin().getServer().getScheduler().cancelTask(this.player_charge_task_id);
-        CosmicBossEggsPlugin.getPlugin().getServer().getScheduler().cancelTask(this.particle_task_id);
+        CosmicBosses.getInstance().getServer().getScheduler().cancelTask(this.target_task_id);
+        CosmicBosses.getInstance().getServer().getScheduler().cancelTask(this.anti_water_task_id);
+        CosmicBosses.getInstance().getServer().getScheduler().cancelTask(this.exploding_pumpkin_task_id);
+        CosmicBosses.getInstance().getServer().getScheduler().cancelTask(this.player_charge_task_id);
+        CosmicBosses.getInstance().getServer().getScheduler().cancelTask(this.particle_task_id);
         ArrayList<Player> heroes = new ArrayList<Player>();
         for (Entity ent : e.getEntity().getNearbyEntities(16.0, 16.0, 16.0)) {
             if (!(ent instanceof Player)) continue;

@@ -3,7 +3,7 @@
  */
 package me.ifamasssxd.cosmicbosses.boss.type;
 
-import me.ifamasssxd.cosmicbosses.CosmicBossEggsPlugin;
+import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import me.ifamasssxd.cosmicbosses.utils.ParticleEffect;
 import java.util.HashSet;
 import java.util.Random;
@@ -46,7 +46,7 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
         b.setCustomNameVisible(true);
         l.getWorld().playSound(l, Sound.BLAZE_BREATH, 2.0f, 0.5f);
         this.entity = b;
-        b.setMetadata("cbe_boss", new FixedMetadataValue((Plugin)CosmicBossEggsPlugin.getPlugin(), this.type.name()));
+        b.setMetadata("cbe_boss", new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), this.type.name()));
         me.ifamasssxd.cosmicbosses.boss.type.Boss.boss_map.put(b, this);
     }
 
@@ -82,7 +82,7 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
                 ms.setSize(new Random().nextInt(3) + 1);
                 ms.setCanPickupItems(false);
                 ms.setRemoveWhenFarAway(true);
-                ms.setMetadata("no_split", new FixedMetadataValue((Plugin)CosmicBossEggsPlugin.getPlugin(), true));
+                ms.setMetadata("no_split", new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), true));
                 this.minions.add(ms);
             } else if (new Random().nextInt(5) == 0) {
                 Blaze b = (Blaze)e.getEntity().getWorld().spawnEntity(e.getEntity().getLocation().add(0.0, 2.0, 0.0), EntityType.BLAZE);
@@ -94,7 +94,7 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
     }
 
     private void playFireEffect(final Location l, final int c) {
-        CosmicBossEggsPlugin.getPlugin().getServer().getScheduler().runTaskAsynchronously((Plugin)CosmicBossEggsPlugin.getPlugin(), new Runnable(){
+        CosmicBossEggsPlugin.getPlugin().getServer().getScheduler().runTaskAsynchronously((Plugin)CosmicBosses.getInstance(), new Runnable(){
 
             @Override
             public void run() {

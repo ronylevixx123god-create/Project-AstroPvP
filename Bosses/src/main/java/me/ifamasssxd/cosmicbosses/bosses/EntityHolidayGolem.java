@@ -3,19 +3,19 @@
  * 
  * Could not load the following classes:
  *  com.google.common.collect.MapMaker
- *  net.minecraft.server.v1_7_R4.Entity
- *  net.minecraft.server.v1_7_R4.EntityGolem
- *  net.minecraft.server.v1_7_R4.EntityHuman
- *  net.minecraft.server.v1_7_R4.EntityLiving
- *  net.minecraft.server.v1_7_R4.EntityPlayer
- *  net.minecraft.server.v1_7_R4.EntitySnowball
- *  net.minecraft.server.v1_7_R4.EntityWitherSkull
- *  net.minecraft.server.v1_7_R4.MathHelper
- *  net.minecraft.server.v1_7_R4.MovingObjectPosition
- *  net.minecraft.server.v1_7_R4.World
+ *  net.minecraft.server.v1_8_R3.Entity
+ *  net.minecraft.server.v1_8_R3.EntityGolem
+ *  net.minecraft.server.v1_8_R3.EntityHuman
+ *  net.minecraft.server.v1_8_R3.EntityLiving
+ *  net.minecraft.server.v1_8_R3.EntityPlayer
+ *  net.minecraft.server.v1_8_R3.EntitySnowball
+ *  net.minecraft.server.v1_8_R3.EntityWitherSkull
+ *  net.minecraft.server.v1_8_R3.MathHelper
+ *  net.minecraft.server.v1_8_R3.MovingObjectPosition
+ *  net.minecraft.server.v1_8_R3.World
  *  org.bukkit.Bukkit
  *  org.bukkit.GameMode
- *  org.bukkit.craftbukkit.v1_7_R4.entity.CraftEntity
+ *  org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity
  *  org.bukkit.entity.Entity
  *  org.bukkit.entity.Player
  */
@@ -27,19 +27,19 @@ import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import me.ifamasssxd.cosmicbosses.bosses.MultiProjectileShooter;
-import net.minecraft.server.v1_7_R4.Entity;
-import net.minecraft.server.v1_7_R4.EntityGolem;
-import net.minecraft.server.v1_7_R4.EntityHuman;
-import net.minecraft.server.v1_7_R4.EntityLiving;
-import net.minecraft.server.v1_7_R4.EntityPlayer;
-import net.minecraft.server.v1_7_R4.EntitySnowball;
-import net.minecraft.server.v1_7_R4.EntityWitherSkull;
-import net.minecraft.server.v1_7_R4.MathHelper;
-import net.minecraft.server.v1_7_R4.MovingObjectPosition;
-import net.minecraft.server.v1_7_R4.World;
+import net.minecraft.server.v1_8_R3.Entity;
+import net.minecraft.server.v1_8_R3.EntityGolem;
+import net.minecraft.server.v1_8_R3.EntityHuman;
+import net.minecraft.server.v1_8_R3.EntityLiving;
+import net.minecraft.server.v1_8_R3.EntityPlayer;
+import net.minecraft.server.v1_8_R3.EntitySnowball;
+import net.minecraft.server.v1_8_R3.EntityWitherSkull;
+import net.minecraft.server.v1_8_R3.MathHelper;
+import net.minecraft.server.v1_8_R3.MovingObjectPosition;
+import net.minecraft.server.v1_8_R3.World;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.Player;
 
 public class EntityHolidayGolem

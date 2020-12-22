@@ -1,0 +1,21 @@
+name: CosmicBosses
+version: 0.1
+main: me.ifamasssxd.cosmicbosses.CosmicBosses
+softdepend: [Vault, mcMMO, Essentials, Factions, FactionUpgrades, CosmicSpaceChests, WorldGuard, WorldEdit]
+commands:
+  spawnboss:
+    description: Spawn a Cosmic Boss
+  boss:
+    description: All purpose boss command.
+  bossrewards:
+    description: Boss rewards command.
+    aliases: [collect]
+  cbe:
+    description: Main command for CustomBossEggs
+    usage: /<command>
+  givecbe:
+    description: Give boss eggs
+    usage: /<command>
+  lootredeem:
+    description: Redeem loot from boss battles!
+    usage: /<command>

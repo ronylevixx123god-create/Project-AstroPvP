@@ -294,7 +294,7 @@ extends Boss {
 
     @Override
     public List<BossMessage> getGeneralMessages() {
-        return Lists.newArrayList((Object[])new BossMessage[]{new BossMessage("If you had not committed great offenses, the galaxy would not have sent a curse as vile as me upon you.", false, 0), new BossMessage("I. AM. DEATH", false, 0), new BossMessage("Come, breathe in my black fog and see your body crumble", false, 0), new BossMessage("You cannot kill a plague.", false, 0)});
+        return Lists.newArrayList(new BossMessage("If you had not committed great offenses, the galaxy would not have sent a curse as vile as me upon you.", false, 0), new BossMessage("I. AM. DEATH", false, 0), new BossMessage("Come, breathe in my black fog and see your body crumble", false, 0), new BossMessage("You cannot kill a plague.", false, 0));
     }
 
     public PlagueBomb getPlagueBomb() {

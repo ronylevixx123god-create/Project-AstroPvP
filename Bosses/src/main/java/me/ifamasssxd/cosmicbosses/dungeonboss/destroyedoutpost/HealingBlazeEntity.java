@@ -2,24 +2,24 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  net.minecraft.server.v1_7_R4.Block
- *  net.minecraft.server.v1_7_R4.Blocks
- *  net.minecraft.server.v1_7_R4.DamageSource
- *  net.minecraft.server.v1_7_R4.Entity
- *  net.minecraft.server.v1_7_R4.EntityBlaze
- *  net.minecraft.server.v1_7_R4.EntityFireball
- *  net.minecraft.server.v1_7_R4.EntityHuman
- *  net.minecraft.server.v1_7_R4.EntityLiving
- *  net.minecraft.server.v1_7_R4.EntitySmallFireball
- *  net.minecraft.server.v1_7_R4.GenericAttributes
- *  net.minecraft.server.v1_7_R4.Item
- *  net.minecraft.server.v1_7_R4.MathHelper
- *  net.minecraft.server.v1_7_R4.MovingObjectPosition
- *  net.minecraft.server.v1_7_R4.World
+ *  net.minecraft.server.v1_8_R3.Block
+ *  net.minecraft.server.v1_8_R3.Blocks
+ *  net.minecraft.server.v1_8_R3.DamageSource
+ *  net.minecraft.server.v1_8_R3.Entity
+ *  net.minecraft.server.v1_8_R3.EntityBlaze
+ *  net.minecraft.server.v1_8_R3.EntityFireball
+ *  net.minecraft.server.v1_8_R3.EntityHuman
+ *  net.minecraft.server.v1_8_R3.EntityLiving
+ *  net.minecraft.server.v1_8_R3.EntitySmallFireball
+ *  net.minecraft.server.v1_8_R3.GenericAttributes
+ *  net.minecraft.server.v1_8_R3.Item
+ *  net.minecraft.server.v1_8_R3.MathHelper
+ *  net.minecraft.server.v1_8_R3.MovingObjectPosition
+ *  net.minecraft.server.v1_8_R3.World
  *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
  *  org.bukkit.Bukkit
  *  org.bukkit.Location
- *  org.bukkit.craftbukkit.v1_7_R4.event.CraftEventFactory
+ *  org.bukkit.craftbukkit.v1_8_R3.event.CraftEventFactory
  *  org.bukkit.entity.Entity
  *  org.bukkit.entity.Projectile
  *  org.bukkit.event.Event
@@ -32,24 +32,24 @@ package me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost.MotherOfYijki;
 import me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost.MotherOfYijkiEntity;
-import net.minecraft.server.v1_7_R4.Block;
-import net.minecraft.server.v1_7_R4.Blocks;
-import net.minecraft.server.v1_7_R4.DamageSource;
-import net.minecraft.server.v1_7_R4.Entity;
-import net.minecraft.server.v1_7_R4.EntityBlaze;
-import net.minecraft.server.v1_7_R4.EntityFireball;
-import net.minecraft.server.v1_7_R4.EntityHuman;
-import net.minecraft.server.v1_7_R4.EntityLiving;
-import net.minecraft.server.v1_7_R4.EntitySmallFireball;
-import net.minecraft.server.v1_7_R4.GenericAttributes;
-import net.minecraft.server.v1_7_R4.Item;
-import net.minecraft.server.v1_7_R4.MathHelper;
-import net.minecraft.server.v1_7_R4.MovingObjectPosition;
-import net.minecraft.server.v1_7_R4.World;
+import net.minecraft.server.v1_8_R3.Block;
+import net.minecraft.server.v1_8_R3.Blocks;
+import net.minecraft.server.v1_8_R3.DamageSource;
+import net.minecraft.server.v1_8_R3.Entity;
+import net.minecraft.server.v1_8_R3.EntityBlaze;
+import net.minecraft.server.v1_8_R3.EntityFireball;
+import net.minecraft.server.v1_8_R3.EntityHuman;
+import net.minecraft.server.v1_8_R3.EntityLiving;
+import net.minecraft.server.v1_8_R3.EntitySmallFireball;
+import net.minecraft.server.v1_8_R3.GenericAttributes;
+import net.minecraft.server.v1_8_R3.Item;
+import net.minecraft.server.v1_8_R3.MathHelper;
+import net.minecraft.server.v1_8_R3.MovingObjectPosition;
+import net.minecraft.server.v1_8_R3.World;
 import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_7_R4.event.CraftEventFactory;
+import org.bukkit.craftbukkit.v1_8_R3.event.CraftEventFactory;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityCombustByEntityEvent;

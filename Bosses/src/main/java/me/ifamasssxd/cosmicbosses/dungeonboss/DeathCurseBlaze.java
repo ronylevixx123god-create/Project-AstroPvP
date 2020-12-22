@@ -2,25 +2,25 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  net.minecraft.server.v1_7_R4.Entity
- *  net.minecraft.server.v1_7_R4.EntityBlaze
- *  net.minecraft.server.v1_7_R4.EntityHuman
- *  net.minecraft.server.v1_7_R4.EntityLiving
- *  net.minecraft.server.v1_7_R4.EntitySmallFireball
- *  net.minecraft.server.v1_7_R4.Item
- *  net.minecraft.server.v1_7_R4.MathHelper
- *  net.minecraft.server.v1_7_R4.World
+ *  net.minecraft.server.v1_8_R3.Entity
+ *  net.minecraft.server.v1_8_R3.EntityBlaze
+ *  net.minecraft.server.v1_8_R3.EntityHuman
+ *  net.minecraft.server.v1_8_R3.EntityLiving
+ *  net.minecraft.server.v1_8_R3.EntitySmallFireball
+ *  net.minecraft.server.v1_8_R3.Item
+ *  net.minecraft.server.v1_8_R3.MathHelper
+ *  net.minecraft.server.v1_8_R3.World
  */
 package me.ifamasssxd.cosmicbosses.dungeonboss;
 
-import net.minecraft.server.v1_7_R4.Entity;
-import net.minecraft.server.v1_7_R4.EntityBlaze;
-import net.minecraft.server.v1_7_R4.EntityHuman;
-import net.minecraft.server.v1_7_R4.EntityLiving;
-import net.minecraft.server.v1_7_R4.EntitySmallFireball;
-import net.minecraft.server.v1_7_R4.Item;
-import net.minecraft.server.v1_7_R4.MathHelper;
-import net.minecraft.server.v1_7_R4.World;
+import net.minecraft.server.v1_8_R3.Entity;
+import net.minecraft.server.v1_8_R3.EntityBlaze;
+import net.minecraft.server.v1_8_R3.EntityHuman;
+import net.minecraft.server.v1_8_R3.EntityLiving;
+import net.minecraft.server.v1_8_R3.EntitySmallFireball;
+import net.minecraft.server.v1_8_R3.Item;
+import net.minecraft.server.v1_8_R3.MathHelper;
+import net.minecraft.server.v1_8_R3.World;
 
 public class DeathCurseBlaze
 extends EntityBlaze {

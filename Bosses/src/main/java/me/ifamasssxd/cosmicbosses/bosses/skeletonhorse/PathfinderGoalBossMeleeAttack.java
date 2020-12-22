@@ -14,14 +14,14 @@
  */
 package me.ifamasssxd.cosmicbosses.bosses.skeletonhorse;
 
-import net.minecraft.server.v1_7_R4.Entity;
-import net.minecraft.server.v1_7_R4.EntityCreature;
-import net.minecraft.server.v1_7_R4.EntityLiving;
-import net.minecraft.server.v1_7_R4.MathHelper;
-import net.minecraft.server.v1_7_R4.PathEntity;
-import net.minecraft.server.v1_7_R4.PathfinderGoalMeleeAttack;
-import net.minecraft.server.v1_7_R4.World;
-import org.bukkit.craftbukkit.v1_7_R4.event.CraftEventFactory;
+import net.minecraft.server.v1_8_R3.Entity;
+import net.minecraft.server.v1_8_R3.EntityCreature;
+import net.minecraft.server.v1_8_R3.EntityLiving;
+import net.minecraft.server.v1_8_R3.MathHelper;
+import net.minecraft.server.v1_8_R3.PathEntity;
+import net.minecraft.server.v1_8_R3.PathfinderGoalMeleeAttack;
+import net.minecraft.server.v1_8_R3.World;
+import org.bukkit.craftbukkit.v1_8_R3.event.CraftEventFactory;
 import org.bukkit.event.entity.EntityTargetEvent;
 
 public class PathfinderGoalBossMeleeAttack
@@ -80,12 +80,12 @@ extends PathfinderGoalMeleeAttack {
     public void e() {
         EntityLiving entityliving = this.b.getGoalTarget();
         this.b.getControllerLook().a((Entity)entityliving, 30.0f, 30.0f);
-        double distance = this.b.e(entityliving.locX, entityliving.boundingBox.b, entityliving.locZ);
+        double distance = this.b.e(entityliving.locX, entityliving.getBoundingBox().b, entityliving.locZ);
         double d1 = this.b.width * 2.0f * this.b.width * 2.0f + entityliving.width;
         --this.h;
         if ((this.e || this.b.getEntitySenses().canSee((Entity)entityliving)) && this.h <= 0 && (this.i == 0.0 && this.j == 0.0 && this.k == 0.0 || entityliving.e(this.i, this.j, this.k) >= 1.0 || this.b.aI().nextFloat() < 0.05f)) {
             this.i = entityliving.locX;
-            this.j = entityliving.boundingBox.b;
+            this.j = entityliving.getBoundingBox().b;
             this.k = entityliving.locZ;
             this.h = 4 + this.b.aI().nextInt(7);
             if (distance > 1024.0) {

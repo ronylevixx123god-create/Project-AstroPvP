@@ -3,44 +3,44 @@
  * 
  * Could not load the following classes:
  *  net.citizensnpcs.npc.entity.EntityHumanNPC
- *  net.minecraft.server.v1_7_R4.Block
- *  net.minecraft.server.v1_7_R4.Blocks
- *  net.minecraft.server.v1_7_R4.DamageSource
- *  net.minecraft.server.v1_7_R4.Entity
- *  net.minecraft.server.v1_7_R4.EntityCreature
- *  net.minecraft.server.v1_7_R4.EntityHuman
- *  net.minecraft.server.v1_7_R4.EntityInsentient
- *  net.minecraft.server.v1_7_R4.EntityLiving
- *  net.minecraft.server.v1_7_R4.EntityMonster
- *  net.minecraft.server.v1_7_R4.EntityPlayer
- *  net.minecraft.server.v1_7_R4.EntityWitherSkull
- *  net.minecraft.server.v1_7_R4.EnumDifficulty
- *  net.minecraft.server.v1_7_R4.EnumEntitySize
- *  net.minecraft.server.v1_7_R4.EnumMonsterType
- *  net.minecraft.server.v1_7_R4.GenericAttributes
- *  net.minecraft.server.v1_7_R4.IEntitySelector
- *  net.minecraft.server.v1_7_R4.IRangedEntity
- *  net.minecraft.server.v1_7_R4.Material
- *  net.minecraft.server.v1_7_R4.MathHelper
- *  net.minecraft.server.v1_7_R4.MobEffect
- *  net.minecraft.server.v1_7_R4.MovingObjectPosition
- *  net.minecraft.server.v1_7_R4.NBTTagCompound
- *  net.minecraft.server.v1_7_R4.Packet
- *  net.minecraft.server.v1_7_R4.PacketPlayOutWorldEvent
- *  net.minecraft.server.v1_7_R4.PathfinderGoal
- *  net.minecraft.server.v1_7_R4.PathfinderGoalFloat
- *  net.minecraft.server.v1_7_R4.PathfinderGoalHurtByTarget
- *  net.minecraft.server.v1_7_R4.PathfinderGoalLookAtPlayer
- *  net.minecraft.server.v1_7_R4.PathfinderGoalNearestAttackableTarget
- *  net.minecraft.server.v1_7_R4.PathfinderGoalRandomLookaround
- *  net.minecraft.server.v1_7_R4.World
- *  net.minecraft.server.v1_7_R4.WorldServer
+ *  net.minecraft.server.v1_8_R3.Block
+ *  net.minecraft.server.v1_8_R3.Blocks
+ *  net.minecraft.server.v1_8_R3.DamageSource
+ *  net.minecraft.server.v1_8_R3.Entity
+ *  net.minecraft.server.v1_8_R3.EntityCreature
+ *  net.minecraft.server.v1_8_R3.EntityHuman
+ *  net.minecraft.server.v1_8_R3.EntityInsentient
+ *  net.minecraft.server.v1_8_R3.EntityLiving
+ *  net.minecraft.server.v1_8_R3.EntityMonster
+ *  net.minecraft.server.v1_8_R3.EntityPlayer
+ *  net.minecraft.server.v1_8_R3.EntityWitherSkull
+ *  net.minecraft.server.v1_8_R3.EnumDifficulty
+ *  net.minecraft.server.v1_8_R3.EnumEntitySize
+ *  net.minecraft.server.v1_8_R3.EnumMonsterType
+ *  net.minecraft.server.v1_8_R3.GenericAttributes
+ *  net.minecraft.server.v1_8_R3.IEntitySelector
+ *  net.minecraft.server.v1_8_R3.IRangedEntity
+ *  net.minecraft.server.v1_8_R3.Material
+ *  net.minecraft.server.v1_8_R3.MathHelper
+ *  net.minecraft.server.v1_8_R3.MobEffect
+ *  net.minecraft.server.v1_8_R3.MovingObjectPosition
+ *  net.minecraft.server.v1_8_R3.NBTTagCompound
+ *  net.minecraft.server.v1_8_R3.Packet
+ *  net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent
+ *  net.minecraft.server.v1_8_R3.PathfinderGoal
+ *  net.minecraft.server.v1_8_R3.PathfinderGoalFloat
+ *  net.minecraft.server.v1_8_R3.PathfinderGoalHurtByTarget
+ *  net.minecraft.server.v1_8_R3.PathfinderGoalLookAtPlayer
+ *  net.minecraft.server.v1_8_R3.PathfinderGoalNearestAttackableTarget
+ *  net.minecraft.server.v1_8_R3.PathfinderGoalRandomLookaround
+ *  net.minecraft.server.v1_8_R3.World
+ *  net.minecraft.server.v1_8_R3.WorldServer
  *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
  *  org.bukkit.Bukkit
  *  org.bukkit.Location
  *  org.bukkit.Sound
  *  org.bukkit.World
- *  org.bukkit.craftbukkit.v1_7_R4.event.CraftEventFactory
+ *  org.bukkit.craftbukkit.v1_8_R3.event.CraftEventFactory
  *  org.bukkit.entity.Entity
  *  org.bukkit.entity.Player
  *  org.bukkit.event.Event
@@ -62,43 +62,43 @@ import me.ifamasssxd.cosmicbosses.struct.Phase;
 import me.ifamasssxd.cosmicbosses.utils.BossUtils;
 import me.ifamasssxd.cosmicbosses.utils.WorldGuardUtils;
 import net.citizensnpcs.npc.entity.EntityHumanNPC;
-import net.minecraft.server.v1_7_R4.Block;
-import net.minecraft.server.v1_7_R4.Blocks;
-import net.minecraft.server.v1_7_R4.DamageSource;
-import net.minecraft.server.v1_7_R4.Entity;
-import net.minecraft.server.v1_7_R4.EntityCreature;
-import net.minecraft.server.v1_7_R4.EntityHuman;
-import net.minecraft.server.v1_7_R4.EntityInsentient;
-import net.minecraft.server.v1_7_R4.EntityLiving;
-import net.minecraft.server.v1_7_R4.EntityMonster;
-import net.minecraft.server.v1_7_R4.EntityPlayer;
-import net.minecraft.server.v1_7_R4.EntityWitherSkull;
-import net.minecraft.server.v1_7_R4.EnumDifficulty;
-import net.minecraft.server.v1_7_R4.EnumEntitySize;
-import net.minecraft.server.v1_7_R4.EnumMonsterType;
-import net.minecraft.server.v1_7_R4.GenericAttributes;
-import net.minecraft.server.v1_7_R4.IEntitySelector;
-import net.minecraft.server.v1_7_R4.IRangedEntity;
-import net.minecraft.server.v1_7_R4.Material;
-import net.minecraft.server.v1_7_R4.MathHelper;
-import net.minecraft.server.v1_7_R4.MobEffect;
-import net.minecraft.server.v1_7_R4.MovingObjectPosition;
-import net.minecraft.server.v1_7_R4.NBTTagCompound;
-import net.minecraft.server.v1_7_R4.Packet;
-import net.minecraft.server.v1_7_R4.PacketPlayOutWorldEvent;
-import net.minecraft.server.v1_7_R4.PathfinderGoal;
-import net.minecraft.server.v1_7_R4.PathfinderGoalFloat;
-import net.minecraft.server.v1_7_R4.PathfinderGoalHurtByTarget;
-import net.minecraft.server.v1_7_R4.PathfinderGoalLookAtPlayer;
-import net.minecraft.server.v1_7_R4.PathfinderGoalNearestAttackableTarget;
-import net.minecraft.server.v1_7_R4.PathfinderGoalRandomLookaround;
-import net.minecraft.server.v1_7_R4.World;
-import net.minecraft.server.v1_7_R4.WorldServer;
+import net.minecraft.server.v1_8_R3.Block;
+import net.minecraft.server.v1_8_R3.Blocks;
+import net.minecraft.server.v1_8_R3.DamageSource;
+import net.minecraft.server.v1_8_R3.Entity;
+import net.minecraft.server.v1_8_R3.EntityCreature;
+import net.minecraft.server.v1_8_R3.EntityHuman;
+import net.minecraft.server.v1_8_R3.EntityInsentient;
+import net.minecraft.server.v1_8_R3.EntityLiving;
+import net.minecraft.server.v1_8_R3.EntityMonster;
+import net.minecraft.server.v1_8_R3.EntityPlayer;
+import net.minecraft.server.v1_8_R3.EntityWitherSkull;
+import net.minecraft.server.v1_8_R3.EnumDifficulty;
+import net.minecraft.server.v1_8_R3.EnumEntitySize;
+import net.minecraft.server.v1_8_R3.EnumMonsterType;
+import net.minecraft.server.v1_8_R3.GenericAttributes;
+import net.minecraft.server.v1_8_R3.IEntitySelector;
+import net.minecraft.server.v1_8_R3.IRangedEntity;
+import net.minecraft.server.v1_8_R3.Material;
+import net.minecraft.server.v1_8_R3.MathHelper;
+import net.minecraft.server.v1_8_R3.MobEffect;
+import net.minecraft.server.v1_8_R3.MovingObjectPosition;
+import net.minecraft.server.v1_8_R3.NBTTagCompound;
+import net.minecraft.server.v1_8_R3.Packet;
+import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
+import net.minecraft.server.v1_8_R3.PathfinderGoal;
+import net.minecraft.server.v1_8_R3.PathfinderGoalFloat;
+import net.minecraft.server.v1_8_R3.PathfinderGoalHurtByTarget;
+import net.minecraft.server.v1_8_R3.PathfinderGoalLookAtPlayer;
+import net.minecraft.server.v1_8_R3.PathfinderGoalNearestAttackableTarget;
+import net.minecraft.server.v1_8_R3.PathfinderGoalRandomLookaround;
+import net.minecraft.server.v1_8_R3.World;
+import net.minecraft.server.v1_8_R3.WorldServer;
 import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
-import org.bukkit.craftbukkit.v1_7_R4.event.CraftEventFactory;
+import org.bukkit.craftbukkit.v1_8_R3.event.CraftEventFactory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityRegainHealthEvent;

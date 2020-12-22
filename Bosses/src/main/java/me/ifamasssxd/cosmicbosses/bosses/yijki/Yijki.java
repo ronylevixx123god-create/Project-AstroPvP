@@ -492,7 +492,7 @@ implements GlobalBoss {
 
     @Override
     public List<BossMessage> getGeneralMessages() {
-        return Lists.newArrayList((Object[])new BossMessage[]{new BossMessage("There is no stopping me. No defeating me. You cannot win.", false, 0), new BossMessage("I am Yijki, destroyer of worlds. I'm afraid your time has come.", false, -1), new BossMessage("Your fate is inevitable, give up now.", false, 0), new BossMessage("Feel the power of absolute darkness.", false, 0)});
+        return Lists.newArrayList(new BossMessage("There is no stopping me. No defeating me. You cannot win.", false, 0), new BossMessage("I am Yijki, destroyer of worlds. I'm afraid your time has come.", false, -1), new BossMessage("Your fate is inevitable, give up now.", false, 0), new BossMessage("Feel the power of absolute darkness.", false, 0));
     }
 
     @Override

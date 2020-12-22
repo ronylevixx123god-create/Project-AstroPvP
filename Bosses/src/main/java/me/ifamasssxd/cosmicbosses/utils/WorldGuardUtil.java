@@ -3,13 +3,14 @@
  */
 package me.ifamasssxd.cosmicbosses.utils;
 
-import me.ifamasssxd.cosmicbosses.CosmicBossEggsPlugin;
 import com.sk89q.worldedit.Vector;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import com.sk89q.worldguard.protection.flags.StateFlag;
 import java.lang.reflect.Method;
 import java.util.List;
+
+import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -94,7 +95,7 @@ public class WorldGuardUtil {
     }
 
     private static WorldGuardPlugin getWorldGuard() {
-        Plugin plugin = CosmicBossEggsPlugin.getPlugin().getServer().getPluginManager().getPlugin("WorldGuard");
+        Plugin plugin = CosmicBosses.getInstance().getServer().getPluginManager().getPlugin("WorldGuard");
         if (plugin == null || !(plugin instanceof WorldGuardPlugin)) {
             return null;
         }

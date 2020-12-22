@@ -2,29 +2,29 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  net.minecraft.server.v1_7_R4.EntityHuman
- *  net.minecraft.server.v1_7_R4.EntityInsentient
- *  net.minecraft.server.v1_7_R4.EntitySlime
- *  net.minecraft.server.v1_7_R4.PathfinderGoal
- *  net.minecraft.server.v1_7_R4.PathfinderGoalFloat
- *  net.minecraft.server.v1_7_R4.PathfinderGoalLookAtPlayer
- *  net.minecraft.server.v1_7_R4.PathfinderGoalRandomLookaround
- *  net.minecraft.server.v1_7_R4.PathfinderGoalSelector
- *  net.minecraft.server.v1_7_R4.World
+ *  net.minecraft.server.v1_8_R3.EntityHuman
+ *  net.minecraft.server.v1_8_R3.EntityInsentient
+ *  net.minecraft.server.v1_8_R3.EntitySlime
+ *  net.minecraft.server.v1_8_R3.PathfinderGoal
+ *  net.minecraft.server.v1_8_R3.PathfinderGoalFloat
+ *  net.minecraft.server.v1_8_R3.PathfinderGoalLookAtPlayer
+ *  net.minecraft.server.v1_8_R3.PathfinderGoalRandomLookaround
+ *  net.minecraft.server.v1_8_R3.PathfinderGoalSelector
+ *  net.minecraft.server.v1_8_R3.World
  */
 package me.ifamasssxd.cosmicbosses.entities;
 
 import java.util.List;
 import me.ifamasssxd.cosmicbosses.utils.ReflectionUtils;
-import net.minecraft.server.v1_7_R4.EntityHuman;
-import net.minecraft.server.v1_7_R4.EntityInsentient;
-import net.minecraft.server.v1_7_R4.EntitySlime;
-import net.minecraft.server.v1_7_R4.PathfinderGoal;
-import net.minecraft.server.v1_7_R4.PathfinderGoalFloat;
-import net.minecraft.server.v1_7_R4.PathfinderGoalLookAtPlayer;
-import net.minecraft.server.v1_7_R4.PathfinderGoalRandomLookaround;
-import net.minecraft.server.v1_7_R4.PathfinderGoalSelector;
-import net.minecraft.server.v1_7_R4.World;
+import net.minecraft.server.v1_8_R3.EntityHuman;
+import net.minecraft.server.v1_8_R3.EntityInsentient;
+import net.minecraft.server.v1_8_R3.EntitySlime;
+import net.minecraft.server.v1_8_R3.PathfinderGoal;
+import net.minecraft.server.v1_8_R3.PathfinderGoalFloat;
+import net.minecraft.server.v1_8_R3.PathfinderGoalLookAtPlayer;
+import net.minecraft.server.v1_8_R3.PathfinderGoalRandomLookaround;
+import net.minecraft.server.v1_8_R3.PathfinderGoalSelector;
+import net.minecraft.server.v1_8_R3.World;
 
 public class SlimeMinion
 extends EntitySlime {

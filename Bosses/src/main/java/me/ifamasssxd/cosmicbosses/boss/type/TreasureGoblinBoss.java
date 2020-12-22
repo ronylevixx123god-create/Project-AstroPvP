@@ -11,7 +11,7 @@
  */
 package me.ifamasssxd.cosmicbosses.boss.type;
 
-import me.ifamasssxd.cosmicbosses.CosmicBossEggsPlugin;
+import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import me.ifamasssxd.cosmicbosses.utils.ParticleEffect;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
@@ -19,6 +19,7 @@ import java.util.HashSet;
 import java.util.Random;
 
 import me.ifamasssxd.cosmicbosses.boss.rarity.BossRarity;
+import me.ifamasssxd.cosmicfactionboosters.CosmicFactionBoosters;
 import net.minecraft.server.v1_8_R3.Packet;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
 import org.bukkit.Bukkit;
@@ -66,7 +67,7 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
         pz.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, Integer.MAX_VALUE, 1));
         l.getWorld().playSound(l, Sound.ZOMBIE_PIG_HURT, 2.0f, 0.5f);
         this.entity = pz;
-        pz.setMetadata("cbe_boss", new FixedMetadataValue((Plugin)CosmicBossEggsPlugin.getPlugin(), this.type.name()));
+        pz.setMetadata("cbe_boss", new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), this.type.name()));
         me.ifamasssxd.cosmicbosses.boss.type.Boss.boss_map.put(pz, this);
     }
 
@@ -76,7 +77,7 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
             return;
         }
         final Location loc = e.getEntity().getLocation().add(0.0, 1.0, 0.0);
-        Bukkit.getScheduler().runTaskAsynchronously((Plugin)CosmicBossEggsPlugin.getPlugin(), new Runnable(){
+        Bukkit.getScheduler().runTaskAsynchronously((Plugin)CosmicBosses.getInstance(), new Runnable(){
 
             @Override
             public void run() {
@@ -93,12 +94,12 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
         }
         int reaction = new Random().nextInt(10);
         if (reaction <= 10) {
-            CosmicBossEggsPlugin.getPlugin().getServer().getScheduler().runTaskAsynchronously((Plugin)CosmicBossEggsPlugin.getPlugin(), new Runnable(){
+            CosmicBosses.getInstance().getServer().getScheduler().runTaskAsynchronously((Plugin)CosmicBosses.getInstance(), new Runnable(){
 
                 @Override
                 public void run() {
                     PacketPlayOutWorldEvent particles = new PacketPlayOutWorldEvent(2001, Math.round(loc.getBlockX()), Math.round(loc.getBlockY()), Math.round(loc.getBlockZ()), loc.getWorld().getHighestBlockAt(loc).getTypeId(), false);
-                    ((CraftServer)CosmicBossEggsPlugin.getPlugin().getServer()).getServer().getPlayerList().sendPacketNearby((double)loc.getBlockX(), (double)loc.getBlockY(), (double)loc.getBlockZ(), 16.0, ((CraftWorld)loc.getWorld()).getHandle().dimension, (Packet) particles);
+                    ((CraftServer)CosmicBosses.getInstance().getServer()).getServer().getPlayerList().sendPacketNearby((double)loc.getBlockX(), (double)loc.getBlockY(), (double)loc.getBlockZ(), 16.0, ((CraftWorld)loc.getWorld()).getHandle().dimension, (Packet) particles);
                 }
             });
             Location new_loc = loc.add(new Random().nextInt(20), new Random().nextInt(10), new Random().nextInt(20));
@@ -109,7 +110,7 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
     @Override
     public void onBossDeath(EntityDeathEvent e) {
         final Location loc = e.getEntity().getLocation().add(0.0, 1.0, 0.0);
-        Bukkit.getScheduler().runTaskAsynchronously((Plugin)CosmicBossEggsPlugin.getPlugin(), new Runnable(){
+        Bukkit.getScheduler().runTaskAsynchronously((Plugin)CosmicBosses.getInstance(), new Runnable(){
 
             @Override
             public void run() {

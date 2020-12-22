@@ -112,7 +112,7 @@ public class HolidaySpirit
 extends Boss {
     Freeze freezeAbility;
     private int hitCounter = 0;
-    List<String> msg = Lists.newArrayList((Object[])new String[]{"Feel the spirit of the holidays consume you!", "This is so much FUN! Are you having fun [NAME]?!", "You're in for a real treat!", "Happy Halloween! Thankful Thanksgiving! Merry Christmas! Buhahaha!"});
+    List<String> msg = Lists.newArrayList("Feel the spirit of the holidays consume you!", "This is so much FUN! Are you having fun [NAME]?!", "You're in for a real treat!", "Happy Halloween! Thankful Thanksgiving! Merry Christmas! Buhahaha!");
 
     public HolidaySpirit(Location location, BossType bossType) {
         super(location, bossType);

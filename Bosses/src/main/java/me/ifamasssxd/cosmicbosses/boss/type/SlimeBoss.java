@@ -3,7 +3,7 @@
  */
 package me.ifamasssxd.cosmicbosses.boss.type;
 
-import me.ifamasssxd.cosmicbosses.CosmicBossEggsPlugin;
+import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import me.ifamasssxd.cosmicbosses.utils.ParticleEffect;
 import java.util.HashSet;
 import java.util.Random;
@@ -41,7 +41,7 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
         s.setCustomNameVisible(true);
         l.getWorld().playSound(l, Sound.SLIME_ATTACK, 2.0f, 0.5f);
         this.entity = s;
-        s.setMetadata("cbe_boss", new FixedMetadataValue((Plugin)CosmicBossEggsPlugin.getPlugin(), this.type.name()));
+        s.setMetadata("cbe_boss", new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), this.type.name()));
         me.ifamasssxd.cosmicbosses.boss.type.Boss.boss_map.put(s, this);
     }
 
@@ -57,7 +57,7 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
             s.setVelocity(new Vector(0.0, 1.1, 0.0));
             s.setMaxHealth(s.getMaxHealth() * 2.0);
             s.setHealth(s.getMaxHealth());
-            s.setMetadata("no_split", new FixedMetadataValue((Plugin)CosmicBossEggsPlugin.getPlugin(), true));
+            s.setMetadata("no_split", new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), true));
             if (this.baby_slimes == null) continue;
             this.baby_slimes.add(s);
         }
@@ -76,7 +76,7 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
             this.baby_slimes = null;
         }
         this.playSlimeEffect(e.getEntity().getLocation(), 200);
-        CosmicBossEggsPlugin.getPlugin().getServer().getScheduler().runTaskLater((Plugin)CosmicBossEggsPlugin.getPlugin(), new Runnable(){
+        CosmicBosses.getInstance().getServer().getScheduler().runTaskLater((Plugin)CosmicBosses.getInstance(), new Runnable(){
 
             @Override
             public void run() {
@@ -92,7 +92,7 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
     }
 
     private void playSlimeEffect(final Location l, final int c) {
-        CosmicBossEggsPlugin.getPlugin().getServer().getScheduler().runTaskAsynchronously((Plugin)CosmicBossEggsPlugin.getPlugin(), new Runnable(){
+        CosmicBosses.getInstance().getServer().getScheduler().runTaskAsynchronously((Plugin)CosmicBosses.getInstance(), new Runnable(){
 
             @Override
             public void run() {

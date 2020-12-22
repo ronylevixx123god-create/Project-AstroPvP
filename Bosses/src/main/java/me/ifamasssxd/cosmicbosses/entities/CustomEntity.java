@@ -2,21 +2,21 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  net.minecraft.server.v1_7_R4.BiomeBase
- *  net.minecraft.server.v1_7_R4.BiomeMeta
- *  net.minecraft.server.v1_7_R4.Entity
- *  net.minecraft.server.v1_7_R4.EntityBlaze
- *  net.minecraft.server.v1_7_R4.EntityCaveSpider
- *  net.minecraft.server.v1_7_R4.EntityEnderDragon
- *  net.minecraft.server.v1_7_R4.EntityEnderman
- *  net.minecraft.server.v1_7_R4.EntityGhast
- *  net.minecraft.server.v1_7_R4.EntityInsentient
- *  net.minecraft.server.v1_7_R4.EntitySkeleton
- *  net.minecraft.server.v1_7_R4.EntitySnowman
- *  net.minecraft.server.v1_7_R4.EntitySpider
- *  net.minecraft.server.v1_7_R4.EntityTypes
- *  net.minecraft.server.v1_7_R4.EntityWither
- *  net.minecraft.server.v1_7_R4.EntityZombie
+ *  net.minecraft.server.v1_8_R3.BiomeBase
+ *  net.minecraft.server.v1_8_R3.BiomeMeta
+ *  net.minecraft.server.v1_8_R3.Entity
+ *  net.minecraft.server.v1_8_R3.EntityBlaze
+ *  net.minecraft.server.v1_8_R3.EntityCaveSpider
+ *  net.minecraft.server.v1_8_R3.EntityEnderDragon
+ *  net.minecraft.server.v1_8_R3.EntityEnderman
+ *  net.minecraft.server.v1_8_R3.EntityGhast
+ *  net.minecraft.server.v1_8_R3.EntityInsentient
+ *  net.minecraft.server.v1_8_R3.EntitySkeleton
+ *  net.minecraft.server.v1_8_R3.EntitySnowman
+ *  net.minecraft.server.v1_8_R3.EntitySpider
+ *  net.minecraft.server.v1_8_R3.EntityTypes
+ *  net.minecraft.server.v1_8_R3.EntityWither
+ *  net.minecraft.server.v1_8_R3.EntityZombie
  *  org.bukkit.entity.EntityType
  */
 package me.ifamasssxd.cosmicbosses.entities;
@@ -43,21 +43,21 @@ import me.ifamasssxd.cosmicbosses.entities.SkeletonBoss;
 import me.ifamasssxd.cosmicbosses.entities.SoulReaperEnderman;
 import me.ifamasssxd.cosmicbosses.entities.SpiderBoss;
 import me.ifamasssxd.cosmicbosses.evilabomination.EvilAbominationEntity;
-import net.minecraft.server.v1_7_R4.BiomeBase;
-import net.minecraft.server.v1_7_R4.BiomeMeta;
-import net.minecraft.server.v1_7_R4.Entity;
-import net.minecraft.server.v1_7_R4.EntityBlaze;
-import net.minecraft.server.v1_7_R4.EntityCaveSpider;
-import net.minecraft.server.v1_7_R4.EntityEnderDragon;
-import net.minecraft.server.v1_7_R4.EntityEnderman;
-import net.minecraft.server.v1_7_R4.EntityGhast;
-import net.minecraft.server.v1_7_R4.EntityInsentient;
-import net.minecraft.server.v1_7_R4.EntitySkeleton;
-import net.minecraft.server.v1_7_R4.EntitySnowman;
-import net.minecraft.server.v1_7_R4.EntitySpider;
-import net.minecraft.server.v1_7_R4.EntityTypes;
-import net.minecraft.server.v1_7_R4.EntityWither;
-import net.minecraft.server.v1_7_R4.EntityZombie;
+import net.minecraft.server.v1_8_R3.BiomeBase;
+import net.minecraft.server.v1_8_R3.BiomeMeta;
+import net.minecraft.server.v1_8_R3.Entity;
+import net.minecraft.server.v1_8_R3.EntityBlaze;
+import net.minecraft.server.v1_8_R3.EntityCaveSpider;
+import net.minecraft.server.v1_8_R3.EntityEnderDragon;
+import net.minecraft.server.v1_8_R3.EntityEnderman;
+import net.minecraft.server.v1_8_R3.EntityGhast;
+import net.minecraft.server.v1_8_R3.EntityInsentient;
+import net.minecraft.server.v1_8_R3.EntitySkeleton;
+import net.minecraft.server.v1_8_R3.EntitySnowman;
+import net.minecraft.server.v1_8_R3.EntitySpider;
+import net.minecraft.server.v1_8_R3.EntityTypes;
+import net.minecraft.server.v1_8_R3.EntityWither;
+import net.minecraft.server.v1_8_R3.EntityZombie;
 import org.bukkit.entity.EntityType;
 
 public enum CustomEntity {

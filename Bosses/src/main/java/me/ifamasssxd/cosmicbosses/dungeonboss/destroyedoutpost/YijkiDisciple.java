@@ -3,15 +3,15 @@
  * 
  * Could not load the following classes:
  *  com.google.common.collect.Lists
- *  net.minecraft.server.v1_7_R4.Entity
- *  net.minecraft.server.v1_7_R4.EntitySkeleton
+ *  net.minecraft.server.v1_8_R3.Entity
+ *  net.minecraft.server.v1_8_R3.EntitySkeleton
  *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
  *  org.bukkit.ChatColor
  *  org.bukkit.Location
  *  org.bukkit.Material
  *  org.bukkit.Sound
- *  org.bukkit.craftbukkit.v1_7_R4.entity.CraftEntity
- *  org.bukkit.craftbukkit.v1_7_R4.entity.CraftSkeleton
+ *  org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity
+ *  org.bukkit.craftbukkit.v1_8_R3.entity.CraftSkeleton
  *  org.bukkit.enchantments.Enchantment
  *  org.bukkit.entity.Arrow
  *  org.bukkit.entity.Creature
@@ -51,15 +51,15 @@ import me.ifamasssxd.cosmicbosses.struct.enums.Difficulty;
 import me.ifamasssxd.cosmicbosses.utils.BossUtils;
 import me.ifamasssxd.cosmicbosses.utils.CustomItem;
 import me.ifamasssxd.cosmicbosses.utils.ItemBuilder;
-import net.minecraft.server.v1_7_R4.Entity;
-import net.minecraft.server.v1_7_R4.EntitySkeleton;
+import net.minecraft.server.v1_8_R3.Entity;
+import net.minecraft.server.v1_8_R3.EntitySkeleton;
 import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftSkeleton;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftSkeleton;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Creature;

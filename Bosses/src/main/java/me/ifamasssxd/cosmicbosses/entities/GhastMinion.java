@@ -2,17 +2,17 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  net.minecraft.server.v1_7_R4.AxisAlignedBB
- *  net.minecraft.server.v1_7_R4.Entity
- *  net.minecraft.server.v1_7_R4.EntityGhast
- *  net.minecraft.server.v1_7_R4.EntityHuman
- *  net.minecraft.server.v1_7_R4.EntityLargeFireball
- *  net.minecraft.server.v1_7_R4.EntityLiving
- *  net.minecraft.server.v1_7_R4.EnumDifficulty
- *  net.minecraft.server.v1_7_R4.MathHelper
- *  net.minecraft.server.v1_7_R4.Vec3D
- *  net.minecraft.server.v1_7_R4.World
- *  org.bukkit.craftbukkit.v1_7_R4.entity.CraftEntity
+ *  net.minecraft.server.v1_8_R3.AxisAlignedBB
+ *  net.minecraft.server.v1_8_R3.Entity
+ *  net.minecraft.server.v1_8_R3.EntityGhast
+ *  net.minecraft.server.v1_8_R3.EntityHuman
+ *  net.minecraft.server.v1_8_R3.EntityLargeFireball
+ *  net.minecraft.server.v1_8_R3.EntityLiving
+ *  net.minecraft.server.v1_8_R3.EnumDifficulty
+ *  net.minecraft.server.v1_8_R3.MathHelper
+ *  net.minecraft.server.v1_8_R3.Vec3D
+ *  net.minecraft.server.v1_8_R3.World
+ *  org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity
  *  org.bukkit.entity.Entity
  *  org.bukkit.entity.LargeFireball
  *  org.bukkit.event.Event
@@ -26,17 +26,17 @@ import java.util.UUID;
 import me.ifamasssxd.cosmicbosses.bosses.plaguebloater.PlagueBloater;
 import me.ifamasssxd.cosmicbosses.bosses.plaguebloater.PlagueCarriers;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
-import net.minecraft.server.v1_7_R4.AxisAlignedBB;
-import net.minecraft.server.v1_7_R4.Entity;
-import net.minecraft.server.v1_7_R4.EntityGhast;
-import net.minecraft.server.v1_7_R4.EntityHuman;
-import net.minecraft.server.v1_7_R4.EntityLargeFireball;
-import net.minecraft.server.v1_7_R4.EntityLiving;
-import net.minecraft.server.v1_7_R4.EnumDifficulty;
-import net.minecraft.server.v1_7_R4.MathHelper;
-import net.minecraft.server.v1_7_R4.Vec3D;
-import net.minecraft.server.v1_7_R4.World;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftEntity;
+import net.minecraft.server.v1_8_R3.AxisAlignedBB;
+import net.minecraft.server.v1_8_R3.Entity;
+import net.minecraft.server.v1_8_R3.EntityGhast;
+import net.minecraft.server.v1_8_R3.EntityHuman;
+import net.minecraft.server.v1_8_R3.EntityLargeFireball;
+import net.minecraft.server.v1_8_R3.EntityLiving;
+import net.minecraft.server.v1_8_R3.EnumDifficulty;
+import net.minecraft.server.v1_8_R3.MathHelper;
+import net.minecraft.server.v1_8_R3.Vec3D;
+import net.minecraft.server.v1_8_R3.World;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.LargeFireball;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityTargetEvent;

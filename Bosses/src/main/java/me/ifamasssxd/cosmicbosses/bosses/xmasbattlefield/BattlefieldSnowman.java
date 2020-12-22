@@ -122,7 +122,7 @@ extends Boss {
     private ElfSpawn elfSpawn;
     private ItemStack skull;
     private int hitCounter = 0;
-    List<String> msg = Lists.newArrayList((Object[])new String[]{"Feel the spirit of the holidays consume you!", "This is so much FUN! Are you having fun [NAME]?!", "You're in for a real treat!", "Happy Halloween! Thankful Thanksgiving! Merry Christmas! Buhahaha!"});
+    List<String> msg = Lists.newArrayList("Feel the spirit of the holidays consume you!", "This is so much FUN! Are you having fun [NAME]?!", "You're in for a real treat!", "Happy Halloween! Thankful Thanksgiving! Merry Christmas! Buhahaha!");
 
     public BattlefieldSnowman(Location location, BossType bossType) {
         super(location, bossType);
@@ -494,7 +494,7 @@ extends Boss {
 
     @Override
     public List<BossMessage> getGeneralMessages() {
-        return Lists.newArrayList((Object[])new BossMessage[]{new BossMessage("I've brought you something good to eat!", false, -1)});
+        return Lists.newArrayList(new BossMessage("I've brought you something good to eat!", false, -1));
     }
 }
 

@@ -2,24 +2,24 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  net.minecraft.server.v1_7_R4.DamageSource
- *  net.minecraft.server.v1_7_R4.EntityLiving
- *  net.minecraft.server.v1_7_R4.EntityMonster
- *  net.minecraft.server.v1_7_R4.EnumEntitySize
- *  net.minecraft.server.v1_7_R4.IRangedEntity
- *  net.minecraft.server.v1_7_R4.World
+ *  net.minecraft.server.v1_8_R3.DamageSource
+ *  net.minecraft.server.v1_8_R3.EntityLiving
+ *  net.minecraft.server.v1_8_R3.EntityMonster
+ *  net.minecraft.server.v1_8_R3.EnumEntitySize
+ *  net.minecraft.server.v1_8_R3.IRangedEntity
+ *  net.minecraft.server.v1_8_R3.World
  *  org.bukkit.Bukkit
  *  org.bukkit.Location
  *  org.bukkit.util.Vector
  */
 package me.ifamasssxd.cosmicbosses.dungeonboss;
 
-import net.minecraft.server.v1_7_R4.DamageSource;
-import net.minecraft.server.v1_7_R4.EntityLiving;
-import net.minecraft.server.v1_7_R4.EntityMonster;
-import net.minecraft.server.v1_7_R4.EnumEntitySize;
-import net.minecraft.server.v1_7_R4.IRangedEntity;
-import net.minecraft.server.v1_7_R4.World;
+import net.minecraft.server.v1_8_R3.DamageSource;
+import net.minecraft.server.v1_8_R3.EntityLiving;
+import net.minecraft.server.v1_8_R3.EntityMonster;
+import net.minecraft.server.v1_8_R3.EnumEntitySize;
+import net.minecraft.server.v1_8_R3.IRangedEntity;
+import net.minecraft.server.v1_8_R3.World;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;

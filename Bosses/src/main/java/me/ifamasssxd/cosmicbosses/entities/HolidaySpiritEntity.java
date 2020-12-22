@@ -3,24 +3,24 @@
  * 
  * Could not load the following classes:
  *  net.citizensnpcs.npc.entity.EntityHumanNPC
- *  net.minecraft.server.v1_7_R4.EntityCreature
- *  net.minecraft.server.v1_7_R4.EntityHuman
- *  net.minecraft.server.v1_7_R4.EntityInsentient
- *  net.minecraft.server.v1_7_R4.GenericAttributes
- *  net.minecraft.server.v1_7_R4.Item
- *  net.minecraft.server.v1_7_R4.Items
- *  net.minecraft.server.v1_7_R4.Material
- *  net.minecraft.server.v1_7_R4.MathHelper
- *  net.minecraft.server.v1_7_R4.PathfinderGoal
- *  net.minecraft.server.v1_7_R4.PathfinderGoalLookAtPlayer
- *  net.minecraft.server.v1_7_R4.PathfinderGoalNearestAttackableTarget
- *  net.minecraft.server.v1_7_R4.PathfinderGoalRandomLookaround
- *  net.minecraft.server.v1_7_R4.World
+ *  net.minecraft.server.v1_8_R3.EntityCreature
+ *  net.minecraft.server.v1_8_R3.EntityHuman
+ *  net.minecraft.server.v1_8_R3.EntityInsentient
+ *  net.minecraft.server.v1_8_R3.GenericAttributes
+ *  net.minecraft.server.v1_8_R3.Item
+ *  net.minecraft.server.v1_8_R3.Items
+ *  net.minecraft.server.v1_8_R3.Material
+ *  net.minecraft.server.v1_8_R3.MathHelper
+ *  net.minecraft.server.v1_8_R3.PathfinderGoal
+ *  net.minecraft.server.v1_8_R3.PathfinderGoalLookAtPlayer
+ *  net.minecraft.server.v1_8_R3.PathfinderGoalNearestAttackableTarget
+ *  net.minecraft.server.v1_8_R3.PathfinderGoalRandomLookaround
+ *  net.minecraft.server.v1_8_R3.World
  *  org.bukkit.Location
  *  org.bukkit.Material
  *  org.bukkit.World
- *  org.bukkit.craftbukkit.v1_7_R4.entity.CraftCreature
- *  org.bukkit.craftbukkit.v1_7_R4.entity.CraftEntity
+ *  org.bukkit.craftbukkit.v1_8_R3.entity.CraftCreature
+ *  org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity
  */
 package me.ifamasssxd.cosmicbosses.entities;
 
@@ -30,22 +30,22 @@ import me.ifamasssxd.cosmicbosses.bosses.holidayspirit.HolidaySpirit;
 import me.ifamasssxd.cosmicbosses.bosses.holidayspirit.PathfinderGoalArrowAttackSnowman;
 import me.ifamasssxd.cosmicbosses.struct.blockmanager.BlockChangeManager;
 import net.citizensnpcs.npc.entity.EntityHumanNPC;
-import net.minecraft.server.v1_7_R4.EntityCreature;
-import net.minecraft.server.v1_7_R4.EntityHuman;
-import net.minecraft.server.v1_7_R4.EntityInsentient;
-import net.minecraft.server.v1_7_R4.GenericAttributes;
-import net.minecraft.server.v1_7_R4.Item;
-import net.minecraft.server.v1_7_R4.Items;
-import net.minecraft.server.v1_7_R4.Material;
-import net.minecraft.server.v1_7_R4.MathHelper;
-import net.minecraft.server.v1_7_R4.PathfinderGoal;
-import net.minecraft.server.v1_7_R4.PathfinderGoalLookAtPlayer;
-import net.minecraft.server.v1_7_R4.PathfinderGoalNearestAttackableTarget;
-import net.minecraft.server.v1_7_R4.PathfinderGoalRandomLookaround;
-import net.minecraft.server.v1_7_R4.World;
+import net.minecraft.server.v1_8_R3.EntityCreature;
+import net.minecraft.server.v1_8_R3.EntityHuman;
+import net.minecraft.server.v1_8_R3.EntityInsentient;
+import net.minecraft.server.v1_8_R3.GenericAttributes;
+import net.minecraft.server.v1_8_R3.Item;
+import net.minecraft.server.v1_8_R3.Items;
+import net.minecraft.server.v1_8_R3.Material;
+import net.minecraft.server.v1_8_R3.MathHelper;
+import net.minecraft.server.v1_8_R3.PathfinderGoal;
+import net.minecraft.server.v1_8_R3.PathfinderGoalLookAtPlayer;
+import net.minecraft.server.v1_8_R3.PathfinderGoalNearestAttackableTarget;
+import net.minecraft.server.v1_8_R3.PathfinderGoalRandomLookaround;
+import net.minecraft.server.v1_8_R3.World;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftCreature;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftCreature;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 
 public class HolidaySpiritEntity
 extends EntityHolidayGolem {

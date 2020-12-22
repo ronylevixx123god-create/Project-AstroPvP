@@ -352,7 +352,7 @@ extends Boss {
 
     @Override
     public List<BossMessage> getGeneralMessages() {
-        return Lists.newArrayList((Object[])new BossMessage[]{new BossMessage((Object)ChatColor.LIGHT_PURPLE + "Your soul is mine now [NAME]!", false, 0)});
+        return Lists.newArrayList(new BossMessage((Object)ChatColor.LIGHT_PURPLE + "Your soul is mine now [NAME]!", false, 0));
     }
 }
 

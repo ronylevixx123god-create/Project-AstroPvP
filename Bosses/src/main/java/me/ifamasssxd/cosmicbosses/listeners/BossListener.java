@@ -45,7 +45,6 @@ import com.google.common.collect.Lists;
 
 import java.util.*;
 
-import me.ifamasssxd.cosmicbosses.CosmicBossEggsPlugin;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import me.ifamasssxd.cosmicbosses.bosses.intergalacticenforcer.Enforcer;
 import me.ifamasssxd.cosmicbosses.bosses.intergalacticenforcer.Marksman;
@@ -330,7 +329,7 @@ implements Listener {
                         }
                         Bukkit.getPlayer(pn).sendMessage((Object)((Object)ChatColor.RED) + "You had no room in your inventory for loot!");
                         Bukkit.getPlayer(pn).sendMessage((Object)((Object)ChatColor.GRAY) + "Type /lootredeem to get your reward!");
-                        Bukkit.getPlayer(pn).setMetadata("lootredeem", new FixedMetadataValue((Plugin)CosmicBossEggsPlugin.getPlugin(), reward));
+                        Bukkit.getPlayer(pn).setMetadata("lootredeem", new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), reward));
                         continue;
                     }
                     if (Bukkit.getPlayer(pn) == null) continue;
@@ -352,13 +351,13 @@ implements Listener {
         if (e.getEntity() instanceof Fireball && (shooter = (Entity)((Object)e.getEntity().getShooter())) != null && shooter.getType() == EntityType.BLAZE && me.ifamasssxd.cosmicbosses.boss.type.Boss.boss_map.containsKey(shooter)) {
             BlazeBoss b = (BlazeBoss) me.ifamasssxd.cosmicbosses.boss.type.Boss.boss_map.get(shooter);
             final Projectile orig_proj = e.getEntity();
-            CosmicBossEggsPlugin.getPlugin().getServer().getScheduler().scheduleSyncDelayedTask((Plugin)CosmicBossEggsPlugin.getPlugin(), new Runnable(){
+            CosmicBossEggsPlugin.getPlugin().getServer().getScheduler().scheduleSyncDelayedTask((Plugin)CosmicBosses.getInstance(), new Runnable(){
 
                 @Override
                 public void run() {
                     if (!orig_proj.hasMetadata("no_spawn")) {
                         SmallFireball FB = ((Blaze)shooter).launchProjectile(SmallFireball.class);
-                        FB.setMetadata("no_spawn", new FixedMetadataValue((Plugin)CosmicBossEggsPlugin.getPlugin(), true));
+                        FB.setMetadata("no_spawn", new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), true));
                         FB.setVelocity(orig_proj.getVelocity());
                     }
                 }
@@ -380,7 +379,7 @@ implements Listener {
                     ms.setSize(new Random().nextInt(3) + 1);
                     ms.setCanPickupItems(false);
                     ms.setRemoveWhenFarAway(true);
-                    ms.setMetadata("no_split", new FixedMetadataValue((Plugin)CosmicBossEggsPlugin.getPlugin(), true));
+                    ms.setMetadata("no_split", new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), true));
                     if (b != null && b.minions != null) {
                         b.minions.add(ms);
                     } else {
@@ -432,7 +431,7 @@ implements Listener {
             } else {
                 final Location loc = e.getVehicle().getLocation();
                 e.getVehicle().remove();
-                Bukkit.getScheduler().runTaskAsynchronously((Plugin)CosmicBossEggsPlugin.getPlugin(), new Runnable(){
+                Bukkit.getScheduler().runTaskAsynchronously((Plugin)CosmicBosses.getInstance(), new Runnable(){
 
                     @Override
                     public void run() {
@@ -466,7 +465,7 @@ implements Listener {
             }
             final Location loc = e.getEntity().getLocation();
             if (new Random().nextInt(5) == 0 && slave_count < 4) {
-                Bukkit.getScheduler().runTaskLater((Plugin)CosmicBossEggsPlugin.getPlugin(), new Runnable(){
+                Bukkit.getScheduler().runTaskLater((Plugin)CosmicBosses.getInstance(), new Runnable(){
 
                     @Override
                     public void run() {
@@ -482,9 +481,9 @@ implements Listener {
                             sk.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, Integer.MAX_VALUE, 0));
                             sk.setCustomName(sk.getSkeletonType() == Skeleton.SkeletonType.NORMAL ? (Object)((Object)ChatColor.RED) + "Headless Undead" : (Object)((Object)ChatColor.RED) + "Headless Ghoul");
                             sk.setCustomNameVisible(true);
-                            sk.setMetadata("undead_slave", new FixedMetadataValue((Plugin)CosmicBossEggsPlugin.getPlugin(), true));
+                            sk.setMetadata("undead_slave", new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), true));
                         }
-                        Bukkit.getScheduler().runTaskAsynchronously((Plugin)CosmicBossEggsPlugin.getPlugin(), new Runnable(){
+                        Bukkit.getScheduler().runTaskAsynchronously(CosmicBosses.getInstance(), new Runnable(){
 
                             @Override
                             public void run() {

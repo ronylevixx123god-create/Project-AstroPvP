@@ -2,28 +2,28 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  net.minecraft.server.v1_7_R4.Entity
- *  net.minecraft.server.v1_7_R4.EntityCreature
- *  net.minecraft.server.v1_7_R4.EntityHuman
- *  net.minecraft.server.v1_7_R4.EntityInsentient
- *  net.minecraft.server.v1_7_R4.EntityLiving
- *  net.minecraft.server.v1_7_R4.EntityPlayer
- *  net.minecraft.server.v1_7_R4.EntityWitherSkull
- *  net.minecraft.server.v1_7_R4.EntityZombie
- *  net.minecraft.server.v1_7_R4.IRangedEntity
- *  net.minecraft.server.v1_7_R4.MathHelper
- *  net.minecraft.server.v1_7_R4.MovingObjectPosition
- *  net.minecraft.server.v1_7_R4.PathfinderGoal
- *  net.minecraft.server.v1_7_R4.PathfinderGoalFloat
- *  net.minecraft.server.v1_7_R4.PathfinderGoalHurtByTarget
- *  net.minecraft.server.v1_7_R4.PathfinderGoalLookAtPlayer
- *  net.minecraft.server.v1_7_R4.PathfinderGoalNearestAttackableTarget
- *  net.minecraft.server.v1_7_R4.PathfinderGoalRandomLookaround
- *  net.minecraft.server.v1_7_R4.PathfinderGoalSelector
- *  net.minecraft.server.v1_7_R4.World
+ *  net.minecraft.server.v1_8_R3.Entity
+ *  net.minecraft.server.v1_8_R3.EntityCreature
+ *  net.minecraft.server.v1_8_R3.EntityHuman
+ *  net.minecraft.server.v1_8_R3.EntityInsentient
+ *  net.minecraft.server.v1_8_R3.EntityLiving
+ *  net.minecraft.server.v1_8_R3.EntityPlayer
+ *  net.minecraft.server.v1_8_R3.EntityWitherSkull
+ *  net.minecraft.server.v1_8_R3.EntityZombie
+ *  net.minecraft.server.v1_8_R3.IRangedEntity
+ *  net.minecraft.server.v1_8_R3.MathHelper
+ *  net.minecraft.server.v1_8_R3.MovingObjectPosition
+ *  net.minecraft.server.v1_8_R3.PathfinderGoal
+ *  net.minecraft.server.v1_8_R3.PathfinderGoalFloat
+ *  net.minecraft.server.v1_8_R3.PathfinderGoalHurtByTarget
+ *  net.minecraft.server.v1_8_R3.PathfinderGoalLookAtPlayer
+ *  net.minecraft.server.v1_8_R3.PathfinderGoalNearestAttackableTarget
+ *  net.minecraft.server.v1_8_R3.PathfinderGoalRandomLookaround
+ *  net.minecraft.server.v1_8_R3.PathfinderGoalSelector
+ *  net.minecraft.server.v1_8_R3.World
  *  org.bukkit.GameMode
  *  org.bukkit.Location
- *  org.bukkit.craftbukkit.v1_7_R4.entity.CraftEntity
+ *  org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity
  *  org.bukkit.entity.Entity
  *  org.bukkit.entity.LivingEntity
  *  org.bukkit.entity.Player
@@ -37,28 +37,28 @@ import me.ifamasssxd.cosmicbosses.bosses.yijki.PathfinderGoalWitherBossArrowAtta
 import me.ifamasssxd.cosmicbosses.evilabomination.EvilAbomination;
 import me.ifamasssxd.cosmicbosses.struct.Phase;
 import me.ifamasssxd.cosmicbosses.utils.ReflectionUtils;
-import net.minecraft.server.v1_7_R4.Entity;
-import net.minecraft.server.v1_7_R4.EntityCreature;
-import net.minecraft.server.v1_7_R4.EntityHuman;
-import net.minecraft.server.v1_7_R4.EntityInsentient;
-import net.minecraft.server.v1_7_R4.EntityLiving;
-import net.minecraft.server.v1_7_R4.EntityPlayer;
-import net.minecraft.server.v1_7_R4.EntityWitherSkull;
-import net.minecraft.server.v1_7_R4.EntityZombie;
-import net.minecraft.server.v1_7_R4.IRangedEntity;
-import net.minecraft.server.v1_7_R4.MathHelper;
-import net.minecraft.server.v1_7_R4.MovingObjectPosition;
-import net.minecraft.server.v1_7_R4.PathfinderGoal;
-import net.minecraft.server.v1_7_R4.PathfinderGoalFloat;
-import net.minecraft.server.v1_7_R4.PathfinderGoalHurtByTarget;
-import net.minecraft.server.v1_7_R4.PathfinderGoalLookAtPlayer;
-import net.minecraft.server.v1_7_R4.PathfinderGoalNearestAttackableTarget;
-import net.minecraft.server.v1_7_R4.PathfinderGoalRandomLookaround;
-import net.minecraft.server.v1_7_R4.PathfinderGoalSelector;
-import net.minecraft.server.v1_7_R4.World;
+import net.minecraft.server.v1_8_R3.Entity;
+import net.minecraft.server.v1_8_R3.EntityCreature;
+import net.minecraft.server.v1_8_R3.EntityHuman;
+import net.minecraft.server.v1_8_R3.EntityInsentient;
+import net.minecraft.server.v1_8_R3.EntityLiving;
+import net.minecraft.server.v1_8_R3.EntityPlayer;
+import net.minecraft.server.v1_8_R3.EntityWitherSkull;
+import net.minecraft.server.v1_8_R3.EntityZombie;
+import net.minecraft.server.v1_8_R3.IRangedEntity;
+import net.minecraft.server.v1_8_R3.MathHelper;
+import net.minecraft.server.v1_8_R3.MovingObjectPosition;
+import net.minecraft.server.v1_8_R3.PathfinderGoal;
+import net.minecraft.server.v1_8_R3.PathfinderGoalFloat;
+import net.minecraft.server.v1_8_R3.PathfinderGoalHurtByTarget;
+import net.minecraft.server.v1_8_R3.PathfinderGoalLookAtPlayer;
+import net.minecraft.server.v1_8_R3.PathfinderGoalNearestAttackableTarget;
+import net.minecraft.server.v1_8_R3.PathfinderGoalRandomLookaround;
+import net.minecraft.server.v1_8_R3.PathfinderGoalSelector;
+import net.minecraft.server.v1_8_R3.World;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;

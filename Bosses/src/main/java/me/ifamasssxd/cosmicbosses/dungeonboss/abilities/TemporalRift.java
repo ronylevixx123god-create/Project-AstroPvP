@@ -4,21 +4,21 @@
  * Could not load the following classes:
  *  com.google.common.collect.Lists
  *  com.sk89q.worldguard.protection.flags.DefaultFlag
- *  net.minecraft.server.v1_7_R4.BlockEnderPortal
- *  net.minecraft.server.v1_7_R4.Entity
- *  net.minecraft.server.v1_7_R4.EntityHuman
- *  net.minecraft.server.v1_7_R4.EntityLiving
- *  net.minecraft.server.v1_7_R4.EntityWitherSkull
- *  net.minecraft.server.v1_7_R4.MovingObjectPosition
- *  net.minecraft.server.v1_7_R4.World
- *  net.minecraft.server.v1_7_R4.WorldServer
+ *  net.minecraft.server.v1_8_R3.BlockEnderPortal
+ *  net.minecraft.server.v1_8_R3.Entity
+ *  net.minecraft.server.v1_8_R3.EntityHuman
+ *  net.minecraft.server.v1_8_R3.EntityLiving
+ *  net.minecraft.server.v1_8_R3.EntityWitherSkull
+ *  net.minecraft.server.v1_8_R3.MovingObjectPosition
+ *  net.minecraft.server.v1_8_R3.World
+ *  net.minecraft.server.v1_8_R3.WorldServer
  *  org.bukkit.Bukkit
  *  org.bukkit.Location
  *  org.bukkit.Material
  *  org.bukkit.Sound
  *  org.bukkit.block.Block
  *  org.bukkit.block.BlockFace
- *  org.bukkit.craftbukkit.v1_7_R4.CraftWorld
+ *  org.bukkit.craftbukkit.v1_8_R3.CraftWorld
  *  org.bukkit.entity.LivingEntity
  *  org.bukkit.event.Event
  *  org.bukkit.event.entity.CreatureSpawnEvent$SpawnReason
@@ -42,21 +42,21 @@ import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijki;
 import me.ifamasssxd.cosmicbosses.struct.BlockModifier;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.cosmicbosses.utils.WorldGuardUtils;
-import net.minecraft.server.v1_7_R4.BlockEnderPortal;
-import net.minecraft.server.v1_7_R4.Entity;
-import net.minecraft.server.v1_7_R4.EntityHuman;
-import net.minecraft.server.v1_7_R4.EntityLiving;
-import net.minecraft.server.v1_7_R4.EntityWitherSkull;
-import net.minecraft.server.v1_7_R4.MovingObjectPosition;
-import net.minecraft.server.v1_7_R4.World;
-import net.minecraft.server.v1_7_R4.WorldServer;
+import net.minecraft.server.v1_8_R3.BlockEnderPortal;
+import net.minecraft.server.v1_8_R3.Entity;
+import net.minecraft.server.v1_8_R3.EntityHuman;
+import net.minecraft.server.v1_8_R3.EntityLiving;
+import net.minecraft.server.v1_8_R3.EntityWitherSkull;
+import net.minecraft.server.v1_8_R3.MovingObjectPosition;
+import net.minecraft.server.v1_8_R3.World;
+import net.minecraft.server.v1_8_R3.WorldServer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.craftbukkit.v1_7_R4.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.CreatureSpawnEvent;

@@ -8,7 +8,7 @@
  */
 package me.ifamasssxd.cosmicbosses.listeners;
 
-import me.ifamasssxd.cosmicbosses.CosmicBossEggsPlugin;
+import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import me.ifamasssxd.cosmicbosses.boss.type.Boss;
 import me.ifamasssxd.cosmicbosses.boss.type.Bosses;
 import me.ifamasssxd.cosmicbosses.utils.WorldGuardUtil;
@@ -89,7 +89,7 @@ public class BossEggListener implements Listener {
             e.setCancelled(true);
             e.setResult(Event.Result.DENY);
             pl.updateInventory();
-            Bukkit.getServer().getScheduler().runTaskLater((Plugin)CosmicBossEggsPlugin.getPlugin(), new Runnable(){
+            Bukkit.getServer().getScheduler().runTaskLater((Plugin) CosmicBosses.getInstance(), new Runnable(){
 
                 @Override
                 public void run() {

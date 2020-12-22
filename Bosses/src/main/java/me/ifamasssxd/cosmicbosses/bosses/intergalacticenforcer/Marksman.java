@@ -235,7 +235,7 @@ implements GuardBoss {
 
     @Override
     public List<BossMessage> getGeneralMessages() {
-        return Lists.newArrayList((Object[])new BossMessage[]{new BossMessage("You will crumble under my arrow!", false, -1)});
+        return Lists.newArrayList(new BossMessage("You will crumble under my arrow!", false, -1));
     }
 }
 

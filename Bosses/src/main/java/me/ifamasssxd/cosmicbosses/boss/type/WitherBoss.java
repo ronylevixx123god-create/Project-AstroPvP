@@ -3,7 +3,7 @@
  */
 package me.ifamasssxd.cosmicbosses.boss.type;
 
-import me.ifamasssxd.cosmicbosses.CosmicBossEggsPlugin;
+import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import me.ifamasssxd.cosmicbosses.boss.rarity.BossRarity;
 import me.ifamasssxd.cosmicbosses.utils.ParticleEffect;
 import java.util.HashSet;
@@ -50,9 +50,9 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
         l.getWorld().playSound(l, Sound.WITHER_SPAWN, 2.0f, 0.5f);
         this.spawn_y = l.getBlockY();
         this.entity = w;
-        w.setMetadata("cbe_boss", new FixedMetadataValue((Plugin)CosmicBossEggsPlugin.getPlugin(), this.type.name()));
+        w.setMetadata("cbe_boss", new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), this.type.name()));
         me.ifamasssxd.cosmicbosses.boss.type.Boss.boss_map.put(w, this);
-        this.height_limit_task_id = CosmicBossEggsPlugin.getPlugin().getServer().getScheduler().runTaskTimer((Plugin)CosmicBossEggsPlugin.getPlugin(), new Runnable(){
+        this.height_limit_task_id = CosmicBosses.getInstance().getServer().getScheduler().runTaskTimer((Plugin)CosmicBosses.getInstance(), new Runnable(){
             final int final_spawn_y;
             {
                 this.final_spawn_y = WitherBoss.this.spawn_y;
@@ -92,7 +92,7 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
             this.minions = null;
         }
         this.playWitherEffect(e.getEntity().getLocation(), 50);
-        CosmicBossEggsPlugin.getPlugin().getServer().getScheduler().cancelTask(this.height_limit_task_id);
+        CosmicBosses.getInstance().getServer().getScheduler().cancelTask(this.height_limit_task_id);
         Boss.boss_map.remove(this.entity);
     }
 
@@ -102,7 +102,7 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
             WitherSkull ws = (WitherSkull)((EntityDamageByEntityEvent)e).getDamager();
             final Location loc = ws.getLocation();
             if (new Random().nextBoolean()) {
-                CosmicBossEggsPlugin.getPlugin().getServer().getScheduler().runTaskLater((Plugin)CosmicBossEggsPlugin.getPlugin(), new Runnable(){
+                CosmicBosses.getInstance().getServer().getScheduler().runTaskLater((Plugin)CosmicBosses.getInstance(), new Runnable(){
 
                     @Override
                     public void run() {
@@ -120,7 +120,7 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
     }
 
     private void playWitherEffect(final Location l, final int c) {
-        CosmicBossEggsPlugin.getPlugin().getServer().getScheduler().runTaskAsynchronously((Plugin)CosmicBossEggsPlugin.getPlugin(), new Runnable(){
+        CosmicBosses.getInstance().getServer().getScheduler().runTaskAsynchronously((Plugin)CosmicBosses.getInstance(), new Runnable(){
 
             @Override
             public void run() {

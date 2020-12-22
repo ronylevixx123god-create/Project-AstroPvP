@@ -2,17 +2,17 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  net.minecraft.server.v1_7_R4.Entity
- *  net.minecraft.server.v1_7_R4.IRangedEntity
- *  net.minecraft.server.v1_7_R4.MathHelper
+ *  net.minecraft.server.v1_8_R3.Entity
+ *  net.minecraft.server.v1_8_R3.IRangedEntity
+ *  net.minecraft.server.v1_8_R3.MathHelper
  */
 package me.ifamasssxd.cosmicbosses.dungeonboss;
 
 import me.ifamasssxd.cosmicbosses.bosses.skeletonhorse.PathfinderGoalBossArrowAttack;
 import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijki;
-import net.minecraft.server.v1_7_R4.Entity;
-import net.minecraft.server.v1_7_R4.IRangedEntity;
-import net.minecraft.server.v1_7_R4.MathHelper;
+import net.minecraft.server.v1_8_R3.Entity;
+import net.minecraft.server.v1_8_R3.IRangedEntity;
+import net.minecraft.server.v1_8_R3.MathHelper;
 
 public class PathfinderGoalDungeonWitherBossAttack
 extends PathfinderGoalBossArrowAttack {
@@ -29,7 +29,7 @@ extends PathfinderGoalBossArrowAttack {
 
     @Override
     public void e() {
-        double d0 = this.a.e(this.c.locX, this.c.boundingBox.b, this.c.locZ);
+        double d0 = this.a.e(this.c.locX, this.c.getBoundingBox().b, this.c.locZ);
         boolean flag = this.a.getEntitySenses().canSee((Entity)this.c);
         this.f = flag ? ++this.f : 0;
         if (d0 <= (double)this.j && this.f >= 10) {

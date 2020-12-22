@@ -16,16 +16,16 @@
  *  io.apice.clientcomms.EventType
  *  me.ifamasssxd.factionupgrades.FactionUpgradeAPI
  *  me.ifamasssxd.factionupgrades.struct.FactionUpgrade
- *  net.minecraft.server.v1_7_R4.EntityInsentient
- *  net.minecraft.server.v1_7_R4.PathfinderGoal
- *  net.minecraft.server.v1_7_R4.PathfinderGoalFloat
- *  net.minecraft.server.v1_7_R4.PathfinderGoalRandomLookaround
+ *  net.minecraft.server.v1_8_R3.EntityInsentient
+ *  net.minecraft.server.v1_8_R3.PathfinderGoal
+ *  net.minecraft.server.v1_8_R3.PathfinderGoalFloat
+ *  net.minecraft.server.v1_8_R3.PathfinderGoalRandomLookaround
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
  *  org.bukkit.Location
  *  org.bukkit.Sound
  *  org.bukkit.command.CommandSender
- *  org.bukkit.craftbukkit.v1_7_R4.entity.CraftLivingEntity
+ *  org.bukkit.craftbukkit.v1_8_R3.entity.CraftLivingEntity
  *  org.bukkit.entity.Entity
  *  org.bukkit.entity.EntityType
  *  org.bukkit.entity.LivingEntity

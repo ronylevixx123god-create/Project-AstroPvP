@@ -191,7 +191,7 @@ implements GuardBoss {
 
     @Override
     public List<BossMessage> getGeneralMessages() {
-        return Lists.newArrayList((Object[])new BossMessage[]{new BossMessage("Time to exterminate!", false, -1)});
+        return Lists.newArrayList(new BossMessage("Time to exterminate!", false, -1));
     }
 }
 

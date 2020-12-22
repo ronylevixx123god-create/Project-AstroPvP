@@ -8,16 +8,16 @@
  *  kotlin.TypeCastException
  *  kotlin.collections.CollectionsKt
  *  kotlin.jvm.internal.Intrinsics
- *  net.minecraft.server.v1_7_R4.Entity
- *  net.minecraft.server.v1_7_R4.World
- *  net.minecraft.server.v1_7_R4.WorldServer
+ *  net.minecraft.server.v1_8_R3.Entity
+ *  net.minecraft.server.v1_8_R3.World
+ *  net.minecraft.server.v1_8_R3.WorldServer
  *  org.arkhamnetwork.Arkkit.utils.LocationUtils
  *  org.bukkit.Location
  *  org.bukkit.Material
  *  org.bukkit.World
  *  org.bukkit.block.Block
- *  org.bukkit.craftbukkit.v1_7_R4.CraftWorld
- *  org.bukkit.craftbukkit.v1_7_R4.entity.CraftEntity
+ *  org.bukkit.craftbukkit.v1_8_R3.CraftWorld
+ *  org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity
  *  org.bukkit.enchantments.Enchantment
  *  org.bukkit.entity.Entity
  *  org.bukkit.entity.LivingEntity
@@ -49,15 +49,15 @@ import me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost.MotherOfYijki;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.cosmicbosses.struct.BossAbility;
 import me.ifamasssxd.cosmicbosses.struct.EntityContainer;
-import net.minecraft.server.v1_7_R4.Entity;
-import net.minecraft.server.v1_7_R4.World;
-import net.minecraft.server.v1_7_R4.WorldServer;
+import net.minecraft.server.v1_8_R3.Entity;
+import net.minecraft.server.v1_8_R3.World;
+import net.minecraft.server.v1_8_R3.WorldServer;
 import org.arkhamnetwork.Arkkit.utils.LocationUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_7_R4.CraftWorld;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -188,7 +188,7 @@ implements EntityContainer {
         EntityEquipment equipment;
         org.bukkit.World world = location.getWorld();
         if (world == null) {
-            throw new TypeCastException("null cannot be cast to non-null type org.bukkit.craftbukkit.v1_7_R4.CraftWorld");
+            throw new TypeCastException("null cannot be cast to non-null type org.bukkit.craftbukkit.v1_8_R3.CraftWorld");
         }
         WorldServer world2 = ((CraftWorld)world).getHandle();
         Boss boss = this.boss;

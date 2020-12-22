@@ -296,7 +296,7 @@ implements GuardBoss {
 
     @Override
     public List<BossMessage> getGeneralMessages() {
-        return Lists.newArrayList((Object[])new BossMessage[]{new BossMessage("This treasure doesnt belong to you!", false, -1)});
+        return Lists.newArrayList(new BossMessage("This treasure doesnt belong to you!", false, -1));
     }
 }
 

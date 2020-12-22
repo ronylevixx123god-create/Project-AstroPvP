@@ -7,7 +7,7 @@
  */
 package me.ifamasssxd.cosmicbosses.tasks;
 
-import me.ifamasssxd.cosmicbosses.CosmicBossEggsPlugin;
+import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import me.ifamasssxd.cosmicbosses.boss.type.Boss;
 import me.ifamasssxd.cosmicbosses.boss.type.Bosses;
 import me.ifamasssxd.cosmicbosses.utils.MiscUtil;
@@ -21,10 +21,10 @@ import org.bukkit.entity.Player;
 
 public class BossSpawnerTask
 implements Runnable {
-    CosmicBossEggsPlugin plugin;
+    CosmicBosses plugin;
     World w;
 
-    public BossSpawnerTask(CosmicBossEggsPlugin cbe) {
+    public BossSpawnerTask(CosmicBosses cbe) {
         this.plugin = cbe;
         this.w = this.plugin.getServer().getWorlds().get(0);
     }

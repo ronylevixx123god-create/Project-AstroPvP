@@ -4,15 +4,15 @@
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.CC
  *  com.google.common.collect.Lists
- *  net.minecraft.server.v1_7_R4.Entity
- *  net.minecraft.server.v1_7_R4.World
+ *  net.minecraft.server.v1_8_R3.Entity
+ *  net.minecraft.server.v1_8_R3.World
  *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
  *  org.bukkit.Effect
  *  org.bukkit.Location
  *  org.bukkit.Sound
- *  org.bukkit.craftbukkit.v1_7_R4.CraftWorld
+ *  org.bukkit.craftbukkit.v1_8_R3.CraftWorld
  *  org.bukkit.entity.Arrow
  *  org.bukkit.entity.Entity
  *  org.bukkit.entity.EntityType
@@ -67,15 +67,15 @@ import me.ifamasssxd.cosmicbosses.struct.enums.DamageType;
 import me.ifamasssxd.cosmicbosses.struct.enums.Difficulty;
 import me.ifamasssxd.cosmicbosses.utils.BossUtils;
 import me.ifamasssxd.cosmicbosses.utils.WorldGuardUtils;
-import net.minecraft.server.v1_7_R4.Entity;
-import net.minecraft.server.v1_7_R4.World;
+import net.minecraft.server.v1_8_R3.Entity;
+import net.minecraft.server.v1_8_R3.World;
 import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Sound;
-import org.bukkit.craftbukkit.v1_7_R4.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.FallingBlock;
