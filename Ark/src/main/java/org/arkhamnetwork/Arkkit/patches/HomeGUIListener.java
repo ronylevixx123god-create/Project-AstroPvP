@@ -26,6 +26,8 @@ package org.arkhamnetwork.Arkkit.patches;
 import com.earth2me.essentials.User;
 
 import java.util.List;
+
+import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.utils.EssentialsUtils;

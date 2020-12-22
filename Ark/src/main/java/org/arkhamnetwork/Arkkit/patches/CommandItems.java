@@ -11,6 +11,7 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import com.google.common.collect.Lists;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;

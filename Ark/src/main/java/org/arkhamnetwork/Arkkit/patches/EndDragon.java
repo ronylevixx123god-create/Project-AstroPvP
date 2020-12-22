@@ -35,6 +35,7 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.cosmicutils.struct.StorableLocation;
 import com.cosmicpvp.cosmicutils.utils.*;
+import com.google.common.collect.Lists;
 import com.google.gson.reflect.TypeToken;
 import java.io.File;
 import java.io.IOException;
@@ -82,8 +83,8 @@ extends ArkPlugin {
     @Override
     public void enable() throws IOException {
         super.enable();
-        this.endDragonFile = JSONUtils.getOrCreateFile((File)this.getBukkitPlugin().getDataFolder(), (String)"endDragonData.json");
-        this.endDragonData = (EndDragonData)JSONUtils.fromJson((File)this.endDragonFile, (Type)this.token);
+        this.endDragonFile = JSONUtils.getOrCreateFile(this.getBukkitPlugin().getDataFolder(), "endDragonData.json");
+        this.endDragonData = (EndDragonData)JSONUtils.fromJson(this.endDragonFile, this.token);
         if (this.endDragonData == null) {
             this.endDragonData = new EndDragonData();
         }

@@ -14,6 +14,7 @@
 package org.arkhamnetwork.Arkkit.patches.balancetop;
 
 import com.earth2me.essentials.Essentials;
+import com.google.common.collect.Lists;
 import net.milkbowl.vault.economy.Economy;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;

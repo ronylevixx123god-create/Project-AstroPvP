@@ -33,6 +33,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.MapMaker;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.bukkit.Bukkit;
@@ -178,18 +179,18 @@ implements Listener {
                 }
                 p1.sendMessage((Object)ChatColor.YELLOW + "" + (Object)ChatColor.BOLD + "Trade cancelled.");
                 if (givingBack.size() > 0) {
-                    Bukkit.getLogger().info("[(Arkkit) NewTrade] " + p1.getName() + " was returned items: " + Arrays.toString((Object[])givingBack.toArray((T[])new ItemStack[givingBack.size()])));
+                    Bukkit.getLogger().info("[(Arkkit) NewTrade] " + p1.getName() + " was returned items: " + Arrays.toString((Object[])givingBack.toArray(new Object[0])));
                 }
             }
             UUID p2_uuid = (UUID)((MetadataValue)p1.getMetadata("compilexTradePartnerUUID").get(0)).value();
-            p1.removeMetadata("compilexTradePartnerUUID", (Plugin)Arkkit.get());
+            p1.removeMetadata("compilexTradePartnerUUID", Arkkit.get());
             if (p1.hasMetadata("compilexTradeTaskID")) {
-                Bukkit.getScheduler().cancelTask(((MetadataValue)p1.getMetadata("compilexTradeTaskID").get(0)).asInt());
-                p1.removeMetadata("compilexTradeTaskID", (Plugin)Arkkit.get());
+                Bukkit.getScheduler().cancelTask(p1.getMetadata("compilexTradeTaskID").get(0).asInt());
+                p1.removeMetadata("compilexTradeTaskID", Arkkit.get());
             }
-            Player player = p2 = Bukkit.getPlayer((UUID)p2_uuid) != null ? Bukkit.getPlayer((UUID)p2_uuid) : null;
+            Player player = p2 = Bukkit.getPlayer(p2_uuid) != null ? Bukkit.getPlayer(p2_uuid) : null;
             if (p2 != null) {
-                p2.removeMetadata("compilexTradeTaskID", (Plugin)Arkkit.get());
+                p2.removeMetadata("compilexTradeTaskID", Arkkit.get());
                 p2.closeInventory();
             }
         }

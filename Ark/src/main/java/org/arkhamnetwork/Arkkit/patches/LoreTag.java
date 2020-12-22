@@ -38,6 +38,8 @@ import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.arkhamnetwork.Arkkit.Arkkit;
