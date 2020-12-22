@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.common.collect.Lists;
 import com.google.common.reflect.TypeToken;
 import lombok.SneakyThrows;
 import org.arkhamnetwork.Arkkit.libs.ArkPluginCommand;

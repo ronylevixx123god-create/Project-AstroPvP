@@ -52,6 +52,7 @@ import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import com.google.common.collect.Lists;
 import com.massivecraft.factions.FPlayer;
 import com.rit.sucy.EnchantmentAPI;
 import java.util.ArrayList;

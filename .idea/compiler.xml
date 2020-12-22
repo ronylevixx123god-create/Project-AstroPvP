@@ -10,6 +10,7 @@
         <module name="Bosses" />
         <module name="Ark" />
         <module name="Utils" />
+        <module name="SpaceChests" />
         <module name="Arkkit" />
       </profile>
     </annotationProcessing>

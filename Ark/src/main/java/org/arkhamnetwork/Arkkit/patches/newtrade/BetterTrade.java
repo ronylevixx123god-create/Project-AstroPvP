@@ -18,6 +18,7 @@ package org.arkhamnetwork.Arkkit.patches.newtrade;
 
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
+import com.google.common.collect.Lists;
 import com.google.common.collect.MapMaker;
 
 import java.io.IOException;
@@ -55,7 +56,7 @@ extends ArkPlugin {
             Bukkit.getLogger().info("Killing old trade system for new one..");
         }
         this.registerListener(new BetterTradeListener(this));
-        this.registerCommand(new BetterTradeCommand(this, "trade", "/<command>", "Trade items with other players!", (List<String>)Lists.newArrayList(new String[]{"trade", "trades", "exchange"})));
+        this.registerCommand(new BetterTradeCommand(this, "trade", "/<command>", "Trade items with other players!", (List<String>) Lists.newArrayList(new String[]{"trade", "trades", "exchange"})));
         this.tradeTask = new BukkitRunnable(){
 
             public void run() {

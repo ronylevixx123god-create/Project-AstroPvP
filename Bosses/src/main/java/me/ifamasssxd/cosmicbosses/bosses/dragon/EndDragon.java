@@ -502,7 +502,7 @@ implements GlobalBoss {
 
     @Override
     public List<BossMessage> getGeneralMessages() {
-        return Lists.newArrayList((Object[])new BossMessage[]{new BossMessage("You dare to enter my realm and disturb my slumber?", false, -1), new BossMessage("I will burn your world to ash!", false, 0), new BossMessage("Greater warriors than you have fallen before me.", false, 0)});
+        return Lists.newArrayList(new BossMessage("You dare to enter my realm and disturb my slumber?", false, -1), new BossMessage("I will burn your world to ash!", false, 0), new BossMessage("Greater warriors than you have fallen before me.", false, 0));
     }
 
     static enum PathStyle {

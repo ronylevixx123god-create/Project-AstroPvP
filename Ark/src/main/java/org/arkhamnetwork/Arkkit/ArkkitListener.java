@@ -19,6 +19,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 
 import java.util.List;
 
+import com.google.common.collect.Lists;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

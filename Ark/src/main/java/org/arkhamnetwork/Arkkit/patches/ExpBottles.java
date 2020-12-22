@@ -14,6 +14,8 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import com.google.common.collect.Lists;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;

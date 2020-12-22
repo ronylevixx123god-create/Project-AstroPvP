@@ -30,6 +30,7 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.earth2me.essentials.User;
+import com.google.common.collect.Lists;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
@@ -58,7 +59,7 @@ import org.bukkit.plugin.Plugin;
 
 class WarpGUIListener
 implements Listener {
-    private List<String> aliases = Lists.newArrayList(new String[]{"/f warp", "/f warps"});
+    private List<String> aliases = Lists.newArrayList("/f warp", "/f warps");
     private WarpGUIManager manager;
 
     public WarpGUIListener(WarpGUIManager manager) {

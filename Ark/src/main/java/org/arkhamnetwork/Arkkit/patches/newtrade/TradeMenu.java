@@ -22,6 +22,7 @@ import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 
 import java.util.List;
 
+import com.google.common.collect.Lists;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

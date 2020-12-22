@@ -24,6 +24,8 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import java.util.List;
 import java.util.Random;
+
+import com.google.common.collect.Lists;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.arkhamnetwork.Arkkit.utils.RandomFireworks;

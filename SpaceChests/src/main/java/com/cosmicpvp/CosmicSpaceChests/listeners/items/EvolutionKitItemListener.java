@@ -1,0 +1,106 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
+ *  com.cosmicpvp.cosmicutils.utils.RandomFireworks
+ *  com.cosmicpvp.cosmicutils.utils.TitleManager
+ *  com.cosmicpvp.cosmicutils.utils.TitleManager$TitleColor
+ *  me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKits
+ *  me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKits
+ *  org.arkhamnetwork.Arkkit.patches.ItemID
+ *  org.arkhamnetwork.Arkkit.plugins.ArkPlugins
+ *  org.bukkit.Bukkit
+ *  org.bukkit.ChatColor
+ *  org.bukkit.Material
+ *  org.bukkit.Sound
+ *  org.bukkit.command.CommandSender
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.Event
+ *  org.bukkit.event.Event$Result
+ *  org.bukkit.event.EventHandler
+ *  org.bukkit.event.EventPriority
+ *  org.bukkit.event.Listener
+ *  org.bukkit.event.block.Action
+ *  org.bukkit.event.player.PlayerInteractEvent
+ *  org.bukkit.inventory.ItemStack
+ */
+package com.cosmicpvp.CosmicSpaceChests.listeners.items;
+
+import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsPlugin;
+import com.cosmicpvp.CosmicSpaceChests.libs.EvolutionKitItems;
+import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
+import com.cosmicpvp.cosmicutils.utils.RandomFireworks;
+import com.cosmicpvp.cosmicutils.utils.TitleManager;
+import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKits;
+import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKits;
+import org.arkhamnetwork.Arkkit.patches.ItemID;
+import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
+
+public class EvolutionKitItemListener
+implements Listener {
+    @EventHandler(priority=EventPriority.HIGH)
+    public void onPlayerInteract(PlayerInteractEvent e) {
+        if (e.hasItem() && e.getItem().getType() == Material.DIAMOND && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
+            EvolutionKits vkit = EvolutionKitItems.getKitFromItemstack(e.getItem());
+            if (vkit == null) {
+                return;
+            }
+            if (e.getPlayer().getWorld().getName().equals("world_duels") || e.getPlayer().getWorld().getName().equals("world_duels2")) {
+                e.getPlayer().sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You cannot redeem this item while in a duel.");
+                return;
+            }
+            if (!CosmicGlobalKits.kitGemsEnabled) {
+                e.getPlayer().sendMessage(ChatColor.RED.toString() + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "Kit Gem redemption is currently disabled on this planet.");
+                e.getPlayer().sendMessage((Object)ChatColor.GRAY + "This is likely due to an economy exploit that admins are investigating.");
+                return;
+            }
+            String kitPerm = "cosmicevolutionkits.kit." + vkit.getName().toLowerCase();
+            Player p = e.getPlayer();
+            e.setCancelled(true);
+            e.setUseItemInHand(Event.Result.DENY);
+            if (e.getItem().getAmount() > 1) {
+                p.sendMessage((Object)ChatColor.RED + "You cannot redeem stacked Evolution Kit vouchers.");
+                return;
+            }
+            if (p.hasPermission(kitPerm)) {
+                p.sendMessage((Object)ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You already have the " + vkit.getKit().getItemName() + (Object)ChatColor.RED + " Evolution Kit unlocked!");
+                p.sendMessage((Object)ChatColor.RED + "Access your Evolution Kit with " + (Object)ChatColor.RED + (Object)ChatColor.UNDERLINE + "/vkit!");
+                return;
+            }
+            try {
+                Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)("pex user " + p.getName() + " add " + kitPerm + " " + CosmicSpaceChestsPlugin.serverName));
+                p.sendMessage(ChatColor.DARK_AQUA.toString() + ChatColor.BOLD.toString() + "(!) You've UNLOCKED the " + vkit.getKit().getItemName() + ChatColor.DARK_AQUA.toString() + ChatColor.BOLD.toString() + " /VKIT!");
+                p.sendMessage((Object)ChatColor.GRAY + "Redeem your new kit in the /vkit menu!");
+                Bukkit.getLogger().info("[KitUnlock] " + p.getName() + " (" + p.getUniqueId() + ") redeemed a " + vkit.getKit().getItemName() + " kit item!");
+                if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
+                    ItemID.blacklistIID((long)ItemID.getItemID((ItemStack)p.getItemInHand()), (String)"vkit item redeem");
+                }
+                p.setItemInHand(null);
+                p.updateInventory();
+                p.playSound(p.getLocation(), Sound.LEVEL_UP, 1.0f, 0.72f);
+                RandomFireworks.getManager().launchRandomFirework(p.getLocation());
+                TitleManager.sendTitle((Player)p, (String)vkit.getKit().getItemName(), (TitleManager.TitleColor)TitleManager.TitleColor.AQUA);
+                TitleManager.sendSubTitle((Player)p, (String)((Object)ChatColor.GREEN + "Evolution Kit Unlocked"), (TitleManager.TitleColor)TitleManager.TitleColor.GREEN);
+                Bukkit.getPluginManager().callEvent((Event)new CustomCosmicPlayerEvent(p, "VKIT_UNLOCK", new Object[]{vkit}));
+            }
+            catch (Exception err) {
+                err.printStackTrace();
+            }
+        }
+    }
+}
+

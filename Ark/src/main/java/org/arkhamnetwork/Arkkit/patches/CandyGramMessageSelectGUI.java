@@ -28,6 +28,8 @@ import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import com.google.common.collect.Lists;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;

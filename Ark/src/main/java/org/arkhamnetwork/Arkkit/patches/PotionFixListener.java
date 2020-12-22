@@ -35,6 +35,7 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import java.util.ArrayList;
 
+import com.google.common.collect.Lists;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
 import net.minecraft.server.v1_8_R3.MobEffectList;
 import org.arkhamnetwork.Arkkit.Arkkit;
@@ -122,6 +123,7 @@ implements Listener {
             e.setCancelled(true);
             PotionMeta potionMeta = (PotionMeta)is.getItemMeta();
             ArrayList<PotionEffect> effects = Lists.newArrayList((Iterable)pot.getEffects());
+
             if (potionMeta.hasCustomEffects()) {
                 effects.addAll(potionMeta.getCustomEffects());
             }

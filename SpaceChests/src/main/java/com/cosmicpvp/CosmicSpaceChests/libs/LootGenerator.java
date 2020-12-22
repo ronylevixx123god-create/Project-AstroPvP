@@ -1,0 +1,703 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.compilex.CosmicArmorSets.CosmicArmorSetsAPI
+ *  com.compilex.CosmicArmorSets.enums.ArmorSet
+ *  com.compilex.CosmicCrate.api.CCAPI
+ *  com.compilex.CosmicCustomCreepers.enums.CreeperTypes
+ *  com.compilex.CosmicWorldWar.api.AetherShardAPI
+ *  com.cosmicpvp.CosmicRankQuests.CosmicRankQuestsAPI
+ *  com.cosmicpvp.CosmicRankQuests.HeroicRankCrystalAPI
+ *  com.cosmicpvp.CosmicRankQuests.utils.PlayerRankUtils
+ *  com.gmail.nossr50.datatypes.skills.SkillType
+ *  com.rit.sucy.CustomEnchantment
+ *  com.rit.sucy.EnchantmentAPI
+ *  me.cosmicpvp.CosmicGlobalKits.libs.FallenHero
+ *  me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits
+ *  me.ifamasssxd.cosmicbosses.struct.enums.BossType
+ *  me.ifamasssxd.cosmicconquest.CosmicConquestAPI
+ *  me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKit
+ *  me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKits
+ *  me.ifamasssxd.cosmicfactionboosters.CosmicFactionBoosters
+ *  me.ifamasssxd.cosmicfactionboosters.enums.BoosterType
+ *  me.ifamasssxd.killtracker.KillTrackerAPI
+ *  me.ifamasssxd.killtracker.listeners.Tracker
+ *  org.arkhamnetwork.Arkkit.patches.EssentialsAddHomes
+ *  org.arkhamnetwork.Arkkit.patches.Halloween
+ *  org.arkhamnetwork.Arkkit.patches.MysteryMobSpawners
+ *  org.arkhamnetwork.Arkkit.patches.NewYears
+ *  org.arkhamnetwork.Arkkit.patches.ShowcaseExpander
+ *  org.arkhamnetwork.CosmicCustomTNT.enums.TNTTypes
+ *  org.arkhamnetwork.enchantments.EnchantmentBook
+ *  org.arkhamnetwork.enchantments.EnchantmentOrb
+ *  org.arkhamnetwork.enchantments.RandomizationScroll
+ *  org.arkhamnetwork.enchantments.libs.OrbType
+ *  org.arkhamnetwork.enchantments.util.GeneralUtil
+ *  org.bukkit.Bukkit
+ *  org.bukkit.ChatColor
+ *  org.bukkit.Material
+ *  org.bukkit.entity.EntityType
+ *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.inventory.meta.ItemMeta
+ */
+package com.cosmicpvp.CosmicSpaceChests.libs;
+
+import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
+import com.compilex.CosmicArmorSets.enums.ArmorSet;
+import com.compilex.CosmicCrate.api.CCAPI;
+import com.compilex.CosmicCustomCreepers.enums.CreeperTypes;
+import com.compilex.CosmicWorldWar.api.AetherShardAPI;
+import com.cosmicpvp.CosmicRankQuests.CosmicRankQuestsAPI;
+import com.cosmicpvp.CosmicRankQuests.HeroicRankCrystalAPI;
+import com.cosmicpvp.CosmicRankQuests.utils.PlayerRankUtils;
+import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
+import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsPlugin;
+import com.cosmicpvp.CosmicSpaceChests.generators.ItemGenerator;
+import com.cosmicpvp.CosmicSpaceChests.generators.LegendaryGenerator;
+import com.cosmicpvp.CosmicSpaceChests.libs.EvolutionKitItems;
+import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
+import com.cosmicpvp.CosmicSpaceChests.libs.KitItems;
+import com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils;
+import com.gmail.nossr50.datatypes.skills.SkillType;
+import com.rit.sucy.CustomEnchantment;
+import com.rit.sucy.EnchantmentAPI;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+import me.cosmicpvp.CosmicGlobalKits.libs.FallenHero;
+import me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits;
+import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
+import me.ifamasssxd.cosmicconquest.CosmicConquestAPI;
+import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKit;
+import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKits;
+import me.ifamasssxd.cosmicfactionboosters.CosmicFactionBoosters;
+import me.ifamasssxd.cosmicfactionboosters.enums.BoosterType;
+import me.ifamasssxd.killtracker.KillTrackerAPI;
+import me.ifamasssxd.killtracker.listeners.Tracker;
+import org.arkhamnetwork.Arkkit.patches.EssentialsAddHomes;
+import org.arkhamnetwork.Arkkit.patches.Halloween;
+import org.arkhamnetwork.Arkkit.patches.MysteryMobSpawners;
+import org.arkhamnetwork.Arkkit.patches.NewYears;
+import org.arkhamnetwork.Arkkit.patches.ShowcaseExpander;
+import org.arkhamnetwork.CosmicCustomTNT.enums.TNTTypes;
+import org.arkhamnetwork.enchantments.EnchantmentBook;
+import org.arkhamnetwork.enchantments.EnchantmentOrb;
+import org.arkhamnetwork.enchantments.RandomizationScroll;
+import org.arkhamnetwork.enchantments.libs.OrbType;
+import org.arkhamnetwork.enchantments.util.GeneralUtil;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+public class LootGenerator {
+    private static HashMap<ItemStack, Double> commonExtras;
+    private static HashMap<ItemStack, Double> uncommonExtras;
+    private static HashMap<ItemStack, Double> rareExtras;
+    private static HashMap<ItemStack, Double> ultraRareExtras;
+    private static HashMap<ItemStack, Double> legendaryExtras;
+    private static HashMap<ItemStack, Double> godExtras;
+    private static List<ItemStack> possibleCommonExtras;
+    private static List<ItemStack> possibleUncommonExtras;
+    private static List<ItemStack> possibleRareExtras;
+    private static List<ItemStack> possibleUltraRareExtras;
+    private static List<ItemStack> possibleLegendaryExtras;
+    private static List<ItemStack> possibleGodExtras;
+
+    public static void generateLootTables() {
+        ItemStack item;
+        boolean rankItems = CosmicSpaceChestsPlugin.plugin.getConfig().getBoolean("rankItems");
+        boolean moneyNotes = CosmicSpaceChestsPlugin.plugin.getConfig().getBoolean("moneyNoteRanks");
+        commonExtras = new HashMap();
+        commonExtras.put(ItemUtils.getMoneyNoteNoIID("Cosmic Chest", 10000), 0.03);
+        commonExtras.put(CosmicSpaceChestsAPI.getSpaceFlare(ItemRarity.SIMPLE), 0.02);
+        commonExtras.put(CosmicSpaceChestsAPI.getSpaceFlare(ItemRarity.UNIQUE), 0.01);
+        commonExtras.put(ItemUtils.getEnchantmentBook(ItemRarity.SIMPLE), 0.3);
+        commonExtras.put(ItemUtils.getXpBottle(100, "Cosmic Chest"), 0.05);
+        commonExtras.put(ItemUtils.getMobSpawner(EntityType.SHEEP), 0.01);
+        commonExtras.put(ItemUtils.getTitleVoucher("Wasted"), 0.005);
+        commonExtras.put(ItemUtils.getTitleVoucher("Tilted"), 0.0025);
+        commonExtras.put(ItemUtils.getTitleVoucher("Trollolol"), 0.0025);
+        commonExtras.put(ItemUtils.getTitleVoucher("Noob"), 1.0E-5);
+        commonExtras.put(ItemUtils.getTitleVoucher("#poor"), 1.0E-5);
+        commonExtras.put(ItemUtils.setAmount(EnchantmentBook.getSecretDust((ItemRarity)ItemRarity.SIMPLE, (int)50), 5), 0.02);
+        commonExtras.put(ItemUtils.setAmount(NewYears.getExplosiveCake(), 10), 0.02);
+        commonExtras.put(ItemUtils.setAmount(RandomizationScroll.getRandomizationScroll((ItemRarity)ItemRarity.SIMPLE), 1), 0.02);
+        uncommonExtras = new HashMap();
+        uncommonExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Lethal), 32), 0.05);
+        uncommonExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Tactical), 32), 0.05);
+        uncommonExtras.put(ItemUtils.getMoneyNoteNoIID("Cosmic Chest", 50000), 0.03);
+        uncommonExtras.put(CosmicSpaceChestsAPI.getSpaceFlare(ItemRarity.UNIQUE), 0.02);
+        uncommonExtras.put(CosmicSpaceChestsAPI.getSpaceFlare(ItemRarity.ELITE), 0.01);
+        uncommonExtras.put(ItemUtils.getSkillVoucher(SkillType.REPAIR, 10), 0.02);
+        uncommonExtras.put(ItemUtils.getSkillVoucher(SkillType.ACROBATICS, 10), 0.02);
+        uncommonExtras.put(ItemUtils.getSkillVoucher(SkillType.ALCHEMY, 10), 0.02);
+        uncommonExtras.put(ItemUtils.getMCMMOVoucher(5), 0.01);
+        uncommonExtras.put(ItemUtils.getEnchantmentBook(ItemRarity.UNIQUE), 0.3);
+        uncommonExtras.put(ItemUtils.getXpBottle(2000, "Cosmic Chest"), 0.05);
+        uncommonExtras.put(ItemUtils.getXpBottle(5000, "Cosmic Chest"), 0.01);
+        uncommonExtras.put(ItemUtils.getMobSpawner(EntityType.SHEEP), 0.02);
+        uncommonExtras.put(ItemUtils.getMobSpawner(EntityType.PIG), 0.01);
+        uncommonExtras.put(ItemUtils.getMobSpawner(EntityType.CHICKEN), 0.01);
+        uncommonExtras.put(ItemUtils.getTitleVoucher("#21"), 0.0025);
+        uncommonExtras.put(ItemUtils.getTitleVoucher("RIP"), 0.005);
+        uncommonExtras.put(ItemUtils.getTitleVoucher("Getmed"), 0.005);
+        uncommonExtras.put(new ItemStack(Material.HOPPER, 1), 0.01);
+        uncommonExtras.put(KillTrackerAPI.buildTracker((Tracker)Tracker.Simple), 0.025);
+        uncommonExtras.put(KillTrackerAPI.buildTracker((Tracker)Tracker.Unique), 0.01);
+        uncommonExtras.put(ItemUtils.setAmount(NewYears.getCosmicCracker(), 8), 0.02);
+        uncommonExtras.put(ItemUtils.setAmount(EnchantmentBook.getSecretDust((ItemRarity)ItemRarity.UNIQUE, (int)50), 5), 0.02);
+        uncommonExtras.put(ItemUtils.setAmount(RandomizationScroll.getRandomizationScroll((ItemRarity)ItemRarity.UNIQUE), 1), 0.01);
+        rareExtras = new HashMap();
+        rareExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Huge), 32), 0.04);
+        rareExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Lethal), 64), 0.05);
+        rareExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Tactical), 64), 0.05);
+        rareExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Mimic), 32), 0.05);
+        rareExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Hex), 24), 0.05);
+        rareExtras.put(ItemUtils.getMoneyNoteNoIID("Cosmic Chest", 100000), 0.03);
+        rareExtras.put(CosmicSpaceChestsAPI.getSpaceFlare(ItemRarity.ELITE), 0.02);
+        rareExtras.put(ItemUtils.getSkillVoucher(SkillType.REPAIR, 30), 0.02);
+        rareExtras.put(ItemUtils.getSkillVoucher(SkillType.ACROBATICS, 30), 0.02);
+        rareExtras.put(ItemUtils.getSkillVoucher(SkillType.ALCHEMY, 30), 0.02);
+        rareExtras.put(CosmicSpaceChestsAPI.getSpaceFlare(ItemRarity.ULTIMATE), 0.01);
+        rareExtras.put(ItemUtils.getSkillVoucher(SkillType.WOODCUTTING, 10), 0.02);
+        rareExtras.put(ItemUtils.getSkillVoucher(SkillType.HERBALISM, 10), 0.02);
+        rareExtras.put(ItemUtils.getSkillVoucher(SkillType.FISHING, 10), 0.02);
+        rareExtras.put(ItemUtils.getMCMMOVoucher(15), 0.03);
+        rareExtras.put(ItemUtils.getEnchantmentBook(ItemRarity.ELITE), 0.3);
+        rareExtras.put(ItemUtils.getXpBottle(5000, "Cosmic Chest"), 0.05);
+        rareExtras.put(ItemUtils.getXpBottle(20000, "Cosmic Chest"), 0.01);
+        rareExtras.put(ItemUtils.getMobSpawner(EntityType.SPIDER), 0.01);
+        rareExtras.put(ItemUtils.getMobSpawner(EntityType.SKELETON), 0.01);
+        rareExtras.put(ItemUtils.getMobSpawner(EntityType.ZOMBIE), 0.01);
+        rareExtras.put(ItemUtils.getMobSpawner(EntityType.CAVE_SPIDER), 0.01);
+        rareExtras.put(ItemUtils.getMobSpawner(EntityType.WOLF), 0.02);
+        rareExtras.put(ItemUtils.getTitleVoucher("Poofless"), 0.01);
+        rareExtras.put(ItemUtils.getTitleVoucher("ezpz"), 0.0025);
+        rareExtras.put(ItemUtils.getTitleVoucher("OneShot"), 0.01);
+        rareExtras.put(ItemUtils.getTitleVoucher("Staysalty"), 0.005);
+        rareExtras.put(ItemUtils.getTitleVoucher("Schmoked"), 0.01);
+        rareExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Spooky), 0.0025);
+        rareExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.TRICKSTER), 0.0025);
+        rareExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.HYPER), 0.0025);
+        rareExtras.put(KitItems.getKitItem(GlobalKits.Spooky), 5.0E-4);
+        rareExtras.put(KitItems.getKitItem(GlobalKits.TRICKSTER), 5.0E-4);
+        rareExtras.put(KitItems.getKitItem(GlobalKits.HYPER), 5.0E-4);
+        rareExtras.put(new ItemStack(Material.getMaterial((int)383), 1, 50), 0.01);
+        rareExtras.put(new ItemStack(Material.HOPPER, 5), 0.01);
+        rareExtras.put(KillTrackerAPI.buildTracker((Tracker)Tracker.Elite), 0.01);
+        rareExtras.put(ItemUtils.setAmount(Halloween.getHalloweenCandy(), 50), 0.02);
+        rareExtras.put(ItemUtils.setAmount(EnchantmentBook.getSecretDust((ItemRarity)ItemRarity.ELITE, (int)50), 5), 0.02);
+        rareExtras.put(ItemUtils.setAmount(RandomizationScroll.getRandomizationScroll((ItemRarity)ItemRarity.ELITE), 1), 0.01);
+        ultraRareExtras = new HashMap();
+        ultraRareExtras.put(ItemUtils.getNewBossEgg(BossType.BROOD_MOTHER), 0.0025);
+        ultraRareExtras.put(ItemUtils.getNewBossEgg(BossType.KING_SLIME), 5.0E-4);
+        ultraRareExtras.put(ItemUtils.getNewBossEgg(BossType.HOLIDAY_SPIRIT), 5.0E-4);
+        ultraRareExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Huge), 64), 0.05);
+        ultraRareExtras.put(ItemUtils.getMoneyNoteNoIID("Cosmic Chest", 250000), 0.03);
+        ultraRareExtras.put(CosmicSpaceChestsAPI.getSpaceFlare(ItemRarity.ULTIMATE), 0.02);
+        ultraRareExtras.put(CosmicSpaceChestsAPI.getSpaceFlare(ItemRarity.LEGENDARY), 0.01);
+        ultraRareExtras.put(ItemUtils.getSkillVoucher(SkillType.WOODCUTTING, 30), 0.02);
+        ultraRareExtras.put(ItemUtils.getSkillVoucher(SkillType.HERBALISM, 30), 0.02);
+        ultraRareExtras.put(ItemUtils.getSkillVoucher(SkillType.FISHING, 30), 0.02);
+        ultraRareExtras.put(ItemUtils.getSkillVoucher(SkillType.UNARMED, 25), 0.02);
+        ultraRareExtras.put(ItemUtils.getSkillVoucher(SkillType.ARCHERY, 25), 0.02);
+        ultraRareExtras.put(ItemUtils.getSkillVoucher(SkillType.SWORDS, 10), 0.02);
+        ultraRareExtras.put(ItemUtils.getSkillVoucher(SkillType.AXES, 10), 0.02);
+        ultraRareExtras.put(ItemUtils.getMCMMOVoucher(25), 0.03);
+        ultraRareExtras.put(ItemUtils.getEnchantmentBook(ItemRarity.ULTIMATE), 0.3);
+        ultraRareExtras.put(ItemUtils.getWhitescroll(), 0.02);
+        ultraRareExtras.put(ItemUtils.getTransmogScroll(), 0.01);
+        ultraRareExtras.put(ItemUtils.getItemNametag(), 0.01);
+        ultraRareExtras.put(ItemUtils.getBlackscroll(), 0.05);
+        ultraRareExtras.put(ItemUtils.getXpBottle(25000, "Cosmic Chest"), 0.05);
+        ultraRareExtras.put(ItemUtils.getXpBottle(75000, "Cosmic Chest"), 0.01);
+        ultraRareExtras.put(ItemUtils.getMobSpawner(EntityType.BLAZE), 0.01);
+        ultraRareExtras.put(ItemUtils.getMobSpawner(EntityType.IRON_GOLEM), 0.01);
+        ultraRareExtras.put(ItemUtils.getMobSpawner(EntityType.ENDERMAN), 0.03);
+        ultraRareExtras.put(ItemUtils.getMobSpawner(EntityType.COW), 0.05);
+        ultraRareExtras.put(ItemUtils.getTitleVoucher("Gank"), 0.01);
+        ultraRareExtras.put(ItemUtils.getTitleVoucher("Scrub"), 0.01);
+        ultraRareExtras.put(ItemUtils.getTitleVoucher("#AllmcMMO"), 0.005);
+        ultraRareExtras.put(ItemUtils.getTitleVoucher("1v1me"), 0.001);
+        ultraRareExtras.put(ItemUtils.getTitleVoucher("Vapenation"), 0.01);
+        ultraRareExtras.put(ItemUtils.getMysterySoulEnchantmentBook(), 0.0025);
+        ultraRareExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.DIABLO), 0.0025);
+        ultraRareExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.ARCANE), 0.0025);
+        ultraRareExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Tinkermaster), 0.0025);
+        ultraRareExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Voidwalker), 0.0025);
+        ultraRareExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.GrandMaster), 0.0025);
+        ultraRareExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Masterbuilder), 0.0025);
+        ultraRareExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Party), 0.0025);
+        ultraRareExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.VALENTINE), 0.0025);
+        ultraRareExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.DESTROYER), 0.0025);
+        ultraRareExtras.put(KitItems.getKitItem(GlobalKits.DIABLO), 5.0E-4);
+        ultraRareExtras.put(KitItems.getKitItem(GlobalKits.ARCANE), 5.0E-4);
+        ultraRareExtras.put(KitItems.getKitItem(GlobalKits.Tinkermaster), 5.0E-4);
+        ultraRareExtras.put(KitItems.getKitItem(GlobalKits.Voidwalker), 5.0E-4);
+        ultraRareExtras.put(KitItems.getKitItem(GlobalKits.GrandMaster), 5.0E-4);
+        ultraRareExtras.put(KitItems.getKitItem(GlobalKits.Masterbuilder), 5.0E-4);
+        ultraRareExtras.put(KitItems.getKitItem(GlobalKits.Party), 5.0E-4);
+        ultraRareExtras.put(KitItems.getKitItem(GlobalKits.VALENTINE), 5.0E-4);
+        ultraRareExtras.put(KitItems.getKitItem(GlobalKits.DESTROYER), 5.0E-4);
+        ultraRareExtras.put(new ItemStack(Material.getMaterial((int)383), 2, 50), 0.01);
+        ultraRareExtras.put(new ItemStack(Material.HOPPER, 16), 0.01);
+        ultraRareExtras.put(ItemUtils.setAmount(ItemUtils.getCustomCreeperEgg(CreeperTypes.Tactical), 1), 0.01);
+        ultraRareExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Lucky), 4), 0.01);
+        ultraRareExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Mimic), 64), 0.02);
+        ultraRareExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Hex), 64), 0.02);
+        ultraRareExtras.put(KillTrackerAPI.buildTracker((Tracker)Tracker.Ultimate), 0.01);
+        ultraRareExtras.put(MysteryMobSpawners.getMysteryMobSpawner(), 0.01);
+        ultraRareExtras.put(CosmicFactionBoosters.get().getBoosterManager().createBooster(BoosterType.EXP, 600, 1.5), 0.01);
+        ultraRareExtras.put(CosmicFactionBoosters.get().getBoosterManager().createBooster(BoosterType.MCMMO, 600, 1.5), 0.02);
+        ultraRareExtras.put(ItemUtils.setAmount(EnchantmentBook.getSecretDust((ItemRarity)ItemRarity.ULTIMATE, (int)50), 5), 0.02);
+        ultraRareExtras.put(ItemUtils.setAmount(RandomizationScroll.getRandomizationScroll((ItemRarity)ItemRarity.ULTIMATE), 2), 0.01);
+        ultraRareExtras.put(ShowcaseExpander.getShowcaseExpanderItem(), 0.01);
+        ultraRareExtras.put(EssentialsAddHomes.getAddHomeItem(), 0.005);
+        legendaryExtras = new HashMap();
+        legendaryExtras.put(ItemUtils.getNewBossEgg(BossType.SKELETON_HORSE), 0.01);
+        legendaryExtras.put(ItemUtils.getNewBossEgg(BossType.PLAGUE_BLOATER), 0.005);
+        legendaryExtras.put(ItemUtils.getNewBossEgg(BossType.DEMONIC_WITHER), 2.5E-4);
+        legendaryExtras.put(ItemUtils.getMoneyNoteNoIID("Cosmic Chest", 1000000), 0.01);
+        legendaryExtras.put(CosmicSpaceChestsAPI.getSpaceFlare(ItemRarity.LEGENDARY), 0.01);
+        legendaryExtras.put(CosmicSpaceChestsAPI.getSpaceFlare(ItemRarity.GOD), 0.005);
+        legendaryExtras.put(ItemUtils.getSkillVoucher(SkillType.UNARMED, 75), 0.02);
+        legendaryExtras.put(ItemUtils.getSkillVoucher(SkillType.ARCHERY, 75), 0.02);
+        legendaryExtras.put(ItemUtils.getSkillVoucher(SkillType.SWORDS, 75), 0.02);
+        legendaryExtras.put(ItemUtils.getSkillVoucher(SkillType.AXES, 75), 0.02);
+        legendaryExtras.put(ItemUtils.getSkillVoucher(SkillType.SWORDS, 100), 0.01);
+        legendaryExtras.put(ItemUtils.getSkillVoucher(SkillType.AXES, 100), 0.01);
+        legendaryExtras.put(ItemUtils.getMCMMOVoucher(50), 0.03);
+        legendaryExtras.put(ItemUtils.getEnchantmentBook(ItemRarity.LEGENDARY), 0.3);
+        legendaryExtras.put(ItemUtils.getMysterySoulEnchantmentBook(), 0.01);
+        legendaryExtras.put(MysteryMobSpawners.getMysteryMobSpawner(), 0.02);
+        legendaryExtras.put(ItemUtils.getMobSpawner(EntityType.MUSHROOM_COW), 0.01);
+        legendaryExtras.put(ItemUtils.getMobSpawner(EntityType.MAGMA_CUBE), 0.0075);
+        legendaryExtras.put(ItemUtils.getMobSpawner(EntityType.GHAST), 0.005);
+        legendaryExtras.put(ItemUtils.getWhitescroll(), 0.1);
+        legendaryExtras.put(ItemUtils.getBlackscroll(75), 0.075);
+        legendaryExtras.put(ItemUtils.getEnvoySummoner(), 0.01);
+        legendaryExtras.put(ItemUtils.getItemNametag(), 0.01);
+        legendaryExtras.put(ItemUtils.getTransmogScroll(), 0.01);
+        legendaryExtras.put(ItemUtils.getXpBottle(50000, "Cosmic Chest"), 0.05);
+        legendaryExtras.put(ItemUtils.getXpBottle(100000, "Cosmic Chest"), 0.01);
+        legendaryExtras.put(ItemUtils.getMobSpawner(EntityType.BLAZE), 0.05);
+        legendaryExtras.put(ItemUtils.getMobSpawner(EntityType.IRON_GOLEM), 0.02);
+        legendaryExtras.put(ItemUtils.getMobSpawner(EntityType.ENDERMAN), 0.05);
+        legendaryExtras.put(ItemUtils.getTitleVoucher("Ez"), 0.005);
+        legendaryExtras.put(ItemUtils.getTitleVoucher("GetRekt"), 0.01);
+        legendaryExtras.put(ItemUtils.getTitleVoucher("weewoo"), 0.01);
+        legendaryExtras.put(ItemUtils.getTitleVoucher("Shiva-d"), 0.01);
+        legendaryExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Enchantment), 0.0035);
+        legendaryExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Butcher), 0.0035);
+        legendaryExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Paladin), 0.0035);
+        legendaryExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.GUARDIAN), 0.0035);
+        legendaryExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Warlock), 0.0035);
+        legendaryExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Cannoner), 0.0035);
+        legendaryExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.TEMPLAR), 0.0035);
+        legendaryExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Cosmonaut), 0.0035);
+        legendaryExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Voidwalker), 0.0035);
+        legendaryExtras.put(KitItems.getKitItem(GlobalKits.Enchantment), 0.001);
+        legendaryExtras.put(KitItems.getKitItem(GlobalKits.Butcher), 0.001);
+        legendaryExtras.put(KitItems.getKitItem(GlobalKits.Paladin), 0.001);
+        legendaryExtras.put(KitItems.getKitItem(GlobalKits.GUARDIAN), 0.001);
+        legendaryExtras.put(KitItems.getKitItem(GlobalKits.Warlock), 0.001);
+        legendaryExtras.put(KitItems.getKitItem(GlobalKits.Cannoner), 0.001);
+        legendaryExtras.put(KitItems.getKitItem(GlobalKits.TEMPLAR), 0.001);
+        legendaryExtras.put(KitItems.getKitItem(GlobalKits.Cosmonaut), 0.001);
+        legendaryExtras.put(KitItems.getKitItem(GlobalKits.Voidwalker), 0.001);
+        legendaryExtras.put(KillTrackerAPI.buildTracker((Tracker)Tracker.Legendary), 0.015);
+        legendaryExtras.put(new ItemStack(Material.getMaterial((int)383), 16, 50), 0.02);
+        legendaryExtras.put(new ItemStack(Material.HOPPER, 64), 0.02);
+        legendaryExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Lucky), 16), 0.03);
+        legendaryExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Silent), 32), 0.03);
+        legendaryExtras.put(ItemUtils.setAmount(ItemUtils.getCustomCreeperEgg(CreeperTypes.Tactical), 8), 0.03);
+        legendaryExtras.put(ItemUtils.setAmount(ItemUtils.getCustomCreeperEgg(CreeperTypes.Huge), 4), 0.015);
+        legendaryExtras.put(ItemUtils.setAmount(ItemUtils.getCustomCreeperEgg(CreeperTypes.Lucky), 2), 0.015);
+        legendaryExtras.put(CosmicFactionBoosters.get().getBoosterManager().createBooster(BoosterType.EXP, 900, 2.0), 0.02);
+        legendaryExtras.put(CosmicFactionBoosters.get().getBoosterManager().createBooster(BoosterType.MCMMO, 900, 2.0), 0.04);
+        legendaryExtras.put(ItemUtils.setAmount(EnchantmentBook.getSecretDust((ItemRarity)ItemRarity.LEGENDARY, (int)50), 5), 0.02);
+        legendaryExtras.put(ItemUtils.setAmount(RandomizationScroll.getRandomizationScroll((ItemRarity)ItemRarity.LEGENDARY), 2), 0.01);
+        legendaryExtras.put(FallenHero.getFallenHeroItem((EvolutionKit)EvolutionKits.PHOENIX.getKit()), 0.0025);
+        legendaryExtras.put(FallenHero.getFallenHeroItem((EvolutionKit)EvolutionKits.TROLL.getKit()), 0.0025);
+        legendaryExtras.put(FallenHero.getFallenHeroItem((EvolutionKit)EvolutionKits.OGRE.getKit()), 0.0025);
+        legendaryExtras.put(EnchantmentOrb.getEnchantmentOrb((int)75, (int)10, (OrbType)OrbType.WEAPON), 0.0025);
+        legendaryExtras.put(EnchantmentOrb.getEnchantmentOrb((int)75, (int)10, (OrbType)OrbType.ARMOR), 0.005);
+        legendaryExtras.put(ItemUtils.getDepthStriderBook(1), 0.01);
+        legendaryExtras.put(ItemUtils.getDepthStriderBook(2), 0.005);
+        legendaryExtras.put(ItemUtils.getDepthStriderBook(3), 0.0025);
+        legendaryExtras.put(ItemUtils.setAmount(ShowcaseExpander.getShowcaseExpanderItem(), 2), 0.01);
+        legendaryExtras.put(ItemUtils.setAmount(EssentialsAddHomes.getAddHomeItem(), 3), 0.005);
+        legendaryExtras.put(CosmicConquestAPI.createFactionToken((int)20), 0.01);
+        godExtras = new HashMap();
+        godExtras.put(ItemUtils.getNewBossEgg(BossType.PLAGUE_BLOATER), 0.005);
+        godExtras.put(ItemUtils.getNewBossEgg(BossType.DEMONIC_WITHER), 2.5E-4);
+        godExtras.put(ItemUtils.getNewBossEgg(BossType.SOUL_REAPER), 4.5E-4);
+        godExtras.put(ItemUtils.getMoneyNoteNoIID("Cosmic Chest", 4000000), 0.01);
+        godExtras.put(ItemUtils.setAmount(CosmicSpaceChestsAPI.getSpaceFlare(ItemRarity.LEGENDARY), 2), 0.01);
+        godExtras.put(ItemUtils.getSkillVoucher(SkillType.UNARMED, 200), 0.02);
+        godExtras.put(ItemUtils.getSkillVoucher(SkillType.ARCHERY, 200), 0.02);
+        godExtras.put(ItemUtils.getSkillVoucher(SkillType.SWORDS, 200), 0.02);
+        godExtras.put(ItemUtils.getSkillVoucher(SkillType.AXES, 200), 0.02);
+        godExtras.put(ItemUtils.getSkillVoucher(SkillType.SWORDS, 300), 0.01);
+        godExtras.put(ItemUtils.getSkillVoucher(SkillType.AXES, 300), 0.01);
+        godExtras.put(ItemUtils.getMCMMOVoucher(200), 0.03);
+        godExtras.put(ItemUtils.setAmount(ItemUtils.getEnchantmentBook(ItemRarity.LEGENDARY), 3), 0.3);
+        godExtras.put(ItemUtils.getMysterySoulEnchantmentBook(), 0.01);
+        godExtras.put(ItemUtils.setAmount(MysteryMobSpawners.getMysteryMobSpawner(), 2), 0.02);
+        godExtras.put(ItemUtils.setAmount(ItemUtils.getWhitescroll(), 2), 0.1);
+        godExtras.put(ItemUtils.setAmount(ItemUtils.getBlackscroll(95), 3), 0.075);
+        godExtras.put(ItemUtils.getEnvoySummoner(), 0.01);
+        godExtras.put(ItemUtils.getItemNametag(), 0.02);
+        godExtras.put(ItemUtils.getTransmogScroll(), 0.025);
+        godExtras.put(ItemUtils.getXpBottle(100000, "Cosmic Chest"), 0.05);
+        godExtras.put(ItemUtils.getXpBottle(200000, "Cosmic Chest"), 0.01);
+        godExtras.put(ItemUtils.getMobSpawner(EntityType.GHAST), 0.02);
+        godExtras.put(ItemUtils.getMobSpawner(EntityType.MUSHROOM_COW), 0.05);
+        godExtras.put(ItemUtils.getMobSpawner(EntityType.MAGMA_CUBE), 0.05);
+        godExtras.put(ItemUtils.getTitleVoucher("TheLongestTitleOnCosmicPvP"), 0.01);
+        godExtras.put(ItemUtils.getTitleVoucher("Godly"), 0.01);
+        godExtras.put(ItemUtils.getTitleVoucher("#BANNED"), 0.01);
+        godExtras.put(ItemUtils.getTitleVoucher("Epic"), 0.01);
+        godExtras.put(ItemUtils.getTitleVoucher("#GetSplit"), 0.01);
+        godExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Enchantment), 0.0075);
+        godExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Independence), 0.0075);
+        godExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Loki), 0.0075);
+        godExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Butcher), 0.0075);
+        godExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Warlock), 0.0075);
+        godExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Paladin), 0.0075);
+        godExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Admiral), 0.0075);
+        godExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Duelist), 0.0075);
+        godExtras.put(KitItems.getKitItem(GlobalKits.Enchantment), 0.0025);
+        godExtras.put(KitItems.getKitItem(GlobalKits.Independence), 0.0025);
+        godExtras.put(KitItems.getKitItem(GlobalKits.Loki), 0.0025);
+        godExtras.put(KitItems.getKitItem(GlobalKits.Butcher), 0.0025);
+        godExtras.put(KitItems.getKitItem(GlobalKits.Warlock), 0.0025);
+        godExtras.put(KitItems.getKitItem(GlobalKits.Paladin), 0.0025);
+        godExtras.put(KitItems.getKitItem(GlobalKits.Admiral), 0.0025);
+        godExtras.put(KitItems.getKitItem(GlobalKits.Duelist), 0.0025);
+        godExtras.put(KillTrackerAPI.buildTracker((Tracker)Tracker.Legendary), 0.015);
+        godExtras.put(new ItemStack(Material.getMaterial((int)383), 48, 50), 0.02);
+        godExtras.put(new ItemStack(Material.HOPPER, 64), 0.02);
+        godExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Lucky), 32), 0.03);
+        godExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Silent), 64), 0.03);
+        godExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Huge), 64), 0.03);
+        godExtras.put(ItemUtils.setAmount(ItemUtils.getCustomCreeperEgg(CreeperTypes.Tactical), 10), 0.03);
+        godExtras.put(ItemUtils.setAmount(ItemUtils.getCustomCreeperEgg(CreeperTypes.Huge), 8), 0.015);
+        godExtras.put(ItemUtils.setAmount(ItemUtils.getCustomCreeperEgg(CreeperTypes.Lucky), 5), 0.015);
+        godExtras.put(CosmicFactionBoosters.get().getBoosterManager().createBooster(BoosterType.EXP, 900, 5.0), 0.03);
+        godExtras.put(CosmicFactionBoosters.get().getBoosterManager().createBooster(BoosterType.MCMMO, 900, 5.0), 0.05);
+        godExtras.put(ItemUtils.setAmount(EnchantmentBook.getSecretDust((ItemRarity)ItemRarity.SOUL, (int)50), 5), 0.02);
+        godExtras.put(ItemUtils.setAmount(RandomizationScroll.getRandomizationScroll((ItemRarity)ItemRarity.GOD), 2), 0.01);
+        godExtras.put(ItemUtils.setAmount(HeroicRankCrystalAPI.getHeroicRankCrystalItem(), 1), 0.001);
+        godExtras.put(EvolutionKitItems.getKitItem(EvolutionKits.PHOENIX), 0.0015);
+        godExtras.put(EvolutionKitItems.getKitItem(EvolutionKits.TROLL), 0.0015);
+        godExtras.put(EvolutionKitItems.getKitItem(EvolutionKits.OGRE), 0.0015);
+        godExtras.put(EnchantmentOrb.getEnchantmentOrb((int)100, (int)10, (OrbType)OrbType.WEAPON), 0.0025);
+        godExtras.put(EnchantmentOrb.getEnchantmentOrb((int)100, (int)10, (OrbType)OrbType.ARMOR), 0.005);
+        godExtras.put(EnchantmentOrb.getEnchantmentOrb((int)75, (int)11, (OrbType)OrbType.WEAPON), 1.0E-4);
+        godExtras.put(EnchantmentOrb.getEnchantmentOrb((int)75, (int)11, (OrbType)OrbType.ARMOR), 2.0E-4);
+        godExtras.put(CCAPI.getMysteryCrate(), 2.0E-4);
+        godExtras.put(ItemUtils.getDepthStriderBook(2), 0.02);
+        godExtras.put(ItemUtils.getDepthStriderBook(3), 0.01);
+        godExtras.put(ItemUtils.setAmount(ShowcaseExpander.getShowcaseExpanderItem(), 2), 0.01);
+        godExtras.put(ItemUtils.setAmount(EssentialsAddHomes.getAddHomeItem(), 5), 0.005);
+        godExtras.put(CosmicConquestAPI.createFactionToken((int)50), 0.01);
+        godExtras.put(CosmicArmorSetsAPI.getArmorSet((ArmorSet)ArmorSet.PHANTOM)[0], 0.0015);
+        godExtras.put(CosmicArmorSetsAPI.getArmorSet((ArmorSet)ArmorSet.PHANTOM)[1], 0.0015);
+        godExtras.put(CosmicArmorSetsAPI.getArmorSet((ArmorSet)ArmorSet.PHANTOM)[2], 0.0015);
+        godExtras.put(CosmicArmorSetsAPI.getArmorSet((ArmorSet)ArmorSet.PHANTOM)[3], 0.0015);
+        godExtras.put(CosmicConquestAPI.createHeroicToken((int)(2 + ThreadLocalRandom.current().nextInt(6))), 0.0015);
+        if (moneyNotes) {
+            Bukkit.getLogger().info("Registering money notes instead of rank items..");
+            commonExtras.put(ItemUtils.getMoneyNoteNoIID("Cosmic Chest", PlayerRankUtils.getSpaceCash((int)1)), 1.5E-5);
+            uncommonExtras.put(ItemUtils.getMoneyNoteNoIID("Cosmic Chest", PlayerRankUtils.getSpaceCash((int)2)), 1.25E-4);
+            rareExtras.put(ItemUtils.getMoneyNoteNoIID("Cosmic Chest", PlayerRankUtils.getSpaceCash((int)3)), 1.25E-4);
+            ultraRareExtras.put(ItemUtils.getMoneyNoteNoIID("Cosmic Chest", PlayerRankUtils.getSpaceCash((int)4)), 1.25E-4);
+            legendaryExtras.put(ItemUtils.getMoneyNoteNoIID("Cosmic Chest", PlayerRankUtils.getSpaceCash((int)5)), 2.5E-4);
+            godExtras.put(ItemUtils.getMoneyNoteNoIID("Cosmic Chest", PlayerRankUtils.getSpaceCash((int)5)), 0.001);
+        } else if (rankItems) {
+            commonExtras.put(CosmicRankQuestsAPI.getRankQuestItem((int)1), 1.5E-5);
+            uncommonExtras.put(CosmicRankQuestsAPI.getRankQuestItem((int)2), 1.25E-4);
+            rareExtras.put(CosmicRankQuestsAPI.getRankQuestItem((int)3), 1.25E-4);
+            ultraRareExtras.put(CosmicRankQuestsAPI.getRankQuestItem((int)4), 1.25E-4);
+            legendaryExtras.put(CosmicRankQuestsAPI.getRankQuestItem((int)5), 2.5E-4);
+            godExtras.put(CosmicRankQuestsAPI.getRankQuestItem((int)5), 0.001);
+        }
+        if (Bukkit.getPluginManager().isPluginEnabled("CosmicWorldWar")) {
+            ultraRareExtras.put(AetherShardAPI.getAetherShard((int)100), 0.001);
+            legendaryExtras.put(AetherShardAPI.getAetherShard((int)250), 0.001);
+            godExtras.put(AetherShardAPI.getAetherShard((int)500), 0.001);
+        }
+        if (Bukkit.getPluginManager().isPluginEnabled("CosmicFactionQuests") && (item = ItemUtils.getFactionQuestReroll(false)) != null) {
+            legendaryExtras.put(ItemUtils.setAmount(item.clone(), 1), 0.005);
+            godExtras.put(ItemUtils.setAmount(item.clone(), ThreadLocalRandom.current().nextInt(2) + 1), 0.008);
+        }
+        possibleCommonExtras = new ArrayList<ItemStack>(commonExtras.keySet());
+        possibleUncommonExtras = new ArrayList<ItemStack>(uncommonExtras.keySet());
+        possibleRareExtras = new ArrayList<ItemStack>(rareExtras.keySet());
+        possibleUltraRareExtras = new ArrayList<ItemStack>(ultraRareExtras.keySet());
+        possibleLegendaryExtras = new ArrayList<ItemStack>(legendaryExtras.keySet());
+        possibleGodExtras = new ArrayList<ItemStack>(godExtras.keySet());
+    }
+
+    public static ItemStack getRandomCommonLoot(ItemRarity slotRarity) {
+        boolean uniqueLoot;
+        ItemStack is = null;
+        ItemRarity chestRarity = ItemRarity.SIMPLE;
+        boolean bl = uniqueLoot = new Random().nextInt(100) > 35;
+        if (uniqueLoot) {
+            if (Math.random() <= 0.02) {
+                Collections.shuffle(possibleCommonExtras);
+            }
+            for (ItemStack item : possibleCommonExtras) {
+                double chance = commonExtras.get((Object)item);
+                if (!(Math.random() * LootGenerator.getSlotRarityModifier(slotRarity) <= chance)) continue;
+                is = item.clone();
+                break;
+            }
+        }
+        if (is == null) {
+            is = ItemGenerator.generate(chestRarity, slotRarity);
+        }
+        if (is == null || is.getType() == Material.AIR) {
+            return null;
+        }
+        return is;
+    }
+
+    public static ItemStack getRandomUncommonLoot(ItemRarity slotRarity) {
+        ItemStack is = null;
+        ItemRarity chestRarity = ItemRarity.UNIQUE;
+        boolean uniqueLoot = new Random().nextInt(100) > 35;
+        int slotRarity_ID = CosmicSpaceChestsAPI.getItemRarity(slotRarity);
+        if (uniqueLoot) {
+            if (Math.random() <= 0.02) {
+                Collections.shuffle(possibleUncommonExtras);
+            }
+            for (ItemStack item : possibleUncommonExtras) {
+                double chance = uncommonExtras.get((Object)item);
+                if (!(Math.random() * LootGenerator.getSlotRarityModifier(slotRarity) <= chance)) continue;
+                is = item.clone();
+                break;
+            }
+        }
+        if (is == null) {
+            CustomEnchantment ce;
+            is = ItemGenerator.generate(chestRarity, slotRarity);
+            if (CosmicSpaceChestsPlugin.plugin.getServer().getPluginManager().isPluginEnabled("Enchantments") && (slotRarity_ID > 2 || new Random().nextBoolean()) && (ce = CosmicSpaceChestsAPI.getRandomCustomEnchant(is.getType())) != null && ce.canEnchantOnto(is)) {
+                is = ce.addToItem(is, new Random().nextInt(ce.getMaxLevel() == 1 ? ce.getMaxLevel() : ce.getMaxLevel() - 1) + 1);
+            }
+        }
+        if (is == null || is.getType() == Material.AIR) {
+            return null;
+        }
+        return is;
+    }
+
+    public static ItemStack getRandomRareLoot(ItemRarity slotRarity) {
+        ItemStack is = null;
+        ItemRarity chestRarity = ItemRarity.ELITE;
+        boolean uniqueLoot = new Random().nextInt(100) > 35;
+        int slotRarity_ID = CosmicSpaceChestsAPI.getItemRarity(slotRarity);
+        if (uniqueLoot) {
+            if (Math.random() <= 0.02) {
+                Collections.shuffle(possibleRareExtras);
+            }
+            for (ItemStack item : possibleRareExtras) {
+                double chance = rareExtras.get((Object)item);
+                if (!(Math.random() * LootGenerator.getSlotRarityModifier(slotRarity) <= chance)) continue;
+                is = item.clone();
+                break;
+            }
+        }
+        if (is == null && EnchantmentAPI.getEnchantments((ItemStack)(is = ItemGenerator.generate(chestRarity, slotRarity))).size() < 5) {
+            int attempts = 0;
+            for (int id = 0; id < 2 && attempts++ <= 100; ++id) {
+                CustomEnchantment ce = CosmicSpaceChestsAPI.getRandomCustomEnchant(is.getType());
+                if (ce == null) continue;
+                if (ce.canEnchantOnto(is)) {
+                    is = ce.addToItem(is, new Random().nextInt(ce.getMaxLevel()) + 1);
+                    continue;
+                }
+                if (!LootGenerator.canBeEnchanted(is)) continue;
+                --id;
+            }
+        }
+        if (is == null || is.getType() == Material.AIR) {
+            return null;
+        }
+        return is;
+    }
+
+    public static ItemStack getRandomUltraRareLoot(ItemRarity slotRarity) {
+        ItemStack is = null;
+        ItemRarity chestRarity = ItemRarity.ULTIMATE;
+        boolean uniqueLoot = new Random().nextInt(100) > 35;
+        int slotRarity_ID = CosmicSpaceChestsAPI.getItemRarity(slotRarity);
+        if (uniqueLoot) {
+            if (Math.random() <= 0.02) {
+                Collections.shuffle(possibleUltraRareExtras);
+            }
+            for (ItemStack item : possibleUltraRareExtras) {
+                double chance = ultraRareExtras.get((Object)item);
+                if (!(Math.random() * LootGenerator.getSlotRarityModifier(slotRarity) <= chance)) continue;
+                is = item.clone();
+                break;
+            }
+        }
+        if (is == null && EnchantmentAPI.getEnchantments((ItemStack)(is = ItemGenerator.generate(chestRarity, slotRarity))).size() < 5) {
+            int x = new Random().nextInt(2) + 3;
+            if (slotRarity_ID > 3) {
+                ++x;
+            }
+            if (slotRarity_ID > 4) {
+                ++x;
+            }
+            if (slotRarity_ID > 5) {
+                ++x;
+            }
+            int attempts = 0;
+            for (int id = 0; id < x && attempts++ <= 100; ++id) {
+                CustomEnchantment ce = CosmicSpaceChestsAPI.getRandomCustomEnchant(is.getType());
+                if (ce == null) continue;
+                if (ce.canEnchantOnto(is)) {
+                    is = ce.addToItem(is, new Random().nextInt(ce.getMaxLevel()) + 1);
+                    continue;
+                }
+                if (!LootGenerator.canBeEnchanted(is)) continue;
+                --id;
+            }
+        }
+        if (is == null || is.getType() == Material.AIR) {
+            return null;
+        }
+        return is;
+    }
+
+    public static ItemStack getRandomLegendaryLoot(ItemRarity slotRarity) {
+        double chance;
+        ItemStack is = null;
+        ItemRarity chestRarity = ItemRarity.LEGENDARY;
+        boolean uniqueLoot = new Random().nextInt(100) > 35;
+        int slotRarity_ID = CosmicSpaceChestsAPI.getItemRarity(slotRarity);
+        if (uniqueLoot) {
+            if (Math.random() <= 0.02) {
+                Collections.shuffle(possibleLegendaryExtras);
+            }
+            for (ItemStack item : possibleLegendaryExtras) {
+                double d = chance = legendaryExtras.containsKey((Object)item) ? legendaryExtras.get((Object)item) : 0.0;
+                if (!(Math.random() * LootGenerator.getSlotRarityModifier(slotRarity) <= chance)) continue;
+                is = item.clone();
+                break;
+            }
+        }
+        if (is == null) {
+            if (new Random().nextInt(10 - slotRarity_ID) != 0 || slotRarity_ID < 3) {
+                is = LootGenerator.convertToGoldName(ItemGenerator.generate(ItemRarity.ULTIMATE, ItemRarity.LEGENDARY));
+                if (is.getType() == Material.DIAMOND_HOE || is.getType() == Material.DIAMOND_SPADE) {
+                    for (ItemStack item : possibleLegendaryExtras) {
+                        double d = chance = legendaryExtras.containsKey((Object)item) ? legendaryExtras.get((Object)item) : 0.0;
+                        if (!(Math.random() * LootGenerator.getSlotRarityModifier(slotRarity) <= chance)) continue;
+                        is = item.clone();
+                        return is;
+                    }
+                    return possibleLegendaryExtras.get(new Random().nextInt(possibleLegendaryExtras.size()));
+                }
+            } else {
+                is = LegendaryGenerator.getRandomLegendary();
+            }
+            if (EnchantmentAPI.getEnchantments((ItemStack)is).size() < 5) {
+                int x = new Random().nextInt(2) + 5;
+                int attempts = 0;
+                for (int id = 0; id < x && attempts++ <= 100; ++id) {
+                    CustomEnchantment ce = CosmicSpaceChestsAPI.getRandomCustomEnchant(is.getType());
+                    if (ce == null) continue;
+                    if (ce != null && ce.canEnchantOnto(is)) {
+                        is = ce.addToItem(is, new Random().nextInt(ce.getMaxLevel()) + 1);
+                        continue;
+                    }
+                    if (!LootGenerator.canBeEnchanted(is)) continue;
+                    --id;
+                }
+            }
+        }
+        if (is == null || is.getType() == Material.AIR) {
+            return null;
+        }
+        return is;
+    }
+
+    public static ItemStack getRandomGodLoot(ItemRarity slotRarity) {
+        return LootGenerator.getRandomGodLoot(slotRarity, 0);
+    }
+
+    public static ItemStack getRandomGodLoot(ItemRarity slotRarity, int attempt) {
+        ItemStack is = null;
+        ItemRarity chestRarity = ItemRarity.GOD;
+        boolean uniqueLoot = true;
+        int slotRarity_ID = CosmicSpaceChestsAPI.getItemRarity(slotRarity);
+        if (uniqueLoot) {
+            if (Math.random() <= 0.02) {
+                Collections.shuffle(possibleGodExtras);
+            }
+            for (ItemStack item : possibleGodExtras) {
+                double chance = godExtras.get((Object)item);
+                if (!(Math.random() * LootGenerator.getSlotRarityModifier(slotRarity) <= chance)) continue;
+                is = item.clone();
+                break;
+            }
+        }
+        if (is == null) {
+            if (attempt >= 10) {
+                Bukkit.getLogger().info("[CosmicSpaceChests] Returning NULL for getRandomGodLoot due to attempt=" + attempt);
+                return null;
+            }
+            return LootGenerator.getRandomGodLoot(slotRarity, attempt + 1);
+        }
+        if (is == null || is.getType() == Material.AIR) {
+            return null;
+        }
+        return is;
+    }
+
+    public static double getSlotRarityModifier(ItemRarity slotRarity) {
+        if (slotRarity == ItemRarity.SIMPLE) {
+            return 1.0;
+        }
+        if (slotRarity == ItemRarity.UNIQUE) {
+            return 0.79;
+        }
+        if (slotRarity == ItemRarity.ELITE) {
+            return 0.65;
+        }
+        if (slotRarity == ItemRarity.ULTIMATE) {
+            return 0.45;
+        }
+        if (slotRarity == ItemRarity.LEGENDARY) {
+            return 0.25;
+        }
+        return 1.0;
+    }
+
+    private static ItemStack convertToGoldName(ItemStack i) {
+        if (i == null || !i.hasItemMeta() || !i.getItemMeta().hasDisplayName()) {
+            return i;
+        }
+        ItemMeta im = i.getItemMeta();
+        im.setDisplayName(im.getDisplayName().replace(ChatColor.YELLOW.toString(), ChatColor.GOLD.toString()));
+        i.setItemMeta(im);
+        return i;
+    }
+
+    private static boolean canBeEnchanted(ItemStack i) {
+        return i != null && (GeneralUtil.isArmor((ItemStack)i) || GeneralUtil.isTool((ItemStack)i) || GeneralUtil.isWeapon((ItemStack)i));
+    }
+}
+

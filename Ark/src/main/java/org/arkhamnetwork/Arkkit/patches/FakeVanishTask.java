@@ -15,6 +15,8 @@ import com.earth2me.essentials.User;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.google.common.collect.Lists;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
