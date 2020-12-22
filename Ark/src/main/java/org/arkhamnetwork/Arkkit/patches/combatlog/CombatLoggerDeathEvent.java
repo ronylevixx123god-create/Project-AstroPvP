@@ -12,7 +12,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches.combatlog;
 
-import com.google.common.collect.Lists;
 import java.util.List;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.Cancellable;

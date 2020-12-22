@@ -43,16 +43,9 @@ import java.util.Arrays;
 import java.util.List;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
-import net.minecraft.server.v1_7_R4.MinecraftServer;
+import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.combatlog.CombatExpireTask;
-import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLogCombatListener;
-import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLogLogoutListener;
-import org.arkhamnetwork.Arkkit.patches.combatlog.CombatTagEvent;
-import org.arkhamnetwork.Arkkit.patches.combatlog.CommandLogout;
-import org.arkhamnetwork.Arkkit.patches.combatlog.DespawnNPCTask;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
-import org.arkhamnetwork.Arkkit.utils.ScoreboardUtils;
 import org.arkhamnetwork.enchantments.enchantments.axes.Bleed;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -140,7 +133,7 @@ extends ArkPlugin {
             Class<?> bukkitUtil = CombatLog.getWorldGuard().getClass().getClassLoader().loadClass("com.sk89q.worldguard.bukkit.BukkitUtil");
             Method toVector = bukkitUtil.getMethod("toVector", Block.class);
             Vector blockVector = (Vector)toVector.invoke(null, new Object[]{l.getBlock()});
-            List regionSet = CombatLog.getWorldGuard().getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs(blockVector);
+            List<String> regionSet = CombatLog.getWorldGuard().getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs(blockVector);
             if (regionSet == null || regionSet.size() < 1) {
                 try {
                     return (StateFlag.State)CombatLog.getWorldGuard().getGlobalRegionManager().get(l.getWorld()).getRegion("__global__").getFlags().get((Object)DefaultFlag.PVP) == StateFlag.State.DENY;
@@ -218,7 +211,7 @@ extends ArkPlugin {
         if (mask_plugin && MaskUtils.hasMaskEquipped((Player)player, (String)"JOKER")) {
             toRetr -= 3000L;
         }
-        if (player.hasMetadata("affectedByJokerMask") && ((MetadataValue)player.getMetadata("affectedByJokerMask").get(0)).asLong() > (long)MinecraftServer.currentTick) {
+        if (player.hasMetadata("affectedByJokerMask") && ((MetadataValue)player.getMetadata("affectedByJokerMask").get(0)).asLong() > (long) MinecraftServer.currentTick) {
             toRetr += 4000L;
         }
         return toRetr;
@@ -238,9 +231,6 @@ extends ArkPlugin {
         }
         CombatTagEvent event = new CombatTagEvent(pl, wasInCombat);
         Bukkit.getServer().getPluginManager().callEvent((Event)event);
-        if (displayOnScoreboard) {
-            ScoreboardUtils.startCombatPlaceholder(pl);
-        }
     }
 
     public static void unflagCombat(Player pl) {

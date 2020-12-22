@@ -9,6 +9,7 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
+import com.conaxgames.banana.event.movement.EntityTNTMoveEvent;
 import com.wimbli.WorldBorder.WorldBorder;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

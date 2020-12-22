@@ -52,7 +52,7 @@ public class WorldGuardUtils {
     public static String getRegionName(Location l) {
         try {
             Vector blockVector = (Vector)toVector.invoke(null, new Object[]{l.getBlock()});
-            List regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs(blockVector);
+            List<String> regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs(blockVector);
             if (regionSet.size() < 1) {
                 return "";
             }
@@ -81,7 +81,7 @@ public class WorldGuardUtils {
     public static boolean isInvincible(Location l) {
         try {
             BlockVector blockVector = BukkitUtil.toVector((Block)l.getBlock());
-            List regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs((Vector)blockVector);
+            List<String> regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs((Vector)blockVector);
             if (regionSet.size() < 1) {
                 try {
                     return (StateFlag.State)wg.getGlobalRegionManager().get(l.getWorld()).getRegion("__global__").getFlags().get((Object)DefaultFlag.INVINCIBILITY) == StateFlag.State.ALLOW;
@@ -156,7 +156,7 @@ public class WorldGuardUtils {
     public static boolean isLavaFlowDisabled(Location l) {
         try {
             BlockVector blockVector = BukkitUtil.toVector((Block)l.getBlock());
-            List regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs((Vector)blockVector);
+            List<String> regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs((Vector)blockVector);
             if (regionSet.size() < 1) {
                 try {
                     return (StateFlag.State)wg.getGlobalRegionManager().get(l.getWorld()).getRegion("__global__").getFlags().get((Object)DefaultFlag.LAVA_FLOW) == StateFlag.State.DENY;
@@ -193,7 +193,7 @@ public class WorldGuardUtils {
     public static boolean getFlagState(Location l, Flag flag) {
         try {
             Vector blockVector = (Vector)toVector.invoke(null, new Object[]{l.getBlock()});
-            List regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs(blockVector);
+            List<String> regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs(blockVector);
             if (regionSet.size() < 1) {
                 return false;
             }

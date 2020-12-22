@@ -29,13 +29,9 @@
 package org.arkhamnetwork.Arkkit;
 
 import com.drtshock.playervaults.vaultmanagement.VaultOperations;
-import com.google.common.collect.Lists;
+
 import java.util.List;
 import org.apache.commons.lang.StringUtils;
-import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.CustomPV;
-import org.arkhamnetwork.Arkkit.CustomPlayerVaults;
-import org.arkhamnetwork.Arkkit.PlayerVaultGUIManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -60,7 +56,7 @@ import org.bukkit.plugin.Plugin;
 class PlayerVaultListener
 implements Listener {
     private PlayerVaultGUIManager manager;
-    List<String> vaultAliases = Lists.newArrayList((Object[])new String[]{"/pv", "/vault", "/chest", "/playervaults"});
+    List<String> vaultAliases = Lists.newArrayList("/pv", "/vault", "/chest", "/playervaults");
 
     public PlayerVaultListener(PlayerVaultGUIManager man) {
         this.manager = man;
@@ -96,7 +92,7 @@ implements Listener {
                     player.closeInventory();
                     return;
                 }
-                CustomPlayerVaults customVaults = this.manager.getCustomPvs().get(player.getUniqueId());
+                CustomPlayerVaults customVaults = (CustomPlayerVaults) this.manager.getCustomPvs().get(player.getUniqueId());
                 if (customVaults == null) {
                     customVaults = new CustomPlayerVaults();
                     this.manager.getCustomPvs().put(player.getUniqueId(), customVaults);
@@ -176,7 +172,7 @@ implements Listener {
                 return;
             }
             player.removeMetadata("pv_name_edit", (Plugin)Arkkit.get());
-            CustomPlayerVaults customPlayerVaults = vaults = this.manager.getCustomPvs().containsKey(player.getUniqueId()) ? this.manager.getCustomPvs().get(player.getUniqueId()) : new CustomPlayerVaults();
+            CustomPlayerVaults customPlayerVaults = vaults = this.manager.getCustomPvs().containsKey(player.getUniqueId()) ? (CustomPlayerVaults) this.manager.getCustomPvs().get(player.getUniqueId()) : new CustomPlayerVaults();
             if (!this.manager.getCustomPvs().containsKey(player.getUniqueId())) {
                 this.manager.getCustomPvs().put(player.getUniqueId(), vaults);
             }

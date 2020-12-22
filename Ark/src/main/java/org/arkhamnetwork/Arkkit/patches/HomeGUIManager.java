@@ -19,7 +19,7 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.earth2me.essentials.User;
-import com.google.common.collect.Lists;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -36,8 +36,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.apache.commons.lang.StringUtils;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.CustomHomes;
-import org.arkhamnetwork.Arkkit.patches.EssentialsAddHomes;
 import org.arkhamnetwork.Arkkit.utils.EssentialsUtils;
 import org.arkhamnetwork.Arkkit.utils.InventoryUtils;
 import org.arkhamnetwork.Arkkit.utils.ItemUtils;

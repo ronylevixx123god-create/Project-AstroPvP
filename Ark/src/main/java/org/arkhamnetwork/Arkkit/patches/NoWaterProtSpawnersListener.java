@@ -31,7 +31,6 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import com.compilex.CosmicCustomCreepers.enums.CreeperTypes;
 import com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils;
-import com.google.common.collect.Lists;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import de.dustplanet.silkspawners.SilkSpawners;

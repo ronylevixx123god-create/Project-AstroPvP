@@ -27,18 +27,15 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
-import me.ifamasssxd.cosmicbosses.utils.BossUtils;
-import net.minecraft.server.v1_7_R4.Chunk;
-import net.minecraft.server.v1_7_R4.WorldServer;
+import me.ifamasssxd.cosmicbosses.utils.BossUtils;;
+import net.minecraft.server.v1_8_R3.Chunk;
+import net.minecraft.server.v1_8_R3.WorldServer;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.chunkgc.ChunkAPI;
-import org.arkhamnetwork.Arkkit.patches.chunkgc.ChunkGC;
-import org.arkhamnetwork.Arkkit.patches.chunkgc.ChunkSyncUtil;
 import org.arkhamnetwork.Arkkit.utils.LongHash;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_7_R4.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.entity.EnderPearl;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -60,7 +57,7 @@ extends BukkitRunnable {
     public static boolean isEndDragonSpawned() {
         if (endDragonClass == null && bossesEnabled) {
             try {
-                endDragonClass = Class.forName("me.ifamasssxd.cosmicbosses.bosses.dragon.EndDragon");
+                endDragonClass = (Class<? extends Boss>) Class.forName("me.ifamasssxd.cosmicbosses.bosses.dragon.EndDragon");
             }
             catch (ClassNotFoundException e) {
                 e.printStackTrace();
@@ -170,28 +167,30 @@ extends BukkitRunnable {
                 final CopyOnWriteArrayList<Long> chunk_batch = new CopyOnWriteArrayList<Long>(slist.subList(x, x_end));
                 final int current_exec = ++exec_count;
                 active_workers.add(current_exec);
+                String finalW_name = w_name;
                 Arkkit.get().getServer().getScheduler().runTaskLater((Plugin)Arkkit.get(), new Runnable(){
 
                     @Override
                     public void run() {
-                        World world = Arkkit.get().getServer().getWorld(w_name);
+                        World world = Arkkit.get().getServer().getWorld(finalW_name);
                         for (Long s : chunk_batch) {
                             int cx = LongHash.msw(s);
                             int cz = LongHash.lsw(s);
                             world.unloadChunk(cx, cz, true, true);
                         }
-                        ChunkGC.log.debug(w_name + " worker_" + current_exec + ": Unloading " + chunk_batch.size() + " chunks...", this.getClass());
+                        ChunkGC.log.debug(finalW_name + " worker_" + current_exec + ": Unloading " + chunk_batch.size() + " chunks...", this.getClass());
                         active_workers.remove(current_exec);
                     }
                 }, (long)(exec_count * 6));
             }
+            String finalW_name1 = w_name;
             Arkkit.get().getServer().getScheduler().runTaskLater((Plugin)Arkkit.get(), new Runnable(){
 
                 @Override
                 public void run() {
                     int csize = ((CraftWorld)w).getHandle().chunkProviderServer.unloadQueue.size();
                     ((CraftWorld)w).getHandle().chunkProviderServer.unloadQueue.clear();
-                    ChunkGC.log.debug("(" + w_name + ") Cleared " + csize + " unloadQueue chunks, skipped " + skipped.get() + " chunks from unloading.", this.getClass());
+                    ChunkGC.log.debug("(" + finalW_name1 + ") Cleared " + csize + " unloadQueue chunks, skipped " + skipped.get() + " chunks from unloading.", this.getClass());
                 }
             }, (long)(++exec_count * 6));
         }

@@ -33,10 +33,8 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import com.google.common.collect.Lists;
 import java.util.ArrayList;
 
-import net.minecraft.server.v1_8_R3.EntityLiving;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
 import net.minecraft.server.v1_8_R3.MobEffectList;
 import org.arkhamnetwork.Arkkit.Arkkit;
@@ -44,7 +42,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftLivingEntity;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftThrownPotion;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;

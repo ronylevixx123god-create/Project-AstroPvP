@@ -78,34 +78,9 @@ implements Listener {
             cmdItem.setItemName("&6&lLEGACY RANK \"&f" + rankName + "&6&l\"");
             cmdItem.setItemLore(new String[]{"&7Right-click this item to unlock", "&7the " + rankName + " Rank (Tier " + rankTier + ") on the", "&7unreleased Legacy Alien Planet.", "", "&b&lCosmicPvP: &c&lLegacy &7launches on", "&7March 8th, 3:00pm CST"});
             KitLegacy.redeemedUUIDs.add(p.getUniqueId().toString());
-            this.requestAll(KitLegacy.kitLegacy_lilypadChannel, p.getUniqueId().toString());
             p.sendMessage(CC.GoldB + "(!) " + CC.Gold + "You have redeemed your /kit legacy!");
             p.sendMessage(CC.Gray + "Whoever uses the LEGACY RANK item you have received will automatically have that rank on CosmicPvP: Legacy's release!");
             p.getInventory().addItem(new ItemStack[]{cmdItem.build()});
-        }
-    }
-
-    @EventListener
-    public void onLilypadMessageRecieved(MessageEvent event) {
-        if (event.getChannel().equals(KitLegacy.kitLegacy_lilypadChannel)) {
-            try {
-                String uuid = event.getMessageAsString();
-                Bukkit.getLogger().info("[KitLegacy] Flagged UUID:" + uuid + " in redeemedUUIDs from " + event.getSender());
-                KitLegacy.redeemedUUIDs.add(uuid);
-            }
-            catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void requestAll(String channel, String message) {
-        try {
-            MessageRequest request = new MessageRequest(new ArrayList(), channel, message);
-            KitLegacy.lilypadConnect.request((Request)request);
-        }
-        catch (UnsupportedEncodingException | RequestException e) {
-            e.printStackTrace();
         }
     }
 }

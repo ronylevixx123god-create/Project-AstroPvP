@@ -24,10 +24,8 @@ import com.cosmicpvp.cosmicutils.itembuilder.BoosterBuilder;
 import com.cosmicpvp.cosmicutils.itembuilder.CustomItemBuilder;
 import com.cosmicpvp.cosmicutils.itembuilder.CustomTitleBuilder;
 import com.cosmicpvp.cosmicutils.itembuilder.FatBucketBuilder;
-import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
-import com.google.common.collect.Lists;
 
 import java.io.IOException;
 import java.util.ArrayList;

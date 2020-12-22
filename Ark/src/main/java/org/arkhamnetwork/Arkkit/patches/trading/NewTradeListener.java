@@ -26,7 +26,7 @@
 package org.arkhamnetwork.Arkkit.patches.trading;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.google.common.collect.Lists;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
@@ -35,7 +35,6 @@ import java.util.concurrent.TimeUnit;
 
 import com.google.common.collect.MapMaker;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.trading.NewTrade;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

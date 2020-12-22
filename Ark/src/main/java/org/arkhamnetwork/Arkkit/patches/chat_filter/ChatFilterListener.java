@@ -85,7 +85,7 @@ implements Listener {
         if (ChatFilter.remove_chat_colors) {
             event.setMessage(ChatColor.stripColor((String)ChatColor.translateAlternateColorCodes((char)'&', (String)event.getMessage())));
         }
-        for (Object c : (String)event.getMessage().toCharArray()) {
+        for (Object c : event.getMessage().toCharArray()) {
             if (Character.UnicodeBlock.of((char)c) == Character.UnicodeBlock.BASIC_LATIN) continue;
             player.sendMessage((Object)ChatColor.RED + "Invalid character '" + (char)c + "' in message.");
             event.setCancelled(true);

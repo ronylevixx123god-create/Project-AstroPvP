@@ -14,7 +14,6 @@
 package org.arkhamnetwork.Arkkit.patches.balancetop;
 
 import com.earth2me.essentials.Essentials;
-import com.google.common.collect.Lists;
 import net.milkbowl.vault.economy.Economy;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
@@ -71,9 +70,6 @@ extends ArkPlugin {
 
     public void registerListeners() {
         this.registerListener(new PlayerListener());
-        if (Bukkit.getPluginManager().isPluginEnabled("BanManager")) {
-            this.registerListener(new UnbanListener());
-        }
     }
 
     private boolean setupEconomy() {

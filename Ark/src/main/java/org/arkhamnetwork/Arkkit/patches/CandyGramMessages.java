@@ -9,8 +9,10 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.google.common.collect.Lists;
+
 import java.util.List;
+
+import com.google.common.collect.Lists;
 import org.bukkit.ChatColor;
 
 enum CandyGramMessages {

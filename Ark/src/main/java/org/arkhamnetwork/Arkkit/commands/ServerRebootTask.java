@@ -94,11 +94,6 @@ extends BukkitRunnable {
                 this.doBroadcast();
                 break;
             }
-            case 0: {
-                if (!ArkPlugins.FALLBACK_SERVERS.getArkPlugin().isRunning()) break;
-                FallbackServers.disconnectAllPlayers();
-                break;
-            }
             case -10: {
                 Bukkit.getLogger().info("(CommandArkReboot) Stopping the server...");
                 Bukkit.shutdown();

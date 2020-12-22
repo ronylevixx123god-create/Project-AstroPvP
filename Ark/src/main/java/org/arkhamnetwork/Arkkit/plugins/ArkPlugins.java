@@ -1,198 +1,9 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  org.bukkit.plugin.Plugin
- */
 package org.arkhamnetwork.Arkkit.plugins;
 
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.PlayerVaultGUI;
-import org.arkhamnetwork.Arkkit.patches.AdminWarps;
-import org.arkhamnetwork.Arkkit.patches.AntiBlockGlitch;
-import org.arkhamnetwork.Arkkit.patches.AntiCrash;
-import org.arkhamnetwork.Arkkit.patches.AntiDupe;
-import org.arkhamnetwork.Arkkit.patches.AntiExploit;
-import org.arkhamnetwork.Arkkit.patches.AntiGodAppleCraft;
-import org.arkhamnetwork.Arkkit.patches.AntiHack;
-import org.arkhamnetwork.Arkkit.patches.AntiInventoryHijack;
-import org.arkhamnetwork.Arkkit.patches.AntiInvisibility;
-import org.arkhamnetwork.Arkkit.patches.AntiLag;
-import org.arkhamnetwork.Arkkit.patches.AntiLootSteal;
-import org.arkhamnetwork.Arkkit.patches.AntiMinecart;
-import org.arkhamnetwork.Arkkit.patches.AntiPistonLag;
-import org.arkhamnetwork.Arkkit.patches.AntiRedstoneLag;
-import org.arkhamnetwork.Arkkit.patches.AntiSpamBot;
-import org.arkhamnetwork.Arkkit.patches.AntiTileEntityLag;
-import org.arkhamnetwork.Arkkit.patches.AsyncMonsters;
-import org.arkhamnetwork.Arkkit.patches.AsyncSpigot;
-import org.arkhamnetwork.Arkkit.patches.AutoCraftTNT;
-import org.arkhamnetwork.Arkkit.patches.AutoReboot;
-import org.arkhamnetwork.Arkkit.patches.AutoRespawn;
-import org.arkhamnetwork.Arkkit.patches.Balance;
-import org.arkhamnetwork.Arkkit.patches.BlockValue;
-import org.arkhamnetwork.Arkkit.patches.BoatBlocker;
-import org.arkhamnetwork.Arkkit.patches.BulkSaving;
-import org.arkhamnetwork.Arkkit.patches.Bump;
-import org.arkhamnetwork.Arkkit.patches.ChatBubbles;
-import org.arkhamnetwork.Arkkit.patches.ChatLimiter;
-import org.arkhamnetwork.Arkkit.patches.Christmas;
-import org.arkhamnetwork.Arkkit.patches.ChunkLoadFlush;
-import org.arkhamnetwork.Arkkit.patches.ClearInventoryConfirm;
-import org.arkhamnetwork.Arkkit.patches.CommandBlocker;
-import org.arkhamnetwork.Arkkit.patches.CommandItems;
-import org.arkhamnetwork.Arkkit.patches.CondenseCommand;
-import org.arkhamnetwork.Arkkit.patches.CoreProtectConfig;
-import org.arkhamnetwork.Arkkit.patches.CosmicClientHelper;
-import org.arkhamnetwork.Arkkit.patches.CustomBroadcast;
-import org.arkhamnetwork.Arkkit.patches.CustomMOTD;
-import org.arkhamnetwork.Arkkit.patches.DeathMessages;
-import org.arkhamnetwork.Arkkit.patches.Deathpoint;
-import org.arkhamnetwork.Arkkit.patches.DoubleDrops;
-import org.arkhamnetwork.Arkkit.patches.DoubleXp;
-import org.arkhamnetwork.Arkkit.patches.Drinks;
-import org.arkhamnetwork.Arkkit.patches.DropperBlocker;
-import org.arkhamnetwork.Arkkit.patches.DynamicMaxPlayers;
-import org.arkhamnetwork.Arkkit.patches.EULA;
-import org.arkhamnetwork.Arkkit.patches.Easter;
-import org.arkhamnetwork.Arkkit.patches.EnchantmentAnvilFix;
-import org.arkhamnetwork.Arkkit.patches.EndDragon;
-import org.arkhamnetwork.Arkkit.patches.EndGrinding;
-import org.arkhamnetwork.Arkkit.patches.EnderpearlCooldown;
-import org.arkhamnetwork.Arkkit.patches.EntityCleaner;
-import org.arkhamnetwork.Arkkit.patches.EquipmentLootboxes;
-import org.arkhamnetwork.Arkkit.patches.EssentialsAddHomes;
-import org.arkhamnetwork.Arkkit.patches.EssentialsKitViewer;
-import org.arkhamnetwork.Arkkit.patches.EssentialsWarpAliases;
-import org.arkhamnetwork.Arkkit.patches.EssentialsWarpUI;
-import org.arkhamnetwork.Arkkit.patches.ExpBottles;
-import org.arkhamnetwork.Arkkit.patches.ExpOrbs;
-import org.arkhamnetwork.Arkkit.patches.ExtraMute;
-import org.arkhamnetwork.Arkkit.patches.FactionCornerClaim;
-import org.arkhamnetwork.Arkkit.patches.FactionTagReserve;
-import org.arkhamnetwork.Arkkit.patches.FactionTeleportSanity;
-import org.arkhamnetwork.Arkkit.patches.FakeVanish;
-import org.arkhamnetwork.Arkkit.patches.FatBuckets;
-import org.arkhamnetwork.Arkkit.patches.FillCommand;
-import org.arkhamnetwork.Arkkit.patches.FinalBattle;
-import org.arkhamnetwork.Arkkit.patches.ForceSpawn;
-import org.arkhamnetwork.Arkkit.patches.Gamble;
-import org.arkhamnetwork.Arkkit.patches.GiveAll;
-import org.arkhamnetwork.Arkkit.patches.GlobalGamemode;
-import org.arkhamnetwork.Arkkit.patches.GoldenAppleSickness;
-import org.arkhamnetwork.Arkkit.patches.GoldenKnife;
-import org.arkhamnetwork.Arkkit.patches.HackerHub;
-import org.arkhamnetwork.Arkkit.patches.Halloween;
-import org.arkhamnetwork.Arkkit.patches.HideLore;
-import org.arkhamnetwork.Arkkit.patches.HideStream;
-import org.arkhamnetwork.Arkkit.patches.HitMe;
-import org.arkhamnetwork.Arkkit.patches.HomeGUI;
-import org.arkhamnetwork.Arkkit.patches.HotbarArmorSwap;
-import org.arkhamnetwork.Arkkit.patches.ItemID;
-import org.arkhamnetwork.Arkkit.patches.ItemLinking;
-import org.arkhamnetwork.Arkkit.patches.ItemNametag;
-import org.arkhamnetwork.Arkkit.patches.ItemTracking;
-import org.arkhamnetwork.Arkkit.patches.ItemframeGodmode;
-import org.arkhamnetwork.Arkkit.patches.JulyFreedom;
-import org.arkhamnetwork.Arkkit.patches.LavaSponge;
-import org.arkhamnetwork.Arkkit.patches.LoreTag;
-import org.arkhamnetwork.Arkkit.patches.MaxFlyHeight;
-import org.arkhamnetwork.Arkkit.patches.MaxHeightLogic;
-import org.arkhamnetwork.Arkkit.patches.McmmoCredits;
-import org.arkhamnetwork.Arkkit.patches.MoreBuckets;
-import org.arkhamnetwork.Arkkit.patches.MysteryMobSpawners;
-import org.arkhamnetwork.Arkkit.patches.NameSanity;
-import org.arkhamnetwork.Arkkit.patches.Near;
-import org.arkhamnetwork.Arkkit.patches.NerfExpDrops;
-import org.arkhamnetwork.Arkkit.patches.NerfNetherSpawners;
-import org.arkhamnetwork.Arkkit.patches.NetherGlitchFix;
-import org.arkhamnetwork.Arkkit.patches.NetherPortalTrap;
-import org.arkhamnetwork.Arkkit.patches.NewYears;
-import org.arkhamnetwork.Arkkit.patches.NoArrowBounce;
-import org.arkhamnetwork.Arkkit.patches.NoBeds;
-import org.arkhamnetwork.Arkkit.patches.NoBookSign;
-import org.arkhamnetwork.Arkkit.patches.NoCaveSpiders;
-import org.arkhamnetwork.Arkkit.patches.NoCombatFlying;
-import org.arkhamnetwork.Arkkit.patches.NoCursorDrop;
-import org.arkhamnetwork.Arkkit.patches.NoDupeExploit;
-import org.arkhamnetwork.Arkkit.patches.NoEnchantmentTableBooks;
-import org.arkhamnetwork.Arkkit.patches.NoExplosionPhysics;
-import org.arkhamnetwork.Arkkit.patches.NoFallRegions;
-import org.arkhamnetwork.Arkkit.patches.NoFireTicking;
-import org.arkhamnetwork.Arkkit.patches.NoHoppers;
-import org.arkhamnetwork.Arkkit.patches.NoHorseRide;
-import org.arkhamnetwork.Arkkit.patches.NoLavaFlow;
-import org.arkhamnetwork.Arkkit.patches.NoLavaFlowRegion;
-import org.arkhamnetwork.Arkkit.patches.NoLoginQueue;
-import org.arkhamnetwork.Arkkit.patches.NoMCMMODisarm;
-import org.arkhamnetwork.Arkkit.patches.NoMCMMOLimits;
-import org.arkhamnetwork.Arkkit.patches.NoMobGriefing;
-import org.arkhamnetwork.Arkkit.patches.NoMobMcmmo;
-import org.arkhamnetwork.Arkkit.patches.NoNaturalMobs;
-import org.arkhamnetwork.Arkkit.patches.NoNewChunks;
-import org.arkhamnetwork.Arkkit.patches.NoSafezoneMobs;
-import org.arkhamnetwork.Arkkit.patches.NoSpawnHomes;
-import org.arkhamnetwork.Arkkit.patches.NoTallGrass;
-import org.arkhamnetwork.Arkkit.patches.NoVehicleTeleport;
-import org.arkhamnetwork.Arkkit.patches.NoVillagerTrading;
-import org.arkhamnetwork.Arkkit.patches.NoVoidDamage;
-import org.arkhamnetwork.Arkkit.patches.NoWaterProtSpawners;
-import org.arkhamnetwork.Arkkit.patches.NoWeather;
-import org.arkhamnetwork.Arkkit.patches.NoWhitelist;
-import org.arkhamnetwork.Arkkit.patches.ObsidianDestroyerFixes;
-import org.arkhamnetwork.Arkkit.patches.OpPermission;
-import org.arkhamnetwork.Arkkit.patches.ParkourRegion;
-import org.arkhamnetwork.Arkkit.patches.Party;
-import org.arkhamnetwork.Arkkit.patches.PlayerHeads;
-import org.arkhamnetwork.Arkkit.patches.PlayerHealth;
-import org.arkhamnetwork.Arkkit.patches.PluginHider;
-import org.arkhamnetwork.Arkkit.patches.PortalRegions;
-import org.arkhamnetwork.Arkkit.patches.PotionFix;
-import org.arkhamnetwork.Arkkit.patches.PotionStackLimiter;
-import org.arkhamnetwork.Arkkit.patches.PvPPotionEffects;
-import org.arkhamnetwork.Arkkit.patches.PvPSanity;
-import org.arkhamnetwork.Arkkit.patches.RaidShop;
-import org.arkhamnetwork.Arkkit.patches.RedeemMCMMO;
-import org.arkhamnetwork.Arkkit.patches.ResetKit;
-import org.arkhamnetwork.Arkkit.patches.RewardNPC;
-import org.arkhamnetwork.Arkkit.patches.SafeShutdown;
-import org.arkhamnetwork.Arkkit.patches.SandStackLimiter;
-import org.arkhamnetwork.Arkkit.patches.SeasonalPrefixes;
-import org.arkhamnetwork.Arkkit.patches.ShopCommand;
-import org.arkhamnetwork.Arkkit.patches.ShowcaseExpander;
-import org.arkhamnetwork.Arkkit.patches.SkillGems;
-import org.arkhamnetwork.Arkkit.patches.SmarterEssentials;
-import org.arkhamnetwork.Arkkit.patches.SpawnPod;
-import org.arkhamnetwork.Arkkit.patches.SpawnerFee;
-import org.arkhamnetwork.Arkkit.patches.SpigotBranding;
-import org.arkhamnetwork.Arkkit.patches.SpigotDebug;
-import org.arkhamnetwork.Arkkit.patches.StackableSpawners;
-import org.arkhamnetwork.Arkkit.patches.Suicide;
-import org.arkhamnetwork.Arkkit.patches.TNTLimiter;
-import org.arkhamnetwork.Arkkit.patches.TPWarmup;
-import org.arkhamnetwork.Arkkit.patches.TWAutoCraftTNT;
-import org.arkhamnetwork.Arkkit.patches.TaperSlots;
-import org.arkhamnetwork.Arkkit.patches.Thanksgiving;
-import org.arkhamnetwork.Arkkit.patches.TickRatelimit;
-import org.arkhamnetwork.Arkkit.patches.TileEntityCleaner;
-import org.arkhamnetwork.Arkkit.patches.TrickOrTreaters;
-import org.arkhamnetwork.Arkkit.patches.ValentinesDay;
-import org.arkhamnetwork.Arkkit.patches.VaultDisable;
-import org.arkhamnetwork.Arkkit.patches.WarpGUI;
-import org.arkhamnetwork.Arkkit.patches.WarzoneClaims;
-import org.arkhamnetwork.Arkkit.patches.WarzoneMoney;
-import org.arkhamnetwork.Arkkit.patches.WebsiteLinks;
-import org.arkhamnetwork.Arkkit.patches.WildernessCommand;
-import org.arkhamnetwork.Arkkit.patches.WithdrawMCMMO;
-import org.arkhamnetwork.Arkkit.patches.WorldBorderFixes;
-import org.arkhamnetwork.Arkkit.patches.WorldTickOptimizer;
-import org.arkhamnetwork.Arkkit.patches.XPDirectDeposit;
-import org.arkhamnetwork.Arkkit.patches.XPLoss;
-import org.arkhamnetwork.Arkkit.patches.XPSanity;
-import org.arkhamnetwork.Arkkit.patches.Youtubers;
-import org.arkhamnetwork.Arkkit.patches.Ypperin;
+import org.arkhamnetwork.Arkkit.patches.*;
 import org.arkhamnetwork.Arkkit.patches.antiknockback.AntiKnockback;
-import org.arkhamnetwork.Arkkit.patches.antimacro.AntiMacro;
 import org.arkhamnetwork.Arkkit.patches.balancetop.BalanceTop;
 import org.arkhamnetwork.Arkkit.patches.barannouncer.BarAnnouncer;
 import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatFilter;
@@ -200,9 +11,7 @@ import org.arkhamnetwork.Arkkit.patches.chunkgc.ChunkGC;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
 import org.arkhamnetwork.Arkkit.patches.commandcooldown.CommandCooldowns;
 import org.arkhamnetwork.Arkkit.patches.createtitle.CreateTitle;
-import org.arkhamnetwork.Arkkit.patches.marriage.Marriage;
 import org.arkhamnetwork.Arkkit.patches.newtrade.BetterTrade;
-import org.arkhamnetwork.Arkkit.patches.teams.Teams;
 import org.arkhamnetwork.Arkkit.patches.trading.NewTrade;
 import org.arkhamnetwork.Arkkit.patches.voting.VotePatch;
 import org.bukkit.plugin.Plugin;
@@ -229,7 +38,6 @@ public enum ArkPlugins {
     ANTI_INVENTORY_HIJACK(new AntiInventoryHijack((Plugin)Arkkit.get()), "Prevents destruction of entities and blocks that have an inventory actively being viewed, Fixes a dupe exploit on Factions."),
     COMMAND_BLOCKER(new CommandBlocker((Plugin)Arkkit.get()), "Allows for dynamic command blocking / unblocking."),
     SPIGOT_BRANDING(new SpigotBranding((Plugin)Arkkit.get()), "Improved default spigot language messages to be more informative, allows for custom store_url and global_prefix to be configured into the improved messages."),
-    CUSTOM_MOTD(new CustomMOTD((Plugin)Arkkit.get()), "Enables /cmotd command along with a custom, configurable, delayed MOTD."),
     ESSENTIALS_WARP_UI(new EssentialsWarpUI((Plugin)Arkkit.get()), "Enables a /warp inventory menu. Warps to be displayed can be configurred."),
     ESSENTIALS_WARP_ALIASES(new EssentialsWarpAliases((Plugin)Arkkit.get()), "Enables per-warp /aliase commands. So /warp test will become /test, useful in prison server configurations."),
     GIVE_ALL(new GiveAll((Plugin)Arkkit.get()), "Enables /giveall command for server giveaways, permission and OP restricted."),
@@ -250,9 +58,7 @@ public enum ArkPlugins {
     CHAT_BUBBLES(new ChatBubbles((Plugin)Arkkit.get()), "Enables chat bubbles over player's heads with the arkkit.chatbubble permission!"),
     BAR_ANNOUNCER(new BarAnnouncer((Plugin)Arkkit.get()), "Enables boss bar announcement system."),
     VOTING(new VotePatch((Plugin)Arkkit.get()), "Enables voting rewards and tracking."),
-    MARRIAGE(new Marriage((Plugin)Arkkit.get()), "Enables marriage and /marry for players on local server."),
     NO_CAVE_SPIDERS(new NoCaveSpiders((Plugin)Arkkit.get()), "Replaces all cave spiders with normal spiders as they spawn."),
-    TEAMS(new Teams((Plugin)Arkkit.get()), "Enables /teams and the ability for players to create parties."),
     TRADING(new NewTrade((Plugin)Arkkit.get()), "Enables /trade and ability to trade items with other players through GUI."),
     NO_COMBAT_FLYING(new NoCombatFlying((Plugin)Arkkit.get()), "Clips wings of players who engage in PvP or PvE combat for 10s."),
     DEATHPOINT(new Deathpoint((Plugin)Arkkit.get()), "Enables /deathpoint (/back alternative) that allows players to return to previous location of death."),
@@ -298,7 +104,6 @@ public enum ArkPlugins {
     ANTI_GOD_APPLE_CRAFT(new AntiGodAppleCraft((Plugin)Arkkit.get()), "Prevents god apples from being crafted."),
     ASYNC_MONSTERS(new AsyncMonsters((Plugin)Arkkit.get()), "Enables monster spawner entity stacking."),
     NETHER_GLITCH_FIX(new NetherGlitchFix((Plugin)Arkkit.get()), "Prevents players from building above nether, and creating portals in nether."),
-    HIDE_STREAM(new HideStream((Plugin)Arkkit.get()), "Hides vanilla player join, quit, and death messages."),
     POTION_FIX(new PotionFix((Plugin)Arkkit.get()), "Nerfs vanilla potion behavior to prevent crazy OP effects like STR III."),
     ANTI_LOOT_STEAL(new AntiLootSteal((Plugin)Arkkit.get()), "Loot can only be picked up by the killer of the entity for a few seconds."),
     HOTBAR_ARMOR_SWAP(new HotbarArmorSwap((Plugin)Arkkit.get()), "Enables right-click-to-equip mechanic for armor."),
@@ -337,7 +142,6 @@ public enum ArkPlugins {
     NO_MCMMO_DISARM(new NoMCMMODisarm((Plugin)Arkkit.get()), "Disables mcMMO's unarmed ability to disarm players."),
     MYSTERY_MOB_SPAWNER(new MysteryMobSpawners((Plugin)Arkkit.get()), "Enables mystery mob spawner item and sell signs."),
     DOUBLE_XP(new DoubleXp((Plugin)Arkkit.get()), "Multiplies vanilla xp drops by specified amount, default 2x."),
-    ANTI_MACRO(new AntiMacro((Plugin)Arkkit.get()), "Enables anti macro captcha confirmation system."),
     RAID_SHOP(new RaidShop((Plugin)Arkkit.get()), "Enables /raidshop"),
     TW_AUTO_CRAFT_TNT(new TWAutoCraftTNT((Plugin)Arkkit.get()), "Enables TreasureWars /tnt"),
     WEBSITE_LINKS(new WebsiteLinks((Plugin)Arkkit.get()), "Enables /forum and /report hotlinks."),
@@ -349,7 +153,6 @@ public enum ArkPlugins {
     OBSIDIAN_DESTROYER_FIXES(new ObsidianDestroyerFixes((Plugin)Arkkit.get()), "Enables Obsidian Destroyer bugfixes, prevents invincible blocks."),
     TAPER_SLOTS(new TaperSlots((Plugin)Arkkit.get()), "Enables slot taper, slowly increases max slots to prevent network thread dieing from spam join."),
     NO_VEHICLE_TELEPORT(new NoVehicleTeleport((Plugin)Arkkit.get()), "Disables teleportation events while in a vehicle."),
-    AUTO_ENTITY_CLEAR(new AutoEntityClear((Plugin)Arkkit.get()), "Activates /clearlagg-like task that removes all entities on a set interval."),
     ANTI_MINECART(new AntiMinecart((Plugin)Arkkit.get()), "Prevents known minecart dupes."),
     WARZONE_CLAIMS(new WarzoneClaims((Plugin)Arkkit.get()), "Charge players for claiming chunks near warzones."),
     EULA(new EULA((Plugin)Arkkit.get()), "Sells EULA compliant items for soft currency."),
@@ -396,7 +199,6 @@ public enum ArkPlugins {
     ADMIN_WARPS(new AdminWarps((Plugin)Arkkit.get()), "Create admin warps that only admins have access to."),
     NO_FALL_REGIONS(new NoFallRegions((Plugin)Arkkit.get()), "No Fall regions that need to have _nofall in them."),
     TRICK_OR_TREATERS(new TrickOrTreaters((Plugin)Arkkit.get()), "Trick or Treaters spawn randomly on players!"),
-    ITEM_TRACKING(new ItemTracking((Plugin)Arkkit.get()), "Tracks high value IID items being dropped/picked up."),
     NO_SPAWN_HOMES(new NoSpawnHomes((Plugin)Arkkit.get()), "Blocks players from setting homes or warps at /spawn."),
     END_DRAGON(new EndDragon((Plugin)Arkkit.get()), "End Dragon boss spawning patch, with an egg to show timers as well."),
     FAT_BUCKETS(new FatBuckets((Plugin)Arkkit.get()), "Enables Fat Buckets"),

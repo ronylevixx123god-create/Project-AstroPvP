@@ -17,10 +17,6 @@ import java.io.File;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.commands.CommandArkReboot;
 import org.arkhamnetwork.Arkkit.libs.MinecraftThreadMonitor;
-import org.arkhamnetwork.Arkkit.patches.AntiCrashEntityListener;
-import org.arkhamnetwork.Arkkit.patches.CommandForceGC;
-import org.arkhamnetwork.Arkkit.patches.Logger;
-import org.arkhamnetwork.Arkkit.patches.RebootTask;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -50,7 +46,6 @@ extends ArkPlugin {
         SpigotConfig.restartOnCrash = true;
         SpigotConfig.restartScript = "null.sh";
         SpigotConfig.timeoutTime = 300;
-        this.registerCommand(new CommandForceGC("forcegc", "/<command>", "Force a JVM GC"));
         this.getBukkitPlugin().getServer().getScheduler().runTaskLater(this.getBukkitPlugin(), new Runnable(){
 
             @Override

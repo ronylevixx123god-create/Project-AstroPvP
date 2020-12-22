@@ -12,7 +12,8 @@
 package org.arkhamnetwork.Arkkit.patches.chat_filter;
 
 import com.cosmicpvp.cosmicutils.utils.JSONUtils;
-import com.google.common.collect.Lists;
+
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,13 +22,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.regex.Pattern;
-import lilypad.libs.io.netty.util.internal.ConcurrentSet;
-import net.minecraft.util.com.google.gson.reflect.TypeToken;
+
+import com.google.common.collect.Lists;
+import com.google.common.reflect.TypeToken;
+import io.netty.util.internal.ConcurrentSet;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatFilterListener;
-import org.arkhamnetwork.Arkkit.patches.chat_filter.CommandChat;
-import org.arkhamnetwork.Arkkit.patches.chat_filter.CommandChatFilter;
-import org.arkhamnetwork.Arkkit.patches.chat_filter.CommandFilter;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -39,7 +38,7 @@ extends ArkPlugin {
     protected static List<UUID> hasntMoved = new ArrayList<UUID>();
     protected static HashMap<UUID, String> lastMessage = new HashMap();
     protected static HashMap<UUID, Long> lastMessage_time = new HashMap();
-    public static Set<UUID> disabledFilteredPlayers = new ConcurrentSet();
+    public static Set disabledFilteredPlayers = new ConcurrentSet();
     protected static boolean block_chat_until_move = true;
     protected static boolean block_duplicate_messages = true;
     protected static boolean remove_chat_colors = true;
@@ -53,7 +52,7 @@ extends ArkPlugin {
     }
 
     @Override
-    public void enable() {
+    public void enable() throws IOException {
         bad_words = this.getBukkitPlugin().getConfig().getStringList("settings.chat_filter.bad_words");
         permanent_bad_words = this.getBukkitPlugin().getConfig().getStringList("settings.chat_filter.permanent_bad_words");
         block_chat_until_move = this.getBukkitPlugin().getConfig().getBoolean("settings.chat_filter.block_chat_until_move");
@@ -70,18 +69,18 @@ extends ArkPlugin {
         bad_words.remove("fu");
         bad_words.remove("fk");
         bad_words.remove("muff");
-        this.registerCommand(new CommandChatFilter("togglefilter", "/<command>", "Toggle filter", Lists.newArrayList((Object[])new String[]{"chatfilter"})));
+        this.registerCommand(new CommandChatFilter("togglefilter", "/<command>", "Toggle filter", Lists.newArrayList("chatfilter")));
         this.registerCommand(new CommandChat("chat", "/<command>", "Chat toggling and clearing.", new ArrayList<String>(Arrays.asList("simplechat"))));
         this.registerCommand(new CommandFilter("filterchat", "/<command>", "Allows modification of world filter and censor list.", new ArrayList<String>(Arrays.asList("censor"))));
         this.registerListener(new ChatFilterListener());
-        disabledFilteredPlayers = (Set)JSONUtils.fromJson((String)"plugins/Arkkit/filterToggles.json", (Object)this.token);
+        disabledFilteredPlayers = (Set)JSONUtils.fromJson("plugins/Arkkit/filterToggles.json", (Object)this.token);
         if (disabledFilteredPlayers == null) {
             disabledFilteredPlayers = new ConcurrentSet();
         }
     }
 
     @Override
-    public void disable() {
+    public void disable() throws IOException {
         chat_haulted = false;
         JSONUtils.saveJSONToFile((String)"plugins/Arkkit/filterToggles.json", disabledFilteredPlayers, (Object)this.token);
     }

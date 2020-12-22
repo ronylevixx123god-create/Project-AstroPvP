@@ -36,15 +36,16 @@ import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.events.PacketListener;
 import com.comphenix.protocol.reflect.StructureModifier;
 import java.util.List;
-import net.minecraft.server.v1_7_R4.NBTBase;
-import net.minecraft.server.v1_7_R4.NBTTagCompound;
-import net.minecraft.server.v1_7_R4.NBTTagList;
+
+import net.minecraft.server.v1_8_R3.NBTBase;
+import net.minecraft.server.v1_8_R3.NBTTagCompound;
+import net.minecraft.server.v1_8_R3.NBTTagList;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
-import org.bukkit.craftbukkit.v1_7_R4.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
@@ -84,7 +85,7 @@ extends ArkPlugin {
                         if (item != null && (itemMeta = item.getItemMeta()).hasLore()) {
                             List lore = itemMeta.getLore();
                             String toRemove = null;
-                            for (String s : lore) {
+                            for (String s : itemMeta.getLore()) {
                                 if (!s.contains("IID")) continue;
                                 toRemove = s;
                                 break;
@@ -97,7 +98,7 @@ extends ArkPlugin {
                             }
                         }
                         if (!editedItem) continue;
-                        event.getPacket().getItemModifier().write(i, (Object)item);
+                        event.getPacket().getItemModifier().write(i, item);
                     }
                 }
                 if (event.getPacketType() == PacketType.Play.Server.WINDOW_ITEMS) {
@@ -111,7 +112,7 @@ extends ArkPlugin {
                             if (i == null || !(itemMeta = i.getItemMeta()).hasLore()) continue;
                             List lore = itemMeta.getLore();
                             String toRemove = null;
-                            for (String s : lore) {
+                            for (String s : itemMeta.getLore()) {
                                 if (!s.contains("IID")) continue;
                                 toRemove = s;
                                 break;
@@ -140,7 +141,7 @@ extends ArkPlugin {
         if (i == null || !GeneralUtil.isArmor((ItemStack)i) && !GeneralUtil.isWeapon((ItemStack)i) && !GeneralUtil.isTool((ItemStack)i)) {
             return i;
         }
-        net.minecraft.server.v1_7_R4.ItemStack nmsItem = CraftItemStack.asNMSCopy((ItemStack)i);
+        net.minecraft.server.v1_8_R3.ItemStack nmsItem = CraftItemStack.asNMSCopy((ItemStack)i);
         if (!nmsItem.hasTag()) {
             tag = new NBTTagCompound();
             nmsItem.setTag(tag);
@@ -150,7 +151,7 @@ extends ArkPlugin {
         NBTTagList am = new NBTTagList();
         tag.set("AttributeModifiers", (NBTBase)am);
         nmsItem.setTag(tag);
-        return CraftItemStack.asCraftMirror((net.minecraft.server.v1_7_R4.ItemStack)nmsItem);
+        return CraftItemStack.asCraftMirror((net.minecraft.server.v1_8_R3.ItemStack)nmsItem);
     }
 }
 

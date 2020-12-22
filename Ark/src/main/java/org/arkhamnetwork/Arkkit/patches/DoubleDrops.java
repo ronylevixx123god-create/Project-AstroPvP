@@ -15,7 +15,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import com.google.common.collect.Lists;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.Material;
 import org.bukkit.entity.Creeper;
@@ -42,7 +41,7 @@ extends ArkPlugin {
     }
 
     @Override
-    public void disable() {
+    public void disable() throws IOException {
         super.disable();
         this.unregisterListeners();
     }

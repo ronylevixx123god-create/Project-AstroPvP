@@ -58,7 +58,6 @@ extends AbstractCommand {
             }
             p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "LOGGING OUT...");
             p.removeMetadata("cl_combat", (Plugin)Arkkit.get());
-            FallbackServers.redirect(FallbackServers.getRandomServer(), p);
         }
         return true;
     }

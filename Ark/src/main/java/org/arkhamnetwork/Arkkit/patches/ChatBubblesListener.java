@@ -22,11 +22,8 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import com.compilex.CompilexPermissions.CompilexPermissions;
 import com.compilex.CompilexPermissions.structure.PermissionGroup;
-import com.harry5574.utils.hologram.Hologram;
 import java.util.ArrayList;
 import java.util.UUID;
-import me.rohan576.ArkhamChatColors.sql.DataManager;
-import me.rohan576.ArkhamTitleAPI.TitleAPI;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -60,7 +57,6 @@ implements Listener {
         }
         String title = null;
         ChatColor cc = null;
-        cc = Bukkit.getPluginManager().isPluginEnabled("ArkhamChatColors") ? ((color_code = DataManager.getChatColor((UUID)pl.getUniqueId())) != null ? ChatColor.getByChar((String)color_code) : ChatColor.WHITE) : ChatColor.WHITE;
         final Location loc = pl.getLocation();
         Player fpl = pl;
         String fmsg = (title != null ? (Object)ChatColor.DARK_GRAY + "[" + (Object)ChatColor.RESET + ChatColor.translateAlternateColorCodes((char)'&', (String)title) + (Object)ChatColor.DARK_GRAY + "] " : "") + (pg != null ? ChatColor.translateAlternateColorCodes((char)'&', (String)pg.getPrefix()) + " " : "") + ChatColor.WHITE.toString() + pl.getName() + ": " + (Object)cc + e.getMessage();

@@ -10,10 +10,11 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
+
+import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.patches.CommandAdminEnd;
 import org.arkhamnetwork.Arkkit.patches.EndGrindingListener;
@@ -66,7 +67,7 @@ extends ArkPlugin {
     }
 
     protected static void setEndPortalBlocks(int blockId) {
-        World w = Bukkit.getWorld((String)"world_end");
+        World w = Bukkit.getWorld("world_end");
         if (w != null) {
             WorldUtil.allowEnderPortalOutsideOverworld(true);
             w.getBlockAt(55, 42, 229).setTypeIdAndData(blockId, (byte)0, false);

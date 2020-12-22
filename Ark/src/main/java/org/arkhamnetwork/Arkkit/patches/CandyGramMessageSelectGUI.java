@@ -24,15 +24,11 @@ import com.cosmicpvp.cosmicutils.struct.DecimalFormatType;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
-import com.google.common.collect.Lists;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.CandyGram;
-import org.arkhamnetwork.Arkkit.patches.CandyGramItem;
-import org.arkhamnetwork.Arkkit.patches.CandyGramMessages;
-import org.arkhamnetwork.Arkkit.patches.CandyGramSenderSelectGUI;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;

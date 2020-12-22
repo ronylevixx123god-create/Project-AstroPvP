@@ -27,6 +27,8 @@ import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.plugin.Plugin;
 
+import java.io.IOException;
+
 public class VaultDisable
 extends ArkPlugin {
     public VaultDisable(Plugin p) {
@@ -34,13 +36,13 @@ extends ArkPlugin {
     }
 
     @Override
-    public void enable() {
+    public void enable() throws IOException {
         super.enable();
         this.registerListener(new VaultListener());
     }
 
     @Override
-    public void disable() {
+    public void disable() throws IOException {
         super.disable();
         this.unregisterListeners();
     }

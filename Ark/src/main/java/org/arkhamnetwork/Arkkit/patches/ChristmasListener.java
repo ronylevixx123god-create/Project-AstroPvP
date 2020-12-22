@@ -38,7 +38,7 @@ import org.arkhamnetwork.Arkkit.patches.NewYears;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
-import org.bukkit.craftbukkit.v1_7_R4.scheduler.CraftTask;
+import org.bukkit.craftbukkit.v1_8_R3.scheduler.CraftTask;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -150,10 +150,10 @@ extends ArkPluginListener<Christmas> {
 
     private void updateSugarTask(Player p, int level) {
         if (p.hasMetadata("christmasSugarTask")) {
-            CraftTask task = (CraftTask)((MetadataValue)p.getMetadata("christmasSugarTask").get(0)).value();
+            CraftTask task = (CraftTask) p.getMetadata("christmasSugarTask").get(0).value();
             task.cancel();
         }
-        p.setMetadata("christmasSugarTask", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)new ChristmasRainbowTask(p, level).runTaskTimer((Plugin)Arkkit.get(), Math.max(2, 30 - level), Math.max(2, 30 - level))));
+        p.setMetadata("christmasSugarTask", new FixedMetadataValue(Arkkit.get(), new ChristmasRainbowTask(p, level).runTaskTimer(Arkkit.get(), Math.max(2, 30 - level), Math.max(2, 30 - level))));
     }
 }
 

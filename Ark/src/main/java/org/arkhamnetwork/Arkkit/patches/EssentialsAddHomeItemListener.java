@@ -56,7 +56,7 @@ implements Listener {
             Player p = e.getPlayer();
             if (!p.hasPermission("enchantments.max.20")) {
                 p.sendMessage(ChatColor.RED.toString() + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "Home expanders can only be applied by players with a Tier 5 (or higher) rank.");
-                p.sendMessage((Object)ChatColor.GRAY + "Upgrade your rank to unlock more homes.");
+                p.sendMessage(ChatColor.GRAY + "Upgrade your rank to unlock more homes.");
                 return;
             }
             Long expiration = this.cooldown.get(p.getUniqueId());

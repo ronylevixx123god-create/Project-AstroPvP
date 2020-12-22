@@ -100,7 +100,7 @@ implements Listener {
                     u.setSocialSpyEnabled(false);
                 }
             }
-            if (this.factions && (fp = FactionUtils.getFPlayer((Player)e.getPlayer())) != null && ((Boolean)FactionUtils.callFPlayerMethod((FPlayer)fp, (String)"isSpyingChat")).booleanValue()) {
+            if (this.factions && (fp = FactionUtils.getFPlayer((Player)e.getPlayer())) != null && (Boolean) FactionUtils.callFPlayerMethod(fp, "isSpyingChat")) {
                 FactionUtils.callFPlayerMethod((FPlayer)fp, (String)"setSpyingChat", (ParamBuilder)new ParamBuilder(Boolean.TYPE, (Object)false));
             }
         }
@@ -279,13 +279,6 @@ implements Listener {
         }
     }
 
-    @EventHandler
-    public void onPlayerVelocity(PlayerVelocityEvent e) {
-        MiningManager miningManager;
-        if (e.getTrigger() == VelocityTrigger.EXPLOSION && (miningManager = UserManager.getPlayer((Player)e.getPlayer()).getMiningManager()).getSkillLevel() >= 1000) {
-            e.setCancelled(true);
-        }
-    }
 
     private void clearTeleportRequests(Player p) {
         if (SmarterEssentials.ess3 != null) {

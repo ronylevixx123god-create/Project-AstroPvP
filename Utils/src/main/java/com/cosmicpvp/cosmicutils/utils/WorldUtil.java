@@ -46,7 +46,7 @@ import org.bukkit.event.world.WorldSaveEvent;
 import org.bukkit.event.world.WorldUnloadEvent;
 
 public class WorldUtil {
-    public static void sendWorldEffect(Block b, int effectID) {
+    /*public static void sendWorldEffect(Block b, int effectID) {
         PacketPlayOutWorldEvent particles = new PacketPlayOutWorldEvent(effectID, new BlockPosition(b.getX(), b.getY(), b.getZ()), b.getTypeId(), false);
         ParticleEffect.sendWorldEventPacket(particles, (Location)b.getLocation());
     }
@@ -54,7 +54,7 @@ public class WorldUtil {
     public static void sendWorldEffect(Block b, int materialID, int effectID) {
         PacketPlayOutWorldEvent particles = new PacketPlayOutWorldEvent(effectID, new BlockPosition(b.getX(), b.getY(), b.getZ()), materialID, false);
         ParticleEffect.sendWorldEventPacket(particles, (Location)b.getLocation());
-    }
+    } */
 
     public static void sendBlockBreakAnimation(Block block, int breaks, List<Player> players) {
         PacketPlayOutBlockBreakAnimation animation = new PacketPlayOutBlockBreakAnimation(0, new BlockPosition(block.getX(), block.getY(), block.getZ()), breaks);
@@ -63,32 +63,14 @@ public class WorldUtil {
         }
     }
 
-    public static void sendWorldBreakPacket(Block b) {
+    /*public static void sendWorldBreakPacket(Block b) {
         PacketPlayOutWorldEvent particles = new PacketPlayOutWorldEvent(2001, new BlockPosition(b.getX(), b.getY(), b.getZ()), b.getTypeId(), false);
         ParticleEffect.sendWorldEventPacket(particles, (Location)b.getLocation());
-    }
+    } */
 
     public static boolean allowEnderPortalOutsideOverworld(boolean allowed) {
         BlockEnderPortal.a = allowed;
         return allowed;
-    }
-
-    public static List<org.bukkit.entity.Entity> getNearbyEntities(org.bukkit.entity.Entity entity, double x, double y, double z, String ... filter) {
-        CraftWorld world = (CraftWorld)entity.getWorld();
-        Entity nmsEntity = ((CraftEntity)entity).getHandle();
-        ArrayList<org.bukkit.entity.Entity> retr = Lists.newArrayList();
-        ArrayList<String> filters = Lists.newArrayList(filter);
-        for (Object ent2 : world.getHandle().getEntities(nmsEntity, nmsEntity.getBoundingBox().grow(x, y, z), ent -> {
-            for (String filt : filters) {
-                if (!ent.getClass().getName().endsWith(filt)) continue;
-                return true;
-            }
-            return false;
-        })) {
-            Entity nms = (Entity)ent2;
-            retr.add((org.bukkit.entity.Entity)nms.getBukkitEntity());
-        }
-        return retr;
     }
 
     public static boolean forceUnloadWorld(World world, boolean save) throws NoSuchFieldException, IllegalAccessException {

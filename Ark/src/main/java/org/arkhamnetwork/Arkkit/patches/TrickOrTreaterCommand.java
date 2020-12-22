@@ -9,12 +9,11 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import com.google.common.collect.Lists;
-
 import java.util.Collections;
 import java.util.List;
+
+import com.google.common.collect.Lists;
 import org.arkhamnetwork.Arkkit.libs.ArkPluginCommand;
-import org.arkhamnetwork.Arkkit.patches.TrickOrTreaters;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -23,7 +22,7 @@ import org.bukkit.entity.Player;
 final class TrickOrTreaterCommand
 extends ArkPluginCommand<TrickOrTreaters> {
     public TrickOrTreaterCommand(TrickOrTreaters patch, String command, String usage, String description) {
-        super(patch, command, usage, description, (List<String>)Lists.newArrayList(new String[]{"trickortreat"}));
+        super(patch, command, usage, description, (List<String>) Lists.newArrayList(new String[]{"trickortreat"}));
     }
 
     @Override

@@ -12,7 +12,7 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
-import com.google.common.collect.Lists;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.Bukkit;

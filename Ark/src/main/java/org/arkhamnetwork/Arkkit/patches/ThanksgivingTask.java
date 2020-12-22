@@ -66,11 +66,12 @@ extends BukkitRunnable {
         c.setCustomName(ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "Thanksgiving Turkey");
         EntityInsentient insentient = (EntityInsentient)((CraftLivingEntity)c).getHandle();
         EntityCreature creature = (EntityCreature)insentient;
-        BossUtils.clearGoalSelectors((EntityInsentient)insentient);
+        // TODO: FIX WHEN BOSSES IS DONE
+     /*   BossUtils.clearGoalSelectors((EntityInsentient)insentient);
         BossUtils.addSelector((EntityInsentient)insentient, (int)0, (PathfinderGoal)new PathfinderGoalFloat(insentient));
         BossUtils.addSelector((EntityInsentient)insentient, (int)1, (PathfinderGoal)new PathfinderGoalPanic(creature, 1.4));
         BossUtils.addSelector((EntityInsentient)insentient, (int)5, (PathfinderGoal)new PathfinderGoalLookAtPlayer(insentient, EntityHuman.class, 6.0f));
-        BossUtils.addSelector((EntityInsentient)insentient, (int)6, (PathfinderGoal)new PathfinderGoalRandomStroll(creature, 1.0));
+        BossUtils.addSelector((EntityInsentient)insentient, (int)6, (PathfinderGoal)new PathfinderGoalRandomStroll(creature, 1.0)); */
         l.getWorld().playSound(l, Sound.CHICKEN_IDLE, 2.0f, 0.25f);
     }
 }

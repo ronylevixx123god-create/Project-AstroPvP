@@ -34,7 +34,6 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
-import com.google.common.collect.Lists;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,10 +41,6 @@ import java.util.List;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.CommandEditLore;
-import org.arkhamnetwork.Arkkit.patches.CommandEditName;
-import org.arkhamnetwork.Arkkit.patches.CommandGiveLoreTag;
-import org.arkhamnetwork.Arkkit.patches.ItemNametagListener;
 import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatUtils;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.arkhamnetwork.Arkkit.utils.ItemUtils;

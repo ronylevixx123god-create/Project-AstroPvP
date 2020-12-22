@@ -1,9 +1,7 @@
 package org.arkhamnetwork.Arkkit;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import lombok.Getter;
@@ -15,7 +13,6 @@ import org.arkhamnetwork.Arkkit.commands.CommandArkReboot;
 import org.arkhamnetwork.Arkkit.commands.CommandArkRegister;
 import org.arkhamnetwork.Arkkit.commands.CommandArkReload;
 import org.arkhamnetwork.Arkkit.commands.CommandArkUnregister;
-import org.arkhamnetwork.Arkkit.commands.CommandArkUpdate;
 import org.arkhamnetwork.Arkkit.patches.AntiCrash;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
@@ -23,11 +20,9 @@ import org.arkhamnetwork.Arkkit.utils.WorldGuardUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.FileUtil;
@@ -114,7 +109,6 @@ extends JavaPlugin {
         this.getCommand("arkunregister").setExecutor(new CommandArkUnregister(this));
         this.getCommand("arklist").setExecutor(new CommandArkList());
         this.getCommand("arkconfig").setExecutor(new CommandArkConfig(this));
-        this.getCommand("arkupdate").setExecutor(new CommandArkUpdate(this));
         this.getCommand("arkreboot").setExecutor(new CommandArkReboot());
     }
 
@@ -208,8 +202,6 @@ extends JavaPlugin {
                 FileUtils.deleteDirectory((File)new File("plugins/ArkhamUtils"));
                 this.getConfig().set("patches." + ArkPlugins.NO_VEHICLE_TELEPORT.getConfigName(), (Object)true);
                 this.registerPatch(ArkPlugins.NO_VEHICLE_TELEPORT.getArkPlugin());
-                this.getConfig().set("patches." + ArkPlugins.AUTO_ENTITY_CLEAR.getConfigName(), (Object)true);
-                this.registerPatch(ArkPlugins.AUTO_ENTITY_CLEAR.getArkPlugin());
                 Bukkit.getScheduler().runTaskLater(Arkkit.get(), new Runnable(){
 
                     @Override
@@ -328,19 +320,6 @@ extends JavaPlugin {
                 err.printStackTrace();
             }
         }
-        if (new File("plugins/HideStream.jar").exists()) {
-            try {
-                if (Bukkit.getPluginManager().isPluginEnabled("HideStream")) {
-                    Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("HideStream"));
-                }
-                new File("plugins/HideStream.jar").delete();
-                this.getConfig().set("patches." + ArkPlugins.HIDE_STREAM.getConfigName(), (Object)true);
-                this.registerPatch(ArkPlugins.HIDE_STREAM.getArkPlugin());
-            }
-            catch (Exception err) {
-                err.printStackTrace();
-            }
-        }
         if (new File("plugins/NetherGlitchFix.jar").exists()) {
             try {
                 if (Bukkit.getPluginManager().isPluginEnabled("NetherGlitchFixPlugin")) {
@@ -436,19 +415,6 @@ extends JavaPlugin {
                 new File("plugins/ArkhamTrade.jar").delete();
                 this.getConfig().set("patches." + ArkPlugins.TRADING.getConfigName(), (Object)true);
                 this.registerPatch(ArkPlugins.TRADING.getArkPlugin());
-            }
-            catch (Exception err) {
-                err.printStackTrace();
-            }
-        }
-        if (new File("plugins/Marriage.jar").exists()) {
-            try {
-                if (Bukkit.getPluginManager().isPluginEnabled("Marriage")) {
-                    Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("Marriage"));
-                }
-                new File("plugins/Marriage.jar").delete();
-                this.getConfig().set("patches." + ArkPlugins.MARRIAGE.getConfigName(), (Object)true);
-                this.registerPatch(ArkPlugins.MARRIAGE.getArkPlugin());
             }
             catch (Exception err) {
                 err.printStackTrace();
@@ -572,18 +538,6 @@ extends JavaPlugin {
             new File("plugins/AntiCrash.jar").delete();
             this.getConfig().set("patches." + ArkPlugins.ANTI_CRASH.getConfigName(), (Object)true);
             this.registerPatch(ArkPlugins.ANTI_CRASH.getArkPlugin());
-        }
-        if (new File("plugins/ArkhamMOTD.jar").exists()) {
-            try {
-                new File("plugins/ArkhamMOTD/motd.txt").renameTo(new File("plugins/Arkkit/motd.txt"));
-                new File("plugins/ArkhamMOTD.jar").delete();
-                new File("plugins/ArkhamMOTD").delete();
-            }
-            catch (Exception err) {
-                err.printStackTrace();
-            }
-            this.getConfig().set("patches." + ArkPlugins.CUSTOM_MOTD.getConfigName(), (Object)true);
-            this.registerPatch(ArkPlugins.CUSTOM_MOTD.getArkPlugin());
         }
         if (new File("plugins/FactionAntiDupe-EXTRONUS.jar").exists()) {
             new File("plugins/FactionAntiDupe-EXTRONUS.jar").delete();

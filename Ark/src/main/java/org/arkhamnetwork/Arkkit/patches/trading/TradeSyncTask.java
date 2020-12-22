@@ -15,11 +15,10 @@
  */
 package org.arkhamnetwork.Arkkit.patches.trading;
 
-import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
-import org.arkhamnetwork.Arkkit.patches.trading.NewTrade;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

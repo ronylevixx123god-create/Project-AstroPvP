@@ -8,8 +8,7 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import org.arkhamnetwork.Arkkit.patches.CommandForums;
-import org.arkhamnetwork.Arkkit.patches.CommandReport;
+
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.plugin.Plugin;
 

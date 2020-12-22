@@ -15,12 +15,7 @@
 package org.arkhamnetwork.Arkkit;
 
 import com.drtshock.playervaults.vaultmanagement.VaultOperations;
-import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
-import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.CustomPV;
-import org.arkhamnetwork.Arkkit.CustomPlayerVaults;
-import org.arkhamnetwork.Arkkit.PlayerVaultGUIManager;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -34,7 +29,7 @@ extends AbstractCommand {
     private PlayerVaultGUIManager guiManager;
 
     public CommandVaultName(PlayerVaultGUIManager manager) {
-        super("namevault", "/<command> <vaultNumber> <name>", "Rename your vaults", Lists.newArrayList((Object[])new String[]{"vaultname", "renamevault"}));
+        super("namevault", "/<command> <vaultNumber> <name>", "Rename your vaults", Lists.newArrayList("vaultname", "renamevault"));
         this.guiManager = manager;
     }
 
@@ -51,11 +46,11 @@ extends AbstractCommand {
                 return true;
             }
             Player player = (Player)sender;
-            if (!VaultOperations.checkPerms((CommandSender)sender, (int)vaultId)) {
+            if (!VaultOperations.checkPerms(sender, (int)vaultId)) {
                 sender.sendMessage((Object)ChatColor.RED + "You do not have access to that Vault number!");
                 return true;
             }
-            CustomPlayerVaults vaults = this.guiManager.getCustomPvs().computeIfAbsent(player.getUniqueId(), e -> new CustomPlayerVaults());
+            CustomPlayerVaults vaults = (CustomPlayerVaults) this.guiManager.getCustomPvs().computeIfAbsent(player.getUniqueId(), e -> new CustomPlayerVaults());
             CustomPV pv = vaults.computeIfAbsent(vaultId, newPV -> new CustomPV());
             StringBuilder newNameBuilder = new StringBuilder();
             for (int i = 1; i < args.length; ++i) {

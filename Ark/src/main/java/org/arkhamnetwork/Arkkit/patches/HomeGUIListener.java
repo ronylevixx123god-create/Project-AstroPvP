@@ -24,12 +24,10 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.earth2me.essentials.User;
-import com.google.common.collect.Lists;
+
 import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.CustomHomes;
-import org.arkhamnetwork.Arkkit.patches.HomeGUIManager;
 import org.arkhamnetwork.Arkkit.utils.EssentialsUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

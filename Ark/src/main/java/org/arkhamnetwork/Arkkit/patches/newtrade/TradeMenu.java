@@ -19,9 +19,9 @@ import com.cosmicpvp.cosmicutils.gui.CosmicGUI;
 import com.cosmicpvp.cosmicutils.gui.InventoryItem;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
-import com.google.common.collect.Lists;
+
 import java.util.List;
-import org.arkhamnetwork.Arkkit.patches.newtrade.PlayerTrade;
+
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

@@ -24,9 +24,11 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.earth2me.essentials.Essentials;
-import com.google.common.collect.Lists;
+
 import java.text.DecimalFormat;
 import java.util.List;
+
+import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
@@ -134,7 +136,7 @@ implements Listener {
         ItemStack is = new ItemStack(material, amount);
         double cost = this.getCost(is, true);
         ItemMeta im = is.getItemMeta();
-        im.setLore((List)Lists.newArrayList((Object[])new String[]{"", (Object)ChatColor.RED + ChatColor.BOLD.toString() + "COST: $" + (Object)ChatColor.RED + this.format.format(cost)}));
+        im.setLore(Lists.newArrayList("", ChatColor.RED + ChatColor.BOLD.toString() + "COST: $" + ChatColor.RED + this.format.format(cost)));
         is.setItemMeta(im);
         return is;
     }

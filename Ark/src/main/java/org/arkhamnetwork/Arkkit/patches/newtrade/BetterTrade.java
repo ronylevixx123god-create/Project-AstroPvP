@@ -18,15 +18,13 @@ package org.arkhamnetwork.Arkkit.patches.newtrade;
 
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
-import com.google.common.collect.Lists;
 import com.google.common.collect.MapMaker;
+
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.newtrade.BetterTradeCommand;
-import org.arkhamnetwork.Arkkit.patches.newtrade.BetterTradeListener;
-import org.arkhamnetwork.Arkkit.patches.newtrade.PlayerTrade;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.Bukkit;
@@ -48,7 +46,7 @@ extends ArkPlugin {
     }
 
     @Override
-    public void enable() {
+    public void enable() throws IOException {
         if (Bukkit.getPluginManager().isPluginEnabled("Essentials")) {
             this.ess = (Essentials)Bukkit.getPluginManager().getPlugin("Essentials");
         }
@@ -99,8 +97,8 @@ extends ArkPlugin {
         this.playerTradeMap.put(player2.getUniqueId(), trade);
         trade.openTradeMenu();
         trade.playSound(Sound.WOOD_CLICK, 1.0f, 0.8f);
-        player.sendMessage((Object)ChatColor.YELLOW + "Trading with " + (Object)ChatColor.BOLD + player2.getName() + (Object)ChatColor.YELLOW + "...");
-        player2.sendMessage((Object)ChatColor.YELLOW + "Trading with " + (Object)ChatColor.BOLD + player.getName() + (Object)ChatColor.YELLOW + "...");
+        player.sendMessage(ChatColor.YELLOW + "Trading with " + (Object)ChatColor.BOLD + player2.getName() + (Object)ChatColor.YELLOW + "...");
+        player2.sendMessage(ChatColor.YELLOW + "Trading with " + (Object)ChatColor.BOLD + player.getName() + (Object)ChatColor.YELLOW + "...");
     }
 
     private void clearTeleportRequests(Player p) {

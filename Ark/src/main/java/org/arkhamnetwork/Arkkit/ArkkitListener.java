@@ -16,9 +16,9 @@
 package org.arkhamnetwork.Arkkit;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.google.common.collect.Lists;
+
 import java.util.List;
-import org.arkhamnetwork.Arkkit.Arkkit;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -30,7 +30,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 final class ArkkitListener
 implements Listener {
-    private List<String> blockedCommandsWhileRebooting = Lists.newArrayList((Object[])new String[]{"/pv", "/trade", "/playervaults", "/chest", "/vault", "/enderchest", "/echest", "/betterenderchest", "/ec", "/bec"});
+    private List<String> blockedCommandsWhileRebooting = Lists.newArrayList("/pv", "/trade", "/playervaults", "/chest", "/vault", "/enderchest", "/echest", "/betterenderchest", "/ec", "/bec");
 
     ArkkitListener() {
     }

@@ -7,7 +7,7 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import java.util.Arrays;
-import org.arkhamnetwork.Arkkit.patches.CommandNerfNetherSpawners;
+
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.plugin.Plugin;
 

@@ -55,10 +55,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-import me.vaqxine.NetworkManager.NetworkManager;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
-import net.minecraft.server.v1_7_R4.MinecraftServer;
+import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.libs.MinecraftThreadMonitor;
 import org.arkhamnetwork.Arkkit.patches.AntiCrash;
@@ -126,7 +125,7 @@ implements Listener {
             Bukkit.getLogger().info("Skipping combatLog check for " + e.getPlayer().getName() + " because their entity is dead.");
             return;
         }
-        if (e.getPlayer().hasMetadata("lastDeathEvent") && (long)MinecraftServer.currentTick - ((MetadataValue)e.getPlayer().getMetadata("lastDeathEvent").get(0)).asLong() < 20L) {
+        if (e.getPlayer().hasMetadata("lastDeathEvent") && (long) MinecraftServer.currentTick - ((MetadataValue)e.getPlayer().getMetadata("lastDeathEvent").get(0)).asLong() < 20L) {
             Bukkit.getLogger().info("Skipping combatLog check for " + e.getPlayer().getName() + " because they had a death event in last 20 ticks.");
             return;
         }
@@ -134,7 +133,7 @@ implements Listener {
             Bukkit.getLogger().info("Skipping combatLog check for " + e.getPlayer().getName() + " due to worldName: " + e.getPlayer().getWorld().getName());
             return;
         }
-        if (!(Arkkit.get().shutting_down || AntiCrash.crash || MinecraftThreadMonitor.non_response > 0 || !CombatLog.inCombat(e.getPlayer()) || Bukkit.getPluginManager().getPlugin("NetworkManager") != null && NetworkManager.getPlugin().rebooting || CombatLog.isPvPDisabled(e.getPlayer().getLocation()))) {
+        if (!(Arkkit.get().shutting_down || AntiCrash.crash || MinecraftThreadMonitor.non_response > 0 || !CombatLog.inCombat(e.getPlayer()) || Bukkit.getPluginManager().getPlugin("NetworkManager") != null && CombatLog.isPvPDisabled(e.getPlayer().getLocation()))) {
             if (e.getPlayer().hasMetadata("noCombatLog")) {
                 e.getPlayer().removeMetadata("noCombatLog", (Plugin)Arkkit.get());
                 return;
@@ -188,7 +187,7 @@ implements Listener {
                 n.setFlyable(false);
                 n.setProtected(false);
                 combatNPCs.put(playerUUID, n);
-                combatNPCs_loot.put(playerUUID, loot.toArray((T[])new ItemStack[loot.size()]));
+                combatNPCs_loot.put(playerUUID, loot.toArray(new ItemStack[loot.size()]));
                 for (Entity ent : e.getPlayer().getNearbyEntities(48.0, 48.0, 48.0)) {
                     if (!(ent instanceof Player)) continue;
                     ((Player)ent).sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + e.getPlayer().getName() + " has logged out while in combat, kill their NPC before they reconnect!");
@@ -255,13 +254,13 @@ implements Listener {
 
     @EventHandler(priority=EventPriority.LOW)
     public void onPotionSplashEvent(PotionSplashEvent e) {
-        for (LivingEntity le : new ArrayList(e.getAffectedEntities())) {
+        for (LivingEntity le : e.getAffectedEntities()) {
             if (!le.hasMetadata("combatNPC_PlayerName")) continue;
             for (PotionEffect pe : e.getPotion().getEffects()) {
-                if (!pe.getType().equals((Object)PotionEffectType.HEAL)) continue;
+                if (!pe.getType().equals(PotionEffectType.HEAL)) continue;
                 le.setHealth(Math.min(le.getMaxHealth(), le.getHealth() + le.getMaxHealth() * 0.1));
             }
-            e.getAffectedEntities().remove((Object)le);
+            e.getAffectedEntities().remove(le);
         }
     }
 

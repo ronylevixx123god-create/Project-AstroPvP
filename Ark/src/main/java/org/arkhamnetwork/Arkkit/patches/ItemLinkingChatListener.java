@@ -36,7 +36,6 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.compilex.CompilexPermissions.CompilexPermissions;
-import com.google.common.collect.Lists;
 import com.massivecraft.factions.Conf;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
