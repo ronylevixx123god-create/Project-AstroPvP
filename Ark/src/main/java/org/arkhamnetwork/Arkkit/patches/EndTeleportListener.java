@@ -38,7 +38,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import com.compilex.CosmicFund.CosmicFundAPI;
 import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
 import com.cosmicpvp.cosmicutils.CosmicUtils;
 import com.earth2me.essentials.Essentials;
@@ -236,7 +235,7 @@ implements Listener {
     @EventHandler
     public void onPlayerChangeWorld(PlayerChangedWorldEvent e) {
         if (e.getPlayer().getWorld().getEnvironment() == World.Environment.THE_END) {
-            if (EndGrinding.fundEnabled && !EndGrinding.hcf && !CosmicFundAPI.isEndEnabled() && !e.getPlayer().isOp()) {
+            if (EndGrinding.fundEnabled && !EndGrinding.hcf && !e.getPlayer().isOp()) {
                 e.getPlayer().teleport(((World)Bukkit.getWorlds().get(0)).getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
                 return;
             }
@@ -256,7 +255,7 @@ implements Listener {
             e.setCancelled(true);
             e.getPlayer().sendMessage((Object)ChatColor.YELLOW + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.YELLOW + "Trying to leave The End? The only way out is through the Exit Portal, located across the map from the spawn platform!");
         }
-        if (cmd.equals("/warp end") && EndGrinding.fundEnabled && !EndGrinding.hcf && !CosmicFundAPI.isEndEnabled() && !e.getPlayer().isOp()) {
+        if (cmd.equals("/warp end") && EndGrinding.fundEnabled && !EndGrinding.hcf && !e.getPlayer().isOp()) {
             e.setCancelled(true);
             e.setMessage("/null");
             e.getPlayer().sendMessage(ChatColor.RED.toString() + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "Your planet has not yet unlocked access to the End Dimension. To unlock, your planet needs to reach the " + (Object)ChatColor.UNDERLINE + "$75m /fund" + (Object)ChatColor.RED + " goal.");

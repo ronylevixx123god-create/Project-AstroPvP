@@ -51,7 +51,6 @@ import com.cosmicpvp.CosmicSpaceChests.generators.WeaponGenerator;
 import com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils;
 import com.cosmicpvp.cosmicutils.CosmicUtils;
 import com.cosmicpvp.cosmicutils.struct.factions.points.FactionPointUtils;
-import com.google.common.collect.Lists;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
@@ -64,8 +63,6 @@ import me.ifamasssxd.cosmicconquest.CosmicConquestAPI;
 import me.ifamasssxd.factionupgrades.FactionUpgradeAPI;
 import me.ifamasssxd.factionupgrades.struct.FactionUpgrade;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.EndMonsterType;
-import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.arkhamnetwork.CosmicCustomTNT.enums.TNTTypes;
 import org.bukkit.Bukkit;
@@ -136,7 +133,7 @@ implements Listener {
                 if (Math.random() < 0.05) {
                     double eggRand = Math.random();
                     if (eggRand < 0.5) {
-                        e.getDrops().add(new ItemStack(Material.MONSTER_EGG, 1, 50));
+                        e.getDrops().add(new ItemStack(Material.MONSTER_EGG, 1, (short) 50));
                     } else if (eggRand < 0.75) {
                         e.getDrops().add(ItemUtils.getCustomCreeperEgg((CreeperTypes)CreeperTypes.Tactical));
                     } else if (eggRand < 0.9) {

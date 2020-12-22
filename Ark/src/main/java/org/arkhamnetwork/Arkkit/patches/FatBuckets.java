@@ -43,14 +43,14 @@ extends ArkPlugin {
 
     public static int getFatBucketUses(ItemStack i) {
         if (FatBuckets.isFatBucket(i)) {
-            return new NBTWrapper(i).getCompound("cosmicData").getInt("fatBucketUses");
+            return new NBTWrapper(i).getCompound("conaxData").getInt("fatBucketUses");
         }
         return 0;
     }
 
     public static int getFatBucketCharges(ItemStack i) {
         if (FatBuckets.isFatBucket(i)) {
-            return new NBTWrapper(i).getCompound("cosmicData").getInt("fatBucketCharges");
+            return new NBTWrapper(i).getCompound("conaxData").getInt("fatBucketCharges");
         }
         return 0;
     }

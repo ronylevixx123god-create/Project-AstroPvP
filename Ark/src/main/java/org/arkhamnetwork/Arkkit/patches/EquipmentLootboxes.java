@@ -69,6 +69,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKitsAPI;
 import me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits;
 import me.cosmicpvp.CosmicGlobalKits.libs.MasteryKits;
+import net.minecraft.server.v1_8_R3.NBTBase;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
 import org.arkhamnetwork.Arkkit.libs.JSONMessage;
@@ -180,7 +181,7 @@ extends ArkPlugin {
             this.MAX_ANIMATION_TICKS = 150;
             this.finished = false;
             this.readyToGive = false;
-            this.validArmorSets = Lists.newArrayList((Object[])new ArmorSet[]{ArmorSet.MOTHER_OF_YIJKI, ArmorSet.PHANTOM, ArmorSet.YETI, ArmorSet.SUPREME, ArmorSet.RANGER});
+            this.validArmorSets = Lists.newArrayList(ArmorSet.MOTHER_OF_YIJKI, ArmorSet.PHANTOM, ArmorSet.YETI, ArmorSet.SUPREME, ArmorSet.RANGER);
             this.heroic = heroicArmor;
         }
 
@@ -222,7 +223,7 @@ extends ArkPlugin {
                             }
                             LootboxOpenMenuAnimation.this.redraw();
                         } else {
-                            int ticksToSkip;
+                            int ticksToSkip = 0;
                             int n = LootboxOpenMenuAnimation.this.animationTick > 80 ? 4 : (LootboxOpenMenuAnimation.this.animationTick > 60 ? 3 : (ticksToSkip = LootboxOpenMenuAnimation.this.animationTick > 40 ? 2 : 2));
                             if (LootboxOpenMenuAnimation.this.animationTick % ticksToSkip == 0) {
                                 LootboxOpenMenuAnimation.this.redraw();
@@ -339,7 +340,7 @@ extends ArkPlugin {
                         return;
                     }
                     if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
-                        String gen;
+                        String gen = null;
                         long id = ItemID.getItemID(item);
                         String string = gkitGenerator ? "gkit armor generator" : (heroicLootbox ? "heroic armor" : (gen = mkitGenerator ? "mkit armor generator" : "Lootbox"));
                         if (id != -1L && ItemID.blacklist_iid.contains(id)) {
@@ -368,14 +369,14 @@ extends ArkPlugin {
                             Bukkit.getLogger().info("[HeroicGkitGenerator] Unable to find armor for " + player.getName());
                             retr = CosmicArmorSetsAPI.createHeroicPeice((HeroicArmorType)HeroicArmorType.values()[random.nextInt(HeroicArmorType.values().length)]);
                         } else {
-                            HeroicArmorType type;
+                            HeroicArmorType type = null;
                             String name = retr.getType().name();
                             Object object = name.endsWith("_HELMET") ? HeroicArmorType.HELMET : (name.endsWith("_CHESTPLATE") ? HeroicArmorType.CHESTPLATE : (name.endsWith("_LEGGINGS") ? HeroicArmorType.LEGGINGS : (type = name.endsWith("_BOOTS") ? HeroicArmorType.BOOTS : null)));
                             if (type != null) {
                                 retr.setType(type.getMaterial());
                                 NBTWrapper wrapper = new NBTWrapper(retr);
                                 wrapper.setString("cosmicType", "HEROIC_ARMOR");
-                                wrapper.setNBTBase("cosmicData", (NBTBase)new NBTTagCompoundBuilder().setInt("durability", Integer.valueOf(type.getDurability())).setInt("maxDurability", Integer.valueOf(type.getDurability())).setInt("armorModifier", Integer.valueOf(type.getArmorModifier())).get());
+                                wrapper.setNBTBase("conaxData", (NBTBase)new NBTTagCompoundBuilder().setInt("durability", Integer.valueOf(type.getDurability())).setInt("maxDurability", Integer.valueOf(type.getDurability())).setInt("armorModifier", Integer.valueOf(type.getArmorModifier())).get());
                                 retr = wrapper.build();
                                 LeatherArmorMeta im = (LeatherArmorMeta)retr.getItemMeta();
                                 List lore = im.getLore();

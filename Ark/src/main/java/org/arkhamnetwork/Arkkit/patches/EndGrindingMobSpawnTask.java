@@ -22,12 +22,9 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import com.compilex.CosmicFund.CosmicFundAPI;
 import java.util.Map;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
-import org.arkhamnetwork.Arkkit.patches.EndGrinding;
-import org.arkhamnetwork.Arkkit.patches.EndMonsterType;
 import org.arkhamnetwork.Arkkit.patches.chunkgc.ChunkGCTask;
 import org.arkhamnetwork.Arkkit.utils.LocationUtils;
 import org.arkhamnetwork.Arkkit.utils.WorldGuardUtils;

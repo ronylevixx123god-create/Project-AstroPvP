@@ -43,14 +43,14 @@ extends ArkPlugin {
 
     public static String getCommandItemCommand(ItemStack i) {
         if (CommandItems.isCommandItem(i)) {
-            return new NBTWrapper(i).getCompound("cosmicData").getString("command");
+            return new NBTWrapper(i).getCompound("conaxData").getString("command");
         }
         return null;
     }
 
     public static String getCommandItemMessage(ItemStack i) {
         if (CommandItems.isCommandItem(i)) {
-            return new NBTWrapper(i).getCompound("cosmicData").getString("message");
+            return new NBTWrapper(i).getCompound("conaxData").getString("message");
         }
         return null;
     }

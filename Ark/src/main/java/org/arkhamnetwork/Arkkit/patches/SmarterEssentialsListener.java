@@ -54,9 +54,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import net.ess3.api.events.NickChangeEvent;
-import net.minecraft.util.org.apache.commons.lang3.text.WordUtils;
 import org.apache.commons.lang3.text.WordUtils;
-import org.arkhamnetwork.Arkkit.patches.SmarterEssentials;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -72,7 +70,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerVelocityEvent;
-import org.bukkit.event.player.VelocityTrigger;
 
 final class SmarterEssentialsListener
 implements Listener {
@@ -216,7 +213,7 @@ implements Listener {
                     double playersInRankTier = this.getPlayersInRankTier(rankTier);
                     String rank = PlayerRankUtils.getRank((int)rankTier);
                     if (rank == null) continue;
-                    ChatColor rankColor = rankTier == 2 ? ChatColor.AQUA : (rankTier == 3 ? ChatColor.BLUE : PlayerRankUtils.getRankColor((int)rankTier));
+                    ChatColor rankColor = rankTier == 2 ? ChatColor.AQUA : (rankTier == 3 ? ChatColor.BLUE : PlayerRankUtils.getRankColor(String.valueOf(rankTier)));
                     this.listCommandCache.add((Object)rankColor + "" + (Object)ChatColor.BOLD + "* " + (Object)rankColor + WordUtils.capitalize((String)(rank.replace("_plus", (Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "+" + (Object)ChatColor.YELLOW) + ": ")) + (Object)ChatColor.AQUA + (int)playersInRankTier + (Object)ChatColor.GRAY + " [" + (int)(playersInRankTier / (double)Bukkit.getOnlinePlayers().size() * 100.0) + "%]");
                 }
             }

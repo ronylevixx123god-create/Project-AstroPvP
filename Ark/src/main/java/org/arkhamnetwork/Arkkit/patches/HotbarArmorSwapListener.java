@@ -27,7 +27,6 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import me.ifamasssxd.cosmicmasks.MaskType;
-import net.minecraft.server.v1_7_R4.MinecraftServer;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.bukkit.Material;

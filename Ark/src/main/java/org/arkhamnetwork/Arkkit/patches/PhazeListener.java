@@ -61,7 +61,6 @@ import me.ifamasssxd.cosmicduel.tasks.DuelArenaTask;
 import org.apache.commons.lang.CharUtils;
 import org.apache.commons.lang.StringUtils;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.AntiHack;
 import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatUtils;
 import org.arkhamnetwork.Arkkit.utils.WorldGuardUtils;
 import org.bukkit.Bukkit;

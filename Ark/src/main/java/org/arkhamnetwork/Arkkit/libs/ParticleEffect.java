@@ -2,12 +2,8 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  net.minecraft.server.v1_7_R4.Packet
- *  net.minecraft.server.v1_7_R4.PacketPlayOutWorldEvent
  *  org.bukkit.Bukkit
  *  org.bukkit.Location
- *  org.bukkit.craftbukkit.v1_7_R4.CraftServer
- *  org.bukkit.craftbukkit.v1_7_R4.CraftWorld
  *  org.bukkit.entity.Player
  *  org.bukkit.plugin.Plugin
  */

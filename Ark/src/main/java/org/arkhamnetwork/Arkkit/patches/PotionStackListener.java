@@ -147,7 +147,7 @@ implements Listener {
         NBTWrapper nbtData = new NBTWrapper(i);
         boolean stackable = nbtData.getString("cosmicType").equalsIgnoreCase("stackable");
         if (stackable) {
-            int maxStackSize = nbtData.getCompound("cosmicData").getInt("maxStackSize");
+            int maxStackSize = nbtData.getCompound("conaxData").getInt("maxStackSize");
             return maxStackSize;
         }
         return 1;

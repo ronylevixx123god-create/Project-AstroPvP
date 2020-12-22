@@ -21,6 +21,9 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import java.io.File;
 import java.io.IOException;
+
+import me.ifamasssxd.factionupgrades.FactionUpgradeAPI;
+import me.ifamasssxd.factionupgrades.struct.FactionUpgrade;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.arkhamnetwork.Arkkit.utils.ExpUtils;
@@ -76,7 +79,7 @@ extends ArkPlugin {
         double xp = ExpUtils.getTotalExperience(p);
         double teleportWarmup = 7.0;
         if (Bukkit.getPluginManager().isPluginEnabled("FactionUpgrades")) {
-            int tpMasterTier = FactionUpgradeAPI.getPerkLevel((Player)p, (FactionUpgrade)FactionUpgrade.TP_MASTERY);
+            int tpMasterTier = FactionUpgradeAPI.getPerkLevel((Player)p, (FactionUpgrade) FactionUpgrade.TP_MASTERY);
             if (tpMasterTier == 1) {
                 teleportWarmup *= 0.9;
             }

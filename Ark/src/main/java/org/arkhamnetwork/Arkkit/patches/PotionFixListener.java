@@ -176,10 +176,10 @@ implements Listener {
                 int id = effect.getType().getId();
                 if (effect.getType().isInstant()) {
                     if (pot.getShooter() instanceof CraftLivingEntity) {
-                        MobEffectList.byId[id].applyInstantEffect(((CraftLivingEntity)pot.getShooter()).getHandle(), ((CraftLivingEntity)ent).getHandle(), effect.getAmplifier(), intensity, ((CraftThrownPotion)pot).getHandle());
+                        MobEffectList.byId[id].applyInstantEffect(((CraftLivingEntity)pot.getShooter()).getHandle(), ((CraftLivingEntity)ent).getHandle(), ((CraftLivingEntity)ent).getHandle(), effect.getAmplifier(), intensity);
                         continue;
                     }
-                    MobEffectList.byId[id].applyInstantEffect(null, ((CraftLivingEntity)ent).getHandle(), effect.getAmplifier(), intensity, ((CraftThrownPotion)pot).getHandle());
+                    MobEffectList.byId[id].applyInstantEffect(null, ((CraftLivingEntity)ent).getHandle(),((CraftLivingEntity)ent).getHandle(), effect.getAmplifier(), intensity);
                     continue;
                 }
                 int timeInTicks = (int)(intensity * (double)effect.getDuration() + 0.5);

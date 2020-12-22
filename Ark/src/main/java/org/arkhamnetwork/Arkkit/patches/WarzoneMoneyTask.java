@@ -25,7 +25,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import com.compilex.CosmicFund.CosmicFundAPI;
 import com.cosmicpvp.CosmicBossEggs.boss.type.Bosses;
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
 import java.util.ArrayList;

@@ -46,7 +46,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import net.ess3.api.InvalidWorldException;
-import net.minecraft.util.org.apache.commons.lang3.text.WordUtils;
+import org.apache.commons.lang3.text.WordUtils;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.patches.EssentialsWarpUI;
 import org.arkhamnetwork.Arkkit.patches.WarpData;

@@ -29,7 +29,8 @@ import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.UUID;
-import net.minecraft.server.v1_7_R4.PacketPlayOutWorldEvent;
+import net.minecraft.server.v1_8_R3.BlockPosition;
+import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -99,7 +100,7 @@ implements Listener {
             pl.setAllowFlight(true);
             Location loc = pl.getLocation().clone().add(0.0, 1.0, 0.0);
             Block b = pl.getLocation().clone().subtract(0.0, 1.0, 0.0).getBlock();
-            PacketPlayOutWorldEvent particles = new PacketPlayOutWorldEvent(2001, Math.round(loc.getBlockX()), Math.round(loc.getBlockY()), Math.round(loc.getBlockZ()), b.getTypeId(), false);
+            PacketPlayOutWorldEvent particles = new PacketPlayOutWorldEvent(2001, new BlockPosition(Math.round(loc.getBlockX()), Math.round(loc.getBlockY()), Math.round(loc.getBlockZ())), b.getTypeId(), false);
             ParticleEffect.sendWorldEventPacket((PacketPlayOutWorldEvent)particles, (Location)loc);
         }
     }

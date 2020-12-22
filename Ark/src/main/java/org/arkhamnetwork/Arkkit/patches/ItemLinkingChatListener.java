@@ -45,24 +45,12 @@ import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.ChatMode;
 import com.massivecraft.factions.struct.Relation;
 import com.massivecraft.factions.struct.Role;
-import java.io.File;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.regex.Pattern;
-import org.arkhamnetwork.ArkhamMoneyNotes.ArkhamMoneyNotesAPI;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.ItemLinking;
-import org.arkhamnetwork.Arkkit.patches.TimedInventory;
-import org.arkhamnetwork.Arkkit.patches.UUIDStorage;
 import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatUtils;
 import org.arkhamnetwork.Arkkit.utils.ItemUtils;
+import org.arkhamnetwork.CosmicMoneyNotes.ArkhamMoneyNotesAPI;
 import org.arkhamnetwork.permissions.ArkhamPermissions;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.DyeColor;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -76,6 +64,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
+
+import java.io.File;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.regex.Pattern;
 
 final class ItemLinkingChatListener
 implements Listener {
@@ -194,7 +188,7 @@ implements Listener {
                 pg = ArkhamPermissions.getInstance().getPermissionManager().getUser(pl.getUniqueId()).getPrefix();
             }
             ChatColor cc = ChatColor.WHITE;
-            String msg = ChatColor.translateAlternateColorCodes((char)'&', (String)ItemLinking.FORMAT.replace("[PREFIX]", pg).replace("[TITLE]", title == null ? "" : title).replace("[NAME]", pl.getName()).replace("[COLOR]", cc == null ? "" : cc.toString())).trim();
+            String msg = ChatColor.translateAlternateColorCodes((char)'&', (String)ItemLinking.FORMAT.replace("[PREFIX]", pg).replace("[TITLE]", title == null ? "" : (CharSequence) title).replace("[NAME]", pl.getName()).replace("[COLOR]", cc == null ? "" : cc.toString())).trim();
             msg = msg.replace((Object)ChatColor.DARK_GRAY + "[" + (Object)ChatColor.DARK_GRAY + "]", "");
             msg = msg.replace((Object)ChatColor.DARK_GRAY + "[" + (Object)ChatColor.RED + "P" + (Object)ChatColor.DARK_GRAY + "]", "");
             msg = msg.replaceAll("  ", " ");

@@ -68,7 +68,7 @@ extends ArkPlugin {
     protected static void setEndPortalBlocks(int blockId) {
         World w = Bukkit.getWorld((String)"world_end");
         if (w != null) {
-            WorldUtil.allowEnderPortalOutsideOverworld((boolean)true);
+            WorldUtil.allowEnderPortalOutsideOverworld(true);
             w.getBlockAt(55, 42, 229).setTypeIdAndData(blockId, (byte)0, false);
             w.getBlockAt(55, 42, 228).setTypeIdAndData(blockId, (byte)0, false);
             w.getBlockAt(55, 42, 227).setTypeIdAndData(blockId, (byte)0, false);
@@ -90,7 +90,7 @@ extends ArkPlugin {
             w.getBlockAt(51, 42, 229).setTypeIdAndData(blockId, (byte)0, false);
             w.getBlockAt(51, 42, 228).setTypeIdAndData(blockId, (byte)0, false);
             w.getBlockAt(51, 42, 227).setTypeIdAndData(blockId, (byte)0, false);
-            WorldUtil.allowEnderPortalOutsideOverworld((boolean)false);
+            WorldUtil.allowEnderPortalOutsideOverworld(false);
         }
     }
 

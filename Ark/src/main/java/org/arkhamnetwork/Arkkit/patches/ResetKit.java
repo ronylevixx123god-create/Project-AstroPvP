@@ -28,6 +28,8 @@ import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.google.common.collect.Lists;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
@@ -50,7 +52,7 @@ extends ArkPlugin {
     }
 
     @Override
-    public void disable() {
+    public void disable() throws IOException {
         super.disable();
         this.unregisterListeners();
         this.unregisterCommands();

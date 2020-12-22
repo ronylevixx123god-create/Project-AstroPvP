@@ -30,9 +30,6 @@ import java.io.File;
 import java.util.HashSet;
 import java.util.List;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.CommandTogglePlayer;
-import org.arkhamnetwork.Arkkit.patches.Youtubers;
-import org.arkhamnetwork.Arkkit.patches.networkevents.NetworkEvents;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -43,7 +40,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
 import org.kitteh.vanish.VanishPlugin;
-import org.zencode.shortninja.staffplus.StaffPlus;
 
 final class TogglePlayerListener
 implements Listener {

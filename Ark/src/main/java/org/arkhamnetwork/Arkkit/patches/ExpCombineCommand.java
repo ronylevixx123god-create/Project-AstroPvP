@@ -37,18 +37,18 @@ extends AbstractCommand {
             return true;
         }
         int totalExpFound = 0;
-        ArrayList bottles = Lists.newArrayList();
+        ArrayList<ItemStack> bottles = Lists.newArrayList();
         int bottlesFound = 0;
         Player player = (Player)sender;
         for (ItemStack item2 : player.getInventory()) {
-            if (item2 == null || !ExpBottles.isXpBottle(item2)) continue;
+            if (!ExpBottles.isXpBottle(item2)) continue;
             totalExpFound += ExpBottles.getXpAmount(item2) * item2.getAmount();
             bottles.add(item2);
             bottlesFound += item2.getAmount();
         }
         if (bottlesFound > 1 && totalExpFound > 0) {
-            bottles.forEach(item -> player.getInventory().removeItem(new ItemStack[]{item}));
-            player.getInventory().addItem(new ItemStack[]{ExpBottles.getXpBottle(totalExpFound, player.getName())});
+            bottles.forEach(item -> player.getInventory().removeItem(item));
+            player.getInventory().addItem(ExpBottles.getXpBottle(totalExpFound, player.getName()));
             player.updateInventory();
             player.playSound(player.getLocation(), Sound.NOTE_PLING, 1.0f, 1.4f);
             player.sendMessage((Object)ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.GREEN + "Combined " + (Object)ChatColor.GREEN + (Object)ChatColor.UNDERLINE + bottlesFound + (Object)ChatColor.GREEN + " EXP Bottles into a " + (Object)ChatColor.GREEN + ChatColor.BOLD.toString() + CommandBalanceTop.insertCommas(totalExpFound) + (Object)ChatColor.GREEN + " EXP Bottle!");
