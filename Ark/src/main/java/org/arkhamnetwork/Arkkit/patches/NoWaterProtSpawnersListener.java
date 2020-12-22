@@ -36,9 +36,6 @@ import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import de.dustplanet.silkspawners.SilkSpawners;
 import java.util.Random;
-import org.arkhamnetwork.Arkkit.patches.BlockValueListener;
-import org.arkhamnetwork.Arkkit.patches.NoWaterProtSpawners;
-import org.arkhamnetwork.Arkkit.patches.SpawnerFee;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.arkhamnetwork.CosmicCustomTNT.enums.TNTTypes;
 import org.bukkit.Bukkit;
@@ -160,7 +157,7 @@ implements Listener {
                     Location loc = b.getLocation();
                     int viewers = 0;
                     if (state instanceof InventoryHolder && (viewers = (inventory = ((InventoryHolder)state).getInventory()).getViewers().size()) > 0) {
-                        Lists.newArrayList((Iterable)inventory.getViewers()).forEach(HumanEntity::closeInventory);
+                        inventory.getViewers().forEach(HumanEntity::closeInventory);
                     }
                     b.setType(Material.AIR);
                     Bukkit.getLogger().info("Breaking chest with TNT at " + loc.getBlockX() + "x " + loc.getBlockY() + "y " + loc.getBlockZ() + "z that had " + viewers + " inventory viewers");

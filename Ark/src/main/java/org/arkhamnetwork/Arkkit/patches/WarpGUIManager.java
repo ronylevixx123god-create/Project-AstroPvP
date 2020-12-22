@@ -36,6 +36,9 @@ import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+
+import markehme.factionsplus.Cmds.CmdWarp;
+import markehme.factionsplus.extras.Warp;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.patches.CustomWarps;
 import org.arkhamnetwork.Arkkit.utils.InventoryUtils;
@@ -127,7 +130,7 @@ class WarpGUIManager {
     public Inventory getWarpInventory(Player player) {
         FPlayer fplayer = (FPlayer)FPlayers.i.get((OfflinePlayer)player);
         Faction faction = fplayer.getFaction();
-        List warps = CmdWarp.getWarps((Faction)faction);
+        List<Warp> warps = CmdWarp.getWarps((Faction)faction);
         Inventory inventory = Bukkit.createInventory(null, (int)InventoryUtils.fitInventorySize(warps.size()), (String)"Faction Warps");
         CustomWarps customWarp = this.getCustomWarps().get(faction.getId());
         for (Warp warp : warps) {

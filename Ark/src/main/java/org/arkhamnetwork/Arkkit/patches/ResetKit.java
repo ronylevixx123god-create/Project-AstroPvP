@@ -74,9 +74,9 @@ extends ArkPlugin {
         retr.add(McmmoCredits.buildMcmmoCreditItem(100 + random.nextInt(101)));
         int toGive = random.nextInt(4) + 2;
         for (int i = 0; i < toGive; ++i) {
-            ItemStack key = new ItemBuilder(random.nextDouble() <= 0.65 ? CustomCrateType.ULTIMATE : CustomCrateType.LEGENDARY).build();
-            if (key == null) continue;
-            retr.add(key);
+            //ItemStack key = new ItemBuilder(random.nextDouble() <= 0.65 ? CustomCrateType.ULTIMATE : CustomCrateType.LEGENDARY).build();
+            //if (key == null) continue;
+            //retr.add(key);
         }
         retr.add(ExpBottles.getXpBottle(2500 + random.nextInt(3501), "Reset Kit"));
         retr.add(new CustomTitleBuilder(random.nextDouble() <= 0.75 ? "#vanilla" : "#comp").build());
