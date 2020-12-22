@@ -60,6 +60,8 @@ import com.cosmicpvp.cosmicutils.utils.ItemUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
 import com.google.common.collect.Lists;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -67,7 +69,6 @@ import java.util.concurrent.ThreadLocalRandom;
 import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKitsAPI;
 import me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits;
 import me.cosmicpvp.CosmicGlobalKits.libs.MasteryKits;
-import net.minecraft.server.v1_7_R4.NBTBase;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
 import org.arkhamnetwork.Arkkit.libs.JSONMessage;
@@ -133,7 +134,7 @@ extends ArkPlugin {
     }
 
     @Override
-    public void enable() {
+    public void enable() throws IOException {
         super.enable();
         this.registerCommand(new LootboxCommand("elootbox", "/<command>", "Lootbox admin command"));
         this.registerCommand(new MKitGeneratorCommand(this));
@@ -142,7 +143,7 @@ extends ArkPlugin {
     }
 
     @Override
-    public void disable() {
+    public void disable() throws IOException {
         super.disable();
         this.unregisterCommands();
         this.unregisterListeners();

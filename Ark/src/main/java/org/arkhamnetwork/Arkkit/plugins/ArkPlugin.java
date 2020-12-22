@@ -12,6 +12,7 @@
  */
 package org.arkhamnetwork.Arkkit.plugins;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -39,11 +40,11 @@ public abstract class ArkPlugin {
         this.bukkit_plugin = p;
     }
 
-    public void enable() {
+    public void enable() throws IOException {
         this.disableCalled = false;
     }
 
-    public void disable() {
+    public void disable() throws IOException {
         this.disableCalled = true;
     }
 

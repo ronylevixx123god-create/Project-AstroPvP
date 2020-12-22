@@ -28,9 +28,8 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import me.ifamasssxd.cosmicmasks.MaskType;
 import net.minecraft.server.v1_7_R4.MinecraftServer;
+import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.AntiHack;
-import org.arkhamnetwork.Arkkit.patches.HotbarArmorSwap;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Chest;
@@ -118,7 +117,7 @@ implements Listener {
             return;
         }
         Player p = e.getPlayer();
-        if (p.hasMetadata("lastArmorSwap") && (long)MinecraftServer.currentTick - ((MetadataValue)p.getMetadata("lastArmorSwap").get(0)).asLong() <= 12L) {
+        if (p.hasMetadata("lastArmorSwap") && (long) MinecraftServer.currentTick - ((MetadataValue)p.getMetadata("lastArmorSwap").get(0)).asLong() <= 12L) {
             return;
         }
         if (e.isCancelled() && p.hasMetadata("noArmorSwap")) {

@@ -10,6 +10,8 @@ import org.arkhamnetwork.Arkkit.patches.PvPSanityListener;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.plugin.Plugin;
 
+import java.io.IOException;
+
 public class PvPSanity
 extends ArkPlugin {
     public PvPSanity(Plugin p) {
@@ -17,13 +19,13 @@ extends ArkPlugin {
     }
 
     @Override
-    public void enable() {
+    public void enable() throws IOException {
         super.enable();
         this.registerListener(new PvPSanityListener());
     }
 
     @Override
-    public void disable() {
+    public void disable() throws IOException {
         super.disable();
     }
 }

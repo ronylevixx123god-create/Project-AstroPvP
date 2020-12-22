@@ -17,12 +17,8 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import com.intellectualcrafters.plot.api.PlotAPI;
-import com.intellectualcrafters.plot.object.Plot;
-import com.intellectualcrafters.plot.object.PlotPlayer;
 import java.io.File;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.ChatLimiter;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -39,15 +35,9 @@ implements Listener {
 
     @EventHandler(priority=EventPriority.LOW)
     public void onAsyncPlayerChatEvent(AsyncPlayerChatEvent e) {
-        PlotPlayer player;
-        PlotAPI api;
-        Plot current;
         Player pl = e.getPlayer();
         boolean vip = pl.hasPermission("chatlimiter.vip") || pl.hasPermission("arkhamchat.vip");
         boolean plotChat = false;
-        if (this.plotSquaredEnabled && (current = (api = new PlotAPI()).getPlot(pl.getLocation())) != null && (player = PlotPlayer.get((String)pl.getName())) != null && player.getAttribute("chat")) {
-            plotChat = true;
-        }
         long chat_delay = vip ? ChatLimiter.vip_delay : ChatLimiter.default_delay;
         long last_chat_message = pl.hasMetadata("last_chat_message") ? ((MetadataValue)pl.getMetadata("last_chat_message").get(0)).asLong() : 0L;
         long dif = System.currentTimeMillis() - last_chat_message;

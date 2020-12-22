@@ -42,7 +42,7 @@ extends BukkitRunnable {
         int exec_count = 0;
         for (World w : this.plugin.getServer().getWorlds()) {
             if (w.getEnvironment() == World.Environment.THE_END && ChunkGCTask.isEndDragonSpawned()) continue;
-            final Entity[] w_ents = w.getEntities().toArray((T[])new Entity[w.getEntities().size()]);
+            final Entity[] w_ents = w.getEntities().toArray(new Entity[0]);
             final int f_exec_count = ++exec_count;
             final String w_name = w.getName();
             if (w_ents.length <= 0) continue;
@@ -55,7 +55,7 @@ extends BukkitRunnable {
                         if (ent.getType() == EntityType.FIREWORK || ent.hasMetadata("NPC") || ent.hasMetadata("cbe_boss") || ent.hasMetadata("do_not_clear") || !ChunkAPI.isIntensive(ent.getType()) && (!(ent instanceof Player) || !ent.hasMetadata("NPC") && !ent.hasMetadata("npc_type")) || ChunkAPI.isPlayerNearby(ent.getLocation(), -1)) continue;
                         dead_entities.add(ent);
                     }
-                    final Entity[] sync_dead_entities = dead_entities.toArray((T[])new Entity[dead_entities.size()]);
+                    final Entity[] sync_dead_entities = dead_entities.toArray(new Entity[0]);
                     EntityCleanerTask.this.plugin.getServer().getScheduler().runTaskLater((Plugin)EntityCleanerTask.this.plugin, new Runnable(){
 
                         @Override

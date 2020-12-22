@@ -8,10 +8,7 @@ package org.arkhamnetwork.Arkkit.plugins;
 
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.PlayerVaultGUI;
-import org.arkhamnetwork.Arkkit.patches.AccountSecurity;
-import org.arkhamnetwork.Arkkit.patches.AdminEvents;
 import org.arkhamnetwork.Arkkit.patches.AdminWarps;
-import org.arkhamnetwork.Arkkit.patches.AlertSystem;
 import org.arkhamnetwork.Arkkit.patches.AntiBlockGlitch;
 import org.arkhamnetwork.Arkkit.patches.AntiCrash;
 import org.arkhamnetwork.Arkkit.patches.AntiDupe;
@@ -25,7 +22,6 @@ import org.arkhamnetwork.Arkkit.patches.AntiLootSteal;
 import org.arkhamnetwork.Arkkit.patches.AntiMinecart;
 import org.arkhamnetwork.Arkkit.patches.AntiPistonLag;
 import org.arkhamnetwork.Arkkit.patches.AntiRedstoneLag;
-import org.arkhamnetwork.Arkkit.patches.AntiScoreboardLeak;
 import org.arkhamnetwork.Arkkit.patches.AntiSpamBot;
 import org.arkhamnetwork.Arkkit.patches.AntiTileEntityLag;
 import org.arkhamnetwork.Arkkit.patches.AsyncMonsters;
@@ -39,7 +35,6 @@ import org.arkhamnetwork.Arkkit.patches.BlockValue;
 import org.arkhamnetwork.Arkkit.patches.BoatBlocker;
 import org.arkhamnetwork.Arkkit.patches.BulkSaving;
 import org.arkhamnetwork.Arkkit.patches.Bump;
-import org.arkhamnetwork.Arkkit.patches.BuycraftSecurity;
 import org.arkhamnetwork.Arkkit.patches.ChatBubbles;
 import org.arkhamnetwork.Arkkit.patches.ChatLimiter;
 import org.arkhamnetwork.Arkkit.patches.Christmas;
@@ -48,7 +43,6 @@ import org.arkhamnetwork.Arkkit.patches.ClearInventoryConfirm;
 import org.arkhamnetwork.Arkkit.patches.CommandBlocker;
 import org.arkhamnetwork.Arkkit.patches.CommandItems;
 import org.arkhamnetwork.Arkkit.patches.CondenseCommand;
-import org.arkhamnetwork.Arkkit.patches.ContentCreator;
 import org.arkhamnetwork.Arkkit.patches.CoreProtectConfig;
 import org.arkhamnetwork.Arkkit.patches.CosmicClientHelper;
 import org.arkhamnetwork.Arkkit.patches.CustomBroadcast;
@@ -79,7 +73,6 @@ import org.arkhamnetwork.Arkkit.patches.FactionCornerClaim;
 import org.arkhamnetwork.Arkkit.patches.FactionTagReserve;
 import org.arkhamnetwork.Arkkit.patches.FactionTeleportSanity;
 import org.arkhamnetwork.Arkkit.patches.FakeVanish;
-import org.arkhamnetwork.Arkkit.patches.FallbackServers;
 import org.arkhamnetwork.Arkkit.patches.FatBuckets;
 import org.arkhamnetwork.Arkkit.patches.FillCommand;
 import org.arkhamnetwork.Arkkit.patches.FinalBattle;
@@ -96,14 +89,12 @@ import org.arkhamnetwork.Arkkit.patches.HideStream;
 import org.arkhamnetwork.Arkkit.patches.HitMe;
 import org.arkhamnetwork.Arkkit.patches.HomeGUI;
 import org.arkhamnetwork.Arkkit.patches.HotbarArmorSwap;
-import org.arkhamnetwork.Arkkit.patches.HubCommand;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.patches.ItemLinking;
 import org.arkhamnetwork.Arkkit.patches.ItemNametag;
 import org.arkhamnetwork.Arkkit.patches.ItemTracking;
 import org.arkhamnetwork.Arkkit.patches.ItemframeGodmode;
 import org.arkhamnetwork.Arkkit.patches.JulyFreedom;
-import org.arkhamnetwork.Arkkit.patches.KitLegacy;
 import org.arkhamnetwork.Arkkit.patches.LavaSponge;
 import org.arkhamnetwork.Arkkit.patches.LoreTag;
 import org.arkhamnetwork.Arkkit.patches.MaxFlyHeight;
@@ -155,7 +146,6 @@ import org.arkhamnetwork.Arkkit.patches.ParkourRegion;
 import org.arkhamnetwork.Arkkit.patches.Party;
 import org.arkhamnetwork.Arkkit.patches.PlayerHeads;
 import org.arkhamnetwork.Arkkit.patches.PlayerHealth;
-import org.arkhamnetwork.Arkkit.patches.PlotMePatches;
 import org.arkhamnetwork.Arkkit.patches.PluginHider;
 import org.arkhamnetwork.Arkkit.patches.PortalRegions;
 import org.arkhamnetwork.Arkkit.patches.PotionFix;
@@ -168,8 +158,6 @@ import org.arkhamnetwork.Arkkit.patches.ResetKit;
 import org.arkhamnetwork.Arkkit.patches.RewardNPC;
 import org.arkhamnetwork.Arkkit.patches.SafeShutdown;
 import org.arkhamnetwork.Arkkit.patches.SandStackLimiter;
-import org.arkhamnetwork.Arkkit.patches.SchematicUpdater;
-import org.arkhamnetwork.Arkkit.patches.SeasonalPasses;
 import org.arkhamnetwork.Arkkit.patches.SeasonalPrefixes;
 import org.arkhamnetwork.Arkkit.patches.ShopCommand;
 import org.arkhamnetwork.Arkkit.patches.ShowcaseExpander;
@@ -184,7 +172,6 @@ import org.arkhamnetwork.Arkkit.patches.Suicide;
 import org.arkhamnetwork.Arkkit.patches.TNTLimiter;
 import org.arkhamnetwork.Arkkit.patches.TPWarmup;
 import org.arkhamnetwork.Arkkit.patches.TWAutoCraftTNT;
-import org.arkhamnetwork.Arkkit.patches.TabList;
 import org.arkhamnetwork.Arkkit.patches.TaperSlots;
 import org.arkhamnetwork.Arkkit.patches.Thanksgiving;
 import org.arkhamnetwork.Arkkit.patches.TickRatelimit;
@@ -215,14 +202,10 @@ import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
 import org.arkhamnetwork.Arkkit.patches.commandcooldown.CommandCooldowns;
 import org.arkhamnetwork.Arkkit.patches.createtitle.CreateTitle;
 import org.arkhamnetwork.Arkkit.patches.marriage.Marriage;
-import org.arkhamnetwork.Arkkit.patches.networkevents.NetworkEvents;
 import org.arkhamnetwork.Arkkit.patches.newtrade.BetterTrade;
-import org.arkhamnetwork.Arkkit.patches.player_shops.PlayerShops;
 import org.arkhamnetwork.Arkkit.patches.teams.Teams;
 import org.arkhamnetwork.Arkkit.patches.trading.NewTrade;
 import org.arkhamnetwork.Arkkit.patches.voting.VotePatch;
-import org.arkhamnetwork.Arkkit.patches.xenforosyncaccount.XenforoSyncAccount;
-import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.plugin.Plugin;
 
 public enum ArkPlugins {
@@ -247,10 +230,6 @@ public enum ArkPlugins {
     ANTI_INVENTORY_HIJACK(new AntiInventoryHijack((Plugin)Arkkit.get()), "Prevents destruction of entities and blocks that have an inventory actively being viewed, Fixes a dupe exploit on Factions."),
     COMMAND_BLOCKER(new CommandBlocker((Plugin)Arkkit.get()), "Allows for dynamic command blocking / unblocking."),
     SPIGOT_BRANDING(new SpigotBranding((Plugin)Arkkit.get()), "Improved default spigot language messages to be more informative, allows for custom store_url and global_prefix to be configured into the improved messages."),
-    FALLBACK_SERVERS(new FallbackServers((Plugin)Arkkit.get()), "Send players back to lobbies when a server shuts down. Supports LilyPad only."),
-    ALERT_SYSTEM(new AlertSystem((Plugin)Arkkit.get()), "Global cross-server alert system. Supports LilyPad only."),
-    NETWORK_EVENTS(new NetworkEvents((Plugin)Arkkit.get()), "Enables cross-server /message, /reply, and /find. Supports LilyPad only."),
-    HUB_COMMAND(new HubCommand((Plugin)Arkkit.get()), "Enables /hub command that teleports users to a random fallback-server."),
     CUSTOM_MOTD(new CustomMOTD((Plugin)Arkkit.get()), "Enables /cmotd command along with a custom, configurable, delayed MOTD."),
     ESSENTIALS_WARP_UI(new EssentialsWarpUI((Plugin)Arkkit.get()), "Enables a /warp inventory menu. Warps to be displayed can be configurred."),
     ESSENTIALS_WARP_ALIASES(new EssentialsWarpAliases((Plugin)Arkkit.get()), "Enables per-warp /aliase commands. So /warp test will become /test, useful in prison server configurations."),
@@ -260,7 +239,6 @@ public enum ArkPlugins {
     PLUGIN_HIDER(new PluginHider((Plugin)Arkkit.get()), "Prevents players from obtaining the server's plugin list through means such as /p l /plugin /? /help:, etc."),
     NO_NEW_CHUNKS(new NoNewChunks((Plugin)Arkkit.get()), "Prevents new chunks from generating in worlds specified in no_new_chunks.worlds section of configuration."),
     ANTI_INVISIBILITY(new AntiInvisibility((Plugin)Arkkit.get()), "Prevents non-OP'd players in survival from having the 'invisibility' potion effect."),
-    PLOTME_PATCHES(new PlotMePatches((Plugin)Arkkit.get()), "Fixes a number of known bugs in PlotMe. Such as trapped chest protection not working."),
     TNT_LIMITER(new TNTLimiter((Plugin)Arkkit.get()), "Enables dynamic adjustment of spigot's maxTntPerTntTick setting in spigot.yml."),
     CHAT_FILTER(new ChatFilter((Plugin)Arkkit.get()), "Enables a dynamic word filtering system via /censor."),
     OP_PERMISSION(new OpPermission((Plugin)Arkkit.get()), "Enables enforcement of automatically op'ing and de'oping players with(out) * or *.* permission node on login."),
@@ -268,7 +246,6 @@ public enum ArkPlugins {
     CREATE_TITLE(new CreateTitle((Plugin)Arkkit.get()), "Enables /createtitle and /addcreatetitle commands to purchase and create custom player titles."),
     NO_HORSE_RIDE(new NoHorseRide((Plugin)Arkkit.get()), "Disables players from riding horses to prevent vanilla noclipping."),
     THANKSGIVING(new Thanksgiving((Plugin)Arkkit.get()), "Adds random Thanksgiving Turkey spawns."),
-    XENFORO_SYNC_ACCOUNT(new XenforoSyncAccount((Plugin)Arkkit.get()), "Enables /syncaccount capability to sync minecraft accounts to forum accounts."),
     NO_VILLAGER_TRADING(new NoVillagerTrading((Plugin)Arkkit.get()), "Disable vanilla villager trading mechanic in gamemode."),
     COMBAT_LOG(new CombatLog((Plugin)Arkkit.get()), "Kills players who logout while within 10s of combat in pvp-enabled area."),
     CHAT_BUBBLES(new ChatBubbles((Plugin)Arkkit.get()), "Enables chat bubbles over player's heads with the arkkit.chatbubble permission!"),
@@ -278,7 +255,6 @@ public enum ArkPlugins {
     NO_CAVE_SPIDERS(new NoCaveSpiders((Plugin)Arkkit.get()), "Replaces all cave spiders with normal spiders as they spawn."),
     TEAMS(new Teams((Plugin)Arkkit.get()), "Enables /teams and the ability for players to create parties."),
     TRADING(new NewTrade((Plugin)Arkkit.get()), "Enables /trade and ability to trade items with other players through GUI."),
-    PLAYER_SHOPS(new PlayerShops((Plugin)Arkkit.get()), "Enables /shop and ability to create player-owned shops."),
     NO_COMBAT_FLYING(new NoCombatFlying((Plugin)Arkkit.get()), "Clips wings of players who engage in PvP or PvE combat for 10s."),
     DEATHPOINT(new Deathpoint((Plugin)Arkkit.get()), "Enables /deathpoint (/back alternative) that allows players to return to previous location of death."),
     COMMAND_COOLDOWNS(new CommandCooldowns((Plugin)Arkkit.get()), "Enables per-player command cooldown functionality through command-cooldowns.yml!"),
@@ -347,7 +323,6 @@ public enum ArkPlugins {
     HALLOWEEN(new Halloween((Plugin)Arkkit.get()), "Enables spooky halloween effects."),
     XPLOSS(new XPLoss((Plugin)Arkkit.get()), "Enables dropping XP on death in bottle form."),
     TP_WARMUP(new TPWarmup((Plugin)Arkkit.get()), "Enables TP warmup times based on player EXP levels."),
-    BUYCRAFT_SECURITY(new BuycraftSecurity((Plugin)Arkkit.get()), "Prevents Buycraft from auto-updating."),
     MAX_FLY_HEIGHT(new MaxFlyHeight((Plugin)Arkkit.get()), "Prevents players from flying above y:256 while in survival mode."),
     NO_WHITELIST(new NoWhitelist((Plugin)Arkkit.get()), "Prevents server from ever enabling whitelist."),
     ANTI_SPAM_BOT(new AntiSpamBot((Plugin)Arkkit.get()), "Spam bot countermesasures, /viponly chat mode."),
@@ -371,7 +346,6 @@ public enum ArkPlugins {
     WORLD_BORDER_FIXES(new WorldBorderFixes((Plugin)Arkkit.get()), "Enables an array of WorldBorder fixes, incl. proper piston handling."),
     BUMP(new Bump((Plugin)Arkkit.get()), "Enables /bump command to deal self inflicted damage in friendly areas."),
     SAND_STACK_LIMITER(new SandStackLimiter((Plugin)Arkkit.get()), "Enables limitations on max number of physics enabled blocks that can be stacked in one x,z location."),
-    TAB_LIST(new TabList((Plugin)Arkkit.get()), "Enables custom [TAB] list headers and footers."),
     ENDERPEARL_COOLDOWN(new EnderpearlCooldown((Plugin)Arkkit.get()), "Enables enderpearl cooldowns."),
     OBSIDIAN_DESTROYER_FIXES(new ObsidianDestroyerFixes((Plugin)Arkkit.get()), "Enables Obsidian Destroyer bugfixes, prevents invincible blocks."),
     TAPER_SLOTS(new TaperSlots((Plugin)Arkkit.get()), "Enables slot taper, slowly increases max slots to prevent network thread dieing from spam join."),
@@ -381,14 +355,12 @@ public enum ArkPlugins {
     WARZONE_CLAIMS(new WarzoneClaims((Plugin)Arkkit.get()), "Charge players for claiming chunks near warzones."),
     EULA(new EULA((Plugin)Arkkit.get()), "Sells EULA compliant items for soft currency."),
     HACKER_HUB(new HackerHub((Plugin)Arkkit.get()), "Enables moderation tools for the hacker hub."),
-    ANTI_SCOREBOARD_LEAK(new AntiScoreboardLeak((Plugin)Arkkit.get()), "Prevents resource leakage when using per-player scoreboards."),
     NO_WATER_PROT_SPAWNERS(new NoWaterProtSpawners((Plugin)Arkkit.get()), "Disbles water protection for mob spawners."),
     NO_MCMMO_LIMITS(new NoMCMMOLimits((Plugin)Arkkit.get()), "Disables mcMMO level caps without allow them to become more powerful past presets."),
     GLOBAL_GAMEMODE(new GlobalGamemode((Plugin)Arkkit.get()), "Makes creative gamemode persist between worlds."),
     SEASONAL_PREFIXES(new SeasonalPrefixes((Plugin)Arkkit.get()), "Enables display of seasonal planet victory prefixes."),
     JULY_FREEDOM(new JulyFreedom((Plugin)Arkkit.get()), "Enables some goofy 4th of July celebrations."),
     PARKOUR_REGION(new ParkourRegion((Plugin)Arkkit.get()), "Enables parkour region functionality."),
-    ACCOUNT_SECURITY(new AccountSecurity((Plugin)Arkkit.get()), "Enables additional account security checks for ops."),
     AUTO_RESPAWN(new AutoRespawn((Plugin)Arkkit.get()), "Enables Auto Respawning for players when they die."),
     NO_SAFEZONE_MOBS(new NoSafezoneMobs((Plugin)Arkkit.get()), "Automatically despawns monsters in pvp disabled regions when hit."),
     FAKE_VANISH(new FakeVanish((Plugin)Arkkit.get()), "Vanish TBNRfrags and Woofless when not nearby."),
@@ -396,7 +368,6 @@ public enum ArkPlugins {
     FWARP_GUI(new WarpGUI((Plugin)Arkkit.get()), "Similar GUI to HomeGUI but for /f warp"),
     VAULT_GUI(new PlayerVaultGUI((Plugin)Arkkit.get()), "GUI for /pv"),
     ANTIKB_DETECTION(new AntiKnockback((Plugin)Arkkit.get()), "Detect obvious Anti Knockback hacks."),
-    SCHEMATIC_UPDATER(new SchematicUpdater((Plugin)Arkkit.get()), "Schematic updater patch to enabled /uploadschem and /downloadschem."),
     EXTRA_MUTES(new ExtraMute((Plugin)Arkkit.get()), "Implement /facmute and /ipmute."),
     NO_BOOK_SIGN(new NoBookSign((Plugin)Arkkit.get()), "Disables book signing."),
     ANTI_BLOCK_GLITCH(new AntiBlockGlitch((Plugin)Arkkit.get()), "Fixes block glitching and jumping."),
@@ -419,14 +390,12 @@ public enum ArkPlugins {
     BLOCK_VALUE(new BlockValue((Plugin)Arkkit.get()), "Enables tracking of custom block values in claims."),
     BETTER_TRADE(new BetterTrade((Plugin)Arkkit.get()), "A much safer trade system made in 2018 using OOP."),
     EQUIPMENT_LOOTBOX(new EquipmentLootboxes((Plugin)Arkkit.get()), "Equipement lootboxes that give a random Armor Set item."),
-    SEASONAL_PASSES(new SeasonalPasses((Plugin)Arkkit.get()), "Seasonal Pass item for Nebula Planet."),
     DOUBLE_DROPS(new DoubleDrops((Plugin)Arkkit.get()), "Enable double gun powder drops for Creepers."),
     RESET_KITS(new ResetKit((Plugin)Arkkit.get()), "Reset Kits similar to CosmicCrates made for Castle Planet."),
     CORE_PROTECT_CONFIG(new CoreProtectConfig((Plugin)Arkkit.get()), "Allows editing in-memory config of Core Protect, automatically disables block logging."),
     NO_DUPE_EXPLOIT(new NoDupeExploit((Plugin)Arkkit.get()), "Scans inventories for items with duplicated IID and removes them."),
     ADMIN_WARPS(new AdminWarps((Plugin)Arkkit.get()), "Create admin warps that only admins have access to."),
     NO_FALL_REGIONS(new NoFallRegions((Plugin)Arkkit.get()), "No Fall regions that need to have _nofall in them."),
-    ADMIN_EVENTS(new AdminEvents((Plugin)Arkkit.get()), "Allows uploading/download dynamic admin event maps and regions."),
     TRICK_OR_TREATERS(new TrickOrTreaters((Plugin)Arkkit.get()), "Trick or Treaters spawn randomly on players!"),
     ITEM_TRACKING(new ItemTracking((Plugin)Arkkit.get()), "Tracks high value IID items being dropped/picked up."),
     NO_SPAWN_HOMES(new NoSpawnHomes((Plugin)Arkkit.get()), "Blocks players from setting homes or warps at /spawn."),
@@ -434,9 +403,7 @@ public enum ArkPlugins {
     FAT_BUCKETS(new FatBuckets((Plugin)Arkkit.get()), "Enables Fat Buckets"),
     PORTAL_REGIONS(new PortalRegions((Plugin)Arkkit.get()), "Enables warp portal regions."),
     SPAWN_POD(new SpawnPod((Plugin)Arkkit.get()), "Enables legacy spawn pods on first join."),
-    KIT_LEGACY(new KitLegacy((Plugin)Arkkit.get()), "Enables /kit legacy for top rank+ players."),
     COMMAND_ITEMS(new CommandItems((Plugin)Arkkit.get()), "Enables Command Item interact functionality."),
-    CONTENT_CREATOR(new ContentCreator((Plugin)Arkkit.get()), "Enables /setchannel command and functionality."),
     NO_BEDS(new NoBeds((Plugin)Arkkit.get()), "Disables sleeping in beds for players."),
     PVP_SANITY(new PvPSanity((Plugin)Arkkit.get()), "Prevents 1-hit kill scenarios."),
     FACTION_TAG_RESERVE(new FactionTagReserve((Plugin)Arkkit.get()), "Ability to reserve specific faction tags."),

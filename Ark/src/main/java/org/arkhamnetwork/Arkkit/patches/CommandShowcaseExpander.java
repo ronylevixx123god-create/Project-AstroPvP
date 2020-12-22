@@ -40,7 +40,7 @@ extends AbstractCommand {
         String pName = args[0];
         if (Bukkit.getPlayer((String)pName) != null) {
             Player p = Bukkit.getPlayer((String)pName);
-            p.getInventory().addItem(new ItemStack[]{ShowcaseExpander.getShowcaseExpanderItem()});
+            p.getInventory().addItem(ShowcaseExpander.getShowcaseExpanderItem());
             sender.sendMessage((Object)ChatColor.GRAY + "* Added 1x ShowcaseExpander to " + p.getName() + "!");
         }
         return true;

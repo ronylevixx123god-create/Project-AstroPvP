@@ -18,11 +18,9 @@ package org.arkhamnetwork.Arkkit.patches.trading;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import java.util.ArrayList;
 import java.util.List;
-import me.vaqxine.NetworkManager.NetworkManager;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.commands.CommandArkReboot;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
-import org.arkhamnetwork.Arkkit.patches.trading.NewTrade;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -50,7 +48,7 @@ extends AbstractCommand {
             pl.sendMessage((Object)ChatColor.GRAY + "Sends a trade request to the specified <player>.");
             return true;
         }
-        if (Arkkit.get().shutting_down || CommandArkReboot.restart_task_exists || Bukkit.getPluginManager().getPlugin("NetworkManager") != null && NetworkManager.getPlugin().rebooting) {
+        if (Arkkit.get().shutting_down || CommandArkReboot.restart_task_exists || Bukkit.getPluginManager().getPlugin("NetworkManager") != null) {
             pl.sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot use this command while the server is rebooting!");
             return true;
         }

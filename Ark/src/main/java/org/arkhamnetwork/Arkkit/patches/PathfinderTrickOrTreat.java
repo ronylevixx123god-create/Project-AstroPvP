@@ -12,16 +12,9 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import net.minecraft.server.v1_7_R4.Blocks;
-import net.minecraft.server.v1_7_R4.Entity;
-import net.minecraft.server.v1_7_R4.EntityCreature;
-import net.minecraft.server.v1_7_R4.EntityHuman;
-import net.minecraft.server.v1_7_R4.ItemStack;
-import net.minecraft.server.v1_7_R4.Items;
-import net.minecraft.server.v1_7_R4.PathfinderGoal;
+import net.minecraft.server.v1_8_R3.*;
 
-final class PathfinderTrickOrTreat
-extends PathfinderGoal {
+final class PathfinderTrickOrTreat extends PathfinderGoal {
     private EntityCreature creature;
     private EntityHuman target;
     private int c;
@@ -35,7 +28,7 @@ extends PathfinderGoal {
         if (!this.creature.world.w()) {
             return false;
         }
-        this.target = (EntityHuman)this.creature.world.a(EntityHuman.class, this.creature.boundingBox.grow(10.0, 8.0, 10.0), (Entity)this.creature);
+        this.target = (EntityHuman)this.creature.world.a(EntityHuman.class, this.creature.getBoundingBox().grow(10.0, 8.0, 10.0), (Entity)this.creature);
         return this.target != null;
     }
 

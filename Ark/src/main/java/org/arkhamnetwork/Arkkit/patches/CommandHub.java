@@ -11,7 +11,6 @@ package org.arkhamnetwork.Arkkit.patches;
 import java.util.List;
 import java.util.Random;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
-import org.arkhamnetwork.Arkkit.patches.HubCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

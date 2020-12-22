@@ -43,17 +43,14 @@ import com.google.common.collect.MapMaker;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.Faction;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.AMUtils;
-import org.arkhamnetwork.Arkkit.patches.AsyncMonsters;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.Ageable;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Enderman;
@@ -216,8 +213,8 @@ implements Listener {
                 } else {
                     e.setDroppedExp(e.getDroppedExp() * monstersToKill);
                 }
-                for (ItemStack i : new ArrayList(e.getDrops())) {
-                    int toGive;
+                for (ItemStack i : e.getDrops()) {
+                    int toGive = 0;
                     int toMultiply = 0;
                     for (int x = monstersToKill; x > 0; --x) {
                         if (Math.random() > 0.33) continue;
@@ -248,7 +245,7 @@ implements Listener {
                 Zombie z;
                 Ageable a;
                 int monstersToAdd = 0;
-                for (ItemStack ent : e.getEntity().getLocation().getChunk().getEntities()) {
+                for (Entity ent : e.getEntity().getLocation().getChunk().getEntities()) {
                     LivingEntity le;
                     if (!(ent instanceof LivingEntity) || (le = (LivingEntity)ent).getEntityId() == e.getEntity().getEntityId() || le.getType() != e.getEntityType() || !(le.getHealth() > 0.0) || !le.hasMetadata("fromMobSpawner")) continue;
                     if (ent instanceof Creeper && ent.isOnGround()) {
@@ -285,7 +282,7 @@ implements Listener {
             }
         }
         if (e.getEntity() instanceof MushroomCow) {
-            for (ItemStack drop : Lists.newArrayList((Iterable)e.getDrops())) {
+            for (ItemStack drop : e.getDrops()) {
                 Material type = drop.getType();
                 if (type != Material.RED_MUSHROOM && type != Material.BROWN_MUSHROOM) continue;
                 e.getDrops().remove((Object)drop);

@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Utils" />
         <module name="Ark" />
+        <module name="Arkkit" />
       </profile>
     </annotationProcessing>
   </component>

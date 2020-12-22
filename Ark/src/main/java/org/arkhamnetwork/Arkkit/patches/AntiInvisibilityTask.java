@@ -13,8 +13,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import com.cosmicpvp.cosmicclasses.struct.HCFKits;
-import org.arkhamnetwork.Arkkit.patches.AntiInvisibility;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -31,16 +29,6 @@ extends BukkitRunnable {
     public void run() {
         for (Player pl : Bukkit.getOnlinePlayers()) {
             if (pl.isOp() || pl.getGameMode() != GameMode.SURVIVAL || !pl.hasPotionEffect(PotionEffectType.INVISIBILITY)) continue;
-            if (AntiInvisibility.classesEnabled && pl.getLocation().getY() <= 20.0) {
-                try {
-                    if (HCFKits.getActiveKit((Player)pl) == HCFKits.MINER) {
-                        continue;
-                    }
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
             pl.removePotionEffect(PotionEffectType.INVISIBILITY);
             pl.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "Invisibility potions cannot be used on this server!");
         }

@@ -37,7 +37,7 @@ extends AbstractCommand {
             sender.sendMessage((Object)ChatColor.RED + "Invalid Usage: /unfacmute <faction>");
             return true;
         }
-        List fplayerIds = FactionUtils.getFPlayerIdsByTag((String)args[0]);
+        List<String> fplayerIds = FactionUtils.getFPlayerIdsByTag((String)args[0]);
         if (fplayerIds == null) {
             sender.sendMessage((Object)ChatColor.RED + "Invalid faction given.");
             return true;

@@ -10,9 +10,12 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.google.common.collect.Lists;
+
+import java.util.Collections;
 import java.util.List;
 import org.arkhamnetwork.Arkkit.libs.ArkPluginCommand;
 import org.arkhamnetwork.Arkkit.patches.TrickOrTreaters;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -20,7 +23,7 @@ import org.bukkit.entity.Player;
 final class TrickOrTreaterCommand
 extends ArkPluginCommand<TrickOrTreaters> {
     public TrickOrTreaterCommand(TrickOrTreaters patch, String command, String usage, String description) {
-        super(patch, command, usage, description, (List<String>)Lists.newArrayList((Object[])new String[]{"trickortreat"}));
+        super(patch, command, usage, description, (List<String>)Lists.newArrayList(new String[]{"trickortreat"}));
     }
 
     @Override
@@ -32,7 +35,7 @@ extends ArkPluginCommand<TrickOrTreaters> {
             return true;
         }
         Player p = (Player)sender;
-        ((TrickOrTreaters)this.patch).spawnTrickOrTreater(p.getTargetBlock(null, 4).getLocation().add(0.0, 1.0, 0.0));
+        ((TrickOrTreaters)this.patch).spawnTrickOrTreater(p.getTargetBlock(Collections.singleton(Material.AIR), 4).getLocation().add(0.0, 1.0, 0.0));
         return true;
     }
 }

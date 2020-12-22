@@ -54,7 +54,7 @@ extends AbstractCommand {
             sender.sendMessage((Object)ChatColor.RED + "Invalid time given!");
             return true;
         }
-        List fplayerIds = FactionUtils.getFPlayerIdsByTag((String)args[0]);
+        List<String > fplayerIds = FactionUtils.getFPlayerIdsByTag((String)args[0]);
         if (fplayerIds == null) {
             sender.sendMessage((Object)ChatColor.RED + "Faction doesnt exist.");
             return true;

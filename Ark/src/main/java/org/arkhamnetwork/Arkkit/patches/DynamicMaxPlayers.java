@@ -14,9 +14,9 @@ import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.lang.reflect.Field;
-import net.minecraft.server.v1_7_R4.MinecraftServer;
-import net.minecraft.server.v1_7_R4.PlayerList;
-import org.arkhamnetwork.Arkkit.patches.SetMaxPlayersCommand;
+
+import com.earth2me.essentials.PlayerList;
+import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -41,7 +41,7 @@ extends ArkPlugin {
         try {
             Field f = PlayerList.class.getDeclaredField("maxPlayers");
             f.setAccessible(true);
-            f.set((Object)MinecraftServer.getServer().getPlayerList(), x);
+            f.set((Object) MinecraftServer.getServer().getPlayerList(), x);
             DynamicMaxPlayers.writeMaxPlayers(x);
             Bukkit.getConsoleSender().sendMessage((Object)ChatColor.YELLOW + "Max players set to " + x + "!");
         }

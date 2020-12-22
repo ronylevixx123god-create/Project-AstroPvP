@@ -12,7 +12,6 @@
 package org.arkhamnetwork.Arkkit.commands;
 
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.FallbackServers;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

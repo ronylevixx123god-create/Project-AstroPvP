@@ -20,18 +20,15 @@ import com.cosmicpvp.cosmicutils.utils.JSONMessage;
 import com.cosmicpvp.cosmicutils.utils.JSONUtils;
 import com.google.common.collect.Lists;
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import net.minecraft.util.com.google.common.reflect.TypeToken;
+
+import com.google.common.reflect.TypeToken;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.CandyGram;
-import org.arkhamnetwork.Arkkit.patches.CandyGramListener;
-import org.arkhamnetwork.Arkkit.patches.CommandCandyGram;
-import org.arkhamnetwork.Arkkit.patches.ValentinesDayListener;
-import org.arkhamnetwork.Arkkit.patches.ValentinesDayTask;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -50,7 +47,7 @@ extends ArkPlugin {
     }
 
     @Override
-    public void enable() {
+    public void enable() throws IOException {
         this.registerListener(new ValentinesDayListener());
         this.registerTask(new ValentinesDayTask().runTaskTimer((Plugin)Arkkit.get(), 6000L, 6000L), ValentinesDay.class);
         this.registerListener(new CandyGramListener());
@@ -68,7 +65,7 @@ extends ArkPlugin {
     }
 
     @Override
-    public void disable() {
+    public void disable() throws IOException {
         JSONUtils.saveJSONToFile((File)this.candyGramFile, this.pendingGrams, (Object)this.token);
         this.unregisterCommands();
         this.unregisterListeners();

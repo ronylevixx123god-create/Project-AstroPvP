@@ -24,8 +24,6 @@ package org.arkhamnetwork.Arkkit.patches;
 import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
 import com.wimbli.WorldBorder.WorldBorder;
 import org.arkhamnetwork.Arkkit.libs.ExpUtils;
-import org.arkhamnetwork.Arkkit.patches.ExpBottles;
-import org.arkhamnetwork.Arkkit.patches.ExpBottlesCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;

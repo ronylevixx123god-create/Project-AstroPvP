@@ -17,8 +17,6 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import java.util.List;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
-import org.arkhamnetwork.Arkkit.patches.ContentCreator;
-import org.arkhamnetwork.Arkkit.patches.ContentCreatorListener;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

@@ -56,7 +56,7 @@ extends BukkitRunnable {
 
     public void run() {
         ++this.tick;
-        if (EndGrinding.fundEnabled && !EndGrinding.hcf && !CosmicFundAPI.isEndEnabled()) {
+        if (EndGrinding.fundEnabled && !EndGrinding.hcf) {
             return;
         }
         if (ChunkGCTask.isEndDragonSpawned()) {

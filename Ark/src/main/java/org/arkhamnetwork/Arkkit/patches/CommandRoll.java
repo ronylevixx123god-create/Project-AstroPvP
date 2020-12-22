@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
-import org.arkhamnetwork.Arkkit.patches.Gamble;
-import org.arkhamnetwork.Arkkit.patches.networkevents.IgnoreUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -83,8 +81,8 @@ extends AbstractCommand {
                 return true;
             }
             for (Entity ent : p.getNearbyEntities(20.0, 20.0, 20.0)) {
-                Player player;
-                if (!(ent instanceof Player) || IgnoreUtils.isIgnored(player = (Player)ent, p.getName()) || Gamble.disabledRollUUIDs.contains(player.getUniqueId().toString())) continue;
+                Player player = (Player) sender;
+                if (!(ent instanceof Player) || Gamble.disabledRollUUIDs.contains(player.getUniqueId().toString())) continue;
                 player.sendMessage((Object)ChatColor.GRAY + "** " + p.getName() + (Object)ChatColor.GRAY + " has rolled a " + (Object)ChatColor.UNDERLINE + (Object)ChatColor.BOLD + roll + (Object)ChatColor.GRAY + " out of " + (Object)ChatColor.UNDERLINE + (Object)ChatColor.BOLD + args[0] + ".");
             }
             p.sendMessage((Object)ChatColor.GRAY + "** " + p.getName() + (Object)ChatColor.GRAY + " has rolled a " + (Object)ChatColor.UNDERLINE + (Object)ChatColor.BOLD + roll + (Object)ChatColor.GRAY + " out of " + (Object)ChatColor.UNDERLINE + (Object)ChatColor.BOLD + args[0] + ".");

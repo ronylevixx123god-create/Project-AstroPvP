@@ -24,7 +24,7 @@ import com.cosmicpvp.cosmicutils.gui.ConfirmGUI;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import java.util.List;
-import net.minecraft.server.v1_7_R4.MinecraftServer;
+import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
 import org.bukkit.ChatColor;
@@ -37,7 +37,6 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.zencode.shortninja.staffplus.StaffPlus;
 
 final class CommandSuicide
 extends AbstractCommand {
@@ -49,10 +48,6 @@ extends AbstractCommand {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (sender instanceof Player) {
             Player p = (Player)sender;
-            if (StaffPlus.get().freeze.isActive(p.getName())) {
-                p.sendMessage((Object)ChatColor.RED + "You cannot use this command while froze by an admin.");
-                return true;
-            }
             if (p.isDead() || p.getHealth() <= 0.0) {
                 p.sendMessage((Object)ChatColor.RED + "You are already dead!");
                 return true;

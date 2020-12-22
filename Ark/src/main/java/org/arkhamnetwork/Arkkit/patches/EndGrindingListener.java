@@ -99,21 +99,21 @@ implements Listener {
 
     EndGrindingListener() {
         this.potionDrops = new HashMap();
-        this.potionDrops.put(new ItemStack(Material.POTION, 1, 8257), 0.1);
-        this.potionDrops.put(new ItemStack(Material.POTION, 1, 8289), 0.1);
-        this.potionDrops.put(new ItemStack(Material.POTION, 1, 8259), 0.1);
-        this.potionDrops.put(new ItemStack(Material.POTION, 1, 8297), 0.1);
-        this.potionDrops.put(new ItemStack(Material.POTION, 1, 8290), 0.1);
-        this.potionDrops.put(new ItemStack(Material.POTION, 1, 8269), 0.1);
-        this.potionDrops.put(new ItemStack(Material.POTION, 1, 8289), 0.02);
-        this.potionDrops.put(new ItemStack(Material.POTION, 1, 8291), 0.02);
-        this.potionDrops.put(new ItemStack(Material.POTION, 1, 8297), 0.02);
-        this.potionDrops.put(new ItemStack(Material.POTION, 1, 8290), 0.02);
-        this.potionDrops.put(new ItemStack(Material.POTION, 1, 16449), 0.1);
-        this.potionDrops.put(new ItemStack(Material.POTION, 1, 16481), 0.1);
-        this.potionDrops.put(new ItemStack(Material.POTION, 1, 16451), 0.1);
-        this.potionDrops.put(new ItemStack(Material.POTION, 1, 16489), 0.1);
-        this.potionDrops.put(new ItemStack(Material.POTION, 1, 16482), 0.1);
+        this.potionDrops.put(new ItemStack(Material.POTION, 1, (short) 8257), 0.1);
+        this.potionDrops.put(new ItemStack(Material.POTION, 1, (short) 8289), 0.1);
+        this.potionDrops.put(new ItemStack(Material.POTION, 1, (short) 8259), 0.1);
+        this.potionDrops.put(new ItemStack(Material.POTION, 1, (short) 8297), 0.1);
+        this.potionDrops.put(new ItemStack(Material.POTION, 1, (short) 8290), 0.1);
+        this.potionDrops.put(new ItemStack(Material.POTION, 1, (short) 8269), 0.1);
+        this.potionDrops.put(new ItemStack(Material.POTION, 1, (short) 8289), 0.02);
+        this.potionDrops.put(new ItemStack(Material.POTION, 1, (short) 8291), 0.02);
+        this.potionDrops.put(new ItemStack(Material.POTION, 1, (short) 8297), 0.02);
+        this.potionDrops.put(new ItemStack(Material.POTION, 1, (short) 8290), 0.02);
+        this.potionDrops.put(new ItemStack(Material.POTION, 1, (short) 16449), 0.1);
+        this.potionDrops.put(new ItemStack(Material.POTION, 1, (short) 16481), 0.1);
+        this.potionDrops.put(new ItemStack(Material.POTION, 1, (short) 16451), 0.1);
+        this.potionDrops.put(new ItemStack(Material.POTION, 1, (short) 16489), 0.1);
+        this.potionDrops.put(new ItemStack(Material.POTION, 1, (short) 16482), 0.1);
         this.killThresholds = new LinkedHashMap();
         this.killThresholds.put(5, 1.1);
         this.killThresholds.put(10, 1.15);
@@ -232,7 +232,7 @@ implements Listener {
                 }
             }
             if ((killer = e.getEntity().getKiller()) != null && CosmicUtils.get().isOutpostsEnabled() && CosmicOutpostsAPI.controlsHeroOutpost((Player)killer)) {
-                for (ItemStack item : Lists.newArrayList((Iterable)e.getDrops())) {
+                for (ItemStack item : e.getDrops()) {
                     if (item == null || item.getType() == Material.EXP_BOTTLE) continue;
                     ItemStack bonusItem = item.clone();
                     if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {

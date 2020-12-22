@@ -17,19 +17,13 @@
  */
 package org.arkhamnetwork.Arkkit.patches.teams;
 
-import com.arkhamnetwork.TeamAPI;
-import org.arkhamnetwork.Arkkit.Arkkit;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.plugin.Plugin;
 
 public class TeamListener
 implements Listener {
@@ -57,20 +51,6 @@ implements Listener {
     public void onPlayerChat(AsyncPlayerChatEvent e) {
         if (org.arkhamnetwork.Arkkit.utils.TeamAPI.getTeam(e.getPlayer()) != null) {
             e.setFormat((Object)org.arkhamnetwork.Arkkit.utils.TeamAPI.getTeamColor(org.arkhamnetwork.Arkkit.utils.TeamAPI.getTeam(e.getPlayer())) + ChatColor.BOLD.toString() + "T " + e.getFormat());
-        }
-    }
-
-    @EventHandler(priority=EventPriority.MONITOR)
-    public void onPlayerJoin(PlayerJoinEvent e) {
-        if (org.arkhamnetwork.Arkkit.utils.TeamAPI.getTeam(e.getPlayer()) != null) {
-            final Player pl = e.getPlayer();
-            Bukkit.getScheduler().runTaskLater((Plugin)Arkkit.get(), new Runnable(){
-
-                @Override
-                public void run() {
-                    TeamAPI.setGlobalPrefix((Player)pl, (String)((Object)org.arkhamnetwork.Arkkit.utils.TeamAPI.getTeamColor(org.arkhamnetwork.Arkkit.utils.TeamAPI.getTeam(pl)) + "&lT"));
-                }
-            }, 15L);
         }
     }
 }

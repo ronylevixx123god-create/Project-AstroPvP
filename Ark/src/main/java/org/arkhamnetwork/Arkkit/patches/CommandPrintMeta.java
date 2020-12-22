@@ -19,7 +19,8 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import java.util.HashMap;
 import java.util.Map;
-import net.minecraft.util.io.netty.util.ResourceLeakDetector;
+
+import io.netty.util.ResourceLeakDetector;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -27,8 +28,8 @@ import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.v1_7_R4.CraftServer;
-import org.bukkit.craftbukkit.v1_7_R4.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 

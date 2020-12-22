@@ -115,19 +115,9 @@ implements Listener {
                     u.setTeleportEnabled(false);
                 }
             }
-            NetworkEvents.getServerSync().setPlayerHidden(e.getPlayer(), true);
             if (Youtubers.youtubers.contains(e.getPlayer().getName())) {
                 e.getPlayer().performCommand("ncp notify off");
                 e.getPlayer().performCommand("shiva notify off");
-                if (!StaffPlus.get().alert.isIgnoringXray(e.getPlayer().getName())) {
-                    e.getPlayer().performCommand("alerts xray");
-                }
-                if (!StaffPlus.get().alert.isIgnoringMention(e.getPlayer().getName())) {
-                    e.getPlayer().performCommand("alerts mention");
-                }
-                if (!StaffPlus.get().alert.isIgnoringNameChange(e.getPlayer().getName())) {
-                    e.getPlayer().performCommand("alerts name");
-                }
             } else {
                 e.getPlayer().performCommand("shiva notify on");
             }

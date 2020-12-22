@@ -59,9 +59,6 @@ implements Listener {
             return;
         }
         String title = null;
-        if (Bukkit.getPluginManager().isPluginEnabled("ArkhamTitleAPI")) {
-            title = TitleAPI.getEquippedTitle((UUID)pl.getUniqueId());
-        }
         ChatColor cc = null;
         cc = Bukkit.getPluginManager().isPluginEnabled("ArkhamChatColors") ? ((color_code = DataManager.getChatColor((UUID)pl.getUniqueId())) != null ? ChatColor.getByChar((String)color_code) : ChatColor.WHITE) : ChatColor.WHITE;
         final Location loc = pl.getLocation();
@@ -71,20 +68,20 @@ implements Listener {
         final double y_boost = (double)bubble_msg.length * 0.2;
         final int length = fmsg.length();
         if (fpl.hasMetadata("chatbubble_hologram")) {
-            Hologram h = (Hologram)((MetadataValue)fpl.getMetadata("chatbubble_hologram").get(0)).value();
-            h.destroy();
+            //Hologram h = (Hologram)((MetadataValue)fpl.getMetadata("chatbubble_hologram").get(0)).value();
+            // h.destroy();
             fpl.removeMetadata("chatbubble_hologram", (Plugin)Arkkit.get());
         }
         Bukkit.getScheduler().runTask((Plugin)Arkkit.get(), new Runnable(){
 
             @Override
             public void run() {
-                final Hologram hg = new Hologram((Plugin)Arkkit.get(), loc.add(0.0, 1.5 + y_boost, 0.0), bubble_msg);
+                //final Hologram hg = new Hologram((Plugin)Arkkit.get(), loc.add(0.0, 1.5 + y_boost, 0.0), bubble_msg);
                 Bukkit.getScheduler().runTaskLater((Plugin)Arkkit.get(), new Runnable(){
 
                     @Override
                     public void run() {
-                        hg.destroy();
+                        //hg.destroy();
                     }
                 }, 80L + (long)length);
             }

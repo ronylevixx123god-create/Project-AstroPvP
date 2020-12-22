@@ -40,7 +40,7 @@ extends ArkPlugin {
     public void enable() {
         this.registerListener(new ExpBottlesListener());
         this.registerCommand(new ExpBottlesCommand("xpbottle", "/<command>", "Converts your vanilla levels into a tradeable XP bottle.", new ArrayList<String>(Arrays.asList("expbottle", "withdrawxp"))));
-        this.registerCommand(new ExpCombineCommand("combineexp", "/<command>", "Combine EXP bottles in your inventory together.", Lists.newArrayList((Object[])new String[]{"combinexp", "combinebottles"})));
+        this.registerCommand(new ExpCombineCommand("combineexp", "/<command>", "Combine EXP bottles in your inventory together.", Lists.newArrayList("combinexp", "combinebottles")));
     }
 
     @Override

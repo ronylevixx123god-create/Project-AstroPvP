@@ -55,6 +55,7 @@ import java.util.LinkedList;
 import java.util.List;
 import net.ess3.api.events.NickChangeEvent;
 import net.minecraft.util.org.apache.commons.lang3.text.WordUtils;
+import org.apache.commons.lang3.text.WordUtils;
 import org.arkhamnetwork.Arkkit.patches.SmarterEssentials;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -264,7 +265,7 @@ implements Listener {
     @EventHandler
     public void onPlayerChatTabCompleteEvent(PlayerChatTabCompleteEvent e) {
         if (!e.getPlayer().hasPermission("arkkit.staff.hidden")) {
-            for (String s : new ArrayList(e.getTabCompletions())) {
+            for (String s : e.getTabCompletions()) {
                 if (Bukkit.getPlayer((String)s) == null || !Bukkit.getPlayer((String)s).hasPermission("arkkit.staff.hidden")) continue;
                 e.getTabCompletions().remove(s);
             }

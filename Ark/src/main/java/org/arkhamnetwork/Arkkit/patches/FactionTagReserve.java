@@ -7,6 +7,7 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +28,7 @@ extends ArkPlugin {
     }
 
     @Override
-    public void enable() {
+    public void enable() throws IOException {
         super.enable();
         reservedTags = new HashMap();
         for (String s : Arkkit.get().getConfig().getStringList("settings.factionTagReserves.tags")) {
@@ -39,7 +40,7 @@ extends ArkPlugin {
     }
 
     @Override
-    public void disable() {
+    public void disable() throws IOException {
         super.disable();
         ArrayList<String> L = new ArrayList<String>();
         for (Map.Entry<String, UUID> data : reservedTags.entrySet()) {

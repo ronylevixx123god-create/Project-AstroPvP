@@ -78,7 +78,7 @@ extends ArkPlugin {
     class CommandToggleDeathMessages
     extends AbstractCommand {
         public CommandToggleDeathMessages() {
-            super("toggledeathmessages", "/<command>", "Death message toggle.", Lists.newArrayList((Object[])new String[]{"toggledeathmessage"}));
+            super("toggledeathmessages", "/<command>", "Death message toggle.", Lists.newArrayList("toggledeathmessage"));
         }
 
         @Override

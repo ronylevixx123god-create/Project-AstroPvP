@@ -17,12 +17,13 @@
  */
 package org.arkhamnetwork.Arkkit.patches.trading;
 
-import com.earth2me.essentials.Essentials;
-import com.earth2me.essentials.User;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Set;
+
+import com.earth2me.essentials.Essentials;
+import com.earth2me.essentials.User;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.patches.trading.NewTradeCommand;
 import org.arkhamnetwork.Arkkit.patches.trading.NewTradeListener;

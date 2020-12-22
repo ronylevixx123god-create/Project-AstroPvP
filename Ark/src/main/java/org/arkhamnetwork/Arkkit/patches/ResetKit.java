@@ -21,7 +21,6 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.cosmicutils.itembuilder.BoosterBuilder;
-import com.cosmicpvp.cosmicutils.itembuilder.CustomCrateType;
 import com.cosmicpvp.cosmicutils.itembuilder.CustomItemBuilder;
 import com.cosmicpvp.cosmicutils.itembuilder.CustomTitleBuilder;
 import com.cosmicpvp.cosmicutils.itembuilder.FatBucketBuilder;
@@ -31,11 +30,6 @@ import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.List;
-import org.arkhamnetwork.Arkkit.patches.ExpBottles;
-import org.arkhamnetwork.Arkkit.patches.ItemID;
-import org.arkhamnetwork.Arkkit.patches.McmmoCredits;
-import org.arkhamnetwork.Arkkit.patches.ResetKitCommand;
-import org.arkhamnetwork.Arkkit.patches.ResetKitListener;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.Material;

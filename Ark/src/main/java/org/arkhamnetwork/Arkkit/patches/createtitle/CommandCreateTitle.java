@@ -33,12 +33,12 @@ extends AbstractCommand {
         }
         Player player = pl = sender instanceof Player ? (Player)sender : null;
         if (args.length != 1 || pl == null) {
-            sender.sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "Usage " + (Object)ChatColor.WHITE + "/createtitle <title>");
+            sender.sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "Usage " + ChatColor.WHITE + "/createtitle <title>");
             sender.sendMessage(ChatColor.GRAY.toString() + ChatColor.ITALIC.toString() + "Title creation cannot include spaces. Use _ as a placeholder for spaces.");
             return true;
         }
         String title = args[0];
-        pl.getInventory().addItem(new ItemStack[]{TitleItems.getTitleItem((String)title)});
+        pl.getInventory().addItem(TitleItems.getTitleItem(title));
         return true;
     }
 }

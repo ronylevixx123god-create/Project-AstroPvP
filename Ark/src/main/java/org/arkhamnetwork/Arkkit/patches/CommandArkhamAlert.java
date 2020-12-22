@@ -10,7 +10,6 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import java.util.List;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
-import org.arkhamnetwork.Arkkit.patches.AlertSystem;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

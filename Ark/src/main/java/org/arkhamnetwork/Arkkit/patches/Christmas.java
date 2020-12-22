@@ -40,23 +40,11 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.CosmicBossEggs.util.MiscUtil;
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.google.common.collect.Lists;
-import java.util.ArrayList;
-import java.util.Collections;
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.ifamasssxd.cosmicbosses.utils.BossUtils;
-import me.ifamasssxd.cosmicbosses.utils.WorldGuardUtils;
-import net.minecraft.server.v1_7_R4.EntityCreature;
-import net.minecraft.server.v1_7_R4.EntityHuman;
-import net.minecraft.server.v1_7_R4.EntityInsentient;
-import net.minecraft.server.v1_7_R4.PathfinderGoal;
-import net.minecraft.server.v1_7_R4.PathfinderGoalFloat;
-import net.minecraft.server.v1_7_R4.PathfinderGoalLookAtPlayer;
-import net.minecraft.server.v1_7_R4.PathfinderGoalPanic;
-import net.minecraft.server.v1_7_R4.PathfinderGoalRandomStroll;
+import net.minecraft.server.v1_8_R3.*;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.libs.ArkPluginCommand;
-import org.arkhamnetwork.Arkkit.patches.ChristmasListener;
-import org.arkhamnetwork.Arkkit.patches.TrickOrTreaters;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.arkhamnetwork.Arkkit.utils.ItemUtils;
 import org.bukkit.Bukkit;
@@ -66,7 +54,7 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftLivingEntity;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftLivingEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -95,10 +83,8 @@ extends ArkPlugin {
         this.registerTask(new BukkitRunnable(){
 
             public void run() {
-                ArrayList players = Lists.newArrayList((Iterable)Bukkit.getOnlinePlayers());
-                Collections.shuffle(players);
-                for (Player pl : players) {
-                    if (WorldGuardUtils.isInRegionsFast((Location)pl.getLocation(), (String[])new String[]{"spawn_region"})) continue;
+                for (Player pl : Bukkit.getOnlinePlayers()) {
+                    if (WorldGuardUtils.isInRegionsFast(pl.getLocation(), "spawn_region")) continue;
                     Christmas.this.spawnEvilElf(pl.getLocation());
                     return;
                 }

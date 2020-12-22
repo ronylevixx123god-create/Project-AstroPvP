@@ -84,7 +84,7 @@ extends AbstractCommand {
     }
 
     private void clearEssentialsHomeLimits(Player pl) {
-        for (PermissionAttachmentInfo pio : new ArrayList(pl.getEffectivePermissions())) {
+        for (PermissionAttachmentInfo pio : pl.getEffectivePermissions()) {
             if (!pio.getPermission().startsWith("essentials.sethome.multiple.")) continue;
             Bukkit.getLogger().info("Removing permission " + pio.getPermission() + " from " + pl.getName() + "...");
             if (Bukkit.getPluginManager().isPluginEnabled("PermissionsEx") || Bukkit.getPluginManager().isPluginEnabled("CompilexPermissions")) {

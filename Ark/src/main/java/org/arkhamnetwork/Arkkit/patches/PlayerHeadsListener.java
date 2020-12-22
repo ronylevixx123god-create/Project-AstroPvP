@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import net.minecraft.util.org.apache.commons.lang3.text.WordUtils;
+import org.apache.commons.lang3.text.WordUtils;
 import org.arkhamnetwork.Arkkit.patches.PlayerHeads;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -68,7 +69,7 @@ implements Listener {
     }
 
     private ItemStack getPlayerHead(String p_name, Player pKiller) {
-        ItemStack is = new ItemStack(Material.SKULL_ITEM, 1, 3);
+        ItemStack is = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
         SkullMeta sm = (SkullMeta)is.getItemMeta();
         sm.setOwner(p_name);
         sm.setDisplayName((Object)ChatColor.WHITE + "Skull of " + p_name);

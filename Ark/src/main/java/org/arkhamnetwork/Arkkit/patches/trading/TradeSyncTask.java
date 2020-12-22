@@ -141,8 +141,8 @@ extends BukkitRunnable {
         this.p2.playSound(this.p2.getLocation(), Sound.BLAZE_HIT, 1.0f, 1.5f);
         this.p1.closeInventory();
         this.p2.closeInventory();
-        Bukkit.getLogger().info("[NewTrade] Giving p1 " + this.p1.getName() + " Items: " + Arrays.toString((Object[])traded.toArray((T[])new ItemStack[traded.size()])) + " from " + this.p2.getName());
-        Bukkit.getLogger().info("[NewTrade] Giving p2 " + this.p2.getName() + " Items: " + Arrays.toString((Object[])traded2.toArray((T[])new ItemStack[traded2.size()])) + " from " + this.p1.getName());
+        Bukkit.getLogger().info("[NewTrade] Giving p1 " + this.p1.getName() + " Items: " + Arrays.toString(traded.toArray(new ItemStack[traded.size()])) + " from " + this.p2.getName());
+        Bukkit.getLogger().info("[NewTrade] Giving p2 " + this.p2.getName() + " Items: " + Arrays.toString(traded2.toArray(new ItemStack[traded2.size()])) + " from " + this.p1.getName());
     }
 
     private int getTradeItemCount(Player p) {

@@ -38,7 +38,7 @@ extends BukkitRunnable {
     public void run() {
         for (Player pl : Bukkit.getOnlinePlayers()) {
             if ((!this.pvp_enabled_players.contains(pl.getUniqueId()) || !this.isPvPDisabled(pl.getLocation())) && (this.pvp_enabled_players.contains(pl.getUniqueId()) || this.isPvPDisabled(pl.getLocation()))) continue;
-            for (PotionEffect pe : new ArrayList(pl.getActivePotionEffects())) {
+            for (PotionEffect pe : pl.getActivePotionEffects()) {
                 pl.removePotionEffect(pe.getType());
             }
             pl.playSound(pl.getLocation(), Sound.VILLAGER_HAGGLE, 1.0f, 0.75f);
@@ -55,7 +55,7 @@ extends BukkitRunnable {
             Class<?> bukkitUtil = PvPPotionEffects.wg.getClass().getClassLoader().loadClass("com.sk89q.worldguard.bukkit.BukkitUtil");
             Method toVector = bukkitUtil.getMethod("toVector", Block.class);
             Vector blockVector = (Vector)toVector.invoke(null, new Object[]{l.getBlock()});
-            List regionSet = PvPPotionEffects.wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs(blockVector);
+            List<String> regionSet = PvPPotionEffects.wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs(blockVector);
             if (regionSet.size() < 1) {
                 return true;
             }

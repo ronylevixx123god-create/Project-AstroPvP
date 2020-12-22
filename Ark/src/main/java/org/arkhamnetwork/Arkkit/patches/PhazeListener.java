@@ -99,7 +99,7 @@ import org.bukkit.plugin.Plugin;
 final class PhazeListener
 implements Listener {
     private List<Material> hollowMaterials;
-    List<Material> disabledMaterials = Lists.newArrayList((Object[])new Material[]{Material.PAPER, Material.EXP_BOTTLE, Material.REDSTONE_TORCH_ON, Material.NAME_TAG, Material.CHEST, Material.CHEST, Material.TNT, Material.MONSTER_EGG, Material.MOB_SPAWNER});
+    List<Material> disabledMaterials = Lists.newArrayList(Material.PAPER, Material.EXP_BOTTLE, Material.REDSTONE_TORCH_ON, Material.NAME_TAG, Material.CHEST, Material.CHEST, Material.TNT, Material.MONSTER_EGG, Material.MOB_SPAWNER);
 
     PhazeListener() {
         this.hollowMaterials = new ArrayList<Material>();

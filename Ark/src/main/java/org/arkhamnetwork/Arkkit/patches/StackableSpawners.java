@@ -11,6 +11,8 @@ import org.arkhamnetwork.Arkkit.patches.StackableSpawnerListener;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.plugin.Plugin;
 
+import java.io.IOException;
+
 public class StackableSpawners
 extends ArkPlugin {
     public static short maxSpawnersPerBlock = (short)10;
@@ -20,14 +22,14 @@ extends ArkPlugin {
     }
 
     @Override
-    public void enable() {
+    public void enable() throws IOException {
         super.enable();
         maxSpawnersPerBlock = (short)Arkkit.get().getConfig().getInt("settings.stackableSpawners.maxSpawnersPerBlock", 10);
         this.registerListener(new StackableSpawnerListener());
     }
 
     @Override
-    public void disable() {
+    public void disable() throws IOException {
         super.disable();
     }
 }

@@ -31,10 +31,10 @@ extends ArkPlugin {
     @Override
     public void enable() {
         this.registerListener(new FactionMuteListener(this));
-        this.registerCommand(new IPMuteCommand(this, "ipmute", "/ipmute <ip/player> <length> <reason>", "Mute ip", (List<String>)Lists.newArrayList((Object[])new String[]{"ipmutes"})));
-        this.registerCommand(new IPUnMuteCommand(this, "ipunmute", "/ipunmute <ip/player>", "Unmute ip", (List<String>)Lists.newArrayList((Object[])new String[]{"unmuteip", "unipmute"})));
-        this.registerCommand(new UnFactionMuteCommand(this, "unmutefac", "/<command> <name>", "Unmutes Faction", (List<String>)Lists.newArrayList((Object[])new String[]{"unmutefaction", "facunmute", "unfacmute"})));
-        this.registerCommand(new FacMuteCommand(this, "facmute", "/<command> <fac> <length> <reason>", "Faction mute.", (List<String>)Lists.newArrayList((Object[])new String[]{"mutefaction"})));
+        this.registerCommand(new IPMuteCommand(this, "ipmute", "/ipmute <ip/player> <length> <reason>", "Mute ip", (List<String>)Lists.newArrayList(new String[]{"ipmutes"})));
+        this.registerCommand(new IPUnMuteCommand(this, "ipunmute", "/ipunmute <ip/player>", "Unmute ip", (List<String>)Lists.newArrayList(new String[]{"unmuteip", "unipmute"})));
+        this.registerCommand(new UnFactionMuteCommand(this, "unmutefac", "/<command> <name>", "Unmutes Faction", (List<String>)Lists.newArrayList(new String[]{"unmutefaction", "facunmute", "unfacmute"})));
+        this.registerCommand(new FacMuteCommand(this, "facmute", "/<command> <fac> <length> <reason>", "Faction mute.", (List<String>)Lists.newArrayList(new String[]{"mutefaction"})));
     }
 
     @Override

@@ -35,6 +35,8 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
 import com.google.common.collect.Lists;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang.StringEscapeUtils;
@@ -83,7 +85,7 @@ extends ArkPlugin {
     }
 
     @Override
-    public void enable() {
+    public void enable() throws IOException {
         this.registerListener(new CustomLoreListener());
         this.registerCommand(new CommandGiveLoreTag("giveloretag", "/<command>", "Spawn item lore tag."));
         this.registerCommand(new CommandEditLore("editlore", "/<command>", "Edit an item lore directly."));
@@ -92,7 +94,7 @@ extends ArkPlugin {
     }
 
     @Override
-    public void disable() {
+    public void disable() throws IOException {
         this.unregisterListeners();
         this.unregisterCommands();
         super.disable();
@@ -169,7 +171,7 @@ extends ArkPlugin {
 
         public ItemStack applyCustomLore(ItemStack item, String customLore) {
             ItemMeta im = item.getItemMeta();
-            List lore = im.hasLore() ? im.getLore() : Lists.newArrayList();
+            List<String> lore = im.hasLore() ? im.getLore() : Lists.newArrayList();
             ArrayList<String> newLore = new ArrayList<String>();
             String line = LORE_PREFIX + (Object)ChatColor.GOLD + customLore;
             boolean hadLore = false;

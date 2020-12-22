@@ -29,18 +29,18 @@ enum CandyGramMessages {
     YOU_SUCK_LESS("&dYou Suck Less Than Most People", 100000, 21),
     PUT_UP_OR("&dPut Up or Shut Up", 100000, 22),
     CHOCOLATE("&d#Chocolate", 100000, 23),
-    SAVE_MONEY(CC.LightPurple + "Save Your Money", Lists.newArrayList((Object[])new String[]{"&dSave Your Money", "&dStay Single"}), 1000000, 24),
+    SAVE_MONEY(CC.LightPurple + "Save Your Money", Lists.newArrayList("&dSave Your Money", "&dStay Single"), 1000000, 24),
     HEART("&d&l<3", 100000, 25),
     NETFLIX("&dNetflix and Grind", 100000, 26),
-    ROSES_ARE_RED(CC.Red + "Roses are Red", Lists.newArrayList((Object[])new String[]{"&c&lRoses are Red", "&b&lViolets are blue", "&6&lI have a sword", "&6&lGimme your gear!"}), 1000000, 36),
+    ROSES_ARE_RED(CC.Red + "Roses are Red", Lists.newArrayList("&c&lRoses are Red", "&b&lViolets are blue", "&6&lI have a sword", "&6&lGimme your gear!"), 1000000, 36),
     TABLE_FOR_ONE("&c#TableForOne", 1000000, 37),
     NO_DATE("&cNo Date No Problem, Right?", 1000000, 38),
-    TODAYS_SINGLE(CC.Red + "Singles Awareness", Lists.newArrayList((Object[])new String[]{"&c&lToday may be", "&c&lSingle's Awareness Day", "&c&lBut chin up,", "&c&lTomorrow's &e&lHalf Price Candy Day!"}), 1000000, 39),
+    TODAYS_SINGLE(CC.Red + "Singles Awareness", Lists.newArrayList("&c&lToday may be", "&c&lSingle's Awareness Day", "&c&lBut chin up,", "&c&lTomorrow's &e&lHalf Price Candy Day!"), 1000000, 39),
     SEND_NUBES("&c#SendNubes", 1000000, 40),
-    LEMME_AXE_YOU(CC.Red + "Axe You A Question", Lists.newArrayList((Object[])new String[]{"&cLemme &4Axe you a question!", "&4Be Mine?"}), 1000000, 41),
+    LEMME_AXE_YOU(CC.Red + "Axe You A Question", Lists.newArrayList("&cLemme &4Axe you a question!", "&4Be Mine?"), 1000000, 41),
     MOM_VALENTINE("&cBet your Mom's your &4&lValentine", 1000000, 42),
     CALL_ME_DADDY("&cCall me Daddy", 1000000, 43),
-    ALWAYS_USE_PROTECTION(CC.Red + "#2fa", Lists.newArrayList((Object[])new String[]{"&6&lAlways Use Protection", "&c&l#2fa"}), 1000000, 44);
+    ALWAYS_USE_PROTECTION(CC.Red + "#2fa", Lists.newArrayList("&6&lAlways Use Protection", "&c&l#2fa"), 1000000, 44);
 
     private String displayName;
     private List<String> messages;
@@ -48,11 +48,11 @@ enum CandyGramMessages {
     private int slot;
 
     private CandyGramMessages(String displayName, String msg, int cost, int slot) {
-        this(ChatColor.translateAlternateColorCodes((char)'&', (String)displayName), Lists.newArrayList((Object[])new String[]{msg}), cost, slot);
+        this(ChatColor.translateAlternateColorCodes((char)'&', (String)displayName), Lists.newArrayList(msg), cost, slot);
     }
 
     private CandyGramMessages(String msg, int cost, int slot) {
-        this(null, Lists.newArrayList((Object[])new String[]{ChatColor.translateAlternateColorCodes((char)'&', (String)msg)}), cost, slot);
+        this(null, Lists.newArrayList(ChatColor.translateAlternateColorCodes((char)'&', (String)msg)), cost, slot);
     }
 
     private CandyGramMessages(String displayName, List<String> messages, int cost, int slot) {

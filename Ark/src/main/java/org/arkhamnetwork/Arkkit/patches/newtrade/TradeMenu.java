@@ -30,10 +30,10 @@ import org.bukkit.inventory.ItemStack;
 
 public class TradeMenu
 extends CosmicGUI {
-    public static List<Integer> leftTradingSlots = Lists.newArrayList((Object[])new Integer[]{1, 2, 3, 9, 10, 11, 12, 18, 19, 20, 21, 27, 28, 29, 30, 36, 37, 38, 39, 45, 46, 47, 48});
-    private static List<Integer> rightTradingSlots = Lists.newArrayList((Object[])new Integer[]{5, 6, 7, 14, 15, 16, 17, 23, 24, 25, 26, 32, 33, 34, 35, 41, 42, 43, 44, 50, 51, 52, 53});
+    public static List<Integer> leftTradingSlots = Lists.newArrayList(1, 2, 3, 9, 10, 11, 12, 18, 19, 20, 21, 27, 28, 29, 30, 36, 37, 38, 39, 45, 46, 47, 48);
+    private static List<Integer> rightTradingSlots = Lists.newArrayList(5, 6, 7, 14, 15, 16, 17, 23, 24, 25, 26, 32, 33, 34, 35, 41, 42, 43, 44, 50, 51, 52, 53);
     private PlayerTrade trade;
-    private InventoryItem dividerItem = new InventoryItem(new ItemBuilder(Material.THIN_GLASS, " ", new String[]{""}).build());
+    private InventoryItem dividerItem = new InventoryItem(new ItemBuilder(Material.THIN_GLASS, " ", "").build());
     private long lastClick = 0L;
     private long lastItemModified;
 

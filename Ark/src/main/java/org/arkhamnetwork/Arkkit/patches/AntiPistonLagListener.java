@@ -67,7 +67,7 @@ implements Listener {
         if (!this.pm.containsPiston(e.getBlock())) {
             this.pm.addPiston(e.getBlock());
         }
-        ArrayList block_list = new ArrayList(e.getBlocks());
+        ArrayList<Block> block_list = (ArrayList<Block>) e.getBlocks();
         for (Block b : block_list) {
             Material m = b.getType();
             byte data = b.getData();

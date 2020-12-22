@@ -176,7 +176,7 @@ implements Listener {
 
     @EventHandler(priority=EventPriority.MONITOR)
     public void onBlockExplodeMONITOR(EntityExplodeEvent e) {
-        for (Block b : new ArrayList(e.blockList())) {
+        for (Block b : e.blockList()) {
             if (e.getEntity() != null && e.getEntity().hasMetadata("fastExplosion") && this.inventory_blocks.contains((Object)b.getType())) {
                 e.blockList().remove((Object)b);
             }
@@ -190,7 +190,7 @@ implements Listener {
 
     @EventHandler(priority=EventPriority.LOWEST)
     public void onBlockExplodeLOWEST(EntityExplodeEvent e) {
-        for (Block b : new ArrayList(e.blockList())) {
+        for (Block b : e.blockList()) {
             if (e.getEntity() != null && e.getEntity().hasMetadata("fastExplosion") && this.inventory_blocks.contains((Object)b.getType())) {
                 e.blockList().remove((Object)b);
             }

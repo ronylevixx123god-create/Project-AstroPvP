@@ -13,7 +13,7 @@ import java.util.HashMap;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_7_R4.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.plugin.Plugin;
 
 public class TNTLimiter

@@ -16,6 +16,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.plugin.Plugin;
 
+import java.io.IOException;
+
 public class NoBeds
 extends ArkPlugin {
     public NoBeds(Plugin p) {
@@ -23,13 +25,13 @@ extends ArkPlugin {
     }
 
     @Override
-    public void enable() {
+    public void enable() throws IOException {
         super.enable();
         this.registerListener(new NoBedListener(this));
     }
 
     @Override
-    public void disable() {
+    public void disable() throws IOException {
         super.disable();
     }
 

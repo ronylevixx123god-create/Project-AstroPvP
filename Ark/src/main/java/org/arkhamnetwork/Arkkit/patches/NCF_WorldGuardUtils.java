@@ -40,7 +40,7 @@ final class NCF_WorldGuardUtils {
             Class<?> bukkitUtil = wg.getClass().getClassLoader().loadClass("com.sk89q.worldguard.bukkit.BukkitUtil");
             Method toVector = bukkitUtil.getMethod("toVector", Block.class);
             Vector blockVector = (Vector)toVector.invoke(null, new Object[]{l.getBlock()});
-            List regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs(blockVector);
+            List<String> regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs(blockVector);
             if (regionSet.size() < 1) {
                 return "";
             }

@@ -10,9 +10,12 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
 import org.arkhamnetwork.Arkkit.patches.ThanksgivingTask;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.Collections;
 
 final class ThanksgivingCommand
 extends AbstractCommand {
@@ -29,7 +32,7 @@ extends AbstractCommand {
             return true;
         }
         Player p = (Player)sender;
-        ThanksgivingTask.spawnTurkey(p.getTargetBlock(null, 4).getLocation().add(0.0, 1.0, 0.0));
+        ThanksgivingTask.spawnTurkey(p.getTargetBlock(Collections.singleton(Material.AIR), 4).getLocation().add(0.0, 1.0, 0.0));
         return true;
     }
 }

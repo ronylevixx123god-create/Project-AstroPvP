@@ -23,7 +23,8 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.massivecraft.factions.event.LandClaimEvent;
-import net.minecraft.server.v1_7_R4.PacketPlayOutWorldEvent;
+import net.minecraft.server.v1_8_R3.BlockPosition;
+import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
 import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.arkhamnetwork.Arkkit.utils.WorldGuardUtils;
 import org.bukkit.ChatColor;
@@ -41,6 +42,8 @@ import org.bukkit.event.player.PlayerAnimationEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
 import org.bukkit.metadata.MetadataValue;
 
+import java.util.Collections;
+
 final class ParkourRegionListener
 implements Listener {
     ParkourRegionListener() {
@@ -50,10 +53,10 @@ implements Listener {
     public void onPlayerAnimation(PlayerAnimationEvent e) {
         Player pl;
         Block b;
-        if (e.getPlayer().hasMetadata("worldguardRegion") && ((MetadataValue)e.getPlayer().getMetadata("worldguardRegion").get(0)).asString().contains("spleef") && (b = (Block)(pl = e.getPlayer()).getLineOfSight(null, 4).get(0)).getTypeId() == 80) {
+        if (e.getPlayer().hasMetadata("worldguardRegion") && ((MetadataValue)e.getPlayer().getMetadata("worldguardRegion").get(0)).asString().contains("spleef") && (b = (Block)(pl = e.getPlayer()).getLineOfSight(Collections.singleton(Material.AIR), 4).get(0)).getTypeId() == 80) {
             b.setType(Material.AIR);
             Location l = b.getLocation().add(0.0, 0.5, 0.0);
-            PacketPlayOutWorldEvent particles = new PacketPlayOutWorldEvent(2001, Math.round(l.getBlockX()), Math.round(l.getBlockY()), Math.round(l.getBlockZ()), 80, false);
+            PacketPlayOutWorldEvent particles = new PacketPlayOutWorldEvent(2001, new BlockPosition(Math.round(l.getBlockX()), Math.round(l.getBlockY()), Math.round(l.getBlockZ())), 80, false);
             ParticleEffect.sendWorldEventPacket(particles, l);
         }
     }

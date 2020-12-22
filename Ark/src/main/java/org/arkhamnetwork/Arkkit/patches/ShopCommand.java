@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import net.minecraft.util.org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FileUtils;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.patches.ShopCommandCommand;
 import org.arkhamnetwork.Arkkit.patches.ShopCommandListener;

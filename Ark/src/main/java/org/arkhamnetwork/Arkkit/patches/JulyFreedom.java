@@ -52,7 +52,7 @@ extends ArkPlugin {
     private boolean usingFactions = true;
     private Random random = new Random();
     private final int MOB_ITEM_DROP_CHANCE = 1;
-    List<Color> available = Lists.newArrayList((Object[])new Color[]{Color.RED, Color.WHITE, Color.BLUE});
+    List<Color> available = Lists.newArrayList(Color.RED, Color.WHITE, Color.BLUE);
 
     public JulyFreedom(Plugin p) {
         super(p);

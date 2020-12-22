@@ -16,7 +16,6 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
 import com.google.common.collect.Lists;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
-import org.arkhamnetwork.Arkkit.patches.SeasonalPasses;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -25,7 +24,7 @@ import org.bukkit.inventory.ItemStack;
 class CommandSeasonalPass
 extends AbstractCommand {
     public CommandSeasonalPass() {
-        super("seasonalpass", "/<command>", "Seasonal Pass", Lists.newArrayList((Object[])new String[]{"seasonpass"}));
+        super("seasonalpass", "/<command>", "Seasonal Pass", Lists.newArrayList("seasonpass"));
     }
 
     @Override

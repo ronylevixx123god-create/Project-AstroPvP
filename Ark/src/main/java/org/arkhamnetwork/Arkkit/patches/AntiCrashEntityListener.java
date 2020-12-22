@@ -11,9 +11,8 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import net.minecraft.server.v1_7_R4.Entity;
+import net.minecraft.server.v1_8_R3.Entity;
 import org.arkhamnetwork.Arkkit.commands.CommandArkReboot;
-import org.arkhamnetwork.Arkkit.patches.AntiCrash;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.EventHandler;
@@ -33,7 +32,7 @@ implements Listener {
                 return;
             }
             Bukkit.getLogger().info("Rebooting due running out of entity ids: current id: " + id);
-            Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)"arkreboot");
+            Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), "arkreboot");
         }
     }
 }

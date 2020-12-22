@@ -8,6 +8,8 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+
 import org.arkhamnetwork.Arkkit.patches.CommandForceSpawn;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.plugin.Plugin;
@@ -20,7 +22,7 @@ extends ArkPlugin {
 
     @Override
     public void enable() {
-        this.registerCommand(new CommandForceSpawn("forcespawn", "/<command> [args]", "Forces all players in a radius to be teleported to the main world's spawn.", new ArrayList<String>(Arrays.asList("sendtospawn"))));
+        this.registerCommand(new CommandForceSpawn("forcespawn", "/<command> [args]", "Forces all players in a radius to be teleported to the main world's spawn.", new ArrayList<String>(Collections.singletonList("sendtospawn"))));
     }
 
     @Override

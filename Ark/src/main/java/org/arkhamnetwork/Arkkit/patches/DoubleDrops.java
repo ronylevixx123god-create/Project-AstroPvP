@@ -27,6 +27,8 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
+import java.io.IOException;
+
 public class DoubleDrops
 extends ArkPlugin {
     public DoubleDrops(Plugin p) {
@@ -34,7 +36,7 @@ extends ArkPlugin {
     }
 
     @Override
-    public void enable() {
+    public void enable() throws IOException {
         super.enable();
         this.registerListener(new DoubleDropListener());
     }
@@ -57,7 +59,7 @@ extends ArkPlugin {
             }
             if (event.getEntity() instanceof Creeper) {
                 int overflow = 0;
-                for (ItemStack sulpherDrop : Lists.newArrayList((Iterable)event.getDrops())) {
+                for (ItemStack sulpherDrop : event.getDrops()) {
                     if (sulpherDrop == null || sulpherDrop.getType() != Material.SULPHUR) continue;
                     int doubleAmount = sulpherDrop.getAmount() * 2;
                     if (doubleAmount > sulpherDrop.getMaxStackSize()) {

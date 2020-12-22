@@ -78,12 +78,6 @@ extends AbstractCommand {
             new File("world/playerdata/" + playerUUID.toString() + ".dat").delete();
             return true;
         }
-        if (opp.equalsIgnoreCase("echest")) {
-            BetterEnderChest BEC = (BetterEnderChest)Bukkit.getPluginManager().getPlugin("BetterEnderChest");
-            BEC.getChestCache().unloadInventory(BEC.getChestOwners().playerChest(playerName, playerUUID), BEC.getWorldGroupManager().getGroupByWorldName("world"));
-            new File("plugins/BetterEnderChest/chestData/" + playerUUID.toString() + ".dat").delete();
-            return true;
-        }
         if (opp.equalsIgnoreCase("essentials")) {
             Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)("eco set " + playerName + " 0"));
             User u = EssentialsUtils.getEssentials().getUser(playerUUID);
@@ -91,7 +85,7 @@ extends AbstractCommand {
                 Bukkit.getLogger().info("[Arkkit (Ypperin)] No essentials playerData for " + playerName + " (" + playerUUID + ")!");
                 return true;
             }
-            for (String home : new ArrayList(u.getHomes())) {
+            for (String home : u.getHomes()) {
                 try {
                     u.delHome(home);
                 }

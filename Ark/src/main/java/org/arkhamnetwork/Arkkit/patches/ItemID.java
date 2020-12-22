@@ -49,7 +49,7 @@ extends ArkPlugin {
     public void enable() {
         next_iid = Arkkit.get().getConfig().getLong("settings.itemID.next_iid");
         blacklist_iid = new HashSet();
-        Iterator<Object> iterator = Arkkit.get().getConfig().getLongList("settings.itemID.blacklist_iid").iterator();
+        Iterator<Long> iterator = Arkkit.get().getConfig().getLongList("settings.itemID.blacklist_iid").iterator();
         while (iterator.hasNext()) {
             long l = (Long)iterator.next();
             blacklist_iid.add(l);
@@ -121,7 +121,7 @@ extends ArkPlugin {
 
     public static ItemStack setItemID(ItemStack i, long iid) {
         ItemMeta im = i.getItemMeta();
-        List lore = im.hasLore() ? im.getLore() : new ArrayList();
+        List<String> lore = im.hasLore() ? im.getLore() : new ArrayList();
         ArrayList<String> newLore = new ArrayList<String>();
         boolean replaced = false;
         for (String s : lore) {
@@ -145,7 +145,7 @@ extends ArkPlugin {
         if (!im.hasLore()) {
             return i;
         }
-        List lore = im.getLore();
+        List<String> lore = im.getLore();
         ArrayList<String> newLore = new ArrayList<String>();
         for (String s : lore) {
             if (s.startsWith(ChatColor.BLACK.toString() + "IID ")) continue;

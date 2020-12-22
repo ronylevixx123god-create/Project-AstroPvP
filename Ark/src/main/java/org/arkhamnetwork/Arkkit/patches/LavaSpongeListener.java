@@ -18,12 +18,13 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import net.minecraft.server.v1_7_R4.Block;
-import net.minecraft.server.v1_7_R4.Blocks;
-import net.minecraft.server.v1_7_R4.WorldServer;
+import net.minecraft.server.v1_8_R3.Block;
+import net.minecraft.server.v1_8_R3.BlockPosition;
+import net.minecraft.server.v1_8_R3.Blocks;
+import net.minecraft.server.v1_8_R3.WorldServer;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_7_R4.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -51,7 +52,7 @@ implements Listener {
                 for (int fz = -this.radius; fz <= this.radius; ++fz) {
                     org.bukkit.block.Block b = world.getBlockAt(bx + fx, by + fy, bz + fz);
                     if (!b.getType().equals((Object)Material.LAVA) && !b.getType().equals((Object)Material.STATIONARY_LAVA)) continue;
-                    netWorld.applyPhysics(b.getX(), b.getY(), b.getZ(), (Block)Blocks.LAVA);
+                    netWorld.applyPhysics(new BlockPosition(b.getX(), b.getY(), b.getZ()), (Block) Blocks.LAVA);
                 }
             }
         }

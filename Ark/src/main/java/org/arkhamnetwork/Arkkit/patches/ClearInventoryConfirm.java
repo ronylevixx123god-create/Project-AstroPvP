@@ -42,13 +42,13 @@ extends ArkPlugin {
     }
 
     @Override
-    public void enable() {
+    public void enable() throws IOException {
         this.ess = (Essentials)Bukkit.getPluginManager().getPlugin("Essentials");
         this.registerListener(new ClearInventoryListener(this));
         this.registerCommand(new CommandToggleClearInventoryConfirm(this));
         this.clearInventoryToggles = JSONUtils.getOrCreateFile((File)this.getBukkitPlugin().getDataFolder(), (String)"ci_toggles.yml");
         this.config = YamlConfiguration.loadConfiguration((File)this.clearInventoryToggles);
-        List toggled = this.config.getStringList("ci_toggled");
+        List<String> toggled = this.config.getStringList("ci_toggled");
         if (toggled != null) {
             for (String toggle : toggled) {
                 this.clearInventoryToggled.add(UUID.fromString(toggle));

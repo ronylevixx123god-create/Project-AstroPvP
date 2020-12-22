@@ -28,7 +28,7 @@ extends ArkPlugin {
 
     @Override
     public void enable() {
-        this.registerCommand(new CommandCommandItem("commanditem", "/<command>", "Spawns command items.", Lists.newArrayList((Object[])new String[]{"icmd"})));
+        this.registerCommand(new CommandCommandItem("commanditem", "/<command>", "Spawns command items.", Lists.newArrayList("icmd")));
         this.registerCommand(new CommandPreRank("prerank", "/<command>", "Spawns prerank items."));
         this.registerListener(new CommandItemsListener());
     }

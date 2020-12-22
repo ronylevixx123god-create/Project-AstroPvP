@@ -61,7 +61,7 @@ import org.bukkit.plugin.Plugin;
 
 class WarpGUIListener
 implements Listener {
-    private List<String> aliases = Lists.newArrayList((Object[])new String[]{"/f warp", "/f warps"});
+    private List<String> aliases = Lists.newArrayList(new String[]{"/f warp", "/f warps"});
     private WarpGUIManager manager;
 
     public WarpGUIListener(WarpGUIManager manager) {

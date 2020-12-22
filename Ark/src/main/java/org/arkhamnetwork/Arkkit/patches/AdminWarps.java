@@ -20,12 +20,15 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.JSONUtils;
 import com.google.common.collect.Lists;
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import net.minecraft.util.com.google.gson.reflect.TypeToken;
+
+import com.google.common.reflect.TypeToken;
+import lombok.SneakyThrows;
 import org.arkhamnetwork.Arkkit.libs.ArkPluginCommand;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.Bukkit;
@@ -47,7 +50,7 @@ extends ArkPlugin {
     }
 
     @Override
-    public void enable() {
+    public void enable() throws IOException {
         this.warpFile = JSONUtils.getOrCreateFile((File)this.getBukkitPlugin().getDataFolder(), (String)"adminWarps.json");
         this.warps = (Map)JSONUtils.fromJson((File)this.warpFile, (Object)this.warpMapToken, new HashMap());
         this.registerCommand(new AdminWarpCommand(this));
@@ -61,12 +64,12 @@ extends ArkPlugin {
         this.unregisterListeners();
     }
 
-    private void addWarp(String name, WarpLocation loc) {
+    private void addWarp(String name, WarpLocation loc) throws IOException {
         this.warps.put(name.toLowerCase(), loc);
         this.saveWarps();
     }
 
-    private boolean removeWarp(String warpName) {
+    private boolean removeWarp(String warpName) throws IOException {
         boolean removed;
         boolean bl = removed = this.warps.remove(warpName.toLowerCase()) != null;
         if (removed) {
@@ -75,7 +78,7 @@ extends ArkPlugin {
         return removed;
     }
 
-    private void saveWarps() {
+    private void saveWarps() throws IOException {
         JSONUtils.saveJSONToFile((File)this.warpFile, this.warps, (Object)this.warpMapToken);
     }
 
@@ -127,15 +130,15 @@ extends ArkPlugin {
     class AdminWarpCommand
     extends ArkPluginCommand<AdminWarps> {
         public AdminWarpCommand(AdminWarps patch) {
-            super(patch, "adminwarp", "/<command>", "", (List<String>)Lists.newArrayList((Object[])new String[]{"awarp", "awarps", "adminwarps"}));
+            super(patch, "adminwarp", "/<command>", "", Lists.newArrayList("awarp", "awarps", "adminwarps"));
         }
 
         @Override
         public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
             if (args.length == 1) {
                 if (args[0].equalsIgnoreCase("list")) {
-                    sender.sendMessage(CC.Red + "Listing " + ((AdminWarps)this.patch).getWarps().size() + " /adminwarp.");
-                    ArrayList keys = Lists.newArrayList(((AdminWarps)this.patch).getWarps().keySet());
+                    sender.sendMessage(CC.Red + "Listing " + (this.patch).getWarps().size() + " /adminwarp.");
+                    ArrayList<String> keys = Lists.newArrayList((this.patch).getWarps().keySet());
                     keys.sort(String::compareTo);
                     keys.forEach(name -> sender.sendMessage(CC.Red + name));
                     return true;
@@ -177,6 +180,7 @@ extends ArkPlugin {
             super(patch, "setadminwarp");
         }
 
+        @SneakyThrows
         @Override
         public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
             if (!sender.hasPermission("arkkit.adminwarp.set")) {
@@ -199,6 +203,7 @@ extends ArkPlugin {
             super(patch, "deladminwarp");
         }
 
+        @SneakyThrows
         @Override
         public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
             if (!sender.hasPermission("arkkit.adminwarp.set")) {

@@ -19,11 +19,11 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import java.util.List;
 import java.util.Random;
-import net.minecraft.server.v1_7_R4.Block;
-import net.minecraft.server.v1_7_R4.Blocks;
-import net.minecraft.server.v1_7_R4.Chunk;
+
+import net.minecraft.server.v1_8_R3.Block;
+import net.minecraft.server.v1_8_R3.Blocks;
+import net.minecraft.server.v1_8_R3.Chunk;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
-import org.arkhamnetwork.Arkkit.patches.SpawnerFee;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -31,7 +31,7 @@ import org.bukkit.block.BlockState;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.v1_7_R4.CraftChunk;
+import org.bukkit.craftbukkit.v1_8_R3.CraftChunk;
 
 final class CommandNerfNetherSpawners
 extends AbstractCommand {

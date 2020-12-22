@@ -171,7 +171,7 @@ extends ArkPlugin {
                 }
                 distanceMap.put(pl, distance);
             }
-            LinkedHashMap sortedDistance = this.sortByValue(distanceMap);
+            LinkedHashMap<Player, Double> sortedDistance = this.sortByValue(distanceMap);
             if (sortedDistance.size() <= 0) {
                 sender.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.YELLOW + "There is no one visible nearby...");
                 return true;
@@ -181,7 +181,7 @@ extends ArkPlugin {
             FPlayer fpl = FPlayers.i.get(player.getUniqueId().toString());
             int MAX_SEND = 30;
             int sent = 0;
-            for (Map.Entry distance : sortedDistance.entrySet()) {
+            for (Map.Entry<Player, Double> distance : sortedDistance.entrySet()) {
                 FPlayer fplayer;
                 if (sent >= MAX_SEND) break;
                 boolean discombobulate = discombobulatedUUIDs.contains(((Player)distance.getKey()).getUniqueId());

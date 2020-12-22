@@ -37,7 +37,7 @@ extends ArkPlugin {
             return;
         }
         ess = (Essentials)this.getBukkitPlugin().getServer().getPluginManager().getPlugin("Essentials");
-        LinkedList config_data = new LinkedList(this.getBukkitPlugin().getConfig().getStringList("settings.essentials_warp_ui"));
+        LinkedList<String> config_data = new LinkedList(this.getBukkitPlugin().getConfig().getStringList("settings.essentials_warp_ui"));
         if (config_data != null && config_data.size() > 0) {
             Material m = null;
             Location warp_loc = null;

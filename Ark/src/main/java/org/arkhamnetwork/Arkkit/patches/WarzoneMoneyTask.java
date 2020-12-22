@@ -37,8 +37,6 @@ import me.ifamasssxd.factionupgrades.FactionUpgradeAPI;
 import me.ifamasssxd.factionupgrades.struct.FactionUpgrade;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.libs.ExpUtils;
-import org.arkhamnetwork.Arkkit.patches.WarzoneMoney;
-import org.arkhamnetwork.Arkkit.patches.WarzoneMoneyLMSTask;
 import org.arkhamnetwork.Arkkit.utils.EssentialsUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -72,8 +70,9 @@ extends BukkitRunnable {
         ArrayList<String> payedIps = new ArrayList<String>();
         boolean contestsEnabled = Bukkit.getPluginManager().isPluginEnabled("CosmicContests");
         List<Player> playersInWarzone = WarzoneMoney.getPlayersInMainWarzone();
-        for (Player p2 : Bukkit.getOnlinePlayers()) {
+        for (Player p : Bukkit.getOnlinePlayers()) {
             try {
+                p2 = p;
                 if (playersInWarzone.contains((Object)p2)) {
                     double distFrom0;
                     Location lastLocation;
@@ -246,7 +245,7 @@ extends BukkitRunnable {
         if (WarzoneMoney.isLMS(p)) {
             payout *= 5;
         }
-        if (Bukkit.getPluginManager().isPluginEnabled("CosmicFund") && !CosmicFundAPI.isLMSEnabled()) {
+        if (Bukkit.getPluginManager().isPluginEnabled("CosmicFund")) {
             payout /= 2;
         }
         if (Bukkit.getPluginManager().isPluginEnabled("FactionUpgrades")) {

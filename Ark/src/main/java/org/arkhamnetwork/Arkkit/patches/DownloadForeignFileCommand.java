@@ -16,8 +16,6 @@ import java.nio.channels.ReadableByteChannel;
 import java.util.Collections;
 import java.util.List;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
-import org.arkhamnetwork.Arkkit.patches.SchematicUpdater;
-import org.arkhamnetwork.Arkkit.patches.UploadFinishCallback;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

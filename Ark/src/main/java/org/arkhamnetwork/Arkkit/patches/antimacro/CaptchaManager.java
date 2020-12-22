@@ -18,8 +18,6 @@ package org.arkhamnetwork.Arkkit.patches.antimacro;
 
 import java.util.Random;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.FallbackServers;
-import org.arkhamnetwork.Arkkit.patches.antimacro.AntiMacro;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

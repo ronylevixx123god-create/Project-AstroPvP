@@ -227,7 +227,7 @@ extends AbstractCommand {
             }
             throw new PlayerNotFoundException();
         }
-        List matches = server.matchPlayer(searchTerm);
+        List<Player> matches = server.matchPlayer(searchTerm);
         if (matches.isEmpty()) {
             String matchText = searchTerm.toLowerCase(Locale.ENGLISH);
             for (Player p : Bukkit.getOnlinePlayers()) {

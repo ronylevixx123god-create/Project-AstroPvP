@@ -53,7 +53,7 @@ extends AbstractCommand {
         }
         String entityType = args[0];
         int price = Integer.parseInt(args[1]);
-        if (EntityType.valueOf((String)entityType.toUpperCase()) == null) {
+        if (EntityType.valueOf(entityType.toUpperCase()) == null) {
             sender.sendMessage("Invalid entityType.");
             return true;
         }

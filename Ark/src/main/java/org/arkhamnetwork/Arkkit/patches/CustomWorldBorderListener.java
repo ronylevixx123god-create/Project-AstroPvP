@@ -12,7 +12,6 @@ package org.arkhamnetwork.Arkkit.patches;
 import com.wimbli.WorldBorder.WorldBorder;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityTNTMoveEvent;
 
 final class CustomWorldBorderListener
 implements Listener {

@@ -35,17 +35,16 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import com.google.common.collect.Lists;
 import java.util.ArrayList;
-import java.util.Collection;
-import net.minecraft.server.v1_7_R4.EntityLiving;
-import net.minecraft.server.v1_7_R4.EntityPlayer;
-import net.minecraft.server.v1_7_R4.MobEffectList;
+
+import net.minecraft.server.v1_8_R3.EntityLiving;
+import net.minecraft.server.v1_8_R3.EntityPlayer;
+import net.minecraft.server.v1_8_R3.MobEffectList;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.PotionFix;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftLivingEntity;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftThrownPotion;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftLivingEntity;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftThrownPotion;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -89,8 +88,7 @@ implements Listener {
         if (PotionFix.EnabledFixes[1] || PotionFix.EnabledFixes[2]) {
             final LivingEntity entity = (LivingEntity)event.getEntity();
             int lvl = 0;
-            Collection Effects = entity.getActivePotionEffects();
-            for (PotionEffect effect : Effects) {
+            for (PotionEffect effect : entity.getActivePotionEffects()) {
                 if (effect.getType().getName() != "REGENERATION" && effect.getType().getName() != "HEAL") continue;
                 lvl = effect.getAmplifier() + 1;
                 break;
@@ -126,7 +124,7 @@ implements Listener {
             }
             e.setCancelled(true);
             PotionMeta potionMeta = (PotionMeta)is.getItemMeta();
-            ArrayList effects = Lists.newArrayList((Iterable)pot.getEffects());
+            ArrayList<PotionEffect> effects = Lists.newArrayList((Iterable)pot.getEffects());
             if (potionMeta.hasCustomEffects()) {
                 effects.addAll(potionMeta.getCustomEffects());
             }
@@ -136,7 +134,7 @@ implements Listener {
                     PotionEffect eff;
                     if (effect.getType().isInstant()) {
                         EntityPlayer ep = ((CraftPlayer)p).getHandle();
-                        MobEffectList.byId[effect.getType().getId()].applyInstantEffect((EntityLiving)ep, (EntityLiving)ep, effect.getAmplifier(), 1.0);
+                        MobEffectList.byId[effect.getType().getId()].applyInstantEffect(ep, ep, ep, effect.getAmplifier(), 1.0);
                         continue;
                     }
                     if (p.hasPotionEffect(effect.getType()) && (eff = this.getPotionEffect((LivingEntity)p, effect.getType())) != null && eff.getDuration() > effect.getDuration()) continue;
@@ -169,7 +167,7 @@ implements Listener {
             ThrownPotion pot = e.getEntity();
             Potion potion = PotionFixListener.fromDamage(pot.getItem().getDurability());
             PotionMeta potionMeta = (PotionMeta)pot.getItem().getItemMeta();
-            ArrayList effects = Lists.newArrayList((Iterable)potion.getEffects());
+            ArrayList<PotionEffect> effects = (ArrayList<PotionEffect>) potion.getEffects();
             if (potionMeta.hasCustomEffects()) {
                 effects.addAll(potionMeta.getCustomEffects());
             }

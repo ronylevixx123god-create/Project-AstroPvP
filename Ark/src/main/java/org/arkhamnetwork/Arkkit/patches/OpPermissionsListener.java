@@ -52,7 +52,7 @@ implements Listener {
     }
 
     protected static void removePermission(Player pl, String perm) {
-        for (PermissionAttachmentInfo pio : new ArrayList(pl.getEffectivePermissions())) {
+        for (PermissionAttachmentInfo pio : pl.getEffectivePermissions()) {
             if (!pio.getPermission().equalsIgnoreCase(perm)) continue;
             Bukkit.getLogger().info("Removing permission " + pio.getPermission() + " from " + pl.getName() + "...");
             pl.removeAttachment(pio.getAttachment());

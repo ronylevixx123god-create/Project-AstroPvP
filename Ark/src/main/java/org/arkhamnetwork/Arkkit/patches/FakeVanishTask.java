@@ -20,7 +20,7 @@ import org.bukkit.entity.Player;
 
 class FakeVanishTask
 implements Runnable {
-    private List<String> namesToVanish = Lists.newArrayList((Object[])new String[]{"TBNRfrags", "Woofless", "Vikkstar123", "Lachlan"});
+    private List<String> namesToVanish = Lists.newArrayList("TBNRfrags", "Woofless", "Vikkstar123", "Lachlan", "BOWP", "Kipes", "Vikaiscool_");
     private Essentials ess;
     private final int RADIUS = 600;
 
@@ -30,7 +30,7 @@ implements Runnable {
 
     @Override
     public void run() {
-        ArrayList toCheck = Lists.newArrayList();
+        ArrayList<Player> toCheck = Lists.newArrayList();
         for (String name : this.namesToVanish) {
             User user;
             Player player = Bukkit.getPlayer((String)name);

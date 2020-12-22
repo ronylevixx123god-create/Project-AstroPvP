@@ -16,17 +16,16 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import net.minecraft.server.v1_7_R4.EntityPlayer;
-import net.minecraft.server.v1_7_R4.MinecraftServer;
-import net.minecraft.server.v1_7_R4.PlayerInteractManager;
-import net.minecraft.server.v1_7_R4.World;
-import net.minecraft.util.com.mojang.authlib.GameProfile;
+import com.mojang.authlib.GameProfile;
+import net.minecraft.server.v1_8_R3.EntityPlayer;
+import net.minecraft.server.v1_8_R3.MinecraftServer;
+import net.minecraft.server.v1_8_R3.PlayerInteractManager;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 final class CommandOEnderchest
@@ -54,7 +53,7 @@ extends AbstractCommand {
         OfflinePlayer player = Bukkit.getOfflinePlayer((String)playerName);
         MinecraftServer minecraftserver = MinecraftServer.getServer();
         GameProfile gameprofile = new GameProfile(player.getUniqueId(), player.getName());
-        EntityPlayer entity = new EntityPlayer(minecraftserver, minecraftserver.getWorldServer(0), gameprofile, new PlayerInteractManager((World)minecraftserver.getWorldServer(0)));
+        EntityPlayer entity = new EntityPlayer(minecraftserver, minecraftserver.getWorldServer(0), gameprofile, new PlayerInteractManager(minecraftserver.getWorldServer(0)));
         CraftPlayer craftPlayer = target = entity == null ? null : entity.getBukkitEntity();
         if (target != null) {
             target.loadData();

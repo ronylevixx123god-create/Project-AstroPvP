@@ -13,7 +13,7 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import net.minecraft.server.v1_7_R4.MinecraftServer;
+import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -31,7 +31,7 @@ implements Listener {
     @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
     public void onInventoryClose(InventoryCloseEvent e) {
         if (e.getInventory().getName().contains("Vault #")) {
-            e.getPlayer().setMetadata("lastInventoryCloseEvent", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)MinecraftServer.currentTick));
+            e.getPlayer().setMetadata("lastInventoryCloseEvent", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object) MinecraftServer.currentTick));
         }
     }
 }

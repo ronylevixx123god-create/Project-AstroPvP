@@ -21,8 +21,8 @@ extends ArkPlugin {
 
     @Override
     public void enable() {
-        this.registerCommand(new CommandForums("forums", "/<command>", "Displays link to official server forums.", new ArrayList<String>(Arrays.asList("forum"))));
-        this.registerCommand(new CommandReport("report", "/<command>", "Displays link to player report form.", new ArrayList<String>(Arrays.asList("reportplayer"))));
+        this.registerCommand(new CommandForums("forums", "/<command>", "Displays link to official server forums.", new ArrayList<>(Arrays.asList("forum"))));
+        this.registerCommand(new CommandReport("report", "/<command>", "Displays link to player report form.", new ArrayList<>(Arrays.asList("reportplayer"))));
     }
 
     @Override

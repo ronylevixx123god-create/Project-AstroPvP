@@ -33,16 +33,12 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import com.compilex.CosmicFund.CosmicFundAPI;
 import com.cosmicpvp.cosmicutils.struct.StorableLocation;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.EntityUtils;
-import com.cosmicpvp.cosmicutils.utils.JSONUtils;
-import com.cosmicpvp.cosmicutils.utils.NumberUtils;
-import com.cosmicpvp.cosmicutils.utils.TimeUtils;
+import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
 import com.google.gson.reflect.TypeToken;
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -54,10 +50,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
-import me.ifamasssxd.utils.StringUtils;
 import org.arkhamnetwork.Arkkit.libs.ArkPluginCommand;
 import org.arkhamnetwork.Arkkit.libs.ArkPluginListener;
-import org.arkhamnetwork.Arkkit.patches.EndGrinding;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -87,7 +81,7 @@ extends ArkPlugin {
     }
 
     @Override
-    public void enable() {
+    public void enable() throws IOException {
         super.enable();
         this.endDragonFile = JSONUtils.getOrCreateFile((File)this.getBukkitPlugin().getDataFolder(), (String)"endDragonData.json");
         this.endDragonData = (EndDragonData)JSONUtils.fromJson((File)this.endDragonFile, (Type)this.token);
@@ -100,7 +94,7 @@ extends ArkPlugin {
         this.registerTask(new BukkitRunnable(){
 
             public void run() {
-                if (!EndGrinding.fundEnabled || !CosmicFundAPI.isEndEnabled()) {
+                if (!EndGrinding.fundEnabled) {
                     return;
                 }
                 long lastSpawn = EndDragon.this.endDragonData.getLastSpawnTime();
@@ -136,7 +130,7 @@ extends ArkPlugin {
 
     public void describeEggData(CommandSender sender) {
         sender.sendMessage(StringUtils.getCenteredMessage((String)(CC.Red + "*** " + CC.RedB + "Timeless Dragon " + CC.Red + "***")));
-        if (!EndGrinding.fundEnabled || !CosmicFundAPI.isEndEnabled()) {
+        if (!EndGrinding.fundEnabled) {
             sender.sendMessage(StringUtils.getCenteredMessage((String)(CC.Red + "Unlock access by using /fund!")));
             return;
         }
@@ -152,7 +146,7 @@ extends ArkPlugin {
         if (this.endDragonData.getDragonDamager() != null && this.endDragonData.getDragonDamager().size() > 0) {
             sender.sendMessage("");
             sender.sendMessage(StringUtils.getCenteredMessage((String)(CC.RedB + "Last Top Damagers")));
-            ArrayList damagers = Lists.newArrayList(this.endDragonData.getDragonDamager().values());
+            ArrayList<EndDragonDamager> damagers = Lists.newArrayList(this.endDragonData.getDragonDamager().values());
             Collections.sort(damagers);
             int index = 1;
             for (EndDragonDamager damager : damagers) {
@@ -164,7 +158,7 @@ extends ArkPlugin {
     }
 
     @Override
-    public void disable() {
+    public void disable() throws IOException {
         super.disable();
         JSONUtils.saveJSONToFile((File)this.endDragonFile, (Object)this.endDragonData, (Object)this.token);
         this.unregisterTasks();
@@ -247,7 +241,7 @@ extends ArkPlugin {
             }
             if (args.length == 1 && args[0].equals("setegg")) {
                 Player block = (Player)sender;
-                Block looking = block.getTargetBlock(null, 4);
+                Block looking = block.getTargetBlock(Collections.singleton(Material.AIR), 4);
                 if (looking == null || looking.getType() != Material.DRAGON_EGG) {
                     sender.sendMessage(CC.RedB + "(!) " + CC.Red + "You must be looking at the egg to set!");
                     return true;
@@ -287,7 +281,7 @@ extends ArkPlugin {
         public void onBossDeath(EntityDeathEvent event) {
             Boss boss;
             if (event.getEntity() instanceof EnderDragon && (boss = (Boss)Boss.bosses.get(event.getEntity().getUniqueId())) != null && boss.getBossType() == BossType.END_DRAGON) {
-                LinkedList damagers = boss.getTopDamage(5, true);
+                LinkedList<Player> damagers = boss.getTopDamage(5, true);
                 ((EndDragon)this.patch).getEndDragonData().dragonDamager.clear();
                 if (damagers != null && !damagers.isEmpty()) {
                     for (Player pl : damagers) {

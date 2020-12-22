@@ -51,7 +51,7 @@ extends AbstractCommand {
                 sender.sendMessage("Invalid EndMonsterType provided. (CREEPER or CUSTOM)");
                 return true;
             }
-            ArrayList<String> spawnPoints = Arkkit.get().getConfig().contains("settings.end_grinding.mobSpawns." + type.toString()) ? Arkkit.get().getConfig().getStringList("settings.end_grinding.mobSpawns." + type.toString()) : new ArrayList<String>();
+            ArrayList<String> spawnPoints = Arkkit.get().getConfig().contains("settings.end_grinding.mobSpawns." + type.toString()) ? (ArrayList<String>) Arkkit.get().getConfig().getStringList("settings.end_grinding.mobSpawns." + type.toString()) : new ArrayList<String>();
             spawnPoints.add(LocationUtils.convertLocationToString(pSender.getLocation()));
             Arkkit.get().getConfig().set("settings.end_grinding.mobSpawns." + type.toString(), spawnPoints);
             sender.sendMessage((Object)ChatColor.GREEN + "Registered " + (Object)pSender.getLocation() + " as a " + type.toString() + " spawnpoint!");

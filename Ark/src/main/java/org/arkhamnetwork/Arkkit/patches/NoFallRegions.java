@@ -24,6 +24,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.plugin.Plugin;
 
+import java.io.IOException;
+
 public class NoFallRegions
 extends ArkPlugin {
     public NoFallRegions(Plugin p) {
@@ -31,7 +33,7 @@ extends ArkPlugin {
     }
 
     @Override
-    public void enable() {
+    public void enable() throws IOException {
         super.enable();
         this.registerListener(new FallDamageListener());
     }

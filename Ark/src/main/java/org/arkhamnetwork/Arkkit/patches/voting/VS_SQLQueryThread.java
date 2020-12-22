@@ -57,7 +57,6 @@ extends Thread {
                 }
                 VS_SQLManager.sql_query.remove(query);
             }
-            break;
         }
     }
 

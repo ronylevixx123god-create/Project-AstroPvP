@@ -14,7 +14,6 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import java.lang.reflect.Method;
-import org.arkhamnetwork.Arkkit.patches.DropperBlocker;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Dropper;

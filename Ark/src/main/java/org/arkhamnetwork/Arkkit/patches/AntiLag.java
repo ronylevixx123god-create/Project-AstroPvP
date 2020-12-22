@@ -12,12 +12,10 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import java.util.Iterator;
 import java.util.LinkedList;
-import net.minecraft.server.v1_7_R4.MinecraftServer;
-import net.minecraft.util.io.netty.util.ResourceLeakDetector;
+
+import io.netty.util.ResourceLeakDetector;
+import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.AntiCrash;
-import org.arkhamnetwork.Arkkit.patches.AntiLagListener;
-import org.arkhamnetwork.Arkkit.patches.AntiPistonListener;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;

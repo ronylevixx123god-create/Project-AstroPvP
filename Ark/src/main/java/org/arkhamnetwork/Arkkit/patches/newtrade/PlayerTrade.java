@@ -102,7 +102,7 @@ public class PlayerTrade {
     }
 
     private int giveTradeItems(Player playersTradeItems, Player playerToReceiveItems) {
-        List items = this.currentlyTradedItems.get(playersTradeItems.getUniqueId());
+        List<ItemStack> items = this.currentlyTradedItems.get(playersTradeItems.getUniqueId());
         if (items == null || items.isEmpty()) {
             return 0;
         }
@@ -110,7 +110,7 @@ public class PlayerTrade {
             if (PlayerUtil.giveOrDropProtectedItem((Player)playerToReceiveItems, (ItemStack)toReceive, (int)-1)) continue;
             playerToReceiveItems.sendMessage(CC.Red + "(!) " + CC.Red + "Trade item " + (toReceive.hasItemMeta() ? toReceive.getItemMeta().getDisplayName() : StringUtils.capitaliseAllWords((String)toReceive.getType().name().replace("_", " ").toLowerCase())) + CC.Yellow + " has been dropped at your feet!");
         }
-        Bukkit.getLogger().info("[CosmicTrade] Giving " + playerToReceiveItems.getName() + " trade items of " + playersTradeItems.getName() + " : " + Arrays.toString((Object[])items.toArray((T[])new ItemStack[items.size()])));
+        Bukkit.getLogger().info("[CosmicTrade] Giving " + playerToReceiveItems.getName() + " trade items of " + playersTradeItems.getName() + " : " + Arrays.toString(items.toArray(new ItemStack[0])));
         int size = items.size();
         playerToReceiveItems.updateInventory();
         items.clear();
@@ -118,7 +118,7 @@ public class PlayerTrade {
     }
 
     private void returnItems(Player player) {
-        List itemsToReturn = this.currentlyTradedItems.get(player.getUniqueId());
+        List<ItemStack> itemsToReturn = this.currentlyTradedItems.get(player.getUniqueId());
         if (itemsToReturn == null) {
             return;
         }
@@ -128,7 +128,7 @@ public class PlayerTrade {
             player.playSound(player.getLocation(), Sound.ANVIL_LAND, 1.0f, 1.0f);
         }
         if (itemsToReturn.size() > 0) {
-            Bukkit.getLogger().info("Returning " + Arrays.toString((Object[])itemsToReturn.toArray((T[])new ItemStack[itemsToReturn.size()])));
+            Bukkit.getLogger().info("Returning " + Arrays.toString((itemsToReturn.toArray((new Object[0])))));
         }
         itemsToReturn.clear();
     }

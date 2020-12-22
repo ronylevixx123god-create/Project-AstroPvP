@@ -57,7 +57,7 @@ extends ArkPlugin {
             Bukkit.getLogger().info("Killing old trade system for new one..");
         }
         this.registerListener(new BetterTradeListener(this));
-        this.registerCommand(new BetterTradeCommand(this, "trade", "/<command>", "Trade items with other players!", (List<String>)Lists.newArrayList((Object[])new String[]{"trade", "trades", "exchange"})));
+        this.registerCommand(new BetterTradeCommand(this, "trade", "/<command>", "Trade items with other players!", (List<String>)Lists.newArrayList(new String[]{"trade", "trades", "exchange"})));
         this.tradeTask = new BukkitRunnable(){
 
             public void run() {

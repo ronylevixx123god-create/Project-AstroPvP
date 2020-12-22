@@ -49,7 +49,7 @@ import org.bukkit.plugin.Plugin;
 
 class HomeGUIListener
 implements Listener {
-    private List<String> aliases = Lists.newArrayList((Object[])new String[]{"/home", "/ehome", "/homes", "/ehomes"});
+    private List<String> aliases = Lists.newArrayList("/home", "/ehome", "/homes", "/ehomes");
     private HomeGUIManager manager;
 
     public HomeGUIListener(HomeGUIManager manager) {
