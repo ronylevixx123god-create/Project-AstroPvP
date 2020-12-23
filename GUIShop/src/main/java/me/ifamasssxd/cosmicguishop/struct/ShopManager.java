@@ -270,26 +270,16 @@ public class ShopManager {
                     e.printStackTrace();
                     displayItem = null;
                 }
-                menu.setItem(index++, new ClickableItemStack(displayItem != null ? displayItem : ItemBuilder.buildItem(data.getType(), data.getSellCount(), dura, string, new String[0])).setLore(lore).setDura(data.getType() == Material.MOB_SPAWNER ? (short) 0 : dura).setClickCallback(new GUIItemCallback() {
+                menu.setItem(index++, new ClickableItemStack(displayItem != null ? displayItem : ItemBuilder.buildItem(data.getType(), data.getSellCount(), dura, string)).setLore(lore).setDura(data.getType() == Material.MOB_SPAWNER ? (short) 0 : dura).setClickCallback(new GUIItemCallback() {
 
                     @Override
                     public void onClick(InventoryClickEvent event) {
-                        int buyAmount = 0;
-                        int n;
-                        int sellAmount = 0;
                         boolean fillInventory = false;
-                        int n2 = event.getClick().equals((Object) ClickType.RIGHT) ? 1 : (sellAmount = event.getClick().equals((Object) ClickType.SHIFT_RIGHT) ? data.getType().getMaxStackSize() : -1);
-                        if (event.getClick().equals((Object) ClickType.LEFT)) {
-                            n = 1;
-                        } else if (event.getClick().equals((Object) ClickType.SHIFT_LEFT) && data.getType() != Material.MOB_SPAWNER) {
-                            n = data.getType().getMaxStackSize();
-                        } else {
-                            fillInventory = data.getType() != Material.MOB_SPAWNER && event.getClick().equals((Object) ClickType.MIDDLE) && emptySlots > 1;
-                            n = buyAmount = fillInventory ? emptySlots * data.getType().getMaxStackSize() : 1;
-                        }
+                        int sellAmount = event.getClick().equals(ClickType.RIGHT) ? 1 : (event.getClick().equals(ClickType.SHIFT_RIGHT) ? data.getType().getMaxStackSize() : -1);
+                        int buyAmount = event.getClick().equals(ClickType.LEFT) ? 1 : ((event.getClick().equals(ClickType.SHIFT_LEFT) && data.getType() != Material.MOB_SPAWNER) ? data.getType().getMaxStackSize() : ((fillInventory = (data.getType() != Material.MOB_SPAWNER && event.getClick().equals(ClickType.MIDDLE) && emptySlots > 1)) ? (emptySlots * data.getType().getMaxStackSize()) : 1));
                         if (sellAmount != -1) {
-                            if (price.getSellPrice() <= 0.0) {
-                                player.sendMessage((Object) ChatColor.RED + "You cannot sell this item to the shop!");
+                            if (price.getSellPrice() <= 0.0D) {
+                                player.sendMessage(ChatColor.RED + "You cannot sell this item to the shop!");
                                 return;
                             }
                             int amountInInventory = ShopManager.this.getAmountInInventory(player, data);
@@ -336,15 +326,15 @@ public class ShopManager {
                                             return;
                                         }
                                         if (player.getInventory().firstEmpty() == -1) {
-                                            player.sendMessage((Object) ChatColor.RED + "You do not have enough inventory space!");
+                                            player.sendMessage(ChatColor.RED + "You do not have enough inventory space!");
                                             return;
                                         }
                                         int slots = SlotUtils.getEmptySlots(player);
                                         if (slots < emptySlots) {
-                                            player.sendMessage((Object) ChatColor.RED + "You do not have the inventory space needed!");
+                                            player.sendMessage(ChatColor.RED + "You do not have the inventory space needed!");
                                             return;
                                         }
-                                        ShopManager.this.finishPurchase(player, data, totalPrice, finalBuyAmount);
+                                        ShopManager.this.finishPurchase(player, data, totalPrice, buyAmount);
                                         menu.open(player);
                                     } else {
                                         player.sendMessage((Object) ChatColor.RED + "Purchase Cancelled!");
