@@ -7,11 +7,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Bosses" />
-        <module name="Ark" />
+        <module name="GUIShop" />
         <module name="Utils" />
         <module name="SpaceChests" />
         <module name="AuctionHouse" />
+        <module name="Bosses" />
+        <module name="Ark" />
         <module name="Arkkit" />
       </profile>
     </annotationProcessing>
