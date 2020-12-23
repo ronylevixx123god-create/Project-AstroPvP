@@ -23,6 +23,7 @@ import me.ifamasssxd.cosmicbosses.utils.BossEggUtils;
 import me.ifamasssxd.cosmicconquest.CosmicConquestAPI;
 import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKit;
 import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKits;
+import me.ifamasssxd.cosmicguishop.ArkhamMoneyNotesAPI;
 import me.ifamasssxd.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.Arkkit.patches.ItemNametag;
 import org.arkhamnetwork.Arkkit.patches.McmmoCredits;
@@ -127,7 +128,7 @@ public class CustomItemUtils {
         if (crateName.equalsIgnoreCase("heroic")) {
             return CCAPI.getHeroicMysteryCrate();
         }
-        return CCAPI.getCosmicCrate(Version.valueOf(crateName), username);
+        return CCAPI.getCosmicCrate((Version) Version.valueOf(crateName), username);
     }
 
     public static ItemStack getXpBottle(int xpAmount, String enchanter) {

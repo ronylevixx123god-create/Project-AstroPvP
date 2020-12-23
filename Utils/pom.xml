@@ -49,11 +49,10 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>arkkit</artifactId>
+            <groupId>org.arkhamnetwork</groupId>
+            <artifactId>Arkkit</artifactId>
             <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/Arkkit.jar</systemPath>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
@@ -201,13 +200,6 @@
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/CosmicCustomTNT.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>mnotes</artifactId>
-            <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/CosmicMoneyNotes.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>

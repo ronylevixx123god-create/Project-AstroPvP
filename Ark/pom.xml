@@ -6,7 +6,7 @@
 
     <groupId>org.arkhamnetwork</groupId>
     <artifactId>Arkkit</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1</version>
 
     <build>
         <plugins>
@@ -255,13 +255,6 @@
         <version>0.1</version>
         <scope>system</scope>
         <systemPath>${project.basedir}/lib/CosmicMasks.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>moneyNotes</artifactId>
-            <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/CosmicMoneyNotes.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
