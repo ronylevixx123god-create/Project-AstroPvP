@@ -26,7 +26,7 @@ public enum ArkPlugins {
     ASYNC_SPIGOT(new AsyncSpigot(Arkkit.get()), "Disables spigot's built in async method catcher."),
     NO_MOBGRIEFING(new NoMobGriefing(Arkkit.get()), "Disables mobGriefing gamerule on all worlds to prevent 1.8 dupe with hostile mob item pickup."),
     TICK_RATELIMIT(new TickRatelimit(Arkkit.get()), "Throttles water flow when no players are around or if an impossible amount of events occur in a short period of time."),
-    CHUNK_GC(new ChunkGC(Arkkit.get()), "Advanced GC system for minecarft chunks. Greatly reduces RAM usage and CPU from tick iterations."),
+    //CHUNK_GC(new ChunkGC(Arkkit.get()), "Advanced GC system for minecarft chunks. Greatly reduces RAM usage and CPU from tick iterations."),
     ENTITY_CLEANER(new EntityCleaner(Arkkit.get()), "Removes entities that are heading towards unloaded chunks. Saves RAM, CPU from tick iterations."),
     TILE_ENTITY_CLEANER(new TileEntityCleaner(Arkkit.get()), "Removes empty tile entities (chests) as chunks load to decrease CPU tick iterations."),
     WORLD_TICK_OPTIMIZER(new WorldTickOptimizer(Arkkit.get()), "Optimizes per-world tick iteration CPU cost. Growth, Tracking, etc."),
