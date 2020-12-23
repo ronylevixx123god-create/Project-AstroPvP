@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.earth2me.essentials.Essentials
  *  org.bukkit.Bukkit
@@ -15,7 +15,7 @@ public class EssentialsUtils {
 
     public static Essentials getEssentials() {
         if (essentials == null) {
-            essentials = (Essentials)Bukkit.getPluginManager().getPlugin("Essentials");
+            essentials = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
         }
         return essentials;
     }

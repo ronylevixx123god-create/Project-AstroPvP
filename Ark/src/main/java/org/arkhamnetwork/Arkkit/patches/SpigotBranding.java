@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
@@ -9,16 +9,17 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.HashMap;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.Plugin;
 import org.spigotmc.SpigotConfig;
 
+import java.util.HashMap;
+
 public class SpigotBranding
-extends ArkPlugin {
-    private HashMap<String, String> default_variables = new HashMap();
+        extends ArkPlugin {
+    private final HashMap<String, String> default_variables = new HashMap();
 
     public SpigotBranding(Plugin p) {
         super(p);
@@ -32,8 +33,8 @@ extends ArkPlugin {
         this.default_variables.put("serverFullMessage", SpigotConfig.serverFullMessage);
         this.default_variables.put("outdatedClientMessage", SpigotConfig.outdatedClientMessage);
         this.default_variables.put("outdatedServerMessage", SpigotConfig.outdatedServerMessage);
-        String spigot_prefix = ChatColor.translateAlternateColorCodes((char)'&', (String)this.getBukkitPlugin().getConfig().getString("language.spigot_branding.global_prefix"));
-        String store_url = ChatColor.translateAlternateColorCodes((char)'&', (String)this.getBukkitPlugin().getConfig().getString("language.spigot_branding.store_url"));
+        String spigot_prefix = ChatColor.translateAlternateColorCodes('&', this.getBukkitPlugin().getConfig().getString("language.spigot_branding.global_prefix"));
+        String store_url = ChatColor.translateAlternateColorCodes('&', this.getBukkitPlugin().getConfig().getString("language.spigot_branding.store_url"));
         SpigotConfig.restartMessage = spigot_prefix + " \u00a7fServer is restarting!";
         SpigotConfig.whitelistMessage = spigot_prefix + " \u00a7cServer is under maintenance!";
         SpigotConfig.unknownCommandMessage = spigot_prefix + " \u00a7fUnknown command. Type '\u00a77/help\u00a7f' for help.";

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.earth2me.essentials.Essentials
  *  com.earth2me.essentials.User
@@ -20,16 +20,8 @@ package org.arkhamnetwork.Arkkit.patches.balancetop;
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
 import com.earth2me.essentials.UserMap;
-import java.text.DecimalFormat;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 import org.apache.commons.lang.StringUtils;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.balancetop.BalanceManager;
-import org.arkhamnetwork.Arkkit.patches.balancetop.BalanceTop;
-import org.arkhamnetwork.Arkkit.patches.balancetop.NameDouble;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -39,9 +31,50 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.text.DecimalFormat;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
 public class CommandBalanceTop
-implements CommandExecutor {
+        implements CommandExecutor {
     static DecimalFormat df = new DecimalFormat("#,##0");
+
+    public static void loadAllBalances() {
+        final Essentials ess = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
+        new BukkitRunnable() {
+
+            public void run() {
+                int total = 0;
+                long start = System.currentTimeMillis();
+                UserMap map = ess.getUserMap();
+                int loaded = 0;
+                for (UUID uuid : map.getAllUniqueUsers()) {
+                    OfflinePlayer offline;
+                    User user = ess.getUser(uuid);
+                    if (++total % 5000 == 0) {
+                        Bukkit.getLogger().info("Scanned " + total + " total users...");
+                    }
+                    if ((offline = Bukkit.getOfflinePlayer(uuid)).getName() == null) continue;
+                    if (!BalanceTop.getEconomy().hasAccount(offline)) {
+                        System.out.println("No account for " + uuid.toString() + " Name: " + user.getName());
+                        continue;
+                    }
+                    ++loaded;
+                    double balance = BalanceTop.getEconomy().getBalance(offline);
+                    if (!(balance >= 0.0)) continue;
+                    BalanceManager.balanceMap.put(offline.getUniqueId(), new NameDouble(user.getName(), balance));
+                }
+                BalanceManager.lastupdate = System.currentTimeMillis();
+                System.out.println("Took " + (System.currentTimeMillis() - start) + "ms to load " + loaded + " accounts out of " + total);
+            }
+        }.runTaskAsynchronously(Arkkit.get());
+    }
+
+    public static String insertCommas(double d) {
+        return df.format(d);
+    }
 
     public boolean onCommand(final CommandSender sender, Command arg1, String arg2, final String[] args) {
         if (sender.isOp() && args.length == 1 && (args[0].equalsIgnoreCase("recalc") || args[0].equalsIgnoreCase("recalculateusers"))) {
@@ -49,7 +82,7 @@ implements CommandExecutor {
                 BalanceManager.lastupdate = System.currentTimeMillis();
                 BalanceManager.getPages();
             } else {
-                sender.sendMessage((Object)ChatColor.RED + "Loading all users...");
+                sender.sendMessage(ChatColor.RED + "Loading all users...");
                 CommandBalanceTop.loadAllBalances();
             }
             return true;
@@ -71,63 +104,28 @@ implements CommandExecutor {
             }
             return true;
         }
-        new BukkitRunnable(){
+        new BukkitRunnable() {
 
             public void run() {
                 LinkedList<List<String>> pageCopy;
                 sender.sendMessage("");
                 int index = 1;
-                if (args.length == 1 && StringUtils.isNumeric((String)args[0])) {
+                if (args.length == 1 && StringUtils.isNumeric(args[0])) {
                     index = Math.max(1, Integer.parseInt(args[0]));
                 }
                 if (index > (pageCopy = BalanceManager.getPages()).size()) {
-                    sender.sendMessage((Object)ChatColor.RED + "Please provide a valid page number 1 - " + (pageCopy.size() + 1));
+                    sender.sendMessage(ChatColor.RED + "Please provide a valid page number 1 - " + (pageCopy.size() + 1));
                     return;
                 }
                 List<String> page = pageCopy.get(index - 1);
-                sender.sendMessage((Object)ChatColor.YELLOW + ChatColor.BOLD.toString() + "Top Balances (" + (Object)ChatColor.GREEN + (Object)ChatColor.BOLD + index + (Object)ChatColor.YELLOW + (Object)ChatColor.BOLD + "/" + (Object)ChatColor.GREEN + (Object)ChatColor.BOLD + pageCopy.size() + (Object)ChatColor.YELLOW + (Object)ChatColor.BOLD + ")");
+                sender.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Top Balances (" + ChatColor.GREEN + ChatColor.BOLD + index + ChatColor.YELLOW + ChatColor.BOLD + "/" + ChatColor.GREEN + ChatColor.BOLD + pageCopy.size() + ChatColor.YELLOW + ChatColor.BOLD + ")");
                 for (String s : page) {
                     sender.sendMessage(s);
                 }
                 sender.sendMessage("");
             }
-        }.runTaskAsynchronously((Plugin)Arkkit.get());
+        }.runTaskAsynchronously(Arkkit.get());
         return false;
-    }
-
-    public static void loadAllBalances() {
-        final Essentials ess = (Essentials)Bukkit.getPluginManager().getPlugin("Essentials");
-        new BukkitRunnable(){
-
-            public void run() {
-                int total = 0;
-                long start = System.currentTimeMillis();
-                UserMap map = ess.getUserMap();
-                int loaded = 0;
-                for (UUID uuid : map.getAllUniqueUsers()) {
-                    OfflinePlayer offline;
-                    User user = ess.getUser(uuid);
-                    if (++total % 5000 == 0) {
-                        Bukkit.getLogger().info("Scanned " + total + " total users...");
-                    }
-                    if ((offline = Bukkit.getOfflinePlayer((UUID)uuid)).getName() == null) continue;
-                    if (!BalanceTop.getEconomy().hasAccount(offline)) {
-                        System.out.println("No account for " + uuid.toString() + " Name: " + user.getName());
-                        continue;
-                    }
-                    ++loaded;
-                    double balance = BalanceTop.getEconomy().getBalance(offline);
-                    if (!(balance >= 0.0)) continue;
-                    BalanceManager.balanceMap.put(offline.getUniqueId(), new NameDouble(user.getName(), balance));
-                }
-                BalanceManager.lastupdate = System.currentTimeMillis();
-                System.out.println("Took " + (System.currentTimeMillis() - start) + "ms to load " + loaded + " accounts out of " + total);
-            }
-        }.runTaskAsynchronously((Plugin)Arkkit.get());
-    }
-
-    public static String insertCommas(double d) {
-        return df.format(d);
     }
 }
 

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.massivecraft.factions.Board
  *  com.massivecraft.factions.FLocation
@@ -16,19 +16,8 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.libs.BlockValueLocation;
-import org.arkhamnetwork.Arkkit.patches.BlockValueListener;
-import org.arkhamnetwork.Arkkit.patches.CommandBlockValue;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
@@ -38,21 +27,64 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.plugin.Plugin;
 
+import java.io.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+
 public class BlockValue
-extends ArkPlugin {
+        extends ArkPlugin {
     public static HashMap<String, BlockValueLocation> trackedBlockValues;
     protected static HashSet<Material> blocksWithValue;
     private static Thread blockValueSaveThread;
     private static boolean blocksSaved;
+
+    static {
+        blocksWithValue = new HashSet<Material>(Arrays.asList(Material.HOPPER, Material.BEACON));
+    }
 
     public BlockValue(Plugin p) {
         super(p);
         blocksSaved = false;
     }
 
+    protected static void saveBlockValues() {
+        try {
+            new File("blockValues.dat").delete();
+            BufferedWriter out = new BufferedWriter(new FileWriter("blockValues.dat"));
+            for (BlockValueLocation sl : trackedBlockValues.values()) {
+                if (sl.getBlockType() == Material.AIR) continue;
+                try {
+                    out.write(sl.string() + "\n");
+                } catch (Exception err) {
+                    if (sl != null) {
+                        Bukkit.getLogger().info("[BlockValue] Failed to parse BlockValueLocation at " + sl.getX() + "," + sl.getY() + "," + sl.getZ());
+                    }
+                    err.printStackTrace();
+                }
+            }
+            out.close();
+            Bukkit.getLogger().info("[Arkkit (BlockValue)] Saved " + trackedBlockValues.size() + " blockValue locations to disk.");
+        } catch (Exception err) {
+            err.printStackTrace();
+        }
+    }
+
+    public static boolean isValueBlock(Block b) {
+        try {
+            return trackedBlockValues.containsKey(b.getWorld().getName() + "," + b.getX() + "," + b.getY() + "," + b.getZ());
+        } catch (Exception err) {
+            return false;
+        }
+    }
+
+    public static int getBlockValueBase(Material m) {
+        return Arkkit.get().getConfig().getInt("settings.blockValue." + m.name());
+    }
+
     @Override
     public void enable() {
-        blockValueSaveThread = new Thread(){
+        blockValueSaveThread = new Thread() {
 
             @Override
             public void run() {
@@ -74,8 +106,7 @@ extends ArkPlugin {
             try {
                 Bukkit.getLogger().info("Waiting for BlockValueSaveThread to complete saving " + trackedBlockValues.size() + " spawners to proceed...");
                 Thread.sleep(500L);
-            }
-            catch (InterruptedException e) {
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
@@ -88,8 +119,7 @@ extends ArkPlugin {
         if (!new File("blockValues.dat").exists()) {
             try {
                 new File("blockValues.dat").createNewFile();
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -106,59 +136,20 @@ extends ArkPlugin {
                         Bukkit.getLogger().info("[Arkkit (BlockValue)] Failed to parse blockValue: " + line);
                         continue;
                     }
-                    blockType = Material.valueOf((String)data[4]);
+                    blockType = Material.valueOf(data[4]);
                     placeTime = Long.parseLong(data[5]);
                     if (blockType == Material.AIR) continue;
                     trackedBlockValues.put(data[0] + "," + data[1] + "," + data[2] + "," + data[3], new BlockValueLocation(Integer.valueOf(data[1]), Integer.valueOf(data[2]), Integer.valueOf(data[3]), data[0], blockType, placeTime));
                     ++count;
-                }
-                catch (NullPointerException npe) {
+                } catch (NullPointerException npe) {
                     npe.printStackTrace();
                 }
             }
             reader.close();
-        }
-        catch (IOException ioe) {
+        } catch (IOException ioe) {
             ioe.printStackTrace();
         }
         Bukkit.getLogger().info("[Arkkit (BlockValue)] Loaded " + count + " blockValue locations from disk.");
-    }
-
-    protected static void saveBlockValues() {
-        try {
-            new File("blockValues.dat").delete();
-            BufferedWriter out = new BufferedWriter(new FileWriter("blockValues.dat"));
-            for (BlockValueLocation sl : trackedBlockValues.values()) {
-                if (sl.getBlockType() == Material.AIR) continue;
-                try {
-                    out.write(sl.string() + "\n");
-                }
-                catch (Exception err) {
-                    if (sl != null) {
-                        Bukkit.getLogger().info("[BlockValue] Failed to parse BlockValueLocation at " + sl.getX() + "," + sl.getY() + "," + sl.getZ());
-                    }
-                    err.printStackTrace();
-                }
-            }
-            out.close();
-            Bukkit.getLogger().info("[Arkkit (BlockValue)] Saved " + trackedBlockValues.size() + " blockValue locations to disk.");
-        }
-        catch (Exception err) {
-            err.printStackTrace();
-        }
-    }
-
-    public static boolean isValueBlock(Block b) {
-        try {
-            return trackedBlockValues.containsKey(b.getWorld().getName() + "," + b.getX() + "," + b.getY() + "," + b.getZ());
-        }
-        catch (Exception err) {
-            return false;
-        }
-    }
-
-    public static int getBlockValueBase(Material m) {
-        return Arkkit.get().getConfig().getInt("settings.blockValue." + m.name());
     }
 
     private void scanLoadedChunks() {
@@ -166,11 +157,12 @@ extends ArkPlugin {
             for (Chunk c : w.getLoadedChunks()) {
                 String cs = c.getX() + "," + c.getZ();
                 FLocation fl = new FLocation(c.getBlock(0, 0, 0));
-                if (!Board.getFactionAt((FLocation)fl).isNormal()) continue;
+                if (!Board.getFactionAt(fl).isNormal()) continue;
                 int blocksFound = 0;
                 for (BlockState blockState : c.getTileEntities()) {
                     String blockString;
-                    if (!blocksWithValue.contains((Object)blockState.getBlock().getType()) || trackedBlockValues.containsKey(blockString = BlockValueListener.convertBlockToString(blockState.getBlock()))) continue;
+                    if (!blocksWithValue.contains(blockState.getBlock().getType()) || trackedBlockValues.containsKey(blockString = BlockValueListener.convertBlockToString(blockState.getBlock())))
+                        continue;
                     trackedBlockValues.put(blockString, BlockValueListener.convertBlockToBlockValueLocation(blockState.getBlock()));
                     ++blocksFound;
                 }
@@ -178,10 +170,6 @@ extends ArkPlugin {
                 Bukkit.getLogger().info("[Arkkit (BlockValue)] Tracked " + blocksFound + " new valueBlocks in chunk: " + cs);
             }
         }
-    }
-
-    static {
-        blocksWithValue = new HashSet<Material>(Arrays.asList(new Material[]{Material.HOPPER, Material.BEACON}));
     }
 }
 

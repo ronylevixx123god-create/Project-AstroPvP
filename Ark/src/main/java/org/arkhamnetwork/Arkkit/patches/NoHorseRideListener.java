@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.ChatColor
  *  org.bukkit.entity.EntityType
@@ -23,7 +23,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.vehicle.VehicleEnterEvent;
 
 final class NoHorseRideListener
-implements Listener {
+        implements Listener {
     NoHorseRideListener() {
     }
 
@@ -31,7 +31,7 @@ implements Listener {
     public void onHorseRide(VehicleEnterEvent e) {
         if ((e.getVehicle() instanceof Horse || e.getVehicle() instanceof Pig) && e.getEntered() instanceof Player) {
             e.setCancelled(true);
-            ((Player)e.getEntered()).sendMessage((Object)ChatColor.RED + "You " + (Object)ChatColor.UNDERLINE + "cannot" + (Object)ChatColor.RED + " ride " + (e.getVehicle().getType() == EntityType.PIG ? "pigs" : "horses") + " here.");
+            e.getEntered().sendMessage(ChatColor.RED + "You " + ChatColor.UNDERLINE + "cannot" + ChatColor.RED + " ride " + (e.getVehicle().getType() == EntityType.PIG ? "pigs" : "horses") + " here.");
         }
     }
 }

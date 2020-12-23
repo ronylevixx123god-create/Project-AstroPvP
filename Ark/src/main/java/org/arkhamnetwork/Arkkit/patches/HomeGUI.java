@@ -1,21 +1,19 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.plugin.Plugin
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import org.arkhamnetwork.Arkkit.patches.HomeGUIListener;
-import org.arkhamnetwork.Arkkit.patches.HomeGUIManager;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.arkhamnetwork.Arkkit.utils.EssentialsUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 public class HomeGUI
-extends ArkPlugin {
+        extends ArkPlugin {
     private HomeGUIManager manager;
 
     public HomeGUI(Plugin p) {

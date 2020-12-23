@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.entity.EntityType
  *  org.bukkit.entity.LivingEntity
@@ -21,11 +21,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 final class NoSafezoneMobsListener
-implements Listener {
+        implements Listener {
     NoSafezoneMobsListener() {
     }
 
-    @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onEntityDamage(EntityDamageEvent e) {
         if (e.getEntity() instanceof LivingEntity && e.getEntityType() != EntityType.PLAYER && WorldGuardUtils.isPvPDisabled(e.getEntity().getLocation())) {
             ParticleEffect.playEffect(ParticleEffect.FIREWORKS_SPARK, e.getEntity().getLocation(), 0.65f, 20);

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.compilex.CompilexPermissions.event.PermissionGroupAddEvent
  *  com.cosmicpvp.cosmicutils.utils.CC
@@ -24,11 +24,6 @@ import com.compilex.CompilexPermissions.event.PermissionGroupAddEvent;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import com.google.common.collect.MapMaker;
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
-import org.arkhamnetwork.Arkkit.patches.EssentialsAddHomes;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -42,14 +37,18 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+
 final class EssentialsAddHomeItemListener
-implements Listener {
+        implements Listener {
     //private Map<UUID, Long> cooldown = new MapMaker().expireAfterWrite(10L, TimeUnit.SECONDS).makeMap();
-    private Cache<UUID, Long> cooldown = CacheBuilder.newBuilder().expireAfterWrite(10L, TimeUnit.SECONDS).build();
+    private final Cache<UUID, Long> cooldown = CacheBuilder.newBuilder().expireAfterWrite(10L, TimeUnit.SECONDS).build();
+
     EssentialsAddHomeItemListener() {
     }
 
-    @EventHandler(priority=EventPriority.LOW)
+    @EventHandler(priority = EventPriority.LOW)
     public void onPlayerUseItem(PlayerInteractEvent e) {
         if (e.hasItem() && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && EssentialsAddHomes.isAddHomeItem(e.getItem()) && !e.getPlayer().getWorld().getName().contains("duels")) {
             e.setCancelled(true);
@@ -57,7 +56,7 @@ implements Listener {
             e.setUseItemInHand(Event.Result.DENY);
             Player p = e.getPlayer();
             if (!p.hasPermission("enchantments.max.20")) {
-                p.sendMessage(ChatColor.RED.toString() + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "Home expanders can only be applied by players with a Tier 5 (or higher) rank.");
+                p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD + "(!) " + ChatColor.RED + "Home expanders can only be applied by players with a Tier 5 (or higher) rank.");
                 p.sendMessage(ChatColor.GRAY + "Upgrade your rank to unlock more homes.");
                 return;
             }
@@ -76,8 +75,8 @@ implements Listener {
             } else {
                 p.setItemInHand(null);
             }
-            Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)("addhomes " + p.getName() + " 1"));
-            p.sendMessage((Object)ChatColor.GREEN + "" + (Object)ChatColor.BOLD + " +1 extra /home!");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "addhomes " + p.getName() + " 1");
+            p.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + " +1 extra /home!");
             p.playSound(p.getLocation(), Sound.LEVEL_UP, 0.7f, 1.0f);
         }
     }

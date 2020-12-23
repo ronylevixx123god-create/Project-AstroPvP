@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.entity.Player
  *  org.bukkit.entity.Projectile
@@ -30,36 +30,36 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
 final class NoCombatFlyingListener
-implements Listener {
+        implements Listener {
     NoCombatFlyingListener() {
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onCombatTag(EntityDamageEvent e) {
         if (e.getDamage() <= 0.0) {
             return;
         }
-        if (e.getEntity() instanceof Player || e instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent)e).getDamager() instanceof Player || e instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent)e).getDamager() instanceof Projectile && ((Projectile)((EntityDamageByEntityEvent)e).getDamager()).getShooter() instanceof Player) {
+        if (e.getEntity() instanceof Player || e instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent) e).getDamager() instanceof Player || e instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent) e).getDamager() instanceof Projectile && ((Projectile) ((EntityDamageByEntityEvent) e).getDamager()).getShooter() instanceof Player) {
             if (e.getEntity() instanceof Player) {
-                this.disableFlight((Player)e.getEntity());
-                ((Player)e.getEntity()).setMetadata("ncf_combat", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)System.currentTimeMillis()));
+                this.disableFlight((Player) e.getEntity());
+                e.getEntity().setMetadata("ncf_combat", new FixedMetadataValue(Arkkit.get(), System.currentTimeMillis()));
             }
-            if (e instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent)e).getDamager() instanceof Player) {
-                this.disableFlight((Player)((EntityDamageByEntityEvent)e).getDamager());
-                ((Player)((EntityDamageByEntityEvent)e).getDamager()).setMetadata("ncf_combat", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)System.currentTimeMillis()));
+            if (e instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent) e).getDamager() instanceof Player) {
+                this.disableFlight((Player) ((EntityDamageByEntityEvent) e).getDamager());
+                ((EntityDamageByEntityEvent) e).getDamager().setMetadata("ncf_combat", new FixedMetadataValue(Arkkit.get(), System.currentTimeMillis()));
             }
-            if (e instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent)e).getDamager() instanceof Projectile && ((Projectile)((EntityDamageByEntityEvent)e).getDamager()).getShooter() instanceof Player) {
-                this.disableFlight((Player)((Projectile)((EntityDamageByEntityEvent)e).getDamager()).getShooter());
-                ((Player)((Projectile)((EntityDamageByEntityEvent)e).getDamager()).getShooter()).setMetadata("ncf_combat", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)System.currentTimeMillis()));
+            if (e instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent) e).getDamager() instanceof Projectile && ((Projectile) ((EntityDamageByEntityEvent) e).getDamager()).getShooter() instanceof Player) {
+                this.disableFlight((Player) ((Projectile) ((EntityDamageByEntityEvent) e).getDamager()).getShooter());
+                ((Player) ((Projectile) ((EntityDamageByEntityEvent) e).getDamager()).getShooter()).setMetadata("ncf_combat", new FixedMetadataValue(Arkkit.get(), System.currentTimeMillis()));
             }
         }
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onEntityShootBow(EntityShootBowEvent e) {
         if (e.getEntity() instanceof Player) {
-            this.disableFlight((Player)e.getEntity());
-            ((Player)e.getEntity()).setMetadata("ncf_combat", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)System.currentTimeMillis()));
+            this.disableFlight((Player) e.getEntity());
+            e.getEntity().setMetadata("ncf_combat", new FixedMetadataValue(Arkkit.get(), System.currentTimeMillis()));
         }
     }
 

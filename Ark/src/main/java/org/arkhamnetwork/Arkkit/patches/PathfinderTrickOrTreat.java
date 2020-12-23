@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  net.minecraft.server.v1_7_R4.Blocks
  *  net.minecraft.server.v1_7_R4.Entity
@@ -15,7 +15,7 @@ package org.arkhamnetwork.Arkkit.patches;
 import net.minecraft.server.v1_8_R3.*;
 
 final class PathfinderTrickOrTreat extends PathfinderGoal {
-    private EntityCreature creature;
+    private final EntityCreature creature;
     private EntityHuman target;
     private int c;
 
@@ -28,7 +28,7 @@ final class PathfinderTrickOrTreat extends PathfinderGoal {
         if (!this.creature.world.w()) {
             return false;
         }
-        this.target = (EntityHuman)this.creature.world.a(EntityHuman.class, this.creature.getBoundingBox().grow(10.0, 8.0, 10.0), (Entity)this.creature);
+        this.target = (EntityHuman) this.creature.world.a(EntityHuman.class, this.creature.getBoundingBox().grow(10.0, 8.0, 10.0), (Entity) this.creature);
         return this.target != null;
     }
 
@@ -47,7 +47,7 @@ final class PathfinderTrickOrTreat extends PathfinderGoal {
     }
 
     public void e() {
-        this.creature.getControllerLook().a((Entity)this.target, 30.0f, 30.0f);
+        this.creature.getControllerLook().a(this.target, 30.0f, 30.0f);
         --this.c;
     }
 }

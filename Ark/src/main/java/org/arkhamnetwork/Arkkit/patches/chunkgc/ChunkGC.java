@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.World
@@ -18,7 +18,7 @@ import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.plugin.Plugin;
 
 public class ChunkGC
-extends ArkPlugin {
+        extends ArkPlugin {
     public static ChunkGCLogger log = new ChunkGCLogger();
 
     public ChunkGC(Plugin p) {
@@ -27,10 +27,10 @@ extends ArkPlugin {
 
     @Override
     public void enable() {
-        ((CraftServer)Bukkit.getServer()).chunkGCPeriod = 0;
-        ((CraftServer)Bukkit.getServer()).chunkGCLoadThresh = 0;
+        ((CraftServer) Bukkit.getServer()).chunkGCPeriod = 0;
+        ((CraftServer) Bukkit.getServer()).chunkGCLoadThresh = 0;
         for (World w : Bukkit.getWorlds()) {
-            ((CraftWorld)w).getHandle().spigotConfig.clearChunksOnTick = true;
+            ((CraftWorld) w).getHandle().spigotConfig.clearChunksOnTick = true;
         }
         ChunkSyncUtil.syncChunks();
         this.registerListener(new ChunkGCListener());

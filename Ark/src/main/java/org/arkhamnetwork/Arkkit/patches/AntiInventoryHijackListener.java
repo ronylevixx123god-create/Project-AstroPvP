@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.ChatColor
  *  org.bukkit.Location
@@ -27,20 +27,11 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Horse;
-import org.bukkit.entity.HumanEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Vehicle;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -54,13 +45,18 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.vehicle.VehicleDamageEvent;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 final class AntiInventoryHijackListener
-implements Listener {
-    private Map<Player, Block> openBlocks = new HashMap<Player, Block>();
-    private Map<Player, Entity> openEntities = new HashMap<Player, Entity>();
-    private List<Material> inventory_blocks;
-    private List<EntityType> inventory_entities;
-    private HashMap<Player, Location> openLocations = new HashMap();
+        implements Listener {
+    private final Map<Player, Block> openBlocks = new HashMap<Player, Block>();
+    private final Map<Player, Entity> openEntities = new HashMap<Player, Entity>();
+    private final List<Material> inventory_blocks;
+    private final List<EntityType> inventory_entities;
+    private final HashMap<Player, Location> openLocations = new HashMap();
 
     public AntiInventoryHijackListener() {
         this.inventory_blocks = new ArrayList<Material>();
@@ -93,42 +89,42 @@ implements Listener {
         if (!(entity instanceof Player)) {
             return;
         }
-        Player player = (Player)entity;
-        this.openBlocks.remove((Object)player);
-        this.openEntities.remove((Object)player);
-        this.openLocations.remove((Object)player);
+        Player player = (Player) entity;
+        this.openBlocks.remove(player);
+        this.openEntities.remove(player);
+        this.openLocations.remove(player);
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent e) {
         Player player = e.getPlayer();
-        this.openBlocks.remove((Object)player);
-        this.openEntities.remove((Object)player);
-        this.openLocations.remove((Object)player);
+        this.openBlocks.remove(player);
+        this.openEntities.remove(player);
+        this.openLocations.remove(player);
     }
 
     @EventHandler
     public void onInteractBlock(PlayerInteractEvent e) {
-        if (!e.getAction().equals((Object)Action.RIGHT_CLICK_BLOCK)) {
+        if (!e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             return;
         }
         Block block = e.getClickedBlock();
         Material blockType = block.getType();
         for (Material inventoryBlock : this.inventory_blocks) {
-            if (!blockType.equals((Object)inventoryBlock)) continue;
+            if (!blockType.equals(inventoryBlock)) continue;
             this.openBlocks.put(e.getPlayer(), block);
             return;
         }
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onInteractEntity(PlayerInteractEntityEvent e) {
         Entity entity = e.getRightClicked();
         EntityType entityType = entity.getType();
         for (EntityType inventoryEntity : this.inventory_entities) {
             Horse h;
-            if (!entityType.equals((Object)inventoryEntity)) continue;
-            if (entityType == EntityType.HORSE && !(h = (Horse)entity).isCarryingChest()) {
+            if (!entityType.equals(inventoryEntity)) continue;
+            if (entityType == EntityType.HORSE && !(h = (Horse) entity).isCarryingChest()) {
                 return;
             }
             this.openEntities.put(e.getPlayer(), entity);
@@ -140,65 +136,65 @@ implements Listener {
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
         Block block = e.getBlock();
-        if (!this.openBlocks.containsValue((Object)block)) {
+        if (!this.openBlocks.containsValue(block)) {
             return;
         }
         Player player = e.getPlayer();
         e.setCancelled(true);
-        player.sendMessage((Object)ChatColor.RED + "You " + (Object)ChatColor.UNDERLINE + "cannot" + (Object)ChatColor.RED + " break that block, as a player is currently viewing its inventory.");
+        player.sendMessage(ChatColor.RED + "You " + ChatColor.UNDERLINE + "cannot" + ChatColor.RED + " break that block, as a player is currently viewing its inventory.");
     }
 
-    @EventHandler(priority=EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onEntityHit(EntityDamageByEntityEvent e) {
         Entity damager = e.getDamager();
         Entity damaged = e.getEntity();
-        if (!this.openEntities.containsValue((Object)damaged)) {
+        if (!this.openEntities.containsValue(damaged)) {
             return;
         }
-        Player player = (Player)damager;
+        Player player = (Player) damager;
         e.setCancelled(true);
         e.setDamage(0.0);
-        player.sendMessage((Object)ChatColor.RED + "You " + (Object)ChatColor.UNDERLINE + "cannot" + (Object)ChatColor.RED + " kill that entity, as a player is currently viewing its inventory.");
+        player.sendMessage(ChatColor.RED + "You " + ChatColor.UNDERLINE + "cannot" + ChatColor.RED + " kill that entity, as a player is currently viewing its inventory.");
     }
 
-    @EventHandler(ignoreCancelled=true)
+    @EventHandler(ignoreCancelled = true)
     public void onVehicleHit(VehicleDamageEvent e) {
         Entity damager = e.getAttacker();
         Vehicle damaged = e.getVehicle();
-        if (!this.openEntities.containsValue((Object)damaged)) {
+        if (!this.openEntities.containsValue(damaged)) {
             return;
         }
-        Player player = (Player)damager;
+        Player player = (Player) damager;
         e.setCancelled(true);
         e.setDamage(0.0);
-        player.sendMessage((Object)ChatColor.RED + "You " + (Object)ChatColor.UNDERLINE + "cannot" + (Object)ChatColor.RED + " kill that entity, as a player is currently viewing its inventory.");
+        player.sendMessage(ChatColor.RED + "You " + ChatColor.UNDERLINE + "cannot" + ChatColor.RED + " kill that entity, as a player is currently viewing its inventory.");
     }
 
-    @EventHandler(priority=EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onBlockExplodeMONITOR(EntityExplodeEvent e) {
         for (Block b : e.blockList()) {
-            if (e.getEntity() != null && e.getEntity().hasMetadata("fastExplosion") && this.inventory_blocks.contains((Object)b.getType())) {
-                e.blockList().remove((Object)b);
+            if (e.getEntity() != null && e.getEntity().hasMetadata("fastExplosion") && this.inventory_blocks.contains(b.getType())) {
+                e.blockList().remove(b);
             }
-            if (this.openBlocks.containsValue((Object)b)) {
-                e.blockList().remove((Object)b);
+            if (this.openBlocks.containsValue(b)) {
+                e.blockList().remove(b);
             }
-            if (!this.openLocations.containsValue((Object)b.getLocation())) continue;
-            e.blockList().remove((Object)b);
+            if (!this.openLocations.containsValue(b.getLocation())) continue;
+            e.blockList().remove(b);
         }
     }
 
-    @EventHandler(priority=EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onBlockExplodeLOWEST(EntityExplodeEvent e) {
         for (Block b : e.blockList()) {
-            if (e.getEntity() != null && e.getEntity().hasMetadata("fastExplosion") && this.inventory_blocks.contains((Object)b.getType())) {
-                e.blockList().remove((Object)b);
+            if (e.getEntity() != null && e.getEntity().hasMetadata("fastExplosion") && this.inventory_blocks.contains(b.getType())) {
+                e.blockList().remove(b);
             }
-            if (this.openBlocks.containsValue((Object)b)) {
-                e.blockList().remove((Object)b);
+            if (this.openBlocks.containsValue(b)) {
+                e.blockList().remove(b);
             }
-            if (!this.openLocations.containsValue((Object)b.getLocation())) continue;
-            e.blockList().remove((Object)b);
+            if (!this.openLocations.containsValue(b.getLocation())) continue;
+            e.blockList().remove(b);
         }
     }
 }

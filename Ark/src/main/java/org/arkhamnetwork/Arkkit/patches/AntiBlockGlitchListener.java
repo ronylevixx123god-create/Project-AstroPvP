@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.massivecraft.factions.Board
  *  com.massivecraft.factions.FLocation
@@ -29,19 +29,10 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import com.massivecraft.factions.Board;
-import com.massivecraft.factions.FLocation;
-import com.massivecraft.factions.FPlayer;
-import com.massivecraft.factions.FPlayers;
-import com.massivecraft.factions.FactionWrapper;
-import com.massivecraft.factions.FactionWrappers;
+import com.massivecraft.factions.*;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -57,11 +48,11 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.plugin.Plugin;
 
 final class AntiBlockGlitchListener
-implements Listener {
+        implements Listener {
     AntiBlockGlitchListener() {
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=false)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)
     public void onBlockPlaceFail(BlockPlaceEvent e) {
         if (e.isCancelled() || !e.canBuild()) {
             final Player p = e.getPlayer();
@@ -69,7 +60,7 @@ implements Listener {
             if (CombatLog.inCombat(p)) {
                 return;
             }
-            Bukkit.getScheduler().runTaskLater((Plugin)Arkkit.get(), new Runnable(){
+            Bukkit.getScheduler().runTaskLater(Arkkit.get(), new Runnable() {
 
                 @Override
                 public void run() {
@@ -89,21 +80,21 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.LOW)
+    @EventHandler(priority = EventPriority.LOW)
     public void onPlayerBlockGlitchWaterLava(PlayerInteractEvent e) {
         if (e.hasBlock() && e.hasItem() && e.getItem().getType() == Material.BUCKET && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
             Material m1 = e.getClickedBlock().getType();
             Material m2 = e.getClickedBlock().getLocation().add(0.0, 1.0, 0.0).getBlock().getType();
             Material m3 = e.getClickedBlock().getLocation().subtract(0.0, 1.0, 0.0).getBlock().getType();
             if (m1 == Material.LAVA || m1 == Material.STATIONARY_LAVA || m1 == Material.WATER || m1 == Material.STATIONARY_WATER || m2 == Material.LAVA || m2 == Material.STATIONARY_LAVA || m2 == Material.WATER || m2 == Material.STATIONARY_WATER || m3 == Material.LAVA || m3 == Material.STATIONARY_LAVA || m3 == Material.WATER || m3 == Material.STATIONARY_WATER) {
-                FPlayer fp = (FPlayer)FPlayers.i.get((OfflinePlayer)e.getPlayer());
+                FPlayer fp = FPlayers.i.get(e.getPlayer());
                 FLocation fl = new FLocation(e.getClickedBlock().getLocation());
-                FactionWrapper wrapper = FactionWrappers.get((String)Board.getFactionAt((FLocation)fl).getId());
+                FactionWrapper wrapper = FactionWrappers.get(Board.getFactionAt(fl).getId());
                 if (!(fp.isInOwnTerritory() || wrapper.doesPlayerHaveChunkAccess(fl, fp, true) || e.getPlayer().isOp())) {
                     e.setCancelled(true);
                     e.setUseInteractedBlock(Event.Result.DENY);
                     e.setUseItemInHand(Event.Result.DENY);
-                    Bukkit.getLogger().info("[AntiBlockGlitch] Cancelling PlayerInteractEvent on liquid in enemy territory for " + e.getPlayer().getName() + " at " + (Object)e.getClickedBlock().getLocation());
+                    Bukkit.getLogger().info("[AntiBlockGlitch] Cancelling PlayerInteractEvent on liquid in enemy territory for " + e.getPlayer().getName() + " at " + e.getClickedBlock().getLocation());
                     return;
                 }
             }

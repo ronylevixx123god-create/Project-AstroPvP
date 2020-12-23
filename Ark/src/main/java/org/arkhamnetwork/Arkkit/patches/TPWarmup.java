@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  me.ifamasssxd.factionupgrades.FactionUpgradeAPI
  *  me.ifamasssxd.factionupgrades.struct.FactionUpgrade
@@ -18,9 +18,6 @@
  *  org.bukkit.potion.PotionEffectType
  */
 package org.arkhamnetwork.Arkkit.patches;
-
-import java.io.File;
-import java.io.IOException;
 
 import me.ifamasssxd.factionupgrades.FactionUpgradeAPI;
 import me.ifamasssxd.factionupgrades.struct.FactionUpgrade;
@@ -40,46 +37,20 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.io.File;
+import java.io.IOException;
+
 public class TPWarmup
-extends ArkPlugin {
+        extends ArkPlugin {
     public TPWarmup(Plugin p) {
         super(p);
-    }
-
-    @Override
-    public void enable() {
-        YamlConfiguration essentialsConfig = YamlConfiguration.loadConfiguration((File)new File("plugins/Essentials/config.yml"));
-        if (essentialsConfig.getInt("teleport-delay") > 0) {
-            Bukkit.getLogger().info("[Arkkit (TPWarmup)] Setting Essential's teleport-delay => 0");
-            essentialsConfig.set("teleport-delay", (Object)0);
-            try {
-                essentialsConfig.save(new File("plugins/Essentials/config.yml"));
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-            Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)"ess r");
-        }
-        this.registerListener(new TPWarmupListener());
-        this.registerTask(new TPWarmupMovementMonitorTask().runTaskTimer((Plugin)Arkkit.get(), 20L, 20L), TPWarmupMovementMonitorTask.class);
-    }
-
-    @Override
-    public void disable() {
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            if (!p.hasMetadata("queuedTeleportTaskID")) continue;
-            Bukkit.getScheduler().cancelTask(((MetadataValue)p.getMetadata("queuedTeleportTaskID").get(0)).asInt());
-            p.removeMetadata("queuedTeleport", (Plugin)Arkkit.get());
-            p.removeMetadata("queuedTeleportTaskID", (Plugin)Arkkit.get());
-            p.removeMetadata("queuedTeleportPass", (Plugin)Arkkit.get());
-        }
     }
 
     protected static double getTeleportWarmupDelay(Player p) {
         double xp = ExpUtils.getTotalExperience(p);
         double teleportWarmup = 7.0;
         if (Bukkit.getPluginManager().isPluginEnabled("FactionUpgrades")) {
-            int tpMasterTier = FactionUpgradeAPI.getPerkLevel((Player)p, (FactionUpgrade) FactionUpgrade.TP_MASTERY);
+            int tpMasterTier = FactionUpgradeAPI.getPerkLevel(p, FactionUpgrade.TP_MASTERY);
             if (tpMasterTier == 1) {
                 teleportWarmup *= 0.9;
             }
@@ -113,16 +84,44 @@ extends ArkPlugin {
 
     public static void cancelQueuedTeleport(Player p) {
         if (p.hasMetadata("queuedTeleportTaskID")) {
-            Bukkit.getScheduler().cancelTask(((MetadataValue)p.getMetadata("queuedTeleportTaskID").get(0)).asInt());
-            p.removeMetadata("queuedTeleport", (Plugin)Arkkit.get());
-            p.removeMetadata("queuedTeleportTaskID", (Plugin)Arkkit.get());
+            Bukkit.getScheduler().cancelTask(p.getMetadata("queuedTeleportTaskID").get(0).asInt());
+            p.removeMetadata("queuedTeleport", Arkkit.get());
+            p.removeMetadata("queuedTeleportTaskID", Arkkit.get());
             p.removePotionEffect(PotionEffectType.CONFUSION);
         }
     }
 
     public static void queuedTeleport(Player p, Location l, PlayerTeleportEvent.TeleportCause tc) {
-        p.setMetadata("queuedTeleport", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)new QueuedTeleport(p, l, TPWarmup.getTeleportWarmupDelay(p), tc)));
-        p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, (int)(20.0 * TPWarmup.getTeleportWarmupDelay(p) + 40.0), 0));
+        p.setMetadata("queuedTeleport", new FixedMetadataValue(Arkkit.get(), new QueuedTeleport(p, l, TPWarmup.getTeleportWarmupDelay(p), tc)));
+        p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, (int) (20.0 * TPWarmup.getTeleportWarmupDelay(p) + 40.0), 0));
+    }
+
+    @Override
+    public void enable() {
+        YamlConfiguration essentialsConfig = YamlConfiguration.loadConfiguration(new File("plugins/Essentials/config.yml"));
+        if (essentialsConfig.getInt("teleport-delay") > 0) {
+            Bukkit.getLogger().info("[Arkkit (TPWarmup)] Setting Essential's teleport-delay => 0");
+            essentialsConfig.set("teleport-delay", 0);
+            try {
+                essentialsConfig.save(new File("plugins/Essentials/config.yml"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ess r");
+        }
+        this.registerListener(new TPWarmupListener());
+        this.registerTask(new TPWarmupMovementMonitorTask().runTaskTimer(Arkkit.get(), 20L, 20L), TPWarmupMovementMonitorTask.class);
+    }
+
+    @Override
+    public void disable() {
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            if (!p.hasMetadata("queuedTeleportTaskID")) continue;
+            Bukkit.getScheduler().cancelTask(p.getMetadata("queuedTeleportTaskID").get(0).asInt());
+            p.removeMetadata("queuedTeleport", Arkkit.get());
+            p.removeMetadata("queuedTeleportTaskID", Arkkit.get());
+            p.removeMetadata("queuedTeleportPass", Arkkit.get());
+        }
     }
 }
 

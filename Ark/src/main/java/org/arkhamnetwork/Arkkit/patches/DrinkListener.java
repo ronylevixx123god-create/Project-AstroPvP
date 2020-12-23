@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.CC
  *  org.bukkit.ChatColor
@@ -22,10 +22,8 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import java.util.Random;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
-import org.arkhamnetwork.Arkkit.patches.Drinks;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -42,32 +40,34 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.Random;
+
 final class DrinkListener
-implements Listener {
-    private Random r = new Random();
+        implements Listener {
+    private final Random r = new Random();
 
     public static void applySpaceDrink(Player p, boolean notify) {
         int drunkLevel;
         int action = new Random().nextInt(20);
-        p.setMetadata("lastDrink", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)System.currentTimeMillis()));
+        p.setMetadata("lastDrink", new FixedMetadataValue(Arkkit.get(), System.currentTimeMillis()));
         if (notify) {
             p.sendMessage(CC.LightPurpleB + "*" + CC.Gray + " splashed by " + CC.LightPurple + "Space Drink " + CC.LightPurpleB + "*");
         }
         if (action == 0) {
             p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 140, 2));
-            p.sendMessage((Object)ChatColor.YELLOW + "You gulp down the Space Drink, and immediately start to feel dizzy and light headed.");
+            p.sendMessage(ChatColor.YELLOW + "You gulp down the Space Drink, and immediately start to feel dizzy and light headed.");
         }
         if (action == 1) {
             p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 140, 1));
-            p.sendMessage((Object)ChatColor.YELLOW + "You swallow the Space Drink, and suddenly the whole world goes dark... #BLACKOUT!");
+            p.sendMessage(ChatColor.YELLOW + "You swallow the Space Drink, and suddenly the whole world goes dark... #BLACKOUT!");
         }
         if (action == 2) {
             p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 140, 1));
-            p.sendMessage((Object)ChatColor.YELLOW + "You finish the drink, smash the glass on the ground, and feel an unstoppable sense of rage fill your body.");
+            p.sendMessage(ChatColor.YELLOW + "You finish the drink, smash the glass on the ground, and feel an unstoppable sense of rage fill your body.");
         }
         if (action == 3) {
             p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 140, 3));
-            p.sendMessage((Object)ChatColor.YELLOW + "You slowly empty the Space Drink into your mouth, and suddenly feel a huge burst of energy!");
+            p.sendMessage(ChatColor.YELLOW + "You slowly empty the Space Drink into your mouth, and suddenly feel a huge burst of energy!");
         }
         if ((drunkLevel = Drinks.moreDrunk(p)) == Drinks.tipsyLevel) {
             p.sendMessage(Drinks.tipsyStr);
@@ -97,14 +97,14 @@ implements Listener {
             ParticleEffect.playEffect(ParticleEffect.LARGE_EXPLODE, e.getEntity().getLocation().add(0.0, 1.0, 0.0), 0.8f, 6);
             for (LivingEntity ent : e.getAffectedEntities()) {
                 if (!(ent instanceof Player)) continue;
-                Player p = (Player)ent;
+                Player p = (Player) ent;
                 DrinkListener.applySpaceDrink(p, true);
                 ParticleEffect.playEffect(ParticleEffect.MAGIC_CRIT, p.getLocation().add(0.0, 1.0, 0.0), 1.15f, 16);
             }
         }
     }
 
-    @EventHandler(priority=EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerChat(AsyncPlayerChatEvent event) {
         int drunkLevel;
         if (!event.isCancelled() && (drunkLevel = Drinks.getDrunkLevel(event.getPlayer())) > 0) {
@@ -124,7 +124,7 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         Drinks.getDrunks().remove(event.getPlayer().getName());
     }

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.event.EventHandler
  *  org.bukkit.event.EventPriority
@@ -10,21 +10,21 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.HashMap;
-import org.arkhamnetwork.Arkkit.patches.NoLoginQueue;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 
+import java.util.HashMap;
+
 final class NoJoinQueueListener
-implements Listener {
-    private HashMap<String, Long> recent_login_attempts = new HashMap();
+        implements Listener {
+    private final HashMap<String, Long> recent_login_attempts = new HashMap();
 
     NoJoinQueueListener() {
     }
 
-    @EventHandler(priority=EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onAsyncPlayerPreLogin_LOWEST(AsyncPlayerPreLoginEvent e) {
         if (NoLoginQueue.no_new_connections) {
             e.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);

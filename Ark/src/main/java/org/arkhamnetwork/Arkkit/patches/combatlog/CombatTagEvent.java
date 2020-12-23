@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.entity.Player
  *  org.bukkit.event.Cancellable
@@ -15,16 +15,20 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 public class CombatTagEvent
-extends Event
-implements Cancellable {
+        extends Event
+        implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled;
-    private Player combatPlayer;
-    private boolean alreadyInCombat;
+    private final Player combatPlayer;
+    private final boolean alreadyInCombat;
 
     public CombatTagEvent(Player p, boolean alreadyInCombat) {
         this.combatPlayer = p;
         this.alreadyInCombat = alreadyInCombat;
+    }
+
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 
     public Player getPlayer() {
@@ -36,10 +40,6 @@ implements Cancellable {
     }
 
     public HandlerList getHandlers() {
-        return handlers;
-    }
-
-    public static HandlerList getHandlerList() {
         return handlers;
     }
 

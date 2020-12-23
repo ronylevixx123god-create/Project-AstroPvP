@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.sk89q.worldguard.bukkit.WorldGuardPlugin
  *  org.bukkit.Bukkit
@@ -10,13 +10,12 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.PvPPotionEffectsTask;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 public class PvPPotionEffects
-extends ArkPlugin {
+        extends ArkPlugin {
     protected static WorldGuardPlugin wg;
 
     public PvPPotionEffects(Plugin p) {
@@ -26,7 +25,7 @@ extends ArkPlugin {
     @Override
     public void enable() {
         wg = this.getWorldGuard();
-        this.registerTask(new PvPPotionEffectsTask().runTaskTimer((Plugin)Arkkit.get(), 30L, 30L), PvPPotionEffects.class);
+        this.registerTask(new PvPPotionEffectsTask().runTaskTimer(Arkkit.get(), 30L, 30L), PvPPotionEffects.class);
     }
 
     @Override
@@ -38,7 +37,7 @@ extends ArkPlugin {
         if (plugin == null || !(plugin instanceof WorldGuardPlugin)) {
             return null;
         }
-        return (WorldGuardPlugin)plugin;
+        return (WorldGuardPlugin) plugin;
     }
 }
 

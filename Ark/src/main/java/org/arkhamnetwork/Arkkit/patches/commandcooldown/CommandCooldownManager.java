@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.entity.Player
@@ -10,17 +10,17 @@
  */
 package org.arkhamnetwork.Arkkit.patches.commandcooldown;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
-import org.arkhamnetwork.Arkkit.patches.commandcooldown.CommandCooldowns;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class CommandCooldownManager {
     private final HashMap<String, Long> command_cooldowns = new HashMap();
@@ -60,7 +60,7 @@ public class CommandCooldownManager {
         List<String> commandsAndAliases = this.getCommandAndAliases(cmd);
         if (cd > 0L) {
             for (String cmds : commandsAndAliases) {
-                pl.setMetadata("arkham_cooldown_" + cmds, (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)(System.currentTimeMillis() + cd)));
+                pl.setMetadata("arkham_cooldown_" + cmds, new FixedMetadataValue(Arkkit.get(), System.currentTimeMillis() + cd));
             }
         }
     }
@@ -73,7 +73,7 @@ public class CommandCooldownManager {
         List<String> commandsAndAliases = this.getCommandAndAliases(cmd);
         if (cd > 0L) {
             for (String cmds : commandsAndAliases) {
-                pl.setMetadata("arkham_cooldown_" + cmds, (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)(System.currentTimeMillis() + cd)));
+                pl.setMetadata("arkham_cooldown_" + cmds, new FixedMetadataValue(Arkkit.get(), System.currentTimeMillis() + cd));
             }
         }
     }
@@ -90,8 +90,7 @@ public class CommandCooldownManager {
                     commandsAndAliases.add(alias);
                 }
             }
-        }
-        catch (NullPointerException npe) {
+        } catch (NullPointerException npe) {
             Bukkit.getLogger().info("(CommandCooldownManager) No command '" + cmd + "' registered, could not lookup aliases.");
         }
         return commandsAndAliases;
@@ -105,7 +104,7 @@ public class CommandCooldownManager {
         if (!pl.hasMetadata("arkham_cooldown_" + cmd)) {
             return 0L;
         }
-        long expiration = ((MetadataValue)pl.getMetadata("arkham_cooldown_" + cmd).get(0)).asLong();
+        long expiration = pl.getMetadata("arkham_cooldown_" + cmd).get(0).asLong();
         if (System.currentTimeMillis() > expiration) {
             return 0L;
         }

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.CC
  *  com.wimbli.WorldBorder.BorderData
@@ -28,7 +28,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
 class WorldBorderEnderpearlListener
-implements Listener {
+        implements Listener {
     WorldBorder plugin;
 
     WorldBorderEnderpearlListener() {
@@ -36,12 +36,12 @@ implements Listener {
 
     public WorldBorder get() {
         if (this.plugin == null) {
-            this.plugin = (WorldBorder)Bukkit.getPluginManager().getPlugin("WorldBorder");
+            this.plugin = (WorldBorder) Bukkit.getPluginManager().getPlugin("WorldBorder");
         }
         return this.plugin;
     }
 
-    @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onProjectileLand(PlayerTeleportEvent event) {
         BorderData data;
         Player player = event.getPlayer();

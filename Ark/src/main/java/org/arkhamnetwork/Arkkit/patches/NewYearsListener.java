@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.FireworkEffect
  *  org.bukkit.Location
@@ -18,7 +18,6 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
-import org.arkhamnetwork.Arkkit.patches.NewYears;
 import org.arkhamnetwork.Arkkit.utils.RandomFireworks;
 import org.bukkit.FireworkEffect;
 import org.bukkit.Location;
@@ -34,7 +33,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 
 final class NewYearsListener
-implements Listener {
+        implements Listener {
     NewYearsListener() {
     }
 
@@ -76,7 +75,7 @@ implements Listener {
             }
             e.getPlayer().updateInventory();
             Location l = e.getPlayer().getLocation().add(0.0, 1.0, 0.0);
-            Firework fw = (Firework)l.getWorld().spawnEntity(l.clone().add(0.0, 1.0, 0.0), EntityType.FIREWORK);
+            Firework fw = (Firework) l.getWorld().spawnEntity(l.clone().add(0.0, 1.0, 0.0), EntityType.FIREWORK);
             FireworkMeta fwm = fw.getFireworkMeta();
             FireworkEffect effect = FireworkEffect.builder().flicker(true).withColor(RandomFireworks.getManager().getRandomColor()).withFade(RandomFireworks.getManager().getRandomColor()).with(RandomFireworks.getManager().getRandomType()).trail(true).build();
             fwm.addEffect(effect);

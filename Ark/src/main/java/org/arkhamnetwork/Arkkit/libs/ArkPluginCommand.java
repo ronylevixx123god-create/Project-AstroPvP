@@ -3,12 +3,12 @@
  */
 package org.arkhamnetwork.Arkkit.libs;
 
-import java.util.List;
-import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 
+import java.util.List;
+
 public abstract class ArkPluginCommand<T extends ArkPlugin>
-extends AbstractCommand {
+        extends AbstractCommand {
     protected T patch;
 
     public ArkPluginCommand(T patch, String command) {

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.massivecraft.factions.FPlayer
  *  com.massivecraft.factions.FPlayers
@@ -30,7 +30,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 
 final class BetterMcMMOWolves
-implements Listener {
+        implements Listener {
     BetterMcMMOWolves() {
     }
 
@@ -49,7 +49,7 @@ implements Listener {
         FPlayer fpOwner;
         Tameable tameable;
         Player owner;
-        if (e.getEntity().hasMetadata("mcMMOWolf") && e.getTarget() instanceof Player && (owner = (Player)(tameable = (Tameable)e.getEntity()).getOwner()) != null && (fpOwner = (FPlayer)FPlayers.i.get((OfflinePlayer)owner)).getRelationTo((RelationParticipator)(fTarget = (FPlayer)FPlayers.i.get((OfflinePlayer)((Player)e.getTarget())))).isAtLeast(Relation.TRUCE)) {
+        if (e.getEntity().hasMetadata("mcMMOWolf") && e.getTarget() instanceof Player && (owner = (Player) (tameable = (Tameable) e.getEntity()).getOwner()) != null && (fpOwner = FPlayers.i.get(owner)).getRelationTo(fTarget = FPlayers.i.get(e.getTarget())).isAtLeast(Relation.TRUCE)) {
             e.setCancelled(true);
         }
     }

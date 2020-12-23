@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.ChatColor
  *  org.bukkit.entity.Player
@@ -16,7 +16,6 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.libs.ArkPluginListener;
-import org.arkhamnetwork.Arkkit.patches.ClearInventoryConfirm;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -29,32 +28,32 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
 final class ClearInventoryListener
-extends ArkPluginListener<ClearInventoryConfirm> {
+        extends ArkPluginListener<ClearInventoryConfirm> {
     public ClearInventoryListener(ClearInventoryConfirm patch) {
         super(patch);
     }
 
-    @EventHandler(priority=EventPriority.LOW)
+    @EventHandler(priority = EventPriority.LOW)
     public void onPlayerChat(AsyncPlayerChatEvent e) {
         Player p = e.getPlayer();
         if (p.hasMetadata("compilex_clearinventory_pending")) {
             e.setCancelled(true);
-            String msg = ChatColor.stripColor((String)e.getMessage());
-            String cmd = ((MetadataValue)p.getMetadata("compilex_clearinventory_pending").get(0)).asString().replace("/", "");
+            String msg = ChatColor.stripColor(e.getMessage());
+            String cmd = p.getMetadata("compilex_clearinventory_pending").get(0).asString().replace("/", "");
             if (msg.equalsIgnoreCase("no")) {
-                p.sendMessage((Object)ChatColor.RED + "Inventory deletion cancelled.");
-                p.removeMetadata("compilex_clearinventory_pending", (Plugin)Arkkit.get());
+                p.sendMessage(ChatColor.RED + "Inventory deletion cancelled.");
+                p.removeMetadata("compilex_clearinventory_pending", Arkkit.get());
             } else if (msg.equalsIgnoreCase("yes")) {
-                p.setMetadata("compilex_clearinventory_confirmed", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)("/" + cmd)));
-                p.removeMetadata("compilex_clearinventory_pending", (Plugin)Arkkit.get());
+                p.setMetadata("compilex_clearinventory_confirmed", new FixedMetadataValue(Arkkit.get(), "/" + cmd));
+                p.removeMetadata("compilex_clearinventory_pending", Arkkit.get());
                 if (!CombatLog.inCombat(p)) {
                     p.performCommand(cmd);
                 } else {
-                    p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You cannot clear your inventory while in combat!");
+                    p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot clear your inventory while in combat!");
                 }
             } else {
-                p.sendMessage((Object)ChatColor.RED + "Invalid /clearinventory response.");
-                p.sendMessage((Object)ChatColor.GRAY + "Please type " + (Object)ChatColor.GREEN + (Object)ChatColor.BOLD + "YES" + (Object)ChatColor.GRAY + " or " + (Object)ChatColor.RED + ChatColor.BOLD.toString() + "NO" + (Object)ChatColor.GRAY + " to confirm " + (Object)ChatColor.UNDERLINE + "deleting your inventory.");
+                p.sendMessage(ChatColor.RED + "Invalid /clearinventory response.");
+                p.sendMessage(ChatColor.GRAY + "Please type " + ChatColor.GREEN + ChatColor.BOLD + "YES" + ChatColor.GRAY + " or " + ChatColor.RED + ChatColor.BOLD.toString() + "NO" + ChatColor.GRAY + " to confirm " + ChatColor.UNDERLINE + "deleting your inventory.");
                 return;
             }
         }
@@ -75,15 +74,15 @@ extends ArkPluginListener<ClearInventoryConfirm> {
                 return;
             }
             String cmd = e.getMessage();
-            if (!(((ClearInventoryConfirm)this.patch).getClearInventoryToggled().contains(p.getUniqueId()) || p.hasMetadata("compilex_clearinventory_confirmed") && ((MetadataValue)p.getMetadata("compilex_clearinventory_confirmed").get(0)).asString().equals(cmd))) {
+            if (!(this.patch.getClearInventoryToggled().contains(p.getUniqueId()) || p.hasMetadata("compilex_clearinventory_confirmed") && p.getMetadata("compilex_clearinventory_confirmed").get(0).asString().equals(cmd))) {
                 e.setCancelled(true);
                 e.setMessage("/null");
-                p.setMetadata("compilex_clearinventory_pending", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)cmd));
-                p.sendMessage((Object)ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.YELLOW + "Are you sure you want to delete items in your inventory?");
-                p.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "Command: " + (Object)ChatColor.GRAY + cmd);
-                p.sendMessage((Object)ChatColor.YELLOW + "** " + (Object)ChatColor.GRAY + "Please type " + (Object)ChatColor.GREEN + (Object)ChatColor.BOLD + (Object)ChatColor.UNDERLINE + "YES" + (Object)ChatColor.GRAY + " or " + (Object)ChatColor.RED + ChatColor.BOLD.toString() + (Object)ChatColor.UNDERLINE + "NO");
+                p.setMetadata("compilex_clearinventory_pending", new FixedMetadataValue(Arkkit.get(), cmd));
+                p.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "Are you sure you want to delete items in your inventory?");
+                p.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "Command: " + ChatColor.GRAY + cmd);
+                p.sendMessage(ChatColor.YELLOW + "** " + ChatColor.GRAY + "Please type " + ChatColor.GREEN + ChatColor.BOLD + ChatColor.UNDERLINE + "YES" + ChatColor.GRAY + " or " + ChatColor.RED + ChatColor.BOLD.toString() + ChatColor.UNDERLINE + "NO");
             } else {
-                p.removeMetadata("compilex_clearinventory_confirmed", (Plugin)Arkkit.get());
+                p.removeMetadata("compilex_clearinventory_confirmed", Arkkit.get());
                 return;
             }
         }

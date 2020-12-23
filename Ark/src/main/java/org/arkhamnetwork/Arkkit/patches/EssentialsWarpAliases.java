@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.earth2me.essentials.Essentials
  *  org.bukkit.Bukkit
@@ -9,13 +9,12 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.earth2me.essentials.Essentials;
-import org.arkhamnetwork.Arkkit.patches.EssentialsWarpAliasesListener;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 public class EssentialsWarpAliases
-extends ArkPlugin {
+        extends ArkPlugin {
     public EssentialsWarpAliases(Plugin p) {
         super(p);
     }
@@ -27,7 +26,7 @@ extends ArkPlugin {
             this.kill();
             return;
         }
-        Essentials ess = Bukkit.getServer().getPluginManager().isPluginEnabled("Essentials") ? (Essentials)Bukkit.getServer().getPluginManager().getPlugin("Essentials") : null;
+        Essentials ess = Bukkit.getServer().getPluginManager().isPluginEnabled("Essentials") ? (Essentials) Bukkit.getServer().getPluginManager().getPlugin("Essentials") : null;
         for (String warp : ess.getWarps().getList()) {
             if (Bukkit.getCommandAliases().containsKey(warp)) {
                 Bukkit.getLogger().info("Skipped creating command alias of /warp" + warp + " due to existing command.");

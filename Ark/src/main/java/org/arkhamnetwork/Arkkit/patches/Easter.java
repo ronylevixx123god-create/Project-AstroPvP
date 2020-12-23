@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
@@ -10,11 +10,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.Calendar;
-import java.util.TimeZone;
-import org.arkhamnetwork.Arkkit.patches.EasterEggHunt;
-import org.arkhamnetwork.Arkkit.patches.EasterEggHuntCommand;
-import org.arkhamnetwork.Arkkit.patches.EasterListener;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.arkhamnetwork.Arkkit.utils.ItemUtils;
 import org.bukkit.Bukkit;
@@ -23,14 +18,25 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
+import java.util.Calendar;
+import java.util.TimeZone;
+
 public class Easter
-extends ArkPlugin {
+        extends ArkPlugin {
     Calendar cal = Calendar.getInstance();
     TimeZone zone = TimeZone.getTimeZone("EST");
     private EasterEggHunt eggHuntTask;
 
     public Easter(Plugin p) {
         super(p);
+    }
+
+    public static ItemStack getEasterEgg() {
+        return ItemUtils.buildItem(Material.EGG, (short) 0, ChatColor.YELLOW + "Easter Egg " + ChatColor.GRAY + "(Right Click)", ChatColor.GRAY + "A colored easter egg full of loot!");
+    }
+
+    public static boolean isEasterEgg(ItemStack i) {
+        return i != null && i.hasItemMeta() && i.getItemMeta().hasDisplayName() && i.getItemMeta().hasLore() && i.getItemMeta().getDisplayName().equals(ChatColor.YELLOW + "Easter Egg " + ChatColor.GRAY + "(Right Click)") && i.getItemMeta().getLore().get(0).equals(ChatColor.GRAY + "A colored easter egg full of loot!");
     }
 
     public boolean isEaster() {
@@ -60,14 +66,6 @@ extends ArkPlugin {
         this.unregisterTasks();
         this.unregisterListeners();
         this.unregisterCommands();
-    }
-
-    public static ItemStack getEasterEgg() {
-        return ItemUtils.buildItem(Material.EGG, (short)0, (Object)ChatColor.YELLOW + "Easter Egg " + (Object)ChatColor.GRAY + "(Right Click)", (Object)ChatColor.GRAY + "A colored easter egg full of loot!");
-    }
-
-    public static boolean isEasterEgg(ItemStack i) {
-        return i != null && i.hasItemMeta() && i.getItemMeta().hasDisplayName() && i.getItemMeta().hasLore() && i.getItemMeta().getDisplayName().equals((Object)ChatColor.YELLOW + "Easter Egg " + (Object)ChatColor.GRAY + "(Right Click)") && ((String)i.getItemMeta().getLore().get(0)).equals((Object)ChatColor.GRAY + "A colored easter egg full of loot!");
     }
 
     public EasterEggHunt getEggHuntTask() {

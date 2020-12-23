@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.World
@@ -13,7 +13,7 @@ import org.bukkit.World;
 import org.bukkit.scheduler.BukkitRunnable;
 
 final class NoMobGriefingTask
-extends BukkitRunnable {
+        extends BukkitRunnable {
     NoMobGriefingTask() {
     }
 

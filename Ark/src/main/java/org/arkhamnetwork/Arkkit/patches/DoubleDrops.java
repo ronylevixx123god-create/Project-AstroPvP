@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.google.common.collect.Lists
  *  org.bukkit.Material
@@ -29,7 +29,7 @@ import org.bukkit.plugin.Plugin;
 import java.io.IOException;
 
 public class DoubleDrops
-extends ArkPlugin {
+        extends ArkPlugin {
     public DoubleDrops(Plugin p) {
         super(p);
     }
@@ -47,11 +47,11 @@ extends ArkPlugin {
     }
 
     class DoubleDropListener
-    implements Listener {
+            implements Listener {
         DoubleDropListener() {
         }
 
-        @EventHandler(priority=EventPriority.HIGH, ignoreCancelled=true)
+        @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
         public void onPlayerDEath(EntityDeathEvent event) {
             if (event instanceof Player) {
                 return;
@@ -71,7 +71,7 @@ extends ArkPlugin {
                 if (overflow > 0) {
                     int stacksToGive;
                     int leftOver = overflow % 64;
-                    if (overflow > 64 && (stacksToGive = (int)Math.floor((double)overflow / 64.0)) >= 1) {
+                    if (overflow > 64 && (stacksToGive = (int) Math.floor((double) overflow / 64.0)) >= 1) {
                         for (int i = 0; i < stacksToGive; ++i) {
                             event.getDrops().add(new ItemStack(Material.SULPHUR, Material.SULPHUR.getMaxStackSize()));
                         }

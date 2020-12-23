@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.comphenix.protocol.PacketType
  *  com.comphenix.protocol.PacketType$Play$Server
@@ -25,12 +25,6 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.events.PacketListener;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
-
 import com.google.common.collect.Lists;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
@@ -43,11 +37,16 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
+
 public class AntiKnockback
-extends ArkPlugin {
+        extends ArkPlugin {
+    public HashMap<UUID, List<Double>> yChanges = new HashMap();
     HashMap<UUID, BukkitRunnable> runnables = new HashMap();
     private PacketListener packetListener;
-    public HashMap<UUID, List<Double>> yChanges = new HashMap();
 
     public AntiKnockback(Plugin p) {
         super(p);
@@ -55,13 +54,13 @@ extends ArkPlugin {
 
     @Override
     public void enable() {
-        this.packetListener = new PacketAdapter((Plugin)Arkkit.get(), new PacketType[]{PacketType.Play.Server.ENTITY_VELOCITY}){
+        this.packetListener = new PacketAdapter(Arkkit.get(), PacketType.Play.Server.ENTITY_VELOCITY) {
 
             public void onPacketSending(PacketEvent event) {
                 if (event.getPacketType() == PacketType.Play.Server.ENTITY_VELOCITY) {
                     int z;
                     int y;
-                    int entityId = (Integer)event.getPacket().getIntegers().readSafely(0);
+                    int entityId = event.getPacket().getIntegers().readSafely(0);
                     if (entityId != event.getPlayer().getEntityId()) {
                         return;
                     }
@@ -73,15 +72,15 @@ extends ArkPlugin {
                         AntiKnockback.this.runnables.get(player.getUniqueId()).cancel();
                     }
                     final Location current = event.getPlayer().getLocation().clone();
-                    int x = (Integer)event.getPacket().getIntegers().readSafely(1);
-                    final Vector velocity = new Vector(x, y = ((Integer)event.getPacket().getIntegers().readSafely(2)).intValue(), z = ((Integer)event.getPacket().getIntegers().readSafely(3)).intValue());
+                    int x = event.getPacket().getIntegers().readSafely(1);
+                    final Vector velocity = new Vector(x, y = event.getPacket().getIntegers().readSafely(2).intValue(), z = event.getPacket().getIntegers().readSafely(3).intValue());
                     if (velocity.getY() <= 500.0 || !event.getPlayer().isOnGround()) {
                         return;
                     }
                     if (current.clone().add(0.0, 2.0, 0.0).getBlock().getType() != Material.AIR) {
                         return;
                     }
-                    BukkitRunnable run = new BukkitRunnable(){
+                    BukkitRunnable run = new BukkitRunnable() {
                         double highestY = 0.0;
                         int run = 0;
 
@@ -101,12 +100,12 @@ extends ArkPlugin {
                                 double difference = this.highestY - current.getY();
                                 ys.add(difference);
                                 if (difference <= 0.2) {
-                                    Bukkit.getPluginManager().callEvent((Event)new PlayerNoKnockbackEvent(player, velocity, current, this.highestY, difference, ys));
+                                    Bukkit.getPluginManager().callEvent(new PlayerNoKnockbackEvent(player, velocity, current, this.highestY, difference, ys));
                                 }
                             }
                         }
                     };
-                    run.runTaskTimer((Plugin)Arkkit.get(), 1L, 1L);
+                    run.runTaskTimer(Arkkit.get(), 1L, 1L);
                     AntiKnockback.this.runnables.put(player.getUniqueId(), run);
                 }
             }
@@ -120,8 +119,7 @@ extends ArkPlugin {
             if (this.packetListener != null) {
                 ProtocolLibrary.getProtocolManager().removePacketListener(this.packetListener);
             }
-        }
-        catch (Exception err) {
+        } catch (Exception err) {
             err.printStackTrace();
         }
     }

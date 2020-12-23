@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.ParticleEffect
  *  net.minecraft.server.v1_7_R4.PacketPlayOutWorldEvent
@@ -26,17 +26,10 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.UUID;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
@@ -50,8 +43,12 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.plugin.Plugin;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.UUID;
+
 final class SpawnPodListener
-implements Listener {
+        implements Listener {
     protected static HashSet<String> newPlayers = new HashSet();
 
     SpawnPodListener() {
@@ -59,19 +56,19 @@ implements Listener {
 
     @EventHandler
     public void onAsyncPlayerLoginEvent(AsyncPlayerPreLoginEvent e) {
-        if (!Bukkit.getOfflinePlayer((UUID)e.getUniqueId()).hasPlayedBefore()) {
+        if (!Bukkit.getOfflinePlayer(e.getUniqueId()).hasPlayedBefore()) {
             newPlayers.add(e.getName());
         }
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerJoin(PlayerJoinEvent e) {
         final Player pl = e.getPlayer();
         if (newPlayers.contains(pl.getName())) {
             pl.setAllowFlight(false);
             pl.teleport(pl.getWorld().getSpawnLocation().clone().add(0.0, 360.0, 0.0), PlayerTeleportEvent.TeleportCause.PLUGIN);
             pl.setPlayerTime(18000L, false);
-            Bukkit.getScheduler().runTaskLater((Plugin)Arkkit.get(), new Runnable(){
+            Bukkit.getScheduler().runTaskLater(Arkkit.get(), new Runnable() {
 
                 @Override
                 public void run() {
@@ -90,10 +87,10 @@ implements Listener {
         newPlayers.remove(e.getPlayer().getName());
     }
 
-    @EventHandler(priority=EventPriority.LOW)
+    @EventHandler(priority = EventPriority.LOW)
     public void onEntityDamage(EntityDamageEvent e) {
-        if (e.getCause() == EntityDamageEvent.DamageCause.FALL && e.getEntity() instanceof Player && newPlayers.contains(((Player)e.getEntity()).getName())) {
-            Player pl = (Player)e.getEntity();
+        if (e.getCause() == EntityDamageEvent.DamageCause.FALL && e.getEntity() instanceof Player && newPlayers.contains(e.getEntity().getName())) {
+            Player pl = (Player) e.getEntity();
             newPlayers.remove(pl.getName());
             e.setCancelled(true);
             e.setDamage(0.0);
@@ -101,7 +98,7 @@ implements Listener {
             Location loc = pl.getLocation().clone().add(0.0, 1.0, 0.0);
             Block b = pl.getLocation().clone().subtract(0.0, 1.0, 0.0).getBlock();
             PacketPlayOutWorldEvent particles = new PacketPlayOutWorldEvent(2001, new BlockPosition(Math.round(loc.getBlockX()), Math.round(loc.getBlockY()), Math.round(loc.getBlockZ())), b.getTypeId(), false);
-            ParticleEffect.sendWorldEventPacket((PacketPlayOutWorldEvent)particles, (Location)loc);
+            ParticleEffect.sendWorldEventPacket(particles, loc);
         }
     }
 
@@ -113,12 +110,12 @@ implements Listener {
         for (int x = -2; x < 2; ++x) {
             for (int z = -2; z < 2; ++z) {
                 for (int y = -2; y < 2; ++y) {
-                    block.add(new Location(loc.getWorld(), ox + (double)x, oy + (double)y, oz + (double)y));
+                    block.add(new Location(loc.getWorld(), ox + (double) x, oy + (double) y, oz + (double) y));
                 }
             }
         }
         for (Location l : block) {
-            FallingBlock fallingBlock = l.getWorld().spawnFallingBlock(l, Material.ICE.getId(), (byte)0);
+            FallingBlock fallingBlock = l.getWorld().spawnFallingBlock(l, Material.ICE.getId(), (byte) 0);
         }
     }
 }

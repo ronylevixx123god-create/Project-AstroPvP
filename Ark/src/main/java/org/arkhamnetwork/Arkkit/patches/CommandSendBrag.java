@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.CC
  *  org.bukkit.Bukkit
@@ -15,11 +15,8 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import java.util.List;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
-import org.arkhamnetwork.Arkkit.patches.ItemLinking;
-import org.arkhamnetwork.Arkkit.patches.ItemLinkingChatListener;
 import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -30,9 +27,11 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
+import java.util.List;
+
 class CommandSendBrag
-extends AbstractCommand {
-    private ItemLinkingChatListener itemLinkingListener;
+        extends AbstractCommand {
+    private final ItemLinkingChatListener itemLinkingListener;
 
     public CommandSendBrag(String command, String usage, String description, List<String> aliases, ItemLinkingChatListener linking) {
         super(command, usage, description, aliases);
@@ -41,22 +40,22 @@ extends AbstractCommand {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        Player p = (Player)sender;
+        Player p = (Player) sender;
         if (!(p.hasPermission("itemlinking.senditem") || p.hasPermission("arkhamjsonitem.senditem") || p.hasPermission("cosmicpvp.senditem"))) {
-            p.sendMessage((Object)ChatColor.RED + "You do not have permission to use this feature!");
-            p.sendMessage((Object)ChatColor.GRAY + "Purchase a global rank with " + (Object)ChatColor.UNDERLINE + "/buy" + (Object)ChatColor.GRAY + " and try again!");
+            p.sendMessage(ChatColor.RED + "You do not have permission to use this feature!");
+            p.sendMessage(ChatColor.GRAY + "Purchase a global rank with " + ChatColor.UNDERLINE + "/buy" + ChatColor.GRAY + " and try again!");
             return true;
         }
-        if (p.hasMetadata("last_senditem") && System.currentTimeMillis() - ((MetadataValue)p.getMetadata("last_senditem").get(0)).asLong() <= 5000L) {
-            p.sendMessage((Object)ChatColor.RED + "You cannot send another /sendbrag for " + (5000L - (System.currentTimeMillis() - ((MetadataValue)p.getMetadata("last_senditem").get(0)).asLong())) + "ms!");
+        if (p.hasMetadata("last_senditem") && System.currentTimeMillis() - p.getMetadata("last_senditem").get(0).asLong() <= 5000L) {
+            p.sendMessage(ChatColor.RED + "You cannot send another /sendbrag for " + (5000L - (System.currentTimeMillis() - p.getMetadata("last_senditem").get(0).asLong())) + "ms!");
             return true;
         }
-        p.setMetadata("last_senditem", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)System.currentTimeMillis()));
+        p.setMetadata("last_senditem", new FixedMetadataValue(Arkkit.get(), System.currentTimeMillis()));
         if (args.length >= 1) {
             String p_name = args[0];
-            Player to_show = Bukkit.getPlayer((String)p_name);
+            Player to_show = Bukkit.getPlayer(p_name);
             if (to_show == null || !p.canSee(to_show)) {
-                p.sendMessage((Object)ChatColor.RED + "That is an invalid player: " + p_name);
+                p.sendMessage(ChatColor.RED + "That is an invalid player: " + p_name);
                 return true;
             }
             if (args.length == 1) {
@@ -65,22 +64,22 @@ extends AbstractCommand {
                     this.itemLinkingListener.createNewBragInventory(p);
                     ItemLinking.sendItemViaJSON(ChatUtils.getFilteredMessage(text, to_show, true), p.getItemInHand(), to_show, p);
                 }
-                p.sendMessage((Object)ChatColor.GREEN + "Brag Sent!");
+                p.sendMessage(ChatColor.GREEN + "Brag Sent!");
                 return true;
             }
             StringBuilder builder = new StringBuilder();
             for (int index = 1; index < args.length; ++index) {
                 builder.append(args[index]).append(" ");
             }
-            String text = (Object)ChatColor.GRAY + "(From " + p.getName() + ") " + (Object)ChatColor.WHITE + "\u00bb [BRAG] " + CC.White + "\u00ab - " + ChatColor.translateAlternateColorCodes((char)'&', (String)builder.toString().trim());
+            String text = ChatColor.GRAY + "(From " + p.getName() + ") " + ChatColor.WHITE + "\u00bb [BRAG] " + CC.White + "\u00ab - " + ChatColor.translateAlternateColorCodes('&', builder.toString().trim());
             if (!p.hasMetadata("silentMute")) {
                 this.itemLinkingListener.createNewBragInventory(p);
                 ItemLinking.sendItemViaJSON(ChatUtils.getFilteredMessage(text, to_show, true), p.getItemInHand(), to_show, p);
             }
-            p.sendMessage((Object)ChatColor.GREEN + "Brag Sent!");
+            p.sendMessage(ChatColor.GREEN + "Brag Sent!");
             return true;
         }
-        p.sendMessage((Object)ChatColor.RED + "Invalid args: /sendBrag <playerName> [extraText]");
+        p.sendMessage(ChatColor.RED + "Invalid args: /sendBrag <playerName> [extraText]");
         return false;
     }
 }

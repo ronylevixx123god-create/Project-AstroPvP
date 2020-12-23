@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.gmail.nossr50.datatypes.player.PlayerProfile
  *  com.gmail.nossr50.util.player.UserManager
@@ -23,7 +23,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 public class SafeShutdown
-extends ArkPlugin {
+        extends ArkPlugin {
     public SafeShutdown(Plugin p) {
         super(p);
     }
@@ -37,15 +37,14 @@ extends ArkPlugin {
         if (Arkkit.get().shutting_down) {
             boolean hasWhitelist = Bukkit.hasWhitelist();
             boolean mcmmo = Bukkit.getPluginManager().isPluginEnabled("mcMMO");
-            Bukkit.setWhitelist((boolean)true);
+            Bukkit.setWhitelist(true);
             for (Player p : Bukkit.getOnlinePlayers()) {
                 if (mcmmo) {
                     try {
-                        PlayerProfile pp = UserManager.getPlayer((Player)p).getProfile();
+                        PlayerProfile pp = UserManager.getPlayer(p).getProfile();
                         pp.changed = true;
                         pp.save();
-                    }
-                    catch (Exception err) {
+                    } catch (Exception err) {
                         Bukkit.getLogger().info("[Arkkit (SafeShutdown)] Handled exception caught for saving player " + p.getName() + "'s mcMMO data.");
                         err.printStackTrace();
                         continue;
@@ -63,7 +62,7 @@ extends ArkPlugin {
                 }
             }
             if (!hasWhitelist) {
-                Bukkit.setWhitelist((boolean)false);
+                Bukkit.setWhitelist(false);
             }
         }
     }

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.World
  *  org.bukkit.craftbukkit.v1_7_R4.CraftWorld
@@ -22,15 +22,15 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.world.WorldLoadEvent;
 
 final class NoNaturalMobsListener
-implements Listener {
+        implements Listener {
     NoNaturalMobsListener() {
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onWorldLoad(WorldLoadEvent e) {
         World w = e.getWorld();
-        ((CraftWorld)w).getHandle().ticksPerAnimalSpawns = 0L;
-        ((CraftWorld)w).getHandle().ticksPerMonsterSpawns = 0L;
+        ((CraftWorld) w).getHandle().ticksPerAnimalSpawns = 0L;
+        ((CraftWorld) w).getHandle().ticksPerMonsterSpawns = 0L;
     }
 
     @EventHandler

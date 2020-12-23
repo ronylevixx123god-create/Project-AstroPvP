@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.ChatColor
  *  org.bukkit.DyeColor
@@ -45,8 +45,8 @@ public class ColorUtils {
         if (dc == DyeColor.YELLOW) {
             return ChatColor.YELLOW;
         }
-        if (ChatColor.valueOf((String)dc.toString()) != null) {
-            return ChatColor.valueOf((String)dc.toString());
+        if (ChatColor.valueOf(dc.toString()) != null) {
+            return ChatColor.valueOf(dc.toString());
         }
         return ChatColor.WHITE;
     }

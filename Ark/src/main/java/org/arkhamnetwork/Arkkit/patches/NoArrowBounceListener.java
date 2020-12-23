@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.entity.Arrow
  *  org.bukkit.event.EventHandler
@@ -15,7 +15,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileHitEvent;
 
 final class NoArrowBounceListener
-implements Listener {
+        implements Listener {
     NoArrowBounceListener() {
     }
 

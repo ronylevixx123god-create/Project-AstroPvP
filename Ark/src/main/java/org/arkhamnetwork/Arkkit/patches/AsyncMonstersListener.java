@@ -1,4 +1,3 @@
-
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.gmail.nossr50.mcMMO;
@@ -29,19 +28,17 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 final class AsyncMonstersListener
-implements Listener {
-    private boolean stackIG = true;
-    private boolean nerfMobSpawners = Arkkit.get().getConfig().getBoolean("settings.async_monsters.nerfWildSpawners");
-    AsyncMonsters instance;
-    //public Set<Entity> deadEntitySet = Collections.newSetFromMap(CacheBuilder.newBuilder().expireAfterWrite(25L, TimeUnit.SECONDS).concurrencyLevel(16).weakKeys().build());
-
+        implements Listener {
     public Set<Entity> deadEntitySet = (Set<Entity>) CacheBuilder.newBuilder()
             .expireAfterWrite(25L, TimeUnit.SECONDS)
             .concurrencyLevel(16)
             .weakKeys()
             .build();
-
-    private HashMap<Material, Material> condensable = new HashMap<Material, Material>(){
+    AsyncMonsters instance;
+    private boolean stackIG = true;
+    //public Set<Entity> deadEntitySet = Collections.newSetFromMap(CacheBuilder.newBuilder().expireAfterWrite(25L, TimeUnit.SECONDS).concurrencyLevel(16).weakKeys().build());
+    private boolean nerfMobSpawners = Arkkit.get().getConfig().getBoolean("settings.async_monsters.nerfWildSpawners");
+    private final HashMap<Material, Material> condensable = new HashMap<Material, Material>() {
         {
             this.put(Material.IRON_INGOT, Material.IRON_BLOCK);
             this.put(Material.GOLD_INGOT, Material.GOLD_BLOCK);
@@ -73,7 +70,7 @@ implements Listener {
         return alreadyFound == null || !alreadyFound.isNormal() || !this.instance.factionsWithEnemiesInThem.contains(alreadyFound.getId());
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onCreatureSpawn(CreatureSpawnEvent e) {
         if (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER) {
             Zombie z;
@@ -83,12 +80,12 @@ implements Listener {
             if (e1.getWorld().getName().equals("dungeon_destroyed_outpost")) {
                 return;
             }
-            Faction found = Board.getFactionAt((FLocation)new FLocation(e.getLocation()));
+            Faction found = Board.getFactionAt(new FLocation(e.getLocation()));
             if (this.nerfMobSpawners && found.isNone() && Math.random() < 0.6) {
                 e.setCancelled(true);
                 return;
             }
-            e1.setMetadata("fromMobSpawner", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)true));
+            e1.setMetadata("fromMobSpawner", new FixedMetadataValue(Arkkit.get(), true));
             if (e1.getType() == EntityType.CREEPER && !AsyncMonsters.stackCreepers) {
                 return;
             }
@@ -100,48 +97,50 @@ implements Listener {
             if (e1.getType() == EntityType.ENDERMAN || e1.getType() == EntityType.PIG_ZOMBIE || e1.getType() == EntityType.CREEPER) {
                 y_scan = 32;
             }
-            if (e1 instanceof Ageable && !(a = (Ageable)e1).isAdult()) {
+            if (e1 instanceof Ageable && !(a = (Ageable) e1).isAdult()) {
                 a.setAdult();
             }
-            if (e1 instanceof Zombie && (z = (Zombie)e1).isBaby()) {
+            if (e1 instanceof Zombie && (z = (Zombie) e1).isBaby()) {
                 z.setBaby(false);
             }
             if (e1 instanceof LivingEntity) {
                 LivingEntity le = e1;
                 this.clearEquipment(le);
             }
-            CraftEntity ce = (CraftEntity)e1;
+            CraftEntity ce = (CraftEntity) e1;
             if (ce.getHandle().mobSpawnerMultiplier > 1) {
-                AMUtils.setMonsterAmount((Entity)e1, AMUtils.getMonsterAmount((Entity)e1) * ce.getHandle().mobSpawnerMultiplier);
+                AMUtils.setMonsterAmount(e1, AMUtils.getMonsterAmount(e1) * ce.getHandle().mobSpawnerMultiplier);
             }
-            for (Entity e2 : e1.getNearbyEntities((double)xz_scan, (double)y_scan, (double)xz_scan)) {
+            for (Entity e2 : e1.getNearbyEntities(xz_scan, y_scan, xz_scan)) {
                 ItemStack boot;
-                if (e1.getType() != e2.getType() || !e2.hasMetadata("fromMobSpawner") || this.deadEntitySet.contains((Object)e2) || (boot = ((LivingEntity)e2).getEquipment().getBoots()) != null && boot.getType() != Material.AIR || e2.getVehicle() != null) continue;
+                if (e1.getType() != e2.getType() || !e2.hasMetadata("fromMobSpawner") || this.deadEntitySet.contains(e2) || (boot = ((LivingEntity) e2).getEquipment().getBoots()) != null && boot.getType() != Material.AIR || e2.getVehicle() != null)
+                    continue;
                 if ((e1 instanceof Creeper || e1 instanceof Enderman) && e2.isOnGround()) {
                     e2.setLastDamageCause(new EntityDamageEvent(e2, EntityDamageEvent.DamageCause.FALL, 999999));
-                    e2.setMetadata("killAura", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)AMUtils.getMonsterAmount(e2)));
-                    ((LivingEntity)e2).damage(999999.0);
+                    e2.setMetadata("killAura", new FixedMetadataValue(Arkkit.get(), AMUtils.getMonsterAmount(e2)));
+                    ((LivingEntity) e2).damage(999999.0);
                     continue;
                 }
                 int monster2Amount = AMUtils.getMonsterAmount(e2);
                 e.setCancelled(true);
-                if (monster2Amount > AsyncMonsters.MAX_KILL_STACK / 10 && Math.random() > 0.33 || monster2Amount > AsyncMonsters.MAX_KILL_STACK && Math.random() > 0.1) break;
-                AMUtils.setMonsterAmount(e2, monster2Amount + AMUtils.getMonsterAmount((Entity)e1));
+                if (monster2Amount > AsyncMonsters.MAX_KILL_STACK / 10 && Math.random() > 0.33 || monster2Amount > AsyncMonsters.MAX_KILL_STACK && Math.random() > 0.1)
+                    break;
+                AMUtils.setMonsterAmount(e2, monster2Amount + AMUtils.getMonsterAmount(e1));
                 break;
             }
         }
     }
 
-    @EventHandler(priority=EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onEntityDeathHIGHEST(EntityDeathEvent e) {
-        if (this.deadEntitySet.contains((Object)e.getEntity())) {
+        if (this.deadEntitySet.contains(e.getEntity())) {
             return;
         }
-        this.deadEntitySet.add((Entity)e.getEntity());
+        this.deadEntitySet.add(e.getEntity());
         if (e.getEntity().getWorld().getName().equals("dungeon_destroyed_outpost")) {
             return;
         }
-        int monsterAmount = AMUtils.getMonsterAmount((Entity)e.getEntity());
+        int monsterAmount = AMUtils.getMonsterAmount(e.getEntity());
         if (monsterAmount > 10000 || monsterAmount < 0) {
             e.getEntity().remove();
             e.setDroppedExp(0);
@@ -151,7 +150,7 @@ implements Listener {
         if (monsterAmount > 1) {
             int monstersToKill = 1;
             if (e.getEntity().getLastDamageCause() != null && (e.getEntity().getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.LAVA || e.getEntity().getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.FIRE)) {
-                monstersToKill = (int)Math.floor((double)monsterAmount * AsyncMonsters.LAVA_KILL_PERCENT);
+                monstersToKill = (int) Math.floor((double) monsterAmount * AsyncMonsters.LAVA_KILL_PERCENT);
             }
             if (e.getEntity().getLastDamageCause() != null && e.getEntity().getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.FALL) {
                 monstersToKill = monsterAmount;
@@ -163,7 +162,7 @@ implements Listener {
                 monstersToKill = AsyncMonsters.MAX_KILL_STACK;
             }
             if (e.getEntity().hasMetadata("killAura")) {
-                monstersToKill = ((MetadataValue)e.getEntity().getMetadata("killAura").get(0)).asInt();
+                monstersToKill = e.getEntity().getMetadata("killAura").get(0).asInt();
             }
             if (monstersToKill > monsterAmount) {
                 monstersToKill = monsterAmount;
@@ -208,35 +207,36 @@ implements Listener {
                 int monstersToAdd = 0;
                 for (Entity ent : e.getEntity().getLocation().getChunk().getEntities()) {
                     LivingEntity le;
-                    if (!(ent instanceof LivingEntity) || (le = (LivingEntity)ent).getEntityId() == e.getEntity().getEntityId() || le.getType() != e.getEntityType() || !(le.getHealth() > 0.0) || !le.hasMetadata("fromMobSpawner")) continue;
+                    if (!(ent instanceof LivingEntity) || (le = (LivingEntity) ent).getEntityId() == e.getEntity().getEntityId() || le.getType() != e.getEntityType() || !(le.getHealth() > 0.0) || !le.hasMetadata("fromMobSpawner"))
+                        continue;
                     if (ent instanceof Creeper && ent.isOnGround()) {
-                        ent.setLastDamageCause(new EntityDamageEvent((Entity)ent, EntityDamageEvent.DamageCause.FALL, 999999));
-                        ent.setMetadata("killAura", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)AMUtils.getMonsterAmount((Entity)ent)));
-                        ((LivingEntity)ent).damage(999999.0);
+                        ent.setLastDamageCause(new EntityDamageEvent(ent, EntityDamageEvent.DamageCause.FALL, 999999));
+                        ent.setMetadata("killAura", new FixedMetadataValue(Arkkit.get(), AMUtils.getMonsterAmount(ent)));
+                        ((LivingEntity) ent).damage(999999.0);
                         continue;
                     }
-                    monstersToAdd += AMUtils.getMonsterAmount((Entity)ent);
+                    monstersToAdd += AMUtils.getMonsterAmount(ent);
                     ent.remove();
                 }
                 Entity e2 = e.getEntity().getWorld().spawnEntity(e.getEntity().getLocation(), e.getEntityType());
                 AMUtils.setMonsterAmount(e2, monsterAmount - monstersToKill + monstersToAdd);
-                ((CraftEntity)e2).getHandle().fromMobSpawner = true;
-                e2.setMetadata("fromMobSpawner", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)true));
-                e2.setMetadata("mcMMO: Spawned Entity", (MetadataValue)mcMMO.metadataValue);
-                if (e2 instanceof Ageable && !(a = (Ageable)e2).isAdult()) {
+                ((CraftEntity) e2).getHandle().fromMobSpawner = true;
+                e2.setMetadata("fromMobSpawner", new FixedMetadataValue(Arkkit.get(), true));
+                e2.setMetadata("mcMMO: Spawned Entity", mcMMO.metadataValue);
+                if (e2 instanceof Ageable && !(a = (Ageable) e2).isAdult()) {
                     a.setAdult();
                 }
-                if (e2 instanceof Zombie && (z = (Zombie)e2).isBaby()) {
+                if (e2 instanceof Zombie && (z = (Zombie) e2).isBaby()) {
                     z.setBaby(false);
                 }
                 if (e2 instanceof LivingEntity) {
-                    LivingEntity le = (LivingEntity)e2;
+                    LivingEntity le = (LivingEntity) e2;
                     this.clearEquipment(le);
                 }
                 if (e.getEntity().getFireTicks() > 0) {
                     e2.setFireTicks(400);
                 }
-                AMUtils.setMonsterAmount((Entity)e.getEntity(), 1);
+                AMUtils.setMonsterAmount(e.getEntity(), 1);
             }
             if (e.getEntity() instanceof IronGolem || e.getEntity() instanceof MushroomCow || e.getEntity() instanceof MagmaCube || e.getEntity() instanceof Ghast) {
                 this.convertDrops(e.getDrops());
@@ -246,7 +246,7 @@ implements Listener {
             for (ItemStack drop : e.getDrops()) {
                 Material type = drop.getType();
                 if (type != Material.RED_MUSHROOM && type != Material.BROWN_MUSHROOM) continue;
-                e.getDrops().remove((Object)drop);
+                e.getDrops().remove(drop);
             }
         }
     }
@@ -259,10 +259,10 @@ implements Listener {
         boolean condensable = false;
         Material condensableMaterial = null;
         for (ItemStack drop : Lists.newArrayList(drops)) {
-            if (!this.condensable.containsKey((Object)drop.getType())) continue;
+            if (!this.condensable.containsKey(drop.getType())) continue;
             condensableMaterial = drop.getType();
             condensableCount += drop.getAmount();
-            drops.remove((Object)drop);
+            drops.remove(drop);
             condensable = true;
         }
         if (!condensable) {
@@ -274,17 +274,17 @@ implements Listener {
             boolean giveExtra;
             int condenseToGive = condensableCount / 9;
             int remainder = condensableCount % 9;
-            boolean bl = giveExtra = condenseToGive > 0 && remainder > 0 && Math.random() <= (double)remainder * 0.11;
+            boolean bl = giveExtra = condenseToGive > 0 && remainder > 0 && Math.random() <= (double) remainder * 0.11;
             if (giveExtra) {
                 ++condenseToGive;
             }
             int stacks = condenseToGive / 64;
             int leftOverBlocks = condenseToGive % 64;
             for (int i = 0; i < stacks; ++i) {
-                drops.add(new ItemStack(this.condensable.get((Object)condensableMaterial), 64));
+                drops.add(new ItemStack(this.condensable.get(condensableMaterial), 64));
             }
             if (leftOverBlocks > 0) {
-                drops.add(new ItemStack(this.condensable.get((Object)condensableMaterial), leftOverBlocks));
+                drops.add(new ItemStack(this.condensable.get(condensableMaterial), leftOverBlocks));
             }
         }
     }

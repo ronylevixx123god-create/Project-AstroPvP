@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.compilex.CompilexPermissions.CompilexPermissions
  *  com.compilex.CompilexPermissions.manager.CacheManager
@@ -26,9 +26,6 @@ import com.compilex.CompilexPermissions.manager.CacheManager;
 import com.compilex.CompilexPermissions.structure.PermissionGroup;
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
-import java.io.File;
-import java.util.HashSet;
-import java.util.List;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -41,18 +38,22 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
 import org.kitteh.vanish.VanishPlugin;
 
+import java.io.File;
+import java.util.HashSet;
+import java.util.List;
+
 final class TogglePlayerListener
-implements Listener {
+        implements Listener {
     private Essentials ess3;
-    private boolean vanishNoPacket = new File("plugins/VanishNoPacket.jar").exists();
+    private final boolean vanishNoPacket = new File("plugins/VanishNoPacket.jar").exists();
 
     TogglePlayerListener() {
         if (Bukkit.getPluginManager().isPluginEnabled("Essentials")) {
-            this.ess3 = (Essentials)Bukkit.getPluginManager().getPlugin("Essentials");
+            this.ess3 = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
         }
     }
 
-    @EventHandler(priority=EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerRunVanish(PlayerCommandPreprocessEvent event) {
         if (event.getMessage() == null) {
             return;
@@ -62,7 +63,7 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerJoin(PlayerJoinEvent e) {
         for (Player p : CommandTogglePlayer.hidden_players) {
             p.hidePlayer(e.getPlayer());
@@ -70,12 +71,12 @@ implements Listener {
         }
         boolean exemptFromVanish = false;
         if (this.vanishNoPacket) {
-            List groups = (List)CacheManager.getCachedPlayerGroups().get(e.getPlayer().getUniqueId().toString());
-            List permissions = (List)CacheManager.getCachedPlayerPermissions().get(e.getPlayer().getUniqueId().toString());
+            List groups = CacheManager.getCachedPlayerGroups().get(e.getPlayer().getUniqueId().toString());
+            List permissions = CacheManager.getCachedPlayerPermissions().get(e.getPlayer().getUniqueId().toString());
             HashSet allPerms = new HashSet();
             if (groups != null) {
                 groups.forEach(group -> {
-                    PermissionGroup foundGroup = (PermissionGroup)CompilexPermissions.get().getPermissionManager().getCachedLoadedGroups().get(group);
+                    PermissionGroup foundGroup = CompilexPermissions.get().getPermissionManager().getCachedLoadedGroups().get(group);
                     if (foundGroup == null) {
                         return;
                     }
@@ -92,9 +93,9 @@ implements Listener {
                 if (u != null && u.isVanished()) {
                     u.setVanished(false);
                 }
-                e.getPlayer().removeMetadata("trackedVanishState", (Plugin)Arkkit.get());
+                e.getPlayer().removeMetadata("trackedVanishState", Arkkit.get());
                 exemptFromVanish = true;
-                VanishPlugin plugin = (VanishPlugin)Bukkit.getPluginManager().getPlugin("VanishNoPacket");
+                VanishPlugin plugin = (VanishPlugin) Bukkit.getPluginManager().getPlugin("VanishNoPacket");
                 if (plugin != null && !plugin.getManager().isVanished(e.getPlayer())) {
                     plugin.getManager().vanish(e.getPlayer(), silent, false);
                     Bukkit.getLogger().info("Forcing vanish for " + e.getPlayer().getName() + " due to having permissions and not being vanished!");
@@ -122,7 +123,7 @@ implements Listener {
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent e) {
-        CommandTogglePlayer.hidden_players.remove((Object)e.getPlayer());
+        CommandTogglePlayer.hidden_players.remove(e.getPlayer());
     }
 }
 

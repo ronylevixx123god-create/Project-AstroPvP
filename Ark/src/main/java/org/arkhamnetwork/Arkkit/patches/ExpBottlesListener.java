@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.compilex.CosmicOutposts.CosmicOutpostsAPI
  *  com.wimbli.WorldBorder.WorldBorder
@@ -39,11 +39,11 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.metadata.MetadataValue;
 
 final class ExpBottlesListener
-implements Listener {
+        implements Listener {
     ExpBottlesListener() {
     }
 
-    @EventHandler(priority=EventPriority.LOW, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onPlayerTeleport(PlayerTeleportEvent e) {
         if (e.getFrom().getWorld().getName().equals("world_duels") || e.getTo().getWorld().getName().equals("world_duels")) {
             return;
@@ -69,14 +69,14 @@ implements Listener {
                     noLimit = true;
                 }
             }
-            if (Bukkit.getPluginManager().isPluginEnabled("CosmicOutposts") && CosmicOutpostsAPI.controlsHeroOutpost((Player)p)) {
-                p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.GREEN + "No XP Exhaustion " + (Object)ChatColor.GRAY + "[Hero Outpost Perk]");
+            if (Bukkit.getPluginManager().isPluginEnabled("CosmicOutposts") && CosmicOutpostsAPI.controlsHeroOutpost(p)) {
+                p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.GREEN + "No XP Exhaustion " + ChatColor.GRAY + "[Hero Outpost Perk]");
                 noLimit = true;
             }
             if (!noLimit) {
-                p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You cannot teleport for " + ExpBottlesCommand.getTimeString(((MetadataValue)p.getMetadata("nextExpBottle").get(0)).asLong() - System.currentTimeMillis()) + " due to EXP exhaustion.");
+                p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot teleport for " + ExpBottlesCommand.getTimeString(p.getMetadata("nextExpBottle").get(0).asLong() - System.currentTimeMillis()) + " due to EXP exhaustion.");
                 if (!p.hasPermission("playervaults.amount.15")) {
-                    p.sendMessage((Object)ChatColor.GRAY + "Upgrade your rank at " + (Object)ChatColor.UNDERLINE + "buy.cosmicpvp.com" + (Object)ChatColor.GRAY + " to decrease this delay.");
+                    p.sendMessage(ChatColor.GRAY + "Upgrade your rank at " + ChatColor.UNDERLINE + "buy.cosmicpvp.com" + ChatColor.GRAY + " to decrease this delay.");
                 }
                 e.setCancelled(true);
             }
@@ -84,7 +84,7 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.LOW)
+    @EventHandler(priority = EventPriority.LOW)
     public void onExpBottleUse(PlayerInteractEvent e) {
         if (e.hasItem() && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && ExpBottles.isXpBottle(e.getItem())) {
             Player p = e.getPlayer();

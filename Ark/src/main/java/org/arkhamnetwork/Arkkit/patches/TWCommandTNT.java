@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
@@ -14,10 +14,8 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.List;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
-import org.arkhamnetwork.Arkkit.patches.TWAutoCraftTNT;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -28,8 +26,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
+import java.util.List;
+
 final class TWCommandTNT
-extends AbstractCommand {
+        extends AbstractCommand {
     public TWCommandTNT(String command, String usage, String description, List<String> aliases) {
         super(command, usage, description, aliases);
     }
@@ -39,7 +39,7 @@ extends AbstractCommand {
         if (!(sender instanceof Player)) {
             return true;
         }
-        Player p = (Player)sender;
+        Player p = (Player) sender;
         boolean vip = p.hasPermission("cosmicpvp.vip");
         PlayerInventory i = p.getInventory();
         ItemStack sand = new ItemStack(Material.SAND, 4);
@@ -50,16 +50,16 @@ extends AbstractCommand {
         int sulphurUsed = 0;
         int sandUsed = 0;
         int tntToGive = 0;
-        if ((i.containsAtLeast(sand, 4) || vip && Arkkit.economy.has((OfflinePlayer)p, TWAutoCraftTNT.sandPrice * 4.0)) && i.containsAtLeast(sulphur, 5)) {
-            while ((i.containsAtLeast(sand, 4) || vip && Arkkit.economy.has((OfflinePlayer)p, TWAutoCraftTNT.sandPrice * 4.0)) && i.containsAtLeast(sulphur, 5)) {
+        if ((i.containsAtLeast(sand, 4) || vip && Arkkit.economy.has(p, TWAutoCraftTNT.sandPrice * 4.0)) && i.containsAtLeast(sulphur, 5)) {
+            while ((i.containsAtLeast(sand, 4) || vip && Arkkit.economy.has(p, TWAutoCraftTNT.sandPrice * 4.0)) && i.containsAtLeast(sulphur, 5)) {
                 if (i.containsAtLeast(sand, 4)) {
-                    i.removeItem(new ItemStack[]{sand});
+                    i.removeItem(sand);
                     sandUsed += 4;
                 } else if (vip) {
-                    Arkkit.economy.withdrawPlayer((OfflinePlayer)p, TWAutoCraftTNT.sandPrice * 4.0);
+                    Arkkit.economy.withdrawPlayer(p, TWAutoCraftTNT.sandPrice * 4.0);
                     moneySpent += TWAutoCraftTNT.sandPrice * 4.0;
                 }
-                i.removeItem(new ItemStack[]{sulphur});
+                i.removeItem(sulphur);
                 sulphurUsed += 5;
                 ++tntToGive;
                 ++c;
@@ -72,17 +72,17 @@ extends AbstractCommand {
                 p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "- " + sulphurUsed + "x SULPHUR");
             }
             if (moneySpent > 0.0) {
-                p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "- $" + (int)moneySpent);
+                p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "- $" + (int) moneySpent);
             }
-            p.getInventory().addItem(new ItemStack[]{new ItemStack(Material.TNT, tntToGive)});
-            p.sendMessage(ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "(!)" + (Object)ChatColor.YELLOW + " You crafted " + c + "x TNT!");
+            p.getInventory().addItem(new ItemStack(Material.TNT, tntToGive));
+            p.sendMessage(ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "(!)" + ChatColor.YELLOW + " You crafted " + c + "x TNT!");
             if (!vip) {
-                p.sendMessage((Object)ChatColor.GRAY + "Unlock the ability to use /tnt without sand blocks by purchasing a rank today at " + Arkkit.get().getConfig().getString("language.spigot_branding.store_url") + "!");
+                p.sendMessage(ChatColor.GRAY + "Unlock the ability to use /tnt without sand blocks by purchasing a rank today at " + Arkkit.get().getConfig().getString("language.spigot_branding.store_url") + "!");
             }
             p.playSound(p.getLocation(), Sound.ANVIL_USE, 1.2f, 2.3f);
         } else {
-            p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You do not have the materials to craft TNT.");
-            p.sendMessage(ChatColor.GRAY.toString() + ChatColor.BOLD.toString() + "REQ: " + (Object)ChatColor.GRAY + "5X Sulphur, 4X Sand OR $" + TWAutoCraftTNT.sandPrice + "/sand if ranked.");
+            p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You do not have the materials to craft TNT.");
+            p.sendMessage(ChatColor.GRAY.toString() + ChatColor.BOLD.toString() + "REQ: " + ChatColor.GRAY + "5X Sulphur, 4X Sand OR $" + TWAutoCraftTNT.sandPrice + "/sand if ranked.");
         }
         return true;
     }

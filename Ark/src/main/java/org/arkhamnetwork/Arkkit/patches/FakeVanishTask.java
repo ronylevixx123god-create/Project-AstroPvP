@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.earth2me.essentials.Essentials
  *  com.earth2me.essentials.User
@@ -12,19 +12,18 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.common.collect.Lists;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.List;
+
 class FakeVanishTask
-implements Runnable {
-    private List<String> namesToVanish = Lists.newArrayList("TBNRfrags", "Woofless", "Vikkstar123", "Lachlan", "BOWP", "Kipes", "Vikaiscool_");
-    private Essentials ess;
+        implements Runnable {
     private final int RADIUS = 600;
+    private final List<String> namesToVanish = Lists.newArrayList("TBNRfrags", "Woofless", "Vikkstar123", "Lachlan", "BOWP", "Kipes", "Vikaiscool_");
+    private final Essentials ess;
 
     public FakeVanishTask(Essentials ess) {
         this.ess = ess;
@@ -35,7 +34,7 @@ implements Runnable {
         ArrayList<Player> toCheck = Lists.newArrayList();
         for (String name : this.namesToVanish) {
             User user;
-            Player player = Bukkit.getPlayer((String)name);
+            Player player = Bukkit.getPlayer(name);
             if (player == null || (user = this.ess.getUser(player)) != null && user.isVanished()) continue;
             toCheck.add(player);
         }

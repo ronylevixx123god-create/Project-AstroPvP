@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.configuration.file.FileConfiguration
  *  org.bukkit.configuration.file.YamlConfiguration
@@ -8,25 +8,34 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import org.arkhamnetwork.Arkkit.patches.CommandAddCredits;
-import org.arkhamnetwork.Arkkit.patches.CommandCredits;
-import org.arkhamnetwork.Arkkit.patches.CommandRedeem;
-import org.arkhamnetwork.Arkkit.patches.CommandTakeCredits;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class RedeemMCMMO
-extends ArkPlugin {
+        extends ArkPlugin {
     private static FileConfiguration config;
 
     public RedeemMCMMO(Plugin p) {
         super(p);
+    }
+
+    protected static FileConfiguration getConfig() {
+        return config;
+    }
+
+    protected static void saveConfig() {
+        try {
+            config.save(new File("plugins/Arkkit/redeemMCMMO.yml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -48,25 +57,11 @@ extends ArkPlugin {
         if (!configFile.exists()) {
             try {
                 configFile.createNewFile();
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        config = YamlConfiguration.loadConfiguration((File)configFile);
-    }
-
-    protected static FileConfiguration getConfig() {
-        return config;
-    }
-
-    protected static void saveConfig() {
-        try {
-            config.save(new File("plugins/Arkkit/redeemMCMMO.yml"));
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+        config = YamlConfiguration.loadConfiguration(configFile);
     }
 }
 

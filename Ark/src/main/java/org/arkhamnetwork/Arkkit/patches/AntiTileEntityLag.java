@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.Chunk
@@ -13,9 +13,7 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.HashSet;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.AntiTileEntityLagTask;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
@@ -26,24 +24,14 @@ import org.bukkit.block.Chest;
 import org.bukkit.material.EnderChest;
 import org.bukkit.plugin.Plugin;
 
+import java.util.HashSet;
+
 public class AntiTileEntityLag
-extends ArkPlugin {
+        extends ArkPlugin {
     protected static HashSet<String> scannedChunks;
 
     public AntiTileEntityLag(Plugin p) {
         super(p);
-    }
-
-    @Override
-    public void enable() {
-        scannedChunks = new HashSet();
-        AntiTileEntityLag.purgeBrewingStands();
-        this.registerTask(new AntiTileEntityLagTask().runTaskTimer((Plugin)Arkkit.get(), 200L, 200L), this.getClass());
-    }
-
-    @Override
-    public void disable() {
-        scannedChunks.clear();
     }
 
     protected static void purgeBrewingStands() {
@@ -92,6 +80,18 @@ extends ArkPlugin {
             ++x;
         }
         return x;
+    }
+
+    @Override
+    public void enable() {
+        scannedChunks = new HashSet();
+        AntiTileEntityLag.purgeBrewingStands();
+        this.registerTask(new AntiTileEntityLagTask().runTaskTimer(Arkkit.get(), 200L, 200L), this.getClass());
+    }
+
+    @Override
+    public void disable() {
+        scannedChunks.clear();
     }
 }
 

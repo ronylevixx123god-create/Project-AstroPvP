@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.massivecraft.factions.Board
  *  com.massivecraft.factions.FLocation
@@ -24,24 +24,14 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import com.massivecraft.factions.Board;
-import com.massivecraft.factions.FLocation;
-import com.massivecraft.factions.FPlayer;
-import com.massivecraft.factions.FPlayers;
-import com.massivecraft.factions.Faction;
+import com.massivecraft.factions.*;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.Relation;
 import com.massivecraft.factions.struct.RolePerm;
-import java.util.LinkedList;
-import java.util.List;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
 import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Dispenser;
 import org.bukkit.command.Command;
@@ -49,8 +39,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.LinkedList;
+import java.util.List;
+
 final class CommandFill
-extends AbstractCommand {
+        extends AbstractCommand {
     public CommandFill(String command, String usage, String description, List<String> aliases) {
         super(command, usage, description, aliases);
     }
@@ -64,48 +57,47 @@ extends AbstractCommand {
             return true;
         }
         if (!sender.hasPermission("arkkit.command.fill")) {
-            sender.sendMessage((Object)ChatColor.RED + "You do not have access to this command.");
-            sender.sendMessage((Object)ChatColor.GRAY + "Unlock this command and more by upgrading your rank today at " + Arkkit.get().getConfig().getString("language.spigot_branding.store_url") + "!");
+            sender.sendMessage(ChatColor.RED + "You do not have access to this command.");
+            sender.sendMessage(ChatColor.GRAY + "Unlock this command and more by upgrading your rank today at " + Arkkit.get().getConfig().getString("language.spigot_branding.store_url") + "!");
             return true;
         }
         if (args.length < 2) {
             sender.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "/fill <#> <radius> [maxPerDispenser]");
-            sender.sendMessage((Object)ChatColor.GRAY + "Adds <#> to all dispensers within <radius> of the item currently in your hand. No dispenser will end with more than [maxPerDispenser] of the item.");
+            sender.sendMessage(ChatColor.GRAY + "Adds <#> to all dispensers within <radius> of the item currently in your hand. No dispenser will end with more than [maxPerDispenser] of the item.");
             sender.sendMessage("");
-            sender.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "EXAMPLE " + (Object)ChatColor.YELLOW + "/fill 2 5 10" + (Object)ChatColor.GRAY + " all dispensers within a 5 block radius would receive 2x of whatever material you are currently holding in your hand, but no dispenser will end with more than 10x of the material.");
+            sender.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "EXAMPLE " + ChatColor.YELLOW + "/fill 2 5 10" + ChatColor.GRAY + " all dispensers within a 5 block radius would receive 2x of whatever material you are currently holding in your hand, but no dispenser will end with more than 10x of the material.");
             return true;
         }
         try {
             amount = Integer.parseInt(args[0]);
             radius = Integer.parseInt(args[1]);
             maxPerDispenser = args.length == 3 ? Integer.parseInt(args[2]) : -1;
-        }
-        catch (NumberFormatException nfe) {
-            sender.sendMessage((Object)ChatColor.RED + "Either " + args[0] + " or " + args[1] + " is not a valid number.");
+        } catch (NumberFormatException nfe) {
+            sender.sendMessage(ChatColor.RED + "Either " + args[0] + " or " + args[1] + " is not a valid number.");
             return true;
         }
         if (amount < 1 || radius < 0 || radius > 40) {
-            sender.sendMessage((Object)ChatColor.RED + "You must specify an amount>0 and a positive radius<=40");
+            sender.sendMessage(ChatColor.RED + "You must specify an amount>0 and a positive radius<=40");
             return true;
         }
         if (amount > 64) {
-            sender.sendMessage((Object)ChatColor.RED + "You may only distribute up to 64x TNT per dispenser at a time.");
+            sender.sendMessage(ChatColor.RED + "You may only distribute up to 64x TNT per dispenser at a time.");
             return true;
         }
-        Player p = (Player)sender;
+        Player p = (Player) sender;
         if (p.getItemInHand() == null || p.getItemInHand().getType() == Material.AIR) {
-            sender.sendMessage((Object)ChatColor.RED + "Equip the material you would like to fill the dispensers with.");
+            sender.sendMessage(ChatColor.RED + "Equip the material you would like to fill the dispensers with.");
             return true;
         }
         if (p.hasPermission("arkkit.fill.restrict") && !p.isOp() && radius > 10) {
             radius = 10;
-            p.sendMessage((Object)ChatColor.RED + "Radius reduced to 10 due to fill restriction!");
+            p.sendMessage(ChatColor.RED + "Radius reduced to 10 due to fill restriction!");
         }
-        FPlayer fp = (FPlayer)FPlayers.i.get((OfflinePlayer)p);
-        Faction f = Board.getFactionAt((FLocation)new FLocation(p.getLocation()));
+        FPlayer fp = FPlayers.i.get(p);
+        Faction f = Board.getFactionAt(new FLocation(p.getLocation()));
         boolean bypass = p.hasPermission("arkkit.fill.bypassclaim");
-        if (!bypass && !f.getRelationTo((RelationParticipator)fp.getFaction()).isAtLeast(Relation.ALLY)) {
-            sender.sendMessage((Object)ChatColor.RED + "You cannot use /fill in non-ally territory.");
+        if (!bypass && !f.getRelationTo(fp.getFaction()).isAtLeast(Relation.ALLY)) {
+            sender.sendMessage(ChatColor.RED + "You cannot use /fill in non-ally territory.");
             return true;
         }
         Material m = p.getItemInHand().getType();
@@ -116,10 +108,11 @@ extends AbstractCommand {
         for (Block b : this.getDispensers(p.getLocation(), radius)) {
             ItemStack is;
             if (!(b.getState() instanceof Dispenser)) continue;
-            Dispenser dp = (Dispenser)b.getState();
+            Dispenser dp = (Dispenser) b.getState();
             if (!p.getInventory().contains(m)) break;
             FLocation fl = new FLocation(dp.getLocation());
-            if (!bypass && !fp.getRelationTo((RelationParticipator)Board.getFactionAt((FLocation)fl)).isAtLeast(Relation.ALLY)) continue;
+            if (!bypass && !fp.getRelationTo(Board.getFactionAt(fl)).isAtLeast(Relation.ALLY))
+                continue;
             int emptySlots = this.getEmptyDispenserSlots(dp, m, metadata);
             int materialCount = this.getMaterialCount(dp, m, metadata);
             int toAdd = amount;
@@ -136,7 +129,7 @@ extends AbstractCommand {
                     int tntAmount = Math.min(64, Math.min(emptySlots, toAdd));
                     if (f.tnt > 0 && f.tnt >= tntAmount) {
                         is = new ItemStack(Material.TNT, tntAmount);
-                        dp.getInventory().addItem(new ItemStack[]{is});
+                        dp.getInventory().addItem(is);
                         f.tnt -= is.getAmount();
                         toAdd -= is.getAmount();
                         totalAdded += is.getAmount();
@@ -149,9 +142,10 @@ extends AbstractCommand {
                 for (int i = 0; i < 36; ++i) {
                     is = p.getInventory().getItem(i);
                     if (emptySlots > 0 && toAdd > 0) {
-                        if (is == null || is.getType() != m || is.getDurability() != metadata || is.hasItemMeta() && is.getItemMeta().hasLore() && ((String)is.getItemMeta().getLore().get(0)).contains(ChatColor.ITALIC.toString())) continue;
+                        if (is == null || is.getType() != m || is.getDurability() != metadata || is.hasItemMeta() && is.getItemMeta().hasLore() && is.getItemMeta().getLore().get(0).contains(ChatColor.ITALIC.toString()))
+                            continue;
                         if (is.getAmount() <= toAdd) {
-                            dp.getInventory().addItem(new ItemStack[]{is});
+                            dp.getInventory().addItem(is);
                             p.getInventory().setItem(i, null);
                             toAdd -= is.getAmount();
                             totalAdded += is.getAmount();
@@ -159,7 +153,7 @@ extends AbstractCommand {
                             continue;
                         }
                         if (is.getAmount() <= toAdd) continue;
-                        dp.getInventory().addItem(new ItemStack[]{new ItemStack(m, toAdd, metadata)});
+                        dp.getInventory().addItem(new ItemStack(m, toAdd, metadata));
                         is.setAmount(is.getAmount() - toAdd);
                         p.getInventory().setItem(i, is);
                         totalAdded += toAdd;
@@ -174,7 +168,7 @@ extends AbstractCommand {
             ++dispenserCount;
         }
         p.updateInventory();
-        p.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "(!)" + (Object)ChatColor.YELLOW + " You have filled " + dispenserCount + "x dispensers with " + totalAdded + "x " + m.name() + "!");
+        p.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "(!)" + ChatColor.YELLOW + " You have filled " + dispenserCount + "x dispensers with " + totalAdded + "x " + m.name() + "!");
         if (dispenserCount == 0) {
             p.sendMessage(ChatColor.GRAY.toString() + ChatColor.ITALIC.toString() + "You can only /fill dispensers in land that is claimed by your faction or your faction's allies.");
         }
@@ -187,7 +181,7 @@ extends AbstractCommand {
         for (int x = -radius; x < radius; ++x) {
             for (int z = -radius; z < radius; ++z) {
                 for (int y = -radius; y < radius; ++y) {
-                    Block b = l.clone().add((double)x, (double)y, (double)z).getBlock();
+                    Block b = l.clone().add(x, y, z).getBlock();
                     if (b.getType() != Material.DISPENSER) continue;
                     dispensers.add(b);
                 }

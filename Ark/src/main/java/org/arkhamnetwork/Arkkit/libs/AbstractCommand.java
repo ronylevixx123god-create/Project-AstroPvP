@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.command.Command
@@ -10,22 +10,23 @@
  */
 package org.arkhamnetwork.Arkkit.libs;
 
-import java.lang.reflect.Field;
-import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 
+import java.lang.reflect.Field;
+import java.util.List;
+
 public abstract class AbstractCommand
-implements TabExecutor {
+        implements TabExecutor {
+    public static CommandMap cmap;
     public final String command;
     protected final String description;
     protected final List<String> alias;
     protected final String usage;
     protected final String permMessage;
-    public static CommandMap cmap;
 
     public AbstractCommand(String command) {
         this(command, null, null, null, null);
@@ -69,7 +70,7 @@ implements TabExecutor {
         if (this.permMessage != null) {
             cmd.setPermissionMessage(this.permMessage);
         }
-        this.getCommandMap().register("arkkit", (Command)cmd);
+        this.getCommandMap().register("arkkit", cmd);
         cmd.setExecutor(this);
         return cmd;
     }
@@ -79,10 +80,9 @@ implements TabExecutor {
             try {
                 Field f = Bukkit.getServer().getClass().getDeclaredField("commandMap");
                 f.setAccessible(true);
-                cmap = (CommandMap)f.get((Object)Bukkit.getServer());
+                cmap = (CommandMap) f.get(Bukkit.getServer());
                 return this.getCommandMap();
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         } else if (cmap != null) {
@@ -98,7 +98,7 @@ implements TabExecutor {
     }
 
     private final class ReflectCommand
-    extends Command {
+            extends Command {
         private AbstractCommand exe;
 
         protected ReflectCommand(String command) {

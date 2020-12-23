@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.entity.Player
@@ -14,7 +14,6 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.SeasonalPrefixes;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -25,17 +24,17 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.plugin.Plugin;
 
 final class SeasonalPrefixesListener
-implements Listener {
+        implements Listener {
     SeasonalPrefixesListener() {
     }
 
-    @EventHandler(priority=EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerChat(AsyncPlayerChatEvent e) {
         if (SeasonalPrefixes.getSeasonalWins(e.getPlayer()) > 0) {
             String format = e.getFormat();
             Player p = e.getPlayer();
             String seasonalPrefix = SeasonalPrefixes.getSeasonalPrefix(p);
-            format = format.substring(0, 11) + seasonalPrefix + " " + format.substring(11, format.length());
+            format = format.substring(0, 11) + seasonalPrefix + " " + format.substring(11);
             Bukkit.getLogger().info(format);
             e.setFormat(format);
         }
@@ -44,10 +43,10 @@ implements Listener {
     @EventHandler
     public void onPlayerCommandPreProcess(PlayerCommandPreprocessEvent e) {
         String pName;
-        if (e.getMessage().toLowerCase().startsWith("/pex user ") && Bukkit.getPlayer((String)(pName = e.getMessage().split(" ")[2])) != null) {
-            Player p = Bukkit.getPlayer((String)pName);
-            p.removeMetadata("seasonalPrefix", (Plugin)Arkkit.get());
-            p.removeMetadata("seasonalWins", (Plugin)Arkkit.get());
+        if (e.getMessage().toLowerCase().startsWith("/pex user ") && Bukkit.getPlayer(pName = e.getMessage().split(" ")[2]) != null) {
+            Player p = Bukkit.getPlayer(pName);
+            p.removeMetadata("seasonalPrefix", Arkkit.get());
+            p.removeMetadata("seasonalWins", Arkkit.get());
         }
     }
 }

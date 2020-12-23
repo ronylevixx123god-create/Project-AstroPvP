@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.itembuilder.FatBucketBuilder
  *  org.bukkit.Bukkit
@@ -20,7 +20,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 final class CommandFatBucket
-extends AbstractCommand {
+        extends AbstractCommand {
     public CommandFatBucket(String command, String usage, String description) {
         super(command, usage, description);
     }
@@ -34,9 +34,9 @@ extends AbstractCommand {
             sender.sendMessage("/fatbucket <player>");
             return true;
         }
-        Player p = Bukkit.getPlayer((String)args[0]);
+        Player p = Bukkit.getPlayer(args[0]);
         if (p != null) {
-            p.getInventory().addItem(new ItemStack[]{new FatBucketBuilder().build()});
+            p.getInventory().addItem(new FatBucketBuilder().build());
             sender.sendMessage("Fat bucket added to " + p.getName() + "'s inventory");
         }
         return false;

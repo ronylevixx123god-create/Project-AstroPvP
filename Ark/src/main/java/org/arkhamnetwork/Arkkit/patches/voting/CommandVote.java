@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
@@ -11,16 +11,8 @@
  */
 package org.arkhamnetwork.Arkkit.patches.voting;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
-import org.arkhamnetwork.Arkkit.patches.voting.VS_SQLConnection;
-import org.arkhamnetwork.Arkkit.patches.voting.VoteAPI;
-import org.arkhamnetwork.Arkkit.patches.voting.VotePatch;
-import org.arkhamnetwork.Arkkit.patches.voting.VoterObject;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -28,8 +20,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class CommandVote
-extends AbstractCommand {
+        extends AbstractCommand {
     public CommandVote(String command, String usage, String description, List<String> aliases) {
         super(command, usage, description, aliases);
     }
@@ -44,18 +41,18 @@ extends AbstractCommand {
             Bukkit.getLogger().info("That is not a console command.");
             return true;
         }
-        final Player player = (Player)sender;
-        Bukkit.getScheduler().runTaskAsynchronously((Plugin)Arkkit.get(), new Runnable(){
+        final Player player = (Player) sender;
+        Bukkit.getScheduler().runTaskAsynchronously(Arkkit.get(), new Runnable() {
 
             @Override
             public void run() {
                 final int votes = VoteAPI.getPlayerVotes(player.getUniqueId().toString());
-                Bukkit.getScheduler().runTask((Plugin)Arkkit.get(), new Runnable(){
+                Bukkit.getScheduler().runTask(Arkkit.get(), new Runnable() {
 
                     @Override
                     public void run() {
                         for (String voteMessage : VotePatch.vote_messages) {
-                            player.sendMessage(ChatColor.translateAlternateColorCodes((char)'&', (String)voteMessage.replace("[VOTES]", String.valueOf(votes))));
+                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', voteMessage.replace("[VOTES]", String.valueOf(votes))));
                         }
                     }
                 });
@@ -70,13 +67,12 @@ extends AbstractCommand {
         try {
             while (old_data.next()) {
                 String p = old_data.getString("player_name");
-                String u = Bukkit.getOfflinePlayer((String)p).getUniqueId().toString();
+                String u = Bukkit.getOfflinePlayer(p).getUniqueId().toString();
                 int v = old_data.getInt("votes");
                 Bukkit.getLogger().info("Caching " + p + "(" + u + ") with " + v + " votes!");
                 old_vote_data.add(new VoterObject(p, u, v));
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         Bukkit.getLogger().info("********");

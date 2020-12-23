@@ -1,21 +1,21 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Material
  *  org.bukkit.plugin.Plugin
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.ArrayList;
-import java.util.List;
-import org.arkhamnetwork.Arkkit.patches.DropperBlockerListener;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.Material;
 import org.bukkit.plugin.Plugin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DropperBlocker
-extends ArkPlugin {
+        extends ArkPlugin {
     protected static List<Material> no_dropper = new ArrayList<Material>();
 
     public DropperBlocker(Plugin p) {

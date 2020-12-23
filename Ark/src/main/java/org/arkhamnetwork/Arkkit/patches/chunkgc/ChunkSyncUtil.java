@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  net.minecraft.server.v1_7_R4.Chunk
  *  org.bukkit.Bukkit
@@ -9,19 +9,17 @@
  */
 package org.arkhamnetwork.Arkkit.patches.chunkgc;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 import net.minecraft.server.v1_8_R3.Chunk;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.patches.AntiCrash;
-import org.arkhamnetwork.Arkkit.patches.chunkgc.ChunkGC;
-import org.arkhamnetwork.Arkkit.patches.chunkgc.ChunkGCTask;
 import org.arkhamnetwork.Arkkit.utils.LongHash;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ChunkSyncUtil {
     Arkkit plugin = Arkkit.get();
@@ -47,10 +45,10 @@ public class ChunkSyncUtil {
     private static void populateLoadedChunkList() {
         for (World w : Arkkit.get().getServer().getWorlds()) {
             if (w.getName().startsWith("dungeon_")) continue;
-            Iterator it = ((CraftWorld)w).getHandle().chunkProviderServer.a().iterator();
+            Iterator it = ((CraftWorld) w).getHandle().chunkProviderServer.a().iterator();
             CopyOnWriteArrayList<Long> cslist = new CopyOnWriteArrayList<Long>();
             while (it.hasNext()) {
-                Chunk c = (Chunk)it.next();
+                Chunk c = (Chunk) it.next();
                 cslist.add(LongHash.toLong(c.locX, c.locZ));
             }
             ChunkGCTask.loaded_chunks.put(w.getName(), cslist);
@@ -59,14 +57,14 @@ public class ChunkSyncUtil {
 
     private static int getLoadedChunkCount() {
         int i;
-        block3: {
+        block3:
+        {
             i = 0;
             try {
                 for (World w : Arkkit.get().getServer().getWorlds()) {
                     i += w.getLoadedChunks().length;
                 }
-            }
-            catch (Exception err) {
+            } catch (Exception err) {
                 err.printStackTrace();
                 if (!(err instanceof NoSuchElementException) && !(err instanceof NullPointerException)) break block3;
                 Bukkit.getLogger().info("[Arkkit] Forcing Arkreboot due to null pointer in chunk data!");

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.entity.Player
  *  org.bukkit.event.EventHandler
@@ -19,17 +19,17 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
 final class NoCursorDropListener
-implements Listener {
+        implements Listener {
     NoCursorDropListener() {
     }
 
-    @EventHandler(priority=EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onInventoryClose(InventoryCloseEvent e) {
-        Player pl = (Player)e.getPlayer();
+        Player pl = (Player) e.getPlayer();
         if (pl.getItemOnCursor() != null && pl.getInventory().firstEmpty() != -1 && !pl.isDead() && pl.getHealth() > 0.0) {
             ItemStack i = pl.getItemOnCursor().clone();
             pl.setItemOnCursor(null);
-            pl.getInventory().addItem(new ItemStack[]{i});
+            pl.getInventory().addItem(i);
             pl.updateInventory();
         }
     }

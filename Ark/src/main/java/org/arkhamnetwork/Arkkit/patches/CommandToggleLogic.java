@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
@@ -27,7 +27,7 @@ import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 
 final class CommandToggleLogic
-extends AbstractCommand {
+        extends AbstractCommand {
     protected boolean blockPhysicsDisabled = false;
     protected boolean blockBuckets = false;
 
@@ -43,30 +43,30 @@ extends AbstractCommand {
         }
         if (args.length == 1 && args[0].equalsIgnoreCase("bucket")) {
             this.blockBuckets = !this.blockBuckets;
-            sender.sendMessage((Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "blockBuckets => " + this.blockBuckets);
+            sender.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "blockBuckets => " + this.blockBuckets);
             return true;
         }
         this.blockPhysicsDisabled = !this.blockPhysicsDisabled;
-        sender.sendMessage((Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "blockPhysicsDisabled => " + this.blockPhysicsDisabled);
+        sender.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "blockPhysicsDisabled => " + this.blockPhysicsDisabled);
         return true;
     }
 
     final class CommandToggleLogicListener
-    implements Listener {
+            implements Listener {
         CommandToggleLogicListener() {
         }
 
-        @EventHandler(priority=EventPriority.HIGHEST)
+        @EventHandler(priority = EventPriority.HIGHEST)
         public void onBlockPhysics(BlockPhysicsEvent e) {
             if (CommandToggleLogic.this.blockPhysicsDisabled) {
                 e.setCancelled(true);
             }
         }
 
-        @EventHandler(priority=EventPriority.HIGHEST)
+        @EventHandler(priority = EventPriority.HIGHEST)
         public void onBucketEmpty(PlayerBucketEmptyEvent e) {
             if (CommandToggleLogic.this.blockBuckets) {
-                Bukkit.getLogger().info("[Ypperin] bucketEmptyEvent(" + (Object)e.getPlayer() + ", " + (Object)e.getBlockClicked().getLocation() + "," + (Object)e.getItemStack() + ")");
+                Bukkit.getLogger().info("[Ypperin] bucketEmptyEvent(" + e.getPlayer() + ", " + e.getBlockClicked().getLocation() + "," + e.getItemStack() + ")");
             }
         }
     }

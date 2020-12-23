@@ -1,23 +1,21 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.plugin.Plugin
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.CommandBless;
-import org.arkhamnetwork.Arkkit.patches.CommandTogglePlayer;
-import org.arkhamnetwork.Arkkit.patches.TogglePlayerListener;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.plugin.Plugin;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Youtubers
-extends ArkPlugin {
+        extends ArkPlugin {
     protected static List<String> youtubers;
 
     public Youtubers(Plugin p) {

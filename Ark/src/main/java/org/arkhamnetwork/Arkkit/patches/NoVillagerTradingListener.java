@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
@@ -25,11 +25,11 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
 final class NoVillagerTradingListener
-implements Listener {
+        implements Listener {
     NoVillagerTradingListener() {
     }
 
-    @EventHandler(priority=EventPriority.HIGH, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onPlayerInteractEntity(PlayerInteractEntityEvent e) {
         if (e.getRightClicked() instanceof Villager) {
             Player pl = e.getPlayer();
@@ -37,7 +37,7 @@ implements Listener {
                 return;
             }
             e.setCancelled(true);
-            pl.sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "Villager trading is currently disabled" + (Object)ChatColor.RED + " on this gamemode.");
+            pl.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "Villager trading is currently disabled" + ChatColor.RED + " on this gamemode.");
         }
     }
 

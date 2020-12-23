@@ -1,17 +1,16 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.plugin.Plugin
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import org.arkhamnetwork.Arkkit.patches.PotionFixListener;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.plugin.Plugin;
 
 public class PotionFix
-extends ArkPlugin {
+        extends ArkPlugin {
     protected static boolean[] EnabledFixes = new boolean[3];
     protected static int[] Amounts = new int[2];
 

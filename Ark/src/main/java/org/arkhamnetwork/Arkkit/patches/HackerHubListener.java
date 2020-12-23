@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.earth2me.essentials.User
  *  org.bukkit.entity.Player
@@ -11,14 +11,13 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.earth2me.essentials.User;
-import org.arkhamnetwork.Arkkit.patches.HackerHub;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 final class HackerHubListener
-implements Listener {
+        implements Listener {
     HackerHubListener() {
     }
 

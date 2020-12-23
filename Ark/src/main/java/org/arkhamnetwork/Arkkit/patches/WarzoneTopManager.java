@@ -3,18 +3,12 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
-import org.arkhamnetwork.Arkkit.patches.TopPlayer;
-import org.arkhamnetwork.Arkkit.patches.WarzoneMoney;
 
 final class WarzoneTopManager {
     WarzoneTopManager() {
@@ -24,6 +18,16 @@ final class WarzoneTopManager {
         private LinkedHashMap<Integer, TopPlayer> TopPlayers = new LinkedHashMap();
         private long lastTopUpgrade;
         private boolean loading = false;
+
+        private static <T extends Comparable> LinkedHashMap<UUID, T> sortByComparator(Map<UUID, T> unsortMap) {
+            LinkedList<Map.Entry<UUID, T>> list = new LinkedList<Map.Entry<UUID, T>>(unsortMap.entrySet());
+            Collections.sort(list, (o1, o2) -> o2.getValue().compareTo(o1.getValue()));
+            LinkedHashMap sortedMap = new LinkedHashMap();
+            for (Map.Entry entry : list) {
+                sortedMap.put(entry.getKey(), entry.getValue());
+            }
+            return sortedMap;
+        }
 
         public void loadTopFund(Consumer<LinkedHashMap<Integer, TopPlayer>> callback) {
             if (this.loading || this.lastTopUpgrade != 0L && System.currentTimeMillis() - this.lastTopUpgrade < TimeUnit.SECONDS.toMillis(10L)) {
@@ -38,7 +42,7 @@ final class WarzoneTopManager {
                 LinkedHashMap<UUID, Integer> sorted = TopManager.sortByComparator(WarzoneMoney.warzoneTimes);
                 LinkedHashMap copy = new LinkedHashMap();
                 AtomicInteger place = new AtomicInteger(1);
-                sorted.forEach((id, amount) -> copy.put(place.getAndIncrement(), new TopPlayer((UUID)id, (int)amount, null)));
+                sorted.forEach((id, amount) -> copy.put(place.getAndIncrement(), new TopPlayer(id, amount, null)));
                 this.TopPlayers = copy;
                 this.loading = false;
                 this.lastTopUpgrade = System.currentTimeMillis();
@@ -47,16 +51,6 @@ final class WarzoneTopManager {
                     callback.accept(this.TopPlayers);
                 }
             }, ForkJoinPool.commonPool());
-        }
-
-        private static <T extends Comparable> LinkedHashMap<UUID, T> sortByComparator(Map<UUID, T> unsortMap) {
-            LinkedList<Map.Entry<UUID, T>> list = new LinkedList<Map.Entry<UUID, T>>(unsortMap.entrySet());
-            Collections.sort(list, (o1, o2) -> ((Comparable)o2.getValue()).compareTo(o1.getValue()));
-            LinkedHashMap sortedMap = new LinkedHashMap();
-            for (Map.Entry entry : list) {
-                sortedMap.put(entry.getKey(), entry.getValue());
-            }
-            return sortedMap;
         }
     }
 }

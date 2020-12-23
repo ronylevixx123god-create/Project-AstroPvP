@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  me.ifamasssxd.cosmicbosses.utils.BossUtils
  *  net.minecraft.server.v1_7_R4.EntityCreature
@@ -25,9 +25,8 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.Random;
-import me.ifamasssxd.cosmicbosses.utils.BossUtils;
-import net.minecraft.server.v1_8_R3.*;
+import net.minecraft.server.v1_8_R3.EntityCreature;
+import net.minecraft.server.v1_8_R3.EntityInsentient;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -40,21 +39,15 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.Random;
+
 final class ThanksgivingTask
-extends BukkitRunnable {
+        extends BukkitRunnable {
     ThanksgivingTask() {
     }
 
-    public void run() {
-        if (Bukkit.getOnlinePlayers().size() <= 0) {
-            return;
-        }
-        Player rand_p = (Player)Bukkit.getOnlinePlayers().toArray()[new Random().nextInt(Bukkit.getOnlinePlayers().size())];
-        ThanksgivingTask.spawnTurkey(rand_p.getLocation());
-    }
-
     public static void spawnTurkey(Location l) {
-        Chicken c = (Chicken)l.getWorld().spawnCreature(l, EntityType.CHICKEN);
+        Chicken c = (Chicken) l.getWorld().spawnCreature(l, EntityType.CHICKEN);
         if (c == null || !c.isValid() || c.isDead()) {
             return;
         }
@@ -64,8 +57,8 @@ extends BukkitRunnable {
         c.setHealth(100.0);
         c.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1));
         c.setCustomName(ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "Thanksgiving Turkey");
-        EntityInsentient insentient = (EntityInsentient)((CraftLivingEntity)c).getHandle();
-        EntityCreature creature = (EntityCreature)insentient;
+        EntityInsentient insentient = (EntityInsentient) ((CraftLivingEntity) c).getHandle();
+        EntityCreature creature = (EntityCreature) insentient;
         // TODO: FIX WHEN BOSSES IS DONE
      /*   BossUtils.clearGoalSelectors((EntityInsentient)insentient);
         BossUtils.addSelector((EntityInsentient)insentient, (int)0, (PathfinderGoal)new PathfinderGoalFloat(insentient));
@@ -73,6 +66,14 @@ extends BukkitRunnable {
         BossUtils.addSelector((EntityInsentient)insentient, (int)5, (PathfinderGoal)new PathfinderGoalLookAtPlayer(insentient, EntityHuman.class, 6.0f));
         BossUtils.addSelector((EntityInsentient)insentient, (int)6, (PathfinderGoal)new PathfinderGoalRandomStroll(creature, 1.0)); */
         l.getWorld().playSound(l, Sound.CHICKEN_IDLE, 2.0f, 0.25f);
+    }
+
+    public void run() {
+        if (Bukkit.getOnlinePlayers().size() <= 0) {
+            return;
+        }
+        Player rand_p = (Player) Bukkit.getOnlinePlayers().toArray()[new Random().nextInt(Bukkit.getOnlinePlayers().size())];
+        ThanksgivingTask.spawnTurkey(rand_p.getLocation());
     }
 }
 

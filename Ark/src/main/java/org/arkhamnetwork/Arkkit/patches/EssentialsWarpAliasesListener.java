@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.earth2me.essentials.Essentials
  *  org.bukkit.Bukkit
@@ -19,13 +19,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 final class EssentialsWarpAliasesListener
-implements Listener {
-    private final Essentials ess = Bukkit.getServer().getPluginManager().isPluginEnabled("Essentials") ? (Essentials)Bukkit.getServer().getPluginManager().getPlugin("Essentials") : null;
+        implements Listener {
+    private final Essentials ess = Bukkit.getServer().getPluginManager().isPluginEnabled("Essentials") ? (Essentials) Bukkit.getServer().getPluginManager().getPlugin("Essentials") : null;
 
     EssentialsWarpAliasesListener() {
     }
 
-    @EventHandler(priority=EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerPreProcessCommand(PlayerCommandPreprocessEvent e) {
         for (String warp : this.ess.getWarps().getList()) {
             if (Bukkit.getCommandAliases().containsKey(e.getMessage().replace("/", ""))) {

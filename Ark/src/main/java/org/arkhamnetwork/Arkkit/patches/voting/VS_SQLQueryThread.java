@@ -1,31 +1,30 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  */
 package org.arkhamnetwork.Arkkit.patches.voting;
 
+import org.bukkit.Bukkit;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Iterator;
-import org.arkhamnetwork.Arkkit.patches.voting.VS_SQLConnection;
-import org.arkhamnetwork.Arkkit.patches.voting.VS_SQLManager;
-import org.bukkit.Bukkit;
 
 public class VS_SQLQueryThread
-extends Thread {
+        extends Thread {
     /*
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     @Override
     public void run() {
-        block13: while (true) {
+        block13:
+        while (true) {
             try {
                 Thread.sleep(250L);
-            }
-            catch (InterruptedException interruptedException) {
+            } catch (InterruptedException interruptedException) {
                 // empty catch block
             }
             Iterator<String> iterator = VS_SQLManager.sql_query.iterator();
@@ -37,12 +36,10 @@ extends Thread {
                 try {
                     pst = VS_SQLConnection.getConnection().prepareStatement(query);
                     pst.executeUpdate();
-                }
-                catch (Exception ex) {
+                } catch (Exception ex) {
                     ex.printStackTrace();
                     Bukkit.getLogger().info("query = " + query);
-                }
-                finally {
+                } finally {
                     try {
                         if (pst != null) {
                             pst.close();
@@ -50,8 +47,7 @@ extends Thread {
                         if (con != null) {
                             con.close();
                         }
-                    }
-                    catch (SQLException ex) {
+                    } catch (SQLException ex) {
                         ex.printStackTrace();
                     }
                 }
@@ -70,12 +66,10 @@ extends Thread {
             try {
                 pst = VS_SQLConnection.getConnection().prepareStatement(query);
                 pst.executeUpdate();
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 ex.printStackTrace();
                 Bukkit.getLogger().info("query = " + query);
-            }
-            finally {
+            } finally {
                 try {
                     if (pst != null) {
                         pst.close();
@@ -83,8 +77,7 @@ extends Thread {
                     if (con != null) {
                         con.close();
                     }
-                }
-                catch (SQLException ex) {
+                } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
             }

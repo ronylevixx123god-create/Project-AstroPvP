@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.FactionUtils
  *  com.massivecraft.factions.FPlayer
@@ -29,7 +29,6 @@ import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.Relation;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.FactionTeleportSanity;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
 import org.arkhamnetwork.Arkkit.utils.FactionUtil;
 import org.arkhamnetwork.Arkkit.utils.WorldGuardUtils;
@@ -47,16 +46,16 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.plugin.Plugin;
 
 final class FactionTeleportSanityListener
-implements Listener {
+        implements Listener {
     FactionTeleportSanityListener() {
     }
 
-    @EventHandler(priority=EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerQuit(PlayerQuitEvent e) {
         Player p = e.getPlayer();
         if (p.getName().equals("Vaquxine") || !p.isOp() && !p.hasPermission("arkkit.teleportsanity.ignore")) {
-            Faction at = FactionUtils.getFactionAt((Location)p.getLocation());
-            if (at != null && ((Boolean)FactionUtils.callFactionMethod((Faction)at, (String)"isNormal", null)).booleanValue()) {
+            Faction at = FactionUtils.getFactionAt(p.getLocation());
+            if (at != null && ((Boolean) FactionUtils.callFactionMethod(at, "isNormal", null)).booleanValue()) {
                 FactionTeleportSanity.logoutTimes.put(p.getName(), System.currentTimeMillis());
             }
         } else {
@@ -64,16 +63,16 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerJoin(PlayerJoinEvent e) {
         if (FactionTeleportSanity.logoutTimes.containsKey(e.getPlayer().getName())) {
             final Player p = e.getPlayer();
             if (p.isDead()) {
                 p.spigot().respawn();
             } else {
-                Faction at = FactionUtils.getFactionAt((Location)p.getLocation());
-                FPlayer fplayer = FactionUtils.getFPlayer((Player)p);
-                if (at != null && fplayer != null && FactionUtil.getRelation((RelationParticipator)at, (RelationParticipator)fplayer).isAtMost(Relation.TRUCE)) {
+                Faction at = FactionUtils.getFactionAt(p.getLocation());
+                FPlayer fplayer = FactionUtils.getFPlayer(p);
+                if (at != null && fplayer != null && FactionUtil.getRelation(at, fplayer).isAtMost(Relation.TRUCE)) {
                     long logoutTime = FactionTeleportSanity.logoutTimes.get(p.getName());
                     long diff = System.currentTimeMillis() - logoutTime;
                     if (diff < 900000L) {
@@ -81,13 +80,13 @@ implements Listener {
                             p.getVehicle().eject();
                         }
                         CombatLog.flagCombat(p);
-                        Bukkit.getScheduler().runTaskLater((Plugin)Arkkit.get(), new Runnable(){
+                        Bukkit.getScheduler().runTaskLater(Arkkit.get(), new Runnable() {
 
                             @Override
                             public void run() {
                                 p.sendMessage("");
                                 p.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "*** YOU HAVE BEEN COMBAT TAGGED! ***");
-                                p.sendMessage((Object)ChatColor.GRAY + "Because you logged out in TRUCE, NEUTRAL, or ENEMY territory.");
+                                p.sendMessage(ChatColor.GRAY + "Because you logged out in TRUCE, NEUTRAL, or ENEMY territory.");
                                 p.sendMessage("");
                             }
                         }, 21L);
@@ -95,14 +94,14 @@ implements Listener {
                         if (p.getVehicle() != null) {
                             p.getVehicle().eject();
                         }
-                        p.teleport(Bukkit.getWorld((String)"world").getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
-                        Bukkit.getScheduler().runTaskLater((Plugin)Arkkit.get(), new Runnable(){
+                        p.teleport(Bukkit.getWorld("world").getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
+                        Bukkit.getScheduler().runTaskLater(Arkkit.get(), new Runnable() {
 
                             @Override
                             public void run() {
                                 p.sendMessage("");
                                 p.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "*** YOU HAVE BEEN TELEPORTED TO SPAWN! ***");
-                                p.sendMessage((Object)ChatColor.GRAY + "Because you logged out in TRUCE, NEUTRAL, or ENEMY territory for more than 15 minutes.");
+                                p.sendMessage(ChatColor.GRAY + "Because you logged out in TRUCE, NEUTRAL, or ENEMY territory for more than 15 minutes.");
                                 p.sendMessage("");
                             }
                         }, 21L);
@@ -121,20 +120,20 @@ implements Listener {
             if (p.isOp() || p.hasPermission("arkkit.teleportsanity.ignore")) {
                 return;
             }
-            FPlayer fplayer = FactionUtils.getFPlayer((Player)p);
-            Faction destinationFaction = FactionUtils.getFactionAt((Location)p.getLocation());
-            if (destinationFaction != null && FactionUtil.isNonPermFaction(destinationFaction) && !(r = FactionUtil.getRelation((RelationParticipator)destinationFaction, (RelationParticipator)fplayer)).isAlly() && !r.isMember()) {
+            FPlayer fplayer = FactionUtils.getFPlayer(p);
+            Faction destinationFaction = FactionUtils.getFactionAt(p.getLocation());
+            if (destinationFaction != null && FactionUtil.isNonPermFaction(destinationFaction) && !(r = FactionUtil.getRelation(destinationFaction, fplayer)).isAlly() && !r.isMember()) {
                 e.setCancelled(true);
-                p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You cannot teleport to " + p.getLocation().getBlockX() + "x, " + p.getLocation().getBlockY() + "y, " + p.getLocation().getBlockZ() + "z, that location is owned by " + FactionUtil.getTag(destinationFaction));
+                p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot teleport to " + p.getLocation().getBlockX() + "x, " + p.getLocation().getBlockY() + "y, " + p.getLocation().getBlockZ() + "z, that location is owned by " + FactionUtil.getTag(destinationFaction));
             }
         }
     }
 
-    @EventHandler(priority=EventPriority.HIGH, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onPlayerTeleport(PlayerTeleportEvent e) {
         String destination_region;
-        if (e.getCause() == PlayerTeleportEvent.TeleportCause.ENDER_PEARL && (destination_region = WorldGuardUtils.getRegionName(e.getTo())).startsWith("spaw") && FactionUtils.isWarZone((Location)e.getFrom())) {
-            e.getPlayer().sendMessage((Object)ChatColor.RED + "You " + (Object)ChatColor.UNDERLINE + "cannot" + (Object)ChatColor.RED + " teleport directly from the warzone to the settlement.");
+        if (e.getCause() == PlayerTeleportEvent.TeleportCause.ENDER_PEARL && (destination_region = WorldGuardUtils.getRegionName(e.getTo())).startsWith("spaw") && FactionUtils.isWarZone(e.getFrom())) {
+            e.getPlayer().sendMessage(ChatColor.RED + "You " + ChatColor.UNDERLINE + "cannot" + ChatColor.RED + " teleport directly from the warzone to the settlement.");
             e.setCancelled(true);
             return;
         }
@@ -144,13 +143,13 @@ implements Listener {
             if (p.isOp() || p.hasPermission("arkkit.teleportsanity.ignore")) {
                 return;
             }
-            FPlayer fplayer = FactionUtils.getFPlayer((Player)p);
-            Faction destinationFaction = FactionUtils.getFactionAt((Location)e.getTo());
-            if (destinationFaction != null && FactionUtil.isNonPermFaction(destinationFaction) && !(r = FactionUtil.getRelation((RelationParticipator)destinationFaction, (RelationParticipator)fplayer)).isAlly() && !r.isMember()) {
+            FPlayer fplayer = FactionUtils.getFPlayer(p);
+            Faction destinationFaction = FactionUtils.getFactionAt(e.getTo());
+            if (destinationFaction != null && FactionUtil.isNonPermFaction(destinationFaction) && !(r = FactionUtil.getRelation(destinationFaction, fplayer)).isAlly() && !r.isMember()) {
                 e.setCancelled(true);
                 String tag = FactionUtil.getTag(destinationFaction);
                 String coordString = e.getTo().getBlockX() + "x, " + e.getTo().getBlockY() + "y, " + e.getTo().getBlockZ() + "z";
-                p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You cannot teleport to " + coordString + ", that location is owned by " + tag);
+                p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot teleport to " + coordString + ", that location is owned by " + tag);
                 Bukkit.getLogger().info("[FactionSanityCheck] Cancelling teleport for " + p.getName() + " due to trying to enter " + r.name() + " (" + destinationFaction.getTag() + ") at " + coordString);
             }
         }

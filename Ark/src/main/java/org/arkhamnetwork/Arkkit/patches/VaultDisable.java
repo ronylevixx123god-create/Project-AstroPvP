@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
@@ -30,7 +30,7 @@ import org.bukkit.plugin.Plugin;
 import java.io.IOException;
 
 public class VaultDisable
-extends ArkPlugin {
+        extends ArkPlugin {
     public VaultDisable(Plugin p) {
         super(p);
     }
@@ -48,13 +48,13 @@ extends ArkPlugin {
     }
 
     class VaultListener
-    implements Listener {
+            implements Listener {
         VaultListener() {
         }
 
-        @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
+        @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
         public void onPlayerInventoryClick(InventoryClickEvent event) {
-            if (ChatColor.stripColor((String)event.getInventory().getName()).startsWith("Vault #")) {
+            if (ChatColor.stripColor(event.getInventory().getName()).startsWith("Vault #")) {
                 if (event.getAction() == InventoryAction.HOTBAR_SWAP || event.getAction() == InventoryAction.HOTBAR_MOVE_AND_READD || event.getAction() == InventoryAction.COLLECT_TO_CURSOR) {
                     event.setCancelled(true);
                     event.setResult(Event.Result.DENY);
@@ -65,8 +65,8 @@ extends ArkPlugin {
                         return;
                     }
                     event.setCancelled(true);
-                    Player player = (Player)event.getWhoClicked();
-                    player.sendMessage((Object)ChatColor.RED + "You can only withdraw items from this Player Vault.");
+                    Player player = (Player) event.getWhoClicked();
+                    player.sendMessage(ChatColor.RED + "You can only withdraw items from this Player Vault.");
                 }
             }
         }

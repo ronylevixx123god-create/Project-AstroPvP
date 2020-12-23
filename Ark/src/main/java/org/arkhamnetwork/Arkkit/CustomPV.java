@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Material
  */
@@ -15,20 +15,20 @@ class CustomPV {
     CustomPV() {
     }
 
-    public void setCustomName(String customName) {
-        this.customName = customName;
-    }
-
     public String getCustomName() {
         return this.customName;
     }
 
-    public void setIcon(Material icon) {
-        this.icon = icon;
+    public void setCustomName(String customName) {
+        this.customName = customName;
     }
 
     public Material getIcon() {
         return this.icon;
+    }
+
+    public void setIcon(Material icon) {
+        this.icon = icon;
     }
 }
 

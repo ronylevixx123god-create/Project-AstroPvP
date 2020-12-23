@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.Material
@@ -24,15 +24,15 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 
 final class PvPSanityListener
-implements Listener {
+        implements Listener {
     PvPSanityListener() {
     }
 
-    @EventHandler(priority=EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerDamagedByPlayer(EntityDamageEvent e) {
         Player pDamaged;
-        if (e.getEntity() instanceof Player && (e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK || e.getCause() == EntityDamageEvent.DamageCause.CUSTOM) && ((pDamaged = (Player)e.getEntity()).getHealth() - e.getFinalDamage() <= 0.0 || e.getDamage() >= 125.0) && pDamaged.getHealth() / pDamaged.getMaxHealth() > 0.33 && pDamaged.getHealth() != e.getDamage() && !this.isNaked(pDamaged)) {
-            Bukkit.getLogger().info("[Arkkit (PvPSanity)] Preventing " + pDamaged.getName() + " (HP: " + pDamaged.getHealth() + "/" + pDamaged.getMaxHealth() + ") from dieing due to " + e.getDamage() + " DMG (f: " + e.getFinalDamage() + "), new DMG: " + e.getDamage() * 0.33 + ", cause: " + (Object)e.getCause());
+        if (e.getEntity() instanceof Player && (e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK || e.getCause() == EntityDamageEvent.DamageCause.CUSTOM) && ((pDamaged = (Player) e.getEntity()).getHealth() - e.getFinalDamage() <= 0.0 || e.getDamage() >= 125.0) && pDamaged.getHealth() / pDamaged.getMaxHealth() > 0.33 && pDamaged.getHealth() != e.getDamage() && !this.isNaked(pDamaged)) {
+            Bukkit.getLogger().info("[Arkkit (PvPSanity)] Preventing " + pDamaged.getName() + " (HP: " + pDamaged.getHealth() + "/" + pDamaged.getMaxHealth() + ") from dieing due to " + e.getDamage() + " DMG (f: " + e.getFinalDamage() + "), new DMG: " + e.getDamage() * 0.33 + ", cause: " + e.getCause());
             e.setDamage(e.getDamage() * 0.33);
         }
     }

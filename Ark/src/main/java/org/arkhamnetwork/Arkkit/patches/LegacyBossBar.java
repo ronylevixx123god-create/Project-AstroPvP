@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.plugin.Plugin
  */
@@ -10,7 +10,7 @@ import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.plugin.Plugin;
 
 public class LegacyBossBar
-extends ArkPlugin {
+        extends ArkPlugin {
     public LegacyBossBar(Plugin p) {
         super(p);
     }

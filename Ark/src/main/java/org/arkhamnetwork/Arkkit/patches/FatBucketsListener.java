@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
@@ -18,7 +18,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import org.arkhamnetwork.Arkkit.patches.FatBuckets;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -34,11 +33,11 @@ import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.inventory.ItemStack;
 
 final class FatBucketsListener
-implements Listener {
+        implements Listener {
     FatBucketsListener() {
     }
 
-    @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPlayerEmptyFatBucket(PlayerBucketEmptyEvent e) {
         ItemStack bucket = e.getPlayer().getItemInHand();
         if (FatBuckets.isFatBucket(bucket)) {
@@ -48,7 +47,7 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPlayerFillFatBucket(PlayerBucketFillEvent e) {
         ItemStack bucket = e.getPlayer().getItemInHand();
         if (FatBuckets.isFatBucket(bucket)) {
@@ -57,9 +56,9 @@ implements Listener {
             boolean bl = inNether = e.getBlockClicked().getWorld().getEnvironment() == World.Environment.NETHER;
             if (!isLava || !inNether) {
                 if (!isLava) {
-                    e.getPlayer().sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "Fat Buckets can only be filled with lava!");
+                    e.getPlayer().sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "Fat Buckets can only be filled with lava!");
                 } else if (!inNether) {
-                    e.getPlayer().sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "Fat Buckets can only be filled in the Nether!");
+                    e.getPlayer().sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "Fat Buckets can only be filled in the Nether!");
                 }
                 e.setCancelled(true);
                 return;
@@ -70,12 +69,12 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.LOW)
+    @EventHandler(priority = EventPriority.LOW)
     public void onInventoryClick(InventoryClickEvent e) {
         InventoryType inventoryType = e.getInventory().getType();
         if ((inventoryType == InventoryType.FURNACE || inventoryType == InventoryType.DISPENSER || inventoryType == InventoryType.DROPPER) && (FatBuckets.isFatBucket(e.getCurrentItem()) || FatBuckets.isFatBucket(e.getCursor()))) {
-            Player p = (Player)e.getWhoClicked();
-            p.sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "Fat Buckets cannot be used in furnaces, dispensers, or droppers!");
+            Player p = (Player) e.getWhoClicked();
+            p.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "Fat Buckets cannot be used in furnaces, dispensers, or droppers!");
             e.setCancelled(true);
             e.setResult(Event.Result.DENY);
         }

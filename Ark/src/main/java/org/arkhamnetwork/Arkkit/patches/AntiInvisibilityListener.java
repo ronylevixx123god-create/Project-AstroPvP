@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
@@ -29,11 +29,11 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionEffectType;
 
 final class AntiInvisibilityListener
-implements Listener {
+        implements Listener {
     AntiInvisibilityListener() {
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=false)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)
     public void onBrewEvent(BrewEvent e) {
         boolean night_vision = false;
         boolean fermented_spider_eye = false;
@@ -44,21 +44,22 @@ implements Listener {
                 fermented_spider_eye = true;
                 continue;
             }
-            if (is.getType() != Material.POTION || !(pm = (PotionMeta)is.getItemMeta()).hasCustomEffect(PotionEffectType.NIGHT_VISION) && !this.isNightVisionPotion(is)) continue;
+            if (is.getType() != Material.POTION || !(pm = (PotionMeta) is.getItemMeta()).hasCustomEffect(PotionEffectType.NIGHT_VISION) && !this.isNightVisionPotion(is))
+                continue;
             night_vision = true;
         }
         if (e.getContents().getIngredient() != null && e.getContents().getIngredient().getType() == Material.FERMENTED_SPIDER_EYE) {
             fermented_spider_eye = true;
         }
-        if (e.getContents().getIngredient() != null && e.getContents().getIngredient().getType() == Material.POTION && (((PotionMeta)e.getContents().getIngredient().getItemMeta()).hasCustomEffect(PotionEffectType.NIGHT_VISION) || this.isNightVisionPotion(e.getContents().getIngredient()))) {
+        if (e.getContents().getIngredient() != null && e.getContents().getIngredient().getType() == Material.POTION && (((PotionMeta) e.getContents().getIngredient().getItemMeta()).hasCustomEffect(PotionEffectType.NIGHT_VISION) || this.isNightVisionPotion(e.getContents().getIngredient()))) {
             night_vision = true;
         }
         if (night_vision && fermented_spider_eye) {
             e.setCancelled(true);
             for (HumanEntity he : e.getContents().getViewers()) {
                 if (!(he instanceof Player)) continue;
-                ((Player)he).sendMessage((Object)ChatColor.RED + "You " + (Object)ChatColor.UNDERLINE + "cannot" + (Object)ChatColor.RED + " brew invisibility potions.");
-                ((Player)he).closeInventory();
+                he.sendMessage(ChatColor.RED + "You " + ChatColor.UNDERLINE + "cannot" + ChatColor.RED + " brew invisibility potions.");
+                he.closeInventory();
             }
         }
     }

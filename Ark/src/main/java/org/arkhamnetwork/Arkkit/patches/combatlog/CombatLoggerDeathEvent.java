@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.google.common.collect.Lists
  *  org.bukkit.entity.LivingEntity
@@ -12,8 +12,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches.combatlog;
 
-import java.util.List;
-
 import com.google.common.collect.Lists;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.Cancellable;
@@ -22,16 +20,18 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
+
 public class CombatLoggerDeathEvent
-extends Event
-implements Cancellable {
+        extends Event
+        implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled;
-    private LivingEntity combatLoggerEntity;
-    private String playerName;
-    private String playerUUIDString;
+    private final LivingEntity combatLoggerEntity;
+    private final String playerName;
+    private final String playerUUIDString;
     private List<ItemStack> inventoryItems;
-    private EntityDamageEvent rawEvent;
+    private final EntityDamageEvent rawEvent;
 
     public CombatLoggerDeathEvent(LivingEntity combatLoggerEntity, String playerUUIDString, String playerName, EntityDamageEvent event, ItemStack[] itemsFromMetadata) {
         this.combatLoggerEntity = combatLoggerEntity;
@@ -43,11 +43,11 @@ implements Cancellable {
         }
     }
 
-    public HandlerList getHandlers() {
+    public static HandlerList getHandlerList() {
         return handlers;
     }
 
-    public static HandlerList getHandlerList() {
+    public HandlerList getHandlers() {
         return handlers;
     }
 

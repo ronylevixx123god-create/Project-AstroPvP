@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.configuration.file.YamlConfiguration
@@ -8,12 +8,13 @@
  */
 package org.arkhamnetwork.Arkkit.patches.barannouncer;
 
-import java.io.File;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
+
+import java.io.File;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.logging.Level;
 
 public class BA_SQLManager {
     public static Plugin plugin;
@@ -26,6 +27,10 @@ public class BA_SQLManager {
     public static String sqlurl;
     public static volatile CopyOnWriteArrayList<String> sql_query;
 
+    static {
+        sql_query = new CopyOnWriteArrayList();
+    }
+
     public static void confirmSectionExists(String section) {
         if (!sqlconfig.contains(section)) {
             sqlconfig.createSection(section);
@@ -36,7 +41,7 @@ public class BA_SQLManager {
 
     public static boolean initializeSQL(Plugin pl) {
         plugin = pl;
-        sqlconfig = YamlConfiguration.loadConfiguration((File)new File(plugin.getDataFolder().getPath() + "/BA_sqlconfig.yml"));
+        sqlconfig = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder().getPath() + "/BA_sqlconfig.yml"));
         BA_SQLManager.confirmSectionExists("user");
         BA_SQLManager.confirmSectionExists("database");
         BA_SQLManager.confirmSectionExists("password");
@@ -50,16 +55,11 @@ public class BA_SQLManager {
             port = sqlconfig.getString("port");
             hostname = sqlconfig.getString("hostname");
             sqlurl = "jdbc:mysql://" + hostname + ":" + port + "/" + database + "?autoReconnect=true";
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
         return true;
-    }
-
-    static {
-        sql_query = new CopyOnWriteArrayList();
     }
 }
 

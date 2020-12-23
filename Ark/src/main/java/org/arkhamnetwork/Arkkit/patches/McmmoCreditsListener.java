@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.gmail.nossr50.api.ExperienceAPI
  *  com.gmail.nossr50.datatypes.skills.SkillType
@@ -21,7 +21,6 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import com.gmail.nossr50.api.ExperienceAPI;
 import com.gmail.nossr50.datatypes.skills.SkillType;
-import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -37,7 +36,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 final class McmmoCreditsListener
-implements Listener {
+        implements Listener {
     McmmoCreditsListener() {
     }
 
@@ -57,7 +56,7 @@ implements Listener {
             if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning() && (itemID = ItemID.getItemID(e.getItem())) != -1L) {
                 ItemID.blacklistIID(itemID, "mcMMOCreditUse");
             }
-            Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)("addcredits " + e.getPlayer().getName() + " " + value));
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "addcredits " + e.getPlayer().getName() + " " + value);
         }
     }
 
@@ -72,11 +71,11 @@ implements Listener {
             e.setCancelled(true);
             e.setUseItemInHand(Event.Result.DENY);
             e.setUseInteractedBlock(Event.Result.DENY);
-            if (ExperienceAPI.getLevel((Player)e.getPlayer(), (String)type.name()) + value <= ExperienceAPI.getLevelCap((String)type.name())) {
+            if (ExperienceAPI.getLevel(e.getPlayer(), type.name()) + value <= ExperienceAPI.getLevelCap(type.name())) {
                 long itemID;
                 e.getPlayer().setItemInHand(null);
                 e.getPlayer().updateInventory();
-                ExperienceAPI.addLevel((Player)e.getPlayer(), (String)type.name(), (int)value);
+                ExperienceAPI.addLevel(e.getPlayer(), type.name(), value);
                 e.getPlayer().sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "+" + value + " " + type.name() + " LEVELS!");
                 e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.ORB_PICKUP, 1.0f, 0.33f);
                 if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning() && (itemID = ItemID.getItemID(e.getItem())) != -1L) {
@@ -89,22 +88,22 @@ implements Listener {
     }
 
     private int getMcmmoCreditValue(ItemStack is) {
-        if (is.getType() == Material.PAPER && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && (is.getItemMeta().getDisplayName().startsWith((Object)ChatColor.GOLD + "MCMMO Voucher") || is.getItemMeta().getDisplayName().startsWith(ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "MCMMO Voucher"))) {
-            return Integer.parseInt(ChatColor.stripColor((String)((String)is.getItemMeta().getLore().get(0)).split(" ")[0])) * is.getAmount();
+        if (is.getType() == Material.PAPER && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && (is.getItemMeta().getDisplayName().startsWith(ChatColor.GOLD + "MCMMO Voucher") || is.getItemMeta().getDisplayName().startsWith(ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "MCMMO Voucher"))) {
+            return Integer.parseInt(ChatColor.stripColor(is.getItemMeta().getLore().get(0).split(" ")[0])) * is.getAmount();
         }
         return 0;
     }
 
     private int getSkillCreditValue(ItemStack is) {
         if (is.getType() == Material.PAPER && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().startsWith(ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "Skill Voucher")) {
-            return Integer.parseInt(ChatColor.stripColor((String)((String)is.getItemMeta().getLore().get(1)).split(" ")[0].replace("+", ""))) * is.getAmount();
+            return Integer.parseInt(ChatColor.stripColor(is.getItemMeta().getLore().get(1).split(" ")[0].replace("+", ""))) * is.getAmount();
         }
         return 0;
     }
 
     private SkillType getSkillCreditType(ItemStack is) {
-        if (is.getType() == Material.PAPER && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().startsWith((Object)ChatColor.GOLD + ChatColor.BOLD.toString() + "Skill Voucher")) {
-            return SkillType.valueOf((String)ChatColor.stripColor((String)((String)is.getItemMeta().getLore().get(0)).split(" ")[1]).toUpperCase());
+        if (is.getType() == Material.PAPER && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().startsWith(ChatColor.GOLD + ChatColor.BOLD.toString() + "Skill Voucher")) {
+            return SkillType.valueOf(ChatColor.stripColor(is.getItemMeta().getLore().get(0).split(" ")[1]).toUpperCase());
         }
         return null;
     }

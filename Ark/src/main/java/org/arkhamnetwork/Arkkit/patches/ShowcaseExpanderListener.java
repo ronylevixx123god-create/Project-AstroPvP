@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
@@ -18,7 +18,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import org.arkhamnetwork.Arkkit.patches.ShowcaseExpander;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -34,11 +33,11 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 final class ShowcaseExpanderListener
-implements Listener {
+        implements Listener {
     ShowcaseExpanderListener() {
     }
 
-    @EventHandler(priority=EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerUseItem(PlayerInteractEvent e) {
         if (e.hasItem() && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && ShowcaseExpander.isShowcaseExpanderItem(e.getItem()) && !e.getPlayer().getWorld().getName().contains("duels")) {
             e.setCancelled(true);
@@ -52,13 +51,13 @@ implements Listener {
             } else {
                 p.setItemInHand(null);
             }
-            Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)("editshowcase " + p.getName() + " add 1"));
-            p.sendMessage((Object)ChatColor.GREEN + "" + (Object)ChatColor.BOLD + " +9 /showcase Slots!");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "editshowcase " + p.getName() + " add 1");
+            p.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + " +9 /showcase Slots!");
             p.playSound(p.getLocation(), Sound.LEVEL_UP, 0.7f, 1.0f);
         }
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerPlacePainting(HangingPlaceEvent e) {
         if (ShowcaseExpander.isShowcaseExpanderItem(e.getPlayer().getItemInHand())) {
             e.setCancelled(true);
@@ -70,8 +69,8 @@ implements Listener {
             } else {
                 p.setItemInHand(null);
             }
-            Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)("editshowcase " + p.getName() + " add 1"));
-            p.sendMessage((Object)ChatColor.GREEN + "" + (Object)ChatColor.BOLD + " +9 /showcase Slots!");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "editshowcase " + p.getName() + " add 1");
+            p.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + " +9 /showcase Slots!");
             p.playSound(p.getLocation(), Sound.LEVEL_UP, 0.7f, 1.0f);
         }
     }

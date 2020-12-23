@@ -1,20 +1,18 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.plugin.Plugin
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import org.arkhamnetwork.Arkkit.patches.CustomWorldBorderListener;
-import org.arkhamnetwork.Arkkit.patches.WorldBorderFixesListener;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 public class WorldBorderFixes
-extends ArkPlugin {
+        extends ArkPlugin {
     public WorldBorderFixes(Plugin p) {
         super(p);
     }
@@ -29,8 +27,7 @@ extends ArkPlugin {
         this.registerListener(new WorldBorderFixesListener());
         try {
             this.registerListener(new CustomWorldBorderListener());
-        }
-        catch (Exception err) {
+        } catch (Exception err) {
             err.printStackTrace();
         }
     }

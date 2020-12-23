@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.command.Command
  *  org.bukkit.command.CommandSender
@@ -8,14 +8,15 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.List;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+
 final class CommandCommandItem
-extends AbstractCommand {
+        extends AbstractCommand {
     public CommandCommandItem(String command, String usage, String description, List<String> aliases) {
         super(command, usage, description, aliases);
     }

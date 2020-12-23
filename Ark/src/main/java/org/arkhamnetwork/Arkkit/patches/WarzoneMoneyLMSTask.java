@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.massivecraft.factions.FPlayer
  *  com.massivecraft.factions.FPlayers
@@ -17,15 +17,7 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
-import java.text.DecimalFormat;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.UUID;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.WarzoneMoney;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -35,55 +27,15 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.text.DecimalFormat;
+import java.util.*;
+
 final class WarzoneMoneyLMSTask
-extends BukkitRunnable {
+        extends BukkitRunnable {
     protected static Player pLMS = null;
-    private static DecimalFormat df = new DecimalFormat("#,##0");
+    private static final DecimalFormat df = new DecimalFormat("#,##0");
 
     WarzoneMoneyLMSTask() {
-    }
-
-    public void run() {
-        if (pLMS == null) {
-            if (WarzoneMoney.warzoneTimes.size() == 0) {
-                return;
-            }
-            int mostMinutes = 0;
-            for (Map.Entry<UUID, Integer> data : WarzoneMoney.warzoneTimes.entrySet()) {
-                if (data.getValue() <= mostMinutes || Bukkit.getPlayer((UUID)data.getKey()) == null) continue;
-                Player p = Bukkit.getPlayer((UUID)data.getKey());
-                if (!WarzoneMoney.getPlayersInMainWarzone().contains((Object)p)) {
-                    Bukkit.getLogger().info("[Arkkit (WarzoneMoney)] Player " + p.getName() + " was found in warzoneTimes map, but is not in warzone!");
-                    continue;
-                }
-                pLMS = p;
-                mostMinutes = data.getValue();
-            }
-            if (pLMS != null) {
-                FPlayer fp = (FPlayer)FPlayers.i.get((OfflinePlayer)pLMS);
-                Bukkit.broadcastMessage((String)(WarzoneMoney.LMS_PREFIX + (Object)ChatColor.YELLOW + (!fp.getFaction().isNone() ? fp.getFaction().getTag() + " " : "") + (Object)ChatColor.BOLD + pLMS.getName() + WarzoneMoney.WARZONE_LMS.intern() + ", they have survived in the main /spawn warzone for " + (Object)ChatColor.GOLD + mostMinutes + " " + "minutes(s)" + (Object)ChatColor.YELLOW + " at: " + (Object)ChatColor.GOLD + (Object)ChatColor.BOLD + pLMS.getLocation().getBlockX() + "x, " + pLMS.getLocation().getBlockY() + "y, " + pLMS.getLocation().getBlockZ() + "z!"));
-                for (Player p : Bukkit.getOnlinePlayers()) {
-                    if (p.hasMetadata("WarzoneLMSTip")) continue;
-                    p.sendMessage((Object)ChatColor.GRAY + "They will now recieve a " + (Object)ChatColor.UNDERLINE + "5.0x multiplier" + (Object)ChatColor.GRAY + " to all Warzone Rewards until killed. Use /warzone top to view other players.");
-                    p.setMetadata("WarzoneLMSTip", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)true));
-                }
-            }
-            return;
-        }
-        if (WarzoneMoney.warzoneTimes.containsKey(pLMS.getUniqueId())) {
-            int minutes = WarzoneMoney.warzoneTimes.get(pLMS.getUniqueId());
-            if (pLMS.hasMetadata("lastLMSAlert") && ((MetadataValue)pLMS.getMetadata("lastLMSAlert").get(0)).asInt() == minutes) {
-                return;
-            }
-            if (minutes % 10 == 0) {
-                FPlayer fp = (FPlayer)FPlayers.i.get((OfflinePlayer)pLMS);
-                Bukkit.broadcastMessage((String)(WarzoneMoney.LMS_PREFIX + (Object)ChatColor.YELLOW + (!fp.getFaction().isNone() ? fp.getFaction().getTag() + " " : "") + (Object)ChatColor.BOLD + pLMS.getName() + WarzoneMoney.WARZONE_LMS.intern() + ", they have survived in the main /spawn warzone for " + (Object)ChatColor.GOLD + minutes + "minutes(s)" + (Object)ChatColor.YELLOW + " at: " + (Object)ChatColor.GOLD + (Object)ChatColor.BOLD + pLMS.getLocation().getBlockX() + "x, " + pLMS.getLocation().getBlockY() + "y, " + pLMS.getLocation().getBlockZ() + "z!"));
-                if (WarzoneMoney.warzoneMoney.containsKey(pLMS.getUniqueId()) && WarzoneMoney.warzoneXp.containsKey(pLMS.getUniqueId())) {
-                    Bukkit.broadcastMessage((String)(WarzoneMoney.LMS_PREFIX + (Object)ChatColor.YELLOW + "They have gained " + (Object)ChatColor.GOLD + "$" + WarzoneMoneyLMSTask.insertCommas(WarzoneMoney.warzoneMoney.get(pLMS.getUniqueId()).intValue()) + (Object)ChatColor.YELLOW + " and " + (Object)ChatColor.GOLD + WarzoneMoneyLMSTask.insertCommas(WarzoneMoney.warzoneXp.get(pLMS.getUniqueId()).intValue()) + "XP"));
-                    pLMS.setMetadata("lastLMSAlert", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)minutes));
-                }
-            }
-        }
     }
 
     private static String insertCommas(double d) {
@@ -92,7 +44,7 @@ extends BukkitRunnable {
 
     private static LinkedHashMap<UUID, Integer> sortByComparator(Map<UUID, Integer> unsortMap, final boolean order) {
         LinkedList<Map.Entry<UUID, Integer>> list = new LinkedList<Map.Entry<UUID, Integer>>(unsortMap.entrySet());
-        Collections.sort(list, new Comparator<Map.Entry<UUID, Integer>>(){
+        Collections.sort(list, new Comparator<Map.Entry<UUID, Integer>>() {
 
             @Override
             public int compare(Map.Entry<UUID, Integer> o1, Map.Entry<UUID, Integer> o2) {
@@ -104,9 +56,52 @@ extends BukkitRunnable {
         });
         LinkedHashMap<UUID, Integer> sortedMap = new LinkedHashMap<UUID, Integer>();
         for (Map.Entry entry : list) {
-            sortedMap.put((UUID)entry.getKey(), (Integer)entry.getValue());
+            sortedMap.put((UUID) entry.getKey(), (Integer) entry.getValue());
         }
         return sortedMap;
+    }
+
+    public void run() {
+        if (pLMS == null) {
+            if (WarzoneMoney.warzoneTimes.size() == 0) {
+                return;
+            }
+            int mostMinutes = 0;
+            for (Map.Entry<UUID, Integer> data : WarzoneMoney.warzoneTimes.entrySet()) {
+                if (data.getValue() <= mostMinutes || Bukkit.getPlayer(data.getKey()) == null) continue;
+                Player p = Bukkit.getPlayer(data.getKey());
+                if (!WarzoneMoney.getPlayersInMainWarzone().contains(p)) {
+                    Bukkit.getLogger().info("[Arkkit (WarzoneMoney)] Player " + p.getName() + " was found in warzoneTimes map, but is not in warzone!");
+                    continue;
+                }
+                pLMS = p;
+                mostMinutes = data.getValue();
+            }
+            if (pLMS != null) {
+                FPlayer fp = FPlayers.i.get(pLMS);
+                Bukkit.broadcastMessage(WarzoneMoney.LMS_PREFIX + ChatColor.YELLOW + (!fp.getFaction().isNone() ? fp.getFaction().getTag() + " " : "") + ChatColor.BOLD + pLMS.getName() + WarzoneMoney.WARZONE_LMS.intern() + ", they have survived in the main /spawn warzone for " + ChatColor.GOLD + mostMinutes + " " + "minutes(s)" + ChatColor.YELLOW + " at: " + ChatColor.GOLD + ChatColor.BOLD + pLMS.getLocation().getBlockX() + "x, " + pLMS.getLocation().getBlockY() + "y, " + pLMS.getLocation().getBlockZ() + "z!");
+                for (Player p : Bukkit.getOnlinePlayers()) {
+                    if (p.hasMetadata("WarzoneLMSTip")) continue;
+                    p.sendMessage(ChatColor.GRAY + "They will now recieve a " + ChatColor.UNDERLINE + "5.0x multiplier" + ChatColor.GRAY + " to all Warzone Rewards until killed. Use /warzone top to view other players.");
+                    p.setMetadata("WarzoneLMSTip", new FixedMetadataValue(Arkkit.get(), true));
+                }
+            }
+            return;
+        }
+        if (WarzoneMoney.warzoneTimes.containsKey(pLMS.getUniqueId())) {
+            int minutes = WarzoneMoney.warzoneTimes.get(pLMS.getUniqueId());
+            if (pLMS.hasMetadata("lastLMSAlert") && pLMS.getMetadata("lastLMSAlert").get(0).asInt() == minutes) {
+                return;
+            }
+            if (minutes % 10 == 0) {
+                FPlayer fp = FPlayers.i.get(pLMS);
+                Bukkit.broadcastMessage(WarzoneMoney.LMS_PREFIX + ChatColor.YELLOW + (!fp.getFaction().isNone() ? fp.getFaction().getTag() + " " : "") + ChatColor.BOLD + pLMS.getName() + WarzoneMoney.WARZONE_LMS.intern() + ", they have survived in the main /spawn warzone for " + ChatColor.GOLD + minutes + "minutes(s)" + ChatColor.YELLOW + " at: " + ChatColor.GOLD + ChatColor.BOLD + pLMS.getLocation().getBlockX() + "x, " + pLMS.getLocation().getBlockY() + "y, " + pLMS.getLocation().getBlockZ() + "z!");
+                if (WarzoneMoney.warzoneMoney.containsKey(pLMS.getUniqueId()) && WarzoneMoney.warzoneXp.containsKey(pLMS.getUniqueId())) {
+                    Bukkit.broadcastMessage(WarzoneMoney.LMS_PREFIX + ChatColor.YELLOW + "They have gained " + ChatColor.GOLD + "$" + WarzoneMoneyLMSTask.insertCommas(WarzoneMoney.warzoneMoney.get(pLMS.getUniqueId()).intValue()) + ChatColor.YELLOW + " and " + ChatColor.GOLD + WarzoneMoneyLMSTask.insertCommas(WarzoneMoney.warzoneXp.get(pLMS.getUniqueId()).intValue()) + "XP");
+                    pLMS.setMetadata("lastLMSAlert", new FixedMetadataValue(Arkkit.get(), minutes));
+                }
+            }
+        }
     }
 }
 

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
@@ -34,30 +34,29 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 final class GoldenAppleSicknessListener
-implements Listener {
+        implements Listener {
     GoldenAppleSicknessListener() {
     }
 
-    @EventHandler(priority=EventPriority.HIGH, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onPlayerConsumeGoldenApple(PlayerItemConsumeEvent e) {
         Player pl = e.getPlayer();
         if (e.getItem().getType() == Material.GOLDEN_APPLE || e.getItem().getTypeId() == 322) {
             try {
-                long l = pl.hasMetadata("golden_apple_count") ? (long)((MetadataValue)pl.getMetadata("golden_apple_count").get(0)).asInt() : 0L;
+                long l = pl.hasMetadata("golden_apple_count") ? (long) pl.getMetadata("golden_apple_count").get(0).asInt() : 0L;
+            } catch (Exception err) {
+                pl.setMetadata("golden_apple_count", new FixedMetadataValue(Arkkit.get(), 0));
+                pl.setMetadata("golden_apple_time", new FixedMetadataValue(Arkkit.get(), 0L));
             }
-            catch (Exception err) {
-                pl.setMetadata("golden_apple_count", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)0));
-                pl.setMetadata("golden_apple_time", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)0L));
-            }
-            int apple_count = pl.hasMetadata("golden_apple_count") ? ((MetadataValue)pl.getMetadata("golden_apple_count").get(0)).asInt() : 0;
-            long apple_time = pl.hasMetadata("golden_apple_time") ? ((MetadataValue)pl.getMetadata("golden_apple_time").get(0)).asLong() : 0L;
-            int nutrition_mod = pl.hasMetadata("nutritionEnchantment") ? ((MetadataValue)pl.getMetadata("nutritionEnchantment").get(0)).asInt() : 0;
+            int apple_count = pl.hasMetadata("golden_apple_count") ? pl.getMetadata("golden_apple_count").get(0).asInt() : 0;
+            long apple_time = pl.hasMetadata("golden_apple_time") ? pl.getMetadata("golden_apple_time").get(0).asLong() : 0L;
+            int nutrition_mod = pl.hasMetadata("nutritionEnchantment") ? pl.getMetadata("nutritionEnchantment").get(0).asInt() : 0;
             ++apple_count;
             if (System.currentTimeMillis() - apple_time <= 30000L) {
                 int adjustedAppleCount = apple_count - nutrition_mod;
                 if (adjustedAppleCount == 2) {
-                    pl.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "(!)" + (Object)ChatColor.YELLOW + " You are about to contract " + (Object)ChatColor.UNDERLINE + "Golden Apple Sickness!");
-                    pl.sendMessage((Object)ChatColor.GRAY + "Don't eat anymore golden apples for 30s!");
+                    pl.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "(!)" + ChatColor.YELLOW + " You are about to contract " + ChatColor.UNDERLINE + "Golden Apple Sickness!");
+                    pl.sendMessage(ChatColor.GRAY + "Don't eat anymore golden apples for 30s!");
                 }
                 if (adjustedAppleCount > 2) {
                     e.setCancelled(true);
@@ -68,8 +67,8 @@ implements Listener {
                         apple_stack.setAmount(apple_stack.getAmount() - 1);
                         pl.setItemInHand(apple_stack);
                     }
-                    pl.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!)" + (Object)ChatColor.RED + " You have " + (Object)ChatColor.UNDERLINE + "Golden Apple Sickness!");
-                    pl.sendMessage((Object)ChatColor.GRAY + "Stop eating golden apples before it's too late!");
+                    pl.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!)" + ChatColor.RED + " You have " + ChatColor.UNDERLINE + "Golden Apple Sickness!");
+                    pl.sendMessage(ChatColor.GRAY + "Stop eating golden apples before it's too late!");
                     pl.updateInventory();
                 }
                 if (adjustedAppleCount >= 3) {
@@ -93,9 +92,9 @@ implements Listener {
                 apple_count = 1;
                 apple_time = System.currentTimeMillis();
             }
-            pl.setMetadata("golden_apple_count", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)apple_count));
+            pl.setMetadata("golden_apple_count", new FixedMetadataValue(Arkkit.get(), apple_count));
             if (apple_count == 1) {
-                pl.setMetadata("golden_apple_time", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)apple_time));
+                pl.setMetadata("golden_apple_time", new FixedMetadataValue(Arkkit.get(), apple_time));
             }
         }
     }

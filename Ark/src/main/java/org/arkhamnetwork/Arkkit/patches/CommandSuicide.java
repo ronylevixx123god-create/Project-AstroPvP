@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.gui.ConfirmGUI
  *  com.cosmicpvp.cosmicutils.utils.CC
@@ -23,7 +23,6 @@ package org.arkhamnetwork.Arkkit.patches;
 import com.cosmicpvp.cosmicutils.gui.ConfirmGUI;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
-import java.util.List;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
@@ -38,8 +37,10 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.List;
+
 final class CommandSuicide
-extends AbstractCommand {
+        extends AbstractCommand {
     public CommandSuicide(String command, String usage, String description, List<String> aliases) {
         super(command, usage, description, aliases);
     }
@@ -47,33 +48,33 @@ extends AbstractCommand {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (sender instanceof Player) {
-            Player p = (Player)sender;
+            Player p = (Player) sender;
             if (p.isDead() || p.getHealth() <= 0.0) {
-                p.sendMessage((Object)ChatColor.RED + "You are already dead!");
+                p.sendMessage(ChatColor.RED + "You are already dead!");
                 return true;
             }
-            if (p.hasMetadata("lastSuicideTick") && ((MetadataValue)p.getMetadata("lastSuicideTick").get(0)).asLong() > (long)(MinecraftServer.currentTick - 20)) {
-                p.sendMessage((Object)ChatColor.RED + "You cannot kill yourself that often!");
+            if (p.hasMetadata("lastSuicideTick") && p.getMetadata("lastSuicideTick").get(0).asLong() > (long) (MinecraftServer.currentTick - 20)) {
+                p.sendMessage(ChatColor.RED + "You cannot kill yourself that often!");
                 return true;
             }
             if (args.length > 0) {
-                p.sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "/suicide: " + (Object)ChatColor.RED + "Instantly kills your player, dropping all items and sending you to spawn.");
+                p.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "/suicide: " + ChatColor.RED + "Instantly kills your player, dropping all items and sending you to spawn.");
                 return true;
             }
             if (!p.hasMetadata("suicideCommandConfirm")) {
-                new ConfirmGUI(p, "Confirm /suicide", 9, new ItemBuilder(Material.STAINED_GLASS_PANE, CC.GreenB + "Confirm /suicide?", new String[]{CC.Gray + "Are you sure you want to " + CC.Red + "KILL YOURSELF" + CC.Gray + "?", "", CC.Gray + "You will lose " + CC.RedU + "ALL" + CC.Gray + " of your items on death!"}).data((short)DyeColor.LIME.getWoolData()).build(), new ItemBuilder(Material.STAINED_GLASS_PANE, CC.RedB + "Cancel Suicide", new String[]{CC.Gray + "Click to cancel this action."}).data((short)DyeColor.RED.getWoolData()).build(), new ItemBuilder(Material.STAINED_GLASS_PANE).name(" ").data((short)DyeColor.GRAY.getWoolData()).build(), () -> {
-                    p.setMetadata("suicideCommandConfirm", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)true));
+                new ConfirmGUI(p, "Confirm /suicide", 9, new ItemBuilder(Material.STAINED_GLASS_PANE, CC.GreenB + "Confirm /suicide?", CC.Gray + "Are you sure you want to " + CC.Red + "KILL YOURSELF" + CC.Gray + "?", "", CC.Gray + "You will lose " + CC.RedU + "ALL" + CC.Gray + " of your items on death!").data(DyeColor.LIME.getWoolData()).build(), new ItemBuilder(Material.STAINED_GLASS_PANE, CC.RedB + "Cancel Suicide", CC.Gray + "Click to cancel this action.").data(DyeColor.RED.getWoolData()).build(), new ItemBuilder(Material.STAINED_GLASS_PANE).name(" ").data(DyeColor.GRAY.getWoolData()).build(), () -> {
+                    p.setMetadata("suicideCommandConfirm", new FixedMetadataValue(Arkkit.get(), true));
                     p.chat("/suicide");
                 }, () -> {
                     p.sendMessage(CC.RedB + "CANCELLED - " + CC.Red + "/suicide");
                     p.closeInventory();
-                }).openGUI((JavaPlugin)Arkkit.get());
+                }).openGUI(Arkkit.get());
                 return true;
             }
-            p.setMetadata("lastSuicideTick", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)MinecraftServer.currentTick));
+            p.setMetadata("lastSuicideTick", new FixedMetadataValue(Arkkit.get(), MinecraftServer.currentTick));
             p.setHealth(0.0);
-            p.sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "/suicide: " + (Object)ChatColor.RED + "You have killed yourself!");
-            p.removeMetadata("suicideCommandConfirm", (Plugin)Arkkit.get());
+            p.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "/suicide: " + ChatColor.RED + "You have killed yourself!");
+            p.removeMetadata("suicideCommandConfirm", Arkkit.get());
         }
         return true;
     }

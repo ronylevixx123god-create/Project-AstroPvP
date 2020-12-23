@@ -1,23 +1,23 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.plugin.Plugin
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.TWCommandTNT;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class TWAutoCraftTNT
-extends ArkPlugin {
+        extends ArkPlugin {
     protected static double sandPrice = 1.53;
 
     public TWAutoCraftTNT(Plugin p) {

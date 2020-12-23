@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.gui.CosmicGUI
  *  com.cosmicpvp.cosmicutils.gui.InventoryItem
@@ -18,31 +18,30 @@ import com.cosmicpvp.cosmicutils.gui.InventoryItem;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.InventoryUtils;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
-import java.util.List;
 import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
-import org.arkhamnetwork.Arkkit.patches.CandyGram;
-import org.arkhamnetwork.Arkkit.patches.ValentinesDay;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
+
 class CandyGramClaimGUI
-extends CosmicGUI {
+        extends CosmicGUI {
     public CandyGramClaimGUI(Player player, List<CandyGram> toClaim) {
-        super(player, "Your Candy Grams", InventoryUtils.fitSize((int)toClaim.size()));
+        super(player, "Your Candy Grams", InventoryUtils.fitSize(toClaim.size()));
     }
 
     public void redraw() {
         this.inventory.clear();
         this.getInventoryItems().clear();
-        ValentinesDay plugin = (ValentinesDay)ArkPlugins.VALENTINES_DAY.getArkPlugin();
+        ValentinesDay plugin = (ValentinesDay) ArkPlugins.VALENTINES_DAY.getArkPlugin();
         List<CandyGram> grams = plugin.pendingGrams.get(this.player.getUniqueId());
         if (grams != null) {
             int slot = 0;
             for (CandyGram gram : grams) {
                 if (slot >= this.size) break;
-                this.setItem(slot++, new InventoryItem(new ItemBuilder(gram.getItemStack()).addLoreLine(new String[]{"", CC.Gray + "Click to claim Candy Gram!"}).build()).click(() -> {
+                this.setItem(slot++, new InventoryItem(new ItemBuilder(gram.getItemStack()).addLoreLine("", CC.Gray + "Click to claim Candy Gram!").build()).click(() -> {
                     if (!grams.contains(gram)) {
                         return;
                     }
@@ -51,7 +50,7 @@ extends CosmicGUI {
                         return;
                     }
                     grams.remove(gram);
-                    this.player.getInventory().addItem(new ItemStack[]{gram.getItemStack()});
+                    this.player.getInventory().addItem(gram.getItemStack());
                     this.player.updateInventory();
                     this.player.playSound(this.player.getLocation(), Sound.LEVEL_UP, 0.4f, 1.4f);
                     ParticleEffect.sendToLocation(ParticleEffect.HEART, this.player.getLocation().add(0.0, 1.0, 0.0), 1.0f, 1.0f, 1.0f, 0.1f, 20);

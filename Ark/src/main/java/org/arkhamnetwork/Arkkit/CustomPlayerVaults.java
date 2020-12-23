@@ -4,10 +4,9 @@
 package org.arkhamnetwork.Arkkit;
 
 import java.util.HashMap;
-import org.arkhamnetwork.Arkkit.CustomPV;
 
 class CustomPlayerVaults
-extends HashMap<Integer, CustomPV> {
+        extends HashMap<Integer, CustomPV> {
     public boolean isCustomPV(int i) {
         return this.containsKey(i);
     }

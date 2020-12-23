@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.intellectualcrafters.plot.api.PlotAPI
  *  com.intellectualcrafters.plot.object.Plot
@@ -17,7 +17,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.io.File;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -29,27 +28,29 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
-final class ChatLimiterListener
-implements Listener {
-    private boolean plotSquaredEnabled = new File("plugins/PlotSquared.jar").exists() || new File("plugins/PlotSquared-3.2.23.jar").exists();
+import java.io.File;
 
-    @EventHandler(priority=EventPriority.LOW)
+final class ChatLimiterListener
+        implements Listener {
+    private final boolean plotSquaredEnabled = new File("plugins/PlotSquared.jar").exists() || new File("plugins/PlotSquared-3.2.23.jar").exists();
+
+    @EventHandler(priority = EventPriority.LOW)
     public void onAsyncPlayerChatEvent(AsyncPlayerChatEvent e) {
         Player pl = e.getPlayer();
         boolean vip = pl.hasPermission("chatlimiter.vip") || pl.hasPermission("arkhamchat.vip");
         boolean plotChat = false;
         long chat_delay = vip ? ChatLimiter.vip_delay : ChatLimiter.default_delay;
-        long last_chat_message = pl.hasMetadata("last_chat_message") ? ((MetadataValue)pl.getMetadata("last_chat_message").get(0)).asLong() : 0L;
+        long last_chat_message = pl.hasMetadata("last_chat_message") ? pl.getMetadata("last_chat_message").get(0).asLong() : 0L;
         long dif = System.currentTimeMillis() - last_chat_message;
         if (dif < (plotChat ? 250L : chat_delay * 1000L)) {
-            pl.sendMessage((Object)ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You cannot send another message for " + (chat_delay * 1000L - dif) + "ms.");
+            pl.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot send another message for " + (chat_delay * 1000L - dif) + "ms.");
             if (!vip) {
-                pl.sendMessage((Object)ChatColor.GRAY + "Purchase a rank at " + (Object)ChatColor.RED + (Object)ChatColor.UNDERLINE + ChatLimiter.store_url + (Object)ChatColor.GRAY + " to reduce the delay between chat messages!");
+                pl.sendMessage(ChatColor.GRAY + "Purchase a rank at " + ChatColor.RED + ChatColor.UNDERLINE + ChatLimiter.store_url + ChatColor.GRAY + " to reduce the delay between chat messages!");
             }
             e.setCancelled(true);
             return;
         }
-        pl.setMetadata("last_chat_message", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)System.currentTimeMillis()));
+        pl.setMetadata("last_chat_message", new FixedMetadataValue(Arkkit.get(), System.currentTimeMillis()));
     }
 }
 

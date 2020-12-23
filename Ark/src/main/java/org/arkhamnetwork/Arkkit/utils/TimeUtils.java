@@ -59,25 +59,25 @@ public class TimeUtils {
         }
         GregorianCalendar c = new GregorianCalendar();
         if (years > 0) {
-            ((Calendar)c).add(1, years * (future ? 1 : -1));
+            ((Calendar) c).add(1, years * (future ? 1 : -1));
         }
         if (months > 0) {
-            ((Calendar)c).add(2, months * (future ? 1 : -1));
+            ((Calendar) c).add(2, months * (future ? 1 : -1));
         }
         if (weeks > 0) {
-            ((Calendar)c).add(3, weeks * (future ? 1 : -1));
+            ((Calendar) c).add(3, weeks * (future ? 1 : -1));
         }
         if (days > 0) {
-            ((Calendar)c).add(5, days * (future ? 1 : -1));
+            ((Calendar) c).add(5, days * (future ? 1 : -1));
         }
         if (hours > 0) {
-            ((Calendar)c).add(11, hours * (future ? 1 : -1));
+            ((Calendar) c).add(11, hours * (future ? 1 : -1));
         }
         if (minutes > 0) {
-            ((Calendar)c).add(12, minutes * (future ? 1 : -1));
+            ((Calendar) c).add(12, minutes * (future ? 1 : -1));
         }
         if (seconds > 0) {
-            ((Calendar)c).add(13, seconds * (future ? 1 : -1));
+            ((Calendar) c).add(13, seconds * (future ? 1 : -1));
         }
         return c.getTimeInMillis() / 1000L;
     }

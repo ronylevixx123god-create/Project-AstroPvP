@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.ChatColor
  *  org.bukkit.event.EventHandler
@@ -15,7 +15,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerEditBookEvent;
 
 final class NoBookSignListener
-implements Listener {
+        implements Listener {
     NoBookSignListener() {
     }
 
@@ -25,7 +25,7 @@ implements Listener {
             return;
         }
         e.setCancelled(true);
-        e.getPlayer().sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "Book signing and editing is disabled.");
+        e.getPlayer().sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "Book signing and editing is disabled.");
     }
 }
 

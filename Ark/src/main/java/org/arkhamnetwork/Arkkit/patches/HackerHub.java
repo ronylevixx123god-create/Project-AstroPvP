@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.earth2me.essentials.Essentials
  *  org.bukkit.Bukkit
@@ -9,13 +9,12 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.earth2me.essentials.Essentials;
-import org.arkhamnetwork.Arkkit.patches.HackerHubListener;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 public class HackerHub
-extends ArkPlugin {
+        extends ArkPlugin {
     protected static Essentials ess;
 
     public HackerHub(Plugin p) {
@@ -29,7 +28,7 @@ extends ArkPlugin {
             this.kill();
             return;
         }
-        ess = (Essentials)Bukkit.getPluginManager().getPlugin("Essentials");
+        ess = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
         this.registerListener(new HackerHubListener());
     }
 

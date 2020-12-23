@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.earth2me.essentials.CommandSource
  *  com.earth2me.essentials.User
@@ -21,14 +21,7 @@ import com.earth2me.essentials.User;
 import com.earth2me.essentials.commands.NotEnoughArgumentsException;
 import com.earth2me.essentials.commands.PlayerNotFoundException;
 import com.earth2me.essentials.utils.FormatUtil;
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
-import org.arkhamnetwork.Arkkit.patches.Balance;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
@@ -36,12 +29,29 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
+
 final class CommandBalance
-extends AbstractCommand {
+        extends AbstractCommand {
     DecimalFormat formatter = new DecimalFormat("#,###.00");
 
     public CommandBalance(String command, String usage, String description, List<String> aliases) {
         super(command, usage, description, aliases);
+    }
+
+    private static boolean canInteractWith(User interactor, User interactee) {
+        if (interactor == null) {
+            return !interactee.isHidden();
+        }
+        if (interactor.equals(interactee)) {
+            return true;
+        }
+        return interactor.getBase().canSee(interactee.getBase());
     }
 
     @Override
@@ -50,34 +60,33 @@ extends AbstractCommand {
             this.doBalanceOther(args, Bukkit.getServer(), sender);
             return true;
         }
-        User user = Balance.ess3.getUser((Player)sender);
+        User user = Balance.ess3.getUser((Player) sender);
         Server server = Bukkit.getServer();
         if (args.length == 1 && user.isAuthorized("essentials.balance.others")) {
             User target = null;
             try {
                 target = this.getPlayer(server, args, 0, true, true);
-            }
-            catch (NotEnoughArgumentsException | PlayerNotFoundException e) {
+            } catch (NotEnoughArgumentsException | PlayerNotFoundException e) {
                 if (e instanceof PlayerNotFoundException) {
-                    sender.sendMessage((Object)ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + args[0] + " is not locally online.");
+                    sender.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + args[0] + " is not locally online.");
                 } else {
                     e.printStackTrace();
                 }
                 return true;
             }
             BigDecimal bal = target.getMoney();
-            sender.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + target.getName() + "'s Balance: " + (Object)ChatColor.WHITE + "$" + this.formatMoney(target.getMoney()));
+            sender.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + target.getName() + "'s Balance: " + ChatColor.WHITE + "$" + this.formatMoney(target.getMoney()));
             if (user.getMoney().compareTo(target.getMoney()) == 1) {
-                sender.sendMessage((Object)ChatColor.GRAY + "You're richer than them!");
+                sender.sendMessage(ChatColor.GRAY + "You're richer than them!");
             } else if (user.getMoney().compareTo(target.getMoney()) == 0) {
-                sender.sendMessage((Object)ChatColor.GRAY + "They're just as rich as you!");
+                sender.sendMessage(ChatColor.GRAY + "They're just as rich as you!");
             } else {
-                sender.sendMessage((Object)ChatColor.GRAY + "They're richer than you!");
+                sender.sendMessage(ChatColor.GRAY + "They're richer than you!");
             }
         } else if (args.length < 2) {
             BigDecimal bal = user.getMoney();
-            user.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "Your Balance: " + (Object)ChatColor.WHITE + "$" + this.formatMoney(bal));
-            user.sendMessage((Object)ChatColor.GRAY + "Use /withdraw or /pay to transfer funds.");
+            user.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "Your Balance: " + ChatColor.WHITE + "$" + this.formatMoney(bal));
+            user.sendMessage(ChatColor.GRAY + "Use /withdraw or /pay to transfer funds.");
         }
         return true;
     }
@@ -103,19 +112,18 @@ extends AbstractCommand {
         User target = null;
         try {
             target = this.getPlayer(server, args, 0, true, true);
-        }
-        catch (NotEnoughArgumentsException | PlayerNotFoundException e) {
+        } catch (NotEnoughArgumentsException | PlayerNotFoundException e) {
             if (e instanceof PlayerNotFoundException) {
-                sender.sendMessage((Object)ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + args[0] + " is not locally online.");
+                sender.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + args[0] + " is not locally online.");
             }
             e.printStackTrace();
         }
-        sender.sendMessage(target.getName() + "'s Balance: " + (Object)ChatColor.WHITE + "$" + this.formatMoney(target.getMoney()));
+        sender.sendMessage(target.getName() + "'s Balance: " + ChatColor.WHITE + "$" + this.formatMoney(target.getMoney()));
     }
 
     private String formatMoney(BigDecimal bal) {
         String s = this.formatter.format(bal);
-        return s.contains(".") ? s.split("\\.")[0] + (Object)ChatColor.GRAY + "." + s.split("\\.")[1] : s;
+        return s.contains(".") ? s.split("\\.")[0] + ChatColor.GRAY + "." + s.split("\\.")[1] : s;
     }
 
     protected User getPlayer(Server server, CommandSource sender, String[] args, int pos) throws PlayerNotFoundException, NotEnoughArgumentsException {
@@ -160,8 +168,7 @@ extends AbstractCommand {
         Player exPlayer;
         try {
             exPlayer = server.getPlayer(UUID.fromString(searchTerm));
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             exPlayer = server.getPlayer(searchTerm);
         }
         User user = exPlayer != null ? Balance.ess3.getUser(exPlayer) : Balance.ess3.getUser(searchTerm);
@@ -180,16 +187,18 @@ extends AbstractCommand {
             for (Player p : Bukkit.getOnlinePlayers()) {
                 String displayName;
                 User userMatch = Balance.ess3.getUser(p);
-                if (!getHidden && !CommandBalance.canInteractWith(sourceUser, userMatch) || !(displayName = FormatUtil.stripFormat((String)userMatch.getDisplayName()).toLowerCase(Locale.ENGLISH)).contains(matchText)) continue;
+                if (!getHidden && !CommandBalance.canInteractWith(sourceUser, userMatch) || !(displayName = FormatUtil.stripFormat(userMatch.getDisplayName()).toLowerCase(Locale.ENGLISH)).contains(matchText))
+                    continue;
                 return userMatch;
             }
         } else {
             for (Player player : matches) {
                 User userMatch = Balance.ess3.getUser(player);
-                if (!userMatch.getDisplayName().startsWith(searchTerm) || !getHidden && !CommandBalance.canInteractWith(sourceUser, userMatch)) continue;
+                if (!userMatch.getDisplayName().startsWith(searchTerm) || !getHidden && !CommandBalance.canInteractWith(sourceUser, userMatch))
+                    continue;
                 return userMatch;
             }
-            User userMatch = Balance.ess3.getUser((Player)matches.get(0));
+            User userMatch = Balance.ess3.getUser(matches.get(0));
             if (getHidden || CommandBalance.canInteractWith(sourceUser, userMatch)) {
                 return userMatch;
             }
@@ -205,16 +214,6 @@ extends AbstractCommand {
             return CommandBalance.canInteractWith(Balance.ess3.getUser(interactor.getPlayer()), interactee);
         }
         return true;
-    }
-
-    private static boolean canInteractWith(User interactor, User interactee) {
-        if (interactor == null) {
-            return !interactee.isHidden();
-        }
-        if (interactor.equals((Object)interactee)) {
-            return true;
-        }
-        return interactor.getBase().canSee(interactee.getBase());
     }
 }
 

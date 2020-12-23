@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.event.EventHandler
  *  org.bukkit.event.Listener
@@ -13,7 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.weather.WeatherChangeEvent;
 
 final class NoWeatherListener
-implements Listener {
+        implements Listener {
     NoWeatherListener() {
     }
 

@@ -3,16 +3,15 @@
  */
 package org.arkhamnetwork.Arkkit.patches.voting;
 
+import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
-import org.arkhamnetwork.Arkkit.patches.voting.VS_SQLConnection;
-import org.arkhamnetwork.Arkkit.patches.voting.VS_SQLManager;
-import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 
 public class VoteAPI {
-    private static HashMap<String, Integer> cached_player_vote_counts = new HashMap();
-    private static HashMap<String, Long> last_sql_lookup = new HashMap();
+    private static final HashMap<String, Integer> cached_player_vote_counts = new HashMap();
+    private static final HashMap<String, Long> last_sql_lookup = new HashMap();
 
     protected static void clearPlayerVoteCache(String player_uuid) {
         cached_player_vote_counts.remove(player_uuid);
@@ -37,17 +36,14 @@ public class VoteAPI {
                 long l = rs.getLong("last_vote");
                 return l;
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             try {
                 if (rs != null) {
                     rs.close();
                 }
-            }
-            catch (SQLException e) {
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
@@ -77,17 +73,14 @@ public class VoteAPI {
                 int n = votes;
                 return n;
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             try {
                 if (rs != null) {
                     rs.close();
                 }
-            }
-            catch (SQLException e) {
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
@@ -109,17 +102,14 @@ public class VoteAPI {
                 int n = rs.getInt("total");
                 return n;
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             try {
                 if (rs != null) {
                     rs.close();
                 }
-            }
-            catch (SQLException e) {
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         }

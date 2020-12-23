@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.ChatColor
  *  org.bukkit.entity.Player
@@ -14,7 +14,6 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import org.arkhamnetwork.Arkkit.libs.ExpUtils;
-import org.arkhamnetwork.Arkkit.patches.ExpOrbs;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -25,11 +24,11 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 final class ExpOrbsListener
-implements Listener {
+        implements Listener {
     ExpOrbsListener() {
     }
 
-    @EventHandler(priority=EventPriority.LOW)
+    @EventHandler(priority = EventPriority.LOW)
     public void onExpOrbUse(PlayerInteractEvent e) {
         if (e.hasItem() && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && ExpOrbs.isXpBottle(e.getItem())) {
             Player p = e.getPlayer();

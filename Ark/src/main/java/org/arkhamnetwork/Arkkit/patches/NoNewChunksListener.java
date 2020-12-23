@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Chunk
  *  org.bukkit.event.EventHandler
@@ -9,14 +9,13 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import org.arkhamnetwork.Arkkit.patches.NoNewChunks;
 import org.bukkit.Chunk;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.ChunkLoadEvent;
 
 final class NoNewChunksListener
-implements Listener {
+        implements Listener {
     NoNewChunksListener() {
     }
 

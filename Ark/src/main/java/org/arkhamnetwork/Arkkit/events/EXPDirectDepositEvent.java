@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.entity.Player
  *  org.bukkit.event.Cancellable
@@ -15,13 +15,13 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 public class EXPDirectDepositEvent
-extends Event
-implements Cancellable {
+        extends Event
+        implements Cancellable {
     public static final HandlerList list = new HandlerList();
     private boolean cancelled = false;
     private int amountToGive;
     private int previousEXPTotal;
-    private Player player;
+    private final Player player;
 
     public EXPDirectDepositEvent(Player player, int amount, int previousEXP) {
         this.amountToGive = amount;
@@ -29,11 +29,11 @@ implements Cancellable {
         this.player = player;
     }
 
-    public HandlerList getHandlers() {
+    public static HandlerList getHandlerList() {
         return list;
     }
 
-    public static HandlerList getHandlerList() {
+    public HandlerList getHandlers() {
         return list;
     }
 
@@ -49,12 +49,12 @@ implements Cancellable {
         return this.amountToGive;
     }
 
-    public int getPreviousEXPTotal() {
-        return this.previousEXPTotal;
-    }
-
     public void setAmountToGive(int amountToGive) {
         this.amountToGive = amountToGive;
+    }
+
+    public int getPreviousEXPTotal() {
+        return this.previousEXPTotal;
     }
 
     public void setPreviousEXPTotal(int previousEXPTotal) {

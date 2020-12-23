@@ -1,14 +1,13 @@
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.plugin.Plugin;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 public class WebsiteLinks
-extends ArkPlugin {
+        extends ArkPlugin {
     public WebsiteLinks(Plugin p) {
         super(p);
     }

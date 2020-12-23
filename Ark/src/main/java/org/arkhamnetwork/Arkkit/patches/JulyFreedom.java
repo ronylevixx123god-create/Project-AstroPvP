@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.google.common.collect.Lists
  *  org.bukkit.Bukkit
@@ -22,19 +22,12 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.List;
-import java.util.Random;
-
 import com.google.common.collect.Lists;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.arkhamnetwork.Arkkit.utils.RandomFireworks;
 import org.arkhamnetwork.Arkkit.utils.WorldGuardUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Color;
-import org.bukkit.FireworkEffect;
-import org.bukkit.Location;
+import org.bukkit.*;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -47,12 +40,15 @@ import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.List;
+import java.util.Random;
+
 public class JulyFreedom
-extends ArkPlugin {
-    private boolean usingFactions = true;
-    private Random random = new Random();
+        extends ArkPlugin {
     private final int MOB_ITEM_DROP_CHANCE = 1;
     List<Color> available = Lists.newArrayList(Color.RED, Color.WHITE, Color.BLUE);
+    private boolean usingFactions = true;
+    private final Random random = new Random();
 
     public JulyFreedom(Plugin p) {
         super(p);
@@ -65,7 +61,7 @@ extends ArkPlugin {
             Bukkit.getLogger().info("Unable to find Factions plugin, disabling support.");
         }
         this.registerListener(new FireworkListener());
-        this.registerTask(new SpaceFireworkTask().runTaskTimer((Plugin)Arkkit.get(), 24000L, 72000L), SpaceFireworkTask.class);
+        this.registerTask(new SpaceFireworkTask().runTaskTimer(Arkkit.get(), 24000L, 72000L), SpaceFireworkTask.class);
     }
 
     @Override
@@ -74,7 +70,7 @@ extends ArkPlugin {
     }
 
     private void launchFirework(final Location loc) {
-        new BukkitRunnable(){
+        new BukkitRunnable() {
 
             public void run() {
                 JulyFreedom.this.shootFirework(loc);
@@ -83,10 +79,10 @@ extends ArkPlugin {
     }
 
     private void shootFirework(Location location) {
-        Firework fw = (Firework)location.getWorld().spawn(location, Firework.class);
+        Firework fw = location.getWorld().spawn(location, Firework.class);
         FireworkMeta fm = fw.getFireworkMeta();
         fm.setPower(1);
-        fm.addEffects(new FireworkEffect[]{FireworkEffect.builder().with(RandomFireworks.getManager().getRandomType()).withColor(this.getRandomColor()).build()});
+        fm.addEffects(FireworkEffect.builder().with(RandomFireworks.getManager().getRandomType()).withColor(this.getRandomColor()).build());
         fw.setFireworkMeta(fm);
     }
 
@@ -95,21 +91,21 @@ extends ArkPlugin {
     }
 
     public class SpaceFireworkTask
-    extends BukkitRunnable {
+            extends BukkitRunnable {
         public void run() {
             for (Player pl : Bukkit.getOnlinePlayers()) {
-                pl.sendMessage((Object)ChatColor.RED + ChatColor.BOLD.toString() + "Happy " + (Object)ChatColor.WHITE + ChatColor.BOLD.toString() + ChatColor.UNDERLINE.toString() + "4th of July" + (Object)ChatColor.BLUE + ChatColor.BOLD.toString() + " CosmicPvP!");
-                pl.sendMessage((Object)ChatColor.YELLOW + ChatColor.BOLD.toString() + "+1 Space Firework");
-                pl.sendMessage((Object)ChatColor.GRAY + "We'll be handing out free space fireworks all day in celebration!");
+                pl.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "Happy " + ChatColor.WHITE + ChatColor.BOLD.toString() + ChatColor.UNDERLINE.toString() + "4th of July" + ChatColor.BLUE + ChatColor.BOLD.toString() + " CosmicPvP!");
+                pl.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "+1 Space Firework");
+                pl.sendMessage(ChatColor.GRAY + "We'll be handing out free space fireworks all day in celebration!");
                 if (pl.getInventory().firstEmpty() == -1) continue;
-                pl.getInventory().addItem(new ItemStack[]{NewYears.getCosmicCracker()});
+                pl.getInventory().addItem(NewYears.getCosmicCracker());
             }
         }
     }
 
     public class FireworkListener
-    implements Listener {
-        @EventHandler(priority=EventPriority.HIGH, ignoreCancelled=true)
+            implements Listener {
+        @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
         public void onPlayerJoin(PlayerJoinEvent event) {
             Location playerLoc = event.getPlayer().getLocation();
             if (JulyFreedom.this.usingFactions) {

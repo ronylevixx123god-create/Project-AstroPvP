@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.FactionUtils
  *  com.massivecraft.factions.Board
@@ -29,7 +29,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 final class CommandCWarzone
-extends AbstractCommand {
+        extends AbstractCommand {
     public CommandCWarzone(String command, String usage, String description) {
         super(command, usage, description);
     }
@@ -44,23 +44,23 @@ extends AbstractCommand {
             sender.sendMessage("i.e) /cwarzone 2 -- would claim 4x4 chunks or 64x64 blocks around the player in the world they're in.");
             return true;
         }
-        Player p = (Player)sender;
+        Player p = (Player) sender;
         final World w = p.getWorld();
         int radius = Integer.valueOf(args[0]);
         final int xMin = p.getLocation().getChunk().getX() - radius;
         final int xMax = p.getLocation().getChunk().getX() + radius;
         final int zMin = p.getLocation().getChunk().getZ() - radius;
         final int zMax = p.getLocation().getChunk().getZ() + radius;
-        Bukkit.getScheduler().runTaskAsynchronously((Plugin)Arkkit.get(), new Runnable(){
+        Bukkit.getScheduler().runTaskAsynchronously(Arkkit.get(), new Runnable() {
 
             @Override
             public void run() {
                 int i = 0;
-                Faction warzoneFaction = FactionUtils.getFactionById((String)"-2");
+                Faction warzoneFaction = FactionUtils.getFactionById("-2");
                 for (int chunkX = xMin; chunkX <= xMax; ++chunkX) {
                     for (int chunkZ = zMin; chunkZ <= zMax; ++chunkZ) {
                         FLocation fl = new FLocation(w.getName(), chunkX, chunkZ);
-                        Board.setFactionAt((Faction)warzoneFaction, (FLocation)fl);
+                        Board.setFactionAt(warzoneFaction, fl);
                         Bukkit.getLogger().info("[Arkkit (ypperin)] Set chunk " + chunkX + "," + chunkZ + " in " + w.getName() + " to WARZONE");
                         ++i;
                     }

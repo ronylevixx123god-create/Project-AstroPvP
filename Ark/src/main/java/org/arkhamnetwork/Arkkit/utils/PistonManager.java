@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Chunk
  *  org.bukkit.Location
@@ -8,15 +8,16 @@
  */
 package org.arkhamnetwork.Arkkit.utils;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+
 public class PistonManager
-extends HashMap<String, HashSet<Location>> {
+        extends HashMap<String, HashSet<Location>> {
     private static final long serialVersionUID = -6754405085225360026L;
 
     public void addPiston(Block b) {
@@ -24,11 +25,11 @@ extends HashMap<String, HashSet<Location>> {
         int cx = c.getX();
         int cz = c.getZ();
         if (this.containsKey(cx + "," + cz)) {
-            HashSet hloc = (HashSet)this.get(cx + "," + cz);
+            HashSet hloc = this.get(cx + "," + cz);
             hloc.add(b.getLocation());
             this.put(cx + "," + cz, hloc);
         } else {
-            HashSet<Location> hloc = new HashSet<Location>(Arrays.asList(new Location[]{b.getLocation()}));
+            HashSet<Location> hloc = new HashSet<Location>(Arrays.asList(b.getLocation()));
             this.put(cx + "," + cz, hloc);
         }
     }
@@ -40,8 +41,8 @@ extends HashMap<String, HashSet<Location>> {
         if (!this.containsKey(cx + "," + cz)) {
             return;
         }
-        HashSet hloc = (HashSet)this.get(cx + "," + cz);
-        hloc.remove((Object)b.getLocation());
+        HashSet hloc = this.get(cx + "," + cz);
+        hloc.remove(b.getLocation());
         this.put(cx + "," + cz, hloc);
     }
 
@@ -50,7 +51,7 @@ extends HashMap<String, HashSet<Location>> {
         int cx = c.getX();
         int cz = c.getZ();
         if (this.containsKey(cx + "," + cz)) {
-            return ((HashSet)this.get(cx + "," + cz)).contains((Object)b.getLocation());
+            return this.get(cx + "," + cz).contains(b.getLocation());
         }
         return false;
     }
@@ -59,7 +60,7 @@ extends HashMap<String, HashSet<Location>> {
         int cx = c.getX();
         int cz = c.getZ();
         if (this.containsKey(cx + "," + cz)) {
-            return ((HashSet)this.get(cx + "," + cz)).size();
+            return this.get(cx + "," + cz).size();
         }
         return 0;
     }

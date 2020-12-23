@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.earth2me.essentials.Essentials
  *  com.earth2me.essentials.User
@@ -17,14 +17,8 @@
 package org.arkhamnetwork.Arkkit.patches.newtrade;
 
 import com.earth2me.essentials.Essentials;
-import com.earth2me.essentials.User;
 import com.google.common.collect.Lists;
 import com.google.common.collect.MapMaker;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
@@ -36,9 +30,14 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
 public class BetterTrade
-extends ArkPlugin {
-    private Map<UUID, PlayerTrade> playerTradeMap = new MapMaker().concurrencyLevel(32).makeMap();
+        extends ArkPlugin {
+    private final Map<UUID, PlayerTrade> playerTradeMap = new MapMaker().concurrencyLevel(32).makeMap();
     private BukkitTask tradeTask;
     private Essentials ess;
 
@@ -49,20 +48,20 @@ extends ArkPlugin {
     @Override
     public void enable() throws IOException {
         if (Bukkit.getPluginManager().isPluginEnabled("Essentials")) {
-            this.ess = (Essentials)Bukkit.getPluginManager().getPlugin("Essentials");
+            this.ess = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
         }
         if (ArkPlugins.TRADING.getArkPlugin().isRunning()) {
             ArkPlugins.TRADING.getArkPlugin().kill();
             Bukkit.getLogger().info("Killing old trade system for new one..");
         }
         this.registerListener(new BetterTradeListener(this));
-        this.registerCommand(new BetterTradeCommand(this, "trade", "/<command>", "Trade items with other players!", (List<String>) Lists.newArrayList(new String[]{"trade", "trades", "exchange"})));
-        this.tradeTask = new BukkitRunnable(){
+        this.registerCommand(new BetterTradeCommand(this, "trade", "/<command>", "Trade items with other players!", Lists.newArrayList(new String[]{"trade", "trades", "exchange"})));
+        this.tradeTask = new BukkitRunnable() {
 
             public void run() {
                 BetterTrade.this.playerTradeMap.values().forEach(PlayerTrade::onTradeTick);
             }
-        }.runTaskTimer((Plugin)Arkkit.get(), 13L, 13L);
+        }.runTaskTimer(Arkkit.get(), 13L, 13L);
         super.enable();
     }
 
@@ -98,8 +97,8 @@ extends ArkPlugin {
         this.playerTradeMap.put(player2.getUniqueId(), trade);
         trade.openTradeMenu();
         trade.playSound(Sound.WOOD_CLICK, 1.0f, 0.8f);
-        player.sendMessage(ChatColor.YELLOW + "Trading with " + (Object)ChatColor.BOLD + player2.getName() + (Object)ChatColor.YELLOW + "...");
-        player2.sendMessage(ChatColor.YELLOW + "Trading with " + (Object)ChatColor.BOLD + player.getName() + (Object)ChatColor.YELLOW + "...");
+        player.sendMessage(ChatColor.YELLOW + "Trading with " + ChatColor.BOLD + player2.getName() + ChatColor.YELLOW + "...");
+        player2.sendMessage(ChatColor.YELLOW + "Trading with " + ChatColor.BOLD + player.getName() + ChatColor.YELLOW + "...");
     }
 
     private void clearTeleportRequests(Player p) {

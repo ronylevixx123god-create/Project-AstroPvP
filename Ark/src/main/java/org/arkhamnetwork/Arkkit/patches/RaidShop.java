@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.earth2me.essentials.Essentials
  *  com.google.common.collect.Lists
@@ -24,10 +24,6 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.earth2me.essentials.Essentials;
-
-import java.text.DecimalFormat;
-import java.util.List;
-
 import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
 import org.arkhamnetwork.Arkkit.Arkkit;
@@ -49,9 +45,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
+import java.text.DecimalFormat;
+import java.util.List;
+
 public class RaidShop
-extends ArkPlugin
-implements Listener {
+        extends ArkPlugin
+        implements Listener {
     Inventory inventory;
     Essentials ess;
     DecimalFormat format = new DecimalFormat("#.##");
@@ -75,16 +74,16 @@ implements Listener {
 
     public Inventory getRaidShop() {
         if (this.inventory == null) {
-            this.inventory = Bukkit.createInventory(null, (int)9, (String)"Raid Shop");
-            this.inventory.addItem(new ItemStack[]{this.createItem(Material.TNT, 1)});
-            this.inventory.addItem(new ItemStack[]{this.createItem(Material.SAND, 1)});
-            this.inventory.addItem(new ItemStack[]{this.createItem(Material.WATER_BUCKET, 1)});
-            this.inventory.addItem(new ItemStack[]{this.createItem(Material.WEB, 1)});
-            this.inventory.addItem(new ItemStack[]{this.createItem(Material.DISPENSER, 1)});
-            this.inventory.addItem(new ItemStack[]{this.createItem(Material.PISTON_BASE, 1)});
-            this.inventory.addItem(new ItemStack[]{this.createItem(Material.REDSTONE, 16)});
-            this.inventory.addItem(new ItemStack[]{this.createItem(Material.DIODE, 8)});
-            this.inventory.addItem(new ItemStack[]{this.createItem(Material.STONE_BUTTON, 1)});
+            this.inventory = Bukkit.createInventory(null, 9, "Raid Shop");
+            this.inventory.addItem(this.createItem(Material.TNT, 1));
+            this.inventory.addItem(this.createItem(Material.SAND, 1));
+            this.inventory.addItem(this.createItem(Material.WATER_BUCKET, 1));
+            this.inventory.addItem(this.createItem(Material.WEB, 1));
+            this.inventory.addItem(this.createItem(Material.DISPENSER, 1));
+            this.inventory.addItem(this.createItem(Material.PISTON_BASE, 1));
+            this.inventory.addItem(this.createItem(Material.REDSTONE, 16));
+            this.inventory.addItem(this.createItem(Material.DIODE, 8));
+            this.inventory.addItem(this.createItem(Material.STONE_BUTTON, 1));
         }
         return this.inventory;
     }
@@ -103,29 +102,29 @@ implements Listener {
             }
             if ((is = is.clone()).hasItemMeta() && is.getItemMeta().hasLore() && is.getItemMeta().getLore().size() == 2) {
                 List lore = is.getItemMeta().getLore();
-                Player p = (Player)e.getWhoClicked();
-                String costLine = (String)lore.get(lore.size() - 1);
+                Player p = (Player) e.getWhoClicked();
+                String costLine = (String) lore.get(lore.size() - 1);
                 if (e.getClick().isShiftClick()) {
                     is.setAmount(is.getMaxStackSize());
                 }
                 if (costLine.contains("COST: $")) {
                     double cost = this.getCost(is, true);
                     if (p.getInventory().firstEmpty() == -1) {
-                        p.sendMessage((Object)ChatColor.RED + "Your inventory is currently full!");
+                        p.sendMessage(ChatColor.RED + "Your inventory is currently full!");
                         return;
                     }
                     if (cost == -1.0 || cost == 0.0) {
                         return;
                     }
-                    if (Arkkit.economy.has((OfflinePlayer)p, cost)) {
-                        Arkkit.economy.withdrawPlayer((OfflinePlayer)p, cost);
-                        p.sendMessage((Object)ChatColor.RED + ChatColor.BOLD.toString() + "- $" + (Object)ChatColor.RED + cost);
-                        p.sendMessage((Object)ChatColor.GREEN + ChatColor.BOLD.toString() + "+ " + (Object)ChatColor.GREEN + is.getAmount() + "x " + (is.getType() == Material.DIODE ? "Redstone Repeater" : StringUtils.capitaliseAllWords((String)is.getType().name().replace("_", " ").toLowerCase())));
-                        p.getInventory().addItem(new ItemStack[]{new ItemStack(is.getType(), is.getAmount())});
+                    if (Arkkit.economy.has(p, cost)) {
+                        Arkkit.economy.withdrawPlayer(p, cost);
+                        p.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "- $" + ChatColor.RED + cost);
+                        p.sendMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + "+ " + ChatColor.GREEN + is.getAmount() + "x " + (is.getType() == Material.DIODE ? "Redstone Repeater" : StringUtils.capitaliseAllWords(is.getType().name().replace("_", " ").toLowerCase())));
+                        p.getInventory().addItem(new ItemStack(is.getType(), is.getAmount()));
                     } else {
-                        p.sendMessage((Object)ChatColor.RED + "You cannot afford this item!");
-                        p.sendMessage((Object)ChatColor.RED + "Cost: $" + cost);
-                        p.sendMessage((Object)ChatColor.GRAY + "Current Balance: $" + Arkkit.economy.getBalance((OfflinePlayer)p));
+                        p.sendMessage(ChatColor.RED + "You cannot afford this item!");
+                        p.sendMessage(ChatColor.RED + "Cost: $" + cost);
+                        p.sendMessage(ChatColor.GRAY + "Current Balance: $" + Arkkit.economy.getBalance(p));
                     }
                 }
             }
@@ -147,13 +146,13 @@ implements Listener {
             costVal = -1.0;
         }
         if (respectCount && is.getAmount() > 1) {
-            costVal *= (double)is.getAmount();
+            costVal *= is.getAmount();
         }
         return costVal;
     }
 
     public class CommandRaidShop
-    extends AbstractCommand {
+            extends AbstractCommand {
         public CommandRaidShop(String command, String usage) {
             super(command, usage);
         }
@@ -163,7 +162,7 @@ implements Listener {
             if (!(sender instanceof Player)) {
                 return true;
             }
-            Player p = (Player)sender;
+            Player p = (Player) sender;
             p.openInventory(RaidShop.this.getRaidShop());
             return false;
         }

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Chunk
  *  org.bukkit.entity.Creeper
@@ -25,19 +25,19 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 
 final class AntiLagListener
-implements Listener {
+        implements Listener {
     AntiLagListener() {
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onChunkLoad(ChunkLoadEvent e) {
-        for (Entity entity : (Entity[])e.getChunk().getEntities().clone()) {
+        for (Entity entity : e.getChunk().getEntities().clone()) {
             if (!(entity instanceof Creeper)) continue;
             entity.remove();
         }
     }
 
-    @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onIronGolemSpawn(CreatureSpawnEvent e) {
         if (e.getEntityType() == EntityType.CREEPER && this.getEntityTypeCount(e.getLocation().getChunk(), EntityType.CREEPER) > 5) {
             e.setCancelled(true);

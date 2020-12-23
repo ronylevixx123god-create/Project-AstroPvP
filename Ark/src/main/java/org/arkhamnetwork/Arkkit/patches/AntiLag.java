@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  net.minecraft.server.v1_7_R4.MinecraftServer
  *  net.minecraft.util.io.netty.util.ResourceLeakDetector
@@ -10,9 +10,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-
 import io.netty.util.ResourceLeakDetector;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.arkhamnetwork.Arkkit.Arkkit;
@@ -20,11 +17,14 @@ import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+
 public class AntiLag
-extends ArkPlugin {
+        extends ArkPlugin {
+    LinkedList<Double> previousTPS;
     private long startTime;
     private boolean rebooting = false;
-    LinkedList<Double> previousTPS;
 
     public AntiLag(Plugin p) {
         super(p);
@@ -35,12 +35,11 @@ extends ArkPlugin {
         this.startTime = System.currentTimeMillis();
         this.previousTPS = new LinkedList();
         try {
-            ResourceLeakDetector.setLevel((ResourceLeakDetector.Level)ResourceLeakDetector.Level.DISABLED);
-        }
-        catch (Exception e) {
+            ResourceLeakDetector.setLevel(ResourceLeakDetector.Level.DISABLED);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        Bukkit.getScheduler().runTaskTimer((Plugin)Arkkit.get(), new Runnable(){
+        Bukkit.getScheduler().runTaskTimer(Arkkit.get(), new Runnable() {
 
             @Override
             public void run() {
@@ -74,7 +73,7 @@ extends ArkPlugin {
         double t = 0.0;
         Iterator iterator = this.previousTPS.iterator();
         while (iterator.hasNext()) {
-            double x = (Double)iterator.next();
+            double x = (Double) iterator.next();
             t += x;
         }
         return t / d;

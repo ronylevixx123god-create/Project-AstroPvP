@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.FactionUtils
  *  org.bukkit.Location
@@ -27,7 +27,7 @@ import org.bukkit.plugin.Plugin;
 import java.io.IOException;
 
 public class NoFallRegions
-extends ArkPlugin {
+        extends ArkPlugin {
     public NoFallRegions(Plugin p) {
         super(p);
     }
@@ -44,13 +44,13 @@ extends ArkPlugin {
     }
 
     class FallDamageListener
-    implements Listener {
+            implements Listener {
         FallDamageListener() {
         }
 
-        @EventHandler(priority=EventPriority.HIGH, ignoreCancelled=true)
+        @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
         public void onPlayerDamage(EntityDamageEvent event) {
-            if (event.getEntity() instanceof Player && event.getCause() == EntityDamageEvent.DamageCause.FALL && FactionUtils.isWarZone((Location)event.getEntity().getLocation())) {
+            if (event.getEntity() instanceof Player && event.getCause() == EntityDamageEvent.DamageCause.FALL && FactionUtils.isWarZone(event.getEntity().getLocation())) {
                 event.setCancelled(true);
             }
         }

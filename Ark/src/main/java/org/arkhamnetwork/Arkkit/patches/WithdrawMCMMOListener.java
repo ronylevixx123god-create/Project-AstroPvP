@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.gmail.nossr50.api.ExperienceAPI
  *  com.gmail.nossr50.datatypes.player.PlayerProfile
@@ -22,10 +22,6 @@ import com.gmail.nossr50.api.ExperienceAPI;
 import com.gmail.nossr50.datatypes.player.PlayerProfile;
 import com.gmail.nossr50.datatypes.skills.SkillType;
 import com.gmail.nossr50.util.player.UserManager;
-import java.text.DecimalFormat;
-import org.arkhamnetwork.Arkkit.patches.ItemID;
-import org.arkhamnetwork.Arkkit.patches.WithdrawMCMMO;
-import org.arkhamnetwork.Arkkit.patches.WithdrawMCMMOCommand;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -37,9 +33,11 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.text.DecimalFormat;
+
 final class WithdrawMCMMOListener
-implements Listener {
-    private static DecimalFormat format = new DecimalFormat("#,###");
+        implements Listener {
+    private static final DecimalFormat format = new DecimalFormat("#,###");
     private final String xpGainReason = "UNKNOWN";
 
     WithdrawMCMMOListener() {
@@ -57,8 +55,8 @@ implements Listener {
             e.setCancelled(true);
             e.setUseItemInHand(Event.Result.DENY);
             e.setUseInteractedBlock(Event.Result.DENY);
-            if (ExperienceAPI.getLevel((Player)e.getPlayer(), (String)type.name()) >= ExperienceAPI.getLevelCap((String)type.name())) {
-                e.getPlayer().sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You cannot add more EXP to " + type.name() + ", as it would exceed the level cap.");
+            if (ExperienceAPI.getLevel(e.getPlayer(), type.name()) >= ExperienceAPI.getLevelCap(type.name())) {
+                e.getPlayer().sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot add more EXP to " + type.name() + ", as it would exceed the level cap.");
                 return;
             }
             if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning() && (itemID = ItemID.getItemID(e.getItem())) != -1L) {
@@ -68,33 +66,33 @@ implements Listener {
             e.getPlayer().setItemInHand(null);
             e.getPlayer().updateInventory();
             e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.ORB_PICKUP, 1.0f, 0.33f);
-            if (ExperienceAPI.getLevel((Player)e.getPlayer(), (String)type.name()) < ExperienceAPI.getLevelCap((String)type.name())) {
+            if (ExperienceAPI.getLevel(e.getPlayer(), type.name()) < ExperienceAPI.getLevelCap(type.name())) {
                 e.getPlayer().sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "+" + format.format(xpValue) + " " + type.name() + " XP!");
             } else {
-                e.getPlayer().sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You added more EXP to " + type.name() + ", than the max level cap, your level was adjusted to " + ExperienceAPI.getLevelCap((String)type.name()));
+                e.getPlayer().sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You added more EXP to " + type.name() + ", than the max level cap, your level was adjusted to " + ExperienceAPI.getLevelCap(type.name()));
                 int extraXp = this.getXPAboveMaxLevel(e.getPlayer(), type.name());
-                ExperienceAPI.setLevel((Player)e.getPlayer(), (String)type.name(), (int)ExperienceAPI.getLevelCap((String)type.name()));
-                ExperienceAPI.setXP((Player)e.getPlayer(), (String)type.name(), (int)0);
+                ExperienceAPI.setLevel(e.getPlayer(), type.name(), ExperienceAPI.getLevelCap(type.name()));
+                ExperienceAPI.setXP(e.getPlayer(), type.name(), 0);
                 if (e.getPlayer().getInventory().firstEmpty() != -1) {
-                    e.getPlayer().getInventory().addItem(new ItemStack[]{WithdrawMCMMO.getMCMMOXpCert(extraXp, type.name(), e.getPlayer().getName())});
+                    e.getPlayer().getInventory().addItem(WithdrawMCMMO.getMCMMOXpCert(extraXp, type.name(), e.getPlayer().getName()));
                 } else {
                     e.getPlayer().getWorld().dropItem(e.getPlayer().getLocation(), WithdrawMCMMO.getMCMMOXpCert(extraXp, type.name(), e.getPlayer().getName()));
                 }
             }
-            PlayerProfile pp = UserManager.getPlayer((Player)e.getPlayer()).getProfile();
+            PlayerProfile pp = UserManager.getPlayer(e.getPlayer()).getProfile();
             pp.changed = true;
             pp.scheduleAsyncSave();
         }
     }
 
     private int getXPAboveMaxLevel(Player p, String skillType) {
-        int level = ExperienceAPI.getLevel((Player)p, (String)skillType);
-        int maxLevel = ExperienceAPI.getLevelCap((String)skillType);
+        int level = ExperienceAPI.getLevel(p, skillType);
+        int maxLevel = ExperienceAPI.getLevelCap(skillType);
         int extraXp = 0;
         while (level > maxLevel) {
-            extraXp += ExperienceAPI.getXpNeededToLevel((int)(--level));
+            extraXp += ExperienceAPI.getXpNeededToLevel(--level);
         }
-        return extraXp + ExperienceAPI.getXP((Player)p, (String)skillType);
+        return extraXp + ExperienceAPI.getXP(p, skillType);
     }
 }
 

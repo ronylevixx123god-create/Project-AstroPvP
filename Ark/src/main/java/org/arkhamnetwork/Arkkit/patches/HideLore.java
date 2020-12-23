@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.comphenix.protocol.PacketType
  *  com.comphenix.protocol.PacketType$Play$Server
@@ -29,14 +29,8 @@ package org.arkhamnetwork.Arkkit.patches;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
-import com.comphenix.protocol.events.ListenerPriority;
-import com.comphenix.protocol.events.PacketAdapter;
-import com.comphenix.protocol.events.PacketContainer;
-import com.comphenix.protocol.events.PacketEvent;
-import com.comphenix.protocol.events.PacketListener;
+import com.comphenix.protocol.events.*;
 import com.comphenix.protocol.reflect.StructureModifier;
-import java.util.List;
-
 import net.minecraft.server.v1_8_R3.NBTBase;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import net.minecraft.server.v1_8_R3.NBTTagList;
@@ -50,13 +44,33 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
+import java.util.List;
+
 public class HideLore
-extends ArkPlugin {
+        extends ArkPlugin {
     private ProtocolManager protocolManager;
     private PacketListener packetListener;
 
     public HideLore(Plugin p) {
         super(p);
+    }
+
+    public static ItemStack removeAttributes(ItemStack i) {
+        NBTTagCompound tag;
+        if (i == null || !GeneralUtil.isArmor(i) && !GeneralUtil.isWeapon(i) && !GeneralUtil.isTool(i)) {
+            return i;
+        }
+        net.minecraft.server.v1_8_R3.ItemStack nmsItem = CraftItemStack.asNMSCopy(i);
+        if (!nmsItem.hasTag()) {
+            tag = new NBTTagCompound();
+            nmsItem.setTag(tag);
+        } else {
+            tag = nmsItem.getTag();
+        }
+        NBTTagList am = new NBTTagList();
+        tag.set("AttributeModifiers", am);
+        nmsItem.setTag(tag);
+        return CraftItemStack.asCraftMirror(nmsItem);
     }
 
     @Override
@@ -67,7 +81,7 @@ extends ArkPlugin {
             return;
         }
         this.protocolManager = ProtocolLibrary.getProtocolManager();
-        this.packetListener = new PacketAdapter((Plugin)Arkkit.get(), ListenerPriority.NORMAL, new PacketType[]{PacketType.Play.Server.SET_SLOT, PacketType.Play.Server.WINDOW_ITEMS}){
+        this.packetListener = new PacketAdapter(Arkkit.get(), ListenerPriority.NORMAL, PacketType.Play.Server.SET_SLOT, PacketType.Play.Server.WINDOW_ITEMS) {
 
             public void onPacketSending(PacketEvent event) {
                 StructureModifier sm;
@@ -81,7 +95,7 @@ extends ArkPlugin {
                     for (int i = 0; i < sm.size(); ++i) {
                         ItemMeta itemMeta;
                         boolean editedItem = false;
-                        ItemStack item = (ItemStack)sm.getValues().get(i);
+                        ItemStack item = (ItemStack) sm.getValues().get(i);
                         if (item != null && (itemMeta = item.getItemMeta()).hasLore()) {
                             List lore = itemMeta.getLore();
                             String toRemove = null;
@@ -105,7 +119,7 @@ extends ArkPlugin {
                     packet = event.getPacket();
                     sm = packet.getItemArrayModifier();
                     for (int j = 0; j < sm.getValues().size(); ++j) {
-                        ItemStack[] iArray = (ItemStack[])sm.getValues().get(j);
+                        ItemStack[] iArray = (ItemStack[]) sm.getValues().get(j);
                         for (int x = 0; x < iArray.length; ++x) {
                             ItemMeta itemMeta;
                             ItemStack i = iArray[x];
@@ -134,24 +148,6 @@ extends ArkPlugin {
         if (this.protocolManager != null) {
             this.protocolManager.removePacketListener(this.packetListener);
         }
-    }
-
-    public static ItemStack removeAttributes(ItemStack i) {
-        NBTTagCompound tag;
-        if (i == null || !GeneralUtil.isArmor((ItemStack)i) && !GeneralUtil.isWeapon((ItemStack)i) && !GeneralUtil.isTool((ItemStack)i)) {
-            return i;
-        }
-        net.minecraft.server.v1_8_R3.ItemStack nmsItem = CraftItemStack.asNMSCopy((ItemStack)i);
-        if (!nmsItem.hasTag()) {
-            tag = new NBTTagCompound();
-            nmsItem.setTag(tag);
-        } else {
-            tag = nmsItem.getTag();
-        }
-        NBTTagList am = new NBTTagList();
-        tag.set("AttributeModifiers", (NBTBase)am);
-        nmsItem.setTag(tag);
-        return CraftItemStack.asCraftMirror((net.minecraft.server.v1_8_R3.ItemStack)nmsItem);
     }
 }
 

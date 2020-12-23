@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.CC
  *  org.bukkit.command.Command
@@ -10,12 +10,11 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
-import org.arkhamnetwork.Arkkit.patches.AsyncMonsters;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 class AsyncMonstersCommand
-extends AbstractCommand {
+        extends AbstractCommand {
     public AsyncMonstersCommand(String command, String usage, String description) {
         super(command, usage, description);
     }

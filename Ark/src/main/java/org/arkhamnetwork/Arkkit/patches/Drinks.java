@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
@@ -11,10 +11,7 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.HashMap;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.DrinkListener;
-import org.arkhamnetwork.Arkkit.patches.DrunkEffects;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.arkhamnetwork.Arkkit.utils.ItemUtils;
 import org.bukkit.Bukkit;
@@ -24,14 +21,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
+import java.util.HashMap;
+
 public class Drinks
-extends ArkPlugin {
-    private static ItemStack drink;
-    private static ItemStack splashDrink;
-    private static ItemStack christmasDrink;
-    private static DrunkEffects effects;
-    private static int taskId;
-    private static HashMap<String, Integer> drunks;
+        extends ArkPlugin {
     protected static int tipsyLevel;
     protected static String tipsyStr;
     protected static int smashedLevel;
@@ -42,22 +35,32 @@ extends ArkPlugin {
     protected static int chanceToSlurSPerLevel;
     protected static int chanceToHic;
     protected static int chanceToHicPerLevel;
+    private static ItemStack drink;
+    private static ItemStack splashDrink;
+    private static ItemStack christmasDrink;
+    private static DrunkEffects effects;
+    private static int taskId;
+    private static HashMap<String, Integer> drunks;
+
+    static {
+        tipsyLevel = 1;
+        tipsyStr = ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "You are feeling tipsy, time to party, drink up!";
+        smashedLevel = 5;
+        smashedStr = ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "You are completely smashed. What a party!";
+        poisoningLevel = 10;
+        poisoningStr = ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You are getting space drink poisoning, sober up!";
+        chanceToSlurS = 50;
+        chanceToSlurSPerLevel = 5;
+        chanceToHic = 15;
+        chanceToHicPerLevel = 5;
+    }
 
     public Drinks(Plugin p) {
         super(p);
         drunks = new HashMap();
-        drink = ItemUtils.buildItem(Material.POTION, (short)0, (Object)ChatColor.AQUA + "Space Drink", (Object)ChatColor.GRAY + "Smuggled in from a mysterious galaxy,", (Object)ChatColor.GRAY + "it is the Cosmic partying drink of choice!");
-        splashDrink = ItemUtils.buildItem(Material.POTION, (short)16429, (Object)ChatColor.LIGHT_PURPLE + "Splash Space Drink", (Object)ChatColor.GRAY + "Smuggled in from a mysterious galaxy,", (Object)ChatColor.GRAY + "it is the Cosmic partying drink of choice", (Object)ChatColor.GRAY + "... now designed for group consumption!");
-        christmasDrink = ItemUtils.buildItem(Material.POTION, (short)0, (Object)ChatColor.YELLOW + "Christmas Eggnog", (Object)ChatColor.GRAY + "Also known as \"egg milk punch\",", (Object)ChatColor.GRAY + "a chilled, sweetened, alcoholic", (Object)ChatColor.GRAY + "beverage perfect for the holidays!");
-    }
-
-    @Override
-    public void enable() {
-        this.registerListener(new DrinkListener());
-    }
-
-    @Override
-    public void disable() {
+        drink = ItemUtils.buildItem(Material.POTION, (short) 0, ChatColor.AQUA + "Space Drink", ChatColor.GRAY + "Smuggled in from a mysterious galaxy,", ChatColor.GRAY + "it is the Cosmic partying drink of choice!");
+        splashDrink = ItemUtils.buildItem(Material.POTION, (short) 16429, ChatColor.LIGHT_PURPLE + "Splash Space Drink", ChatColor.GRAY + "Smuggled in from a mysterious galaxy,", ChatColor.GRAY + "it is the Cosmic partying drink of choice", ChatColor.GRAY + "... now designed for group consumption!");
+        christmasDrink = ItemUtils.buildItem(Material.POTION, (short) 0, ChatColor.YELLOW + "Christmas Eggnog", ChatColor.GRAY + "Also known as \"egg milk punch\",", ChatColor.GRAY + "a chilled, sweetened, alcoholic", ChatColor.GRAY + "beverage perfect for the holidays!");
     }
 
     public static ItemStack getDrink() {
@@ -81,8 +84,8 @@ extends ArkPlugin {
     }
 
     protected static void startEffects() {
-        effects = new DrunkEffects((Plugin)Arkkit.get());
-        taskId = Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)Arkkit.get(), (Runnable)effects, 100L, 100L);
+        effects = new DrunkEffects(Arkkit.get());
+        taskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(Arkkit.get(), effects, 100L, 100L);
     }
 
     protected static void stopEffects() {
@@ -118,17 +121,13 @@ extends ArkPlugin {
         return lvl;
     }
 
-    static {
-        tipsyLevel = 1;
-        tipsyStr = ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.YELLOW + "You are feeling tipsy, time to party, drink up!";
-        smashedLevel = 5;
-        smashedStr = ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.YELLOW + "You are completely smashed. What a party!";
-        poisoningLevel = 10;
-        poisoningStr = ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You are getting space drink poisoning, sober up!";
-        chanceToSlurS = 50;
-        chanceToSlurSPerLevel = 5;
-        chanceToHic = 15;
-        chanceToHicPerLevel = 5;
+    @Override
+    public void enable() {
+        this.registerListener(new DrinkListener());
+    }
+
+    @Override
+    public void disable() {
     }
 }
 

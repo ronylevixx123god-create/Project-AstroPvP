@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.earth2me.essentials.User
  *  org.bukkit.Bukkit
@@ -18,15 +18,10 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.earth2me.essentials.User;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.arkhamnetwork.Arkkit.utils.EssentialsUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
@@ -36,9 +31,13 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 final class VanishAuditTask
-extends BukkitRunnable {
-    private List<String> playersToWatch = new ArrayList<String>(Arrays.asList("Vaquxine"));
+        extends BukkitRunnable {
+    private final List<String> playersToWatch = new ArrayList<String>(Arrays.asList("Vaquxine"));
 
     VanishAuditTask() {
         ArkPlugins.YPPERIN.getArkPlugin().registerListener(new VanishAuditListener());
@@ -48,7 +47,7 @@ extends BukkitRunnable {
     }
 
     final class VanishAuditListener
-    implements Listener {
+            implements Listener {
         VanishAuditListener() {
         }
 
@@ -56,7 +55,7 @@ extends BukkitRunnable {
         public void onPlayerCommandPreProcess(PlayerCommandPreprocessEvent e) {
             if (VanishAuditTask.this.playersToWatch.contains(e.getPlayer().getName()) && (e.getMessage().equals("/vanish") || e.getMessage().equals("/evanish"))) {
                 User u = EssentialsUtils.getEssentials().getUser(e.getPlayer());
-                Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Arkkit.get(), () -> e.getPlayer().setMetadata("trackedVanishState", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)u.isVanished())), 1L);
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Arkkit.get(), () -> e.getPlayer().setMetadata("trackedVanishState", new FixedMetadataValue(Arkkit.get(), u.isVanished())), 1L);
             }
         }
 
@@ -66,7 +65,7 @@ extends BukkitRunnable {
                 VanishAuditTask.this.playersToWatch.add(e.getPlayer().getName());
             }
             if (VanishAuditTask.this.playersToWatch.contains(e.getPlayer().getName())) {
-                e.getPlayer().setMetadata("trackedVanishState", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)true));
+                e.getPlayer().setMetadata("trackedVanishState", new FixedMetadataValue(Arkkit.get(), true));
             }
         }
     }

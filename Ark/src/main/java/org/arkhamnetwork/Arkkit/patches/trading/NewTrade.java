@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.earth2me.essentials.Essentials
  *  com.earth2me.essentials.User
@@ -17,17 +17,8 @@
  */
 package org.arkhamnetwork.Arkkit.patches.trading;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Set;
-
 import com.earth2me.essentials.Essentials;
-import com.earth2me.essentials.User;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.trading.NewTradeCommand;
-import org.arkhamnetwork.Arkkit.patches.trading.NewTradeListener;
-import org.arkhamnetwork.Arkkit.patches.trading.TradeSyncTask;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.arkhamnetwork.Arkkit.utils.ItemUtils;
 import org.bukkit.Bukkit;
@@ -41,23 +32,28 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Set;
+
 public class NewTrade
-extends ArkPlugin {
-    private static Essentials ess3 = null;
+        extends ArkPlugin {
+    private static final int tradeInventorySize = 54;
+    public static HashMap<Integer, Integer> slotConversionMap;
     protected static ItemStack divider;
     protected static ItemStack gray_button;
     protected static ItemStack green_button;
-    private static final int tradeInventorySize = 54;
-    public static HashMap<Integer, Integer> slotConversionMap;
+    private static Essentials ess3 = null;
 
     public NewTrade(Plugin p) {
         super(p);
         if (Bukkit.getPluginManager().isPluginEnabled("Essentials")) {
-            ess3 = (Essentials)Bukkit.getPluginManager().getPlugin("Essentials");
+            ess3 = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
         }
-        divider = ItemUtils.buildItem(Material.THIN_GLASS, (short)0, (Object)ChatColor.WHITE + " ", "");
-        gray_button = NewTrade.setAmount(ItemUtils.buildItem(Material.STAINED_GLASS_PANE, (short)14, ChatColor.YELLOW.toString() + "Click to ACCEPT Trade", ""), 10);
-        green_button = NewTrade.setAmount(ItemUtils.buildItem(Material.STAINED_GLASS_PANE, (short)5, ChatColor.GREEN.toString() + "Trade ACCEPTING...", ChatColor.GRAY.toString() + "Modify the trade to cancel."), 10);
+        divider = ItemUtils.buildItem(Material.THIN_GLASS, (short) 0, ChatColor.WHITE + " ", "");
+        gray_button = NewTrade.setAmount(ItemUtils.buildItem(Material.STAINED_GLASS_PANE, (short) 14, ChatColor.YELLOW.toString() + "Click to ACCEPT Trade", ""), 10);
+        green_button = NewTrade.setAmount(ItemUtils.buildItem(Material.STAINED_GLASS_PANE, (short) 5, ChatColor.GREEN.toString() + "Trade ACCEPTING...", ChatColor.GRAY.toString() + "Modify the trade to cancel."), 10);
         slotConversionMap = new HashMap();
         slotConversionMap.put(1, 5);
         slotConversionMap.put(2, 6);
@@ -85,23 +81,6 @@ extends ArkPlugin {
         slotConversionMap.put(48, 53);
     }
 
-    @Override
-    public void enable() {
-        this.registerListener(new NewTradeListener());
-        this.registerCommand(new NewTradeCommand("trade", "/<command>", "Trade items with other players!", new ArrayList<String>(Arrays.asList("trades", "trading", "exchange"))));
-    }
-
-    @Override
-    public void disable() {
-        if (Arkkit.get().shutting_down) {
-            return;
-        }
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            if (!p.hasMetadata("compilexTradeTaskID")) continue;
-            p.closeInventory();
-        }
-    }
-
     public static Set<Integer> getValidSlots() {
         return slotConversionMap.keySet();
     }
@@ -113,27 +92,27 @@ extends ArkPlugin {
     protected static void startTrade(Player p1, Player p2) {
         p1.closeInventory();
         p2.closeInventory();
-        p1.setMetadata("compilexTradePartnerUUID", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)p2.getUniqueId()));
-        p2.setMetadata("compilexTradePartnerUUID", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)p1.getUniqueId()));
+        p1.setMetadata("compilexTradePartnerUUID", new FixedMetadataValue(Arkkit.get(), p2.getUniqueId()));
+        p2.setMetadata("compilexTradePartnerUUID", new FixedMetadataValue(Arkkit.get(), p1.getUniqueId()));
         p1.openInventory(NewTrade.buildTradeWindow(p1, p2));
         p2.openInventory(NewTrade.buildTradeWindow(p2, p1));
         TradeSyncTask TST = new TradeSyncTask(p1, p2);
-        TST.runTaskTimer((Plugin)Arkkit.get(), 2L, 2L);
-        p1.setMetadata("compilexTradeTaskID", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)TST.getTaskId()));
-        p2.setMetadata("compilexTradeTaskID", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)TST.getTaskId()));
+        TST.runTaskTimer(Arkkit.get(), 2L, 2L);
+        p1.setMetadata("compilexTradeTaskID", new FixedMetadataValue(Arkkit.get(), TST.getTaskId()));
+        p2.setMetadata("compilexTradeTaskID", new FixedMetadataValue(Arkkit.get(), TST.getTaskId()));
         p1.playSound(p1.getLocation(), Sound.WOOD_CLICK, 1.0f, 0.8f);
         p2.playSound(p2.getLocation(), Sound.WOOD_CLICK, 1.0f, 0.8f);
-        p1.sendMessage((Object)ChatColor.YELLOW + "Trading with " + (Object)ChatColor.BOLD + p2.getName() + (Object)ChatColor.YELLOW + "...");
-        p2.sendMessage((Object)ChatColor.YELLOW + "Trading with " + (Object)ChatColor.BOLD + p1.getName() + (Object)ChatColor.YELLOW + "...");
+        p1.sendMessage(ChatColor.YELLOW + "Trading with " + ChatColor.BOLD + p2.getName() + ChatColor.YELLOW + "...");
+        p2.sendMessage(ChatColor.YELLOW + "Trading with " + ChatColor.BOLD + p1.getName() + ChatColor.YELLOW + "...");
     }
 
     private static Inventory buildTradeWindow(Player p1, Player p2) {
-        Inventory TradeWindow = Bukkit.createInventory(null, (int)54, (String)NewTrade.getTradeInventoryTitle(p1.getName(), p2.getName()));
+        Inventory TradeWindow = Bukkit.createInventory(null, 54, NewTrade.getTradeInventoryTitle(p1.getName(), p2.getName()));
         for (int i = 4; i < TradeWindow.getSize(); i += 9) {
             TradeWindow.setItem(i, divider);
         }
-        TradeWindow.setItem(0, NewTrade.setAmount(ItemUtils.buildItem(Material.STAINED_GLASS_PANE, (short)14, ChatColor.YELLOW.toString() + "Click to ACCEPT Trade", ""), 10));
-        TradeWindow.setItem(8, NewTrade.setAmount(ItemUtils.buildItem(Material.STAINED_GLASS_PANE, (short)14, ChatColor.YELLOW.toString() + "Click to ACCEPT Trade", ""), 10));
+        TradeWindow.setItem(0, NewTrade.setAmount(ItemUtils.buildItem(Material.STAINED_GLASS_PANE, (short) 14, ChatColor.YELLOW.toString() + "Click to ACCEPT Trade", ""), 10));
+        TradeWindow.setItem(8, NewTrade.setAmount(ItemUtils.buildItem(Material.STAINED_GLASS_PANE, (short) 14, ChatColor.YELLOW.toString() + "Click to ACCEPT Trade", ""), 10));
         return TradeWindow;
     }
 
@@ -150,6 +129,23 @@ extends ArkPlugin {
             title = title + " ";
         }
         return (title = title + rPName).length() <= 32 ? title : title.substring(0, 31);
+    }
+
+    @Override
+    public void enable() {
+        this.registerListener(new NewTradeListener());
+        this.registerCommand(new NewTradeCommand("trade", "/<command>", "Trade items with other players!", new ArrayList<String>(Arrays.asList("trades", "trading", "exchange"))));
+    }
+
+    @Override
+    public void disable() {
+        if (Arkkit.get().shutting_down) {
+            return;
+        }
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            if (!p.hasMetadata("compilexTradeTaskID")) continue;
+            p.closeInventory();
+        }
     }
 }
 

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.Location
@@ -11,7 +11,6 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
-import org.arkhamnetwork.Arkkit.patches.FinalBattle;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -19,7 +18,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 final class FinalBattleCommand
-extends AbstractCommand {
+        extends AbstractCommand {
     public FinalBattleCommand(String command, String usage, String description) {
         super(command, usage, description);
     }
@@ -47,11 +46,11 @@ extends AbstractCommand {
         }
         if (args[1].equals("spawn")) {
             String targ = args[2];
-            Player p = (Player)sender;
+            Player p = (Player) sender;
             if (targ.equalsIgnoreCase("preston")) {
-                p.teleport(new Location(Bukkit.getWorld((String)"world_final_battle"), -4.0, 126.0, -143.0));
+                p.teleport(new Location(Bukkit.getWorld("world_final_battle"), -4.0, 126.0, -143.0));
             } else if (targ.equalsIgnoreCase("woofless")) {
-                p.teleport(new Location(Bukkit.getWorld((String)"world_final_battle"), -9.0, 126.0, 75.0));
+                p.teleport(new Location(Bukkit.getWorld("world_final_battle"), -9.0, 126.0, 75.0));
             }
             return true;
         }

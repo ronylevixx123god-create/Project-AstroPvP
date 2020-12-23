@@ -1,25 +1,23 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Material
  *  org.bukkit.plugin.Plugin
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.ArrayList;
-import java.util.List;
-import org.arkhamnetwork.Arkkit.patches.ExplosionPhysicsSanity;
-import org.arkhamnetwork.Arkkit.patches.GrowthPhysicsSanity;
-import org.arkhamnetwork.Arkkit.patches.ObsidianDestroyerBootstrapListener;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.Material;
 import org.bukkit.plugin.Plugin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ObsidianDestroyerFixes
-extends ArkPlugin {
-    protected static List<Material> bad_blocks = new ArrayList<Material>();
+        extends ArkPlugin {
     protected static final int radius = 3;
+    protected static List<Material> bad_blocks = new ArrayList<Material>();
 
     public ObsidianDestroyerFixes(Plugin p) {
         super(p);

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.earth2me.essentials.Essentials
  *  com.google.common.collect.Lists
@@ -26,11 +26,15 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
 public class BalanceTop
-extends ArkPlugin {
+        extends ArkPlugin {
     public static Economy economy;
 
     public BalanceTop(Plugin p) {
         super(p);
+    }
+
+    public static Economy getEconomy() {
+        return economy;
     }
 
     @Override
@@ -40,8 +44,7 @@ extends ArkPlugin {
         this.registerCommands(true);
         try {
             BalanceManager.loadBalances();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         BalanceManager.getPages();
@@ -57,12 +60,12 @@ extends ArkPlugin {
         if (Bukkit.getPluginManager().isPluginEnabled("Essentials")) {
             if (coolkidway) {
                 System.out.println("Unregistering /baltop..");
-                Essentials ess = (Essentials)Bukkit.getPluginManager().getPlugin("Essentials");
-                ess.getCommand("balancetop").setExecutor((CommandExecutor)new CommandBalanceTop());
+                Essentials ess = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
+                ess.getCommand("balancetop").setExecutor(new CommandBalanceTop());
                 ess.getCommand("balancetop").setUsage("");
             } else {
-                Essentials ess = (Essentials)Bukkit.getPluginManager().getPlugin("Essentials");
-                CommandUtils.unRegisterBukkitCommand((Plugin)ess, (Command)ess.getCommand("balancetop"));
+                Essentials ess = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
+                CommandUtils.unRegisterBukkitCommand(ess, ess.getCommand("balancetop"));
             }
         } else {
             this.registerCommand(new CommandBalanceTopAbstract("balancetop", "/<command>", "View top balances on the server.", Lists.newArrayList("baltop", "ebaltop", "ebalancetop")));
@@ -78,12 +81,8 @@ extends ArkPlugin {
         if (rsp == null) {
             return false;
         }
-        economy = (Economy)rsp.getProvider();
+        economy = (Economy) rsp.getProvider();
         return economy != null;
-    }
-
-    public static Economy getEconomy() {
-        return economy;
     }
 }
 

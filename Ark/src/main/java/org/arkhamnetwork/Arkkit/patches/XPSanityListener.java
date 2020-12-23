@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.Material
@@ -13,8 +13,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.ArrayList;
-import org.arkhamnetwork.Arkkit.patches.ExpBottles;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -24,23 +22,25 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+
 final class XPSanityListener
-implements Listener {
+        implements Listener {
     XPSanityListener() {
     }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
         if (e.getPlayer().getLevel() >= 1001) {
-            Bukkit.getLogger().info("Set player " + (Object)e.getPlayer() + " to level 0, old level => " + e.getPlayer().getLevel());
+            Bukkit.getLogger().info("Set player " + e.getPlayer() + " to level 0, old level => " + e.getPlayer().getLevel());
             e.getPlayer().setLevel(0);
-            Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)("ban " + e.getPlayer().getName() + " EXP exploit, contact administration for item removal."));
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ban " + e.getPlayer().getName() + " EXP exploit, contact administration for item removal.");
         }
         ArrayList<ItemStack> toRemove = new ArrayList<ItemStack>();
         for (ItemStack i : e.getPlayer().getInventory()) {
             if (i == null || i.getType() != Material.EXP_BOTTLE || ExpBottles.getXpAmount(i) <= 1000000) continue;
             toRemove.add(i);
-            Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)("ban " + e.getPlayer().getName() + " EXP exploit, contact administration for item removal."));
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ban " + e.getPlayer().getName() + " EXP exploit, contact administration for item removal.");
             Bukkit.getLogger().info("Removing EXP_BOTTLE with an xp value of " + ExpBottles.getXpAmount(i) + " from " + e.getPlayer().getName() + "!");
         }
         for (ItemStack i : toRemove) {

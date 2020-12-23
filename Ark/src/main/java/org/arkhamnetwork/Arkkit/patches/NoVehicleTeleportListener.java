@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.ChatColor
  *  org.bukkit.entity.Player
@@ -19,15 +19,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
 final class NoVehicleTeleportListener
-implements Listener {
+        implements Listener {
     NoVehicleTeleportListener() {
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerTeleportVehicle(PlayerTeleportEvent event) {
         Player player = event.getPlayer();
         if (player.getPlayer().getVehicle() != null && player.isInsideVehicle()) {
-            player.sendMessage((Object)ChatColor.RED + "You cannot teleport while you are inside a vehicle.");
+            player.sendMessage(ChatColor.RED + "You cannot teleport while you are inside a vehicle.");
             event.setCancelled(true);
         }
     }

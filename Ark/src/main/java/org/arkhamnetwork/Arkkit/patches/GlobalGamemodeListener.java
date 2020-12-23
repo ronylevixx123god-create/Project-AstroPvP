@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.GameMode
@@ -24,17 +24,17 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.plugin.Plugin;
 
 final class GlobalGamemodeListener
-implements Listener {
+        implements Listener {
     GlobalGamemodeListener() {
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerTeleport(PlayerTeleportEvent e) {
-        if (!e.getFrom().getWorld().equals((Object)e.getTo().getWorld())) {
+        if (!e.getFrom().getWorld().equals(e.getTo().getWorld())) {
             final GameMode gm = e.getPlayer().getGameMode();
             final Player p = e.getPlayer();
             if (gm == GameMode.CREATIVE) {
-                Bukkit.getScheduler().runTaskLater((Plugin)Arkkit.get(), new Runnable(){
+                Bukkit.getScheduler().runTaskLater(Arkkit.get(), new Runnable() {
 
                     @Override
                     public void run() {

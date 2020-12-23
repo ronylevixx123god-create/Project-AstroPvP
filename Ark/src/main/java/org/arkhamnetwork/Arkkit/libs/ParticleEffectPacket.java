@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  net.minecraft.server.v1_7_R4.Packet
  *  org.bukkit.Location
@@ -9,7 +9,6 @@
 package org.arkhamnetwork.Arkkit.libs;
 
 import net.minecraft.server.v1_8_R3.Packet;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -56,7 +55,7 @@ final class ParticleEffectPacket {
     }
 
     public Packet getPacket() throws Exception {
-        return (Packet)ParticleEffect.createPacket(this.effect, this.l, this.offsetX, this.offsetY, this.offsetZ, this.speed, this.amount);
+        return (Packet) ParticleEffect.createPacket(this.effect, this.l, this.offsetX, this.offsetY, this.offsetZ, this.speed, this.amount);
     }
 
     public ParticleEffect getEffect() {

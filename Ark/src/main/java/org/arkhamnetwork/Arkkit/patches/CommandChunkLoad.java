@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.command.Command
  *  org.bukkit.command.CommandSender
@@ -14,7 +14,7 @@ import org.bukkit.command.CommandSender;
 import org.spigotmc.SpigotConfig;
 
 final class CommandChunkLoad
-extends AbstractCommand {
+        extends AbstractCommand {
     public CommandChunkLoad(String command, String usage, String description) {
         super(command, usage, description);
     }

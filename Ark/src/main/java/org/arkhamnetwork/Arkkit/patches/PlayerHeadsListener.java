@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  net.minecraft.util.org.apache.commons.lang3.text.WordUtils
  *  org.bukkit.ChatColor
@@ -16,10 +16,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
 import org.apache.commons.lang3.text.WordUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -32,12 +28,17 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
+
 final class PlayerHeadsListener
-implements Listener {
+        implements Listener {
     PlayerHeadsListener() {
     }
 
-    @EventHandler(priority=EventPriority.LOW)
+    @EventHandler(priority = EventPriority.LOW)
     public void onPlayerDeath(PlayerDeathEvent e) {
         Player pKiller;
         Player p_dead = e.getEntity();
@@ -68,13 +69,13 @@ implements Listener {
 
     private ItemStack getPlayerHead(String p_name, Player pKiller) {
         ItemStack is = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
-        SkullMeta sm = (SkullMeta)is.getItemMeta();
+        SkullMeta sm = (SkullMeta) is.getItemMeta();
         sm.setOwner(p_name);
-        sm.setDisplayName((Object)ChatColor.WHITE + "Skull of " + p_name);
+        sm.setDisplayName(ChatColor.WHITE + "Skull of " + p_name);
         SimpleDateFormat month_date = new SimpleDateFormat("MMMM");
         String monthName = month_date.format(PlayerHeads.calendar.getTime());
-        sm.setLore(new ArrayList<String>(Arrays.asList((Object)ChatColor.GRAY + "Defeated by " + (Object)ChatColor.WHITE + pKiller.getName() + (Object)ChatColor.GRAY + " on ", (Object)ChatColor.WHITE + monthName + " " + PlayerHeads.calendar.get(5) + ", " + PlayerHeads.calendar.get(1) + (Object)ChatColor.GRAY + " at ", (Object)ChatColor.WHITE + "" + pKiller.getLocation().getBlockX() + ", " + pKiller.getLocation().getBlockY() + ", " + pKiller.getLocation().getBlockZ() + (Object)ChatColor.GRAY + " with a(n) ", (Object)ChatColor.WHITE + this.getItemName(pKiller.getItemInHand()) + "!")));
-        is.setItemMeta((ItemMeta)sm);
+        sm.setLore(new ArrayList<String>(Arrays.asList(ChatColor.GRAY + "Defeated by " + ChatColor.WHITE + pKiller.getName() + ChatColor.GRAY + " on ", ChatColor.WHITE + monthName + " " + PlayerHeads.calendar.get(5) + ", " + PlayerHeads.calendar.get(1) + ChatColor.GRAY + " at ", ChatColor.WHITE + "" + pKiller.getLocation().getBlockX() + ", " + pKiller.getLocation().getBlockY() + ", " + pKiller.getLocation().getBlockZ() + ChatColor.GRAY + " with a(n) ", ChatColor.WHITE + this.getItemName(pKiller.getItemInHand()) + "!")));
+        is.setItemMeta(sm);
         return is;
     }
 
@@ -85,7 +86,7 @@ implements Listener {
         if (i.hasItemMeta() && i.getItemMeta().hasDisplayName()) {
             return i.getItemMeta().getDisplayName();
         }
-        return WordUtils.capitalize((String)i.getType().name());
+        return WordUtils.capitalize(i.getType().name());
     }
 }
 

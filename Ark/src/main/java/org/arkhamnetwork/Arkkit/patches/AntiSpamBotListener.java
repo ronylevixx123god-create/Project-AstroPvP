@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
@@ -13,10 +13,7 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.AntiSpamBot;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
@@ -25,12 +22,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 
+import java.util.HashMap;
+import java.util.HashSet;
+
 final class AntiSpamBotListener
-implements Listener {
+        implements Listener {
+    protected static HashMap<String, Integer> IPMessageCount;
     int maxMessageUsesPerScan = 2;
     HashSet<String> ipBlacklist;
     HashSet<String> uuidBlacklist;
-    protected static HashMap<String, Integer> IPMessageCount;
 
     public AntiSpamBotListener() {
         AntiSpamBot.messageUses = new HashMap();
@@ -42,7 +42,7 @@ implements Listener {
         this.maxMessageUsesPerScan = Arkkit.get().getConfig().getInt("settings.anti_spam_bot.maxMessageUsesPerScan");
     }
 
-    @EventHandler(priority=EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerChat(AsyncPlayerChatEvent e) {
         if (AntiSpamBot.vipOnly && !e.getPlayer().hasPermission("chatlimiter.vip")) {
             e.getPlayer().sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) NON-VIP CHAT IS TEMPORARILY DISABLED!");
@@ -77,7 +77,7 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onAsyncPlayerPreLogin(AsyncPlayerPreLoginEvent e) {
         String uuid = e.getUniqueId().toString();
         String ip = e.getAddress().getHostAddress();

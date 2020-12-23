@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.massivecraft.factions.FLocation
  *  com.massivecraft.factions.event.LandClaimEvent
@@ -14,21 +14,22 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.event.LandClaimEvent;
-import java.util.HashSet;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
+import java.util.HashSet;
+
 final class FactionCornerClaimListener
-implements Listener {
-    private HashSet<String> announcedCorners = new HashSet();
+        implements Listener {
+    private final HashSet<String> announcedCorners = new HashSet();
 
     FactionCornerClaimListener() {
     }
 
-    @EventHandler(priority=EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onLandClaim(LandClaimEvent e) {
         FLocation fL = e.getLocation();
         long x = Math.abs(fL.getX());
@@ -39,9 +40,9 @@ implements Listener {
             if (this.announcedCorners.contains(cornerLocation)) {
                 return;
             }
-            Bukkit.broadcastMessage((String)"");
-            Bukkit.broadcastMessage((String)((Object)ChatColor.DARK_GREEN + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.DARK_GREEN + "The faction \"" + (Object)ChatColor.UNDERLINE + faction + (Object)ChatColor.DARK_GREEN + "\" has claimed the " + (Object)ChatColor.GREEN + (Object)ChatColor.BOLD + cornerLocation + (Object)ChatColor.DARK_GREEN + " corner chunk! Congratulations!"));
-            Bukkit.broadcastMessage((String)"");
+            Bukkit.broadcastMessage("");
+            Bukkit.broadcastMessage(ChatColor.DARK_GREEN + "" + ChatColor.BOLD + "(!) " + ChatColor.DARK_GREEN + "The faction \"" + ChatColor.UNDERLINE + faction + ChatColor.DARK_GREEN + "\" has claimed the " + ChatColor.GREEN + ChatColor.BOLD + cornerLocation + ChatColor.DARK_GREEN + " corner chunk! Congratulations!");
+            Bukkit.broadcastMessage("");
             this.announcedCorners.add(cornerLocation);
         }
     }

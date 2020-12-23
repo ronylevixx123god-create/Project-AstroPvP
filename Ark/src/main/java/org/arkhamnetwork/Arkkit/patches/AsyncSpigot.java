@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.plugin.Plugin
@@ -8,14 +8,13 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import org.arkhamnetwork.Arkkit.patches.DebugListener;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.spigotmc.AsyncCatcher;
 
 public class AsyncSpigot
-extends ArkPlugin {
+        extends ArkPlugin {
     public AsyncSpigot(Plugin p) {
         super(p);
     }

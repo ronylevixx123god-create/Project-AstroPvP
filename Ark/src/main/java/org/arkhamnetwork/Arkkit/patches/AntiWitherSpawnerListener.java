@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Material
  *  org.bukkit.World$Environment
@@ -23,11 +23,11 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
 final class AntiWitherSpawnerListener
-implements Listener {
+        implements Listener {
     AntiWitherSpawnerListener() {
     }
 
-    @EventHandler(priority=EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onEntityDeath(EntityDeathEvent e) {
         if (e.getEntityType() == EntityType.SKELETON && e.getEntity().getWorld().getEnvironment() == World.Environment.NETHER) {
             ItemStack witherSkull = null;
@@ -37,7 +37,7 @@ implements Listener {
                 break;
             }
             if (witherSkull != null) {
-                e.getDrops().remove((Object)witherSkull);
+                e.getDrops().remove(witherSkull);
             }
         }
     }

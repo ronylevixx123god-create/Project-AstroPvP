@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  net.minecraft.server.v1_7_R4.DedicatedPlayerList
  *  net.minecraft.server.v1_7_R4.JsonListEntry
@@ -13,8 +13,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.ArrayList;
-
 import com.mojang.authlib.GameProfile;
 import net.minecraft.server.v1_8_R3.DedicatedPlayerList;
 import net.minecraft.server.v1_8_R3.JsonListEntry;
@@ -26,7 +24,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
 
 final class CommandWipeWhitelist
-extends AbstractCommand {
+        extends AbstractCommand {
     public CommandWipeWhitelist(String command, String usage, String description) {
         super(command, usage, description);
     }
@@ -40,11 +38,11 @@ extends AbstractCommand {
             sender.sendMessage("/wipewhitelist true");
             return true;
         }
-        CraftServer CS = (CraftServer)Bukkit.getServer();
+        CraftServer CS = (CraftServer) Bukkit.getServer();
         DedicatedPlayerList DPL = CS.getHandle();
         int x = 0;
         for (JsonListEntry entry : DPL.getWhitelist().getValues()) {
-            OfflinePlayer player = CS.getOfflinePlayer((GameProfile)entry.getKey());
+            OfflinePlayer player = CS.getOfflinePlayer((GameProfile) entry.getKey());
             if (!player.isOp()) {
                 DPL.getWhitelist().getValues().remove(entry);
                 sender.sendMessage("* Removed " + player.getName() + " (" + player.getUniqueId().toString() + ") from whitelist.");

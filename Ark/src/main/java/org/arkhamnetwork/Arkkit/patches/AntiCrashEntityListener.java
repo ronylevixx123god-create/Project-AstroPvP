@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  net.minecraft.server.v1_7_R4.Entity
  *  org.bukkit.Bukkit
@@ -14,17 +14,16 @@ package org.arkhamnetwork.Arkkit.patches;
 import net.minecraft.server.v1_8_R3.Entity;
 import org.arkhamnetwork.Arkkit.commands.CommandArkReboot;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 
 class AntiCrashEntityListener
-implements Listener {
+        implements Listener {
     AntiCrashEntityListener() {
     }
 
-    @EventHandler(ignoreCancelled=true)
+    @EventHandler(ignoreCancelled = true)
     public void onEntitySpawn(CreatureSpawnEvent event) {
         int id = Entity.entityCount.get();
         if (id >= 2097483647) {

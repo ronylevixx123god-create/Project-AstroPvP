@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.CC
  *  me.vaqxine.NetworkManager.NetworkManager
@@ -16,8 +16,6 @@
 package org.arkhamnetwork.Arkkit.patches.newtrade;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import java.util.ArrayList;
-import java.util.List;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.commands.CommandArkReboot;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
@@ -30,9 +28,12 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BetterTradeCommand
-extends AbstractCommand {
-    private BetterTrade betterTradeInstance;
+        extends AbstractCommand {
+    private final BetterTrade betterTradeInstance;
 
     public BetterTradeCommand(BetterTrade instance, String command, String usage, String description, List<String> aliases) {
         super(command, usage, description, aliases);
@@ -44,11 +45,11 @@ extends AbstractCommand {
         if (!(sender instanceof Player)) {
             return true;
         }
-        Player pl = (Player)sender;
+        Player pl = (Player) sender;
         if (args.length != 1) {
             pl.sendMessage(ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + ChatColor.UNDERLINE.toString() + "Trade Commands");
             pl.sendMessage(ChatColor.GOLD.toString() + "/trade <player>");
-            pl.sendMessage((Object)ChatColor.GRAY + "Sends a trade request to the specified <player>.");
+            pl.sendMessage(ChatColor.GRAY + "Sends a trade request to the specified <player>.");
             return true;
         }
         if (Arkkit.get().shutting_down || CommandArkReboot.restart_task_exists || Bukkit.getPluginManager().getPlugin("NetworkManager") != null) {
@@ -64,52 +65,52 @@ extends AbstractCommand {
         }
         String tradie = args[0];
         if (tradie.equalsIgnoreCase(pl.getName())) {
-            pl.sendMessage((Object)ChatColor.RED + "'If a man loves the labour of his trade, apart from any question of success or fame, the gods have called him.'");
+            pl.sendMessage(ChatColor.RED + "'If a man loves the labour of his trade, apart from any question of success or fame, the gods have called him.'");
             return true;
         }
-        Player p_tradie = Bukkit.getPlayer((String)tradie);
+        Player p_tradie = Bukkit.getPlayer(tradie);
         if (p_tradie == null) {
-            pl.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!)" + (Object)ChatColor.RED + " " + (Object)ChatColor.RED + "You aren't close enough to " + tradie + " to send a /trade.");
+            pl.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!)" + ChatColor.RED + " " + ChatColor.RED + "You aren't close enough to " + tradie + " to send a /trade.");
             return true;
         }
         if (p_tradie.getName().equalsIgnoreCase(pl.getName())) {
-            pl.sendMessage((Object)ChatColor.RED + "'If a man loves the labour of his trade, apart from any question of success or fame, the gods have called him.'");
+            pl.sendMessage(ChatColor.RED + "'If a man loves the labour of his trade, apart from any question of success or fame, the gods have called him.'");
             return true;
         }
         if (!p_tradie.getWorld().getName().equalsIgnoreCase(pl.getWorld().getName())) {
-            pl.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!)" + (Object)ChatColor.RED + " " + (Object)ChatColor.RED + "You aren't close enough to " + tradie + " to send a /trade.");
+            pl.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!)" + ChatColor.RED + " " + ChatColor.RED + "You aren't close enough to " + tradie + " to send a /trade.");
             return true;
         }
         if (p_tradie.getLocation().distanceSquared(pl.getLocation()) > Math.pow(10.0, 2.0)) {
-            pl.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!)" + (Object)ChatColor.RED + " " + (Object)ChatColor.RED + "You aren't close enough to " + tradie + " to send a /trade.");
-            pl.sendMessage((Object)ChatColor.GRAY + "Move within 10 blocks of them and try again.");
+            pl.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!)" + ChatColor.RED + " " + ChatColor.RED + "You aren't close enough to " + tradie + " to send a /trade.");
+            pl.sendMessage(ChatColor.GRAY + "Move within 10 blocks of them and try again.");
             return true;
         }
         if (pl.hasMetadata("trade_request") || p_tradie.hasMetadata("trade_request")) {
             String stored_tradie;
-            if (pl.hasMetadata("trade_request") && (stored_tradie = ((MetadataValue)pl.getMetadata("trade_request").get(0)).asString()).equalsIgnoreCase(tradie)) {
-                if (!p_tradie.hasMetadata("trade_request") || !((MetadataValue)p_tradie.getMetadata("trade_request").get(0)).asString().equalsIgnoreCase(pl.getName())) {
-                    pl.sendMessage((Object)ChatColor.RED + p_tradie.getName() + "'s trade request has timed out.");
-                    pl.removeMetadata("trade_request", (Plugin)Arkkit.get());
+            if (pl.hasMetadata("trade_request") && (stored_tradie = pl.getMetadata("trade_request").get(0).asString()).equalsIgnoreCase(tradie)) {
+                if (!p_tradie.hasMetadata("trade_request") || !p_tradie.getMetadata("trade_request").get(0).asString().equalsIgnoreCase(pl.getName())) {
+                    pl.sendMessage(ChatColor.RED + p_tradie.getName() + "'s trade request has timed out.");
+                    pl.removeMetadata("trade_request", Arkkit.get());
                     return true;
                 }
-                pl.removeMetadata("trade_request", (Plugin)Arkkit.get());
-                p_tradie.removeMetadata("trade_request", (Plugin)Arkkit.get());
+                pl.removeMetadata("trade_request", Arkkit.get());
+                p_tradie.removeMetadata("trade_request", Arkkit.get());
                 this.betterTradeInstance.startPlayerTrade(pl, p_tradie);
                 return true;
             }
             if (p_tradie.hasMetadata("trade_request")) {
-                if (((MetadataValue)p_tradie.getMetadata("trade_request").get(0)).asString().equalsIgnoreCase(pl.getName())) {
-                    pl.removeMetadata("trade_request", (Plugin)Arkkit.get());
-                    p_tradie.removeMetadata("trade_request", (Plugin)Arkkit.get());
+                if (p_tradie.getMetadata("trade_request").get(0).asString().equalsIgnoreCase(pl.getName())) {
+                    pl.removeMetadata("trade_request", Arkkit.get());
+                    p_tradie.removeMetadata("trade_request", Arkkit.get());
                     this.betterTradeInstance.startPlayerTrade(pl, p_tradie);
                 }
                 return true;
             }
         }
-        pl.setMetadata("trade_request", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)p_tradie.getName()));
-        pl.sendMessage(ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "(!)" + (Object)ChatColor.GOLD + " You have sent a trade request to " + p_tradie.getName() + "!");
-        p_tradie.sendMessage(ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "TRADE " + (Object)ChatColor.YELLOW + pl.getName() + (Object)ChatColor.GOLD + " wants to trade with you. " + (Object)ChatColor.YELLOW + "/trade " + pl.getName());
+        pl.setMetadata("trade_request", new FixedMetadataValue(Arkkit.get(), p_tradie.getName()));
+        pl.sendMessage(ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "(!)" + ChatColor.GOLD + " You have sent a trade request to " + p_tradie.getName() + "!");
+        p_tradie.sendMessage(ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "TRADE " + ChatColor.YELLOW + pl.getName() + ChatColor.GOLD + " wants to trade with you. " + ChatColor.YELLOW + "/trade " + pl.getName());
         return true;
     }
 
@@ -121,7 +122,8 @@ extends AbstractCommand {
         }
         String s = args[0];
         for (Player pl : Bukkit.getOnlinePlayers()) {
-            if (sender instanceof Player && !((Player)sender).canSee(pl) || !pl.getName().toLowerCase().startsWith(s.toLowerCase())) continue;
+            if (sender instanceof Player && !((Player) sender).canSee(pl) || !pl.getName().toLowerCase().startsWith(s.toLowerCase()))
+                continue;
             results.add(pl.getName());
         }
         return results.size() > 0 ? results : null;

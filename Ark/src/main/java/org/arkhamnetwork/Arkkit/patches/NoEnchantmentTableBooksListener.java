@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
@@ -23,7 +23,7 @@ import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 final class NoEnchantmentTableBooksListener
-implements Listener {
+        implements Listener {
     NoEnchantmentTableBooksListener() {
     }
 
@@ -32,15 +32,15 @@ implements Listener {
         if (e.getInventory().getTitle().equals("Enchant") && e.getCurrentItem() != null && (e.getCurrentItem().getType() == Material.BOOK || e.getCurrentItem().getType() == Material.ENCHANTED_BOOK)) {
             e.setCancelled(true);
             e.setResult(Event.Result.DENY);
-            ((Player)e.getWhoClicked()).sendMessage((Object)ChatColor.RED + "You cannot currently inscribe enchantments onto books.");
-            ((Player)e.getWhoClicked()).closeInventory();
+            e.getWhoClicked().sendMessage(ChatColor.RED + "You cannot currently inscribe enchantments onto books.");
+            e.getWhoClicked().closeInventory();
         }
     }
 
     @EventHandler
     public void onEnchantItemEvent(EnchantItemEvent e) {
         if (e.getItem().getType() == Material.BOOK || e.getItem().getType() == Material.ENCHANTED_BOOK) {
-            e.getEnchanter().sendMessage((Object)ChatColor.RED + "You cannot currently inscribe enchantments onto books.");
+            e.getEnchanter().sendMessage(ChatColor.RED + "You cannot currently inscribe enchantments onto books.");
             e.getEnchanter().closeInventory();
             e.setCancelled(true);
         }

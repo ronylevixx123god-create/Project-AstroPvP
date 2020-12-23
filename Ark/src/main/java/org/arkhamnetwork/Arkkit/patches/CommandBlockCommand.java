@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.ChatColor
  *  org.bukkit.command.Command
@@ -10,14 +10,13 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
-import org.arkhamnetwork.Arkkit.patches.CommandBlocker;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 final class CommandBlockCommand
-extends AbstractCommand {
+        extends AbstractCommand {
     public CommandBlockCommand(String command, String usage, String description) {
         super(command, usage, description);
     }
@@ -25,7 +24,7 @@ extends AbstractCommand {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         if (cmd.getName().equalsIgnoreCase("blockcommand")) {
-            if (sender instanceof Player && !((Player)sender).isOp()) {
+            if (sender instanceof Player && !sender.isOp()) {
                 return true;
             }
             if (args.length == 0) {
@@ -40,19 +39,19 @@ extends AbstractCommand {
             command = command.trim();
             if (opperation.equalsIgnoreCase("add")) {
                 CommandBlocker.blockCommand(command);
-                sender.sendMessage((Object)ChatColor.RED + "Command '" + command + "' is now blocked.");
+                sender.sendMessage(ChatColor.RED + "Command '" + command + "' is now blocked.");
             } else if (opperation.equalsIgnoreCase("remove")) {
                 if (CommandBlocker.unblockCommand(command)) {
-                    sender.sendMessage((Object)ChatColor.GREEN + "Command '" + command + "' is now unblocked.");
+                    sender.sendMessage(ChatColor.GREEN + "Command '" + command + "' is now unblocked.");
                 } else {
-                    sender.sendMessage((Object)ChatColor.RED + "Oops! Something went wrong while attempting to unblock the command '" + command + "', check console for errors.");
+                    sender.sendMessage(ChatColor.RED + "Oops! Something went wrong while attempting to unblock the command '" + command + "', check console for errors.");
                 }
             } else if (opperation.equalsIgnoreCase("list")) {
                 for (String blocked : CommandBlocker.getBlockedCommands()) {
-                    sender.sendMessage((Object)ChatColor.RED + "/" + blocked + " - BLOCKED");
+                    sender.sendMessage(ChatColor.RED + "/" + blocked + " - BLOCKED");
                 }
                 for (String blocked_alias : CommandBlocker.getBlockedAliases()) {
-                    sender.sendMessage((Object)ChatColor.YELLOW + "/" + blocked_alias + " - ALIAS");
+                    sender.sendMessage(ChatColor.YELLOW + "/" + blocked_alias + " - ALIAS");
                 }
             }
         }

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.compilex.CosmicOutposts.CosmicOutpostsAPI
  *  com.massivecraft.factions.Board
@@ -22,12 +22,9 @@ package org.arkhamnetwork.Arkkit.patches;
 import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
 import org.arkhamnetwork.Arkkit.libs.ExpUtils;
-import org.arkhamnetwork.Arkkit.patches.ExpBottles;
 import org.arkhamnetwork.Arkkit.utils.WorldGuardUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -41,23 +38,34 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 final class ExpBottlesCommand
-extends AbstractCommand {
+        extends AbstractCommand {
     public ExpBottlesCommand(String command, String usage, String description, List<String> aliases) {
         super(command, usage, description, aliases);
+    }
+
+    protected static boolean canMakeXPBottle(Player p) {
+        return !p.hasMetadata("nextExpBottle") || System.currentTimeMillis() >= p.getMetadata("nextExpBottle").get(0).asLong();
+    }
+
+    protected static String getTimeString(long millis) {
+        return String.format("%02dm %02ds", TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)), TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         Player p;
-        Player player = p = sender instanceof Player ? (Player)sender : null;
+        Player player = p = sender instanceof Player ? (Player) sender : null;
         if (p == null) {
             return false;
         }
         if (args.length != 1) {
-            p.sendMessage((Object)ChatColor.YELLOW + "/xpbottle <amount>");
-            p.sendMessage((Object)ChatColor.GRAY + "Converts <amount> xp into bottle form.");
-            p.sendMessage((Object)ChatColor.GRAY + "Use " + (Object)ChatColor.YELLOW + "/xp" + (Object)ChatColor.GRAY + " to view your current exp points.");
+            p.sendMessage(ChatColor.YELLOW + "/xpbottle <amount>");
+            p.sendMessage(ChatColor.GRAY + "Converts <amount> xp into bottle form.");
+            p.sendMessage(ChatColor.GRAY + "Use " + ChatColor.YELLOW + "/xp" + ChatColor.GRAY + " to view your current exp points.");
             return true;
         }
         if (!ExpBottlesCommand.canMakeXPBottle(p)) {
@@ -71,16 +79,16 @@ extends AbstractCommand {
                     noLimit = true;
                 }
             }
-            if (Bukkit.getPluginManager().isPluginEnabled("CosmicOutposts") && CosmicOutpostsAPI.controlsHeroOutpost((Player)p)) {
-                p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.GREEN + "No XP Bottle Delay " + (Object)ChatColor.GRAY + "[Hero Outpost Perk]");
+            if (Bukkit.getPluginManager().isPluginEnabled("CosmicOutposts") && CosmicOutpostsAPI.controlsHeroOutpost(p)) {
+                p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.GREEN + "No XP Bottle Delay " + ChatColor.GRAY + "[Hero Outpost Perk]");
                 noLimit = true;
             }
             if (!noLimit) {
-                p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You cannot create another XP Bottle for " + ExpBottlesCommand.getTimeString(((MetadataValue)p.getMetadata("nextExpBottle").get(0)).asLong() - System.currentTimeMillis()));
+                p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot create another XP Bottle for " + ExpBottlesCommand.getTimeString(p.getMetadata("nextExpBottle").get(0).asLong() - System.currentTimeMillis()));
                 if (!p.hasPermission("playervaults.amount.15")) {
-                    p.sendMessage((Object)ChatColor.GRAY + "Complete a Rank Quest from buy.cosmicpvp.com to decrease this delay.");
+                    p.sendMessage(ChatColor.GRAY + "Complete a Rank Quest from buy.cosmicpvp.com to decrease this delay.");
                 } else if (!p.hasPermission("cosmicpvp.heroic")) {
-                    p.sendMessage((Object)ChatColor.GRAY + "Purchase a Heroic Rank Crystal at buy.cosmicpvp.com to decrease this delay.");
+                    p.sendMessage(ChatColor.GRAY + "Purchase a Heroic Rank Crystal at buy.cosmicpvp.com to decrease this delay.");
                 }
                 return true;
             }
@@ -91,43 +99,38 @@ extends AbstractCommand {
         } else {
             try {
                 amount = Integer.parseInt(args[0]);
-            }
-            catch (NumberFormatException nfe) {
-                p.sendMessage((Object)ChatColor.RED + "Invalid <amount> specified.");
+            } catch (NumberFormatException nfe) {
+                p.sendMessage(ChatColor.RED + "Invalid <amount> specified.");
                 return true;
             }
         }
         if (amount < 25) {
-            p.sendMessage((Object)ChatColor.RED + "You must withdraw at least 25XP points per bottle.");
+            p.sendMessage(ChatColor.RED + "You must withdraw at least 25XP points per bottle.");
             return true;
         }
         int currentXp = ExpUtils.getTotalExperience(p);
         if (currentXp < amount) {
-            p.sendMessage((Object)ChatColor.RED + "You only have " + currentXp + " xp points to convert.");
-            p.sendMessage((Object)ChatColor.GRAY + "View your exp values with /xp");
+            p.sendMessage(ChatColor.RED + "You only have " + currentXp + " xp points to convert.");
+            p.sendMessage(ChatColor.GRAY + "View your exp values with /xp");
             return true;
         }
         if (p.getInventory().firstEmpty() == -1) {
-            p.sendMessage((Object)ChatColor.RED + "You do not have any inventory space.");
+            p.sendMessage(ChatColor.RED + "You do not have any inventory space.");
             return true;
         }
         FLocation pLoc = new FLocation(p.getLocation());
-        if (Board.getFactionAt((FLocation)pLoc).isWarZone() && !WorldGuardUtils.getRegionName(p.getLocation()).startsWith("spawn_")) {
-            p.sendMessage((Object)ChatColor.RED + "You " + (Object)ChatColor.UNDERLINE + "cannot" + (Object)ChatColor.RED + " bottle EXP in Warzones.");
+        if (Board.getFactionAt(pLoc).isWarZone() && !WorldGuardUtils.getRegionName(p.getLocation()).startsWith("spawn_")) {
+            p.sendMessage(ChatColor.RED + "You " + ChatColor.UNDERLINE + "cannot" + ChatColor.RED + " bottle EXP in Warzones.");
             return true;
         }
         ExpUtils.setTotalExperience(p, currentXp - amount);
         p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "- " + amount + " xp");
-        p.sendMessage((Object)ChatColor.YELLOW + "You are now afflicted with " + (Object)ChatColor.UNDERLINE + "EXP Exhaustion" + (Object)ChatColor.YELLOW + " for " + this.getExpBottleCreationDelayMinutes(p) + " minute(s).");
-        p.sendMessage((Object)ChatColor.YELLOW + "You " + (Object)ChatColor.UNDERLINE + "cannot" + (Object)ChatColor.YELLOW + " use /xpbottle or teleport while EXP Exhausted.");
+        p.sendMessage(ChatColor.YELLOW + "You are now afflicted with " + ChatColor.UNDERLINE + "EXP Exhaustion" + ChatColor.YELLOW + " for " + this.getExpBottleCreationDelayMinutes(p) + " minute(s).");
+        p.sendMessage(ChatColor.YELLOW + "You " + ChatColor.UNDERLINE + "cannot" + ChatColor.YELLOW + " use /xpbottle or teleport while EXP Exhausted.");
         p.playSound(p.getLocation(), Sound.ORB_PICKUP, 1.0f, 0.2f);
-        p.getInventory().addItem(new ItemStack[]{ExpBottles.getXpBottle(amount, p.getName())});
-        p.setMetadata("nextExpBottle", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)(System.currentTimeMillis() + (long)((int)Math.round(this.getExpBottleCreationDelayMinutes(p) * 60.0 * 1000.0)))));
+        p.getInventory().addItem(ExpBottles.getXpBottle(amount, p.getName()));
+        p.setMetadata("nextExpBottle", new FixedMetadataValue(Arkkit.get(), System.currentTimeMillis() + (long) ((int) Math.round(this.getExpBottleCreationDelayMinutes(p) * 60.0 * 1000.0))));
         return true;
-    }
-
-    protected static boolean canMakeXPBottle(Player p) {
-        return !p.hasMetadata("nextExpBottle") || System.currentTimeMillis() >= ((MetadataValue)p.getMetadata("nextExpBottle").get(0)).asLong();
     }
 
     private double getExpBottleCreationDelayMinutes(Player p) {
@@ -150,10 +153,6 @@ extends AbstractCommand {
             return 15.0;
         }
         return 17.0;
-    }
-
-    protected static String getTimeString(long millis) {
-        return String.format("%02dm %02ds", TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)), TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
     }
 }
 

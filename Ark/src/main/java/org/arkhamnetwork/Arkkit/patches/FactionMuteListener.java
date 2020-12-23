@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.FactionUtils
  *  org.bukkit.ChatColor
@@ -13,8 +13,6 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
-import org.arkhamnetwork.Arkkit.patches.ExtraMute;
-import org.arkhamnetwork.Arkkit.patches.MuteReason;
 import org.arkhamnetwork.Arkkit.utils.TimeUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -24,23 +22,23 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 class FactionMuteListener
-implements Listener {
-    private ExtraMute instance;
+        implements Listener {
+    private final ExtraMute instance;
 
     public FactionMuteListener(ExtraMute instance) {
         this.instance = instance;
     }
 
-    @EventHandler(priority=EventPriority.LOWEST, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onPlayerChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
-        String factionID = FactionUtils.getFactionId((Player)player);
+        String factionID = FactionUtils.getFactionId(player);
         if (factionID != null && !player.isOp() && this.instance.getFactionsMuted().containsKey(factionID)) {
             long time = this.instance.getFactionsMuted().get(factionID);
             if (time > System.currentTimeMillis() / 1000L) {
                 event.setCancelled(true);
-                player.sendMessage((Object)ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "Your faction has been muted and you cannot speak.");
-                player.sendMessage((Object)ChatColor.GRAY + "Faction Mute Expires in " + TimeUtils.formatTime(time) + "!");
+                player.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "Your faction has been muted and you cannot speak.");
+                player.sendMessage(ChatColor.GRAY + "Faction Mute Expires in " + TimeUtils.formatTime(time) + "!");
                 return;
             }
             this.instance.getFactionsMuted().remove(factionID);
@@ -53,11 +51,11 @@ implements Listener {
                 return;
             }
             event.setCancelled(true);
-            player.sendMessage((Object)ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "Your IP has been muted for " + reason.getReason() + "!");
+            player.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "Your IP has been muted for " + reason.getReason() + "!");
             if (reason.getExpire() == -1L) {
-                player.sendMessage((Object)ChatColor.GRAY + "This mute will never expire.");
+                player.sendMessage(ChatColor.GRAY + "This mute will never expire.");
             } else {
-                player.sendMessage((Object)ChatColor.GRAY + "Mute will expire in " + TimeUtils.formatTime(reason.getExpire() / 1000L) + "!");
+                player.sendMessage(ChatColor.GRAY + "Mute will expire in " + TimeUtils.formatTime(reason.getExpire() / 1000L) + "!");
             }
         }
     }

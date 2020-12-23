@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicclasses.struct.HCFKits
  *  org.bukkit.Bukkit
@@ -22,15 +22,16 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 final class AntiInvisibilityTask
-extends BukkitRunnable {
+        extends BukkitRunnable {
     AntiInvisibilityTask() {
     }
 
     public void run() {
         for (Player pl : Bukkit.getOnlinePlayers()) {
-            if (pl.isOp() || pl.getGameMode() != GameMode.SURVIVAL || !pl.hasPotionEffect(PotionEffectType.INVISIBILITY)) continue;
+            if (pl.isOp() || pl.getGameMode() != GameMode.SURVIVAL || !pl.hasPotionEffect(PotionEffectType.INVISIBILITY))
+                continue;
             pl.removePotionEffect(PotionEffectType.INVISIBILITY);
-            pl.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "Invisibility potions cannot be used on this server!");
+            pl.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "Invisibility potions cannot be used on this server!");
         }
     }
 

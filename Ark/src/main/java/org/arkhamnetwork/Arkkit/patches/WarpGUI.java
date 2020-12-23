@@ -1,21 +1,19 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.plugin.Plugin
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import org.arkhamnetwork.Arkkit.patches.WarpGUIListener;
-import org.arkhamnetwork.Arkkit.patches.WarpGUIManager;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 public class WarpGUI
-extends ArkPlugin {
-    private WarpGUIManager warpManager = new WarpGUIManager();
+        extends ArkPlugin {
+    private final WarpGUIManager warpManager = new WarpGUIManager();
 
     public WarpGUI(Plugin p) {
         super(p);

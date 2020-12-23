@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.itembuilder.MaskBuilder
  *  org.bukkit.Bukkit
@@ -27,14 +27,9 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.cosmicutils.itembuilder.MaskBuilder;
-import java.util.concurrent.ThreadLocalRandom;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.libs.ArkPluginListener;
 import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
-import org.arkhamnetwork.Arkkit.patches.Christmas;
-import org.arkhamnetwork.Arkkit.patches.ChristmasRainbowTask;
-import org.arkhamnetwork.Arkkit.patches.Drinks;
-import org.arkhamnetwork.Arkkit.patches.NewYears;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -56,10 +51,16 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 final class ChristmasListener
-extends ArkPluginListener<Christmas> {
+        extends ArkPluginListener<Christmas> {
     public ChristmasListener(Christmas patch) {
         super(patch);
+    }
+
+    protected static void setSugarLevel(Player p, int x) {
+        p.setMetadata("christmasSugarLevel", new FixedMetadataValue(Arkkit.get(), x));
     }
 
     @EventHandler
@@ -69,15 +70,15 @@ extends ArkPluginListener<Christmas> {
 
     @EventHandler
     public void onEntityDamage(EntityDamageEvent e) {
-        if (((Christmas)this.patch).isChristmasElf(e.getEntity())) {
+        if (this.patch.isChristmasElf(e.getEntity())) {
             e.getEntity().getWorld().playSound(e.getEntity().getLocation(), Sound.GHAST_MOAN, 1.0f, 1.1f);
             e.getEntity().getWorld().playSound(e.getEntity().getLocation(), Sound.ZOMBIE_IDLE, 1.0f, 1.3f);
         }
     }
 
-    @EventHandler(priority=EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onEntityDeath(EntityDeathEvent e) {
-        if (((Christmas)this.patch).isChristmasElf((Entity)e.getEntity())) {
+        if (this.patch.isChristmasElf(e.getEntity())) {
             ItemStack mask;
             e.getDrops().clear();
             e.getDrops().add(NewYears.getExplosiveCake(5 + ThreadLocalRandom.current().nextInt(5)));
@@ -86,7 +87,7 @@ extends ArkPluginListener<Christmas> {
             e.getDrops().add(Drinks.getChristmasDrink());
             if (Math.random() <= 0.01 && Bukkit.getPluginManager().isPluginEnabled("CosmicMasks") && (mask = new MaskBuilder(Math.random() <= 0.5 ? "SANTA" : "REINDEER").build()) != null) {
                 e.getDrops().add(mask);
-                Bukkit.getLogger().info("[Christmas] Dropping Christmas mask at " + (Object)e.getEntity().getLocation() + "!");
+                Bukkit.getLogger().info("[Christmas] Dropping Christmas mask at " + e.getEntity().getLocation() + "!");
             }
         }
     }
@@ -98,11 +99,11 @@ extends ArkPluginListener<Christmas> {
             e.setUseItemInHand(Event.Result.DENY);
             e.setUseInteractedBlock(Event.Result.DENY);
             if (e.getPlayer().getWorld().getName().startsWith("cosmic-station")) {
-                e.getPlayer().sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "You cannot eat Christmas Candy at Outposts.");
+                e.getPlayer().sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "You cannot eat Christmas Candy at Outposts.");
                 return;
             }
             if (e.getPlayer().getWorld().getName().startsWith("dungeon_")) {
-                e.getPlayer().sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "You cannot eat Christmas Candy inside of a Dungeon.");
+                e.getPlayer().sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "You cannot eat Christmas Candy inside of a Dungeon.");
                 return;
             }
             ItemStack candy = e.getItem().clone();
@@ -121,7 +122,7 @@ extends ArkPluginListener<Christmas> {
             if (p.hasMetadata("spectator")) {
                 ParticleEffect.playEffect(ParticleEffect.SPELL, p.getLocation().add(0.0, 1.0, 0.0), 0.4f, christmasSugarLevel * 5);
             }
-            p.sendMessage((Object)ChatColor.YELLOW + "You eat a piece of christmas candy... YUM! [" + christmasSugarLevel + "x]");
+            p.sendMessage(ChatColor.YELLOW + "You eat a piece of christmas candy... YUM! [" + christmasSugarLevel + "x]");
             p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, duration, Math.min(1, christmasSugarLevel / 2)));
             p.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, duration, Math.min(3, christmasSugarLevel / 2)));
             p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, duration / 3, christmasSugarLevel > 3 ? 1 : 0));
@@ -141,11 +142,7 @@ extends ArkPluginListener<Christmas> {
     }
 
     private int getSugarLevel(Player p) {
-        return p.hasMetadata("christmasSugarLevel") ? ((MetadataValue)p.getMetadata("christmasSugarLevel").get(0)).asInt() : 0;
-    }
-
-    protected static void setSugarLevel(Player p, int x) {
-        p.setMetadata("christmasSugarLevel", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)x));
+        return p.hasMetadata("christmasSugarLevel") ? p.getMetadata("christmasSugarLevel").get(0).asInt() : 0;
     }
 
     private void updateSugarTask(Player p, int level) {

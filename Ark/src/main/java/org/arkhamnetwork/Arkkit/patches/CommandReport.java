@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.ChatColor
  *  org.bukkit.command.Command
@@ -8,14 +8,15 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.List;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
+import java.util.List;
+
 class CommandReport
-extends AbstractCommand {
+        extends AbstractCommand {
     public CommandReport(String command, String usage, String description, List<String> aliases) {
         super(command, usage, description, aliases);
     }

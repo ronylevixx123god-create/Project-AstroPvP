@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.compilex.CompilexServerSync.CompilexServerSync
  *  org.bukkit.Bukkit
@@ -10,13 +10,12 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import com.compilex.CompilexServerSync.CompilexServerSync;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.DynamicMaxPlayers;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
 final class TaperSlotsTask
-extends BukkitRunnable {
-    private int maxSlots = Arkkit.get().getConfig().getInt("settings.taperSlots.maxSlots");
+        extends BukkitRunnable {
+    private final int maxSlots = Arkkit.get().getConfig().getInt("settings.taperSlots.maxSlots");
 
     public TaperSlotsTask() {
         if (CompilexServerSync.get().isQueue()) {

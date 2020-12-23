@@ -1,16 +1,17 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Material
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.Material;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 class CustomWarps
-extends ConcurrentHashMap<String, Material> {
+        extends ConcurrentHashMap<String, Material> {
     CustomWarps() {
     }
 

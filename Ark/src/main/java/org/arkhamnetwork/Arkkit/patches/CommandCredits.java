@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
@@ -10,18 +10,18 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.ArrayList;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
-import org.arkhamnetwork.Arkkit.patches.RedeemMCMMO;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+
 final class CommandCredits
-extends AbstractCommand {
+        extends AbstractCommand {
     public CommandCredits(String command, String usage, String description, ArrayList<String> aliases) {
         super(command, usage, description, aliases);
     }
@@ -33,18 +33,18 @@ extends AbstractCommand {
                 return true;
             }
             if (sender instanceof Player) {
-                Player player = (Player)sender;
+                Player player = (Player) sender;
                 if (args.length == 0) {
                     String id = player.getUniqueId().toString();
                     String playerId = RedeemMCMMO.getConfig().getString(id);
                     if (playerId != null) {
                         int credits = RedeemMCMMO.getConfig().getInt(id + ".credits");
-                        player.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.YELLOW + "MCMMO Credits: " + (Object)ChatColor.UNDERLINE + credits);
-                        player.sendMessage((Object)ChatColor.GRAY + "Use /redeem to allocate these credits to your mcMMO stats.");
+                        player.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "MCMMO Credits: " + ChatColor.UNDERLINE + credits);
+                        player.sendMessage(ChatColor.GRAY + "Use /redeem to allocate these credits to your mcMMO stats.");
                         return true;
                     }
-                    player.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.YELLOW + "MCMMO Credits: " + (Object)ChatColor.UNDERLINE + 0);
-                    player.sendMessage((Object)ChatColor.GRAY + "Purchase mcMMO credits at " + (Object)ChatColor.UNDERLINE + Arkkit.get().getConfig().getString("language.spigot_branding.store_url"));
+                    player.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "MCMMO Credits: " + ChatColor.UNDERLINE + 0);
+                    player.sendMessage(ChatColor.GRAY + "Purchase mcMMO credits at " + ChatColor.UNDERLINE + Arkkit.get().getConfig().getString("language.spigot_branding.store_url"));
                     return true;
                 }
                 if (args.length == 1) {
@@ -55,14 +55,14 @@ extends AbstractCommand {
                     String targetId = target.getUniqueId().toString();
                     if (targetId != null) {
                         int credits = RedeemMCMMO.getConfig().getInt(targetId + ".credits");
-                        player.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.YELLOW + target.getName() + "'s MCMMO Credits: " + (Object)ChatColor.UNDERLINE + credits);
+                        player.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + target.getName() + "'s MCMMO Credits: " + ChatColor.UNDERLINE + credits);
                         return true;
                     }
-                    player.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.YELLOW + target.getName() + "'s MCMMO Credits: " + (Object)ChatColor.UNDERLINE + 0);
+                    player.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + target.getName() + "'s MCMMO Credits: " + ChatColor.UNDERLINE + 0);
                     return true;
                 }
             } else {
-                sender.sendMessage((Object)ChatColor.RED + "This command can only be run by a player!");
+                sender.sendMessage(ChatColor.RED + "This command can only be run by a player!");
                 return true;
             }
         }

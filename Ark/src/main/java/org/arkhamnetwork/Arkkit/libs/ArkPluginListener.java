@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.event.Listener
  */
@@ -10,7 +10,7 @@ import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.event.Listener;
 
 public abstract class ArkPluginListener<T extends ArkPlugin>
-implements Listener {
+        implements Listener {
     protected T patch;
 
     public ArkPluginListener(T patch) {

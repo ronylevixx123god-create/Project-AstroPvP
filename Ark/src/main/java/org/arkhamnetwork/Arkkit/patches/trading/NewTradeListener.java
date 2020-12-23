@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.CC
  *  com.google.common.collect.Lists
@@ -26,18 +26,9 @@
 package org.arkhamnetwork.Arkkit.patches.trading;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.TimeUnit;
-
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.Lists;
-import com.google.common.collect.MapMaker;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -55,12 +46,26 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class NewTradeListener
-implements Listener {
+        implements Listener {
     //private Map<UUID, Long> expiringClickMap = new MapMaker().expireAfterWrite(1L, TimeUnit.SECONDS).makeMap();
-    private Cache<UUID, Long> expiringClickMap = CacheBuilder.newBuilder().expireAfterWrite(1L, TimeUnit.SECONDS).build();
+    private final Cache<UUID, Long> expiringClickMap = CacheBuilder.newBuilder().expireAfterWrite(1L, TimeUnit.SECONDS).build();
+
+    public static int getNextOpenTradeSlot(Inventory tradeInventory) {
+        int lowest_open_slot = 999;
+        for (int slot : NewTrade.getValidSlots()) {
+            if (tradeInventory.getSize() <= slot || tradeInventory.getItem(slot) != null || slot >= lowest_open_slot)
+                continue;
+            lowest_open_slot = slot;
+        }
+        return lowest_open_slot == 999 ? -1 : lowest_open_slot;
+    }
 
     @EventHandler
     public void onInventoryOpen(InventoryOpenEvent e) {
@@ -70,14 +75,14 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.HIGH, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onInventoryClick_HIGH(InventoryClickEvent e) {
         if (e.getWhoClicked() instanceof Player && e.getWhoClicked().hasMetadata("compilexTradePartnerUUID")) {
             if (!e.getInventory().getTitle().contains("  ")) {
                 e.getWhoClicked().closeInventory();
                 return;
             }
-            Player p1 = (Player)e.getWhoClicked();
+            Player p1 = (Player) e.getWhoClicked();
             e.setCancelled(true);
             e.setResult(Event.Result.DENY);
             if (e.getClickedInventory() == null || e.getCurrentItem() == null || e.getCurrentItem().getType() == Material.AIR) {
@@ -99,15 +104,15 @@ implements Listener {
                 p1.updateInventory();
                 return;
             }
-            if (e.getClickedInventory().equals((Object)p1.getOpenInventory().getTopInventory())) {
+            if (e.getClickedInventory().equals(p1.getOpenInventory().getTopInventory())) {
                 if (!NewTrade.getValidSlots().contains(e.getRawSlot())) {
                     return;
                 }
                 ItemStack i = e.getCurrentItem();
                 e.setCurrentItem(null);
                 p1.getInventory().setItem(p1.getInventory().firstEmpty(), i);
-                Bukkit.getLogger().info("[(Arkkit) NewTrade] " + p1.getName() + " removing item: " + (Object)i + " in trade: " + e.getClickedInventory().getTitle());
-            } else if (e.getClickedInventory().equals((Object)p1.getOpenInventory().getBottomInventory())) {
+                Bukkit.getLogger().info("[(Arkkit) NewTrade] " + p1.getName() + " removing item: " + i + " in trade: " + e.getClickedInventory().getTitle());
+            } else if (e.getClickedInventory().equals(p1.getOpenInventory().getBottomInventory())) {
                 int tradeSlot = NewTradeListener.getNextOpenTradeSlot(p1.getOpenInventory().getTopInventory());
                 if (tradeSlot == -1) {
                     return;
@@ -115,24 +120,15 @@ implements Listener {
                 ItemStack i = e.getCurrentItem().clone();
                 e.setCurrentItem(null);
                 p1.getOpenInventory().getTopInventory().setItem(tradeSlot, i);
-                Bukkit.getLogger().info("[(Arkkit) NewTrade] " + p1.getName() + " adding item: " + (Object)i + " to trade: " + e.getClickedInventory().getTitle());
+                Bukkit.getLogger().info("[(Arkkit) NewTrade] " + p1.getName() + " adding item: " + i + " to trade: " + e.getClickedInventory().getTitle());
             }
             e.getInventory().setItem(0, NewTrade.gray_button);
-            Player p2 = Bukkit.getPlayer((UUID)((UUID)((MetadataValue)p1.getMetadata("compilexTradePartnerUUID").get(0)).value()));
+            Player p2 = Bukkit.getPlayer(p1.getMetadata("compilexTradePartnerUUID").get(0).value());
             p2.getOpenInventory().getTopInventory().setItem(0, NewTrade.gray_button);
         }
     }
 
-    public static int getNextOpenTradeSlot(Inventory tradeInventory) {
-        int lowest_open_slot = 999;
-        for (int slot : NewTrade.getValidSlots()) {
-            if (tradeInventory.getSize() <= slot || tradeInventory.getItem(slot) != null || slot >= lowest_open_slot) continue;
-            lowest_open_slot = slot;
-        }
-        return lowest_open_slot == 999 ? -1 : lowest_open_slot;
-    }
-
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=false)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)
     public void onInventoryClick_MONITOR(InventoryClickEvent e) {
         if (e.getWhoClicked() instanceof Player && e.getWhoClicked().hasMetadata("compilexTradePartnerUUID")) {
             Long expiration;
@@ -149,8 +145,8 @@ implements Listener {
             if ((expiration = this.expiringClickMap.asMap().get(e.getWhoClicked().getUniqueId())) != null && expiration > System.currentTimeMillis()) {
                 return;
             }
-            Player p1 = (Player)e.getWhoClicked();
-            Player p2 = Bukkit.getPlayer((UUID)((UUID)((MetadataValue)p1.getMetadata("compilexTradePartnerUUID").get(0)).value()));
+            Player p1 = (Player) e.getWhoClicked();
+            Player p2 = Bukkit.getPlayer(p1.getMetadata("compilexTradePartnerUUID").get(0).value());
             Inventory inv1 = p1.getOpenInventory().getTopInventory();
             Inventory inv2 = p2.getOpenInventory().getTopInventory();
             for (int slot : NewTrade.getValidSlots()) {
@@ -173,20 +169,21 @@ implements Listener {
     public void onInventoryClose(InventoryCloseEvent e) {
         if (e.getPlayer().hasMetadata("compilexTradePartnerUUID")) {
             Player p2;
-            Player p1 = (Player)e.getPlayer();
+            Player p1 = (Player) e.getPlayer();
             if (e.getInventory().getTitle().contains("  ") && (e.getInventory().getItem(0) != null && (e.getInventory().getItem(0).getDurability() != NewTrade.green_button.getDurability() || e.getInventory().getItem(0).getAmount() > 0) || e.getInventory().getItem(8) != null && (e.getInventory().getItem(8).getDurability() != NewTrade.green_button.getDurability() || e.getInventory().getItem(8).getAmount() > 0))) {
                 ArrayList givingBack = Lists.newArrayList();
                 for (int slot : NewTrade.getValidSlots()) {
-                    if (e.getInventory().getItem(slot) == null || e.getInventory().getItem(slot).getType() == Material.STAINED_GLASS_PANE) continue;
-                    p1.getInventory().addItem(new ItemStack[]{e.getInventory().getItem(slot)});
+                    if (e.getInventory().getItem(slot) == null || e.getInventory().getItem(slot).getType() == Material.STAINED_GLASS_PANE)
+                        continue;
+                    p1.getInventory().addItem(e.getInventory().getItem(slot));
                     givingBack.add(e.getInventory().getItem(slot));
                 }
-                p1.sendMessage((Object)ChatColor.YELLOW + "" + (Object)ChatColor.BOLD + "Trade cancelled.");
+                p1.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "Trade cancelled.");
                 if (givingBack.size() > 0) {
-                    Bukkit.getLogger().info("[(Arkkit) NewTrade] " + p1.getName() + " was returned items: " + Arrays.toString((Object[])givingBack.toArray(new Object[0])));
+                    Bukkit.getLogger().info("[(Arkkit) NewTrade] " + p1.getName() + " was returned items: " + Arrays.toString(givingBack.toArray(new Object[0])));
                 }
             }
-            UUID p2_uuid = (UUID)((MetadataValue)p1.getMetadata("compilexTradePartnerUUID").get(0)).value();
+            UUID p2_uuid = (UUID) p1.getMetadata("compilexTradePartnerUUID").get(0).value();
             p1.removeMetadata("compilexTradePartnerUUID", Arkkit.get());
             if (p1.hasMetadata("compilexTradeTaskID")) {
                 Bukkit.getScheduler().cancelTask(p1.getMetadata("compilexTradeTaskID").get(0).asInt());
@@ -200,17 +197,17 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onItemPickup(PlayerPickupItemEvent e) {
         if (e.getPlayer().hasMetadata("compilexTradePartnerUUID")) {
             e.setCancelled(true);
         }
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onEntityDamage(EntityDamageEvent e) {
         Player p1;
-        if (e.getEntity() instanceof Player && (p1 = (Player)e.getEntity()).hasMetadata("compilexTradePartnerUUID")) {
+        if (e.getEntity() instanceof Player && (p1 = (Player) e.getEntity()).hasMetadata("compilexTradePartnerUUID")) {
             p1.closeInventory();
         }
     }

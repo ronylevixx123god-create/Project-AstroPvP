@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
@@ -19,7 +19,7 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 final class MaxFlyHeightTask
-extends BukkitRunnable {
+        extends BukkitRunnable {
     MaxFlyHeightTask() {
     }
 
@@ -30,7 +30,7 @@ extends BukkitRunnable {
                 locFixed.setY(255.0);
                 if (!locFixed.getBlock().getType().isBlock()) {
                     p.teleport(locFixed, PlayerTeleportEvent.TeleportCause.UNKNOWN);
-                    p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You cannot fly above y:256 in this world!");
+                    p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot fly above y:256 in this world!");
                     continue;
                 }
                 p.setFlying(false);

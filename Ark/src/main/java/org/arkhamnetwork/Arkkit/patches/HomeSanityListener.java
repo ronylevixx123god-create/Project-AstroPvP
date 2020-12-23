@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.FactionUtils
  *  com.earth2me.essentials.User
@@ -24,8 +24,6 @@ package org.arkhamnetwork.Arkkit.patches;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.earth2me.essentials.User;
 import com.massivecraft.factions.Faction;
-import java.util.ArrayList;
-import java.util.List;
 import markehme.factionsplus.Cmds.CmdWarp;
 import markehme.factionsplus.extras.Warp;
 import org.bukkit.Bukkit;
@@ -39,10 +37,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import java.util.ArrayList;
+import java.util.List;
+
 final class HomeSanityListener
-implements Listener {
+        implements Listener {
     List<World> whitelistedWorlds = new ArrayList<World>();
-    private boolean factionsPlus;
+    private final boolean factionsPlus;
 
     public HomeSanityListener() {
         for (World w : Bukkit.getWorlds()) {
@@ -53,7 +54,7 @@ implements Listener {
     }
 
     private boolean isValidHome(Location l) {
-        return this.whitelistedWorlds.contains((Object)l.getWorld()) && l.getY() >= 0.0 && (l.getWorld().getEnvironment() != World.Environment.NETHER || l.getY() < 128.0);
+        return this.whitelistedWorlds.contains(l.getWorld()) && l.getY() >= 0.0 && (l.getWorld().getEnvironment() != World.Environment.NETHER || l.getY() < 128.0);
     }
 
     private boolean isEventWorldException(Location l, String cmd) {
@@ -71,30 +72,28 @@ implements Listener {
             try {
                 Location homeLocation = u.getHome(home);
                 if (this.isValidHome(homeLocation) && homeLocation.getWorld().getName().equals("world_event")) continue;
-                Bukkit.getLogger().info("[Arkkit (SmarterEssentials)] Deleted invalid home '" + home + "' (" + (Object)homeLocation + ") for player " + e.getPlayer().getName() + " (" + e.getPlayer().getUniqueId() + ")");
+                Bukkit.getLogger().info("[Arkkit (SmarterEssentials)] Deleted invalid home '" + home + "' (" + homeLocation + ") for player " + e.getPlayer().getName() + " (" + e.getPlayer().getUniqueId() + ")");
                 u.delHome(home);
-            }
-            catch (Exception e1) {
+            } catch (Exception e1) {
                 Bukkit.getLogger().info("[Arkkit (SmarterEssentials)] Could not parse home '" + home + "' for player " + e.getPlayer().getName() + " (" + e.getPlayer().getUniqueId() + "), attempting to delete...");
                 e1.printStackTrace();
                 try {
                     u.delHome(home);
-                }
-                catch (Exception e2) {
+                } catch (Exception e2) {
                     e2.printStackTrace();
                 }
             }
         }
-        if (this.factionsPlus && (faction = FactionUtils.getFaction((Player)e.getPlayer())) != null && ((Boolean)FactionUtils.callFactionMethod((Faction)faction, (String)"isNormal", null)).booleanValue()) {
-            for (Warp w : CmdWarp.getWarps((Faction)faction)) {
+        if (this.factionsPlus && (faction = FactionUtils.getFaction(e.getPlayer())) != null && ((Boolean) FactionUtils.callFactionMethod(faction, "isNormal", null)).booleanValue()) {
+            for (Warp w : CmdWarp.getWarps(faction)) {
                 if (this.isValidHome(w.getLocation())) continue;
-                Bukkit.getLogger().info("[Arkkit (SmarterEssentials)] Deleted invalid /f warp '" + w.getName() + "' (" + (Object)w.getLocation() + ") for faction " + e.getPlayer().getName() + " (" + FactionUtils.getFactionId((Player)e.getPlayer()) + ")");
-                CmdWarp.removeWarp((Faction)faction, (String)w.getName());
+                Bukkit.getLogger().info("[Arkkit (SmarterEssentials)] Deleted invalid /f warp '" + w.getName() + "' (" + w.getLocation() + ") for faction " + e.getPlayer().getName() + " (" + FactionUtils.getFactionId(e.getPlayer()) + ")");
+                CmdWarp.removeWarp(faction, w.getName());
             }
         }
     }
 
-    @EventHandler(priority=EventPriority.LOW)
+    @EventHandler(priority = EventPriority.LOW)
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent e) {
         String cmd = e.getMessage().toLowerCase();
         if (cmd.startsWith("/sethome") || cmd.startsWith("/esethome") || cmd.startsWith("/createhome") || cmd.startsWith("/ecreatehome") || cmd.startsWith("/f setwarp") || cmd.startsWith("/f sethome") || cmd.startsWith("/f setallywarp") || cmd.startsWith("/f addwarp") || cmd.startsWith("/f createwarp")) {
@@ -104,10 +103,10 @@ implements Listener {
             if (!this.isValidHome(e.getPlayer().getLocation()) && !this.isEventWorldException(e.getPlayer().getLocation(), cmd)) {
                 e.setMessage("/null");
                 e.setCancelled(true);
-                e.getPlayer().sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "You cannot create a /home or /f warp at this location.");
-                e.getPlayer().sendMessage((Object)ChatColor.GRAY + "You can only create homes and warps in the overworld and nether, and only above y:0 (or beneath y:128 in nether).");
+                e.getPlayer().sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "You cannot create a /home or /f warp at this location.");
+                e.getPlayer().sendMessage(ChatColor.GRAY + "You can only create homes and warps in the overworld and nether, and only above y:0 (or beneath y:128 in nether).");
             } else {
-                Bukkit.getLogger().info("[Arkkit (SmarterEssentials)] Player " + e.getPlayer().getName() + " (" + e.getPlayer().getUniqueId() + ") issued command " + cmd + " at location " + (Object)e.getPlayer().getLocation());
+                Bukkit.getLogger().info("[Arkkit (SmarterEssentials)] Player " + e.getPlayer().getName() + " (" + e.getPlayer().getUniqueId() + ") issued command " + cmd + " at location " + e.getPlayer().getLocation());
             }
         }
     }

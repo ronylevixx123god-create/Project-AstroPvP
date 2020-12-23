@@ -1,23 +1,22 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.google.common.collect.Lists
  *  org.bukkit.plugin.Plugin
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.HashMap;
-import java.util.List;
-
 import com.google.common.collect.Lists;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.plugin.Plugin;
 
+import java.util.HashMap;
+
 public class ExtraMute
-extends ArkPlugin {
-    private HashMap<String, Long> factionsMuted = new HashMap();
-    private HashMap<String, MuteReason> ipsMuted = new HashMap();
+        extends ArkPlugin {
+    private final HashMap<String, Long> factionsMuted = new HashMap();
+    private final HashMap<String, MuteReason> ipsMuted = new HashMap();
 
     public ExtraMute(Plugin p) {
         super(p);

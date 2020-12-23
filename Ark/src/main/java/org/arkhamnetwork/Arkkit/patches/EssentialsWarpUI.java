@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.earth2me.essentials.Essentials
  *  org.bukkit.Bukkit
@@ -11,17 +11,17 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.earth2me.essentials.Essentials;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import org.arkhamnetwork.Arkkit.patches.EssentialsWarpUIListener;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.plugin.Plugin;
 
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+
 public class EssentialsWarpUI
-extends ArkPlugin {
+        extends ArkPlugin {
     public static LinkedHashMap<String, Material> warp_data = new LinkedHashMap();
     protected static Essentials ess;
 
@@ -36,7 +36,7 @@ extends ArkPlugin {
             this.kill();
             return;
         }
-        ess = (Essentials)this.getBukkitPlugin().getServer().getPluginManager().getPlugin("Essentials");
+        ess = (Essentials) this.getBukkitPlugin().getServer().getPluginManager().getPlugin("Essentials");
         LinkedList<String> config_data = new LinkedList(this.getBukkitPlugin().getConfig().getStringList("settings.essentials_warp_ui"));
         if (config_data != null && config_data.size() > 0) {
             Material m = null;
@@ -46,16 +46,14 @@ extends ArkPlugin {
                 String[] data = entry.split("=");
                 try {
                     warp_loc = ess.getWarps().getWarp(data[0]).getBlock().getLocation();
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     Bukkit.getLogger().warning("Invalid warp name specified, '" + data[0] + "', skipping.");
                     e.printStackTrace();
                     continue;
                 }
                 try {
-                    m = Material.valueOf((String)data[1].toUpperCase());
-                }
-                catch (Exception err) {
+                    m = Material.valueOf(data[1].toUpperCase());
+                } catch (Exception err) {
                     Bukkit.getLogger().warning("Invalid material enum '" + data[1] + "' specified for " + data[0] + ", defaulting to stone.");
                     err.printStackTrace();
                     m = Material.STONE;

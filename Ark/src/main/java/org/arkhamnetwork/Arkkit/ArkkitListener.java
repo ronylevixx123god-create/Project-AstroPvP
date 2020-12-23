@@ -1,9 +1,6 @@
 package org.arkhamnetwork.Arkkit;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-
-import java.util.List;
-
 import com.google.common.collect.Lists;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -14,26 +11,28 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import java.util.List;
+
 final class ArkkitListener
-implements Listener {
-    private List<String> blockedCommandsWhileRebooting = Lists.newArrayList("/pv", "/trade", "/playervaults", "/chest", "/vault", "/enderchest", "/echest", "/betterenderchest", "/ec", "/bec");
+        implements Listener {
+    private final List<String> blockedCommandsWhileRebooting = Lists.newArrayList("/pv", "/trade", "/playervaults", "/chest", "/vault", "/enderchest", "/echest", "/betterenderchest", "/ec", "/bec");
 
     ArkkitListener() {
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerJoin(PlayerJoinEvent e) {
         Arkkit.get().getAsyncPlayerMap().put(e.getPlayer().getName(), e.getPlayer());
         Arkkit.get().getPlayerLocations().put(e.getPlayer().getName(), e.getPlayer().getLocation());
     }
 
-    @EventHandler(priority=EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerQuit(PlayerQuitEvent e) {
         Arkkit.get().getAsyncPlayerMap().remove(e.getPlayer().getName());
         Arkkit.get().getPlayerLocations().remove(e.getPlayer().getName());
     }
 
-    @EventHandler(priority=EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerCommandWhileRebooting(PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
         if (event.getMessage() == null || !Arkkit.get().isRebooting()) {

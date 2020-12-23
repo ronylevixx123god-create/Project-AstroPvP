@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.Location
@@ -15,20 +15,19 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
-import org.bukkit.craftbukkit.v1_8_R3.block.CraftBlock;
 import org.bukkit.entity.EntityType;
 
 public class SpawnerLocation {
-    private int x;
-    private int y;
-    private int z;
-    private int chunkX;
-    private int chunkZ;
-    private String worldName;
-    private EntityType spawnerType;
+    private final int x;
+    private final int y;
+    private final int z;
+    private final int chunkX;
+    private final int chunkZ;
+    private final String worldName;
+    private final EntityType spawnerType;
     private Location bukkitLocation;
     private long placeTime;
-    private int spawnerCount;
+    private final int spawnerCount;
 
     @Deprecated
     public SpawnerLocation(int x, int y, int z, String worldName) {
@@ -99,8 +98,8 @@ public class SpawnerLocation {
     }
 
     public Location getLocation() {
-        if (this.bukkitLocation == null && Bukkit.getWorld((String)this.worldName) != null) {
-            this.bukkitLocation = new Location(Bukkit.getWorld((String)this.worldName), (double)this.x, (double)this.y, (double)this.z);
+        if (this.bukkitLocation == null && Bukkit.getWorld(this.worldName) != null) {
+            this.bukkitLocation = new Location(Bukkit.getWorld(this.worldName), this.x, this.y, this.z);
         }
         return this.bukkitLocation;
     }
@@ -141,12 +140,12 @@ public class SpawnerLocation {
         return this.bukkitLocation;
     }
 
-    public void setPlaceTime(long placeTime) {
-        this.placeTime = placeTime;
-    }
-
     public long getPlaceTime() {
         return this.placeTime;
+    }
+
+    public void setPlaceTime(long placeTime) {
+        this.placeTime = placeTime;
     }
 
     public int getSpawnerCount() {

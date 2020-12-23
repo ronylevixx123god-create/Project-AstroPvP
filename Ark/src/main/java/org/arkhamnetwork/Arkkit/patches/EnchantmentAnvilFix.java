@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.event.block.BlockPhysicsEvent
@@ -21,14 +21,14 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.plugin.Plugin;
 
 public class EnchantmentAnvilFix
-extends ArkPlugin {
+        extends ArkPlugin {
     public EnchantmentAnvilFix(Plugin p) {
         super(p);
     }
 
     @Override
     public void enable() {
-        Bukkit.getScheduler().runTaskLater((Plugin)Arkkit.get(), new Runnable(){
+        Bukkit.getScheduler().runTaskLater(Arkkit.get(), new Runnable() {
 
             @Override
             public void run() {

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.massivecraft.factions.Board
  *  com.massivecraft.factions.FLocation
@@ -28,15 +28,6 @@ import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.Relation;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -50,20 +41,50 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.*;
+
 final class CommandCondense
-extends AbstractCommand {
-    private static HashSet<Byte> transparentBlocks = new HashSet<Byte>(Arrays.asList((byte)Material.AIR.getId(), (byte)Material.WATER.getId(), (byte)Material.STATIONARY_WATER.getId(), (byte)Material.LAVA.getId(), (byte)Material.STATIONARY_LAVA.getId()));
+        extends AbstractCommand {
+    private static final HashSet<Byte> transparentBlocks = new HashSet<Byte>(Arrays.asList((byte) Material.AIR.getId(), (byte) Material.WATER.getId(), (byte) Material.STATIONARY_WATER.getId(), (byte) Material.LAVA.getId(), (byte) Material.STATIONARY_LAVA.getId()));
 
     public CommandCondense(String command, String usage, String description, List<String> aliases) {
         super(command, usage, description, aliases);
     }
 
+    protected static Inventory getTargetInventory(Player player, int max_distance) {
+        try {
+            Block block = player.getTargetBlock(transparentBlocks, max_distance);
+            if (block.getType() == Material.CHEST || block.getType() == Material.TRAPPED_CHEST) {
+                Faction f = Board.getFactionAt(new FLocation(block.getLocation()));
+                if (!f.isNone() && !f.getRelationTo(FPlayers.i.get(player)).isAtLeast(Relation.ALLY)) {
+                    player.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + " Could not organize target inventory, you must have an ALLY+ relationship to the faction that owns this chunk - defaulting to player inventory.");
+                    return null;
+                }
+                if (block.getState() instanceof DoubleChest) {
+                    return ((DoubleChest) block.getState()).getInventory();
+                }
+                if (block.getState() instanceof Chest) {
+                    return ((Chest) block.getState()).getInventory();
+                }
+            } else if (block.getType() == Material.ENDER_CHEST) {
+                return player.getEnderChest();
+            }
+        } catch (IllegalStateException ise) {
+            ise.printStackTrace();
+        }
+        return null;
+    }
+
+    protected static void sortItems(List<ItemStack> items) {
+        Collections.sort(items, ItemStackComparator.INSTANCE);
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (sender instanceof Player) {
-            Player player = (Player)sender;
+            Player player = (Player) sender;
             if (!player.hasPermission("enchantments.max.12") && !player.hasPermission("enchantments.max.20")) {
-                player.sendMessage((Object)ChatColor.RED + "You do not have permission to use /" + (Object)cmd + ". Tier 4+ rank is required.");
+                player.sendMessage(ChatColor.RED + "You do not have permission to use /" + cmd + ". Tier 4+ rank is required.");
                 return true;
             }
             Inventory inventory = CommandCondense.getTargetInventory(player, 5);
@@ -79,11 +100,11 @@ extends AbstractCommand {
                 CommandCondense.sortItems(contents);
                 for (ItemStack item : contents) {
                     if (item == null) continue;
-                    inventory.addItem(new ItemStack[]{item});
+                    inventory.addItem(item);
                 }
                 contents.clear();
             }
-            player.sendMessage(ChatColor.YELLOW.toString() + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.YELLOW + "Successfully combined and organized inventory.");
+            player.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD + "(!) " + ChatColor.YELLOW + "Successfully combined and organized inventory.");
             return true;
         }
         return true;
@@ -91,16 +112,16 @@ extends AbstractCommand {
 
     private double getConversionRate(Material type) {
         switch (type) {
-            case IRON_INGOT: 
-            case GOLD_INGOT: 
-            case DIAMOND: 
-            case EMERALD: 
-            case REDSTONE: 
+            case IRON_INGOT:
+            case GOLD_INGOT:
+            case DIAMOND:
+            case EMERALD:
+            case REDSTONE:
             case COAL: {
                 return 0.1111111111111111;
             }
-            case GLOWSTONE_DUST: 
-            case CLAY_BALL: 
+            case GLOWSTONE_DUST:
+            case CLAY_BALL:
             case SNOW_BALL: {
                 return 0.25;
             }
@@ -167,8 +188,9 @@ extends AbstractCommand {
             int amount;
             int new_item_amount;
             double conversion;
-            if (itemStack == null || itemStack.hasItemMeta() && itemStack.getItemMeta().hasLore() || (conversion = this.getConversionRate(itemStack.getType())) == 1.0 || (new_item_amount = (int)((double)(amount = itemStack.getAmount()) * conversion)) == 0) continue;
-            int old_item_amount = (int)Math.floor((double)amount % (1.0 / conversion));
+            if (itemStack == null || itemStack.hasItemMeta() && itemStack.getItemMeta().hasLore() || (conversion = this.getConversionRate(itemStack.getType())) == 1.0 || (new_item_amount = (int) ((double) (amount = itemStack.getAmount()) * conversion)) == 0)
+                continue;
+            int old_item_amount = (int) Math.floor((double) amount % (1.0 / conversion));
             ItemStack new_item = new ItemStack(this.getConversionType(itemStack.getType()), new_item_amount, itemStack.getDurability());
             new_item.setItemMeta(itemStack.getItemMeta().clone());
             overflow.addAll(inventory.addItem(new ItemStack[]{new_item}).values());
@@ -182,14 +204,15 @@ extends AbstractCommand {
             ++x;
         }
         for (ItemStack item : to_remove) {
-            inventory.removeItem(new ItemStack[]{item});
+            inventory.removeItem(item);
         }
         HashMap<Material, Integer> items = new HashMap<Material, Integer>();
         ArrayList<ItemStack> uniqueItems = new ArrayList<ItemStack>();
         for (ItemStack itemStack : inventory) {
-            if (itemStack == null || itemStack.getDurability() != 0 || this.getConversionType(itemStack.getType()).equals((Object)itemStack.getType())) continue;
+            if (itemStack == null || itemStack.getDurability() != 0 || this.getConversionType(itemStack.getType()).equals(itemStack.getType()))
+                continue;
             if (!itemStack.hasItemMeta()) {
-                items.put(itemStack.getType(), items.containsKey((Object)itemStack.getType()) ? (Integer)items.get((Object)itemStack.getType()) + itemStack.getAmount() : itemStack.getAmount());
+                items.put(itemStack.getType(), items.containsKey(itemStack.getType()) ? items.get(itemStack.getType()) + itemStack.getAmount() : itemStack.getAmount());
                 continue;
             }
             uniqueItems.add(itemStack);
@@ -201,55 +224,26 @@ extends AbstractCommand {
             inventory.remove(itemStack.getType());
         }
         for (Map.Entry entry : items.entrySet()) {
-            inventory.addItem(new ItemStack[]{new ItemStack((Material)entry.getKey(), ((Integer)entry.getValue()).intValue())});
+            inventory.addItem(new ItemStack((Material) entry.getKey(), ((Integer) entry.getValue()).intValue()));
         }
         for (ItemStack itemStack : uniqueItems) {
-            inventory.addItem(new ItemStack[]{itemStack});
+            inventory.addItem(itemStack);
         }
         Iterator overflow_iter = overflow.iterator();
         while (overflow_iter.hasNext()) {
-            ItemStack itemStack = (ItemStack)overflow_iter.next();
+            ItemStack itemStack = (ItemStack) overflow_iter.next();
             if (!this.hasRoomForItem(inventory, itemStack)) {
                 p.getWorld().dropItem(p.getLocation(), itemStack);
                 continue;
             }
-            inventory.addItem(new ItemStack[]{itemStack});
+            inventory.addItem(itemStack);
             overflow_iter.remove();
         }
         return x;
     }
 
-    protected static Inventory getTargetInventory(Player player, int max_distance) {
-        try {
-            Block block = player.getTargetBlock(transparentBlocks, max_distance);
-            if (block.getType() == Material.CHEST || block.getType() == Material.TRAPPED_CHEST) {
-                Faction f = Board.getFactionAt((FLocation)new FLocation(block.getLocation()));
-                if (!f.isNone() && !f.getRelationTo((RelationParticipator)FPlayers.i.get((OfflinePlayer)player)).isAtLeast(Relation.ALLY)) {
-                    player.sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + " Could not organize target inventory, you must have an ALLY+ relationship to the faction that owns this chunk - defaulting to player inventory.");
-                    return null;
-                }
-                if (block.getState() instanceof DoubleChest) {
-                    return ((DoubleChest)block.getState()).getInventory();
-                }
-                if (block.getState() instanceof Chest) {
-                    return ((Chest)block.getState()).getInventory();
-                }
-            } else if (block.getType() == Material.ENDER_CHEST) {
-                return player.getEnderChest();
-            }
-        }
-        catch (IllegalStateException ise) {
-            ise.printStackTrace();
-        }
-        return null;
-    }
-
-    protected static void sortItems(List<ItemStack> items) {
-        Collections.sort(items, ItemStackComparator.INSTANCE);
-    }
-
     private static class ItemStackComparator
-    implements Comparator<ItemStack> {
+            implements Comparator<ItemStack> {
         protected static final ItemStackComparator INSTANCE = new ItemStackComparator();
 
         private ItemStackComparator() {

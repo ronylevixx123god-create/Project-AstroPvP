@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.entity.LivingEntity
@@ -25,17 +25,17 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 
 final class XPDirectDepositListener
-implements Listener {
+        implements Listener {
     XPDirectDepositListener() {
     }
 
-    @EventHandler(priority=EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onEntityDeath(EntityDeathEvent e) {
         LivingEntity le;
         if (e.getDroppedExp() > 0 && e.getEntity() instanceof LivingEntity && e.getEntity().getLastDamageCause() != null && e.getEntity().getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK && (le = e.getEntity()).getKiller() != null && le.getKiller().isOnline()) {
             int total = ExpUtils.getTotalExperience(le.getKiller());
             EXPDirectDepositEvent event = new EXPDirectDepositEvent(le.getKiller(), e.getDroppedExp(), total);
-            Bukkit.getPluginManager().callEvent((Event)event);
+            Bukkit.getPluginManager().callEvent(event);
             if (event.isCancelled()) {
                 return;
             }

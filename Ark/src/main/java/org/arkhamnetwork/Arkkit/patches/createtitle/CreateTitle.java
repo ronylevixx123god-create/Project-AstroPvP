@@ -1,17 +1,16 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.plugin.Plugin
  */
 package org.arkhamnetwork.Arkkit.patches.createtitle;
 
-import org.arkhamnetwork.Arkkit.patches.createtitle.CommandCreateTitle;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.plugin.Plugin;
 
 public class CreateTitle
-extends ArkPlugin {
+        extends ArkPlugin {
     public CreateTitle(Plugin p) {
         super(p);
     }

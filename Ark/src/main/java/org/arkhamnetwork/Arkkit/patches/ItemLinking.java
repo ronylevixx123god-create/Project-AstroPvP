@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.CC
  *  com.google.common.collect.MapMaker
@@ -16,16 +16,8 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
-import java.util.regex.Pattern;
-
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import com.google.common.collect.MapMaker;
 import net.milkbowl.vault.economy.Economy;
 import org.apache.commons.lang.StringUtils;
 import org.arkhamnetwork.Arkkit.libs.JSONMessage;
@@ -37,48 +29,28 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
+
 public class ItemLinking
-extends ArkPlugin {
+        extends ArkPlugin {
     public static boolean bragEnabled = false;
     public static String split = "[ITEM]";
     public static String bragSplit = "[BRAG]";
-    protected static String FORMAT = "&8[&cP[PRESTIGE]&8] &8[[TITLE]&8] [PREFIX][NAME]&f: [COLOR][MESSAGE]";
-    protected static boolean arkham_prestige = false;
-    protected static Economy economy = null;
-    public CommandViewBrag viewBrag;
     //public static Map<UUID, TimedInventory> inventoryViews = new MapMaker().expireAfterWrite(10L, TimeUnit.MINUTES).makeMap();
     public static Cache<UUID, TimedInventory> inventoryViews = CacheBuilder.newBuilder().expireAfterWrite(10L, TimeUnit.MINUTES).build();
     //public static Map<UUID, UUIDStorage> recentlyAssignedIds = new MapMaker().expireAfterWrite(5L, TimeUnit.MINUTES).makeMap();
     public static Cache<UUID, UUIDStorage> recentlyAssignedIds = CacheBuilder.newBuilder().expireAfterWrite(10L, TimeUnit.MINUTES).build();
+    protected static String FORMAT = "&8[&cP[PRESTIGE]&8] &8[[TITLE]&8] [PREFIX][NAME]&f: [COLOR][MESSAGE]";
+    protected static boolean arkham_prestige = false;
+    protected static Economy economy = null;
+    public CommandViewBrag viewBrag;
+
     public ItemLinking(Plugin p) {
         super(p);
-    }
-
-    @Override
-    public void enable() {
-        split = this.getBukkitPlugin().getConfig().getString("language.item_linking.chat_keyword");
-        FORMAT = this.getBukkitPlugin().getConfig().getString("language.item_linking.senditem_format");
-        arkham_prestige = this.getBukkitPlugin().getServer().getPluginManager().isPluginEnabled("ArkhamPrestige");
-        bragEnabled = this.getBukkitPlugin().getConfig().getBoolean("settings.item_linking.bragEnabled", false);
-        this.setupEconomy();
-        ItemLinkingChatListener listener = new ItemLinkingChatListener(this);
-        this.registerListener(listener);
-        if (bragEnabled) {
-            this.viewBrag = new CommandViewBrag("brag", "/<command> [args]", "Sends a link to a bragable inventory.");
-            this.registerCommand(this.viewBrag);
-        }
-        this.registerCommand(new CommandSendItem("senditem", "/<command> [args]", "Sends a link of the item in your character's hand.", new ArrayList<String>(Arrays.asList("showitem", "send"))));
-        this.registerCommand(new CommandSendBrag("sendbrag", "/<command> [args]", "Sends a link to your inventory.", new ArrayList<String>(Arrays.asList("showbrag")), listener));
-    }
-
-    @Override
-    public void disable() {
-        for (Player pl : Bukkit.getOnlinePlayers()) {
-            pl.removeMetadata("last_senditem", this.getBukkitPlugin());
-        }
-        economy = null;
-        this.unregisterListeners();
-        this.unregisterCommands();
     }
 
     private static void sendItemViaJSON(ItemStack is, Player p, String message) {
@@ -114,7 +86,7 @@ extends ArkPlugin {
             JSONMessage message = new JSONMessage(before.trim() + " ", ChatColor.WHITE);
             UUID uuid = recentlyAssignedIds.asMap().computeIfAbsent(sender.getUniqueId(), e -> new UUIDStorage()).getUUID();
             ChatColor color = ChatColor.GOLD;
-            message.addRunCommand((Object)color + ChatColor.ITALIC.toString() + sender.getName() + "'s Inventory", color, "/brag " + uuid, (Object)ChatColor.GRAY + "Click to view " + CC.GrayU + sender.getName() + CC.Gray + "'s inventory!");
+            message.addRunCommand(color + ChatColor.ITALIC.toString() + sender.getName() + "'s Inventory", color, "/brag " + uuid, ChatColor.GRAY + "Click to view " + CC.GrayU + sender.getName() + CC.Gray + "'s inventory!");
             message.addText(after);
             message.sendToPlayer(p);
         } else {
@@ -128,15 +100,15 @@ extends ArkPlugin {
 
     public static void sendItemViaJSON(String before, ItemStack is, String after, Player p) {
         JSONMessage msg = new JSONMessage("");
-        msg.addText(before.split(":")[0] + ":" + (Object)ChatColor.WHITE + ChatColor.stripColor((String)before.split(":")[1]));
+        msg.addText(before.split(":")[0] + ":" + ChatColor.WHITE + ChatColor.stripColor(before.split(":")[1]));
         ItemLinking.addItemToMessage(msg, is);
-        msg.addText(ChatColor.stripColor((String)after));
+        msg.addText(ChatColor.stripColor(after));
         msg.sendToPlayer(p);
     }
 
     private static void addItemToMessage(JSONMessage msg, ItemStack is) {
         HoverText text = is.hasItemMeta() && is.getItemMeta().hasDisplayName() ? ItemLinking.formatColors(is.getItemMeta().getDisplayName()) : null;
-        msg.addItem(is, (Object)ChatColor.WHITE + "\u00bb " + (text != null ? (Object)ChatColor.RESET + text.getText() : StringUtils.capitaliseAllWords((String)is.getType().name().toLowerCase().replace("_", " "))) + (Object)ChatColor.GRAY + (is.getMaxStackSize() >= 1 ? " (x" + is.getAmount() + ")" : "") + (Object)ChatColor.WHITE + " \u00ab", text == null || text.getLastColors().isEmpty() ? ChatColor.WHITE : text.getLastColors().get(0));
+        msg.addItem(is, ChatColor.WHITE + "\u00bb " + (text != null ? ChatColor.RESET + text.getText() : StringUtils.capitaliseAllWords(is.getType().name().toLowerCase().replace("_", " "))) + ChatColor.GRAY + (is.getMaxStackSize() >= 1 ? " (x" + is.getAmount() + ")" : "") + ChatColor.WHITE + " \u00ab", text == null || text.getLastColors().isEmpty() ? ChatColor.WHITE : text.getLastColors().get(0));
     }
 
     public static HoverText formatColors(String s) {
@@ -157,7 +129,7 @@ extends ArkPlugin {
                         continue;
                     }
                     if (foundColorChar) {
-                        ChatColor color = ChatColor.getByChar((char)c);
+                        ChatColor color = ChatColor.getByChar(c);
                         if (color != null) {
                             letterColors.add(color);
                         }
@@ -181,10 +153,37 @@ extends ArkPlugin {
         return text;
     }
 
+    @Override
+    public void enable() {
+        split = this.getBukkitPlugin().getConfig().getString("language.item_linking.chat_keyword");
+        FORMAT = this.getBukkitPlugin().getConfig().getString("language.item_linking.senditem_format");
+        arkham_prestige = this.getBukkitPlugin().getServer().getPluginManager().isPluginEnabled("ArkhamPrestige");
+        bragEnabled = this.getBukkitPlugin().getConfig().getBoolean("settings.item_linking.bragEnabled", false);
+        this.setupEconomy();
+        ItemLinkingChatListener listener = new ItemLinkingChatListener(this);
+        this.registerListener(listener);
+        if (bragEnabled) {
+            this.viewBrag = new CommandViewBrag("brag", "/<command> [args]", "Sends a link to a bragable inventory.");
+            this.registerCommand(this.viewBrag);
+        }
+        this.registerCommand(new CommandSendItem("senditem", "/<command> [args]", "Sends a link of the item in your character's hand.", new ArrayList<String>(Arrays.asList("showitem", "send"))));
+        this.registerCommand(new CommandSendBrag("sendbrag", "/<command> [args]", "Sends a link to your inventory.", new ArrayList<String>(Arrays.asList("showbrag")), listener));
+    }
+
+    @Override
+    public void disable() {
+        for (Player pl : Bukkit.getOnlinePlayers()) {
+            pl.removeMetadata("last_senditem", this.getBukkitPlugin());
+        }
+        economy = null;
+        this.unregisterListeners();
+        this.unregisterCommands();
+    }
+
     private boolean setupEconomy() {
         RegisteredServiceProvider economyProvider = this.getBukkitPlugin().getServer().getServicesManager().getRegistration(Economy.class);
         if (economyProvider != null) {
-            economy = (Economy)economyProvider.getProvider();
+            economy = (Economy) economyProvider.getProvider();
         }
         return economy != null;
     }

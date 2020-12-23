@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.JSONUtils
  *  com.earth2me.essentials.Essentials
@@ -13,6 +13,12 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.cosmicutils.utils.JSONUtils;
 import com.earth2me.essentials.Essentials;
+import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
+import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.Plugin;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
@@ -20,22 +26,15 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import org.arkhamnetwork.Arkkit.patches.ClearInventoryListener;
-import org.arkhamnetwork.Arkkit.patches.CommandToggleClearInventoryConfirm;
-import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
-import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.Plugin;
 
 public class ClearInventoryConfirm
-extends ArkPlugin {
+        extends ArkPlugin {
     public static final String clearInventoryPending = "compilex_clearinventory_pending";
     public static final String clearInventoryConfirmed = "compilex_clearinventory_confirmed";
+    Essentials ess;
     private File clearInventoryToggles;
     private FileConfiguration config;
-    private Set<UUID> clearInventoryToggled = new HashSet<UUID>();
-    Essentials ess;
+    private final Set<UUID> clearInventoryToggled = new HashSet<UUID>();
 
     public ClearInventoryConfirm(Plugin p) {
         super(p);
@@ -43,11 +42,11 @@ extends ArkPlugin {
 
     @Override
     public void enable() throws IOException {
-        this.ess = (Essentials)Bukkit.getPluginManager().getPlugin("Essentials");
+        this.ess = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
         this.registerListener(new ClearInventoryListener(this));
         this.registerCommand(new CommandToggleClearInventoryConfirm(this));
-        this.clearInventoryToggles = JSONUtils.getOrCreateFile((File)this.getBukkitPlugin().getDataFolder(), (String)"ci_toggles.yml");
-        this.config = YamlConfiguration.loadConfiguration((File)this.clearInventoryToggles);
+        this.clearInventoryToggles = JSONUtils.getOrCreateFile(this.getBukkitPlugin().getDataFolder(), "ci_toggles.yml");
+        this.config = YamlConfiguration.loadConfiguration(this.clearInventoryToggles);
         List<String> toggled = this.config.getStringList("ci_toggled");
         if (toggled != null) {
             for (String toggle : toggled) {
@@ -62,8 +61,7 @@ extends ArkPlugin {
         this.config.set("ci_toggled", toggled);
         try {
             this.config.save(this.clearInventoryToggles);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

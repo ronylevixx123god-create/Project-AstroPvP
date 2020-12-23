@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.CosmicSpaceChests.libs.TitleItems
  *  org.bukkit.ChatColor
@@ -17,10 +17,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 final class CommandCreateTitle
-extends AbstractCommand {
+        extends AbstractCommand {
     public CommandCreateTitle(String command, String usage, String description) {
         super(command, usage, description);
     }
@@ -31,7 +30,7 @@ extends AbstractCommand {
         if (!sender.isOp()) {
             return true;
         }
-        Player player = pl = sender instanceof Player ? (Player)sender : null;
+        Player player = pl = sender instanceof Player ? (Player) sender : null;
         if (args.length != 1 || pl == null) {
             sender.sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "Usage " + ChatColor.WHITE + "/createtitle <title>");
             sender.sendMessage(ChatColor.GRAY.toString() + ChatColor.ITALIC.toString() + "Title creation cannot include spaces. Use _ as a placeholder for spaces.");

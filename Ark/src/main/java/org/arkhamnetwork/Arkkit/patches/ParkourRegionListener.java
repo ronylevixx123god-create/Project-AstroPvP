@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.massivecraft.factions.event.LandClaimEvent
  *  net.minecraft.server.v1_7_R4.PacketPlayOutWorldEvent
@@ -45,15 +45,15 @@ import org.bukkit.metadata.MetadataValue;
 import java.util.Collections;
 
 final class ParkourRegionListener
-implements Listener {
+        implements Listener {
     ParkourRegionListener() {
     }
 
-    @EventHandler(priority=EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerAnimation(PlayerAnimationEvent e) {
         Player pl;
         Block b;
-        if (e.getPlayer().hasMetadata("worldguardRegion") && ((MetadataValue)e.getPlayer().getMetadata("worldguardRegion").get(0)).asString().contains("spleef") && (b = (Block)(pl = e.getPlayer()).getLineOfSight(Collections.singleton(Material.AIR), 4).get(0)).getTypeId() == 80) {
+        if (e.getPlayer().hasMetadata("worldguardRegion") && e.getPlayer().getMetadata("worldguardRegion").get(0).asString().contains("spleef") && (b = (pl = e.getPlayer()).getLineOfSight(Collections.singleton(Material.AIR), 4).get(0)).getTypeId() == 80) {
             b.setType(Material.AIR);
             Location l = b.getLocation().add(0.0, 0.5, 0.0);
             PacketPlayOutWorldEvent particles = new PacketPlayOutWorldEvent(2001, new BlockPosition(Math.round(l.getBlockX()), Math.round(l.getBlockY()), Math.round(l.getBlockZ())), 80, false);
@@ -61,7 +61,7 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onCreatureSpawn(CreatureSpawnEvent e) {
         String regionName;
         if (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER && (regionName = WorldGuardUtils.getRegionName(e.getLocation())).toLowerCase().contains("_ai")) {
@@ -82,15 +82,15 @@ implements Listener {
         if (e.getPlayer().isOp()) {
             return;
         }
-        Chunk c = e.getLocation().getWorld().getChunkAt((int)e.getLocation().getX(), (int)e.getLocation().getZ());
+        Chunk c = e.getLocation().getWorld().getChunkAt((int) e.getLocation().getX(), (int) e.getLocation().getZ());
         Location l = c.getBlock(8, 0, 8).getLocation();
         if (WorldGuardUtils.getRegionName(l).contains("noClaim")) {
             e.setCancelled(true);
-            e.getPlayer().sendMessage(ChatColor.RED.toString() + (Object)ChatColor.BOLD + "(!) You cannot claim land in this area.");
+            e.getPlayer().sendMessage(ChatColor.RED.toString() + ChatColor.BOLD + "(!) You cannot claim land in this area.");
         }
     }
 
-    @EventHandler(priority=EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerDeath(PlayerDeathEvent e) {
         if (WorldGuardUtils.getRegionName(e.getEntity().getLocation()).contains("keepInv")) {
             e.setKeepInventory(true);

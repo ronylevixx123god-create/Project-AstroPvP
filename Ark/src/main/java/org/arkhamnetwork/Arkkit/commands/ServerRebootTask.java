@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
@@ -12,7 +12,6 @@
 package org.arkhamnetwork.Arkkit.commands;
 
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -21,9 +20,9 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 final class ServerRebootTask
-extends BukkitRunnable {
+        extends BukkitRunnable {
     volatile int iteration = 60;
-    private String restartWarnMessage = ChatColor.translateAlternateColorCodes('&', "&e&l *** LOCAL SERVER REBOOTING IN [time] SECONDS ***");
+    private final String restartWarnMessage = ChatColor.translateAlternateColorCodes('&', "&e&l *** LOCAL SERVER REBOOTING IN [time] SECONDS ***");
 
     public ServerRebootTask(boolean force) {
         Bukkit.broadcastMessage("");
@@ -60,7 +59,7 @@ extends BukkitRunnable {
             }
             case 10: {
                 this.doBroadcast();
-                Bukkit.getScheduler().runTask((Plugin)Arkkit.get(), new Runnable(){
+                Bukkit.getScheduler().runTask(Arkkit.get(), new Runnable() {
 
                     @Override
                     public void run() {
@@ -83,9 +82,9 @@ extends BukkitRunnable {
     }
 
     private void doBroadcast() {
-        Bukkit.broadcastMessage((String)"");
-        Bukkit.broadcastMessage((String)this.restartWarnMessage.replace("[time]", String.valueOf(this.iteration)));
-        Bukkit.broadcastMessage((String)"");
+        Bukkit.broadcastMessage("");
+        Bukkit.broadcastMessage(this.restartWarnMessage.replace("[time]", String.valueOf(this.iteration)));
+        Bukkit.broadcastMessage("");
     }
 }
 

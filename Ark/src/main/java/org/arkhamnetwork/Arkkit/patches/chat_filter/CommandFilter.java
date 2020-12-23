@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.ChatColor
  *  org.bukkit.command.Command
@@ -9,17 +9,17 @@
  */
 package org.arkhamnetwork.Arkkit.patches.chat_filter;
 
-import java.util.List;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
-import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatFilter;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+
 final class CommandFilter
-extends AbstractCommand {
+        extends AbstractCommand {
     public CommandFilter(String command, String usage, String description, List<String> aliases) {
         super(command, usage, description, aliases);
     }
@@ -27,13 +27,13 @@ extends AbstractCommand {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         Player player;
-        Player player2 = player = sender instanceof Player ? (Player)sender : null;
+        Player player2 = player = sender instanceof Player ? (Player) sender : null;
         if (player != null && !player.isOp()) {
-            player.sendMessage((Object)ChatColor.RED + "You do not have permission to do that.");
+            player.sendMessage(ChatColor.RED + "You do not have permission to do that.");
             return true;
         }
         if (args.length < 1) {
-            sender.sendMessage((Object)ChatColor.RED + "Usage: /filter <add|addp|removep|remove|list>");
+            sender.sendMessage(ChatColor.RED + "Usage: /filter <add|addp|removep|remove|list>");
             return true;
         }
         boolean addPerm = false;
@@ -47,21 +47,21 @@ extends AbstractCommand {
                 word = word.substring(0, word.length() - 1);
             }
             if (addPerm && ChatFilter.permanent_bad_words.contains(word)) {
-                sender.sendMessage((Object)ChatColor.RED + "The word, '" + word + "' is already permantently blocked.");
+                sender.sendMessage(ChatColor.RED + "The word, '" + word + "' is already permantently blocked.");
                 return true;
             }
             if (!addPerm && ChatFilter.bad_words.contains(word)) {
-                sender.sendMessage((Object)ChatColor.RED + "The word, '" + word + "' is already blocked.");
+                sender.sendMessage(ChatColor.RED + "The word, '" + word + "' is already blocked.");
                 return true;
             }
             if (addPerm) {
                 ChatFilter.permanent_bad_words.add(word);
                 Arkkit.get().getConfig().set("settings.chat_filter.permanent_bad_words", ChatFilter.permanent_bad_words);
-                sender.sendMessage((Object)ChatColor.YELLOW + "The word, '" + (Object)ChatColor.WHITE + word + (Object)ChatColor.YELLOW + "' is now blocked PERMANENTLY.");
+                sender.sendMessage(ChatColor.YELLOW + "The word, '" + ChatColor.WHITE + word + ChatColor.YELLOW + "' is now blocked PERMANENTLY.");
             } else {
                 ChatFilter.bad_words.add(word);
                 Arkkit.get().getConfig().set("settings.chat_filter.bad_words", ChatFilter.bad_words);
-                sender.sendMessage((Object)ChatColor.YELLOW + "The word, '" + (Object)ChatColor.WHITE + word + (Object)ChatColor.YELLOW + "' is now blocked.");
+                sender.sendMessage(ChatColor.YELLOW + "The word, '" + ChatColor.WHITE + word + ChatColor.YELLOW + "' is now blocked.");
             }
             return true;
         }
@@ -76,21 +76,21 @@ extends AbstractCommand {
                 word = word.substring(0, word.length() - 1);
             }
             if (removePerm && !ChatFilter.permanent_bad_words.contains(word)) {
-                sender.sendMessage((Object)ChatColor.RED + "The word, '" + word + "' is not blocked permanently!");
+                sender.sendMessage(ChatColor.RED + "The word, '" + word + "' is not blocked permanently!");
                 return true;
             }
             if (!removePerm && !ChatFilter.bad_words.contains(word)) {
-                sender.sendMessage((Object)ChatColor.RED + "The word, '" + word + "' is not blocked.");
+                sender.sendMessage(ChatColor.RED + "The word, '" + word + "' is not blocked.");
                 return true;
             }
             if (removePerm) {
                 ChatFilter.permanent_bad_words.remove(word);
                 Arkkit.get().getConfig().set("settings.chat_filter.permanent_bad_words", ChatFilter.permanent_bad_words);
-                sender.sendMessage((Object)ChatColor.GREEN + "The word, '" + (Object)ChatColor.WHITE + word + (Object)ChatColor.GREEN + "' is no longer permanently blocked!.");
+                sender.sendMessage(ChatColor.GREEN + "The word, '" + ChatColor.WHITE + word + ChatColor.GREEN + "' is no longer permanently blocked!.");
             } else {
                 ChatFilter.bad_words.remove(word);
                 Arkkit.get().getConfig().set("settings.chat_filter.bad_words", ChatFilter.bad_words);
-                sender.sendMessage((Object)ChatColor.GREEN + "The word, '" + (Object)ChatColor.WHITE + word + (Object)ChatColor.GREEN + "' is now unblocked.");
+                sender.sendMessage(ChatColor.GREEN + "The word, '" + ChatColor.WHITE + word + ChatColor.GREEN + "' is now unblocked.");
             }
             return true;
         }
@@ -103,11 +103,11 @@ extends AbstractCommand {
             for (String word : ChatFilter.permanent_bad_words) {
                 perm = perm + word + ", ";
             }
-            sender.sendMessage((Object)ChatColor.RED + "Bad Words: " + (Object)ChatColor.GRAY + s);
-            sender.sendMessage((Object)ChatColor.RED + "Permanent Bad Words: " + (Object)ChatColor.GRAY + perm);
+            sender.sendMessage(ChatColor.RED + "Bad Words: " + ChatColor.GRAY + s);
+            sender.sendMessage(ChatColor.RED + "Permanent Bad Words: " + ChatColor.GRAY + perm);
             return true;
         }
-        sender.sendMessage((Object)ChatColor.RED + "Usage: /filter <add|addp|remove|removep|list>");
+        sender.sendMessage(ChatColor.RED + "Usage: /filter <add|addp|remove|removep|list>");
         return true;
     }
 }

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.ChatColor
  *  org.bukkit.command.Command
@@ -20,34 +20,34 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 final class CommandEditName
-extends AbstractCommand {
+        extends AbstractCommand {
     public CommandEditName(String command, String usage, String description) {
         super(command, usage, description);
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (sender instanceof Player && !((Player)sender).isOp()) {
+        if (sender instanceof Player && !sender.isOp()) {
             return true;
         }
         if (args.length == 0) {
-            sender.sendMessage((Object)ChatColor.RED + "/editname <name>");
+            sender.sendMessage(ChatColor.RED + "/editname <name>");
             return true;
         }
         String name = "";
         for (int i = 0; i < args.length; ++i) {
-            name = name + ChatColor.translateAlternateColorCodes((char)'&', (String)(i == args.length - 1 ? args[i] : args[i] + " "));
+            name = name + ChatColor.translateAlternateColorCodes('&', i == args.length - 1 ? args[i] : args[i] + " ");
         }
-        ItemStack i = ((Player)sender).getItemInHand();
+        ItemStack i = ((Player) sender).getItemInHand();
         if (i == null) {
-            sender.sendMessage((Object)ChatColor.RED + "Please hold the item you wish to edit the name of!");
+            sender.sendMessage(ChatColor.RED + "Please hold the item you wish to edit the name of!");
             return true;
         }
         ItemMeta im = i.getItemMeta();
         im.setDisplayName(name);
         i.setItemMeta(im);
-        ((Player)sender).setItemInHand(i);
-        sender.sendMessage((Object)ChatColor.GREEN + "Name updated!");
+        ((Player) sender).setItemInHand(i);
+        sender.sendMessage(ChatColor.GREEN + "Name updated!");
         return true;
     }
 }

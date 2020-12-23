@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.Location
@@ -8,20 +8,21 @@
  */
 package org.arkhamnetwork.Arkkit.libs;
 
-import java.util.concurrent.TimeUnit;
 import org.arkhamnetwork.Arkkit.patches.BlockValue;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 
+import java.util.concurrent.TimeUnit;
+
 public class BlockValueLocation {
-    private int x;
-    private int y;
-    private int z;
-    private int chunkX;
-    private int chunkZ;
-    private String worldName;
-    private Material blockType;
+    private final int x;
+    private final int y;
+    private final int z;
+    private final int chunkX;
+    private final int chunkZ;
+    private final String worldName;
+    private final Material blockType;
     private Location bukkitLocation;
     private long placeTime;
 
@@ -53,8 +54,8 @@ public class BlockValueLocation {
     }
 
     public Location getLocation() {
-        if (this.bukkitLocation == null && Bukkit.getWorld((String)this.worldName) != null) {
-            this.bukkitLocation = new Location(Bukkit.getWorld((String)this.worldName), (double)this.x, (double)this.y, (double)this.z);
+        if (this.bukkitLocation == null && Bukkit.getWorld(this.worldName) != null) {
+            this.bukkitLocation = new Location(Bukkit.getWorld(this.worldName), this.x, this.y, this.z);
         }
         return this.bukkitLocation;
     }
@@ -69,7 +70,7 @@ public class BlockValueLocation {
         long aliveTime = this.getMillisecondsSincePlace();
         long days = aliveTime / day;
         double percent = Math.min(100L, Math.max(20L, 20L + days * 20L));
-        baseValue = (int)((double)baseValue * (0.01 * percent));
+        baseValue = (int) ((double) baseValue * (0.01 * percent));
         return baseValue;
     }
 
@@ -105,12 +106,12 @@ public class BlockValueLocation {
         return this.bukkitLocation;
     }
 
-    public void setPlaceTime(long placeTime) {
-        this.placeTime = placeTime;
-    }
-
     public long getPlaceTime() {
         return this.placeTime;
+    }
+
+    public void setPlaceTime(long placeTime) {
+        this.placeTime = placeTime;
     }
 }
 

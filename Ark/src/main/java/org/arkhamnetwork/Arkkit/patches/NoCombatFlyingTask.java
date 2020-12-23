@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.entity.Player
  *  org.bukkit.scheduler.BukkitRunnable
@@ -8,12 +8,11 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.NoCombatFlying;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 final class NoCombatFlyingTask
-extends BukkitRunnable {
+        extends BukkitRunnable {
     NoCombatFlyingTask() {
     }
 
@@ -23,8 +22,7 @@ extends BukkitRunnable {
                 if (!NoCombatFlying.inCombat(pl.getName()) || !pl.isFlying() && !pl.getAllowFlight()) continue;
                 pl.setAllowFlight(false);
                 pl.setFlying(false);
-            }
-            catch (Exception err) {
+            } catch (Exception err) {
                 err.printStackTrace();
             }
         }

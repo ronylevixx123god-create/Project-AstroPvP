@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.itembuilder.BoosterBuilder
  *  com.cosmicpvp.cosmicutils.itembuilder.CustomCrateType
@@ -26,11 +26,6 @@ import com.cosmicpvp.cosmicutils.itembuilder.CustomTitleBuilder;
 import com.cosmicpvp.cosmicutils.itembuilder.FatBucketBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.common.collect.Lists;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
@@ -39,8 +34,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class ResetKit
-extends ArkPlugin {
+        extends ArkPlugin {
     public ResetKit(Plugin p) {
         super(p);
     }
@@ -61,7 +60,7 @@ extends ArkPlugin {
     public ItemStack createResetKit(boolean applyIID) {
         String color = CC.White;
         String key = CC.GoldB + "* " + color;
-        NBTWrapper wrapper = new NBTWrapper(new com.cosmicpvp.cosmicutils.utils.ItemBuilder(Material.CHEST, CC.GoldB + "Reset Kit " + CC.Gray + "(Right Click)", new String[]{"", CC.Gold + "Contains a Mystery Cache of items...", key + "100-200 mcMMO Credits", key + "2-5 Ultimate " + color + CC.Bold + CC.Underline + "OR" + color + " Legendary Keys", key + "1-2 Rare " + color + CC.Bold + CC.Underline + "OR" + color + " Legendary Space Chests", key + "2,500-6,000 EXP", key + "2-4 Item Nametags", key + "1-4x Mystery Mob Spawners", key + "Exclusive Titles", key + "3x Fat Buckets", key + "XP Boosters"}).build()).setString("cosmicType", "RESET_KIT");
+        NBTWrapper wrapper = new NBTWrapper(new com.cosmicpvp.cosmicutils.utils.ItemBuilder(Material.CHEST, CC.GoldB + "Reset Kit " + CC.Gray + "(Right Click)", "", CC.Gold + "Contains a Mystery Cache of items...", key + "100-200 mcMMO Credits", key + "2-5 Ultimate " + color + CC.Bold + CC.Underline + "OR" + color + " Legendary Keys", key + "1-2 Rare " + color + CC.Bold + CC.Underline + "OR" + color + " Legendary Space Chests", key + "2,500-6,000 EXP", key + "2-4 Item Nametags", key + "1-4x Mystery Mob Spawners", key + "Exclusive Titles", key + "3x Fat Buckets", key + "XP Boosters").build()).setString("cosmicType", "RESET_KIT");
         ItemStack item = wrapper.build();
         if (applyIID && ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
             item = ItemID.assignItemID(null, item);

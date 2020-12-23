@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
@@ -11,9 +11,7 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.List;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
-import org.arkhamnetwork.Arkkit.patches.MysteryMobSpawners;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -21,8 +19,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
+
 final class CommandMysteryMobSpawner
-extends AbstractCommand {
+        extends AbstractCommand {
     public CommandMysteryMobSpawner(String command, String usage, String description, List<String> aliases) {
         super(command, usage, description, aliases);
     }
@@ -37,17 +37,17 @@ extends AbstractCommand {
             return true;
         }
         String playerName = args[0];
-        Player p = Bukkit.getPlayer((String)playerName);
+        Player p = Bukkit.getPlayer(playerName);
         if (p != null) {
             if (p.getInventory().firstEmpty() != -1) {
-                p.getInventory().addItem(new ItemStack[]{MysteryMobSpawners.getMysteryMobSpawner()});
+                p.getInventory().addItem(MysteryMobSpawners.getMysteryMobSpawner());
             } else {
                 p.getWorld().dropItem(p.getLocation(), MysteryMobSpawners.getMysteryMobSpawner());
             }
             p.sendMessage(ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + " +1x Mystery Mob Spawner");
-            sender.sendMessage((Object)ChatColor.YELLOW + playerName + " has been given 1x Mystery Mob Spawner!");
+            sender.sendMessage(ChatColor.YELLOW + playerName + " has been given 1x Mystery Mob Spawner!");
         } else {
-            sender.sendMessage((Object)ChatColor.RED + "Could not locate player " + playerName + "!");
+            sender.sendMessage(ChatColor.RED + "Could not locate player " + playerName + "!");
         }
         return true;
     }

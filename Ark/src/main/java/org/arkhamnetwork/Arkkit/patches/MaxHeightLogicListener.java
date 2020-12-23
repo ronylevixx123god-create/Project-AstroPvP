@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.FactionUtils
  *  org.bukkit.Location
@@ -16,7 +16,6 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
-import org.arkhamnetwork.Arkkit.patches.MaxHeightLogic;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -28,11 +27,11 @@ import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 
 final class MaxHeightLogicListener
-implements Listener {
+        implements Listener {
     MaxHeightLogicListener() {
     }
 
-    @EventHandler(priority=EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onEntityExplode(EntityExplodeEvent e) {
         if (e.getLocation().getY() >= 255.0 && (e.getEntityType() == EntityType.PRIMED_TNT || e.getEntityType() == EntityType.CREEPER)) {
             e.setCancelled(true);
@@ -42,10 +41,10 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onEntityBlockChange(EntityChangeBlockEvent e) {
         Material material;
-        if (e.getEntity() instanceof FallingBlock && ((material = ((FallingBlock)e.getEntity()).getMaterial()) == Material.SAND || material == Material.GRAVEL || material == Material.ANVIL) && (e.getBlock().getLocation().getY() >= 255.0 || MaxHeightLogic.factions && FactionUtils.isWarZone((Location)e.getBlock().getLocation()))) {
+        if (e.getEntity() instanceof FallingBlock && ((material = ((FallingBlock) e.getEntity()).getMaterial()) == Material.SAND || material == Material.GRAVEL || material == Material.ANVIL) && (e.getBlock().getLocation().getY() >= 255.0 || MaxHeightLogic.factions && FactionUtils.isWarZone(e.getBlock().getLocation()))) {
             e.setCancelled(true);
             e.getEntity().remove();
         }

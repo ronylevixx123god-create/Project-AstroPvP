@@ -7,14 +7,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 public class CommandArkReload implements CommandExecutor {
     private Arkkit plugin = null;
 
     public CommandArkReload(Plugin p) {
-        this.plugin = (Arkkit)p;
+        this.plugin = (Arkkit) p;
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -42,9 +41,9 @@ public class CommandArkReload implements CommandExecutor {
             this.plugin.registerPatches();
         } else {
             sender.sendMessage("Killing patch...");
-            Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)("arkunregister " + patch));
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "arkunregister " + patch);
             sender.sendMessage("Injecting patch...");
-            Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)("arkregister " + patch));
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "arkregister " + patch);
             sender.sendMessage("Done!");
         }
         return true;

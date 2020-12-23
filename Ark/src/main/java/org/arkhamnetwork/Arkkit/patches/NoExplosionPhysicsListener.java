@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.massivecraft.factions.Board
  *  com.massivecraft.factions.FLocation
@@ -33,20 +33,20 @@ import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 
 final class NoExplosionPhysicsListener
-implements Listener {
+        implements Listener {
     NoExplosionPhysicsListener() {
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onEntityExplode(EntityExplodeEvent e) {
-        if (e.getEntity() instanceof Creeper && WorldGuardUtils.getRegionName(e.getEntity().getLocation()).contains("warzone") && Board.getFactionAt((FLocation)new FLocation(e.getEntity().getLocation())).isWarZone()) {
-            Creeper c = (Creeper)e.getEntity();
+        if (e.getEntity() instanceof Creeper && WorldGuardUtils.getRegionName(e.getEntity().getLocation()).contains("warzone") && Board.getFactionAt(new FLocation(e.getEntity().getLocation())).isWarZone()) {
+            Creeper c = (Creeper) e.getEntity();
             int radius = c.isPowered() ? 6 : 3;
             int damage = c.isPowered() ? 12 : 6;
             e.setCancelled(true);
-            for (Entity ent : e.getEntity().getNearbyEntities((double)radius, (double)radius, (double)radius)) {
+            for (Entity ent : e.getEntity().getNearbyEntities(radius, radius, radius)) {
                 if (!(ent instanceof LivingEntity)) continue;
-                ((LivingEntity)ent).damage((double)damage, (Entity)c);
+                ((LivingEntity) ent).damage(damage, c);
             }
             c.getWorld().playSound(c.getLocation(), Sound.EXPLODE, 1.0f, 1.0f);
             ParticleEffect.playEffect(ParticleEffect.EXPLODE, c.getLocation().add(0.0, 1.0, 0.0), 1.0f, 6);
@@ -56,7 +56,7 @@ implements Listener {
 
     @EventHandler
     public void onBlockPhysics(BlockPhysicsEvent e) {
-        if (e.getBlock().getType() == Material.AIR && WorldGuardUtils.getRegionName(e.getBlock().getLocation()).contains("warzone") && Board.getFactionAt((FLocation)new FLocation(e.getBlock().getLocation())).isWarZone()) {
+        if (e.getBlock().getType() == Material.AIR && WorldGuardUtils.getRegionName(e.getBlock().getLocation()).contains("warzone") && Board.getFactionAt(new FLocation(e.getBlock().getLocation())).isWarZone()) {
             e.setCancelled(true);
         }
     }

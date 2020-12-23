@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.command.Command
@@ -10,18 +10,17 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.List;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
-import org.arkhamnetwork.Arkkit.patches.BucketType;
-import org.arkhamnetwork.Arkkit.patches.MoreBuckets;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
+
 final class CommandMultiBucket
-extends AbstractCommand {
+        extends AbstractCommand {
     public CommandMultiBucket(String command, String usage, String description, List<String> aliases) {
         super(command, usage, description, aliases);
     }
@@ -38,10 +37,10 @@ extends AbstractCommand {
         String pName = args[0];
         BucketType type = BucketType.valueOf(args[1].toUpperCase());
         int uses = Integer.parseInt(args[2]);
-        if (Bukkit.getPlayer((String)pName) != null) {
-            Player p = Bukkit.getPlayer((String)pName);
+        if (Bukkit.getPlayer(pName) != null) {
+            Player p = Bukkit.getPlayer(pName);
             if (p.getInventory().firstEmpty() != -1) {
-                p.getInventory().addItem(new ItemStack[]{MoreBuckets.getMultiBucket(type, uses)});
+                p.getInventory().addItem(MoreBuckets.getMultiBucket(type, uses));
             } else {
                 p.getWorld().dropItem(p.getLocation(), MoreBuckets.getMultiBucket(type, uses));
             }

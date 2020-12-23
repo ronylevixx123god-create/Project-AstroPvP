@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.help.HelpTopic
@@ -8,29 +8,36 @@
  */
 package org.arkhamnetwork.Arkkit.patches.commandcooldown;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.HashMap;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
-import org.arkhamnetwork.Arkkit.patches.commandcooldown.CommandAliasListener;
-import org.arkhamnetwork.Arkkit.patches.commandcooldown.CommandCooldownListener;
-import org.arkhamnetwork.Arkkit.patches.commandcooldown.CommandCooldownManager;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.help.HelpTopic;
 import org.bukkit.plugin.Plugin;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashMap;
+
 public class CommandCooldowns
-extends ArkPlugin {
+        extends ArkPlugin {
     public static HashMap<String, String> aliasToCmd;
     private static CommandCooldowns plugi;
-    private CommandCooldownManager cooldown_manager;
+
+    static {
+        plugi = null;
+    }
+
     private final File config = new File("plugins/Arkkit/command-cooldowns.yml");
+    private CommandCooldownManager cooldown_manager;
 
     public CommandCooldowns(Plugin p) {
         super(p);
+    }
+
+    public static final CommandCooldowns get() {
+        return plugi;
     }
 
     @Override
@@ -43,8 +50,7 @@ extends ArkPlugin {
                 this.config.createNewFile();
             }
             this.loadCooldowns();
-        }
-        catch (IOException err) {
+        } catch (IOException err) {
             Bukkit.getLogger().warning("Failed to loadCooldowns(), IOException thrown.");
             err.printStackTrace();
         }
@@ -97,19 +103,10 @@ extends ArkPlugin {
         this.cooldown_manager = new CommandCooldownManager();
         try {
             this.loadCooldowns();
-        }
-        catch (IOException err) {
+        } catch (IOException err) {
             Bukkit.getLogger().warning("Failed to loadCooldowns(), IOException thrown.");
             err.printStackTrace();
         }
-    }
-
-    public static final CommandCooldowns get() {
-        return plugi;
-    }
-
-    static {
-        plugi = null;
     }
 }
 

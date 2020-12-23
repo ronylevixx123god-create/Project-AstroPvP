@@ -1,31 +1,87 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.plugin.Plugin
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
-import org.arkhamnetwork.Arkkit.patches.CommandBlockCommand;
-import org.arkhamnetwork.Arkkit.patches.CommandBlockerListener;
-import org.arkhamnetwork.Arkkit.patches.CommandNull;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CommandBlocker
-extends ArkPlugin {
-    private static List<String> blocked_commands = new ArrayList<String>();
-    private static List<String> blocked_aliases = new ArrayList<String>();
+        extends ArkPlugin {
+    private static final List<String> blocked_commands = new ArrayList<String>();
+    private static final List<String> blocked_aliases = new ArrayList<String>();
     private static boolean initialized = false;
 
     public CommandBlocker(Plugin p) {
         super(p);
+    }
+
+    protected static boolean isBlockedCommand(String cmd) {
+        return blocked_commands.contains(cmd) || blocked_commands.contains(cmd.toLowerCase()) || blocked_commands.contains("/" + cmd.toLowerCase()) || blocked_commands.contains("/" + cmd) || blocked_aliases.contains(cmd) || blocked_aliases.contains(cmd.toLowerCase()) || blocked_aliases.contains("/" + cmd.toLowerCase()) || blocked_aliases.contains("/" + cmd);
+    }
+
+    protected static boolean blockCommand(String cmd) {
+        if (blocked_commands.contains(cmd)) {
+            return false;
+        }
+        blocked_commands.add(cmd);
+        try {
+            if (AbstractCommand.cmap.getCommand(cmd) != null && AbstractCommand.cmap.getCommand(cmd).getAliases() != null && AbstractCommand.cmap.getCommand(cmd).getAliases().size() > 0) {
+                for (String alias : AbstractCommand.cmap.getCommand(cmd).getAliases()) {
+                    if (blocked_aliases.contains(alias)) continue;
+                    Bukkit.getLogger().info("(CommandBlocker) Added alias of command, '" + alias + "', to blocked commands list.");
+                    blocked_aliases.add(alias);
+                }
+            }
+        } catch (NullPointerException npe) {
+            Bukkit.getLogger().info("(CommandBlocker) No command '" + cmd + "' registered, could not lookup aliases.");
+        }
+        if (initialized && blocked_commands.size() > 0) {
+            Arkkit.get().getConfig().set("settings.blocked_commands", blocked_commands);
+        }
+        return true;
+    }
+
+    protected static boolean unblockCommand(String cmd) {
+        if (!blocked_commands.contains(cmd) && !blocked_aliases.contains(cmd)) {
+            Bukkit.getLogger().info("(CommandBlocker) Failed to unblock cmd " + cmd + " because it was not found in blocked_commands map!");
+            return false;
+        }
+        blocked_commands.remove(cmd);
+        blocked_aliases.remove(cmd);
+        try {
+            if (AbstractCommand.cmap.getCommand(cmd) != null && AbstractCommand.cmap.getCommand(cmd).getAliases() != null && AbstractCommand.cmap.getCommand(cmd).getAliases().size() > 0) {
+                for (String alias : AbstractCommand.cmap.getCommand(cmd).getAliases()) {
+                    if (!blocked_aliases.contains(alias)) continue;
+                    Bukkit.getLogger().info("(CommandBlocker) Removed alias of command, '" + alias + "', to blocked commands list.");
+                    blocked_aliases.remove(alias);
+                }
+            }
+        } catch (NullPointerException npe) {
+            Bukkit.getLogger().info("(CommandBlocker) No command '" + cmd + "' registered, could not lookup aliases for unblock.");
+        }
+        if (initialized) {
+            Arkkit.get().getConfig().set("settings.blocked_commands", blocked_commands);
+        }
+        return true;
+    }
+
+    protected static String[] getBlockedCommands() {
+        return blocked_commands.toArray(new String[blocked_commands.size()]);
+    }
+
+    protected static String[] getBlockedAliases() {
+        return blocked_aliases.toArray(new String[blocked_aliases.size()]);
     }
 
     @Override
@@ -100,66 +156,6 @@ extends ArkPlugin {
         blocked_commands.clear();
         blocked_aliases.clear();
         initialized = false;
-    }
-
-    protected static boolean isBlockedCommand(String cmd) {
-        return blocked_commands.contains(cmd) || blocked_commands.contains(cmd.toLowerCase()) || blocked_commands.contains("/" + cmd.toLowerCase()) || blocked_commands.contains("/" + cmd) || blocked_aliases.contains(cmd) || blocked_aliases.contains(cmd.toLowerCase()) || blocked_aliases.contains("/" + cmd.toLowerCase()) || blocked_aliases.contains("/" + cmd);
-    }
-
-    protected static boolean blockCommand(String cmd) {
-        if (blocked_commands.contains(cmd)) {
-            return false;
-        }
-        blocked_commands.add(cmd);
-        try {
-            if (AbstractCommand.cmap.getCommand(cmd) != null && AbstractCommand.cmap.getCommand(cmd).getAliases() != null && AbstractCommand.cmap.getCommand(cmd).getAliases().size() > 0) {
-                for (String alias : AbstractCommand.cmap.getCommand(cmd).getAliases()) {
-                    if (blocked_aliases.contains(alias)) continue;
-                    Bukkit.getLogger().info("(CommandBlocker) Added alias of command, '" + alias + "', to blocked commands list.");
-                    blocked_aliases.add(alias);
-                }
-            }
-        }
-        catch (NullPointerException npe) {
-            Bukkit.getLogger().info("(CommandBlocker) No command '" + cmd + "' registered, could not lookup aliases.");
-        }
-        if (initialized && blocked_commands.size() > 0) {
-            Arkkit.get().getConfig().set("settings.blocked_commands", blocked_commands);
-        }
-        return true;
-    }
-
-    protected static boolean unblockCommand(String cmd) {
-        if (!blocked_commands.contains(cmd) && !blocked_aliases.contains(cmd)) {
-            Bukkit.getLogger().info("(CommandBlocker) Failed to unblock cmd " + cmd + " because it was not found in blocked_commands map!");
-            return false;
-        }
-        blocked_commands.remove(cmd);
-        blocked_aliases.remove(cmd);
-        try {
-            if (AbstractCommand.cmap.getCommand(cmd) != null && AbstractCommand.cmap.getCommand(cmd).getAliases() != null && AbstractCommand.cmap.getCommand(cmd).getAliases().size() > 0) {
-                for (String alias : AbstractCommand.cmap.getCommand(cmd).getAliases()) {
-                    if (!blocked_aliases.contains(alias)) continue;
-                    Bukkit.getLogger().info("(CommandBlocker) Removed alias of command, '" + alias + "', to blocked commands list.");
-                    blocked_aliases.remove(alias);
-                }
-            }
-        }
-        catch (NullPointerException npe) {
-            Bukkit.getLogger().info("(CommandBlocker) No command '" + cmd + "' registered, could not lookup aliases for unblock.");
-        }
-        if (initialized) {
-            Arkkit.get().getConfig().set("settings.blocked_commands", blocked_commands);
-        }
-        return true;
-    }
-
-    protected static String[] getBlockedCommands() {
-        return blocked_commands.toArray(new String[blocked_commands.size()]);
-    }
-
-    protected static String[] getBlockedAliases() {
-        return blocked_aliases.toArray(new String[blocked_aliases.size()]);
     }
 }
 

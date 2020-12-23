@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.event.EventHandler
  *  org.bukkit.event.EventPriority
@@ -15,24 +15,17 @@
 package org.arkhamnetwork.Arkkit.patches.barannouncer;
 
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.barannouncer.BarAnnouncer;
-import org.arkhamnetwork.Arkkit.patches.barannouncer.BarAnnouncerParser;
-import org.arkhamnetwork.Arkkit.patches.barannouncer.StatusBarAPI;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerChangedWorldEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.plugin.Plugin;
 
 public class BarAnnouncerPersistanceListener
-implements Listener {
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+        implements Listener {
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onJoin(final PlayerJoinEvent event) {
-        Arkkit.get().getServer().getScheduler().runTaskLater((Plugin)Arkkit.get(), new Runnable(){
+        Arkkit.get().getServer().getScheduler().runTaskLater(Arkkit.get(), new Runnable() {
 
             @Override
             public void run() {
@@ -41,14 +34,14 @@ implements Listener {
         }, 2L);
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void PlayerLogout(PlayerQuitEvent event) {
         StatusBarAPI.removeStatusBar(event.getPlayer());
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerTeleport(final PlayerTeleportEvent event) {
-        Arkkit.get().getServer().getScheduler().runTaskLater((Plugin)Arkkit.get(), new Runnable(){
+        Arkkit.get().getServer().getScheduler().runTaskLater(Arkkit.get(), new Runnable() {
 
             @Override
             public void run() {
@@ -58,9 +51,9 @@ implements Listener {
         }, 2L);
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerRespawn(final PlayerRespawnEvent event) {
-        Arkkit.get().getServer().getScheduler().runTaskLater((Plugin)Arkkit.get(), new Runnable(){
+        Arkkit.get().getServer().getScheduler().runTaskLater(Arkkit.get(), new Runnable() {
 
             @Override
             public void run() {
@@ -70,9 +63,9 @@ implements Listener {
         }, 2L);
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerWorldChance(final PlayerChangedWorldEvent event) {
-        Arkkit.get().getServer().getScheduler().runTaskLater((Plugin)Arkkit.get(), new Runnable(){
+        Arkkit.get().getServer().getScheduler().runTaskLater(Arkkit.get(), new Runnable() {
 
             @Override
             public void run() {

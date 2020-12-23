@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.struct.DecimalFormatType
  *  com.cosmicpvp.cosmicutils.utils.MaskUtils
@@ -35,12 +35,6 @@ import com.sk89q.worldedit.Vector;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import com.sk89q.worldguard.protection.flags.StateFlag;
-import java.io.File;
-import java.lang.ref.WeakReference;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
@@ -58,18 +52,158 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
+import java.io.File;
+import java.lang.ref.WeakReference;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class CombatLog
-extends ArkPlugin {
-    private static WorldGuardPlugin wg = null;
+        extends ArkPlugin {
     protected static boolean duel_plugin = false;
     protected static boolean mask_plugin = false;
     protected static boolean block_enderpearls = false;
     protected static long tagDuration;
     protected static boolean cosmicPVP;
     protected static boolean displayOnScoreboard;
+    private static WorldGuardPlugin wg = null;
+
+    static {
+        cosmicPVP = false;
+        displayOnScoreboard = false;
+    }
 
     public CombatLog(Plugin p) {
         super(p);
+    }
+
+    protected static WorldGuardPlugin getWorldGuard() {
+        return wg;
+    }
+
+    private static WorldGuardPlugin hookWorldGuard() {
+        Plugin plugin = Arkkit.get().getServer().getPluginManager().getPlugin("WorldGuard");
+        if (plugin == null || !(plugin instanceof WorldGuardPlugin)) {
+            return null;
+        }
+        return (WorldGuardPlugin) plugin;
+    }
+
+    protected static boolean isPvPDisabled(Location l) {
+        try {
+            Class<?> bukkitUtil = CombatLog.getWorldGuard().getClass().getClassLoader().loadClass("com.sk89q.worldguard.bukkit.BukkitUtil");
+            Method toVector = bukkitUtil.getMethod("toVector", Block.class);
+            Vector blockVector = (Vector) toVector.invoke(null, new Object[]{l.getBlock()});
+            List<String> regionSet = CombatLog.getWorldGuard().getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs(blockVector);
+            if (regionSet == null || regionSet.size() < 1) {
+                try {
+                    return CombatLog.getWorldGuard().getGlobalRegionManager().get(l.getWorld()).getRegion("__global__").getFlags().get(DefaultFlag.PVP) == StateFlag.State.DENY;
+                } catch (Exception err) {
+                    return false;
+                }
+            }
+            boolean return_flag = false;
+            int return_priority = -1;
+            for (String region : regionSet) {
+                if (!CombatLog.getWorldGuard().getGlobalRegionManager().get(l.getWorld()).getRegion(region).getFlags().containsKey(DefaultFlag.PVP))
+                    continue;
+                StateFlag.State pvp_flag = (StateFlag.State) CombatLog.getWorldGuard().getGlobalRegionManager().get(l.getWorld()).getRegion(region).getFlags().get(DefaultFlag.PVP);
+                int region_priority = CombatLog.getWorldGuard().getGlobalRegionManager().get(l.getWorld()).getRegion(region).getPriority();
+                if (return_priority == -1) {
+                    return_flag = pvp_flag == StateFlag.State.DENY;
+                    return_priority = region_priority;
+                    continue;
+                }
+                if (region_priority <= return_priority) continue;
+                return_flag = pvp_flag == StateFlag.State.DENY;
+                return_priority = region_priority;
+            }
+            return return_flag;
+        } catch (Exception exception) {
+            return false;
+        }
+    }
+
+    public static boolean inCombat(Player pl) {
+        try {
+            List val = pl.getMetadata("cl_combat");
+            if (val != null && !val.isEmpty() && System.currentTimeMillis() - ((MetadataValue) val.get(0)).asLong() <= CombatLog.getCombatTagDuration(pl)) {
+                return true;
+            }
+        } catch (Exception err) {
+            err.printStackTrace();
+            pl.setMetadata("cl_combat", new FixedMetadataValue(Arkkit.get(), System.currentTimeMillis()));
+        }
+        return false;
+    }
+
+    public static long getTimeLeftInCombat(Player pl) {
+        try {
+            List values = pl.getMetadata("cl_combat");
+            if (values != null && values.size() > 0) {
+                Long time = ((MetadataValue) values.get(0)).asLong();
+                long duration = CombatLog.getCombatTagDuration(pl);
+                if (System.currentTimeMillis() - time <= duration) {
+                    return duration - (System.currentTimeMillis() - time);
+                }
+            }
+        } catch (Exception err) {
+            err.printStackTrace();
+            pl.setMetadata("cl_combat", new FixedMetadataValue(Arkkit.get(), System.currentTimeMillis()));
+        }
+        return 0L;
+    }
+
+    public static long getCombatTagDuration(Player player) {
+        int combatDuration = UpgradeUtils.getUpgradeLevel(player, "HEROIC_COMBAT_TAG");
+        long toRetr = tagDuration;
+        if (combatDuration == 1) {
+            toRetr -= 250L;
+        } else if (combatDuration == 2) {
+            toRetr -= 500L;
+        } else if (combatDuration == 3) {
+            toRetr -= 1000L;
+        } else if (combatDuration == 4) {
+            toRetr -= 2000L;
+        }
+        if (mask_plugin && MaskUtils.hasMaskEquipped(player, "JOKER")) {
+            toRetr -= 3000L;
+        }
+        if (player.hasMetadata("affectedByJokerMask") && player.getMetadata("affectedByJokerMask").get(0).asLong() > (long) MinecraftServer.currentTick) {
+            toRetr += 4000L;
+        }
+        return toRetr;
+    }
+
+    public static synchronized void flagCombat(Player pl) {
+        boolean wasInCombat = CombatLog.inCombat(pl);
+        pl.setMetadata("cl_combat", new FixedMetadataValue(Arkkit.get(), System.currentTimeMillis()));
+        if (!wasInCombat) {
+            pl.setMetadata("cl_combat_monitor_task", new FixedMetadataValue(Arkkit.get(), CombatExpireTask.combatTagged.add(new WeakReference<Player>(pl))));
+            pl.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You have entered combat. Do not log out for " + NumberUtils.format((double) CombatLog.getCombatTagDuration(pl) / 1000.0, DecimalFormatType.SECONDS) + "s.");
+        }
+        pl.setAllowFlight(false);
+        pl.setFlying(false);
+        if (pl.getOpenInventory() != null && (pl.getOpenInventory().getTopInventory().getName().startsWith("Shop") || pl.getOpenInventory().getTopInventory().getName().equals("Auction House"))) {
+            pl.closeInventory();
+        }
+        CombatTagEvent event = new CombatTagEvent(pl, wasInCombat);
+        Bukkit.getServer().getPluginManager().callEvent(event);
+    }
+
+    public static void unflagCombat(Player pl) {
+        if (pl.hasMetadata("cl_combat_monitor_task")) {
+            pl.removeMetadata("cl_combat_monitor_task", Arkkit.get());
+            if (Bukkit.getPluginManager().isPluginEnabled("Enchantments")) {
+                Bleed.clearBleedEffect(pl);
+            }
+            pl.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "(!)" + ChatColor.GREEN + " You have left combat. You may now safely logout.");
+            if (pl.isOp()) {
+                pl.setAllowFlight(true);
+            }
+            pl.updateInventory();
+        }
     }
 
     @Override
@@ -87,14 +221,14 @@ extends ArkPlugin {
         this.registerListener(new CombatLogCombatListener());
         this.registerListener(new CombatLogLogoutListener(this));
         this.registerCommand(new CommandLogout("logout", "/<command>", "Safetly logs you out of the server.", new ArrayList<String>(Arrays.asList("quit", "exit", "leave"))));
-        this.registerTask(new DespawnNPCTask().runTaskTimer((Plugin)Arkkit.get(), 20L, 20L), DespawnNPCTask.class);
-        this.registerTask(new CombatExpireTask().runTaskTimer((Plugin)Arkkit.get(), 10L, 10L), CombatExpireTask.class);
+        this.registerTask(new DespawnNPCTask().runTaskTimer(Arkkit.get(), 20L, 20L), DespawnNPCTask.class);
+        this.registerTask(new CombatExpireTask().runTaskTimer(Arkkit.get(), 10L, 10L), CombatExpireTask.class);
     }
 
     @Override
     public void disable() {
         for (Player pl : Bukkit.getOnlinePlayers()) {
-            pl.removeMetadata("cl_combat", (Plugin)Arkkit.get());
+            pl.removeMetadata("cl_combat", Arkkit.get());
         }
         this.cleanNPCs();
         this.getBukkitPlugin().getConfig().set("settings.combatLog.playersToKill", new ArrayList<String>(CombatLogLogoutListener.playersToKill));
@@ -114,142 +248,6 @@ extends ArkPlugin {
             n.destroy();
             CitizensAPI.getNPCRegistry().deregister(n);
         }
-    }
-
-    protected static WorldGuardPlugin getWorldGuard() {
-        return wg;
-    }
-
-    private static WorldGuardPlugin hookWorldGuard() {
-        Plugin plugin = Arkkit.get().getServer().getPluginManager().getPlugin("WorldGuard");
-        if (plugin == null || !(plugin instanceof WorldGuardPlugin)) {
-            return null;
-        }
-        return (WorldGuardPlugin)plugin;
-    }
-
-    protected static boolean isPvPDisabled(Location l) {
-        try {
-            Class<?> bukkitUtil = CombatLog.getWorldGuard().getClass().getClassLoader().loadClass("com.sk89q.worldguard.bukkit.BukkitUtil");
-            Method toVector = bukkitUtil.getMethod("toVector", Block.class);
-            Vector blockVector = (Vector)toVector.invoke(null, new Object[]{l.getBlock()});
-            List<String> regionSet = CombatLog.getWorldGuard().getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs(blockVector);
-            if (regionSet == null || regionSet.size() < 1) {
-                try {
-                    return (StateFlag.State)CombatLog.getWorldGuard().getGlobalRegionManager().get(l.getWorld()).getRegion("__global__").getFlags().get((Object)DefaultFlag.PVP) == StateFlag.State.DENY;
-                }
-                catch (Exception err) {
-                    return false;
-                }
-            }
-            boolean return_flag = false;
-            int return_priority = -1;
-            for (String region : regionSet) {
-                if (!CombatLog.getWorldGuard().getGlobalRegionManager().get(l.getWorld()).getRegion(region).getFlags().containsKey((Object)DefaultFlag.PVP)) continue;
-                StateFlag.State pvp_flag = (StateFlag.State)CombatLog.getWorldGuard().getGlobalRegionManager().get(l.getWorld()).getRegion(region).getFlags().get((Object)DefaultFlag.PVP);
-                int region_priority = CombatLog.getWorldGuard().getGlobalRegionManager().get(l.getWorld()).getRegion(region).getPriority();
-                if (return_priority == -1) {
-                    return_flag = pvp_flag == StateFlag.State.DENY;
-                    return_priority = region_priority;
-                    continue;
-                }
-                if (region_priority <= return_priority) continue;
-                return_flag = pvp_flag == StateFlag.State.DENY;
-                return_priority = region_priority;
-            }
-            return return_flag;
-        }
-        catch (Exception exception) {
-            return false;
-        }
-    }
-
-    public static boolean inCombat(Player pl) {
-        try {
-            List val = pl.getMetadata("cl_combat");
-            if (val != null && !val.isEmpty() && System.currentTimeMillis() - ((MetadataValue)val.get(0)).asLong() <= CombatLog.getCombatTagDuration(pl)) {
-                return true;
-            }
-        }
-        catch (Exception err) {
-            err.printStackTrace();
-            pl.setMetadata("cl_combat", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)System.currentTimeMillis()));
-        }
-        return false;
-    }
-
-    public static long getTimeLeftInCombat(Player pl) {
-        try {
-            List values = pl.getMetadata("cl_combat");
-            if (values != null && values.size() > 0) {
-                Long time = ((MetadataValue)values.get(0)).asLong();
-                long duration = CombatLog.getCombatTagDuration(pl);
-                if (System.currentTimeMillis() - time <= duration) {
-                    return duration - (System.currentTimeMillis() - time);
-                }
-            }
-        }
-        catch (Exception err) {
-            err.printStackTrace();
-            pl.setMetadata("cl_combat", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)System.currentTimeMillis()));
-        }
-        return 0L;
-    }
-
-    public static long getCombatTagDuration(Player player) {
-        int combatDuration = UpgradeUtils.getUpgradeLevel((Player)player, (String)"HEROIC_COMBAT_TAG");
-        long toRetr = tagDuration;
-        if (combatDuration == 1) {
-            toRetr -= 250L;
-        } else if (combatDuration == 2) {
-            toRetr -= 500L;
-        } else if (combatDuration == 3) {
-            toRetr -= 1000L;
-        } else if (combatDuration == 4) {
-            toRetr -= 2000L;
-        }
-        if (mask_plugin && MaskUtils.hasMaskEquipped((Player)player, (String)"JOKER")) {
-            toRetr -= 3000L;
-        }
-        if (player.hasMetadata("affectedByJokerMask") && ((MetadataValue)player.getMetadata("affectedByJokerMask").get(0)).asLong() > (long) MinecraftServer.currentTick) {
-            toRetr += 4000L;
-        }
-        return toRetr;
-    }
-
-    public static synchronized void flagCombat(Player pl) {
-        boolean wasInCombat = CombatLog.inCombat(pl);
-        pl.setMetadata("cl_combat", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)System.currentTimeMillis()));
-        if (!wasInCombat) {
-            pl.setMetadata("cl_combat_monitor_task", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)CombatExpireTask.combatTagged.add(new WeakReference<Player>(pl))));
-            pl.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You have entered combat. Do not log out for " + NumberUtils.format((double)((double)CombatLog.getCombatTagDuration(pl) / 1000.0), (DecimalFormatType)DecimalFormatType.SECONDS) + "s.");
-        }
-        pl.setAllowFlight(false);
-        pl.setFlying(false);
-        if (pl.getOpenInventory() != null && (pl.getOpenInventory().getTopInventory().getName().startsWith("Shop") || pl.getOpenInventory().getTopInventory().getName().equals("Auction House"))) {
-            pl.closeInventory();
-        }
-        CombatTagEvent event = new CombatTagEvent(pl, wasInCombat);
-        Bukkit.getServer().getPluginManager().callEvent((Event)event);
-    }
-
-    public static void unflagCombat(Player pl) {
-        if (pl.hasMetadata("cl_combat_monitor_task")) {
-            pl.removeMetadata("cl_combat_monitor_task", (Plugin)Arkkit.get());
-            if (Bukkit.getPluginManager().isPluginEnabled("Enchantments")) {
-                Bleed.clearBleedEffect((LivingEntity)pl);
-            }
-            pl.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "(!)" + (Object)ChatColor.GREEN + " You have left combat. You may now safely logout.");
-            if (pl.isOp()) {
-                pl.setAllowFlight(true);
-            }
-            pl.updateInventory();
-        }
-    }
-
-    static {
-        cosmicPVP = false;
-        displayOnScoreboard = false;
     }
 }
 

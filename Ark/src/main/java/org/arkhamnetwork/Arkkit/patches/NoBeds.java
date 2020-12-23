@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.CC
  *  org.bukkit.event.EventHandler
@@ -19,7 +19,7 @@ import org.bukkit.plugin.Plugin;
 import java.io.IOException;
 
 public class NoBeds
-extends ArkPlugin {
+        extends ArkPlugin {
     public NoBeds(Plugin p) {
         super(p);
     }
@@ -36,7 +36,7 @@ extends ArkPlugin {
     }
 
     class NoBedListener
-    extends ArkPluginListener<NoBeds> {
+            extends ArkPluginListener<NoBeds> {
         public NoBedListener(NoBeds patch) {
             super(patch);
         }

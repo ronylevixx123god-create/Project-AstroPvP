@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.sk89q.worldedit.BlockVector
  *  com.sk89q.worldedit.Vector
@@ -26,12 +26,13 @@ import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import com.sk89q.worldguard.protection.flags.Flag;
 import com.sk89q.worldguard.protection.flags.StateFlag;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import java.lang.reflect.Method;
-import java.util.List;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.plugin.Plugin;
+
+import java.lang.reflect.Method;
+import java.util.List;
 
 public class WorldGuardUtils {
     private static WorldGuardPlugin wg = null;
@@ -43,15 +44,14 @@ public class WorldGuardUtils {
         try {
             bukkitUtil = wg.getClass().getClassLoader().loadClass("com.sk89q.worldguard.bukkit.BukkitUtil");
             toVector = bukkitUtil.getMethod("toVector", Block.class);
-        }
-        catch (ClassNotFoundException | NoSuchMethodException | SecurityException e) {
+        } catch (ClassNotFoundException | NoSuchMethodException | SecurityException e) {
             e.printStackTrace();
         }
     }
 
     public static String getRegionName(Location l) {
         try {
-            Vector blockVector = (Vector)toVector.invoke(null, new Object[]{l.getBlock()});
+            Vector blockVector = (Vector) toVector.invoke(null, new Object[]{l.getBlock()});
             List<String> regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs(blockVector);
             if (regionSet.size() < 1) {
                 return "";
@@ -72,21 +72,19 @@ public class WorldGuardUtils {
                 return_region = "";
             }
             return return_region;
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             return "";
         }
     }
 
     public static boolean isInvincible(Location l) {
         try {
-            BlockVector blockVector = BukkitUtil.toVector((Block)l.getBlock());
-            List<String> regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs((Vector)blockVector);
+            BlockVector blockVector = BukkitUtil.toVector(l.getBlock());
+            List<String> regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs(blockVector);
             if (regionSet.size() < 1) {
                 try {
-                    return (StateFlag.State)wg.getGlobalRegionManager().get(l.getWorld()).getRegion("__global__").getFlags().get((Object)DefaultFlag.INVINCIBILITY) == StateFlag.State.ALLOW;
-                }
-                catch (Exception err) {
+                    return wg.getGlobalRegionManager().get(l.getWorld()).getRegion("__global__").getFlags().get(DefaultFlag.INVINCIBILITY) == StateFlag.State.ALLOW;
+                } catch (Exception err) {
                     if (err instanceof NullPointerException) {
                         return false;
                     }
@@ -97,8 +95,9 @@ public class WorldGuardUtils {
             boolean return_flag = false;
             int return_priority = -1;
             for (String region : regionSet) {
-                if (!wg.getGlobalRegionManager().get(l.getWorld()).getRegion(region).getFlags().containsKey((Object)DefaultFlag.INVINCIBILITY)) continue;
-                StateFlag.State pvp_flag = (StateFlag.State)wg.getGlobalRegionManager().get(l.getWorld()).getRegion(region).getFlags().get((Object)DefaultFlag.INVINCIBILITY);
+                if (!wg.getGlobalRegionManager().get(l.getWorld()).getRegion(region).getFlags().containsKey(DefaultFlag.INVINCIBILITY))
+                    continue;
+                StateFlag.State pvp_flag = (StateFlag.State) wg.getGlobalRegionManager().get(l.getWorld()).getRegion(region).getFlags().get(DefaultFlag.INVINCIBILITY);
                 int region_priority = wg.getGlobalRegionManager().get(l.getWorld()).getRegion(region).getPriority();
                 if (return_priority == -1) {
                     return_flag = pvp_flag == StateFlag.State.ALLOW;
@@ -110,8 +109,7 @@ public class WorldGuardUtils {
                 return_priority = region_priority;
             }
             return return_flag;
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             return false;
         }
     }
@@ -121,9 +119,8 @@ public class WorldGuardUtils {
             ApplicableRegionSet regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegions(l);
             if (regionSet.size() < 1) {
                 try {
-                    return (StateFlag.State)wg.getGlobalRegionManager().get(l.getWorld()).getRegion("__global__").getFlags().get((Object)DefaultFlag.PVP) == StateFlag.State.DENY;
-                }
-                catch (Exception err) {
+                    return wg.getGlobalRegionManager().get(l.getWorld()).getRegion("__global__").getFlags().get(DefaultFlag.PVP) == StateFlag.State.DENY;
+                } catch (Exception err) {
                     if (err instanceof NullPointerException) {
                         return false;
                     }
@@ -134,8 +131,8 @@ public class WorldGuardUtils {
             boolean return_flag = false;
             int return_priority = -1;
             for (ProtectedRegion region : regionSet) {
-                if (!region.getFlags().containsKey((Object)DefaultFlag.PVP)) continue;
-                StateFlag.State pvp_flag = (StateFlag.State)region.getFlags().get((Object)DefaultFlag.PVP);
+                if (!region.getFlags().containsKey(DefaultFlag.PVP)) continue;
+                StateFlag.State pvp_flag = (StateFlag.State) region.getFlags().get(DefaultFlag.PVP);
                 int region_priority = region.getPriority();
                 if (return_priority == -1) {
                     return_flag = pvp_flag == StateFlag.State.DENY;
@@ -147,21 +144,19 @@ public class WorldGuardUtils {
                 return_priority = region_priority;
             }
             return return_flag;
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             return false;
         }
     }
 
     public static boolean isLavaFlowDisabled(Location l) {
         try {
-            BlockVector blockVector = BukkitUtil.toVector((Block)l.getBlock());
-            List<String> regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs((Vector)blockVector);
+            BlockVector blockVector = BukkitUtil.toVector(l.getBlock());
+            List<String> regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs(blockVector);
             if (regionSet.size() < 1) {
                 try {
-                    return (StateFlag.State)wg.getGlobalRegionManager().get(l.getWorld()).getRegion("__global__").getFlags().get((Object)DefaultFlag.LAVA_FLOW) == StateFlag.State.DENY;
-                }
-                catch (Exception err) {
+                    return wg.getGlobalRegionManager().get(l.getWorld()).getRegion("__global__").getFlags().get(DefaultFlag.LAVA_FLOW) == StateFlag.State.DENY;
+                } catch (Exception err) {
                     if (err instanceof NullPointerException) {
                         return false;
                     }
@@ -171,8 +166,9 @@ public class WorldGuardUtils {
             boolean return_flag = false;
             int return_priority = -1;
             for (String region : regionSet) {
-                if (!wg.getGlobalRegionManager().get(l.getWorld()).getRegion(region).getFlags().containsKey((Object)DefaultFlag.LAVA_FLOW)) continue;
-                StateFlag.State lava_flag = (StateFlag.State)wg.getGlobalRegionManager().get(l.getWorld()).getRegion(region).getFlags().get((Object)DefaultFlag.LAVA_FLOW);
+                if (!wg.getGlobalRegionManager().get(l.getWorld()).getRegion(region).getFlags().containsKey(DefaultFlag.LAVA_FLOW))
+                    continue;
+                StateFlag.State lava_flag = (StateFlag.State) wg.getGlobalRegionManager().get(l.getWorld()).getRegion(region).getFlags().get(DefaultFlag.LAVA_FLOW);
                 int region_priority = wg.getGlobalRegionManager().get(l.getWorld()).getRegion(region).getPriority();
                 if (return_priority == -1) {
                     return_flag = lava_flag == StateFlag.State.DENY;
@@ -184,15 +180,14 @@ public class WorldGuardUtils {
                 return_priority = region_priority;
             }
             return return_flag;
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             return false;
         }
     }
 
     public static boolean getFlagState(Location l, Flag flag) {
         try {
-            Vector blockVector = (Vector)toVector.invoke(null, new Object[]{l.getBlock()});
+            Vector blockVector = (Vector) toVector.invoke(null, new Object[]{l.getBlock()});
             List<String> regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs(blockVector);
             if (regionSet.size() < 1) {
                 return false;
@@ -200,8 +195,9 @@ public class WorldGuardUtils {
             boolean return_flag = false;
             int return_priority = -1;
             for (String region : regionSet) {
-                if (!wg.getGlobalRegionManager().get(l.getWorld()).getRegion(region).getFlags().containsKey((Object)flag)) continue;
-                StateFlag.State invincible_flag = (StateFlag.State)wg.getGlobalRegionManager().get(l.getWorld()).getRegion(region).getFlags().get((Object)flag);
+                if (!wg.getGlobalRegionManager().get(l.getWorld()).getRegion(region).getFlags().containsKey(flag))
+                    continue;
+                StateFlag.State invincible_flag = (StateFlag.State) wg.getGlobalRegionManager().get(l.getWorld()).getRegion(region).getFlags().get(flag);
                 int region_priority = wg.getGlobalRegionManager().get(l.getWorld()).getRegion(region).getPriority();
                 if (return_priority == -1) {
                     return_flag = invincible_flag == StateFlag.State.ALLOW;
@@ -213,8 +209,7 @@ public class WorldGuardUtils {
                 return_priority = region_priority;
             }
             return return_flag;
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             return false;
         }
     }
@@ -227,7 +222,7 @@ public class WorldGuardUtils {
         if (plugin == null || !(plugin instanceof WorldGuardPlugin)) {
             return null;
         }
-        return (WorldGuardPlugin)plugin;
+        return (WorldGuardPlugin) plugin;
     }
 }
 

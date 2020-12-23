@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  net.minecraft.server.v1_7_R4.EntityPlayer
  *  net.minecraft.server.v1_7_R4.MinecraftServer
@@ -15,8 +15,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.UUID;
-
 import com.mojang.authlib.GameProfile;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
@@ -29,8 +27,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.plugin.Plugin;
 
+import java.util.UUID;
+
 final class CommandOXp
-extends AbstractCommand {
+        extends AbstractCommand {
     public CommandOXp(String command, String usage, String description) {
         super(command, usage, description);
     }
@@ -45,13 +45,13 @@ extends AbstractCommand {
             return true;
         }
         final String playerName = args[0];
-        Bukkit.getScheduler().runTaskAsynchronously((Plugin)Arkkit.get(), new Runnable(){
+        Bukkit.getScheduler().runTaskAsynchronously(Arkkit.get(), new Runnable() {
 
             @Override
             public void run() {
                 CraftPlayer target;
                 MinecraftServer minecraftserver = MinecraftServer.getServer();
-                UUID playerUUID = Bukkit.getOfflinePlayer((String)playerName).getUniqueId();
+                UUID playerUUID = Bukkit.getOfflinePlayer(playerName).getUniqueId();
                 GameProfile gameprofile = new GameProfile(playerUUID, playerName);
                 EntityPlayer entity = new EntityPlayer(minecraftserver, minecraftserver.getWorldServer(0), gameprofile, new PlayerInteractManager(minecraftserver.getWorldServer(0)));
                 CraftPlayer craftPlayer = target = entity == null ? null : entity.getBukkitEntity();

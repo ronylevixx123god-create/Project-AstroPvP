@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.Material
@@ -11,9 +11,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.ArrayList;
-import java.util.List;
-import org.arkhamnetwork.Arkkit.patches.SandStackLimiter;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -21,8 +18,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 
+import java.util.ArrayList;
+import java.util.List;
+
 final class SandStackLimiterListener
-implements Listener {
+        implements Listener {
     List<Material> gravityMaterials = new ArrayList<Material>();
 
     SandStackLimiterListener() {
@@ -35,13 +35,13 @@ implements Listener {
     public void onPistonExtend(BlockPistonExtendEvent e) {
         for (Block b : e.getBlocks()) {
             int blockCount;
-            if (!this.gravityMaterials.contains((Object)b.getType())) continue;
-            for (blockCount = 0; blockCount < SandStackLimiter.maxStackSize && b.getY() < 256 && this.gravityMaterials.contains((Object)b.getType()); ++blockCount) {
+            if (!this.gravityMaterials.contains(b.getType())) continue;
+            for (blockCount = 0; blockCount < SandStackLimiter.maxStackSize && b.getY() < 256 && this.gravityMaterials.contains(b.getType()); ++blockCount) {
                 b = b.getLocation().add(0.0, 1.0, 0.0).getBlock();
             }
             if (blockCount < SandStackLimiter.maxStackSize) continue;
             e.setCancelled(true);
-            Bukkit.getLogger().info("[Arkkit (SandStackLimiter)] Preventing piston push at " + (Object)e.getBlock().getLocation() + " due to blockCount>=" + blockCount);
+            Bukkit.getLogger().info("[Arkkit (SandStackLimiter)] Preventing piston push at " + e.getBlock().getLocation() + " due to blockCount>=" + blockCount);
             return;
         }
     }

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.itembuilder.FatBucketBuilder
  *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
@@ -12,29 +12,17 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.cosmicutils.itembuilder.FatBucketBuilder;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
-import org.arkhamnetwork.Arkkit.patches.CommandFatBucket;
-import org.arkhamnetwork.Arkkit.patches.FatBucketsListener;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 public class FatBuckets
-extends ArkPlugin {
+        extends ArkPlugin {
     protected static int maxBucketCharges = 50;
 
     public FatBuckets(Plugin p) {
         super(p);
-    }
-
-    @Override
-    public void enable() {
-        this.registerCommand(new CommandFatBucket("fatbucket", "/<command>", "Admin command to spawn fat buckets."));
-        this.registerListener(new FatBucketsListener());
-    }
-
-    @Override
-    public void disable() {
     }
 
     public static boolean isFatBucket(ItemStack i) {
@@ -71,6 +59,16 @@ extends ArkPlugin {
 
     public static ItemStack getFatBucket() {
         return new FatBucketBuilder().build();
+    }
+
+    @Override
+    public void enable() {
+        this.registerCommand(new CommandFatBucket("fatbucket", "/<command>", "Admin command to spawn fat buckets."));
+        this.registerListener(new FatBucketsListener());
+    }
+
+    @Override
+    public void disable() {
     }
 }
 

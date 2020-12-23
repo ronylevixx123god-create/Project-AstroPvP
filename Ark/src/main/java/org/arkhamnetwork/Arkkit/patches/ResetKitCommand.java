@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.CC
  *  com.cosmicpvp.cosmicutils.utils.PlayerUtil
@@ -15,7 +15,6 @@ package org.arkhamnetwork.Arkkit.patches;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
 import org.arkhamnetwork.Arkkit.libs.ArkPluginCommand;
-import org.arkhamnetwork.Arkkit.patches.ResetKit;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -23,7 +22,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 class ResetKitCommand
-extends ArkPluginCommand<ResetKit> {
+        extends ArkPluginCommand<ResetKit> {
     public ResetKitCommand(ResetKit patch, String command) {
         super(patch, command);
     }
@@ -34,12 +33,12 @@ extends ArkPluginCommand<ResetKit> {
             return true;
         }
         if (args.length == 1) {
-            Player pl = Bukkit.getPlayer((String)args[0]);
+            Player pl = Bukkit.getPlayer(args[0]);
             if (pl == null) {
                 sender.sendMessage(CC.RedB + "(!) " + CC.Red + "Unable to find player with that name!");
                 return true;
             }
-            PlayerUtil.giveOrDropProtectedItem((Player)pl, (ItemStack)((ResetKit)this.patch).createResetKit(true), (int)-1, null, (String)(CC.RedB + "INVENTORY FULL " + CC.Red + "Reset Kit dropped on ground"));
+            PlayerUtil.giveOrDropProtectedItem(pl, this.patch.createResetKit(true), -1, null, CC.RedB + "INVENTORY FULL " + CC.Red + "Reset Kit dropped on ground");
             sender.sendMessage(CC.Red + "Added reset kit to " + pl.getName() + "'s Inventory!");
             return true;
         }

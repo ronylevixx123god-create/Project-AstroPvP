@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  me.ifamasssxd.cosmicmasks.MaskType
  *  net.minecraft.server.v1_7_R4.MinecraftServer
@@ -31,11 +31,7 @@ import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.block.Chest;
-import org.bukkit.block.Dispenser;
-import org.bukkit.block.Dropper;
-import org.bukkit.block.Furnace;
-import org.bukkit.block.Hopper;
+import org.bukkit.block.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -50,7 +46,7 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
 final class HotbarArmorSwapListener
-implements Listener {
+        implements Listener {
     HotbarArmorSwapListener() {
     }
 
@@ -71,28 +67,28 @@ implements Listener {
         if (n.contains("helmet")) {
             ItemStack old = inv.getHelmet();
             inv.setHelmet(is);
-            inv.removeItem(new ItemStack[]{is});
+            inv.removeItem(is);
             if (old != null && old.getType() != Material.AIR) {
                 inv.setItemInHand(old);
             }
         } else if (n.contains("chestplate")) {
             ItemStack old = inv.getChestplate();
             inv.setChestplate(is);
-            inv.removeItem(new ItemStack[]{is});
+            inv.removeItem(is);
             if (old != null && old.getType() != Material.AIR) {
                 inv.setItemInHand(old);
             }
         } else if (n.contains("leggings")) {
             ItemStack old = inv.getLeggings();
             inv.setLeggings(is);
-            inv.removeItem(new ItemStack[]{is});
+            inv.removeItem(is);
             if (old != null && old.getType() != Material.AIR) {
                 inv.setItemInHand(old);
             }
         } else if (n.contains("boots")) {
             ItemStack old = inv.getBoots();
             inv.setBoots(is);
-            inv.removeItem(new ItemStack[]{is});
+            inv.removeItem(is);
             if (old != null && old.getType() != Material.AIR) {
                 inv.setItemInHand(old);
             }
@@ -100,7 +96,7 @@ implements Listener {
         player.updateInventory();
     }
 
-    @EventHandler(priority=EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerInteract(PlayerInteractEvent e) {
         if (e.getAction() != Action.RIGHT_CLICK_AIR && e.getAction() != Action.RIGHT_CLICK_BLOCK) {
             return;
@@ -116,7 +112,7 @@ implements Listener {
             return;
         }
         Player p = e.getPlayer();
-        if (p.hasMetadata("lastArmorSwap") && (long) MinecraftServer.currentTick - ((MetadataValue)p.getMetadata("lastArmorSwap").get(0)).asLong() <= 12L) {
+        if (p.hasMetadata("lastArmorSwap") && (long) MinecraftServer.currentTick - p.getMetadata("lastArmorSwap").get(0).asLong() <= 12L) {
             return;
         }
         if (e.isCancelled() && p.hasMetadata("noArmorSwap")) {
@@ -128,10 +124,10 @@ implements Listener {
         if (AntiHack.hasTeleportedCrossWorld(p)) {
             return;
         }
-        p.setMetadata("lastArmorSwap", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)MinecraftServer.currentTick));
+        p.setMetadata("lastArmorSwap", new FixedMetadataValue(Arkkit.get(), MinecraftServer.currentTick));
         this.equipArmor(p, e.getItem());
         if (HotbarArmorSwap.masksEnabled && e.hasItem() && e.getItem().getType().toString().toLowerCase().contains("helmet")) {
-            MaskType.rescanMask((Player)p, (boolean)true);
+            MaskType.rescanMask(p, true);
         }
         p.playSound(p.getLocation(), Sound.SUCCESSFUL_HIT, 10.0f, 0.95f);
     }

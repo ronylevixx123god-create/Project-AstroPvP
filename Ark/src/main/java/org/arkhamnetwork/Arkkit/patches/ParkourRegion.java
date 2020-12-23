@@ -1,19 +1,17 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.plugin.Plugin
  */
 package org.arkhamnetwork.Arkkit.patches;
 
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.ParkourRegionListener;
-import org.arkhamnetwork.Arkkit.patches.ParkourRegionTask;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.plugin.Plugin;
 
 public class ParkourRegion
-extends ArkPlugin {
+        extends ArkPlugin {
     public ParkourRegion(Plugin p) {
         super(p);
     }
@@ -21,7 +19,7 @@ extends ArkPlugin {
     @Override
     public void enable() {
         this.registerListener(new ParkourRegionListener());
-        this.registerTask(new ParkourRegionTask().runTaskTimer((Plugin)Arkkit.get(), 10L, 10L), ParkourRegionTask.class);
+        this.registerTask(new ParkourRegionTask().runTaskTimer(Arkkit.get(), 10L, 10L), ParkourRegionTask.class);
     }
 
     @Override

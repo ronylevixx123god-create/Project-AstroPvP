@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.OfflinePlayer
@@ -19,7 +19,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 
 final class CommandVUnban
-extends AbstractCommand {
+        extends AbstractCommand {
     public CommandVUnban(String command, String usage, String description) {
         super(command, usage, description);
     }
@@ -34,13 +34,13 @@ extends AbstractCommand {
             return true;
         }
         final String playerName = args[0];
-        Bukkit.getScheduler().runTaskAsynchronously((Plugin)Arkkit.get(), new Runnable(){
+        Bukkit.getScheduler().runTaskAsynchronously(Arkkit.get(), new Runnable() {
 
             @Override
             public void run() {
-                OfflinePlayer op = Bukkit.getOfflinePlayer((String)playerName);
-                if (Bukkit.getBannedPlayers().contains((Object)op)) {
-                    Bukkit.getBannedPlayers().remove((Object)op);
+                OfflinePlayer op = Bukkit.getOfflinePlayer(playerName);
+                if (Bukkit.getBannedPlayers().contains(op)) {
+                    Bukkit.getBannedPlayers().remove(op);
                     sender.sendMessage(playerName + " has been removed from the bukkit/vanilla banned-players.json list.");
                 } else {
                     sender.sendMessage(playerName + " is not currently on the bukkit/vanilla banned-players.json list.");

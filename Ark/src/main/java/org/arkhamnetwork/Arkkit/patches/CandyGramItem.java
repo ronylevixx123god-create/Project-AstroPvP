@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.CC
  *  org.bukkit.Material
@@ -41,12 +41,12 @@ enum CandyGramItem {
     DEAD_BUSH(new MaterialData(Material.DEAD_BUSH), CC.Yellow + "Dead Bush", 100000, 43),
     ROTTEN_FLESH(new MaterialData(Material.ROTTEN_FLESH), CC.RedB + "Rotten Flesh", 100000, 44);
 
-    private MaterialData material;
-    private String name;
-    private int cost;
-    private int slot;
+    private final MaterialData material;
+    private final String name;
+    private final int cost;
+    private final int slot;
 
-    private CandyGramItem(MaterialData material, String name, int cost, int slot) {
+    CandyGramItem(MaterialData material, String name, int cost, int slot) {
         this.material = material;
         this.name = name;
         this.cost = cost;

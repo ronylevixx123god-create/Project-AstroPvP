@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Chunk
  *  org.bukkit.event.EventHandler
@@ -10,10 +10,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.HashMap;
-import java.util.Map;
-import org.arkhamnetwork.Arkkit.patches.AntiRedstoneLag;
-import org.arkhamnetwork.Arkkit.patches.AntiRedstoneLagTask;
 import org.arkhamnetwork.Arkkit.utils.LongHash;
 import org.bukkit.Chunk;
 import org.bukkit.event.EventHandler;
@@ -21,15 +17,18 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockRedstoneEvent;
 
+import java.util.HashMap;
+import java.util.Map;
+
 final class AntiRedstoneLagListener
-implements Listener {
+        implements Listener {
     protected static HashMap<String, Integer> redstone_tracker = new HashMap();
     protected static Map<Long, Integer> fastRedstoneTracker = new HashMap<Long, Integer>();
 
     AntiRedstoneLagListener() {
     }
 
-    @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onBlockRedstoneEvent(BlockRedstoneEvent e) {
         Integer flag;
         long chunk = this.getChunkValue(e.getBlock().getChunk());

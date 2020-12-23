@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.ChatColor
  *  org.bukkit.command.Command
@@ -11,22 +11,22 @@
  */
 package org.arkhamnetwork.Arkkit.commands;
 
-import java.util.List;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.StaticMessages;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import java.util.List;
+
 public class CommandArkConfig
-implements CommandExecutor {
+        implements CommandExecutor {
     private Arkkit plugin = null;
 
     public CommandArkConfig(Plugin p) {
-        this.plugin = (Arkkit)p;
+        this.plugin = (Arkkit) p;
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -43,7 +43,7 @@ implements CommandExecutor {
                 }
             } else if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
                 this.plugin.reloadConfig();
-                sender.sendMessage((Object)ChatColor.RED + "Reloaded config!");
+                sender.sendMessage(ChatColor.RED + "Reloaded config!");
             }
             return true;
         }
@@ -68,20 +68,19 @@ implements CommandExecutor {
             return true;
         }
         if (opperation.equalsIgnoreCase("set")) {
-            if (val.toString().equals("true")) {
-                this.plugin.getConfig().set(key, (Object)Boolean.TRUE);
+            if (val.equals("true")) {
+                this.plugin.getConfig().set(key, Boolean.TRUE);
                 this.plugin.saveConfig();
-            } else if (val.toString().equals("false")) {
-                this.plugin.getConfig().set(key, (Object)Boolean.FALSE);
+            } else if (val.equals("false")) {
+                this.plugin.getConfig().set(key, Boolean.FALSE);
                 this.plugin.saveConfig();
             } else {
                 try {
-                    double i = Double.parseDouble(val.toString());
-                    this.plugin.getConfig().set(key, (Object)i);
+                    double i = Double.parseDouble(val);
+                    this.plugin.getConfig().set(key, i);
                     this.plugin.saveConfig();
-                }
-                catch (NumberFormatException nfe) {
-                    this.plugin.getConfig().set(key, (Object)val);
+                } catch (NumberFormatException nfe) {
+                    this.plugin.getConfig().set(key, val);
                     this.plugin.saveConfig();
                 }
             }
@@ -89,25 +88,23 @@ implements CommandExecutor {
         } else if (opperation.equalsIgnoreCase("add")) {
             List list = this.plugin.getConfig().getList(key);
             try {
-                int i = Integer.parseInt(val.toString());
+                int i = Integer.parseInt(val);
                 list.add(i);
+            } catch (NumberFormatException nfe) {
+                list.add(val);
             }
-            catch (NumberFormatException nfe) {
-                list.add(String.valueOf(val));
-            }
-            this.plugin.getConfig().set(key, (Object)list);
+            this.plugin.getConfig().set(key, list);
             this.plugin.saveConfig();
             sender.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "[Compilex]" + ChatColor.WHITE.toString() + " Added " + key + " TO " + val);
         } else if (opperation.equalsIgnoreCase("remove")) {
             List list = this.plugin.getConfig().getList(key);
             try {
-                int i = Integer.parseInt(val.toString());
+                int i = Integer.parseInt(val);
                 list.remove(i);
+            } catch (NumberFormatException nfe) {
+                list.remove(val);
             }
-            catch (NumberFormatException nfe) {
-                list.remove(String.valueOf(val));
-            }
-            this.plugin.getConfig().set(key, (Object)list);
+            this.plugin.getConfig().set(key, list);
             this.plugin.saveConfig();
             sender.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "[Compilex]" + ChatColor.WHITE.toString() + " Removed " + key + " FROM " + val);
         }

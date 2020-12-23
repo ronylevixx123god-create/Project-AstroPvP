@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Chunk
  *  org.bukkit.entity.Entity
@@ -12,8 +12,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.bukkit.Chunk;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -22,8 +20,11 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.ChunkLoadEvent;
 
+import java.util.ArrayList;
+import java.util.List;
+
 final class ChunkLoadFlushListener
-implements Listener {
+        implements Listener {
     List<EntityType> noRemove = new ArrayList<EntityType>();
 
     ChunkLoadFlushListener() {
@@ -34,14 +35,14 @@ implements Listener {
         this.noRemove.add(EntityType.PRIMED_TNT);
     }
 
-    @EventHandler(priority=EventPriority.LOW)
+    @EventHandler(priority = EventPriority.LOW)
     public void onChunkLoad(ChunkLoadEvent e) {
         this.removeEntities(e.getChunk());
     }
 
     private void removeEntities(Chunk c) {
         for (Entity e : c.getEntities()) {
-            if (this.noRemove.contains((Object)e.getType())) continue;
+            if (this.noRemove.contains(e.getType())) continue;
             e.remove();
         }
     }

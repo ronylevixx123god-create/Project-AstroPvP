@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  net.minecraft.server.v1_7_R4.EntityPlayer
  *  net.minecraft.server.v1_7_R4.MinecraftServer
@@ -30,7 +30,7 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.plugin.Plugin;
 
 final class CommandXptop
-extends AbstractCommand {
+        extends AbstractCommand {
     public CommandXptop(String command, String usage, String description) {
         super(command, usage, description);
     }
@@ -45,7 +45,7 @@ extends AbstractCommand {
             return true;
         }
         final int minLevel = Integer.parseInt(args[0]);
-        Bukkit.getScheduler().runTaskAsynchronously((Plugin)Arkkit.get(), new Runnable(){
+        Bukkit.getScheduler().runTaskAsynchronously(Arkkit.get(), new Runnable() {
 
             @Override
             public void run() {

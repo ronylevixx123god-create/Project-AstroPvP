@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  net.minecraft.server.v1_7_R4.Block
  *  net.minecraft.server.v1_7_R4.Blocks
@@ -33,17 +33,17 @@ import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
 final class LavaSpongeListener
-implements Listener {
-    private int radius = 3;
+        implements Listener {
+    private final int radius = 3;
 
     LavaSpongeListener() {
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onSpongeDestroy(BlockBreakEvent e) {
         org.bukkit.block.Block block = e.getBlock();
         World world = block.getWorld();
-        WorldServer netWorld = ((CraftWorld)block.getWorld()).getHandle();
+        WorldServer netWorld = ((CraftWorld) block.getWorld()).getHandle();
         int bx = block.getX();
         int by = block.getY();
         int bz = block.getZ();
@@ -51,14 +51,15 @@ implements Listener {
             for (int fy = -this.radius; fy <= this.radius; ++fy) {
                 for (int fz = -this.radius; fz <= this.radius; ++fz) {
                     org.bukkit.block.Block b = world.getBlockAt(bx + fx, by + fy, bz + fz);
-                    if (!b.getType().equals((Object)Material.LAVA) && !b.getType().equals((Object)Material.STATIONARY_LAVA)) continue;
-                    netWorld.applyPhysics(new BlockPosition(b.getX(), b.getY(), b.getZ()), (Block) Blocks.LAVA);
+                    if (!b.getType().equals(Material.LAVA) && !b.getType().equals(Material.STATIONARY_LAVA))
+                        continue;
+                    netWorld.applyPhysics(new BlockPosition(b.getX(), b.getY(), b.getZ()), Blocks.LAVA);
                 }
             }
         }
     }
 
-    @EventHandler(priority=EventPriority.HIGH, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onWaterLavaUpdate(BlockFromToEvent e) {
         org.bukkit.block.Block block = e.getBlock();
         if (block.getType() != Material.WATER && block.getType() != Material.STATIONARY_WATER && block.getType() != Material.LAVA && block.getType() != Material.STATIONARY_LAVA) {
@@ -72,7 +73,7 @@ implements Listener {
             for (int fy = -this.radius; fy <= this.radius; ++fy) {
                 for (int fz = -this.radius; fz <= this.radius; ++fz) {
                     org.bukkit.block.Block b = world.getBlockAt(bx + fx, by + fy, bz + fz);
-                    if (!b.getType().equals((Object)Material.SPONGE)) continue;
+                    if (!b.getType().equals(Material.SPONGE)) continue;
                     e.setCancelled(true);
                     return;
                 }
@@ -80,11 +81,11 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onBlockPlace(BlockPlaceEvent e) {
         org.bukkit.block.Block block = e.getBlock();
         World world = block.getWorld();
-        if (block.getType().equals((Object)Material.SPONGE)) {
+        if (block.getType().equals(Material.SPONGE)) {
             int bx = block.getX();
             int by = block.getY();
             int bz = block.getZ();
@@ -92,7 +93,8 @@ implements Listener {
                 for (int fy = -this.radius; fy <= this.radius; ++fy) {
                     for (int fz = -this.radius; fz <= this.radius; ++fz) {
                         org.bukkit.block.Block b = world.getBlockAt(bx + fx, by + fy, bz + fz);
-                        if (!b.getType().equals((Object)Material.LAVA) && !b.getType().equals((Object)Material.STATIONARY_LAVA)) continue;
+                        if (!b.getType().equals(Material.LAVA) && !b.getType().equals(Material.STATIONARY_LAVA))
+                            continue;
                         world.getBlockAt(bx + fx, by + fy, bz + fz).setType(Material.AIR);
                     }
                 }

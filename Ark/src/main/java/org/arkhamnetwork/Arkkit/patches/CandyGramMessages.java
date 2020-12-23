@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.CC
  *  com.google.common.collect.Lists
@@ -9,11 +9,10 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-
-import java.util.List;
-
 import com.google.common.collect.Lists;
 import org.bukkit.ChatColor;
+
+import java.util.List;
 
 enum CandyGramMessages {
     YOUR_THE_ONE("&a#You'reTheOne", 10000, 0),
@@ -44,20 +43,20 @@ enum CandyGramMessages {
     CALL_ME_DADDY("&cCall me Daddy", 1000000, 43),
     ALWAYS_USE_PROTECTION(CC.Red + "#2fa", Lists.newArrayList("&6&lAlways Use Protection", "&c&l#2fa"), 1000000, 44);
 
-    private String displayName;
-    private List<String> messages;
-    private int cost;
-    private int slot;
+    private final String displayName;
+    private final List<String> messages;
+    private final int cost;
+    private final int slot;
 
-    private CandyGramMessages(String displayName, String msg, int cost, int slot) {
-        this(ChatColor.translateAlternateColorCodes((char)'&', (String)displayName), Lists.newArrayList(msg), cost, slot);
+    CandyGramMessages(String displayName, String msg, int cost, int slot) {
+        this(ChatColor.translateAlternateColorCodes('&', displayName), Lists.newArrayList(msg), cost, slot);
     }
 
-    private CandyGramMessages(String msg, int cost, int slot) {
-        this(null, Lists.newArrayList(ChatColor.translateAlternateColorCodes((char)'&', (String)msg)), cost, slot);
+    CandyGramMessages(String msg, int cost, int slot) {
+        this(null, Lists.newArrayList(ChatColor.translateAlternateColorCodes('&', msg)), cost, slot);
     }
 
-    private CandyGramMessages(String displayName, List<String> messages, int cost, int slot) {
+    CandyGramMessages(String displayName, List<String> messages, int cost, int slot) {
         this.displayName = displayName;
         this.messages = messages;
         this.cost = cost;

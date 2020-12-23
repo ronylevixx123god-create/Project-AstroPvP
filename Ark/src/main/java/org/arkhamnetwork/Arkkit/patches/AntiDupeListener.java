@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.gmail.nossr50.datatypes.player.McMMOPlayer
  *  com.gmail.nossr50.datatypes.skills.AbilityType
@@ -59,25 +59,11 @@ import com.gmail.nossr50.datatypes.player.McMMOPlayer;
 import com.gmail.nossr50.datatypes.skills.AbilityType;
 import com.gmail.nossr50.util.ItemUtils;
 import com.gmail.nossr50.util.player.UserManager;
-import com.massivecraft.factions.Board;
-import com.massivecraft.factions.FLocation;
-import com.massivecraft.factions.FPlayer;
-import com.massivecraft.factions.FPlayers;
-import com.massivecraft.factions.FactionWrapper;
-import com.massivecraft.factions.FactionWrappers;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
+import com.massivecraft.factions.*;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.AntiDupe;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.enchantments.Enchantment;
@@ -87,11 +73,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.block.BlockPhysicsEvent;
-import org.bukkit.event.block.BlockPistonExtendEvent;
-import org.bukkit.event.block.BlockPistonRetractEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.block.*;
 import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -100,36 +82,35 @@ import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+
 final class AntiDupeListener
-implements Listener {
+        implements Listener {
+    private static final HashSet<Material> oreMaterials = new HashSet<Material>(Arrays.asList(Material.COAL_ORE, Material.IRON_ORE, Material.DIAMOND_ORE, Material.REDSTONE_ORE, Material.EMERALD_ORE, Material.GOLD_ORE, Material.LAPIS_ORE, Material.QUARTZ_ORE));
     Plugin plugin = null;
     boolean volcanic_crates = false;
-    private static HashSet<Material> oreMaterials = new HashSet<Material>(Arrays.asList(new Material[]{Material.COAL_ORE, Material.IRON_ORE, Material.DIAMOND_ORE, Material.REDSTONE_ORE, Material.EMERALD_ORE, Material.GOLD_ORE, Material.LAPIS_ORE, Material.QUARTZ_ORE}));
 
     public AntiDupeListener(ArkPlugin ark_plugin) {
         this.plugin = ark_plugin.getBukkitPlugin();
         this.volcanic_crates = new File("plugins/VolcanicCrates.jar").exists();
     }
 
-    @EventHandler(priority=EventPriority.LOW)
+    @EventHandler(priority = EventPriority.LOW)
     public void onEnchantItemEvent(EnchantItemEvent e) {
-        if (e.getEnchantsToAdd().containsKey((Object)Enchantment.DEPTH_STRIDER)) {
-            e.getEnchantsToAdd().remove((Object)Enchantment.DEPTH_STRIDER);
-        }
+        e.getEnchantsToAdd().remove(Enchantment.DEPTH_STRIDER);
     }
 
-    @EventHandler(priority=EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlace_LOWEST(BlockPlaceEvent event) {
         if (!this.volcanic_crates || event.getPlayer().isOp()) {
             return;
@@ -140,7 +121,7 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPlace_MONITOR(BlockPlaceEvent event) {
         if (!this.volcanic_crates || event.getPlayer().isOp()) {
             return;
@@ -151,7 +132,7 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onEntityDamage(EntityDamageEvent e) {
         if (e.getEntityType() == EntityType.CREEPER && (e.getCause() == EntityDamageEvent.DamageCause.MAGIC || e.getCause() == EntityDamageEvent.DamageCause.WITHER || e.getCause() == EntityDamageEvent.DamageCause.POISON)) {
             e.setCancelled(true);
@@ -181,14 +162,14 @@ implements Listener {
                 return;
             }
             if (e.getRawSlot() == 2 && e.getCurrentItem() != null) {
-                Player p = (Player)e.getWhoClicked();
+                Player p = (Player) e.getWhoClicked();
                 ItemStack is = e.getCurrentItem();
                 if (is.hasItemMeta() && is.getItemMeta().hasDisplayName()) {
                     ItemMeta im = is.getItemMeta();
                     if (!this.canRenameItem(is)) {
                         e.setCancelled(true);
-                        p.sendMessage((Object)ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You cannot rename this item.");
-                        p.sendMessage((Object)ChatColor.GRAY + "Anvil renaming can only be used on armor, weapons, and tools.");
+                        p.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot rename this item.");
+                        p.sendMessage(ChatColor.GRAY + "Anvil renaming can only be used on armor, weapons, and tools.");
                     }
                 }
             }
@@ -196,20 +177,20 @@ implements Listener {
     }
 
     private boolean canRenameItem(ItemStack i) {
-        return i != null && (GeneralUtil.isArmor((ItemStack)i) || GeneralUtil.isTool((ItemStack)i) || GeneralUtil.isWeapon((ItemStack)i));
+        return i != null && (GeneralUtil.isArmor(i) || GeneralUtil.isTool(i) || GeneralUtil.isWeapon(i));
     }
 
-    @EventHandler(priority=EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerInteract(PlayerInteractEvent e) {
         if (e.hasItem() && e.getItem().getType() == Material.ANVIL && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
-            FPlayer fp = (FPlayer)FPlayers.i.get((OfflinePlayer)e.getPlayer());
+            FPlayer fp = FPlayers.i.get(e.getPlayer());
             FLocation floc = new FLocation(e.getPlayer().getLocation());
-            FactionWrapper wrapper = FactionWrappers.get((String)Board.getFactionAt((FLocation)floc).getId());
-            if (!(fp.isInOwnTerritory() || Board.getFactionAt((FLocation)floc).isNone() || e.getPlayer().isOp() || wrapper.doesPlayerHaveChunkAccess(floc, fp, true))) {
+            FactionWrapper wrapper = FactionWrappers.get(Board.getFactionAt(floc).getId());
+            if (!(fp.isInOwnTerritory() || Board.getFactionAt(floc).isNone() || e.getPlayer().isOp() || wrapper.doesPlayerHaveChunkAccess(floc, fp, true))) {
                 e.setCancelled(true);
                 e.setUseInteractedBlock(Event.Result.DENY);
                 e.setUseItemInHand(Event.Result.DENY);
-                Bukkit.getLogger().info("[AntiDupe] Preventing ANVIL->FLOWER POT dupe by " + e.getPlayer().getName() + " at " + (Object)e.getPlayer().getLocation());
+                Bukkit.getLogger().info("[AntiDupe] Preventing ANVIL->FLOWER POT dupe by " + e.getPlayer().getName() + " at " + e.getPlayer().getLocation());
             }
         }
     }
@@ -224,14 +205,14 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.LOW)
+    @EventHandler(priority = EventPriority.LOW)
     public void onFakeRedstoneWirePlaceEvent(BlockPhysicsEvent e) {
         if ((e.getChangedType().name().contains("REDSTONE") || e.getChangedType().name().contains("DIODE")) && e.getBlock().getType() == Material.FENCE_GATE) {
             e.setCancelled(true);
         }
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onCreatureSpawn(CreatureSpawnEvent e) {
         if (e.getEntity() != null) {
             e.getEntity().setCanPickupItems(false);
@@ -240,48 +221,49 @@ implements Listener {
 
     @EventHandler
     public void onCraftItemEvent(CraftItemEvent e) {
-        Player pl = (Player)e.getWhoClicked();
+        Player pl = (Player) e.getWhoClicked();
         if (pl.getInventory().firstEmpty() == -1) {
             e.setCancelled(true);
             pl.updateInventory();
-            pl.sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "You " + (Object)ChatColor.UNDERLINE + "cannot" + (Object)ChatColor.RED + " craft without any free space!");
+            pl.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "You " + ChatColor.UNDERLINE + "cannot" + ChatColor.RED + " craft without any free space!");
         }
         if (e.getRecipe().getResult().getType() == Material.BEACON) {
             e.setCancelled(true);
             e.setResult(Event.Result.DENY);
             pl.updateInventory();
-            pl.sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "You " + (Object)ChatColor.UNDERLINE + "cannot" + (Object)ChatColor.RED + " craft beacon blocks!");
+            pl.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "You " + ChatColor.UNDERLINE + "cannot" + ChatColor.RED + " craft beacon blocks!");
         }
         if (e.getRecipe().getResult().getType() == Material.EYE_OF_ENDER) {
             return;
         }
         for (ItemStack i : e.getInventory()) {
-            if (i == null || !i.hasItemMeta() || !i.getItemMeta().hasLore() || i.getItemMeta().getLore().size() <= 0 || i.getType() == Material.DIAMOND_PICKAXE) continue;
+            if (i == null || !i.hasItemMeta() || !i.getItemMeta().hasLore() || i.getItemMeta().getLore().size() <= 0 || i.getType() == Material.DIAMOND_PICKAXE)
+                continue;
             e.setCancelled(true);
             e.setResult(Event.Result.DENY);
             pl.updateInventory();
-            pl.sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "You " + (Object)ChatColor.UNDERLINE + "cannot" + (Object)ChatColor.RED + " craft using materials that have custom lore.");
+            pl.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "You " + ChatColor.UNDERLINE + "cannot" + ChatColor.RED + " craft using materials that have custom lore.");
             return;
         }
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerTeleportComplete(PlayerTeleportEvent e) {
-        if (e.getFrom().getWorld().equals((Object)e.getTo().getWorld()) || e.getFrom().getWorld().getName().equals("world_duels2")) {
+        if (e.getFrom().getWorld().equals(e.getTo().getWorld()) || e.getFrom().getWorld().getName().equals("world_duels2")) {
             if (e.getPlayer().hasMetadata("natureWrathTask") && e.getCause() == PlayerTeleportEvent.TeleportCause.UNKNOWN) {
                 return;
             }
-            e.getPlayer().setMetadata("lastTeleportEvent", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)System.currentTimeMillis()));
+            e.getPlayer().setMetadata("lastTeleportEvent", new FixedMetadataValue(Arkkit.get(), System.currentTimeMillis()));
         }
     }
 
-    @EventHandler(priority=EventPriority.LOW)
+    @EventHandler(priority = EventPriority.LOW)
     public void onPlayerDropItem(PlayerDropItemEvent e) {
         final Player p = e.getPlayer();
-        if (p.hasMetadata("lastTeleportEvent") && System.currentTimeMillis() - ((MetadataValue)p.getMetadata("lastTeleportEvent").get(0)).asLong() < 500L) {
+        if (p.hasMetadata("lastTeleportEvent") && System.currentTimeMillis() - p.getMetadata("lastTeleportEvent").get(0).asLong() < 500L) {
             e.setCancelled(true);
-            p.sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "You cannot drop items so quickly after teleporting.");
-            Bukkit.getScheduler().runTaskLater((Plugin)Arkkit.get(), new Runnable(){
+            p.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "You cannot drop items so quickly after teleporting.");
+            Bukkit.getScheduler().runTaskLater(Arkkit.get(), new Runnable() {
 
                 @Override
                 public void run() {
@@ -291,60 +273,60 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.LOW)
+    @EventHandler(priority = EventPriority.LOW)
     public void onInventoryClick(InventoryClickEvent e) {
-        Player p = (Player)e.getWhoClicked();
-        if (p.hasMetadata("lastTeleportEvent") && System.currentTimeMillis() - ((MetadataValue)p.getMetadata("lastTeleportEvent").get(0)).asLong() < 250L) {
+        Player p = (Player) e.getWhoClicked();
+        if (p.hasMetadata("lastTeleportEvent") && System.currentTimeMillis() - p.getMetadata("lastTeleportEvent").get(0).asLong() < 250L) {
             e.setCancelled(true);
             e.setResult(Event.Result.DENY);
-            p.sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "You cannot perform inventory edits so quickly after teleporting.");
+            p.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "You cannot perform inventory edits so quickly after teleporting.");
         }
     }
 
-    @EventHandler(priority=EventPriority.LOW)
+    @EventHandler(priority = EventPriority.LOW)
     public void onPlayerPlaceCreeperEgg(PlayerInteractEvent e) {
         Player p = e.getPlayer();
-        if (e.hasItem() && e.getItem().getType() == Material.MONSTER_EGG && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && p.hasMetadata("lastTeleportEvent") && System.currentTimeMillis() - ((MetadataValue)p.getMetadata("lastTeleportEvent").get(0)).asLong() < 5000L) {
+        if (e.hasItem() && e.getItem().getType() == Material.MONSTER_EGG && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && p.hasMetadata("lastTeleportEvent") && System.currentTimeMillis() - p.getMetadata("lastTeleportEvent").get(0).asLong() < 5000L) {
             e.setCancelled(true);
             e.setUseItemInHand(Event.Result.DENY);
-            p.sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "You cannot use monster eggs so quickly after teleporting (5s).");
+            p.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "You cannot use monster eggs so quickly after teleporting (5s).");
         }
     }
 
-    @EventHandler(priority=EventPriority.HIGH, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onItemPickup(PlayerPickupItemEvent e) {
-        block5: {
+        block5:
+        {
             if (AntiDupe.mcmmo) {
                 try {
                     McMMOPlayer mcMMOPlayer;
-                    if (UserManager.getPlayer((Player)e.getPlayer()) != null && ((mcMMOPlayer = UserManager.getPlayer((Player)e.getPlayer())).getAbilityMode(AbilityType.BERSERK) || mcMMOPlayer.isUsingUnarmed() && ItemUtils.isSharable((ItemStack)e.getItem().getItemStack()))) {
+                    if (UserManager.getPlayer(e.getPlayer()) != null && ((mcMMOPlayer = UserManager.getPlayer(e.getPlayer())).getAbilityMode(AbilityType.BERSERK) || mcMMOPlayer.isUsingUnarmed() && ItemUtils.isSharable(e.getItem().getItemStack()))) {
                         e.setCancelled(true);
                         if (e.getPlayer().getInventory().firstEmpty() != -1) {
                             ItemStack is = e.getItem().getItemStack().clone();
                             e.getItem().remove();
-                            e.getPlayer().getInventory().addItem(new ItemStack[]{is});
+                            e.getPlayer().getInventory().addItem(is);
                             e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.ITEM_PICKUP, 1.0f, 1.0f);
                             e.getPlayer().updateInventory();
                         }
                     }
-                }
-                catch (Exception err) {
+                } catch (Exception err) {
                     if (err instanceof IndexOutOfBoundsException) break block5;
                     err.printStackTrace();
-                    e.getPlayer().removeMetadata("cl_combat", (Plugin)Arkkit.get());
+                    e.getPlayer().removeMetadata("cl_combat", Arkkit.get());
                     e.getPlayer().kickPlayer("Invalid mcMMO data, please relog!");
                 }
             }
         }
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerJoin(PlayerJoinEvent e) {
         ArrayList<ItemStack> toRemove = new ArrayList<ItemStack>();
         for (ItemStack is : e.getPlayer().getInventory()) {
             if (is == null || !is.hasItemMeta() || !is.getItemMeta().hasLore()) continue;
             for (String s : is.getItemMeta().getLore()) {
-                if (!ChatColor.stripColor((String)s).equals("Click to toggle this setting.")) continue;
+                if (!ChatColor.stripColor(s).equals("Click to toggle this setting.")) continue;
                 toRemove.add(is);
             }
         }
@@ -354,19 +336,19 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.LOW)
+    @EventHandler(priority = EventPriority.LOW)
     public void onPistonPush(BlockPistonExtendEvent e) {
         for (Block b : e.getBlocks()) {
-            if (!oreMaterials.contains((Object)b.getType())) continue;
+            if (!oreMaterials.contains(b.getType())) continue;
             e.setCancelled(true);
         }
     }
 
-    @EventHandler(priority=EventPriority.LOW)
+    @EventHandler(priority = EventPriority.LOW)
     public void onPistonPull(BlockPistonRetractEvent e) {
         BlockFace direction = e.getDirection();
         Block movedBlock = e.getBlock().getRelative(direction).getRelative(direction);
-        if (oreMaterials.contains((Object)movedBlock.getType())) {
+        if (oreMaterials.contains(movedBlock.getType())) {
             e.setCancelled(true);
         }
     }

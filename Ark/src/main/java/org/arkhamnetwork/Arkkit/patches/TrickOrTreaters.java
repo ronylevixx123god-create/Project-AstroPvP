@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.google.common.collect.Lists
  *  me.ifamasssxd.cosmicbosses.utils.BossUtils
@@ -32,9 +32,9 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import me.ifamasssxd.cosmicbosses.utils.BossUtils;
 import me.ifamasssxd.cosmicbosses.utils.WorldGuardUtils;
-import net.minecraft.server.v1_8_R3.*;
+import net.minecraft.server.v1_8_R3.EntityCreature;
+import net.minecraft.server.v1_8_R3.EntityInsentient;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.Bukkit;
@@ -55,7 +55,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class TrickOrTreaters
-extends ArkPlugin {
+        extends ArkPlugin {
     public TrickOrTreaters(Plugin p) {
         super(p);
     }
@@ -64,11 +64,12 @@ extends ArkPlugin {
     public void enable() {
         this.registerListener(new TrickOrTreaterListener(this));
         this.registerCommand(new TrickOrTreaterCommand(this, "trickortreater", "/<command>", "Spawns special Trick or Treater."));
-        this.registerTask(new BukkitRunnable(){
+        this.registerTask(new BukkitRunnable() {
 
             public void run() {
                 for (Player pl : Bukkit.getOnlinePlayers()) {
-                    if (WorldGuardUtils.isInRegionsFast((Location)pl.getLocation(), (String[])new String[]{"spawn_region"})) continue;
+                    if (WorldGuardUtils.isInRegionsFast(pl.getLocation(), new String[]{"spawn_region"}))
+                        continue;
                     TrickOrTreaters.this.spawnTrickOrTreater(pl.getLocation());
                     return;
                 }
@@ -88,7 +89,7 @@ extends ArkPlugin {
     }
 
     public void spawnTrickOrTreater(Location l) {
-        Zombie z = (Zombie)l.getWorld().spawnCreature(l, EntityType.ZOMBIE);
+        Zombie z = (Zombie) l.getWorld().spawnCreature(l, EntityType.ZOMBIE);
         if (z == null || !z.isValid() || z.isDead()) {
             return;
         }
@@ -98,7 +99,7 @@ extends ArkPlugin {
         z.setHealth(100.0);
         z.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1));
         z.setCustomName(ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "Trick Or Treater");
-        z.setMetadata("trickOrTreater", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)l));
+        z.setMetadata("trickOrTreater", new FixedMetadataValue(Arkkit.get(), l));
         z.setCanPickupItems(false);
         EntityEquipment equipment = z.getEquipment();
         equipment.setItemInHandDropChance(0.0f);
@@ -106,8 +107,8 @@ extends ArkPlugin {
         equipment.setChestplateDropChance(0.0f);
         equipment.setLeggingsDropChance(0.0f);
         equipment.setBootsDropChance(0.0f);
-        EntityInsentient insentient = (EntityInsentient)((CraftLivingEntity)z).getHandle();
-        EntityCreature creature = (EntityCreature)insentient;
+        EntityInsentient insentient = (EntityInsentient) ((CraftLivingEntity) z).getHandle();
+        EntityCreature creature = (EntityCreature) insentient;
         // TODO: DO WHEN BOSSES IS DONE
        /* BossUtils.clearGoalSelectors((EntityInsentient)insentient);
         BossUtils.addSelector((EntityInsentient)insentient, (int)0, (PathfinderGoal)new PathfinderGoalFloat(insentient));

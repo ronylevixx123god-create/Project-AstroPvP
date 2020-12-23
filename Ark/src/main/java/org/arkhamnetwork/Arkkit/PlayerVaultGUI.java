@@ -1,13 +1,10 @@
 package org.arkhamnetwork.Arkkit;
 
-import org.arkhamnetwork.Arkkit.CommandVaultName;
-import org.arkhamnetwork.Arkkit.PlayerVaultGUIManager;
-import org.arkhamnetwork.Arkkit.PlayerVaultListener;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.plugin.Plugin;
 
 public class PlayerVaultGUI
-extends ArkPlugin {
+        extends ArkPlugin {
     private PlayerVaultGUIManager manager;
 
     public PlayerVaultGUI(Plugin p) {

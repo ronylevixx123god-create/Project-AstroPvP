@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
@@ -18,14 +18,14 @@ enum BucketType {
     public String itemPrefix;
     public ChatColor color;
 
-    private BucketType(Material m, String name, ChatColor cc) {
+    BucketType(Material m, String name, ChatColor cc) {
         this.m = m;
         this.itemPrefix = name;
         this.color = cc;
     }
 
     public String getItemPrefix() {
-        return (Object)this.color + "" + (Object)ChatColor.BOLD + this.itemPrefix;
+        return this.color + "" + ChatColor.BOLD + this.itemPrefix;
     }
 }
 

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.ChatColor
  *  org.bukkit.command.Command
@@ -9,16 +9,16 @@
  */
 package org.arkhamnetwork.Arkkit.patches.chat_filter;
 
-import java.util.List;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
-import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+
 final class CommandChat
-extends AbstractCommand {
+        extends AbstractCommand {
     public CommandChat(String command, String usage, String description, List<String> aliases) {
         super(command, usage, description, aliases);
     }
@@ -26,13 +26,13 @@ extends AbstractCommand {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         Player player;
-        Player player2 = player = sender instanceof Player ? (Player)sender : null;
+        Player player2 = player = sender instanceof Player ? (Player) sender : null;
         if (player != null && !player.hasPermission("simplechat.admin")) {
-            player.sendMessage((Object)ChatColor.RED + "You do not have permission to do that.");
+            player.sendMessage(ChatColor.RED + "You do not have permission to do that.");
             return true;
         }
         if (args.length != 1) {
-            sender.sendMessage((Object)ChatColor.RED + "Usage: /chat <clear|toggle|reload>");
+            sender.sendMessage(ChatColor.RED + "Usage: /chat <clear|toggle|reload>");
             return true;
         }
         if (args.length == 1) {
@@ -44,7 +44,7 @@ extends AbstractCommand {
                 ChatUtils.toggleChat(player);
                 return true;
             }
-            sender.sendMessage((Object)ChatColor.RED + " Usage: /chat <clear|toggle|reload>");
+            sender.sendMessage(ChatColor.RED + " Usage: /chat <clear|toggle|reload>");
             return true;
         }
         return false;

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.event.EventHandler
@@ -11,7 +11,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import org.arkhamnetwork.Arkkit.patches.MoreBuckets;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -20,15 +19,15 @@ import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.inventory.ItemStack;
 
 final class MoreBucketsListener
-implements Listener {
+        implements Listener {
     MoreBucketsListener() {
     }
 
-    @EventHandler(priority=EventPriority.LOW, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onPlayerEmptyBucket(PlayerBucketEmptyEvent e) {
-        Bukkit.getLogger().info("bucket => " + (Object)e.getItemStack());
+        Bukkit.getLogger().info("bucket => " + e.getItemStack());
         ItemStack bucket = e.getPlayer().getItemInHand();
-        Bukkit.getLogger().info("ibucket => " + (Object)bucket);
+        Bukkit.getLogger().info("ibucket => " + bucket);
         if (MoreBuckets.isMultiBucket(bucket)) {
             int uses = MoreBuckets.getBucketUses(bucket);
             if (uses > 1) {

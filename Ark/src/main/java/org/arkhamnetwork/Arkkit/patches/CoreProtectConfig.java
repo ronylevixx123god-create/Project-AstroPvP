@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  net.coreprotect.model.Config
  *  org.bukkit.Bukkit
@@ -9,13 +9,12 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import net.coreprotect.model.Config;
-import org.arkhamnetwork.Arkkit.patches.CommandCOConfig;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 public class CoreProtectConfig
-extends ArkPlugin {
+        extends ArkPlugin {
     public CoreProtectConfig(Plugin p) {
         super(p);
     }

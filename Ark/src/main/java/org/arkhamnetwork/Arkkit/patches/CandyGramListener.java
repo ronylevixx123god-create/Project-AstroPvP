@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.ChatColor
  *  org.bukkit.Sound
@@ -13,7 +13,6 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.CandyGramGUI;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -23,14 +22,14 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
 final class CandyGramListener
-implements Listener {
+        implements Listener {
     CandyGramListener() {
     }
 
     @EventHandler
     public void onPlayerClickNPC(PlayerInteractEntityEvent event) {
         Player clicked;
-        if (event.getRightClicked() instanceof Player && ChatColor.stripColor((String)(clicked = (Player)event.getRightClicked()).getName()).equalsIgnoreCase("Candy Man")) {
+        if (event.getRightClicked() instanceof Player && ChatColor.stripColor((clicked = (Player) event.getRightClicked()).getName()).equalsIgnoreCase("Candy Man")) {
             event.setCancelled(true);
             event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.BAT_TAKEOFF, 1.0f, 1.4f);
             new CandyGramGUI(event.getPlayer()).openGUI(Arkkit.get());

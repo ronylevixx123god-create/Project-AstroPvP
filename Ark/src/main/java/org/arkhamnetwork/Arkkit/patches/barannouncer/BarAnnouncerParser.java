@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.ChatColor
  *  org.bukkit.entity.Player
@@ -16,7 +16,7 @@ public class BarAnnouncerParser {
     }
 
     public static String translateToColorCode(String msg) {
-        return ChatColor.translateAlternateColorCodes((char)'&', (String)msg);
+        return ChatColor.translateAlternateColorCodes('&', msg);
     }
 }
 

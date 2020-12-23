@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.event.EventHandler
  *  org.bukkit.event.EventPriority
@@ -17,11 +17,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 final class WorldGuardFixesListener
-implements Listener {
+        implements Listener {
     WorldGuardFixesListener() {
     }
 
-    @EventHandler(priority=EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onEntityDamage(EntityDamageEvent e) {
         if (e.getCause() == EntityDamageEvent.DamageCause.FALL && WorldGuardUtils.isInvincible(e.getEntity().getLocation())) {
             e.setCancelled(true);

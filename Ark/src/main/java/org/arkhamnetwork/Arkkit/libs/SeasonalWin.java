@@ -4,10 +4,10 @@
 package org.arkhamnetwork.Arkkit.libs;
 
 public class SeasonalWin {
-    private String playerName;
-    private String faction;
-    private String planet;
-    private int season;
+    private final String playerName;
+    private final String faction;
+    private final String planet;
+    private final int season;
 
     public SeasonalWin(String playerName, String faction, String planet, int season) {
         this.playerName = playerName;

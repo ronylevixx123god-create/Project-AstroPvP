@@ -9,11 +9,10 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 class CommandVaultName
-extends AbstractCommand {
-    private PlayerVaultGUIManager guiManager;
+        extends AbstractCommand {
+    private final PlayerVaultGUIManager guiManager;
 
     public CommandVaultName(PlayerVaultGUIManager manager) {
         super("namevault", "/<command> <vaultNumber> <name>", "Rename your vaults", Lists.newArrayList("vaultname", "renamevault"));
@@ -23,18 +22,18 @@ extends AbstractCommand {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (args.length < 2) {
-            sender.sendMessage((Object)ChatColor.RED + "Invalid Usage: /namevault <vaultNumber> <name>");
+            sender.sendMessage(ChatColor.RED + "Invalid Usage: /namevault <vaultNumber> <name>");
             return true;
         }
-        if (StringUtils.isNumeric((String)args[0])) {
+        if (StringUtils.isNumeric(args[0])) {
             int vaultId = Integer.parseInt(args[0]);
             if (vaultId < 1 || vaultId > 100) {
-                sender.sendMessage((Object)ChatColor.RED + "Invalid Vault ID.");
+                sender.sendMessage(ChatColor.RED + "Invalid Vault ID.");
                 return true;
             }
-            Player player = (Player)sender;
-            if (!VaultOperations.checkPerms(sender, (int)vaultId)) {
-                sender.sendMessage((Object)ChatColor.RED + "You do not have access to that Vault number!");
+            Player player = (Player) sender;
+            if (!VaultOperations.checkPerms(sender, vaultId)) {
+                sender.sendMessage(ChatColor.RED + "You do not have access to that Vault number!");
                 return true;
             }
             CustomPlayerVaults vaults = (CustomPlayerVaults) this.guiManager.getCustomPvs().computeIfAbsent(player.getUniqueId(), e -> new CustomPlayerVaults());
@@ -49,7 +48,7 @@ extends AbstractCommand {
                 return true;
             }
             pv.setCustomName(done);
-            player.sendMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.GREEN + "Vault #" + vaultId + " renamed to " + done);
+            player.sendMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + ChatColor.GREEN + "Vault #" + vaultId + " renamed to " + done);
             Bukkit.getScheduler().scheduleSyncDelayedTask(Arkkit.get(), () -> player.chat("/pv"));
             return true;
         }

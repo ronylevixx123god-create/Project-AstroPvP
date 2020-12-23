@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
@@ -17,8 +17,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import org.arkhamnetwork.Arkkit.patches.CommandItems;
-import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -34,11 +32,11 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 final class CommandItemsListener
-implements Listener {
+        implements Listener {
     CommandItemsListener() {
     }
 
-    @EventHandler(priority=EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerInteract(PlayerInteractEvent e) {
         if (e.hasItem() && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && CommandItems.isCommandItem(e.getPlayer().getItemInHand())) {
             e.setCancelled(true);
@@ -62,39 +60,38 @@ implements Listener {
                     p.setItemInHand(null);
                 }
                 Bukkit.getLogger().info("[CommandItems] Executing command: " + cmd + " for player: " + p.getName() + " (" + p.getUniqueId() + ")");
-                Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)cmd);
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd);
                 if (msg != null) {
-                    p.sendMessage(ChatColor.translateAlternateColorCodes((char)'&', (String)msg));
+                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
                     if (cmd.contains("legacy")) {
                         int rankID = 0;
                         try {
                             String[] s = cmd.split(" ");
                             rankID = Integer.parseInt(s[s.length - 1]);
-                        }
-                        catch (Exception err) {
+                        } catch (Exception err) {
                             err.printStackTrace();
                         }
                         String rankName = null;
                         if (rankID == 1) {
-                            rankName = (Object)ChatColor.GREEN + "Pilot (Tier 1)";
+                            rankName = ChatColor.GREEN + "Pilot (Tier 1)";
                         }
                         if (rankID == 2) {
-                            rankName = (Object)ChatColor.AQUA + "Specialist (Tier 2)";
+                            rankName = ChatColor.AQUA + "Specialist (Tier 2)";
                         }
                         if (rankID == 3) {
-                            rankName = (Object)ChatColor.BLUE + "Engineer (Tier 3)";
+                            rankName = ChatColor.BLUE + "Engineer (Tier 3)";
                         }
                         if (rankID == 4) {
-                            rankName = (Object)ChatColor.GOLD + "Commander (Tier 4)";
+                            rankName = ChatColor.GOLD + "Commander (Tier 4)";
                         }
                         if (rankID == 5) {
-                            rankName = (Object)ChatColor.YELLOW + "" + (Object)ChatColor.BOLD + "Cosmonaut (Tier 5)";
+                            rankName = ChatColor.YELLOW + "" + ChatColor.BOLD + "Cosmonaut (Tier 5)";
                         }
                     }
                 }
                 p.playSound(p.getLocation(), Sound.ORB_PICKUP, 1.0f, 1.0f);
             } else {
-                Bukkit.getLogger().info("[CommandItems] Null command param found on commandItem: " + (Object)e.getItem() + " player: " + e.getPlayer().getName());
+                Bukkit.getLogger().info("[CommandItems] Null command param found on commandItem: " + e.getItem() + " player: " + e.getPlayer().getName());
             }
         }
     }

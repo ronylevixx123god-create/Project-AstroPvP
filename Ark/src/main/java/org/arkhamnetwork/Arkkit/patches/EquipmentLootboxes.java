@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.compilex.CosmicArmorSets.CosmicArmorSetsAPI
  *  com.compilex.CosmicArmorSets.enums.ArmorSet
@@ -53,19 +53,7 @@ import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
 import com.cosmicpvp.cosmicutils.gui.CosmicGUI;
 import com.cosmicpvp.cosmicutils.gui.InventoryItem;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
-import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
-import com.cosmicpvp.cosmicutils.utils.ItemUtils;
-import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
-import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
-
+import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
 import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKitsAPI;
 import me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits;
@@ -76,12 +64,7 @@ import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
 import org.arkhamnetwork.Arkkit.libs.JSONMessage;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Color;
-import org.bukkit.DyeColor;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -99,10 +82,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+
 public class EquipmentLootboxes
-extends ArkPlugin {
-    private ItemStack lootboxItem = new ItemBuilder(Material.CHEST, CC.GoldB + "Equipment Lootbox " + CC.Gray + "(Right Click)", new String[]{"", CC.GrayU + "Right-click" + CC.Gray + " to receive a random", CC.Gray + "item from one of these armor sets!", "", CC.GoldB + "Available Armor Sets", CC.GoldB + " * " + CC.RedB + "Phantom Armor Set", CC.GoldB + " * " + CC.AquaB + "Yeti Armor Set", CC.GoldB + " * " + CC.WhiteB + "Mother Of Yijki Armor Set", CC.GoldB + " * " + CC.GreenB + "Ranger Armor Set", CC.GoldB + " * " + CC.DarkRedB + "Supreme Armor Set", CC.GoldB + " * " + CC.DarkPurpleB + "Dimensional Traveler Armor Set"}).build();
-    private ItemStack heroicLootboxItem = new NBTWrapper(new ItemBuilder(Material.CHEST, CC.GoldB + "Heroic Equipment Lootbox " + CC.Gray + "(Right Click)", new String[]{"", CC.GrayU + "Right-click" + CC.Gray + " to receive a random", CC.Gray + "heroic armor piece from", CC.Gray + "one of these armor sets!", "", CC.GoldB + "Available Armor Sets", CC.GoldB + " * " + CC.RedB + "Phantom Armor Set", CC.GoldB + " * " + CC.AquaB + "Yeti Armor Set", CC.GoldB + " * " + CC.WhiteB + "Mother Of Yijki Armor Set", CC.GoldB + " * " + CC.GreenB + "Ranger Armor Set", CC.GoldB + " * " + CC.DarkRedB + "Supreme Armor Set", CC.GoldB + " * " + CC.DarkPurpleB + "Dimensional Traveler Armor Set"}).build()).setString("cosmicType", "heroicLootbox").build();
+        extends ArkPlugin {
+    private final ItemStack lootboxItem = new ItemBuilder(Material.CHEST, CC.GoldB + "Equipment Lootbox " + CC.Gray + "(Right Click)", "", CC.GrayU + "Right-click" + CC.Gray + " to receive a random", CC.Gray + "item from one of these armor sets!", "", CC.GoldB + "Available Armor Sets", CC.GoldB + " * " + CC.RedB + "Phantom Armor Set", CC.GoldB + " * " + CC.AquaB + "Yeti Armor Set", CC.GoldB + " * " + CC.WhiteB + "Mother Of Yijki Armor Set", CC.GoldB + " * " + CC.GreenB + "Ranger Armor Set", CC.GoldB + " * " + CC.DarkRedB + "Supreme Armor Set", CC.GoldB + " * " + CC.DarkPurpleB + "Dimensional Traveler Armor Set").build();
+    private final ItemStack heroicLootboxItem = new NBTWrapper(new ItemBuilder(Material.CHEST, CC.GoldB + "Heroic Equipment Lootbox " + CC.Gray + "(Right Click)", "", CC.GrayU + "Right-click" + CC.Gray + " to receive a random", CC.Gray + "heroic armor piece from", CC.Gray + "one of these armor sets!", "", CC.GoldB + "Available Armor Sets", CC.GoldB + " * " + CC.RedB + "Phantom Armor Set", CC.GoldB + " * " + CC.AquaB + "Yeti Armor Set", CC.GoldB + " * " + CC.WhiteB + "Mother Of Yijki Armor Set", CC.GoldB + " * " + CC.GreenB + "Ranger Armor Set", CC.GoldB + " * " + CC.DarkRedB + "Supreme Armor Set", CC.GoldB + " * " + CC.DarkPurpleB + "Dimensional Traveler Armor Set").build()).setString("cosmicType", "heroicLootbox").build();
 
     public EquipmentLootboxes(Plugin p) {
         super(p);
@@ -117,7 +106,7 @@ extends ArkPlugin {
     }
 
     public ItemStack createHeroicGKitGenerator(boolean applyIID) {
-        ItemStack retr = new ItemBuilder(Material.CHEST, CC.RedB + "Heroic G-Kit Generator ", new String[]{"", CC.GrayU + "Right-Click" + CC.Gray + " to receive a random", CC.Gray + "Heroic G-Kit Armor Piece!"}).build();
+        ItemStack retr = new ItemBuilder(Material.CHEST, CC.RedB + "Heroic G-Kit Generator ", "", CC.GrayU + "Right-Click" + CC.Gray + " to receive a random", CC.Gray + "Heroic G-Kit Armor Piece!").build();
         if (applyIID && ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
             retr = ItemID.assignItemID(null, retr);
         }
@@ -125,7 +114,7 @@ extends ArkPlugin {
     }
 
     public ItemStack createMKitGenerator(boolean applyIID) {
-        ItemStack retr = new ItemBuilder(Material.CHEST, CC.DarkRedB + "Random M-Kit Generator", new String[]{"", CC.GrayU + "Right-Click" + CC.Gray + " to receive a random", CC.Gray + "Mastery Kit Armor Piece!"}).build();
+        ItemStack retr = new ItemBuilder(Material.CHEST, CC.DarkRedB + "Random M-Kit Generator", "", CC.GrayU + "Right-Click" + CC.Gray + " to receive a random", CC.Gray + "Mastery Kit Armor Piece!").build();
         if (applyIID && ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
             retr = ItemID.assignItemID(null, retr);
         }
@@ -150,29 +139,29 @@ extends ArkPlugin {
 
     public ItemStack getRandomGkitItem() {
         GlobalKits kit = GlobalKits.values()[random.nextInt(GlobalKits.values().length)];
-        List items = CosmicGlobalKitsAPI.getGlobalKitItems((GlobalKits)kit, (String)"Heroic Armor GKit Generator");
-        return (ItemStack)items.get(random.nextInt(items.size()));
+        List items = CosmicGlobalKitsAPI.getGlobalKitItems(kit, "Heroic Armor GKit Generator");
+        return (ItemStack) items.get(random.nextInt(items.size()));
     }
 
     public ItemStack getRandomMkitItem() {
-        ArrayList kits = Lists.newArrayList((Object[])new MasteryKits[]{MasteryKits.DEATH_KNIGHT, MasteryKits.GHOST, MasteryKits.NECROMANCER});
-        MasteryKits random = (MasteryKits)kits.get(ThreadLocalRandom.current().nextInt(kits.size()));
+        ArrayList kits = Lists.newArrayList((Object[]) new MasteryKits[]{MasteryKits.DEATH_KNIGHT, MasteryKits.GHOST, MasteryKits.NECROMANCER});
+        MasteryKits random = (MasteryKits) kits.get(ThreadLocalRandom.current().nextInt(kits.size()));
         List items = random.getKit().getMasteryItems(null, random, true);
-        items.removeIf(item -> item == null || !GeneralUtil.isArmor((ItemStack)item));
+        items.removeIf(item -> item == null || !GeneralUtil.isArmor((ItemStack) item));
         Collections.shuffle(items);
-        return items.isEmpty() ? null : (ItemStack)items.get(ThreadLocalRandom.current().nextInt(items.size()));
+        return items.isEmpty() ? null : (ItemStack) items.get(ThreadLocalRandom.current().nextInt(items.size()));
     }
 
     class LootboxOpenMenuAnimation
-    extends CosmicGUI {
-        private int animationTick;
-        private int MAX_ANIMATION_TICKS;
+            extends CosmicGUI {
         BukkitTask animationTask;
+        List<ArmorSet> validArmorSets;
+        private int animationTick;
+        private final int MAX_ANIMATION_TICKS;
         private boolean finished;
         private boolean readyToGive;
-        private boolean heroic;
+        private final boolean heroic;
         private ItemStack lastArmorPeice;
-        List<ArmorSet> validArmorSets;
 
         public LootboxOpenMenuAnimation(Player player, boolean heroicArmor) {
             super(player, (heroicArmor ? "Heroic " : "") + "Equipment Lootbox", 9);
@@ -192,10 +181,10 @@ extends ArkPlugin {
             if (this.animationTask != null && Bukkit.getScheduler().isCurrentlyRunning(this.animationTask.getTaskId())) {
                 this.animationTask.cancel();
             }
-            this.animationTask = new BukkitRunnable(){
+            this.animationTask = new BukkitRunnable() {
 
                 public void run() {
-                    if (!LootboxOpenMenuAnimation.this.player.isValid() || LootboxOpenMenuAnimation.this.player.getOpenInventory() == null || !LootboxOpenMenuAnimation.this.inventory.equals((Object)LootboxOpenMenuAnimation.this.player.getOpenInventory().getTopInventory())) {
+                    if (!LootboxOpenMenuAnimation.this.player.isValid() || LootboxOpenMenuAnimation.this.player.getOpenInventory() == null || !LootboxOpenMenuAnimation.this.inventory.equals(LootboxOpenMenuAnimation.this.player.getOpenInventory().getTopInventory())) {
                         this.cancel();
                         Bukkit.getLogger().info("Cancelling task for " + LootboxOpenMenuAnimation.this.player.getName() + " due to not having inventory open!");
                         return;
@@ -204,8 +193,8 @@ extends ArkPlugin {
                         this.cancel();
                         LootboxOpenMenuAnimation.this.readyToGive = true;
                         LootboxOpenMenuAnimation.this.player.playSound(LootboxOpenMenuAnimation.this.player.getLocation(), Sound.LEVEL_UP, 1.0f, 1.5f);
-                        Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Arkkit.get(), () -> {
-                            if (LootboxOpenMenuAnimation.this.player.isValid() && LootboxOpenMenuAnimation.this.player.getOpenInventory() != null && LootboxOpenMenuAnimation.this.inventory.equals((Object)LootboxOpenMenuAnimation.this.player.getOpenInventory().getTopInventory()) && LootboxOpenMenuAnimation.this.readyToGive) {
+                        Bukkit.getScheduler().scheduleSyncDelayedTask(Arkkit.get(), () -> {
+                            if (LootboxOpenMenuAnimation.this.player.isValid() && LootboxOpenMenuAnimation.this.player.getOpenInventory() != null && LootboxOpenMenuAnimation.this.inventory.equals(LootboxOpenMenuAnimation.this.player.getOpenInventory().getTopInventory()) && LootboxOpenMenuAnimation.this.readyToGive) {
                                 LootboxOpenMenuAnimation.this.readyToGive = false;
                                 LootboxOpenMenuAnimation.this.givePrize(true);
                                 LootboxOpenMenuAnimation.this.player.closeInventory();
@@ -237,7 +226,7 @@ extends ArkPlugin {
                         LootboxOpenMenuAnimation.this.readyToGive = true;
                     }
                 }
-            }.runTaskTimer((Plugin)Arkkit.get(), 20L, 1L);
+            }.runTaskTimer(Arkkit.get(), 20L, 1L);
         }
 
         private void givePrize(boolean announce) {
@@ -253,17 +242,17 @@ extends ArkPlugin {
                 this.lastArmorPeice = ItemID.assignItemID(null, this.lastArmorPeice);
             }
             if (announce) {
-                Bukkit.broadcastMessage((String)(CC.GoldB + "(!) " + CC.Gold + this.player.getName() + " received a " + this.lastArmorPeice.getItemMeta().getDisplayName() + CC.Gold + " from a " + (this.heroic ? "Heroic " : "") + "Equipment Lootbox!"));
+                Bukkit.broadcastMessage(CC.GoldB + "(!) " + CC.Gold + this.player.getName() + " received a " + this.lastArmorPeice.getItemMeta().getDisplayName() + CC.Gold + " from a " + (this.heroic ? "Heroic " : "") + "Equipment Lootbox!");
             } else {
                 this.player.sendMessage(CC.GoldB + "(!) " + CC.Gold + "You found a " + this.lastArmorPeice.getItemMeta().getDisplayName() + CC.Gold + " inside a" + (this.heroic ? " Heroic" : "n") + " Equipment Lootbox!");
             }
             this.player.playSound(this.player.getLocation(), Sound.LEVEL_UP, 1.1f, 0.9f);
-            PlayerUtil.giveOrDropProtectedItem((Player)this.player, (ItemStack)this.lastArmorPeice, (int)-1);
-            Bukkit.getLogger().info("{EquipmentLootbox] Giving: " + (Object)this.lastArmorPeice + " to " + this.player.getName() + "!");
+            PlayerUtil.giveOrDropProtectedItem(this.player, this.lastArmorPeice, -1);
+            Bukkit.getLogger().info("{EquipmentLootbox] Giving: " + this.lastArmorPeice + " to " + this.player.getName() + "!");
             this.player.updateInventory();
-            Bukkit.getPluginManager().callEvent((Event)new CustomCosmicPlayerEvent(this.player, "EQUIP_LOOTBOX_OPEN", new Object[]{this.lastArmorPeice}));
+            Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(this.player, "EQUIP_LOOTBOX_OPEN", new Object[]{this.lastArmorPeice}));
             if (this.heroic) {
-                Bukkit.getPluginManager().callEvent((Event)new CustomCosmicPlayerEvent(this.player, "EQUIP_HEROIC_LOOTBOX_OPEN", new Object[]{this.lastArmorPeice}));
+                Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(this.player, "EQUIP_HEROIC_LOOTBOX_OPEN", new Object[]{this.lastArmorPeice}));
             }
         }
 
@@ -272,7 +261,7 @@ extends ArkPlugin {
                 this.givePrize(true);
             } else if (!this.finished) {
                 this.finished = true;
-                if (!PlayerUtil.giveOrDropProtectedItem((Player)this.player, (ItemStack)(this.heroic ? EquipmentLootboxes.this.createHeroicLootboxItem(true) : EquipmentLootboxes.this.createLootboxItem(true)), (int)-1)) {
+                if (!PlayerUtil.giveOrDropProtectedItem(this.player, this.heroic ? EquipmentLootboxes.this.createHeroicLootboxItem(true) : EquipmentLootboxes.this.createLootboxItem(true), -1)) {
                     this.player.sendMessage(CC.Red + "Your inventory was full so your Lootbox has been dropped at your feet!");
                 }
             }
@@ -286,13 +275,13 @@ extends ArkPlugin {
             } else {
                 ItemStack weapon;
                 ArmorSet set = this.validArmorSets.get(ThreadLocalRandom.current().nextInt(this.validArmorSets.size()));
-                if (!this.heroic && Math.random() <= 0.05 && (weapon = CosmicArmorSetsAPI.getWeaponFromArmorSet((ArmorSet)set)) != null) {
+                if (!this.heroic && Math.random() <= 0.05 && (weapon = CosmicArmorSetsAPI.getWeaponFromArmorSet(set)) != null) {
                     return weapon;
                 }
                 retr = set.getRandomPeice(true);
             }
             if (this.heroic) {
-                retr = CosmicArmorSetsAPI.convertItemToHeroic((ItemStack)retr, (HeroicArmorType)HeroicArmorType.getFromMaterial((Material)retr.getType()), (boolean)true);
+                retr = CosmicArmorSetsAPI.convertItemToHeroic(retr, HeroicArmorType.getFromMaterial(retr.getType()), true);
             }
             return retr;
         }
@@ -300,7 +289,7 @@ extends ArkPlugin {
         public void redraw() {
             if (this.lastArmorPeice == null) {
                 for (int i = 0; i < this.size; ++i) {
-                    this.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE).name(" ").data((short)DyeColor.GRAY.getWoolData()).build(), null);
+                    this.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE).name(" ").data(DyeColor.GRAY.getWoolData()).build(), null);
                 }
             }
             this.lastArmorPeice = this.getRandomArmorSetItem();
@@ -310,11 +299,11 @@ extends ArkPlugin {
     }
 
     class LootboxListener
-    implements Listener {
+            implements Listener {
         LootboxListener() {
         }
 
-        @EventHandler(priority=EventPriority.HIGHEST)
+        @EventHandler(priority = EventPriority.HIGHEST)
         public void onPlayerInteract(PlayerInteractEvent event) {
             if (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR) {
                 ItemStack item = event.getItem();
@@ -322,7 +311,7 @@ extends ArkPlugin {
                     return;
                 }
                 Player player = event.getPlayer();
-                if (player.getItemInHand() == null || !player.getItemInHand().equals((Object)item)) {
+                if (player.getItemInHand() == null || !player.getItemInHand().equals(item)) {
                     return;
                 }
                 NBTWrapper isWrapper = new NBTWrapper(item);
@@ -330,7 +319,7 @@ extends ArkPlugin {
                 boolean heroicLootbox = false;
                 boolean mkitGenerator = false;
                 gkitGenerator = item.getType() == Material.CHEST && isWrapper.getString("cosmicType").equals("GKIT_GENERATOR");
-                if (gkitGenerator || (heroicLootbox = isWrapper.getString("cosmicType").equals("heroicLootbox")) || (mkitGenerator = isWrapper.getString("cosmicType").equals("MKIT_GENERATOR")) || item.getItemMeta().getDisplayName().equals(EquipmentLootboxes.this.lootboxItem.getItemMeta().getDisplayName()) && ItemUtils.isLoreSameWithoutIID((List)EquipmentLootboxes.this.lootboxItem.getItemMeta().getLore(), (List)item.getItemMeta().getLore())) {
+                if (gkitGenerator || (heroicLootbox = isWrapper.getString("cosmicType").equals("heroicLootbox")) || (mkitGenerator = isWrapper.getString("cosmicType").equals("MKIT_GENERATOR")) || item.getItemMeta().getDisplayName().equals(EquipmentLootboxes.this.lootboxItem.getItemMeta().getDisplayName()) && ItemUtils.isLoreSameWithoutIID(EquipmentLootboxes.this.lootboxItem.getItemMeta().getLore(), item.getItemMeta().getLore())) {
                     event.setCancelled(true);
                     event.setUseItemInHand(Event.Result.DENY);
                     if (player.getWorld().getName().startsWith("world_duels")) {
@@ -345,7 +334,7 @@ extends ArkPlugin {
                             player.sendMessage(CC.RedB + "That " + gen + " has already been claimed!");
                             player.setItemInHand(null);
                             player.updateInventory();
-                            Bukkit.getLogger().info("[EquipmentLootbox] Found already claimed " + gen + " from " + player.getName() + " itemID: " + id + " item: " + (Object)item);
+                            Bukkit.getLogger().info("[EquipmentLootbox] Found already claimed " + gen + " from " + player.getName() + " itemID: " + id + " item: " + item);
                             return;
                         }
                         ItemID.blacklistIID(id, gen + " claimed " + player.getName());
@@ -360,12 +349,12 @@ extends ArkPlugin {
                     if (gkitGenerator) {
                         int attempts;
                         ItemStack retr = EquipmentLootboxes.this.getRandomGkitItem();
-                        for (attempts = 0; retr == null || !GeneralUtil.isArmor((ItemStack)retr) && attempts < 1000000; ++attempts) {
+                        for (attempts = 0; retr == null || !GeneralUtil.isArmor(retr) && attempts < 1000000; ++attempts) {
                             retr = EquipmentLootboxes.this.getRandomGkitItem();
                         }
-                        if (!GeneralUtil.isArmor((ItemStack)retr)) {
+                        if (!GeneralUtil.isArmor(retr)) {
                             Bukkit.getLogger().info("[HeroicGkitGenerator] Unable to find armor for " + player.getName());
-                            retr = CosmicArmorSetsAPI.createHeroicPeice((HeroicArmorType)HeroicArmorType.values()[random.nextInt(HeroicArmorType.values().length)]);
+                            retr = CosmicArmorSetsAPI.createHeroicPeice(HeroicArmorType.values()[random.nextInt(HeroicArmorType.values().length)]);
                         } else {
                             HeroicArmorType type = null;
                             String name = retr.getType().name();
@@ -374,9 +363,9 @@ extends ArkPlugin {
                                 retr.setType(type.getMaterial());
                                 NBTWrapper wrapper = new NBTWrapper(retr);
                                 wrapper.setString("cosmicType", "HEROIC_ARMOR");
-                                wrapper.setNBTBase("conaxData", (NBTBase)new NBTTagCompoundBuilder().setInt("durability", Integer.valueOf(type.getDurability())).setInt("maxDurability", Integer.valueOf(type.getDurability())).setInt("armorModifier", Integer.valueOf(type.getArmorModifier())).get());
+                                wrapper.setNBTBase("conaxData", new NBTTagCompoundBuilder().setInt("durability", Integer.valueOf(type.getDurability())).setInt("maxDurability", Integer.valueOf(type.getDurability())).setInt("armorModifier", Integer.valueOf(type.getArmorModifier())).get());
                                 retr = wrapper.build();
-                                LeatherArmorMeta im = (LeatherArmorMeta)retr.getItemMeta();
+                                LeatherArmorMeta im = (LeatherArmorMeta) retr.getItemMeta();
                                 List lore = im.getLore();
                                 if (lore == null) {
                                     lore = Lists.newArrayList();
@@ -387,25 +376,25 @@ extends ArkPlugin {
                                 lore.add(CC.DarkRed + "This armor is stronger than diamond.");
                                 im.setLore(lore);
                                 im.setColor(Color.RED);
-                                retr.setItemMeta((ItemMeta)im);
+                                retr.setItemMeta(im);
                             }
                         }
-                        Bukkit.getLogger().info("[HeroicGkitGenerator] Giving " + (Object)retr + " to " + player.getName() + " in " + attempts + " attempts!");
-                        PlayerUtil.giveOrDropProtectedItem((Player)player, (ItemStack)retr, (int)-1, null, (String)(CC.Red + "Inventory Full - Heroic Armor dropped on ground."));
+                        Bukkit.getLogger().info("[HeroicGkitGenerator] Giving " + retr + " to " + player.getName() + " in " + attempts + " attempts!");
+                        PlayerUtil.giveOrDropProtectedItem(player, retr, -1, null, CC.Red + "Inventory Full - Heroic Armor dropped on ground.");
                         JSONMessage message = new JSONMessage("");
                         message.addText(null, CC.GoldB + "(!) " + CC.Gold + "You have received a ", ChatColor.GOLD);
-                        message.addItem(retr, ItemUtils.getDisplayName((ItemStack)retr), ChatColor.GOLD);
+                        message.addItem(retr, ItemUtils.getDisplayName(retr), ChatColor.GOLD);
                         message.addText(null, CC.Gold + " from the Heroic G-Kit Generator!", ChatColor.GOLD);
                         message.sendToPlayer(player);
                         player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0f, 1.4f);
                         player.updateInventory();
                     } else if (mkitGenerator) {
                         ItemStack mkit = EquipmentLootboxes.this.getRandomMkitItem();
-                        Bukkit.getLogger().info("[MkitGenerator] Giving " + (Object)mkit + " to " + player.getName() + " in 1 attempt!");
-                        PlayerUtil.giveOrDropProtectedItem((Player)player, (ItemStack)mkit, (int)-1, null, (String)(CC.Red + "Inventory Full - Mastery Kit Armor dropped on ground."));
+                        Bukkit.getLogger().info("[MkitGenerator] Giving " + mkit + " to " + player.getName() + " in 1 attempt!");
+                        PlayerUtil.giveOrDropProtectedItem(player, mkit, -1, null, CC.Red + "Inventory Full - Mastery Kit Armor dropped on ground.");
                         JSONMessage message = new JSONMessage("");
                         message.addText(null, CC.GoldB + "(!) " + CC.Gold + "You have received a ", ChatColor.GOLD);
-                        message.addItem(mkit, ItemUtils.getDisplayName((ItemStack)mkit), ChatColor.GOLD);
+                        message.addItem(mkit, ItemUtils.getDisplayName(mkit), ChatColor.GOLD);
                         message.addText(null, CC.Gold + " from the Random M-Kit Generator!", ChatColor.GOLD);
                         message.sendToPlayer(player);
                         player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0f, 1.4f);
@@ -419,7 +408,7 @@ extends ArkPlugin {
     }
 
     class LootboxCommand
-    extends AbstractCommand {
+            extends AbstractCommand {
         public LootboxCommand(String command, String usage, String description) {
             super(command, usage, description);
         }
@@ -432,13 +421,13 @@ extends ArkPlugin {
             }
             boolean bl = heroic = args.length == 2 && args[1].equalsIgnoreCase("heroic");
             if (args.length == 1 || heroic) {
-                Player pl = Bukkit.getPlayer((String)args[0]);
+                Player pl = Bukkit.getPlayer(args[0]);
                 if (pl == null) {
                     sender.sendMessage(CC.Red + "Invalid player!");
                     return true;
                 }
                 pl.sendMessage(CC.GoldB + "(!) " + CC.Gold + "You have been given an " + CC.GoldB + "Equipment Lootbox!");
-                PlayerUtil.giveOrDropProtectedItem((Player)pl, (ItemStack)(heroic ? EquipmentLootboxes.this.createHeroicLootboxItem(true) : EquipmentLootboxes.this.createLootboxItem(true)), (int)-1);
+                PlayerUtil.giveOrDropProtectedItem(pl, heroic ? EquipmentLootboxes.this.createHeroicLootboxItem(true) : EquipmentLootboxes.this.createLootboxItem(true), -1);
                 sender.sendMessage(CC.Red + "Given lootbox to " + pl.getName() + "!");
                 return true;
             }

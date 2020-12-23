@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.ChatColor
  *  org.bukkit.command.Command
@@ -9,15 +9,16 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.List;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+
 final class CommandHitMe
-extends AbstractCommand {
+        extends AbstractCommand {
     public CommandHitMe(String command, String usage, String description, List<String> aliases) {
         super(command, usage, description, aliases);
     }
@@ -25,11 +26,11 @@ extends AbstractCommand {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (sender instanceof Player) {
-            Player p = (Player)sender;
+            Player p = (Player) sender;
             if (p.getHealth() - 1.0 > 0.0) {
                 p.damage(1.0);
             } else {
-                p.sendMessage((Object)ChatColor.RED + "You cannot execute this command at 1HP.");
+                p.sendMessage(ChatColor.RED + "You cannot execute this command at 1HP.");
             }
         }
         return true;

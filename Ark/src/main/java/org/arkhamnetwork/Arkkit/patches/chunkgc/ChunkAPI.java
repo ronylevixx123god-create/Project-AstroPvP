@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Chunk
  *  org.bukkit.Location
@@ -10,9 +10,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches.chunkgc;
 
-import java.util.concurrent.CopyOnWriteArrayList;
-import org.arkhamnetwork.Arkkit.patches.chunkgc.ChunkGCTask;
-import org.arkhamnetwork.Arkkit.patches.chunkgc.PlayerMoveTask;
 import org.arkhamnetwork.Arkkit.utils.LongHash;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -20,10 +17,12 @@ import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_8_R3.CraftChunk;
 import org.bukkit.entity.EntityType;
 
+import java.util.concurrent.CopyOnWriteArrayList;
+
 public class ChunkAPI {
     public static boolean isAsyncChunkLoaded(Chunk c) {
         CopyOnWriteArrayList<Long> lists = ChunkGCTask.loaded_chunks.get(c.getWorld().getName());
-        return lists != null && lists.contains(LongHash.toLong(((CraftChunk)c).getHandle().locX, ((CraftChunk)c).getHandle().locZ));
+        return lists != null && lists.contains(LongHash.toLong(((CraftChunk) c).getHandle().locX, ((CraftChunk) c).getHandle().locZ));
     }
 
     public static boolean isAsyncChunkLoaded(World w, int cx, int cz) {
@@ -41,7 +40,8 @@ public class ChunkAPI {
             lblock_viewdistance *= 3;
         }
         for (Location ploc : PlayerMoveTask.async_player_locations.values()) {
-            if (!ploc.getWorld().equals((Object)loc.getWorld()) || !(Math.abs(ploc.getX() - loc.getX()) + Math.abs(ploc.getZ() - loc.getZ()) <= (double)lblock_viewdistance)) continue;
+            if (!ploc.getWorld().equals(loc.getWorld()) || !(Math.abs(ploc.getX() - loc.getX()) + Math.abs(ploc.getZ() - loc.getZ()) <= (double) lblock_viewdistance))
+                continue;
             nearby = true;
             break;
         }

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.earth2me.essentials.User
  *  com.google.common.collect.Lists
@@ -24,9 +24,6 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.earth2me.essentials.User;
-
-import java.util.List;
-
 import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
 import org.arkhamnetwork.Arkkit.Arkkit;
@@ -47,16 +44,18 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
+import java.util.List;
+
 class HomeGUIListener
-implements Listener {
-    private List<String> aliases = Lists.newArrayList("/home", "/ehome", "/homes", "/ehomes");
-    private HomeGUIManager manager;
+        implements Listener {
+    private final List<String> aliases = Lists.newArrayList("/home", "/ehome", "/homes", "/ehomes");
+    private final HomeGUIManager manager;
 
     public HomeGUIListener(HomeGUIManager manager) {
         this.manager = manager;
     }
 
-    @EventHandler(priority=EventPriority.HIGH, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onPlayerCommand(PlayerCommandPreprocessEvent event) {
         if (this.aliases.contains(event.getMessage().toLowerCase())) {
             event.setCancelled(true);
@@ -69,7 +68,7 @@ implements Listener {
     @EventHandler
     public void onPlayerClose(InventoryCloseEvent event) {
         if (event.getPlayer().hasMetadata("custom_home")) {
-            event.getPlayer().removeMetadata("custom_home", (Plugin)Arkkit.get());
+            event.getPlayer().removeMetadata("custom_home", Arkkit.get());
         }
     }
 
@@ -86,8 +85,8 @@ implements Listener {
             if (event.getRawSlot() < 0 || event.getRawSlot() >= event.getInventory().getSize()) {
                 return;
             }
-            Player player = (Player)event.getWhoClicked();
-            if (event.getInventory().getName().contains("#") && StringUtils.isNumeric((String)(pageStr = event.getInventory().getName().split("#")[1].split(" \\(")[0]))) {
+            Player player = (Player) event.getWhoClicked();
+            if (event.getInventory().getName().contains("#") && StringUtils.isNumeric(pageStr = event.getInventory().getName().split("#")[1].split(" \\(")[0])) {
                 int pageOn = Integer.parseInt(pageStr);
                 if (item.getType() == Material.ARROW) {
                     if (event.getRawSlot() == event.getInventory().getSize() - 1) {
@@ -100,14 +99,14 @@ implements Listener {
                     }
                 }
             }
-            if (!this.isValidHome(player, homeName = ChatColor.stripColor((String)item.getItemMeta().getDisplayName()).replace(" ", "_").toLowerCase())) {
-                player.sendMessage((Object)ChatColor.RED + "That home is no longer valid!");
+            if (!this.isValidHome(player, homeName = ChatColor.stripColor(item.getItemMeta().getDisplayName()).replace(" ", "_").toLowerCase())) {
+                player.sendMessage(ChatColor.RED + "That home is no longer valid!");
                 player.closeInventory();
                 return;
             }
             if (event.getClick() == ClickType.RIGHT) {
                 player.openInventory(this.manager.getMaterialSelection());
-                player.setMetadata("custom_home", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)homeName));
+                player.setMetadata("custom_home", new FixedMetadataValue(Arkkit.get(), homeName));
                 player.playSound(player.getLocation(), Sound.LAVA_POP, 1.0f, 1.0f);
             } else if (event.getClick() == ClickType.LEFT) {
                 player.closeInventory();
@@ -125,11 +124,11 @@ implements Listener {
             if (event.getRawSlot() < 0 || event.getRawSlot() >= event.getInventory().getSize()) {
                 return;
             }
-            Player player = (Player)event.getWhoClicked();
+            Player player = (Player) event.getWhoClicked();
             if (player.hasMetadata("custom_home")) {
-                String homeName = ((MetadataValue)player.getMetadata("custom_home").get(0)).asString();
+                String homeName = player.getMetadata("custom_home").get(0).asString();
                 if (!this.isValidHome(player, homeName)) {
-                    player.sendMessage((Object)ChatColor.RED + "That home is no longer valid!");
+                    player.sendMessage(ChatColor.RED + "That home is no longer valid!");
                     player.closeInventory();
                     return;
                 }
@@ -139,9 +138,9 @@ implements Listener {
                     this.manager.getCustomHomes().put(player.getUniqueId(), customHomes);
                 }
                 customHomes.put(homeName, item.getType());
-                player.sendMessage((Object)ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.GREEN + "Saved " + homeName + " home icon to " + (Object)ChatColor.GREEN + ChatColor.UNDERLINE.toString() + StringUtils.capitaliseAllWords((String)item.getType().name().toLowerCase().replace("_", " ")));
+                player.sendMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + ChatColor.GREEN + "Saved " + homeName + " home icon to " + ChatColor.GREEN + ChatColor.UNDERLINE.toString() + StringUtils.capitaliseAllWords(item.getType().name().toLowerCase().replace("_", " ")));
                 player.playSound(player.getLocation(), Sound.CLICK, 1.0f, 0.8f);
-                player.removeMetadata("custom_home", (Plugin)Arkkit.get());
+                player.removeMetadata("custom_home", Arkkit.get());
                 player.closeInventory();
                 player.chat("/home");
             } else {
@@ -154,8 +153,7 @@ implements Listener {
         User user = EssentialsUtils.getEssentials().getUser(player);
         try {
             return user.getHome(name) != null;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return false;
         }
     }

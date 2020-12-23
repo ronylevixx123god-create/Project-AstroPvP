@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.massivecraft.factions.FPlayer
  *  com.massivecraft.factions.FPlayers
@@ -24,12 +24,7 @@ package org.arkhamnetwork.Arkkit.patches;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.struct.Relation;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -38,11 +33,11 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
 final class NoVoidDamageListener
-implements Listener {
+        implements Listener {
     NoVoidDamageListener() {
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=false)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)
     public void onPlayerDamage(EntityDamageEvent e) {
         if (e.getEntity() instanceof Player && e.getCause() == EntityDamageEvent.DamageCause.VOID) {
             Location l = e.getEntity().getLocation().clone();
@@ -60,10 +55,10 @@ implements Listener {
                 if (l.getBlock().getType() != Material.BEDROCK) {
                     l.getBlock().setType(Material.BEDROCK);
                 }
-                if (!(fp = (FPlayer)FPlayers.i.get((OfflinePlayer)(pEnt = (Player)e.getEntity()))).getRelationToLocation().isAtLeast(Relation.ALLY)) {
+                if (!(fp = FPlayers.i.get(pEnt = (Player) e.getEntity())).getRelationToLocation().isAtLeast(Relation.ALLY)) {
                     pEnt.teleport(l.getWorld().getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
-                    pEnt.sendMessage((Object)ChatColor.RED + "You were under y:0 in non-ally territory, and have been force teleported to spawn.");
-                    Bukkit.getLogger().info("[Arkkit (NoVoidDamage)] Teleported player " + pEnt.getName() + " to spawn due to invalid location: " + (Object)l);
+                    pEnt.sendMessage(ChatColor.RED + "You were under y:0 in non-ally territory, and have been force teleported to spawn.");
+                    Bukkit.getLogger().info("[Arkkit (NoVoidDamage)] Teleported player " + pEnt.getName() + " to spawn due to invalid location: " + l);
                 } else {
                     e.getEntity().teleport(l.add(0.0, 2.0, 0.0), PlayerTeleportEvent.TeleportCause.UNKNOWN);
                 }

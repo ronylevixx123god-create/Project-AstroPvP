@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
  *  org.arkhamnetwork.enchantments.util.ParticleEffect
@@ -30,8 +30,6 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.Halloween;
-import org.arkhamnetwork.Arkkit.patches.HalloweenRainbowTask;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.arkhamnetwork.enchantments.util.ParticleEffect;
 import org.bukkit.Bukkit;
@@ -56,11 +54,15 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 final class HalloweenListener
-implements Listener {
+        implements Listener {
     HalloweenListener() {
     }
 
-    @EventHandler(priority=EventPriority.MONITOR)
+    protected static void setSugarLevel(Player p, int x) {
+        p.setMetadata("sugarLevel", new FixedMetadataValue(Arkkit.get(), x));
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerJoin(PlayerJoinEvent e) {
         e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), Sound.GHAST_MOAN, 0.4f, 0.33f);
     }
@@ -77,15 +79,15 @@ implements Listener {
             e.setUseItemInHand(Event.Result.DENY);
             e.setUseInteractedBlock(Event.Result.DENY);
             if (e.getPlayer().getWorld().getName().startsWith("cosmic-station")) {
-                e.getPlayer().sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "You cannot eat Halloween Candy at Outposts.");
+                e.getPlayer().sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "You cannot eat Halloween Candy at Outposts.");
                 return;
             }
             if (e.getPlayer().getWorld().getName().startsWith("dungeon_")) {
-                e.getPlayer().sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "You cannot eat Halloween Candy inside of a Dungeon.");
+                e.getPlayer().sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "You cannot eat Halloween Candy inside of a Dungeon.");
                 return;
             }
-            if (ArkPlugins.PARKOUR_REGION.getArkPlugin().isRunning() && e.getPlayer().hasMetadata("worldguardRegion") && ((MetadataValue)e.getPlayer().getMetadata("worldguardRegion").get(0)).asString().contains("parkour")) {
-                e.getPlayer().sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "You cannot eat Halloween Candy inside of a parkour region.");
+            if (ArkPlugins.PARKOUR_REGION.getArkPlugin().isRunning() && e.getPlayer().hasMetadata("worldguardRegion") && e.getPlayer().getMetadata("worldguardRegion").get(0).asString().contains("parkour")) {
+                e.getPlayer().sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "You cannot eat Halloween Candy inside of a parkour region.");
                 return;
             }
             ItemStack candy = e.getItem().clone();
@@ -102,9 +104,9 @@ implements Listener {
             HalloweenListener.setSugarLevel(p, sugarLevel);
             this.updateSugarTask(p, sugarLevel);
             if (!p.hasMetadata("spectator")) {
-                ParticleEffect.playEffect((ParticleEffect)ParticleEffect.SPELL, (Location)p.getLocation().add(0.0, 1.0, 0.0), (float)0.4f, (int)(sugarLevel * 5));
+                ParticleEffect.playEffect(ParticleEffect.SPELL, p.getLocation().add(0.0, 1.0, 0.0), 0.4f, sugarLevel * 5);
             }
-            p.sendMessage((Object)ChatColor.YELLOW + "You eat a piece of space candy... YUM! [" + sugarLevel + "x]");
+            p.sendMessage(ChatColor.YELLOW + "You eat a piece of space candy... YUM! [" + sugarLevel + "x]");
             p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, duration, Math.min(1, sugarLevel / 2)));
             p.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, duration, Math.min(3, sugarLevel / 2)));
             p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, duration / 3, sugarLevel > 3 ? 1 : 0));
@@ -120,24 +122,20 @@ implements Listener {
             if (sugarLevel > 6) {
                 p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, duration, Math.min(3, sugarLevel / 2)));
             }
-            Bukkit.getPluginManager().callEvent((Event)new CustomCosmicPlayerEvent(p, "ITEM_USE", new Object[]{"CANDY", candy}));
+            Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(p, "ITEM_USE", new Object[]{"CANDY", candy}));
         }
     }
 
     private int getSugarLevel(Player p) {
-        return p.hasMetadata("sugarLevel") ? ((MetadataValue)p.getMetadata("sugarLevel").get(0)).asInt() : 0;
-    }
-
-    protected static void setSugarLevel(Player p, int x) {
-        p.setMetadata("sugarLevel", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)x));
+        return p.hasMetadata("sugarLevel") ? p.getMetadata("sugarLevel").get(0).asInt() : 0;
     }
 
     private void updateSugarTask(Player p, int level) {
         if (p.hasMetadata("sugarTask")) {
-            CraftTask task = (CraftTask)((MetadataValue)p.getMetadata("sugarTask").get(0)).value();
+            CraftTask task = (CraftTask) p.getMetadata("sugarTask").get(0).value();
             task.cancel();
         }
-        p.setMetadata("sugarTask", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)new HalloweenRainbowTask(p, level).runTaskTimer((Plugin)Arkkit.get(), Math.max(2, 30 - level), Math.max(2, 30 - level))));
+        p.setMetadata("sugarTask", new FixedMetadataValue(Arkkit.get(), new HalloweenRainbowTask(p, level).runTaskTimer(Arkkit.get(), Math.max(2, 30 - level), Math.max(2, 30 - level))));
     }
 }
 

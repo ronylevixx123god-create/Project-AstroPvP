@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  net.minecraft.server.v1_7_R4.EntityPlayer
  *  net.minecraft.server.v1_7_R4.MinecraftServer
@@ -29,7 +29,7 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 final class CommandOEnderchest
-extends AbstractCommand {
+        extends AbstractCommand {
     public CommandOEnderchest(String command, String usage, String description) {
         super(command, usage, description);
     }
@@ -44,13 +44,13 @@ extends AbstractCommand {
             sender.sendMessage("/oenderchest <player>");
             return true;
         }
-        Player p = (Player)sender;
+        Player p = (Player) sender;
         String playerName = args[0];
-        if (Bukkit.getPlayer((String)playerName) != null) {
+        if (Bukkit.getPlayer(playerName) != null) {
             sender.sendMessage(playerName + " is online locally, please use /enderchest instead.");
             return true;
         }
-        OfflinePlayer player = Bukkit.getOfflinePlayer((String)playerName);
+        OfflinePlayer player = Bukkit.getOfflinePlayer(playerName);
         MinecraftServer minecraftserver = MinecraftServer.getServer();
         GameProfile gameprofile = new GameProfile(player.getUniqueId(), player.getName());
         EntityPlayer entity = new EntityPlayer(minecraftserver, minecraftserver.getWorldServer(0), gameprofile, new PlayerInteractManager(minecraftserver.getWorldServer(0)));

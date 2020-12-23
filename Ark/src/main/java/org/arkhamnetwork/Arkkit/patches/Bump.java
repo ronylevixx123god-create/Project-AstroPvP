@@ -1,20 +1,19 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.plugin.Plugin
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import org.arkhamnetwork.Arkkit.patches.BumpListener;
-import org.arkhamnetwork.Arkkit.patches.CommandBump;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.plugin.Plugin;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class Bump
-extends ArkPlugin {
+        extends ArkPlugin {
     public Bump(Plugin p) {
         super(p);
     }

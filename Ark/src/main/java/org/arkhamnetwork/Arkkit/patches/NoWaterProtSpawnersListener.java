@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.compilex.CosmicCustomCreepers.enums.CreeperTypes
  *  com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils
@@ -34,7 +34,6 @@ import com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import de.dustplanet.silkspawners.SilkSpawners;
-import java.util.Random;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.arkhamnetwork.CosmicCustomTNT.enums.TNTTypes;
 import org.bukkit.Bukkit;
@@ -55,18 +54,20 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.metadata.MetadataValue;
 
+import java.util.Random;
+
 final class NoWaterProtSpawnersListener
-implements Listener {
+        implements Listener {
     int explosionDropChance = 0;
     int eggDropChance = 0;
-    SilkSpawners ssPlugin = (SilkSpawners)Bukkit.getPluginManager().getPlugin("SilkSpawners");
+    SilkSpawners ssPlugin = (SilkSpawners) Bukkit.getPluginManager().getPlugin("SilkSpawners");
 
     NoWaterProtSpawnersListener() {
         this.explosionDropChance = this.ssPlugin.config.getInt("explosionDropChance", 30);
         this.eggDropChance = this.ssPlugin.config.getInt("eggDropChance", 100);
     }
 
-    @EventHandler(priority=EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onEntityExplode(EntityExplodeEvent e) {
         Location targetLoc;
         int z;
@@ -79,12 +80,12 @@ implements Listener {
         int radius = 3;
         boolean tntExplosion = false;
         if (e.getEntityType() == EntityType.CREEPER) {
-            Creeper c = (Creeper)e.getEntity();
+            Creeper c = (Creeper) e.getEntity();
             if (c.isPowered()) {
                 radius = 6;
             }
             if (e.getEntity().hasMetadata("customCreeperType")) {
-                CreeperTypes egg_type = CreeperTypes.valueOf((String)((MetadataValue)c.getMetadata("customCreeperType").get(0)).asString());
+                CreeperTypes egg_type = CreeperTypes.valueOf(c.getMetadata("customCreeperType").get(0).asString());
                 if (egg_type == CreeperTypes.Lucky) {
                     dropChance = Math.max(dropChance, 60);
                 } else if (egg_type == CreeperTypes.Raid) {
@@ -93,11 +94,11 @@ implements Listener {
             }
         } else if (e.getEntityType() == EntityType.PRIMED_TNT) {
             TNTTypes tnt_type;
-            TNTPrimed tnt = (TNTPrimed)e.getEntity();
+            TNTPrimed tnt = (TNTPrimed) e.getEntity();
             if (!tnt.hasMetadata("ObbyEntity")) {
                 tntExplosion = true;
             }
-            if (tnt.hasMetadata("custom_tnt") && (tnt_type = TNTTypes.valueOf((String)((MetadataValue)tnt.getMetadata("custom_tnt").get(0)).asString())) == TNTTypes.Lucky) {
+            if (tnt.hasMetadata("custom_tnt") && (tnt_type = TNTTypes.valueOf(tnt.getMetadata("custom_tnt").get(0).asString())) == TNTTypes.Lucky) {
                 dropChance = Math.max(dropChance, 60);
             }
         }
@@ -106,16 +107,18 @@ implements Listener {
         boolean mobSpawner = false;
         boolean container = false;
         for (x = -radius; x <= radius; ++x) {
-            block1: for (y = radius; y >= -radius; --y) {
+            block1:
+            for (y = radius; y >= -radius; --y) {
                 for (z = -radius; z <= radius; ++z) {
-                    targetLoc = new Location(detonator.getWorld(), detonatorLoc.getX() + (double)x, detonatorLoc.getY() + (double)y, detonatorLoc.getZ() + (double)z);
+                    targetLoc = new Location(detonator.getWorld(), detonatorLoc.getX() + (double) x, detonatorLoc.getY() + (double) y, detonatorLoc.getZ() + (double) z);
                     Block b = targetLoc.getBlock();
                     Material mat = b.getType();
                     if (b.getType() == Material.MOB_SPAWNER) {
                         mobSpawner = true;
                         continue block1;
                     }
-                    if (!tntExplosion || mat != Material.CHEST && mat != Material.ENDER_CHEST && mat != Material.TRAPPED_CHEST) continue;
+                    if (!tntExplosion || mat != Material.CHEST && mat != Material.ENDER_CHEST && mat != Material.TRAPPED_CHEST)
+                        continue;
                     container = true;
                     continue block1;
                 }
@@ -128,21 +131,21 @@ implements Listener {
             for (y = radius; y >= -radius; --y) {
                 for (z = -radius; z <= radius; ++z) {
                     Inventory inventory;
-                    targetLoc = new Location(detonator.getWorld(), detonatorLoc.getX() + (double)x, detonatorLoc.getY() + (double)y, detonatorLoc.getZ() + (double)z);
+                    targetLoc = new Location(detonator.getWorld(), detonatorLoc.getX() + (double) x, detonatorLoc.getY() + (double) y, detonatorLoc.getZ() + (double) z);
                     FLocation fl = new FLocation(targetLoc);
-                    if (Board.getFactionAt((FLocation)fl).isWarZone()) continue;
+                    if (Board.getFactionAt(fl).isWarZone()) continue;
                     Block b = targetLoc.getBlock();
                     Material type = b.getType();
                     if (type == Material.MOB_SPAWNER) {
                         if (new Random().nextInt(100) <= dropChance) {
-                            CreatureSpawner cs = (CreatureSpawner)b.getState();
+                            CreatureSpawner cs = (CreatureSpawner) b.getState();
                             int spawnCount = cs.getSpawnerCount();
-                            if (spawnCount == 4 && !Board.getFactionAt((FLocation)new FLocation(b.getLocation())).isNormal()) {
-                                cs.setSpawnerCount((short)1);
+                            if (spawnCount == 4 && !Board.getFactionAt(new FLocation(b.getLocation())).isNormal()) {
+                                cs.setSpawnerCount((short) 1);
                                 spawnCount = 1;
                             }
                             while (spawnCount-- > 0) {
-                                b.getWorld().dropItemNaturally(b.getLocation(), ItemUtils.getMobSpawner((EntityType)EntityType.fromId((int)NoWaterProtSpawners.su.getSpawnerEntityID(b))));
+                                b.getWorld().dropItemNaturally(b.getLocation(), ItemUtils.getMobSpawner(EntityType.fromId(NoWaterProtSpawners.su.getSpawnerEntityID(b))));
                             }
                         }
                         if (ArkPlugins.SPAWNER_FEE.getArkPlugin().isRunning()) {
@@ -151,11 +154,12 @@ implements Listener {
                         b.setType(Material.AIR);
                         continue;
                     }
-                    if (!tntExplosion || type != Material.CHEST && type != Material.ENDER_CHEST && type != Material.TRAPPED_CHEST) continue;
+                    if (!tntExplosion || type != Material.CHEST && type != Material.ENDER_CHEST && type != Material.TRAPPED_CHEST)
+                        continue;
                     BlockState state = b.getState();
                     Location loc = b.getLocation();
                     int viewers = 0;
-                    if (state instanceof InventoryHolder && (viewers = (inventory = ((InventoryHolder)state).getInventory()).getViewers().size()) > 0) {
+                    if (state instanceof InventoryHolder && (viewers = (inventory = ((InventoryHolder) state).getInventory()).getViewers().size()) > 0) {
                         inventory.getViewers().forEach(HumanEntity::closeInventory);
                     }
                     b.setType(Material.AIR);

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Chunk
  *  org.bukkit.event.EventHandler
@@ -12,9 +12,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches.chunkgc;
 
-import java.util.concurrent.CopyOnWriteArrayList;
-import org.arkhamnetwork.Arkkit.patches.chunkgc.ChunkGCTask;
-import org.arkhamnetwork.Arkkit.patches.chunkgc.PlayerMoveTask;
 import org.arkhamnetwork.Arkkit.utils.LongHash;
 import org.bukkit.Chunk;
 import org.bukkit.event.EventHandler;
@@ -24,8 +21,10 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 
+import java.util.concurrent.CopyOnWriteArrayList;
+
 final class ChunkGCListener
-implements Listener {
+        implements Listener {
     ChunkGCListener() {
     }
 
@@ -39,13 +38,13 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onChunkUnloaded(ChunkUnloadEvent e) {
         CopyOnWriteArrayList<Long> chunks = ChunkGCTask.loaded_chunks.get(e.getWorld().getName());
         chunks.remove(LongHash.toLong(e.getChunk().getX(), e.getChunk().getZ()));
     }
 
-    @EventHandler(priority=EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerQuit(PlayerQuitEvent e) {
         PlayerMoveTask.async_player_locations.remove(e.getPlayer().getName());
     }

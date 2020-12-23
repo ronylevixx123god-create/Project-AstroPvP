@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.google.common.collect.Lists
  *  com.massivecraft.factions.FPlayer
@@ -57,7 +57,7 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
 public class DeathMessages
-extends ArkPlugin {
+        extends ArkPlugin {
     public DeathMessages(Plugin p) {
         super(p);
     }
@@ -75,31 +75,31 @@ extends ArkPlugin {
     }
 
     class CommandToggleDeathMessages
-    extends AbstractCommand {
+            extends AbstractCommand {
         public CommandToggleDeathMessages() {
             super("toggledeathmessages", "/<command>", "Death message toggle.", Lists.newArrayList("toggledeathmessage"));
         }
 
         @Override
         public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-            Player pl = (Player)sender;
+            Player pl = (Player) sender;
             if (pl.hasMetadata("deathMessageToggle")) {
-                pl.removeMetadata("deathMessageToggle", (Plugin)Arkkit.get());
-                pl.sendMessage((Object)ChatColor.YELLOW + "Death Messages have been " + (Object)ChatColor.GREEN + (Object)ChatColor.BOLD + "ENABLED");
+                pl.removeMetadata("deathMessageToggle", Arkkit.get());
+                pl.sendMessage(ChatColor.YELLOW + "Death Messages have been " + ChatColor.GREEN + ChatColor.BOLD + "ENABLED");
             } else {
-                pl.setMetadata("deathMessageToggle", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)""));
-                pl.sendMessage((Object)ChatColor.YELLOW + "Death Messages have been " + (Object)ChatColor.RED + (Object)ChatColor.BOLD + "DISABLED");
+                pl.setMetadata("deathMessageToggle", new FixedMetadataValue(Arkkit.get(), ""));
+                pl.sendMessage(ChatColor.YELLOW + "Death Messages have been " + ChatColor.RED + ChatColor.BOLD + "DISABLED");
             }
             return false;
         }
     }
 
     class DeathMessageListener
-    implements Listener {
+            implements Listener {
         DeathMessageListener() {
         }
 
-        @EventHandler(priority=EventPriority.LOW)
+        @EventHandler(priority = EventPriority.LOW)
         public void onPlayerDeath(PlayerDeathEvent event) {
             Player killer = event.getEntity().getKiller();
             if (killer != null) {
@@ -107,13 +107,14 @@ extends ArkPlugin {
                     return;
                 }
                 event.setDeathMessage(null);
-                FPlayer player = (FPlayer)FPlayers.i.get((OfflinePlayer)killer);
-                FPlayer deadFPlayer = (FPlayer)FPlayers.i.get((OfflinePlayer)event.getEntity());
+                FPlayer player = FPlayers.i.get(killer);
+                FPlayer deadFPlayer = FPlayers.i.get(event.getEntity());
                 Bukkit.getLogger().info("[Arkkit (DeathMessages)] Player " + killer.getName() + " killed " + event.getEntity().getName() + " at " + LocationUtils.convertLocationToString(event.getEntity().getLocation()));
                 for (Entity e : event.getEntity().getNearbyEntities(64.0, 64.0, 64.0)) {
                     Player nearbyPlayer;
-                    if (!(e instanceof Player) || WorldGuardUtils.isPvPDisabled((nearbyPlayer = (Player)e).getLocation()) || nearbyPlayer.hasMetadata("deathMessageToggle")) continue;
-                    FPlayer foundFPlayer = (FPlayer)FPlayers.i.get((OfflinePlayer)nearbyPlayer);
+                    if (!(e instanceof Player) || WorldGuardUtils.isPvPDisabled((nearbyPlayer = (Player) e).getLocation()) || nearbyPlayer.hasMetadata("deathMessageToggle"))
+                        continue;
+                    FPlayer foundFPlayer = FPlayers.i.get(nearbyPlayer);
                     this.sendMessage(player, foundFPlayer, deadFPlayer, killer, nearbyPlayer);
                 }
                 this.sendMessage(player, deadFPlayer, deadFPlayer, killer, event.getEntity());
@@ -126,14 +127,14 @@ extends ArkPlugin {
             String deadName = deadFPlayer.getPlayer().getName();
             String killerTag = player.getChatTag(nearbyFPlayer);
             String deadTag = deadFPlayer.getChatTag(nearbyFPlayer);
-            Relation deadRelation = nearbyFPlayer.getRelationTo((RelationParticipator)deadFPlayer);
+            Relation deadRelation = nearbyFPlayer.getRelationTo(deadFPlayer);
             ChatColor prefix = deadRelation == Relation.ENEMY ? ChatColor.GREEN : (deadRelation == Relation.NEUTRAL ? ChatColor.GRAY : (deadRelation == Relation.ALLY || deadRelation == Relation.MEMBER ? ChatColor.RED : ChatColor.GREEN));
-            message.addText(prefix.toString() + (Object)ChatColor.BOLD + "\u2731" + (Object)ChatColor.GRAY + " ");
-            message.addText(ChatColor.WHITE.toString() + (killerTag.isEmpty() ? "" : killerTag + " ") + (Object)player.getRelationTo((RelationParticipator)nearbyFPlayer).getColor() + playerName + (Object)ChatColor.GRAY + " killed " + (Object)ChatColor.WHITE + (deadTag.isEmpty() ? "" : deadTag + " ") + (Object)deadFPlayer.getRelationTo((RelationParticipator)nearbyFPlayer).getColor() + deadName + (Object)ChatColor.GRAY + " with ");
+            message.addText(prefix.toString() + ChatColor.BOLD + "\u2731" + ChatColor.GRAY + " ");
+            message.addText(ChatColor.WHITE.toString() + (killerTag.isEmpty() ? "" : killerTag + " ") + player.getRelationTo(nearbyFPlayer).getColor() + playerName + ChatColor.GRAY + " killed " + ChatColor.WHITE + (deadTag.isEmpty() ? "" : deadTag + " ") + deadFPlayer.getRelationTo(nearbyFPlayer).getColor() + deadName + ChatColor.GRAY + " with ");
             if (killer.getItemInHand() == null || killer.getItemInHand().getType() == Material.AIR) {
                 message.addText(this.getFormattedName(null));
             } else {
-                message.addItem(killer.getItemInHand(), ItemLinking.formatColors((Object)ChatColor.WHITE + this.getFormattedName(killer.getItemInHand())).getText());
+                message.addItem(killer.getItemInHand(), ItemLinking.formatColors(ChatColor.WHITE + this.getFormattedName(killer.getItemInHand())).getText());
             }
             message.sendToPlayer(toReceive);
         }
@@ -148,7 +149,7 @@ extends ArkPlugin {
             if (hand.getType() == Material.TNT) {
                 return "TNT";
             }
-            return StringUtils.capitaliseAllWords((String)hand.getType().name().toLowerCase().replace("_", " "));
+            return StringUtils.capitaliseAllWords(hand.getType().name().toLowerCase().replace("_", " "));
         }
     }
 }

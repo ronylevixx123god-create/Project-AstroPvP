@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.Material
@@ -11,17 +11,8 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.HashMap;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.libs.SpawnerLocation;
-import org.arkhamnetwork.Arkkit.patches.CommandSpawnerFee;
-import org.arkhamnetwork.Arkkit.patches.SpawnerFeeListener;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -30,13 +21,20 @@ import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.EntityType;
 import org.bukkit.plugin.Plugin;
 
+import java.io.*;
+import java.util.HashMap;
+
 public class SpawnerFee
-extends ArkPlugin {
+        extends ArkPlugin {
     public static HashMap<String, SpawnerLocation> playerSpawners;
     public static boolean spawnerFee;
     private static Thread spawnerFeeSaveThread;
     private static boolean spawnersSaved;
     private static boolean cleanSpawners;
+
+    static {
+        spawnerFee = true;
+    }
 
     public SpawnerFee(Plugin p) {
         super(p);
@@ -45,12 +43,11 @@ extends ArkPlugin {
         if (cleanSpawners) {
             try {
                 new File("spawner_fee_clean").createNewFile();
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        spawnerFeeSaveThread = new Thread(){
+        spawnerFeeSaveThread = new Thread() {
 
             @Override
             public void run() {
@@ -59,6 +56,40 @@ extends ArkPlugin {
             }
         };
         spawnerFeeSaveThread.setName("SpawnerFeeAsyncSaveThread");
+    }
+
+    protected static void saveSpawners() {
+        try {
+            new File("playerSpawners.dat").delete();
+            BufferedWriter out = new BufferedWriter(new FileWriter("playerSpawners.dat"));
+            for (SpawnerLocation sl : playerSpawners.values()) {
+                if (sl.getSpawnerType() == EntityType.UNKNOWN) continue;
+                try {
+                    out.write(sl.string() + "\n");
+                } catch (Exception err) {
+                    if (sl != null) {
+                        Bukkit.getLogger().info("[SpawnerFee] Failed to parse SpawnerLocation at " + sl.getX() + "," + sl.getY() + "," + sl.getZ());
+                    }
+                    err.printStackTrace();
+                }
+            }
+            out.close();
+            Bukkit.getLogger().info("Saved " + playerSpawners.size() + " playerSpawner locations to disk.");
+        } catch (Exception err) {
+            err.printStackTrace();
+        }
+    }
+
+    public static boolean isPlayerSpawner(Block b) {
+        try {
+            return playerSpawners.containsKey(b.getWorld().getName() + "," + b.getX() + "," + b.getY() + "," + b.getZ());
+        } catch (Exception err) {
+            return false;
+        }
+    }
+
+    public static void updateMobSpawnerData(Block b) {
+        playerSpawners.put(SpawnerFeeListener.convertBlockToString(b), SpawnerFeeListener.convertBlockToSpawnerLocation(b));
     }
 
     @Override
@@ -76,8 +107,7 @@ extends ArkPlugin {
             try {
                 Bukkit.getLogger().info("Waiting for spawnerFeeSaveThread to complete saving " + playerSpawners.size() + " spawners to proceed...");
                 Thread.sleep(500L);
-            }
-            catch (InterruptedException e) {
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
@@ -91,8 +121,7 @@ extends ArkPlugin {
         if (!new File("playerSpawners.dat").exists()) {
             try {
                 new File("playerSpawners.dat").createNewFile();
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -111,98 +140,55 @@ extends ArkPlugin {
                         if (!conversion) {
                             conversion = true;
                             if (!hasWhitelist) {
-                                Bukkit.setWhitelist((boolean)true);
+                                Bukkit.setWhitelist(true);
                             }
                         }
-                        if ((b = Bukkit.getWorld((String)data[0]).getBlockAt(Integer.valueOf(data[1]).intValue(), Integer.valueOf(data[2]).intValue(), Integer.valueOf(data[3]).intValue())).getType() == Material.MOB_SPAWNER) {
-                            spawnerType = ((CreatureSpawner)b.getState()).getSpawnedType();
-                            Bukkit.getLogger().info("[Arkkit (SpawnerFee)] Stored mob spawner at " + (Object)b.getLocation() + " as spawnerType " + (Object)spawnerType + "!");
+                        if ((b = Bukkit.getWorld(data[0]).getBlockAt(Integer.valueOf(data[1]).intValue(), Integer.valueOf(data[2]).intValue(), Integer.valueOf(data[3]).intValue())).getType() == Material.MOB_SPAWNER) {
+                            spawnerType = ((CreatureSpawner) b.getState()).getSpawnedType();
+                            Bukkit.getLogger().info("[Arkkit (SpawnerFee)] Stored mob spawner at " + b.getLocation() + " as spawnerType " + spawnerType + "!");
                         }
                     } else if (data.length == 5) {
-                        spawnerType = EntityType.valueOf((String)data[4]);
+                        spawnerType = EntityType.valueOf(data[4]);
                     } else if (data.length == 6) {
                         String entityNameAndCount = data[4];
                         if (entityNameAndCount.contains(":")) {
-                            spawnerType = EntityType.valueOf((String)entityNameAndCount.split(":")[0]);
+                            spawnerType = EntityType.valueOf(entityNameAndCount.split(":")[0]);
                             spawnerCount = Integer.parseInt(entityNameAndCount.split(":")[1]);
                         } else {
-                            spawnerType = EntityType.valueOf((String)data[4]);
+                            spawnerType = EntityType.valueOf(data[4]);
                         }
                         placeTime = Long.parseLong(data[5]);
                     }
                     if (spawnerType == EntityType.UNKNOWN) continue;
                     if (cleanSpawners) {
-                        b = Bukkit.getWorld((String)data[0]).getBlockAt(Integer.valueOf(data[1]).intValue(), Integer.valueOf(data[2]).intValue(), Integer.valueOf(data[3]).intValue());
+                        b = Bukkit.getWorld(data[0]).getBlockAt(Integer.valueOf(data[1]).intValue(), Integer.valueOf(data[2]).intValue(), Integer.valueOf(data[3]).intValue());
                         if (b.getType() != Material.MOB_SPAWNER) {
-                            Bukkit.getLogger().info("[Arkkit (SpawnerFee)] Cleaned non-existing mob spawner at " + (Object)b.getLocation() + " as spawnerType " + (Object)spawnerType + "!");
+                            Bukkit.getLogger().info("[Arkkit (SpawnerFee)] Cleaned non-existing mob spawner at " + b.getLocation() + " as spawnerType " + spawnerType + "!");
                             continue;
                         }
-                        CreatureSpawner cs = (CreatureSpawner)b.getState();
+                        CreatureSpawner cs = (CreatureSpawner) b.getState();
                         if (cs.getSpawnerCount() != spawnerCount) {
-                            Bukkit.getLogger().info("[Arkkit (SpawnerFee) Assigned spawnerCount value:1(" + cs.getSpawnerCount() + ") to spawner at: " + (Object)b.getLocation());
-                            cs.setSpawnerCount((short)1);
+                            Bukkit.getLogger().info("[Arkkit (SpawnerFee) Assigned spawnerCount value:1(" + cs.getSpawnerCount() + ") to spawner at: " + b.getLocation());
+                            cs.setSpawnerCount((short) 1);
                         }
                     }
                     playerSpawners.put(data[0] + "," + data[1] + "," + data[2] + "," + data[3], new SpawnerLocation(Integer.valueOf(data[1]), Integer.valueOf(data[2]), Integer.valueOf(data[3]), data[0], spawnerType, placeTime, spawnerCount));
                     ++count;
-                }
-                catch (NullPointerException npe) {
+                } catch (NullPointerException npe) {
                     npe.printStackTrace();
                 }
             }
             reader.close();
             if (conversion) {
                 if (!hasWhitelist) {
-                    Bukkit.setWhitelist((boolean)false);
+                    Bukkit.setWhitelist(false);
                 }
                 Bukkit.shutdown();
             }
-        }
-        catch (IOException ioe) {
+        } catch (IOException ioe) {
             ioe.printStackTrace();
         }
         Bukkit.getLogger().info("Loaded " + count + " playerSpawner locations from disk.");
-    }
-
-    protected static void saveSpawners() {
-        try {
-            new File("playerSpawners.dat").delete();
-            BufferedWriter out = new BufferedWriter(new FileWriter("playerSpawners.dat"));
-            for (SpawnerLocation sl : playerSpawners.values()) {
-                if (sl.getSpawnerType() == EntityType.UNKNOWN) continue;
-                try {
-                    out.write(sl.string() + "\n");
-                }
-                catch (Exception err) {
-                    if (sl != null) {
-                        Bukkit.getLogger().info("[SpawnerFee] Failed to parse SpawnerLocation at " + sl.getX() + "," + sl.getY() + "," + sl.getZ());
-                    }
-                    err.printStackTrace();
-                }
-            }
-            out.close();
-            Bukkit.getLogger().info("Saved " + playerSpawners.size() + " playerSpawner locations to disk.");
-        }
-        catch (Exception err) {
-            err.printStackTrace();
-        }
-    }
-
-    public static boolean isPlayerSpawner(Block b) {
-        try {
-            return playerSpawners.containsKey(b.getWorld().getName() + "," + b.getX() + "," + b.getY() + "," + b.getZ());
-        }
-        catch (Exception err) {
-            return false;
-        }
-    }
-
-    public static void updateMobSpawnerData(Block b) {
-        playerSpawners.put(SpawnerFeeListener.convertBlockToString(b), SpawnerFeeListener.convertBlockToSpawnerLocation(b));
-    }
-
-    static {
-        spawnerFee = true;
     }
 }
 

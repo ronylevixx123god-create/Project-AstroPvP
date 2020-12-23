@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.gmail.nossr50.mcMMO
  *  org.bukkit.event.EventHandler
@@ -19,13 +19,13 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.metadata.MetadataValue;
 
 final class NoMobMcmmoListener
-implements Listener {
+        implements Listener {
     NoMobMcmmoListener() {
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onCreatureSpawn(CreatureSpawnEvent e) {
-        e.getEntity().setMetadata("mcMMO: Spawned Entity", (MetadataValue)mcMMO.metadataValue);
+        e.getEntity().setMetadata("mcMMO: Spawned Entity", mcMMO.metadataValue);
     }
 }
 

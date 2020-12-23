@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
@@ -27,7 +27,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.vehicle.VehicleCreateEvent;
 
 final class BoatBlockerListener
-implements Listener {
+        implements Listener {
     BoatBlockerListener() {
     }
 
@@ -42,7 +42,7 @@ implements Listener {
     public void onPlayerInteractEvent(PlayerInteractEvent e) {
         Player pl = e.getPlayer();
         if (e.hasItem() && e.getItem().getType() == Material.BOAT && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
-            pl.sendMessage((Object)ChatColor.RED + "Boat placement is currently " + (Object)ChatColor.UNDERLINE + "disabled.");
+            pl.sendMessage(ChatColor.RED + "Boat placement is currently " + ChatColor.UNDERLINE + "disabled.");
             e.setCancelled(true);
             e.setUseItemInHand(Event.Result.DENY);
         }

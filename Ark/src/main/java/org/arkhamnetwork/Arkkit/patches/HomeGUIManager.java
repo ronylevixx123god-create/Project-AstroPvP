@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.earth2me.essentials.User
  *  com.google.common.collect.Lists
@@ -19,18 +19,6 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.earth2me.essentials.User;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.text.DecimalFormat;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-
 import com.google.common.collect.Lists;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
@@ -48,12 +36,23 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.text.DecimalFormat;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+
 class HomeGUIManager {
-    private ConcurrentHashMap<UUID, CustomHomes> customHomes = new ConcurrentHashMap();
-    private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private static File jsonFile;
-    private List<Material> materials = Lists.newArrayList(Material.DIRT, Material.STONE, Material.COBBLESTONE, Material.LOG, Material.LOG_2, Material.WORKBENCH, Material.PISTON_BASE, Material.NOTE_BLOCK, Material.MOB_SPAWNER, Material.BOOKSHELF, Material.TNT, Material.STEP, Material.ANVIL, Material.IRON_BLOCK, Material.GOLD_BLOCK, Material.DIAMOND_BLOCK, Material.NETHER_BRICK, Material.NETHERRACK, Material.ENDER_STONE, Material.CHEST, Material.ENDER_CHEST, Material.SMOOTH_BRICK, Material.SNOW_BLOCK, Material.SOUL_SAND, Material.QUARTZ_BLOCK, Material.DIAMOND_SWORD, Material.DIAMOND_AXE, Material.DIAMOND_PICKAXE, Material.DIAMOND_SPADE, Material.DIAMOND_HOE, Material.ICE, Material.PACKED_ICE, Material.DISPENSER, Material.FURNACE, Material.HOPPER, Material.GLASS, Material.SAND, Material.SPONGE, Material.OBSIDIAN, Material.BEDROCK, Material.ENCHANTMENT_TABLE, Material.CACTUS, Material.GLOWSTONE, Material.DIAMOND, Material.EMERALD, Material.GOLD_INGOT, Material.IRON_INGOT, Material.REDSTONE, Material.BUCKET, Material.LAVA_BUCKET, Material.WATER_BUCKET, Material.GOLDEN_APPLE, Material.EXP_BOTTLE, Material.BED);
-    private DecimalFormat format = new DecimalFormat("#.#");
+    private ConcurrentHashMap<UUID, CustomHomes> customHomes = new ConcurrentHashMap();
+    private final List<Material> materials = Lists.newArrayList(Material.DIRT, Material.STONE, Material.COBBLESTONE, Material.LOG, Material.LOG_2, Material.WORKBENCH, Material.PISTON_BASE, Material.NOTE_BLOCK, Material.MOB_SPAWNER, Material.BOOKSHELF, Material.TNT, Material.STEP, Material.ANVIL, Material.IRON_BLOCK, Material.GOLD_BLOCK, Material.DIAMOND_BLOCK, Material.NETHER_BRICK, Material.NETHERRACK, Material.ENDER_STONE, Material.CHEST, Material.ENDER_CHEST, Material.SMOOTH_BRICK, Material.SNOW_BLOCK, Material.SOUL_SAND, Material.QUARTZ_BLOCK, Material.DIAMOND_SWORD, Material.DIAMOND_AXE, Material.DIAMOND_PICKAXE, Material.DIAMOND_SPADE, Material.DIAMOND_HOE, Material.ICE, Material.PACKED_ICE, Material.DISPENSER, Material.FURNACE, Material.HOPPER, Material.GLASS, Material.SAND, Material.SPONGE, Material.OBSIDIAN, Material.BEDROCK, Material.ENCHANTMENT_TABLE, Material.CACTUS, Material.GLOWSTONE, Material.DIAMOND, Material.EMERALD, Material.GOLD_INGOT, Material.IRON_INGOT, Material.REDSTONE, Material.BUCKET, Material.LAVA_BUCKET, Material.WATER_BUCKET, Material.GOLDEN_APPLE, Material.EXP_BOTTLE, Material.BED);
+    private final DecimalFormat format = new DecimalFormat("#.#");
 
     HomeGUIManager() {
     }
@@ -76,19 +75,18 @@ class HomeGUIManager {
                 while ((line = reader.readLine()) != null) {
                     build.append(line);
                 }
-                this.customHomes = (ConcurrentHashMap)gson.fromJson(build.toString(), new TypeToken<ConcurrentHashMap<UUID, CustomHomes>>(){}.getType());
+                this.customHomes = gson.fromJson(build.toString(), new TypeToken<ConcurrentHashMap<UUID, CustomHomes>>() {
+                }.getType());
                 if (this.customHomes == null) {
                     this.customHomes = new ConcurrentHashMap();
                 }
                 System.out.println("Took " + (System.currentTimeMillis() - start) + "ms to load " + this.customHomes.size() + " unique players custom homes.");
-            }
-            finally {
+            } finally {
                 if (Collections.singletonList(reader).get(0) != null) {
                     reader.close();
                 }
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -98,9 +96,9 @@ class HomeGUIManager {
     }
 
     public Inventory getMaterialSelection() {
-        Inventory inventory = Bukkit.createInventory(null, (int)54, (String)"Select Home Icon");
+        Inventory inventory = Bukkit.createInventory(null, 54, "Select Home Icon");
         for (Material material : this.getMaterials()) {
-            inventory.addItem(new ItemStack[]{ItemUtils.buildItem(material, (short)0, null, (Object)ChatColor.GRAY + "Click to select material.")});
+            inventory.addItem(ItemUtils.buildItem(material, (short) 0, null, ChatColor.GRAY + "Click to select material."));
         }
         return inventory;
     }
@@ -112,14 +110,12 @@ class HomeGUIManager {
             try {
                 writer.write(map);
                 writer.flush();
-            }
-            finally {
+            } finally {
                 if (Collections.singletonList(writer).get(0) != null) {
                     writer.close();
                 }
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -130,7 +126,7 @@ class HomeGUIManager {
             return null;
         }
         int perPage = page == 1 ? 53 : 52;
-        int maxPages = (int)Math.max(1.0, Math.ceil((double)user.getHomes().size() / (double)perPage));
+        int maxPages = (int) Math.max(1.0, Math.ceil((double) user.getHomes().size() / (double) perPage));
         if (page > maxPages) {
             page = maxPages;
         }
@@ -142,7 +138,7 @@ class HomeGUIManager {
         if (name.length() > 32) {
             name = name.substring(0, 32);
         }
-        Inventory inventory = Bukkit.createInventory(null, (int)InventoryUtils.fitInventorySize(user.getHomes().size()), (String)name);
+        Inventory inventory = Bukkit.createInventory(null, InventoryUtils.fitInventorySize(user.getHomes().size()), name);
         CustomHomes customHomes = this.getCustomHomes().get(player.getUniqueId());
         LinkedList homes = new LinkedList(user.getHomes());
         int startIndex = page * perPage - perPage;
@@ -150,24 +146,23 @@ class HomeGUIManager {
             ++startIndex;
         }
         if (page > 1) {
-            inventory.setItem(inventory.getSize() - 9, ItemUtils.buildItem(Material.ARROW, (short)0, ChatColor.RED.toString() + (Object)ChatColor.BOLD + "Previous Page", (Object)ChatColor.GRAY + "Click to return to previous menu."));
+            inventory.setItem(inventory.getSize() - 9, ItemUtils.buildItem(Material.ARROW, (short) 0, ChatColor.RED.toString() + ChatColor.BOLD + "Previous Page", ChatColor.GRAY + "Click to return to previous menu."));
         }
         if (maxPages > 1 && page < maxPages) {
-            inventory.setItem(inventory.getSize() - 1, ItemUtils.buildItem(Material.ARROW, (short)0, ChatColor.GREEN.toString() + (Object)ChatColor.BOLD + "Next Page", (Object)ChatColor.GRAY + "Click to return to previous menu."));
+            inventory.setItem(inventory.getSize() - 1, ItemUtils.buildItem(Material.ARROW, (short) 0, ChatColor.GREEN.toString() + ChatColor.BOLD + "Next Page", ChatColor.GRAY + "Click to return to previous menu."));
         }
         for (int i = startIndex; i < startIndex + perPage && i < homes.size(); ++i) {
-            String homeName = (String)homes.get(i);
+            String homeName = (String) homes.get(i);
             try {
                 Location loc = user.getHome(homeName);
                 Material material = Material.GRASS;
                 if (customHomes != null && customHomes.isCustomHome(homeName)) {
-                    material = (Material)customHomes.get(homeName);
+                    material = customHomes.get(homeName);
                 }
-                ItemStack item = ItemUtils.buildItem(material, (short)0, (Object)ChatColor.AQUA + ChatColor.BOLD.toString() + StringUtils.capitaliseAllWords((String)homeName.replace("_", " ")), (Object)ChatColor.GRAY + "Location: " + (Object)ChatColor.WHITE + this.format.format(loc.getX()) + "x, " + this.format.format(loc.getY()) + "y, " + this.format.format(loc.getZ()) + "z", (Object)ChatColor.GRAY + "World: " + (Object)ChatColor.WHITE + (loc.getWorld() == null ? "???" : loc.getWorld().getName()), "", (Object)ChatColor.GRAY + "Left-Click to teleport", (Object)ChatColor.GRAY + "Middle-Click to delete home", (Object)ChatColor.GRAY + "Right-Click to edit icon");
-                inventory.addItem(new ItemStack[]{item});
+                ItemStack item = ItemUtils.buildItem(material, (short) 0, ChatColor.AQUA + ChatColor.BOLD.toString() + StringUtils.capitaliseAllWords(homeName.replace("_", " ")), ChatColor.GRAY + "Location: " + ChatColor.WHITE + this.format.format(loc.getX()) + "x, " + this.format.format(loc.getY()) + "y, " + this.format.format(loc.getZ()) + "z", ChatColor.GRAY + "World: " + ChatColor.WHITE + (loc.getWorld() == null ? "???" : loc.getWorld().getName()), "", ChatColor.GRAY + "Left-Click to teleport", ChatColor.GRAY + "Middle-Click to delete home", ChatColor.GRAY + "Right-Click to edit icon");
+                inventory.addItem(item);
                 continue;
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -177,8 +172,7 @@ class HomeGUIManager {
                 try {
                     if (user.getHome(homeName) != null) continue;
                     home.remove(homeName);
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     home.remove(homeName);
                 }
             }

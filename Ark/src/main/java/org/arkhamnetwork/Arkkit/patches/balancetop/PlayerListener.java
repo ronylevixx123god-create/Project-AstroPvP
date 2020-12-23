@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  net.ess3.api.events.UserBalanceUpdateEvent
  *  org.bukkit.Bukkit
@@ -14,9 +14,6 @@
 package org.arkhamnetwork.Arkkit.patches.balancetop;
 
 import net.ess3.api.events.UserBalanceUpdateEvent;
-import org.arkhamnetwork.Arkkit.patches.balancetop.BalanceManager;
-import org.arkhamnetwork.Arkkit.patches.balancetop.BalanceTop;
-import org.arkhamnetwork.Arkkit.patches.balancetop.NameDouble;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.event.EventHandler;
@@ -26,10 +23,10 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerListener
-implements Listener {
+        implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
-        double cash = BalanceTop.getEconomy().getBalance((OfflinePlayer)e.getPlayer());
+        double cash = BalanceTop.getEconomy().getBalance(e.getPlayer());
         if (cash <= 0.0) {
             cash = 0.0;
         }
@@ -43,14 +40,14 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onBalanceChangeEvent(UserBalanceUpdateEvent event) {
         if (event.getPlayer() == null) {
             return;
         }
         if (event.getPlayer().getName().startsWith("faction_")) {
             if (BalanceManager.balanceMap.remove(event.getPlayer().getUniqueId()) != null) {
-                Bukkit.getLogger().info("Removing stored balance for non player: " + event.getPlayer().getName() + ", how???? player: " + (Object)event.getPlayer());
+                Bukkit.getLogger().info("Removing stored balance for non player: " + event.getPlayer().getName() + ", how???? player: " + event.getPlayer());
             }
             return;
         }
@@ -64,7 +61,7 @@ implements Listener {
 
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent e) {
-        double cash = Math.max(0.0, BalanceTop.getEconomy().getBalance((OfflinePlayer)e.getPlayer()));
+        double cash = Math.max(0.0, BalanceTop.getEconomy().getBalance(e.getPlayer()));
         BalanceManager.setBalance(e.getPlayer().getUniqueId(), e.getPlayer().getName(), cash);
     }
 }

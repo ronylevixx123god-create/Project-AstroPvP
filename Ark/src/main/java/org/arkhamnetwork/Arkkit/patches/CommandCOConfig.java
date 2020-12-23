@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  net.coreprotect.model.Config
  *  org.bukkit.command.Command
@@ -14,7 +14,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 final class CommandCOConfig
-extends AbstractCommand {
+        extends AbstractCommand {
     public CommandCOConfig(String command, String usage, String description) {
         super(command, usage, description);
     }

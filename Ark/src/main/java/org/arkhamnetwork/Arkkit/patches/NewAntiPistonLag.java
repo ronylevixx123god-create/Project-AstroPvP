@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Chunk
  *  org.bukkit.plugin.Plugin
@@ -8,15 +8,13 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.NewAntiPistonLagListener;
-import org.arkhamnetwork.Arkkit.patches.NewAntiPistonLagTask;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.arkhamnetwork.Arkkit.utils.LongHash;
 import org.bukkit.Chunk;
 import org.bukkit.plugin.Plugin;
 
 public class NewAntiPistonLag
-extends ArkPlugin {
+        extends ArkPlugin {
     public int tickInterval = 20;
     public int maxPistonEventsPerChunk = 100;
 
@@ -29,7 +27,7 @@ extends ArkPlugin {
         this.tickInterval = Arkkit.get().getConfig().getInt("settings.anti_piston_lag.tickInterval", 20);
         this.maxPistonEventsPerChunk = Arkkit.get().getConfig().getInt("settings.anti_piston_lag.maxPistonEventsPerChunk", 100);
         this.registerListener(new NewAntiPistonLagListener(this));
-        this.registerTask(new NewAntiPistonLagTask(this).runTaskTimer((Plugin)Arkkit.get(), this.tickInterval, this.tickInterval), NewAntiPistonLagTask.class);
+        this.registerTask(new NewAntiPistonLagTask(this).runTaskTimer(Arkkit.get(), this.tickInterval, this.tickInterval), NewAntiPistonLagTask.class);
     }
 
     @Override

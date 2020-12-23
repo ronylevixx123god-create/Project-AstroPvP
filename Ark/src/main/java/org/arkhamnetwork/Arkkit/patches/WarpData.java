@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Material
  */
@@ -14,7 +14,7 @@ final class WarpData {
     String[] description;
     Material displayMaterial;
 
-    protected WarpData(String warpName, String displayName, Material displayMaterial, String ... description) {
+    protected WarpData(String warpName, String displayName, Material displayMaterial, String... description) {
         this.warpName = warpName;
         this.displayName = displayName;
         this.description = description;

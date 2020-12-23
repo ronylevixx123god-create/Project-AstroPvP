@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.ChatColor
  *  org.bukkit.event.EventHandler
@@ -10,7 +10,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import org.arkhamnetwork.Arkkit.patches.CommandBlocker;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -18,11 +17,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 final class CommandBlockerListener
-implements Listener {
+        implements Listener {
     CommandBlockerListener() {
     }
 
-    @EventHandler(priority=EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerComandPreProcess(PlayerCommandPreprocessEvent e) {
         boolean op = e.getPlayer().isOp();
         boolean banteam = e.getPlayer().hasPermission("essentials.god");
@@ -45,20 +44,20 @@ implements Listener {
                 }
                 e.setCancelled(true);
                 e.setMessage("/null");
-                e.getPlayer().sendMessage((Object)ChatColor.RED + "The " + (Object)ChatColor.UNDERLINE + "/" + cmd + (Object)ChatColor.RED + " command is currently disabled.");
+                e.getPlayer().sendMessage(ChatColor.RED + "The " + ChatColor.UNDERLINE + "/" + cmd + ChatColor.RED + " command is currently disabled.");
             } else {
-                e.getPlayer().sendMessage((Object)ChatColor.RED + "'" + cmd + "' is a blocked command, but since you're an OP it has been executed.");
+                e.getPlayer().sendMessage(ChatColor.RED + "'" + cmd + "' is a blocked command, but since you're an OP it has been executed.");
             }
         }
     }
 
-    @EventHandler(priority=EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerCommandPreProcessUnique(PlayerCommandPreprocessEvent e) {
         String cmd;
         boolean op = e.getPlayer().isOp();
         if (!op && (cmd = e.getMessage().toLowerCase()).startsWith("/f money ff")) {
             e.setCancelled(true);
-            e.getPlayer().sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You cannot transfer money directly from one faction to another on this server.");
+            e.getPlayer().sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot transfer money directly from one faction to another on this server.");
             return;
         }
     }

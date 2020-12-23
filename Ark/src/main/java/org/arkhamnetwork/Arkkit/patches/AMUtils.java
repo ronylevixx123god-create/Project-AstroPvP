@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.ChatColor
  *  org.bukkit.entity.Entity
@@ -24,15 +24,15 @@ final class AMUtils {
     }
 
     public static void setMonsterAmount(Entity e, int value) {
-        e.setMetadata("monsterAmount", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)value));
+        e.setMetadata("monsterAmount", new FixedMetadataValue(Arkkit.get(), value));
         if (e instanceof LivingEntity) {
-            ((LivingEntity)e).setCustomName(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + value + "X " + e.getType().name().replace("_", " "));
-            ((LivingEntity)e).setCustomNameVisible(true);
+            e.setCustomName(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + value + "X " + e.getType().name().replace("_", " "));
+            e.setCustomNameVisible(true);
         }
     }
 
     public static int getMonsterAmount(Entity e) {
-        return e.hasMetadata("monsterAmount") ? ((MetadataValue)e.getMetadata("monsterAmount").get(0)).asInt() : 1;
+        return e.hasMetadata("monsterAmount") ? e.getMetadata("monsterAmount").get(0).asInt() : 1;
     }
 }
 

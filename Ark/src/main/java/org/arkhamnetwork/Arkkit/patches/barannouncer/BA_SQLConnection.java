@@ -7,11 +7,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import org.arkhamnetwork.Arkkit.patches.barannouncer.BA_SQLManager;
 
 public class BA_SQLConnection {
-    private static Connection con = null;
     public static int query_count = 0;
+    private static Connection con = null;
 
     public static Connection getConnection() {
         try {
@@ -26,8 +25,7 @@ public class BA_SQLConnection {
                 Class.forName("com.mysql.jdbc.Driver");
                 con = DriverManager.getConnection(BA_SQLManager.sqlurl, BA_SQLManager.user, BA_SQLManager.password);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         ++query_count;
@@ -41,8 +39,7 @@ public class BA_SQLConnection {
             pst.execute();
             ResultSet rs = pst.getResultSet();
             return rs;
-        }
-        catch (Exception err) {
+        } catch (Exception err) {
             err.printStackTrace();
             return null;
         }

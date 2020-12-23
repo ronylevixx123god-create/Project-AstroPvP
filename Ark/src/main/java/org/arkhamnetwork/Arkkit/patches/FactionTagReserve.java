@@ -1,26 +1,25 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.plugin.Plugin
  */
 package org.arkhamnetwork.Arkkit.patches;
 
+import org.arkhamnetwork.Arkkit.Arkkit;
+import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.CommandSetTagOwner;
-import org.arkhamnetwork.Arkkit.patches.FactionTagReserveListener;
-import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
 
 public class FactionTagReserve
-extends ArkPlugin {
+        extends ArkPlugin {
     protected static HashMap<String, UUID> reservedTags;
 
     public FactionTagReserve(Plugin p) {

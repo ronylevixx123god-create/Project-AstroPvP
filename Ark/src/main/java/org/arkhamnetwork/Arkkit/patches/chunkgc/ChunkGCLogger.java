@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.fusesource.jansi.Ansi
  *  org.fusesource.jansi.Ansi$Attribute

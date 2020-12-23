@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.sk89q.worldedit.Vector
  *  com.sk89q.worldguard.bukkit.WorldGuardPlugin
@@ -14,14 +14,13 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import com.sk89q.worldedit.Vector;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
-import java.lang.reflect.Method;
-import java.util.List;
-
-import org.arkhamnetwork.Arkkit.Arkkit;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.plugin.Plugin;
+
+import java.lang.reflect.Method;
+import java.util.List;
 
 final class NCF_WorldGuardUtils {
     private static WorldGuardPlugin wg = null;
@@ -40,7 +39,7 @@ final class NCF_WorldGuardUtils {
         try {
             Class<?> bukkitUtil = wg.getClass().getClassLoader().loadClass("com.sk89q.worldguard.bukkit.BukkitUtil");
             Method toVector = bukkitUtil.getMethod("toVector", Block.class);
-            Vector blockVector = (Vector)toVector.invoke(null, new Object[]{l.getBlock()});
+            Vector blockVector = (Vector) toVector.invoke(null, new Object[]{l.getBlock()});
             List<String> regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs(blockVector);
             if (regionSet.size() < 1) {
                 return "";
@@ -61,8 +60,7 @@ final class NCF_WorldGuardUtils {
                 return_region = "";
             }
             return return_region;
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             return "";
         }
     }
@@ -72,7 +70,7 @@ final class NCF_WorldGuardUtils {
         if (!(plugin instanceof WorldGuardPlugin)) {
             return null;
         }
-        return (WorldGuardPlugin)plugin;
+        return (WorldGuardPlugin) plugin;
     }
 }
 

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.World
@@ -13,7 +13,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.io.File;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.commands.CommandArkReboot;
 import org.arkhamnetwork.Arkkit.libs.MinecraftThreadMonitor;
@@ -27,18 +26,34 @@ import org.bukkit.entity.TNTPrimed;
 import org.bukkit.plugin.Plugin;
 import org.spigotmc.SpigotConfig;
 
+import java.io.File;
+
 public class AntiCrash
-extends ArkPlugin {
-    protected static Logger log = new Logger();
-    MinecraftThreadMonitor MTM;
-    protected static boolean reboot_me = false;
+        extends ArkPlugin {
     public static boolean disable_called = false;
     public static boolean crash = false;
-    protected static boolean treasureWars = new File("treasurewars").exists();
     public static int reboot_task_id = -1;
+    protected static Logger log = new Logger();
+    protected static boolean reboot_me = false;
+    protected static boolean treasureWars = new File("treasurewars").exists();
+    MinecraftThreadMonitor MTM;
 
     public AntiCrash(Plugin p) {
         super(p);
+    }
+
+    public static void restartServer(int countdown) {
+        CommandArkReboot.restart_task_exists = true;
+        Bukkit.getScheduler().runTask(Arkkit.get(), new Runnable() {
+
+            @Override
+            public void run() {
+                for (Player p : Bukkit.getOnlinePlayers()) {
+                    p.closeInventory();
+                }
+            }
+        });
+        reboot_task_id = Bukkit.getScheduler().runTaskTimer(Arkkit.get(), new RebootTask(countdown), 20L, 20L).getTaskId();
     }
 
     @Override
@@ -46,7 +61,7 @@ extends ArkPlugin {
         SpigotConfig.restartOnCrash = true;
         SpigotConfig.restartScript = "null.sh";
         SpigotConfig.timeoutTime = 300;
-        this.getBukkitPlugin().getServer().getScheduler().runTaskLater(this.getBukkitPlugin(), new Runnable(){
+        this.getBukkitPlugin().getServer().getScheduler().runTaskLater(this.getBukkitPlugin(), new Runnable() {
 
             @Override
             public void run() {
@@ -56,7 +71,7 @@ extends ArkPlugin {
             }
         }, 20L);
         if (Arkkit.get().getConfig().getBoolean("settings.antiCrash.entityScan")) {
-            Bukkit.getScheduler().runTaskTimer((Plugin)Arkkit.get(), new Runnable(){
+            Bukkit.getScheduler().runTaskTimer(Arkkit.get(), new Runnable() {
 
                 @Override
                 public void run() {
@@ -83,20 +98,6 @@ extends ArkPlugin {
         }
         disable_called = true;
         this.unregisterListeners();
-    }
-
-    public static void restartServer(int countdown) {
-        CommandArkReboot.restart_task_exists = true;
-        Bukkit.getScheduler().runTask((Plugin)Arkkit.get(), new Runnable(){
-
-            @Override
-            public void run() {
-                for (Player p : Bukkit.getOnlinePlayers()) {
-                    p.closeInventory();
-                }
-            }
-        });
-        reboot_task_id = Bukkit.getScheduler().runTaskTimer((Plugin)Arkkit.get(), (Runnable)new RebootTask(countdown), 20L, 20L).getTaskId();
     }
 }
 

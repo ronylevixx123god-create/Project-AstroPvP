@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.entity.Player
@@ -12,7 +12,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.ArrayList;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -23,13 +22,21 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
 
 final class OpPermissionsListener
-implements Listener {
+        implements Listener {
     OpPermissionsListener() {
+    }
+
+    protected static void removePermission(Player pl, String perm) {
+        for (PermissionAttachmentInfo pio : pl.getEffectivePermissions()) {
+            if (!pio.getPermission().equalsIgnoreCase(perm)) continue;
+            Bukkit.getLogger().info("Removing permission " + pio.getPermission() + " from " + pl.getName() + "...");
+            pl.removeAttachment(pio.getAttachment());
+        }
     }
 
     @EventHandler
     public void onPlayerJoin(final PlayerJoinEvent e) {
-        Bukkit.getScheduler().runTaskLater((Plugin)Arkkit.get(), new Runnable(){
+        Bukkit.getScheduler().runTaskLater(Arkkit.get(), new Runnable() {
 
             @Override
             public void run() {
@@ -49,14 +56,6 @@ implements Listener {
                 }
             }
         }, 20L);
-    }
-
-    protected static void removePermission(Player pl, String perm) {
-        for (PermissionAttachmentInfo pio : pl.getEffectivePermissions()) {
-            if (!pio.getPermission().equalsIgnoreCase(perm)) continue;
-            Bukkit.getLogger().info("Removing permission " + pio.getPermission() + " from " + pl.getName() + "...");
-            pl.removeAttachment(pio.getAttachment());
-        }
     }
 }
 

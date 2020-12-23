@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.wimbli.WorldBorder.WorldBorder
  *  org.bukkit.Bukkit
@@ -27,7 +27,7 @@ import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 
 final class WorldBorderFixesListener
-implements Listener {
+        implements Listener {
     WorldBorderFixesListener() {
     }
 
@@ -36,8 +36,8 @@ implements Listener {
         int xMod = e.getDirection().getModX();
         int zMod = e.getDirection().getModZ();
         for (Block b : e.getBlocks()) {
-            if (this.inWorldBorder(b.getLocation().add((double)xMod, 0.0, (double)zMod))) continue;
-            Bukkit.getLogger().info("[WorldBorderFixes] Block " + (Object)b.getLocation() + " attempted to push outside world border.");
+            if (this.inWorldBorder(b.getLocation().add(xMod, 0.0, zMod))) continue;
+            Bukkit.getLogger().info("[WorldBorderFixes] Block " + b.getLocation() + " attempted to push outside world border.");
             e.setCancelled(true);
         }
     }
@@ -45,19 +45,19 @@ implements Listener {
     @EventHandler
     public void onPistonPullBlock(BlockPistonRetractEvent e) {
         if (!this.inWorldBorder(e.getRetractLocation())) {
-            Bukkit.getLogger().info("[WorldBorderFixes] Block " + (Object)e.getRetractLocation() + " outside world border, preventing retraction.");
+            Bukkit.getLogger().info("[WorldBorderFixes] Block " + e.getRetractLocation() + " outside world border, preventing retraction.");
             e.setCancelled(true);
         }
     }
 
-    @EventHandler(priority=EventPriority.LOW, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onEntityExplode(EntityExplodeEvent e) {
         if (e.getEntity() == null || e.getEntity().getLocation() == null) {
             Bukkit.getLogger().info("[WorldBorderFixes] Null entity or entity location passed to EntityExplodeEvent!");
             return;
         }
         if (!this.inWorldBorder(e.getEntity().getLocation())) {
-            Bukkit.getLogger().info("[WorldBorderFixes] Exploding " + e.getEntity().getType().name() + " at " + (Object)e.getEntity().getLocation() + " outside world border, preventing explosion.");
+            Bukkit.getLogger().info("[WorldBorderFixes] Exploding " + e.getEntity().getType().name() + " at " + e.getEntity().getLocation() + " outside world border, preventing explosion.");
             e.setCancelled(true);
             e.getEntity().remove();
         }

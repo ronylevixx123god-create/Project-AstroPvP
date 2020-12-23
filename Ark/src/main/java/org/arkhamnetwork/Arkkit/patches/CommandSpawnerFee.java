@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.ChatColor
  *  org.bukkit.command.Command
@@ -11,15 +11,13 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
-import org.arkhamnetwork.Arkkit.patches.SpawnerFee;
-import org.arkhamnetwork.Arkkit.patches.SpawnerFeeListener;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 
 final class CommandSpawnerFee
-extends AbstractCommand {
+        extends AbstractCommand {
     public CommandSpawnerFee(String command, String usage, String description) {
         super(command, usage, description);
     }
@@ -39,14 +37,14 @@ extends AbstractCommand {
         }
         if (args[0].equals("disable") && args[1].equals("fees")) {
             SpawnerFee.spawnerFee = false;
-            Arkkit.get().getConfig().set("settings.spawner_fee.spawnerFee", (Object)false);
+            Arkkit.get().getConfig().set("settings.spawner_fee.spawnerFee", false);
             Arkkit.get().saveConfig();
             sender.sendMessage("Spawner Fees DISABLED");
             return true;
         }
         if (args[0].equals("enable") && args[1].equals("fees")) {
             SpawnerFee.spawnerFee = true;
-            Arkkit.get().getConfig().set("settings.spawner_fee.spawnerFee", (Object)true);
+            Arkkit.get().getConfig().set("settings.spawner_fee.spawnerFee", true);
             Arkkit.get().saveConfig();
             sender.sendMessage("Spawner Fees ENABLED");
             return true;
@@ -57,9 +55,9 @@ extends AbstractCommand {
             sender.sendMessage("Invalid entityType.");
             return true;
         }
-        Arkkit.get().getConfig().set("settings.spawner_fee." + entityType.toLowerCase(), (Object)price);
+        Arkkit.get().getConfig().set("settings.spawner_fee." + entityType.toLowerCase(), price);
         Arkkit.get().saveConfig();
-        sender.sendMessage((Object)ChatColor.YELLOW + "Set spawner fee for " + entityType + " to $" + price);
+        sender.sendMessage(ChatColor.YELLOW + "Set spawner fee for " + entityType + " to $" + price);
         return true;
     }
 }

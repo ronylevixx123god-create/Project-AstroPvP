@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.plugin.Plugin
@@ -8,23 +8,22 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.HashSet;
-import java.util.Set;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.AsyncMonstersCommand;
-import org.arkhamnetwork.Arkkit.patches.AsyncMonstersListener;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class AsyncMonsters
-extends ArkPlugin {
+        extends ArkPlugin {
     public static boolean stackCreepers = true;
     public static int MAX_KILL_STACK = 100;
     public static double LAVA_KILL_PERCENT = 0.2;
-    private BukkitTask bukkitTask;
     public Set<String> factionsWithEnemiesInThem = new HashSet<String>();
+    private BukkitTask bukkitTask;
 
     public AsyncMonsters(Plugin p) {
         super(p);

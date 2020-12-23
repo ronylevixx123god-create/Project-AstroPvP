@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
@@ -22,11 +22,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 final class NoSpawnHomesListener
-implements Listener {
+        implements Listener {
     NoSpawnHomesListener() {
     }
 
-    @EventHandler(priority=EventPriority.LOW)
+    @EventHandler(priority = EventPriority.LOW)
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent e) {
         String cmd = e.getMessage().toLowerCase();
         if (cmd.startsWith("/sethome") || cmd.startsWith("/esethome") || cmd.startsWith("/createhome") || cmd.startsWith("/ecreatehome") || cmd.startsWith("/f setwarp") || cmd.startsWith("/f sethome") || cmd.startsWith("/f setallywarp") || cmd.startsWith("/f addwarp") || cmd.startsWith("/f createwarp")) {
@@ -36,10 +36,10 @@ implements Listener {
             if (this.inSpawn(e.getPlayer().getLocation())) {
                 e.setMessage("/null");
                 e.setCancelled(true);
-                e.getPlayer().sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "You cannot create a /home or /f warp at /spawn.");
-                e.getPlayer().sendMessage((Object)ChatColor.GRAY + "This is to prevent location exploitation when the spawn has theme changes.");
+                e.getPlayer().sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "You cannot create a /home or /f warp at /spawn.");
+                e.getPlayer().sendMessage(ChatColor.GRAY + "This is to prevent location exploitation when the spawn has theme changes.");
             } else {
-                Bukkit.getLogger().info("[Arkkit (NoSpawnHomes)] Player " + e.getPlayer().getName() + " (" + e.getPlayer().getUniqueId() + ") issued command " + cmd + " at location " + (Object)e.getPlayer().getLocation());
+                Bukkit.getLogger().info("[Arkkit (NoSpawnHomes)] Player " + e.getPlayer().getName() + " (" + e.getPlayer().getUniqueId() + ") issued command " + cmd + " at location " + e.getPlayer().getLocation());
             }
         }
     }

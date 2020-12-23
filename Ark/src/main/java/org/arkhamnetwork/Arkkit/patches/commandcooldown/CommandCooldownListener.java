@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.massivecraft.factions.FPlayer
  *  com.massivecraft.factions.FPlayers
@@ -22,7 +22,6 @@ import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.Relation;
 import org.arkhamnetwork.Arkkit.patches.WildernessCommand;
-import org.arkhamnetwork.Arkkit.patches.commandcooldown.CommandCooldowns;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -33,8 +32,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 public class CommandCooldownListener
-implements Listener {
-    @EventHandler(priority=EventPriority.LOW)
+        implements Listener {
+    @EventHandler(priority = EventPriority.LOW)
     public void onPlayerCommandPreProcessLOWEST(PlayerCommandPreprocessEvent e) {
         String originalCMD = e.getMessage().replace("/", "").toLowerCase();
         String cmd = e.getMessage().replace("/", "").toLowerCase();
@@ -48,16 +47,16 @@ implements Listener {
         }
         if (originalCMD.startsWith("feed ") && e.getPlayer().hasPermission("essentials.feed.others")) {
             String playerTarget = originalCMD.split(" ")[1];
-            Player p = Bukkit.getPlayer((String)playerTarget);
+            Player p = Bukkit.getPlayer(playerTarget);
             Player pl = e.getPlayer();
-            if (p != null && p.isOnline() && !pl.isOp() && !((FPlayer)FPlayers.i.get((OfflinePlayer)p)).getRelationTo((RelationParticipator)FPlayers.i.get((OfflinePlayer)pl)).isAtLeast(Relation.ALLY)) {
-                e.getPlayer().sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "You can only /feed players in ALLY+ factions.");
+            if (p != null && p.isOnline() && !pl.isOp() && !FPlayers.i.get(p).getRelationTo(FPlayers.i.get(pl)).isAtLeast(Relation.ALLY)) {
+                e.getPlayer().sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "You can only /feed players in ALLY+ factions.");
                 e.setCancelled(true);
                 e.setMessage("/null");
                 return;
             }
             if (CommandCooldowns.get().getCooldownManager().hasCooldown(pl, "feed <player>")) {
-                pl.sendMessage((Object)ChatColor.RED + "You " + (Object)ChatColor.UNDERLINE + "cannot" + (Object)ChatColor.RED + " use /feed <player> for another " + this.getPrettyCooldown(CommandCooldowns.get().getCooldownManager().getCooldownMillisRemaining(pl, "feed <player>")) + "!");
+                pl.sendMessage(ChatColor.RED + "You " + ChatColor.UNDERLINE + "cannot" + ChatColor.RED + " use /feed <player> for another " + this.getPrettyCooldown(CommandCooldowns.get().getCooldownManager().getCooldownMillisRemaining(pl, "feed <player>")) + "!");
                 e.setCancelled(true);
                 return;
             }
@@ -70,7 +69,7 @@ implements Listener {
                 return;
             }
             if (CommandCooldowns.get().getCooldownManager().hasCooldown(pl, cmd)) {
-                pl.sendMessage((Object)ChatColor.RED + "You " + (Object)ChatColor.UNDERLINE + "cannot" + (Object)ChatColor.RED + " use /" + originalCMD + " for another " + this.getPrettyCooldown(CommandCooldowns.get().getCooldownManager().getCooldownMillisRemaining(pl, cmd)) + "!");
+                pl.sendMessage(ChatColor.RED + "You " + ChatColor.UNDERLINE + "cannot" + ChatColor.RED + " use /" + originalCMD + " for another " + this.getPrettyCooldown(CommandCooldowns.get().getCooldownManager().getCooldownMillisRemaining(pl, cmd)) + "!");
                 e.setCancelled(true);
                 return;
             }
@@ -80,7 +79,7 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerCommandPreProcessHIGHEST(PlayerCommandPreprocessEvent e) {
         String cmd = e.getMessage().replace("/", "").toLowerCase();
         if (cmd.startsWith("f invite") || cmd.startsWith("party invite") || cmd.startsWith("f disband") || cmd.startsWith("f focus") || cmd.startsWith("f target")) {
@@ -97,9 +96,9 @@ implements Listener {
     }
 
     private String getPrettyCooldown(long milliseconds) {
-        int seconds = (int)(milliseconds / 1000L) % 60;
-        int minutes = (int)(milliseconds / 60000L % 60L);
-        int hours = (int)(milliseconds / 3600000L % 24L);
+        int seconds = (int) (milliseconds / 1000L) % 60;
+        int minutes = (int) (milliseconds / 60000L % 60L);
+        int hours = (int) (milliseconds / 3600000L % 24L);
         if (hours > 0) {
             return hours + "h, " + minutes + "m, " + seconds + "s";
         }

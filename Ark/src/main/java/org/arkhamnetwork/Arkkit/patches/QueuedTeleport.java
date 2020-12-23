@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
@@ -41,23 +41,23 @@ final class QueuedTeleport {
         this.castLocation = this.player.getLocation();
         this.teleportCause = cause;
         final Location l = this.targetLoc;
-        this.taskID = taskID = Bukkit.getScheduler().runTaskLater((Plugin)Arkkit.get(), new Runnable(){
+        this.taskID = taskID = Bukkit.getScheduler().runTaskLater(Arkkit.get(), new Runnable() {
 
             @Override
             public void run() {
-                QueuedTeleport.this.player.removeMetadata("queuedTeleport", (Plugin)Arkkit.get());
-                QueuedTeleport.this.player.removeMetadata("queuedTeleportTaskID", (Plugin)Arkkit.get());
-                if (QueuedTeleport.this.player.getLocation().getWorld().equals((Object)QueuedTeleport.this.castLocation.getWorld()) && QueuedTeleport.this.player.getLocation().distanceSquared(QueuedTeleport.this.castLocation) <= 4.0) {
-                    QueuedTeleport.this.player.setMetadata("queuedTeleportPass", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)l));
+                QueuedTeleport.this.player.removeMetadata("queuedTeleport", Arkkit.get());
+                QueuedTeleport.this.player.removeMetadata("queuedTeleportTaskID", Arkkit.get());
+                if (QueuedTeleport.this.player.getLocation().getWorld().equals(QueuedTeleport.this.castLocation.getWorld()) && QueuedTeleport.this.player.getLocation().distanceSquared(QueuedTeleport.this.castLocation) <= 4.0) {
+                    QueuedTeleport.this.player.setMetadata("queuedTeleportPass", new FixedMetadataValue(Arkkit.get(), l));
                     QueuedTeleport.this.player.playSound(QueuedTeleport.this.player.getLocation(), Sound.BAT_TAKEOFF, 0.8f, 0.65f);
                     QueuedTeleport.this.player.teleport(l, QueuedTeleport.this.teleportCause);
-                    QueuedTeleport.this.player.removeMetadata("queuedTeleportPass", (Plugin)Arkkit.get());
+                    QueuedTeleport.this.player.removeMetadata("queuedTeleportPass", Arkkit.get());
                 } else {
-                    QueuedTeleport.this.player.sendMessage((Object)ChatColor.DARK_RED + "Pending teleport request cancelled due to movement.");
+                    QueuedTeleport.this.player.sendMessage(ChatColor.DARK_RED + "Pending teleport request cancelled due to movement.");
                 }
             }
         }, Math.round(this.teleportWarmup * 20.0)).getTaskId();
-        this.player.setMetadata("queuedTeleportTaskID", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)taskID));
+        this.player.setMetadata("queuedTeleportTaskID", new FixedMetadataValue(Arkkit.get(), taskID));
     }
 }
 

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  net.minecraft.server.v1_7_R4.MinecraftServer
  *  org.bukkit.event.EventHandler
@@ -24,14 +24,14 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
 final class InventoryRatelimitListener
-implements Listener {
+        implements Listener {
     InventoryRatelimitListener() {
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onInventoryClose(InventoryCloseEvent e) {
         if (e.getInventory().getName().contains("Vault #")) {
-            e.getPlayer().setMetadata("lastInventoryCloseEvent", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object) MinecraftServer.currentTick));
+            e.getPlayer().setMetadata("lastInventoryCloseEvent", new FixedMetadataValue(Arkkit.get(), MinecraftServer.currentTick));
         }
     }
 }

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.CC
  *  com.cosmicpvp.cosmicutils.utils.JSONUtils
@@ -18,14 +18,6 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.JSONUtils;
-
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.google.common.collect.Lists;
 import com.google.common.reflect.TypeToken;
 import lombok.SneakyThrows;
@@ -39,11 +31,19 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.plugin.Plugin;
 
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 public class AdminWarps
-extends ArkPlugin {
+        extends ArkPlugin {
     private Map warps = new HashMap<String, WarpLocation>();
     private File warpFile;
-    private Type warpMapToken = new TypeToken<HashMap<String, WarpLocation>>(){}.getType();
+    private final Type warpMapToken = new TypeToken<HashMap<String, WarpLocation>>() {
+    }.getType();
 
     public AdminWarps(Plugin p) {
         super(p);
@@ -52,7 +52,7 @@ extends ArkPlugin {
     @Override
     public void enable() throws IOException {
         this.warpFile = JSONUtils.getOrCreateFile(this.getBukkitPlugin().getDataFolder(), "adminWarps.json");
-        this.warps = (Map)JSONUtils.fromJson(this.warpFile, this.warpMapToken, new HashMap());
+        this.warps = (Map) JSONUtils.fromJson(this.warpFile, this.warpMapToken, new HashMap());
         this.registerCommand(new AdminWarpCommand(this));
         this.registerCommand(new DelAdminWarpCommand(this));
         this.registerCommand(new SetAdminWarpCommand(this));
@@ -79,7 +79,7 @@ extends ArkPlugin {
     }
 
     private void saveWarps() throws IOException {
-        JSONUtils.saveJSONToFile((File)this.warpFile, this.warps, (Object)this.warpMapToken);
+        JSONUtils.saveJSONToFile(this.warpFile, this.warps, this.warpMapToken);
     }
 
     public Map<String, WarpLocation> getWarps() {
@@ -87,10 +87,10 @@ extends ArkPlugin {
     }
 
     class WarpLocation {
-        private String world;
-        private double x;
-        private double y;
-        private double z;
+        private final String world;
+        private final double x;
+        private final double y;
+        private final double z;
 
         public WarpLocation(Location loc) {
             this.world = loc.getWorld().getName();
@@ -99,15 +99,15 @@ extends ArkPlugin {
             this.z = loc.getZ();
         }
 
-        public Location toBukkitLocation() {
-            return new Location(Bukkit.getWorld((String)this.world), this.x, this.y, this.z);
-        }
-
         public WarpLocation(String world, double x, double y, double z) {
             this.world = world;
             this.x = x;
             this.y = y;
             this.z = z;
+        }
+
+        public Location toBukkitLocation() {
+            return new Location(Bukkit.getWorld(this.world), this.x, this.y, this.z);
         }
 
         public String getWorld() {
@@ -128,7 +128,7 @@ extends ArkPlugin {
     }
 
     class AdminWarpCommand
-    extends ArkPluginCommand<AdminWarps> {
+            extends ArkPluginCommand<AdminWarps> {
         public AdminWarpCommand(AdminWarps patch) {
             super(patch, "adminwarp", "/<command>", "", Lists.newArrayList("awarp", "awarps", "adminwarps"));
         }
@@ -148,15 +148,15 @@ extends ArkPlugin {
                     return true;
                 }
                 if (!sender.hasPermission("arkkit.adminwarp." + args[0].toLowerCase())) {
-                    ((AdminWarps)this.patch).getBukkitPlugin().getLogger().info(sender.getName() + " didnt have permission to use " + args[0] + "!");
+                    this.patch.getBukkitPlugin().getLogger().info(sender.getName() + " didnt have permission to use " + args[0] + "!");
                     return true;
                 }
-                WarpLocation location = ((AdminWarps)this.patch).getWarps().get(args[0].toLowerCase());
+                WarpLocation location = this.patch.getWarps().get(args[0].toLowerCase());
                 if (location == null) {
                     sender.sendMessage(CC.Red + "No Admin Warp found with that name!");
                     return true;
                 }
-                Player player = (Player)sender;
+                Player player = (Player) sender;
                 Location bukkit = location.toBukkitLocation();
                 if (bukkit == null || bukkit.getWorld() == null) {
                     sender.sendMessage(CC.Red + "Invalid Bukkit World for warp! World no longer exists?");
@@ -175,7 +175,7 @@ extends ArkPlugin {
     }
 
     class SetAdminWarpCommand
-    extends ArkPluginCommand<AdminWarps> {
+            extends ArkPluginCommand<AdminWarps> {
         public SetAdminWarpCommand(AdminWarps patch) {
             super(patch, "setadminwarp");
         }
@@ -188,7 +188,7 @@ extends ArkPlugin {
             }
             if (args.length == 1) {
                 String warpName = args[0];
-                ((AdminWarps)this.patch).addWarp(warpName, new WarpLocation(((Player)sender).getLocation()));
+                this.patch.addWarp(warpName, new WarpLocation(((Player) sender).getLocation()));
                 sender.sendMessage(CC.GreenB + "(!) " + CC.Green + "Set admin warp " + args[0] + "!");
                 return true;
             }
@@ -198,7 +198,7 @@ extends ArkPlugin {
     }
 
     class DelAdminWarpCommand
-    extends ArkPluginCommand<AdminWarps> {
+            extends ArkPluginCommand<AdminWarps> {
         public DelAdminWarpCommand(AdminWarps patch) {
             super(patch, "deladminwarp");
         }
@@ -210,7 +210,7 @@ extends ArkPlugin {
                 return true;
             }
             if (args.length == 1) {
-                if (((AdminWarps)this.patch).removeWarp(args[0])) {
+                if (this.patch.removeWarp(args[0])) {
                     sender.sendMessage(CC.Red + "Admin warp removed!");
                     return true;
                 }

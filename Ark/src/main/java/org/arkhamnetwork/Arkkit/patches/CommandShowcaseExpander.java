@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
@@ -11,18 +11,17 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.List;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
-import org.arkhamnetwork.Arkkit.patches.ShowcaseExpander;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
+
+import java.util.List;
 
 final class CommandShowcaseExpander
-extends AbstractCommand {
+        extends AbstractCommand {
     public CommandShowcaseExpander(String command, String usage, String description, List<String> aliases) {
         super(command, usage, description, aliases);
     }
@@ -33,15 +32,15 @@ extends AbstractCommand {
             return true;
         }
         if (args.length != 1) {
-            sender.sendMessage((Object)ChatColor.YELLOW + "/sce <player>");
-            sender.sendMessage((Object)ChatColor.GRAY + "Adds 1x ShowcaseExpander item to specified <player>.");
+            sender.sendMessage(ChatColor.YELLOW + "/sce <player>");
+            sender.sendMessage(ChatColor.GRAY + "Adds 1x ShowcaseExpander item to specified <player>.");
             return true;
         }
         String pName = args[0];
-        if (Bukkit.getPlayer((String)pName) != null) {
-            Player p = Bukkit.getPlayer((String)pName);
+        if (Bukkit.getPlayer(pName) != null) {
+            Player p = Bukkit.getPlayer(pName);
             p.getInventory().addItem(ShowcaseExpander.getShowcaseExpanderItem());
-            sender.sendMessage((Object)ChatColor.GRAY + "* Added 1x ShowcaseExpander to " + p.getName() + "!");
+            sender.sendMessage(ChatColor.GRAY + "* Added 1x ShowcaseExpander to " + p.getName() + "!");
         }
         return true;
     }

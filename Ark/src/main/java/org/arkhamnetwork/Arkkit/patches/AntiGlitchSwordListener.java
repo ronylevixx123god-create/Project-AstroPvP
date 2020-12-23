@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.entity.Entity
@@ -24,25 +24,25 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 final class AntiGlitchSwordListener
-implements Listener {
+        implements Listener {
     AntiGlitchSwordListener() {
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onEntityDamage(EntityDamageEvent e) {
         if (e.getCause() == EntityDamageEvent.DamageCause.CUSTOM) {
             return;
         }
         if (e.getEntity() instanceof Player && e.getDamage() >= 80.0) {
-            Player p = (Player)e.getEntity();
+            Player p = (Player) e.getEntity();
             if (e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
-                Entity eAttacker = ((EntityDamageByEntityEvent)e).getDamager();
+                Entity eAttacker = ((EntityDamageByEntityEvent) e).getDamager();
                 if (eAttacker instanceof Player) {
-                    Player pAttacker = (Player)eAttacker;
-                    Bukkit.getLogger().info("[CombatMonitor] Player " + pAttacker.getName() + " has dealt " + e.getDamage() + " damage to " + p.getName() + " (silenced: " + p.hasMetadata("noDefenseProcs") + ") with " + (Object)pAttacker.getItemInHand() + " at " + (Object)p.getLocation());
+                    Player pAttacker = (Player) eAttacker;
+                    Bukkit.getLogger().info("[CombatMonitor] Player " + pAttacker.getName() + " has dealt " + e.getDamage() + " damage to " + p.getName() + " (silenced: " + p.hasMetadata("noDefenseProcs") + ") with " + pAttacker.getItemInHand() + " at " + p.getLocation());
                 }
             } else {
-                Bukkit.getLogger().info("[CombatMonitor] Player " + p.getName() + " has taken " + e.getDamage() + " damage from " + e.getCause().name() + " at " + (Object)p.getLocation());
+                Bukkit.getLogger().info("[CombatMonitor] Player " + p.getName() + " has taken " + e.getDamage() + " damage from " + e.getCause().name() + " at " + p.getLocation());
             }
         }
     }

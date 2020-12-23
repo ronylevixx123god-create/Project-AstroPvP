@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.massivecraft.factions.event.LandClaimEvent
  *  org.bukkit.ChatColor
@@ -15,7 +15,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 final class DisableClaimsListener
-implements Listener {
+        implements Listener {
     protected static boolean noClaim = false;
 
     DisableClaimsListener() {
@@ -25,7 +25,7 @@ implements Listener {
     public void onFactionClaimLand(LandClaimEvent e) {
         if (noClaim && !e.getPlayer().isOp()) {
             e.setCancelled(true);
-            e.getPlayer().sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "Land claiming has been disabled by an admin.");
+            e.getPlayer().sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "Land claiming has been disabled by an admin.");
         }
     }
 }

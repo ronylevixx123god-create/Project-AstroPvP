@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.compilex.MineBans.api.MineBanAPI
  *  com.google.common.collect.Lists
@@ -37,16 +37,26 @@ import java.util.concurrent.ConcurrentHashMap;
 public class BalanceManager {
     public static ConcurrentHashMap<UUID, NameDouble> balanceMap = new ConcurrentHashMap<>();
     public static Gson gson = new Gson();
+    public static volatile LinkedList<List<String>> pages;
+    public static long lastupdate;
     private static File jsonFile;
     private static LinkedHashMap<String, Double> balancetop;
     private static String topName;
     private static double topBalance;
-    public static volatile LinkedList<List<String>> pages;
-    public static long lastupdate;
     private static boolean minebansEnabled;
-    private static DecimalFormat format;
-    private static HashSet<UUID> bannedCache;
-    private static DecimalFormat df;
+    private static final DecimalFormat format;
+    private static final HashSet<UUID> bannedCache;
+    private static final DecimalFormat df;
+
+    static {
+        balancetop = null;
+        pages = new LinkedList();
+        lastupdate = System.currentTimeMillis();
+        minebansEnabled = false;
+        format = new DecimalFormat("#,###");
+        bannedCache = new HashSet();
+        df = new DecimalFormat("#,##0");
+    }
 
     public static void setBalance(UUID uuid, String name, double cash) {
         balanceMap.put(uuid, new NameDouble(name, cash));
@@ -67,14 +77,14 @@ public class BalanceManager {
                 if (i == 1 && !v.getKey().equals(topName)) {
                     topBalance = v.getValue();
                     topName = v.getKey();
-                    Bukkit.broadcastMessage((String)((Object)ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + ChatColor.UNDERLINE.toString() + v.getKey() + (Object)ChatColor.GREEN + " has taken the " + (Object)ChatColor.GREEN + ChatColor.BOLD.toString() + "#1" + (Object)ChatColor.GREEN + " /baltop with " + (Object)ChatColor.GREEN + ChatColor.BOLD.toString() + "$" + (Object)ChatColor.GREEN + format.format(v.getValue()) + "!"));
+                    Bukkit.broadcastMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + ChatColor.UNDERLINE.toString() + v.getKey() + ChatColor.GREEN + " has taken the " + ChatColor.GREEN + ChatColor.BOLD.toString() + "#1" + ChatColor.GREEN + " /baltop with " + ChatColor.GREEN + ChatColor.BOLD.toString() + "$" + ChatColor.GREEN + format.format(v.getValue()) + "!");
                 }
                 if (pages.size() >= 20) break;
                 if (page.size() >= 10) {
                     pages.add(new ArrayList(page));
                     page = new ArrayList();
                 }
-                page.add((Object)ChatColor.GREEN + ChatColor.BOLD.toString() + i++ + ". " + (Object)ChatColor.YELLOW + v.getKey() + ": " + (Object)ChatColor.GREEN + ChatColor.BOLD.toString() + "$" + BalanceManager.insertCommas(v.getValue()));
+                page.add(ChatColor.GREEN + ChatColor.BOLD.toString() + i++ + ". " + ChatColor.YELLOW + v.getKey() + ": " + ChatColor.GREEN + ChatColor.BOLD.toString() + "$" + BalanceManager.insertCommas(v.getValue()));
             }
             if (pages.size() < 20) {
                 pages.add(page);
@@ -106,20 +116,17 @@ public class BalanceManager {
         });
         LinkedHashMap<String, Double> sortedMap = new LinkedHashMap<String, Double>();
         for (Map.Entry entry : list) {
-            if (BalanceManager.isBanned((UUID)entry.getKey()) || ((NameDouble)entry.getValue()).getName() != null && ((NameDouble)entry.getValue()).getName().startsWith("faction_")) {
+            if (BalanceManager.isBanned((UUID) entry.getKey()) || ((NameDouble) entry.getValue()).getName() != null && ((NameDouble) entry.getValue()).getName().startsWith("faction_")) {
                 balanceMap.remove(entry.getKey());
                 continue;
             }
-            sortedMap.put(((NameDouble)entry.getValue()).getName(), ((NameDouble)entry.getValue()).getAmount());
+            sortedMap.put(((NameDouble) entry.getValue()).getName(), ((NameDouble) entry.getValue()).getAmount());
         }
         return sortedMap;
     }
 
     private static boolean isBanned(UUID uuid) {
-        if (bannedCache.contains(uuid)) {
-            return true;
-        }
-        return false;
+        return bannedCache.contains(uuid);
     }
 
     /*
@@ -144,9 +151,9 @@ public class BalanceManager {
                     build.append(line);
                 }
                 try {
-                    balanceMap = gson.fromJson(build.toString(), new TypeToken<ConcurrentHashMap<UUID, NameDouble>>(){}.getType());
-                }
-                catch (Exception e) {
+                    balanceMap = gson.fromJson(build.toString(), new TypeToken<ConcurrentHashMap<UUID, NameDouble>>() {
+                    }.getType());
+                } catch (Exception e) {
                     e.printStackTrace();
                     Bukkit.getLogger().info("UNABLE TO LOAD BALANCE MAP, POSSIBLE OUTDATED?");
                 }
@@ -154,7 +161,7 @@ public class BalanceManager {
                     balanceMap = new ConcurrentHashMap();
                 }
                 System.out.println("Took " + (System.currentTimeMillis() - start) + "ms to load " + BalanceManager.insertCommas(balanceMap.size()) + " balances.");
-                new BukkitRunnable(){
+                new BukkitRunnable() {
 
                     public void run() {
                         if (balanceMap.isEmpty()) {
@@ -162,15 +169,13 @@ public class BalanceManager {
                             CommandBalanceTop.loadAllBalances();
                         }
                     }
-                }.runTaskLater((Plugin)Arkkit.get(), 1L);
-            }
-            finally {
+                }.runTaskLater(Arkkit.get(), 1L);
+            } finally {
                 if (Collections.singletonList(reader).get(0) != null) {
                     reader.close();
                 }
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -186,26 +191,14 @@ public class BalanceManager {
             try {
                 writer.write(map);
                 writer.flush();
-            }
-            finally {
+            } finally {
                 if (Collections.singletonList(writer).get(0) != null) {
                     writer.close();
                 }
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    static {
-        balancetop = null;
-        pages = new LinkedList();
-        lastupdate = System.currentTimeMillis();
-        minebansEnabled = false;
-        format = new DecimalFormat("#,###");
-        bannedCache = new HashSet();
-        df = new DecimalFormat("#,##0");
     }
 }
 

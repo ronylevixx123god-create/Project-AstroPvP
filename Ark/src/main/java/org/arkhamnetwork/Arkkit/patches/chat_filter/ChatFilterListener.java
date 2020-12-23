@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
@@ -17,27 +17,20 @@
  */
 package org.arkhamnetwork.Arkkit.patches.chat_filter;
 
-import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatFilter;
-import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerKickEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.*;
 
 final class ChatFilterListener
-implements Listener {
+        implements Listener {
     ChatFilterListener() {
     }
 
-    @EventHandler(priority=EventPriority.LOW, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onChat(AsyncPlayerChatEvent event) {
         String lower;
         Player player = event.getPlayer();
@@ -45,13 +38,13 @@ implements Listener {
             return;
         }
         if (ChatFilter.isChatHalted()) {
-            player.sendMessage((Object)ChatColor.RED + "Chat has been temporary disabled by an administrator.");
-            player.sendMessage((Object)ChatColor.GRAY + "Please be patient, chat will be re-enabled promptly.");
+            player.sendMessage(ChatColor.RED + "Chat has been temporary disabled by an administrator.");
+            player.sendMessage(ChatColor.GRAY + "Please be patient, chat will be re-enabled promptly.");
             event.setCancelled(true);
             return;
         }
         if (ChatFilter.block_chat_until_move && ChatFilter.hasntMoved.contains(player.getUniqueId())) {
-            player.sendMessage((Object)ChatColor.RED + "You " + (Object)ChatColor.UNDERLINE + "cannot" + (Object)ChatColor.RED + " chat until your character has moved.");
+            player.sendMessage(ChatColor.RED + "You " + ChatColor.UNDERLINE + "cannot" + ChatColor.RED + " chat until your character has moved.");
             event.setCancelled(true);
             return;
         }
@@ -61,7 +54,7 @@ implements Listener {
                 String oldmsg = ChatFilter.lastMessage.get(player.getUniqueId());
                 long l = last_send = ChatFilter.lastMessage_time.containsKey(player.getUniqueId()) ? ChatFilter.lastMessage_time.get(player.getUniqueId()) : 0L;
                 if (System.currentTimeMillis() <= last_send + 5000L && event.getMessage().equalsIgnoreCase(oldmsg)) {
-                    player.sendMessage((Object)ChatColor.RED + "Please do not send duplicate messages so quickly!");
+                    player.sendMessage(ChatColor.RED + "Please do not send duplicate messages so quickly!");
                     ChatFilter.lastMessage_time.put(player.getUniqueId(), System.currentTimeMillis());
                     event.setCancelled(true);
                     return;
@@ -71,23 +64,23 @@ implements Listener {
             ChatFilter.lastMessage.put(player.getUniqueId(), event.getMessage());
         }
         if (!player.hasPermission("cosmicpvp.vip") && ChatUtils.checkMessageForAdvertising(event.getMessage().toLowerCase())) {
-            player.sendMessage((Object)ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "URL or advertisement link was found in your message, and therefore blocked.");
+            player.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "URL or advertisement link was found in your message, and therefore blocked.");
             Bukkit.getLogger().info("[Arkkit (ChatFilter)] Filtered message: \"" + event.getMessage() + "\" from " + player.getName());
             event.setCancelled(true);
             return;
         }
         if (!player.hasPermission("cosmicpvp.advertising") && ChatUtils.checkMessageForIP(event.getMessage())) {
-            player.sendMessage((Object)ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "Advertisement link was found in your message, and therefore blocked.");
+            player.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "Advertisement link was found in your message, and therefore blocked.");
             Bukkit.getLogger().info("[Arkkit (ChatFilter)] Filtered advertisment / ip message: \"" + event.getMessage() + "\" from " + player.getName());
             event.setCancelled(true);
             return;
         }
         if (ChatFilter.remove_chat_colors) {
-            event.setMessage(ChatColor.stripColor((String)ChatColor.translateAlternateColorCodes((char)'&', (String)event.getMessage())));
+            event.setMessage(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', event.getMessage())));
         }
         for (Object c : event.getMessage().toCharArray()) {
-            if (Character.UnicodeBlock.of((char)c) == Character.UnicodeBlock.BASIC_LATIN) continue;
-            player.sendMessage((Object)ChatColor.RED + "Invalid character '" + (char)c + "' in message.");
+            if (Character.UnicodeBlock.of((char) c) == Character.UnicodeBlock.BASIC_LATIN) continue;
+            player.sendMessage(ChatColor.RED + "Invalid character '" + c + "' in message.");
             event.setCancelled(true);
             return;
         }
@@ -145,7 +138,7 @@ implements Listener {
         return original.substring(0, 1).toUpperCase() + original.substring(1);
     }
 
-    @EventHandler(priority=EventPriority.NORMAL, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onKick(PlayerKickEvent event) {
         ChatFilter.lastMessage.remove(event.getPlayer().getUniqueId());
         if (ChatFilter.block_chat_until_move) {
@@ -153,7 +146,7 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.NORMAL, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onQuit(PlayerQuitEvent event) {
         ChatFilter.lastMessage.remove(event.getPlayer().getUniqueId());
         if (ChatFilter.block_chat_until_move) {
@@ -161,14 +154,14 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.HIGH, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onJoin(PlayerJoinEvent event) {
         if (ChatFilter.block_chat_until_move) {
             ChatFilter.hasntMoved.add(event.getPlayer().getUniqueId());
         }
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onMove(PlayerMoveEvent event) {
         if (!ChatFilter.block_chat_until_move) {
             return;
@@ -179,7 +172,7 @@ implements Listener {
         ChatFilter.hasntMoved.remove(event.getPlayer().getUniqueId());
     }
 
-    @EventHandler(priority=EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerCommandPreProcess(PlayerCommandPreprocessEvent e) {
         Player player = e.getPlayer();
         if (!player.getName().equals("Vaquxine") && (player.hasPermission("arkkit.chat_filter.admin") || player.hasPermission("simplechat.admin") || player.hasPermission("arkhamnetwork.joker_perks"))) {
@@ -187,8 +180,8 @@ implements Listener {
         }
         String m = e.getMessage().toLowerCase();
         if (m.startsWith("/bounty ") && ChatFilter.isChatHalted()) {
-            player.sendMessage((Object)ChatColor.RED + "Chat has been temporary disabled by an administrator.");
-            player.sendMessage((Object)ChatColor.GRAY + "Please be patient, /bounty will be re-enabled promptly.");
+            player.sendMessage(ChatColor.RED + "Chat has been temporary disabled by an administrator.");
+            player.sendMessage(ChatColor.GRAY + "Please be patient, /bounty will be re-enabled promptly.");
             e.setCancelled(true);
             return;
         }

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.Chunk
@@ -11,7 +11,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.HashMap;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
@@ -20,8 +19,10 @@ import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.plugin.Plugin;
 import org.spigotmc.AsyncCatcher;
 
+import java.util.HashMap;
+
 public class BulkSaving
-extends ArkPlugin {
+        extends ArkPlugin {
     protected static HashMap<World, Integer> default_save_periods = new HashMap();
 
     public BulkSaving(Plugin p) {
@@ -31,8 +32,8 @@ extends ArkPlugin {
     @Override
     public void enable() {
         for (World w : Bukkit.getWorlds()) {
-            default_save_periods.put(w, ((CraftWorld)w).getHandle().getServer().getServer().autosavePeriod);
-            ((CraftWorld)w).getHandle().getServer().getServer().autosavePeriod = 0;
+            default_save_periods.put(w, ((CraftWorld) w).getHandle().getServer().getServer().autosavePeriod);
+            ((CraftWorld) w).getHandle().getServer().getServer().autosavePeriod = 0;
             w.setAutoSave(false);
         }
         this.registerListener(new BulkSavingListener());
@@ -42,11 +43,11 @@ extends ArkPlugin {
     public void disable() {
         AsyncCatcher.enabled = false;
         for (World w : Bukkit.getWorlds()) {
-            if (default_save_periods.containsKey((Object)w)) {
-                ((CraftWorld)w).getHandle().getServer().getServer().autosavePeriod = default_save_periods.get((Object)w);
+            if (default_save_periods.containsKey(w)) {
+                ((CraftWorld) w).getHandle().getServer().getServer().autosavePeriod = default_save_periods.get(w);
                 w.setAutoSave(true);
             }
-            for (Chunk c : (Chunk[])w.getLoadedChunks().clone()) {
+            for (Chunk c : w.getLoadedChunks().clone()) {
                 if (w.getPlayers().size() > 0) {
                     c.unload(true, true);
                     continue;

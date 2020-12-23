@@ -1,18 +1,16 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.plugin.Plugin
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import org.arkhamnetwork.Arkkit.patches.FinalBattleCommand;
-import org.arkhamnetwork.Arkkit.patches.FinalBattleListener;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.plugin.Plugin;
 
 public class FinalBattle
-extends ArkPlugin {
+        extends ArkPlugin {
     protected static final String wooflessFactionID = "2";
     protected static final String prestonFactionID = "3";
     protected static boolean wooflessRespawn = true;

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.World
@@ -13,7 +13,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.HashSet;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.patches.chunkgc.ChunkAPI;
 import org.arkhamnetwork.Arkkit.patches.chunkgc.ChunkGCTask;
@@ -25,8 +24,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.HashSet;
+
 final class EntityCleanerTask
-extends BukkitRunnable {
+        extends BukkitRunnable {
     Arkkit plugin;
     int run_count = 0;
 
@@ -46,23 +47,24 @@ extends BukkitRunnable {
             final int f_exec_count = ++exec_count;
             final String w_name = w.getName();
             if (w_ents.length <= 0) continue;
-            this.plugin.getServer().getScheduler().runTaskAsynchronously((Plugin)this.plugin, new Runnable(){
+            this.plugin.getServer().getScheduler().runTaskAsynchronously(this.plugin, new Runnable() {
 
                 @Override
                 public void run() {
                     HashSet<Entity> dead_entities = new HashSet<Entity>();
                     for (Entity ent : w_ents) {
-                        if (ent.getType() == EntityType.FIREWORK || ent.hasMetadata("NPC") || ent.hasMetadata("cbe_boss") || ent.hasMetadata("do_not_clear") || !ChunkAPI.isIntensive(ent.getType()) && (!(ent instanceof Player) || !ent.hasMetadata("NPC") && !ent.hasMetadata("npc_type")) || ChunkAPI.isPlayerNearby(ent.getLocation(), -1)) continue;
+                        if (ent.getType() == EntityType.FIREWORK || ent.hasMetadata("NPC") || ent.hasMetadata("cbe_boss") || ent.hasMetadata("do_not_clear") || !ChunkAPI.isIntensive(ent.getType()) && (!(ent instanceof Player) || !ent.hasMetadata("NPC") && !ent.hasMetadata("npc_type")) || ChunkAPI.isPlayerNearby(ent.getLocation(), -1))
+                            continue;
                         dead_entities.add(ent);
                     }
                     final Entity[] sync_dead_entities = dead_entities.toArray(new Entity[0]);
-                    EntityCleanerTask.this.plugin.getServer().getScheduler().runTaskLater((Plugin)EntityCleanerTask.this.plugin, new Runnable(){
+                    EntityCleanerTask.this.plugin.getServer().getScheduler().runTaskLater(EntityCleanerTask.this.plugin, new Runnable() {
 
                         @Override
                         public void run() {
                             EntityCleanerTask.this.syncRemoveEntities(w_name, sync_dead_entities);
                         }
-                    }, 4L * (long)f_exec_count);
+                    }, 4L * (long) f_exec_count);
                 }
             });
         }

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.CC
  *  com.cosmicpvp.cosmicutils.utils.PlayerUtil
@@ -15,7 +15,6 @@ package org.arkhamnetwork.Arkkit.patches;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
 import org.arkhamnetwork.Arkkit.libs.ArkPluginCommand;
-import org.arkhamnetwork.Arkkit.patches.EquipmentLootboxes;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -23,7 +22,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 final class HeroicArmorGeneratorCommand
-extends ArkPluginCommand<EquipmentLootboxes> {
+        extends ArkPluginCommand<EquipmentLootboxes> {
     public HeroicArmorGeneratorCommand(EquipmentLootboxes patch) {
         super(patch, "heroicarmorgenerator");
     }
@@ -34,13 +33,13 @@ extends ArkPluginCommand<EquipmentLootboxes> {
             return true;
         }
         if (args.length == 1) {
-            Player player = Bukkit.getPlayer((String)args[0]);
+            Player player = Bukkit.getPlayer(args[0]);
             if (player == null) {
                 sender.sendMessage(CC.Red + "Invalid player entered!");
                 return true;
             }
             player.sendMessage(CC.GoldB + "(!) " + CC.Gold + "You have been given a " + CC.RedB + "Heroic G-Kit Generator" + CC.Gold + "!");
-            PlayerUtil.giveOrDropProtectedItem((Player)player, (ItemStack)((EquipmentLootboxes)this.patch).createHeroicGKitGenerator(true), (int)-1);
+            PlayerUtil.giveOrDropProtectedItem(player, this.patch.createHeroicGKitGenerator(true), -1);
             sender.sendMessage(CC.Red + "Given heroic generator to " + player.getName() + "!");
             return true;
         }

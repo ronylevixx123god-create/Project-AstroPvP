@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
@@ -21,15 +21,8 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import org.arkhamnetwork.Arkkit.utils.WorldGuardUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -42,16 +35,20 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.world.PortalCreateEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 final class NetherGlitchFixListener
-implements Listener {
+        implements Listener {
     private final List<String> netherWorldNames = new ArrayList<String>(Arrays.asList("world_nether"));
 
     NetherGlitchFixListener() {
     }
 
-    @EventHandler(priority=EventPriority.HIGH, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onPortal(PortalCreateEvent event) {
-        Block block = (Block)event.getBlocks().get(0);
+        Block block = event.getBlocks().get(0);
         World currentWorld = block.getWorld();
         if (!this.netherWorldNames.contains(currentWorld.getName())) {
             return;
@@ -59,7 +56,7 @@ implements Listener {
         event.setCancelled(true);
     }
 
-    @EventHandler(priority=EventPriority.HIGH, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onInteractLight(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         World currentWorld = player.getWorld();
@@ -75,10 +72,10 @@ implements Listener {
             return;
         }
         event.setCancelled(true);
-        player.sendMessage((Object)ChatColor.RED + "You may not make portals in the nether!");
+        player.sendMessage(ChatColor.RED + "You may not make portals in the nether!");
     }
 
-    @EventHandler(priority=EventPriority.HIGH, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onBlockPlace(BlockPlaceEvent event) {
         Block block = event.getBlock();
         World currentWorld = block.getWorld();
@@ -90,18 +87,18 @@ implements Listener {
             return;
         }
         event.setCancelled(true);
-        player.sendMessage((Object)ChatColor.RED + "You may not build here!");
+        player.sendMessage(ChatColor.RED + "You may not build here!");
     }
 
-    @EventHandler(priority=EventPriority.LOW)
+    @EventHandler(priority = EventPriority.LOW)
     public void onBedrockLevelBlockBreak(BlockBreakEvent e) {
         if (e.getBlock().getY() <= 0 && !e.getPlayer().isOp()) {
             e.setCancelled(true);
-            e.getPlayer().sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "You cannot break blocks at y:0 in the nether!");
+            e.getPlayer().sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "You cannot break blocks at y:0 in the nether!");
         }
     }
 
-    @EventHandler(priority=EventPriority.HIGH, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onBlockBreak(BlockBreakEvent event) {
         Block block = event.getBlock();
         World currentWorld = block.getWorld();
@@ -113,7 +110,7 @@ implements Listener {
             return;
         }
         event.setCancelled(true);
-        player.sendMessage((Object)ChatColor.RED + "You may not build here!");
+        player.sendMessage(ChatColor.RED + "You may not build here!");
     }
 
     @EventHandler
@@ -129,14 +126,14 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.LOW)
+    @EventHandler(priority = EventPriority.LOW)
     public void onEntityPortalEvent(EntityPortalEvent e) {
         Location netherLocation;
         if (e.getTo() != null && e.getTo().getWorld().getName().equals("world_nether") && WorldGuardUtils.isPvPDisabled(netherLocation = e.getTo())) {
-            if (e.getEntity() instanceof Player && ((Player)e.getEntity()).isOp()) {
+            if (e.getEntity() instanceof Player && e.getEntity().isOp()) {
                 return;
             }
-            Bukkit.getLogger().info("[Arkkit (NetherGlitchFix)] Blocking portal creation event at: " + (Object)e.getTo() + " from entity: " + (Object)e.getEntity());
+            Bukkit.getLogger().info("[Arkkit (NetherGlitchFix)] Blocking portal creation event at: " + e.getTo() + " from entity: " + e.getEntity());
             e.getPortalTravelAgent().setCanCreatePortal(false);
         }
     }

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.earth2me.essentials.User
  *  com.google.common.collect.Lists
@@ -35,7 +35,6 @@ import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.struct.Role;
-import java.util.List;
 import markehme.factionsplus.Cmds.CmdWarp;
 import org.apache.commons.lang.StringUtils;
 import org.arkhamnetwork.Arkkit.Arkkit;
@@ -57,16 +56,18 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
+import java.util.List;
+
 class WarpGUIListener
-implements Listener {
-    private List<String> aliases = Lists.newArrayList("/f warp", "/f warps");
-    private WarpGUIManager manager;
+        implements Listener {
+    private final List<String> aliases = Lists.newArrayList("/f warp", "/f warps");
+    private final WarpGUIManager manager;
 
     public WarpGUIListener(WarpGUIManager manager) {
         this.manager = manager;
     }
 
-    @EventHandler(priority=EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerCommand(PlayerCommandPreprocessEvent event) {
         if (this.aliases.contains(event.getMessage().toLowerCase())) {
             event.setCancelled(true);
@@ -79,7 +80,7 @@ implements Listener {
     @EventHandler
     public void onPlayerClose(InventoryCloseEvent event) {
         if (event.getPlayer().hasMetadata("custom_warp")) {
-            event.getPlayer().removeMetadata("custom_warp", (Plugin)Arkkit.get());
+            event.getPlayer().removeMetadata("custom_warp", Arkkit.get());
         }
     }
 
@@ -94,25 +95,25 @@ implements Listener {
             if (event.getRawSlot() < 0 || event.getRawSlot() >= event.getInventory().getSize()) {
                 return;
             }
-            Player player = (Player)event.getWhoClicked();
-            FPlayer fplayer = (FPlayer)FPlayers.i.get((OfflinePlayer)player);
+            Player player = (Player) event.getWhoClicked();
+            FPlayer fplayer = FPlayers.i.get(player);
             if (fplayer.getFaction() == null || !fplayer.getFaction().isNormal()) {
                 player.closeInventory();
                 return;
             }
-            String warpName = ChatColor.stripColor((String)item.getItemMeta().getDisplayName());
-            if (CmdWarp.getWarp((Faction)fplayer.getFaction(), (String)warpName) == null) {
-                player.sendMessage((Object)ChatColor.RED + "That warp is no longer valid!");
+            String warpName = ChatColor.stripColor(item.getItemMeta().getDisplayName());
+            if (CmdWarp.getWarp(fplayer.getFaction(), warpName) == null) {
+                player.sendMessage(ChatColor.RED + "That warp is no longer valid!");
                 player.closeInventory();
                 return;
             }
             if (event.getClick() == ClickType.RIGHT) {
                 if (!fplayer.getRole().isAtLeast(Role.MODERATOR)) {
-                    player.sendMessage((Object)ChatColor.RED + "You must be atleast Faction Moderator to change warp icons!");
+                    player.sendMessage(ChatColor.RED + "You must be atleast Faction Moderator to change warp icons!");
                     return;
                 }
                 player.openInventory(this.manager.getMaterialSelection());
-                player.setMetadata("custom_warp", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)warpName));
+                player.setMetadata("custom_warp", new FixedMetadataValue(Arkkit.get(), warpName));
                 player.playSound(player.getLocation(), Sound.LAVA_POP, 1.0f, 1.0f);
             } else {
                 player.closeInventory();
@@ -127,16 +128,16 @@ implements Listener {
             if (event.getRawSlot() < 0 || event.getRawSlot() >= event.getInventory().getSize()) {
                 return;
             }
-            Player player = (Player)event.getWhoClicked();
-            FPlayer fplayer = (FPlayer)FPlayers.i.get((OfflinePlayer)player);
+            Player player = (Player) event.getWhoClicked();
+            FPlayer fplayer = FPlayers.i.get(player);
             if (fplayer.getFaction() == null || !fplayer.getFaction().isNormal()) {
                 player.closeInventory();
                 return;
             }
             if (player.hasMetadata("custom_warp")) {
-                String warpName = ((MetadataValue)player.getMetadata("custom_warp").get(0)).asString();
-                if (CmdWarp.getWarp((Faction)fplayer.getFaction(), (String)warpName) == null) {
-                    player.sendMessage((Object)ChatColor.RED + "That warp is no longer valid!");
+                String warpName = player.getMetadata("custom_warp").get(0).asString();
+                if (CmdWarp.getWarp(fplayer.getFaction(), warpName) == null) {
+                    player.sendMessage(ChatColor.RED + "That warp is no longer valid!");
                     player.closeInventory();
                     return;
                 }
@@ -146,9 +147,9 @@ implements Listener {
                     this.manager.getCustomWarps().put(fplayer.getFaction().getId(), customWarps);
                 }
                 customWarps.put(warpName, item.getType());
-                player.sendMessage((Object)ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.GREEN + "Saved " + warpName + " faction warp icon to " + (Object)ChatColor.GREEN + ChatColor.UNDERLINE.toString() + StringUtils.capitaliseAllWords((String)item.getType().name().toLowerCase().replace("_", " ")));
+                player.sendMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + ChatColor.GREEN + "Saved " + warpName + " faction warp icon to " + ChatColor.GREEN + ChatColor.UNDERLINE.toString() + StringUtils.capitaliseAllWords(item.getType().name().toLowerCase().replace("_", " ")));
                 player.playSound(player.getLocation(), Sound.CLICK, 1.0f, 0.8f);
-                player.removeMetadata("custom_warp", (Plugin)Arkkit.get());
+                player.removeMetadata("custom_warp", Arkkit.get());
                 player.closeInventory();
                 player.chat("/f warp");
             } else {
@@ -161,8 +162,7 @@ implements Listener {
         User user = EssentialsUtils.getEssentials().getUser(player);
         try {
             return user.getHome(name) != null;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return false;
         }
     }

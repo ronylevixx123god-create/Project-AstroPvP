@@ -1,21 +1,21 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.command.Command
  *  org.bukkit.command.CommandSender
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.Map;
-import java.util.UUID;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
-import org.arkhamnetwork.Arkkit.patches.FactionTagReserve;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
+import java.util.Map;
+import java.util.UUID;
+
 final class CommandSetTagOwner
-extends AbstractCommand {
+        extends AbstractCommand {
     public CommandSetTagOwner(String command, String usage, String description) {
         super(command, usage, description);
     }

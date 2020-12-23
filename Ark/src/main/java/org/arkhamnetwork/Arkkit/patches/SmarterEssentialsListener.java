@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.compilex.CompilexPermissions.PermissionsAPI
  *  com.compilex.CompilexServerSync.ServerSyncAPI
@@ -43,16 +43,9 @@ import com.cosmicpvp.CosmicRankQuests.utils.PlayerRankUtils;
 import com.cosmicpvp.cosmicutils.compat.ParamBuilder;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.earth2me.essentials.User;
-import com.gmail.nossr50.skills.mining.MiningManager;
-import com.gmail.nossr50.util.player.UserManager;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.struct.Relation;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import net.ess3.api.events.NickChangeEvent;
 import org.apache.commons.lang3.text.WordUtils;
 import org.bukkit.Bukkit;
@@ -63,22 +56,18 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerChatTabCompleteEvent;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
-import org.bukkit.event.player.PlayerVelocityEvent;
+import org.bukkit.event.player.*;
+
+import java.util.*;
 
 final class SmarterEssentialsListener
-implements Listener {
+        implements Listener {
     List<String> blockedMutedCommands;
     boolean factions = false;
     boolean essentials = false;
-    private List<String> message_aliases = new ArrayList<String>(Arrays.asList("msg", "message", "tell", "whisper", "m", "emsg", "w", "t", "etell", "ewhisper"));
-    private List<String> reply_aliases = new ArrayList<String>(Arrays.asList("reply", "r", "repl"));
-    private LinkedList<String> listCommandCache = new LinkedList();
+    private final List<String> message_aliases = new ArrayList<String>(Arrays.asList("msg", "message", "tell", "whisper", "m", "emsg", "w", "t", "etell", "ewhisper"));
+    private final List<String> reply_aliases = new ArrayList<String>(Arrays.asList("reply", "r", "repl"));
+    private final LinkedList<String> listCommandCache = new LinkedList();
     private long listCommandCacheExpiration = 0L;
 
     SmarterEssentialsListener() {
@@ -100,13 +89,13 @@ implements Listener {
                     u.setSocialSpyEnabled(false);
                 }
             }
-            if (this.factions && (fp = FactionUtils.getFPlayer((Player)e.getPlayer())) != null && (Boolean) FactionUtils.callFPlayerMethod(fp, "isSpyingChat")) {
-                FactionUtils.callFPlayerMethod((FPlayer)fp, (String)"setSpyingChat", (ParamBuilder)new ParamBuilder(Boolean.TYPE, (Object)false));
+            if (this.factions && (fp = FactionUtils.getFPlayer(e.getPlayer())) != null && (Boolean) FactionUtils.callFPlayerMethod(fp, "isSpyingChat")) {
+                FactionUtils.callFPlayerMethod(fp, "setSpyingChat", new ParamBuilder(Boolean.TYPE, false));
             }
         }
     }
 
-    @EventHandler(priority=EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onAsyncPlayerChat(AsyncPlayerChatEvent e) {
         if (e.getPlayer().hasPermission("*")) {
             Bukkit.getLogger().info(e.getMessage());
@@ -143,7 +132,7 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onVanishedPlayerItemPickup(PlayerPickupItemEvent e) {
         User u = SmarterEssentials.ess3.getUser(e.getPlayer());
         if (u.isVanished()) {
@@ -152,19 +141,19 @@ implements Listener {
     }
 
     private Relation getRelationWish(Faction original, Faction fac) {
-        return (Relation)FactionUtils.callFactionMethod((Faction)original, (String)"getRelationWish", (ParamBuilder)new ParamBuilder(Faction.class, (Object)fac));
+        return (Relation) FactionUtils.callFactionMethod(original, "getRelationWish", new ParamBuilder(Faction.class, fac));
     }
 
     @EventHandler
     public void onIllegalPlayerTeleport(PlayerTeleportEvent e) {
         if (e.getCause() == PlayerTeleportEvent.TeleportCause.COMMAND && SmarterEssentials.factions) {
             Player p = e.getPlayer();
-            Faction fpFaction = FactionUtils.getFaction((Player)p);
-            Faction locationFaction = FactionUtils.getFactionAt((Location)e.getTo());
+            Faction fpFaction = FactionUtils.getFaction(p);
+            Faction locationFaction = FactionUtils.getFactionAt(e.getTo());
             Relation relation = this.getRelationWish(fpFaction, locationFaction);
-            if (!(locationFaction == fpFaction || relation.isAlly() || relation.isTruce() || relation.isNeutral() || ((Boolean)FactionUtils.callFactionMethod((Faction)locationFaction, (String)"isWarZone", null)).booleanValue() || ((Boolean)FactionUtils.callFactionMethod((Faction)locationFaction, (String)"isSafeZone", null)).booleanValue() || ((Boolean)FactionUtils.callFactionMethod((Faction)locationFaction, (String)"isNone", null)).booleanValue() || p.isOp())) {
+            if (!(locationFaction == fpFaction || relation.isAlly() || relation.isTruce() || relation.isNeutral() || ((Boolean) FactionUtils.callFactionMethod(locationFaction, "isWarZone", null)).booleanValue() || ((Boolean) FactionUtils.callFactionMethod(locationFaction, "isSafeZone", null)).booleanValue() || ((Boolean) FactionUtils.callFactionMethod(locationFaction, "isNone", null)).booleanValue() || p.isOp())) {
                 e.setCancelled(true);
-                e.getPlayer().sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You cannot teleport to an enemy's territory.");
+                e.getPlayer().sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot teleport to an enemy's territory.");
             }
         }
     }
@@ -173,11 +162,11 @@ implements Listener {
     public void onNickChangeEvent(NickChangeEvent e) {
         if (e.getValue() != null && e.getValue().length() < 3 && !e.getController().getBase().isOp()) {
             e.setCancelled(true);
-            e.getController().sendMessage((Object)ChatColor.RED + "Error: " + (Object)ChatColor.DARK_RED + "That nickname is too short.");
+            e.getController().sendMessage(ChatColor.RED + "Error: " + ChatColor.DARK_RED + "That nickname is too short.");
         }
     }
 
-    @EventHandler(priority=EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerCommandPreProcess(PlayerCommandPreprocessEvent e) {
         String cmd = e.getMessage().replace("/", "").toLowerCase();
         if (cmd.contains(" ")) {
@@ -203,24 +192,24 @@ implements Listener {
             int onlinePlayers = Bukkit.getOnlinePlayers().size();
             int maxPlayers = Bukkit.getMaxPlayers();
             this.listCommandCache.add("");
-            this.listCommandCache.add((Object)ChatColor.AQUA + "" + (Object)ChatColor.BOLD + "--- " + (Object)ChatColor.UNDERLINE + "CosmicPvP Player List" + (Object)ChatColor.AQUA + (Object)ChatColor.BOLD + " ---");
+            this.listCommandCache.add(ChatColor.AQUA + "" + ChatColor.BOLD + "--- " + ChatColor.UNDERLINE + "CosmicPvP Player List" + ChatColor.AQUA + ChatColor.BOLD + " ---");
             this.listCommandCache.add("");
-            this.listCommandCache.add((Object)ChatColor.AQUA + "" + (Object)ChatColor.BOLD + "Players: " + (Object)ChatColor.GREEN + (Object)ChatColor.BOLD + onlinePlayers + (Object)ChatColor.GRAY + (Object)ChatColor.BOLD + " / " + (Object)ChatColor.GRAY + (Object)ChatColor.BOLD + (maxPlayers - 50) + (Object)ChatColor.GRAY + " players on your planet!");
+            this.listCommandCache.add(ChatColor.AQUA + "" + ChatColor.BOLD + "Players: " + ChatColor.GREEN + ChatColor.BOLD + onlinePlayers + ChatColor.GRAY + ChatColor.BOLD + " / " + ChatColor.GRAY + ChatColor.BOLD + (maxPlayers - 50) + ChatColor.GRAY + " players on your planet!");
             if (Bukkit.getPluginManager().isPluginEnabled("CosmicRankQuests")) {
                 double traineePlayers = this.getPlayersInRankTier(-1);
-                this.listCommandCache.add((Object)ChatColor.GRAY + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Trainee: " + (Object)ChatColor.AQUA + (int)traineePlayers + (Object)ChatColor.GRAY + " [" + (int)(traineePlayers / (double)Bukkit.getOnlinePlayers().size() * 100.0) + "%]");
+                this.listCommandCache.add(ChatColor.GRAY + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Trainee: " + ChatColor.AQUA + (int) traineePlayers + ChatColor.GRAY + " [" + (int) (traineePlayers / (double) Bukkit.getOnlinePlayers().size() * 100.0) + "%]");
                 for (int rankTier = 1; rankTier <= 6; ++rankTier) {
                     double playersInRankTier = this.getPlayersInRankTier(rankTier);
-                    String rank = PlayerRankUtils.getRank((int)rankTier);
+                    String rank = PlayerRankUtils.getRank(rankTier);
                     if (rank == null) continue;
                     ChatColor rankColor = rankTier == 2 ? ChatColor.AQUA : (rankTier == 3 ? ChatColor.BLUE : PlayerRankUtils.getRankColor(String.valueOf(rankTier)));
-                    this.listCommandCache.add((Object)rankColor + "" + (Object)ChatColor.BOLD + "* " + (Object)rankColor + WordUtils.capitalize((String)(rank.replace("_plus", (Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "+" + (Object)ChatColor.YELLOW) + ": ")) + (Object)ChatColor.AQUA + (int)playersInRankTier + (Object)ChatColor.GRAY + " [" + (int)(playersInRankTier / (double)Bukkit.getOnlinePlayers().size() * 100.0) + "%]");
+                    this.listCommandCache.add(rankColor + "" + ChatColor.BOLD + "* " + rankColor + WordUtils.capitalize(rank.replace("_plus", ChatColor.GOLD + "" + ChatColor.BOLD + "+" + ChatColor.YELLOW) + ": ") + ChatColor.AQUA + (int) playersInRankTier + ChatColor.GRAY + " [" + (int) (playersInRankTier / (double) Bukkit.getOnlinePlayers().size() * 100.0) + "%]");
                 }
             }
             this.listCommandCache.add("");
-            this.listCommandCache.add((Object)ChatColor.AQUA + "" + (Object)ChatColor.BOLD + "Factions: " + (Object)ChatColor.AQUA + this.getOnlinePlayersInFactions() + (Object)ChatColor.GRAY + " players" + (Object)ChatColor.GRAY + " online in " + (Object)ChatColor.AQUA + this.getOnlineFactionCount() + " different factions.");
+            this.listCommandCache.add(ChatColor.AQUA + "" + ChatColor.BOLD + "Factions: " + ChatColor.AQUA + this.getOnlinePlayersInFactions() + ChatColor.GRAY + " players" + ChatColor.GRAY + " online in " + ChatColor.AQUA + this.getOnlineFactionCount() + " different factions.");
             if (ServerSyncAPI.getCurrentGameServerState() != GameServerState.ONLINE) {
-                this.listCommandCache.add((Object)ChatColor.AQUA + "" + (Object)ChatColor.BOLD + "VIP Level: " + ServerSyncAPI.getCurrentGameServerState().getName());
+                this.listCommandCache.add(ChatColor.AQUA + "" + ChatColor.BOLD + "VIP Level: " + ServerSyncAPI.getCurrentGameServerState().getName());
             }
             this.listCommandCache.add("");
             for (String msg : this.listCommandCache) {
@@ -232,28 +221,28 @@ implements Listener {
             if (e.getMessage().contains("&")) {
                 e.setCancelled(true);
                 e.setMessage("/null");
-                e.getPlayer().sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You cannot use &color codes in private messages.");
+                e.getPlayer().sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot use &color codes in private messages.");
             } else {
-                e.setMessage(ChatColor.stripColor((String)e.getMessage()));
+                e.setMessage(ChatColor.stripColor(e.getMessage()));
             }
         }
     }
 
-    @EventHandler(priority=EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerDamageLOWEST(EntityDamageEvent e) {
         User u;
-        if (e.getEntity() instanceof Player && ((u = SmarterEssentials.ess3.getUser((Player)e.getEntity())).isVanished() || u.isGodModeEnabled())) {
-            Player p = (Player)e.getEntity();
+        if (e.getEntity() instanceof Player && ((u = SmarterEssentials.ess3.getUser((Player) e.getEntity())).isVanished() || u.isGodModeEnabled())) {
+            Player p = (Player) e.getEntity();
             e.setCancelled(true);
             e.setDamage(0.0);
         }
     }
 
-    @EventHandler(priority=EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerDamageMONITOR(EntityDamageEvent e) {
         User u;
-        if (e.getEntity() instanceof Player && ((u = SmarterEssentials.ess3.getUser((Player)e.getEntity())).isVanished() || u.isGodModeEnabled())) {
-            Player p = (Player)e.getEntity();
+        if (e.getEntity() instanceof Player && ((u = SmarterEssentials.ess3.getUser((Player) e.getEntity())).isVanished() || u.isGodModeEnabled())) {
+            Player p = (Player) e.getEntity();
             e.setCancelled(true);
             e.setDamage(0.0);
         }
@@ -263,18 +252,19 @@ implements Listener {
     public void onPlayerChatTabCompleteEvent(PlayerChatTabCompleteEvent e) {
         if (!e.getPlayer().hasPermission("arkkit.staff.hidden")) {
             for (String s : e.getTabCompletions()) {
-                if (Bukkit.getPlayer((String)s) == null || !Bukkit.getPlayer((String)s).hasPermission("arkkit.staff.hidden")) continue;
+                if (Bukkit.getPlayer(s) == null || !Bukkit.getPlayer(s).hasPermission("arkkit.staff.hidden"))
+                    continue;
                 e.getTabCompletions().remove(s);
             }
         }
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerTeleport(PlayerTeleportEvent e) {
         if (e.getCause() == PlayerTeleportEvent.TeleportCause.UNKNOWN) {
             return;
         }
-        if (!e.getFrom().getWorld().equals((Object)e.getTo().getWorld()) || e.getFrom().distanceSquared(e.getTo()) >= 256.0) {
+        if (!e.getFrom().getWorld().equals(e.getTo().getWorld()) || e.getFrom().distanceSquared(e.getTo()) >= 256.0) {
             this.clearTeleportRequests(e.getPlayer());
         }
     }
@@ -291,21 +281,22 @@ implements Listener {
                 ++x;
                 continue;
             }
-            if (PermissionsAPI.getHighestRankID((String)p.getUniqueId().toString()) != rankTier || rankTier == -1 && p.hasPermission("cosmicpvp.heroic")) continue;
+            if (PermissionsAPI.getHighestRankID(p.getUniqueId().toString()) != rankTier || rankTier == -1 && p.hasPermission("cosmicpvp.heroic"))
+                continue;
             ++x;
         }
         return x;
     }
 
     private boolean isNormalFaction(Player player) {
-        Faction faction = FactionUtils.getFaction((Player)player);
-        return faction != null && (Boolean)FactionUtils.callFactionMethod((Faction)faction, (String)"isNormal", null) != false;
+        Faction faction = FactionUtils.getFaction(player);
+        return faction != null && (Boolean) FactionUtils.callFactionMethod(faction, "isNormal", null) != false;
     }
 
     private int getOnlineFactionCount() {
         HashSet<String> onlineFactionIds = new HashSet<String>();
         for (Player p : Bukkit.getOnlinePlayers()) {
-            String factionId = FactionUtils.getFactionId((Player)p);
+            String factionId = FactionUtils.getFactionId(p);
             if (factionId == null || !this.isNormalFaction(p)) continue;
             onlineFactionIds.add(factionId);
         }

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.GeneralUtil
  *  org.bukkit.Bukkit
@@ -14,17 +14,7 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.stream.IntStream;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.CommandItemID;
-import org.arkhamnetwork.Arkkit.patches.ItemIDAutoSaveTask;
-import org.arkhamnetwork.Arkkit.patches.ItemIDListener;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -34,51 +24,27 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
+import java.util.*;
+import java.util.stream.IntStream;
+
 public class ItemID
-extends ArkPlugin {
+        extends ArkPlugin {
     public static volatile HashSet<Long> blacklist_iid;
     public static long next_iid;
     protected static List<Material> otherItemsToMonitor;
     protected static HashMap<Material, int[]> durabilityMap;
 
+    static {
+        otherItemsToMonitor = new ArrayList<Material>(Arrays.asList(Material.PAPER, Material.MAGMA_CREAM, Material.BOOK, Material.EYE_OF_ENDER, Material.DIAMOND, Material.BONE, Material.ENDER_CHEST, Material.getMaterial(383), Material.NETHER_STAR, Material.TORCH, Material.EMERALD, Material.CHEST, Material.REDSTONE_TORCH_OFF, Material.MOB_SPAWNER, Material.EXP_BOTTLE, Material.PAINTING, Material.INK_SACK, Material.EMPTY_MAP, Material.ENCHANTED_BOOK, Material.FEATHER));
+        durabilityMap = new HashMap();
+    }
+
     public ItemID(Plugin p) {
         super(p);
     }
 
-    @Override
-    public void enable() {
-        next_iid = Arkkit.get().getConfig().getLong("settings.itemID.next_iid");
-        blacklist_iid = new HashSet();
-        Iterator<Long> iterator = Arkkit.get().getConfig().getLongList("settings.itemID.blacklist_iid").iterator();
-        while (iterator.hasNext()) {
-            long l = (Long)iterator.next();
-            blacklist_iid.add(l);
-        }
-        for (Material m : otherItemsToMonitor) {
-            if (m == Material.INK_SACK) {
-                durabilityMap.put(m, new int[]{0, 1});
-            }
-            if (m != Material.getMaterial((int)383)) continue;
-            durabilityMap.put(m, new int[]{0, 51, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 90, 91, 92, 93, 94, 95, 96, 97, 99});
-        }
-        this.registerTask(new ItemIDAutoSaveTask().runTaskTimer((Plugin)Arkkit.get(), 200L, 200L), ItemIDAutoSaveTask.class);
-        this.registerListener(new ItemIDListener());
-        this.registerCommand(new CommandItemID("itemid", "/<command>", "ItemID admin command.", Arrays.asList("iid")));
-    }
-
-    @Override
-    public void disable() {
-        Arkkit.get().getConfig().set("settings.itemID.next_iid", (Object)(next_iid += 1000L));
-        ArrayList<Long> llist = new ArrayList<Long>();
-        for (long l : blacklist_iid) {
-            llist.add(l);
-        }
-        Arkkit.get().getConfig().set("settings.itemID.blacklist_iid", llist);
-        Arkkit.get().saveConfig();
-    }
-
     public static boolean hasValidDurabilityForTracking(ItemStack i) {
-        return !durabilityMap.containsKey((Object)i.getType()) || IntStream.of(durabilityMap.get((Object)i.getType())).anyMatch(x -> x == i.getDurability());
+        return !durabilityMap.containsKey(i.getType()) || IntStream.of(durabilityMap.get(i.getType())).anyMatch(x -> x == i.getDurability());
     }
 
     public static ItemStack assignItemID(InventoryClickEvent e, ItemStack i) {
@@ -113,7 +79,7 @@ extends ArkPlugin {
         if (i.hasItemMeta() && i.getItemMeta().hasLore()) {
             for (String s : i.getItemMeta().getLore()) {
                 if (!s.startsWith(ChatColor.BLACK.toString() + "IID ")) continue;
-                return Long.parseLong(ChatColor.stripColor((String)s.split(" ")[1]));
+                return Long.parseLong(ChatColor.stripColor(s.split(" ")[1]));
             }
         }
         return -1L;
@@ -174,17 +140,44 @@ extends ArkPlugin {
     }
 
     public static boolean doesItemIDNeedToPersist(ItemStack i) {
-        return i != null && (i.getMaxStackSize() == 1 && (GeneralUtil.isArmor((ItemStack)i) || GeneralUtil.isWeapon((ItemStack)i) || GeneralUtil.isTool((ItemStack)i)) || otherItemsToMonitor.contains((Object)i.getType()) && ItemID.hasValidDurabilityForTracking(i)) && (i.hasItemMeta() && i.getItemMeta().hasLore() || i.getType() == Material.MOB_SPAWNER || i.getTypeId() == 383);
+        return i != null && (i.getMaxStackSize() == 1 && (GeneralUtil.isArmor(i) || GeneralUtil.isWeapon(i) || GeneralUtil.isTool(i)) || otherItemsToMonitor.contains(i.getType()) && ItemID.hasValidDurabilityForTracking(i)) && (i.hasItemMeta() && i.getItemMeta().hasLore() || i.getType() == Material.MOB_SPAWNER || i.getTypeId() == 383);
     }
 
     public static boolean needsItemID(ItemStack i) {
         Material type = i != null ? i.getType() : null;
-        return i != null && (i.getMaxStackSize() == 1 && (GeneralUtil.isArmor((ItemStack)i) || GeneralUtil.isWeapon((ItemStack)i) || GeneralUtil.isTool((ItemStack)i)) || otherItemsToMonitor.contains((Object)type) && ItemID.hasValidDurabilityForTracking(i)) && (i.hasItemMeta() && i.getItemMeta().hasLore() || type == Material.MOB_SPAWNER || i.getTypeId() == 383) && ItemID.getItemID(i) == -1L;
+        return i != null && (i.getMaxStackSize() == 1 && (GeneralUtil.isArmor(i) || GeneralUtil.isWeapon(i) || GeneralUtil.isTool(i)) || otherItemsToMonitor.contains(type) && ItemID.hasValidDurabilityForTracking(i)) && (i.hasItemMeta() && i.getItemMeta().hasLore() || type == Material.MOB_SPAWNER || i.getTypeId() == 383) && ItemID.getItemID(i) == -1L;
     }
 
-    static {
-        otherItemsToMonitor = new ArrayList<Material>(Arrays.asList(new Material[]{Material.PAPER, Material.MAGMA_CREAM, Material.BOOK, Material.EYE_OF_ENDER, Material.DIAMOND, Material.BONE, Material.ENDER_CHEST, Material.getMaterial((int)383), Material.NETHER_STAR, Material.TORCH, Material.EMERALD, Material.CHEST, Material.REDSTONE_TORCH_OFF, Material.MOB_SPAWNER, Material.EXP_BOTTLE, Material.PAINTING, Material.INK_SACK, Material.EMPTY_MAP, Material.ENCHANTED_BOOK, Material.FEATHER}));
-        durabilityMap = new HashMap();
+    @Override
+    public void enable() {
+        next_iid = Arkkit.get().getConfig().getLong("settings.itemID.next_iid");
+        blacklist_iid = new HashSet();
+        Iterator<Long> iterator = Arkkit.get().getConfig().getLongList("settings.itemID.blacklist_iid").iterator();
+        while (iterator.hasNext()) {
+            long l = iterator.next();
+            blacklist_iid.add(l);
+        }
+        for (Material m : otherItemsToMonitor) {
+            if (m == Material.INK_SACK) {
+                durabilityMap.put(m, new int[]{0, 1});
+            }
+            if (m != Material.getMaterial(383)) continue;
+            durabilityMap.put(m, new int[]{0, 51, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 90, 91, 92, 93, 94, 95, 96, 97, 99});
+        }
+        this.registerTask(new ItemIDAutoSaveTask().runTaskTimer(Arkkit.get(), 200L, 200L), ItemIDAutoSaveTask.class);
+        this.registerListener(new ItemIDListener());
+        this.registerCommand(new CommandItemID("itemid", "/<command>", "ItemID admin command.", Arrays.asList("iid")));
+    }
+
+    @Override
+    public void disable() {
+        Arkkit.get().getConfig().set("settings.itemID.next_iid", next_iid += 1000L);
+        ArrayList<Long> llist = new ArrayList<Long>();
+        for (long l : blacklist_iid) {
+            llist.add(l);
+        }
+        Arkkit.get().getConfig().set("settings.itemID.blacklist_iid", llist);
+        Arkkit.get().saveConfig();
     }
 }
 

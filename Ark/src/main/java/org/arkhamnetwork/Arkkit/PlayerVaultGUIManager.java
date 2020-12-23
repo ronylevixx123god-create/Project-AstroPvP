@@ -1,14 +1,5 @@
 package org.arkhamnetwork.Arkkit;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-
 import com.google.common.collect.Lists;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
@@ -22,11 +13,20 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+
 class PlayerVaultGUIManager {
-    private ConcurrentHashMap customPvs = new ConcurrentHashMap();
-    private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private static File jsonFile;
-    private List<Material> materials = Lists.newArrayList(Material.DIAMOND_HELMET, Material.DIAMOND_CHESTPLATE, Material.DIAMOND_LEGGINGS, Material.DIAMOND_BOOTS, Material.BOW, Material.POTION, Material.SUGAR, Material.ENDER_PEARL, Material.MOB_SPAWNER, Material.BOOK, Material.TNT, Material.STEP, Material.ANVIL, Material.IRON_BLOCK, Material.GOLD_BLOCK, Material.DIAMOND_BLOCK, Material.NETHER_BRICK, Material.NETHERRACK, Material.PAPER, Material.CHEST, Material.ENDER_CHEST, Material.SMOOTH_BRICK, Material.SNOW_BLOCK, Material.SOUL_SAND, Material.QUARTZ_BLOCK, Material.DIAMOND_SWORD, Material.DIAMOND_AXE, Material.DIAMOND_PICKAXE, Material.DIAMOND_SPADE, Material.DIAMOND_HOE, Material.ICE, Material.PACKED_ICE, Material.DISPENSER, Material.FURNACE, Material.HOPPER, Material.GLASS, Material.SAND, Material.SPONGE, Material.OBSIDIAN, Material.BEDROCK, Material.ENCHANTMENT_TABLE, Material.CACTUS, Material.GLOWSTONE, Material.DIAMOND, Material.EMERALD, Material.GOLD_INGOT, Material.IRON_INGOT, Material.REDSTONE, Material.BUCKET, Material.LAVA_BUCKET, Material.WATER_BUCKET, Material.GOLDEN_APPLE, Material.EXP_BOTTLE, Material.BED);
+    private ConcurrentHashMap customPvs = new ConcurrentHashMap();
+    private final List<Material> materials = Lists.newArrayList(Material.DIAMOND_HELMET, Material.DIAMOND_CHESTPLATE, Material.DIAMOND_LEGGINGS, Material.DIAMOND_BOOTS, Material.BOW, Material.POTION, Material.SUGAR, Material.ENDER_PEARL, Material.MOB_SPAWNER, Material.BOOK, Material.TNT, Material.STEP, Material.ANVIL, Material.IRON_BLOCK, Material.GOLD_BLOCK, Material.DIAMOND_BLOCK, Material.NETHER_BRICK, Material.NETHERRACK, Material.PAPER, Material.CHEST, Material.ENDER_CHEST, Material.SMOOTH_BRICK, Material.SNOW_BLOCK, Material.SOUL_SAND, Material.QUARTZ_BLOCK, Material.DIAMOND_SWORD, Material.DIAMOND_AXE, Material.DIAMOND_PICKAXE, Material.DIAMOND_SPADE, Material.DIAMOND_HOE, Material.ICE, Material.PACKED_ICE, Material.DISPENSER, Material.FURNACE, Material.HOPPER, Material.GLASS, Material.SAND, Material.SPONGE, Material.OBSIDIAN, Material.BEDROCK, Material.ENCHANTMENT_TABLE, Material.CACTUS, Material.GLOWSTONE, Material.DIAMOND, Material.EMERALD, Material.GOLD_INGOT, Material.IRON_INGOT, Material.REDSTONE, Material.BUCKET, Material.LAVA_BUCKET, Material.WATER_BUCKET, Material.GOLDEN_APPLE, Material.EXP_BOTTLE, Material.BED);
 
     PlayerVaultGUIManager() {
     }
@@ -48,19 +48,18 @@ class PlayerVaultGUIManager {
                 while ((line = reader.readLine()) != null) {
                     build.append(line);
                 }
-                this.customPvs = gson.fromJson(build.toString(), new TypeToken<ConcurrentHashMap<UUID, CustomPlayerVaults>>(){}.getType());
+                this.customPvs = gson.fromJson(build.toString(), new TypeToken<ConcurrentHashMap<UUID, CustomPlayerVaults>>() {
+                }.getType());
                 if (this.customPvs == null) {
                     this.customPvs = new ConcurrentHashMap();
                 }
                 System.out.println("Took " + (System.currentTimeMillis() - start) + "ms to load " + this.customPvs.size() + " unique players vaults.");
-            }
-            finally {
+            } finally {
                 if (Collections.singletonList(reader).get(0) != null) {
                     reader.close();
                 }
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -72,14 +71,12 @@ class PlayerVaultGUIManager {
             try {
                 writer.write(map);
                 writer.flush();
-            }
-            finally {
+            } finally {
                 if (Collections.singletonList(writer).get(0) != null) {
                     writer.close();
                 }
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -91,7 +88,7 @@ class PlayerVaultGUIManager {
     public Inventory getMaterialSelection() {
         Inventory inventory = Bukkit.createInventory(null, 54, "Select Vault Icon");
         for (Material material : this.getMaterials()) {
-            inventory.addItem(ItemUtils.buildItem(material, material == Material.POTION ? (short)16421 : 0, null, ChatColor.GRAY + "Click to select material."));
+            inventory.addItem(ItemUtils.buildItem(material, material == Material.POTION ? (short) 16421 : 0, null, ChatColor.GRAY + "Click to select material."));
         }
         return inventory;
     }
@@ -105,18 +102,17 @@ class PlayerVaultGUIManager {
                 Material material = Material.EMERALD;
                 String name = "PV #" + vault;
                 if (customVaults != null && customVaults.isCustomPV(vault)) {
-                    CustomPV pv = (CustomPV)customVaults.get(vault);
+                    CustomPV pv = customVaults.get(vault);
                     material = pv.getIcon();
                     if (pv.getCustomName() != null && !pv.getCustomName().isEmpty()) {
                         name = pv.getCustomName();
                     }
                 }
-                ItemStack item = ItemUtils.buildItem(material, material == Material.POTION ? (short)16421 : 0, ChatColor.AQUA + ChatColor.BOLD.toString() + name, ChatColor.LIGHT_PURPLE + "/pv " + vault, "", ChatColor.GRAY + "Left-Click to enter Vault", ChatColor.GRAY + "Middle-Click to edit name", ChatColor.GRAY + "Right-Click to edit icon");
+                ItemStack item = ItemUtils.buildItem(material, material == Material.POTION ? (short) 16421 : 0, ChatColor.AQUA + ChatColor.BOLD.toString() + name, ChatColor.LIGHT_PURPLE + "/pv " + vault, "", ChatColor.GRAY + "Left-Click to enter Vault", ChatColor.GRAY + "Middle-Click to edit name", ChatColor.GRAY + "Right-Click to edit icon");
                 item.setAmount(vault);
                 inventory.addItem(item);
                 continue;
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -125,7 +121,7 @@ class PlayerVaultGUIManager {
 
     public int getPlayerVaults(Player player) {
         for (int i = 27; i > 0; --i) {
-            if (!player.hasPermission("playervaults.amount." + String.valueOf(i))) continue;
+            if (!player.hasPermission("playervaults.amount." + i)) continue;
             return i;
         }
         return 0;

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.entity.Player
@@ -15,7 +15,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.Random;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.bukkit.Bukkit;
@@ -29,26 +28,28 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
+import java.util.Random;
+
 final class ValentinesDayListener
-implements Listener {
+        implements Listener {
     boolean is_hub = Bukkit.getPluginManager().isPluginEnabled("CosmicHub");
 
     @EventHandler
     public void onPlayerToggleSneak(PlayerToggleSneakEvent e) {
-        if (e.getPlayer().hasMetadata("sneak_love") && System.currentTimeMillis() - ((MetadataValue)e.getPlayer().getMetadata("sneak_love").get(0)).asLong() <= 2500L) {
+        if (e.getPlayer().hasMetadata("sneak_love") && System.currentTimeMillis() - e.getPlayer().getMetadata("sneak_love").get(0).asLong() <= 2500L) {
             return;
         }
-        e.getPlayer().setMetadata("sneak_love", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)System.currentTimeMillis()));
+        e.getPlayer().setMetadata("sneak_love", new FixedMetadataValue(Arkkit.get(), System.currentTimeMillis()));
         Player pl = e.getPlayer();
         ParticleEffect.sendToLocation(ParticleEffect.HEART, pl.getLocation().add(0.0, 1.75, 0.0), 0.0f, 0.0f, 0.0f, 0.001f, 3);
     }
 
-    @EventHandler(priority=EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerJoin(PlayerJoinEvent e) {
         if (this.is_hub) {
             Player pl = e.getPlayer();
             Random r = new Random();
-            ParticleEffect.sendToLocation(ParticleEffect.HEART, pl.getLocation().add(0.0, 2.0, 0.0), (float)(r.nextBoolean() ? Math.random() : -Math.random()), (float)(r.nextBoolean() ? Math.random() : -Math.random()), (float)(r.nextBoolean() ? Math.random() : -Math.random()), 0.0025f, 8);
+            ParticleEffect.sendToLocation(ParticleEffect.HEART, pl.getLocation().add(0.0, 2.0, 0.0), (float) (r.nextBoolean() ? Math.random() : -Math.random()), (float) (r.nextBoolean() ? Math.random() : -Math.random()), (float) (r.nextBoolean() ? Math.random() : -Math.random()), 0.0025f, 8);
         }
     }
 }

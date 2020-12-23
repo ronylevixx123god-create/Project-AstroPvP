@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.CC
  *  com.massivecraft.factions.event.FactionCreateEvent
@@ -13,13 +13,13 @@ package org.arkhamnetwork.Arkkit.patches;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.massivecraft.factions.event.FactionCreateEvent;
 import com.massivecraft.factions.event.FactionRenameEvent;
-import java.util.UUID;
-import org.arkhamnetwork.Arkkit.patches.FactionTagReserve;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
+import java.util.UUID;
+
 final class FactionTagReserveListener
-implements Listener {
+        implements Listener {
     FactionTagReserveListener() {
     }
 

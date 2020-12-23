@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.google.common.collect.Lists
  *  org.bukkit.Bukkit
@@ -9,18 +9,17 @@
  */
 package org.arkhamnetwork.Arkkit.patches.chat_filter;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.google.common.collect.Lists;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ChatUtils {
     protected static void clearChat(Player whoCleared) {
@@ -29,11 +28,11 @@ public class ChatUtils {
             for (int i = 0; i < 75; ++i) {
                 player.sendMessage(" ");
             }
-            player.sendMessage((Object)ChatColor.YELLOW + "=============================================================================================================================================================================================");
-            player.sendMessage((Object)ChatColor.GRAY + "The chat has been " + (Object)ChatColor.AQUA + (Object)ChatColor.UNDERLINE + "cleared" + (Object)ChatColor.GRAY + " by " + (Object)ChatColor.YELLOW + clearer);
-            player.sendMessage((Object)ChatColor.YELLOW + "=============================================================================================================================================================================================");
+            player.sendMessage(ChatColor.YELLOW + "=============================================================================================================================================================================================");
+            player.sendMessage(ChatColor.GRAY + "The chat has been " + ChatColor.AQUA + ChatColor.UNDERLINE + "cleared" + ChatColor.GRAY + " by " + ChatColor.YELLOW + clearer);
+            player.sendMessage(ChatColor.YELLOW + "=============================================================================================================================================================================================");
         }
-        whoCleared.sendMessage((Object)ChatColor.GREEN + "You have cleared the chat.");
+        whoCleared.sendMessage(ChatColor.GREEN + "You have cleared the chat.");
     }
 
     protected static void toggleChat(Player whoToggled) {
@@ -45,12 +44,12 @@ public class ChatUtils {
                 for (int i = 0; i < 75; ++i) {
                     player.sendMessage(" ");
                 }
-                player.sendMessage((Object)ChatColor.YELLOW + "=============================================================================================================================================================================================");
-                player.sendMessage((Object)ChatColor.GRAY + "The chat has been " + (Object)ChatColor.RED + (Object)ChatColor.UNDERLINE + "disabled" + (Object)ChatColor.GRAY + " by " + (Object)ChatColor.YELLOW + toggler);
-                player.sendMessage((Object)ChatColor.YELLOW + "=============================================================================================================================================================================================");
+                player.sendMessage(ChatColor.YELLOW + "=============================================================================================================================================================================================");
+                player.sendMessage(ChatColor.GRAY + "The chat has been " + ChatColor.RED + ChatColor.UNDERLINE + "disabled" + ChatColor.GRAY + " by " + ChatColor.YELLOW + toggler);
+                player.sendMessage(ChatColor.YELLOW + "=============================================================================================================================================================================================");
             }
             if (whoToggled != null) {
-                whoToggled.sendMessage((Object)ChatColor.RED + "You have toggled the chat OFF.");
+                whoToggled.sendMessage(ChatColor.RED + "You have toggled the chat OFF.");
             }
         } else {
             ChatFilter.setChatHalted(false);
@@ -58,12 +57,12 @@ public class ChatUtils {
                 for (int i = 0; i < 75; ++i) {
                     player.sendMessage(" ");
                 }
-                player.sendMessage((Object)ChatColor.YELLOW + "=============================================================================================================================================================================================");
-                player.sendMessage((Object)ChatColor.GRAY + "The chat has been " + (Object)ChatColor.GREEN + (Object)ChatColor.UNDERLINE + "enabled" + (Object)ChatColor.GRAY + " by " + (Object)ChatColor.YELLOW + toggler);
-                player.sendMessage((Object)ChatColor.YELLOW + "=============================================================================================================================================================================================");
+                player.sendMessage(ChatColor.YELLOW + "=============================================================================================================================================================================================");
+                player.sendMessage(ChatColor.GRAY + "The chat has been " + ChatColor.GREEN + ChatColor.UNDERLINE + "enabled" + ChatColor.GRAY + " by " + ChatColor.YELLOW + toggler);
+                player.sendMessage(ChatColor.YELLOW + "=============================================================================================================================================================================================");
             }
             if (whoToggled != null) {
-                whoToggled.sendMessage((Object)ChatColor.GREEN + "You have toggled the chat ON.");
+                whoToggled.sendMessage(ChatColor.GREEN + "You have toggled the chat ON.");
             }
         }
     }
@@ -97,7 +96,8 @@ public class ChatUtils {
         String quoted = Pattern.quote("www.");
         while (regexMatcherurl.find()) {
             String text = regexMatcherurl.group().trim().replaceAll(quoted, "").replaceAll("http://", "").replaceAll("https://", "");
-            if (regexMatcherurl.group().length() == 0 || text.length() == 0 || !ChatFilter.webpattern.matcher(message).find() || message.toLowerCase().contains("cosmicpvp.com") && message.toLowerCase().contains("cosmicpvp.me")) continue;
+            if (regexMatcherurl.group().length() == 0 || text.length() == 0 || !ChatFilter.webpattern.matcher(message).find() || message.toLowerCase().contains("cosmicpvp.com") && message.toLowerCase().contains("cosmicpvp.me"))
+                continue;
             return true;
         }
         return false;
@@ -137,7 +137,7 @@ public class ChatUtils {
 
     public static String getFilteredSwearMessage(String message, boolean permanentFilter) {
         ArrayList<String> filters;
-        String oMessage = message.startsWith(" ") ? message.substring(1, message.length()) : message;
+        String oMessage = message.startsWith(" ") ? message.substring(1) : message;
         StringBuilder newMessage = new StringBuilder();
         ArrayList<String> arrayList = filters = permanentFilter ? (ArrayList<String>) ChatFilter.permanent_bad_words : Lists.newArrayList(ChatFilter.bad_words);
         if (!permanentFilter) {
@@ -151,8 +151,7 @@ public class ChatUtils {
                     continue;
                 }
                 message = Pattern.compile(s, 2).matcher(message).replaceAll(ChatUtils.buildPlaceholders(s.length(), "*"));
-            }
-            catch (Exception err) {
+            } catch (Exception err) {
                 err.printStackTrace();
             }
         }

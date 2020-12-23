@@ -1,9 +1,6 @@
 package org.arkhamnetwork.Arkkit;
 
 import com.drtshock.playervaults.vaultmanagement.VaultOperations;
-
-import java.util.List;
-
 import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
@@ -24,19 +21,19 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
+
+import java.util.List;
 
 class PlayerVaultListener
-implements Listener {
-    private PlayerVaultGUIManager manager;
+        implements Listener {
     List<String> vaultAliases = Lists.newArrayList("/pv", "/vault", "/chest", "/playervaults");
+    private final PlayerVaultGUIManager manager;
 
     public PlayerVaultListener(PlayerVaultGUIManager man) {
         this.manager = man;
     }
 
-    @EventHandler(priority=EventPriority.HIGH, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onPlayerPreProcess(PlayerCommandPreprocessEvent event) {
         if (this.vaultAliases.contains(event.getMessage().toLowerCase())) {
             event.setCancelled(true);
@@ -47,7 +44,7 @@ implements Listener {
 
     @EventHandler
     public void onPlayerClick(InventoryClickEvent event) {
-        Player player = (Player)event.getWhoClicked();
+        Player player = (Player) event.getWhoClicked();
         if (event.getInventory().getName().equals("Select Vault Icon")) {
             event.setCancelled(true);
             event.setResult(Event.Result.DENY);
@@ -61,7 +58,7 @@ implements Listener {
             if (player.hasMetadata("pv_icon_edit")) {
                 CustomPV pv;
                 int vaultNumber = (player.getMetadata("pv_icon_edit").get(0)).asInt();
-                if (!VaultOperations.checkPerms((CommandSender)player, (int)vaultNumber)) {
+                if (!VaultOperations.checkPerms(player, vaultNumber)) {
                     player.sendMessage(ChatColor.RED + "That vault is no longer valid!");
                     player.closeInventory();
                     return;
@@ -127,7 +124,7 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
         if (player.hasMetadata("pv_name_edit")) {
@@ -163,7 +160,7 @@ implements Listener {
 
     @EventHandler
     public void onPLayerOpen(InventoryOpenEvent event) {
-        Player player = (Player)event.getPlayer();
+        Player player = (Player) event.getPlayer();
         if (player.hasMetadata("pv_name_edit")) {
             player.removeMetadata("pv_name_edit", Arkkit.get());
             player.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "Vault naming cancelled.");
@@ -176,7 +173,7 @@ implements Listener {
         if (event.getPlayer().hasMetadata("pv_icon_edit")) {
             event.getPlayer().removeMetadata("pv_icon_edit", Arkkit.get());
         }
-        if ((player = (Player)event.getPlayer()).hasMetadata("viewing_pvs")) {
+        if ((player = (Player) event.getPlayer()).hasMetadata("viewing_pvs")) {
             player.removeMetadata("viewing_pvs", Arkkit.get());
             if (ChatColor.stripColor(event.getInventory().getName()).startsWith("Vault #")) {
                 Bukkit.getScheduler().scheduleSyncDelayedTask(Arkkit.get(), () -> player.chat("/pv"), 1L);

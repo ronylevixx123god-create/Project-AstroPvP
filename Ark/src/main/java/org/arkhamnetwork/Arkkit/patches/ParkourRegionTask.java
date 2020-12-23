@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.entity.Player
@@ -23,14 +23,14 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 
 final class ParkourRegionTask
-extends BukkitRunnable {
+        extends BukkitRunnable {
     ParkourRegionTask() {
     }
 
     public void run() {
         for (Player p : Bukkit.getOnlinePlayers()) {
             String region = WorldGuardUtils.getRegionName(p.getLocation());
-            p.setMetadata("worldguardRegion", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)region));
+            p.setMetadata("worldguardRegion", new FixedMetadataValue(Arkkit.get(), region));
             boolean parkour = region.contains("parkour");
             boolean removeEnchants = !region.contains("enchants");
             boolean hidePlayers = region.contains("hidePlayers");
@@ -49,17 +49,18 @@ extends BukkitRunnable {
             }
             if (hidePlayers) {
                 if (this.canSeePlayersInParkour(p)) continue;
-                p.setMetadata("hidePlayers", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)true));
+                p.setMetadata("hidePlayers", new FixedMetadataValue(Arkkit.get(), true));
                 for (Player pl : Bukkit.getOnlinePlayers()) {
-                    if (this.canSeePlayersInParkour(pl) || pl.equals((Object)p) || !pl.hasMetadata("worldguardRegion") || !((MetadataValue)pl.getMetadata("worldguardRegion").get(0)).asString().contains("hidePlayers") || !p.canSee(pl)) continue;
+                    if (this.canSeePlayersInParkour(pl) || pl.equals(p) || !pl.hasMetadata("worldguardRegion") || !pl.getMetadata("worldguardRegion").get(0).asString().contains("hidePlayers") || !p.canSee(pl))
+                        continue;
                     p.hidePlayer(pl);
                 }
                 continue;
             }
             if (!p.hasMetadata("hidePlayers")) continue;
-            p.removeMetadata("hidePlayers", (Plugin)Arkkit.get());
+            p.removeMetadata("hidePlayers", Arkkit.get());
             for (Player pl : Bukkit.getOnlinePlayers()) {
-                if (this.canSeePlayersInParkour(pl) || pl.equals((Object)p) || p.canSee(pl)) continue;
+                if (this.canSeePlayersInParkour(pl) || pl.equals(p) || p.canSee(pl)) continue;
                 p.showPlayer(pl);
             }
         }

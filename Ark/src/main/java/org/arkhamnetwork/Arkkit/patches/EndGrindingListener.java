@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.compilex.CosmicCustomCreepers.enums.CreeperTypes
  *  com.compilex.CosmicDungeons.DungeonsAPI
@@ -54,22 +54,13 @@ import com.cosmicpvp.cosmicutils.struct.factions.points.FactionPointUtils;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
-import java.text.DecimalFormat;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Random;
 import me.ifamasssxd.cosmicconquest.CosmicConquestAPI;
 import me.ifamasssxd.factionupgrades.FactionUpgradeAPI;
 import me.ifamasssxd.factionupgrades.struct.FactionUpgrade;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.arkhamnetwork.CosmicCustomTNT.enums.TNTTypes;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
@@ -88,11 +79,17 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
+import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Random;
+
 final class EndGrindingListener
-implements Listener {
-    private HashMap<ItemStack, Double> potionDrops;
-    private LinkedHashMap<Integer, Double> killThresholds;
-    private DecimalFormat format = new DecimalFormat("#,###");
+        implements Listener {
+    private final HashMap<ItemStack, Double> potionDrops;
+    private final LinkedHashMap<Integer, Double> killThresholds;
+    private final DecimalFormat format = new DecimalFormat("#,###");
 
     EndGrindingListener() {
         this.potionDrops = new HashMap();
@@ -124,26 +121,26 @@ implements Listener {
         this.killThresholds.put(500, 5.0);
     }
 
-    @EventHandler(priority=EventPriority.LOW)
+    @EventHandler(priority = EventPriority.LOW)
     public void onEndMonsterDeath(EntityDeathEvent e) {
         if (e.getEntity().hasMetadata("endMonsterType")) {
             Player killer;
-            EndMonsterType type = EndMonsterType.valueOf(((MetadataValue)e.getEntity().getMetadata("endMonsterType").get(0)).asString());
+            EndMonsterType type = EndMonsterType.valueOf(e.getEntity().getMetadata("endMonsterType").get(0).asString());
             if (type == EndMonsterType.CREEPER) {
                 if (Math.random() < 0.05) {
                     double eggRand = Math.random();
                     if (eggRand < 0.5) {
                         e.getDrops().add(new ItemStack(Material.MONSTER_EGG, 1, (short) 50));
                     } else if (eggRand < 0.75) {
-                        e.getDrops().add(ItemUtils.getCustomCreeperEgg((CreeperTypes)CreeperTypes.Tactical));
+                        e.getDrops().add(ItemUtils.getCustomCreeperEgg(CreeperTypes.Tactical));
                     } else if (eggRand < 0.9) {
-                        e.getDrops().add(ItemUtils.getCustomCreeperEgg((CreeperTypes)CreeperTypes.Huge));
+                        e.getDrops().add(ItemUtils.getCustomCreeperEgg(CreeperTypes.Huge));
                     } else {
-                        e.getDrops().add(ItemUtils.getCustomCreeperEgg((CreeperTypes)CreeperTypes.Lucky));
+                        e.getDrops().add(ItemUtils.getCustomCreeperEgg(CreeperTypes.Lucky));
                     }
                 }
                 if (Math.random() < 0.2) {
-                    e.getDrops().add(TNTTypes.getRandomCustomTNT((int)(4 + new Random().nextInt(3))));
+                    e.getDrops().add(TNTTypes.getRandomCustomTNT(4 + new Random().nextInt(3)));
                 }
             } else if (type == EndMonsterType.CUSTOM) {
                 double moneyRand;
@@ -163,7 +160,7 @@ implements Listener {
                     }
                 }
                 if (Math.random() < 0.15) {
-                    e.getDrops().add(CosmicConquestAPI.createFactionToken((int)(1 + new Random().nextInt(2))));
+                    e.getDrops().add(CosmicConquestAPI.createFactionToken(1 + new Random().nextInt(2)));
                 }
                 if (Math.random() < 0.25) {
                     e.getDrops().add(this.getRandomEnchantedVanillaArmor());
@@ -174,29 +171,29 @@ implements Listener {
                 if (Math.random() < 0.001) {
                     e.getDrops().add(DungeonsAPI.get().getDimensionWeb());
                 }
-                if (Math.random() <= 0.01 && (item = FactionPointUtils.getFactionPointsItem(null, null, (String)"end_custom", (Object)e)) != null) {
+                if (Math.random() <= 0.01 && (item = FactionPointUtils.getFactionPointsItem(null, null, "end_custom", e)) != null) {
                     e.getDrops().add(item);
                 }
                 if (Math.random() < 0.001) {
                     if (Math.random() < 0.1) {
-                        e.getDrops().add(ItemUtils.getTitleVoucher((String)"#End"));
+                        e.getDrops().add(ItemUtils.getTitleVoucher("#End"));
                     } else {
-                        e.getDrops().add(ItemUtils.getTitleVoucher((String)"Toxic"));
+                        e.getDrops().add(ItemUtils.getTitleVoucher("Toxic"));
                     }
                 }
                 if ((moneyRand = Math.random()) < 0.05) {
-                    e.getDrops().add(ItemUtils.getMoneyNote((String)"End Dimension", (int)(10000 + new Random().nextInt(25000))));
+                    e.getDrops().add(ItemUtils.getMoneyNote("End Dimension", 10000 + new Random().nextInt(25000)));
                 } else if (moneyRand < 0.25) {
-                    e.getDrops().add(ItemUtils.getMoneyNote((String)"End Dimension", (int)(5000 + new Random().nextInt(20000))));
+                    e.getDrops().add(ItemUtils.getMoneyNote("End Dimension", 5000 + new Random().nextInt(20000)));
                 } else if (moneyRand < 0.5) {
-                    e.getDrops().add(ItemUtils.getMoneyNote((String)"End Dimension", (int)(2500 + new Random().nextInt(10000))));
+                    e.getDrops().add(ItemUtils.getMoneyNote("End Dimension", 2500 + new Random().nextInt(10000)));
                 } else {
-                    e.getDrops().add(ItemUtils.getMoneyNote((String)"End Dimension", (int)(1000 + new Random().nextInt(5000))));
+                    e.getDrops().add(ItemUtils.getMoneyNote("End Dimension", 1000 + new Random().nextInt(5000)));
                 }
                 Player pKiller = e.getEntity().getKiller();
                 if (pKiller != null) {
-                    int killstreak = pKiller.hasMetadata("endMonsterKills") ? ((MetadataValue)pKiller.getMetadata("endMonsterKills").get(0)).asInt() : 0;
-                    double killstreakMultiPerk = FactionUpgradeAPI.getPerkLevel((Player)pKiller, (FactionUpgrade)FactionUpgrade.ENDER_FARMING);
+                    int killstreak = pKiller.hasMetadata("endMonsterKills") ? pKiller.getMetadata("endMonsterKills").get(0).asInt() : 0;
+                    double killstreakMultiPerk = FactionUpgradeAPI.getPerkLevel(pKiller, FactionUpgrade.ENDER_FARMING);
                     int killstreakAdd = 1;
                     if (killstreakMultiPerk == 1.0) {
                         killstreakAdd *= 2;
@@ -208,27 +205,27 @@ implements Listener {
                         killstreakAdd *= 5;
                     }
                     double killXPMod = this.getKillstreakXPMultiplier(killstreak += killstreakAdd);
-                    e.getDrops().add(ItemUtils.getXpBottle((int)((int)(1000.0 * killXPMod)), (String)("End Dimension [" + killXPMod + "x]")));
-                    pKiller.setMetadata("endMonsterKills", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)killstreak));
+                    e.getDrops().add(ItemUtils.getXpBottle((int) (1000.0 * killXPMod), "End Dimension [" + killXPMod + "x]"));
+                    pKiller.setMetadata("endMonsterKills", new FixedMetadataValue(Arkkit.get(), killstreak));
                     if (killstreak == 1) {
-                        pKiller.sendMessage((Object)ChatColor.LIGHT_PURPLE + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.LIGHT_PURPLE + "You have killed an Ender Monster! Kill more without dieing or leaving the End to unlock XP multipliers to the XP Bottles they drop!");
-                        pKiller.sendMessage((Object)ChatColor.GRAY + "The first threshold is at 5 kills, and at 500 kills you get " + (Object)ChatColor.UNDERLINE + "5x XP!");
+                        pKiller.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "(!) " + ChatColor.LIGHT_PURPLE + "You have killed an Ender Monster! Kill more without dieing or leaving the End to unlock XP multipliers to the XP Bottles they drop!");
+                        pKiller.sendMessage(ChatColor.GRAY + "The first threshold is at 5 kills, and at 500 kills you get " + ChatColor.UNDERLINE + "5x XP!");
                     } else {
-                        pKiller.sendMessage((Object)ChatColor.LIGHT_PURPLE + "Ender Monster Kills: " + (Object)ChatColor.BOLD + killstreak);
+                        pKiller.sendMessage(ChatColor.LIGHT_PURPLE + "Ender Monster Kills: " + ChatColor.BOLD + killstreak);
                     }
                     if (this.killThresholds.containsKey(killstreak)) {
-                        pKiller.sendMessage((Object)ChatColor.LIGHT_PURPLE + "" + (Object)ChatColor.BOLD + "(!) " + killstreak + " Ender Monster Kills! " + (Object)ChatColor.GRAY + "[" + (Object)ChatColor.LIGHT_PURPLE + (int)(killXPMod * 100.0) + "% XP" + (Object)ChatColor.GRAY + "]");
+                        pKiller.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "(!) " + killstreak + " Ender Monster Kills! " + ChatColor.GRAY + "[" + ChatColor.LIGHT_PURPLE + (int) (killXPMod * 100.0) + "% XP" + ChatColor.GRAY + "]");
                         if (killstreak >= 25) {
-                            Faction f = ((FPlayer)FPlayers.i.get((OfflinePlayer)pKiller)).getFaction();
+                            Faction f = FPlayers.i.get(pKiller).getFaction();
                             for (Player p : killstreak >= 50 ? Bukkit.getOnlinePlayers() : pKiller.getWorld().getPlayers()) {
-                                if (p.equals((Object)pKiller)) continue;
-                                p.sendMessage((Object)ChatColor.DARK_PURPLE + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.LIGHT_PURPLE + (Object)ChatColor.UNDERLINE + (f.isNormal() ? f.getTag() + " " : "") + pKiller.getName() + (Object)ChatColor.DARK_PURPLE + "(" + (Object)ChatColor.WHITE + "/warp end, " + pKiller.getLocation().getBlockX() + "x, " + pKiller.getLocation().getBlockY() + "y, " + pKiller.getLocation().getBlockZ() + "z" + (Object)ChatColor.DARK_PURPLE + ") has killed " + killstreak + "x Ender Monsters! They have grinded ~" + (Object)ChatColor.UNDERLINE + this.format.format((int)(killXPMod * 1000.0) * killstreak) + "XP" + (Object)ChatColor.DARK_PURPLE + " can anyone stop them?");
+                                if (p.equals(pKiller)) continue;
+                                p.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "(!) " + ChatColor.LIGHT_PURPLE + ChatColor.UNDERLINE + (f.isNormal() ? f.getTag() + " " : "") + pKiller.getName() + ChatColor.DARK_PURPLE + "(" + ChatColor.WHITE + "/warp end, " + pKiller.getLocation().getBlockX() + "x, " + pKiller.getLocation().getBlockY() + "y, " + pKiller.getLocation().getBlockZ() + "z" + ChatColor.DARK_PURPLE + ") has killed " + killstreak + "x Ender Monsters! They have grinded ~" + ChatColor.UNDERLINE + this.format.format((int) (killXPMod * 1000.0) * killstreak) + "XP" + ChatColor.DARK_PURPLE + " can anyone stop them?");
                             }
                         }
                     }
                 }
             }
-            if ((killer = e.getEntity().getKiller()) != null && CosmicUtils.get().isOutpostsEnabled() && CosmicOutpostsAPI.controlsHeroOutpost((Player)killer)) {
+            if ((killer = e.getEntity().getKiller()) != null && CosmicUtils.get().isOutpostsEnabled() && CosmicOutpostsAPI.controlsHeroOutpost(killer)) {
                 for (ItemStack item : e.getDrops()) {
                     if (item == null || item.getType() == Material.EXP_BOTTLE) continue;
                     ItemStack bonusItem = item.clone();
@@ -251,19 +248,19 @@ implements Listener {
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent e) {
         if (e.getEntity().hasMetadata("endMonsterKills")) {
-            e.getEntity().removeMetadata("endMonsterKills", (Plugin)Arkkit.get());
+            e.getEntity().removeMetadata("endMonsterKills", Arkkit.get());
         }
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent e) {
-        e.getPlayer().removeMetadata("endMonsterKills", (Plugin)Arkkit.get());
+        e.getPlayer().removeMetadata("endMonsterKills", Arkkit.get());
     }
 
     @EventHandler
     public void onPlayerTeleport(PlayerTeleportEvent e) {
-        if (e.getFrom().getWorld().getName().equals("world_end") && !e.getTo().getWorld().equals((Object)e.getFrom().getWorld())) {
-            e.getPlayer().removeMetadata("endMonsterKills", (Plugin)Arkkit.get());
+        if (e.getFrom().getWorld().getName().equals("world_end") && !e.getTo().getWorld().equals(e.getFrom().getWorld())) {
+            e.getPlayer().removeMetadata("endMonsterKills", Arkkit.get());
         }
     }
 

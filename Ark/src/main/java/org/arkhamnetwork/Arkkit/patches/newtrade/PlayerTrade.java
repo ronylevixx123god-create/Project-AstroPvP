@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.CC
  *  com.cosmicpvp.cosmicutils.utils.PlayerUtil
@@ -14,29 +14,23 @@ package org.arkhamnetwork.Arkkit.patches.newtrade;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 import org.apache.commons.lang.StringUtils;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
-import org.arkhamnetwork.Arkkit.patches.newtrade.BetterTrade;
-import org.arkhamnetwork.Arkkit.patches.newtrade.TradeMenu;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.*;
+
 public class PlayerTrade {
-    private Player player1;
-    private Player player2;
+    private final Player player1;
+    private final Player player2;
     private TradeMenu player1Menu;
     private TradeMenu player2Menu;
-    private Map<UUID, LinkedList<ItemStack>> currentlyTradedItems = new HashMap<UUID, LinkedList<ItemStack>>();
+    private final Map<UUID, LinkedList<ItemStack>> currentlyTradedItems = new HashMap<UUID, LinkedList<ItemStack>>();
     private int tradeCountdown = 10;
     private boolean tradeSuccess = false;
     private boolean cancelled = false;
@@ -107,8 +101,9 @@ public class PlayerTrade {
             return 0;
         }
         for (ItemStack toReceive : items) {
-            if (PlayerUtil.giveOrDropProtectedItem((Player)playerToReceiveItems, (ItemStack)toReceive, (int)-1)) continue;
-            playerToReceiveItems.sendMessage(CC.Red + "(!) " + CC.Red + "Trade item " + (toReceive.hasItemMeta() ? toReceive.getItemMeta().getDisplayName() : StringUtils.capitaliseAllWords((String)toReceive.getType().name().replace("_", " ").toLowerCase())) + CC.Yellow + " has been dropped at your feet!");
+            if (PlayerUtil.giveOrDropProtectedItem(playerToReceiveItems, toReceive, -1))
+                continue;
+            playerToReceiveItems.sendMessage(CC.Red + "(!) " + CC.Red + "Trade item " + (toReceive.hasItemMeta() ? toReceive.getItemMeta().getDisplayName() : StringUtils.capitaliseAllWords(toReceive.getType().name().replace("_", " ").toLowerCase())) + CC.Yellow + " has been dropped at your feet!");
         }
         Bukkit.getLogger().info("[CosmicTrade] Giving " + playerToReceiveItems.getName() + " trade items of " + playersTradeItems.getName() + " : " + Arrays.toString(items.toArray(new ItemStack[0])));
         int size = items.size();
@@ -123,7 +118,7 @@ public class PlayerTrade {
             return;
         }
         for (ItemStack toRetr : itemsToReturn) {
-            if (PlayerUtil.giveOrDropProtectedItem((Player)player, (ItemStack)toRetr, (int)-1)) continue;
+            if (PlayerUtil.giveOrDropProtectedItem(player, toRetr, -1)) continue;
             player.sendMessage(CC.Gray + "Overflow trade item dropped at your feet!");
             player.playSound(player.getLocation(), Sound.ANVIL_LAND, 1.0f, 1.0f);
         }
@@ -141,15 +136,15 @@ public class PlayerTrade {
 
     void returnItemFromTradeList(Player player, ItemStack item) {
         List itemsStillTrading = this.currentlyTradedItems.get(player.getUniqueId());
-        if (itemsStillTrading == null || !itemsStillTrading.contains((Object)item)) {
-            Bukkit.getLogger().info("[CosmicTrade] Not removing " + (Object)item + " for " + player.getName() + " due to list not having any trade items!");
+        if (itemsStillTrading == null || !itemsStillTrading.contains(item)) {
+            Bukkit.getLogger().info("[CosmicTrade] Not removing " + item + " for " + player.getName() + " due to list not having any trade items!");
             return;
         }
-        itemsStillTrading.remove((Object)item);
+        itemsStillTrading.remove(item);
         int emptySlot = player.getInventory().firstEmpty();
         if (emptySlot == -1) {
-            PlayerUtil.giveOrDropProtectedItem((Player)player, (ItemStack)item, (int)-1);
-            Bukkit.getLogger().info("[CosmicTrade] " + player.getName() + " is being dropped " + (Object)item);
+            PlayerUtil.giveOrDropProtectedItem(player, item, -1);
+            Bukkit.getLogger().info("[CosmicTrade] " + player.getName() + " is being dropped " + item);
         } else {
             player.getInventory().setItem(emptySlot, item);
         }
@@ -161,8 +156,8 @@ public class PlayerTrade {
         if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning() && (id = ItemID.getItemID(item)) != -1L) {
             if (ItemID.blacklist_iid.contains(id)) {
                 player.sendMessage(CC.RedB + "(!) " + CC.Red + "That item is blacklisted and cannot be traded!");
-                player.getInventory().removeItem(new ItemStack[]{item});
-                Bukkit.getLogger().info("[CosmicTrade] " + player.getName() + " tried to trade blacklisted item: " + id + " Item: " + (Object)item);
+                player.getInventory().removeItem(item);
+                Bukkit.getLogger().info("[CosmicTrade] " + player.getName() + " tried to trade blacklisted item: " + id + " Item: " + item);
                 return false;
             }
             if (item.getAmount() > 1) {
@@ -181,20 +176,20 @@ public class PlayerTrade {
     }
 
     Player getOppositePlayer(Player player) {
-        if (this.player1.equals((Object)player)) {
+        if (this.player1.equals(player)) {
             return this.player2;
         }
-        if (this.player2.equals((Object)player)) {
+        if (this.player2.equals(player)) {
             return this.player1;
         }
         return null;
     }
 
     boolean hasAccepted(Player player) {
-        if (this.player1.equals((Object)player)) {
+        if (this.player1.equals(player)) {
             return this.player1Accepted;
         }
-        if (this.player2.equals((Object)player)) {
+        if (this.player2.equals(player)) {
             return this.player2Accepted;
         }
         return false;
@@ -206,10 +201,10 @@ public class PlayerTrade {
             this.player1Accepted = false;
             this.player2Accepted = false;
             this.playSound(Sound.NOTE_PIANO, 1.1f, 1.0f);
-        } else if (this.player1.equals((Object)player)) {
+        } else if (this.player1.equals(player)) {
             this.player1Accepted = !this.player1Accepted;
             retr = this.player1Accepted;
-        } else if (this.player2.equals((Object)player)) {
+        } else if (this.player2.equals(player)) {
             this.player2Accepted = !this.player2Accepted;
             retr = this.player2Accepted;
         }
@@ -219,9 +214,9 @@ public class PlayerTrade {
 
     private void updateOppositeButtons(Player player) {
         Player opp = this.getOppositePlayer(player);
-        if (opp.equals((Object)this.player2)) {
+        if (opp.equals(this.player2)) {
             this.player2Menu.updateToggleButtons();
-        } else if (opp.equals((Object)this.player1)) {
+        } else if (opp.equals(this.player1)) {
             this.player1Menu.updateToggleButtons();
         }
         opp.updateInventory();
@@ -229,9 +224,9 @@ public class PlayerTrade {
 
     private void updateOppositeMenu(Player player) {
         Player opp = this.getOppositePlayer(player);
-        if (opp.equals((Object)this.player2)) {
+        if (opp.equals(this.player2)) {
             this.player2Menu.redraw();
-        } else if (opp.equals((Object)this.player1)) {
+        } else if (opp.equals(this.player1)) {
             this.player1Menu.redraw();
         }
     }
@@ -288,7 +283,7 @@ public class PlayerTrade {
     }
 
     private void unregister() {
-        ((BetterTrade)ArkPlugins.BETTER_TRADE.getArkPlugin()).unregisterTrade(this);
+        ((BetterTrade) ArkPlugins.BETTER_TRADE.getArkPlugin()).unregisterTrade(this);
     }
 
     public String toString() {
@@ -319,6 +314,10 @@ public class PlayerTrade {
         return this.tradeCountdown;
     }
 
+    public void setTradeCountdown(int tradeCountdown) {
+        this.tradeCountdown = tradeCountdown;
+    }
+
     public boolean isTradeSuccess() {
         return this.tradeSuccess;
     }
@@ -337,10 +336,6 @@ public class PlayerTrade {
 
     public long getLastWindowUpdate() {
         return this.lastWindowUpdate;
-    }
-
-    public void setTradeCountdown(int tradeCountdown) {
-        this.tradeCountdown = tradeCountdown;
     }
 }
 

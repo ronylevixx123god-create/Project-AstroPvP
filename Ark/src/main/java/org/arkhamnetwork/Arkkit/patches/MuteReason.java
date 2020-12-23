@@ -4,8 +4,8 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 class MuteReason {
-    private long expire;
-    private String reason;
+    private final long expire;
+    private final String reason;
 
     public MuteReason(long expire, String reason) {
         this.expire = expire;

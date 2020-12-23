@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  net.minecraft.server.v1_7_R4.DedicatedPlayerList
  *  net.minecraft.server.v1_7_R4.JsonListEntry
@@ -13,9 +13,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
 import com.mojang.authlib.GameProfile;
 import net.minecraft.server.v1_8_R3.DedicatedPlayerList;
 import net.minecraft.server.v1_8_R3.JsonListEntry;
@@ -26,8 +23,10 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
 
+import java.io.IOException;
+
 final class CommandWipeOps
-extends AbstractCommand {
+        extends AbstractCommand {
     public CommandWipeOps(String command, String usage, String description) {
         super(command, usage, description);
     }
@@ -41,19 +40,18 @@ extends AbstractCommand {
             sender.sendMessage("/wipeops true");
             return true;
         }
-        CraftServer CS = (CraftServer)Bukkit.getServer();
+        CraftServer CS = (CraftServer) Bukkit.getServer();
         DedicatedPlayerList DPL = CS.getHandle();
         int x = 0;
         for (JsonListEntry entry : DPL.getOPs().getValues()) {
-            OfflinePlayer player = CS.getOfflinePlayer((GameProfile)entry.getKey());
+            OfflinePlayer player = CS.getOfflinePlayer((GameProfile) entry.getKey());
             DPL.getOPs().getValues().remove(entry);
             sender.sendMessage("* Removed " + player.getName() + " (" + player.getUniqueId().toString() + ") from ops.json");
             ++x;
         }
         try {
             DPL.getOPs().save();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         sender.sendMessage("*** " + x + " players cleared from local ops.json list.");

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.event.EventHandler
  *  org.bukkit.event.EventPriority
@@ -22,16 +22,16 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
 final class SuicideListener
-implements Listener {
+        implements Listener {
     SuicideListener() {
     }
 
-    @EventHandler(priority=EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerDeath(PlayerDeathEvent e) {
         if (e.getEntity().hasMetadata("suicideCommandConfirm")) {
-            e.getEntity().setMetadata("lastDeathWasSuicide", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)true));
+            e.getEntity().setMetadata("lastDeathWasSuicide", new FixedMetadataValue(Arkkit.get(), true));
         } else {
-            e.getEntity().removeMetadata("lastDeathWasSuicide", (Plugin)Arkkit.get());
+            e.getEntity().removeMetadata("lastDeathWasSuicide", Arkkit.get());
         }
     }
 }

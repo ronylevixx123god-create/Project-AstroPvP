@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
@@ -23,11 +23,11 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 
 final class InventoryScannerListener
-implements Listener {
+        implements Listener {
     InventoryScannerListener() {
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onInventoryClick(InventoryClickEvent e) {
         String invName = e.getInventory().getName();
         if (invName.equals("container.crafting") && e.getCurrentItem() != null && this.hasAHLore(e.getCurrentItem())) {
@@ -46,7 +46,7 @@ implements Listener {
     private boolean hasAHLore(ItemStack i) {
         if (i.hasItemMeta() && i.getItemMeta().hasLore()) {
             for (String s : i.getItemMeta().getLore()) {
-                if (!s.startsWith(ChatColor.GOLD.toString() + "Price: " + (Object)ChatColor.YELLOW + "$")) continue;
+                if (!s.startsWith(ChatColor.GOLD.toString() + "Price: " + ChatColor.YELLOW + "$")) continue;
                 return true;
             }
         }

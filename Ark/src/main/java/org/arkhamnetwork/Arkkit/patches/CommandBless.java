@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.CC
  *  com.cosmicpvp.cosmicutils.utils.TimeUtils
@@ -17,14 +17,8 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.TimeUtils;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
-
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import com.google.common.collect.MapMaker;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
 import org.bukkit.ChatColor;
@@ -34,10 +28,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+
 final class CommandBless
-extends AbstractCommand {
+        extends AbstractCommand {
     //private Map<UUID, Long> blessCooldown = new MapMaker().expireAfterWrite(5L, TimeUnit.MINUTES).makeMap();
-    private Cache<UUID, Long> blessCooldown = CacheBuilder.newBuilder().expireAfterWrite(5L, TimeUnit.MINUTES).build();
+    private final Cache<UUID, Long> blessCooldown = CacheBuilder.newBuilder().expireAfterWrite(5L, TimeUnit.MINUTES).build();
+
     public CommandBless(String command, String usage, String description, List<String> aliases) {
         super(command, usage, description, aliases);
     }
@@ -49,14 +48,14 @@ extends AbstractCommand {
             sender.sendMessage(CC.Gray + "Unlock a Heroic rank at " + CC.GrayU + "buy.cosmicpvp.com" + CC.Gray + "!");
             return true;
         }
-        Player pl = (Player)sender;
+        Player pl = (Player) sender;
         Long value = this.blessCooldown.asMap().get(pl.getUniqueId());
         if (value != null && value > System.currentTimeMillis() && !pl.isOp()) {
-            pl.sendMessage(CC.RedB + "(!) " + CC.Red + "You must wait " + TimeUtils.formatFutureTime((long)value) + " before using /bless again!");
+            pl.sendMessage(CC.RedB + "(!) " + CC.Red + "You must wait " + TimeUtils.formatFutureTime(value) + " before using /bless again!");
             return true;
         }
         if (pl.hasMetadata("lastNatureWrathEffect")) {
-            long lastAffected = ((MetadataValue)pl.getMetadata("lastNatureWrathEffect").get(0)).asLong();
+            long lastAffected = pl.getMetadata("lastNatureWrathEffect").get(0).asLong();
             long timeSinceAffected = System.currentTimeMillis() - lastAffected;
             if (timeSinceAffected < TimeUnit.SECONDS.toMillis(5L)) {
                 pl.sendMessage(CC.RedB + "(!) " + CC.Red + "You must wait at least 5 seconds after being affected by " + CC.RedB + "Natures Wrath " + CC.Red + " before using /bless.");
@@ -64,9 +63,9 @@ extends AbstractCommand {
             }
         }
         this.blessCooldown.put(pl.getUniqueId(), System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(5L));
-        PlayerPotionEffects.untrackPotionEffect((Player)pl, (PotionEffectType)PotionEffectType.SLOW);
-        PlayerPotionEffects.untrackPotionEffect((Player)pl, (PotionEffectType)PotionEffectType.SLOW_DIGGING);
-        pl.sendMessage(ChatColor.YELLOW.toString() + (Object)ChatColor.BOLD + "BLESSED!");
+        PlayerPotionEffects.untrackPotionEffect(pl, PotionEffectType.SLOW);
+        PlayerPotionEffects.untrackPotionEffect(pl, PotionEffectType.SLOW_DIGGING);
+        pl.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD + "BLESSED!");
         return true;
     }
 }

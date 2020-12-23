@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
@@ -12,10 +12,6 @@
  */
 package org.arkhamnetwork.Arkkit.plugins;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
 import org.arkhamnetwork.Arkkit.utils.CommandUtils;
 import org.bukkit.Bukkit;
@@ -26,15 +22,20 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 public abstract class ArkPlugin {
-    private List<Listener> listeners = new ArrayList<Listener>();
-    private List<Integer> task_ids = new ArrayList<Integer>();
-    private List<Command> commands = new ArrayList<Command>();
-    private Plugin bukkit_plugin = null;
-    private boolean running = false;
+    protected static Random random = new Random();
     public long enable_time = 0L;
     public boolean disableCalled = false;
-    protected static Random random = new Random();
+    private final List<Listener> listeners = new ArrayList<Listener>();
+    private final List<Integer> task_ids = new ArrayList<Integer>();
+    private final List<Command> commands = new ArrayList<Command>();
+    private Plugin bukkit_plugin = null;
+    private boolean running = false;
 
     public ArkPlugin(Plugin p) {
         this.bukkit_plugin = p;
@@ -54,8 +55,7 @@ public abstract class ArkPlugin {
         try {
             this.enable();
             Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "[Compilex]" + ChatColor.WHITE.toString() + " Injected " + ChatColor.YELLOW.toString() + this.getClass().getSimpleName() + ChatColor.WHITE.toString() + " patch.");
-        }
-        catch (Exception err) {
+        } catch (Exception err) {
             err.printStackTrace();
             this.kill();
         }
@@ -70,8 +70,7 @@ public abstract class ArkPlugin {
             Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "[Compilex]" + ChatColor.WHITE.toString() + " Killed " + ChatColor.RED.toString() + this.getClass().getSimpleName() + ChatColor.WHITE.toString() + " patch.");
             this.enable_time = 0L;
             this.running = false;
-        }
-        catch (Exception err) {
+        } catch (Exception err) {
             err.printStackTrace();
         }
     }
@@ -101,7 +100,7 @@ public abstract class ArkPlugin {
     public void unregisterListeners() {
         for (Listener l : this.listeners) {
             Bukkit.getLogger().info("(" + this.getClass().getSimpleName() + ") Unregistered listener: " + l.getClass().getSimpleName() + "!");
-            HandlerList.unregisterAll((Listener)l);
+            HandlerList.unregisterAll(l);
             Object var2_2 = null;
         }
         this.listeners.clear();

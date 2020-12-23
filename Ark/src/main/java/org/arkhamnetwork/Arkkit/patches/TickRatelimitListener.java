@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.Location
@@ -30,9 +30,7 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.HashMap;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.TickRatelimit;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -46,11 +44,7 @@ import org.bukkit.entity.minecart.HopperMinecart;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.block.BlockFadeEvent;
-import org.bukkit.event.block.BlockFromToEvent;
-import org.bukkit.event.block.BlockSpreadEvent;
-import org.bukkit.event.block.LeavesDecayEvent;
+import org.bukkit.event.block.*;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
@@ -58,14 +52,16 @@ import org.bukkit.event.inventory.InventoryPickupItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.InventoryHolder;
 
+import java.util.HashMap;
+
 final class TickRatelimitListener
-implements Listener {
+        implements Listener {
     protected static HashMap<String, Integer> flow_counts = new HashMap();
 
     TickRatelimitListener() {
     }
 
-    @EventHandler(priority=EventPriority.LOW)
+    @EventHandler(priority = EventPriority.LOW)
     public void onBlockFromToEvent_LOW(BlockFromToEvent e) {
         if (!TickRatelimit.limitFlow && !TickRatelimit.monitorFlow) {
             return;
@@ -81,7 +77,7 @@ implements Listener {
         int maxFlowPerTick = Arkkit.get().getConfig().getInt("settings.limit_water_flow.block-flow-per-tick");
         int flow_count = this.getChunkFlowingCount(e.getBlock());
         if (flow_count >= maxFlowPerTick) {
-            Bukkit.getLogger().info("[Arkkit (TickRateLimit)] Ratelimiting flow at " + (Object)e.getBlock().getLocation() + " due to flow_count (" + flow_count + ") >= " + maxFlowPerTick);
+            Bukkit.getLogger().info("[Arkkit (TickRateLimit)] Ratelimiting flow at " + e.getBlock().getLocation() + " due to flow_count (" + flow_count + ") >= " + maxFlowPerTick);
             if (TickRatelimit.limitFlow) {
                 e.setCancelled(true);
             }
@@ -89,7 +85,7 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.HIGH, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onBlockSpreadEvent(BlockSpreadEvent e) {
         if (!TickRatelimit.isLoadedChunk(e.getBlock().getLocation().getChunk())) {
             e.setCancelled(true);
@@ -97,7 +93,7 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.HIGH, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onBlockFade(BlockFadeEvent e) {
         if (!TickRatelimit.isLoadedChunk(e.getBlock().getLocation().getChunk())) {
             e.setCancelled(true);
@@ -105,7 +101,7 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.HIGH, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onLeavesDecay(LeavesDecayEvent e) {
         if (!TickRatelimit.isLoadedChunk(e.getBlock().getLocation().getChunk())) {
             e.setCancelled(true);
@@ -113,7 +109,7 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.NORMAL, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onInventoryMoveItem(InventoryMoveItemEvent e) {
         if (!TickRatelimit.limitHopperOut) {
             return;
@@ -121,16 +117,16 @@ implements Listener {
         Location l = null;
         InventoryHolder holder = e.getSource().getHolder();
         if (holder instanceof Hopper) {
-            l = ((Hopper)holder).getLocation();
+            l = ((Hopper) holder).getLocation();
         }
         if (holder instanceof HopperMinecart) {
-            l = ((HopperMinecart)holder).getLocation();
+            l = ((HopperMinecart) holder).getLocation();
         }
         if (holder instanceof Dispenser) {
-            l = ((Dispenser)holder).getLocation();
+            l = ((Dispenser) holder).getLocation();
         }
         if (holder instanceof Dropper) {
-            l = ((Dropper)holder).getLocation();
+            l = ((Dropper) holder).getLocation();
         }
         if (l != null && !TickRatelimit.isLoadedChunk(l.getChunk())) {
             e.setCancelled(true);
@@ -139,17 +135,17 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.NORMAL, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onInventoryPickupEvent(InventoryPickupItemEvent e) {
         if (!TickRatelimit.limitHopperIn) {
             return;
         }
         Location l = null;
         if (e.getInventory().getHolder() instanceof Hopper) {
-            l = ((Hopper)e.getInventory().getHolder()).getLocation();
+            l = ((Hopper) e.getInventory().getHolder()).getLocation();
         }
         if (e.getInventory().getHolder() instanceof HopperMinecart) {
-            l = ((HopperMinecart)e.getInventory().getHolder()).getLocation();
+            l = ((HopperMinecart) e.getInventory().getHolder()).getLocation();
         }
         if (l != null && !TickRatelimit.isLoadedChunk(l.getChunk())) {
             e.setCancelled(true);
@@ -158,7 +154,7 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onCreatureSpawn(CreatureSpawnEvent e) {
         if (!TickRatelimit.limitCreatureSpawn) {
             return;
@@ -170,7 +166,7 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onBlockFromToEvent_MONITOR(BlockFromToEvent e) {
         if (!TickRatelimit.limitFlow && !TickRatelimit.monitorFlow) {
             return;
@@ -179,7 +175,7 @@ implements Listener {
         flow_counts.put(e.getBlock().getChunk().getX() + "," + e.getBlock().getChunk().getZ(), ++c);
     }
 
-    @EventHandler(priority=EventPriority.NORMAL, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onEntityExplode(EntityExplodeEvent e) {
         if (e.getEntity() != null && e.getEntityType() == EntityType.PRIMED_TNT) {
             int cx = e.getEntity().getLocation().getChunk().getX();
@@ -192,7 +188,7 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerInteract(PlayerInteractEvent e) {
         if (!TickRatelimit.limitFlow) {
             return;

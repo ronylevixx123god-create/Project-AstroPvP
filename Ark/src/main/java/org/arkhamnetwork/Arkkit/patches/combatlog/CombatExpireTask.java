@@ -1,25 +1,25 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.entity.Player
  *  org.bukkit.scheduler.BukkitRunnable
  */
 package org.arkhamnetwork.Arkkit.patches.combatlog;
 
-import java.lang.ref.WeakReference;
-import java.util.concurrent.CopyOnWriteArrayList;
-import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.lang.ref.WeakReference;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 public class CombatExpireTask
-extends BukkitRunnable {
+        extends BukkitRunnable {
     public static final CopyOnWriteArrayList<WeakReference<Player>> combatTagged = new CopyOnWriteArrayList();
 
     public void run() {
         for (WeakReference<Player> p : combatTagged) {
-            Player pl = (Player)p.get();
+            Player pl = p.get();
             if (pl == null || !pl.isValid()) {
                 combatTagged.remove(p);
                 continue;

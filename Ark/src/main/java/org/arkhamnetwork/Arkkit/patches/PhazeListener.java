@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI
  *  com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity
@@ -55,19 +55,13 @@ import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.FPlayer;
 import com.rit.sucy.EnchantmentAPI;
-import java.util.ArrayList;
-import java.util.List;
 import me.ifamasssxd.cosmicduel.tasks.DuelArenaTask;
 import org.apache.commons.lang.CharUtils;
 import org.apache.commons.lang.StringUtils;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatUtils;
 import org.arkhamnetwork.Arkkit.utils.WorldGuardUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.command.CommandSender;
@@ -82,12 +76,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.player.PlayerGameModeChangeEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerKickEvent;
-import org.bukkit.event.player.PlayerPortalEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.event.world.StructureGrowEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -95,15 +84,18 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 final class PhazeListener
-implements Listener {
-    private List<Material> hollowMaterials;
+        implements Listener {
     List<Material> disabledMaterials = Lists.newArrayList(Material.PAPER, Material.EXP_BOTTLE, Material.REDSTONE_TORCH_ON, Material.NAME_TAG, Material.CHEST, Material.CHEST, Material.TNT, Material.MONSTER_EGG, Material.MOB_SPAWNER);
+    private final List<Material> hollowMaterials;
 
     PhazeListener() {
         this.hollowMaterials = new ArrayList<Material>();
         for (String hollowMaterials : Arkkit.get().getConfig().getStringList("settings.anti_hack.hollow-materials")) {
-            this.hollowMaterials.add(Material.getMaterial((String)hollowMaterials));
+            this.hollowMaterials.add(Material.getMaterial(hollowMaterials));
         }
     }
 
@@ -113,27 +105,27 @@ implements Listener {
         if (y > 200) {
             e.setCancelled(true);
             if (e.getPlayer() != null) {
-                e.getPlayer().sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "You cannot grow objects past y:200");
+                e.getPlayer().sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "You cannot grow objects past y:200");
             }
         }
     }
 
-    @EventHandler(priority=EventPriority.HIGH, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onEnderpearlTeleport(PlayerTeleportEvent e) {
         if (e.getCause() == PlayerTeleportEvent.TeleportCause.ENDER_PEARL) {
             Location to = e.getTo().clone();
             Location from = e.getFrom().clone();
             if (to.getY() > from.getY()) {
                 Location to_upwards = to.clone();
-                Bukkit.getLogger().info("to_upwards = " + (Object)to_upwards + ", m:" + to_upwards.getBlock().getType().name());
+                Bukkit.getLogger().info("to_upwards = " + to_upwards + ", m:" + to_upwards.getBlock().getType().name());
                 to_upwards.setY(Math.ceil(to_upwards.getY()));
                 if (this.isSolidBlock(to_upwards) && !this.isSolidBlock(to_upwards.clone().add(0.0, 1.0, 0.0))) {
-                    Bukkit.getLogger().info("[AntiClip] Preventing (upwards) V-Clip teleport by " + e.getPlayer().getName() + " to " + (Object)e.getTo() + " (to_upwards:" + (Object)to_upwards + ")");
+                    Bukkit.getLogger().info("[AntiClip] Preventing (upwards) V-Clip teleport by " + e.getPlayer().getName() + " to " + e.getTo() + " (to_upwards:" + to_upwards + ")");
                     e.setCancelled(true);
                     return;
                 }
                 if (this.isSolidBlock(to_upwards.clone().add(0.0, 1.0, 0.0)) && !this.isSolidBlock(to_upwards)) {
-                    Bukkit.getLogger().info("[AntiClip] Preventing (upwards_v2) V-Clip teleport by " + e.getPlayer().getName() + " to " + (Object)e.getTo() + " (to_upwards:" + (Object)to_upwards + ")");
+                    Bukkit.getLogger().info("[AntiClip] Preventing (upwards_v2) V-Clip teleport by " + e.getPlayer().getName() + " to " + e.getTo() + " (to_upwards:" + to_upwards + ")");
                     e.setCancelled(true);
                     return;
                 }
@@ -142,24 +134,24 @@ implements Listener {
                 if (to.getY() >= 256.0 && to.getBlock().getType() == Material.BEDROCK && (!this.isSolidBlock(from) || from.getBlock().getType() == Material.BEDROCK)) {
                     return;
                 }
-                Bukkit.getLogger().info("[AntiClip] Preventing V-Clip teleport by " + e.getPlayer().getName() + " to " + (Object)e.getTo());
+                Bukkit.getLogger().info("[AntiClip] Preventing V-Clip teleport by " + e.getPlayer().getName() + " to " + e.getTo());
                 e.setCancelled(true);
             }
         }
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerDamage(EntityDamageEvent e) {
         Player p;
-        if (e.getCause() == EntityDamageEvent.DamageCause.SUFFOCATION && e.getEntity() instanceof Player && (p = (Player)e.getEntity()).getLocation().getBlock().getType() == Material.AIR && p.getEyeLocation().getBlock().getType() != Material.AIR && this.isNearEnchantmentTable(p)) {
-            Bukkit.getLogger().info("[Arkkit (AntiHack)] Kicking " + p.getName() + " due to impossible block collision at " + (Object)p.getLocation() + "!");
+        if (e.getCause() == EntityDamageEvent.DamageCause.SUFFOCATION && e.getEntity() instanceof Player && (p = (Player) e.getEntity()).getLocation().getBlock().getType() == Material.AIR && p.getEyeLocation().getBlock().getType() != Material.AIR && this.isNearEnchantmentTable(p)) {
+            Bukkit.getLogger().info("[Arkkit (AntiHack)] Kicking " + p.getName() + " due to impossible block collision at " + p.getLocation() + "!");
             AntiHack.playerNamesTeleportToSpawn.add(p.getName());
-            p.setMetadata("noCombatLog", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)System.currentTimeMillis()));
+            p.setMetadata("noCombatLog", new FixedMetadataValue(Arkkit.get(), System.currentTimeMillis()));
             p.kickPlayer("Impossible block collision!");
         }
     }
 
-    @EventHandler(priority=EventPriority.LOW)
+    @EventHandler(priority = EventPriority.LOW)
     public void onInventoryClickHeadExploit(InventoryClickEvent e) {
         if (!Bukkit.getPluginManager().isPluginEnabled("Enchantments")) {
             return;
@@ -172,16 +164,16 @@ implements Listener {
             if (cosmicType.equalsIgnoreCase("COSMIC_MASK") || cosmicType.equalsIgnoreCase("inventory_pet")) {
                 return;
             }
-            if (i.hasItemMeta() && i.getItemMeta().hasLore() && i.getItemMeta().getLore().size() >= 4 && (weaponName = ChatColor.stripColor((String)((String)i.getItemMeta().getLore().get(3)))).contains(" ") && !weaponName.endsWith("!") && EnchantmentAPI.isRegistered((String)(possibleEnchantName = weaponName.split(" ")[0]))) {
-                ((Player)e.getWhoClicked()).sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "Invalid lore found on player head, removed.");
+            if (i.hasItemMeta() && i.getItemMeta().hasLore() && i.getItemMeta().getLore().size() >= 4 && (weaponName = ChatColor.stripColor(i.getItemMeta().getLore().get(3))).contains(" ") && !weaponName.endsWith("!") && EnchantmentAPI.isRegistered(possibleEnchantName = weaponName.split(" ")[0])) {
+                e.getWhoClicked().sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "Invalid lore found on player head, removed.");
                 e.setCurrentItem(null);
             }
         }
     }
 
-    @EventHandler(priority=EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerJoin(PlayerJoinEvent e) {
-        FPlayer fp = FactionUtils.getFPlayer((Player)e.getPlayer());
+        FPlayer fp = FactionUtils.getFPlayer(e.getPlayer());
         if (fp == null) {
             e.getPlayer().kickPlayer("Invalid faction data, please re-join.");
         }
@@ -198,48 +190,48 @@ implements Listener {
     @EventHandler
     public void onPlayerKick(PlayerKickEvent e) {
         String playerName = e.getPlayer().getName();
-        Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)("ncp removeplayer " + playerName + " MOVING_SURVIVALFLY"));
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ncp removeplayer " + playerName + " MOVING_SURVIVALFLY");
     }
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent e) {
         if (e.getBlock().getType() == Material.BEDROCK && !e.getPlayer().isOp()) {
-            e.getPlayer().sendMessage((Object)ChatColor.RED + "You cannot place bedrock.");
+            e.getPlayer().sendMessage(ChatColor.RED + "You cannot place bedrock.");
             e.setCancelled(true);
         }
     }
 
-    @EventHandler(priority=EventPriority.LOWEST, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onPlayerShootBow(EntityShootBowEvent e) {
         if (e.getEntity() instanceof Player) {
             Player p;
-            if (e.getForce() < 0.75f && !(p = (Player)e.getEntity()).hasMetadata("bowWarning")) {
+            if (e.getForce() < 0.75f && !(p = (Player) e.getEntity()).hasMetadata("bowWarning")) {
                 p.sendMessage("");
                 p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "*** WEAK SHOT ***");
-                p.sendMessage((Object)ChatColor.GRAY + "Custom Bow Enchantments will not proc on targets unless your bow shot is charged at LEAST 75%");
+                p.sendMessage(ChatColor.GRAY + "Custom Bow Enchantments will not proc on targets unless your bow shot is charged at LEAST 75%");
                 p.sendMessage("");
-                p.setMetadata("bowWarning", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)System.currentTimeMillis()));
+                p.setMetadata("bowWarning", new FixedMetadataValue(Arkkit.get(), System.currentTimeMillis()));
             }
-            e.getProjectile().setMetadata("shootForce", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)Float.valueOf(e.getForce())));
+            e.getProjectile().setMetadata("shootForce", new FixedMetadataValue(Arkkit.get(), Float.valueOf(e.getForce())));
         }
     }
 
-    @EventHandler(priority=EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent e) {
         if ((e.getMessage().equals("/hat") || e.getMessage().equals("/ehat") || e.getMessage().equals("/head") || e.getMessage().equals("/ehead") || e.getMessage().equals("/essentials:")) && e.getPlayer().getInventory().getHelmet() != null && e.getPlayer().getInventory().getHelmet().getType() != Material.AIR) {
             e.setCancelled(true);
-            e.getPlayer().sendMessage((Object)ChatColor.RED + "You cannot use " + e.getMessage() + " while you have a helmet equipped.");
+            e.getPlayer().sendMessage(ChatColor.RED + "You cannot use " + e.getMessage() + " while you have a helmet equipped.");
         }
     }
 
-    @EventHandler(priority=EventPriority.LOW, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onPlayerPortal(PlayerPortalEvent e) {
         if (e.getTo() != null && e.getTo().getWorld() != null && e.getTo().getWorld().getName().startsWith("dungeon_") || e.getFrom() != null && e.getFrom().getWorld() != null && e.getFrom().getWorld().getName().startsWith("dungeon_")) {
             return;
         }
-        if (FactionUtils.isWarZone((Location)e.getFrom())) {
+        if (FactionUtils.isWarZone(e.getFrom())) {
             e.setCancelled(true);
-            e.getPlayer().sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + " You cannot teleport to the nether from the Warzone.");
+            e.getPlayer().sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + " You cannot teleport to the nether from the Warzone.");
             if (e.getFrom().getBlock().getType() == Material.PORTAL && !e.getFrom().getBlock().hasMetadata("dungeonPortalBlock") && !e.getFrom().getBlock().hasMetadata("dungeonExitPortalBlock")) {
                 e.getFrom().getBlock().setType(Material.AIR);
             }
@@ -249,14 +241,14 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.LOW)
+    @EventHandler(priority = EventPriority.LOW)
     public void onPlayerJoinGamemodeCheck(PlayerJoinEvent e) {
         e.setJoinMessage(null);
         boolean op = e.getPlayer().isOp();
         final Player pl = e.getPlayer();
         if (!op) {
             pl.setGameMode(GameMode.SURVIVAL);
-            Bukkit.getScheduler().runTaskLater((Plugin)Arkkit.get(), new Runnable(){
+            Bukkit.getScheduler().runTaskLater(Arkkit.get(), new Runnable() {
 
                 @Override
                 public void run() {
@@ -270,7 +262,7 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerGamemodeChange(PlayerGameModeChangeEvent e) {
         if (e.getPlayer().isOp()) {
             return;
@@ -281,21 +273,20 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerPreCommandProcess(PlayerCommandPreprocessEvent e) {
         if ((e.getMessage().toLowerCase().startsWith("/f owner") || e.getMessage().toLowerCase().startsWith("/f unclaim") || e.getMessage().toLowerCase().startsWith("/f declaim") || e.getMessage().toLowerCase().startsWith("/f ownerunclaim") || e.getMessage().toLowerCase().startsWith("/f ownerun") || e.getMessage().toLowerCase().startsWith("/f claim")) && e.getMessage().split(" ").length == 3) {
             try {
                 int radius = Integer.parseInt(e.getMessage().split(" ")[2]);
                 if (radius > 20) {
-                    e.getPlayer().sendMessage((Object)ChatColor.RED + "You cannot process more than 20 chunks at a time.");
+                    e.getPlayer().sendMessage(ChatColor.RED + "You cannot process more than 20 chunks at a time.");
                     e.setCancelled(true);
                     e.setMessage("/null");
                     return;
                 }
-            }
-            catch (Exception err) {
+            } catch (Exception err) {
                 if (err instanceof NumberFormatException) {
-                    e.getPlayer().sendMessage((Object)ChatColor.RED + "Specify a numeric radius, 'all' is not valid for this command.");
+                    e.getPlayer().sendMessage(ChatColor.RED + "Specify a numeric radius, 'all' is not valid for this command.");
                 }
                 err.printStackTrace();
                 e.setCancelled(true);
@@ -305,10 +296,10 @@ implements Listener {
         if (e.getMessage().toLowerCase().startsWith("/f title") && e.getMessage().toLowerCase().split(" ").length == 4) {
             String title = e.getMessage().toLowerCase().split(" ")[3];
             for (char c : title.toCharArray()) {
-                if (CharUtils.isAsciiAlphanumeric((char)c) || c == '&') continue;
+                if (CharUtils.isAsciiAlphanumeric(c) || c == '&') continue;
                 e.setCancelled(true);
                 e.setMessage("/null");
-                e.getPlayer().sendMessage((Object)ChatColor.RED + "You have invalid characters in your /f title");
+                e.getPlayer().sendMessage(ChatColor.RED + "You have invalid characters in your /f title");
                 return;
             }
         }
@@ -321,40 +312,40 @@ implements Listener {
                 return;
             }
             if (e.getRawSlot() == 2 && e.getCurrentItem() != null) {
-                Player p = (Player)e.getWhoClicked();
+                Player p = (Player) e.getWhoClicked();
                 ItemStack is = e.getCurrentItem();
                 if (is.hasItemMeta() && is.getItemMeta().hasDisplayName()) {
                     ItemMeta im = is.getItemMeta();
                     if (this.containsIP(im.getDisplayName())) {
                         e.setCancelled(true);
-                        p.sendMessage((Object)ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You cannot have an IP address in your item name.");
+                        p.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot have an IP address in your item name.");
                     }
                     if (this.containsURL(im.getDisplayName())) {
                         e.setCancelled(true);
-                        p.sendMessage((Object)ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You cannot have a URL in your item name.");
+                        p.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot have a URL in your item name.");
                     }
                 }
             }
         }
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerTeleport(PlayerTeleportEvent e) {
-        if (!e.getTo().getWorld().equals((Object)e.getFrom().getWorld())) {
-            e.getPlayer().setMetadata("arkkitTeleportEvent", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)System.currentTimeMillis()));
+        if (!e.getTo().getWorld().equals(e.getFrom().getWorld())) {
+            e.getPlayer().setMetadata("arkkitTeleportEvent", new FixedMetadataValue(Arkkit.get(), System.currentTimeMillis()));
         }
     }
 
     @EventHandler
     public void onInventoryClickPostTeleport(InventoryClickEvent e) {
-        if (AntiHack.hasTeleportedCrossWorld((Player)e.getWhoClicked())) {
+        if (AntiHack.hasTeleportedCrossWorld((Player) e.getWhoClicked())) {
             e.setCancelled(true);
             e.setResult(Event.Result.DENY);
             return;
         }
     }
 
-    @EventHandler(priority=EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onChestFall(EntityChangeBlockEvent e) {
         if (e.getTo() == Material.CHEST && DuelArenaTask.arena_regions.contains(WorldGuardUtils.getRegionName(e.getBlock().getLocation())) && (e.getBlock().getWorld().getName().equals("world_duels") || e.getBlock().getWorld().getName().equals("world_duels2"))) {
             this.removeDisabledItems(e.getBlock());
@@ -363,18 +354,18 @@ implements Listener {
 
     @EventHandler
     public void onAnvilInventoryClick(InventoryClickEvent e) {
-        Material monsterEgg = Material.getMaterial((int)383);
+        Material monsterEgg = Material.getMaterial(383);
         if (e.getInventory().getType() == InventoryType.ANVIL && (e.getCurrentItem() != null && e.getCurrentItem().getType() == monsterEgg || e.getCursor() != null && e.getCursor().getType() == monsterEgg)) {
-            final Player pl = (Player)e.getWhoClicked();
+            final Player pl = (Player) e.getWhoClicked();
             e.setCancelled(true);
             e.setResult(Event.Result.DENY);
             pl.updateInventory();
-            Bukkit.getServer().getScheduler().runTaskLater((Plugin)Arkkit.get(), new Runnable(){
+            Bukkit.getServer().getScheduler().runTaskLater(Arkkit.get(), new Runnable() {
 
                 @Override
                 public void run() {
                     pl.closeInventory();
-                    pl.sendMessage((Object)ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You " + (Object)ChatColor.UNDERLINE + "cannot" + (Object)ChatColor.RED + " rename this item.");
+                    pl.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You " + ChatColor.UNDERLINE + "cannot" + ChatColor.RED + " rename this item.");
                 }
             }, 2L);
         }
@@ -382,21 +373,22 @@ implements Listener {
 
     public void removeDisabledItems(Block b) {
         if (b.getType() == Material.CHEST) {
-            Chest chest = (Chest)b.getState();
+            Chest chest = (Chest) b.getState();
             for (ItemStack is : chest.getInventory()) {
-                if (is == null || is.getType() == Material.AIR || !this.disabledMaterials.contains((Object)is.getType())) continue;
-                chest.getInventory().removeItem(new ItemStack[]{is});
-                ItemStack newItem = CosmicSpaceChestsAPI.getItems((ItemRarity)ItemRarity.LEGENDARY, (int)1)[0];
+                if (is == null || is.getType() == Material.AIR || !this.disabledMaterials.contains(is.getType()))
+                    continue;
+                chest.getInventory().removeItem(is);
+                ItemStack newItem = CosmicSpaceChestsAPI.getItems(ItemRarity.LEGENDARY, 1)[0];
                 int trys = 100;
-                while (this.disabledMaterials.contains((Object)newItem.getType()) && trys > 0) {
+                while (this.disabledMaterials.contains(newItem.getType()) && trys > 0) {
                     if (--trys == 0) {
                         newItem = null;
                         break;
                     }
-                    newItem = CosmicSpaceChestsAPI.getItems((ItemRarity)ItemRarity.LEGENDARY, (int)1)[0];
+                    newItem = CosmicSpaceChestsAPI.getItems(ItemRarity.LEGENDARY, 1)[0];
                 }
                 if (newItem != null) {
-                    chest.getInventory().addItem(new ItemStack[]{newItem});
+                    chest.getInventory().addItem(newItem);
                     System.out.println("Adding back: " + newItem.toString());
                 }
                 chest.update();
@@ -408,7 +400,7 @@ implements Listener {
     public boolean containsIP(String name) {
         char[] chars = name.toCharArray();
         for (int index = 0; index < chars.length; ++index) {
-            if (chars[index] == '.' || StringUtils.isAlphanumericSpace((String)String.valueOf(chars[index]))) continue;
+            if (chars[index] == '.' || StringUtils.isAlphanumericSpace(String.valueOf(chars[index]))) continue;
             chars[index] = '\u0000';
         }
         name = new String(chars).replace(" ", "").replace("dot", ".");
@@ -423,7 +415,7 @@ implements Listener {
     public int getNumbers(String s) {
         int i = 0;
         for (char c : s.toCharArray()) {
-            if (!StringUtils.isNumeric((String)String.valueOf(c))) continue;
+            if (!StringUtils.isNumeric(String.valueOf(c))) continue;
             ++i;
         }
         return i;
@@ -444,7 +436,8 @@ implements Listener {
         for (int x = -2; x < 2; ++x) {
             for (int z = -2; z < 2; ++z) {
                 for (int y = -2; y < 2; ++y) {
-                    if (p.getLocation().add((double)x, (double)y, (double)z).getBlock().getType() != Material.ENCHANTMENT_TABLE) continue;
+                    if (p.getLocation().add(x, y, z).getBlock().getType() != Material.ENCHANTMENT_TABLE)
+                        continue;
                     return true;
                 }
             }
@@ -453,7 +446,7 @@ implements Listener {
     }
 
     private boolean isSolidBlock(Location l) {
-        return l.getBlock().getType() != Material.AIR && !this.hollowMaterials.contains((Object)l.getBlock().getType());
+        return l.getBlock().getType() != Material.AIR && !this.hollowMaterials.contains(l.getBlock().getType());
     }
 }
 

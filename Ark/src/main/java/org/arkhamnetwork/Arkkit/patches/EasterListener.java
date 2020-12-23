@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI
  *  com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity
@@ -23,7 +23,6 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
-import org.arkhamnetwork.Arkkit.patches.Easter;
 import org.arkhamnetwork.Arkkit.utils.RandomFireworks;
 import org.bukkit.ChatColor;
 import org.bukkit.FireworkEffect;
@@ -41,14 +40,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 
 final class EasterListener
-implements Listener {
-    private Easter instance;
+        implements Listener {
+    private final Easter instance;
 
     EasterListener(Easter easter) {
         this.instance = easter;
     }
 
-    @EventHandler(priority=EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerJoin(PlayerJoinEvent e) {
         if (this.instance.isEaster()) {
             e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), Sound.CHICKEN_EGG_POP, 1.0f, 1.0f);
@@ -62,7 +61,7 @@ implements Listener {
             e.setUseItemInHand(Event.Result.DENY);
             e.setUseInteractedBlock(Event.Result.DENY);
             if (e.getPlayer().getInventory().firstEmpty() == -1) {
-                e.getPlayer().sendMessage((Object)ChatColor.RED + "You do not have enough inventory slots to open this easter egg.");
+                e.getPlayer().sendMessage(ChatColor.RED + "You do not have enough inventory slots to open this easter egg.");
                 return;
             }
             ItemStack easterEggs = e.getItem().clone();
@@ -72,11 +71,11 @@ implements Listener {
             } else {
                 e.getPlayer().setItemInHand(null);
             }
-            ItemStack reward = CosmicSpaceChestsAPI.getDropPackageChest((ItemRarity)CosmicSpaceChestsAPI.getRandomItemRarity());
+            ItemStack reward = CosmicSpaceChestsAPI.getDropPackageChest(CosmicSpaceChestsAPI.getRandomItemRarity());
             e.getPlayer().getInventory().setItem(e.getPlayer().getInventory().firstEmpty(), reward);
             e.getPlayer().updateInventory();
             e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), Sound.CHICKEN_IDLE, 1.0f, 0.75f);
-            Firework fw = (Firework)e.getPlayer().getWorld().spawnEntity(e.getPlayer().getLocation().clone().add(0.0, 1.0, 0.0), EntityType.FIREWORK);
+            Firework fw = (Firework) e.getPlayer().getWorld().spawnEntity(e.getPlayer().getLocation().clone().add(0.0, 1.0, 0.0), EntityType.FIREWORK);
             FireworkMeta fwm = fw.getFireworkMeta();
             FireworkEffect effect = FireworkEffect.builder().flicker(true).withColor(RandomFireworks.getManager().getRandomColor()).withFade(RandomFireworks.getManager().getRandomColor()).with(RandomFireworks.getManager().getRandomType()).trail(true).build();
             fwm.addEffect(effect);

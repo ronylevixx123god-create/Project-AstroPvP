@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.Location
@@ -10,15 +10,16 @@
  */
 package org.arkhamnetwork.Arkkit.utils;
 
-import java.text.DecimalFormat;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+
+import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 public class LocationUtils {
     public static String convertLocationToString(Location l) {
@@ -41,13 +42,13 @@ public class LocationUtils {
             double y = Double.parseDouble(location_string.split(",")[2]);
             double z = Double.parseDouble(location_string.split(",")[3].split(":")[0]);
             float yaw = Float.parseFloat(location_string.substring(location_string.indexOf(":") + 1, location_string.indexOf("$")));
-            float pitch = Float.parseFloat(location_string.substring(location_string.indexOf("$") + 1, location_string.length()));
+            float pitch = Float.parseFloat(location_string.substring(location_string.indexOf("$") + 1));
             if (letWorldBeNull) {
-                loc = new Location(Bukkit.getWorld((String)world_name), x, y, z, yaw, pitch);
-            } else if (Bukkit.getWorld((String)world_name) != null) {
-                loc = new Location(Bukkit.getWorld((String)world_name), x, y, z, yaw, pitch);
+                loc = new Location(Bukkit.getWorld(world_name), x, y, z, yaw, pitch);
+            } else if (Bukkit.getWorld(world_name) != null) {
+                loc = new Location(Bukkit.getWorld(world_name), x, y, z, yaw, pitch);
             } else {
-                Location l_spawn = ((World)Bukkit.getServer().getWorlds().get(0)).getSpawnLocation();
+                Location l_spawn = Bukkit.getServer().getWorlds().get(0).getSpawnLocation();
                 l_spawn.setPitch(2.0f);
                 l_spawn.setYaw(-179.0f);
                 loc = l_spawn;
@@ -82,7 +83,7 @@ public class LocationUtils {
         boolean badMaterial;
         Random rand = new Random();
         Location rand_loc = l.clone();
-        rand_loc.add((double)((rand.nextBoolean() ? 1 : -1) * (rand.nextInt(maxDistance) + minDistance)), 0.0, (double)((rand.nextBoolean() ? 1 : -1) * (rand.nextInt(maxDistance) + minDistance)));
+        rand_loc.add((rand.nextBoolean() ? 1 : -1) * (rand.nextInt(maxDistance) + minDistance), 0.0, (rand.nextBoolean() ? 1 : -1) * (rand.nextInt(maxDistance) + minDistance));
         rand_loc.add(0.5, 0.0, 0.5);
         Block b = rand_loc.getWorld().getHighestBlockAt(rand_loc).getLocation().subtract(0.0, 1.0, 0.0).getBlock();
         boolean bl = badMaterial = b.isLiquid() || b.getType() == Material.STATIONARY_WATER || b.getType() == Material.WATER || b.getType() == Material.SNOW;

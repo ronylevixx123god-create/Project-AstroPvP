@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
@@ -11,11 +11,7 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.HashMap;
-import java.util.logging.Logger;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.DisguiseCommandListener;
-import org.arkhamnetwork.Arkkit.patches.SpoofHealthDisplay;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -24,8 +20,11 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 
+import java.util.HashMap;
+import java.util.logging.Logger;
+
 public class PlayerHealth
-extends ArkPlugin {
+        extends ArkPlugin {
     private static final Logger log = Logger.getLogger("Minecraft");
     protected static HashMap<String, String> playerDisguises;
 
@@ -37,7 +36,7 @@ extends ArkPlugin {
     public void enable() {
         log.info("[HealthDisplay] Starting.");
         playerDisguises = new HashMap();
-        String objectiveName = (Object)ChatColor.RED + "\u2764";
+        String objectiveName = ChatColor.RED + "\u2764";
         Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
         for (Objective objective : scoreboard.getObjectivesByCriteria("health")) {
             objective.unregister();
@@ -46,7 +45,7 @@ extends ArkPlugin {
         if (Bukkit.getPluginManager().isPluginEnabled("LibsDisguises")) {
             Bukkit.getLogger().info("[HealthDispaly] Detected LibsDisguises.jar, Launching SpoofHealthDisplay()...");
             this.registerListener(new DisguiseCommandListener());
-            this.registerTask(new SpoofHealthDisplay().runTaskTimer((Plugin)Arkkit.get(), 20L, 20L), PlayerHealth.class);
+            this.registerTask(new SpoofHealthDisplay().runTaskTimer(Arkkit.get(), 20L, 20L), PlayerHealth.class);
         }
     }
 

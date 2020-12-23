@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.compat.ParamBuilder
  *  com.cosmicpvp.cosmicutils.utils.FactionUtils
@@ -22,20 +22,20 @@ import org.bukkit.Location;
 
 public class FactionUtil {
     public static Relation getRelation(RelationParticipator part, RelationParticipator part2) {
-        return (Relation)ReflectionUtils.callReflectionMethod((Object)part, RelationParticipator.class, (String)"getRelationTo", (ParamBuilder)new ParamBuilder(RelationParticipator.class, (Object)part2));
+        return (Relation) ReflectionUtils.callReflectionMethod(part, RelationParticipator.class, "getRelationTo", new ParamBuilder(RelationParticipator.class, part2));
     }
 
     public static boolean isNonPermFaction(Location destination) {
-        Faction at = FactionUtils.getFactionAt((Location)destination);
+        Faction at = FactionUtils.getFactionAt(destination);
         return at != null && FactionUtil.isNonPermFaction(at);
     }
 
     public static boolean isNonPermFaction(Faction at) {
-        return at != null && (Boolean)FactionUtils.callFactionMethod((Faction)at, (String)"isSafeZone", null) == false && (Boolean)FactionUtils.callFactionMethod((Faction)at, (String)"isNone", null) == false && (Boolean)FactionUtils.callFactionMethod((Faction)at, (String)"isWarZone", null) == false;
+        return at != null && (Boolean) FactionUtils.callFactionMethod(at, "isSafeZone", null) == false && (Boolean) FactionUtils.callFactionMethod(at, "isNone", null) == false && (Boolean) FactionUtils.callFactionMethod(at, "isWarZone", null) == false;
     }
 
     public static String getTag(Faction faction) {
-        return (String)FactionUtils.callFactionMethod((Faction)faction, (String)"getTag", null);
+        return (String) FactionUtils.callFactionMethod(faction, "getTag", null);
     }
 }
 

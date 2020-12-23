@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.compat.ParamBuilder
  *  com.cosmicpvp.cosmicutils.utils.FactionUtils
@@ -13,18 +13,18 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.cosmicutils.compat.ParamBuilder;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
-import java.util.List;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
-import org.arkhamnetwork.Arkkit.patches.ExtraMute;
 import org.arkhamnetwork.Arkkit.utils.TimeUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
+import java.util.List;
+
 class FacMuteCommand
-extends AbstractCommand {
-    private ExtraMute instance;
+        extends AbstractCommand {
+    private final ExtraMute instance;
 
     public FacMuteCommand(ExtraMute mute, String command, String usage, String description, List<String> aliases) {
         super(command, usage, description, aliases);
@@ -38,7 +38,7 @@ extends AbstractCommand {
             return true;
         }
         if (args.length < 3) {
-            sender.sendMessage((Object)ChatColor.RED + "Invalid Usage: /facmute <fac> <length> <reason>");
+            sender.sendMessage(ChatColor.RED + "Invalid Usage: /facmute <fac> <length> <reason>");
             return true;
         }
         String facName = args[0];
@@ -49,25 +49,24 @@ extends AbstractCommand {
         }
         try {
             time = TimeUtils.parseDateDiff(length, true);
-        }
-        catch (Exception e) {
-            sender.sendMessage((Object)ChatColor.RED + "Invalid time given!");
+        } catch (Exception e) {
+            sender.sendMessage(ChatColor.RED + "Invalid time given!");
             return true;
         }
-        List<String > fplayerIds = FactionUtils.getFPlayerIdsByTag((String)args[0]);
+        List<String> fplayerIds = FactionUtils.getFPlayerIdsByTag(args[0]);
         if (fplayerIds == null) {
-            sender.sendMessage((Object)ChatColor.RED + "Faction doesnt exist.");
+            sender.sendMessage(ChatColor.RED + "Faction doesnt exist.");
             return true;
         }
-        String id = FactionUtils.getFactionIdByTag((String)facName);
+        String id = FactionUtils.getFactionIdByTag(facName);
         if (id == null) {
-            sender.sendMessage((Object)ChatColor.RED + "Faction doesnt exist.");
+            sender.sendMessage(ChatColor.RED + "Faction doesnt exist.");
             return true;
         }
-        sender.sendMessage((Object)ChatColor.RED + "Faction muted.");
-        FactionUtils.callFactionMethodByTag((String)facName, (String)"sendMessage", (ParamBuilder)new ParamBuilder(String.class, (Object)((Object)ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "Your faction has been muted for " + length + " by " + sender.getName() + "!")));
+        sender.sendMessage(ChatColor.RED + "Faction muted.");
+        FactionUtils.callFactionMethodByTag(facName, "sendMessage", new ParamBuilder(String.class, ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "Your faction has been muted for " + length + " by " + sender.getName() + "!"));
         for (String fplayerId : fplayerIds) {
-            Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)("tempmute " + fplayerId + " " + length + " " + reason));
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "tempmute " + fplayerId + " " + length + " " + reason);
         }
         this.instance.getFactionsMuted().put(id, time);
         return false;

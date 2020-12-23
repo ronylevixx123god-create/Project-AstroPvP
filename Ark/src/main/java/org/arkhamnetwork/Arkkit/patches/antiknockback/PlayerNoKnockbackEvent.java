@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Location
  *  org.bukkit.entity.Player
@@ -10,15 +10,16 @@
  */
 package org.arkhamnetwork.Arkkit.patches.antiknockback;
 
-import java.util.List;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.util.Vector;
 
+import java.util.List;
+
 public class PlayerNoKnockbackEvent
-extends Event {
+        extends Event {
     private static final HandlerList handlerList = new HandlerList();
     public Player player;
     public Vector velocity;
@@ -36,11 +37,11 @@ extends Event {
         this.startingLocation = starting;
     }
 
-    public HandlerList getHandlers() {
+    public static HandlerList getHandlerList() {
         return handlerList;
     }
 
-    public static HandlerList getHandlerList() {
+    public HandlerList getHandlers() {
         return handlerList;
     }
 

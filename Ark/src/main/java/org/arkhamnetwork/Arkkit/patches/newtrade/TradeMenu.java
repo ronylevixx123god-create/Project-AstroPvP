@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.gui.CosmicGUI
  *  com.cosmicpvp.cosmicutils.gui.InventoryItem
@@ -19,9 +19,6 @@ import com.cosmicpvp.cosmicutils.gui.CosmicGUI;
 import com.cosmicpvp.cosmicutils.gui.InventoryItem;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
-
-import java.util.List;
-
 import com.google.common.collect.Lists;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -29,12 +26,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
+
 public class TradeMenu
-extends CosmicGUI {
+        extends CosmicGUI {
     public static List<Integer> leftTradingSlots = Lists.newArrayList(1, 2, 3, 9, 10, 11, 12, 18, 19, 20, 21, 27, 28, 29, 30, 36, 37, 38, 39, 45, 46, 47, 48);
-    private static List<Integer> rightTradingSlots = Lists.newArrayList(5, 6, 7, 14, 15, 16, 17, 23, 24, 25, 26, 32, 33, 34, 35, 41, 42, 43, 44, 50, 51, 52, 53);
-    private PlayerTrade trade;
-    private InventoryItem dividerItem = new InventoryItem(new ItemBuilder(Material.THIN_GLASS, " ", "").build());
+    private static final List<Integer> rightTradingSlots = Lists.newArrayList(5, 6, 7, 14, 15, 16, 17, 23, 24, 25, 26, 32, 33, 34, 35, 41, 42, 43, 44, 50, 51, 52, 53);
+    private final PlayerTrade trade;
+    private final InventoryItem dividerItem = new InventoryItem(new ItemBuilder(Material.THIN_GLASS, " ", "").build());
     private long lastClick = 0L;
     private long lastItemModified;
 
@@ -84,7 +83,7 @@ extends CosmicGUI {
         if (item == null || item.getType() == Material.AIR) {
             return;
         }
-        if (event.getInventory() != null && event.getInventory().getTitle().equals(this.title) && event.getWhoClicked().equals((Object)this.player) && event.getClickedInventory() != null && event.getClickedInventory().getTitle().equals("container.inventory") && event.getClickedInventory().equals((Object)this.player.getOpenInventory().getBottomInventory())) {
+        if (event.getInventory() != null && event.getInventory().getTitle().equals(this.title) && event.getWhoClicked().equals(this.player) && event.getClickedInventory() != null && event.getClickedInventory().getTitle().equals("container.inventory") && event.getClickedInventory().equals(this.player.getOpenInventory().getBottomInventory())) {
             if (!this.trade.canTradeItem(this.player, item)) {
                 return;
             }
@@ -105,9 +104,9 @@ extends CosmicGUI {
         int itemIndex = 0;
         for (Integer slot : slotsToUse) {
             if (itemIndex >= itemsInTrade.size()) break;
-            ItemStack tradeItem = (ItemStack)itemsInTrade.get(itemIndex++);
+            ItemStack tradeItem = (ItemStack) itemsInTrade.get(itemIndex++);
             InventoryItem invItem = new InventoryItem(tradeItem);
-            if (player.equals((Object)this.player)) {
+            if (player.equals(this.player)) {
                 invItem.click(() -> {
                     if (!this.checkCanClick(true)) {
                         return;
@@ -130,7 +129,7 @@ extends CosmicGUI {
 
     public InventoryItem getAcceptedPane(Player playerFor) {
         boolean hasAccepted = this.trade.hasAccepted(playerFor);
-        return new InventoryItem(new ItemBuilder(Material.STAINED_GLASS_PANE, hasAccepted ? CC.Green + "Trade ACCEPTING..." : CC.Yellow + "Click to ACCEPT Trade", new String[]{hasAccepted ? CC.Gray + "Modify the trade to cancel." : ""}).data(hasAccepted ? (short)DyeColor.LIME.getWoolData() : (short)DyeColor.RED.getWoolData()).amount(this.trade.getTradeCountdown()).build());
+        return new InventoryItem(new ItemBuilder(Material.STAINED_GLASS_PANE, hasAccepted ? CC.Green + "Trade ACCEPTING..." : CC.Yellow + "Click to ACCEPT Trade", hasAccepted ? CC.Gray + "Modify the trade to cancel." : "").data(hasAccepted ? (short) DyeColor.LIME.getWoolData() : (short) DyeColor.RED.getWoolData()).amount(this.trade.getTradeCountdown()).build());
     }
 
     public PlayerTrade getTrade() {

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Color
  *  org.bukkit.FireworkEffect
@@ -11,18 +11,19 @@
  */
 package org.arkhamnetwork.Arkkit.utils;
 
-import java.util.ArrayList;
-import java.util.Random;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.Location;
 import org.bukkit.entity.Firework;
 import org.bukkit.inventory.meta.FireworkMeta;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 public class RandomFireworks {
-    private static RandomFireworks fireWorks = new RandomFireworks();
     public static ArrayList<Color> colors = new ArrayList();
     public static ArrayList<FireworkEffect.Type> types = new ArrayList();
+    private static final RandomFireworks fireWorks = new RandomFireworks();
 
     public static RandomFireworks getManager() {
         if (colors == null || colors.size() == 0) {
@@ -78,10 +79,10 @@ public class RandomFireworks {
     }
 
     public void launchRandomFirework(Location loc) {
-        Firework fw = (Firework)loc.getWorld().spawn(loc, Firework.class);
+        Firework fw = loc.getWorld().spawn(loc, Firework.class);
         FireworkMeta fm = fw.getFireworkMeta();
         fm.setPower(1);
-        fm.addEffects(new FireworkEffect[]{FireworkEffect.builder().with(this.getRandomType()).withColor(this.getRandomColor()).build()});
+        fm.addEffects(FireworkEffect.builder().with(this.getRandomType()).withColor(this.getRandomColor()).build());
         fw.setFireworkMeta(fm);
     }
 }

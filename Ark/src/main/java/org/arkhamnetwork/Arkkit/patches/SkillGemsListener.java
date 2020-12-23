@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.gmail.nossr50.api.ExperienceAPI
  *  com.gmail.nossr50.datatypes.skills.SkillType
@@ -31,7 +31,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 final class SkillGemsListener
-implements Listener {
+        implements Listener {
     SkillGemsListener() {
     }
 
@@ -46,10 +46,10 @@ implements Listener {
             e.setCancelled(true);
             e.setUseItemInHand(Event.Result.DENY);
             e.setUseInteractedBlock(Event.Result.DENY);
-            if (ExperienceAPI.getLevel((Player)e.getPlayer(), (String)type.name()) + value <= ExperienceAPI.getLevelCap((String)type.name())) {
+            if (ExperienceAPI.getLevel(e.getPlayer(), type.name()) + value <= ExperienceAPI.getLevelCap(type.name())) {
                 e.getPlayer().setItemInHand(null);
                 e.getPlayer().updateInventory();
-                ExperienceAPI.addLevel((Player)e.getPlayer(), (String)type.name(), (int)value);
+                ExperienceAPI.addLevel(e.getPlayer(), type.name(), value);
                 e.getPlayer().sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "+" + value + " " + type.name() + " MCMMO LEVELS!");
                 e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.ORB_PICKUP, 1.0f, 0.33f);
             } else {
@@ -60,14 +60,14 @@ implements Listener {
 
     private int getSkillCreditValue(ItemStack is) {
         if (is.getType() == Material.GLOWSTONE_DUST && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().startsWith(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "Skill Gem")) {
-            return Integer.parseInt(ChatColor.stripColor((String)((String)is.getItemMeta().getLore().get(1)).split(" ")[0].replace("+", ""))) * is.getAmount();
+            return Integer.parseInt(ChatColor.stripColor(is.getItemMeta().getLore().get(1).split(" ")[0].replace("+", ""))) * is.getAmount();
         }
         return 0;
     }
 
     private SkillType getSkillCreditType(ItemStack is) {
-        if (is.getType() == Material.GLOWSTONE_DUST && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().startsWith((Object)ChatColor.GREEN + ChatColor.BOLD.toString() + "Skill Gem")) {
-            return SkillType.valueOf((String)ChatColor.stripColor((String)((String)is.getItemMeta().getLore().get(0)).split(" ")[1]).toUpperCase());
+        if (is.getType() == Material.GLOWSTONE_DUST && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().startsWith(ChatColor.GREEN + ChatColor.BOLD.toString() + "Skill Gem")) {
+            return SkillType.valueOf(ChatColor.stripColor(is.getItemMeta().getLore().get(0).split(" ")[1]).toUpperCase());
         }
         return null;
     }

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.compilex.CosmicFund.CosmicFundAPI
  *  org.bukkit.ChatColor
@@ -22,7 +22,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.Map;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.arkhamnetwork.Arkkit.patches.chunkgc.ChunkGCTask;
@@ -31,11 +30,7 @@ import org.arkhamnetwork.Arkkit.utils.WorldGuardUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Creeper;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Skeleton;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
@@ -44,8 +39,10 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.Map;
+
 final class EndGrindingMobSpawnTask
-extends BukkitRunnable {
+        extends BukkitRunnable {
     long tick = 0L;
 
     EndGrindingMobSpawnTask() {
@@ -96,13 +93,13 @@ extends BukkitRunnable {
         if (creeperCount >= 4) {
             return null;
         }
-        Creeper c = (Creeper)l.getWorld().spawnEntity(l, EntityType.CREEPER);
+        Creeper c = (Creeper) l.getWorld().spawnEntity(l, EntityType.CREEPER);
         c.setPowered(true);
-        c.setCustomName((Object)ChatColor.LIGHT_PURPLE + "" + (Object)ChatColor.BOLD + "Ender Creeper");
+        c.setCustomName(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "Ender Creeper");
         c.setCustomNameVisible(true);
         c.setMaxHealth(c.getMaxHealth() * 5.0);
         c.setHealth(c.getMaxHealth());
-        c.setMetadata("endMonsterType", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)EndMonsterType.CREEPER.toString()));
+        c.setMetadata("endMonsterType", new FixedMetadataValue(Arkkit.get(), EndMonsterType.CREEPER.toString()));
         ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, l.add(0.0, 0.5, 0.0), 0.7f, 16);
         return c;
     }
@@ -117,7 +114,7 @@ extends BukkitRunnable {
         if (monsterCount >= 2) {
             return null;
         }
-        Skeleton s = (Skeleton)l.getWorld().spawnEntity(l, EntityType.SKELETON);
+        Skeleton s = (Skeleton) l.getWorld().spawnEntity(l, EntityType.SKELETON);
         s.setSkeletonType(Skeleton.SkeletonType.WITHER);
         s.setMaxHealth(100.0);
         s.setHealth(100.0);
@@ -131,7 +128,7 @@ extends BukkitRunnable {
         s.getEquipment().setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
         s.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
         s.getEquipment().setBoots(new ItemStack(Material.DIAMOND_BOOTS));
-        s.setMetadata("endMonsterType", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)EndMonsterType.CUSTOM.toString()));
+        s.setMetadata("endMonsterType", new FixedMetadataValue(Arkkit.get(), EndMonsterType.CUSTOM.toString()));
         double rand = Math.random();
         if (rand < 0.4) {
             s.getEquipment().setItemInHand(new ItemStack(Material.DIAMOND_AXE));

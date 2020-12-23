@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.entity.Player
  *  org.bukkit.event.EventHandler
@@ -10,7 +10,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import org.arkhamnetwork.Arkkit.patches.NerfExpDrops;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -18,17 +17,17 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerExpChangeEvent;
 
 final class NerfExpDropsListener
-implements Listener {
-    private NerfExpDrops drops;
+        implements Listener {
+    private final NerfExpDrops drops;
 
     public NerfExpDropsListener(NerfExpDrops drops) {
         this.drops = drops;
     }
 
-    @EventHandler(priority=EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerExpChange(PlayerExpChangeEvent e) {
         if (e.getAmount() > 0) {
-            e.setAmount((int)Math.round((double)e.getAmount() * this.getPlayerXpRate(e.getPlayer())));
+            e.setAmount((int) Math.round((double) e.getAmount() * this.getPlayerXpRate(e.getPlayer())));
         }
     }
 

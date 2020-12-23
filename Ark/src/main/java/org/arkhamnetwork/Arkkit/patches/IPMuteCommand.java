@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
@@ -10,10 +10,7 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import java.util.List;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
-import org.arkhamnetwork.Arkkit.patches.ExtraMute;
-import org.arkhamnetwork.Arkkit.patches.MuteReason;
 import org.arkhamnetwork.Arkkit.utils.TimeUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -21,9 +18,11 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+
 class IPMuteCommand
-extends AbstractCommand {
-    private ExtraMute instance;
+        extends AbstractCommand {
+    private final ExtraMute instance;
 
     public IPMuteCommand(ExtraMute instance, String command, String usage, String description, List<String> aliases) {
         super(command, usage, description, aliases);
@@ -37,18 +36,18 @@ extends AbstractCommand {
             return true;
         }
         if (args.length < 3) {
-            sender.sendMessage((Object)ChatColor.RED + "Invalid Usage: /ipmute <ip/name> <length> <reason>");
+            sender.sendMessage(ChatColor.RED + "Invalid Usage: /ipmute <ip/name> <length> <reason>");
             return true;
         }
         String ip = args[0];
         String playerName = null;
         if (!ip.contains(".")) {
-            Player pl = Bukkit.getPlayer((String)ip);
+            Player pl = Bukkit.getPlayer(ip);
             if (pl != null) {
                 ip = pl.getAddress().getAddress().getHostAddress();
                 playerName = pl.getName();
             } else {
-                sender.sendMessage((Object)ChatColor.RED + "No player online with that name");
+                sender.sendMessage(ChatColor.RED + "No player online with that name");
                 return true;
             }
         }
@@ -59,16 +58,15 @@ extends AbstractCommand {
         }
         try {
             time = length.equals("-1") ? -1L : TimeUtils.parseDateDiff(length, true);
-        }
-        catch (Exception e) {
-            sender.sendMessage((Object)ChatColor.RED + "Invalid time given!");
+        } catch (Exception e) {
+            sender.sendMessage(ChatColor.RED + "Invalid time given!");
             return true;
         }
         this.instance.getIpsMuted().put(ip, new MuteReason(time != -1L ? time * 1000L : time, reason.toString().trim()));
         if (sender.hasPermission("ipmute.showip")) {
-            sender.sendMessage((Object)ChatColor.RED + "IP " + ip + " has been muted.");
+            sender.sendMessage(ChatColor.RED + "IP " + ip + " has been muted.");
         } else {
-            sender.sendMessage((Object)ChatColor.RED + playerName + "'s IP has been muted.");
+            sender.sendMessage(ChatColor.RED + playerName + "'s IP has been muted.");
         }
         return false;
     }

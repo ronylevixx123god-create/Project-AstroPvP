@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.earth2me.essentials.CommandSource
  *  com.earth2me.essentials.I18n
@@ -35,26 +35,31 @@ import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.Relation;
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
-import org.arkhamnetwork.Arkkit.patches.NearLegacy;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.Server;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.MetadataValue;
 
+import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
+
 final class CommandNear
-extends AbstractCommand {
+        extends AbstractCommand {
     public CommandNear(String command, String usage, String description, List<String> aliases) {
         super(command, usage, description, aliases);
+    }
+
+    private static boolean canInteractWith(User interactor, User interactee) {
+        if (interactor == null) {
+            return !interactee.isHidden();
+        }
+        if (interactor.equals(interactee)) {
+            return true;
+        }
+        return interactor.getBase().canSee(interactee.getBase());
     }
 
     @Override
@@ -62,21 +67,20 @@ extends AbstractCommand {
         if (!(sender instanceof Player)) {
             try {
                 this.lookupOtherPlayer(sender, args, Bukkit.getServer());
-            }
-            catch (NotEnoughArgumentsException | PlayerNotFoundException e) {
+            } catch (NotEnoughArgumentsException | PlayerNotFoundException e) {
                 if (e instanceof PlayerNotFoundException) {
-                    sender.sendMessage((Object)ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + args[0] + " is not locally online.");
+                    sender.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + args[0] + " is not locally online.");
                 }
                 e.printStackTrace();
             }
             return true;
         }
         if (!sender.hasPermission("essentials.near")) {
-            sender.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You do not have permission to use /near.");
-            sender.sendMessage((Object)ChatColor.GRAY + "Purchase a rank on the server shop to unlock access.");
+            sender.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You do not have permission to use /near.");
+            sender.sendMessage(ChatColor.GRAY + "Purchase a rank on the server shop to unlock access.");
             return true;
         }
-        User user = NearLegacy.ess3.getUser((Player)sender);
+        User user = NearLegacy.ess3.getUser((Player) sender);
         Server server = Bukkit.getServer();
         long maxRadius = NearLegacy.ess3.getSettings().getChatRadius();
         if (maxRadius == 0L) {
@@ -87,34 +91,31 @@ extends AbstractCommand {
         if (args.length > 0) {
             try {
                 radius = Long.parseLong(args[0]);
-            }
-            catch (NumberFormatException e) {
+            } catch (NumberFormatException e) {
                 try {
                     otherUser = this.getPlayer(server, user, args, 0);
-                }
-                catch (Exception exception) {
+                } catch (Exception exception) {
                     // empty catch block
                 }
             }
             if (args.length > 1 && otherUser != null) {
                 try {
                     radius = Long.parseLong(args[1]);
-                }
-                catch (NumberFormatException numberFormatException) {
+                } catch (NumberFormatException numberFormatException) {
                     // empty catch block
                 }
             }
         }
         if ((radius = Math.abs(radius)) > maxRadius && !user.isAuthorized("essentials.near.maxexempt")) {
             NearLegacy.ess3.getI18n();
-            user.sendMessage(I18n.tl((String)"radiusTooBig", (Object[])new Object[]{maxRadius}));
+            user.sendMessage(I18n.tl("radiusTooBig", new Object[]{maxRadius}));
             radius = maxRadius;
         }
         if (otherUser == null || !user.isAuthorized("essentials.near.others")) {
             otherUser = user;
         }
         NearLegacy.ess3.getI18n();
-        user.sendMessage(I18n.tl((String)"nearbyPlayers", (Object[])new Object[]{this.getLocal(server, otherUser, radius)}));
+        user.sendMessage(I18n.tl("nearbyPlayers", new Object[]{this.getLocal(server, otherUser, radius)}));
         return true;
     }
 
@@ -127,13 +128,12 @@ extends AbstractCommand {
         if (args.length > 1) {
             try {
                 radius = Long.parseLong(args[1]);
-            }
-            catch (NumberFormatException numberFormatException) {
+            } catch (NumberFormatException numberFormatException) {
                 // empty catch block
             }
         }
         NearLegacy.ess3.getI18n();
-        sender.sendMessage(I18n.tl((String)"nearbyPlayers", (Object[])new Object[]{this.getLocal(server, otherUser, radius)}));
+        sender.sendMessage(I18n.tl("nearbyPlayers", new Object[]{this.getLocal(server, otherUser, radius)}));
     }
 
     private String getLocal(Server server, User user, long radius) {
@@ -143,30 +143,32 @@ extends AbstractCommand {
         StringBuilder output = new StringBuilder();
         long radiusSquared = radius * radius;
         boolean showHidden = user.canInteractVanished();
-        FPlayer fuser = (FPlayer)FPlayers.i.get((OfflinePlayer)user.getBase().getPlayer());
+        FPlayer fuser = FPlayers.i.get(user.getBase().getPlayer());
         for (Player p : Bukkit.getOnlinePlayers()) {
             long delta;
             Location playerLoc;
             User player = NearLegacy.ess3.getUser(p);
-            if (player.equals((Object)user) || player.isHidden(user.getBase()) && !showHidden && !user.getBase().canSee(player.getBase()) || (playerLoc = player.getLocation()).getWorld() != world || (delta = (long)playerLoc.distanceSquared(loc)) >= radiusSquared) continue;
+            if (player.equals(user) || player.isHidden(user.getBase()) && !showHidden && !user.getBase().canSee(player.getBase()) || (playerLoc = player.getLocation()).getWorld() != world || (delta = (long) playerLoc.distanceSquared(loc)) >= radiusSquared)
+                continue;
             if (p.hasMetadata("ghostEnchantment")) {
-                int ghostLevel = ((MetadataValue)p.getMetadata("ghostEnchantment").get(0)).asInt();
-                FPlayer fp = (FPlayer)FPlayers.i.get((OfflinePlayer)p);
-                if (fp.getRelationTo((RelationParticipator)fuser).isAtMost(Relation.NEUTRAL)) {
+                int ghostLevel = p.getMetadata("ghostEnchantment").get(0).asInt();
+                FPlayer fp = FPlayers.i.get(p);
+                if (fp.getRelationTo(fuser).isAtMost(Relation.NEUTRAL)) {
                     Relation r = fp.getRelationToLocation();
-                    if (ghostLevel >= 1 && r.isMember() || ghostLevel >= 2 && r.isAlly() || ghostLevel >= 3 && r.isTruce()) continue;
+                    if (ghostLevel >= 1 && r.isMember() || ghostLevel >= 2 && r.isAlly() || ghostLevel >= 3 && r.isTruce())
+                        continue;
                 }
             }
             if (output.length() > 0) {
                 output.append(", ");
             }
-            output.append(player.getDisplayName()).append("\u00a7f(\u00a74").append((long)Math.sqrt(delta)).append("m\u00a7f)");
+            output.append(player.getDisplayName()).append("\u00a7f(\u00a74").append((long) Math.sqrt(delta)).append("m\u00a7f)");
         }
         if (output.length() > 1) {
             string = output.toString();
         } else {
             NearLegacy.ess3.getI18n();
-            string = I18n.tl((String)"none", (Object[])new Object[0]);
+            string = I18n.tl("none", new Object[0]);
         }
         return string;
     }
@@ -213,8 +215,7 @@ extends AbstractCommand {
         Player exPlayer;
         try {
             exPlayer = server.getPlayer(UUID.fromString(searchTerm));
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             exPlayer = server.getPlayer(searchTerm);
         }
         User user = exPlayer != null ? NearLegacy.ess3.getUser(exPlayer) : NearLegacy.ess3.getUser(searchTerm);
@@ -233,16 +234,18 @@ extends AbstractCommand {
             for (Player p : Bukkit.getOnlinePlayers()) {
                 String displayName;
                 User userMatch = NearLegacy.ess3.getUser(p);
-                if (!getHidden && !CommandNear.canInteractWith(sourceUser, userMatch) || !(displayName = FormatUtil.stripFormat((String)userMatch.getDisplayName()).toLowerCase(Locale.ENGLISH)).contains(matchText)) continue;
+                if (!getHidden && !CommandNear.canInteractWith(sourceUser, userMatch) || !(displayName = FormatUtil.stripFormat(userMatch.getDisplayName()).toLowerCase(Locale.ENGLISH)).contains(matchText))
+                    continue;
                 return userMatch;
             }
         } else {
             for (Player player : matches) {
                 User userMatch = NearLegacy.ess3.getUser(player);
-                if (!userMatch.getDisplayName().startsWith(searchTerm) || !getHidden && !CommandNear.canInteractWith(sourceUser, userMatch)) continue;
+                if (!userMatch.getDisplayName().startsWith(searchTerm) || !getHidden && !CommandNear.canInteractWith(sourceUser, userMatch))
+                    continue;
                 return userMatch;
             }
-            User userMatch = NearLegacy.ess3.getUser((Player)matches.get(0));
+            User userMatch = NearLegacy.ess3.getUser(matches.get(0));
             if (getHidden || CommandNear.canInteractWith(sourceUser, userMatch)) {
                 return userMatch;
             }
@@ -258,16 +261,6 @@ extends AbstractCommand {
             return CommandNear.canInteractWith(NearLegacy.ess3.getUser(interactor.getPlayer()), interactee);
         }
         return true;
-    }
-
-    private static boolean canInteractWith(User interactor, User interactee) {
-        if (interactor == null) {
-            return !interactee.isHidden();
-        }
-        if (interactor.equals((Object)interactee)) {
-            return true;
-        }
-        return interactor.getBase().canSee(interactee.getBase());
     }
 }
 

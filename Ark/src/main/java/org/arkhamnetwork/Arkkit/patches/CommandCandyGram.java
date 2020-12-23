@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.CC
  *  org.bukkit.command.Command
@@ -10,19 +10,17 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import java.util.List;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
-import org.arkhamnetwork.Arkkit.patches.CandyGram;
-import org.arkhamnetwork.Arkkit.patches.CandyGramClaimGUI;
-import org.arkhamnetwork.Arkkit.patches.ValentinesDay;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+
 class CommandCandyGram
-extends AbstractCommand {
-    private ValentinesDay patch;
+        extends AbstractCommand {
+    private final ValentinesDay patch;
 
     public CommandCandyGram(ValentinesDay patch) {
         super("candygram", "/<command>");
@@ -34,7 +32,7 @@ extends AbstractCommand {
         if (!(sender instanceof Player)) {
             return true;
         }
-        Player player = (Player)sender;
+        Player player = (Player) sender;
         List<CandyGram> grams = this.patch.pendingGrams.get(player.getUniqueId());
         if (grams == null || grams.isEmpty()) {
             player.sendMessage(CC.RedB + "</3 " + CC.Red + "You do not have any pending Candy Grams!");

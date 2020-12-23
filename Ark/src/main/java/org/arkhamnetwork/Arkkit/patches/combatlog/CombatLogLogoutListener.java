@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.FactionUtils
  *  com.massivecraft.factions.Faction
@@ -50,42 +50,20 @@ import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.Relation;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.libs.MinecraftThreadMonitor;
 import org.arkhamnetwork.Arkkit.patches.AntiCrash;
-import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
-import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLoggerDeathEvent;
-import org.arkhamnetwork.Arkkit.patches.combatlog.PlayerLogoutMonitorTask;
 import org.arkhamnetwork.Arkkit.utils.FactionUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.EntityEffect;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Zombie;
+import org.bukkit.*;
+import org.bukkit.entity.*;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityCombustEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.EntityRegainHealthEvent;
-import org.bukkit.event.entity.PotionSplashEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -98,24 +76,35 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+
 public class CombatLogLogoutListener
-implements Listener {
-    private PlayerLogoutMonitorTask logoutMonitor = new PlayerLogoutMonitorTask();
-    private CombatLog cl = null;
+        implements Listener {
     public static boolean spawnNPC = false;
     public static ConcurrentHashMap<String, NPC> combatNPCs;
     public static HashMap<String, ItemStack[]> combatNPCs_loot;
     protected static HashSet<String> playersToKill;
 
+    static {
+        playersToKill = new HashSet();
+    }
+
+    private final PlayerLogoutMonitorTask logoutMonitor = new PlayerLogoutMonitorTask();
+    private CombatLog cl = null;
+
     CombatLogLogoutListener(CombatLog cl) {
         combatNPCs = new ConcurrentHashMap();
         combatNPCs_loot = new HashMap();
         this.cl = cl;
-        this.cl.registerTask(this.logoutMonitor.runTaskTimer((Plugin)Arkkit.get(), 5L, 5L), CombatLogLogoutListener.class);
+        this.cl.registerTask(this.logoutMonitor.runTaskTimer(Arkkit.get(), 5L, 5L), CombatLogLogoutListener.class);
         spawnNPC = cl.getBukkitPlugin().getConfig().getBoolean("settings.combat_log.spawnNPC");
     }
 
-    @EventHandler(priority=EventPriority.LOW)
+    @EventHandler(priority = EventPriority.LOW)
     public void onPlayerQuit(PlayerQuitEvent e) {
         if (this.logoutMonitor.logouts++ > 2) {
             Bukkit.getLogger().info("Skipping combatLog check for " + e.getPlayer().getName() + " due to >2 logouts in 5 ticks.");
@@ -125,7 +114,7 @@ implements Listener {
             Bukkit.getLogger().info("Skipping combatLog check for " + e.getPlayer().getName() + " because their entity is dead.");
             return;
         }
-        if (e.getPlayer().hasMetadata("lastDeathEvent") && (long) MinecraftServer.currentTick - ((MetadataValue)e.getPlayer().getMetadata("lastDeathEvent").get(0)).asLong() < 20L) {
+        if (e.getPlayer().hasMetadata("lastDeathEvent") && (long) MinecraftServer.currentTick - e.getPlayer().getMetadata("lastDeathEvent").get(0).asLong() < 20L) {
             Bukkit.getLogger().info("Skipping combatLog check for " + e.getPlayer().getName() + " because they had a death event in last 20 ticks.");
             return;
         }
@@ -135,7 +124,7 @@ implements Listener {
         }
         if (!(Arkkit.get().shutting_down || AntiCrash.crash || MinecraftThreadMonitor.non_response > 0 || !CombatLog.inCombat(e.getPlayer()) || Bukkit.getPluginManager().getPlugin("NetworkManager") != null && CombatLog.isPvPDisabled(e.getPlayer().getLocation()))) {
             if (e.getPlayer().hasMetadata("noCombatLog")) {
-                e.getPlayer().removeMetadata("noCombatLog", (Plugin)Arkkit.get());
+                e.getPlayer().removeMetadata("noCombatLog", Arkkit.get());
                 return;
             }
             if (spawnNPC && e.getPlayer().getHealth() >= 2.0) {
@@ -144,20 +133,20 @@ implements Listener {
                     return;
                 }
                 if (combatNPCs.containsKey(e.getPlayer().getUniqueId().toString())) {
-                    Bukkit.getLogger().info("[Arkkit (CombatLog)] Skipping Combat NPC spawn for " + (Object)e.getPlayer() + " due to existing NPC: " + (Object)combatNPCs.get(e.getPlayer().getUniqueId().toString()));
+                    Bukkit.getLogger().info("[Arkkit (CombatLog)] Skipping Combat NPC spawn for " + e.getPlayer() + " due to existing NPC: " + combatNPCs.get(e.getPlayer().getUniqueId().toString()));
                     return;
                 }
                 String playerName = e.getPlayer().getName();
                 String playerUUID = e.getPlayer().getUniqueId().toString();
-                NPC n = CitizensAPI.getNPCRegistry().createNPC(EntityType.ZOMBIE, ChatColor.RED.toString() + (Object)ChatColor.BOLD + "*OFFLINE* " + (Object)ChatColor.RESET + playerName);
+                NPC n = CitizensAPI.getNPCRegistry().createNPC(EntityType.ZOMBIE, ChatColor.RED.toString() + ChatColor.BOLD + "*OFFLINE* " + ChatColor.RESET + playerName);
                 Player p = e.getPlayer();
                 Bukkit.getLogger().info("[Arkkit (CombatLog)] Attempting to spawn combatNPC for player " + p.getName() + " at " + p.getLocation().getBlockX() + "," + p.getLocation().getBlockY() + "," + p.getLocation().getBlockZ() + " with HP: " + p.getHealth());
                 Location npcLocation = p.getLocation();
-                if (e.getPlayer().getWorld().getEnvironment() == World.Environment.THE_END && e.getPlayer().getLocation().getY() < 35.0 && p.hasMetadata("lastPlayerDamagerUUID") && (pKiller = Bukkit.getPlayer((UUID)((UUID)((MetadataValue)p.getMetadata("lastPlayerDamagerUUID").get(0)).value()))) != null && pKiller.isOnline()) {
+                if (e.getPlayer().getWorld().getEnvironment() == World.Environment.THE_END && e.getPlayer().getLocation().getY() < 35.0 && p.hasMetadata("lastPlayerDamagerUUID") && (pKiller = Bukkit.getPlayer(p.getMetadata("lastPlayerDamagerUUID").get(0).value())) != null && pKiller.isOnline()) {
                     npcLocation = pKiller.getLocation().add(0.0, 1.0, 0.0);
                 }
                 n.spawn(npcLocation);
-                Zombie z = (Zombie)n.getEntity();
+                Zombie z = (Zombie) n.getEntity();
                 z.setMaxHealth(p.getMaxHealth());
                 z.setHealth(p.getHealth());
                 z.setCustomNameVisible(true);
@@ -168,29 +157,29 @@ implements Listener {
                 z.setNoDamageTicks(0);
                 z.setFireTicks(0);
                 if (e.getPlayer().hasMetadata("resilienceEnchant")) {
-                    z.setMetadata("resilienceEnchant", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)((MetadataValue)e.getPlayer().getMetadata("resilienceEnchant").get(0)).asInt()));
+                    z.setMetadata("resilienceEnchant", new FixedMetadataValue(Arkkit.get(), e.getPlayer().getMetadata("resilienceEnchant").get(0).asInt()));
                 }
                 ArrayList<ItemStack> loot = new ArrayList<ItemStack>();
-                for (ItemStack i : (ItemStack[])p.getInventory().getContents().clone()) {
+                for (ItemStack i : p.getInventory().getContents().clone()) {
                     if (i == null || i.getTypeId() == 0) continue;
                     loot.add(i);
                 }
-                for (ItemStack i : (ItemStack[])p.getEquipment().getArmorContents().clone()) {
+                for (ItemStack i : p.getEquipment().getArmorContents().clone()) {
                     if (i == null || i.getTypeId() == 0) continue;
                     loot.add(i);
                 }
-                n.getEntity().setMetadata("combatNPC_PlayerName", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)playerName));
-                n.getEntity().setMetadata("combatNPC_PlayerUUID", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)e.getPlayer().getUniqueId().toString()));
-                n.getEntity().setMetadata("combatNPC_ID", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)n.getId()));
-                n.getEntity().setMetadata("combatNPC_TimeoutTime", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)(System.currentTimeMillis() + CombatLog.getTimeLeftInCombat(p))));
-                n.getEntity().setMetadata("combatNPC_Faction", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)FactionUtils.getFaction((Player)p, (boolean)true)));
+                n.getEntity().setMetadata("combatNPC_PlayerName", new FixedMetadataValue(Arkkit.get(), playerName));
+                n.getEntity().setMetadata("combatNPC_PlayerUUID", new FixedMetadataValue(Arkkit.get(), e.getPlayer().getUniqueId().toString()));
+                n.getEntity().setMetadata("combatNPC_ID", new FixedMetadataValue(Arkkit.get(), n.getId()));
+                n.getEntity().setMetadata("combatNPC_TimeoutTime", new FixedMetadataValue(Arkkit.get(), System.currentTimeMillis() + CombatLog.getTimeLeftInCombat(p)));
+                n.getEntity().setMetadata("combatNPC_Faction", new FixedMetadataValue(Arkkit.get(), FactionUtils.getFaction(p, true)));
                 n.setFlyable(false);
                 n.setProtected(false);
                 combatNPCs.put(playerUUID, n);
                 combatNPCs_loot.put(playerUUID, loot.toArray(new ItemStack[loot.size()]));
                 for (Entity ent : e.getPlayer().getNearbyEntities(48.0, 48.0, 48.0)) {
                     if (!(ent instanceof Player)) continue;
-                    ((Player)ent).sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + e.getPlayer().getName() + " has logged out while in combat, kill their NPC before they reconnect!");
+                    ent.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + e.getPlayer().getName() + " has logged out while in combat, kill their NPC before they reconnect!");
                 }
                 Bukkit.getLogger().info("[Arkkit (CombatLog)] Spawned combatNPC for player " + p.getName() + " at " + p.getLocation().getBlockX() + "," + p.getLocation().getBlockY() + "," + p.getLocation().getBlockZ() + " with HP: " + p.getHealth() + " / Inventory: " + combatNPCs_loot.get(playerUUID));
             } else {
@@ -198,26 +187,26 @@ implements Listener {
                 e.getPlayer().setHealth(0.0);
                 for (Entity ent : e.getPlayer().getNearbyEntities(64.0, 64.0, 64.0)) {
                     if (!(ent instanceof Player)) continue;
-                    ((Player)ent).sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + e.getPlayer().getName() + " was killed due to logging out in combat.");
+                    ent.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + e.getPlayer().getName() + " was killed due to logging out in combat.");
                 }
             }
         }
     }
 
-    @EventHandler(priority=EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onEntityDeath(EntityDeathEvent e) {
         if (e.getEntity() instanceof Player) {
             Player p;
-            ((Player)e.getEntity()).setMetadata("lastDeathEvent", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)MinecraftServer.currentTick));
-            if (!e.getEntity().hasMetadata("NPC") && combatNPCs.containsKey((p = (Player)e.getEntity()).getUniqueId().toString())) {
+            e.getEntity().setMetadata("lastDeathEvent", new FixedMetadataValue(Arkkit.get(), MinecraftServer.currentTick));
+            if (!e.getEntity().hasMetadata("NPC") && combatNPCs.containsKey((p = (Player) e.getEntity()).getUniqueId().toString())) {
                 NPC n;
                 String pName = p.getName();
                 Bukkit.getLogger().info("[Arkkit (CombatLog)] Adding Player:" + p.getName() + ", UUID:" + p.getUniqueId().toString() + " to playersToKill due to NPC EntityDeathEvent.");
                 playersToKill.add(p.getUniqueId().toString());
                 combatNPCs.remove(p.getUniqueId().toString());
                 combatNPCs_loot.remove(p.getUniqueId().toString());
-                int id = e.getEntity().hasMetadata("combatNPC_ID") ? ((MetadataValue)e.getEntity().getMetadata("combatNPC_ID").get(0)).asInt() : -1;
-                NPC nPC = n = id != -1 ? CitizensAPI.getNPCRegistry().getById(id) : CitizensAPI.getNPCRegistry().getNPC((Entity)e.getEntity());
+                int id = e.getEntity().hasMetadata("combatNPC_ID") ? e.getEntity().getMetadata("combatNPC_ID").get(0).asInt() : -1;
+                NPC nPC = n = id != -1 ? CitizensAPI.getNPCRegistry().getById(id) : CitizensAPI.getNPCRegistry().getNPC(e.getEntity());
                 if (n != null) {
                     n.despawn();
                     n.destroy();
@@ -229,12 +218,12 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.HIGH)
     public void onEntityCombust(final EntityCombustEvent e) {
         if (e.getEntity().hasMetadata("combatNPC_PlayerName")) {
             e.setCancelled(true);
             e.setDuration(0);
-            Bukkit.getScheduler().runTaskLater((Plugin)Arkkit.get(), new Runnable(){
+            Bukkit.getScheduler().runTaskLater(Arkkit.get(), new Runnable() {
 
                 @Override
                 public void run() {
@@ -247,12 +236,12 @@ implements Listener {
     @EventHandler
     public void onEntityRegainHealth(EntityRegainHealthEvent e) {
         if (e.getEntity().hasMetadata("combatNPC_PlayerName") && e.getAmount() > 0.0) {
-            LivingEntity le = (LivingEntity)e.getEntity();
+            LivingEntity le = (LivingEntity) e.getEntity();
             e.setAmount(le.getMaxHealth() * 0.1);
         }
     }
 
-    @EventHandler(priority=EventPriority.LOW)
+    @EventHandler(priority = EventPriority.LOW)
     public void onPotionSplashEvent(PotionSplashEvent e) {
         for (LivingEntity le : e.getAffectedEntities()) {
             if (!le.hasMetadata("combatNPC_PlayerName")) continue;
@@ -264,10 +253,10 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onNPCDamage(EntityDamageEvent e) {
         Player p;
-        if (e.getEntity() instanceof Player && !e.getEntity().hasMetadata("NPC") && combatNPCs.containsKey((p = (Player)e.getEntity()).getUniqueId().toString())) {
+        if (e.getEntity() instanceof Player && !e.getEntity().hasMetadata("NPC") && combatNPCs.containsKey((p = (Player) e.getEntity()).getUniqueId().toString())) {
             e.setCancelled(true);
             e.setDamage(0.0);
             return;
@@ -276,11 +265,11 @@ implements Listener {
             Player p2;
             Faction faction;
             EntityDamageByEntityEvent edbee;
-            LivingEntity le = (LivingEntity)e.getEntity();
+            LivingEntity le = (LivingEntity) e.getEntity();
             double dmgMod = 0.1;
             if (le.hasMetadata("resilienceEnchant")) {
-                int resilienceLevel = ((MetadataValue)le.getMetadata("resilienceEnchant").get(0)).asInt();
-                dmgMod -= (double)resilienceLevel * 0.015;
+                int resilienceLevel = le.getMetadata("resilienceEnchant").get(0).asInt();
+                dmgMod -= (double) resilienceLevel * 0.015;
             }
             double dmg = le.getMaxHealth() * dmgMod;
             e.setCancelled(true);
@@ -288,22 +277,22 @@ implements Listener {
             if (e.getCause() == EntityDamageEvent.DamageCause.MAGIC) {
                 return;
             }
-            Faction f = (Faction)((MetadataValue)e.getEntity().getMetadata("combatNPC_Faction").get(0)).value();
-            String pName = ((MetadataValue)e.getEntity().getMetadata("combatNPC_PlayerName").get(0)).asString();
-            if ((e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK || e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE) && (edbee = (EntityDamageByEntityEvent)e).getDamager() instanceof Player && FactionUtil.getRelation((RelationParticipator)(faction = FactionUtils.getFaction((Player)(p2 = (Player)edbee.getDamager()))), (RelationParticipator)f).isAtLeast(Relation.TRUCE)) {
-                p2.sendMessage((Object)ChatColor.RED + "** " + (Object)ChatColor.GRAY + "You cannot hurt " + (Object)ChatColor.RED + pName + "'s NPC" + (Object)ChatColor.GRAY + " due to your faction relationship.");
+            Faction f = (Faction) e.getEntity().getMetadata("combatNPC_Faction").get(0).value();
+            String pName = e.getEntity().getMetadata("combatNPC_PlayerName").get(0).asString();
+            if ((e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK || e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE) && (edbee = (EntityDamageByEntityEvent) e).getDamager() instanceof Player && FactionUtil.getRelation(faction = FactionUtils.getFaction(p2 = (Player) edbee.getDamager()), f).isAtLeast(Relation.TRUCE)) {
+                p2.sendMessage(ChatColor.RED + "** " + ChatColor.GRAY + "You cannot hurt " + ChatColor.RED + pName + "'s NPC" + ChatColor.GRAY + " due to your faction relationship.");
                 return;
             }
             if (le.getHealth() > 0.0) {
                 double newHealth = Math.max(0.0, le.getHealth() - dmg);
                 le.setHealth(newHealth);
                 le.playEffect(EntityEffect.HURT);
-                le.setMetadata("combatNPC_TimeoutTime", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)(System.currentTimeMillis() + 10000L)));
+                le.setMetadata("combatNPC_TimeoutTime", new FixedMetadataValue(Arkkit.get(), System.currentTimeMillis() + 10000L));
                 if (newHealth <= 0.0 && le.hasMetadata("combatNPC_PlayerName")) {
-                    String playerUUID = ((MetadataValue)le.getMetadata("combatNPC_PlayerUUID").get(0)).asString();
+                    String playerUUID = le.getMetadata("combatNPC_PlayerUUID").get(0).asString();
                     ItemStack[] storedItems = combatNPCs_loot.get(playerUUID);
                     CombatLoggerDeathEvent combatLoggerDeathEvent = new CombatLoggerDeathEvent(le, playerUUID, pName, e, storedItems);
-                    Bukkit.getPluginManager().callEvent((Event)combatLoggerDeathEvent);
+                    Bukkit.getPluginManager().callEvent(combatLoggerDeathEvent);
                     if (combatLoggerDeathEvent.getInventoryItems() != null) {
                         for (ItemStack i : combatLoggerDeathEvent.getInventoryItems()) {
                             if (i == null || i.getType() == Material.AIR) continue;
@@ -317,7 +306,7 @@ implements Listener {
                     }
                     combatNPCs.remove(playerUUID);
                     combatNPCs_loot.remove(playerUUID);
-                    int id = ((MetadataValue)e.getEntity().getMetadata("combatNPC_ID").get(0)).asInt();
+                    int id = e.getEntity().getMetadata("combatNPC_ID").get(0).asInt();
                     NPC n = CitizensAPI.getNPCRegistry().getById(id);
                     if (n != null) {
                         n.despawn();
@@ -329,7 +318,7 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerVelocity(PlayerVelocityEvent e) {
         if (e.getPlayer().hasMetadata("combatNPC_PlayerName")) {
             e.setCancelled(true);
@@ -337,7 +326,7 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerJoin(PlayerJoinEvent e) {
         String uuid;
         if (!e.getPlayer().isOnline()) {
@@ -347,7 +336,7 @@ implements Listener {
             Bukkit.getLogger().info("[Arkkit (CombatLog)] Removing " + e.getPlayer().getName() + "'s NPC due to relog.");
             NPC n = combatNPCs.get(e.getPlayer().getUniqueId().toString());
             if (n.getEntity() instanceof LivingEntity) {
-                LivingEntity le = (LivingEntity)n.getEntity();
+                LivingEntity le = (LivingEntity) n.getEntity();
                 e.getPlayer().setHealth(Math.max(0.0, Math.min(20.0, le.getHealth())));
                 if (!n.getEntity().getWorld().getName().startsWith("dungeon_")) {
                     e.getPlayer().teleport(n.getEntity().getLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
@@ -376,26 +365,23 @@ implements Listener {
             }
             final Player p = e.getPlayer();
             CombatLog.unflagCombat(p);
-            Bukkit.getScheduler().runTaskLater((Plugin)Arkkit.get(), new Runnable(){
+            Bukkit.getScheduler().runTaskLater(Arkkit.get(), new Runnable() {
 
                 @Override
                 public void run() {
                     if (p.isOnline()) {
-                        p.sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "You logged out in combat and your NPC was killed while you were away.");
+                        p.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "You logged out in combat and your NPC was killed while you were away.");
                     }
                 }
             }, 60L);
             for (NPC n : CitizensAPI.getNPCRegistry()) {
-                if (!n.isSpawned() || n.getEntity() == null || !n.getEntity().hasMetadata("combatNPC_PlayerUUID") || !((MetadataValue)n.getEntity().getMetadata("combatNPC_PlayerUUID").get(0)).asString().equals(e.getPlayer().getUniqueId().toString())) continue;
-                Bukkit.getLogger().info("[Arkkit (CombatLog)] Invalid NPC found for UUID (" + e.getPlayer().getUniqueId() + "): " + n.getFullName() + "(" + n.getId() + ") / " + (Object)n.getEntity());
+                if (!n.isSpawned() || n.getEntity() == null || !n.getEntity().hasMetadata("combatNPC_PlayerUUID") || !n.getEntity().getMetadata("combatNPC_PlayerUUID").get(0).asString().equals(e.getPlayer().getUniqueId().toString()))
+                    continue;
+                Bukkit.getLogger().info("[Arkkit (CombatLog)] Invalid NPC found for UUID (" + e.getPlayer().getUniqueId() + "): " + n.getFullName() + "(" + n.getId() + ") / " + n.getEntity());
                 n.despawn();
                 n.destroy();
             }
         }
-    }
-
-    static {
-        playersToKill = new HashSet();
     }
 }
 

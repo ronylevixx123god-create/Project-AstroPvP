@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.itembuilder.MaskBuilder
  *  org.bukkit.ChatColor
@@ -39,7 +39,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 final class ThanksgivingListener
-implements Listener {
+        implements Listener {
     ThanksgivingListener() {
     }
 
@@ -52,7 +52,7 @@ implements Listener {
 
     @EventHandler
     public void onEntityDeath(EntityDeathEvent e) {
-        if (this.isTurkey((Entity)e.getEntity())) {
+        if (this.isTurkey(e.getEntity())) {
             ItemStack mask;
             e.getDrops().add(this.getThanksgivingTurkey());
             if (Math.random() <= 0.001 && (mask = new MaskBuilder(Math.random() <= 0.5 ? "THANKSGIVING" : "PILGRIM").build()) != null) {
@@ -67,7 +67,7 @@ implements Listener {
             e.setCancelled(true);
             e.setUseItemInHand(Event.Result.DENY);
             if (e.getPlayer().getWorld().getName().startsWith("cosmic-station")) {
-                e.getPlayer().sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "You cannot eat Thanksgiving Turkey at Outposts.");
+                e.getPlayer().sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "You cannot eat Thanksgiving Turkey at Outposts.");
                 return;
             }
             ItemStack i = e.getItem();
@@ -85,18 +85,18 @@ implements Listener {
     }
 
     private ItemStack getThanksgivingTurkey() {
-        return ItemUtils.buildItem(Material.COOKED_CHICKEN, (short)0, ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "Thanksgiving Turkey", (Object)ChatColor.RED + "+16 HP", (Object)ChatColor.RED + "+20 Food", (Object)ChatColor.GRAY + "A deliciously home-roasted turkey!");
+        return ItemUtils.buildItem(Material.COOKED_CHICKEN, (short) 0, ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "Thanksgiving Turkey", ChatColor.RED + "+16 HP", ChatColor.RED + "+20 Food", ChatColor.GRAY + "A deliciously home-roasted turkey!");
     }
 
     private boolean isTurkey(Entity ent) {
-        return ent instanceof Chicken && ((Chicken)ent).getCustomName().contains("Thanksgiving Turkey");
+        return ent instanceof Chicken && ent.getCustomName().contains("Thanksgiving Turkey");
     }
 
     private void healHP(Player p, int amount) {
-        if (p.getHealth() + (double)amount > p.getMaxHealth()) {
+        if (p.getHealth() + (double) amount > p.getMaxHealth()) {
             p.setHealth(p.getMaxHealth());
         } else {
-            p.setHealth(p.getHealth() + (double)amount);
+            p.setHealth(p.getHealth() + (double) amount);
         }
     }
 

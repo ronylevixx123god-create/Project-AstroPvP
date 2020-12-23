@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.compilex.CompilexPermissions.CompilexPermissions
  *  com.google.common.collect.Lists
@@ -72,8 +72,8 @@ import java.util.logging.Level;
 import java.util.regex.Pattern;
 
 final class ItemLinkingChatListener
-implements Listener {
-    private ItemLinking itemLinking;
+        implements Listener {
+    private final ItemLinking itemLinking;
 
     public ItemLinkingChatListener(ItemLinking linking) {
         this.itemLinking = linking;
@@ -86,7 +86,7 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerCommandPreProcess(PlayerCommandPreprocessEvent event) {
         if (event.getMessage() == null) {
             return;
@@ -96,11 +96,11 @@ implements Listener {
             String id = msg.split("/brag ")[1].trim();
             event.setCancelled(true);
             event.setMessage("/null");
-            this.itemLinking.viewBrag.onCommand((CommandSender)event.getPlayer(), null, "/brag", Lists.newArrayList((Object[])new String[]{id}).toArray(new String[1]));
+            this.itemLinking.viewBrag.onCommand(event.getPlayer(), null, "/brag", Lists.newArrayList((Object[]) new String[]{id}).toArray(new String[1]));
         }
     }
 
-    @EventHandler(priority=EventPriority.HIGH, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onAsyncChatEvent(AsyncPlayerChatEvent e) {
         boolean bragShow;
         boolean itemShow = e.getMessage().toUpperCase().contains(ItemLinking.split);
@@ -110,74 +110,76 @@ implements Listener {
             Object title = null;
             Player pl = e.getPlayer();
             if (!(pl.hasPermission("itemlinking.senditem") || pl.hasPermission("arkhamjsonitem.senditem") || pl.hasPermission("cosmicpvp.senditem"))) {
-                pl.sendMessage((Object)ChatColor.RED + "You do not have permission to link items in chat with " + (bragShow ? "[BRAG]" : "[ITEM]") + "!");
-                pl.sendMessage((Object)ChatColor.GRAY + "Purchase a rank at " + (Object)ChatColor.UNDERLINE + "buy.cosmicpvp.com" + (Object)ChatColor.GRAY + " and try again!");
+                pl.sendMessage(ChatColor.RED + "You do not have permission to link items in chat with " + (bragShow ? "[BRAG]" : "[ITEM]") + "!");
+                pl.sendMessage(ChatColor.GRAY + "Purchase a rank at " + ChatColor.UNDERLINE + "buy.cosmicpvp.com" + ChatColor.GRAY + " and try again!");
                 return;
             }
-            if (pl.hasMetadata("last_senditem") && System.currentTimeMillis() - ((MetadataValue)pl.getMetadata("last_senditem").get(0)).asLong() <= 5000L) {
-                pl.sendMessage((Object)ChatColor.RED + "You cannot send another " + (bragShow ? "[BRAG]" : "[ITEM]") + " link for " + (5000L - (System.currentTimeMillis() - ((MetadataValue)pl.getMetadata("last_senditem").get(0)).asLong())) + "ms!");
+            if (pl.hasMetadata("last_senditem") && System.currentTimeMillis() - pl.getMetadata("last_senditem").get(0).asLong() <= 5000L) {
+                pl.sendMessage(ChatColor.RED + "You cannot send another " + (bragShow ? "[BRAG]" : "[ITEM]") + " link for " + (5000L - (System.currentTimeMillis() - pl.getMetadata("last_senditem").get(0).asLong())) + "ms!");
                 return;
             }
-            pl.setMetadata("last_senditem", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)System.currentTimeMillis()));
+            pl.setMetadata("last_senditem", new FixedMetadataValue(Arkkit.get(), System.currentTimeMillis()));
             if (bragShow) {
                 UUIDStorage storage = ItemLinking.recentlyAssignedIds.asMap().computeIfAbsent(pl.getUniqueId(), sto -> new UUIDStorage());
                 UUID newID = storage.generateUUID();
                 ItemLinking.inventoryViews.put(newID, new TimedInventory(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(10L), this.createCopy(pl)));
             }
             String message = e.getMessage().replaceAll("(?i)" + Pattern.quote(ItemLinking.split.toLowerCase()), ItemLinking.split).replaceAll("(?i)" + Pattern.quote(ItemLinking.bragSplit.toLowerCase()), ItemLinking.bragSplit);
-            FPlayer fplayer = (FPlayer)FPlayers.i.get((OfflinePlayer)pl);
+            FPlayer fplayer = FPlayers.i.get(pl);
             if (fplayer != null) {
                 Faction faction = fplayer.getFaction();
                 ChatMode chatMode = fplayer.getChatMode();
                 if (chatMode == ChatMode.FACTION) {
                     if (pl.hasMetadata("silentMute")) {
-                        ItemLinking.sendItemViaJSON(String.format(Conf.factionChatFormat, fplayer.describeToAsync((RelationParticipator)faction).replace(pl.getName(), ""), pl.getName(), ChatUtils.getFilteredMessage(message, pl, true)), e.getPlayer().getItemInHand(), pl, pl);
+                        ItemLinking.sendItemViaJSON(String.format(Conf.factionChatFormat, fplayer.describeToAsync(faction).replace(pl.getName(), ""), pl.getName(), ChatUtils.getFilteredMessage(message, pl, true)), e.getPlayer().getItemInHand(), pl, pl);
                         return;
                     }
                     for (FPlayer fp : faction.getFPlayersWhereOnline(true)) {
-                        ItemLinking.sendItemViaJSON(String.format(Conf.factionChatFormat, fplayer.describeToAsync((RelationParticipator)faction).replace(pl.getName(), ""), pl.getName(), ChatUtils.getFilteredMessage(message, fp.getPlayer(), true)), e.getPlayer().getItemInHand(), fp.getPlayer(), pl);
+                        ItemLinking.sendItemViaJSON(String.format(Conf.factionChatFormat, fplayer.describeToAsync(faction).replace(pl.getName(), ""), pl.getName(), ChatUtils.getFilteredMessage(message, fp.getPlayer(), true)), e.getPlayer().getItemInHand(), fp.getPlayer(), pl);
                     }
-                    Bukkit.getLogger().log(Level.INFO, ChatColor.stripColor((String)("FactionChat: " + String.format(Conf.factionChatFormat, fplayer.describeToAsync((RelationParticipator)faction).replace(pl.getName(), ""), pl.getName(), message))), (Object)pl);
+                    Bukkit.getLogger().log(Level.INFO, ChatColor.stripColor("FactionChat: " + String.format(Conf.factionChatFormat, fplayer.describeToAsync(faction).replace(pl.getName(), ""), pl.getName(), message)), pl);
                     return;
                 }
                 if (chatMode == ChatMode.ALLIANCE) {
                     if (pl.hasMetadata("silentMute")) {
-                        ItemLinking.sendItemViaJSON(String.format(Conf.allianceChatFormat, ChatColor.stripColor((String)fplayer.getNameAndTagAsync()), ChatUtils.getFilteredMessage(message, pl, true)), e.getPlayer().getItemInHand(), pl, pl);
+                        ItemLinking.sendItemViaJSON(String.format(Conf.allianceChatFormat, ChatColor.stripColor(fplayer.getNameAndTagAsync()), ChatUtils.getFilteredMessage(message, pl, true)), e.getPlayer().getItemInHand(), pl, pl);
                         return;
                     }
                     for (FPlayer fp : FPlayers.i.getOnline()) {
-                        if (!faction.getFPlayers().contains((Object)fp) && faction.getRelationTo((RelationParticipator)fp) != Relation.ALLY) continue;
-                        ItemLinking.sendItemViaJSON(String.format(Conf.allianceChatFormat, ChatColor.stripColor((String)fplayer.getNameAndTagAsync()), ChatUtils.getFilteredMessage(message, fp.getPlayer(), true)), e.getPlayer().getItemInHand(), fp.getPlayer(), pl);
+                        if (!faction.getFPlayers().contains(fp) && faction.getRelationTo(fp) != Relation.ALLY)
+                            continue;
+                        ItemLinking.sendItemViaJSON(String.format(Conf.allianceChatFormat, ChatColor.stripColor(fplayer.getNameAndTagAsync()), ChatUtils.getFilteredMessage(message, fp.getPlayer(), true)), e.getPlayer().getItemInHand(), fp.getPlayer(), pl);
                     }
-                    Bukkit.getLogger().log(Level.INFO, ChatColor.stripColor((String)("AllianceChat: " + String.format(Conf.allianceChatFormat, ChatColor.stripColor((String)fplayer.getNameAndTagAsync()), message))));
+                    Bukkit.getLogger().log(Level.INFO, ChatColor.stripColor("AllianceChat: " + String.format(Conf.allianceChatFormat, ChatColor.stripColor(fplayer.getNameAndTagAsync()), message)));
                     return;
                 }
                 if (chatMode == ChatMode.MOD) {
                     if (!fplayer.getRole().isAtLeast(Role.MODERATOR)) {
-                        fplayer.getPlayer().sendMessage((Object)ChatColor.RED + "You must be a faction moderator to speak in /f c m");
+                        fplayer.getPlayer().sendMessage(ChatColor.RED + "You must be a faction moderator to speak in /f c m");
                         return;
                     }
                     if (pl.hasMetadata("silentMute")) {
-                        ItemLinking.sendItemViaJSON(String.format(Conf.modChatFormat, ChatColor.stripColor((String)fplayer.describeToAsync((RelationParticipator)faction).replace(pl.getName(), "")), pl.getName(), ChatUtils.getFilteredMessage(message, pl, true)), e.getPlayer().getItemInHand(), pl, pl);
+                        ItemLinking.sendItemViaJSON(String.format(Conf.modChatFormat, ChatColor.stripColor(fplayer.describeToAsync(faction).replace(pl.getName(), "")), pl.getName(), ChatUtils.getFilteredMessage(message, pl, true)), e.getPlayer().getItemInHand(), pl, pl);
                         return;
                     }
                     for (FPlayer fp : faction.getFPlayersWhereOnline(true)) {
                         if (!fp.getRole().isAtLeast(Role.MODERATOR)) continue;
-                        ItemLinking.sendItemViaJSON(String.format(Conf.modChatFormat, ChatColor.stripColor((String)fplayer.describeToAsync((RelationParticipator)faction).replace(pl.getName(), "")), pl.getName(), ChatUtils.getFilteredMessage(message, fp.getPlayer(), true)), e.getPlayer().getItemInHand(), fp.getPlayer(), pl);
+                        ItemLinking.sendItemViaJSON(String.format(Conf.modChatFormat, ChatColor.stripColor(fplayer.describeToAsync(faction).replace(pl.getName(), "")), pl.getName(), ChatUtils.getFilteredMessage(message, fp.getPlayer(), true)), e.getPlayer().getItemInHand(), fp.getPlayer(), pl);
                     }
-                    Bukkit.getLogger().log(Level.INFO, ChatColor.stripColor((String)("ModChat: " + String.format(Conf.modChatFormat, ChatColor.stripColor((String)fplayer.describeToAsync((RelationParticipator)faction).replace(pl.getName(), "")), pl.getName(), message))));
+                    Bukkit.getLogger().log(Level.INFO, ChatColor.stripColor("ModChat: " + String.format(Conf.modChatFormat, ChatColor.stripColor(fplayer.describeToAsync(faction).replace(pl.getName(), "")), pl.getName(), message)));
                     return;
                 }
                 if (chatMode == ChatMode.TRUCE) {
                     if (pl.hasMetadata("silentMute")) {
-                        ItemLinking.sendItemViaJSON(String.format(Conf.truceChatFormat, ChatColor.stripColor((String)fplayer.getNameAndTagAsync()), ChatUtils.getFilteredMessage(message, pl, true)), e.getPlayer().getItemInHand(), pl, pl);
+                        ItemLinking.sendItemViaJSON(String.format(Conf.truceChatFormat, ChatColor.stripColor(fplayer.getNameAndTagAsync()), ChatUtils.getFilteredMessage(message, pl, true)), e.getPlayer().getItemInHand(), pl, pl);
                         return;
                     }
                     for (FPlayer fp : FPlayers.i.getOnline()) {
-                        if (!faction.getFPlayers().contains((Object)fp) && faction.getRelationTo((RelationParticipator)fp) != Relation.TRUCE) continue;
-                        ItemLinking.sendItemViaJSON(String.format(Conf.truceChatFormat, ChatColor.stripColor((String)fplayer.getNameAndTagAsync()), ChatUtils.getFilteredMessage(message, fp.getPlayer(), true)), e.getPlayer().getItemInHand(), fp.getPlayer(), pl);
+                        if (!faction.getFPlayers().contains(fp) && faction.getRelationTo(fp) != Relation.TRUCE)
+                            continue;
+                        ItemLinking.sendItemViaJSON(String.format(Conf.truceChatFormat, ChatColor.stripColor(fplayer.getNameAndTagAsync()), ChatUtils.getFilteredMessage(message, fp.getPlayer(), true)), e.getPlayer().getItemInHand(), fp.getPlayer(), pl);
                     }
-                    Bukkit.getLogger().log(Level.INFO, ChatColor.stripColor((String)("TruceChat: " + String.format(Conf.truceChatFormat, ChatColor.stripColor((String)fplayer.getNameAndTagAsync()), message))));
+                    Bukkit.getLogger().log(Level.INFO, ChatColor.stripColor("TruceChat: " + String.format(Conf.truceChatFormat, ChatColor.stripColor(fplayer.getNameAndTagAsync()), message)));
                     return;
                 }
             }
@@ -188,22 +190,22 @@ implements Listener {
                 pg = ArkhamPermissions.getInstance().getPermissionManager().getUser(pl.getUniqueId()).getPrefix();
             }
             ChatColor cc = ChatColor.WHITE;
-            String msg = ChatColor.translateAlternateColorCodes((char)'&', (String)ItemLinking.FORMAT.replace("[PREFIX]", pg).replace("[TITLE]", title == null ? "" : (CharSequence) title).replace("[NAME]", pl.getName()).replace("[COLOR]", cc == null ? "" : cc.toString())).trim();
-            msg = msg.replace((Object)ChatColor.DARK_GRAY + "[" + (Object)ChatColor.DARK_GRAY + "]", "");
-            msg = msg.replace((Object)ChatColor.DARK_GRAY + "[" + (Object)ChatColor.RED + "P" + (Object)ChatColor.DARK_GRAY + "]", "");
+            String msg = ChatColor.translateAlternateColorCodes('&', ItemLinking.FORMAT.replace("[PREFIX]", pg).replace("[TITLE]", title == null ? "" : (CharSequence) title).replace("[NAME]", pl.getName()).replace("[COLOR]", cc == null ? "" : cc.toString())).trim();
+            msg = msg.replace(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_GRAY + "]", "");
+            msg = msg.replace(ChatColor.DARK_GRAY + "[" + ChatColor.RED + "P" + ChatColor.DARK_GRAY + "]", "");
             msg = msg.replaceAll("  ", " ");
             if (pl.hasPermission("arkhamnetwork.joker_perks")) {
-                Bukkit.broadcastMessage((String)"");
+                Bukkit.broadcastMessage("");
             }
             if (pl.hasMetadata("silentMute")) {
-                ItemLinking.sendItemViaJSON(msg.replace("[MESSAGE]", ChatUtils.getFilteredMessage(ChatColor.stripColor((String)message), pl, true)), e.getPlayer().getItemInHand(), pl, pl);
+                ItemLinking.sendItemViaJSON(msg.replace("[MESSAGE]", ChatUtils.getFilteredMessage(ChatColor.stripColor(message), pl, true)), e.getPlayer().getItemInHand(), pl, pl);
                 return;
             }
             for (Player p : e.getRecipients()) {
-                ItemLinking.sendItemViaJSON(msg.replace("[MESSAGE]", ChatUtils.getFilteredMessage(ChatColor.stripColor((String)message), p, true)), e.getPlayer().getItemInHand(), p, pl);
+                ItemLinking.sendItemViaJSON(msg.replace("[MESSAGE]", ChatUtils.getFilteredMessage(ChatColor.stripColor(message), p, true)), e.getPlayer().getItemInHand(), p, pl);
             }
             if (pl.hasPermission("arkhamnetwork.joker_perks")) {
-                Bukkit.broadcastMessage((String)"");
+                Bukkit.broadcastMessage("");
             }
         }
     }
@@ -216,7 +218,7 @@ implements Listener {
 
     public Inventory createCopy(Player player) {
         ItemStack item;
-        Inventory inventory = Bukkit.createInventory(null, (int)(player.getInventory().getSize() + 9), (String)(player.getName() + "'s Inventory"));
+        Inventory inventory = Bukkit.createInventory(null, player.getInventory().getSize() + 9, player.getName() + "'s Inventory");
         ItemStack[] armor = player.getEquipment().getArmorContents();
         ItemStack[] items = player.getInventory().getContents();
         for (int i = 0; i < items.length; ++i) {
@@ -241,9 +243,9 @@ implements Listener {
     private long getMoney(Player p) {
         long bal = 0L;
         if (Bukkit.getPluginManager().isPluginEnabled("ArkhamMoneyNotes")) {
-            bal += ArkhamMoneyNotesAPI.getAllMoneyNoteValues((Player)p);
+            bal += ArkhamMoneyNotesAPI.getAllMoneyNoteValues(p);
         }
-        bal = (long)((double)bal + ItemLinking.economy.getBalance((OfflinePlayer)p));
+        bal = (long) ((double) bal + ItemLinking.economy.getBalance(p));
         return bal;
     }
 

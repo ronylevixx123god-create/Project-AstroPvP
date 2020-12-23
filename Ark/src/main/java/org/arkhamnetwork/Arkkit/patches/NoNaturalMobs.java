@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.World
@@ -16,7 +16,7 @@ import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.plugin.Plugin;
 
 public class NoNaturalMobs
-extends ArkPlugin {
+        extends ArkPlugin {
     public NoNaturalMobs(Plugin p) {
         super(p);
     }
@@ -24,8 +24,8 @@ extends ArkPlugin {
     @Override
     public void enable() {
         for (World w : Bukkit.getWorlds()) {
-            ((CraftWorld)w).getHandle().ticksPerAnimalSpawns = 0L;
-            ((CraftWorld)w).getHandle().ticksPerMonsterSpawns = 0L;
+            ((CraftWorld) w).getHandle().ticksPerAnimalSpawns = 0L;
+            ((CraftWorld) w).getHandle().ticksPerMonsterSpawns = 0L;
         }
         this.registerListener(new NoNaturalMobsListener());
     }
@@ -33,8 +33,8 @@ extends ArkPlugin {
     @Override
     public void disable() {
         for (World w : Bukkit.getWorlds()) {
-            ((CraftWorld)w).getHandle().ticksPerAnimalSpawns = 200L;
-            ((CraftWorld)w).getHandle().ticksPerMonsterSpawns = 20L;
+            ((CraftWorld) w).getHandle().ticksPerAnimalSpawns = 200L;
+            ((CraftWorld) w).getHandle().ticksPerMonsterSpawns = 20L;
         }
     }
 }
