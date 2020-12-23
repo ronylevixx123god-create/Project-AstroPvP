@@ -13,6 +13,8 @@
 package me.ifamasssxd.cosmicguishop.commands;
 
 import java.util.Arrays;
+
+import lombok.SneakyThrows;
 import me.ifamasssxd.cosmicguishop.CosmicGUIShop;
 import me.ifamasssxd.cosmicguishop.struct.ItemPrice;
 import me.ifamasssxd.cosmicguishop.struct.ShopCategory;
@@ -29,6 +31,7 @@ import org.bukkit.entity.Player;
 
 public class CommandShop
 implements CommandExecutor {
+    @SneakyThrows
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if (sender.isOp()) {
             if (args.length == 1) {
