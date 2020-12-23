@@ -316,7 +316,7 @@ implements GlobalBoss {
             if (Math.random() <= 0.25 && (itemstack = new HeroicUpgradeBuilder("DRAGON_SLAYER", 50.0, 100.0).build()) != null) {
                 toGive.add(itemstack);
             }
-            ArrayList msgs = Lists.newArrayList();
+            ArrayList<JSONMessage> msgs = Lists.newArrayList();
             for (ItemStack item : toGive) {
                 JSONMessage msg2 = new JSONMessage("");
                 msg2.addItem(item, StringUtils.getCenteredMessage(CC.RedB + "* " + CC.White + ItemUtils.getDisplayName((ItemStack)item)), ChatColor.WHITE);

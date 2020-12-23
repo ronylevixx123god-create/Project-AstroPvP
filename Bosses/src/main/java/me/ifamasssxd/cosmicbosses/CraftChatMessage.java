@@ -26,7 +26,8 @@ public class CraftChatMessage {
     public static Map<Character, EnumChatFormat> setupFormat() {
         ImmutableMap.Builder<Character, EnumChatFormat> builder = ImmutableMap.builder();
         for (EnumChatFormat format : EnumChatFormat.values()) {
-            builder.put(Character.valueOf(Character.toLowerCase(format.getChar())), format);
+            // TODO: SPIGOT LOOKING FOR C WHICH IS STRING, NEEDS CHAR (couble be #z() but that is private)
+            builder.put(Character.valueOf(Character.toLowerCase(format.c())), format);
         }
         return builder.build();
     }
@@ -47,8 +48,6 @@ public class CraftChatMessage {
         while (matcher.find()) {
             int index2;
             int groupId = 0;
-            while ((match = matcher.group(++groupId)) == null) {
-            }
             if (currentIndex < message.length() && (index2 = matcher.start(groupId)) > currentIndex) {
                 IChatBaseComponent addition = new ChatComponentText(message.substring(currentIndex, index2)).setChatModifier(modifier);
                 currentIndex = index2;
@@ -58,11 +57,11 @@ public class CraftChatMessage {
                     list.add(currentChatComponent);
                 }
                 currentChatComponent.addSibling(addition);
-                output = list.toArray(new IChatBaseComponent[list.size()]);
+                output = list.toArray(new IChatBaseComponent[0]);
             }
             block0 : switch (groupId) {
                 case 1: {
-                    EnumChatFormat format = formatMap.get(Character.valueOf(match.toLowerCase().charAt(1)));
+                    EnumChatFormat format = formatMap.get(match.toLowerCase().charAt(1));
                     if (format == EnumChatFormat.RESET) {
                         modifier = new ChatModifier();
                         break;
@@ -85,7 +84,7 @@ public class CraftChatMessage {
                                 modifier.setUnderline(Boolean.TRUE);
                                 break block0;
                             }
-                            case RANDOM: {
+                            case OBFUSCATED: {
                                 modifier.setRandom(Boolean.TRUE);
                                 break block0;
                             }
@@ -114,7 +113,7 @@ public class CraftChatMessage {
                             list.add(currentChatComponent);
                         }
                         currentChatComponent.addSibling(addition);
-                        output = list.toArray((new IChatBaseComponent[list.size()]);
+                        output = list.toArray((new IChatBaseComponent[list.size()]));
                     }
                     modifier.setChatClickable((ChatClickable)null);
                 }

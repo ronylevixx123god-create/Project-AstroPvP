@@ -13,7 +13,7 @@
  */
 package me.ifamasssxd.cosmicbosses.boss.type;
 
-import me.ifamasssxd.cosmicbosses.CosmicBossEggsPlugin;
+import com.cosmicpvp.CosmicBossEggs.CosmicBossEggsPlugin;
 import me.ifamasssxd.cosmicbosses.utils.MiscUtil;
 import me.ifamasssxd.cosmicbosses.utils.ParticleEffect;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
@@ -23,6 +23,7 @@ import java.util.HashSet;
 import java.util.Random;
 
 import me.ifamasssxd.cosmicbosses.boss.rarity.BossRarity;
+import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.Packet;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
 import org.arkhamnetwork.Arkkit.Arkkit;
@@ -73,7 +74,7 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
         pz.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, Integer.MAX_VALUE, 1));
         l.getWorld().playSound(l, Sound.ZOMBIE_HURT, 2.0f, 0.5f);
         this.entity = pz;
-        pz.setMetadata("cbe_boss", new FixedMetadataValue((Plugin)CosmicBossEggsPlugin.getPlugin(), this.type.name()));
+        pz.setMetadata("cbe_boss", new FixedMetadataValue((Plugin) CosmicBossEggsPlugin.getPlugin(), this.type.name()));
         me.ifamasssxd.cosmicbosses.boss.type.Boss.boss_map.put(pz, this);
     }
 
@@ -134,7 +135,7 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
 
                 @Override
                 public void run() {
-                    PacketPlayOutWorldEvent particles = new PacketPlayOutWorldEvent(2001, Math.round(loc.getBlockX()), Math.round(loc.getBlockY()), Math.round(loc.getBlockZ()), loc.getWorld().getHighestBlockAt(loc).getTypeId(), false);
+                    PacketPlayOutWorldEvent particles = new PacketPlayOutWorldEvent(2001, new BlockPosition(Math.round(loc.getBlockX()), Math.round(loc.getBlockY()), Math.round(loc.getBlockZ())), loc.getWorld().getHighestBlockAt(loc).getTypeId(), false);
                     ((CraftServer)CosmicBossEggsPlugin.getPlugin().getServer()).getServer().getPlayerList().sendPacketNearby((double)loc.getBlockX(), (double)loc.getBlockY(), (double)loc.getBlockZ(), 16.0, ((CraftWorld)loc.getWorld()).getHandle().dimension, (Packet) particles);
                 }
             });

@@ -101,7 +101,7 @@ implements GlobalBoss {
     Cage cage;
     long lastPhaseSwitch = 0L;
     private Phase lastPhase = this.getPhase();
-    List<Phase> phases = Lists.newArrayList((Object[])new Phase[]{Phase.ONE, Phase.TWO, Phase.THREE, Phase.FOUR, Phase.FIVE, Phase.SIX});
+    List<Phase> phases = Lists.newArrayList(Phase.ONE, Phase.TWO, Phase.THREE, Phase.FOUR, Phase.FIVE, Phase.SIX);
     private List<Wither> clones = Lists.newArrayList();
 
     public Yijki(Location location, BossType bossType) {

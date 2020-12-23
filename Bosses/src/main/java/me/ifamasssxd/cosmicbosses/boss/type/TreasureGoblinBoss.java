@@ -20,6 +20,7 @@ import java.util.Random;
 
 import me.ifamasssxd.cosmicbosses.boss.rarity.BossRarity;
 import me.ifamasssxd.cosmicfactionboosters.CosmicFactionBoosters;
+import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.Packet;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
 import org.bukkit.Bukkit;
@@ -98,7 +99,7 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
 
                 @Override
                 public void run() {
-                    PacketPlayOutWorldEvent particles = new PacketPlayOutWorldEvent(2001, Math.round(loc.getBlockX()), Math.round(loc.getBlockY()), Math.round(loc.getBlockZ()), loc.getWorld().getHighestBlockAt(loc).getTypeId(), false);
+                    PacketPlayOutWorldEvent particles = new PacketPlayOutWorldEvent(2001, new BlockPosition(Math.round(loc.getBlockX()), Math.round(loc.getBlockY()), Math.round(loc.getBlockZ())), loc.getWorld().getHighestBlockAt(loc).getTypeId(), false);
                     ((CraftServer)CosmicBosses.getInstance().getServer()).getServer().getPlayerList().sendPacketNearby((double)loc.getBlockX(), (double)loc.getBlockY(), (double)loc.getBlockZ(), 16.0, ((CraftWorld)loc.getWorld()).getHandle().dimension, (Packet) particles);
                 }
             });

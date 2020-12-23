@@ -136,7 +136,7 @@ extends EntityEnderDragon {
     public Entity target;
     public int bB;
     public EntityEnderCrystal bC;
-    private Explosion explosionSource = new Explosion((World)null, (Entity)this, Double.NaN, Double.NaN, Double.NaN, Float.NaN);
+    private Explosion explosionSource = new Explosion((World)null, (Entity)this, Double.NaN, Double.NaN, Double.NaN, Float.NaN, false, false);
     public IPhase phase;
     public DragonFightManager fightManager;
     public PhaseManager phaseManager;

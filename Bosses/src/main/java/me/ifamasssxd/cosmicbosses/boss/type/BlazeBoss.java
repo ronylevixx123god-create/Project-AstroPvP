@@ -3,6 +3,7 @@
  */
 package me.ifamasssxd.cosmicbosses.boss.type;
 
+import com.cosmicpvp.CosmicBossEggs.CosmicBossEggsPlugin;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import me.ifamasssxd.cosmicbosses.utils.ParticleEffect;
 import java.util.HashSet;

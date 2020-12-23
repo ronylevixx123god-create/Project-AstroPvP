@@ -12,12 +12,14 @@
  */
 package me.ifamasssxd.cosmicbosses.boss.type;
 
+import com.cosmicpvp.CosmicBossEggs.CosmicBossEggsPlugin;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import me.ifamasssxd.cosmicbosses.utils.ParticleEffect;
 import java.util.HashSet;
 import java.util.Random;
 
 import me.ifamasssxd.cosmicbosses.boss.rarity.BossRarity;
+import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.Packet;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
 import org.arkhamnetwork.Arkkit.patches.Easter;
@@ -123,7 +125,7 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
 
                 @Override
                 public void run() {
-                    PacketPlayOutWorldEvent particles = new PacketPlayOutWorldEvent(2001, Math.round(loc.getBlockX()), Math.round(loc.getBlockY()), Math.round(loc.getBlockZ()), loc.getWorld().getHighestBlockAt(loc).getTypeId(), false);
+                    PacketPlayOutWorldEvent particles = new PacketPlayOutWorldEvent(2001, new BlockPosition(Math.round(loc.getBlockX()), Math.round(loc.getBlockY()), Math.round(loc.getBlockZ())), loc.getWorld().getHighestBlockAt(loc).getTypeId(), false);
                     ((CraftServer)CosmicBosses.getInstance().getServer()).getServer().getPlayerList().sendPacketNearby((double)loc.getBlockX(), (double)loc.getBlockY(), (double)loc.getBlockZ(), 16.0, ((CraftWorld)loc.getWorld()).getHandle().dimension, (Packet)particles);
                 }
             });
@@ -176,7 +178,7 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
 
                     @Override
                     public void run() {
-                        PacketPlayOutWorldEvent particles = new PacketPlayOutWorldEvent(2001, Math.round(loc.getBlockX()), Math.round(loc.getBlockY()), Math.round(loc.getBlockZ()), loc.getWorld().getHighestBlockAt(loc).getTypeId(), false);
+                        PacketPlayOutWorldEvent particles = new PacketPlayOutWorldEvent(2001, new BlockPosition(Math.round(loc.getBlockX()), Math.round(loc.getBlockY()), Math.round(loc.getBlockZ())), loc.getWorld().getHighestBlockAt(loc).getTypeId(), false);
                         ((CraftServer)CosmicBosses.getInstance().getServer()).getServer().getPlayerList().sendPacketNearby((double)loc.getBlockX(), (double)loc.getBlockY(), (double)loc.getBlockZ(), 16.0, ((CraftWorld)loc.getWorld()).getHandle().dimension, (Packet)particles);
                     }
                 });
@@ -189,7 +191,7 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
         e.getDrops().clear();
         e.getDrops().add(ItemUtils.buildItem((Material)Material.RAW_CHICKEN, (short)0, (String)((Object)((Object)ChatColor.WHITE) + "Evil Raw Chicken"), (String[])new String[]{(Object)((Object)ChatColor.GRAY) + "Being bad never tasted so good."}));
         final Location loc = e.getEntity().getLocation().add(0.0, 1.0, 0.0);
-        Bukkit.getScheduler().runTaskAsynchronously((Plugin)CosmicBosses.getPlugin(), new Runnable(){
+        Bukkit.getScheduler().runTaskAsynchronously((Plugin)CosmicBosses.getInstance(), new Runnable(){
 
             @Override
             public void run() {

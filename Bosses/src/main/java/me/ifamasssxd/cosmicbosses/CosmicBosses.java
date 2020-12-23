@@ -17,6 +17,7 @@ package me.ifamasssxd.cosmicbosses;
 
 import com.google.common.collect.Lists;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import me.ifamasssxd.cosmicbosses.bosses.GuardBoss;
@@ -159,7 +160,7 @@ extends JavaPlugin {
             World world = Bukkit.getWorld((String)args[1]);
             Location loc = new Location(world, (double)Integer.parseInt(args[2]), (double)Integer.parseInt(args[3]), (double)Integer.parseInt(args[4]));
             String chunkCoords = loc.getChunk().getX() + ":" + loc.getChunk().getZ();
-            List<Object> bosses = Lists.newArrayList();
+            List<String[]> bosses = Lists.newArrayList();
             if (this.pendingBosses.containsKey(chunkCoords)) {
                 bosses = this.pendingBosses.get(chunkCoords);
             }

@@ -340,7 +340,7 @@ extends Boss {
                     continue;
                 }
                 if (newPhase != Phase.ONE || !(minion instanceof MagmaCube)) continue;
-                cube = (Slime)this.spawnMinion(EntityType.SLIME, minion.getLocation());
+                cube = (MagmaCube) this.spawnMinion(EntityType.SLIME, minion.getLocation());
                 slime = (MagmaCube)minion;
                 cube.setSize(slime.getSize());
                 cube.setMaxHealth(slime.getMaxHealth());

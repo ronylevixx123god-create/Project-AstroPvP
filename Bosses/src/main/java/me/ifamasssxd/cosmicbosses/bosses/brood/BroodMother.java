@@ -358,7 +358,7 @@ extends Boss {
 
     @Override
     public List<BossMessage> getGeneralMessages() {
-        return Lists.newArrayList((Object[])new BossMessage[]{new BossMessage("Have you ever wondered why you're afraid of spiders?", false, -1), new BossMessage("One bite, and you'll be mine.", false, 0), new BossMessage("My babies.. they hunger for Cosmonauts!", true, 0)});
+        return Lists.newArrayList(new BossMessage("Have you ever wondered why you're afraid of spiders?", false, -1), new BossMessage("One bite, and you'll be mine.", false, 0), new BossMessage("My babies.. they hunger for Cosmonauts!", true, 0));
     }
 }
 
