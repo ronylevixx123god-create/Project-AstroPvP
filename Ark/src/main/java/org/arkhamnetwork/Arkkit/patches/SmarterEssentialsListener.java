@@ -281,20 +281,6 @@ implements Listener {
 
 
     private void clearTeleportRequests(Player p) {
-        if (SmarterEssentials.ess3 != null) {
-            try {
-                User u = SmarterEssentials.ess3.getUser(p);
-                if (u.getTeleportRequest() != null) {
-                    u.setTeleportRequest(null);
-                    u.setTpRequestLocation(null);
-                    p.sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "A pending /tpa request has been cleared due to you teleporting.");
-                    Bukkit.getLogger().info("[Arkkit (SmarterEssentials)] Cleared pending TeleportRequest for: " + p.getName());
-                }
-            }
-            catch (Exception err) {
-                err.printStackTrace();
-            }
-        }
     }
 
     private int getPlayersInRankTier(int rankTier) {

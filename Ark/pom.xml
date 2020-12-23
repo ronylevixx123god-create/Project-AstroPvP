@@ -118,10 +118,10 @@
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>ess</artifactId>
+            <artifactId>essentialsX</artifactId>
             <version>0.1</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/Essentials.jar</systemPath>
+            <systemPath>${project.basedir}/lib/EssentialsX-2.18.2.0.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
