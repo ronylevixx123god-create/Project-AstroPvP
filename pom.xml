@@ -7,7 +7,7 @@
     <groupId>com.conaxgames</groupId>
     <artifactId>ProjectAstro</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1</version>
 
     <modules>
         <module>Utils</module>
@@ -16,7 +16,6 @@
         <module>SpaceChests</module>
         <module>AuctionHouse</module>
         <module>GUIShop</module>
-        <module>MoneyNotes</module>
     </modules>
 
     <build>
