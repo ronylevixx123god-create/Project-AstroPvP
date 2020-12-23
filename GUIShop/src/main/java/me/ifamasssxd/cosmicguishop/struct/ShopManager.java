@@ -1,35 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
- *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
- *  com.google.common.collect.Lists
- *  de.dustplanet.silkspawners.SilkSpawners
- *  de.dustplanet.util.SilkUtil
- *  net.minecraft.server.v1_8_R3.NBTBase
- *  org.apache.commons.lang.StringUtils
- *  org.arkhamnetwork.Arkkit.patches.ItemID
- *  org.arkhamnetwork.Arkkit.patches.MysteryMobSpawners
- *  org.arkhamnetwork.Arkkit.plugins.ArkPlugins
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.Material
- *  org.bukkit.OfflinePlayer
- *  org.bukkit.Sound
- *  org.bukkit.command.CommandSender
- *  org.bukkit.configuration.ConfigurationSection
- *  org.bukkit.configuration.file.YamlConfiguration
- *  org.bukkit.entity.EntityType
- *  org.bukkit.entity.Player
- *  org.bukkit.event.Event
- *  org.bukkit.event.inventory.ClickType
- *  org.bukkit.event.inventory.InventoryClickEvent
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
- */
 package me.ifamasssxd.cosmicguishop.struct;
 
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
@@ -264,7 +232,7 @@ public class ShopManager {
                     dura = 0;
                 }
                 try {
-                    displayItem = data.getType() == Material.MOB_SPAWNER ? (data.getData() == 101 ? MysteryMobSpawners.getMysteryMobSpawner() : this.silkSpawners.newSpawnerItem(data.getData(), ChatColor.YELLOW + ChatColor.BOLD.toString() + "%creature% Spawner", 1, false)) : null;
+                    displayItem = data.getType() == Material.MOB_SPAWNER ? (data.getData() == 101 ? MysteryMobSpawners.getMysteryMobSpawner() : this.silkSpawners.newSpawnerItem(String.valueOf(data.getData()), ChatColor.YELLOW + ChatColor.BOLD.toString() + "%creature% Spawner", 1, false)) : null;
                 } catch (Exception e) {
                     Bukkit.getLogger().info("Problem loading " + data.getData() + " Spawner!");
                     e.printStackTrace();
