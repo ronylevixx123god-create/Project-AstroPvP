@@ -425,7 +425,7 @@ public class ShopManager {
                 continue;
             }
             toRemove -= item.getAmount();
-            player.getInventory().removeItem(new ItemStack[]{item});
+            player.getInventory().removeItem(item);
         }
         player.updateInventory();
     }
