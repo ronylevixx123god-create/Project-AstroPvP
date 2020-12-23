@@ -524,8 +524,8 @@ public class Arkkit
             new File("plugins/ChunkGC.jar").delete();
             new File("plugins/ChunkGCTask.jar").delete();
             new File("plugins/ExtronusChunkGC.jar").delete();
-            this.getConfig().set("patches." + ArkPlugins.CHUNK_GC.getConfigName(), true);
-            this.registerPatch(ArkPlugins.CHUNK_GC.getArkPlugin());
+            //this.getConfig().set("patches." + ArkPlugins.CHUNK_GC.getConfigName(), true);
+            //this.registerPatch(ArkPlugins.CHUNK_GC.getArkPlugin());
             if (!new File("no_adjust").exists()) {
                 this.getConfig().set("patches." + ArkPlugins.WORLD_TICK_OPTIMIZER.getConfigName(), true);
                 this.registerPatch(ArkPlugins.WORLD_TICK_OPTIMIZER.getArkPlugin());
