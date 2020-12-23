@@ -1,35 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
- *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
- *  com.google.common.collect.Lists
- *  de.dustplanet.silkspawners.SilkSpawners
- *  de.dustplanet.util.SilkUtil
- *  net.minecraft.server.v1_8_R3.NBTBase
- *  org.apache.commons.lang.StringUtils
- *  org.arkhamnetwork.Arkkit.patches.ItemID
- *  org.arkhamnetwork.Arkkit.patches.MysteryMobSpawners
- *  org.arkhamnetwork.Arkkit.plugins.ArkPlugins
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.Material
- *  org.bukkit.OfflinePlayer
- *  org.bukkit.Sound
- *  org.bukkit.command.CommandSender
- *  org.bukkit.configuration.ConfigurationSection
- *  org.bukkit.configuration.file.YamlConfiguration
- *  org.bukkit.entity.EntityType
- *  org.bukkit.entity.Player
- *  org.bukkit.event.Event
- *  org.bukkit.event.inventory.ClickType
- *  org.bukkit.event.inventory.InventoryClickEvent
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
- */
 package me.ifamasssxd.cosmicguishop.struct;
 
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
@@ -264,32 +232,22 @@ public class ShopManager {
                     dura = 0;
                 }
                 try {
-                    displayItem = data.getType() == Material.MOB_SPAWNER ? (data.getData() == 101 ? MysteryMobSpawners.getMysteryMobSpawner() : this.silkSpawners.newSpawnerItem(data.getData(), (Object) ChatColor.YELLOW + ChatColor.BOLD.toString() + "%creature% Spawner", 1, false)) : null;
+                    displayItem = data.getType() == Material.MOB_SPAWNER ? (data.getData() == 101 ? MysteryMobSpawners.getMysteryMobSpawner() : this.silkSpawners.newSpawnerItem(String.valueOf(data.getData()), ChatColor.YELLOW + ChatColor.BOLD.toString() + "%creature% Spawner", 1, false)) : null;
                 } catch (Exception e) {
                     Bukkit.getLogger().info("Problem loading " + data.getData() + " Spawner!");
                     e.printStackTrace();
                     displayItem = null;
                 }
-                menu.setItem(index++, new ClickableItemStack(displayItem != null ? displayItem : ItemBuilder.buildItem(data.getType(), data.getSellCount(), dura, string, new String[0])).setLore(lore).setDura(data.getType() == Material.MOB_SPAWNER ? (short) 0 : dura).setClickCallback(new GUIItemCallback() {
+                menu.setItem(index++, new ClickableItemStack(displayItem != null ? displayItem : ItemBuilder.buildItem(data.getType(), data.getSellCount(), dura, string)).setLore(lore).setDura(data.getType() == Material.MOB_SPAWNER ? (short) 0 : dura).setClickCallback(new GUIItemCallback() {
 
                     @Override
                     public void onClick(InventoryClickEvent event) {
-                        int buyAmount = 0;
-                        int n;
-                        int sellAmount = 0;
                         boolean fillInventory = false;
-                        int n2 = event.getClick().equals((Object) ClickType.RIGHT) ? 1 : (sellAmount = event.getClick().equals((Object) ClickType.SHIFT_RIGHT) ? data.getType().getMaxStackSize() : -1);
-                        if (event.getClick().equals((Object) ClickType.LEFT)) {
-                            n = 1;
-                        } else if (event.getClick().equals((Object) ClickType.SHIFT_LEFT) && data.getType() != Material.MOB_SPAWNER) {
-                            n = data.getType().getMaxStackSize();
-                        } else {
-                            fillInventory = data.getType() != Material.MOB_SPAWNER && event.getClick().equals((Object) ClickType.MIDDLE) && emptySlots > 1;
-                            n = buyAmount = fillInventory ? emptySlots * data.getType().getMaxStackSize() : 1;
-                        }
+                        int sellAmount = event.getClick().equals(ClickType.RIGHT) ? 1 : (event.getClick().equals(ClickType.SHIFT_RIGHT) ? data.getType().getMaxStackSize() : -1);
+                        int buyAmount = event.getClick().equals(ClickType.LEFT) ? 1 : ((event.getClick().equals(ClickType.SHIFT_LEFT) && data.getType() != Material.MOB_SPAWNER) ? data.getType().getMaxStackSize() : ((fillInventory = (data.getType() != Material.MOB_SPAWNER && event.getClick().equals(ClickType.MIDDLE) && emptySlots > 1)) ? (emptySlots * data.getType().getMaxStackSize()) : 1));
                         if (sellAmount != -1) {
-                            if (price.getSellPrice() <= 0.0) {
-                                player.sendMessage((Object) ChatColor.RED + "You cannot sell this item to the shop!");
+                            if (price.getSellPrice() <= 0.0D) {
+                                player.sendMessage(ChatColor.RED + "You cannot sell this item to the shop!");
                                 return;
                             }
                             int amountInInventory = ShopManager.this.getAmountInInventory(player, data);
@@ -336,15 +294,15 @@ public class ShopManager {
                                             return;
                                         }
                                         if (player.getInventory().firstEmpty() == -1) {
-                                            player.sendMessage((Object) ChatColor.RED + "You do not have enough inventory space!");
+                                            player.sendMessage(ChatColor.RED + "You do not have enough inventory space!");
                                             return;
                                         }
                                         int slots = SlotUtils.getEmptySlots(player);
                                         if (slots < emptySlots) {
-                                            player.sendMessage((Object) ChatColor.RED + "You do not have the inventory space needed!");
+                                            player.sendMessage(ChatColor.RED + "You do not have the inventory space needed!");
                                             return;
                                         }
-                                        ShopManager.this.finishPurchase(player, data, totalPrice, finalBuyAmount);
+                                        ShopManager.this.finishPurchase(player, data, totalPrice, buyAmount);
                                         menu.open(player);
                                     } else {
                                         player.sendMessage((Object) ChatColor.RED + "Purchase Cancelled!");
