@@ -9,14 +9,15 @@
  *  org.bukkit.entity.Player
  *  org.bukkit.inventory.ItemStack
  */
-package org.arkhamnetwork.CosmicMoneyNotes;
+package me.ifamasssxd.cosmicguishop;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+
+import me.ifamasssxd.cosmicguishop.utils.ItemUtils;
+import me.ifamasssxd.cosmicguishop.utils.NumberUtils;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
-import org.arkhamnetwork.CosmicMoneyNotes.utils.ItemUtils;
-import org.arkhamnetwork.CosmicMoneyNotes.utils.NumberUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

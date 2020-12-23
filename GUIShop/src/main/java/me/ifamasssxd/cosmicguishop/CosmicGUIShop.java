@@ -11,6 +11,7 @@
 package me.ifamasssxd.cosmicguishop;
 
 import lombok.SneakyThrows;
+import me.ifamasssxd.cosmicguishop.commands.CommandBankNote;
 import me.ifamasssxd.cosmicguishop.commands.CommandShop;
 import me.ifamasssxd.cosmicguishop.listeners.MenuListener;
 import me.ifamasssxd.cosmicguishop.listeners.PlayerListener;
@@ -44,6 +45,7 @@ public class CosmicGUIShop
         this.getServer().getPluginManager().registerEvents((Listener) new PlayerListener(), (Plugin) this);
         this.getServer().getPluginManager().registerEvents((Listener) new MenuListener(), (Plugin) this);
         this.getCommand("cosmicshop").setExecutor((CommandExecutor) new CommandShop());
+        this.getCommand("banknote").setExecutor((CommandExecutor)new CommandBankNote());
     }
 
     public ShopManager getShopManager() {

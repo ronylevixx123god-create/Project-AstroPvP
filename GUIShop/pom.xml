@@ -186,13 +186,6 @@
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>mnotes</artifactId>
-            <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/CosmicMoneyNotes.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
             <artifactId>factions</artifactId>
             <version>0.1</version>
             <scope>system</scope>

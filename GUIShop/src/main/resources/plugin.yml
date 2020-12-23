@@ -7,3 +7,6 @@ commands:
   cosmicshop:
     description: Shop command.
     aliases: [ shop, cshop, shops ]
+  banknote:
+    description: yes command.
+    aliases: [ banknote, withdraw, bnote ]

@@ -1,7 +1,7 @@
 /*
  * Decompiled with CFR 0.150.
  */
-package org.arkhamnetwork.CosmicMoneyNotes.utils;
+package me.ifamasssxd.cosmicguishop.utils;
 
 import java.text.DecimalFormat;
 

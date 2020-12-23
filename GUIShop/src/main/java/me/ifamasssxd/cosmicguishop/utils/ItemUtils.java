@@ -10,8 +10,12 @@ package me.ifamasssxd.cosmicguishop.utils;
 
 import com.earth2me.essentials.Essentials;
 import me.ifamasssxd.cosmicguishop.struct.ShopMaterialData;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Arrays;
 
 public class ItemUtils {
     public static String getPrettyName(ShopMaterialData data) {
@@ -28,6 +32,20 @@ public class ItemUtils {
             // empty catch block
         }
         return false;
+    }
+
+    public static ItemStack buildItem(Material m, short metaData, String name, String ... description) {
+        ItemStack is = new ItemStack(m, 1, metaData);
+        ItemMeta im = is.getItemMeta();
+        if (name != null) {
+            im.setDisplayName(name);
+        }
+        if (description != null) {
+            im.setLore(Arrays.asList(description));
+        }
+        is.setItemMeta(im);
+        is.setDurability(metaData);
+        return is;
     }
 }
 

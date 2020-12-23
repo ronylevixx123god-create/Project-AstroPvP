@@ -9,7 +9,7 @@
  *  org.bukkit.entity.Player
  *  org.bukkit.util.BlockIterator
  */
-package org.arkhamnetwork.CosmicMoneyNotes.utils;
+package me.ifamasssxd.cosmicguishop.utils;
 
 import java.util.ArrayList;
 import java.util.List;

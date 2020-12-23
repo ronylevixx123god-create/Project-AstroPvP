@@ -12,10 +12,11 @@
  *  org.bukkit.entity.Player
  *  org.bukkit.inventory.ItemStack
  */
-package org.arkhamnetwork.CosmicMoneyNotes.commands;
+package me.ifamasssxd.cosmicguishop.commands;
 
-import org.arkhamnetwork.CosmicMoneyNotes.ArkhamMoneyNotesAPI;
-import org.arkhamnetwork.CosmicMoneyNotes.CosmicMoneyNotes;
+import com.cosmicpvp.cosmicutils.gui.CosmicGUI;
+import me.ifamasssxd.cosmicguishop.ArkhamMoneyNotesAPI;
+import me.ifamasssxd.cosmicguishop.CosmicGUIShop;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
@@ -26,8 +27,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class CommandBankNote
-implements CommandExecutor {
+public class CommandBankNote implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (args.length != 1) {
             sender.sendMessage((Object)ChatColor.RED + "/withdraw <$>");
@@ -56,7 +56,7 @@ implements CommandExecutor {
             pl.sendMessage((Object)ChatColor.RED + "You must /withdraw atleast $1 at a time.");
             return true;
         }
-        if (!CosmicMoneyNotes.getEconomy().has((OfflinePlayer)pl, Double.valueOf(withdraw_val).doubleValue())) {
+        if (!CosmicGUIShop.getEconomy().has((OfflinePlayer)pl, Double.valueOf(withdraw_val).doubleValue())) {
             pl.sendMessage((Object)ChatColor.RED + "You do not have enough $ to sign a cosmic note that large!");
             pl.performCommand("balance");
             return true;
@@ -65,7 +65,7 @@ implements CommandExecutor {
             pl.sendMessage((Object)ChatColor.RED + "You do not have enough room in your inventory.");
             return true;
         }
-        CosmicMoneyNotes.getEconomy().withdrawPlayer((OfflinePlayer)pl, (double)withdraw_val);
+        CosmicGUIShop.getEconomy().withdrawPlayer((OfflinePlayer)pl, (double)withdraw_val);
         pl.sendMessage(String.valueOf(ChatColor.RED.toString()) + ChatColor.BOLD.toString() + "- $" + withdraw_val);
         ItemStack moneyNote = ArkhamMoneyNotesAPI.getMoneyNote(pl.getName(), withdraw_val);
         pl.getInventory().addItem(new ItemStack[]{moneyNote});
