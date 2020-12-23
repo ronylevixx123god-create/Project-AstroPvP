@@ -26,8 +26,8 @@ implements Runnable {
     @Override
     public void run() {
         for (Location loc : CosmicSpaceChestsPlugin.chest_locations.keySet()) {
-            if (!ChunkAPI.isPlayerNearby((Location)loc, (int)0) || !loc.getWorld().getName().equals("world_arena") || loc.getBlock().getType() != Material.PUMPKIN && loc.getBlock().getType() != Material.JACK_O_LANTERN) continue;
-            ParticleEffect.playEffect((ParticleEffect)ParticleEffect.FLAME, (Location)loc.clone().add(0.0, 0.5, 0.0), (float)0.075f, (int)25);
+            if (!ChunkAPI.isPlayerNearby(loc, (int)0) || !loc.getWorld().getName().equals("world_arena") || loc.getBlock().getType() != Material.PUMPKIN && loc.getBlock().getType() != Material.JACK_O_LANTERN) continue;
+            ParticleEffect.playEffect(ParticleEffect.FLAME, (Location)loc.clone().add(0.0, 0.5, 0.0), 0.075f, (int)25);
         }
     }
 }

@@ -34,7 +34,7 @@ implements Runnable {
     @Override
     public void run() {
         for (Location loc : CosmicSpaceChestsPlugin.chest_locations.keySet()) {
-            if (!ChunkAPI.isPlayerNearby((Location)loc, (int)0)) continue;
+            if (!ChunkAPI.isPlayerNearby(loc, 0)) continue;
             this.launchFirework(loc, CosmicSpaceChestsPlugin.chest_locations.getChestRarity(loc));
         }
     }

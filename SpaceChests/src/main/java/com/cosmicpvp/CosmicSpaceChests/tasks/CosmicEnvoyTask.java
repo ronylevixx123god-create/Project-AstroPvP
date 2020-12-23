@@ -1,32 +1,11 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.cosmicpvp.worldevents.CosmicWorldEventAPI
- *  com.massivecraft.factions.Board
- *  com.massivecraft.factions.FLocation
- *  io.apice.clientcomms.ClientCommsAPI
- *  io.apice.clientcomms.EventType
- *  org.arkhamnetwork.Arkkit.Arkkit
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.Location
- *  org.bukkit.entity.Player
- *  org.bukkit.metadata.FixedMetadataValue
- *  org.bukkit.metadata.MetadataValue
- *  org.bukkit.plugin.Plugin
- */
 package com.cosmicpvp.CosmicSpaceChests.tasks;
 
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsPlugin;
 import com.cosmicpvp.CosmicSpaceChests.utils.LocationUtils;
 import com.cosmicpvp.CosmicSpaceChests.utils.MiscUtil;
-import com.cosmicpvp.worldevents.CosmicWorldEventAPI;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
-import io.apice.clientcomms.ClientCommsAPI;
-import io.apice.clientcomms.EventType;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -56,9 +35,6 @@ implements Runnable {
     @Override
     public void run() {
         if (Bukkit.getServer().getOnlinePlayers().size() == 0) {
-            return;
-        }
-        if (CosmicSpaceChestsPlugin.worldEventsEnabled && CosmicWorldEventAPI.isWorldEventRunning()) {
             return;
         }
         if (!this.firstRun) {

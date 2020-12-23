@@ -10,10 +10,11 @@
 package com.cosmicpvp.CosmicSpaceChests.utils;
 
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsPlugin;
-import com.sk89q.worldedit.Vector;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Random;
+
+import com.sk89q.worldedit.Vector;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -36,7 +37,7 @@ public class MiscUtil {
             Class<?> bukkitUtil = CosmicSpaceChestsPlugin.wg.getClass().getClassLoader().loadClass("com.sk89q.worldguard.bukkit.BukkitUtil");
             Method toVector = bukkitUtil.getMethod("toVector", Block.class);
             Vector blockVector = (Vector)toVector.invoke(null, new Object[]{l.getBlock()});
-            List regionSet = CosmicSpaceChestsPlugin.wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs(blockVector);
+            List<String> regionSet = CosmicSpaceChestsPlugin.wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs(blockVector);
             if (regionSet.size() < 1) {
                 return "";
             }

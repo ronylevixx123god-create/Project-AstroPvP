@@ -15,8 +15,8 @@ package com.cosmicpvp.CosmicSpaceChests.tasks;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsPlugin;
 import com.cosmicpvp.CosmicSpaceChests.tasks.CosmicEnvoyTask;
 import com.cosmicpvp.CosmicSpaceChests.utils.LocationUtils;
-import com.gmail.filoghost.holograms.api.Hologram;
-import com.gmail.filoghost.holograms.api.HolographicDisplaysAPI;
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -46,7 +46,7 @@ extends BukkitRunnable {
 
             @Override
             public void run() {
-                HologramUpdateTask.this.spawnHologram = HolographicDisplaysAPI.createHologram((Plugin)CosmicSpaceChestsPlugin.plugin, (Location)HologramUpdateTask.this.hologramLocation, (String[])new String[]{ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "PREVIOUS COSMIC ENVOY", ChatColor.LIGHT_PURPLE.toString() + CosmicEnvoyTask.getPreviousEnvoySpawnString() + " ago"});
+                HologramUpdateTask.this.spawnHologram = HologramsAPI.createHologram((Plugin)CosmicSpaceChestsPlugin.plugin, (Location)HologramUpdateTask.this.hologramLocation, (String[])new String[]{ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "PREVIOUS COSMIC ENVOY", ChatColor.LIGHT_PURPLE.toString() + CosmicEnvoyTask.getPreviousEnvoySpawnString() + " ago"});
             }
         }, 1L);
     }

@@ -35,7 +35,7 @@ public class CommandGiveDp
 implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("givedp")) {
-            String p_name;
+            String p_name = null;
             if (sender instanceof Player && !((Player)sender).isOp()) {
                 return true;
             }
@@ -54,7 +54,7 @@ implements CommandExecutor {
             }
             if (Bukkit.getPlayer((String)p_name) == null) {
                 if (sender instanceof Player) {
-                    ((Player)sender).sendMessage((Object)ChatColor.RED + p_name + " cannot be found.");
+                    ((Player)sender).sendMessage(ChatColor.RED + p_name + " cannot be found.");
                 } else {
                     CosmicSpaceChestsPlugin.log.error(p_name + " cannot be found.", this.getClass());
                 }
