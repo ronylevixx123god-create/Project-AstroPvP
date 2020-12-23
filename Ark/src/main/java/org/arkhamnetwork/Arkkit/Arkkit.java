@@ -71,18 +71,14 @@ extends JavaPlugin {
             Bukkit.broadcastMessage(ChatColor.GRAY.toString() + ChatColor.ITALIC.toString() + "     Thank you for your patience!");
             Bukkit.broadcastMessage("");
         }, 20L);
-        this.getServer().getPluginManager().registerEvents((Listener)new ArkkitListener(), this);
+        this.getServer().getPluginManager().registerEvents(new ArkkitListener(), this);
         for (Player pl : Bukkit.getOnlinePlayers()) {
             this.asyncPlayerMap.put(pl.getName(), pl);
             this.playerLocations.put(pl.getName(), pl.getLocation());
         }
-        Bukkit.getScheduler().runTaskTimer(this, new Runnable(){
-
-            @Override
-            public void run() {
-                for (Player p : Bukkit.getOnlinePlayers()) {
-                    Arkkit.this.playerLocations.put(p.getName(), p.getLocation());
-                }
+        Bukkit.getScheduler().runTaskTimer(this, () -> {
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                Arkkit.this.playerLocations.put(p.getName(), p.getLocation());
             }
         }, 0L, 40L);
         this.enable_time = System.currentTimeMillis();
@@ -91,10 +87,10 @@ extends JavaPlugin {
     public void onDisable() {
         this.shutting_down = true;
         try {
-            Bukkit.broadcastMessage((String)"");
-            Bukkit.broadcastMessage((String)(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "   *** A Compilex Patch is loading. Please wait... *** "));
-            Bukkit.broadcastMessage((String)(ChatColor.GRAY.toString() + ChatColor.ITALIC.toString() + "  This process occurs when Compilex applies a dynamic update."));
-            Bukkit.broadcastMessage((String)"");
+            Bukkit.broadcastMessage("");
+            Bukkit.broadcastMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "   *** A Compilex Patch is loading. Please wait... *** ");
+            Bukkit.broadcastMessage(ChatColor.GRAY.toString() + ChatColor.ITALIC.toString() + "  This process occurs when Compilex applies a dynamic update.");
+            Bukkit.broadcastMessage("");
         }
         catch (Exception err) {
             err.printStackTrace();

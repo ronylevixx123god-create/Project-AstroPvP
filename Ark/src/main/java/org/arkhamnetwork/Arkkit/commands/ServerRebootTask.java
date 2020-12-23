@@ -23,13 +23,13 @@ import org.bukkit.scheduler.BukkitRunnable;
 final class ServerRebootTask
 extends BukkitRunnable {
     volatile int iteration = 60;
-    private String restartWarnMessage = ChatColor.translateAlternateColorCodes((char)'&', (String)"&e&l *** LOCAL SERVER REBOOTING IN [time] SECONDS ***");
+    private String restartWarnMessage = ChatColor.translateAlternateColorCodes('&', "&e&l *** LOCAL SERVER REBOOTING IN [time] SECONDS ***");
 
     public ServerRebootTask(boolean force) {
-        Bukkit.broadcastMessage((String)"");
-        Bukkit.broadcastMessage((String)(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "      *** A Compilex reboot has been queued. *** "));
-        Bukkit.broadcastMessage((String)(ChatColor.GRAY.toString() + ChatColor.ITALIC.toString() + "  This process occurs when Compilex pulls a critical core update."));
-        Bukkit.broadcastMessage((String)"");
+        Bukkit.broadcastMessage("");
+        Bukkit.broadcastMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "      *** A Compilex reboot has been queued. *** ");
+        Bukkit.broadcastMessage(ChatColor.GRAY.toString() + ChatColor.ITALIC.toString() + "  This process occurs when Compilex pulls a critical core update.");
+        Bukkit.broadcastMessage("");
         if (force) {
             this.iteration = 0;
         }

@@ -27,7 +27,7 @@ implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (sender instanceof Player && !((Player)sender).isOp()) {
+        if (sender instanceof Player && !sender.isOp()) {
             return true;
         }
         if (args.length != 1) {

@@ -30,7 +30,7 @@ implements CommandExecutor {
     public static boolean restart_task_exists = false;
 
     public CommandArkReboot() {
-        Bukkit.getPluginManager().registerEvents((Listener)new ArkRebootListener(), (Plugin)Arkkit.get());
+        Bukkit.getPluginManager().registerEvents(new ArkRebootListener(), (Plugin)Arkkit.get());
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {

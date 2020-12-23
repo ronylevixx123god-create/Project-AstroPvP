@@ -41,7 +41,7 @@ import org.bukkit.plugin.Plugin;
 
 public class AdminWarps
 extends ArkPlugin {
-    private Map<String, WarpLocation> warps = new HashMap<String, WarpLocation>();
+    private Map warps = new HashMap<String, WarpLocation>();
     private File warpFile;
     private Type warpMapToken = new TypeToken<HashMap<String, WarpLocation>>(){}.getType();
 
@@ -51,8 +51,8 @@ extends ArkPlugin {
 
     @Override
     public void enable() throws IOException {
-        this.warpFile = JSONUtils.getOrCreateFile((File)this.getBukkitPlugin().getDataFolder(), (String)"adminWarps.json");
-        this.warps = (Map)JSONUtils.fromJson((File)this.warpFile, (Object)this.warpMapToken, new HashMap());
+        this.warpFile = JSONUtils.getOrCreateFile(this.getBukkitPlugin().getDataFolder(), "adminWarps.json");
+        this.warps = (Map)JSONUtils.fromJson(this.warpFile, this.warpMapToken, new HashMap());
         this.registerCommand(new AdminWarpCommand(this));
         this.registerCommand(new DelAdminWarpCommand(this));
         this.registerCommand(new SetAdminWarpCommand(this));
