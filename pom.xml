@@ -16,7 +16,6 @@
         <module>SpaceChests</module>
         <module>AuctionHouse</module>
         <module>GUIShop</module>
-        <module>MoneyNotes</module>
     </modules>
 
     <build>
