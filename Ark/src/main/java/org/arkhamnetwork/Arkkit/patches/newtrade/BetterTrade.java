@@ -103,19 +103,6 @@ extends ArkPlugin {
     }
 
     private void clearTeleportRequests(Player p) {
-        if (this.ess != null) {
-            try {
-                User u = this.ess.getUser(p);
-                if (u.getTeleportRequest() != null) {
-                    u.setTeleportRequest(null);
-                    u.setTpRequestLocation(null);
-                    Bukkit.getLogger().info("[Arkkit (Trade)] Cleared Teleport Request for " + p.getName());
-                }
-            }
-            catch (Exception err) {
-                err.printStackTrace();
-            }
-        }
     }
 
     public Map<UUID, PlayerTrade> getPlayerTradeMap() {

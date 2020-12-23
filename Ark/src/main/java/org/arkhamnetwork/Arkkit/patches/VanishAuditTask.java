@@ -45,15 +45,6 @@ extends BukkitRunnable {
     }
 
     public void run() {
-        for (String pName : this.playersToWatch) {
-            boolean b;
-            User u;
-            Player p;
-            if (Bukkit.getPlayer((String)pName) == null || (p = Bukkit.getPlayer((String)pName)).getName().equals("ypperin") || (u = EssentialsUtils.getEssentials().getUser(p)).isVanished() || !p.hasMetadata("trackedVanishState") || !(b = ((MetadataValue)p.getMetadata("trackedVanishState").get(0)).asBoolean())) continue;
-            u.setVanished(true);
-            p.sendMessage((Object)ChatColor.RED + "VanishAuditTask >> " + (Object)ChatColor.GRAY + "You were found out of /vanish, yet there is no record of you toggling /vanish with the command:" + (Object)ChatColor.RED + " You have been re-/vanish'd.");
-            Bukkit.getLogger().info("[VanishAudit] Player " + p.getName() + " was found out of /vanish, but no record of them executing /vanish!");
-        }
     }
 
     final class VanishAuditListener

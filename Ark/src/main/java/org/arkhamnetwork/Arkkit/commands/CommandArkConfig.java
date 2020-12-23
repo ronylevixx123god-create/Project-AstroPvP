@@ -13,6 +13,7 @@ package org.arkhamnetwork.Arkkit.commands;
 
 import java.util.List;
 import org.arkhamnetwork.Arkkit.Arkkit;
+import org.arkhamnetwork.Arkkit.StaticMessages;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -29,7 +30,8 @@ implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (sender instanceof Player && !((Player)sender).isOp()) {
+        if (!sender.hasPermission("arkkit.command.admin")) {
+            sender.sendMessage(StaticMessages.NO_PERMISSION);
             return true;
         }
         if (args.length < 3) {

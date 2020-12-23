@@ -1,7 +1,7 @@
 name: Arkkit
 main: org.arkhamnetwork.Arkkit.Arkkit
 version: 1.0
-softdepend: [LilyPad-Connect, Citizens, mcMMO, CosmicPvPUtils, CosmicArmorSets, CosmicSkyCustomItems]
+softdepend: [Citizens, mcMMO, CosmicPvPUtils, CosmicArmorSets, CosmicSkyCustomItems]
 commands:
   arkhamreload:
     description: Reload ArkhamNetworkAI Configuration.
@@ -27,3 +27,7 @@ commands:
     description: Gracefully reboot the local server.
     usage: /<command>
     aliases: [areboot, arkstop, arkrestart]
+  arkdebug:
+    description: Gracefully suck my dick.
+    usage: /<command>
+    aliases: [ arkconaxgames ]

@@ -85,7 +85,7 @@ implements Listener {
                     if (!i.hasItemMeta() || !i.getItemMeta().hasLore()) continue;
                     int n = i.getItemMeta().getLore().size();
                     this.getClass();
-                    if (n <= 1 || (worth = SmarterEssentials.ess3.getWorth().getPrice(i)) == null) continue;
+                    if (n <= 1 || (worth = SmarterEssentials.ess3.getWorth().getPrice(SmarterEssentials.ess3, i)) == null) continue;
                     uniqueItems.add(i);
                 }
             }

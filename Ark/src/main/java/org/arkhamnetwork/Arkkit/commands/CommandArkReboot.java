@@ -14,6 +14,7 @@
 package org.arkhamnetwork.Arkkit.commands;
 
 import org.arkhamnetwork.Arkkit.Arkkit;
+import org.arkhamnetwork.Arkkit.StaticMessages;
 import org.arkhamnetwork.Arkkit.commands.ArkRebootListener;
 import org.arkhamnetwork.Arkkit.commands.ServerRebootTask;
 import org.bukkit.Bukkit;
@@ -34,9 +35,11 @@ implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (sender instanceof Player && !((Player)sender).isOp()) {
+        if (!sender.hasPermission("arkkit.command.admin")) {
+            sender.sendMessage(StaticMessages.NO_PERMISSION);
             return true;
         }
+
         if (restart_task_exists) {
             sender.sendMessage((Object)ChatColor.YELLOW + "There is already a pending restart task running.");
             return true;

@@ -110,25 +110,7 @@ extends ArkPlugin {
         return slotConversionMap.containsKey(slot) ? slotConversionMap.get(slot) : Integer.valueOf(-1);
     }
 
-    private static void clearTeleportRequests(Player p) {
-        if (ess3 != null) {
-            try {
-                User u = ess3.getUser(p);
-                if (u.getTeleportRequest() != null) {
-                    u.setTeleportRequest(null);
-                    u.setTpRequestLocation(null);
-                    Bukkit.getLogger().info("[Arkkit (Trade)] Cleared Teleport Request for " + p.getName());
-                }
-            }
-            catch (Exception err) {
-                err.printStackTrace();
-            }
-        }
-    }
-
     protected static void startTrade(Player p1, Player p2) {
-        NewTrade.clearTeleportRequests(p1);
-        NewTrade.clearTeleportRequests(p2);
         p1.closeInventory();
         p2.closeInventory();
         p1.setMetadata("compilexTradePartnerUUID", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)p2.getUniqueId()));

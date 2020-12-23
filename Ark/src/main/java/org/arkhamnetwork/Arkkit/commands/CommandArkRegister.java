@@ -11,6 +11,7 @@
 package org.arkhamnetwork.Arkkit.commands;
 
 import org.arkhamnetwork.Arkkit.Arkkit;
+import org.arkhamnetwork.Arkkit.StaticMessages;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -27,9 +28,11 @@ implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (sender instanceof Player && !sender.isOp()) {
+        if (!sender.hasPermission("arkkit.command.admin")) {
+            sender.sendMessage(StaticMessages.NO_PERMISSION);
             return true;
         }
+
         if (args.length != 1) {
             sender.sendMessage("Usage: /arkregister <patch>");
             sender.sendMessage("Unloaded Patches: [" + ArkPlugins.getUnloadedPatches() + "]");
@@ -38,9 +41,7 @@ implements CommandExecutor {
         String patch = args[0];
         try {
             if (this.plugin.registerPatch(ArkPlugins.valueOf(patch.toUpperCase()).getArkPlugin())) {
-                if (sender instanceof Player) {
-                    sender.sendMessage("Loaded patches." + patch.toLowerCase());
-                }
+                sender.sendMessage("Loaded patches." + patch.toLowerCase());
                 this.plugin.getConfig().set("patches." + patch.toLowerCase(), (Object)true);
                 return true;
             }
