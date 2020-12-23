@@ -109,9 +109,6 @@ implements Listener {
                 return;
             }
             e.getPlayer().setMetadata("last_enderpearl_throw", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)System.currentTimeMillis()));
-            if (this.instance.useHCFScoreboard) {
-                ScoreboardUtils.startEPearlCooldown(e.getPlayer());
-            }
         }
     }
 }

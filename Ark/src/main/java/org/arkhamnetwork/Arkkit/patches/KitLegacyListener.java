@@ -34,8 +34,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class KitLegacyListener
-implements Listener {
+public class KitLegacyListener implements Listener {
     @EventHandler(priority=EventPriority.LOW)
     public void onPlayerCommandPreProcess(PlayerCommandPreprocessEvent e) {
         if (e.getMessage().toLowerCase().equalsIgnoreCase("/kit legacy")) {

@@ -11,9 +11,12 @@ package org.arkhamnetwork.Arkkit.patches.chat_filter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import com.google.common.collect.Lists;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -133,10 +136,10 @@ public class ChatUtils {
     }
 
     public static String getFilteredSwearMessage(String message, boolean permanentFilter) {
-        ArrayList filters;
+        ArrayList<String> filters;
         String oMessage = message.startsWith(" ") ? message.substring(1, message.length()) : message;
         StringBuilder newMessage = new StringBuilder();
-        ArrayList arrayList = filters = permanentFilter ? ChatFilter.permanent_bad_words : Lists.newArrayList(ChatFilter.bad_words);
+        ArrayList<String> arrayList = filters = permanentFilter ? (ArrayList<String>) ChatFilter.permanent_bad_words : Lists.newArrayList(ChatFilter.bad_words);
         if (!permanentFilter) {
             filters.addAll(ChatFilter.permanent_bad_words);
         }
@@ -204,15 +207,13 @@ public class ChatUtils {
             if (!word.contains(sw)) continue;
             return true;
         }
-        List<Character> delimeters = Arrays.asList(Character.valueOf('.'), Character.valueOf(','), Character.valueOf(';'), Character.valueOf(':'), Character.valueOf('-'), Character.valueOf('_'), Character.valueOf('|'), Character.valueOf('/'), Character.valueOf('?'), Character.valueOf('('), Character.valueOf(')'), Character.valueOf('!'), Character.valueOf('@'), Character.valueOf('#'), Character.valueOf('4'), Character.valueOf('5'), Character.valueOf('6'), Character.valueOf('7'), Character.valueOf('8'), Character.valueOf('9'), Character.valueOf('0'), Character.valueOf('`'), Character.valueOf('~'), Character.valueOf('+'), Character.valueOf('<'), Character.valueOf('>'));
+        List<Character> delimeters = Arrays.asList('.', ',', ';', ':', '-', '_', '|', '/', '?', '(', ')', '!', '@', '#', '4', '5', '6', '7', '8', '9', '0', '`', '~', '+', '<', '>');
         String noDelimeterWord = "";
         for (char c : word.toCharArray()) {
-            if (delimeters.contains(Character.valueOf(c))) continue;
+            if (delimeters.contains(c)) continue;
             noDelimeterWord = noDelimeterWord + c;
         }
-        Object object = ChatFilter.permanent_bad_words.iterator();
-        while (object.hasNext()) {
-            String sw = (String)object.next();
+        for (String sw : ChatFilter.permanent_bad_words) {
             if (!noDelimeterWord.contains(sw)) continue;
             return true;
         }
@@ -227,15 +228,13 @@ public class ChatUtils {
             if (!word.contains(sw)) continue;
             return true;
         }
-        List<Character> delimeters = Arrays.asList(Character.valueOf('.'), Character.valueOf(','), Character.valueOf(';'), Character.valueOf(':'), Character.valueOf('-'), Character.valueOf('_'), Character.valueOf('|'), Character.valueOf('/'), Character.valueOf('?'), Character.valueOf('('), Character.valueOf(')'), Character.valueOf('!'), Character.valueOf('@'), Character.valueOf('#'), Character.valueOf('4'), Character.valueOf('5'), Character.valueOf('6'), Character.valueOf('7'), Character.valueOf('8'), Character.valueOf('9'), Character.valueOf('0'), Character.valueOf('`'), Character.valueOf('~'), Character.valueOf('+'), Character.valueOf('<'), Character.valueOf('>'));
+        List<Character> delimeters = Arrays.asList('.', ',', ';', ':', '-', '_', '|', '/', '?', '(', ')', '!', '@', '#', '4', '5', '6', '7', '8', '9', '0', '`', '~', '+', '<', '>');
         String noDelimeterWord = "";
         for (char c : word.toCharArray()) {
-            if (delimeters.contains(Character.valueOf(c))) continue;
+            if (delimeters.contains(c)) continue;
             noDelimeterWord = noDelimeterWord + c;
         }
-        Object object = ChatFilter.bad_words.iterator();
-        while (object.hasNext()) {
-            String sw = (String)object.next();
+        for (String sw : ChatFilter.bad_words) {
             if (!noDelimeterWord.contains(sw)) continue;
             return true;
         }

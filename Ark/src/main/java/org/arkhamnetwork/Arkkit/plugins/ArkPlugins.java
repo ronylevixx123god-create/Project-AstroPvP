@@ -134,7 +134,6 @@ public enum ArkPlugins {
     FINAL_BATTLE(new FinalBattle((Plugin)Arkkit.get()), "Enables some silly mechanics for Rob in world_final_battle."),
     CHRISTMAS(new Christmas((Plugin)Arkkit.get()), "Enables some modular jolly christmas patches!"),
     NEW_YEARS(new NewYears((Plugin)Arkkit.get()), "Enables New Year specific special event items."),
-    NERF_NETHER_SPAWNERS(new NerfNetherSpawners((Plugin)Arkkit.get()), "Removes half of all vanilla nether spawners."),
     SPIGOT_DEBUG(new SpigotDebug((Plugin)Arkkit.get()), "Toggles spigot debug boolean."),
     PARTY(new Party((Plugin)Arkkit.get()), "Enables special party login listener."),
     NEAR(new Near((Plugin)Arkkit.get()), "Custom /near command."),

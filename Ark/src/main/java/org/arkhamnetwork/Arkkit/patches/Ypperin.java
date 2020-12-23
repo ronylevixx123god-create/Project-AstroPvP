@@ -29,8 +29,6 @@ extends ArkPlugin {
         this.registerCommand(new CommandWipeWhitelist("wipewhitelist", "/<command> [args]", "Clear local whitelist of all players."));
         this.registerCommand(new CommandWipeOps("wipeops", "/<command> [args]", "Clear local ops list of all players."));
         this.registerCommand(new CommandDisableClaims("disableclaim", "/<command> [args]", "Toggle ability for players to claim chunks.", new ArrayList<String>(Arrays.asList("disableclaims", "toggleclaims"))));
-        this.registerCommand(new CommandResetPlayer("resetplayer", "/<command> [args]", "Clears offline playerdata."));
-        this.registerCommand(new CommandPrintMeta("printmeta", "/<command> [args]", "Prints metadata memory usage."));
         this.registerCommand(new CommandToggleLogic("togglelogic", "/<command> [args]", "Toggles all BlockPhysicsEvents."));
         this.registerListener(new DisableClaimsListener());
         this.registerTask(new VanishAuditTask().runTaskTimer((Plugin)Arkkit.get(), 20L, 20L), VanishAuditTask.class);

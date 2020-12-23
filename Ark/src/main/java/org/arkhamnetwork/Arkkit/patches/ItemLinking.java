@@ -16,23 +16,17 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.google.common.collect.MapMaker;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
+
+import com.google.common.collect.MapMaker;
 import net.milkbowl.vault.economy.Economy;
 import org.apache.commons.lang.StringUtils;
 import org.arkhamnetwork.Arkkit.libs.JSONMessage;
-import org.arkhamnetwork.Arkkit.patches.CommandSendBrag;
-import org.arkhamnetwork.Arkkit.patches.CommandSendItem;
-import org.arkhamnetwork.Arkkit.patches.CommandViewBrag;
-import org.arkhamnetwork.Arkkit.patches.HoverText;
-import org.arkhamnetwork.Arkkit.patches.ItemLinkingChatListener;
-import org.arkhamnetwork.Arkkit.patches.TimedInventory;
-import org.arkhamnetwork.Arkkit.patches.UUIDStorage;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -52,7 +46,6 @@ extends ArkPlugin {
     public CommandViewBrag viewBrag;
     public static Map<UUID, TimedInventory> inventoryViews = new MapMaker().expireAfterWrite(10L, TimeUnit.MINUTES).makeMap();
     public static Map<UUID, UUIDStorage> recentlyAssignedIds = new MapMaker().expireAfterWrite(5L, TimeUnit.MINUTES).makeMap();
-
     public ItemLinking(Plugin p) {
         super(p);
     }

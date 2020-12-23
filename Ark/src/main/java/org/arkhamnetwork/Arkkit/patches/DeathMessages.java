@@ -27,6 +27,7 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
+import com.google.common.collect.Lists;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.iface.RelationParticipator;
