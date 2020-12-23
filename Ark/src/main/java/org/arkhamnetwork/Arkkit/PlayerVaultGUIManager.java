@@ -1,18 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.google.common.collect.Lists
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.Material
- *  org.bukkit.craftbukkit.libs.com.google.gson.Gson
- *  org.bukkit.craftbukkit.libs.com.google.gson.GsonBuilder
- *  org.bukkit.craftbukkit.libs.com.google.gson.reflect.TypeToken
- *  org.bukkit.entity.Player
- *  org.bukkit.inventory.Inventory
- *  org.bukkit.inventory.ItemStack
- */
 package org.arkhamnetwork.Arkkit;
 
 import java.io.BufferedReader;
@@ -104,16 +89,16 @@ class PlayerVaultGUIManager {
     }
 
     public Inventory getMaterialSelection() {
-        Inventory inventory = Bukkit.createInventory(null, (int)54, (String)"Select Vault Icon");
+        Inventory inventory = Bukkit.createInventory(null, 54, "Select Vault Icon");
         for (Material material : this.getMaterials()) {
-            inventory.addItem(ItemUtils.buildItem(material, material == Material.POTION ? (short)16421 : 0, null, (Object)ChatColor.GRAY + "Click to select material."));
+            inventory.addItem(ItemUtils.buildItem(material, material == Material.POTION ? (short)16421 : 0, null, ChatColor.GRAY + "Click to select material."));
         }
         return inventory;
     }
 
     public Inventory getVaultsInventory(Player player) {
         int vaults = this.getPlayerVaults(player);
-        Inventory inventory = Bukkit.createInventory(null, (int)InventoryUtils.fitInventorySize(vaults), (String)"Player Vaults");
+        Inventory inventory = Bukkit.createInventory(null, InventoryUtils.fitInventorySize(vaults), "Player Vaults");
         CustomPlayerVaults customVaults = (CustomPlayerVaults) this.getCustomPvs().get(player.getUniqueId());
         for (int vault = 1; vault <= vaults; ++vault) {
             try {
@@ -126,7 +111,7 @@ class PlayerVaultGUIManager {
                         name = pv.getCustomName();
                     }
                 }
-                ItemStack item = ItemUtils.buildItem(material, material == Material.POTION ? (short)16421 : 0, (Object)ChatColor.AQUA + ChatColor.BOLD.toString() + name, (Object)ChatColor.LIGHT_PURPLE + "/pv " + vault, "", (Object)ChatColor.GRAY + "Left-Click to enter Vault", (Object)ChatColor.GRAY + "Middle-Click to edit name", (Object)ChatColor.GRAY + "Right-Click to edit icon");
+                ItemStack item = ItemUtils.buildItem(material, material == Material.POTION ? (short)16421 : 0, ChatColor.AQUA + ChatColor.BOLD.toString() + name, ChatColor.LIGHT_PURPLE + "/pv " + vault, "", ChatColor.GRAY + "Left-Click to enter Vault", ChatColor.GRAY + "Middle-Click to edit name", ChatColor.GRAY + "Right-Click to edit icon");
                 item.setAmount(vault);
                 inventory.addItem(item);
                 continue;

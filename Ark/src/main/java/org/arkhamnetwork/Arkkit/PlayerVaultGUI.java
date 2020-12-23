@@ -1,9 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  org.bukkit.plugin.Plugin
- */
 package org.arkhamnetwork.Arkkit;
 
 import org.arkhamnetwork.Arkkit.CommandVaultName;

@@ -1,31 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.drtshock.playervaults.vaultmanagement.VaultOperations
- *  com.google.common.collect.Lists
- *  org.apache.commons.lang.StringUtils
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.Material
- *  org.bukkit.Sound
- *  org.bukkit.command.CommandSender
- *  org.bukkit.entity.Player
- *  org.bukkit.event.Event$Result
- *  org.bukkit.event.EventHandler
- *  org.bukkit.event.EventPriority
- *  org.bukkit.event.Listener
- *  org.bukkit.event.inventory.ClickType
- *  org.bukkit.event.inventory.InventoryClickEvent
- *  org.bukkit.event.inventory.InventoryCloseEvent
- *  org.bukkit.event.inventory.InventoryOpenEvent
- *  org.bukkit.event.player.AsyncPlayerChatEvent
- *  org.bukkit.event.player.PlayerCommandPreprocessEvent
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.metadata.FixedMetadataValue
- *  org.bukkit.metadata.MetadataValue
- *  org.bukkit.plugin.Plugin
- */
 package org.arkhamnetwork.Arkkit;
 
 import com.drtshock.playervaults.vaultmanagement.VaultOperations;
@@ -88,9 +60,9 @@ implements Listener {
             }
             if (player.hasMetadata("pv_icon_edit")) {
                 CustomPV pv;
-                int vaultNumber = ((MetadataValue)player.getMetadata("pv_icon_edit").get(0)).asInt();
+                int vaultNumber = (player.getMetadata("pv_icon_edit").get(0)).asInt();
                 if (!VaultOperations.checkPerms((CommandSender)player, (int)vaultNumber)) {
-                    player.sendMessage((Object)ChatColor.RED + "That vault is no longer valid!");
+                    player.sendMessage(ChatColor.RED + "That vault is no longer valid!");
                     player.closeInventory();
                     return;
                 }
@@ -99,14 +71,14 @@ implements Listener {
                     customVaults = new CustomPlayerVaults();
                     this.manager.getCustomPvs().put(player.getUniqueId(), customVaults);
                 }
-                CustomPV customPV = pv = customVaults.isCustomPV(vaultNumber) ? (CustomPV)customVaults.get(vaultNumber) : new CustomPV();
+                CustomPV customPV = pv = customVaults.isCustomPV(vaultNumber) ? customVaults.get(vaultNumber) : new CustomPV();
                 if (!customVaults.isCustomPV(vaultNumber)) {
                     customVaults.put(vaultNumber, pv);
                 }
                 pv.setIcon(item.getType());
-                player.sendMessage((Object)ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.GREEN + "Saved Vault #" + vaultNumber + " icon to " + (Object)ChatColor.GREEN + ChatColor.UNDERLINE.toString() + StringUtils.capitaliseAllWords((String)item.getType().name().toLowerCase().replace("_", " ")));
+                player.sendMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + ChatColor.GREEN + "Saved Vault #" + vaultNumber + " icon to " + ChatColor.GREEN + ChatColor.UNDERLINE.toString() + StringUtils.capitaliseAllWords(item.getType().name().toLowerCase().replace("_", " ")));
                 player.playSound(player.getLocation(), Sound.CLICK, 1.0f, 0.8f);
-                player.removeMetadata("pv_icon_edit", (Plugin)Arkkit.get());
+                player.removeMetadata("pv_icon_edit", Arkkit.get());
                 player.closeInventory();
                 player.chat("/pv");
             } else {
@@ -128,28 +100,28 @@ implements Listener {
             if (clicked.getItemMeta().getLore().size() <= 0) {
                 return;
             }
-            String lore = (String)clicked.getItemMeta().getLore().get(0);
-            if (ChatColor.stripColor((String)lore).startsWith("/pv ")) {
+            String lore = clicked.getItemMeta().getLore().get(0);
+            if (ChatColor.stripColor(lore).startsWith("/pv ")) {
                 String number = lore.split("/pv ")[1];
-                if (!StringUtils.isNumeric((String)number)) {
+                if (!StringUtils.isNumeric(number)) {
                     return;
                 }
                 int num = Integer.parseInt(number);
                 if (event.getClick() == ClickType.LEFT) {
                     player.closeInventory();
-                    player.setMetadata("viewing_pvs", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)""));
+                    player.setMetadata("viewing_pvs", new FixedMetadataValue(Arkkit.get(), ""));
                     player.chat("/pv " + num);
                 } else if (event.getClick() == ClickType.RIGHT) {
                     player.closeInventory();
                     player.openInventory(this.manager.getMaterialSelection());
-                    player.setMetadata("pv_icon_edit", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)num));
+                    player.setMetadata("pv_icon_edit", new FixedMetadataValue(Arkkit.get(), num));
                 } else if (event.getClick() == ClickType.MIDDLE) {
                     player.closeInventory();
                     player.sendMessage("");
-                    player.sendMessage((Object)ChatColor.AQUA + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.AQUA + "Please enter your new desired Vault name.");
-                    player.sendMessage((Object)ChatColor.GRAY + "If you wish to cancel type '" + (Object)ChatColor.RED + "cancel" + (Object)ChatColor.GRAY + "' in the chat.");
+                    player.sendMessage(ChatColor.AQUA + ChatColor.BOLD.toString() + "(!) " + ChatColor.AQUA + "Please enter your new desired Vault name.");
+                    player.sendMessage(ChatColor.GRAY + "If you wish to cancel type '" + ChatColor.RED + "cancel" + ChatColor.GRAY + "' in the chat.");
                     player.sendMessage("");
-                    player.setMetadata("pv_name_edit", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)num));
+                    player.setMetadata("pv_name_edit", new FixedMetadataValue(Arkkit.get(), num));
                 }
             }
         }
@@ -162,29 +134,29 @@ implements Listener {
             CustomPV customPv;
             CustomPlayerVaults vaults;
             event.setCancelled(true);
-            int vaultNumber = ((MetadataValue)player.getMetadata("pv_name_edit").get(0)).asInt();
+            int vaultNumber = (player.getMetadata("pv_name_edit").get(0)).asInt();
             String name = event.getMessage();
             if (name.equalsIgnoreCase("cancel") || vaultNumber <= 0 || name.trim().isEmpty()) {
-                player.removeMetadata("pv_name_edit", (Plugin)Arkkit.get());
-                player.sendMessage((Object)ChatColor.RED + "Vault naming " + (Object)ChatColor.RED + ChatColor.BOLD.toString() + "CANCELLED!");
+                player.removeMetadata("pv_name_edit", Arkkit.get());
+                player.sendMessage(ChatColor.RED + "Vault naming " + ChatColor.RED + ChatColor.BOLD.toString() + "CANCELLED!");
                 return;
             }
             if (name.length() >= 32) {
-                player.sendMessage((Object)ChatColor.RED + "Vault names cannot be longer than 32 characters.");
+                player.sendMessage(ChatColor.RED + "Vault names cannot be longer than 32 characters.");
                 return;
             }
-            player.removeMetadata("pv_name_edit", (Plugin)Arkkit.get());
+            player.removeMetadata("pv_name_edit", Arkkit.get());
             CustomPlayerVaults customPlayerVaults = vaults = this.manager.getCustomPvs().containsKey(player.getUniqueId()) ? (CustomPlayerVaults) this.manager.getCustomPvs().get(player.getUniqueId()) : new CustomPlayerVaults();
             if (!this.manager.getCustomPvs().containsKey(player.getUniqueId())) {
                 this.manager.getCustomPvs().put(player.getUniqueId(), vaults);
             }
-            CustomPV customPV = customPv = vaults.isCustomPV(vaultNumber) ? (CustomPV)vaults.get(vaultNumber) : new CustomPV();
+            CustomPV customPV = customPv = vaults.isCustomPV(vaultNumber) ? vaults.get(vaultNumber) : new CustomPV();
             if (!vaults.isCustomPV(vaultNumber)) {
                 vaults.storePV(vaultNumber, customPv);
             }
             customPv.setCustomName(name);
-            player.sendMessage((Object)ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.GREEN + "Vault #" + vaultNumber + " renamed to " + name);
-            Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Arkkit.get(), () -> player.chat("/pv"));
+            player.sendMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + ChatColor.GREEN + "Vault #" + vaultNumber + " renamed to " + name);
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Arkkit.get(), () -> player.chat("/pv"));
             event.setMessage(" ");
         }
     }
@@ -193,8 +165,8 @@ implements Listener {
     public void onPLayerOpen(InventoryOpenEvent event) {
         Player player = (Player)event.getPlayer();
         if (player.hasMetadata("pv_name_edit")) {
-            player.removeMetadata("pv_name_edit", (Plugin)Arkkit.get());
-            player.sendMessage((Object)ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "Vault naming cancelled.");
+            player.removeMetadata("pv_name_edit", Arkkit.get());
+            player.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "Vault naming cancelled.");
         }
     }
 
@@ -202,12 +174,12 @@ implements Listener {
     public void onInventoryClose(InventoryCloseEvent event) {
         Player player;
         if (event.getPlayer().hasMetadata("pv_icon_edit")) {
-            event.getPlayer().removeMetadata("pv_icon_edit", (Plugin)Arkkit.get());
+            event.getPlayer().removeMetadata("pv_icon_edit", Arkkit.get());
         }
         if ((player = (Player)event.getPlayer()).hasMetadata("viewing_pvs")) {
-            player.removeMetadata("viewing_pvs", (Plugin)Arkkit.get());
-            if (ChatColor.stripColor((String)event.getInventory().getName()).startsWith("Vault #")) {
-                Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Arkkit.get(), () -> player.chat("/pv"), 1L);
+            player.removeMetadata("viewing_pvs", Arkkit.get());
+            if (ChatColor.stripColor(event.getInventory().getName()).startsWith("Vault #")) {
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Arkkit.get(), () -> player.chat("/pv"), 1L);
             }
         }
     }
