@@ -31,8 +31,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.Lists;
 import com.google.common.collect.MapMaker;
 import org.arkhamnetwork.Arkkit.Arkkit;
@@ -56,7 +59,8 @@ import org.bukkit.plugin.Plugin;
 
 public class NewTradeListener
 implements Listener {
-    private Map<UUID, Long> expiringClickMap = new MapMaker().expireAfterWrite(1L, TimeUnit.SECONDS).makeMap();
+    //private Map<UUID, Long> expiringClickMap = new MapMaker().expireAfterWrite(1L, TimeUnit.SECONDS).makeMap();
+    private Cache<UUID, Long> expiringClickMap = CacheBuilder.newBuilder().expireAfterWrite(1L, TimeUnit.SECONDS).build();
 
     @EventHandler
     public void onInventoryOpen(InventoryOpenEvent e) {
@@ -80,13 +84,13 @@ implements Listener {
                 return;
             }
             if (e.getRawSlot() == 0) {
-                Long expiration = this.expiringClickMap.get(p1.getUniqueId());
+                Long expiration = this.expiringClickMap.asMap().get(p1.getUniqueId());
                 if (expiration != null && expiration > System.currentTimeMillis()) {
                     p1.sendMessage(CC.Red + "You cannot click the accept pane that quickly!");
                     Bukkit.getLogger().info("Rate limiting " + p1.getName() + " from clicking accept, cooldown expiring: " + (expiration - System.currentTimeMillis()));
                     return;
                 }
-                this.expiringClickMap.put(p1.getUniqueId(), System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(1L));
+                this.expiringClickMap.asMap().put(p1.getUniqueId(), System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(1L));
                 if (e.getInventory().getItem(0).getDurability() == NewTrade.gray_button.getDurability()) {
                     e.getInventory().setItem(0, NewTrade.green_button);
                 } else {
@@ -142,7 +146,7 @@ implements Listener {
             if (e.getResult() != Event.Result.DENY) {
                 e.setResult(Event.Result.DENY);
             }
-            if ((expiration = this.expiringClickMap.get(e.getWhoClicked().getUniqueId())) != null && expiration > System.currentTimeMillis()) {
+            if ((expiration = this.expiringClickMap.asMap().get(e.getWhoClicked().getUniqueId())) != null && expiration > System.currentTimeMillis()) {
                 return;
             }
             Player p1 = (Player)e.getWhoClicked();

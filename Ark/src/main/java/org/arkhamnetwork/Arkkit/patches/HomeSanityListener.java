@@ -70,7 +70,7 @@ implements Listener {
         for (String home : u.getHomes()) {
             try {
                 Location homeLocation = u.getHome(home);
-                if (this.isValidHome(homeLocation) || AdminEvents.isAdminEventRunning && homeLocation.getWorld().getName().equals("world_event")) continue;
+                if (this.isValidHome(homeLocation) && homeLocation.getWorld().getName().equals("world_event")) continue;
                 Bukkit.getLogger().info("[Arkkit (SmarterEssentials)] Deleted invalid home '" + home + "' (" + (Object)homeLocation + ") for player " + e.getPlayer().getName() + " (" + e.getPlayer().getUniqueId() + ")");
                 u.delHome(home);
             }

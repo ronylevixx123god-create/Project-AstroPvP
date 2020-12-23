@@ -31,14 +31,14 @@ extends AbstractCommand {
         }
         try {
             UUID uuid = UUID.fromString(args[0]);
-            TimedInventory inv = ItemLinking.inventoryViews.get(uuid);
+            TimedInventory inv = ItemLinking.inventoryViews.asMap().get(uuid);
             if (inv == null) {
                 sender.sendMessage((Object)ChatColor.RED + "Invalid brag!");
                 return true;
             }
             if (inv.getExpiration() < System.currentTimeMillis()) {
                 sender.sendMessage((Object)ChatColor.RED + "Brag inventory expired!");
-                ItemLinking.inventoryViews.remove(uuid);
+                ItemLinking.inventoryViews.asMap().remove(uuid);
                 return true;
             }
             ((Player)sender).openInventory(inv.getInventory());

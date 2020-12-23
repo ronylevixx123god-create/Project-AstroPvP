@@ -120,7 +120,7 @@ implements Listener {
             }
             pl.setMetadata("last_senditem", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)System.currentTimeMillis()));
             if (bragShow) {
-                UUIDStorage storage = ItemLinking.recentlyAssignedIds.computeIfAbsent(pl.getUniqueId(), sto -> new UUIDStorage());
+                UUIDStorage storage = ItemLinking.recentlyAssignedIds.asMap().computeIfAbsent(pl.getUniqueId(), sto -> new UUIDStorage());
                 UUID newID = storage.generateUUID();
                 ItemLinking.inventoryViews.put(newID, new TimedInventory(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(10L), this.createCopy(pl)));
             }
@@ -209,7 +209,7 @@ implements Listener {
     }
 
     public void createNewBragInventory(Player player) {
-        UUIDStorage storage = ItemLinking.recentlyAssignedIds.computeIfAbsent(player.getUniqueId(), sto -> new UUIDStorage());
+        UUIDStorage storage = ItemLinking.recentlyAssignedIds.asMap().computeIfAbsent(player.getUniqueId(), sto -> new UUIDStorage());
         UUID newID = storage.generateUUID();
         ItemLinking.inventoryViews.put(newID, new TimedInventory(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(10L), this.createCopy(player)));
     }

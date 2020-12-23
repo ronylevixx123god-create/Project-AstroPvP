@@ -22,6 +22,8 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import com.compilex.CompilexPermissions.event.PermissionGroupAddEvent;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.MapMaker;
 import java.util.Map;
 import java.util.UUID;
@@ -42,8 +44,8 @@ import org.bukkit.inventory.ItemStack;
 
 final class EssentialsAddHomeItemListener
 implements Listener {
-    private Map<UUID, Long> cooldown = new MapMaker().expireAfterWrite(10L, TimeUnit.SECONDS).makeMap();
-
+    //private Map<UUID, Long> cooldown = new MapMaker().expireAfterWrite(10L, TimeUnit.SECONDS).makeMap();
+    private Cache<UUID, Long> cooldown = CacheBuilder.newBuilder().expireAfterWrite(10L, TimeUnit.SECONDS).build();
     EssentialsAddHomeItemListener() {
     }
 
@@ -59,7 +61,7 @@ implements Listener {
                 p.sendMessage(ChatColor.GRAY + "Upgrade your rank to unlock more homes.");
                 return;
             }
-            Long expiration = this.cooldown.get(p.getUniqueId());
+            Long expiration = this.cooldown.asMap().get(p.getUniqueId());
             if (expiration != null && expiration > System.currentTimeMillis()) {
                 e.setCancelled(true);
                 e.setUseItemInHand(Event.Result.DENY);

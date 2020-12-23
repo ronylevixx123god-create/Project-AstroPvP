@@ -23,6 +23,8 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.MapMaker;
 import net.milkbowl.vault.economy.Economy;
 import org.apache.commons.lang.StringUtils;
@@ -44,8 +46,10 @@ extends ArkPlugin {
     protected static boolean arkham_prestige = false;
     protected static Economy economy = null;
     public CommandViewBrag viewBrag;
-    public static Map<UUID, TimedInventory> inventoryViews = new MapMaker().expireAfterWrite(10L, TimeUnit.MINUTES).makeMap();
-    public static Map<UUID, UUIDStorage> recentlyAssignedIds = new MapMaker().expireAfterWrite(5L, TimeUnit.MINUTES).makeMap();
+    //public static Map<UUID, TimedInventory> inventoryViews = new MapMaker().expireAfterWrite(10L, TimeUnit.MINUTES).makeMap();
+    public static Cache<UUID, TimedInventory> inventoryViews = CacheBuilder.newBuilder().expireAfterWrite(10L, TimeUnit.MINUTES).build();
+    //public static Map<UUID, UUIDStorage> recentlyAssignedIds = new MapMaker().expireAfterWrite(5L, TimeUnit.MINUTES).makeMap();
+    public static Cache<UUID, UUIDStorage> recentlyAssignedIds = CacheBuilder.newBuilder().expireAfterWrite(10L, TimeUnit.MINUTES).build();
     public ItemLinking(Plugin p) {
         super(p);
     }
@@ -108,7 +112,7 @@ extends ArkPlugin {
         String after = whole.substring(index + spliterator.length());
         if (bragShow && sender != null) {
             JSONMessage message = new JSONMessage(before.trim() + " ", ChatColor.WHITE);
-            UUID uuid = recentlyAssignedIds.computeIfAbsent(sender.getUniqueId(), e -> new UUIDStorage()).getUUID();
+            UUID uuid = recentlyAssignedIds.asMap().computeIfAbsent(sender.getUniqueId(), e -> new UUIDStorage()).getUUID();
             ChatColor color = ChatColor.GOLD;
             message.addRunCommand((Object)color + ChatColor.ITALIC.toString() + sender.getName() + "'s Inventory", color, "/brag " + uuid, (Object)ChatColor.GRAY + "Click to view " + CC.GrayU + sender.getName() + CC.Gray + "'s inventory!");
             message.addText(after);

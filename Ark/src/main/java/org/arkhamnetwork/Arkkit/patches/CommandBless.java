@@ -22,6 +22,8 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.MapMaker;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
@@ -34,8 +36,8 @@ import org.bukkit.potion.PotionEffectType;
 
 final class CommandBless
 extends AbstractCommand {
-    private Map<UUID, Long> blessCooldown = new MapMaker().expireAfterWrite(5L, TimeUnit.MINUTES).makeMap();
-
+    //private Map<UUID, Long> blessCooldown = new MapMaker().expireAfterWrite(5L, TimeUnit.MINUTES).makeMap();
+    private Cache<UUID, Long> blessCooldown = CacheBuilder.newBuilder().expireAfterWrite(5L, TimeUnit.MINUTES).build();
     public CommandBless(String command, String usage, String description, List<String> aliases) {
         super(command, usage, description, aliases);
     }
@@ -48,7 +50,7 @@ extends AbstractCommand {
             return true;
         }
         Player pl = (Player)sender;
-        Long value = this.blessCooldown.get(pl.getUniqueId());
+        Long value = this.blessCooldown.asMap().get(pl.getUniqueId());
         if (value != null && value > System.currentTimeMillis() && !pl.isOp()) {
             pl.sendMessage(CC.RedB + "(!) " + CC.Red + "You must wait " + TimeUtils.formatFutureTime((long)value) + " before using /bless again!");
             return true;

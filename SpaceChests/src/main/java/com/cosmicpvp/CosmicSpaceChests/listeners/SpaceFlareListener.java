@@ -28,6 +28,8 @@ import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.cosmicpvp.CosmicSpaceChests.utils.LocationUtils;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.TimeUtils;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.MapMaker;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
@@ -52,7 +54,8 @@ import org.bukkit.inventory.ItemStack;
 public class SpaceFlareListener
 implements Listener {
     private static HashSet<Location> spaceFlares;
-    private Map<UUID, Long> failedSpaceFlareAttempts = new MapMaker().expireAfterWrite(30L, TimeUnit.SECONDS).makeMap();
+    //private Map<UUID, Long> failedSpaceFlareAttempts = new MapMaker().expireAfterWrite(30L, TimeUnit.SECONDS).makeMap();
+    private Cache<UUID, Long> failedSpaceFlareAttempts = CacheBuilder.newBuilder().expireAfterWrite(30L, TimeUnit.SECONDS).build();
 
     public SpaceFlareListener() {
         spaceFlares = new HashSet();
@@ -81,7 +84,7 @@ implements Listener {
                 return;
             }
             Player p = e.getPlayer();
-            Long expiration = this.failedSpaceFlareAttempts.get(p.getUniqueId());
+            Long expiration = this.failedSpaceFlareAttempts.asMap().get(p.getUniqueId());
             if (expiration != null && expiration > System.currentTimeMillis()) {
                 p.sendMessage(CC.RedB + "(!) " + CC.Red + "Please wait " + CC.RedB + TimeUtils.formatFutureTime((long)expiration) + CC.Red + " before attempting to use another Space Flare!");
                 return;
