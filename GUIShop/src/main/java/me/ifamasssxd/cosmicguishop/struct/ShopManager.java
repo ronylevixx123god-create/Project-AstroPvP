@@ -264,7 +264,7 @@ public class ShopManager {
                     dura = 0;
                 }
                 try {
-                    displayItem = data.getType() == Material.MOB_SPAWNER ? (data.getData() == 101 ? MysteryMobSpawners.getMysteryMobSpawner() : this.silkSpawners.newSpawnerItem(data.getData(), (Object) ChatColor.YELLOW + ChatColor.BOLD.toString() + "%creature% Spawner", 1, false)) : null;
+                    displayItem = data.getType() == Material.MOB_SPAWNER ? (data.getData() == 101 ? MysteryMobSpawners.getMysteryMobSpawner() : this.silkSpawners.newSpawnerItem(data.getData(), ChatColor.YELLOW + ChatColor.BOLD.toString() + "%creature% Spawner", 1, false)) : null;
                 } catch (Exception e) {
                     Bukkit.getLogger().info("Problem loading " + data.getData() + " Spawner!");
                     e.printStackTrace();
