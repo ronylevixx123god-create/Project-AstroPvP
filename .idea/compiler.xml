@@ -8,16 +8,16 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="GUIShop" />
+        <module name="Ark" />
         <module name="Utils" />
         <module name="AuctionHouse" />
-        <module name="Ark" />
+        <module name="SpaceChests" />
         <module name="Arkkit" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Bosses" target="1.8" />
       <module name="MoneyNotes" target="1.8" />
-      <module name="SpaceChests" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
