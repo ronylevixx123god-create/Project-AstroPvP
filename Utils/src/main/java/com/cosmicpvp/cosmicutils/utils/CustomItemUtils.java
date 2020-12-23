@@ -1,35 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  com.compilex.CosmicCrate.api.CCAPI
- *  com.compilex.CosmicCrate.libs.Version
- *  com.compilex.CosmicCustomCreepers.enums.CreeperTypes
- *  com.cosmicpvp.CosmicBossEggs.boss.type.Boss
- *  com.cosmicpvp.CosmicBossEggs.boss.type.Bosses
- *  com.cosmicpvp.CosmicBossEggs.util.MiscUtil
- *  com.cosmicpvp.CosmicRankQuests.utils.PlayerRankUtils
- *  com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI
- *  com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity
- *  com.cosmicpvp.CosmicSpaceChests.listeners.EnvoySummonItemListener
- *  com.gmail.nossr50.datatypes.skills.SkillType
- *  com.rit.sucy.CustomEnchantment
- *  com.rit.sucy.EnchantmentAPI
- *  me.cosmicpvp.CosmicGlobalKits.libs.FallenHero
- *  me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits
- *  me.ifamasssxd.cosmicbosses.struct.enums.BossType
- *  me.ifamasssxd.cosmicbosses.utils.BossEggUtils
- *  me.ifamasssxd.cosmicconquest.CosmicConquestAPI
- *  me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKit
- *  me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKits
- *  me.ifamasssxd.killtracker.KillTrackerAPI
- *  org.arkhamnetwork.Arkkit.patches.ItemNametag
- *  org.arkhamnetwork.Arkkit.patches.McmmoCredits
- *  org.arkhamnetwork.CosmicCustomTNT.enums.TNTTypes
- *  org.arkhamnetwork.CosmicMoneyNotes.ArkhamMoneyNotesAPI
- *  org.arkhamnetwork.enchantments.EnchantmentBook
- *  org.arkhamnetwork.enchantments.util.TieredEnchantments
- */
 package com.cosmicpvp.cosmicutils.utils;
 
 import com.compilex.CosmicCrate.api.CCAPI;
@@ -59,7 +27,6 @@ import me.ifamasssxd.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.Arkkit.patches.ItemNametag;
 import org.arkhamnetwork.Arkkit.patches.McmmoCredits;
 import org.arkhamnetwork.CosmicCustomTNT.enums.TNTTypes;
-import org.arkhamnetwork.CosmicMoneyNotes.ArkhamMoneyNotesAPI;
 import org.arkhamnetwork.enchantments.EnchantmentBook;
 import org.arkhamnetwork.enchantments.util.TieredEnchantments;
 import org.bukkit.Bukkit;
@@ -160,11 +127,11 @@ public class CustomItemUtils {
         if (crateName.equalsIgnoreCase("heroic")) {
             return CCAPI.getHeroicMysteryCrate();
         }
-        return CCAPI.getCosmicCrate((Version) Version.valueOf((String) crateName), (String) username);
+        return CCAPI.getCosmicCrate(Version.valueOf(crateName), username);
     }
 
     public static ItemStack getXpBottle(int xpAmount, String enchanter) {
-        return CustomItemUtils.buildItem(Material.EXP_BOTTLE, (short) 0, ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "Experience Bottle" + (Object) ((Object) ChatColor.GRAY) + " (Throw)", (Object) ((Object) ChatColor.LIGHT_PURPLE) + "Value " + (Object) ((Object) ChatColor.WHITE) + xpAmount + " XP", (Object) ((Object) ChatColor.LIGHT_PURPLE) + "Enchanter " + (Object) ((Object) ChatColor.WHITE) + enchanter);
+        return CustomItemUtils.buildItem(Material.EXP_BOTTLE, (short) 0, ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "Experience Bottle" + ChatColor.GRAY + " (Throw)", ChatColor.LIGHT_PURPLE + "Value " + ChatColor.WHITE + xpAmount + " XP", ChatColor.LIGHT_PURPLE + "Enchanter " + ChatColor.WHITE + enchanter);
     }
 
     public static ItemStack getMoneyNote(String signer, int amount) {
@@ -176,20 +143,20 @@ public class CustomItemUtils {
     }
 
     public static ItemStack getBossEgg(Bosses b) {
-        return MiscUtil.getBossEgg((Boss) b.b);
+        return MiscUtil.getBossEgg(b.b);
     }
 
     public static ItemStack getEnchantmentBook(CustomEnchantment ce) {
-        return EnchantmentBook.getEnchantmentBook((CustomEnchantment) ce, (int) (new Random().nextInt(ce.getMaxLevel()) + 1));
+        return EnchantmentBook.getEnchantmentBook(ce, new Random().nextInt(ce.getMaxLevel()) + 1);
     }
 
     public static ItemStack getEnchantmentBook(CustomEnchantment ce, int level) {
-        return EnchantmentBook.getEnchantmentBook((CustomEnchantment) ce, (int) level);
+        return EnchantmentBook.getEnchantmentBook(ce, level);
     }
 
     public static ItemStack getRandomEnchantmentBook() {
         CustomEnchantment ce = EnchantmentAPI.getEnchantments().toArray(new CustomEnchantment[0])[new Random().nextInt(EnchantmentAPI.getEnchantments().size())];
-        return EnchantmentBook.getEnchantmentBook(ce, (int) (new Random().nextInt(ce.getMaxLevel()) + 1));
+        return EnchantmentBook.getEnchantmentBook(ce, new Random().nextInt(ce.getMaxLevel()) + 1);
     }
 
     public static ItemStack getMysterySoulEnchantmentBook() {
