@@ -15,6 +15,12 @@ public class Range {
         this.max = max;
     }
 
+    public Range(int min, int max, double chanceToAdd) {
+        this.min = min;
+        this.max = max;
+        this.chanceToAdd = chanceToAdd;
+    }
+
     public static int between(int min, int maxInclusive) {
         int dif = maxInclusive - min;
         if (dif <= 0) {
@@ -25,12 +31,6 @@ public class Range {
 
     public int getRandom() {
         return Range.between(this.min, this.max);
-    }
-
-    public Range(int min, int max, double chanceToAdd) {
-        this.min = min;
-        this.max = max;
-        this.chanceToAdd = chanceToAdd;
     }
 
     public int getMin() {

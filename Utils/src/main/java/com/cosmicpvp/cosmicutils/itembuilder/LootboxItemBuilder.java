@@ -7,7 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 public class LootboxItemBuilder
-extends ItemBuilder {
+        extends ItemBuilder {
     private String lootboxInternal;
 
     public LootboxItemBuilder(String internal) {

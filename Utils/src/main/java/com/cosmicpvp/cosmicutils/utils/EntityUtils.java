@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  me.ifamasssxd.cosmicbosses.utils.BossUtils
  *  net.minecraft.server.v1_7_R4.Entity
@@ -28,8 +28,12 @@ public class EntityUtils {
     private static boolean bossesEnabled;
     private static Field ghastTarget;
 
+    static {
+        bossesEnabled = new File("plugins/CosmicBosses.jar").exists();
+    }
+
     public static void removeAI(org.bukkit.entity.Entity entity) {
-        EntityLiving ent = (EntityLiving)((CraftEntity)entity).getHandle();
+        EntityLiving ent = (EntityLiving) ((CraftEntity) entity).getHandle();
         ent.fromMobSpawner = true;
     }
 
@@ -37,8 +41,7 @@ public class EntityUtils {
         if (endDragonClass == null && bossesEnabled) {
             try {
                 endDragonClass = Class.forName("me.ifamasssxd.cosmicbosses.bosses.dragon.EndDragon");
-            }
-            catch (ClassNotFoundException e) {
+            } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }
@@ -54,12 +57,12 @@ public class EntityUtils {
 
     public static void setGhastTarget(org.bukkit.entity.Entity entity, org.bukkit.entity.Entity target) throws NoSuchFieldException, IllegalAccessException {
         if (entity instanceof Ghast) {
-            Ghast ghast = (Ghast)entity;
-            EntityGhast entGhast = ((CraftGhast)ghast).getHandle();
-            CraftEntity craftEnt = (CraftEntity)target;
+            Ghast ghast = (Ghast) entity;
+            EntityGhast entGhast = ((CraftGhast) ghast).getHandle();
+            CraftEntity craftEnt = (CraftEntity) target;
             EntityLiving toSet = null;
             if (target != null && craftEnt.getHandle() instanceof EntityLiving) {
-                toSet = (EntityLiving)craftEnt.getHandle();
+                toSet = (EntityLiving) craftEnt.getHandle();
             }
             entGhast.setGoalTarget(toSet);
             ReflectionUtils.setObject(entGhast, EntityUtils.getGhastTarget(), toSet);
@@ -68,21 +71,16 @@ public class EntityUtils {
 
     public static org.bukkit.entity.Entity getGhastTarget(org.bukkit.entity.Entity entity) {
         if (entity instanceof Ghast) {
-            Ghast ghast = (Ghast)entity;
-            EntityGhast entGhast = ((CraftGhast)ghast).getHandle();
+            Ghast ghast = (Ghast) entity;
+            EntityGhast entGhast = ((CraftGhast) ghast).getHandle();
             try {
-                Entity internal = (Entity)EntityUtils.getGhastTarget().get(entGhast);
+                Entity internal = (Entity) EntityUtils.getGhastTarget().get(entGhast);
                 return internal.getBukkitEntity();
-            }
-            catch (IllegalAccessException | NoSuchFieldException e) {
+            } catch (IllegalAccessException | NoSuchFieldException e) {
                 e.printStackTrace();
             }
         }
         return null;
-    }
-
-    static {
-        bossesEnabled = new File("plugins/CosmicBosses.jar").exists();
     }
 }
 

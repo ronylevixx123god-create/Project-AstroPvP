@@ -3,7 +3,6 @@
  */
 package com.cosmicpvp.cosmicutils.compat;
 
-import com.cosmicpvp.cosmicutils.compat.RParam;
 import java.util.LinkedList;
 import java.util.List;
 

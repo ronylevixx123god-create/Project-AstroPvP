@@ -5,15 +5,16 @@ package com.cosmicpvp.cosmicutils.utils;
 
 import com.cosmicpvp.cosmicutils.struct.log.CosmicLog;
 import com.google.common.base.Splitter;
-import java.util.Iterator;
-import java.util.Random;
-import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
+
+import java.util.Iterator;
+import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class UserScoreboard {
     private final Scoreboard scoreboard;
@@ -45,14 +46,14 @@ public class UserScoreboard {
         this.scoreboard.getObjective("scoreboard").setDisplaySlot(slot);
     }
 
-    public void setName(String name) {
-        this.getClass();
-        this.scoreboard.getObjective("scoreboard").setDisplayName(name);
-    }
-
     public String getName() {
         this.getClass();
         return this.scoreboard.getObjective("scoreboard").getDisplayName();
+    }
+
+    public void setName(String name) {
+        this.getClass();
+        this.scoreboard.getObjective("scoreboard").setDisplayName(name);
     }
 
     public void addLongLine(int id, String whole, int score) {
@@ -132,9 +133,9 @@ public class UserScoreboard {
     }
 
     public void clear() {
-        Iterator<Object> iterator = ((ConcurrentHashMap.KeySetView)this.storedLines.keySet()).iterator();
+        Iterator<Object> iterator = ((ConcurrentHashMap.KeySetView) this.storedLines.keySet()).iterator();
         while (iterator.hasNext()) {
-            int lines = (Integer)iterator.next();
+            int lines = (Integer) iterator.next();
             this.removeLine(lines);
         }
         for (Team t : this.getScoreboard().getTeams()) {

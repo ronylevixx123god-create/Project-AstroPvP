@@ -3,22 +3,22 @@
  */
 package com.cosmicpvp.cosmicutils.itembuilder;
 
-import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.ItemUtils;
 import com.google.common.collect.Lists;
-import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.List;
+
 public class EssentialsItemBuilder
-extends ItemBuilder {
+        extends ItemBuilder {
     private String essentialsString;
     private ItemStack parsedItem;
 
     public EssentialsItemBuilder(String essentialsString) {
-        super((Material)null, 0);
+        super((Material) null, 0);
         this.essentialsString = essentialsString;
         List<ItemStack> retr = ItemUtils.parseItemsIntoItemStacks(Lists.newArrayList(essentialsString));
         if (retr == null) {

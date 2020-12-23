@@ -3,32 +3,33 @@
  */
 package com.cosmicpvp.cosmicutils.customevents;
 
-import java.util.List;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
+
 public class AlchemistTradeEvent
-extends Event {
+        extends Event {
+    public static HandlerList list = new HandlerList();
     public Player player;
     public List<ItemStack> tradedItems;
     public List<ItemStack> willReceive;
-    public static HandlerList list = new HandlerList();
 
-    @Override
-    public HandlerList getHandlers() {
-        return list;
+    public AlchemistTradeEvent(Player player, List<ItemStack> tradedItems, List<ItemStack> willReceive) {
+        this.player = player;
+        this.tradedItems = tradedItems;
+        this.willReceive = willReceive;
     }
 
     public static HandlerList getHandlerList() {
         return list;
     }
 
-    public AlchemistTradeEvent(Player player, List<ItemStack> tradedItems, List<ItemStack> willReceive) {
-        this.player = player;
-        this.tradedItems = tradedItems;
-        this.willReceive = willReceive;
+    @Override
+    public HandlerList getHandlers() {
+        return list;
     }
 }
 

@@ -57,7 +57,7 @@ final class ParticleEffectPacket {
         if (this.cachedPacket != null) {
             return this.cachedPacket;
         }
-        return (Packet)ParticleEffect.createPacket(this.effect, this.l, this.offsetX, this.offsetY, this.offsetZ, this.speed, this.amount);
+        return (Packet) ParticleEffect.createPacket(this.effect, this.l, this.offsetX, this.offsetY, this.offsetZ, this.speed, this.amount);
     }
 
     public ParticleEffect getEffect() {

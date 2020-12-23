@@ -4,13 +4,6 @@
 package com.cosmicpvp.cosmicutils.itembuilder;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -21,18 +14,21 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.potion.Potion;
 
+import java.text.SimpleDateFormat;
+import java.util.*;
+
 public class ItemBuilder {
     private static SimpleDateFormat format = new SimpleDateFormat("EEE MM/dd/yy");
-    private Material mat;
-    protected int amount;
-    private short data;
-    protected String title = null;
     protected final List<String> lore = new ArrayList<String>();
     private final HashMap<Enchantment, Integer> enchants = new HashMap();
     private final HashMap<Enchantment, Integer> storedBookEnchants = new HashMap();
+    public ItemStack original;
+    protected int amount;
+    protected String title = null;
+    private Material mat;
+    private short data;
     private Color color;
     private Potion potion;
-    public ItemStack original;
 
     public ItemBuilder(ItemStack original) {
         this.original = original;
@@ -66,11 +62,6 @@ public class ItemBuilder {
         return this;
     }
 
-    public ItemBuilder setType(Material mat) {
-        this.mat = mat;
-        return this;
-    }
-
     public ItemBuilder addStoredEnchantment(Enchantment enchantment, int level) {
         this.storedBookEnchants.put(enchantment, level);
         return this;
@@ -88,7 +79,7 @@ public class ItemBuilder {
         return this;
     }
 
-    public ItemBuilder addLoreLines(String ... lore) {
+    public ItemBuilder addLoreLines(String... lore) {
         for (String line : lore) {
             this.addLoreLine(line.replace("_", " "));
         }
@@ -96,7 +87,7 @@ public class ItemBuilder {
     }
 
     public ItemBuilder addLore(String lore) {
-        this.lore.add((Object)((Object)ChatColor.GRAY) + lore);
+        this.lore.add((Object) ((Object) ChatColor.GRAY) + lore);
         return this;
     }
 
@@ -105,13 +96,6 @@ public class ItemBuilder {
             this.enchants.remove(enchant);
         }
         this.enchants.put(enchant, level);
-        return this;
-    }
-
-    public ItemBuilder setColor(Color color) {
-        if (this.mat.name().contains("LEATHER_")) {
-            this.color = color;
-        }
         return this;
     }
 
@@ -149,14 +133,14 @@ public class ItemBuilder {
             meta.setLore(this.lore);
         }
         if (meta instanceof LeatherArmorMeta) {
-            ((LeatherArmorMeta)meta).setColor(this.color);
+            ((LeatherArmorMeta) meta).setColor(this.color);
         }
         if (!this.storedBookEnchants.isEmpty() && meta instanceof EnchantmentStorageMeta) {
-            EnchantmentStorageMeta storage = (EnchantmentStorageMeta)meta;
+            EnchantmentStorageMeta storage = (EnchantmentStorageMeta) meta;
             for (Enchantment ench2 : storage.getStoredEnchants().keySet()) {
                 storage.removeStoredEnchant(ench2);
             }
-            this.storedBookEnchants.forEach((ench, level) -> storage.addStoredEnchant((Enchantment)ench, (int)level, true));
+            this.storedBookEnchants.forEach((ench, level) -> storage.addStoredEnchant((Enchantment) ench, (int) level, true));
         }
         item.setItemMeta(meta);
         item.addUnsafeEnchantments(this.enchants);
@@ -173,7 +157,7 @@ public class ItemBuilder {
             newBuilder.addLore(string);
         }
         for (Map.Entry entry : this.enchants.entrySet()) {
-            newBuilder.addEnchantment((Enchantment)entry.getKey(), (Integer)entry.getValue());
+            newBuilder.addEnchantment((Enchantment) entry.getKey(), (Integer) entry.getValue());
         }
         newBuilder.setColor(this.color);
         newBuilder.potion = this.potion;
@@ -184,8 +168,17 @@ public class ItemBuilder {
         return this.mat;
     }
 
+    public ItemBuilder setType(Material mat) {
+        this.mat = mat;
+        return this;
+    }
+
     public String getTitle() {
         return this.title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public List<String> getLore() {
@@ -194,6 +187,13 @@ public class ItemBuilder {
 
     public Color getColor() {
         return this.color;
+    }
+
+    public ItemBuilder setColor(Color color) {
+        if (this.mat.name().contains("LEATHER_")) {
+            this.color = color;
+        }
+        return this;
     }
 
     public boolean hasEnchantment(Enchantment enchant) {
@@ -236,10 +236,6 @@ public class ItemBuilder {
             return false;
         }
         return true;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 }
 

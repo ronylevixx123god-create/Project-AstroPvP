@@ -2,12 +2,13 @@ package com.cosmicpvp.cosmicutils.itembuilder;
 
 import com.cosmicpvp.cosmicutils.utils.CustomItemUtils;
 import com.gmail.nossr50.datatypes.skills.SkillType;
-import java.util.concurrent.ThreadLocalRandom;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class McMMOSkillVoucherBuilder
-extends ItemBuilder {
+        extends ItemBuilder {
     private SkillType type;
     private int minLevel = -1;
     private int maxLevel = -1;
@@ -18,11 +19,11 @@ extends ItemBuilder {
         super(Material.PAPER);
         this.minLevel = minLevel;
         this.maxLevel = maxLevel;
-        this.type = SkillType.getSkill((String)skillType);
+        this.type = SkillType.getSkill((String) skillType);
     }
 
     public McMMOSkillVoucherBuilder(String type, int levels) {
-        this(SkillType.getSkill((String)type), levels);
+        this(SkillType.getSkill((String) type), levels);
     }
 
     public McMMOSkillVoucherBuilder(boolean random, int min, int max) {

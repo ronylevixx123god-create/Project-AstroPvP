@@ -6,12 +6,13 @@ package com.cosmicpvp.cosmicutils.itembuilder;
 import com.cosmicpvp.cosmicutils.gui.InventoryItem;
 import com.cosmicpvp.cosmicutils.math.Range;
 import com.google.common.collect.Lists;
-import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+
+import java.util.List;
 
 public class CosmicItemBuilder {
     protected ItemStack item;
@@ -26,7 +27,7 @@ public class CosmicItemBuilder {
         this.item = new ItemStack(type, 1);
     }
 
-    public CosmicItemBuilder(Material type, String name, String ... lore) {
+    public CosmicItemBuilder(Material type, String name, String... lore) {
         this.item = new ItemStack(type, 1);
         this.nameAndLore(name, lore);
     }
@@ -40,16 +41,16 @@ public class CosmicItemBuilder {
     }
 
     public CosmicItemBuilder setSkullOwner(String owner) {
-        if (this.item == null || !this.item.getType().equals((Object)Material.SKULL_ITEM)) {
+        if (this.item == null || !this.item.getType().equals((Object) Material.SKULL_ITEM)) {
             return this;
         }
-        SkullMeta sm = (SkullMeta)this.item.getItemMeta();
+        SkullMeta sm = (SkullMeta) this.item.getItemMeta();
         sm.setOwner(owner);
         this.item.setItemMeta(sm);
         return this;
     }
 
-    public CosmicItemBuilder nameAndLore(String name, String ... lore) {
+    public CosmicItemBuilder nameAndLore(String name, String... lore) {
         return this.nameAndLore(name, Lists.newArrayList(lore));
     }
 
@@ -74,7 +75,7 @@ public class CosmicItemBuilder {
         return this;
     }
 
-    public CosmicItemBuilder addLoreLine(String ... line) {
+    public CosmicItemBuilder addLoreLine(String... line) {
         return this.addLoreLines(Lists.newArrayList(line));
     }
 
@@ -85,7 +86,7 @@ public class CosmicItemBuilder {
         return this;
     }
 
-    public CosmicItemBuilder lore(String ... lore) {
+    public CosmicItemBuilder lore(String... lore) {
         return this.lore(Lists.newArrayList(lore));
     }
 

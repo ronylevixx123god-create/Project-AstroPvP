@@ -3,14 +3,12 @@
  */
 package com.cosmicpvp.cosmicutils.gui;
 
-import com.cosmicpvp.cosmicutils.gui.CosmicGUI;
-import com.cosmicpvp.cosmicutils.gui.InventoryItem;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class ConfirmGUI
-extends CosmicGUI {
+        extends CosmicGUI {
     private InventoryItem confirmItem;
     private InventoryItem cancelItem;
     private InventoryItem fillerItem;

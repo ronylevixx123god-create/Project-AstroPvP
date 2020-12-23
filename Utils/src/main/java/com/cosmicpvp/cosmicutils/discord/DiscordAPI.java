@@ -1,21 +1,20 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.google.gson.JsonObject
  */
 package com.cosmicpvp.cosmicutils.discord;
 
 import com.cosmicpvp.cosmicutils.CosmicUtils;
-import com.cosmicpvp.cosmicutils.discord.CosmicDiscordChannels;
-import com.cosmicpvp.cosmicutils.discord.DiscordChannel;
 import com.google.gson.JsonObject;
+import org.bukkit.Bukkit;
+
+import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.URL;
-import javax.net.ssl.HttpsURLConnection;
-import org.bukkit.Bukkit;
 
 public class DiscordAPI {
     public static void sendMessage(DiscordChannel channel, String message) {
@@ -31,7 +30,7 @@ public class DiscordAPI {
     private static void sendRequest(String url, String postData) {
         Bukkit.getScheduler().runTaskAsynchronously(CosmicUtils.get(), () -> {
             try {
-                HttpsURLConnection con = (HttpsURLConnection)new URL(url).openConnection();
+                HttpsURLConnection con = (HttpsURLConnection) new URL(url).openConnection();
                 con.setReadTimeout(5000);
                 con.setRequestMethod("POST");
                 con.setRequestProperty("Content-Type", "application/json");
@@ -44,8 +43,7 @@ public class DiscordAPI {
                 out.close();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
                 reader.close();
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         });

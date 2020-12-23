@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  net.minecraft.server.v1_7_R4.ItemStack
  *  net.minecraft.server.v1_7_R4.NBTBase
@@ -13,17 +13,6 @@
  */
 package com.cosmicpvp.cosmicutils.utils;
 
-import com.cosmicpvp.cosmicutils.utils.InventoryUtils;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInput;
-import java.io.DataInputStream;
-import java.io.DataOutput;
-import java.io.DataOutputStream;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftInventoryCustom;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
@@ -31,6 +20,11 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
+
+import java.io.*;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ItemSerialization {
     private static final int VERSION = 1;
@@ -61,7 +55,7 @@ public class ItemSerialization {
         for (ItemStack is : items) {
             NBTTagCompound outputObject = new NBTTagCompound();
             CraftItemStack craft = ItemSerialization.getCraftVersion(is);
-            net.minecraft.server.v1_8_R3.ItemStack nmsCopy = CraftItemStack.asNMSCopy((ItemStack)craft);
+            net.minecraft.server.v1_8_R3.ItemStack nmsCopy = CraftItemStack.asNMSCopy((ItemStack) craft);
             if (nmsCopy != null) {
                 nmsCopy.save(outputObject);
             }
@@ -76,7 +70,7 @@ public class ItemSerialization {
     public static List<ItemStack> itemListFromBase64(String data) {
         ArrayList<ItemStack> items = new ArrayList<ItemStack>();
         ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64Coder.decodeLines(data));
-        NBTTagCompound root = (NBTTagCompound)ItemSerialization.readNbt(new DataInputStream(inputStream), 0);
+        NBTTagCompound root = (NBTTagCompound) ItemSerialization.readNbt(new DataInputStream(inputStream), 0);
         if (root.getInt(NBT_VERSION) != 1) {
             throw new IllegalArgumentException("Incompatible version: " + root.getInt(NBT_VERSION));
         }
@@ -101,16 +95,16 @@ public class ItemSerialization {
         for (int i = 0; i < size; ++i) {
             NBTTagCompound outputObject = new NBTTagCompound();
             CraftItemStack craft = ItemSerialization.getCraftVersion(items[i]);
-            net.minecraft.server.v1_8_R3.ItemStack nmsCopy = CraftItemStack.asNMSCopy((ItemStack)craft);
+            net.minecraft.server.v1_8_R3.ItemStack nmsCopy = CraftItemStack.asNMSCopy((ItemStack) craft);
             if (nmsCopy != null) {
                 nmsCopy.save(outputObject);
             }
-            itemList.add((NBTBase)outputObject);
+            itemList.add((NBTBase) outputObject);
         }
         root.setString(NBT_TYPE, INVENTORY_CUSTOM);
         root.setInt(NBT_VERSION, 1);
-        root.set(NBT_ITEMS, (NBTBase)itemList);
-        ItemSerialization.writeNbt((NBTBase)root, dataOutput);
+        root.set(NBT_ITEMS, (NBTBase) itemList);
+        ItemSerialization.writeNbt((NBTBase) root, dataOutput);
         return outputStream.toByteArray();
     }
 
@@ -128,25 +122,25 @@ public class ItemSerialization {
         }
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         DataOutputStream dataOutput = new DataOutputStream(outputStream);
-        net.minecraft.server.v1_8_R3.ItemStack nmsCopy = CraftItemStack.asNMSCopy((ItemStack)item);
+        net.minecraft.server.v1_8_R3.ItemStack nmsCopy = CraftItemStack.asNMSCopy((ItemStack) item);
         NBTTagCompound root = new NBTTagCompound();
         nmsCopy.save(root);
-        ItemSerialization.writeNbt((NBTBase)root, dataOutput);
+        ItemSerialization.writeNbt((NBTBase) root, dataOutput);
         return outputStream.toByteArray();
     }
 
     public static ItemStack parseItemFromByteArray(byte[] array) {
         ByteArrayInputStream inputStream = new ByteArrayInputStream(array);
-        NBTTagCompound root = (NBTTagCompound)ItemSerialization.readNbt(new DataInputStream(inputStream), 0);
+        NBTTagCompound root = (NBTTagCompound) ItemSerialization.readNbt(new DataInputStream(inputStream), 0);
         if (root.isEmpty()) {
             return null;
         }
-        return CraftItemStack.asCraftMirror((net.minecraft.server.v1_8_R3.ItemStack)net.minecraft.server.v1_8_R3.ItemStack.createStack((NBTTagCompound)root));
+        return CraftItemStack.asCraftMirror((net.minecraft.server.v1_8_R3.ItemStack) net.minecraft.server.v1_8_R3.ItemStack.createStack((NBTTagCompound) root));
     }
 
     public static Inventory parseInventoryFromByteArray(byte[] array, String inventoryName) {
         ByteArrayInputStream inputStream = new ByteArrayInputStream(array);
-        NBTTagCompound root = (NBTTagCompound)ItemSerialization.readNbt(new DataInputStream(inputStream), 0);
+        NBTTagCompound root = (NBTTagCompound) ItemSerialization.readNbt(new DataInputStream(inputStream), 0);
         NBTTagList itemList = root.getList(NBT_ITEMS, 10);
         String type = root.getString(NBT_TYPE);
         return ItemSerialization.parseInventory(root, InventoryUtils.fitSize(itemList.size()), itemList, type, inventoryName);
@@ -163,7 +157,7 @@ public class ItemSerialization {
         String type = INVENTORY_CUSTOM;
         int size = inventory.getSize();
         if (inventory instanceof PlayerInventory) {
-            PlayerInventory playerInventory = (PlayerInventory)inventory;
+            PlayerInventory playerInventory = (PlayerInventory) inventory;
             root.setInt(NBT_PLAYER_HELD_INDEX, playerInventory.getHeldItemSlot());
             root.setString(NBT_PLAYER_NAME, playerInventory.getHolder().getName());
             type = INVENTORY_PLAYER;
@@ -172,22 +166,22 @@ public class ItemSerialization {
         for (int i = 0; i < size; ++i) {
             NBTTagCompound outputObject = new NBTTagCompound();
             CraftItemStack craft = ItemSerialization.getCraftVersion(inventory.getItem(i));
-            net.minecraft.server.v1_8_R3.ItemStack nmsCopy = CraftItemStack.asNMSCopy((ItemStack)craft);
+            net.minecraft.server.v1_8_R3.ItemStack nmsCopy = CraftItemStack.asNMSCopy((ItemStack) craft);
             if (nmsCopy != null) {
                 nmsCopy.save(outputObject);
             }
-            itemList.add((NBTBase)outputObject);
+            itemList.add((NBTBase) outputObject);
         }
         root.setString(NBT_TYPE, type);
         root.setInt(NBT_VERSION, 1);
-        root.set(NBT_ITEMS, (NBTBase)itemList);
-        ItemSerialization.writeNbt((NBTBase)root, dataOutput);
+        root.set(NBT_ITEMS, (NBTBase) itemList);
+        ItemSerialization.writeNbt((NBTBase) root, dataOutput);
         return Base64Coder.encodeLines(outputStream.toByteArray());
     }
 
     public static Inventory fromBase64(String data, String name, int size) {
         ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64Coder.decodeLines(data));
-        NBTTagCompound root = (NBTTagCompound)ItemSerialization.readNbt(new DataInputStream(inputStream), 0);
+        NBTTagCompound root = (NBTTagCompound) ItemSerialization.readNbt(new DataInputStream(inputStream), 0);
         if (root.getInt(NBT_VERSION) != 1) {
             throw new IllegalArgumentException("Incompatible version: " + root.getInt(NBT_VERSION));
         }
@@ -201,7 +195,7 @@ public class ItemSerialization {
         for (int i = 0; i < itemList.size(); ++i) {
             NBTTagCompound inputObject = itemList.get(i);
             if (i >= size || inputObject.isEmpty()) continue;
-            inventory.setItem(i, (ItemStack)CraftItemStack.asCraftMirror((net.minecraft.server.v1_8_R3.ItemStack)net.minecraft.server.v1_8_R3.ItemStack.createStack((NBTTagCompound)inputObject)));
+            inventory.setItem(i, (ItemStack) CraftItemStack.asCraftMirror((net.minecraft.server.v1_8_R3.ItemStack) net.minecraft.server.v1_8_R3.ItemStack.createStack((NBTTagCompound) inputObject)));
         }
         return inventory;
     }
@@ -211,16 +205,14 @@ public class ItemSerialization {
             try {
                 WRITE_NBT = NBTCompressedStreamTools.class.getDeclaredMethod("a", NBTBase.class, DataOutput.class);
                 WRITE_NBT.setAccessible(true);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 throw new IllegalStateException("Unable to find private write method.", e);
             }
         }
         try {
             WRITE_NBT.invoke(null, new Object[]{base, output});
-        }
-        catch (Exception e) {
-            throw new IllegalArgumentException("Unable to write " + (Object)base + " to " + output, e);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Unable to write " + (Object) base + " to " + output, e);
         }
     }
 
@@ -229,15 +221,13 @@ public class ItemSerialization {
             try {
                 READ_NBT = NBTCompressedStreamTools.class.getDeclaredMethod("a", DataInput.class, Integer.TYPE, NBTReadLimiter.class);
                 READ_NBT.setAccessible(true);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 throw new IllegalStateException("Unable to find private read method.", e);
             }
         }
         try {
-            return (NBTBase)READ_NBT.invoke(null, new Object[]{input, level, NBTReadLimiter.a});
-        }
-        catch (Exception e) {
+            return (NBTBase) READ_NBT.invoke(null, new Object[]{input, level, NBTReadLimiter.a});
+        } catch (Exception e) {
             throw new IllegalArgumentException("Unable to read from " + input, e);
         }
     }
@@ -253,10 +243,10 @@ public class ItemSerialization {
 
     private static CraftItemStack getCraftVersion(ItemStack stack) {
         if (stack instanceof CraftItemStack) {
-            return (CraftItemStack)stack;
+            return (CraftItemStack) stack;
         }
         if (stack != null) {
-            return CraftItemStack.asCraftCopy((ItemStack)stack);
+            return CraftItemStack.asCraftCopy((ItemStack) stack);
         }
         return null;
     }

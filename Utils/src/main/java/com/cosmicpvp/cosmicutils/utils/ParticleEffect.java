@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  net.minecraft.server.v1_7_R4.Packet
  *  net.minecraft.server.v1_7_R4.PacketPlayOutWorldEvent
@@ -10,16 +10,6 @@
 package com.cosmicpvp.cosmicutils.utils;
 
 import com.cosmicpvp.cosmicutils.CosmicUtils;
-import com.cosmicpvp.cosmicutils.utils.ParticleEffectPacket;
-import com.cosmicpvp.cosmicutils.utils.QueuedWorldEventPacket;
-import com.cosmicpvp.cosmicutils.utils.ReflectionUtils;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 import net.minecraft.server.v1_8_R3.Packet;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
 import org.bukkit.Bukkit;
@@ -27,6 +17,13 @@ import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.entity.Player;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public enum ParticleEffect {
     HUGE_EXPLOSION("hugeexplosion", 0),
@@ -65,29 +62,68 @@ public enum ParticleEffect {
     ICONCRACK("iconcrack", 33),
     TILECRACK("tilecrack", 34);
 
-    private String name;
-    private int id;
-    public static CopyOnWriteArrayList<ParticleEffectPacket> particlePacketQueue;
-    public static CopyOnWriteArrayList<QueuedWorldEventPacket> sendPacketNearbyQueue;
     private static final Map<String, ParticleEffect> NAME_MAP;
     private static final Map<Integer, ParticleEffect> ID_MAP;
+    public static CopyOnWriteArrayList<ParticleEffectPacket> particlePacketQueue;
+    public static CopyOnWriteArrayList<QueuedWorldEventPacket> sendPacketNearbyQueue;
     static Constructor<?> cachedConstructor;
     static Class<?> cachedPacketClass;
     private static Method getHandle;
     private static Method sendPacketMethod;
     private static Field cachedPlayerConnectionField;
 
+    static {
+        particlePacketQueue = new CopyOnWriteArrayList();
+        sendPacketNearbyQueue = new CopyOnWriteArrayList();
+        NAME_MAP = new HashMap<String, ParticleEffect>();
+        ID_MAP = new HashMap<Integer, ParticleEffect>();
+        for (ParticleEffect effect : ParticleEffect.values()) {
+            NAME_MAP.put(effect.name, effect);
+            ID_MAP.put(effect.id, effect);
+        }
+        Bukkit.getScheduler().runTaskTimerAsynchronously(CosmicUtils.get(), new Runnable() {
+            double radius = Math.pow(48.0, 2.0);
+
+            @Override
+            public void run() {
+                for (ParticleEffectPacket pep : particlePacketQueue) {
+                    try {
+                        Packet packet = pep.getPacket();
+                        if (pep.getP() != null) {
+                            ParticleEffect.sendPacket(pep.getP(), (Object) packet);
+                            continue;
+                        }
+                        String worldName = pep.getL().getWorld().getName();
+                        for (Map.Entry<String, Location> data : CosmicUtils.get().getPlayerLocations().entrySet()) {
+                            Player pl = CosmicUtils.get().getAsyncPlayerMap().get(data.getKey());
+                            Location loc = data.getValue();
+                            if (pl == null || !pl.isValid() || !loc.getWorld().getName().equalsIgnoreCase(worldName) || !(loc.distanceSquared(pep.getL()) <= this.radius))
+                                continue;
+                            ParticleEffect.sendPacket(pl, (Object) packet);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                particlePacketQueue.clear();
+            }
+        }, 2L, 2L);
+        Bukkit.getScheduler().runTaskTimerAsynchronously(CosmicUtils.get(), () -> {
+            for (QueuedWorldEventPacket data : sendPacketNearbyQueue) {
+                Location l = data.getLocation();
+                PacketPlayOutWorldEvent particles = data.getPacket();
+                ((CraftServer) Bukkit.getServer()).getServer().getPlayerList().sendPacketNearby((double) l.getBlockX(), (double) l.getBlockY(), (double) l.getBlockZ(), 16.0, ((CraftWorld) l.getWorld()).getHandle().dimension, (Packet) particles);
+            }
+            sendPacketNearbyQueue.clear();
+        }, 2L, 2L);
+    }
+
+    private String name;
+    private int id;
+
     private ParticleEffect(String name, int id) {
         this.name = name;
         this.id = id;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public int getId() {
-        return this.id;
     }
 
     public static ParticleEffect fromName(String name) {
@@ -146,9 +182,9 @@ public enum ParticleEffect {
         }
         Object packet = ParticleEffect.getPacket63WorldParticles();
         ParticleEffect.setValue(packet, "a", effect.name);
-        ParticleEffect.setValue(packet, "b", Float.valueOf((float)location.getX()));
-        ParticleEffect.setValue(packet, "c", Float.valueOf((float)location.getY()));
-        ParticleEffect.setValue(packet, "d", Float.valueOf((float)location.getZ()));
+        ParticleEffect.setValue(packet, "b", Float.valueOf((float) location.getX()));
+        ParticleEffect.setValue(packet, "c", Float.valueOf((float) location.getY()));
+        ParticleEffect.setValue(packet, "d", Float.valueOf((float) location.getZ()));
         ParticleEffect.setValue(packet, "e", Float.valueOf(offsetX));
         ParticleEffect.setValue(packet, "f", Float.valueOf(offsetY));
         ParticleEffect.setValue(packet, "g", Float.valueOf(offsetZ));
@@ -167,9 +203,9 @@ public enum ParticleEffect {
             modifier = "tilecrack_" + id + "_" + data;
         }
         ParticleEffect.setValue(packet, "a", modifier);
-        ParticleEffect.setValue(packet, "b", Float.valueOf((float)location.getX()));
-        ParticleEffect.setValue(packet, "c", Float.valueOf((float)location.getY()));
-        ParticleEffect.setValue(packet, "d", Float.valueOf((float)location.getZ()));
+        ParticleEffect.setValue(packet, "b", Float.valueOf((float) location.getX()));
+        ParticleEffect.setValue(packet, "c", Float.valueOf((float) location.getY()));
+        ParticleEffect.setValue(packet, "d", Float.valueOf((float) location.getZ()));
         ParticleEffect.setValue(packet, "e", Float.valueOf(offsetX));
         ParticleEffect.setValue(packet, "f", Float.valueOf(offsetY));
         ParticleEffect.setValue(packet, "g", Float.valueOf(offsetZ));
@@ -222,50 +258,12 @@ public enum ParticleEffect {
         }
     }
 
-    static {
-        particlePacketQueue = new CopyOnWriteArrayList();
-        sendPacketNearbyQueue = new CopyOnWriteArrayList();
-        NAME_MAP = new HashMap<String, ParticleEffect>();
-        ID_MAP = new HashMap<Integer, ParticleEffect>();
-        for (ParticleEffect effect : ParticleEffect.values()) {
-            NAME_MAP.put(effect.name, effect);
-            ID_MAP.put(effect.id, effect);
-        }
-        Bukkit.getScheduler().runTaskTimerAsynchronously(CosmicUtils.get(), new Runnable(){
-            double radius = Math.pow(48.0, 2.0);
+    public String getName() {
+        return this.name;
+    }
 
-            @Override
-            public void run() {
-                for (ParticleEffectPacket pep : particlePacketQueue) {
-                    try {
-                        Packet packet = pep.getPacket();
-                        if (pep.getP() != null) {
-                            ParticleEffect.sendPacket(pep.getP(), (Object)packet);
-                            continue;
-                        }
-                        String worldName = pep.getL().getWorld().getName();
-                        for (Map.Entry<String, Location> data : CosmicUtils.get().getPlayerLocations().entrySet()) {
-                            Player pl = CosmicUtils.get().getAsyncPlayerMap().get(data.getKey());
-                            Location loc = data.getValue();
-                            if (pl == null || !pl.isValid() || !loc.getWorld().getName().equalsIgnoreCase(worldName) || !(loc.distanceSquared(pep.getL()) <= this.radius)) continue;
-                            ParticleEffect.sendPacket(pl, (Object)packet);
-                        }
-                    }
-                    catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-                particlePacketQueue.clear();
-            }
-        }, 2L, 2L);
-        Bukkit.getScheduler().runTaskTimerAsynchronously(CosmicUtils.get(), () -> {
-            for (QueuedWorldEventPacket data : sendPacketNearbyQueue) {
-                Location l = data.getLocation();
-                PacketPlayOutWorldEvent particles = data.getPacket();
-                ((CraftServer)Bukkit.getServer()).getServer().getPlayerList().sendPacketNearby((double)l.getBlockX(), (double)l.getBlockY(), (double)l.getBlockZ(), 16.0, ((CraftWorld)l.getWorld()).getHandle().dimension, (Packet)particles);
-            }
-            sendPacketNearbyQueue.clear();
-        }, 2L, 2L);
+    public int getId() {
+        return this.id;
     }
 }
 

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  net.minecraft.server.v1_7_R4.NBTBase
  *  net.minecraft.server.v1_7_R4.NBTTagCompound
@@ -19,16 +19,16 @@ public class NBTTagCompoundBuilder {
 
     public NBTTagCompoundBuilder(NBTBase comp) {
         if (comp instanceof NBTTagCompound) {
-            this.compound = (NBTTagCompound)comp;
+            this.compound = (NBTTagCompound) comp;
         }
-    }
-
-    public boolean hasCompound() {
-        return this.compound != null;
     }
 
     public NBTTagCompoundBuilder() {
         this.compound = new NBTTagCompound();
+    }
+
+    public boolean hasCompound() {
+        return this.compound != null;
     }
 
     public boolean hasKey(String key) {
@@ -47,7 +47,7 @@ public class NBTTagCompoundBuilder {
 
     public Short getShort(String key) {
         if (this.compound == null) {
-            return (short)0;
+            return (short) 0;
         }
         return this.compound.getShort(key);
     }
@@ -131,7 +131,7 @@ public class NBTTagCompoundBuilder {
         if (this.compound == null) {
             this.compound = new NBTTagCompound();
         }
-        this.compound.set(key, (NBTBase)base.get());
+        this.compound.set(key, (NBTBase) base.get());
         return this;
     }
 

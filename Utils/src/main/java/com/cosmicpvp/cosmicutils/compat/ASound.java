@@ -3,10 +3,11 @@
  */
 package com.cosmicpvp.cosmicutils.compat;
 
-import java.util.Arrays;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+
+import java.util.Arrays;
 
 public enum ASound {
     AMBIENCE_CAVE("AMBIENCE_CAVE", "AMBIENT_CAVE"),
@@ -208,7 +209,7 @@ public enum ASound {
     private final String[] bukkitValues;
     private Sound bukkit = null;
 
-    private ASound(String ... bukkitValues) {
+    private ASound(String... bukkitValues) {
         this.bukkitValues = bukkitValues;
     }
 
@@ -218,8 +219,7 @@ public enum ASound {
                 try {
                     this.bukkit = Sound.valueOf(value);
                     return this.bukkit;
-                }
-                catch (IllegalArgumentException illegalArgumentException) {
+                } catch (IllegalArgumentException illegalArgumentException) {
                 }
             }
             Bukkit.getLogger().severe("Invalid org.bukkit.Sound enum names provided: " + Arrays.toString(this.bukkitValues));

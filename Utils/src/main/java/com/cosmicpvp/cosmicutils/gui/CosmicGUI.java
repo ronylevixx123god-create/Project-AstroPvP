@@ -4,14 +4,6 @@
 package com.cosmicpvp.cosmicutils.gui;
 
 import com.cosmicpvp.cosmicutils.CosmicUtils;
-import com.cosmicpvp.cosmicutils.gui.InventoryItem;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Consumer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -19,6 +11,10 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Consumer;
 
 public abstract class CosmicGUI {
     public static Set<String> allGUINames = new HashSet<String>();
@@ -44,9 +40,12 @@ public abstract class CosmicGUI {
         allGUINames.add(this.title);
     }
 
-    public CosmicGUI setParentGUI(CosmicGUI parent) {
-        this.parentGUI = parent;
-        return this;
+    public static CosmicGUI getActiveGUI(UUID uuid) {
+        return activeGUIs.get(uuid);
+    }
+
+    public static void removeGUI(UUID uuid) {
+        activeGUIs.remove(uuid);
     }
 
     public void onUnknownItemClick(InventoryClickEvent event) {
@@ -123,16 +122,13 @@ public abstract class CosmicGUI {
         return this.inventory.equals(inventory);
     }
 
-    public static CosmicGUI getActiveGUI(UUID uuid) {
-        return activeGUIs.get(uuid);
-    }
-
-    public static void removeGUI(UUID uuid) {
-        activeGUIs.remove(uuid);
-    }
-
     public CosmicGUI getParentGUI() {
         return this.parentGUI;
+    }
+
+    public CosmicGUI setParentGUI(CosmicGUI parent) {
+        this.parentGUI = parent;
+        return this;
     }
 
     public Map<Integer, InventoryItem> getInventoryItems() {

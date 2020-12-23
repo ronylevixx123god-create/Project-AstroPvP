@@ -1,20 +1,20 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.arkhamnetwork.enchantments.EnchantmentBook
  */
 package com.cosmicpvp.cosmicutils.itembuilder;
 
 import com.cosmicpvp.cosmicutils.CosmicUtils;
-import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
-import java.util.concurrent.ThreadLocalRandom;
 import org.arkhamnetwork.enchantments.EnchantmentBook;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class BlackScrollBuilder
-extends ItemBuilder {
+        extends ItemBuilder {
     private boolean heroicBlack;
     private int min;
     private int max;
@@ -31,7 +31,7 @@ extends ItemBuilder {
         if (!CosmicUtils.get().isEnchantmentsEnabled()) {
             return null;
         }
-        ItemStack retr = this.heroicBlack ? EnchantmentBook.getHeroicBlackscroll((int)this.min, (int)this.max, (boolean)true) : EnchantmentBook.getBlackScroll((int)(this.min + ThreadLocalRandom.current().nextInt(this.max - this.min + 1)));
+        ItemStack retr = this.heroicBlack ? EnchantmentBook.getHeroicBlackscroll((int) this.min, (int) this.max, (boolean) true) : EnchantmentBook.getBlackScroll((int) (this.min + ThreadLocalRandom.current().nextInt(this.max - this.min + 1)));
         if (this.amount > 1) {
             retr.setAmount(this.amount);
         }

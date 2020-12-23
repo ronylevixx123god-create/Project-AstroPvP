@@ -3,11 +3,10 @@
  */
 package com.cosmicpvp.cosmicutils.exceptions;
 
-import com.cosmicpvp.cosmicutils.exceptions.CosmicException;
 import com.cosmicpvp.cosmicutils.utils.CC;
 
 public class PrefixedException
-extends CosmicException {
+        extends CosmicException {
     public PrefixedException(String msg) {
         super(CC.RedB + "(!) " + CC.Red + msg);
     }

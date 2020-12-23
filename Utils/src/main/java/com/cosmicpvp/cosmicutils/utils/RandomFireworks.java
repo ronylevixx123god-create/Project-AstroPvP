@@ -3,18 +3,19 @@
  */
 package com.cosmicpvp.cosmicutils.utils;
 
-import java.util.ArrayList;
-import java.util.Random;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.Location;
 import org.bukkit.entity.Firework;
 import org.bukkit.inventory.meta.FireworkMeta;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 public class RandomFireworks {
-    private static RandomFireworks fireWorks = new RandomFireworks();
     public static ArrayList<Color> colors = new ArrayList();
     public static ArrayList<FireworkEffect.Type> types = new ArrayList();
+    private static RandomFireworks fireWorks = new RandomFireworks();
 
     public static RandomFireworks getManager() {
         if (colors == null || colors.size() == 0) {

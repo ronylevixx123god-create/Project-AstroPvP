@@ -3,13 +3,12 @@ package com.cosmicpvp.cosmicutils.itembuilder;
 import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.compilex.CosmicArmorSets.enums.WeaponedArmorSet;
 import com.cosmicpvp.cosmicutils.CosmicUtils;
-import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.struct.EquipmentType;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 public class ArmorSetItemBuilder
-extends ItemBuilder {
+        extends ItemBuilder {
     public String armorsetName;
     private EquipmentType type;
     private boolean transmog = false;
@@ -32,9 +31,9 @@ extends ItemBuilder {
         if (!CosmicUtils.get().isArmorsetEnabled()) {
             return null;
         }
-        ArmorSet set = ArmorSet.fromName((String)this.armorsetName);
+        ArmorSet set = ArmorSet.fromName((String) this.armorsetName);
         if (set != null) {
-            return this.type == EquipmentType.WEAPON && set.getArmorSetInfo() instanceof WeaponedArmorSet && Math.random() <= this.weaponChance ? ((WeaponedArmorSet)set.getArmorSetInfo()).getWeapon(this.transmog) : set.getArmorPeice(this.type.getIndex(), this.transmog);
+            return this.type == EquipmentType.WEAPON && set.getArmorSetInfo() instanceof WeaponedArmorSet && Math.random() <= this.weaponChance ? ((WeaponedArmorSet) set.getArmorSetInfo()).getWeapon(this.transmog) : set.getArmorPeice(this.type.getIndex(), this.transmog);
         }
         return null;
     }

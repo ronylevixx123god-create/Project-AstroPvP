@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  net.minecraft.server.v1_7_R4.ItemStack
  *  net.minecraft.server.v1_7_R4.NBTBase
@@ -30,7 +30,7 @@ public class NBTWrapper {
     public NBTWrapper(ItemStack item, boolean useDefault) {
         this.defaultItem = item;
         if (!useDefault) {
-            this.nmsItem = item instanceof CraftItemStack ? ((CraftItemStack)item).getHandle() : CraftItemStack.asNMSCopy(item);
+            this.nmsItem = item instanceof CraftItemStack ? ((CraftItemStack) item).getHandle() : CraftItemStack.asNMSCopy(item);
             this.compound = this.nmsItem.getTag();
         }
     }
@@ -41,7 +41,7 @@ public class NBTWrapper {
     }
 
     private void load() {
-        this.nmsItem = this.defaultItem instanceof CraftItemStack ? ((CraftItemStack)this.defaultItem).getHandle() : CraftItemStack.asNMSCopy((ItemStack)this.defaultItem);
+        this.nmsItem = this.defaultItem instanceof CraftItemStack ? ((CraftItemStack) this.defaultItem).getHandle() : CraftItemStack.asNMSCopy((ItemStack) this.defaultItem);
         this.compound = this.nmsItem.getTag();
     }
 
@@ -58,7 +58,7 @@ public class NBTWrapper {
             if (this.defaultItem == null) {
                 return null;
             }
-            this.nmsItem = CraftItemStack.asNMSCopy((ItemStack)this.defaultItem);
+            this.nmsItem = CraftItemStack.asNMSCopy((ItemStack) this.defaultItem);
         }
         if (this.compound == null) {
             this.compound = new NBTTagCompound();
@@ -73,7 +73,7 @@ public class NBTWrapper {
         if (this.foundIID != null) {
             return this.foundIID;
         }
-        this.foundIID = ItemID.getItemID((ItemStack)this.defaultItem);
+        this.foundIID = ItemID.getItemID((ItemStack) this.defaultItem);
         return this.foundIID;
     }
 
@@ -103,7 +103,7 @@ public class NBTWrapper {
         if (id == -1L) {
             return this;
         }
-        ItemID.blacklistIID((long)id, (String)reason);
+        ItemID.blacklistIID((long) id, (String) reason);
         return this;
     }
 
@@ -112,8 +112,8 @@ public class NBTWrapper {
             return this;
         }
         ItemStack item = this.build();
-        ItemID.assignItemID(null, (ItemStack)item);
-        this.foundIID = ItemID.getItemID((ItemStack)item);
+        ItemID.assignItemID(null, (ItemStack) item);
+        this.foundIID = ItemID.getItemID((ItemStack) item);
         this.defaultItem = item;
         this.load();
         return this;
@@ -297,7 +297,7 @@ public class NBTWrapper {
     }
 
     public NBTWrapper setGlowing() {
-        this.getOrCreateTag().set("ench", (NBTBase)new NBTTagListBuilder().build());
+        this.getOrCreateTag().set("ench", (NBTBase) new NBTTagListBuilder().build());
         return this;
     }
 

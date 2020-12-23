@@ -3,6 +3,11 @@
  */
 package com.cosmicpvp.cosmicutils.sql;
 
+import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.java.JavaPlugin;
+
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,12 +15,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Collections;
 import java.util.function.Consumer;
-import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
 
 public class Database {
+    protected Connection connection;
     private String url;
     private String host;
     private String username;
@@ -23,7 +25,6 @@ public class Database {
     private String database;
     private FileConfiguration config;
     private JavaPlugin owning;
-    protected Connection connection;
 
     public Database(JavaPlugin owning) {
         this.owning = owning;
@@ -66,14 +67,12 @@ public class Database {
             PreparedStatement pst = this.getConnection().prepareStatement(update);
             try {
                 pst.executeUpdate();
-            }
-            finally {
+            } finally {
                 if (Collections.singletonList(pst).get(0) != null) {
                     pst.close();
                 }
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -81,7 +80,7 @@ public class Database {
     /*
      * WARNING - Removed try catching itself - possible behaviour change.
      */
-    public void executeUpdate(String update, boolean async, Object ... params) {
+    public void executeUpdate(String update, boolean async, Object... params) {
         if (async && Bukkit.isPrimaryThread()) {
             Bukkit.getScheduler().scheduleAsyncDelayedTask(this.owning, () -> this.executeUpdate(update, false, params));
             return;
@@ -95,14 +94,12 @@ public class Database {
                     pst.setObject(sqlIndex++, o);
                 }
                 pst.executeUpdate();
-            }
-            finally {
+            } finally {
                 if (Collections.singletonList(pst).get(0) != null) {
                     pst.close();
                 }
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -129,14 +126,12 @@ public class Database {
                     rs.close();
                 }
                 return;
-            }
-            finally {
+            } finally {
                 if (Collections.singletonList(pst).get(0) != null) {
                     pst.close();
                 }
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             consumer.accept(null);
             return;
@@ -147,8 +142,7 @@ public class Database {
         try {
             Connection connect = this.getConnection();
             return connect != null;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return false;
         }
     }
@@ -162,8 +156,7 @@ public class Database {
                 this.connection.close();
             }
             this.connection = DriverManager.getConnection(this.url, this.username, this.password);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return this.connection;

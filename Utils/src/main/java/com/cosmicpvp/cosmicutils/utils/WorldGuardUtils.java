@@ -13,24 +13,16 @@ import com.sk89q.worldguard.protection.flags.Flag;
 import com.sk89q.worldguard.protection.flags.StateFlag;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-import java.util.stream.Collectors;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+
+import java.lang.reflect.Method;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class WorldGuardUtils {
     private static WorldGuardPlugin wg = null;
@@ -51,7 +43,8 @@ public class WorldGuardUtils {
         for (World world : Bukkit.getWorlds()) {
             ArrayList<ProtectedRegion> cachedRegions;
             RegionManager manager = wg.getGlobalRegionManager().get(world);
-            if (manager == null || (cachedRegions = Lists.newArrayList(manager.getRegions().values())).isEmpty()) continue;
+            if (manager == null || (cachedRegions = Lists.newArrayList(manager.getRegions().values())).isEmpty())
+                continue;
             cachedWorldRegions.put(world.getName(), cachedRegions);
         }
     }
@@ -65,7 +58,7 @@ public class WorldGuardUtils {
         if (found == null || found.isEmpty()) {
             return null;
         }
-        return (String)found.get(0);
+        return (String) found.get(0);
     }
 
     public static LinkedList<String> clearCachedRegions(Player player) {
@@ -74,36 +67,36 @@ public class WorldGuardUtils {
 
     public static void updateAllPlayerRegions() {
         CosmicUtils.get().getAsyncPlayerMap().values().forEach(player -> {
-                    List<ProtectedRegion> regionsList = cachedWorldRegions.get(player.getWorld().getName());
-                    HashMap<String, Integer> regionsInside = null;
-                    Location loc = player.getLocation();
-                    if (regionsList != null) {
-                        for (ProtectedRegion region : regionsList) {
-                            if (!region.contains(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ())) continue;
-                            if (regionsInside == null) {
-                                regionsInside = new HashMap<String, Integer>();
-                            }
-                            regionsInside.put(region.getId(), region.getPriority());
-                        }
+            List<ProtectedRegion> regionsList = cachedWorldRegions.get(player.getWorld().getName());
+            HashMap<String, Integer> regionsInside = null;
+            Location loc = player.getLocation();
+            if (regionsList != null) {
+                for (ProtectedRegion region : regionsList) {
+                    if (!region.contains(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ())) continue;
+                    if (regionsInside == null) {
+                        regionsInside = new HashMap<String, Integer>();
                     }
-                    LinkedList<Map.Entry<String, Integer>> retr = (regionsInside != null) ? new LinkedList<>(regionsInside.entrySet()) : null;
+                    regionsInside.put(region.getId(), region.getPriority());
+                }
+            }
+            LinkedList<Map.Entry<String, Integer>> retr = (regionsInside != null) ? new LinkedList<>(regionsInside.entrySet()) : null;
 
-                    if (retr != null) {
-                        retr.sort(Comparator.comparing(Map.Entry::getValue));
-                    }
+            if (retr != null) {
+                retr.sort(Comparator.comparing(Map.Entry::getValue));
+            }
 
-                    LinkedList<String> sorted = (retr != null) ? new LinkedList<>() : null;
+            LinkedList<String> sorted = (retr != null) ? new LinkedList<>() : null;
 
-                    if (sorted != null) {
-                        retr.forEach(ent -> sorted.add(ent.getKey()));
+            if (sorted != null) {
+                retr.forEach(ent -> sorted.add(ent.getKey()));
 
-                        if (!sorted.isEmpty()) {
-                            lastKnownPlayerRegions.put(player.getUniqueId(), sorted);
-                            return;
-                        }
-                    }
-                    lastKnownPlayerRegions.remove(player.getUniqueId());
-                });
+                if (!sorted.isEmpty()) {
+                    lastKnownPlayerRegions.put(player.getUniqueId(), sorted);
+                    return;
+                }
+            }
+            lastKnownPlayerRegions.remove(player.getUniqueId());
+        });
            /* LinkedList linkedList2 = sorted = retr != null ? new LinkedList() : null;
             if (sorted != null) {
                 retr.forEach(ent -> sorted.add(ent.getKey()));
@@ -159,7 +152,7 @@ public class WorldGuardUtils {
         return retr;
     }
 
-    public static boolean isInRegionsFast(Location location, String ... regionNames) {
+    public static boolean isInRegionsFast(Location location, String... regionNames) {
         return WorldGuardUtils.isInRegionsFast(location, Lists.newArrayList(regionNames));
     }
 
@@ -215,7 +208,7 @@ public class WorldGuardUtils {
         try {
             Class<?> bukkitUtil = wg.getClass().getClassLoader().loadClass("com.sk89q.worldguard.bukkit.BukkitUtil");
             Method toVector = bukkitUtil.getMethod("toVector", Block.class);
-            Vector blockVector = (Vector)toVector.invoke(null, l.getBlock());
+            Vector blockVector = (Vector) toVector.invoke(null, l.getBlock());
             List<String> regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs(blockVector);
             if (regionSet.size() < 0) {
                 return "";
@@ -236,8 +229,7 @@ public class WorldGuardUtils {
                 return_region = "";
             }
             return return_region;
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             return "";
         }
     }
@@ -268,8 +260,8 @@ public class WorldGuardUtils {
     @Deprecated
     public static boolean isPvPDisabled(Location l) {
         try {
-            BlockVector blockVector = BukkitUtil.toVector((Block)l.getBlock());
-            List<String> regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs((Vector)blockVector);
+            BlockVector blockVector = BukkitUtil.toVector((Block) l.getBlock());
+            List<String> regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs((Vector) blockVector);
             if (regionSet.size() < 1) {
                 try {
                     RegionManager rm = wg.getGlobalRegionManager().get(l.getWorld());
@@ -281,10 +273,10 @@ public class WorldGuardUtils {
                     }
                     ProtectedRegion region = rm.getRegion("__global__");
                     if (!region.getFlags().containsKey(DefaultFlag.PVP)) return false;
-                    if ((StateFlag.State)((Object)region.getFlags().get(DefaultFlag.PVP)) != StateFlag.State.DENY) return false;
+                    if ((StateFlag.State) ((Object) region.getFlags().get(DefaultFlag.PVP)) != StateFlag.State.DENY)
+                        return false;
                     return true;
-                }
-                catch (Exception err) {
+                } catch (Exception err) {
                     err.printStackTrace();
                     return true;
                 }
@@ -294,8 +286,9 @@ public class WorldGuardUtils {
             Iterator<String> iterator = regionSet.iterator();
             while (iterator.hasNext()) {
                 String region = iterator.next();
-                if (!wg.getGlobalRegionManager().get(l.getWorld()).getRegion(region).getFlags().containsKey(DefaultFlag.PVP)) continue;
-                StateFlag.State pvp_flag = (StateFlag.State)((Object)wg.getGlobalRegionManager().get(l.getWorld()).getRegion(region).getFlags().get(DefaultFlag.PVP));
+                if (!wg.getGlobalRegionManager().get(l.getWorld()).getRegion(region).getFlags().containsKey(DefaultFlag.PVP))
+                    continue;
+                StateFlag.State pvp_flag = (StateFlag.State) ((Object) wg.getGlobalRegionManager().get(l.getWorld()).getRegion(region).getFlags().get(DefaultFlag.PVP));
                 int region_priority = wg.getGlobalRegionManager().get(l.getWorld()).getRegion(region).getPriority();
                 if (return_priority == -1) {
                     return_flag = pvp_flag == StateFlag.State.DENY;
@@ -307,21 +300,19 @@ public class WorldGuardUtils {
                 return_priority = region_priority;
             }
             return return_flag;
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             return false;
         }
     }
 
     public static boolean isLavaFlowDisabled(Location l) {
         try {
-            BlockVector blockVector = BukkitUtil.toVector((Block)l.getBlock());
-            List<String> regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs((Vector)blockVector);
+            BlockVector blockVector = BukkitUtil.toVector((Block) l.getBlock());
+            List<String> regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs((Vector) blockVector);
             if (regionSet.size() < 1) {
                 try {
-                    return (StateFlag.State)((Object)wg.getGlobalRegionManager().get(l.getWorld()).getRegion("__global__").getFlags().get(DefaultFlag.LAVA_FLOW)) == StateFlag.State.DENY;
-                }
-                catch (Exception err) {
+                    return (StateFlag.State) ((Object) wg.getGlobalRegionManager().get(l.getWorld()).getRegion("__global__").getFlags().get(DefaultFlag.LAVA_FLOW)) == StateFlag.State.DENY;
+                } catch (Exception err) {
                     if (!(err instanceof NullPointerException)) {
                         err.printStackTrace();
                     }
@@ -331,8 +322,9 @@ public class WorldGuardUtils {
             boolean return_flag = false;
             int return_priority = -1;
             for (String region : regionSet) {
-                if (!wg.getGlobalRegionManager().get(l.getWorld()).getRegion(region).getFlags().containsKey(DefaultFlag.PVP)) continue;
-                StateFlag.State pvp_flag = (StateFlag.State)((Object)wg.getGlobalRegionManager().get(l.getWorld()).getRegion(region).getFlags().get(DefaultFlag.PVP));
+                if (!wg.getGlobalRegionManager().get(l.getWorld()).getRegion(region).getFlags().containsKey(DefaultFlag.PVP))
+                    continue;
+                StateFlag.State pvp_flag = (StateFlag.State) ((Object) wg.getGlobalRegionManager().get(l.getWorld()).getRegion(region).getFlags().get(DefaultFlag.PVP));
                 int region_priority = wg.getGlobalRegionManager().get(l.getWorld()).getRegion(region).getPriority();
                 if (return_priority == -1) {
                     return_flag = pvp_flag == StateFlag.State.DENY;
@@ -344,8 +336,7 @@ public class WorldGuardUtils {
                 return_priority = region_priority;
             }
             return return_flag;
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             return false;
         }
     }
@@ -355,7 +346,7 @@ public class WorldGuardUtils {
         if (plugin == null || !(plugin instanceof WorldGuardPlugin)) {
             return null;
         }
-        return (WorldGuardPlugin)plugin;
+        return (WorldGuardPlugin) plugin;
     }
 }
 

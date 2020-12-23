@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  me.confuser.barapi.BarAPI
  *  org.arkhamnetwork.Arkkit.Arkkit
@@ -10,13 +10,6 @@ package com.cosmicpvp.cosmicutils.utils;
 
 import com.cosmicpvp.cosmicutils.CosmicUtils;
 import com.cosmicpvp.cosmicutils.compat.ASound;
-import com.cosmicpvp.cosmicutils.utils.ReflectionUtils;
-import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.UUID;
-import java.util.stream.Collectors;
 import me.confuser.barapi.BarAPI;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
@@ -27,6 +20,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
+
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class PlayerUtil {
     static Method method;
@@ -43,9 +43,8 @@ public class PlayerUtil {
         if (name.length() > 16 && name.contains("-")) {
             try {
                 UUID uuid = UUID.fromString(name);
-                return Bukkit.getPlayer((UUID)uuid);
-            }
-            catch (Exception e) {
+                return Bukkit.getPlayer((UUID) uuid);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -56,12 +55,11 @@ public class PlayerUtil {
         try {
             Object retr = method.invoke(Bukkit.getServer(), new Object[0]);
             if (retr instanceof Player[]) {
-                Player[] players = (Player[])retr;
+                Player[] players = (Player[]) retr;
                 return Arrays.stream(players).collect(Collectors.toList());
             }
-            return (Collection)retr;
-        }
-        catch (Exception e) {
+            return (Collection) retr;
+        } catch (Exception e) {
             e.printStackTrace();
             Bukkit.getLogger().info("Unable to retreive online players from getOnlinePlayers reflection call!");
             return new HashSet();
@@ -85,8 +83,8 @@ public class PlayerUtil {
             return true;
         }
         Item itemEntity = player.getWorld().dropItem(player.getLocation(), item);
-        itemEntity.setMetadata("protectedItem", new FixedMetadataValue((Plugin)CosmicUtils.get(), protectionTimer == -1 ? (long)protectionTimer : System.currentTimeMillis() + (long)(protectionTimer * 1000)));
-        itemEntity.setMetadata("protectedOwner", new FixedMetadataValue((Plugin)CosmicUtils.get(), player.getUniqueId().toString()));
+        itemEntity.setMetadata("protectedItem", new FixedMetadataValue((Plugin) CosmicUtils.get(), protectionTimer == -1 ? (long) protectionTimer : System.currentTimeMillis() + (long) (protectionTimer * 1000)));
+        itemEntity.setMetadata("protectedOwner", new FixedMetadataValue((Plugin) CosmicUtils.get(), player.getUniqueId().toString()));
         ASound.CHICKEN_EGG_POP.play(player, 1.1f);
         return false;
     }
@@ -105,17 +103,17 @@ public class PlayerUtil {
         if (!CosmicUtils.get().isArkkitEnabled()) {
             return false;
         }
-        CombatLog.unflagCombat((Player)player);
-        player.removeMetadata("cl_combat", (Plugin)Arkkit.get());
+        CombatLog.unflagCombat((Player) player);
+        player.removeMetadata("cl_combat", (Plugin) Arkkit.get());
         return true;
     }
 
     public static void removeBossBar(Player player) {
-        BarAPI.removeBar((Player)player);
+        BarAPI.removeBar((Player) player);
     }
 
     public static void sendBossBar(Player player, String msg, float percentage) {
-        BarAPI.setMessage((Player)player, (String)msg, (float)percentage);
+        BarAPI.setMessage((Player) player, (String) msg, (float) percentage);
     }
 
     public static void sendBossBar(Player player, String msg) {
@@ -123,7 +121,7 @@ public class PlayerUtil {
     }
 
     public static void sendBossBar(Player player, String msg, int seconds) {
-        BarAPI.setMessage((Player)player, (String)msg, (int)seconds);
+        BarAPI.setMessage((Player) player, (String) msg, (int) seconds);
     }
 }
 

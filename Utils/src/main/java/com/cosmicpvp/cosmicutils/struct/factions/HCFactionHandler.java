@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.massivecraft.factions.Board
  *  com.massivecraft.factions.FLocation
@@ -14,32 +14,22 @@
 package com.cosmicpvp.cosmicutils.struct.factions;
 
 import com.cosmicpvp.cosmicutils.compat.ParamBuilder;
-import com.cosmicpvp.cosmicutils.struct.factions.FactionHandler;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.ReflectionUtils;
 import com.google.common.collect.Lists;
-import com.massivecraft.factions.Board;
-import com.massivecraft.factions.FLocation;
-import com.massivecraft.factions.FPlayer;
-import com.massivecraft.factions.FPlayers;
-import com.massivecraft.factions.Faction;
-import com.massivecraft.factions.Factions;
+import com.massivecraft.factions.*;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.Relation;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.*;
+
 public class HCFactionHandler
-extends FactionHandler {
+        extends FactionHandler {
     private Factions instance;
     private FPlayers fPlayers;
     private Board board;
@@ -63,9 +53,9 @@ extends FactionHandler {
     public void initHandler() throws NoSuchMethodException {
         Method getInstance = ReflectionUtils.getMethod(FPlayers.class, "getInstance");
         try {
-            this.fPlayers = (FPlayers)getInstance.invoke(null, new Object[0]);
+            this.fPlayers = (FPlayers) getInstance.invoke(null, new Object[0]);
             Method fInstance = ReflectionUtils.getMethod(Factions.class, "getInstance");
-            this.instance = (Factions)fInstance.invoke(null, new Object[0]);
+            this.instance = (Factions) fInstance.invoke(null, new Object[0]);
             this.board = Board.getInstance();
             this.memoryFPlayerClass = Class.forName("com.massivecraft.factions.zcore.persist.MemoryFPlayer");
             this.memoryFPlayersClass = Class.forName("com.massivecraft.factions.zcore.persist.MemoryFPlayers");
@@ -82,8 +72,7 @@ extends FactionHandler {
             this.isNone = ReflectionUtils.getMethod(this.memoryFactionClass, "isNone");
             this.getPlayer = ReflectionUtils.getMethod(FPlayer.class, "getPlayer");
             this.getFactionTag = ReflectionUtils.getMethod(Faction.class, "getTag");
-        }
-        catch (ClassNotFoundException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | NoSuchFieldException e) {
+        } catch (ClassNotFoundException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | NoSuchFieldException e) {
             e.printStackTrace();
         }
     }
@@ -92,7 +81,7 @@ extends FactionHandler {
     public boolean isInOwnFaction(Player player) {
         Faction at = this.getFactionAt(player.getLocation());
         FPlayer fpla = this.getFPlayer(player);
-        return at != null && fpla != null && (Relation)ReflectionUtils.callReflectionMethod((Object)fpla, this.memoryFPlayerClass, "getRelationTo", new ParamBuilder(RelationParticipator.class, (Object)at)) == Relation.MEMBER;
+        return at != null && fpla != null && (Relation) ReflectionUtils.callReflectionMethod((Object) fpla, this.memoryFPlayerClass, "getRelationTo", new ParamBuilder(RelationParticipator.class, (Object) at)) == Relation.MEMBER;
     }
 
     @Override
@@ -114,7 +103,7 @@ extends FactionHandler {
         if (fPlayer == null || otherfPlayer == null) {
             return Relation.NEUTRAL;
         }
-        return (Relation)ReflectionUtils.callReflectionMethod((Object)fPlayer, this.memoryFPlayerClass, "getRelationTo", new ParamBuilder(RelationParticipator.class, (Object)otherfPlayer));
+        return (Relation) ReflectionUtils.callReflectionMethod((Object) fPlayer, this.memoryFPlayerClass, "getRelationTo", new ParamBuilder(RelationParticipator.class, (Object) otherfPlayer));
     }
 
     @Override
@@ -126,7 +115,7 @@ extends FactionHandler {
     public String getFactionTag(Player seeingMsg, Player checking) {
         FPlayer fplayer = this.getFPlayer(seeingMsg);
         FPlayer other = this.getFPlayer(checking);
-        return (String)ReflectionUtils.callReflectionMethod((Object)other, this.memoryFPlayerClass, "getChatTag", new ParamBuilder(FPlayer.class, (Object)fplayer));
+        return (String) ReflectionUtils.callReflectionMethod((Object) other, this.memoryFPlayerClass, "getChatTag", new ParamBuilder(FPlayer.class, (Object) fplayer));
     }
 
     @Override
@@ -135,7 +124,7 @@ extends FactionHandler {
         if (faction == null) {
             return null;
         }
-        return (String)ReflectionUtils.callReflectionMethod((Object)faction, this.memoryFactionClass, "getTag");
+        return (String) ReflectionUtils.callReflectionMethod((Object) faction, this.memoryFactionClass, "getTag");
     }
 
     @Override
@@ -144,30 +133,29 @@ extends FactionHandler {
         if (faction == null) {
             return null;
         }
-        return (String)ReflectionUtils.invokeMethod(this.factionGetId, (Object)faction);
+        return (String) ReflectionUtils.invokeMethod(this.factionGetId, (Object) faction);
     }
 
     @Override
     public String getFPlayerName(FPlayer fplayer) {
-        return (String)FactionUtils.callFPlayerMethod(fplayer, "getName", null);
+        return (String) FactionUtils.callFPlayerMethod(fplayer, "getName", null);
     }
 
     @Override
     public String getFPlayerNameAndTag(FPlayer fplayer) {
-        return (String)FactionUtils.callFPlayerMethod(fplayer, "getNameAndTag", null);
+        return (String) FactionUtils.callFPlayerMethod(fplayer, "getNameAndTag", null);
     }
 
     @Override
     public Map<String, Map<String, String>> dumpAsSaveFormat() {
         try {
             Class<?> boardClass = Class.forName("com.massivecraft.factions.zcore.persist.json.JSONBlockBoard");
-            if (this.board != null && boardClass.isInstance((Object)this.board)) {
-                Object jsonBoard = boardClass.cast((Object)this.board);
+            if (this.board != null && boardClass.isInstance((Object) this.board)) {
+                Object jsonBoard = boardClass.cast((Object) this.board);
                 Method dumpAsSaveFormat = ReflectionUtils.getMethod(jsonBoard.getClass(), "dumpAsSaveFormat");
-                return (Map)dumpAsSaveFormat.invoke(jsonBoard, new Object[0]);
+                return (Map) dumpAsSaveFormat.invoke(jsonBoard, new Object[0]);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return new HashMap<String, Map<String, String>>();
@@ -176,9 +164,8 @@ extends FactionHandler {
     @Override
     public FPlayer getFPlayerByName(String name) {
         try {
-            return (FPlayer)this.getFplayerBytag.invoke((Object)this.fPlayers, name);
-        }
-        catch (IllegalAccessException | InvocationTargetException e) {
+            return (FPlayer) this.getFplayerBytag.invoke((Object) this.fPlayers, name);
+        } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
             return null;
         }
@@ -187,9 +174,8 @@ extends FactionHandler {
     @Override
     public Player getPlayer(FPlayer player) {
         try {
-            return (Player)this.getPlayer.invoke((Object)player, new Object[0]);
-        }
-        catch (IllegalAccessException | InvocationTargetException e) {
+            return (Player) this.getPlayer.invoke((Object) player, new Object[0]);
+        } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
             return null;
         }
@@ -202,19 +188,19 @@ extends FactionHandler {
 
     @Override
     public Faction getFactionAt(FLocation location) {
-        return (Faction)ReflectionUtils.callReflectionMethod((Object)this.board, this.memoryBoard, "getFactionAt", new ParamBuilder(FLocation.class, (Object)location));
+        return (Faction) ReflectionUtils.callReflectionMethod((Object) this.board, this.memoryBoard, "getFactionAt", new ParamBuilder(FLocation.class, (Object) location));
     }
 
     @Override
     public Faction getFaction(Player player, boolean includeWilderness) {
         FPlayer fplayer = this.getFPlayer(player);
-        return (Faction)ReflectionUtils.invokeMethod(this.fPlayerGetFaction, (Object)fplayer);
+        return (Faction) ReflectionUtils.invokeMethod(this.fPlayerGetFaction, (Object) fplayer);
     }
 
     @Override
     public Faction getFaction(FPlayer player, boolean includeWilderness) {
-        Faction faction = (Faction)ReflectionUtils.invokeMethod(this.fPlayerGetFaction, (Object)player);
-        if (!includeWilderness && ((Boolean)ReflectionUtils.invokeMethod(this.isNone, (Object)faction)).booleanValue()) {
+        Faction faction = (Faction) ReflectionUtils.invokeMethod(this.fPlayerGetFaction, (Object) player);
+        if (!includeWilderness && ((Boolean) ReflectionUtils.invokeMethod(this.isNone, (Object) faction)).booleanValue()) {
             return null;
         }
         return faction;
@@ -222,26 +208,25 @@ extends FactionHandler {
 
     @Override
     public void sendMessage(FPlayer fplayer, String msg) {
-        ReflectionUtils.callReflectionMethod((Object)fplayer, FPlayer.class, "sendMessage", new ParamBuilder(String.class, msg));
+        ReflectionUtils.callReflectionMethod((Object) fplayer, FPlayer.class, "sendMessage", new ParamBuilder(String.class, msg));
     }
 
     @Override
     public Faction getFactionByTag(String tag) {
         Faction fac = this.instance.getByTag(tag);
-        return (Faction)this.jsonFactionClass.cast((Object)fac);
+        return (Faction) this.jsonFactionClass.cast((Object) fac);
     }
 
     private String getFacId(Faction faction) {
-        return (String)ReflectionUtils.callReflectionMethod((Object)faction, this.memoryFactionClass, "getId", null);
+        return (String) ReflectionUtils.callReflectionMethod((Object) faction, this.memoryFactionClass, "getId", null);
     }
 
     @Override
     public Faction getFactionById(String tag) {
         try {
             Method getFactionById = ReflectionUtils.getMethod(Factions.class, "getFactionById", String.class);
-            return (Faction)getFactionById.invoke((Object)this.instance, tag);
-        }
-        catch (Exception e) {
+            return (Faction) getFactionById.invoke((Object) this.instance, tag);
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -268,7 +253,7 @@ extends FactionHandler {
     @Override
     public boolean isFocusedPlayer(Faction faction, String name) {
         try {
-            FPlayer focusing = (FPlayer)this.focusPlayerField.get((Object)faction);
+            FPlayer focusing = (FPlayer) this.focusPlayerField.get((Object) faction);
             if (focusing == null) {
                 return false;
             }
@@ -276,8 +261,7 @@ extends FactionHandler {
             if (fName.equals(name)) {
                 return true;
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
@@ -286,9 +270,8 @@ extends FactionHandler {
     @Override
     public FPlayer getFocusing(Faction faction) {
         try {
-            return (FPlayer)this.focusPlayerField.get((Object)faction);
-        }
-        catch (Exception e) {
+            return (FPlayer) this.focusPlayerField.get((Object) faction);
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -296,12 +279,12 @@ extends FactionHandler {
 
     @Override
     public void setFocusing(Faction faction, FPlayer player) throws IllegalAccessException {
-        ReflectionUtils.setObject((Object)faction, this.focusPlayerField, (Object)player);
+        ReflectionUtils.setObject((Object) faction, this.focusPlayerField, (Object) player);
     }
 
     @Override
     public boolean attemptClaim(FPlayer fplayer, Faction faction, Location location, boolean notifyFailure) {
-        return (Boolean)ReflectionUtils.callReflectionMethod((Object)fplayer, FPlayer.class, "attemptClaim", new ParamBuilder(Faction.class, (Object)faction).add(Location.class, location).add(Boolean.TYPE, notifyFailure));
+        return (Boolean) ReflectionUtils.callReflectionMethod((Object) fplayer, FPlayer.class, "attemptClaim", new ParamBuilder(Faction.class, (Object) faction).add(Location.class, location).add(Boolean.TYPE, notifyFailure));
     }
 
     @Override
@@ -325,8 +308,8 @@ extends FactionHandler {
 
     private List<String> getFPlayerAccountIds(Faction fac) {
         ArrayList<String> retr = Lists.newArrayList();
-        Set players = (Set)ReflectionUtils.callReflectionMethod((Object)fac, this.memoryFactionClass, "getFPlayers", null);
-        players.forEach(pl -> retr.add((String)ReflectionUtils.callReflectionMethod(pl, FPlayer.class, "getAccountId", null)));
+        Set players = (Set) ReflectionUtils.callReflectionMethod((Object) fac, this.memoryFactionClass, "getFPlayers", null);
+        players.forEach(pl -> retr.add((String) ReflectionUtils.callReflectionMethod(pl, FPlayer.class, "getAccountId", null)));
         return retr;
     }
 
@@ -334,9 +317,8 @@ extends FactionHandler {
     public FPlayer getFPlayer(Player player) {
         try {
             Method method = ReflectionUtils.getMethod(this.memoryFPlayersClass, "getByPlayer", Player.class);
-            return (FPlayer)method.invoke((Object)this.fPlayers, player);
-        }
-        catch (Exception e) {
+            return (FPlayer) method.invoke((Object) this.fPlayers, player);
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -344,22 +326,22 @@ extends FactionHandler {
 
     @Override
     public String getFactionId(Faction faction) {
-        return (String)ReflectionUtils.invokeMethod(this.factionGetId, (Object)faction);
+        return (String) ReflectionUtils.invokeMethod(this.factionGetId, (Object) faction);
     }
 
     @Override
     public String getFPlayerId(FPlayer fplayer) {
-        return (String)ReflectionUtils.invokeMethod(this.fplayerGetId, (Object)fplayer);
+        return (String) ReflectionUtils.invokeMethod(this.fplayerGetId, (Object) fplayer);
     }
 
     @Override
     public int getLand(Faction faction) {
-        return (Integer)ReflectionUtils.callReflectionMethod((Object)faction, Faction.class, "getLand", null);
+        return (Integer) ReflectionUtils.callReflectionMethod((Object) faction, Faction.class, "getLand", null);
     }
 
     @Override
     public int getLandMax(Faction faction) {
-        return (Integer)ReflectionUtils.callReflectionMethod((Object)faction, Faction.class, "getMaxLand", null);
+        return (Integer) ReflectionUtils.callReflectionMethod((Object) faction, Faction.class, "getMaxLand", null);
     }
 
     @Override
@@ -374,26 +356,26 @@ extends FactionHandler {
 
     @Override
     public double getDTR(Faction faction) {
-        return (Double)ReflectionUtils.callReflectionMethod((Object)faction, Faction.class, "getDTR", null);
+        return (Double) ReflectionUtils.callReflectionMethod((Object) faction, Faction.class, "getDTR", null);
     }
 
     @Override
     public double getDTRMax(Faction faction) {
-        return (Double)ReflectionUtils.callReflectionMethod((Object)faction, Faction.class, "getMaxDTR", null);
+        return (Double) ReflectionUtils.callReflectionMethod((Object) faction, Faction.class, "getMaxDTR", null);
     }
 
     @Override
     public double getDTRMin(Faction faction) {
-        return (Double)ReflectionUtils.callReflectionMethod((Object)faction, Faction.class, "getMinDTR", null);
+        return (Double) ReflectionUtils.callReflectionMethod((Object) faction, Faction.class, "getMinDTR", null);
     }
 
     @Override
     public double getFactionBalance(Faction faction) throws NoSuchFieldException, IllegalAccessException {
-        return (Double)ReflectionUtils.getObject(Faction.class, (Object)faction, "money");
+        return (Double) ReflectionUtils.getObject(Faction.class, (Object) faction, "money");
     }
 
     private String getAccountId(Faction faction) {
-        return (String)ReflectionUtils.callReflectionMethod((Object)faction, Faction.class, "getAccountId", null);
+        return (String) ReflectionUtils.callReflectionMethod((Object) faction, Faction.class, "getAccountId", null);
     }
 
     private FPlayers getFPlayers() {
@@ -402,12 +384,12 @@ extends FactionHandler {
 
     @Override
     public Collection<FPlayer> getAllFPlayers(boolean online) {
-        return online ? (Collection)ReflectionUtils.callReflectionMethod((Object)this.getFPlayers(), FPlayers.class, "getOnlinePlayers", null) : (Collection)ReflectionUtils.callReflectionMethod((Object)this.getFPlayers(), FPlayers.class, "getAllFPlayers", null);
+        return online ? (Collection) ReflectionUtils.callReflectionMethod((Object) this.getFPlayers(), FPlayers.class, "getOnlinePlayers", null) : (Collection) ReflectionUtils.callReflectionMethod((Object) this.getFPlayers(), FPlayers.class, "getAllFPlayers", null);
     }
 
     @Override
     public Collection<Faction> getAllFactions() {
-        return (List)ReflectionUtils.callReflectionMethod((Object)this.instance, Factions.class, "getAllFactions", null);
+        return (List) ReflectionUtils.callReflectionMethod((Object) this.instance, Factions.class, "getAllFactions", null);
     }
 }
 

@@ -3,15 +3,15 @@
  */
 package com.cosmicpvp.cosmicutils.itembuilder;
 
-import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.struct.ItemTier;
 import com.cosmicpvp.cosmicutils.utils.CustomItemUtils;
-import java.util.concurrent.ThreadLocalRandom;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class MysteryEnchantBookBuilder
-extends ItemBuilder {
+        extends ItemBuilder {
     private ItemTier tier;
     private int min;
     private int max;

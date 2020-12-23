@@ -21,8 +21,7 @@ public class NumberUtils {
     public static Long parseLongOrNull(String val) {
         try {
             return Long.parseLong(val);
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             return null;
         }
     }
@@ -30,8 +29,7 @@ public class NumberUtils {
     public static Integer parseIntOrNull(String val) {
         try {
             return Integer.parseInt(val);
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             return null;
         }
     }
@@ -39,8 +37,7 @@ public class NumberUtils {
     public static Double parseDoubleOrNull(String val) {
         try {
             return Double.parseDouble(val);
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             return null;
         }
     }
@@ -48,8 +45,7 @@ public class NumberUtils {
     public static Float parseFloatOrNull(String val) {
         try {
             return Float.valueOf(Float.parseFloat(val));
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             return null;
         }
     }

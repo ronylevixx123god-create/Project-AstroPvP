@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity
  */
@@ -22,16 +22,16 @@ public enum ItemTier {
     public String name;
     private int rarityId;
 
+    private ItemTier(String name, int rarityId) {
+        this.name = name;
+        this.rarityId = rarityId;
+    }
+
     public ItemRarity toItemRarity() {
         if (this == HEROIC) {
             return ItemRarity.SOUL;
         }
-        return ItemRarity.valueOf((String)this.name());
-    }
-
-    private ItemTier(String name, int rarityId) {
-        this.name = name;
-        this.rarityId = rarityId;
+        return ItemRarity.valueOf((String) this.name());
     }
 
     public String getName() {

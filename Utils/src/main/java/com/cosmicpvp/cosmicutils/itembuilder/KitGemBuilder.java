@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.CosmicSpaceChests.libs.KitItems
  *  me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKitsAPI
@@ -11,8 +11,6 @@
 package com.cosmicpvp.cosmicutils.itembuilder;
 
 import com.cosmicpvp.CosmicSpaceChests.libs.KitItems;
-import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
-import java.util.concurrent.ThreadLocalRandom;
 import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKitsAPI;
 import me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits;
 import me.cosmicpvp.CosmicGlobalKits.libs.MasteryKits;
@@ -20,15 +18,17 @@ import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKits;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class KitGemBuilder
-extends ItemBuilder {
+        extends ItemBuilder {
+    int min;
+    int max;
     private String kitType;
     private boolean random;
     private boolean levelupVariant;
     private boolean gkit;
     private boolean mkit;
-    int min;
-    int max;
 
     public KitGemBuilder(String kitType, boolean gkit) {
         super(Material.EMERALD);
@@ -72,19 +72,19 @@ extends ItemBuilder {
         ItemStack retr = null;
         if (this.gkit) {
             try {
-                GlobalKits gkit = this.random ? GlobalKits.values()[ThreadLocalRandom.current().nextInt(GlobalKits.values().length)] : GlobalKits.valueOf((String)this.kitType);
-                retr = KitItems.getKitItem((GlobalKits)gkit);
+                GlobalKits gkit = this.random ? GlobalKits.values()[ThreadLocalRandom.current().nextInt(GlobalKits.values().length)] : GlobalKits.valueOf((String) this.kitType);
+                retr = KitItems.getKitItem((GlobalKits) gkit);
+            } catch (Exception gkit) {
             }
-            catch (Exception gkit) {}
         } else if (this.mkit) {
             MasteryKits kit;
-            MasteryKits masteryKits = kit = this.random ? MasteryKits.values()[ThreadLocalRandom.current().nextInt(MasteryKits.values().length)] : MasteryKits.getFromName((String)this.kitType);
+            MasteryKits masteryKits = kit = this.random ? MasteryKits.values()[ThreadLocalRandom.current().nextInt(MasteryKits.values().length)] : MasteryKits.getFromName((String) this.kitType);
             if (kit != null) {
-                retr = CosmicGlobalKitsAPI.createMasteryKitItem((MasteryKits)kit, (boolean)true);
+                retr = CosmicGlobalKitsAPI.createMasteryKitItem((MasteryKits) kit, (boolean) true);
             }
         } else {
             EvolutionKits kit;
-            EvolutionKits evolutionKits = kit = this.random ? EvolutionKits.values()[ThreadLocalRandom.current().nextInt(EvolutionKits.values().length)] : EvolutionKits.getFromName((String)this.kitType);
+            EvolutionKits evolutionKits = kit = this.random ? EvolutionKits.values()[ThreadLocalRandom.current().nextInt(EvolutionKits.values().length)] : EvolutionKits.getFromName((String) this.kitType);
             if (kit != null) {
                 ItemStack itemStack = retr = !this.levelupVariant ? kit.getClaimableItem() : kit.getLevelUpItem(true);
             }

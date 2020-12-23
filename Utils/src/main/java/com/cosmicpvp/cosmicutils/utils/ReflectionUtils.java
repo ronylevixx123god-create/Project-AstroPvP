@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  lombok.NonNull
  */
@@ -8,13 +8,13 @@ package com.cosmicpvp.cosmicutils.utils;
 
 import com.cosmicpvp.cosmicutils.compat.ParamBuilder;
 import com.cosmicpvp.cosmicutils.compat.RParam;
+import lombok.NonNull;
+import org.bukkit.Bukkit;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
-
-import lombok.NonNull;
-import org.bukkit.Bukkit;
 
 public class ReflectionUtils {
     private static Map<String, Field> cachedFields = new HashMap<String, Field>();
@@ -24,6 +24,16 @@ public class ReflectionUtils {
     private static Class<?> genericAttributesClass;
     private static Class<?> iattributeInstanceClass;
     private static Class<?> attributeInstanceClass;
+
+    static {
+        String name = Bukkit.getServer().getClass().getPackage().getName();
+        nmsVersion = name.substring(name.lastIndexOf(46) + 1) + ".";
+        Bukkit.getLogger().info("[CosmicUtils] Registered NMS version: " + nmsVersion);
+        entityLivingClass = ReflectionUtils.getNMSClass("EntityLiving");
+        attributeInstanceClass = ReflectionUtils.getNMSClass("AttributeInstance");
+        genericAttributesClass = ReflectionUtils.getNMSClass("GenericAttributes");
+        iattributeInstanceClass = ReflectionUtils.getNMSClass("IAttribute");
+    }
 
     public static Field getField(Class<?> clazz, String field) throws NoSuchFieldException {
         Field cached = cachedFields.get(clazz.getName() + ":" + field);
@@ -47,11 +57,10 @@ public class ReflectionUtils {
         return f;
     }
 
-    public static Object invokeMethod(Method method, Object instance, Object ... args) {
+    public static Object invokeMethod(Method method, Object instance, Object... args) {
         try {
             return method.invoke(instance, args);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -60,14 +69,13 @@ public class ReflectionUtils {
     public static Object invokeMethod(Method method, Object instance) {
         try {
             return method.invoke(instance, new Object[0]);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public static Method getMethod(Class<?> clazz, String field, Class<?> ... paramaters) throws NoSuchMethodException {
+    public static Method getMethod(Class<?> clazz, String field, Class<?>... paramaters) throws NoSuchMethodException {
         Method cached = cachedMethods.get(clazz.getName() + ":" + field);
         if (cached != null) {
             return cached;
@@ -128,8 +136,7 @@ public class ReflectionUtils {
             }
             Method m = ReflectionUtils.getMethod(clazz, method);
             return m.invoke(instance, new Object[0]);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -144,8 +151,7 @@ public class ReflectionUtils {
         Class<?> clazz = null;
         try {
             clazz = Class.forName(fullName);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return clazz;
@@ -156,8 +162,7 @@ public class ReflectionUtils {
         Class<?> clazz = null;
         try {
             clazz = Class.forName(fullName);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return clazz;
@@ -166,8 +171,7 @@ public class ReflectionUtils {
     public static Object getNMSHandle(Object obj) {
         try {
             return ReflectionUtils.getMethod(obj.getClass(), "getHandle", new Class[0]).invoke(obj, new Object[0]);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -187,16 +191,6 @@ public class ReflectionUtils {
 
     public static Class<?> getAttributeInstanceClass() {
         return attributeInstanceClass;
-    }
-
-    static {
-        String name = Bukkit.getServer().getClass().getPackage().getName();
-        nmsVersion = name.substring(name.lastIndexOf(46) + 1) + ".";
-        Bukkit.getLogger().info("[CosmicUtils] Registered NMS version: " + nmsVersion);
-        entityLivingClass = ReflectionUtils.getNMSClass("EntityLiving");
-        attributeInstanceClass = ReflectionUtils.getNMSClass("AttributeInstance");
-        genericAttributesClass = ReflectionUtils.getNMSClass("GenericAttributes");
-        iattributeInstanceClass = ReflectionUtils.getNMSClass("IAttribute");
     }
 }
 

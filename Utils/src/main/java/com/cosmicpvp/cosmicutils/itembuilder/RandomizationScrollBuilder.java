@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity
  *  org.arkhamnetwork.enchantments.RandomizationScroll
@@ -8,15 +8,15 @@
 package com.cosmicpvp.cosmicutils.itembuilder;
 
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
-import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.struct.ItemTier;
-import java.util.concurrent.ThreadLocalRandom;
 import org.arkhamnetwork.enchantments.RandomizationScroll;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class RandomizationScrollBuilder
-extends ItemBuilder {
+        extends ItemBuilder {
     private ItemTier tier;
     private int min;
     private int max;
@@ -36,7 +36,7 @@ extends ItemBuilder {
 
     @Override
     public ItemStack build() {
-        ItemStack scroll = RandomizationScroll.getRandomizationScroll((ItemRarity)this.tier.toItemRarity());
+        ItemStack scroll = RandomizationScroll.getRandomizationScroll((ItemRarity) this.tier.toItemRarity());
         if (this.amount > 1) {
             scroll.setAmount(this.amount);
         }

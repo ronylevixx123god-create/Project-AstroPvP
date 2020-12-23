@@ -19,8 +19,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class TitleItemListener
-implements Listener {
-    @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
+        implements Listener {
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPlayerInteract(PlayerInteractEvent e) {
         if (e.hasItem() && e.getItem().getType() == Material.PAPER && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
             String title = TitleItems.getTitleFromItemstack(e.getItem());
@@ -28,7 +28,7 @@ implements Listener {
                 return;
             }
             if (e.getPlayer().getWorld().getName().equals("world_duels") || e.getPlayer().getWorld().getName().equals("world_duels2")) {
-                e.getPlayer().sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)((Object)ChatColor.RED) + "You cannot redeem this item while in a duel.");
+                e.getPlayer().sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object) ((Object) ChatColor.RED) + "You cannot redeem this item while in a duel.");
                 return;
             }
             String titlePerm = "titles.title." + title;
@@ -47,15 +47,14 @@ implements Listener {
             try {
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + p.getName() + " add " + titlePerm);
                 p.sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "(!) You've UNLOCKED the " + ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD.toString() + title + ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + " title!");
-                p.sendMessage((Object)((Object)ChatColor.GRAY) + "Equip your new title in the /title menu!");
+                p.sendMessage((Object) ((Object) ChatColor.GRAY) + "Equip your new title in the /title menu!");
                 if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
-                    ItemID.blacklistIID((long)ItemID.getItemID((ItemStack)p.getItemInHand()), (String)"title item redeem");
+                    ItemID.blacklistIID((long) ItemID.getItemID((ItemStack) p.getItemInHand()), (String) "title item redeem");
                 }
                 p.setItemInHand(null);
                 p.playSound(p.getLocation(), Sound.LEVEL_UP, 1.0f, 0.72f);
                 Bukkit.getScheduler().runTaskLater(CosmicUtils.get(), () -> ArkhamPermissions.getInstance().getPermissionManager().reloadPlayer(p), 15L);
-            }
-            catch (Exception err) {
+            } catch (Exception err) {
                 err.printStackTrace();
             }
         }

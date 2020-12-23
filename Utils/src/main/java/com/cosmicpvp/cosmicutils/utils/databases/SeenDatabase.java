@@ -3,10 +3,11 @@
  */
 package com.cosmicpvp.cosmicutils.utils.databases;
 
+import org.bukkit.plugin.Plugin;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import org.bukkit.plugin.Plugin;
 
 public class SeenDatabase {
     private static Connection connection;
@@ -28,11 +29,10 @@ public class SeenDatabase {
     }
 
     public void executeUpdate(String update) {
-        try (PreparedStatement pst = this.getConnection().prepareStatement(update);){
+        try (PreparedStatement pst = this.getConnection().prepareStatement(update);) {
             pst.execute();
             pst.close();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -41,8 +41,7 @@ public class SeenDatabase {
         try {
             Connection connect = this.getConnection();
             return connect != null;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return false;
         }
     }
@@ -56,8 +55,7 @@ public class SeenDatabase {
                 connection.close();
             }
             connection = DriverManager.getConnection(this.url, this.username, this.password);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return connection;

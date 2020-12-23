@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.compilex.CosmicDungeons.DungeonsAPI
  *  com.compilex.CosmicDungeons.DungeonsRewardsAPI
@@ -23,17 +23,11 @@ import com.compilex.CosmicDungeons.DungeonsAPI;
 import com.compilex.CosmicDungeons.DungeonsRewardsAPI;
 import com.cosmicpvp.CosmicRankQuests.CosmicRankQuestsAPI;
 import com.cosmicpvp.cosmicutils.CosmicUtils;
-import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import me.ifamasssxd.cosmicconquest.CosmicConquestAPI;
 import me.ifamasssxd.cosmicmasks.CosmicMasks;
 import me.ifamasssxd.cosmicmasks.MaskType;
-import org.arkhamnetwork.Arkkit.patches.EquipmentLootboxes;
-import org.arkhamnetwork.Arkkit.patches.EssentialsAddHomes;
-import org.arkhamnetwork.Arkkit.patches.ItemNametag;
-import org.arkhamnetwork.Arkkit.patches.LoreTag;
-import org.arkhamnetwork.Arkkit.patches.MysteryMobSpawners;
-import org.arkhamnetwork.Arkkit.patches.ShowcaseExpander;
+import org.arkhamnetwork.Arkkit.patches.*;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.arkhamnetwork.enchantments.EnchantmentBook;
 import org.bukkit.Bukkit;
@@ -41,16 +35,16 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 public class CustomItemBuilder
-extends ItemBuilder {
+        extends ItemBuilder {
     private CustomItemType type;
 
     public CustomItemBuilder(CustomItemType type) {
-        super((Material)null, 0);
+        super((Material) null, 0);
         this.type = type;
     }
 
     public CustomItemBuilder(CustomItemType type, int amount) {
-        super((Material)null, amount);
+        super((Material) null, amount);
         this.type = type;
     }
 
@@ -67,7 +61,7 @@ extends ItemBuilder {
             } else if (this.type == CustomItemType.LORETAG && ArkPlugins.LORE_TAG.getArkPlugin().isRunning()) {
                 retr = LoreTag.getLoreTagItem();
             } else if ((this.type == CustomItemType.FACTION_CRYSTAL || this.type == CustomItemType.HEROIC_FACTION_CRYSTAL) && CosmicUtils.get().isConquestsEnabled()) {
-                retr = this.type == CustomItemType.FACTION_CRYSTAL ? CosmicConquestAPI.createFactionToken((int)1) : CosmicConquestAPI.createHeroicToken((int)1);
+                retr = this.type == CustomItemType.FACTION_CRYSTAL ? CosmicConquestAPI.createFactionToken((int) 1) : CosmicConquestAPI.createHeroicToken((int) 1);
             } else if (this.type == CustomItemType.TRANSMOG_SCROLL && CosmicUtils.get().isEnchantmentsEnabled()) {
                 retr = EnchantmentBook.getTransmogScroll();
             } else if (this.type == CustomItemType.SHOWCASE_EXPANDER && ArkPlugins.SHOWCASE_EXPANDER.getArkPlugin().isRunning()) {
@@ -79,14 +73,14 @@ extends ItemBuilder {
             } else if (this.type == CustomItemType.BLACKSCROLL && CosmicUtils.get().isEnchantmentsEnabled()) {
                 retr = EnchantmentBook.getBlackScroll();
             } else if (this.type == CustomItemType.HEROIC_BLACKSCROLL && CosmicUtils.get().isEnchantmentsEnabled()) {
-                retr = EnchantmentBook.getHeroicBlackscroll((boolean)false);
+                retr = EnchantmentBook.getHeroicBlackscroll((boolean) false);
             } else if ((this.type == CustomItemType.EQUIPMENT_LOOTBOX || this.type == CustomItemType.HEROIC_EQUIPMENT_LOOTBOX) && ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin().isRunning()) {
-                EquipmentLootboxes boxes = (EquipmentLootboxes)ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin();
+                EquipmentLootboxes boxes = (EquipmentLootboxes) ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin();
                 retr = this.type == CustomItemType.HEROIC_EQUIPMENT_LOOTBOX ? boxes.createHeroicLootboxItem(false) : boxes.createLootboxItem(false);
             } else if (this.type == CustomItemType.GKIT_GENERATOR && ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin().isRunning()) {
-                retr = ((EquipmentLootboxes)ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin()).createHeroicGKitGenerator(false);
+                retr = ((EquipmentLootboxes) ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin()).createHeroicGKitGenerator(false);
             } else if (this.type == CustomItemType.MKIT_GENERATOR && ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin().isRunning()) {
-                retr = ((EquipmentLootboxes)ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin()).createMKitGenerator(false);
+                retr = ((EquipmentLootboxes) ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin()).createMKitGenerator(false);
             } else if ((this.type == CustomItemType.DUNGEON_PORTAL_ABANDONED_SHIP || this.type == CustomItemType.DUNGEON_PORTAL_DESTROYED_OUTPOST) && CosmicUtils.get().isDungeonsEnabled()) {
                 retr = DungeonsAPI.get().getDungeon(this.type == CustomItemType.DUNGEON_PORTAL_ABANDONED_SHIP ? 0 : 1).getDungeonPortal();
             } else {
@@ -98,13 +92,12 @@ extends ItemBuilder {
                 if (this.type == CustomItemType.HOLY_WHITE_SCROLL && CosmicUtils.get().isDungeonsEnabled()) {
                     return DungeonsRewardsAPI.getHolyWhiteScroll();
                 }
-                if (this.type == CustomItemType.RANDOM_MASK && CosmicUtils.get().isMasksEnabled() && (version = NumberUtils.parseDoubleOrNull((masks = (CosmicMasks)Bukkit.getPluginManager().getPlugin("CosmicMasks")).getDescription().getVersion().trim())) != null && version >= 1.1) {
-                    return MaskType.createRandomMaskItem((boolean)true);
+                if (this.type == CustomItemType.RANDOM_MASK && CosmicUtils.get().isMasksEnabled() && (version = NumberUtils.parseDoubleOrNull((masks = (CosmicMasks) Bukkit.getPluginManager().getPlugin("CosmicMasks")).getDescription().getVersion().trim())) != null && version >= 1.1) {
+                    return MaskType.createRandomMaskItem((boolean) true);
                 }
             }
-        }
-        catch (Exception e) {
-            Bukkit.getLogger().info("Unable to generate " + (Object)((Object)this.type) + " CustomItem!");
+        } catch (Exception e) {
+            Bukkit.getLogger().info("Unable to generate " + (Object) ((Object) this.type) + " CustomItem!");
             e.printStackTrace();
         }
         if (retr == null) {

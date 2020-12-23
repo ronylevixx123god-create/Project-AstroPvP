@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.earth2me.essentials.Essentials
  *  com.earth2me.essentials.User
@@ -15,6 +15,12 @@ import org.bukkit.entity.Player;
 
 public class EssentialsUtils {
     private static Essentials ess;
+
+    static {
+        if (ess == null) {
+            ess = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
+        }
+    }
 
     public static boolean isVanished(Player player) {
         return EssentialsUtils.isVanished(ess.getUser(player));
@@ -42,12 +48,6 @@ public class EssentialsUtils {
             return EssentialsUtils.isVanished(user) || VanishUtils.isVanishNoPacketVanished(player) || user.isGodModeEnabled();
         }
         return false;
-    }
-
-    static {
-        if (ess == null) {
-            ess = (Essentials)Bukkit.getPluginManager().getPlugin("Essentials");
-        }
     }
 }
 

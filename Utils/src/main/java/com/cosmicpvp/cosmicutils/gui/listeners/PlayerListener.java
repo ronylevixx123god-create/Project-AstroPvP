@@ -2,9 +2,7 @@ package com.cosmicpvp.cosmicutils.gui.listeners;
 
 import com.cosmicpvp.cosmicutils.CosmicUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
-import java.util.UUID;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -14,7 +12,7 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerListener
-implements Listener {
+        implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerJoin(PlayerLoginEvent e) {
         CosmicUtils.get().getAsyncPlayerMap().put(e.getPlayer().getName(), e.getPlayer());
@@ -22,7 +20,7 @@ implements Listener {
         CosmicUtils.get().getPlayerLocations().put(e.getPlayer().getName(), e.getPlayer().getLocation());
     }
 
-    @EventHandler(priority=EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerQuit(PlayerQuitEvent e) {
         CosmicUtils.get().getAsyncPlayerMap().remove(e.getPlayer().getName());
         CosmicUtils.get().getAsyncPlayerMapUUID().remove(e.getPlayer().getUniqueId());
@@ -30,7 +28,7 @@ implements Listener {
         WorldGuardUtils.clearCachedRegions(e.getPlayer());
     }
 
-    @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPlayerPickup(PlayerPickupItemEvent event) {
         String ownerUUID;
         long time;
@@ -39,7 +37,7 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerPreProcessCommand(PlayerCommandPreprocessEvent event) {
         String lower = event.getMessage().toLowerCase();
         if (lower.startsWith("/rg define") || lower.startsWith("/rg redefine") && event.getPlayer().isOp()) {

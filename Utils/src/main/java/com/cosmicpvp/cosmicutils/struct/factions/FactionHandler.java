@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.massivecraft.factions.FLocation
  *  com.massivecraft.factions.FPlayer
@@ -11,11 +11,12 @@ package com.cosmicpvp.cosmicutils.struct.factions;
 import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.Faction;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
 
 public abstract class FactionHandler {
     public abstract void initHandler() throws NoSuchMethodException;

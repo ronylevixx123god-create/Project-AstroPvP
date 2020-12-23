@@ -3,14 +3,15 @@
  */
 package com.cosmicpvp.cosmicutils.utils;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class BlockUtils {
     public static List<Block> getCube(Location loc, Integer radius) {
@@ -19,7 +20,7 @@ public class BlockUtils {
             for (int y = radius * -1; y <= radius; ++y) {
                 for (int z = radius * -1 - 1; z <= radius + 1; ++z) {
                     Block b = loc.getWorld().getBlockAt(loc.getBlockX() + x, loc.getBlockY() + y, loc.getBlockZ() + z);
-                    if (b.getType().equals((Object)Material.AIR) || b == null) continue;
+                    if (b.getType().equals((Object) Material.AIR) || b == null) continue;
                     blocks.add(b);
                 }
             }
@@ -34,7 +35,7 @@ public class BlockUtils {
                 for (int z = base.getBlockZ() - changeZ; z <= base.getBlockZ() + changeZ; ++z) {
                     Location loc = new Location(base.getWorld(), x, y, z);
                     Block b = loc.getBlock();
-                    if (b.getType().equals((Object)Material.AIR) || b == null) continue;
+                    if (b.getType().equals((Object) Material.AIR) || b == null) continue;
                     blocks.add(b);
                 }
             }
@@ -155,7 +156,7 @@ public class BlockUtils {
     private static int getDepthByLevel(int level) {
         int depth = 0;
         if (level == 1 || level == 2) {
-            if (Math.random() < (double)level * 0.33) {
+            if (Math.random() < (double) level * 0.33) {
                 depth = 1;
             } else {
                 return 0;
@@ -165,13 +166,13 @@ public class BlockUtils {
             depth = 1;
         }
         if (level == 4 || level == 5) {
-            depth = Math.random() < (double)(level - 3) * 0.33 ? 2 : 1;
+            depth = Math.random() < (double) (level - 3) * 0.33 ? 2 : 1;
         }
         if (level == 6) {
             depth = 2;
         }
         if (level == 7 || level == 8) {
-            depth = Math.random() < (double)(level - 6) * 0.33 ? 3 : 2;
+            depth = Math.random() < (double) (level - 6) * 0.33 ? 3 : 2;
         }
         if (level == 9) {
             depth = 3;

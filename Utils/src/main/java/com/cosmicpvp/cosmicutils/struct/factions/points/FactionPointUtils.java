@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.factionpoints.CosmicFactionPoints
  *  com.cosmicpvp.factionpoints.FactionsPointsAPI
@@ -14,10 +14,11 @@ import com.cosmicpvp.factionpoints.CosmicFactionPoints;
 import com.cosmicpvp.factionpoints.FactionsPointsAPI;
 import com.cosmicpvp.factionpoints.menus.PointPurchaseMenu;
 import com.massivecraft.factions.Faction;
-import java.io.File;
-import java.util.concurrent.TimeUnit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 public class FactionPointUtils {
     private static boolean factionPointsEnabled = new File("plugins/CosmicFactionPoints.jar").exists();
@@ -83,21 +84,21 @@ public class FactionPointUtils {
         if (!FactionPointUtils.isPointsEnabled()) {
             return false;
         }
-        return FactionsPointsAPI.isPointItem((NBTWrapper)new NBTWrapper(item));
+        return FactionsPointsAPI.isPointItem((NBTWrapper) new NBTWrapper(item));
     }
 
     public static boolean isPointItem(NBTWrapper wrapper) {
         if (!FactionPointUtils.isPointsEnabled()) {
             return false;
         }
-        return FactionsPointsAPI.isPointItem((NBTWrapper)wrapper);
+        return FactionsPointsAPI.isPointItem((NBTWrapper) wrapper);
     }
 
     public static Long getFactionPoints(Faction faction) {
         if (!FactionPointUtils.isPointsEnabled()) {
             return 0L;
         }
-        return FactionsPointsAPI.getPoints((Faction)faction);
+        return FactionsPointsAPI.getPoints((Faction) faction);
     }
 
     public static Long giveFactionPoints(Faction faction, Player player, String eventName, Object data) {
@@ -118,21 +119,21 @@ public class FactionPointUtils {
         if (!FactionPointUtils.isPointsEnabled()) {
             return null;
         }
-        return FactionsPointsAPI.getFactionPointItem((Faction)faction, (Player)player, (String)eventName, (Object)data);
+        return FactionsPointsAPI.getFactionPointItem((Faction) faction, (Player) player, (String) eventName, (Object) data);
     }
 
     public static ItemStack getFactionPointsItem(Faction faction, Player player, String eventName, int points, Object data) {
         if (!FactionPointUtils.isPointsEnabled()) {
             return null;
         }
-        return FactionsPointsAPI.getFactionPointItem((Faction)faction, (Player)player, (String)eventName, (int)points, (Object)data);
+        return FactionsPointsAPI.getFactionPointItem((Faction) faction, (Player) player, (String) eventName, (int) points, (Object) data);
     }
 
     public static ItemStack getPointItem(double amount, boolean applyIID) {
         if (!FactionPointUtils.isPointsEnabled()) {
             return null;
         }
-        return FactionsPointsAPI.createPointItem((double)amount, (boolean)applyIID);
+        return FactionsPointsAPI.createPointItem((double) amount, (boolean) applyIID);
     }
 }
 

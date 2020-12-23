@@ -168,6 +168,14 @@ public class StringUtils {
             this.length = length;
         }
 
+        public static DefaultFontInfo getDefaultFontInfo(char c) {
+            for (DefaultFontInfo dFI : DefaultFontInfo.values()) {
+                if (dFI.getCharacter() != c) continue;
+                return dFI;
+            }
+            return DEFAULT;
+        }
+
         public char getCharacter() {
             return this.character;
         }
@@ -181,14 +189,6 @@ public class StringUtils {
                 return this.getLength();
             }
             return this.length + 1;
-        }
-
-        public static DefaultFontInfo getDefaultFontInfo(char c) {
-            for (DefaultFontInfo dFI : DefaultFontInfo.values()) {
-                if (dFI.getCharacter() != c) continue;
-                return dFI;
-            }
-            return DEFAULT;
         }
     }
 }

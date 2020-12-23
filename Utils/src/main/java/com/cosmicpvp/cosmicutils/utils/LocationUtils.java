@@ -3,20 +3,16 @@
  */
 package com.cosmicpvp.cosmicutils.utils;
 
-import com.cosmicpvp.cosmicutils.utils.CC;
+import org.bukkit.*;
+
 import java.util.ArrayList;
 import java.util.List;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.WorldCreator;
 
 public class LocationUtils {
     public static String printPretty(Location location, ChatColor color, boolean bold) {
         String xyzBefore = "%sx%s %sy%s %sz%s";
         String boldText = bold ? CC.Bold : "";
-        return String.format(xyzBefore, new Object[]{color, (Object)((Object)color) + boldText + location.getBlockX(), color, (Object)((Object)color) + boldText + location.getBlockY(), color, (Object)((Object)color) + boldText + location.getBlockZ()});
+        return String.format(xyzBefore, new Object[]{color, (Object) ((Object) color) + boldText + location.getBlockX(), color, (Object) ((Object) color) + boldText + location.getBlockY(), color, (Object) ((Object) color) + boldText + location.getBlockZ()});
     }
 
     public static Location getLocationFromString(String s, boolean loadWorld) {

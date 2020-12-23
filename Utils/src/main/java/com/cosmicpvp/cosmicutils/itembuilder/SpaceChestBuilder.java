@@ -4,14 +4,13 @@
 package com.cosmicpvp.cosmicutils.itembuilder;
 
 import com.cosmicpvp.cosmicutils.CosmicUtils;
-import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.struct.ItemTier;
 import com.cosmicpvp.cosmicutils.utils.CustomItemUtils;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 public class SpaceChestBuilder
-extends ItemBuilder {
+        extends ItemBuilder {
     private ItemTier tier;
 
     public SpaceChestBuilder(ItemTier tier) {

@@ -18,15 +18,15 @@ public class StorableLocation {
         this.z = location.getBlockZ();
     }
 
-    public boolean isLocation(Location location) {
-        return this.worldName.equals(location.getWorld().getName()) && this.x == location.getBlockX() && this.y == location.getBlockY() && this.z == location.getBlockZ();
-    }
-
     public StorableLocation(String worldName, int x, int y, int z) {
         this.worldName = worldName;
         this.x = x;
         this.y = y;
         this.z = z;
+    }
+
+    public boolean isLocation(Location location) {
+        return this.worldName.equals(location.getWorld().getName()) && this.x == location.getBlockX() && this.y == location.getBlockY() && this.z == location.getBlockZ();
     }
 
     public String getWorldName() {

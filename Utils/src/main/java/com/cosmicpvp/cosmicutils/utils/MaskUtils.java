@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  me.ifamasssxd.cosmicmasks.MaskType
  */
@@ -15,7 +15,7 @@ public class MaskUtils {
         if (!CosmicUtils.get().isMasksEnabled()) {
             return false;
         }
-        MaskType found = MaskType.getFromName((String)maskName);
+        MaskType found = MaskType.getFromName((String) maskName);
         if (found == null) {
             return false;
         }

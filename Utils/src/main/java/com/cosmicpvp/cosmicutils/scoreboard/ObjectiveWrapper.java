@@ -3,20 +3,21 @@
  */
 package com.cosmicpvp.cosmicutils.scoreboard;
 
-import java.util.Iterator;
-import java.util.Random;
-import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
+import java.util.Iterator;
+import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
+
 public class ObjectiveWrapper {
     private final Scoreboard scoreboard;
     private final ConcurrentHashMap<Integer, String> storedLines = new ConcurrentHashMap();
-    private String objectiveName = "scoreboard";
     Random random = new Random();
+    private String objectiveName = "scoreboard";
 
     public ObjectiveWrapper(Scoreboard scoreboard, String objectiveName, DisplaySlot slot, String title, boolean use) {
         this.scoreboard = scoreboard;
@@ -41,13 +42,13 @@ public class ObjectiveWrapper {
         return this;
     }
 
+    public String getName() {
+        return this.scoreboard.getObjective(this.objectiveName).getDisplayName();
+    }
+
     public ObjectiveWrapper setName(String name) {
         this.scoreboard.getObjective(this.objectiveName).setDisplayName(name);
         return this;
-    }
-
-    public String getName() {
-        return this.scoreboard.getObjective(this.objectiveName).getDisplayName();
     }
 
     public void addLine(int id, String name, int scoreValue) {
@@ -81,9 +82,9 @@ public class ObjectiveWrapper {
     }
 
     public void clear() {
-        Iterator<Object> iterator = ((ConcurrentHashMap.KeySetView)this.storedLines.keySet()).iterator();
+        Iterator<Object> iterator = ((ConcurrentHashMap.KeySetView) this.storedLines.keySet()).iterator();
         while (iterator.hasNext()) {
-            int lines = (Integer)iterator.next();
+            int lines = (Integer) iterator.next();
             this.removeLine(lines);
         }
         for (Team t : this.getScoreboard().getTeams()) {

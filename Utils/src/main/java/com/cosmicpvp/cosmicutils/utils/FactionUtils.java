@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.massivecraft.factions.FLocation
  *  com.massivecraft.factions.FPlayer
@@ -19,14 +19,15 @@ import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.Relation;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
+
 import java.io.File;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
 
 public class FactionUtils {
     private static FactionHandler factionHandler;
@@ -40,12 +41,10 @@ public class FactionUtils {
         try {
             Class.forName("com.massivecraft.factions.Faction");
             getFactionTag = ReflectionUtils.getMethod(Faction.class, "getTag");
-        }
-        catch (ClassNotFoundException | NoClassDefFoundError ex) {
+        } catch (ClassNotFoundException | NoClassDefFoundError ex) {
             Bukkit.getLogger().info("NO FACTIONS CLASS FOUND, NOT ENABLED???");
             return;
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             // empty catch block
         }
         if (new File("plugins/HCFactions.jar").exists()) {
@@ -58,8 +57,7 @@ public class FactionUtils {
                 factionHandler = new CosmicFactionHandler();
                 factionHandler.initHandler();
                 return;
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 Bukkit.getLogger().info("Unable to hook Faction Handler.. disabling faction support: " + e.getMessage());
             }
         }
@@ -116,13 +114,13 @@ public class FactionUtils {
     public static String getChatTag(FPlayer fplayer, RelationParticipator relation) {
         ParamBuilder builder = new ParamBuilder();
         if (relation instanceof Faction) {
-            Faction fac = (Faction)relation;
-            builder.add(Faction.class, (Object)fac);
+            Faction fac = (Faction) relation;
+            builder.add(Faction.class, (Object) fac);
         } else if (relation instanceof FPlayer) {
-            FPlayer fac = (FPlayer)relation;
-            builder.add(FPlayer.class, (Object)fac);
+            FPlayer fac = (FPlayer) relation;
+            builder.add(FPlayer.class, (Object) fac);
         }
-        return (String)FactionUtils.callFPlayerMethod(fplayer, "getChatTag", builder);
+        return (String) FactionUtils.callFPlayerMethod(fplayer, "getChatTag", builder);
     }
 
     public static boolean attemptClaim(FPlayer fplayer, Faction faction, Location location, boolean notifyFailure) {
@@ -130,19 +128,19 @@ public class FactionUtils {
     }
 
     public static boolean isNormal(Faction faction) {
-        return faction != null && (Boolean)ReflectionUtils.callReflectionMethod((Object)faction, Faction.class, "isNormal", null) != false;
+        return faction != null && (Boolean) ReflectionUtils.callReflectionMethod((Object) faction, Faction.class, "isNormal", null) != false;
     }
 
     public static boolean isWarZone(Faction faction) {
-        return faction != null && (Boolean)ReflectionUtils.callReflectionMethod((Object)faction, Faction.class, "isWarZone", null) != false;
+        return faction != null && (Boolean) ReflectionUtils.callReflectionMethod((Object) faction, Faction.class, "isWarZone", null) != false;
     }
 
     public static boolean isWilderness(Faction faction) {
-        return (Boolean)ReflectionUtils.callReflectionMethod((Object)faction, Faction.class, "isNone", null);
+        return (Boolean) ReflectionUtils.callReflectionMethod((Object) faction, Faction.class, "isNone", null);
     }
 
     public static boolean isSafeZone(Faction faction) {
-        return faction != null && (Boolean)ReflectionUtils.callReflectionMethod((Object)faction, Faction.class, "isSafeZone", null) != false;
+        return faction != null && (Boolean) ReflectionUtils.callReflectionMethod((Object) faction, Faction.class, "isSafeZone", null) != false;
     }
 
     public static boolean isWarZone(Location location) {
@@ -183,11 +181,11 @@ public class FactionUtils {
     }
 
     public static boolean isFactionMember(Faction faction, FPlayer player) {
-        return faction != null && player != null && ReflectionUtils.callReflectionMethod((Object)faction, RelationParticipator.class, "getRelationTo", new ParamBuilder(RelationParticipator.class, (Object)player)) == Relation.MEMBER;
+        return faction != null && player != null && ReflectionUtils.callReflectionMethod((Object) faction, RelationParticipator.class, "getRelationTo", new ParamBuilder(RelationParticipator.class, (Object) player)) == Relation.MEMBER;
     }
 
     public static Relation getRelationTo(RelationParticipator first, RelationParticipator second) {
-        return (Relation)ReflectionUtils.callReflectionMethod((Object)first, RelationParticipator.class, "getRelationTo", new ParamBuilder(RelationParticipator.class, (Object)second));
+        return (Relation) ReflectionUtils.callReflectionMethod((Object) first, RelationParticipator.class, "getRelationTo", new ParamBuilder(RelationParticipator.class, (Object) second));
     }
 
     public static boolean isInsideOwnFaction(Player player) {
@@ -221,7 +219,7 @@ public class FactionUtils {
         if (getFactionTag == null) {
             Bukkit.getLogger().info("getTag null!");
         }
-        return (String)ReflectionUtils.invokeMethod(getFactionTag, (Object)faction);
+        return (String) ReflectionUtils.invokeMethod(getFactionTag, (Object) faction);
     }
 
     public static String getFactionId(Player player) {
@@ -309,29 +307,29 @@ public class FactionUtils {
     }
 
     public static Object callFPlayerMethod(FPlayer fplayer, String method) {
-        return ReflectionUtils.callReflectionMethod((Object)fplayer, factionHandler.getMainFPlayerClass(), method, null);
+        return ReflectionUtils.callReflectionMethod((Object) fplayer, factionHandler.getMainFPlayerClass(), method, null);
     }
 
     public static Object callFPlayerMethod(FPlayer fplayer, String method, ParamBuilder builder) {
-        return ReflectionUtils.callReflectionMethod((Object)fplayer, factionHandler.getMainFPlayerClass(), method, builder);
+        return ReflectionUtils.callReflectionMethod((Object) fplayer, factionHandler.getMainFPlayerClass(), method, builder);
     }
 
     public static Object callFactionMethod(String id, String method, ParamBuilder builder) {
         Faction fac = FactionUtils.getFactionByTag(id);
-        return ReflectionUtils.callReflectionMethod((Object)fac, factionHandler.getMainFactionClass(), method, builder);
+        return ReflectionUtils.callReflectionMethod((Object) fac, factionHandler.getMainFactionClass(), method, builder);
     }
 
     public static Object callFactionMethod(Faction faction, String method, ParamBuilder builder) {
-        return ReflectionUtils.callReflectionMethod((Object)faction, factionHandler.getMainFactionClass(), method, builder);
+        return ReflectionUtils.callReflectionMethod((Object) faction, factionHandler.getMainFactionClass(), method, builder);
     }
 
     public static Map getRelationWishes(Faction faction) throws NoSuchFieldException, IllegalAccessException {
-        return (Map)ReflectionUtils.getObject(factionHandler.getMainFactionClass(), (Object)faction, "relationWish");
+        return (Map) ReflectionUtils.getObject(factionHandler.getMainFactionClass(), (Object) faction, "relationWish");
     }
 
     public static Object callFactionMethodByTag(String tag, String method, ParamBuilder builder) {
         Faction fac = FactionUtils.getFactionByTag(tag);
-        return ReflectionUtils.callReflectionMethod((Object)fac, factionHandler.getMainFactionClass(), method, builder);
+        return ReflectionUtils.callReflectionMethod((Object) fac, factionHandler.getMainFactionClass(), method, builder);
     }
 }
 

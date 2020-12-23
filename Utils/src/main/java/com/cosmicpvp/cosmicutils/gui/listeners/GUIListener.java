@@ -15,8 +15,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.server.PluginDisableEvent;
 
 public class GUIListener
-implements Listener {
-    @EventHandler(priority=EventPriority.HIGHEST)
+        implements Listener {
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onInventoryClick(InventoryClickEvent event) {
         CosmicGUI active = CosmicGUI.getActiveGUI(event.getWhoClicked().getUniqueId());
         if (active != null) {
@@ -60,8 +60,7 @@ implements Listener {
             Bukkit.getLogger().info("Closing GUI due to " + event.getPlugin().getName() + " disabling!");
             try {
                 active.close();
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

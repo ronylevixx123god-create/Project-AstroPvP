@@ -4,11 +4,12 @@
 package com.cosmicpvp.cosmicutils.gui;
 
 import com.cosmicpvp.cosmicutils.itembuilder.CosmicItemBuilder;
-import java.util.HashMap;
-import java.util.Map;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class InventoryItem {
     private ItemStack item;
@@ -37,7 +38,7 @@ public class InventoryItem {
         if (this.clickMap.isEmpty() && this.runnable != null) {
             this.runnable.run();
         } else {
-            Runnable found = this.clickMap.get((Object)event.getClick());
+            Runnable found = this.clickMap.get((Object) event.getClick());
             if (found != null) {
                 found.run();
             }

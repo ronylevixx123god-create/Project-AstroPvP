@@ -4,7 +4,7 @@
 package com.cosmicpvp.cosmicutils.exceptions;
 
 public abstract class CosmicException
-extends Exception {
+        extends Exception {
     public CosmicException(String message) {
         super(message);
     }

@@ -12,7 +12,7 @@ public class NBTTagListBuilder {
 
     public NBTTagListBuilder(NBTBase comp) {
         if (comp instanceof NBTTagList) {
-            this.tagList = (NBTTagList)comp;
+            this.tagList = (NBTTagList) comp;
         }
     }
 
@@ -31,14 +31,14 @@ public class NBTTagListBuilder {
         if (this.tagList == null) {
             return null;
         }
-        return ((NBTTagInt)this.get(index)).d();
+        return ((NBTTagInt) this.get(index)).d();
     }
 
     public Double getDoubleAt(int index) {
         if (this.tagList == null) {
             return null;
         }
-        return ((NBTTagDouble)this.get(index)).g();
+        return ((NBTTagDouble) this.get(index)).g();
     }
 
     public Float getFloatAt(int index) {
@@ -68,19 +68,19 @@ public class NBTTagListBuilder {
     }
 
     public NBTTagListBuilder addInt(int value) {
-        return this.add((NBTBase)new NBTTagInt(value));
+        return this.add((NBTBase) new NBTTagInt(value));
     }
 
     public NBTTagListBuilder addDouble(double value) {
-        return this.add((NBTBase)new NBTTagDouble(value));
+        return this.add((NBTBase) new NBTTagDouble(value));
     }
 
     public NBTTagListBuilder addFloat(float value) {
-        return this.add((NBTBase)new NBTTagFloat(value));
+        return this.add((NBTBase) new NBTTagFloat(value));
     }
 
     public NBTTagListBuilder addString(String value) {
-        return this.add((NBTBase)new NBTTagString(value));
+        return this.add((NBTBase) new NBTTagString(value));
     }
 
     public NBTTagListBuilder add(NBTBase base) {

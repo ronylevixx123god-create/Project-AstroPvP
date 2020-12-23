@@ -1,17 +1,16 @@
 package com.cosmicpvp.cosmicutils.itembuilder;
 
 import com.cosmicpvp.cosmicutils.CosmicUtils;
-import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.struct.EquipmentType;
-import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
-
 import me.cosmicpvp.CosmicGlobalKits.libs.MasteryKits;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+
 public class AbilityArmorSetItemBuilder
-extends ItemBuilder {
+        extends ItemBuilder {
     public String armorsetName;
     private EquipmentType type;
     private boolean transmog = false;
@@ -45,16 +44,16 @@ extends ItemBuilder {
         if (kits != null) {
             List gear = MasteryKits.DEATH_KNIGHT.getKit().getMasteryItems(null, kits, false);
             if (type == EquipmentType.HELMET) {
-                return (ItemStack)gear.get(0);
+                return (ItemStack) gear.get(0);
             }
             if (type == EquipmentType.CHESTPLATE) {
-                return (ItemStack)gear.get(1);
+                return (ItemStack) gear.get(1);
             }
             if (type == EquipmentType.LEGGINGS) {
-                return (ItemStack)gear.get(2);
+                return (ItemStack) gear.get(2);
             }
             if (type == EquipmentType.BOOTS) {
-                return (ItemStack)gear.get(3);
+                return (ItemStack) gear.get(3);
             }
         }
         return null;

@@ -1,19 +1,18 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  me.ifamasssxd.cosmicmasks.MaskType
  */
 package com.cosmicpvp.cosmicutils.itembuilder;
 
 import com.cosmicpvp.cosmicutils.CosmicUtils;
-import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import me.ifamasssxd.cosmicmasks.MaskType;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 public class MaskBuilder
-extends ItemBuilder {
+        extends ItemBuilder {
     private String maskType;
 
     public MaskBuilder(String maskType) {
@@ -24,7 +23,7 @@ extends ItemBuilder {
     @Override
     public ItemStack build() {
         MaskType type;
-        if (this.maskType != null && CosmicUtils.get().isMasksEnabled() && (type = MaskType.getFromName((String)this.maskType)) != null) {
+        if (this.maskType != null && CosmicUtils.get().isMasksEnabled() && (type = MaskType.getFromName((String) this.maskType)) != null) {
             return type.createMask(true);
         }
         return null;

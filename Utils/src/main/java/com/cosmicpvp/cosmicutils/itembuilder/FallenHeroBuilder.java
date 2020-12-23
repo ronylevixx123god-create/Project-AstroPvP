@@ -1,22 +1,22 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits
  *  me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKits
  */
 package com.cosmicpvp.cosmicutils.itembuilder;
 
-import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.CustomItemUtils;
-import java.util.concurrent.ThreadLocalRandom;
 import me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits;
 import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKits;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class FallenHeroBuilder
-extends ItemBuilder {
+        extends ItemBuilder {
     private boolean gkit;
     private String gkitName;
     private String evolutionKitName;

@@ -4,12 +4,13 @@
 package com.cosmicpvp.cosmicutils.utils;
 
 import com.google.common.collect.Lists;
-import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+
+import java.util.List;
 
 public class ItemBuilder {
     private ItemStack item;
@@ -22,7 +23,7 @@ public class ItemBuilder {
         this.item = new ItemStack(type, 1);
     }
 
-    public ItemBuilder(Material type, String name, String ... lore) {
+    public ItemBuilder(Material type, String name, String... lore) {
         this.item = new ItemStack(type, 1);
         this.nameAndLore(name, lore);
     }
@@ -36,16 +37,16 @@ public class ItemBuilder {
     }
 
     public ItemBuilder setSkullOwner(String owner) {
-        if (this.item == null || !this.item.getType().equals((Object)Material.SKULL_ITEM)) {
+        if (this.item == null || !this.item.getType().equals((Object) Material.SKULL_ITEM)) {
             return this;
         }
-        SkullMeta sm = (SkullMeta)this.item.getItemMeta();
+        SkullMeta sm = (SkullMeta) this.item.getItemMeta();
         sm.setOwner(owner);
         this.item.setItemMeta(sm);
         return this;
     }
 
-    public ItemBuilder nameAndLore(String name, String ... lore) {
+    public ItemBuilder nameAndLore(String name, String... lore) {
         return this.nameAndLore(name, Lists.newArrayList(lore));
     }
 
@@ -70,7 +71,7 @@ public class ItemBuilder {
         return this;
     }
 
-    public ItemBuilder addLoreLine(String ... line) {
+    public ItemBuilder addLoreLine(String... line) {
         return this.addLoreLines(Lists.newArrayList(line));
     }
 
@@ -81,7 +82,7 @@ public class ItemBuilder {
         return this;
     }
 
-    public ItemBuilder lore(String ... lore) {
+    public ItemBuilder lore(String... lore) {
         return this.lore(Lists.newArrayList(lore));
     }
 

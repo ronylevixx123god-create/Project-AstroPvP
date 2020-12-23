@@ -1,18 +1,17 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.compilex.CosmicDungeons.DungeonsAPI
  */
 package com.cosmicpvp.cosmicutils.itembuilder;
 
 import com.compilex.CosmicDungeons.DungeonsAPI;
-import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 public class DungeonPortalIngredientBuilder
-extends ItemBuilder {
+        extends ItemBuilder {
     private PortalIngredient ingredient;
 
     public DungeonPortalIngredientBuilder(PortalIngredient ingredient) {

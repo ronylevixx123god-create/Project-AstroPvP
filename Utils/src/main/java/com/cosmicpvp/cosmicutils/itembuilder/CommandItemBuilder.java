@@ -1,6 +1,5 @@
 package com.cosmicpvp.cosmicutils.itembuilder;
 
-import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import org.arkhamnetwork.Arkkit.utils.ItemUtils;
@@ -9,7 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 public class CommandItemBuilder
-extends ItemBuilder {
+        extends ItemBuilder {
     private String command;
     private String message;
     private String itemName;
@@ -19,7 +18,7 @@ extends ItemBuilder {
         super(Material.ENCHANTED_BOOK);
     }
 
-    public CommandItemBuilder(String cmd, String message, String itemName, String ... lore) {
+    public CommandItemBuilder(String cmd, String message, String itemName, String... lore) {
         super(Material.ENCHANTED_BOOK);
         this.command = cmd;
         this.itemName = itemName;
@@ -36,7 +35,7 @@ extends ItemBuilder {
         return this;
     }
 
-    public ItemBuilder setItemLore(String ... lore) {
+    public ItemBuilder setItemLore(String... lore) {
         this.itemLore = lore;
         return this;
     }
@@ -48,7 +47,7 @@ extends ItemBuilder {
 
     @Override
     public ItemStack build() {
-        ItemStack i = ItemUtils.buildItem(this.getType(), (short)0, ChatColor.translateAlternateColorCodes('&', this.itemName), (String[])this.itemLore);
+        ItemStack i = ItemUtils.buildItem(this.getType(), (short) 0, ChatColor.translateAlternateColorCodes('&', this.itemName), (String[]) this.itemLore);
         NBTWrapper wrapper = new NBTWrapper(i);
         NBTTagCompoundBuilder builder = wrapper.getCompoundOrCreate("conaxData");
         wrapper.setString("cosmicType", "commandItem");

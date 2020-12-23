@@ -3,19 +3,13 @@
  */
 package com.cosmicpvp.cosmicutils.struct;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.NavigableMap;
-import java.util.Random;
-import java.util.TreeMap;
+import java.util.*;
 
 public class LootTable<T> {
-    Random random = new Random();
-    double total = 0.0;
     private final NavigableMap<Double, T> table = new TreeMap<Double, T>();
     private final Map<T, Double> lootRates = new HashMap<T, Double>();
+    Random random = new Random();
+    double total = 0.0;
     private List<T> loot = new ArrayList<T>();
 
     public void addItem(T loot, double chance) {

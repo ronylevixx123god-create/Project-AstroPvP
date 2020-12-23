@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  net.minecraft.server.v1_7_R4.PacketDataSerializer
  *  net.minecraft.util.io.netty.buffer.ByteBuf
@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 public class ByteDataSerializer
-extends PacketDataSerializer {
+        extends PacketDataSerializer {
     public ByteDataSerializer(ByteBuf bytebuf) {
         super(bytebuf);
     }

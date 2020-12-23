@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.earth2me.essentials.CommandSource
  *  com.earth2me.essentials.Essentials
@@ -12,17 +12,11 @@
 package com.cosmicpvp.cosmicutils.utils;
 
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
-import com.cosmicpvp.cosmicutils.utils.CustomItemUtils;
-import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
-import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.earth2me.essentials.CommandSource;
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.MetaItemStack;
 import com.earth2me.essentials.textreader.SimpleTextInput;
 import com.google.common.collect.Lists;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Pattern;
 import net.ess3.api.IEssentials;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
@@ -34,6 +28,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.MaterialData;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
 
 public class ItemUtils {
     private static String capTitle = Pattern.quote("{TITLE}:");
@@ -122,20 +120,19 @@ public class ItemUtils {
                 Integer id = NumberUtils.parseIntOrNull(str);
                 mat = id != null ? Material.getMaterial(id) : Material.getMaterial(str);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Bukkit.getLogger().info("Invalid Material Data given: " + str);
             e.printStackTrace();
             return null;
         }
-        return new MaterialData(mat, (byte)data);
+        return new MaterialData(mat, (byte) data);
     }
 
     public static List<ItemStack> parseItemsIntoItemStacks(List<String> items) {
         if (!Bukkit.getPluginManager().isPluginEnabled("Essentials")) {
             return null;
         }
-        Essentials ess = (Essentials)Bukkit.getPluginManager().getPlugin("Essentials");
+        Essentials ess = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
         ArrayList<ItemStack> retr = Lists.newArrayList();
         try {
             SimpleTextInput e = new SimpleTextInput(items);
@@ -152,12 +149,11 @@ public class ItemUtils {
                 if (parseStack.getType() == Material.AIR) continue;
                 MetaItemStack metaStack = new MetaItemStack(parseStack);
                 if (parts.length > 2) {
-                    metaStack.parseStringMeta((CommandSource)null, allowUnsafe, parts, 2, (IEssentials)ess);
+                    metaStack.parseStringMeta((CommandSource) null, allowUnsafe, parts, 2, (IEssentials) ess);
                 }
                 retr.add(metaStack.getItemStack());
             }
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
         return retr;
@@ -165,7 +161,7 @@ public class ItemUtils {
 
     public static ItemStack createEnchantBook(Enchantment enchantment, int level) {
         ItemStack book = new ItemStack(Material.ENCHANTED_BOOK, 1);
-        EnchantmentStorageMeta storageMeta = (EnchantmentStorageMeta)book.getItemMeta();
+        EnchantmentStorageMeta storageMeta = (EnchantmentStorageMeta) book.getItemMeta();
         storageMeta.getStoredEnchants().keySet().forEach(ench -> storageMeta.removeEnchant(enchantment));
         storageMeta.addStoredEnchant(enchantment, level, true);
         book.setItemMeta(storageMeta);

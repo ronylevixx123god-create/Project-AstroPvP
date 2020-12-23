@@ -1,13 +1,12 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  me.ifamasssxd.cosmicfactionboosters.CosmicFactionBoosters
  *  me.ifamasssxd.cosmicfactionboosters.enums.BoosterType
  */
 package com.cosmicpvp.cosmicutils.itembuilder;
 
-import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import me.ifamasssxd.cosmicfactionboosters.CosmicFactionBoosters;
 import me.ifamasssxd.cosmicfactionboosters.enums.BoosterType;
 import org.bukkit.Bukkit;
@@ -15,30 +14,30 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 public class BoosterBuilder
-extends ItemBuilder {
+        extends ItemBuilder {
     public String boosterType;
     public int duration;
     private double multiplier;
 
     public BoosterBuilder(String booster, int duration, double multiplier) {
-        super((Material)null, 0);
+        super((Material) null, 0);
         this.boosterType = booster;
         this.duration = duration;
         this.multiplier = multiplier;
     }
 
+    public static BoosterBuilderBuilder builder() {
+        return new BoosterBuilderBuilder();
+    }
+
     @Override
     public ItemStack build() {
-        BoosterType type = BoosterType.fromName((String)this.boosterType);
+        BoosterType type = BoosterType.fromName((String) this.boosterType);
         if (type == null) {
             Bukkit.getLogger().info("Unable to find booster type from " + this.boosterType + " (" + this.duration + "s, " + this.multiplier + "x) ! Returning EXP by default!");
             type = BoosterType.EXP;
         }
         return CosmicFactionBoosters.get().getBoosterManager().createBooster(type, this.duration, this.multiplier);
-    }
-
-    public static BoosterBuilderBuilder builder() {
-        return new BoosterBuilderBuilder();
     }
 
     public String getBoosterType() {

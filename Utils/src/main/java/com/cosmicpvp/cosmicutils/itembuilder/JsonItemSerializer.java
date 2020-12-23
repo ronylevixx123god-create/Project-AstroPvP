@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  net.minecraft.util.com.google.gson.JsonDeserializationContext
  *  net.minecraft.util.com.google.gson.JsonDeserializer
@@ -13,13 +13,13 @@
 package com.cosmicpvp.cosmicutils.itembuilder;
 
 import com.cosmicpvp.cosmicutils.utils.ItemSerialization;
-import java.lang.reflect.Type;
-
 import com.google.gson.*;
 import org.bukkit.inventory.ItemStack;
 
+import java.lang.reflect.Type;
+
 public class JsonItemSerializer
-implements JsonDeserializer<ItemStack>,
+        implements JsonDeserializer<ItemStack>,
         JsonSerializer<ItemStack> {
     public ItemStack deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
         String found = jsonElement.getAsString();

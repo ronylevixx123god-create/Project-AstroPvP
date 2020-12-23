@@ -14,12 +14,12 @@ public enum EquipmentType {
 
     private int index;
 
-    public static EquipmentType getRandomArmor() {
-        return EquipmentType.values()[ThreadLocalRandom.current().nextInt(4)];
-    }
-
     private EquipmentType(int index) {
         this.index = index;
+    }
+
+    public static EquipmentType getRandomArmor() {
+        return EquipmentType.values()[ThreadLocalRandom.current().nextInt(4)];
     }
 
     public int getIndex() {

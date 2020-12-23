@@ -9,6 +9,14 @@ public class DiscordChannel {
     private String channelId;
     private String channelRank;
 
+    public DiscordChannel(String username, String avatarURL, String tokenId, String channelId, String channelRank) {
+        this.username = username;
+        this.avatarURL = avatarURL;
+        this.tokenId = tokenId;
+        this.channelId = channelId;
+        this.channelRank = channelRank;
+    }
+
     public String getURL() {
         return "https://discordapp.com/api/webhooks/" + this.channelId + "/" + this.tokenId;
     }
@@ -22,14 +30,6 @@ public class DiscordChannel {
             obj.addProperty("username", this.getUsername());
         }
         return obj;
-    }
-
-    public DiscordChannel(String username, String avatarURL, String tokenId, String channelId, String channelRank) {
-        this.username = username;
-        this.avatarURL = avatarURL;
-        this.tokenId = tokenId;
-        this.channelId = channelId;
-        this.channelRank = channelRank;
     }
 
     public String getUsername() {

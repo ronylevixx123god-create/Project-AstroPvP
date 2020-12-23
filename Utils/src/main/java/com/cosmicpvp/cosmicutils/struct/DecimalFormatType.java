@@ -12,12 +12,12 @@ public enum DecimalFormatType {
 
     private DecimalFormat format;
 
-    public String format(Number value) {
-        return this.format.format(value);
-    }
-
     private DecimalFormatType(DecimalFormat format) {
         this.format = format;
+    }
+
+    public String format(Number value) {
+        return this.format.format(value);
     }
 
     public DecimalFormat getFormat() {

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.compilex.CosmicCrate.api.CCAPI
  *  com.compilex.CosmicCrate.libs.Version
@@ -45,13 +45,9 @@ import com.cosmicpvp.CosmicSpaceChests.listeners.EnvoySummonItemListener;
 import com.cosmicpvp.cosmicutils.CosmicUtils;
 import com.cosmicpvp.cosmicutils.itembuilder.CustomItemBuilder;
 import com.cosmicpvp.cosmicutils.struct.ItemTier;
-import com.cosmicpvp.cosmicutils.utils.TitleItems;
 import com.gmail.nossr50.datatypes.skills.SkillType;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
-import java.util.Arrays;
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 import me.cosmicpvp.CosmicGlobalKits.libs.FallenHero;
 import me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits;
 import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
@@ -76,8 +72,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Arrays;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+
 public class CustomItemUtils {
-    public static ItemStack buildItem(Material m, short metaData, String name, String ... description) {
+    public static ItemStack buildItem(Material m, short metaData, String name, String... description) {
         ItemStack is = new ItemStack(m, 1, metaData);
         ItemMeta im = is.getItemMeta();
         if (name != null) {
@@ -91,35 +91,35 @@ public class CustomItemUtils {
     }
 
     public static ItemStack createSoulGem(int amount) {
-        return KillTrackerAPI.createSoulShard((int)amount);
+        return KillTrackerAPI.createSoulShard((int) amount);
     }
 
     public static ItemStack createGKitFallenHero(String name) {
         if (!CosmicUtils.get().isGlobalKitsEnabled()) {
             return null;
         }
-        return FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.valueOf((String)name));
+        return FallenHero.getFallenHeroItem((GlobalKits) GlobalKits.valueOf((String) name));
     }
 
     public static ItemStack createVKitFallenHero(String name) {
         if (!CosmicUtils.get().isEvolutionKitEnabled()) {
             return null;
         }
-        return FallenHero.getFallenHeroItem((EvolutionKit)EvolutionKits.valueOf((String)name).getKit());
+        return FallenHero.getFallenHeroItem((EvolutionKit) EvolutionKits.valueOf((String) name).getKit());
     }
 
     public static ItemStack createRandomGKitFallenHero() {
         if (!CosmicUtils.get().isGlobalKitsEnabled()) {
             return null;
         }
-        return FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.values()[ThreadLocalRandom.current().nextInt(GlobalKits.values().length)]);
+        return FallenHero.getFallenHeroItem((GlobalKits) GlobalKits.values()[ThreadLocalRandom.current().nextInt(GlobalKits.values().length)]);
     }
 
     public static ItemStack createRandomVKitFallenHero() {
         if (!CosmicUtils.get().isEvolutionKitEnabled()) {
             return null;
         }
-        return FallenHero.getFallenHeroItem((EvolutionKit)EvolutionKits.values()[ThreadLocalRandom.current().nextInt(EvolutionKits.values().length)].getKit());
+        return FallenHero.getFallenHeroItem((EvolutionKit) EvolutionKits.values()[ThreadLocalRandom.current().nextInt(EvolutionKits.values().length)].getKit());
     }
 
     public static ItemStack createRandomEvolutionKitGem() {
@@ -140,7 +140,7 @@ public class CustomItemUtils {
         if (!CosmicUtils.get().isConquestsEnabled()) {
             return null;
         }
-        return heroic ? CosmicConquestAPI.createHeroicToken((int)amount) : CosmicConquestAPI.createFactionToken((int)amount);
+        return heroic ? CosmicConquestAPI.createHeroicToken((int) amount) : CosmicConquestAPI.createFactionToken((int) amount);
     }
 
     public static ItemStack createMysteryMobSpawner() {
@@ -160,59 +160,59 @@ public class CustomItemUtils {
         if (crateName.equalsIgnoreCase("heroic")) {
             return CCAPI.getHeroicMysteryCrate();
         }
-        return CCAPI.getCosmicCrate((Version)Version.valueOf((String)crateName), (String)username);
+        return CCAPI.getCosmicCrate((Version) Version.valueOf((String) crateName), (String) username);
     }
 
     public static ItemStack getXpBottle(int xpAmount, String enchanter) {
-        return CustomItemUtils.buildItem(Material.EXP_BOTTLE, (short)0, ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "Experience Bottle" + (Object)((Object)ChatColor.GRAY) + " (Throw)", (Object)((Object)ChatColor.LIGHT_PURPLE) + "Value " + (Object)((Object)ChatColor.WHITE) + xpAmount + " XP", (Object)((Object)ChatColor.LIGHT_PURPLE) + "Enchanter " + (Object)((Object)ChatColor.WHITE) + enchanter);
+        return CustomItemUtils.buildItem(Material.EXP_BOTTLE, (short) 0, ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "Experience Bottle" + (Object) ((Object) ChatColor.GRAY) + " (Throw)", (Object) ((Object) ChatColor.LIGHT_PURPLE) + "Value " + (Object) ((Object) ChatColor.WHITE) + xpAmount + " XP", (Object) ((Object) ChatColor.LIGHT_PURPLE) + "Enchanter " + (Object) ((Object) ChatColor.WHITE) + enchanter);
     }
 
     public static ItemStack getMoneyNote(String signer, int amount) {
-        return ArkhamMoneyNotesAPI.getMoneyNote((String)signer, (long)amount);
+        return ArkhamMoneyNotesAPI.getMoneyNote((String) signer, (long) amount);
     }
 
     public static ItemStack getMoneyNoteNoIID(String string, int i) {
-        return ArkhamMoneyNotesAPI.getMoneyNoteNoIID((String)string, (long)i);
+        return ArkhamMoneyNotesAPI.getMoneyNoteNoIID((String) string, (long) i);
     }
 
     public static ItemStack getBossEgg(Bosses b) {
-        return MiscUtil.getBossEgg((Boss)b.b);
+        return MiscUtil.getBossEgg((Boss) b.b);
     }
 
     public static ItemStack getEnchantmentBook(CustomEnchantment ce) {
-        return EnchantmentBook.getEnchantmentBook((CustomEnchantment)ce, (int)(new Random().nextInt(ce.getMaxLevel()) + 1));
+        return EnchantmentBook.getEnchantmentBook((CustomEnchantment) ce, (int) (new Random().nextInt(ce.getMaxLevel()) + 1));
     }
 
     public static ItemStack getEnchantmentBook(CustomEnchantment ce, int level) {
-        return EnchantmentBook.getEnchantmentBook((CustomEnchantment)ce, (int)level);
+        return EnchantmentBook.getEnchantmentBook((CustomEnchantment) ce, (int) level);
     }
 
     public static ItemStack getRandomEnchantmentBook() {
         CustomEnchantment ce = EnchantmentAPI.getEnchantments().toArray(new CustomEnchantment[0])[new Random().nextInt(EnchantmentAPI.getEnchantments().size())];
-        return EnchantmentBook.getEnchantmentBook(ce, (int)(new Random().nextInt(ce.getMaxLevel()) + 1));
+        return EnchantmentBook.getEnchantmentBook(ce, (int) (new Random().nextInt(ce.getMaxLevel()) + 1));
     }
 
     public static ItemStack getMysterySoulEnchantmentBook() {
-        return TieredEnchantments.getMysteryEnchantmentBook((int)6);
+        return TieredEnchantments.getMysteryEnchantmentBook((int) 6);
     }
 
     public static ItemStack getMysteryEnchantmentBook(int tier) {
         if (!CosmicUtils.get().isEnchantmentsEnabled()) {
             return null;
         }
-        return TieredEnchantments.getMysteryEnchantmentBook((int)tier);
+        return TieredEnchantments.getMysteryEnchantmentBook((int) tier);
     }
 
     public static ItemStack getEnchantmentBook(ItemRarity ir) {
-        return TieredEnchantments.getMysteryEnchantmentBook((int)CosmicSpaceChestsAPI.getItemRarity((ItemRarity)ir));
+        return TieredEnchantments.getMysteryEnchantmentBook((int) CosmicSpaceChestsAPI.getItemRarity((ItemRarity) ir));
     }
 
     public static ItemStack getMysteryDust(ItemRarity ir, int successIncrease) {
-        return EnchantmentBook.getMagicDust((ItemRarity)ir, (int)successIncrease);
+        return EnchantmentBook.getMagicDust((ItemRarity) ir, (int) successIncrease);
     }
 
     public static ItemStack getEnchantmentBook(CustomEnchantment ce, int level, int success, int failure) {
-        return EnchantmentBook.getEnchantmentBook((CustomEnchantment)ce, (int)level, (int)success, (int)failure);
+        return EnchantmentBook.getEnchantmentBook((CustomEnchantment) ce, (int) level, (int) success, (int) failure);
     }
 
     public static ItemStack getEnvoySummoner() {
@@ -228,7 +228,7 @@ public class CustomItemUtils {
     }
 
     public static ItemStack getBlackscroll(int successRate) {
-        return EnchantmentBook.getBlackScroll((int)successRate);
+        return EnchantmentBook.getBlackScroll((int) successRate);
     }
 
     public static ItemStack getTitleVoucher(String title) {
@@ -236,47 +236,47 @@ public class CustomItemUtils {
     }
 
     public static ItemStack getMCMMOVoucher(int amount) {
-        return McmmoCredits.buildMcmmoCreditItem((int)amount);
+        return McmmoCredits.buildMcmmoCreditItem((int) amount);
     }
 
     public static ItemStack getSkillVoucher(SkillType type, int amount) {
-        return McmmoCredits.buildSkillCreditItem((SkillType)type, (int)amount);
+        return McmmoCredits.buildSkillCreditItem((SkillType) type, (int) amount);
     }
 
     public static ItemStack getMobSpawner(EntityType entityType) {
-        return CustomItemUtils.buildItem(Material.MOB_SPAWNER, entityType.getTypeId(), ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + CustomItemUtils.getEntityName(entityType) + ChatColor.GOLD.toString() + " Spawner", (Object)((Object)ChatColor.GRAY) + "Be careful where you place this!");
+        return CustomItemUtils.buildItem(Material.MOB_SPAWNER, entityType.getTypeId(), ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + CustomItemUtils.getEntityName(entityType) + ChatColor.GOLD.toString() + " Spawner", (Object) ((Object) ChatColor.GRAY) + "Be careful where you place this!");
     }
 
     public static ItemStack getRankItem(ItemTier ir) {
-        return PlayerRankUtils.getRankItem((String)PlayerRankUtils.getRank((int)ir.getRarityId()));
+        return PlayerRankUtils.getRankItem((String) PlayerRankUtils.getRank((int) ir.getRarityId()));
     }
 
     public static ItemStack getRankItem(ItemRarity ir) {
-        return PlayerRankUtils.getRankItem((String)PlayerRankUtils.getRank((int)CustomItemUtils.getItemRarityID(ir)));
+        return PlayerRankUtils.getRankItem((String) PlayerRankUtils.getRank((int) CustomItemUtils.getItemRarityID(ir)));
     }
 
     public static ItemStack getDepthStriderBook(int level) {
         ItemStack book = new ItemStack(Material.ENCHANTED_BOOK, 1);
-        EnchantmentStorageMeta ebm = (EnchantmentStorageMeta)book.getItemMeta();
+        EnchantmentStorageMeta ebm = (EnchantmentStorageMeta) book.getItemMeta();
         ebm.addStoredEnchant(Enchantment.DEPTH_STRIDER, level, true);
         book.setItemMeta(ebm);
         return book;
     }
 
     public static ItemStack getCustomTNT(TNTTypes tntType) {
-        return TNTTypes.getTNTItem((TNTTypes)tntType);
+        return TNTTypes.getTNTItem((TNTTypes) tntType);
     }
 
     public static ItemStack getCustomCreeperEgg(CreeperTypes creeperType) {
-        return CreeperTypes.getCCItem((CreeperTypes)creeperType);
+        return CreeperTypes.getCCItem((CreeperTypes) creeperType);
     }
 
     public static ItemStack getCustomCreeperEgg(String creeperType) {
-        return CreeperTypes.getCCItem((CreeperTypes)CreeperTypes.valueOf((String)creeperType));
+        return CreeperTypes.getCCItem((CreeperTypes) CreeperTypes.valueOf((String) creeperType));
     }
 
     public static ItemStack getCustomTNT(String tntEnumName) {
-        return CustomItemUtils.getCustomTNT(TNTTypes.valueOf((String)tntEnumName));
+        return CustomItemUtils.getCustomTNT(TNTTypes.valueOf((String) tntEnumName));
     }
 
     public static ItemStack setAmount(ItemStack i, int amount) {
@@ -285,7 +285,7 @@ public class CustomItemUtils {
     }
 
     public static ItemStack getLootCrate(ItemRarity ir) {
-        return CosmicSpaceChestsAPI.getDropPackageChest((ItemRarity)ir);
+        return CosmicSpaceChestsAPI.getDropPackageChest((ItemRarity) ir);
     }
 
     public static ItemStack getTransmogScroll() {
@@ -297,7 +297,7 @@ public class CustomItemUtils {
     }
 
     public static ItemStack getNewBossEgg(BossType bossType) {
-        return BossEggUtils.getBossEgg((BossType)bossType);
+        return BossEggUtils.getBossEgg((BossType) bossType);
     }
 
     private static String getEntityName(EntityType et) {

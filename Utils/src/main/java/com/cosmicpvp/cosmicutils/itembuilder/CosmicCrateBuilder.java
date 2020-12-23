@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.compilex.CosmicCrate.api.CCAPI
  *  com.compilex.CosmicCrate.libs.Version
@@ -11,16 +11,16 @@ package com.cosmicpvp.cosmicutils.itembuilder;
 import com.compilex.CosmicCrate.api.CCAPI;
 import com.compilex.CosmicCrate.libs.Version;
 import com.compilex.CosmicCrate.listeners.HeroicMysteryCrateListener;
-import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.CustomItemUtils;
 import com.cosmicpvp.cosmicutils.utils.ReflectionUtils;
-import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+
 public class CosmicCrateBuilder
-extends ItemBuilder {
+        extends ItemBuilder {
     private boolean random;
     private String crateName;
     private String signer;
@@ -42,8 +42,7 @@ extends ItemBuilder {
         if (this.crateName != null) {
             try {
                 return CustomItemUtils.createCosmicCrate(this.crateName, this.signer);
-            }
-            catch (Exception exception) {
+            } catch (Exception exception) {
                 return null;
             }
         }
@@ -66,7 +65,7 @@ extends ItemBuilder {
         if (version == null || version.isEmpty()) {
             return null;
         }
-        return CCAPI.getCosmicCrate((Version)((Version)version.get(ThreadLocalRandom.current().nextInt(version.size()))), (String)this.signer);
+        return CCAPI.getCosmicCrate((Version) ((Version) version.get(ThreadLocalRandom.current().nextInt(version.size()))), (String) this.signer);
     }
 }
 

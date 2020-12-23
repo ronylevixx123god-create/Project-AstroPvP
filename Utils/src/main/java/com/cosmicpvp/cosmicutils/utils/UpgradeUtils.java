@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  me.ifamasssxd.factionupgrades.FactionUpgradeAPI
  *  me.ifamasssxd.factionupgrades.struct.FactionUpgrade
@@ -19,9 +19,8 @@ public class UpgradeUtils {
             return 0;
         }
         try {
-            return FactionUpgradeAPI.getPerkLevelIfAllowed((Player)player, (FactionUpgrade)FactionUpgrade.valueOf((String)upgradeName));
-        }
-        catch (Exception e) {
+            return FactionUpgradeAPI.getPerkLevelIfAllowed((Player) player, (FactionUpgrade) FactionUpgrade.valueOf((String) upgradeName));
+        } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
@@ -32,9 +31,8 @@ public class UpgradeUtils {
             return 0;
         }
         try {
-            return FactionUpgradeAPI.getPerkLevelIfAllowed((String)factionId, (FactionUpgrade)FactionUpgrade.valueOf((String)upgradeName));
-        }
-        catch (Exception e) {
+            return FactionUpgradeAPI.getPerkLevelIfAllowed((String) factionId, (FactionUpgrade) FactionUpgrade.valueOf((String) upgradeName));
+        } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }

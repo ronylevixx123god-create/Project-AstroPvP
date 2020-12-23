@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.massivecraft.factions.FPlayer
  *  com.massivecraft.factions.FPlayers
@@ -26,7 +26,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
 public class GeneralUtil {
@@ -46,9 +45,9 @@ public class GeneralUtil {
 
     public static ItemStack getPlayerHead(String p_name) {
         ItemStack is = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
-        SkullMeta sm = (SkullMeta)is.getItemMeta();
+        SkullMeta sm = (SkullMeta) is.getItemMeta();
         sm.setOwner(p_name);
-        sm.setDisplayName((Object)((Object)ChatColor.WHITE) + "Skull of " + p_name);
+        sm.setDisplayName((Object) ((Object) ChatColor.WHITE) + "Skull of " + p_name);
         is.setItemMeta(sm);
         return is;
     }
@@ -104,13 +103,13 @@ public class GeneralUtil {
         if (p1.hasMetadata("in_duel") || p2.hasMetadata("in_duel")) {
             return false;
         }
-        FPlayer fp1 = (FPlayer)FPlayers.i.get((OfflinePlayer)p1);
-        FPlayer fp2 = (FPlayer)FPlayers.i.get((OfflinePlayer)p2);
+        FPlayer fp1 = (FPlayer) FPlayers.i.get((OfflinePlayer) p1);
+        FPlayer fp2 = (FPlayer) FPlayers.i.get((OfflinePlayer) p2);
         if (!fp1.hasFaction() || !fp2.hasFaction()) {
             return false;
         }
-        Relation r1 = fp1.getFaction().getRelationTo((RelationParticipator)fp2.getFaction());
-        Relation r2 = fp2.getFaction().getRelationTo((RelationParticipator)fp1.getFaction());
+        Relation r1 = fp1.getFaction().getRelationTo((RelationParticipator) fp2.getFaction());
+        Relation r2 = fp2.getFaction().getRelationTo((RelationParticipator) fp1.getFaction());
         return !(!r1.isAlly() && !r1.isMember() || !r2.isAlly() && !r2.isMember());
     }
 
@@ -121,13 +120,13 @@ public class GeneralUtil {
         if (p1.hasMetadata("in_duel") || p2.hasMetadata("in_duel")) {
             return false;
         }
-        FPlayer fp1 = (FPlayer)FPlayers.i.get((OfflinePlayer)p1);
-        FPlayer fp2 = (FPlayer)FPlayers.i.get((OfflinePlayer)p2);
+        FPlayer fp1 = (FPlayer) FPlayers.i.get((OfflinePlayer) p1);
+        FPlayer fp2 = (FPlayer) FPlayers.i.get((OfflinePlayer) p2);
         if (!fp1.hasFaction() || !fp2.hasFaction()) {
             return false;
         }
-        Relation r1 = fp1.getFaction().getRelationTo((RelationParticipator)fp2.getFaction());
-        Relation r2 = fp2.getFaction().getRelationTo((RelationParticipator)fp1.getFaction());
+        Relation r1 = fp1.getFaction().getRelationTo((RelationParticipator) fp2.getFaction());
+        Relation r2 = fp2.getFaction().getRelationTo((RelationParticipator) fp1.getFaction());
         return !(!r1.isAlly() && !r1.isMember() && !r1.isTruce() || !r2.isAlly() && !r2.isMember() && !r2.isTruce());
     }
 
@@ -138,13 +137,13 @@ public class GeneralUtil {
         if (p1.hasMetadata("in_duel") || p2.hasMetadata("in_duel")) {
             return true;
         }
-        FPlayer fp1 = (FPlayer)FPlayers.i.get((OfflinePlayer)p1);
-        FPlayer fp2 = (FPlayer)FPlayers.i.get((OfflinePlayer)p2);
+        FPlayer fp1 = (FPlayer) FPlayers.i.get((OfflinePlayer) p1);
+        FPlayer fp2 = (FPlayer) FPlayers.i.get((OfflinePlayer) p2);
         if (!fp1.hasFaction() || !fp2.hasFaction()) {
             return true;
         }
-        Relation r1 = fp1.getFaction().getRelationTo((RelationParticipator)fp2.getFaction());
-        Relation r2 = fp2.getFaction().getRelationTo((RelationParticipator)fp1.getFaction());
+        Relation r1 = fp1.getFaction().getRelationTo((RelationParticipator) fp2.getFaction());
+        Relation r2 = fp2.getFaction().getRelationTo((RelationParticipator) fp1.getFaction());
         return r1.isEnemy() || r2.isEnemy();
     }
 

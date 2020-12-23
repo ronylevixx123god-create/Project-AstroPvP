@@ -20,30 +20,24 @@
  */
 package com.cosmicpvp.cosmicutils.utils;
 
-import com.cosmicpvp.cosmicutils.utils.ReflectionUtils;
-import com.google.common.collect.Lists;
+import net.minecraft.server.v1_8_R3.*;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.entity.Player;
+import org.bukkit.event.world.WorldSaveEvent;
+import org.bukkit.event.world.WorldUnloadEvent;
+
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
-
-import net.minecraft.server.v1_8_R3.*;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
-import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.entity.Player;
-import org.bukkit.event.world.WorldSaveEvent;
-import org.bukkit.event.world.WorldUnloadEvent;
 
 public class WorldUtil {
     /*public static void sendWorldEffect(Block b, int effectID) {
@@ -59,7 +53,7 @@ public class WorldUtil {
     public static void sendBlockBreakAnimation(Block block, int breaks, List<Player> players) {
         PacketPlayOutBlockBreakAnimation animation = new PacketPlayOutBlockBreakAnimation(0, new BlockPosition(block.getX(), block.getY(), block.getZ()), breaks);
         for (Player pl : players) {
-            ((CraftPlayer)pl).getHandle().playerConnection.sendPacket((Packet)animation);
+            ((CraftPlayer) pl).getHandle().playerConnection.sendPacket((Packet) animation);
         }
     }
 
@@ -77,10 +71,10 @@ public class WorldUtil {
         if (world == null) {
             return false;
         }
-        WorldServer handle = ((CraftWorld)world).getHandle();
-        LinkedHashMap worlds = (LinkedHashMap)ReflectionUtils.getObject(CraftServer.class, (Object)handle.getServer(), "worlds");
+        WorldServer handle = ((CraftWorld) world).getHandle();
+        LinkedHashMap worlds = (LinkedHashMap) ReflectionUtils.getObject(CraftServer.class, (Object) handle.getServer(), "worlds");
         MinecraftServer console = handle.getMinecraftServer();
-        WorldUnloadEvent e = new WorldUnloadEvent((World)handle.getWorld());
+        WorldUnloadEvent e = new WorldUnloadEvent((World) handle.getWorld());
         Bukkit.getPluginManager().callEvent(e);
         if (e.isCancelled()) {
             return false;
@@ -89,15 +83,14 @@ public class WorldUtil {
             try {
                 handle.save(true, null);
                 handle.saveLevel();
-                WorldSaveEvent event = new WorldSaveEvent((World)handle.getWorld());
+                WorldSaveEvent event = new WorldSaveEvent((World) handle.getWorld());
                 Bukkit.getPluginManager().callEvent(event);
-            }
-            catch (ExceptionWorldConflict ex) {
+            } catch (ExceptionWorldConflict ex) {
                 Bukkit.getLogger().log(Level.SEVERE, null, ex);
             }
         }
         worlds.remove(world.getName().toLowerCase());
-        console.worlds.remove((Object)handle);
+        console.worlds.remove((Object) handle);
         WorldUtil.unloadRegionFolder(world, null);
         return true;
     }
@@ -111,16 +104,16 @@ public class WorldUtil {
         synchronized (RegionFileCache.class) {
             WorldUtil.removeFiles(parentFolder);
             Iterator i = RegionFileCache.a.entrySet().iterator();
-            block5: while (i.hasNext()) {
+            block5:
+            while (i.hasNext()) {
                 //TODO: MIGHT BE CUCKED vvv
                 Map.Entry<File, RegionFile> entry = (Map.Entry<File, RegionFile>) i.next();
-                for (File child = ((File)entry.getKey()).getAbsoluteFile(); child != null; child = child.getParentFile()) {
+                for (File child = ((File) entry.getKey()).getAbsoluteFile(); child != null; child = child.getParentFile()) {
                     if (!child.equals(parentFolder)) continue;
                     i.remove();
                     try {
-                        ((RegionFile)entry.getValue()).c();
-                    }
-                    catch (IOException ex) {
+                        ((RegionFile) entry.getValue()).c();
+                    } catch (IOException ex) {
                         Bukkit.getLogger().log(Level.SEVERE, null, ex);
                     }
                     continue block5;
@@ -141,16 +134,15 @@ public class WorldUtil {
     }
 
     public static void removeFromCache(File file) {
-        RegionFile regionFile = (RegionFile)RegionFileCache.a.remove(file);
-        if (regionFile == null && (regionFile = (RegionFile)RegionFileCache.a.remove(file.getAbsoluteFile())) != null) {
+        RegionFile regionFile = (RegionFile) RegionFileCache.a.remove(file);
+        if (regionFile == null && (regionFile = (RegionFile) RegionFileCache.a.remove(file.getAbsoluteFile())) != null) {
             Bukkit.getLogger().info("found match in absolute instead: " + file.getAbsoluteFile());
         }
         if (regionFile != null) {
             try {
                 Bukkit.getLogger().info("Deleting cached regionFile: " + file.toString());
                 regionFile.c();
-            }
-            catch (IOException ex) {
+            } catch (IOException ex) {
                 Bukkit.getLogger().log(Level.SEVERE, null, ex);
             }
         }
