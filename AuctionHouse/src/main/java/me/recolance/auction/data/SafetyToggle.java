@@ -1,18 +1,19 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.configuration.file.YamlConfiguration
  *  org.bukkit.entity.Player
  */
 package me.recolance.auction.data;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import me.recolance.auction.Auction;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SafetyToggle {
     private List<String> toggles = new ArrayList<String>();
@@ -24,12 +25,11 @@ public class SafetyToggle {
         if (!this.file.exists()) {
             try {
                 this.file.createNewFile();
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        this.config = YamlConfiguration.loadConfiguration((File)this.file);
+        this.config = YamlConfiguration.loadConfiguration((File) this.file);
         this.toggles = this.config.getStringList("toggles");
         this.notifytoggles = this.config.getStringList("notify-toggles");
     }
@@ -47,8 +47,7 @@ public class SafetyToggle {
             this.config.set("toggles", this.toggles);
             this.config.set("notify-toggles", this.notifytoggles);
             this.config.save(this.file);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

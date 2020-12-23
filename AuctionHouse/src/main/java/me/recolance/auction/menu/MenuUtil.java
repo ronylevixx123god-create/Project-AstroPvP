@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Material
  *  org.bukkit.event.inventory.ClickType
@@ -12,7 +12,6 @@
 package me.recolance.auction.menu;
 
 import me.recolance.auction.Auction;
-import me.recolance.auction.menu.MenuButton;
 import me.recolance.auction.util.Util;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.ClickType;
@@ -35,7 +34,7 @@ public class MenuUtil {
             return;
         }
         inventory.setItem(slot, new MenuButton().type(Material.STAINED_GLASS_PANE).durability(14).name("&c" + message).get());
-        new BukkitRunnable(){
+        new BukkitRunnable() {
 
             public void run() {
                 ItemStack item = inventory.getItem(slot);
@@ -43,7 +42,7 @@ public class MenuUtil {
                     inventory.setItem(slot, originalItem);
                 }
             }
-        }.runTaskLater((Plugin)Auction.plugin, 20L);
+        }.runTaskLater((Plugin) Auction.plugin, 20L);
     }
 
     public static void displayMenuInfo(final int slot, final Inventory inventory, final ItemStack originalItem, String message) {
@@ -52,7 +51,7 @@ public class MenuUtil {
             return;
         }
         inventory.setItem(slot, new MenuButton().type(Material.STAINED_GLASS_PANE).durability(4).name("&e" + message).get());
-        new BukkitRunnable(){
+        new BukkitRunnable() {
 
             public void run() {
                 ItemStack item = inventory.getItem(slot);
@@ -60,7 +59,7 @@ public class MenuUtil {
                     inventory.setItem(slot, originalItem);
                 }
             }
-        }.runTaskLater((Plugin)Auction.plugin, 20L);
+        }.runTaskLater((Plugin) Auction.plugin, 20L);
     }
 }
 

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.entity.Player
@@ -13,10 +13,6 @@
  */
 package me.recolance.auction.controller;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
 import me.recolance.auction.Auction;
 import me.recolance.auction.auction.UnclaimedListing;
 import me.recolance.auction.data.DataHandler;
@@ -30,15 +26,20 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+
 public class Events
-implements Listener {
+        implements Listener {
     public static Set<UUID> loadingUUIDs = new HashSet<UUID>();
 
     public static boolean isLoading(Player player) {
         return loadingUUIDs.contains(player.getUniqueId());
     }
 
-    @EventHandler(priority=EventPriority.HIGH, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onPlayerJoinEvent(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
@@ -53,7 +54,7 @@ implements Listener {
             return;
         }
         loadingUUIDs.add(player.getUniqueId());
-        Bukkit.getScheduler().runTaskAsynchronously((Plugin)Auction.getPlugin(), () -> {
+        Bukkit.getScheduler().runTaskAsynchronously((Plugin) Auction.getPlugin(), () -> {
             DataHandler.loadUnclaimedListings(uuid);
             loadingUUIDs.remove(player.getUniqueId());
         });

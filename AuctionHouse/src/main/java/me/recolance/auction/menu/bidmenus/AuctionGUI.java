@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.gui.CosmicGUI
  *  com.cosmicpvp.cosmicutils.utils.CC
@@ -13,7 +13,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import org.bukkit.entity.Player;
 
 public abstract class AuctionGUI
-extends CosmicGUI {
+        extends CosmicGUI {
     private long lastClicked;
 
     public AuctionGUI(Player player, String title, int size) {

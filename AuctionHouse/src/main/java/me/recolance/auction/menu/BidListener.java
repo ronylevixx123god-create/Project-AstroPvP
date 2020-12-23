@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.CC
  *  org.bukkit.Bukkit
@@ -21,10 +21,8 @@
 package me.recolance.auction.menu;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import java.util.UUID;
 import me.recolance.auction.Auction;
 import me.recolance.auction.data.AuctionBid;
-import me.recolance.auction.menu.BidManager;
 import me.recolance.auction.menu.bidmenus.BidMenu;
 import me.recolance.auction.menu.bidmenus.ConfirmItemMenu;
 import me.recolance.auction.util.Util;
@@ -43,8 +41,10 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
+import java.util.UUID;
+
 public class BidListener
-implements Listener {
+        implements Listener {
     private static String auctionBiddingMetadata = "auctionBidding";
 
     @EventHandler
@@ -55,10 +55,10 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPlayerInteract(PlayerInteractEntityEvent event) {
         Player clicked;
-        if (event.getRightClicked() instanceof Player && (clicked = (Player)event.getRightClicked()).getName().endsWith("Auctioneer") && clicked.hasMetadata("NPC")) {
+        if (event.getRightClicked() instanceof Player && (clicked = (Player) event.getRightClicked()).getName().endsWith("Auctioneer") && clicked.hasMetadata("NPC")) {
             event.setCancelled(true);
             event.getPlayer().chat("/ah");
         }
@@ -69,38 +69,37 @@ implements Listener {
         Auction.getPlugin().getBidManager().setProccessAuctionHouse(true);
     }
 
-    @EventHandler(priority=EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onAsyncPLayerChatEvent(AsyncPlayerChatEvent event) {
         Player pl = event.getPlayer();
         if (pl.hasMetadata(auctionBiddingMetadata)) {
             event.setCancelled(true);
-            Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Auction.getPlugin(), () -> {
+            Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin) Auction.getPlugin(), () -> {
                 boolean buyout;
-                UUID uuid = UUID.fromString(((MetadataValue)pl.getMetadata(auctionBiddingMetadata).get(0)).asString());
+                UUID uuid = UUID.fromString(((MetadataValue) pl.getMetadata(auctionBiddingMetadata).get(0)).asString());
                 if (uuid == null) {
-                    pl.removeMetadata(auctionBiddingMetadata, (Plugin)Auction.getPlugin());
+                    pl.removeMetadata(auctionBiddingMetadata, (Plugin) Auction.getPlugin());
                     pl.sendMessage(CC.RedB + "Auction no longer valid!");
                     return;
                 }
-                String msg = ChatColor.stripColor((String)event.getMessage());
+                String msg = ChatColor.stripColor((String) event.getMessage());
                 BidManager bidManager = Auction.getPlugin().getBidManager();
                 AuctionBid bid = bidManager.getActiveAuctionBids().get(uuid);
                 if (bid == null || bid.isExpired()) {
-                    pl.sendMessage((Object)ChatColor.RED + "Auction no longer valid!");
-                    pl.removeMetadata(auctionBiddingMetadata, (Plugin)Auction.getPlugin());
+                    pl.sendMessage((Object) ChatColor.RED + "Auction no longer valid!");
+                    pl.removeMetadata(auctionBiddingMetadata, (Plugin) Auction.getPlugin());
                     return;
                 }
                 if (msg.equalsIgnoreCase("cancel")) {
-                    pl.sendMessage((Object)ChatColor.RED + "Auction bid cancelled!");
-                    pl.removeMetadata(auctionBiddingMetadata, (Plugin)Auction.getPlugin());
+                    pl.sendMessage((Object) ChatColor.RED + "Auction bid cancelled!");
+                    pl.removeMetadata(auctionBiddingMetadata, (Plugin) Auction.getPlugin());
                     return;
                 }
                 Long bidAmount = Util.parseLongOrNull(msg);
                 if (bidAmount == null) {
                     try {
                         bidAmount = Util.getMoneyValue(msg);
-                    }
-                    catch (Exception exception) {
+                    } catch (Exception exception) {
                         // empty catch block
                     }
                 }
@@ -109,34 +108,34 @@ implements Listener {
                     return;
                 }
                 if (bid.getCurrentBid() >= bidAmount) {
-                    pl.sendMessage((Object)ChatColor.RED + "Your bid must be higher than the current bid!");
+                    pl.sendMessage((Object) ChatColor.RED + "Your bid must be higher than the current bid!");
                     pl.sendMessage(CC.RedB + "Current Bid: $" + CC.Red + Util.formatMoney(bid.getCurrentBid()));
-                    pl.sendMessage((Object)ChatColor.GRAY + "Type '" + CC.Red + "cancel" + CC.Gray + "' to cancel this auction bid!");
+                    pl.sendMessage((Object) ChatColor.GRAY + "Type '" + CC.Red + "cancel" + CC.Gray + "' to cancel this auction bid!");
                     return;
                 }
-                if ((double)bid.getCurrentBid() < bid.getStartingBid() && (double)bidAmount.longValue() < bid.getStartingBid()) {
+                if ((double) bid.getCurrentBid() < bid.getStartingBid() && (double) bidAmount.longValue() < bid.getStartingBid()) {
                     pl.sendMessage(CC.Red + "You must bid atleast the starting bid amount!");
                     pl.sendMessage(CC.RedB + "Starting Bid: $" + CC.Red + Util.formatMoney(bid.getStartingBid()));
                     return;
                 }
-                if (!Auction.economy.has((OfflinePlayer)pl, (double)bidAmount.longValue())) {
+                if (!Auction.economy.has((OfflinePlayer) pl, (double) bidAmount.longValue())) {
                     pl.sendMessage(CC.Red + "You cannot afford that bid!");
-                    pl.sendMessage(CC.Red + "Current Balance: " + CC.RedB + "$" + CC.Red + Util.formatMoney(Auction.economy.getBalance((OfflinePlayer)pl)));
+                    pl.sendMessage(CC.Red + "Current Balance: " + CC.RedB + "$" + CC.Red + Util.formatMoney(Auction.economy.getBalance((OfflinePlayer) pl)));
                     return;
                 }
                 long nextBid = bid.getCurrentBid() + bid.getBidIncrementAmount();
                 if (nextBid > bidAmount) {
-                    pl.sendMessage((Object)ChatColor.RED + "Your bid must be higher than the current bid with the bid increment!");
+                    pl.sendMessage((Object) ChatColor.RED + "Your bid must be higher than the current bid with the bid increment!");
                     pl.sendMessage(CC.RedB + "Required Bid: $" + CC.Red + Util.formatMoney(nextBid));
                     return;
                 }
-                boolean bl = buyout = bid.getBuyoutAmount() > 0.0 && (double)bidAmount.longValue() == bid.getBuyoutAmount();
-                if (buyout && (double)bid.getCurrentBid() >= bid.getBuyoutAmount()) {
+                boolean bl = buyout = bid.getBuyoutAmount() > 0.0 && (double) bidAmount.longValue() == bid.getBuyoutAmount();
+                if (buyout && (double) bid.getCurrentBid() >= bid.getBuyoutAmount()) {
                     pl.sendMessage(CC.RedB + "Buyout no longer available for that item!");
-                    pl.removeMetadata(auctionBiddingMetadata, (Plugin)Auction.getPlugin());
+                    pl.removeMetadata(auctionBiddingMetadata, (Plugin) Auction.getPlugin());
                     return;
                 }
-                pl.removeMetadata(auctionBiddingMetadata, (Plugin)Auction.getPlugin());
+                pl.removeMetadata(auctionBiddingMetadata, (Plugin) Auction.getPlugin());
                 Long finalBidAmount = bidAmount;
                 new ConfirmItemMenu(pl, "Confirm " + (buyout ? "Purchase" : "Bid") + " Now", finalBidAmount, bid, ConfirmItemMenu.getConfirmCallback(bid, pl, finalBidAmount, buyout), deny -> new BidMenu(pl).openGUI(Auction.getPlugin())).openGUI(Auction.getPlugin());
             });

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.google.common.base.Splitter
  *  com.google.common.collect.BiMap
@@ -27,37 +27,25 @@ import com.google.common.io.Closeables;
 import com.google.common.io.InputSupplier;
 import com.google.common.io.OutputSupplier;
 import com.google.common.primitives.Primitives;
-import java.io.BufferedInputStream;
-import java.io.Closeable;
-import java.io.DataInput;
-import java.io.DataInputStream;
-import java.io.DataOutput;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.AbstractList;
-import java.util.AbstractMap;
-import java.util.AbstractSet;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentMap;
-import java.util.zip.GZIPInputStream;
-import java.util.zip.GZIPOutputStream;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.inventory.ItemStack;
 
+import java.io.*;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.*;
+import java.util.concurrent.ConcurrentMap;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
+
 public class NbtFactory {
     private static final BiMap<Integer, Class<?>> NBT_CLASS = HashBiMap.create();
     private static final BiMap<Integer, NbtType> NBT_ENUM = HashBiMap.create();
+    private static NbtFactory INSTANCE;
+    private final Field[] DATA_FIELD = new Field[12];
     private Class<?> BASE_CLASS;
     private Class<?> COMPOUND_CLASS;
     private Class<?> STREAM_TOOLS;
@@ -65,20 +53,11 @@ public class NbtFactory {
     private Method NBT_CREATE_TAG;
     private Method NBT_GET_TYPE;
     private Field NBT_LIST_TYPE;
-    private final Field[] DATA_FIELD = new Field[12];
     private Class<?> CRAFT_STACK;
     private Field CRAFT_HANDLE;
     private Field STACK_TAG;
     private LoadCompoundMethod LOAD_COMPOUND;
     private Method SAVE_COMPOUND;
-    private static NbtFactory INSTANCE;
-
-    private static NbtFactory get() {
-        if (INSTANCE == null) {
-            INSTANCE = new NbtFactory();
-        }
-        return INSTANCE;
-    }
 
     private NbtFactory() {
         if (this.BASE_CLASS == null) {
@@ -97,42 +76,20 @@ public class NbtFactory {
                 this.initializeNMS(loader, nmsPackage);
                 this.LOAD_COMPOUND = this.READ_LIMITER_CLASS != null ? new LoadMethodSkinUpdate(this.STREAM_TOOLS, this.READ_LIMITER_CLASS) : new LoadMethodWorldUpdate(this.STREAM_TOOLS);
                 this.SAVE_COMPOUND = NbtFactory.getMethod(8, 0, this.STREAM_TOOLS, null, this.BASE_CLASS, DataOutput.class);
-            }
-            catch (ClassNotFoundException e) {
+            } catch (ClassNotFoundException e) {
                 throw new IllegalStateException("Unable to find offline player.", e);
             }
         }
     }
 
-    private void initializeNMS(ClassLoader loader, String nmsPackage) {
-        try {
-            this.STREAM_TOOLS = loader.loadClass(nmsPackage + ".NBTCompressedStreamTools");
-            this.READ_LIMITER_CLASS = loader.loadClass(nmsPackage + ".NBTReadLimiter");
+    private static NbtFactory get() {
+        if (INSTANCE == null) {
+            INSTANCE = new NbtFactory();
         }
-        catch (ClassNotFoundException classNotFoundException) {
-            // empty catch block
-        }
+        return INSTANCE;
     }
 
-    private String getPackageName() {
-        String name;
-        Server server = Bukkit.getServer();
-        String string = name = server != null ? server.getClass().getPackage().getName() : null;
-        if (name != null && name.contains("craftbukkit")) {
-            return name;
-        }
-        return "org.bukkit.craftbukkit.v1_7_R3";
-    }
-
-    private Map<String, Object> getDataMap(Object handle) {
-        return (Map)NbtFactory.getFieldValue(this.getDataField(NbtType.TAG_COMPOUND, handle), handle);
-    }
-
-    private List<Object> getDataList(Object handle) {
-        return (List)NbtFactory.getFieldValue(this.getDataField(NbtType.TAG_LIST, handle), handle);
-    }
-
-    public static NbtList createList(Object ... content) {
+    public static NbtList createList(Object... content) {
         return NbtFactory.createList(Arrays.asList(content));
     }
 
@@ -163,34 +120,35 @@ public class NbtFactory {
      */
     public static NbtCompound fromStream(InputSupplier<? extends InputStream> stream, StreamOptions option) throws IOException {
         NbtCompound nbtCompound;
-        block7: {
+        block7:
+        {
             boolean suppress;
             InputStream input;
-            block6: {
+            block6:
+            {
                 input = null;
                 DataInputStream data = null;
                 suppress = true;
                 try {
-                    input = (InputStream)stream.getInput();
+                    input = (InputStream) stream.getInput();
                     data = new DataInputStream(new BufferedInputStream(option == StreamOptions.GZIP_COMPRESSION ? new GZIPInputStream(input) : input));
                     NbtCompound result = NbtFactory.fromCompound(NbtFactory.get().LOAD_COMPOUND.loadNbt(data));
                     suppress = false;
                     nbtCompound = result;
                     if (data == null) break block6;
-                }
-                catch (Throwable throwable) {
+                } catch (Throwable throwable) {
                     if (data != null) {
-                        Closeables.close(data, (boolean)suppress);
+                        Closeables.close(data, (boolean) suppress);
                     } else if (input != null) {
-                        Closeables.close((Closeable)input, (boolean)suppress);
+                        Closeables.close((Closeable) input, (boolean) suppress);
                     }
                     throw throwable;
                 }
-                Closeables.close((Closeable)data, (boolean)suppress);
+                Closeables.close((Closeable) data, (boolean) suppress);
                 break block7;
             }
             if (input != null) {
-                Closeables.close((Closeable)input, (boolean)suppress);
+                Closeables.close((Closeable) input, (boolean) suppress);
             }
         }
         return nbtCompound;
@@ -200,33 +158,34 @@ public class NbtFactory {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     public static void saveStream(NbtCompound source, OutputSupplier<? extends OutputStream> stream, StreamOptions option) throws IOException {
-        block7: {
+        block7:
+        {
             boolean suppress;
             OutputStream output;
-            block6: {
+            block6:
+            {
                 output = null;
                 DataOutputStream data = null;
                 suppress = true;
                 try {
-                    output = (OutputStream)stream.getOutput();
+                    output = (OutputStream) stream.getOutput();
                     data = new DataOutputStream(option == StreamOptions.GZIP_COMPRESSION ? new GZIPOutputStream(output) : output);
                     NbtFactory.invokeMethod(NbtFactory.get().SAVE_COMPOUND, null, source.getHandle(), data);
                     suppress = false;
                     if (data == null) break block6;
-                }
-                catch (Throwable throwable) {
+                } catch (Throwable throwable) {
                     if (data != null) {
-                        Closeables.close(data, (boolean)suppress);
+                        Closeables.close(data, (boolean) suppress);
                     } else if (output != null) {
-                        Closeables.close((Closeable)output, (boolean)suppress);
+                        Closeables.close((Closeable) output, (boolean) suppress);
                     }
                     throw throwable;
                 }
-                Closeables.close((Closeable)data, (boolean)suppress);
+                Closeables.close((Closeable) data, (boolean) suppress);
                 break block7;
             }
             if (output != null) {
-                Closeables.close((Closeable)output, (boolean)suppress);
+                Closeables.close((Closeable) output, (boolean) suppress);
             }
         }
     }
@@ -239,13 +198,13 @@ public class NbtFactory {
 
     public static void setItemTag(ItemStack stack, NbtCompound compound) {
         NbtFactory.checkItemStack(stack);
-        Object nms = NbtFactory.getFieldValue(NbtFactory.get().CRAFT_HANDLE, (Object)stack);
+        Object nms = NbtFactory.getFieldValue(NbtFactory.get().CRAFT_HANDLE, (Object) stack);
         NbtFactory.setFieldValue(NbtFactory.get().STACK_TAG, nms, compound.getHandle());
     }
 
     public static NbtCompound fromItemTag(ItemStack stack) {
         NbtFactory.checkItemStack(stack);
-        Object nms = NbtFactory.getFieldValue(NbtFactory.get().CRAFT_HANDLE, (Object)stack);
+        Object nms = NbtFactory.getFieldValue(NbtFactory.get().CRAFT_HANDLE, (Object) stack);
         Object tag = NbtFactory.getFieldValue(NbtFactory.get().STACK_TAG, nms);
         if (tag == null) {
             NbtCompound compound = NbtFactory.createCompound();
@@ -262,10 +221,9 @@ public class NbtFactory {
         try {
             Constructor<?> caller = NbtFactory.INSTANCE.CRAFT_STACK.getDeclaredConstructor(ItemStack.class);
             caller.setAccessible(true);
-            return (ItemStack)caller.newInstance(new Object[]{stack});
-        }
-        catch (Exception e) {
-            throw new IllegalStateException("Unable to convert " + (Object)stack + " + to a CraftItemStack.");
+            return (ItemStack) caller.newInstance(new Object[]{stack});
+        } catch (Exception e) {
+            throw new IllegalStateException("Unable to convert " + (Object) stack + " + to a CraftItemStack.");
         }
     }
 
@@ -281,12 +239,91 @@ public class NbtFactory {
         }
     }
 
+    private static Object invokeMethod(Method method, Object target, Object... params) {
+        try {
+            return method.invoke(target, params);
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to invoke method " + method + " for " + target, e);
+        }
+    }
+
+    private static void setFieldValue(Field field, Object target, Object value) {
+        try {
+            field.set(target, value);
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to set " + field + " for " + target, e);
+        }
+    }
+
+    private static Object getFieldValue(Field field, Object target) {
+        try {
+            return field.get(target);
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to retrieve " + field + " for " + target, e);
+        }
+    }
+
+    private static Method getMethod(int requireMod, int bannedMod, Class<?> clazz, String methodName, Class<?>... params) {
+        for (Method method : clazz.getDeclaredMethods()) {
+            if ((method.getModifiers() & requireMod) != requireMod || (method.getModifiers() & bannedMod) != 0 || methodName != null && !method.getName().equals(methodName) || !Arrays.equals(method.getParameterTypes(), params))
+                continue;
+            method.setAccessible(true);
+            return method;
+        }
+        if (clazz.getSuperclass() != null) {
+            return NbtFactory.getMethod(requireMod, bannedMod, clazz.getSuperclass(), methodName, params);
+        }
+        throw new IllegalStateException(String.format("Unable to find method %s (%s).", methodName, Arrays.asList(params)));
+    }
+
+    private static Field getField(Object instance, Class<?> clazz, String fieldName) {
+        if (clazz == null) {
+            clazz = instance.getClass();
+        }
+        for (Field field : clazz.getDeclaredFields()) {
+            if (!field.getName().equals(fieldName)) continue;
+            field.setAccessible(true);
+            return field;
+        }
+        if (clazz.getSuperclass() != null) {
+            return NbtFactory.getField(instance, clazz.getSuperclass(), fieldName);
+        }
+        throw new IllegalStateException("Unable to find field " + fieldName + " in " + instance);
+    }
+
+    private void initializeNMS(ClassLoader loader, String nmsPackage) {
+        try {
+            this.STREAM_TOOLS = loader.loadClass(nmsPackage + ".NBTCompressedStreamTools");
+            this.READ_LIMITER_CLASS = loader.loadClass(nmsPackage + ".NBTReadLimiter");
+        } catch (ClassNotFoundException classNotFoundException) {
+            // empty catch block
+        }
+    }
+
+    private String getPackageName() {
+        String name;
+        Server server = Bukkit.getServer();
+        String string = name = server != null ? server.getClass().getPackage().getName() : null;
+        if (name != null && name.contains("craftbukkit")) {
+            return name;
+        }
+        return "org.bukkit.craftbukkit.v1_7_R3";
+    }
+
+    private Map<String, Object> getDataMap(Object handle) {
+        return (Map) NbtFactory.getFieldValue(this.getDataField(NbtType.TAG_COMPOUND, handle), handle);
+    }
+
+    private List<Object> getDataList(Object handle) {
+        return (List) NbtFactory.getFieldValue(this.getDataField(NbtType.TAG_LIST, handle), handle);
+    }
+
     private Object unwrapValue(Object value) {
         if (value == null) {
             return null;
         }
         if (value instanceof Wrapper) {
-            return ((Wrapper)value).getHandle();
+            return ((Wrapper) value).getHandle();
         }
         if (value instanceof List) {
             throw new IllegalArgumentException("Can only insert a WrappedList.");
@@ -317,7 +354,7 @@ public class NbtFactory {
     }
 
     private Object createNbtTag(NbtType type, Object value) {
-        Object tag = NbtFactory.invokeMethod(this.NBT_CREATE_TAG, null, (byte)type.id);
+        Object tag = NbtFactory.invokeMethod(this.NBT_CREATE_TAG, null, (byte) type.id);
         if (value != null) {
             NbtFactory.setFieldValue(this.getDataField(type, tag), tag, value);
         }
@@ -332,74 +369,63 @@ public class NbtFactory {
     }
 
     private NbtType getNbtType(Object nms) {
-        byte type = (Byte)NbtFactory.invokeMethod(this.NBT_GET_TYPE, nms, new Object[0]);
-        return (NbtType)((Object)NBT_ENUM.get((Object)type));
+        byte type = (Byte) NbtFactory.invokeMethod(this.NBT_GET_TYPE, nms, new Object[0]);
+        return (NbtType) ((Object) NBT_ENUM.get((Object) type));
     }
 
     private NbtType getPrimitiveType(Object primitive) {
-        NbtType type = (NbtType)((Object)NBT_ENUM.get(NBT_CLASS.inverse().get((Object)Primitives.unwrap(primitive.getClass()))));
+        NbtType type = (NbtType) ((Object) NBT_ENUM.get(NBT_CLASS.inverse().get((Object) Primitives.unwrap(primitive.getClass()))));
         if (type == null) {
             throw new IllegalArgumentException(String.format("Illegal type: %s (%s)", primitive.getClass(), primitive));
         }
         return type;
     }
 
-    private static Object invokeMethod(Method method, Object target, Object ... params) {
-        try {
-            return method.invoke(target, params);
+    private static enum NbtType {
+        TAG_END(0, Void.class),
+        TAG_BYTE(1, Byte.TYPE),
+        TAG_SHORT(2, Short.TYPE),
+        TAG_INT(3, Integer.TYPE),
+        TAG_LONG(4, Long.TYPE),
+        TAG_FLOAT(5, Float.TYPE),
+        TAG_DOUBLE(6, Double.TYPE),
+        TAG_BYTE_ARRAY(7, byte[].class),
+        TAG_INT_ARRAY(11, int[].class),
+        TAG_STRING(8, String.class),
+        TAG_LIST(9, List.class),
+        TAG_COMPOUND(10, Map.class);
+
+        public final int id;
+
+        private NbtType(int id, Class<?> type) {
+            this.id = id;
+            NBT_CLASS.put(id, type);
+            NBT_ENUM.put(id, this);
         }
-        catch (Exception e) {
-            throw new RuntimeException("Unable to invoke method " + method + " for " + target, e);
+
+        private String getFieldName() {
+            if (this == TAG_COMPOUND) {
+                return "map";
+            }
+            if (this == TAG_LIST) {
+                return "list";
+            }
+            return "data";
         }
     }
 
-    private static void setFieldValue(Field field, Object target, Object value) {
-        try {
-            field.set(target, value);
-        }
-        catch (Exception e) {
-            throw new RuntimeException("Unable to set " + field + " for " + target, e);
-        }
+    public static enum StreamOptions {
+        NO_COMPRESSION,
+        GZIP_COMPRESSION;
+
     }
 
-    private static Object getFieldValue(Field field, Object target) {
-        try {
-            return field.get(target);
-        }
-        catch (Exception e) {
-            throw new RuntimeException("Unable to retrieve " + field + " for " + target, e);
-        }
-    }
-
-    private static Method getMethod(int requireMod, int bannedMod, Class<?> clazz, String methodName, Class<?> ... params) {
-        for (Method method : clazz.getDeclaredMethods()) {
-            if ((method.getModifiers() & requireMod) != requireMod || (method.getModifiers() & bannedMod) != 0 || methodName != null && !method.getName().equals(methodName) || !Arrays.equals(method.getParameterTypes(), params)) continue;
-            method.setAccessible(true);
-            return method;
-        }
-        if (clazz.getSuperclass() != null) {
-            return NbtFactory.getMethod(requireMod, bannedMod, clazz.getSuperclass(), methodName, params);
-        }
-        throw new IllegalStateException(String.format("Unable to find method %s (%s).", methodName, Arrays.asList(params)));
-    }
-
-    private static Field getField(Object instance, Class<?> clazz, String fieldName) {
-        if (clazz == null) {
-            clazz = instance.getClass();
-        }
-        for (Field field : clazz.getDeclaredFields()) {
-            if (!field.getName().equals(fieldName)) continue;
-            field.setAccessible(true);
-            return field;
-        }
-        if (clazz.getSuperclass() != null) {
-            return NbtFactory.getField(instance, clazz.getSuperclass(), fieldName);
-        }
-        throw new IllegalStateException("Unable to find field " + fieldName + " in " + instance);
+    public static interface Wrapper {
+        public Object getHandle();
     }
 
     private static class LoadMethodSkinUpdate
-    extends LoadCompoundMethod {
+            extends LoadCompoundMethod {
         private Object readLimiter;
 
         public LoadMethodSkinUpdate(Class<?> streamClass, Class<?> readLimiterClass) {
@@ -408,8 +434,7 @@ public class NbtFactory {
                 if (!readLimiterClass.isAssignableFrom(field.getType())) continue;
                 try {
                     this.readLimiter = field.get(null);
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     throw new RuntimeException("Cannot retrieve read limiter.", e);
                 }
             }
@@ -422,7 +447,7 @@ public class NbtFactory {
     }
 
     private static class LoadMethodWorldUpdate
-    extends LoadCompoundMethod {
+            extends LoadCompoundMethod {
         public LoadMethodWorldUpdate(Class<?> streamClass) {
             this.setMethod(NbtFactory.getMethod(8, 0, streamClass, null, new Class[]{DataInput.class}));
         }
@@ -448,8 +473,8 @@ public class NbtFactory {
     }
 
     private class ConvertedList
-    extends AbstractList<Object>
-    implements Wrapper {
+            extends AbstractList<Object>
+            implements Wrapper {
         private final Object handle;
         private final List<Object> original;
         private final CachedNativeWrapper cache;
@@ -490,7 +515,7 @@ public class NbtFactory {
         public void add(int index, Object element) {
             Object nbt = this.unwrapIncoming(element);
             if (this.size() == 0) {
-                NbtFactory.setFieldValue(NbtFactory.this.NBT_LIST_TYPE, this.handle, (byte)((NbtFactory)NbtFactory.this).getNbtType((Object)nbt).id);
+                NbtFactory.setFieldValue(NbtFactory.this.NBT_LIST_TYPE, this.handle, (byte) ((NbtFactory) NbtFactory.this).getNbtType((Object) nbt).id);
             }
             this.original.add(index, nbt);
         }
@@ -512,8 +537,8 @@ public class NbtFactory {
     }
 
     private class ConvertedMap
-    extends AbstractMap<String, Object>
-    implements Wrapper {
+            extends AbstractMap<String, Object>
+            implements Wrapper {
         private final Object handle;
         private final Map<String, Object> original;
         private final CachedNativeWrapper cache;
@@ -554,7 +579,7 @@ public class NbtFactory {
 
         @Override
         public Set<Map.Entry<String, Object>> entrySet() {
-            return new AbstractSet<Map.Entry<String, Object>>(){
+            return new AbstractSet<Map.Entry<String, Object>>() {
 
                 @Override
                 public boolean add(Map.Entry<String, Object> e) {
@@ -578,7 +603,7 @@ public class NbtFactory {
 
         private Iterator<Map.Entry<String, Object>> iterator() {
             final Iterator<Map.Entry<String, Object>> proxy = this.original.entrySet().iterator();
-            return new Iterator<Map.Entry<String, Object>>(){
+            return new Iterator<Map.Entry<String, Object>>() {
 
                 @Override
                 public boolean hasNext() {
@@ -587,8 +612,8 @@ public class NbtFactory {
 
                 @Override
                 public Map.Entry<String, Object> next() {
-                    Map.Entry entry = (Map.Entry)proxy.next();
-                    return new AbstractMap.SimpleEntry<String, Object>((String)entry.getKey(), ConvertedMap.this.wrapOutgoing(entry.getValue()));
+                    Map.Entry entry = (Map.Entry) proxy.next();
+                    return new AbstractMap.SimpleEntry<String, Object>((String) entry.getKey(), ConvertedMap.this.wrapOutgoing(entry.getValue()));
                 }
 
                 @Override
@@ -619,64 +644,60 @@ public class NbtFactory {
         }
     }
 
-    public static interface Wrapper {
-        public Object getHandle();
-    }
-
     public final class NbtList
-    extends ConvertedList {
+            extends ConvertedList {
         private NbtList(Object handle) {
             super(handle, NbtFactory.this.getDataList(handle));
         }
     }
 
     public final class NbtCompound
-    extends ConvertedMap {
+            extends ConvertedMap {
         private NbtCompound(Object handle) {
             super(handle, NbtFactory.this.getDataMap(handle));
         }
 
         public Byte getByte(String key, Byte defaultValue) {
-            return this.containsKey(key) ? (Byte)this.get(key) : defaultValue;
+            return this.containsKey(key) ? (Byte) this.get(key) : defaultValue;
         }
 
         public Short getShort(String key, Short defaultValue) {
-            return this.containsKey(key) ? (Short)this.get(key) : defaultValue;
+            return this.containsKey(key) ? (Short) this.get(key) : defaultValue;
         }
 
         public Integer getInteger(String key, Integer defaultValue) {
-            return this.containsKey(key) ? (Integer)this.get(key) : defaultValue;
+            return this.containsKey(key) ? (Integer) this.get(key) : defaultValue;
         }
 
         public Long getLong(String key, Long defaultValue) {
-            return this.containsKey(key) ? (Long)this.get(key) : defaultValue;
+            return this.containsKey(key) ? (Long) this.get(key) : defaultValue;
         }
 
         public Float getFloat(String key, Float defaultValue) {
-            return this.containsKey(key) ? (Float)this.get(key) : defaultValue;
+            return this.containsKey(key) ? (Float) this.get(key) : defaultValue;
         }
 
         public Double getDouble(String key, Double defaultValue) {
-            return this.containsKey(key) ? (Double)this.get(key) : defaultValue;
+            return this.containsKey(key) ? (Double) this.get(key) : defaultValue;
         }
 
         public String getString(String key, String defaultValue) {
-            return this.containsKey(key) ? (String)this.get(key) : defaultValue;
+            return this.containsKey(key) ? (String) this.get(key) : defaultValue;
         }
 
         public byte[] getByteArray(String key, byte[] defaultValue) {
-            return this.containsKey(key) ? (byte[])this.get(key) : defaultValue;
+            return this.containsKey(key) ? (byte[]) this.get(key) : defaultValue;
         }
 
         public int[] getIntegerArray(String key, int[] defaultValue) {
-            return this.containsKey(key) ? (int[])this.get(key) : defaultValue;
+            return this.containsKey(key) ? (int[]) this.get(key) : defaultValue;
         }
 
         public NbtList getList(String key, boolean createNew) {
-            NbtList list = (NbtList)this.get(key);
+            NbtList list = (NbtList) this.get(key);
             if (list == null && createNew) {
                 list = NbtFactory.createList(new Object[0]);
-                this.put(key, (Object)list);
+                this.put(key, (Object) list);
             }
             return list;
         }
@@ -696,7 +717,7 @@ public class NbtFactory {
             List<String> entries = this.getPathElements(path);
             NbtCompound map = this.getMap(entries.subList(0, entries.size() - 1), false);
             if (map != null) {
-                return (T)map.get(entries.get(entries.size() - 1));
+                return (T) map.get(entries.get(entries.size() - 1));
             }
             return null;
         }
@@ -708,13 +729,13 @@ public class NbtFactory {
         private NbtCompound getMap(Iterable<String> path, boolean createNew) {
             NbtCompound current = this;
             for (String entry : path) {
-                NbtCompound child = (NbtCompound)current.get(entry);
+                NbtCompound child = (NbtCompound) current.get(entry);
                 if (child == null) {
                     if (!createNew) {
                         return null;
                     }
                     child = NbtFactory.createCompound();
-                    current.put(entry, (Object)child);
+                    current.put(entry, (Object) child);
                 }
                 current = child;
             }
@@ -722,47 +743,8 @@ public class NbtFactory {
         }
 
         private List<String> getPathElements(String path) {
-            return Lists.newArrayList((Iterable)Splitter.on((String)".").omitEmptyStrings().split((CharSequence)path));
+            return Lists.newArrayList((Iterable) Splitter.on((String) ".").omitEmptyStrings().split((CharSequence) path));
         }
-    }
-
-    private static enum NbtType {
-        TAG_END(0, Void.class),
-        TAG_BYTE(1, Byte.TYPE),
-        TAG_SHORT(2, Short.TYPE),
-        TAG_INT(3, Integer.TYPE),
-        TAG_LONG(4, Long.TYPE),
-        TAG_FLOAT(5, Float.TYPE),
-        TAG_DOUBLE(6, Double.TYPE),
-        TAG_BYTE_ARRAY(7, byte[].class),
-        TAG_INT_ARRAY(11, int[].class),
-        TAG_STRING(8, String.class),
-        TAG_LIST(9, List.class),
-        TAG_COMPOUND(10, Map.class);
-
-        public final int id;
-
-        private NbtType(int id, Class<?> type) {
-            this.id = id;
-            NBT_CLASS.put((Object)id, type);
-            NBT_ENUM.put((Object)id, (Object)this);
-        }
-
-        private String getFieldName() {
-            if (this == TAG_COMPOUND) {
-                return "map";
-            }
-            if (this == TAG_LIST) {
-                return "list";
-            }
-            return "data";
-        }
-    }
-
-    public static enum StreamOptions {
-        NO_COMPRESSION,
-        GZIP_COMPRESSION;
-
     }
 }
 

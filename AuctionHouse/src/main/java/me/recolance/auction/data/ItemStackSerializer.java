@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  net.minecraft.util.com.google.gson.JsonElement
  *  net.minecraft.util.com.google.gson.JsonObject
@@ -10,14 +10,14 @@
  */
 package me.recolance.auction.data;
 
-import java.lang.reflect.Type;
-
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import me.recolance.auction.util.ItemSerialization;
 import org.bukkit.inventory.ItemStack;
+
+import java.lang.reflect.Type;
 
 public class ItemStackSerializer implements JsonSerializer<ItemStack> {
     public JsonElement serialize(ItemStack itemStack, Type type, JsonSerializationContext jsonSerializationContext) {

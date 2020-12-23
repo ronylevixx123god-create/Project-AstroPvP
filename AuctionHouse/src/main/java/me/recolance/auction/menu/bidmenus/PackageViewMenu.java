@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.gui.CosmicGUI
  *  com.cosmicpvp.cosmicutils.gui.InventoryItem
@@ -22,7 +22,6 @@ import com.cosmicpvp.cosmicutils.utils.InventoryUtils;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import me.recolance.auction.Auction;
 import me.recolance.auction.data.AuctionBid;
-import me.recolance.auction.menu.bidmenus.BiddableMenu;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -30,12 +29,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 public class PackageViewMenu
-extends CosmicGUI {
+        extends CosmicGUI {
     private AuctionBid toView;
     private BiddableMenu menu;
 
     public PackageViewMenu(Player player, AuctionBid toView, BiddableMenu parent) {
-        super(player, toView.getSellerName() + "'s Package Items", InventoryUtils.fitSize((int)(toView.getSellingItems().size() + 1)));
+        super(player, toView.getSellerName() + "'s Package Items", InventoryUtils.fitSize((int) (toView.getSellingItems().size() + 1)));
         this.toView = toView;
         this.menu = parent;
     }
@@ -50,7 +49,7 @@ extends CosmicGUI {
         for (ItemStack item : this.toView.getSellingItems()) {
             this.setItem(slot++, item, null);
         }
-        this.setItem(this.size - 1, new InventoryItem(new ItemBuilder(Material.ARROW).name(CC.GreenB + "Return to Auctions").lore(new String[]{"", CC.Gray + "Click to return to auction bids!"}).build()).click(() -> Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Auction.getPlugin(), () -> this.menu.openGUI(Auction.getPlugin()), 1L)));
+        this.setItem(this.size - 1, new InventoryItem(new ItemBuilder(Material.ARROW).name(CC.GreenB + "Return to Auctions").lore(new String[]{"", CC.Gray + "Click to return to auction bids!"}).build()).click(() -> Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin) Auction.getPlugin(), () -> this.menu.openGUI(Auction.getPlugin()), 1L)));
     }
 }
 

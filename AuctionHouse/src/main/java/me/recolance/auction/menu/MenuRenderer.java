@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.CC
  *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
@@ -23,20 +23,11 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.google.common.collect.Lists;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.UUID;
 import me.recolance.auction.Auction;
 import me.recolance.auction.auction.Listing;
 import me.recolance.auction.auction.UnclaimedListing;
 import me.recolance.auction.controller.Controller;
 import me.recolance.auction.data.DataHolder;
-import me.recolance.auction.menu.BidManager;
-import me.recolance.auction.menu.MenuButton;
-import me.recolance.auction.menu.MenuHelper;
-import me.recolance.auction.menu.MenuType;
 import me.recolance.auction.util.AuctionUtil;
 import me.recolance.auction.util.Item;
 import me.recolance.auction.util.Util;
@@ -50,6 +41,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
+
+import java.util.*;
 
 public class MenuRenderer {
     private static Plugin plugin = Auction.plugin;
@@ -65,7 +58,7 @@ public class MenuRenderer {
     private static List<String> expirationLore;
 
     public static void loadMenuItems() {
-        auctionInventoryName = ChatColor.translateAlternateColorCodes((char)'&', (String)plugin.getConfig().getString("menuText.menuName"));
+        auctionInventoryName = ChatColor.translateAlternateColorCodes((char) '&', (String) plugin.getConfig().getString("menuText.menuName"));
         itemsSellingName = plugin.getConfig().getString("menuText.itemsYoureSelling.name");
         itemsSellingLore = plugin.getConfig().getStringList("menuText.itemsYoureSelling.lore");
         expiredItemName = plugin.getConfig().getString("menuText.collectExpired.name");
@@ -107,7 +100,7 @@ public class MenuRenderer {
         if (pP == null) {
             MenuRenderer.loadMenuItems();
         }
-        Inventory inventory = Bukkit.createInventory(null, (int)54, (String)auctionInventoryName);
+        Inventory inventory = Bukkit.createInventory(null, (int) 54, (String) auctionInventoryName);
         MenuRenderer.renderAuctionPage(1, inventory, player);
         MenuButton iYS = new MenuButton().type(Material.DIAMOND).name(itemsSellingName);
         for (String string : itemsSellingLore) {
@@ -174,7 +167,7 @@ public class MenuRenderer {
     }
 
     public static void purchaseConfirmation(Player player, Listing listing, boolean categoryViewing) {
-        Inventory inventory = Bukkit.createInventory(null, (int)9, (String)"Purchase Item: Are You Sure?");
+        Inventory inventory = Bukkit.createInventory(null, (int) 9, (String) "Purchase Item: Are You Sure?");
         ItemStack yes = new MenuButton().type(Material.STAINED_GLASS_PANE).durability(5).name("&a&lConfirm Purchase").lore("&7Click to confirm purchase.").get();
         for (int i = 0; i < 4; ++i) {
             inventory.setItem(i, yes);
@@ -183,18 +176,18 @@ public class MenuRenderer {
         for (int i = 5; i < 9; ++i) {
             inventory.setItem(i, no);
         }
-        ItemStack item = new Item(new ItemStack(listing.getItem())).addLore("", "&6Price: &e$" + listing.getPrettyPrice(), "&6Seller: &e" + Bukkit.getOfflinePlayer((UUID)listing.getWhoListed()).getName()).get();
+        ItemStack item = new Item(new ItemStack(listing.getItem())).addLore("", "&6Price: &e$" + listing.getPrettyPrice(), "&6Seller: &e" + Bukkit.getOfflinePlayer((UUID) listing.getWhoListed()).getName()).get();
         inventory.setItem(4, item);
         player.openInventory(inventory);
         MenuHelper.setPurchasing(player, listing);
         MenuHelper.setViewing(player, MenuType.PURCHASE_CONFIRMATION);
         if (categoryViewing) {
-            player.setMetadata("category_view", (MetadataValue)new FixedMetadataValue((Plugin)Auction.getPlugin(), (Object)""));
+            player.setMetadata("category_view", (MetadataValue) new FixedMetadataValue((Plugin) Auction.getPlugin(), (Object) ""));
         }
     }
 
     public static void selling(Player player) {
-        Inventory inventory = Bukkit.createInventory(null, (int)54, (String)"Your Current Listings");
+        Inventory inventory = Bukkit.createInventory(null, (int) 54, (String) "Your Current Listings");
         MenuRenderer.renderSelling(player, inventory);
         MenuButton back = new MenuButton().type(Material.CHEST).name("&e&lReturn to Auction House").lore("&7Click here to return to the", "&7auction house main menu.");
         MenuButton wITP = new MenuButton().type(Material.BOOK).name("&e&lTutorial").lore("&7These are your current listings, all of", "&7the items you currently have listed on", "&7the auction house are displayed here.", "", "&7You can cancel and view your listing's", "&7expire time here.");
@@ -213,7 +206,7 @@ public class MenuRenderer {
             return;
         }
         if (playerListings.size() > 1) {
-            Collections.sort(playerListings, new Comparator<Listing>(){
+            Collections.sort(playerListings, new Comparator<Listing>() {
 
                 @Override
                 public int compare(Listing l1, Listing l2) {
@@ -224,10 +217,10 @@ public class MenuRenderer {
         ArrayList<Listing> vL = new ArrayList<Listing>();
         int slot = 0;
         for (Listing listing : playerListings) {
-            String perData = listing.getExpInBottle() > 0 ? CC.Gray + " ($" + NumberUtils.formatMoney((double)listing.getExpPerDollar()) + " / xp)" : "";
+            String perData = listing.getExpInBottle() > 0 ? CC.Gray + " ($" + NumberUtils.formatMoney((double) listing.getExpPerDollar()) + " / xp)" : "";
             double perItem = listing.getPricePerItem();
-            if (perItem != (double)listing.getPrice() && perItem > 0.0) {
-                perData = " ($" + NumberUtils.formatMoney((double)perItem) + " / item)";
+            if (perItem != (double) listing.getPrice() && perItem > 0.0) {
+                perData = " ($" + NumberUtils.formatMoney((double) perItem) + " / item)";
             }
             ItemStack item = new Item(new ItemStack(listing.getItem())).addLore("&7-------------------------", "&c&lClick item to cancel auction.", "", "&6Price: &e$" + listing.getPrettyPrice() + perData, "&6Expire: &e" + Util.getRemainingTimeString(System.currentTimeMillis(), listing.getEndTime() - System.currentTimeMillis()), "&7-------------------------").get();
             vL.add(listing);
@@ -238,7 +231,7 @@ public class MenuRenderer {
     }
 
     public static void expired(Player player) {
-        Inventory inventory = Bukkit.createInventory(null, (int)54, (String)"Cancelled / Expired Listings");
+        Inventory inventory = Bukkit.createInventory(null, (int) 54, (String) "Cancelled / Expired Listings");
         MenuRenderer.renderExpired(1, inventory, player);
         MenuButton back = new MenuButton().type(Material.CHEST).name("&e&lReturn to Auction House").lore("&7Click here to return to the", "&7auction house main menu.");
         MenuButton previous = new MenuButton().type(Material.PAPER).name("&e&l<- Previous Page");
@@ -278,7 +271,7 @@ public class MenuRenderer {
             return;
         }
         if (listings.size() > 1) {
-            Collections.sort(listings, new Comparator<UnclaimedListing>(){
+            Collections.sort(listings, new Comparator<UnclaimedListing>() {
 
                 @Override
                 public int compare(UnclaimedListing l1, UnclaimedListing l2) {

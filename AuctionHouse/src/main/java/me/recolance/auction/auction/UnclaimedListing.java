@@ -1,13 +1,14 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.inventory.ItemStack
  */
 package me.recolance.auction.auction;
 
-import java.util.UUID;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.UUID;
 
 public class UnclaimedListing {
     private UUID id;

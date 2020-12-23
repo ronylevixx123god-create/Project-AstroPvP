@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
@@ -11,8 +11,6 @@
  */
 package me.recolance.auction.util;
 
-import java.text.DecimalFormat;
-import java.util.regex.Pattern;
 import me.recolance.auction.Auction;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -21,15 +19,18 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
+import java.text.DecimalFormat;
+import java.util.regex.Pattern;
+
 public class Util {
     private static DecimalFormat format = new DecimalFormat("#,###");
 
     public static String setStringColors(String message) {
-        return ChatColor.translateAlternateColorCodes((char)'&', (String)message);
+        return ChatColor.translateAlternateColorCodes((char) '&', (String) message);
     }
 
     public static void message(Player player, String message) {
-        player.sendMessage(ChatColor.translateAlternateColorCodes((char)'&', (String)message));
+        player.sendMessage(ChatColor.translateAlternateColorCodes((char) '&', (String) message));
     }
 
     public static String formatMoney(long value) {
@@ -41,20 +42,19 @@ public class Util {
     }
 
     public static void closePlayerInventoryOnClick(Player p) {
-        Bukkit.getScheduler().runTaskLater((Plugin)Auction.getPlugin(), ((Player)p)::closeInventory, 1L);
+        Bukkit.getScheduler().runTaskLater((Plugin) Auction.getPlugin(), ((Player) p)::closeInventory, 1L);
     }
 
     public static Long parseLongOrNull(String strg) {
         try {
             return Long.parseLong(strg);
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             return null;
         }
     }
 
     public static long getMoneyValue(String formatted_value) {
-        String numb_val = ChatColor.stripColor((String)formatted_value.replaceAll(",", "").replace("$", "")).toLowerCase();
+        String numb_val = ChatColor.stripColor((String) formatted_value.replaceAll(",", "").replace("$", "")).toLowerCase();
         numb_val = numb_val.replace("k", "000");
         numb_val = numb_val.replace("million", "000000");
         numb_val = numb_val.replace("billion", "000000000");
@@ -132,24 +132,24 @@ public class Util {
         int day = hour * 24;
         long playTimeManipulator = time;
         StringBuilder timeString = new StringBuilder();
-        if (playTimeManipulator >= (long)day) {
-            long finalDay = playTimeManipulator / (long)day;
-            playTimeManipulator -= finalDay * (long)day;
+        if (playTimeManipulator >= (long) day) {
+            long finalDay = playTimeManipulator / (long) day;
+            playTimeManipulator -= finalDay * (long) day;
             timeString.append(finalDay + (finalDay > 1L ? "d " : "d "));
         }
-        if (playTimeManipulator >= (long)hour) {
-            long finalHour = playTimeManipulator / (long)hour;
-            playTimeManipulator -= finalHour * (long)hour;
+        if (playTimeManipulator >= (long) hour) {
+            long finalHour = playTimeManipulator / (long) hour;
+            playTimeManipulator -= finalHour * (long) hour;
             timeString.append(finalHour + (finalHour > 1L ? "h " : "h "));
         }
-        if (playTimeManipulator >= (long)minute) {
-            long finalMinute = playTimeManipulator / (long)minute;
-            playTimeManipulator -= finalMinute * (long)minute;
+        if (playTimeManipulator >= (long) minute) {
+            long finalMinute = playTimeManipulator / (long) minute;
+            playTimeManipulator -= finalMinute * (long) minute;
             timeString.append(finalMinute + (finalMinute > 1L ? "m " : "m "));
         }
-        if (playTimeManipulator >= (long)second) {
-            long finalSecond = playTimeManipulator / (long)second;
-            playTimeManipulator -= finalSecond * (long)second;
+        if (playTimeManipulator >= (long) second) {
+            long finalSecond = playTimeManipulator / (long) second;
+            playTimeManipulator -= finalSecond * (long) second;
             timeString.append(finalSecond + (finalSecond > 1L ? "s" : "s"));
         }
         return timeString.toString();

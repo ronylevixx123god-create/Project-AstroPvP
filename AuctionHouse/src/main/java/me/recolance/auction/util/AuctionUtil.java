@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.entity.Player
  */
@@ -30,7 +30,7 @@ public class AuctionUtil {
     }
 
     public static long getUnclaimedEndTime() {
-        return System.currentTimeMillis() + (long)(Auction.plugin.getConfig().getInt("auction.unclaimedHours") * 3600000);
+        return System.currentTimeMillis() + (long) (Auction.plugin.getConfig().getInt("auction.unclaimedHours") * 3600000);
     }
 
     public static boolean canSellItemPermission(Player player) {

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  net.minecraft.server.v1_8_R3.ItemStack
  *  net.minecraft.server.v1_8_R3.NBTTagCompound
@@ -15,8 +15,6 @@
  */
 package me.recolance.auction.util;
 
-import java.util.ArrayList;
-import java.util.UUID;
 import me.recolance.globalutils.attribute.Attributes;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.bukkit.Bukkit;
@@ -27,6 +25,9 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+
+import java.util.ArrayList;
+import java.util.UUID;
 
 public class Item {
     private ItemStack item;
@@ -64,26 +65,26 @@ public class Item {
     }
 
     public Item setDurability(int d) {
-        this.item.setDurability((short)d);
+        this.item.setDurability((short) d);
         return this;
     }
 
     public Item setName(String name) {
-        name = ChatColor.translateAlternateColorCodes((char)'&', (String)name);
+        name = ChatColor.translateAlternateColorCodes((char) '&', (String) name);
         ItemMeta meta = this.item.getItemMeta();
         meta.setDisplayName(name);
         this.item.setItemMeta(meta);
         return this;
     }
 
-    public Item addLore(String ... lore) {
+    public Item addLore(String... lore) {
         ItemMeta meta = this.item.getItemMeta();
         ArrayList<String> loreList = new ArrayList<String>();
         if (meta.hasLore()) {
             loreList.addAll(meta.getLore());
         }
         for (String line : lore) {
-            loreList.add(ChatColor.translateAlternateColorCodes((char)'&', (String)line));
+            loreList.add(ChatColor.translateAlternateColorCodes((char) '&', (String) line));
         }
         meta.setLore(loreList);
         this.item.setItemMeta(meta);
@@ -95,7 +96,7 @@ public class Item {
     }
 
     public Item addEnchant(int eId, int level) {
-        return this.addEnchant(Enchantment.getById((int)eId), level);
+        return this.addEnchant(Enchantment.getById((int) eId), level);
     }
 
     public Item addEnchant(Enchantment enchant, int level) {
@@ -104,7 +105,7 @@ public class Item {
     }
 
     public Item incrementEnchant(int eId, int amount) {
-        return this.incrementEnchant(Enchantment.getById((int)eId), amount);
+        return this.incrementEnchant(Enchantment.getById((int) eId), amount);
     }
 
     public Item incrementEnchant(Enchantment enchant, int amount) {
@@ -119,7 +120,7 @@ public class Item {
     }
 
     public Item incrementSafeEnchant(int eId, int amount) {
-        return this.incrementSafeEnchant(Enchantment.getById((int)eId), amount);
+        return this.incrementSafeEnchant(Enchantment.getById((int) eId), amount);
     }
 
     public Item incrementSafeEnchant(Enchantment enchant, int amount) {
@@ -137,19 +138,19 @@ public class Item {
     }
 
     public Item skull(UUID uuid) {
-        return this.skull(Bukkit.getOfflinePlayer((UUID)uuid).getName());
+        return this.skull(Bukkit.getOfflinePlayer((UUID) uuid).getName());
     }
 
     public Item skull(String name) {
-        SkullMeta meta = (SkullMeta)this.item.getItemMeta();
+        SkullMeta meta = (SkullMeta) this.item.getItemMeta();
         meta.setOwner(name);
-        this.item.setItemMeta((ItemMeta)meta);
+        this.item.setItemMeta((ItemMeta) meta);
         return this;
     }
 
     public Item hideFlag(FlagType flagType) {
-        int type = (Integer)flagType.getFlag();
-        net.minecraft.server.v1_8_R3.ItemStack stack = CraftItemStack.asNMSCopy((ItemStack)this.item);
+        int type = (Integer) flagType.getFlag();
+        net.minecraft.server.v1_8_R3.ItemStack stack = CraftItemStack.asNMSCopy((ItemStack) this.item);
         NBTTagCompound compound = stack.getTag();
         if (compound == null) {
             compound = new NBTTagCompound();
@@ -158,13 +159,13 @@ public class Item {
         }
         compound.setInt("HideFlags", type);
         stack.setTag(compound);
-        this.item = CraftItemStack.asCraftMirror((net.minecraft.server.v1_8_R3.ItemStack)stack);
+        this.item = CraftItemStack.asCraftMirror((net.minecraft.server.v1_8_R3.ItemStack) stack);
         return this;
     }
 
     public Item setUnbreakable(boolean isUnbreakable) {
-        int type = isUnbreakable ? (Integer)FlagType.UNBREAKABLE_TRUE.getFlag() : (Integer)FlagType.UNBREAKABLE_FALSE.getFlag();
-        net.minecraft.server.v1_8_R3.ItemStack stack = CraftItemStack.asNMSCopy((ItemStack)this.item);
+        int type = isUnbreakable ? (Integer) FlagType.UNBREAKABLE_TRUE.getFlag() : (Integer) FlagType.UNBREAKABLE_FALSE.getFlag();
+        net.minecraft.server.v1_8_R3.ItemStack stack = CraftItemStack.asNMSCopy((ItemStack) this.item);
         NBTTagCompound compound = stack.getTag();
         if (compound == null) {
             compound = new NBTTagCompound();
@@ -173,7 +174,7 @@ public class Item {
         }
         compound.setInt("Unbreakable", type);
         stack.setTag(compound);
-        this.item = CraftItemStack.asCraftMirror((net.minecraft.server.v1_8_R3.ItemStack)stack);
+        this.item = CraftItemStack.asCraftMirror((net.minecraft.server.v1_8_R3.ItemStack) stack);
         return this;
     }
 

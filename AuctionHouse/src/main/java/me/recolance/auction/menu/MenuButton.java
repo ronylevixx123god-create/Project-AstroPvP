@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  net.minecraft.server.v1_8_R3.ItemStack
  *  net.minecraft.server.v1_8_R3.NBTTagCompound
@@ -15,9 +15,6 @@
  */
 package me.recolance.auction.menu;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -28,9 +25,22 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 public class MenuButton {
-    private ItemStack item;
     private static List<Integer> attributeItems;
+
+    static {
+        int[] idWithAttribute;
+        attributeItems = new ArrayList<Integer>();
+        for (int item : idWithAttribute = new int[]{256, 257, 258, 267, 268, 269, 270, 271, 272, 273, 274, 275, 276, 277, 278, 279, 283, 284, 285, 286, 373, 387, 403, 2256, 2257, 2258, 2259, 2260, 2261, 2262, 2263, 2264, 2265, 2266, 2267}) {
+            attributeItems.add(item);
+        }
+    }
+
+    private ItemStack item;
 
     public MenuButton() {
         this.item = new ItemStack(Material.AIR, 1);
@@ -40,21 +50,25 @@ public class MenuButton {
         this.item = item;
     }
 
+    private static boolean typeHasAttribute(int id) {
+        return attributeItems.contains(id);
+    }
+
     public MenuButton name(String name) {
         ItemMeta meta = this.item.getItemMeta();
-        meta.setDisplayName(ChatColor.translateAlternateColorCodes((char)'&', (String)name));
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes((char) '&', (String) name));
         this.item.setItemMeta(meta);
         return this;
     }
 
-    public MenuButton lore(String ... lore) {
+    public MenuButton lore(String... lore) {
         ItemMeta meta = this.item.getItemMeta();
         ArrayList<String> loreList = new ArrayList<String>();
         if (meta.hasLore()) {
             loreList.addAll(meta.getLore());
         }
         for (String line : lore) {
-            loreList.add(ChatColor.translateAlternateColorCodes((char)'&', (String)line));
+            loreList.add(ChatColor.translateAlternateColorCodes((char) '&', (String) line));
         }
         meta.setLore(loreList);
         this.item.setItemMeta(meta);
@@ -68,7 +82,7 @@ public class MenuButton {
             loreList.addAll(meta.getLore());
         }
         for (String line : lore) {
-            loreList.add(ChatColor.translateAlternateColorCodes((char)'&', (String)line));
+            loreList.add(ChatColor.translateAlternateColorCodes((char) '&', (String) line));
         }
         meta.setLore(loreList);
         this.item.setItemMeta(meta);
@@ -81,20 +95,20 @@ public class MenuButton {
         if (meta.hasLore()) {
             loreList.addAll(meta.getLore());
         }
-        loreList.add(ChatColor.translateAlternateColorCodes((char)'&', (String)loreLine));
+        loreList.add(ChatColor.translateAlternateColorCodes((char) '&', (String) loreLine));
         meta.setLore(loreList);
         this.item.setItemMeta(meta);
         return this;
     }
 
     public MenuButton skull(UUID uuid) {
-        return this.skull(Bukkit.getOfflinePlayer((UUID)uuid).getName());
+        return this.skull(Bukkit.getOfflinePlayer((UUID) uuid).getName());
     }
 
     public MenuButton skull(String name) {
-        SkullMeta meta = (SkullMeta)this.item.getItemMeta();
+        SkullMeta meta = (SkullMeta) this.item.getItemMeta();
         meta.setOwner(name);
-        this.item.setItemMeta((ItemMeta)meta);
+        this.item.setItemMeta((ItemMeta) meta);
         return this;
     }
 
@@ -113,13 +127,13 @@ public class MenuButton {
     }
 
     public MenuButton durability(int durability) {
-        this.item.setDurability((short)durability);
+        this.item.setDurability((short) durability);
         return this;
     }
 
     public ItemStack get() {
         if (MenuButton.typeHasAttribute(this.item.getTypeId())) {
-            net.minecraft.server.v1_8_R3.ItemStack stack = CraftItemStack.asNMSCopy((ItemStack)this.item);
+            net.minecraft.server.v1_8_R3.ItemStack stack = CraftItemStack.asNMSCopy((ItemStack) this.item);
             NBTTagCompound compound = stack.getTag();
             if (compound == null) {
                 compound = new NBTTagCompound();
@@ -128,14 +142,14 @@ public class MenuButton {
             }
             compound.setInt("HideFlags", 63);
             stack.setTag(compound);
-            this.item = CraftItemStack.asCraftMirror((net.minecraft.server.v1_8_R3.ItemStack)stack);
+            this.item = CraftItemStack.asCraftMirror((net.minecraft.server.v1_8_R3.ItemStack) stack);
         }
         return this.item;
     }
 
     public MenuButton addGlow() {
         this.item.addUnsafeEnchantment(Enchantment.DURABILITY, -1);
-        net.minecraft.server.v1_8_R3.ItemStack stack = CraftItemStack.asNMSCopy((ItemStack)this.item);
+        net.minecraft.server.v1_8_R3.ItemStack stack = CraftItemStack.asNMSCopy((ItemStack) this.item);
         NBTTagCompound compound = stack.getTag();
         if (compound == null) {
             compound = new NBTTagCompound();
@@ -146,20 +160,8 @@ public class MenuButton {
             compound.setInt("HideFlags", 1);
         }
         stack.setTag(compound);
-        this.item = CraftItemStack.asCraftMirror((net.minecraft.server.v1_8_R3.ItemStack)stack);
+        this.item = CraftItemStack.asCraftMirror((net.minecraft.server.v1_8_R3.ItemStack) stack);
         return this;
-    }
-
-    private static boolean typeHasAttribute(int id) {
-        return attributeItems.contains(id);
-    }
-
-    static {
-        int[] idWithAttribute;
-        attributeItems = new ArrayList<Integer>();
-        for (int item : idWithAttribute = new int[]{256, 257, 258, 267, 268, 269, 270, 271, 272, 273, 274, 275, 276, 277, 278, 279, 283, 284, 285, 286, 373, 387, 403, 2256, 2257, 2258, 2259, 2260, 2261, 2262, 2263, 2264, 2265, 2266, 2267}) {
-            attributeItems.add(item);
-        }
     }
 }
 

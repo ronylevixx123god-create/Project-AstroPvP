@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.CosmicUtils
  *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
@@ -35,19 +35,14 @@ import com.cosmicpvp.cosmicutils.struct.DecimalFormatType;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.HCFOutpostUtils;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 import me.recolance.auction.Auction;
 import me.recolance.auction.auction.Listing;
 import me.recolance.auction.auction.UnclaimedListing;
 import me.recolance.auction.command.Command;
-import me.recolance.auction.controller.ConfirmMenu;
 import me.recolance.auction.data.DataHandler;
 import me.recolance.auction.data.DataHolder;
 import me.recolance.auction.util.AuctionUtil;
 import me.recolance.auction.util.Util;
-import me.vaqxine.NetworkManager.NetworkManager;
 import net.milkbowl.vault.economy.Economy;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.commands.CommandArkReboot;
@@ -66,26 +61,30 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 public class Controller {
     private static Economy economy = Auction.economy;
 
     public static void purchase(Player player, Listing listing) {
         int price = listing.getPrice();
         ItemStack item = listing.getItem();
-        economy.withdrawPlayer(Bukkit.getOfflinePlayer((UUID)player.getUniqueId()), (double)price);
-        economy.depositPlayer(Bukkit.getOfflinePlayer((UUID)listing.getWhoListed()), (double)price);
+        economy.withdrawPlayer(Bukkit.getOfflinePlayer((UUID) player.getUniqueId()), (double) price);
+        economy.depositPlayer(Bukkit.getOfflinePlayer((UUID) listing.getWhoListed()), (double) price);
         if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
-            long itemID = ItemID.getItemID((ItemStack)item);
+            long itemID = ItemID.getItemID((ItemStack) item);
             if (itemID != -1L) {
                 if (ItemID.blacklist_iid.contains(itemID)) {
-                    Bukkit.getLogger().info("[ItemID] Blacklisted IID #" + itemID + " was purchased from /ah by player " + player.getName() + " item: " + (Object)item);
-                    player.sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "An item you just attempted to purchase from the /ah, with IID " + itemID + ", has been flagged as a duplicated item. Your /bal has been refunded.");
-                    economy.depositPlayer(Bukkit.getOfflinePlayer((UUID)player.getUniqueId()), (double)price);
-                    economy.withdrawPlayer(Bukkit.getOfflinePlayer((UUID)listing.getWhoListed()), (double)price);
+                    Bukkit.getLogger().info("[ItemID] Blacklisted IID #" + itemID + " was purchased from /ah by player " + player.getName() + " item: " + (Object) item);
+                    player.sendMessage((Object) ChatColor.RED + "" + (Object) ChatColor.BOLD + "(!) " + (Object) ChatColor.RED + "An item you just attempted to purchase from the /ah, with IID " + itemID + ", has been flagged as a duplicated item. Your /bal has been refunded.");
+                    economy.depositPlayer(Bukkit.getOfflinePlayer((UUID) player.getUniqueId()), (double) price);
+                    economy.withdrawPlayer(Bukkit.getOfflinePlayer((UUID) listing.getWhoListed()), (double) price);
                     return;
                 }
-                ItemID.blacklistIID((long)itemID, (String)"auctionItemPurchase");
-                item = ItemID.doesItemIDNeedToPersist((ItemStack)item) ? ItemID.setItemID((ItemStack)item, (long)ItemID.generateNewItemID()) : ItemID.removeItemID((ItemStack)item);
+                ItemID.blacklistIID((long) itemID, (String) "auctionItemPurchase");
+                item = ItemID.doesItemIDNeedToPersist((ItemStack) item) ? ItemID.setItemID((ItemStack) item, (long) ItemID.generateNewItemID()) : ItemID.removeItemID((ItemStack) item);
                 player.getInventory().addItem(new ItemStack[]{item});
             } else {
                 player.getInventory().addItem(new ItemStack[]{item});
@@ -97,33 +96,33 @@ public class Controller {
         DataHolder.removePlayerListing(listing.getWhoListed(), listing);
         Util.message(player, "&c&l- $" + price);
         player.playSound(player.getLocation(), Sound.VILLAGER_HAGGLE, 1.0f, 3.0f);
-        Player seller = Bukkit.getPlayer((UUID)listing.getWhoListed());
+        Player seller = Bukkit.getPlayer((UUID) listing.getWhoListed());
         if (seller != null) {
             Util.message(seller, "&e&6" + player.getName() + "&e has &6purchased &eyour listing of &6" + Util.getItemName(item) + "&r&e!");
             Util.message(seller, "&a&l+ $" + price);
             seller.playSound(seller.getLocation(), Sound.CHICKEN_EGG_POP, 1.0f, 0.65f);
-            Bukkit.getPluginManager().callEvent((Event)new CustomCosmicPlayerEvent(seller, "AUCTION_SELL", new Object[]{item, player}));
+            Bukkit.getPluginManager().callEvent((Event) new CustomCosmicPlayerEvent(seller, "AUCTION_SELL", new Object[]{item, player}));
         } else {
-            Bukkit.getPluginManager().callEvent((Event)new CustomCosmicPlayerEvent(listing.getWhoListed(), "AUCTION_SELL", new Object[]{item, player}));
+            Bukkit.getPluginManager().callEvent((Event) new CustomCosmicPlayerEvent(listing.getWhoListed(), "AUCTION_SELL", new Object[]{item, player}));
         }
         DataHandler.deleteListing(listing, true);
     }
 
     public static void attemptSell(Player player, ItemStack item, int price) {
         if (price > 999999999) {
-            player.sendMessage((Object)ChatColor.RED + "You cannot list for this amount.");
+            player.sendMessage((Object) ChatColor.RED + "You cannot list for this amount.");
             return;
         }
         if (price < 0) {
             price = 0;
         }
         if (player.hasMetadata("auctionConfirm") && player.getMetadata("auctionConfirm").size() > 0) {
-            player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You are creating auctions too quickly!");
+            player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object) ChatColor.RED + "You are creating auctions too quickly!");
             return;
         }
         double fee = Controller.getSellFee(player, price);
-        if (!Auction.economy.has((OfflinePlayer)player, fee)) {
-            player.sendMessage(CC.Red + "(!) " + CC.Red + "You cannot afford the sell fee of " + CC.RedB + "$" + CC.Red + NumberUtils.format((double)fee, (DecimalFormatType)DecimalFormatType.MONEY));
+        if (!Auction.economy.has((OfflinePlayer) player, fee)) {
+            player.sendMessage(CC.Red + "(!) " + CC.Red + "You cannot afford the sell fee of " + CC.RedB + "$" + CC.Red + NumberUtils.format((double) fee, (DecimalFormatType) DecimalFormatType.MONEY));
             return;
         }
         if (Auction.getPlugin().hasToggle(player)) {
@@ -132,8 +131,8 @@ public class Controller {
         } else {
             item = player.getItemInHand().clone();
             player.setItemInHand(null);
-            player.setMetadata("auctionConfirm", (MetadataValue)new FixedMetadataValue((Plugin)Auction.getPlugin(), (Object)item));
-            player.setMetadata("auctionPrice", (MetadataValue)new FixedMetadataValue((Plugin)Auction.getPlugin(), (Object)price));
+            player.setMetadata("auctionConfirm", (MetadataValue) new FixedMetadataValue((Plugin) Auction.getPlugin(), (Object) item));
+            player.setMetadata("auctionPrice", (MetadataValue) new FixedMetadataValue((Plugin) Auction.getPlugin(), (Object) price));
             player.playSound(player.getLocation(), Sound.BAT_TAKEOFF, 0.8f, 0.8f);
             player.openInventory(ConfirmMenu.getConfirmMenu(item, price, fee, Controller.getSellFee(player)));
         }
@@ -147,7 +146,7 @@ public class Controller {
     }
 
     public static double getSellFee(Player player) {
-        if (CosmicUtils.get().isCosmicGalaxy() && HCFOutpostUtils.doesControlOutpost((Player)player, (String)"infernal")) {
+        if (CosmicUtils.get().isCosmicGalaxy() && HCFOutpostUtils.doesControlOutpost((Player) player, (String) "infernal")) {
             return 0.0;
         }
         if (player.hasPermission("enchantments.max.20")) {
@@ -175,8 +174,8 @@ public class Controller {
         Util.message(player, "&e&l(!) &eYou have &6listed &eyour " + Util.getItemName(item) + "&e on the auction house for &6$" + price + "&e!");
         DataHandler.saveListing(listing, true);
         if (fee > 0.0) {
-            Auction.economy.withdrawPlayer((OfflinePlayer)player, fee);
-            player.sendMessage(CC.RedB + "(AH Fee) - $" + CC.Red + NumberUtils.format((double)fee, (DecimalFormatType)DecimalFormatType.MONEY));
+            Auction.economy.withdrawPlayer((OfflinePlayer) player, fee);
+            player.sendMessage(CC.RedB + "(AH Fee) - $" + CC.Red + NumberUtils.format((double) fee, (DecimalFormatType) DecimalFormatType.MONEY));
         }
     }
 
@@ -194,7 +193,7 @@ public class Controller {
         DataHolder.removeListing(listing);
         DataHolder.removePlayerListing(listing.getWhoListed(), listing);
         UnclaimedListing ucL = new UnclaimedListing(UUID.randomUUID(), listing.getWhoListed(), listing.getItem(), AuctionUtil.getUnclaimedEndTime());
-        if (Bukkit.getPlayer((UUID)listing.getWhoListed()) != null) {
+        if (Bukkit.getPlayer((UUID) listing.getWhoListed()) != null) {
             DataHolder.addUnclaimedListing(listing.getWhoListed(), ucL);
         }
         DataHandler.deleteListing(listing, true);
@@ -206,7 +205,7 @@ public class Controller {
         DataHolder.removeListing(listing);
         DataHolder.removePlayerListing(listing.getWhoListed(), listing);
         UnclaimedListing ucL = new UnclaimedListing(UUID.randomUUID(), listing.getWhoListed(), listing.getItem(), AuctionUtil.getUnclaimedEndTime());
-        if (Bukkit.getPlayer((UUID)listing.getWhoListed()) != null) {
+        if (Bukkit.getPlayer((UUID) listing.getWhoListed()) != null) {
             DataHolder.addUnclaimedListing(listing.getWhoListed(), ucL);
         }
         DataHandler.deleteListing(listing, true);
@@ -222,19 +221,19 @@ public class Controller {
         DataHolder.getUnclaimedListings().get(player.getUniqueId()).remove(listing);
         DataHandler.deleteUnclaimedListing(listing, true);
         if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
-            long itemID = ItemID.getItemID((ItemStack)listing.getItem());
+            long itemID = ItemID.getItemID((ItemStack) listing.getItem());
             if (itemID != -1L) {
                 if (ItemID.blacklist_iid.contains(itemID)) {
-                    Bukkit.getLogger().info("[ItemID] Blacklisted IID #" + itemID + " found in /ah expired of player " + player.getName() + " item: " + (Object)listing.getItem());
-                    player.sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "An item you just attempted to claim from your Collection Bin, with IID " + itemID + ", has been flagged as a duplicated item, and has been removed.");
+                    Bukkit.getLogger().info("[ItemID] Blacklisted IID #" + itemID + " found in /ah expired of player " + player.getName() + " item: " + (Object) listing.getItem());
+                    player.sendMessage((Object) ChatColor.RED + "" + (Object) ChatColor.BOLD + "(!) " + (Object) ChatColor.RED + "An item you just attempted to claim from your Collection Bin, with IID " + itemID + ", has been flagged as a duplicated item, and has been removed.");
                     return;
                 }
-                ItemID.blacklistIID((long)itemID, (String)"expiredItemClaim");
+                ItemID.blacklistIID((long) itemID, (String) "expiredItemClaim");
                 ItemStack listingItem = listing.getItem();
-                if (ItemID.doesItemIDNeedToPersist((ItemStack)listingItem)) {
-                    ItemID.setItemID((ItemStack)listingItem, (long)ItemID.generateNewItemID());
+                if (ItemID.doesItemIDNeedToPersist((ItemStack) listingItem)) {
+                    ItemID.setItemID((ItemStack) listingItem, (long) ItemID.generateNewItemID());
                 } else {
-                    ItemID.removeItemID((ItemStack)listingItem);
+                    ItemID.removeItemID((ItemStack) listingItem);
                 }
                 player.getInventory().addItem(new ItemStack[]{listingItem});
             } else {
@@ -255,21 +254,21 @@ public class Controller {
                 break;
             }
             if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
-                long itemID = ItemID.getItemID((ItemStack)listing.getItem());
+                long itemID = ItemID.getItemID((ItemStack) listing.getItem());
                 if (itemID != -1L) {
                     if (ItemID.blacklist_iid.contains(itemID)) {
-                        Bukkit.getLogger().info("[ItemID] Blacklisted IID #" + itemID + " found in /ah expired of player " + player.getName() + " item: " + (Object)listing.getItem());
-                        player.sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "An item you just attempted to claim from your Collection Bin, with IID " + itemID + ", has been flagged as a duplicated item, and has been removed.");
+                        Bukkit.getLogger().info("[ItemID] Blacklisted IID #" + itemID + " found in /ah expired of player " + player.getName() + " item: " + (Object) listing.getItem());
+                        player.sendMessage((Object) ChatColor.RED + "" + (Object) ChatColor.BOLD + "(!) " + (Object) ChatColor.RED + "An item you just attempted to claim from your Collection Bin, with IID " + itemID + ", has been flagged as a duplicated item, and has been removed.");
                         claim.add(listing);
                         ++i;
                         continue;
                     }
-                    ItemID.blacklistIID((long)itemID, (String)"expiredItemClaimAll");
+                    ItemID.blacklistIID((long) itemID, (String) "expiredItemClaimAll");
                     ItemStack listingItem = listing.getItem();
-                    if (ItemID.doesItemIDNeedToPersist((ItemStack)listingItem)) {
-                        ItemID.setItemID((ItemStack)listingItem, (long)ItemID.generateNewItemID());
+                    if (ItemID.doesItemIDNeedToPersist((ItemStack) listingItem)) {
+                        ItemID.setItemID((ItemStack) listingItem, (long) ItemID.generateNewItemID());
                     } else {
-                        ItemID.removeItemID((ItemStack)listingItem);
+                        ItemID.removeItemID((ItemStack) listingItem);
                     }
                     player.getInventory().addItem(new ItemStack[]{listingItem});
                 } else {
@@ -311,29 +310,29 @@ public class Controller {
     }
 
     public static void expireListings() {
-        new BukkitRunnable(){
+        new BukkitRunnable() {
 
             public void run() {
-                if (Auction.stoppingServer || Arkkit.get().shutting_down || AntiCrash.reboot_task_id != -1 || CommandArkReboot.restart_task_exists || NetworkManager.getPlugin().rebooting) {
+                if (Auction.stoppingServer || Arkkit.get().shutting_down || AntiCrash.reboot_task_id != -1 || CommandArkReboot.restart_task_exists) {
                     return;
                 }
                 List<Listing> listings = DataHolder.getListings();
                 if (listings.size() > 0 && listings.get(listings.size() - 1).getEndTime() < System.currentTimeMillis()) {
                     Listing l = listings.get(listings.size() - 1);
                     Controller.expire(l);
-                    Bukkit.getLogger().info("[Auction] Expiring auction " + l.getId() + " of " + (Object)l.getItem() + " for " + l.getWhoListed() + " for $" + l.getPrice());
+                    Bukkit.getLogger().info("[Auction] Expiring auction " + l.getId() + " of " + (Object) l.getItem() + " for " + l.getWhoListed() + " for $" + l.getPrice());
                 }
             }
-        }.runTaskTimer((Plugin)Auction.plugin, 100L, 100L);
+        }.runTaskTimer((Plugin) Auction.plugin, 100L, 100L);
     }
 
     public static void expireOfflineUnclaimedListings() {
-        new BukkitRunnable(){
+        new BukkitRunnable() {
 
             public void run() {
                 DataHandler.deleteOverExpiredUnclaimedListing(true);
             }
-        }.runTaskTimer((Plugin)Auction.plugin, 0L, 3600L);
+        }.runTaskTimer((Plugin) Auction.plugin, 0L, 3600L);
     }
 }
 

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.gui.CosmicGUI
  *  com.cosmicpvp.cosmicutils.gui.InventoryItem
@@ -16,7 +16,6 @@ import com.cosmicpvp.cosmicutils.gui.CosmicGUI;
 import com.cosmicpvp.cosmicutils.gui.InventoryItem;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
-import java.util.List;
 import me.recolance.auction.auction.Listing;
 import me.recolance.auction.auction.UnclaimedListing;
 import me.recolance.auction.controller.Controller;
@@ -26,8 +25,10 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 
+import java.util.List;
+
 public abstract class AuctionMenu
-extends CosmicGUI {
+        extends CosmicGUI {
     public long nextClickExpiration = System.currentTimeMillis() + 1000L;
 
     public AuctionMenu(Player player, String title, int size) {
@@ -80,7 +81,7 @@ extends CosmicGUI {
 
     public InventoryItem getCollectionBinItem() {
         List<UnclaimedListing> itemsSelling = DataHolder.getUnclaimedListings().get(this.player.getUniqueId());
-        int emptyItems = itemsSelling != null ? (int)itemsSelling.stream().filter(item -> !item.isExpired()).count() : 0;
+        int emptyItems = itemsSelling != null ? (int) itemsSelling.stream().filter(item -> !item.isExpired()).count() : 0;
         return new InventoryItem(new ItemBuilder(Material.ENDER_CHEST, CC.YellowB + "Collection Bin", new String[]{CC.Gray + "Click to view and collect", CC.Gray + "all of your active, cancelled", CC.Gray + "or expired Auction items.", "", CC.YellowB + emptyItems + " Item" + (emptyItems != 1 ? "s" : "")}).build()).click(() -> this.closeWithDelay(pl -> MenuRenderer.expired(this.player)));
     }
 

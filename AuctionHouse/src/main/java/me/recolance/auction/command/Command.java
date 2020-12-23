@@ -12,7 +12,7 @@ public enum Command {
 
     private String[] desc;
 
-    private Command(String ... desc) {
+    private Command(String... desc) {
         this.desc = desc;
     }
 

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.gui.InventoryItem
  *  com.cosmicpvp.cosmicutils.utils.CC
@@ -22,27 +22,22 @@ import com.cosmicpvp.cosmicutils.gui.InventoryItem;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.google.common.collect.Lists;
+import io.netty.util.internal.ConcurrentSet;
+import me.recolance.auction.Auction;
+import me.recolance.auction.data.AuctionBid;
+import me.recolance.auction.menu.BidManager;
+import org.bukkit.*;
+import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
+
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
-import me.recolance.auction.Auction;
-import me.recolance.auction.data.AuctionBid;
-import me.recolance.auction.menu.BidManager;
-import me.recolance.auction.menu.bidmenus.BiddableMenu;
-import me.recolance.auction.menu.bidmenus.WatchlistMenu;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.Sound;
-import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.ClickType;
-import org.bukkit.plugin.Plugin;
 
 public class BidMenu
-extends BiddableMenu {
+        extends BiddableMenu {
     int page = 1;
     private long lastUpdate = 0L;
     private boolean forceUpdate = false;
@@ -68,11 +63,11 @@ extends BiddableMenu {
         }
         this.forceUpdate = false;
         BidManager bidManager = Auction.getPlugin().getBidManager();
-        ArrayList<> bidEntries = Lists.newArrayList(bidManager.getActiveAuctionBids().entrySet()); // HELP
+        ArrayList<Map.Entry<UUID, AuctionBid>> bidEntries = Lists.newArrayList(bidManager.getActiveAuctionBids().entrySet()); // HELP
         bidEntries.sort((o1, o2) -> {
             int secondsLeft2;
-            int secondsLeft1 = ((AuctionBid)o1.getValue()).getSecondsLeftInAuction();
-            if (secondsLeft1 > (secondsLeft2 = ((AuctionBid)o2.getValue()).getSecondsLeftInAuction())) {
+            int secondsLeft1 = o1.getValue().getSecondsLeftInAuction();
+            if (secondsLeft1 > (secondsLeft2 = o2.getValue().getSecondsLeftInAuction())) {
                 return -1;
             }
             if (secondsLeft2 == secondsLeft1) {
@@ -81,7 +76,7 @@ extends BiddableMenu {
             return 1;
         });
         double perPage = 45.0;
-        int maxPages = Math.max(1, (int)Math.ceil((double)bidEntries.size() / perPage));
+        int maxPages = Math.max(1, (int) Math.ceil((double) bidEntries.size() / perPage));
         if (this.page < 1) {
             this.page = 1;
         }
@@ -92,13 +87,13 @@ extends BiddableMenu {
         this.getInventoryItems().clear();
         this.lastUpdate = System.currentTimeMillis();
         AtomicInteger slot = new AtomicInteger(0);
-        for (int i = startIndex = (int)((double)this.page * perPage - perPage); (double)i < (double)startIndex + perPage && i < bidEntries.size(); ++i) {
-            Map.Entry entry = (Map.Entry)bidEntries.get(i);
-            AuctionBid auctionBid = (AuctionBid)entry.getValue();
+        for (int i = startIndex = (int) ((double) this.page * perPage - perPage); (double) i < (double) startIndex + perPage && i < bidEntries.size(); ++i) {
+            Map.Entry entry = bidEntries.get(i);
+            AuctionBid auctionBid = (AuctionBid) entry.getValue();
             if (slot.get() >= this.size) break;
             if (auctionBid.isExpired()) continue;
             this.setItem(slot.getAndIncrement(), new InventoryItem(new ItemBuilder(auctionBid.getAuctionDisplayItem(true)).build()).click(ClickType.LEFT, auctionBid.getLeftClickLogic(this, this.player)).click(ClickType.RIGHT, auctionBid.getRightClickLogic(this, this.player)).click(ClickType.MIDDLE, auctionBid.getMiddleClickLogic(this, this.player)).click(ClickType.SHIFT_LEFT, auctionBid.getShiftLeftClickLogic(this, this.player)).click(ClickType.SHIFT_RIGHT, () -> {
-                Set watching = (Set)Auction.getPlugin().getBidManager().getWatchlists().computeIfAbsent(this.player.getUniqueId(), list -> new ConcurrentSet());
+                Set watching = Auction.getPlugin().getBidManager().getWatchlists().computeIfAbsent(this.player.getUniqueId(), list -> new ConcurrentSet());
                 if (watching.contains(auctionBid.getBidID())) {
                     watching.remove(auctionBid.getBidID());
                     this.player.sendMessage(CC.RedB + "(!) " + CC.Red + "Item removed from watchlist!");
@@ -117,17 +112,17 @@ extends BiddableMenu {
                 this.player.playSound(this.player.getLocation(), Sound.LEVEL_UP, 1.0f, 1.4f);
             }).click(ClickType.NUMBER_KEY, () -> this.forceExpireAuction(auctionBid, this.player)));
         }
-        this.setItem(this.size - 9, new InventoryItem(new ItemBuilder(Material.CHEST, CC.YellowB + "Return to Auction", new String[]{CC.Gray + "Click here to return to the", CC.Gray + "auction house main menu."}).build()).click(() -> {
+        this.setItem(this.size - 9, new InventoryItem(new ItemBuilder(Material.CHEST, CC.YellowB + "Return to Auction", CC.Gray + "Click here to return to the", CC.Gray + "auction house main menu.").build()).click(() -> {
             this.player.closeInventory();
             this.player.performCommand("ah");
         }));
-        this.setItem(this.size - 8, new InventoryItem(new ItemBuilder(Material.DIAMOND, CC.AquaB + "View Watchlist", new String[0]).lore(new String[]{CC.Gray + "Click here to view all active", CC.Gray + "bids on your watchlist!"}).build()).click(() -> Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Auction.getPlugin(), () -> new WatchlistMenu(this.player).openGUI(Auction.getPlugin()))));
-        this.setItem(this.size - 6, new InventoryItem(new ItemBuilder(Material.PAPER, CC.YellowB + "<- Previous Page", new String[]{CC.Gray + "View previous page of auction biddings."}).build()).click(() -> {
+        this.setItem(this.size - 8, new InventoryItem(new ItemBuilder(Material.DIAMOND, CC.AquaB + "View Watchlist").lore(CC.Gray + "Click here to view all active", CC.Gray + "bids on your watchlist!").build()).click(() -> Bukkit.getScheduler().scheduleSyncDelayedTask(Auction.getPlugin(), () -> new WatchlistMenu(this.player).openGUI(Auction.getPlugin()))));
+        this.setItem(this.size - 6, new InventoryItem(new ItemBuilder(Material.PAPER, CC.YellowB + "<- Previous Page", CC.Gray + "View previous page of auction biddings.").build()).click(() -> {
             --this.page;
             this.forceUpdate = true;
             this.redraw();
         }));
-        this.setItem(this.size - 4, new InventoryItem(new ItemBuilder(Material.PAPER, CC.YellowB + "Next Page ->", new String[]{CC.Gray + "View next page of auction biddings."}).build()).click(() -> {
+        this.setItem(this.size - 4, new InventoryItem(new ItemBuilder(Material.PAPER, CC.YellowB + "Next Page ->", CC.Gray + "View next page of auction biddings.").build()).click(() -> {
             ++this.page;
             this.forceUpdate = true;
             this.redraw();
@@ -139,14 +134,14 @@ extends BiddableMenu {
             return;
         }
         if (auctionBid.isExpired()) {
-            player.sendMessage((Object)ChatColor.RED + "Bid already expired!");
+            player.sendMessage(ChatColor.RED + "Bid already expired!");
             return;
         }
         auctionBid.expire();
         if (auctionBid.getCurrentHighestBidder() != null) {
-            OfflinePlayer offlineBuyer = Bukkit.getOfflinePlayer((UUID)auctionBid.getCurrentHighestBidder());
+            OfflinePlayer offlineBuyer = Bukkit.getOfflinePlayer(auctionBid.getCurrentHighestBidder());
             if (offlineBuyer != null) {
-                Auction.economy.depositPlayer(offlineBuyer, (double)auctionBid.getCurrentBid());
+                Auction.economy.depositPlayer(offlineBuyer, (double) auctionBid.getCurrentBid());
             }
             player.sendMessage(CC.Red + "Returned " + auctionBid.getCurrentBidderName() + " $" + auctionBid.getCurrentBid());
         }

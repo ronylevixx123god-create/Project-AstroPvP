@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.CC
  *  com.cosmicpvp.cosmicutils.utils.GeneralUtil
@@ -27,31 +27,13 @@ import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.ItemUtils;
 import com.google.common.collect.Lists;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
-
 import com.google.common.io.BaseEncoding;
 import me.recolance.auction.Auction;
 import me.recolance.auction.auction.Listing;
 import me.recolance.auction.auction.UnclaimedListing;
-import me.recolance.auction.data.DataHolder;
-import me.recolance.auction.data.Database;
 import me.recolance.auction.menu.categories.AuctionCategory;
 import net.minecraft.server.v1_8_R3.NBTCompressedStreamTools;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
-import net.minecraft.util.com.google.common.io.BaseEncoding;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -61,10 +43,24 @@ import org.bukkit.material.MaterialData;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.*;
+
 public class DataHandler {
     private static List<AuctionCategory> auctionCategories = Lists.newLinkedList();
     private static long nextCategoryCalculation;
     private static List<Material> subCategoryItems;
+
+    static {
+        subCategoryItems = null;
+    }
 
     public static void generateTables() {
         Connection connection = Database.getConnection();
@@ -75,8 +71,7 @@ public class DataHandler {
             expired.execute();
             DataHandler.generateIndex();
             listings.close();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -86,8 +81,7 @@ public class DataHandler {
         try {
             PreparedStatement statement = connection.prepareStatement("CREATE INDEX IDX_EXPIRED ON expired (player)");
             statement.execute();
-        }
-        catch (SQLException sQLException) {
+        } catch (SQLException sQLException) {
             // empty catch block
         }
     }
@@ -104,7 +98,7 @@ public class DataHandler {
                 DataHolder.addPlayerListing(playerId, listing);
             }
             List<Listing> listings = DataHolder.getListings();
-            Collections.sort(listings, new Comparator<Listing>(){
+            Collections.sort(listings, new Comparator<Listing>() {
 
                 @Override
                 public int compare(Listing l1, Listing l2) {
@@ -113,8 +107,7 @@ public class DataHandler {
             });
             Collections.reverse(listings);
             load.close();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -132,7 +125,7 @@ public class DataHandler {
     private static boolean isSubCategoryItem(MaterialData data, ItemStack item) {
         String display;
         Material type = data.getItemType();
-        boolean contains = DataHandler.getSubCategoryItems().contains((Object)type);
+        boolean contains = DataHandler.getSubCategoryItems().contains((Object) type);
         Material dataType = data.getItemType();
         if (!contains && dataType == Material.EMERALD && item.getItemMeta().hasDisplayName() && (display = item.getItemMeta().getDisplayName()).startsWith(CC.RedB + "Soul Gem [")) {
             return true;
@@ -151,9 +144,9 @@ public class DataHandler {
             DataHolder.getListings().forEach(item -> {
                 if (item.isValid() && !item.isExpired()) {
                     ItemStack selling = item.getItem().clone();
-                    String name = ItemUtils.getDisplayName((ItemStack)selling);
+                    String name = ItemUtils.getDisplayName((ItemStack) selling);
                     if (name == null) {
-                        name = StringUtils.capitaliseAllWords((String)item.toString().toLowerCase().replace("_", " "));
+                        name = StringUtils.capitaliseAllWords((String) item.toString().toLowerCase().replace("_", " "));
                     }
                     if (selling.getEnchantments().size() > 0) {
                         selling.getEnchantments().forEach((ench, level) -> selling.removeEnchantment(ench));
@@ -162,29 +155,28 @@ public class DataHandler {
                     MaterialData type = selling.getData();
                     Material mat = type.getItemType();
                     if (DataHandler.isSubCategoryItem(type, selling)) {
-                        String subCategoryName = CC.White + StringUtils.capitaliseAllWords((String)mat.name().toLowerCase().replace("_", " "));
+                        String subCategoryName = CC.White + StringUtils.capitaliseAllWords((String) mat.name().toLowerCase().replace("_", " "));
                         if (name.startsWith(CC.RedB + "Soul Gem") && mat == Material.EMERALD) {
                             subCategoryName = CC.RedB + "Soul Gems";
                         } else if (item.getBookRarity() != null) {
                             subCategoryName = CC.White + "Enchant Books";
                         }
                         String finalSubCategoryName = subCategoryName;
-                        AuctionCategory category = subCategoryCategories.computeIfAbsent(mat, e -> new AuctionCategory(finalSubCategoryName, ChatColor.stripColor(finalSubCategoryName), new ItemBuilder(selling).name(finalSubCategoryName).build(), Lists.newArrayList(), null, Lists.newLinkedList(), 10));
-                        String finalName1 = name;
+                        AuctionCategory category = (AuctionCategory) subCategoryCategories.computeIfAbsent(mat, e -> new AuctionCategory(finalSubCategoryName, ChatColor.stripColor(finalSubCategoryName), new ItemBuilder(selling).name(finalSubCategoryName).build(), Lists.newArrayList(), null, Lists.newLinkedList(), 10));
                         if (item.getBookRarity() != null) {
                             String bookName = item.getBookTierColor() + item.getBookTierName() + " Enchant Books";
-                            AuctionCategory bookCategory = bookCategories.computeIfAbsent(item.getBookRarity(), e -> new AuctionCategory(bookName, ChatColor.stripColor((String)bookName), new ItemBuilder(selling).name(bookName).build(), Lists.newArrayList(), null, Lists.newLinkedList(), item.getBookRarity()));
-                            bookCategory.getCategoryItems().add((Listing)item);
+                            AuctionCategory bookCategory = (AuctionCategory) bookCategories.computeIfAbsent(item.getBookRarity(), e -> new AuctionCategory(bookName, ChatColor.stripColor((String) bookName), new ItemBuilder(selling).name(bookName).build(), Lists.newArrayList(), null, Lists.newLinkedList(), item.getBookRarity()));
+                            bookCategory.getCategoryItems().add((Listing) item);
                             if (!category.getSubCategories().contains(bookCategory)) {
                                 category.getSubCategories().add(bookCategory);
                             }
                             return;
                         }
-                        category.getCategoryItems().add((Listing)item);
+                        category.getCategoryItems().add((Listing) item);
                         return;
                     }
                     String finalName = name;
-                    matchingItemNames.computeIfAbsent(name, e -> new AuctionCategory(finalName, ChatColor.stripColor((String)finalName), selling, Lists.newArrayList(), null, Lists.newLinkedList(), 10)).getCategoryItems().add((Listing)item);
+                    matchingItemNames.computeIfAbsent(name, e -> new AuctionCategory(finalName, ChatColor.stripColor(finalName), selling, Lists.newArrayList(), null, Lists.newLinkedList(), 10).getCategoryItems().add(item));
                 }
             });
             auctionCategories.addAll(matchingItemNames.values());
@@ -212,8 +204,7 @@ public class DataHandler {
                 DataHolder.addUnclaimedListing(playerId, uL);
             }
             statement.close();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -236,8 +227,7 @@ public class DataHandler {
                 statement.executeBatch();
                 statement.close();
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -257,8 +247,7 @@ public class DataHandler {
                 statement.execute();
                 statement.close();
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -277,8 +266,7 @@ public class DataHandler {
                 statement.execute();
                 statement.close();
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -294,8 +282,7 @@ public class DataHandler {
                 statement.execute();
                 statement.close();
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -311,8 +298,7 @@ public class DataHandler {
                 statement.execute();
                 statement.close();
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -328,8 +314,7 @@ public class DataHandler {
                 statement.execute();
                 statement.close();
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -339,47 +324,43 @@ public class DataHandler {
             try {
                 statement.execute();
                 statement.close();
-            }
-            catch (SQLException e) {
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
             return;
         }
-        new BukkitRunnable(){
+        new BukkitRunnable() {
 
             public void run() {
                 try {
                     statement.execute();
                     statement.close();
-                }
-                catch (SQLException e) {
+                } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
-        }.runTaskAsynchronously((Plugin)Auction.plugin);
+        }.runTaskAsynchronously((Plugin) Auction.plugin);
     }
 
     private static void asyncExecuteBatch(final PreparedStatement statement) {
         if (Auction.stoppingServer) {
             try {
                 statement.execute();
-            }
-            catch (SQLException e) {
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
             return;
         }
-        new BukkitRunnable(){
+        new BukkitRunnable() {
 
             public void run() {
                 try {
                     statement.executeBatch();
-                }
-                catch (SQLException e) {
+                } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
-        }.runTaskAsynchronously((Plugin)Auction.plugin);
+        }.runTaskAsynchronously((Plugin) Auction.plugin);
     }
 
     public static String toString(ItemStack item) {
@@ -387,12 +368,11 @@ public class DataHandler {
             return "null";
         }
         NBTTagCompound tagCompound = new NBTTagCompound();
-        CraftItemStack.asNMSCopy((ItemStack)item).save(tagCompound);
+        CraftItemStack.asNMSCopy((ItemStack) item).save(tagCompound);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
-            NBTCompressedStreamTools.a((NBTTagCompound)tagCompound, (OutputStream)outputStream);
-        }
-        catch (Exception e) {
+            NBTCompressedStreamTools.a((NBTTagCompound) tagCompound, (OutputStream) outputStream);
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return BaseEncoding.base64().encode(outputStream.toByteArray());
@@ -402,19 +382,14 @@ public class DataHandler {
         if (string.equals("null")) {
             return null;
         }
-        ByteArrayInputStream is = new ByteArrayInputStream(BaseEncoding.base64().decode((CharSequence)string));
+        ByteArrayInputStream is = new ByteArrayInputStream(BaseEncoding.base64().decode((CharSequence) string));
         NBTTagCompound nbttagcompound = null;
         try {
-            nbttagcompound = NBTCompressedStreamTools.a((InputStream)is);
-        }
-        catch (Exception e) {
+            nbttagcompound = NBTCompressedStreamTools.a((InputStream) is);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return CraftItemStack.asBukkitCopy((net.minecraft.server.v1_8_R3.ItemStack)net.minecraft.server.v1_8_R3.ItemStack.createStack((NBTTagCompound)nbttagcompound));
-    }
-
-    static {
-        subCategoryItems = null;
+        return CraftItemStack.asBukkitCopy((net.minecraft.server.v1_8_R3.ItemStack) net.minecraft.server.v1_8_R3.ItemStack.createStack((NBTTagCompound) nbttagcompound));
     }
 }
 

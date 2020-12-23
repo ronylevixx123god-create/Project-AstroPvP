@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  net.milkbowl.vault.economy.Economy
  *  org.bukkit.Bukkit
@@ -14,6 +14,7 @@
  */
 package me.recolance.auction;
 
+import lombok.SneakyThrows;
 import me.recolance.auction.command.CommandHandler;
 import me.recolance.auction.controller.ConfirmMenu;
 import me.recolance.auction.controller.Controller;
@@ -36,13 +37,24 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
 public class Auction
-extends JavaPlugin {
+        extends JavaPlugin {
     public static Auction plugin;
     public static Economy economy;
     public static boolean stoppingServer;
+
+    static {
+        economy = null;
+        stoppingServer = false;
+    }
+
     private SafetyToggle toggles;
     private BidManager bidManager;
 
+    public static Auction getPlugin() {
+        return plugin;
+    }
+
+    @SneakyThrows
     public void onEnable() {
         plugin = this;
         this.toggles = new SafetyToggle();
@@ -63,7 +75,8 @@ extends JavaPlugin {
         this.bidManager.setProccessAuctionHouse(false);
         for (Player p : Bukkit.getOnlinePlayers()) {
             String invName = p.getInventory().getTitle();
-            if (!invName.equals("Cancelled / Expired Listings") && !invName.equals("Auction House") && !invName.equals("Your Current Listings")) continue;
+            if (!invName.equals("Cancelled / Expired Listings") && !invName.equals("Auction House") && !invName.equals("Your Current Listings"))
+                continue;
             p.closeInventory();
         }
         int attempts = 0;
@@ -71,8 +84,7 @@ extends JavaPlugin {
             Bukkit.getLogger().info("(Auction) There are still " + this.getPendingAsyncTasks() + " pending SQL tasks, sleeping 500ms...");
             try {
                 Thread.sleep(500L);
-            }
-            catch (InterruptedException e) {
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
@@ -80,8 +92,7 @@ extends JavaPlugin {
         if (this.bidManager != null) {
             try {
                 this.bidManager.saveBids(false);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -92,7 +103,7 @@ extends JavaPlugin {
     private int getPendingAsyncTasks() {
         int c = 0;
         for (BukkitTask bt : Bukkit.getScheduler().getPendingTasks()) {
-            if (bt.isSync() || !bt.getOwner().equals((Object)plugin)) continue;
+            if (bt.isSync() || !bt.getOwner().equals((Object) plugin)) continue;
             ++c;
         }
         return c;
@@ -101,17 +112,17 @@ extends JavaPlugin {
     public void registration() {
         this.saveDefaultConfig();
         this.updateConfig();
-        this.getServer().getPluginManager().registerEvents((Listener)new BidListener(), (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)new MenuController(), (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)new Events(), (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)new ConfirmMenu(), (Plugin)this);
-        this.getCommand("ah").setExecutor((CommandExecutor)new CommandHandler());
-        new ItemExpireWarnTask().runTaskTimer((Plugin)this, 4800L, 4800L);
+        this.getServer().getPluginManager().registerEvents((Listener) new BidListener(), (Plugin) this);
+        this.getServer().getPluginManager().registerEvents((Listener) new MenuController(), (Plugin) this);
+        this.getServer().getPluginManager().registerEvents((Listener) new Events(), (Plugin) this);
+        this.getServer().getPluginManager().registerEvents((Listener) new ConfirmMenu(), (Plugin) this);
+        this.getCommand("ah").setExecutor((CommandExecutor) new CommandHandler());
+        new ItemExpireWarnTask().runTaskTimer((Plugin) this, 4800L, 4800L);
     }
 
     private void updateConfig() {
         if (!this.getConfig().contains("auction.preventCreativeSale")) {
-            this.getConfig().set("auction.preventCreativeSale", (Object)false);
+            this.getConfig().set("auction.preventCreativeSale", (Object) false);
         }
         this.saveConfig();
     }
@@ -119,7 +130,7 @@ extends JavaPlugin {
     private boolean setupEconomy() {
         RegisteredServiceProvider economyProvider = this.getServer().getServicesManager().getRegistration(Economy.class);
         if (economyProvider != null) {
-            economy = (Economy)economyProvider.getProvider();
+            economy = (Economy) economyProvider.getProvider();
         }
         return economy != null;
     }
@@ -128,21 +139,12 @@ extends JavaPlugin {
         return this.toggles.isToggled(pl);
     }
 
-    public static Auction getPlugin() {
-        return plugin;
-    }
-
     public SafetyToggle getToggles() {
         return this.toggles;
     }
 
     public BidManager getBidManager() {
         return this.bidManager;
-    }
-
-    static {
-        economy = null;
-        stoppingServer = false;
     }
 }
 

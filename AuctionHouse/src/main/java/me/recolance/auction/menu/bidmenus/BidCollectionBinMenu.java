@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.gui.CosmicGUI
  *  com.cosmicpvp.cosmicutils.gui.InventoryItem
@@ -24,10 +24,8 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.InventoryUtils;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
-import java.util.List;
 import me.recolance.auction.Auction;
 import me.recolance.auction.menu.BidManager;
-import me.recolance.auction.menu.bidmenus.BidMenu;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.Bukkit;
@@ -36,10 +34,12 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
+
 public class BidCollectionBinMenu
-extends CosmicGUI {
+        extends CosmicGUI {
     public BidCollectionBinMenu(Player player, List<ItemStack> bin) {
-        super(player, "Auction Bid Collection", InventoryUtils.fitSize((int)(bin != null ? bin.size() + 1 : 9)));
+        super(player, "Auction Bid Collection", InventoryUtils.fitSize((int) (bin != null ? bin.size() + 1 : 9)));
     }
 
     public void redraw() {
@@ -52,22 +52,22 @@ extends CosmicGUI {
             for (ItemStack toClaim : binItems) {
                 if (slot >= this.size) break;
                 this.setItem(slot++, new InventoryItem(toClaim).click(() -> {
-                    if (!binItems.contains((Object)toClaim)) {
+                    if (!binItems.contains((Object) toClaim)) {
                         this.redraw();
                         return;
                     }
                     if (this.player.getInventory().firstEmpty() == -1) {
-                        this.player.sendMessage((Object)ChatColor.RED + "You do not have the inventory space for this item!");
+                        this.player.sendMessage((Object) ChatColor.RED + "You do not have the inventory space for this item!");
                         return;
                     }
-                    binItems.remove((Object)toClaim);
+                    binItems.remove((Object) toClaim);
                     if (binItems.isEmpty()) {
                         bidManager.getBidCollectionBin().remove(this.player.getUniqueId());
                     }
                     if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
-                        Bukkit.getLogger().info("[AuctionHouse] " + this.player.getName() + " has claimed their auction winning of " + (Object)toClaim + " with IID: " + ItemID.getItemID((ItemStack)toClaim));
+                        Bukkit.getLogger().info("[AuctionHouse] " + this.player.getName() + " has claimed their auction winning of " + (Object) toClaim + " with IID: " + ItemID.getItemID((ItemStack) toClaim));
                     }
-                    PlayerUtil.giveOrDropProtectedItem((Player)this.player, (ItemStack)toClaim, (int)-1);
+                    PlayerUtil.giveOrDropProtectedItem((Player) this.player, (ItemStack) toClaim, (int) -1);
                     if (binItems.isEmpty()) {
                         new BidMenu(this.player).openGUI(Auction.getPlugin());
                         return;

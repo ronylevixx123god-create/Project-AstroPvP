@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.gui.InventoryItem
  *  com.cosmicpvp.cosmicutils.utils.CC
@@ -20,24 +20,22 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.google.common.collect.Lists;
-import java.util.ArrayList;
-import java.util.List;
 import me.recolance.auction.Auction;
 import me.recolance.auction.auction.Listing;
 import me.recolance.auction.data.AuctionItem;
 import me.recolance.auction.data.DataHandler;
 import me.recolance.auction.menu.MenuRenderer;
-import me.recolance.auction.menu.categories.AuctionCategory;
-import me.recolance.auction.menu.categories.AuctionMenu;
-import me.recolance.auction.menu.categories.CategoryItemViewMenu;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CategoryMainMenu
-extends AuctionMenu {
+        extends AuctionMenu {
     private List<AuctionItem> categories;
     private int page = 1;
     private boolean mainPage = true;
@@ -59,6 +57,10 @@ extends AuctionMenu {
         return this.categories;
     }
 
+    public void setCategories(List<AuctionItem> categories) {
+        this.categories = categories;
+    }
+
     public void redraw() {
         this.clearItems();
         int PREVIOUS_PAGE_SLOT = this.inventory.getSize() - 6;
@@ -69,7 +71,7 @@ extends AuctionMenu {
         int MAIN_CATEGORIES = this.inventory.getSize() - 7;
         List<AuctionItem> categories = this.getCategories();
         int perPage = 45;
-        int maxPages = (int)Math.ceil((double)categories.size() / (double)perPage);
+        int maxPages = (int) Math.ceil((double) categories.size() / (double) perPage);
         if (this.page > maxPages) {
             this.page = maxPages;
         }
@@ -127,7 +129,7 @@ extends AuctionMenu {
             ItemStack display = item.getDisplay();
             ItemMeta im = display.getItemMeta();
             if (item instanceof AuctionCategory) {
-                AuctionCategory category = (AuctionCategory)item;
+                AuctionCategory category = (AuctionCategory) item;
                 if (category.getCategoryItems().size() == 1 && category.getSubCategories().isEmpty()) {
                     this.setItem(index++, this.getAuctionItem(category.getCategoryItems().get(0)));
                     continue;
@@ -138,11 +140,11 @@ extends AuctionMenu {
                     lore.add(CC.Gold + "Sub Categories: " + CC.Yellow + category.getSubCategories().size());
                 }
                 lore.add(CC.GoldB + "Listings: " + CC.Yellow + category.getCategoryItems().size());
-                lore.add(CC.Gold + " Lowest Price: " + CC.YellowB + "$" + CC.Yellow + NumberUtils.formatMoney((double)category.getLowestPricedItem()));
+                lore.add(CC.Gold + " Lowest Price: " + CC.YellowB + "$" + CC.Yellow + NumberUtils.formatMoney((double) category.getLowestPricedItem()));
                 if (category.getSubCategories() != null && !category.getSubCategories().isEmpty()) {
                     lore.add(CC.Gray + "Click to view sub categories!");
                 }
-                im.setLore((List)lore);
+                im.setLore((List) lore);
                 display.setItemMeta(im);
                 this.setItem(index++, new InventoryItem(display).click(() -> {
                     if (category.getSubCategories() != null && category.getSubCategories().size() > 0) {
@@ -154,17 +156,13 @@ extends AuctionMenu {
                         this.redraw();
                         return;
                     }
-                    new CategoryItemViewMenu(this.player, category).setParentGUI(this).openGUI((JavaPlugin)Auction.getPlugin());
+                    new CategoryItemViewMenu(this.player, category).setParentGUI(this).openGUI((JavaPlugin) Auction.getPlugin());
                 }));
                 continue;
             }
             if (!(item instanceof Listing)) continue;
-            this.setItem(index++, this.getAuctionItem((Listing)item));
+            this.setItem(index++, this.getAuctionItem((Listing) item));
         }
-    }
-
-    public void setCategories(List<AuctionItem> categories) {
-        this.categories = categories;
     }
 }
 

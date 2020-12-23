@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.google.common.base.Function
  *  com.google.common.base.Objects
@@ -18,13 +18,13 @@ import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Maps;
+import org.bukkit.inventory.ItemStack;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Iterator;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentMap;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import me.recolance.globalutils.attribute.NbtFactory;
-import org.bukkit.inventory.ItemStack;
 
 public class Attributes {
     public ItemStack stack;
@@ -45,7 +45,7 @@ public class Attributes {
     }
 
     public void add(Attribute attribute) {
-        Preconditions.checkNotNull((Object)attribute.getName(), (Object)"must specify an attribute name.");
+        Preconditions.checkNotNull((Object) attribute.getName(), (Object) "must specify an attribute name.");
         this.attributes.add(attribute.data);
     }
 
@@ -53,7 +53,7 @@ public class Attributes {
         UUID uuid = attribute.getUUID();
         Iterator<Attribute> it = this.values().iterator();
         while (it.hasNext()) {
-            if (!Objects.equal((Object)it.next().getUUID(), (Object)uuid)) continue;
+            if (!Objects.equal((Object) it.next().getUUID(), (Object) uuid)) continue;
             it.remove();
             return true;
         }
@@ -65,22 +65,46 @@ public class Attributes {
     }
 
     public Attribute get(int index) {
-        return new Attribute((NbtFactory.NbtCompound)this.attributes.get(index));
+        return new Attribute((NbtFactory.NbtCompound) this.attributes.get(index));
     }
 
     public Iterable<Attribute> values() {
-        return new Iterable<Attribute>(){
+        return new Iterable<Attribute>() {
 
             @Override
             public Iterator<Attribute> iterator() {
-                return Iterators.transform(Attributes.this.attributes.iterator(), (Function)new Function<Object, Attribute>(){
+                return Iterators.transform(Attributes.this.attributes.iterator(), (Function) new Function<Object, Attribute>() {
 
                     public Attribute apply(@Nullable Object element) {
-                        return new Attribute((NbtFactory.NbtCompound)element);
+                        return new Attribute((NbtFactory.NbtCompound) element);
                     }
                 });
             }
         };
+    }
+
+    public static enum Operation {
+        ADD_NUMBER(0),
+        MULTIPLY_PERCENTAGE(1),
+        ADD_PERCENTAGE(2);
+
+        private int id;
+
+        private Operation(int id) {
+            this.id = id;
+        }
+
+        public static Operation fromId(int id) {
+            for (Operation op : Operation.values()) {
+                if (op.getId() != id) continue;
+                return op;
+            }
+            throw new IllegalArgumentException("Corrupt operation ID " + id + " detected.");
+        }
+
+        public int getId() {
+            return this.id;
+        }
     }
 
     public static class Attribute {
@@ -97,63 +121,6 @@ public class Attributes {
 
         private Attribute(NbtFactory.NbtCompound data) {
             this.data = data;
-        }
-
-        public double getAmount() {
-            return this.data.getDouble("Amount", 0.0);
-        }
-
-        public void setAmount(double amount) {
-            this.data.put("Amount", (Object)amount);
-        }
-
-        public Operation getOperation() {
-            return Operation.fromId(this.data.getInteger("Operation", 0));
-        }
-
-        public void setOperation(@Nonnull Operation operation) {
-            if (operation == null) {
-                Attribute.$$$reportNull$$$0(0);
-            }
-            Preconditions.checkNotNull((Object)((Object)operation), (Object)"operation cannot be NULL.");
-            this.data.put("Operation", (Object)operation.getId());
-        }
-
-        public AttributeType getAttributeType() {
-            return AttributeType.fromId(this.data.getString("AttributeName", null));
-        }
-
-        public void setAttributeType(@Nonnull AttributeType type) {
-            if (type == null) {
-                Attribute.$$$reportNull$$$0(1);
-            }
-            Preconditions.checkNotNull((Object)type, (Object)"type cannot be NULL.");
-            this.data.put("AttributeName", (Object)type.getMinecraftId());
-        }
-
-        public String getName() {
-            return this.data.getString("Name", null);
-        }
-
-        public void setName(@Nonnull String name) {
-            if (name == null) {
-                Attribute.$$$reportNull$$$0(2);
-            }
-            Preconditions.checkNotNull((Object)name, (Object)"name cannot be NULL.");
-            this.data.put("Name", (Object)name);
-        }
-
-        public UUID getUUID() {
-            return new UUID(this.data.getLong("UUIDMost", null), this.data.getLong("UUIDLeast", null));
-        }
-
-        public void setUUID(@Nonnull UUID id) {
-            if (id == null) {
-                Attribute.$$$reportNull$$$0(3);
-            }
-            Preconditions.checkNotNull((Object)"id", (Object)"id cannot be NULL.");
-            this.data.put("UUIDLeast", (Object)id.getLeastSignificantBits());
-            this.data.put("UUIDMost", (Object)id.getMostSignificantBits());
         }
 
         public static Builder newBuilder() {
@@ -212,6 +179,63 @@ public class Attributes {
             throw new IllegalArgumentException(String.format("Argument for @Nonnull parameter '%s' of %s.%s must not be null", arrobject));
         }
 
+        public double getAmount() {
+            return this.data.getDouble("Amount", 0.0);
+        }
+
+        public void setAmount(double amount) {
+            this.data.put("Amount", (Object) amount);
+        }
+
+        public Operation getOperation() {
+            return Operation.fromId(this.data.getInteger("Operation", 0));
+        }
+
+        public void setOperation(@Nonnull Operation operation) {
+            if (operation == null) {
+                Attribute.$$$reportNull$$$0(0);
+            }
+            Preconditions.checkNotNull((Object) ((Object) operation), (Object) "operation cannot be NULL.");
+            this.data.put("Operation", (Object) operation.getId());
+        }
+
+        public AttributeType getAttributeType() {
+            return AttributeType.fromId(this.data.getString("AttributeName", null));
+        }
+
+        public void setAttributeType(@Nonnull AttributeType type) {
+            if (type == null) {
+                Attribute.$$$reportNull$$$0(1);
+            }
+            Preconditions.checkNotNull((Object) type, (Object) "type cannot be NULL.");
+            this.data.put("AttributeName", (Object) type.getMinecraftId());
+        }
+
+        public String getName() {
+            return this.data.getString("Name", null);
+        }
+
+        public void setName(@Nonnull String name) {
+            if (name == null) {
+                Attribute.$$$reportNull$$$0(2);
+            }
+            Preconditions.checkNotNull((Object) name, (Object) "name cannot be NULL.");
+            this.data.put("Name", (Object) name);
+        }
+
+        public UUID getUUID() {
+            return new UUID(this.data.getLong("UUIDMost", null), this.data.getLong("UUIDLeast", null));
+        }
+
+        public void setUUID(@Nonnull UUID id) {
+            if (id == null) {
+                Attribute.$$$reportNull$$$0(3);
+            }
+            Preconditions.checkNotNull((Object) "id", (Object) "id cannot be NULL.");
+            this.data.put("UUIDLeast", (Object) id.getLeastSignificantBits());
+            this.data.put("UUIDMost", (Object) id.getMostSignificantBits());
+        }
+
         public static class Builder {
             private double amount;
             private Operation operation = Operation.ADD_NUMBER;
@@ -266,6 +290,14 @@ public class Attributes {
             this.minecraftId = minecraftId;
         }
 
+        public static AttributeType fromId(String minecraftId) {
+            return (AttributeType) LOOKUP.get(minecraftId);
+        }
+
+        public static Iterable<AttributeType> values() {
+            return LOOKUP.values();
+        }
+
         public String getMinecraftId() {
             return this.minecraftId;
         }
@@ -273,38 +305,6 @@ public class Attributes {
         public AttributeType register() {
             AttributeType old = LOOKUP.putIfAbsent(this.minecraftId, this);
             return old != null ? old : this;
-        }
-
-        public static AttributeType fromId(String minecraftId) {
-            return (AttributeType)LOOKUP.get(minecraftId);
-        }
-
-        public static Iterable<AttributeType> values() {
-            return LOOKUP.values();
-        }
-    }
-
-    public static enum Operation {
-        ADD_NUMBER(0),
-        MULTIPLY_PERCENTAGE(1),
-        ADD_PERCENTAGE(2);
-
-        private int id;
-
-        private Operation(int id) {
-            this.id = id;
-        }
-
-        public int getId() {
-            return this.id;
-        }
-
-        public static Operation fromId(int id) {
-            for (Operation op : Operation.values()) {
-                if (op.getId() != id) continue;
-                return op;
-            }
-            throw new IllegalArgumentException("Corrupt operation ID " + id + " detected.");
         }
     }
 }

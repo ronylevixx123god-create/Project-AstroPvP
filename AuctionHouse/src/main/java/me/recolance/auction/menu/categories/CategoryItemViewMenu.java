@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.gui.InventoryItem
  *  com.cosmicpvp.cosmicutils.utils.CC
@@ -14,17 +14,16 @@ package me.recolance.auction.menu.categories;
 import com.cosmicpvp.cosmicutils.gui.InventoryItem;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
-import java.util.List;
 import me.recolance.auction.Auction;
 import me.recolance.auction.auction.Listing;
-import me.recolance.auction.menu.categories.AuctionCategory;
-import me.recolance.auction.menu.categories.AuctionMenu;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.List;
+
 public class CategoryItemViewMenu
-extends AuctionMenu {
+        extends AuctionMenu {
     private AuctionCategory category;
     private int page = 1;
 
@@ -42,14 +41,14 @@ extends AuctionMenu {
         List<Listing> items = this.category.getCategoryItems();
         this.setItem(MAIN_CATEGORY_SLOT, new InventoryItem(new ItemBuilder(Material.PAPER, CC.RedB + "Main Category Menu", new String[]{CC.Gray + "Click to view all current", CC.Gray + "auction item categories."}).build()).click(() -> {
             if (this.getParentGUI() != null) {
-                this.getParentGUI().openGUI((JavaPlugin)Auction.getPlugin());
+                this.getParentGUI().openGUI((JavaPlugin) Auction.getPlugin());
                 this.getParentGUI().redraw();
             }
         }));
         this.setItem(COLLECTION_BIN_SLOT, this.getCollectionBinItem());
         if (items.size() > 0) {
             int perPage = 45;
-            int maxPages = (int)Math.ceil((double)items.size() / (double)perPage);
+            int maxPages = (int) Math.ceil((double) items.size() / (double) perPage);
             if (this.page > maxPages) {
                 this.page = maxPages;
             }

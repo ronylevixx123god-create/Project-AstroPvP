@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.gui.CosmicGUI
  *  com.cosmicpvp.cosmicutils.gui.InventoryItem
@@ -20,21 +20,17 @@ import com.cosmicpvp.cosmicutils.gui.CosmicGUI;
 import com.cosmicpvp.cosmicutils.gui.InventoryItem;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
-import java.util.function.Consumer;
 import me.recolance.auction.Auction;
 import me.recolance.auction.data.AuctionBid;
-import me.recolance.auction.menu.bidmenus.BidMenu;
 import me.recolance.auction.util.Util;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.DyeColor;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import java.util.function.Consumer;
+
 public class ConfirmItemMenu
-extends CosmicGUI {
+        extends CosmicGUI {
     Consumer<Void> confirmCallback;
     Consumer<Void> denyCallback;
     private AuctionBid bid;
@@ -59,11 +55,11 @@ extends CosmicGUI {
                 return;
             }
             if (bid.getCurrentBid() >= finalBidAmount) {
-                pl.sendMessage((Object)ChatColor.RED + "Your bid must be higher than the current bid!");
+                pl.sendMessage((Object) ChatColor.RED + "Your bid must be higher than the current bid!");
                 pl.sendMessage(CC.RedB + "Current Bid: $" + CC.Red + Util.formatMoney(bid.getCurrentBid()));
                 return;
             }
-            if (!Auction.economy.has((OfflinePlayer)pl, (double)finalBidAmount)) {
+            if (!Auction.economy.has((OfflinePlayer) pl, (double) finalBidAmount)) {
                 pl.sendMessage(CC.Red + "You do not have the funds to do that!");
                 return;
             }
@@ -73,15 +69,15 @@ extends CosmicGUI {
                 bid.placePlayerBid(pl, finalBidAmount);
             }
             pl.closeInventory();
-            Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Auction.getPlugin(), () -> new BidMenu(pl).openGUI(Auction.getPlugin()), 1L);
+            Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin) Auction.getPlugin(), () -> new BidMenu(pl).openGUI(Auction.getPlugin()), 1L);
         };
     }
 
     public void redraw() {
         int i;
-        boolean buyout = this.bid.getBuyoutAmount() > 0.0 && this.bid.getBuyoutAmount() == (double)this.bidding;
-        InventoryItem item = new InventoryItem(new ItemBuilder(Material.STAINED_GLASS_PANE, CC.GreenB + "Confirm " + (buyout ? "Buy" : "Bid") + " Now", new String[]{(Object)ChatColor.GRAY + "Click to confirm " + (buyout ? "purchase of" : "bid on"), CC.Gray + "'" + CC.White + this.bid.getBidSellDisplayName() + CC.Gray + "' for " + CC.GreenB + "$" + CC.Green + Util.formatMoney(this.bidding)}).data((short)DyeColor.LIME.getWoolData()).build()).click(() -> this.confirmCallback.accept(null));
-        InventoryItem deny = new InventoryItem(new ItemBuilder(Material.STAINED_GLASS_PANE, CC.RedB + "Cancel", new String[]{(Object)ChatColor.GRAY + "Click to cancel this bid!"}).data((short)DyeColor.RED.getWoolData()).build()).click(() -> this.denyCallback.accept(null));
+        boolean buyout = this.bid.getBuyoutAmount() > 0.0 && this.bid.getBuyoutAmount() == (double) this.bidding;
+        InventoryItem item = new InventoryItem(new ItemBuilder(Material.STAINED_GLASS_PANE, CC.GreenB + "Confirm " + (buyout ? "Buy" : "Bid") + " Now", new String[]{(Object) ChatColor.GRAY + "Click to confirm " + (buyout ? "purchase of" : "bid on"), CC.Gray + "'" + CC.White + this.bid.getBidSellDisplayName() + CC.Gray + "' for " + CC.GreenB + "$" + CC.Green + Util.formatMoney(this.bidding)}).data((short) DyeColor.LIME.getWoolData()).build()).click(() -> this.confirmCallback.accept(null));
+        InventoryItem deny = new InventoryItem(new ItemBuilder(Material.STAINED_GLASS_PANE, CC.RedB + "Cancel", new String[]{(Object) ChatColor.GRAY + "Click to cancel this bid!"}).data((short) DyeColor.RED.getWoolData()).build()).click(() -> this.denyCallback.accept(null));
         for (i = 0; i < 4; ++i) {
             this.setItem(i, item);
         }

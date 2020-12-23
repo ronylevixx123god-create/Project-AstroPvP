@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.CC
  *  net.milkbowl.vault.economy.Economy
@@ -23,18 +23,11 @@
 package me.recolance.auction.menu;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.UUID;
 import me.recolance.auction.Auction;
 import me.recolance.auction.auction.Listing;
 import me.recolance.auction.auction.UnclaimedListing;
 import me.recolance.auction.controller.Controller;
 import me.recolance.auction.data.DataHolder;
-import me.recolance.auction.menu.MenuHelper;
-import me.recolance.auction.menu.MenuRenderer;
-import me.recolance.auction.menu.MenuUtil;
 import me.recolance.auction.menu.bidmenus.BidMenu;
 import me.recolance.auction.menu.categories.CategoryMainMenu;
 import me.recolance.auction.util.Util;
@@ -55,16 +48,21 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.UUID;
+
 public class MenuController
-implements Listener {
+        implements Listener {
     private static HashMap<UUID, Inventory> closeSecurity = new HashMap();
     private static HashMap<UUID, Long> timer = new HashMap();
     private static Economy economy = Auction.economy;
 
-    @EventHandler(priority=EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onClick(InventoryClickEvent event) {
         ItemStack item;
-        Player player = (Player)event.getWhoClicked();
+        Player player = (Player) event.getWhoClicked();
         Inventory inventory = event.getInventory();
         if (closeSecurity.containsKey(player.getUniqueId()) && closeSecurity.get(player.getUniqueId()) == inventory) {
             event.setCancelled(true);
@@ -80,10 +78,10 @@ implements Listener {
             return;
         }
         timer.put(player.getUniqueId(), System.currentTimeMillis());
-        if (event.getCurrentItem() != null && !event.getClickedInventory().equals((Object)player.getOpenInventory().getTopInventory())) {
+        if (event.getCurrentItem() != null && !event.getClickedInventory().equals((Object) player.getOpenInventory().getTopInventory())) {
             event.setCancelled(true);
             event.setResult(Event.Result.DENY);
-            Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Auction.getPlugin(), ((Player)player)::closeInventory, 1L);
+            Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin) Auction.getPlugin(), ((Player) player)::closeInventory, 1L);
             Util.message(player, "&e&l(!) &eTo list an item for sale on the &6/ah&e use &6/ah sell <price>&e, to list an item up for auction use &6/ah startbid&e.");
             return;
         }
@@ -123,12 +121,12 @@ implements Listener {
                         MenuUtil.displayMenuInvalidity(slot, inventory, item, "You do not have enough inventory space!");
                         break;
                     }
-                    if (!economy.has(Bukkit.getOfflinePlayer((UUID)player.getUniqueId()), (double)l.getPrice())) {
+                    if (!economy.has(Bukkit.getOfflinePlayer((UUID) player.getUniqueId()), (double) l.getPrice())) {
                         MenuUtil.displayMenuInvalidity(slot, inventory, item, "You cannot afford this item.");
                         break;
                     }
                     player.closeInventory();
-                    Bukkit.getScheduler().runTaskLater((Plugin)Auction.getPlugin(), () -> MenuRenderer.purchaseConfirmation(player, l), 1L);
+                    Bukkit.getScheduler().runTaskLater((Plugin) Auction.getPlugin(), () -> MenuRenderer.purchaseConfirmation(player, l), 1L);
                     break;
                 }
                 if (slot == 45) {
@@ -143,16 +141,16 @@ implements Listener {
                 }
                 if (slot == 47) {
                     if (item.getType() == Material.ENDER_CHEST) {
-                        Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Auction.getPlugin(), () -> {
+                        Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin) Auction.getPlugin(), () -> {
                             player.closeInventory();
                             player.performCommand("ah collect");
                         }, 1L);
                         break;
                     }
                     if (item.getType() != Material.BOOK_AND_QUILL) break;
-                    Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Auction.getPlugin(), () -> {
+                    Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin) Auction.getPlugin(), () -> {
                         player.closeInventory();
-                        Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Auction.getPlugin(), () -> new BidMenu(player).openGUI(Auction.getPlugin()), 1L);
+                        Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin) Auction.getPlugin(), () -> new BidMenu(player).openGUI(Auction.getPlugin()), 1L);
                     }, 1L);
                     break;
                 }
@@ -172,9 +170,9 @@ implements Listener {
                     break;
                 }
                 if (slot != 51) break;
-                Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Auction.getPlugin(), () -> {
+                Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin) Auction.getPlugin(), () -> {
                     player.closeInventory();
-                    Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Auction.getPlugin(), () -> new CategoryMainMenu(player).openGUI(Auction.getPlugin()), 1L);
+                    Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin) Auction.getPlugin(), () -> new CategoryMainMenu(player).openGUI(Auction.getPlugin()), 1L);
                 }, 1L);
                 break;
             }
@@ -186,7 +184,7 @@ implements Listener {
                         if (viewingCategories) {
                             player.closeInventory();
                             player.sendMessage(CC.RedB + "(!) " + CC.Red + "Item is no longer available!");
-                            Bukkit.getScheduler().runTaskLater((Plugin)Auction.getPlugin(), () -> new CategoryMainMenu(player).openGUI(Auction.getPlugin()), 1L);
+                            Bukkit.getScheduler().runTaskLater((Plugin) Auction.getPlugin(), () -> new CategoryMainMenu(player).openGUI(Auction.getPlugin()), 1L);
                             return;
                         }
                         MenuUtil.displayMenuInvalidity(slot, inventory, item, "This item is no longer available.");
@@ -200,17 +198,17 @@ implements Listener {
                         if (viewingCategories) {
                             player.closeInventory();
                             player.sendMessage(CC.RedB + "(!) " + CC.Red + "You dont have enough inventory space to purchase that item!");
-                            Bukkit.getScheduler().runTaskLater((Plugin)Auction.getPlugin(), () -> new CategoryMainMenu(player).openGUI(Auction.getPlugin()), 1L);
+                            Bukkit.getScheduler().runTaskLater((Plugin) Auction.getPlugin(), () -> new CategoryMainMenu(player).openGUI(Auction.getPlugin()), 1L);
                             return;
                         }
                         MenuUtil.displayMenuInvalidity(slot, inventory, item, "You do not have enough inventory space!");
                         break;
                     }
-                    if (!economy.has(Bukkit.getOfflinePlayer((UUID)player.getUniqueId()), (double)l.getPrice())) {
+                    if (!economy.has(Bukkit.getOfflinePlayer((UUID) player.getUniqueId()), (double) l.getPrice())) {
                         if (viewingCategories) {
                             player.closeInventory();
                             player.sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot afford this item.");
-                            Bukkit.getScheduler().runTaskLater((Plugin)Auction.getPlugin(), () -> new CategoryMainMenu(player).openGUI(Auction.getPlugin()), 1L);
+                            Bukkit.getScheduler().runTaskLater((Plugin) Auction.getPlugin(), () -> new CategoryMainMenu(player).openGUI(Auction.getPlugin()), 1L);
                             return;
                         }
                         MenuUtil.displayMenuInvalidity(slot, inventory, item, "You cannot afford this item.");
@@ -224,7 +222,7 @@ implements Listener {
                 if (slot <= 4 || slot >= 9) break;
                 player.closeInventory();
                 if (viewingCategories) {
-                    Bukkit.getScheduler().runTaskLater((Plugin)Auction.getPlugin(), () -> new CategoryMainMenu(player).openGUI(Auction.getPlugin()), 1L);
+                    Bukkit.getScheduler().runTaskLater((Plugin) Auction.getPlugin(), () -> new CategoryMainMenu(player).openGUI(Auction.getPlugin()), 1L);
                     return;
                 }
                 MenuRenderer.openAuction(player);
@@ -291,9 +289,9 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onClose(InventoryCloseEvent event) {
-        final Player player = (Player)event.getPlayer();
+        final Player player = (Player) event.getPlayer();
         if (!MenuHelper.isViewing(player)) {
             return;
         }
@@ -318,24 +316,24 @@ implements Listener {
         }
         MenuHelper.removeViewing(player);
         closeSecurity.put(player.getUniqueId(), event.getInventory());
-        new BukkitRunnable(){
+        new BukkitRunnable() {
 
             public void run() {
                 closeSecurity.remove(player.getUniqueId());
             }
-        }.runTaskLater((Plugin)Auction.plugin, 2L);
+        }.runTaskLater((Plugin) Auction.plugin, 2L);
     }
 
-    @EventHandler(priority=EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onDrag(InventoryDragEvent event) {
-        Player player = (Player)event.getWhoClicked();
+        Player player = (Player) event.getWhoClicked();
         if (!MenuHelper.isViewing(player)) {
             return;
         }
         Inventory inventory = event.getInventory();
         Iterator iterator = event.getRawSlots().iterator();
         while (iterator.hasNext()) {
-            int slot = (Integer)iterator.next();
+            int slot = (Integer) iterator.next();
             if (slot >= inventory.getSize()) continue;
             event.setCancelled(true);
             break;

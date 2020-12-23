@@ -3,12 +3,13 @@
  */
 package me.recolance.auction.data;
 
+import me.recolance.auction.auction.Listing;
+import me.recolance.auction.auction.UnclaimedListing;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
-import me.recolance.auction.auction.Listing;
-import me.recolance.auction.auction.UnclaimedListing;
 
 public class DataHolder {
     private static List<Listing> listings = new ArrayList<Listing>();

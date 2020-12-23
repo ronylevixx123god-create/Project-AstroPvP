@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.compat.ASound
  *  com.cosmicpvp.cosmicutils.gui.InventoryItem
@@ -28,39 +28,35 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
 import com.google.common.collect.Lists;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
 import me.recolance.auction.command.CommandHandler;
-import me.recolance.auction.menu.bidmenus.AuctionGUI;
 import me.recolance.auction.util.ItemUtils;
 import me.recolance.auction.util.Util;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.DyeColor;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
+
 public class AuctionPackageMenu
-extends AuctionGUI {
+        extends AuctionGUI {
+    public long bidLength5 = TimeUnit.MINUTES.toSeconds(5L);
+    public long bidLength10 = TimeUnit.MINUTES.toSeconds(10L);
+    public long bidLength15 = TimeUnit.MINUTES.toSeconds(15L);
+    public long bidLength30 = TimeUnit.MINUTES.toSeconds(30L);
+    public int bidLength = (int) TimeUnit.MINUTES.toSeconds(15L);
     private List<ItemStack> toReturn = Lists.newArrayList();
     private long startingBid;
     private long maxBid;
     private long buyoutPrice;
     private Consumer<Pair<List<ItemStack>, Integer>> callback;
     private boolean confirmed = false;
-    public long bidLength5 = TimeUnit.MINUTES.toSeconds(5L);
-    public long bidLength10 = TimeUnit.MINUTES.toSeconds(10L);
-    public long bidLength15 = TimeUnit.MINUTES.toSeconds(15L);
-    public long bidLength30 = TimeUnit.MINUTES.toSeconds(30L);
-    public int bidLength = (int)TimeUnit.MINUTES.toSeconds(15L);
 
     public AuctionPackageMenu(Player player, long startingBid, long incrementAmount, long buyoutPrice, ItemStack selling, Consumer<Pair<List<ItemStack>, Integer>> successCallback) {
         super(player, "Enter Auction Package Items", 54);
@@ -85,7 +81,7 @@ extends AuctionGUI {
             this.player.sendMessage(CC.Gray + "Your items have been returned to you.");
             this.confirmed = true;
             for (ItemStack retr : this.toReturn) {
-                if (PlayerUtil.giveOrDropProtectedItem((Player)this.player, (ItemStack)retr, (int)-1)) continue;
+                if (PlayerUtil.giveOrDropProtectedItem((Player) this.player, (ItemStack) retr, (int) -1)) continue;
                 this.player.sendMessage(CC.Green + "No inventory space available! A protected version of your item has been dropped on the ground!");
             }
             this.toReturn.clear();
@@ -99,19 +95,19 @@ extends AuctionGUI {
         for (ItemStack itemStack : this.toReturn) {
             ItemStack clone = itemStack.clone();
             this.setItem(slot++, new InventoryItem(new ItemBuilder(clone).build()).click(() -> {
-                if (!this.toReturn.remove((Object)itemStack)) {
+                if (!this.toReturn.remove((Object) itemStack)) {
                     this.redraw();
-                    Bukkit.getLogger().info("Didnt find item in toReturn: " + (Object)itemStack + " for " + this.player.getName());
+                    Bukkit.getLogger().info("Didnt find item in toReturn: " + (Object) itemStack + " for " + this.player.getName());
                     return;
                 }
-                if (!PlayerUtil.giveOrDropProtectedItem((Player)this.player, (ItemStack)itemStack, (int)-1)) {
+                if (!PlayerUtil.giveOrDropProtectedItem((Player) this.player, (ItemStack) itemStack, (int) -1)) {
                     this.player.sendMessage(CC.Green + "No inventory space available! A protected version of your item has been dropped on the ground!");
                 }
                 this.player.playSound(this.player.getLocation(), Sound.LAVA_POP, 1.0f, 1.4f);
                 this.redraw();
             }));
         }
-        ArrayList lore = Lists.newArrayList((Object[])new String[]{"", CC.Gray + "Confirm to auction " + CC.GrayB + this.toReturn.size() + "x" + CC.Gray + " Items:"});
+        ArrayList lore = Lists.newArrayList((Object[]) new String[]{"", CC.Gray + "Confirm to auction " + CC.GrayB + this.toReturn.size() + "x" + CC.Gray + " Items:"});
         for (ItemStack item3 : this.toReturn) {
             lore.add(CC.GoldB + "* " + CC.White + Util.getItemName(item3));
         }
@@ -124,7 +120,7 @@ extends AuctionGUI {
         lore.add("");
         lore.add(CC.RedB + "NOTE: " + CC.Red + "You cannot cancel this");
         lore.add(CC.Red + "auction once it has started!");
-        InventoryItem inventoryItem = new InventoryItem(new ItemBuilder(Material.STAINED_GLASS_PANE).data((short)DyeColor.LIME.getWoolData()).name(CC.GreenB + "Confirm Auction").lore((List)lore).build()).click(() -> {
+        InventoryItem inventoryItem = new InventoryItem(new ItemBuilder(Material.STAINED_GLASS_PANE).data((short) DyeColor.LIME.getWoolData()).name(CC.GreenB + "Confirm Auction").lore((List) lore).build()).click(() -> {
             if (this.toReturn.isEmpty()) {
                 this.player.sendMessage(CC.RedB + "(!) " + CC.Red + "You must provide at least 1 item to auction!");
                 return;
@@ -138,14 +134,14 @@ extends AuctionGUI {
             }
             this.click();
             this.confirmed = true;
-            this.callback.accept((Pair<List<ItemStack>, Integer>)new ImmutablePair(this.toReturn, (Object)this.bidLength));
+            this.callback.accept((Pair<List<ItemStack>, Integer>) new ImmutablePair(this.toReturn, (Object) this.bidLength));
         });
         for (int index = this.size - 9; index < this.size; ++index) {
             if (index < this.size - 5) {
                 this.setItem(index, inventoryItem);
                 continue;
             }
-            this.setItem(index, new InventoryItem(new ItemBuilder(Material.STAINED_GLASS_PANE).data((short)DyeColor.RED.getWoolData()).name(CC.RedB + "Cancel Auction").lore(new String[]{"", CC.Gray + "Click to cancel this auction."}).build()).click(() -> {
+            this.setItem(index, new InventoryItem(new ItemBuilder(Material.STAINED_GLASS_PANE).data((short) DyeColor.RED.getWoolData()).name(CC.RedB + "Cancel Auction").lore(new String[]{"", CC.Gray + "Click to cancel this auction."}).build()).click(() -> {
                 if (this.confirmed) {
                     return;
                 }
@@ -157,19 +153,19 @@ extends AuctionGUI {
             this.setItem(this.size - 5, new InventoryItem(sellingItem));
         }
         for (int i = this.size - 18; i < this.size - 9; ++i) {
-            this.setItem(i, new InventoryItem(new ItemBuilder(Material.STAINED_GLASS_PANE).data((short)DyeColor.GRAY.getWoolData()).name(" ").build()));
+            this.setItem(i, new InventoryItem(new ItemBuilder(Material.STAINED_GLASS_PANE).data((short) DyeColor.GRAY.getWoolData()).name(" ").build()));
         }
-        boolean min = (long)this.bidLength == this.bidLength5;
-        boolean min2 = (long)this.bidLength == this.bidLength10;
-        boolean min5 = (long)this.bidLength == this.bidLength15;
-        boolean min30 = (long)this.bidLength == this.bidLength30;
+        boolean min = (long) this.bidLength == this.bidLength5;
+        boolean min2 = (long) this.bidLength == this.bidLength10;
+        boolean min5 = (long) this.bidLength == this.bidLength15;
+        boolean min30 = (long) this.bidLength == this.bidLength30;
         boolean maxRank = this.player.hasPermission("enchantments.max.20");
         int slots = this.size - (maxRank ? 16 : 15);
         this.setItem(slots, new InventoryItem(ItemUtils.setFakeEnchantment(new ItemBuilder(Material.WATCH).name(CC.GreenB + "5 Minute Duration").lore("", CC.Gray + "Click to set auction bid duration!").build(), min)).click(() -> {
             if (!this.canClick()) {
                 return;
             }
-            this.bidLength = (int)this.bidLength5;
+            this.bidLength = (int) this.bidLength5;
             this.click();
             this.redraw();
         }));
@@ -177,7 +173,7 @@ extends AuctionGUI {
             if (!this.canClick()) {
                 return;
             }
-            this.bidLength = (int)this.bidLength10;
+            this.bidLength = (int) this.bidLength10;
             this.click();
             this.redraw();
         }));
@@ -188,7 +184,7 @@ extends AuctionGUI {
             if (!this.canClick()) {
                 return;
             }
-            this.bidLength = (int)this.bidLength15;
+            this.bidLength = (int) this.bidLength15;
             this.click();
             this.redraw();
         }));
@@ -197,7 +193,7 @@ extends AuctionGUI {
                 if (!this.canClick()) {
                     return;
                 }
-                this.bidLength = (int)this.bidLength30;
+                this.bidLength = (int) this.bidLength30;
                 this.click();
                 this.redraw();
             }));
@@ -223,7 +219,7 @@ extends AuctionGUI {
                 return;
             }
             if (this.toReturn.size() >= 5) {
-                this.player.sendMessage((Object)ChatColor.RED + "You can only sell up to 5 items in a single Auction Package!");
+                this.player.sendMessage((Object) ChatColor.RED + "You can only sell up to 5 items in a single Auction Package!");
                 return;
             }
             event.getClickedInventory().setItem(event.getSlot(), null);

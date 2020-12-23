@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI
  *  com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity
@@ -21,8 +21,6 @@ import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.rit.sucy.CustomEnchantment;
-import java.text.DecimalFormat;
-import java.util.UUID;
 import me.recolance.auction.data.AuctionItem;
 import me.recolance.auction.util.Item;
 import org.arkhamnetwork.Arkkit.patches.ExpBottles;
@@ -32,9 +30,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
+import java.text.DecimalFormat;
+import java.util.UUID;
+
 public class Listing
-implements Comparable<Listing>,
-AuctionItem {
+        implements Comparable<Listing>,
+        AuctionItem {
     private UUID id;
     private long endTime;
     private UUID listedBy;
@@ -57,7 +58,7 @@ AuctionItem {
         this.listedBy = listedBy;
         this.item = item;
         this.price = price;
-        this.listedByName = Bukkit.getOfflinePlayer((UUID)this.listedBy).getName();
+        this.listedByName = Bukkit.getOfflinePlayer((UUID) this.listedBy).getName();
     }
 
     public double getPricePerItem() {
@@ -65,7 +66,7 @@ AuctionItem {
             return this.pricePerItem;
         }
         if (this.item.getAmount() > 1) {
-            this.pricePerItem = (double)this.getPrice() / (double)this.item.getAmount();
+            this.pricePerItem = (double) this.getPrice() / (double) this.item.getAmount();
             return this.pricePerItem;
         }
         this.pricePerItem = this.getPrice();
@@ -74,7 +75,7 @@ AuctionItem {
 
     public int getExpInBottle() {
         if (this.expInBottle == null) {
-            this.expInBottle = ExpBottles.isXpBottle((ItemStack)this.item) ? Integer.valueOf(ExpBottles.getXpAmount((ItemStack)this.item)) : Integer.valueOf(0);
+            this.expInBottle = ExpBottles.isXpBottle((ItemStack) this.item) ? Integer.valueOf(ExpBottles.getXpAmount((ItemStack) this.item)) : Integer.valueOf(0);
         }
         return this.expInBottle;
     }
@@ -82,7 +83,7 @@ AuctionItem {
     public double getExpPerDollar() {
         if (this.expPerDollar == null) {
             int exp = this.getExpInBottle();
-            this.expPerDollar = exp > 0 ? Double.valueOf((double)this.price / (double)exp) : Double.valueOf(0.0);
+            this.expPerDollar = exp > 0 ? Double.valueOf((double) this.price / (double) exp) : Double.valueOf(0.0);
         }
         return this.expPerDollar;
     }
@@ -90,16 +91,16 @@ AuctionItem {
     public Integer getBookRarity() {
         if (!this.checkedBook) {
             this.checkedBook = true;
-            if (!EnchantmentBook.isEnchantmentBook((ItemStack)this.item)) {
+            if (!EnchantmentBook.isEnchantmentBook((ItemStack) this.item)) {
                 return null;
             }
-            CustomEnchantment enchant = EnchantmentBook.getEnchantment((ItemStack)this.item);
+            CustomEnchantment enchant = EnchantmentBook.getEnchantment((ItemStack) this.item);
             if (enchant == null) {
                 return null;
             }
-            this.bookTierColor = TieredEnchantments.getTierColor((CustomEnchantment)enchant);
-            this.bookRarity = TieredEnchantments.getEnchantmentTier((String)enchant.name());
-            ItemRarity rarity = CosmicSpaceChestsAPI.getItemRarity((int)this.bookRarity);
+            this.bookTierColor = TieredEnchantments.getTierColor((CustomEnchantment) enchant);
+            this.bookRarity = TieredEnchantments.getEnchantmentTier((String) enchant.name());
+            ItemRarity rarity = CosmicSpaceChestsAPI.getItemRarity((int) this.bookRarity);
             if (rarity == null || rarity == ItemRarity.UNKNOWN) {
                 if (this.bookRarity == 7) {
                     this.bookTierName = "Heroic";
@@ -114,10 +115,10 @@ AuctionItem {
     }
 
     public ItemStack getMenuDisplayItem() {
-        String perData = this.getExpInBottle() > 0 ? CC.Gray + " ($" + NumberUtils.formatMoney((double)this.getExpPerDollar()) + " / xp)" : "";
+        String perData = this.getExpInBottle() > 0 ? CC.Gray + " ($" + NumberUtils.formatMoney((double) this.getExpPerDollar()) + " / xp)" : "";
         double perItem = this.getPricePerItem();
-        if (perItem != (double)this.getPrice() && perItem > 0.0) {
-            perData = " ($" + NumberUtils.formatMoney((double)perItem) + " / item)";
+        if (perItem != (double) this.getPrice() && perItem > 0.0) {
+            perData = " ($" + NumberUtils.formatMoney((double) perItem) + " / item)";
         }
         return new Item(new ItemStack(this.getItem())).addLore("", "&7-------------------------", "&e&lClick item to buy!", "", "&6Price: &e$" + this.getPrettyPrice() + perData, "&6Seller: &e" + this.getNameOfWhoListed(), "&7-------------------------").get();
     }
@@ -128,6 +129,10 @@ AuctionItem {
 
     public boolean isValid() {
         return this.valid;
+    }
+
+    public void setValid(boolean valid) {
+        this.valid = valid;
     }
 
     public UUID getId() {
@@ -174,12 +179,12 @@ AuctionItem {
         return this.price;
     }
 
-    public String getPrettyPrice() {
-        return this.formatter.format(this.price);
-    }
-
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public String getPrettyPrice() {
+        return this.formatter.format(this.price);
     }
 
     @Override
@@ -190,10 +195,6 @@ AuctionItem {
     @Override
     public ItemStack getDisplay() {
         return this.getMenuDisplayItem();
-    }
-
-    public void setValid(boolean valid) {
-        this.valid = valid;
     }
 
     public ChatColor getBookTierColor() {
