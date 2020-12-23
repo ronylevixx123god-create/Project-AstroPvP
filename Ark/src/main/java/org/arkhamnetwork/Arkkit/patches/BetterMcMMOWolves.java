@@ -49,7 +49,7 @@ final class BetterMcMMOWolves
         FPlayer fpOwner;
         Tameable tameable;
         Player owner;
-        if (e.getEntity().hasMetadata("mcMMOWolf") && e.getTarget() instanceof Player && (owner = (Player) (tameable = (Tameable) e.getEntity()).getOwner()) != null && (fpOwner = FPlayers.i.get(owner)).getRelationTo(fTarget = FPlayers.i.get(e.getTarget())).isAtLeast(Relation.TRUCE)) {
+        if (e.getEntity().hasMetadata("mcMMOWolf") && e.getTarget() instanceof Player && (owner = (Player) (tameable = (Tameable) e.getEntity()).getOwner()) != null && (fpOwner = FPlayers.i.get(owner)).getRelationTo(fTarget = FPlayers.i.get((OfflinePlayer) e.getTarget())).isAtLeast(Relation.TRUCE)) {
             e.setCancelled(true);
         }
     }

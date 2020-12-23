@@ -123,7 +123,7 @@ public class NewTradeListener
                 Bukkit.getLogger().info("[(Arkkit) NewTrade] " + p1.getName() + " adding item: " + i + " to trade: " + e.getClickedInventory().getTitle());
             }
             e.getInventory().setItem(0, NewTrade.gray_button);
-            Player p2 = Bukkit.getPlayer(p1.getMetadata("compilexTradePartnerUUID").get(0).value());
+            Player p2 = Bukkit.getPlayer((String) p1.getMetadata("compilexTradePartnerUUID").get(0).value());
             p2.getOpenInventory().getTopInventory().setItem(0, NewTrade.gray_button);
         }
     }
@@ -146,7 +146,7 @@ public class NewTradeListener
                 return;
             }
             Player p1 = (Player) e.getWhoClicked();
-            Player p2 = Bukkit.getPlayer(p1.getMetadata("compilexTradePartnerUUID").get(0).value());
+            Player p2 = Bukkit.getPlayer((String) p1.getMetadata("compilexTradePartnerUUID").get(0).value());
             Inventory inv1 = p1.getOpenInventory().getTopInventory();
             Inventory inv2 = p2.getOpenInventory().getTopInventory();
             for (int slot : NewTrade.getValidSlots()) {

@@ -142,7 +142,7 @@ public class CombatLogLogoutListener
                 Player p = e.getPlayer();
                 Bukkit.getLogger().info("[Arkkit (CombatLog)] Attempting to spawn combatNPC for player " + p.getName() + " at " + p.getLocation().getBlockX() + "," + p.getLocation().getBlockY() + "," + p.getLocation().getBlockZ() + " with HP: " + p.getHealth());
                 Location npcLocation = p.getLocation();
-                if (e.getPlayer().getWorld().getEnvironment() == World.Environment.THE_END && e.getPlayer().getLocation().getY() < 35.0 && p.hasMetadata("lastPlayerDamagerUUID") && (pKiller = Bukkit.getPlayer(p.getMetadata("lastPlayerDamagerUUID").get(0).value())) != null && pKiller.isOnline()) {
+                if (e.getPlayer().getWorld().getEnvironment() == World.Environment.THE_END && e.getPlayer().getLocation().getY() < 35.0 && p.hasMetadata("lastPlayerDamagerUUID") && (pKiller = Bukkit.getPlayer((String) p.getMetadata("lastPlayerDamagerUUID").get(0).value())) != null && pKiller.isOnline()) {
                     npcLocation = pKiller.getLocation().add(0.0, 1.0, 0.0);
                 }
                 n.spawn(npcLocation);

@@ -602,7 +602,6 @@ org\arkhamnetwork\Arkkit\patches\NoNaturalMobs.class
 org\arkhamnetwork\Arkkit\patches\SpawnPodListener$1.class
 org\arkhamnetwork\Arkkit\patches\ThanksgivingCommand.class
 org\arkhamnetwork\Arkkit\patches\AntiGlitchSwordListener.class
-org\arkhamnetwork\Arkkit\Arkkit$3.class
 org\arkhamnetwork\Arkkit\patches\CommandCWarzone.class
 org\arkhamnetwork\Arkkit\patches\CommandClientReward.class
 org\arkhamnetwork\Arkkit\patches\AntiBlockGlitchListener.class

@@ -140,7 +140,7 @@ final class EndTeleportListener
                 e.setCancelled(true);
                 e.setDamage(0.0);
                 if (p.hasMetadata("lastPlayerDamagerUUID")) {
-                    Player pKiller = Bukkit.getPlayer(p.getMetadata("lastPlayerDamagerUUID").get(0).value());
+                    Player pKiller = Bukkit.getPlayer((String) p.getMetadata("lastPlayerDamagerUUID").get(0).value());
                     if (pKiller != null && pKiller.isOnline()) {
                         try {
                             for (ItemStack i : p.getInventory()) {
