@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.entity.Player
  *  org.bukkit.event.EventHandler
@@ -23,13 +23,13 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class MenuListener
-implements Listener {
+        implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         if (event.getInventory().getName().equals("Shop Categories") || event.getInventory().getName().startsWith("Shop Items") || event.getInventory().getName().startsWith("Confirm Inventory Purchase")) {
             event.setCancelled(true);
         }
-        Player player = (Player)event.getWhoClicked();
+        Player player = (Player) event.getWhoClicked();
         GUIMenu menu = GUIMenu.getMenus().get(player.getUniqueId());
         if (menu != null) {
             event.setCancelled(true);

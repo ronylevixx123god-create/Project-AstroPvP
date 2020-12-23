@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.earth2me.essentials.Essentials
  *  org.bukkit.inventory.ItemStack
@@ -10,7 +10,6 @@ package me.ifamasssxd.cosmicguishop.utils;
 
 import com.earth2me.essentials.Essentials;
 import me.ifamasssxd.cosmicguishop.struct.ShopMaterialData;
-import me.ifamasssxd.cosmicguishop.utils.ItemNames;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -21,12 +20,11 @@ public class ItemUtils {
 
     public static boolean hasEssentialsPrice(ItemStack item) {
         try {
-            Essentials ess = (Essentials)JavaPlugin.getPlugin(Essentials.class);
+            Essentials ess = (Essentials) JavaPlugin.getPlugin(Essentials.class);
             if (ess != null && ess.getWorth().getPrice(ess, item) != null) {
                 return true;
             }
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             // empty catch block
         }
         return false;

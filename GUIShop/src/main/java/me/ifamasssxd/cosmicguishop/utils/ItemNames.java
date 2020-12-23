@@ -1,8 +1,6 @@
 package me.ifamasssxd.cosmicguishop.utils;
 
 
-import java.util.Map;
-
 import com.google.common.collect.ImmutableMap;
 import me.ifamasssxd.cosmicguishop.struct.ShopMaterialData;
 import org.apache.commons.lang.WordUtils;

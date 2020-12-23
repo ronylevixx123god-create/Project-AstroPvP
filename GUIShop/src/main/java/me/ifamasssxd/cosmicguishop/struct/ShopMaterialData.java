@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Material
  */
@@ -22,8 +22,14 @@ public class ShopMaterialData {
         this.sellCount = count;
     }
 
+    public ShopMaterialData(Material type, short data, int sellCount) {
+        this.type = type;
+        this.data = data;
+        this.sellCount = sellCount;
+    }
+
     public String toString() {
-        return (Object)this.type + (this.data != 0 ? "@" + this.data : "") + (this.sellCount > 1 ? "#" + this.sellCount : "");
+        return (Object) this.type + (this.data != 0 ? "@" + this.data : "") + (this.sellCount > 1 ? "#" + this.sellCount : "");
     }
 
     public boolean equals(Object o) {
@@ -33,13 +39,13 @@ public class ShopMaterialData {
         if (!(o instanceof ShopMaterialData)) {
             return false;
         }
-        ShopMaterialData other = (ShopMaterialData)o;
+        ShopMaterialData other = (ShopMaterialData) o;
         if (!other.canEqual(this)) {
             return false;
         }
         Material this$type = this.getType();
         Material other$type = other.getType();
-        if (this$type == null ? other$type != null : !this$type.equals((Object)other$type)) {
+        if (this$type == null ? other$type != null : !this$type.equals((Object) other$type)) {
             return false;
         }
         if (this.getData() != other.getData()) {
@@ -60,12 +66,6 @@ public class ShopMaterialData {
         result = result * 59 + this.getData();
         result = result * 59 + this.getSellCount();
         return result;
-    }
-
-    public ShopMaterialData(Material type, short data, int sellCount) {
-        this.type = type;
-        this.data = data;
-        this.sellCount = sellCount;
     }
 
     public Material getType() {

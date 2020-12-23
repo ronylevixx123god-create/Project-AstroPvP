@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.apache.commons.lang.StringUtils
  *  org.bukkit.ChatColor
@@ -12,9 +12,6 @@
  */
 package me.ifamasssxd.cosmicguishop.utils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -23,18 +20,22 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class ItemBuilder {
-    public static ItemStack buildItem(Material m, short data, String name, String ... lore) {
+    public static ItemStack buildItem(Material m, short data, String name, String... lore) {
         return ItemBuilder.buildItem(m, 1, data, name, lore);
     }
 
-    public static ItemStack createSkull(String owner, String name, String ... lore) {
+    public static ItemStack createSkull(String owner, String name, String... lore) {
         ItemStack is = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
-        SkullMeta sm = (SkullMeta)is.getItemMeta();
+        SkullMeta sm = (SkullMeta) is.getItemMeta();
         sm.setOwner(owner);
         sm.setDisplayName(name);
         sm.setLore(new ArrayList<String>(Arrays.asList(lore)));
-        is.setItemMeta((ItemMeta)sm);
+        is.setItemMeta((ItemMeta) sm);
         return is;
     }
 
@@ -42,7 +43,7 @@ public class ItemBuilder {
         return ItemBuilder.buildItem(m, 1, data, name, lore.toArray(new String[lore.size()]));
     }
 
-    public static ItemStack buildItem(Material m, int amount, short data, String name, String ... lore) {
+    public static ItemStack buildItem(Material m, int amount, short data, String name, String... lore) {
         ItemStack is = new ItemStack(m, amount, data);
         ItemMeta im = is.getItemMeta();
         if (name != null) {
@@ -79,18 +80,18 @@ public class ItemBuilder {
 
     private static List<String> getLore(String s) {
         ArrayList<String> lore = new ArrayList<String>();
-        String color = ChatColor.translateAlternateColorCodes((char)'\u00a7', (String)s.trim().substring(0, 2));
-        for (String st : StringUtils.split((String)s, (String)"//")) {
+        String color = ChatColor.translateAlternateColorCodes((char) '\u00a7', (String) s.trim().substring(0, 2));
+        for (String st : StringUtils.split((String) s, (String) "//")) {
             lore.add(color + st);
         }
         return lore;
     }
 
-    public static ItemStack buildItem(Material m, String name, String ... lore) {
-        return ItemBuilder.buildItem(m, (short)0, name, lore);
+    public static ItemStack buildItem(Material m, String name, String... lore) {
+        return ItemBuilder.buildItem(m, (short) 0, name, lore);
     }
 
-    public static ItemStack buildArmor(Material material, Enchantment ... enchants) {
+    public static ItemStack buildArmor(Material material, Enchantment... enchants) {
         ItemStack is = new ItemStack(material, 1);
         for (Enchantment enchant : enchants) {
             is.addUnsafeEnchantment(enchant, enchant.getMaxLevel());

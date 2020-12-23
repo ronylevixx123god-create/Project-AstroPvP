@@ -1,19 +1,19 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.inventory.ItemStack
  *  org.bukkit.inventory.meta.ItemMeta
  */
 package me.ifamasssxd.cosmicguishop.menus;
 
-import java.util.List;
-import me.ifamasssxd.cosmicguishop.menus.GUIItemCallback;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.List;
+
 public class ClickableItemStack
-extends ItemStack {
+        extends ItemStack {
     private GUIItemCallback itemCallback;
 
     public ClickableItemStack(ItemStack clone) {
