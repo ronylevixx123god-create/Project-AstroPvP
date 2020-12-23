@@ -1,17 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.drtshock.playervaults.vaultmanagement.VaultOperations
- *  com.google.common.collect.Lists
- *  org.apache.commons.lang.StringUtils
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.command.Command
- *  org.bukkit.command.CommandSender
- *  org.bukkit.entity.Player
- *  org.bukkit.plugin.Plugin
- */
 package org.arkhamnetwork.Arkkit;
 
 import com.drtshock.playervaults.vaultmanagement.VaultOperations;
@@ -59,15 +45,15 @@ extends AbstractCommand {
             }
             String done = newNameBuilder.toString().trim();
             if (done.length() >= 32) {
-                player.sendMessage((Object)ChatColor.RED + "Vault names cannot be longer than 32 characters.");
+                player.sendMessage(ChatColor.RED + "Vault names cannot be longer than 32 characters.");
                 return true;
             }
             pv.setCustomName(done);
-            player.sendMessage((Object)ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.GREEN + "Vault #" + vaultId + " renamed to " + done);
-            Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Arkkit.get(), () -> player.chat("/pv"));
+            player.sendMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.GREEN + "Vault #" + vaultId + " renamed to " + done);
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Arkkit.get(), () -> player.chat("/pv"));
             return true;
         }
-        sender.sendMessage((Object)ChatColor.RED + "Invalid Usage: /namevault <vaultNumber> <name>");
+        sender.sendMessage(ChatColor.RED + "Invalid Usage: /namevault <vaultNumber> <name>");
         return false;
     }
 }

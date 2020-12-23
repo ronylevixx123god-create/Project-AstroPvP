@@ -1,18 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.google.common.collect.Lists
- *  org.bukkit.Bukkit
- *  org.bukkit.entity.Player
- *  org.bukkit.event.EventHandler
- *  org.bukkit.event.EventPriority
- *  org.bukkit.event.Listener
- *  org.bukkit.event.player.PlayerCommandPreprocessEvent
- *  org.bukkit.event.player.PlayerJoinEvent
- *  org.bukkit.event.player.PlayerQuitEvent
- */
 package org.arkhamnetwork.Arkkit;
 
 import com.cosmicpvp.cosmicutils.utils.CC;

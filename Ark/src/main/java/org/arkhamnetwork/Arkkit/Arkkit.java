@@ -46,9 +46,8 @@ extends JavaPlugin {
         this.loaded_patches = new HashMap();
         this.asyncPlayerMap = new ConcurrentHashMap();
         this.playerLocations = new ConcurrentHashMap();
-        this.deleteOldVersions();
         if (!new File("plugins/Arkkit/config.yml").exists()) {
-            Bukkit.getConsoleSender().sendMessage((Object)ChatColor.YELLOW + "Copying default config.yml ...");
+            Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "Copying default config.yml ...");
             this.saveDefaultConfig();
             this.getConfig().options().copyDefaults(true);
             this.saveConfig();
@@ -128,7 +127,7 @@ extends JavaPlugin {
 
     public boolean unregisterPatch(String config_path) {
         ArkPlugin ap;
-        ArkPlugin arkPlugin = ap = this.loaded_patches.containsKey(config_path) ? this.loaded_patches.get(config_path) : null;
+        ArkPlugin arkPlugin = ap = this.loaded_patches.getOrDefault(config_path, null);
         if (ap == null) {
             return false;
         }
@@ -140,7 +139,7 @@ extends JavaPlugin {
     public void registerPatches() {
         for (ArkPlugins aps : ArkPlugins.values()) {
             if (!this.getConfig().contains("patches." + aps.getConfigName())) {
-                this.getConfig().set("patches." + aps.getConfigName(), (Object)false);
+                this.getConfig().set("patches." + aps.getConfigName(), false);
                 continue;
             }
             if (!this.getConfig().getBoolean("patches." + aps.getConfigName())) continue;
@@ -173,7 +172,7 @@ extends JavaPlugin {
                     Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("NoDupeExploit"));
                 }
                 new File("plugins/NoDupeExploit.jar").delete();
-                this.getConfig().set("patches." + ArkPlugins.NO_DUPE_EXPLOIT.getConfigName(), (Object)true);
+                this.getConfig().set("patches." + ArkPlugins.NO_DUPE_EXPLOIT.getConfigName(), true);
                 this.registerPatch(ArkPlugins.NO_DUPE_EXPLOIT.getArkPlugin());
             }
             catch (Exception err) {
@@ -182,7 +181,7 @@ extends JavaPlugin {
         }
         if (new File("plugins/Essentials.jar").exists()) {
             try {
-                this.getConfig().set("patches." + ArkPlugins.CLEAR_INVENTORY_CONFIRM.getConfigName(), (Object)true);
+                this.getConfig().set("patches." + ArkPlugins.CLEAR_INVENTORY_CONFIRM.getConfigName(), true);
                 this.registerPatch(ArkPlugins.CLEAR_INVENTORY_CONFIRM.getArkPlugin());
             }
             catch (Exception err) {
@@ -195,14 +194,14 @@ extends JavaPlugin {
                     Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("ArkhamUtils"));
                 }
                 new File("plugins/ArkhamUtils.jar").delete();
-                FileUtils.deleteDirectory((File)new File("plugins/ArkhamUtils"));
-                this.getConfig().set("patches." + ArkPlugins.NO_VEHICLE_TELEPORT.getConfigName(), (Object)true);
+                FileUtils.deleteDirectory(new File("plugins/ArkhamUtils"));
+                this.getConfig().set("patches." + ArkPlugins.NO_VEHICLE_TELEPORT.getConfigName(), true);
                 this.registerPatch(ArkPlugins.NO_VEHICLE_TELEPORT.getArkPlugin());
                 Bukkit.getScheduler().runTaskLater(Arkkit.get(), new Runnable(){
 
                     @Override
                     public void run() {
-                        Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)"arkreload auto_entity_clear");
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "arkreload auto_entity_clear");
                     }
                 }, 20L);
             }
@@ -216,21 +215,17 @@ extends JavaPlugin {
                     Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("EssentialsKitViewer"));
                 }
                 new File("plugins/EssentialsKitViewer.jar").delete();
-                FileUtils.copyFile((File)new File("plugins/EssentialsKitViewer/config.dat"), (File)new File("plugins/Arkkit/kitViewer.dat"));
-                FileUtils.deleteDirectory((File)new File("plugins/EssentialsKitViewer"));
-                this.getConfig().set("patches." + ArkPlugins.ESSENTIALS_KIT_VIEWER.getConfigName(), (Object)true);
+                FileUtils.copyFile(new File("plugins/EssentialsKitViewer/config.dat"), new File("plugins/Arkkit/kitViewer.dat"));
+                FileUtils.deleteDirectory(new File("plugins/EssentialsKitViewer"));
+                this.getConfig().set("patches." + ArkPlugins.ESSENTIALS_KIT_VIEWER.getConfigName(), true);
                 this.registerPatch(ArkPlugins.ESSENTIALS_KIT_VIEWER.getArkPlugin());
             }
             catch (Exception err) {
                 err.printStackTrace();
             }
-            Bukkit.getScheduler().runTaskLater(this, new Runnable(){
-
-                @Override
-                public void run() {
-                    Bukkit.getConsoleSender().sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "SERVER IS REBOOTING TO CLEAR CACHED COMMANDS!");
-                    Bukkit.shutdown();
-                }
+            Bukkit.getScheduler().runTaskLater(this, () -> {
+                Bukkit.getConsoleSender().sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "SERVER IS REBOOTING TO CLEAR CACHED COMMANDS!");
+                Bukkit.shutdown();
             }, 21L);
         }
         if (new File("plugins/redeemMCMMO.jar").exists()) {
@@ -239,9 +234,9 @@ extends JavaPlugin {
                     Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("RedeemMCMMO"));
                 }
                 new File("plugins/redeemMCMMO.jar").delete();
-                FileUtils.copyFile((File)new File("plugins/RedeemMCMMO/config.yml"), (File)new File("plugins/Arkkit/redeemMCMMO.yml"));
-                FileUtils.deleteDirectory((File)new File("plugins/RedeemMCMMO"));
-                this.getConfig().set("patches." + ArkPlugins.REDEEM_MCMMO.getConfigName(), (Object)true);
+                FileUtils.copyFile(new File("plugins/RedeemMCMMO/config.yml"), new File("plugins/Arkkit/redeemMCMMO.yml"));
+                FileUtils.deleteDirectory(new File("plugins/RedeemMCMMO"));
+                this.getConfig().set("patches." + ArkPlugins.REDEEM_MCMMO.getConfigName(), true);
                 this.registerPatch(ArkPlugins.REDEEM_MCMMO.getArkPlugin());
             }
             catch (Exception err) {
@@ -254,7 +249,7 @@ extends JavaPlugin {
                     Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("TempEnchantments"));
                 }
                 new File("plugins/TempEnchantments.jar").delete();
-                this.getConfig().set("patches." + ArkPlugins.XP_SANITY.getConfigName(), (Object)true);
+                this.getConfig().set("patches." + ArkPlugins.XP_SANITY.getConfigName(), true);
                 this.registerPatch(ArkPlugins.XP_SANITY.getArkPlugin());
             }
             catch (Exception err) {
@@ -267,8 +262,8 @@ extends JavaPlugin {
                     Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("DynamicMaxPlayers"));
                 }
                 new File("plugins/DynamicMaxPlayers.jar").delete();
-                FileUtils.deleteDirectory((File)new File("plugins/DynamicMaxPlayers"));
-                this.getConfig().set("patches." + ArkPlugins.DYNAMIC_MAX_PLAYERS.getConfigName(), (Object)true);
+                FileUtils.deleteDirectory(new File("plugins/DynamicMaxPlayers"));
+                this.getConfig().set("patches." + ArkPlugins.DYNAMIC_MAX_PLAYERS.getConfigName(), true);
                 this.registerPatch(ArkPlugins.DYNAMIC_MAX_PLAYERS.getArkPlugin());
             }
             catch (Exception err) {
@@ -281,8 +276,8 @@ extends JavaPlugin {
                     Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("HotbarArmorSwap"));
                 }
                 new File("plugins/HotbarArmorSwap.jar").delete();
-                FileUtils.deleteDirectory((File)new File("plugins/HotbarArmorSwap"));
-                this.getConfig().set("patches." + ArkPlugins.HOTBAR_ARMOR_SWAP.getConfigName(), (Object)true);
+                FileUtils.deleteDirectory(new File("plugins/HotbarArmorSwap"));
+                this.getConfig().set("patches." + ArkPlugins.HOTBAR_ARMOR_SWAP.getConfigName(), true);
                 this.registerPatch(ArkPlugins.HOTBAR_ARMOR_SWAP.getArkPlugin());
             }
             catch (Exception err) {
@@ -295,8 +290,8 @@ extends JavaPlugin {
                     Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("AntiLootSteal"));
                 }
                 new File("plugins/AntiLootSteal.jar").delete();
-                FileUtils.deleteDirectory((File)new File("plugins/AntiLootSteal"));
-                this.getConfig().set("patches." + ArkPlugins.ANTI_LOOT_STEAL.getConfigName(), (Object)true);
+                FileUtils.deleteDirectory(new File("plugins/AntiLootSteal"));
+                this.getConfig().set("patches." + ArkPlugins.ANTI_LOOT_STEAL.getConfigName(), true);
                 this.registerPatch(ArkPlugins.ANTI_LOOT_STEAL.getArkPlugin());
             }
             catch (Exception err) {
@@ -309,7 +304,7 @@ extends JavaPlugin {
                     Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("PotionFix"));
                 }
                 new File("plugins/PotionFix.jar").delete();
-                this.getConfig().set("patches." + ArkPlugins.POTION_FIX.getConfigName(), (Object)true);
+                this.getConfig().set("patches." + ArkPlugins.POTION_FIX.getConfigName(), true);
                 this.registerPatch(ArkPlugins.POTION_FIX.getArkPlugin());
             }
             catch (Exception err) {
@@ -322,7 +317,7 @@ extends JavaPlugin {
                     Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("NetherGlitchFixPlugin"));
                 }
                 new File("plugins/NetherGlitchFix.jar").delete();
-                this.getConfig().set("patches." + ArkPlugins.NETHER_GLITCH_FIX.getConfigName(), (Object)true);
+                this.getConfig().set("patches." + ArkPlugins.NETHER_GLITCH_FIX.getConfigName(), true);
                 this.registerPatch(ArkPlugins.NETHER_GLITCH_FIX.getArkPlugin());
             }
             catch (Exception err) {
@@ -335,7 +330,7 @@ extends JavaPlugin {
                     Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("AsyncMonsters"));
                 }
                 new File("plugins/AsyncMonsters.jar").delete();
-                this.getConfig().set("patches." + ArkPlugins.ASYNC_MONSTERS.getConfigName(), (Object)true);
+                this.getConfig().set("patches." + ArkPlugins.ASYNC_MONSTERS.getConfigName(), true);
                 this.registerPatch(ArkPlugins.ASYNC_MONSTERS.getArkPlugin());
                 Bukkit.getScheduler().runTaskLater(this, new Runnable(){
 
@@ -356,7 +351,7 @@ extends JavaPlugin {
                     Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("AntiGodAppleCraftPlugin"));
                 }
                 new File("plugins/AntiGodAppleCraft.jar").delete();
-                this.getConfig().set("patches." + ArkPlugins.ANTI_GOD_APPLE_CRAFT.getConfigName(), (Object)true);
+                this.getConfig().set("patches." + ArkPlugins.ANTI_GOD_APPLE_CRAFT.getConfigName(), true);
                 this.registerPatch(ArkPlugins.ANTI_GOD_APPLE_CRAFT.getArkPlugin());
             }
             catch (Exception err) {
@@ -369,7 +364,7 @@ extends JavaPlugin {
                     Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("ArkhamShops"));
                 }
                 new File("plugins/ArkhamShops.jar").delete();
-                this.getConfig().set("patches." + ArkPlugins.SHOP_COMMAND.getConfigName(), (Object)true);
+                this.getConfig().set("patches." + ArkPlugins.SHOP_COMMAND.getConfigName(), true);
                 this.registerPatch(ArkPlugins.SHOP_COMMAND.getArkPlugin());
             }
             catch (Exception err) {
@@ -382,7 +377,7 @@ extends JavaPlugin {
                     Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("AntiClip"));
                 }
                 new File("plugins/AntiClip.jar").delete();
-                this.getConfig().set("patches." + ArkPlugins.ANTI_HACK.getConfigName(), (Object)true);
+                this.getConfig().set("patches." + ArkPlugins.ANTI_HACK.getConfigName(), true);
                 this.registerPatch(ArkPlugins.ANTI_HACK.getArkPlugin());
             }
             catch (Exception err) {
@@ -395,8 +390,8 @@ extends JavaPlugin {
                     Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("ArkhamCooldowns"));
                 }
                 new File("plugins/ArkhamCooldowns.jar").delete();
-                FileUtil.copy((File)new File("plugins/ArkhamCooldowns/config.dat"), (File)new File("plugins/Arkkit/command-cooldowns.yml"));
-                this.getConfig().set("patches." + ArkPlugins.COMMAND_COOLDOWNS.getConfigName(), (Object)true);
+                FileUtil.copy(new File("plugins/ArkhamCooldowns/config.dat"), new File("plugins/Arkkit/command-cooldowns.yml"));
+                this.getConfig().set("patches." + ArkPlugins.COMMAND_COOLDOWNS.getConfigName(), true);
                 this.registerPatch(ArkPlugins.COMMAND_COOLDOWNS.getArkPlugin());
             }
             catch (Exception err) {
@@ -409,7 +404,7 @@ extends JavaPlugin {
                     Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("ArkhamTrade"));
                 }
                 new File("plugins/ArkhamTrade.jar").delete();
-                this.getConfig().set("patches." + ArkPlugins.TRADING.getConfigName(), (Object)true);
+                this.getConfig().set("patches." + ArkPlugins.TRADING.getConfigName(), true);
                 this.registerPatch(ArkPlugins.TRADING.getArkPlugin());
             }
             catch (Exception err) {
@@ -422,7 +417,7 @@ extends JavaPlugin {
                     Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("VotingSystems"));
                 }
                 new File("plugins/VotingSystems.jar").delete();
-                this.getConfig().set("patches." + ArkPlugins.VOTING.getConfigName(), (Object)true);
+                this.getConfig().set("patches." + ArkPlugins.VOTING.getConfigName(), true);
                 this.registerPatch(ArkPlugins.VOTING.getArkPlugin());
             }
             catch (Exception err) {
@@ -435,7 +430,7 @@ extends JavaPlugin {
                     Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("ArkhamChatBubbles"));
                 }
                 new File("plugins/ArkhamChatBubbles.jar").delete();
-                this.getConfig().set("patches." + ArkPlugins.CHAT_BUBBLES.getConfigName(), (Object)true);
+                this.getConfig().set("patches." + ArkPlugins.CHAT_BUBBLES.getConfigName(), true);
                 this.registerPatch(ArkPlugins.CHAT_BUBBLES.getArkPlugin());
             }
             catch (Exception err) {
@@ -444,7 +439,7 @@ extends JavaPlugin {
         }
         if (new File("plugins/ArkhamTitleAPI.jar").exists()) {
             try {
-                this.getConfig().set("patches." + ArkPlugins.CREATE_TITLE.getConfigName(), (Object)true);
+                this.getConfig().set("patches." + ArkPlugins.CREATE_TITLE.getConfigName(), true);
                 this.registerPatch(ArkPlugins.CREATE_TITLE.getArkPlugin());
             }
             catch (Exception err) {
@@ -456,7 +451,7 @@ extends JavaPlugin {
                 if (Bukkit.getPluginManager().isPluginEnabled("SimpleChat")) {
                     Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("SimpleChat"));
                 }
-                this.getConfig().set("patches." + ArkPlugins.CHAT_FILTER.getConfigName(), (Object)true);
+                this.getConfig().set("patches." + ArkPlugins.CHAT_FILTER.getConfigName(), true);
                 this.registerPatch(ArkPlugins.CHAT_FILTER.getArkPlugin());
             }
             catch (Exception err) {
@@ -470,7 +465,7 @@ extends JavaPlugin {
                     this.getConfig().set("settings.no_new_chunks.worlds", Bukkit.getPluginManager().getPlugin("NoNewChunk").getConfig().get("Worlds"));
                     Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("NoNewChunks"));
                 }
-                this.getConfig().set("patches." + ArkPlugins.NO_NEW_CHUNKS.getConfigName(), (Object)true);
+                this.getConfig().set("patches." + ArkPlugins.NO_NEW_CHUNKS.getConfigName(), true);
                 this.registerPatch(ArkPlugins.NO_NEW_CHUNKS.getArkPlugin());
             }
             catch (Exception err) {
@@ -486,7 +481,7 @@ extends JavaPlugin {
                 if (Bukkit.getPluginManager().isPluginEnabled("AntiPluginCommand")) {
                     Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("AntiPluginCommand"));
                 }
-                this.getConfig().set("patches." + ArkPlugins.PLUGIN_HIDER.getConfigName(), (Object)true);
+                this.getConfig().set("patches." + ArkPlugins.PLUGIN_HIDER.getConfigName(), true);
                 this.registerPatch(ArkPlugins.PLUGIN_HIDER.getArkPlugin());
             }
             catch (Exception err) {
@@ -500,7 +495,7 @@ extends JavaPlugin {
                 Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("ArkhamChatLimiter"));
             }
             new File("plugins/ArkhamChatLimiter.jar").delete();
-            this.getConfig().set("patches." + ArkPlugins.CHAT_LIMITER.getConfigName(), (Object)true);
+            this.getConfig().set("patches." + ArkPlugins.CHAT_LIMITER.getConfigName(), true);
             this.registerPatch(ArkPlugins.CHAT_LIMITER.getArkPlugin());
         }
         if (new File("plugins/GiveAll.jar").exists()) {
@@ -508,7 +503,7 @@ extends JavaPlugin {
                 Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("GiveAll"));
             }
             new File("plugins/GiveAll.jar").delete();
-            this.getConfig().set("patches." + ArkPlugins.GIVE_ALL.getConfigName(), (Object)true);
+            this.getConfig().set("patches." + ArkPlugins.GIVE_ALL.getConfigName(), true);
             this.registerPatch(ArkPlugins.GIVE_ALL.getArkPlugin());
         }
         if (new File("plugins/EssentialsWarpUI.jar").exists()) {
@@ -516,7 +511,7 @@ extends JavaPlugin {
                 Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("EssentialsWarpUI"));
             }
             new File("plugins/EssentialsWarpUI.jar").delete();
-            this.getConfig().set("patches." + ArkPlugins.ESSENTIALS_WARP_UI.getConfigName(), (Object)true);
+            this.getConfig().set("patches." + ArkPlugins.ESSENTIALS_WARP_UI.getConfigName(), true);
             this.registerPatch(ArkPlugins.ESSENTIALS_WARP_UI.getArkPlugin());
         }
         if (new File("plugins/ArkhamWarpAliases.jar").exists()) {
@@ -524,7 +519,7 @@ extends JavaPlugin {
                 Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("ArkhamWarpAliases"));
             }
             new File("plugins/ArkhamWarpAliases.jar").delete();
-            this.getConfig().set("patches." + ArkPlugins.ESSENTIALS_WARP_ALIASES.getConfigName(), (Object)true);
+            this.getConfig().set("patches." + ArkPlugins.ESSENTIALS_WARP_ALIASES.getConfigName(), true);
             this.registerPatch(ArkPlugins.ESSENTIALS_WARP_ALIASES.getArkPlugin());
         }
         if (new File("plugins/AntiCrash.jar").exists()) {
@@ -532,7 +527,7 @@ extends JavaPlugin {
                 Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("AntiCrash"));
             }
             new File("plugins/AntiCrash.jar").delete();
-            this.getConfig().set("patches." + ArkPlugins.ANTI_CRASH.getConfigName(), (Object)true);
+            this.getConfig().set("patches." + ArkPlugins.ANTI_CRASH.getConfigName(), true);
             this.registerPatch(ArkPlugins.ANTI_CRASH.getArkPlugin());
         }
         if (new File("plugins/FactionAntiDupe-EXTRONUS.jar").exists()) {
@@ -541,7 +536,7 @@ extends JavaPlugin {
         if (new File("plugins/ChunkGC.jar").exists() || new File("plugins/ChunkGCTask.jar").exists() || new File("plugins/ExtronusChunkGC.jar").exists()) {
             if (new File("gc_force_save").exists()) {
                 new File("gc_force_save").delete();
-                this.getConfig().set("patches." + ArkPlugins.BULK_SAVING.getConfigName(), (Object)true);
+                this.getConfig().set("patches." + ArkPlugins.BULK_SAVING.getConfigName(), true);
                 this.registerPatch(ArkPlugins.BULK_SAVING.getArkPlugin());
             }
             if (Bukkit.getPluginManager().isPluginEnabled("ChunkGC")) {
@@ -550,25 +545,16 @@ extends JavaPlugin {
             new File("plugins/ChunkGC.jar").delete();
             new File("plugins/ChunkGCTask.jar").delete();
             new File("plugins/ExtronusChunkGC.jar").delete();
-            this.getConfig().set("patches." + ArkPlugins.CHUNK_GC.getConfigName(), (Object)true);
+            this.getConfig().set("patches." + ArkPlugins.CHUNK_GC.getConfigName(), true);
             this.registerPatch(ArkPlugins.CHUNK_GC.getArkPlugin());
             if (!new File("no_adjust").exists()) {
-                this.getConfig().set("patches." + ArkPlugins.WORLD_TICK_OPTIMIZER.getConfigName(), (Object)true);
+                this.getConfig().set("patches." + ArkPlugins.WORLD_TICK_OPTIMIZER.getConfigName(), true);
                 this.registerPatch(ArkPlugins.WORLD_TICK_OPTIMIZER.getArkPlugin());
-                this.getConfig().set("patches." + ArkPlugins.NO_NATURAL_MOBS.getConfigName(), (Object)true);
+                this.getConfig().set("patches." + ArkPlugins.NO_NATURAL_MOBS.getConfigName(), true);
                 this.registerPatch(ArkPlugins.NO_NATURAL_MOBS.getArkPlugin());
             }
         }
         this.saveConfig();
-    }
-
-    private void deleteOldVersions() {
-        if (new File("plugins/ArkhamNetworkAI.jar").exists()) {
-            if (Bukkit.getPluginManager().isPluginEnabled("ArkhamNetworkAI")) {
-                Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("ArkhamNetworkAI"));
-            }
-            new File("plugins/ArkhamNetworkAI.jar").delete();
-        }
     }
 
     public ConcurrentHashMap<String, Player> getAsyncPlayerMap() {

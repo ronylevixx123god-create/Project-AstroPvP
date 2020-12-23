@@ -23,10 +23,6 @@ commands:
     description: Set configuration options.
     usage: /<command>
     aliases: [arkset, aconfig]
-  arkupdate:
-    description: Grab newest build of plugin.
-    usage: /<command>
-    aliases: [aupdate]
   arkreboot:
     description: Gracefully reboot the local server.
     usage: /<command>
