@@ -1,0 +1,9 @@
+version: 1.0
+name: CosmicGUIShop
+main: me.ifamasssxd.cosmicguishop.CosmicGUIShop
+softdepend: [Essentials]
+depend: [Vault, SilkSpawners]
+commands:
+  cosmicshop:
+    description: Shop command.
+    aliases: [shop, cshop, shops]

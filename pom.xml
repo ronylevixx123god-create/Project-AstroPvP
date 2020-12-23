@@ -15,6 +15,7 @@
         <module>Bosses</module>
         <module>SpaceChests</module>
         <module>AuctionHouse</module>
+        <module>GUIShop</module>
     </modules>
 
     <build>
