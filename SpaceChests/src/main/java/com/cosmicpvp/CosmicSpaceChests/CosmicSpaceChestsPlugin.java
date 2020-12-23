@@ -15,8 +15,6 @@
  */
 package com.cosmicpvp.CosmicSpaceChests;
 
-import com.cosmicpvp.CosmicSpaceChests.Logger;
-import com.cosmicpvp.CosmicSpaceChests.cmds.CommandEnvoy;
 import com.cosmicpvp.CosmicSpaceChests.cmds.CommandFDP;
 import com.cosmicpvp.CosmicSpaceChests.cmds.CommandFlare;
 import com.cosmicpvp.CosmicSpaceChests.cmds.CommandGiveDp;

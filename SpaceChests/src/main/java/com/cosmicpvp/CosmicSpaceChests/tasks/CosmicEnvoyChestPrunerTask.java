@@ -14,7 +14,6 @@ package com.cosmicpvp.CosmicSpaceChests.tasks;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsPlugin;
 import java.util.HashSet;
 import java.util.Map;
-import org.arkhamnetwork.ArkhamEvents;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -31,9 +30,6 @@ implements Runnable {
 
     @Override
     public void run() {
-        if (Bukkit.getPluginManager().isPluginEnabled("ArkhamEvents") && ArkhamEvents.season_event) {
-            return;
-        }
         HashSet<Location> chest_prunes = new HashSet<Location>();
         for (Map.Entry data : CosmicSpaceChestsPlugin.chest_locations.entrySet()) {
             Location l = (Location)data.getKey();
@@ -41,7 +37,7 @@ implements Runnable {
             if (System.currentTimeMillis() - drop_time < 300000L) continue;
             chest_prunes.add(l);
         }
-        final Location[] loc_array = chest_prunes.toArray((T[])new Location[chest_prunes.size()]);
+        final Location[] loc_array = chest_prunes.toArray(new Location[chest_prunes.size()]);
         if (loc_array.length > 0) {
             CosmicSpaceChestsPlugin.log.debug("Removing " + loc_array.length + " drop packages with >180s lifespan", this.getClass());
             this.plugin.getServer().getScheduler().runTask((Plugin)this.plugin, new Runnable(){

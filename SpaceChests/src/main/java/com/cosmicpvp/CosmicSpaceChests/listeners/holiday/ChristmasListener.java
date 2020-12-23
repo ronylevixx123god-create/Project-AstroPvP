@@ -54,8 +54,9 @@ import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsPlugin;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.cosmicpvp.CosmicSpaceChests.tasks.holiday.Christmas2018Task;
 import java.util.Random;
-import net.minecraft.server.v1_7_R4.Packet;
-import net.minecraft.server.v1_7_R4.PacketPlayOutWorldEvent;
+
+import net.minecraft.server.v1_8_R3.Packet;
+import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
 import org.arkhamnetwork.Arkkit.patches.Christmas;
 import org.arkhamnetwork.Arkkit.patches.Drinks;
 import org.arkhamnetwork.enchantments.util.ParticleEffect;
@@ -69,8 +70,8 @@ import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Chest;
-import org.bukkit.craftbukkit.v1_7_R4.CraftServer;
-import org.bukkit.craftbukkit.v1_7_R4.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Fireball;
@@ -178,7 +179,7 @@ implements Listener {
                 @Override
                 public void run() {
                     PacketPlayOutWorldEvent particles = new PacketPlayOutWorldEvent(2001, f_b.getX(), f_b.getY(), f_b.getZ(), block_id, false);
-                    ((CraftServer)ChristmasListener.this.plugin.getServer()).getServer().getPlayerList().sendPacketNearby((double)f_b.getX(), (double)f_b.getY(), (double)f_b.getZ(), 32.0, ((CraftWorld)f_b.getWorld()).getHandle().dimension, (Packet)particles);
+                    ((CraftServer)ChristmasListener.this.plugin.getServer()).getServer().getPlayerList().sendPacketNearby((double)f_b.getX(), (double)f_b.getY(), (double)f_b.getZ(), 32.0, ((CraftWorld)f_b.getWorld()).getHandle().dimension, particles);
                 }
             });
             if (data != -1 && (newData = blockBelow.getData()) != data) {

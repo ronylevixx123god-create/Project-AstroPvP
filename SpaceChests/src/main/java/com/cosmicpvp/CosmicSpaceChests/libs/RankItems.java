@@ -61,8 +61,8 @@ public class RankItems {
             if (!group.getPermissions().contains("enchantments.max.3")) continue;
             donorTiers.put(1, groupName);
         }
-        for (Map.Entry<Object, Object> entry : donorTiers.entrySet()) {
-            Bukkit.getLogger().info("[CosmicLootCrates] Set groupName " + (String)entry.getValue() + " as ID " + entry.getKey());
+        for (Map.Entry<Integer, String> entry : donorTiers.entrySet()) {
+            Bukkit.getLogger().info("[CosmicLootCrates] Set groupName " + entry.getValue() + " as ID " + entry.getKey());
         }
     }
 
