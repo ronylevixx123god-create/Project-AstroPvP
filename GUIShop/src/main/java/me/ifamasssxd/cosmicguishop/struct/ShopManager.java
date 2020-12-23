@@ -51,8 +51,8 @@ public class ShopManager {
     private SilkUtil silkSpawners;
 
     private static ItemStack getMobSpawner(EntityType entityType) {
-        Bukkit.getLogger().info("TYPE: " + (Object) entityType + " ID: " + entityType.getTypeId());
-        ItemStack item = ItemBuilder.buildItem(Material.MOB_SPAWNER, 1, entityType.getTypeId(), ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + StringUtils.capitaliseAllWords((String) entityType.name().replace("_", " ").toLowerCase()) + ChatColor.GOLD.toString() + " Spawner", (Object) ChatColor.GRAY + "Be careful where you place this!");
+        Bukkit.getLogger().info("TYPE: " +  entityType + " ID: " + entityType.getTypeId());
+        ItemStack item = ItemBuilder.buildItem(Material.MOB_SPAWNER, 1, entityType.getTypeId(), ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + StringUtils.capitaliseAllWords((String) entityType.name().replace("_", " ").toLowerCase()) + ChatColor.GOLD.toString() + " Spawner",  ChatColor.GRAY + "Be careful where you place this!");
         item.setDurability(entityType.getTypeId());
         return item;
     }
@@ -62,7 +62,7 @@ public class ShopManager {
             SilkSpawners spawners = (SilkSpawners) Bukkit.getPluginManager().getPlugin("SilkSpawners");
             Field field = spawners.getClass().getDeclaredField("su");
             field.setAccessible(true);
-            this.silkSpawners = (SilkUtil) field.get((Object) spawners);
+            this.silkSpawners = (SilkUtil) field.get( spawners);
             Bukkit.getLogger().info("Loaded SilkSpawner Utilities...");
         }
         this.shopItems.clear();
@@ -106,8 +106,8 @@ public class ShopManager {
                     Bukkit.getLogger().info("Converting " + itemString + " -> " + data.toString());
                     ShopManager manager = CosmicGUIShop.get().getShopManager();
                     catSection.set(itemString, null);
-                    manager.getPriceConfig().set("prices." + cat.name() + "." + data.toString() + ".buy", (Object) price);
-                    manager.getPriceConfig().set("prices." + cat.name() + "." + data.toString() + ".sell", (Object) sell);
+                    manager.getPriceConfig().set("prices." + cat.name() + "." + data.toString() + ".buy",  price);
+                    manager.getPriceConfig().set("prices." + cat.name() + "." + data.toString() + ".sell",  sell);
                     this.saveFile();
                 }
                 items.put(data, new ItemPrice(price, sell));
@@ -153,8 +153,8 @@ public class ShopManager {
 
     public void setPrice(ShopCategory category, ShopMaterialData data, ItemPrice price) {
         ShopManager manager = CosmicGUIShop.get().getShopManager();
-        manager.getPriceConfig().set("prices." + category.name() + "." + data.toString() + ".buy", (Object) price.getBuyPrice());
-        manager.getPriceConfig().set("prices." + category.name() + "." + data.toString() + ".sell", (Object) price.getSellPrice());
+        manager.getPriceConfig().set("prices." + category.name() + "." + data.toString() + ".buy",  price.getBuyPrice());
+        manager.getPriceConfig().set("prices." + category.name() + "." + data.toString() + ".sell",  price.getSellPrice());
     }
 
     public GUIMenu getShopMenu(final Player player) {
@@ -164,7 +164,7 @@ public class ShopManager {
             if (slot == 9) {
                 slot = 11;
             }
-            menu.setItem(slot++, new ClickableItemStack(ItemBuilder.buildItem(category.getDisplayData().getType(), category.getDisplayData().getData(), category.getDisplayName(), (List<String>) Lists.newArrayList(new String[]{(Object) ChatColor.GRAY + "Click to view this category."}))).setClickCallback(new GUIItemCallback() {
+            menu.setItem(slot++, new ClickableItemStack(ItemBuilder.buildItem(category.getDisplayData().getType(), category.getDisplayData().getData(), category.getDisplayName(), (List<String>) Lists.newArrayList(new String[]{ ChatColor.GRAY + "Click to view this category."}))).setClickCallback(new GUIItemCallback() {
 
                 @Override
                 public void onClick(InventoryClickEvent event) {
@@ -176,7 +176,7 @@ public class ShopManager {
     }
 
     public GUIMenu getCategoryMenu(final Player player, ShopCategory category) {
-        ShopItemMap items = this.shopItems.get((Object) category);
+        ShopItemMap items = this.shopItems.get( category);
         String name = "Shop Items (" + ChatColor.stripColor((String) category.getDisplayName()) + ")";
         if (name.length() > 32) {
             name = name.substring(0, 32);
@@ -194,41 +194,41 @@ public class ShopManager {
                 int potionBundleCount = isPotionBundle ? data.getData() - 100 : 0;
                 ArrayList lore = Lists.newArrayList();
                 if (isCollectionChest) {
-                    lore.addAll(Lists.newArrayList((Object[]) new String[]{(Object) ChatColor.GRAY + "Create a chest that will", (Object) ChatColor.GRAY + "automatically collect specified", (Object) ChatColor.GRAY + "mob drops when a creature dies", (Object) ChatColor.GRAY + "within the same chunk.", ""}));
+                    lore.addAll(Lists.newArrayList((Object[]) new String[]{ ChatColor.GRAY + "Create a chest that will",  ChatColor.GRAY + "automatically collect specified",  ChatColor.GRAY + "mob drops when a creature dies",  ChatColor.GRAY + "within the same chunk.", ""}));
                 } else {
                     lore.add("");
                 }
                 if (price.getBuyPrice() > 0.0) {
-                    lore.add((Object) ChatColor.GREEN + "Buy Price");
-                    lore.add((Object) ChatColor.GREEN + ChatColor.BOLD.toString() + " $" + (Object) ChatColor.GREEN + moneyFormat.format(price.getBuyPrice()) + (Object) ChatColor.GREEN + "/ea");
+                    lore.add( ChatColor.GREEN + "Buy Price");
+                    lore.add( ChatColor.GREEN + ChatColor.BOLD.toString() + " $" +  ChatColor.GREEN + moneyFormat.format(price.getBuyPrice()) +  ChatColor.GREEN + "/ea");
                 }
                 if (price.getSellPrice() > 0.0) {
                     if (lore.size() > 1) {
                         lore.add("");
                     }
-                    lore.add((Object) ChatColor.RED + "Sell Price");
-                    lore.add((Object) ChatColor.RED + ChatColor.BOLD.toString() + " $" + (Object) ChatColor.RED + moneyFormat.format(price.getSellPrice()) + (Object) ChatColor.RED + "/ea");
+                    lore.add( ChatColor.RED + "Sell Price");
+                    lore.add( ChatColor.RED + ChatColor.BOLD.toString() + " $" +  ChatColor.RED + moneyFormat.format(price.getSellPrice()) +  ChatColor.RED + "/ea");
                 }
                 lore.add("");
-                lore.add((Object) ChatColor.GRAY + ChatColor.STRIKETHROUGH.toString() + "-----------------------");
+                lore.add( ChatColor.GRAY + ChatColor.STRIKETHROUGH.toString() + "-----------------------");
                 if (price.getBuyPrice() > 0.0) {
-                    lore.add((Object) ChatColor.YELLOW + "Left-Click " + (Object) ChatColor.GRAY + "to buy " + (Object) ChatColor.YELLOW + "1x");
+                    lore.add( ChatColor.YELLOW + "Left-Click " +  ChatColor.GRAY + "to buy " +  ChatColor.YELLOW + "1x");
                     if (data.getType() != Material.MOB_SPAWNER) {
-                        lore.add((Object) ChatColor.YELLOW + "Shift Left-Click " + (Object) ChatColor.GRAY + "to buy " + (Object) ChatColor.YELLOW + data.getType().getMaxStackSize() + "x");
+                        lore.add( ChatColor.YELLOW + "Shift Left-Click " +  ChatColor.GRAY + "to buy " +  ChatColor.YELLOW + data.getType().getMaxStackSize() + "x");
                         if (emptySlots > 1) {
-                            lore.add((Object) ChatColor.YELLOW + "Middle-Click" + (Object) ChatColor.GRAY + " to buy inventory " + (Object) ChatColor.YELLOW + data.getType().getMaxStackSize() * emptySlots + "x");
+                            lore.add( ChatColor.YELLOW + "Middle-Click" +  ChatColor.GRAY + " to buy inventory " +  ChatColor.YELLOW + data.getType().getMaxStackSize() * emptySlots + "x");
                         }
                     }
                 }
                 if (price.getSellPrice() > 0.0) {
                     lore.add("");
-                    lore.add((Object) ChatColor.YELLOW + "Right-Click " + (Object) ChatColor.GRAY + "to sell " + (Object) ChatColor.YELLOW + "1x");
-                    lore.add((Object) ChatColor.YELLOW + "Shift Right-Click " + (Object) ChatColor.GRAY + "to sell " + (Object) ChatColor.YELLOW + data.getType().getMaxStackSize() + "x");
+                    lore.add(ChatColor.YELLOW + "Right-Click " +  ChatColor.GRAY + "to sell " +  ChatColor.YELLOW + "1x");
+                    lore.add( ChatColor.YELLOW + "Shift Right-Click " +  ChatColor.GRAY + "to sell " +  ChatColor.YELLOW + data.getType().getMaxStackSize() + "x");
                 }
                 short dura = data.getData();
-                String string = (Object) ChatColor.YELLOW + ChatColor.BOLD.toString() + (data.getSellCount() > 1 ? data.getSellCount() + "x " : "") + ItemUtils.getPrettyName(data);
+                String string =  ChatColor.YELLOW + ChatColor.BOLD.toString() + (data.getSellCount() > 1 ? data.getSellCount() + "x " : "") + ItemUtils.getPrettyName(data);
                 if (isCollectionChest) {
-                    string = (Object) ChatColor.YELLOW + ChatColor.BOLD.toString() + "Collection " + (data.getType() == Material.TRAPPED_CHEST ? "Trapped " : "") + "Chest";
+                    string =  ChatColor.YELLOW + ChatColor.BOLD.toString() + "Collection " + (data.getType() == Material.TRAPPED_CHEST ? "Trapped " : "") + "Chest";
                     dura = 0;
                 }
                 try {
@@ -262,26 +262,26 @@ public class ShopManager {
                                 ShopManager.this.removeItemsFromInventory(player, data, sellAmount);
                                 CosmicGUIShop.getEconomy().depositPlayer((OfflinePlayer) player, cashToGive);
                                 player.playSound(player.getLocation(), Sound.VILLAGER_YES, 3.0f, 0.93f);
-                                player.sendMessage((Object) ChatColor.GREEN + ChatColor.BOLD.toString() + "+ $" + moneyFormat.format(cashToGive));
-                                player.sendMessage((Object) ChatColor.GREEN + "Successfully sold " + (Object) ChatColor.GREEN + (Object) ChatColor.BOLD + sellAmount + "x " + (Object) ChatColor.GREEN + ItemUtils.getPrettyName(data) + " for " + (Object) ChatColor.GREEN + (Object) ChatColor.BOLD + "$" + (Object) ChatColor.GREEN + moneyFormat.format(price.getSellPrice()) + (Object) ChatColor.GREEN + "/ea");
+                                player.sendMessage( ChatColor.GREEN + ChatColor.BOLD.toString() + "+ $" + moneyFormat.format(cashToGive));
+                                player.sendMessage( ChatColor.GREEN + "Successfully sold " +  ChatColor.GREEN +  ChatColor.BOLD + sellAmount + "x " +  ChatColor.GREEN + ItemUtils.getPrettyName(data) + " for " +  ChatColor.GREEN +  ChatColor.BOLD + "$" +  ChatColor.GREEN + moneyFormat.format(price.getSellPrice()) +  ChatColor.GREEN + "/ea");
                                 Bukkit.getLogger().info(player.getName() + " sold " + sellAmount + " " + data.toString() + " for " + cashToGive);
                                 Bukkit.getPluginManager().callEvent((Event) new CustomCosmicPlayerEvent(player, "SHOP_SELL", new Object[]{cashToGive, sellAmount, data.getType(), data.getData()}));
                             } else if (amountInInventory <= 0) {
-                                player.sendMessage((Object) ChatColor.RED + "You do not have any to sell!");
+                                player.sendMessage( ChatColor.RED + "You do not have any to sell!");
                             }
                         } else if (buyAmount != -1) {
                             if (price.getBuyPrice() <= 0.0) {
-                                player.sendMessage((Object) ChatColor.RED + "You cannot buy this item from the shop!");
+                                player.sendMessage( ChatColor.RED + "You cannot buy this item from the shop!");
                                 return;
                             }
                             double totalPrice = price.getBuyPrice() * (double) buyAmount;
                             if (!CosmicGUIShop.getEconomy().has((OfflinePlayer) player, totalPrice)) {
-                                player.sendMessage((Object) ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + (Object) ChatColor.RED + "You do not enough money to purchase this!");
-                                player.sendMessage((Object) ChatColor.GRAY + "Price: " + (Object) ChatColor.GRAY + moneyFormat.format(price.getBuyPrice()) + (Object) ChatColor.GRAY + "/ea");
+                                player.sendMessage( ChatColor.RED + ChatColor.BOLD.toString() + "(!) " +  ChatColor.RED + "You do not enough money to purchase this!");
+                                player.sendMessage( ChatColor.GRAY + "Price: " +  ChatColor.GRAY + moneyFormat.format(price.getBuyPrice()) +  ChatColor.GRAY + "/ea");
                                 return;
                             }
                             if (player.getInventory().firstEmpty() == -1) {
-                                player.sendMessage((Object) ChatColor.RED + "You do not have enough inventory space!");
+                                player.sendMessage( ChatColor.RED + "You do not have enough inventory space!");
                                 return;
                             }
                             if (fillInventory) {
@@ -289,7 +289,7 @@ public class ShopManager {
                                 new ConfirmPurchaseMenu("Confirm Inventory Purchase", 9, new ItemStack(data.getType(), 1, data.getData()), ItemUtils.getPrettyName(data), buyAmount, totalPrice, acceptStatus -> {
                                     if (acceptStatus.booleanValue()) {
                                         if (!CosmicGUIShop.getEconomy().has((OfflinePlayer) player, totalPrice)) {
-                                            player.sendMessage((Object) ChatColor.RED + "You no longer have the funds!");
+                                            player.sendMessage( ChatColor.RED + "You no longer have the funds!");
                                             player.closeInventory();
                                             return;
                                         }
@@ -305,7 +305,7 @@ public class ShopManager {
                                         ShopManager.this.finishPurchase(player, data, totalPrice, buyAmount);
                                         menu.open(player);
                                     } else {
-                                        player.sendMessage((Object) ChatColor.RED + "Purchase Cancelled!");
+                                        player.sendMessage( ChatColor.RED + "Purchase Cancelled!");
                                         menu.open(player);
                                     }
                                 }).open(player);
@@ -324,8 +324,8 @@ public class ShopManager {
     public void finishPurchase(Player player, ShopMaterialData data, double totalPrice, int buyAmount) {
         boolean isPotionBundle;
         CosmicGUIShop.getEconomy().withdrawPlayer((OfflinePlayer) player, totalPrice);
-        player.sendMessage((Object) ChatColor.RED + ChatColor.BOLD.toString() + "- $" + (Object) ChatColor.RED + moneyFormat.format(totalPrice));
-        player.sendMessage((Object) ChatColor.GREEN + "Successfully purchased " + (Object) ChatColor.GREEN + (Object) ChatColor.BOLD + buyAmount + "x " + (Object) ChatColor.GREEN + ItemUtils.getPrettyName(data) + "!");
+        player.sendMessage( ChatColor.RED + ChatColor.BOLD.toString() + "- $" +  ChatColor.RED + moneyFormat.format(totalPrice));
+        player.sendMessage( ChatColor.GREEN + "Successfully purchased " +  ChatColor.GREEN +  ChatColor.BOLD + buyAmount + "x " +  ChatColor.GREEN + ItemUtils.getPrettyName(data) + "!");
         player.playSound(player.getLocation(), Sound.ORB_PICKUP, 1.0f, 1.4f);
         Material type = data.getType();
         if ((type == Material.CHEST || type == Material.TRAPPED_CHEST) && data.getData() == 100) {
@@ -366,7 +366,7 @@ public class ShopManager {
             if (data.getData() == 101) {
                 toGive = MysteryMobSpawners.getMysteryMobSpawner();
             } else {
-                EntityType type = EntityType.fromId((int) data.getData());
+                EntityType type = EntityType.fromId(data.getData());
                 if (type == null) {
                     Bukkit.getLogger().info("Data: " + data.getData() + " from : " + data);
                     type = EntityType.PIG;
@@ -389,7 +389,7 @@ public class ShopManager {
     }
 
     public ClickableItemStack getBackArrow(final Player player) {
-        return new ClickableItemStack(ItemBuilder.buildItem(Material.ARROW, 1, (short) 0, ChatColor.GREEN.toString() + (Object) ChatColor.BOLD + "Back", (List<String>) Lists.newArrayList(new String[]{(Object) ChatColor.GRAY + "Click to return to categories."}))).setClickCallback(new GUIItemCallback() {
+        return new ClickableItemStack(ItemBuilder.buildItem(Material.ARROW, 1, (short) 0, ChatColor.GREEN.toString() +  ChatColor.BOLD + "Back", (List<String>) Lists.newArrayList(new String[]{ ChatColor.GRAY + "Click to return to categories."}))).setClickCallback(new GUIItemCallback() {
 
             @Override
             public void onClick(InventoryClickEvent event) {
