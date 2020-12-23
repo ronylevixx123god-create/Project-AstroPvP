@@ -119,7 +119,7 @@ public class CommandHandler
         if (type == Material.CHEST && item.hasItemMeta() && item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().contains("???")) {
             return false;
         }
-        if (ArkhamMoneyNotesAPI.isMoneyNote((ItemStack) item)) {
+        if (ArkhamMoneyNotesAPI.isMoneyNote(item)) {
             return false;
         }
         if (type == Material.POTION && invisibilityEffectIds.contains(item.getDurability())) {

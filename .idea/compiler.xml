@@ -9,15 +9,15 @@
         <outputRelativeToContentRoot value="true" />
         <module name="GUIShop" />
         <module name="Utils" />
-        <module name="SpaceChests" />
         <module name="AuctionHouse" />
-        <module name="Bosses" />
         <module name="Ark" />
         <module name="Arkkit" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="Bosses" target="1.8" />
       <module name="MoneyNotes" target="1.8" />
+      <module name="SpaceChests" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

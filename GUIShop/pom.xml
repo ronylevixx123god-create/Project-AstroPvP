@@ -5,11 +5,12 @@
     <parent>
         <artifactId>ProjectAstro</artifactId>
         <groupId>com.conaxgames</groupId>
-        <version>0.1</version>
+        <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>GUIShop</artifactId>
+    <version>0.1</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
