@@ -46,7 +46,7 @@ extends BukkitRunnable {
 
             @Override
             public void run() {
-                HologramUpdateTask.this.spawnHologram = HologramsAPI.createHologram((Plugin)CosmicSpaceChestsPlugin.plugin, (Location)HologramUpdateTask.this.hologramLocation, (String[])new String[]{ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "PREVIOUS COSMIC ENVOY", ChatColor.LIGHT_PURPLE.toString() + CosmicEnvoyTask.getPreviousEnvoySpawnString() + " ago"});
+                //HologramUpdateTask.this.spawnHologram = HologramsAPI.createHologram((Plugin)CosmicSpaceChestsPlugin.plugin, (Location)HologramUpdateTask.this.hologramLocation, (String[])new String[]{ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "PREVIOUS COSMIC ENVOY", ChatColor.LIGHT_PURPLE.toString() + CosmicEnvoyTask.getPreviousEnvoySpawnString() + " ago"});
             }
         }, 1L);
     }

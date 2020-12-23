@@ -104,7 +104,7 @@ implements Runnable {
     }
 
     public static void spawnCosmicPumpkin(String summoner) {
-        double chests_per_location;
+        double chests_per_location = 0;
         ArrayList<Location> drop_zones = new ArrayList<Location>();
         boolean factions = Bukkit.getPluginManager().isPluginEnabled("Factions");
         for (Player pl : Bukkit.getServer().getOnlinePlayers()) {

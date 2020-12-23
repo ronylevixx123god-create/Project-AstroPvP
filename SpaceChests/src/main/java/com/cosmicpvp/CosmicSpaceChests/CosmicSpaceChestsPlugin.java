@@ -107,7 +107,6 @@ extends JavaPlugin {
     private void registerCommands() {
         this.getCommand("fdp").setExecutor((CommandExecutor)new CommandFDP());
         this.getCommand("givedp").setExecutor((CommandExecutor)new CommandGiveDp());
-        this.getCommand("envoy").setExecutor((CommandExecutor)new CommandEnvoy());
         this.getCommand("flare").setExecutor((CommandExecutor)new CommandFlare());
     }
 

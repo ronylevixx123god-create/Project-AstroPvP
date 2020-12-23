@@ -42,7 +42,7 @@ public class ItemBuilder {
     }
 
     public ItemBuilder(Material mat, int amount) {
-        this(mat, amount, 0);
+        this(mat, amount, (short) 0);
     }
 
     public ItemBuilder(Material mat, short data) {

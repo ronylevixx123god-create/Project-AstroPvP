@@ -31,7 +31,7 @@ public class WeaponGenerator {
 
     public static ItemStack getRandomKitWeapon() {
         GlobalKits gkit = GlobalKits.values()[new Random().nextInt(GlobalKits.values().length)];
-        List items = CosmicGlobalKitsAPI.getGlobalKitItems((GlobalKits)gkit, null);
+        List<ItemStack> items = CosmicGlobalKitsAPI.getGlobalKitItems((GlobalKits)gkit, null);
         for (ItemStack i : items) {
             if (!GeneralUtil.isWeapon((ItemStack)i)) continue;
             return i;

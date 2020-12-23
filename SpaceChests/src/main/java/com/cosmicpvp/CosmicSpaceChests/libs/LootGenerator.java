@@ -47,7 +47,6 @@ import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
 import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.compilex.CosmicCrate.api.CCAPI;
 import com.compilex.CosmicCustomCreepers.enums.CreeperTypes;
-import com.compilex.CosmicWorldWar.api.AetherShardAPI;
 import com.cosmicpvp.CosmicRankQuests.CosmicRankQuestsAPI;
 import com.cosmicpvp.CosmicRankQuests.HeroicRankCrystalAPI;
 import com.cosmicpvp.CosmicRankQuests.utils.PlayerRankUtils;
@@ -189,7 +188,7 @@ public class LootGenerator {
         rareExtras.put(KitItems.getKitItem(GlobalKits.Spooky), 5.0E-4);
         rareExtras.put(KitItems.getKitItem(GlobalKits.TRICKSTER), 5.0E-4);
         rareExtras.put(KitItems.getKitItem(GlobalKits.HYPER), 5.0E-4);
-        rareExtras.put(new ItemStack(Material.getMaterial((int)383), 1, 50), 0.01);
+        rareExtras.put(new ItemStack(Material.getMaterial((int)383), 1, (short) 50), 0.01);
         rareExtras.put(new ItemStack(Material.HOPPER, 5), 0.01);
         rareExtras.put(KillTrackerAPI.buildTracker((Tracker)Tracker.Elite), 0.01);
         rareExtras.put(ItemUtils.setAmount(Halloween.getHalloweenCandy(), 50), 0.02);
@@ -246,7 +245,7 @@ public class LootGenerator {
         ultraRareExtras.put(KitItems.getKitItem(GlobalKits.Party), 5.0E-4);
         ultraRareExtras.put(KitItems.getKitItem(GlobalKits.VALENTINE), 5.0E-4);
         ultraRareExtras.put(KitItems.getKitItem(GlobalKits.DESTROYER), 5.0E-4);
-        ultraRareExtras.put(new ItemStack(Material.getMaterial((int)383), 2, 50), 0.01);
+        ultraRareExtras.put(new ItemStack(Material.getMaterial((int)383), 2, (short) 50), 0.01);
         ultraRareExtras.put(new ItemStack(Material.HOPPER, 16), 0.01);
         ultraRareExtras.put(ItemUtils.setAmount(ItemUtils.getCustomCreeperEgg(CreeperTypes.Tactical), 1), 0.01);
         ultraRareExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Lucky), 4), 0.01);
@@ -313,7 +312,7 @@ public class LootGenerator {
         legendaryExtras.put(KitItems.getKitItem(GlobalKits.Cosmonaut), 0.001);
         legendaryExtras.put(KitItems.getKitItem(GlobalKits.Voidwalker), 0.001);
         legendaryExtras.put(KillTrackerAPI.buildTracker((Tracker)Tracker.Legendary), 0.015);
-        legendaryExtras.put(new ItemStack(Material.getMaterial((int)383), 16, 50), 0.02);
+        legendaryExtras.put(new ItemStack(Material.getMaterial((int)383), 16, (short) 50), 0.02);
         legendaryExtras.put(new ItemStack(Material.HOPPER, 64), 0.02);
         legendaryExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Lucky), 16), 0.03);
         legendaryExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Silent), 32), 0.03);
@@ -383,7 +382,7 @@ public class LootGenerator {
         godExtras.put(KitItems.getKitItem(GlobalKits.Admiral), 0.0025);
         godExtras.put(KitItems.getKitItem(GlobalKits.Duelist), 0.0025);
         godExtras.put(KillTrackerAPI.buildTracker((Tracker)Tracker.Legendary), 0.015);
-        godExtras.put(new ItemStack(Material.getMaterial((int)383), 48, 50), 0.02);
+        godExtras.put(new ItemStack(Material.getMaterial((int)383), 48, (short) 50), 0.02);
         godExtras.put(new ItemStack(Material.HOPPER, 64), 0.02);
         godExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Lucky), 32), 0.03);
         godExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Silent), 64), 0.03);
@@ -429,11 +428,6 @@ public class LootGenerator {
             ultraRareExtras.put(CosmicRankQuestsAPI.getRankQuestItem((int)4), 1.25E-4);
             legendaryExtras.put(CosmicRankQuestsAPI.getRankQuestItem((int)5), 2.5E-4);
             godExtras.put(CosmicRankQuestsAPI.getRankQuestItem((int)5), 0.001);
-        }
-        if (Bukkit.getPluginManager().isPluginEnabled("CosmicWorldWar")) {
-            ultraRareExtras.put(AetherShardAPI.getAetherShard((int)100), 0.001);
-            legendaryExtras.put(AetherShardAPI.getAetherShard((int)250), 0.001);
-            godExtras.put(AetherShardAPI.getAetherShard((int)500), 0.001);
         }
         if (Bukkit.getPluginManager().isPluginEnabled("CosmicFactionQuests") && (item = ItemUtils.getFactionQuestReroll(false)) != null) {
             legendaryExtras.put(ItemUtils.setAmount(item.clone(), 1), 0.005);

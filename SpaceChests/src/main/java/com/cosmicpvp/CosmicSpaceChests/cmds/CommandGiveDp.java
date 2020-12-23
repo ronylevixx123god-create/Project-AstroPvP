@@ -45,19 +45,11 @@ implements CommandExecutor {
                 return true;
             }
             if (args.length < 1) {
-                if (sender instanceof Player) {
-                    ((Player)sender).sendMessage((Object)ChatColor.RED + "/givedp [1-6/envoy] <player>");
-                } else {
-                    CosmicSpaceChestsPlugin.log.debug("/givedp [1-6/envoy] <player>", this.getClass());
-                }
+                ((Player)sender).sendMessage((Object)ChatColor.RED + "/givedp [1-6/envoy] <player>");
                 return true;
             }
             if (Bukkit.getPlayer((String)p_name) == null) {
-                if (sender instanceof Player) {
-                    ((Player)sender).sendMessage(ChatColor.RED + p_name + " cannot be found.");
-                } else {
-                    CosmicSpaceChestsPlugin.log.error(p_name + " cannot be found.", this.getClass());
-                }
+                ((Player)sender).sendMessage(ChatColor.RED + p_name + " cannot be found.");
                 return true;
             }
             Player ply = Bukkit.getPlayer((String)p_name);
@@ -66,8 +58,8 @@ implements CommandExecutor {
                 ItemUtils.giveItemToPlayer(ply, is);
                 ply.sendMessage((Object)ChatColor.GRAY + "You got a " + (Object)ChatColor.GOLD + (Object)ChatColor.UNDERLINE + "Cosmic Envoy Spawner!");
                 ply.updateInventory();
-                if (sender instanceof Player && !((Player)sender).getName().equalsIgnoreCase(ply.getName())) {
-                    ((Player)sender).sendMessage((Object)ChatColor.GRAY + p_name + " has been given 1x " + (Object)ChatColor.GOLD + (Object)ChatColor.UNDERLINE + "Cosmic Envoy Spawner!");
+                if (!sender.getName().equalsIgnoreCase(ply.getName())) {
+                    sender.sendMessage(ChatColor.GRAY + p_name + " has been given 1x " + ChatColor.GOLD + ChatColor.UNDERLINE + "Cosmic Envoy Spawner!");
                 } else {
                     CosmicSpaceChestsPlugin.log.debug(p_name + " has been given 1x " + ChatColor.GOLD.toString() + (Object)ChatColor.UNDERLINE + "Cosmic Envoy Spawner!", this.getClass());
                 }
