@@ -28,7 +28,7 @@ public class ArmorGenerator {
 
     public static ItemStack getRandomKitArmor() {
         GlobalKits gkit = GlobalKits.values()[new Random().nextInt(GlobalKits.values().length)];
-        List items = CosmicGlobalKitsAPI.getGlobalKitItems((GlobalKits)gkit, null);
+        List<ItemStack> items = CosmicGlobalKitsAPI.getGlobalKitItems((GlobalKits)gkit, null);
         for (ItemStack i : items) {
             if (!GeneralUtil.isArmor((ItemStack)i)) continue;
             return i;

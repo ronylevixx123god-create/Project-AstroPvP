@@ -99,7 +99,7 @@ implements Runnable {
     }
 
     public static void spawnCosmicPumpkin(String summoner) {
-        double chests_per_location;
+        double chests_per_location = 0;
         ArrayList<Location> drop_zones = new ArrayList<Location>();
         for (Player pl : Bukkit.getServer().getOnlinePlayers()) {
             pl.playSound(pl.getLocation(), Sound.GHAST_DEATH, 1.0f, 0.5f);

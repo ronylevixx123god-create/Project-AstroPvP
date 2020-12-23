@@ -111,7 +111,7 @@ public class ItemUtils {
     }
 
     public static ItemStack getRandomEnchantmentBook() {
-        CustomEnchantment ce = EnchantmentAPI.getEnchantments().toArray((T[])new CustomEnchantment[EnchantmentAPI.getEnchantments().size()])[new Random().nextInt(EnchantmentAPI.getEnchantments().size())];
+        CustomEnchantment ce = EnchantmentAPI.getEnchantments().toArray(new CustomEnchantment[EnchantmentAPI.getEnchantments().size()])[new Random().nextInt(EnchantmentAPI.getEnchantments().size())];
         return EnchantmentBook.getEnchantmentBook((CustomEnchantment)ce, (int)(new Random().nextInt(ce.getMaxLevel()) + 1));
     }
 

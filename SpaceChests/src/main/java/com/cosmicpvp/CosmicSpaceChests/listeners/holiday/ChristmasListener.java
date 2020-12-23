@@ -55,6 +55,7 @@ import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.cosmicpvp.CosmicSpaceChests.tasks.holiday.Christmas2018Task;
 import java.util.Random;
 
+import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.Packet;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
 import org.arkhamnetwork.Arkkit.patches.Christmas;
@@ -178,7 +179,7 @@ implements Listener {
 
                 @Override
                 public void run() {
-                    PacketPlayOutWorldEvent particles = new PacketPlayOutWorldEvent(2001, f_b.getX(), f_b.getY(), f_b.getZ(), block_id, false);
+                    PacketPlayOutWorldEvent particles = new PacketPlayOutWorldEvent(2001, new BlockPosition(f_b.getX(), f_b.getY(), f_b.getZ()), block_id, false);
                     ((CraftServer)ChristmasListener.this.plugin.getServer()).getServer().getPlayerList().sendPacketNearby((double)f_b.getX(), (double)f_b.getY(), (double)f_b.getZ(), 32.0, ((CraftWorld)f_b.getWorld()).getHandle().dimension, particles);
                 }
             });
@@ -212,7 +213,7 @@ implements Listener {
 
                 @Override
                 public void run() {
-                    PacketPlayOutWorldEvent particles = new PacketPlayOutWorldEvent(2001, (int)Math.round(loc.getX()), (int)Math.round(loc.getY()), (int)Math.round(loc.getZ()), Material.PUMPKIN.getId(), false);
+                    PacketPlayOutWorldEvent particles = new PacketPlayOutWorldEvent(2001, new BlockPosition((int)Math.round(loc.getX()), (int)Math.round(loc.getY()), (int)Math.round(loc.getZ())), Material.PUMPKIN.getId(), false);
                     ((CraftServer)ChristmasListener.this.plugin.getServer()).getServer().getPlayerList().sendPacketNearby(loc.getX(), loc.getY(), loc.getZ(), 24.0, ((CraftWorld)loc.getWorld()).getHandle().dimension, (Packet)particles);
                 }
             });
@@ -265,7 +266,7 @@ implements Listener {
             b.setPlayerCreated(false);
             b.setCustomName(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "Christmas " + ChatColor.RED.toString() + ChatColor.BOLD.toString() + "Golem");
             b.setCustomNameVisible(true);
-            le = b;
+            le = (PigZombie) b;
         } else if (et == EntityType.SKELETON) {
             Skeleton b = (Skeleton)l.getWorld().spawnEntity(l, EntityType.SKELETON);
             b.setSkeletonType(Skeleton.SkeletonType.WITHER);
@@ -274,14 +275,14 @@ implements Listener {
             b.setHealth(b.getMaxHealth());
             b.setCustomName(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "Christmas " + ChatColor.RED.toString() + ChatColor.BOLD.toString() + "Assassin");
             b.setCustomNameVisible(true);
-            le = b;
+            le = (PigZombie) b;
         } else if (et == EntityType.GHAST) {
             Ghast b = (Ghast)l.getWorld().spawnEntity(l, EntityType.GHAST);
             b.setMaxHealth(b.getMaxHealth() * 5.0);
             b.setHealth(b.getMaxHealth());
             b.setCustomName(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "Christmas " + ChatColor.RED.toString() + ChatColor.BOLD.toString() + "Angel");
             b.setCustomNameVisible(true);
-            le = b;
+            le = (PigZombie) b;
         }
         le.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, Integer.MAX_VALUE, 0));
         le.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, new Random().nextInt(3)));

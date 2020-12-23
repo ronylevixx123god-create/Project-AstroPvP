@@ -47,9 +47,6 @@ implements Runnable {
             public void run() {
                 lastEnvoyEventTime = System.currentTimeMillis();
                 CosmicEnvoyTask.spawnCosmicEnvoy(null);
-                for (Player p : Bukkit.getOnlinePlayers()) {
-                    ClientCommsAPI.sendEvent((Player)p, (String)"Previous Cosmic Envoy", (EventType)EventType.COUNT_UP, (long)lastEnvoyEventTime, (long)0L);
-                }
             }
         }, currentEnvoyDelay);
     }

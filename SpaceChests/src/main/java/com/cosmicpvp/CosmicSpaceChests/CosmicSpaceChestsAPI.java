@@ -514,7 +514,7 @@ public class CosmicSpaceChestsAPI {
 
     public static ItemStack[] getItems(ItemRarity ir, int amount) {
         List<ItemStack> retr = CosmicSpaceChestsAPI.getItemList(ir, amount);
-        return retr.toArray((T[])new ItemStack[retr.size()]);
+        return retr.toArray(new ItemStack[retr.size()]);
     }
 
     public static ItemStack[] getItems(ItemRarity chestRarity, ItemRarity slotRarity, int amount) {
@@ -551,7 +551,7 @@ public class CosmicSpaceChestsAPI {
             if (is == null) continue;
             li.add(is);
         }
-        return li.toArray((T[])new ItemStack[li.size()]);
+        return li.toArray(new ItemStack[li.size()]);
     }
 
     public static void spawnCustomEnvoy(Location center, int radius, int amountToSpawn, ItemRarity chestRarity) {
