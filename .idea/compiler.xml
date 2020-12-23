@@ -11,6 +11,7 @@
         <module name="Ark" />
         <module name="Utils" />
         <module name="SpaceChests" />
+        <module name="AuctionHouse" />
         <module name="Arkkit" />
       </profile>
     </annotationProcessing>
