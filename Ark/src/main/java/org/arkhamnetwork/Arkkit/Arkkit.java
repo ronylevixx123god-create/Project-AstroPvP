@@ -4,15 +4,11 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
 import org.apache.commons.io.FileUtils;
-import org.arkhamnetwork.Arkkit.commands.CommandArkConfig;
-import org.arkhamnetwork.Arkkit.commands.CommandArkList;
-import org.arkhamnetwork.Arkkit.commands.CommandArkReboot;
-import org.arkhamnetwork.Arkkit.commands.CommandArkRegister;
-import org.arkhamnetwork.Arkkit.commands.CommandArkReload;
-import org.arkhamnetwork.Arkkit.commands.CommandArkUnregister;
+import org.arkhamnetwork.Arkkit.commands.*;
 import org.arkhamnetwork.Arkkit.patches.AntiCrash;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
@@ -22,7 +18,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.FileUtil;
@@ -53,8 +48,8 @@ extends JavaPlugin {
             this.getConfig().options().copyDefaults(true);
             this.saveConfig();
         }
-        this.registerCommands();
-        this.setupEconomy();
+        registerCommands();
+        setupEconomy();
         WorldGuardUtils.hook();
         Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "Loading Patches ...");
         Bukkit.getScheduler().runTaskLater(this, () -> {
@@ -100,12 +95,22 @@ extends JavaPlugin {
     }
 
     private void registerCommands() {
-        this.getCommand("arkhamreload").setExecutor(new CommandArkReload(this));
-        this.getCommand("arkregister").setExecutor(new CommandArkRegister(this));
-        this.getCommand("arkunregister").setExecutor(new CommandArkUnregister(this));
-        this.getCommand("arklist").setExecutor(new CommandArkList());
-        this.getCommand("arkconfig").setExecutor(new CommandArkConfig(this));
-        this.getCommand("arkreboot").setExecutor(new CommandArkReboot());
+        Bukkit.getConsoleSender().sendMessage(CC.Gold + "[Arkkit] Beginning loading commands...");
+        getCommand("arkhamreload").setExecutor(new CommandArkReload(this));
+        Bukkit.getConsoleSender().sendMessage(CC.Green + "[Arkkit] ArkReload registered");
+        getCommand("arkregister").setExecutor(new CommandArkRegister(this));
+        Bukkit.getConsoleSender().sendMessage(CC.Green + "[Arkkit] ArkRegister registered");
+        getCommand("arkunregister").setExecutor(new CommandArkUnregister(this));
+        Bukkit.getConsoleSender().sendMessage(CC.Green + "[Arkkit] ArkUnregister registered");
+        getCommand("arklist").setExecutor(new CommandArkList());
+        Bukkit.getConsoleSender().sendMessage(CC.Green + "[Arkkit] ArkList registered");
+        getCommand("arkconfig").setExecutor(new CommandArkConfig(this));
+        Bukkit.getConsoleSender().sendMessage(CC.Green + "[Arkkit] ArkConfig registered");
+        getCommand("arkreboot").setExecutor(new CommandArkReboot());
+        Bukkit.getConsoleSender().sendMessage(CC.Green + "[Arkkit] ArkReboot registered");
+        getCommand("arkdebug").setExecutor(new CommandArkDebug());
+        Bukkit.getConsoleSender().sendMessage(CC.Green + "[Arkkit] ArkDebug registered");
+        Bukkit.getConsoleSender().sendMessage(CC.Gold + "[Arkkit] Finished loading commands...");
     }
 
     private boolean setupEconomy() {

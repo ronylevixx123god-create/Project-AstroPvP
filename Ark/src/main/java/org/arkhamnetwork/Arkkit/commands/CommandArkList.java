@@ -12,6 +12,8 @@ package org.arkhamnetwork.Arkkit.commands;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
+import org.arkhamnetwork.Arkkit.StaticMessages;
 import org.arkhamnetwork.Arkkit.libs.JSONMessage;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.ChatColor;
@@ -23,7 +25,8 @@ import org.bukkit.entity.Player;
 public class CommandArkList
 implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (sender instanceof Player && !((Player)sender).isOp()) {
+        if (!sender.hasPermission("arkkit.command.admin")) {
+            sender.sendMessage(StaticMessages.NO_PERMISSION);
             return true;
         }
         int running = 0;

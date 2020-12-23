@@ -328,6 +328,7 @@ org\arkhamnetwork\Arkkit\patches\NoDupeExploitListener.class
 org\arkhamnetwork\Arkkit\patches\AdminWarps$SetAdminWarpCommand.class
 org\arkhamnetwork\Arkkit\patches\CommandToggleClearInventoryConfirm.class
 org\arkhamnetwork\Arkkit\patches\Drinks.class
+org\arkhamnetwork\Arkkit\StaticMessages.class
 org\arkhamnetwork\Arkkit\patches\NearLegacy.class
 org\arkhamnetwork\Arkkit\patches\Party.class
 org\arkhamnetwork\Arkkit\patches\Easter.class
@@ -430,6 +431,7 @@ org\arkhamnetwork\Arkkit\patches\chunkgc\ChunkSyncUtil.class
 org\arkhamnetwork\Arkkit\patches\voting\VS_SQLManager.class
 org\arkhamnetwork\Arkkit\utils\ConfigUtils.class
 org\arkhamnetwork\Arkkit\patches\WorldBorderEnderpearlListener.class
+org\arkhamnetwork\Arkkit\commands\CommandArkDebug.class
 org\arkhamnetwork\Arkkit\patches\EndGrinding.class
 org\arkhamnetwork\Arkkit\CommandVaultName.class
 org\arkhamnetwork\Arkkit\libs\ParticleEffectPacket.class
@@ -630,7 +632,6 @@ org\arkhamnetwork\Arkkit\patches\NoMCMMODisarm.class
 org\arkhamnetwork\Arkkit\patches\ExpOrbs.class
 org\arkhamnetwork\Arkkit\patches\CommandRoll.class
 org\arkhamnetwork\Arkkit\patches\NoMobGriefingTask.class
-org\arkhamnetwork\Arkkit\Arkkit$4.class
 org\arkhamnetwork\Arkkit\patches\SafeShutdown.class
 org\arkhamnetwork\Arkkit\patches\AsyncMonstersCommand.class
 org\arkhamnetwork\Arkkit\patches\ChunkCoordPair.class

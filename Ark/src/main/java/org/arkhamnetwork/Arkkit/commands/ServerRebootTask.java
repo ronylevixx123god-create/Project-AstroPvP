@@ -47,15 +47,14 @@ extends BukkitRunnable {
                 }
                 break;
             }
-            case 45: {
-                this.doBroadcast();
-                break;
-            }
-            case 30: {
-                this.doBroadcast();
-                break;
-            }
-            case 15: {
+            case 45:
+            case 30:
+            case 15:
+            case 5:
+            case 4:
+            case 3:
+            case 2:
+            case 1: {
                 this.doBroadcast();
                 break;
             }
@@ -72,26 +71,6 @@ extends BukkitRunnable {
                         }
                     }
                 });
-                break;
-            }
-            case 5: {
-                this.doBroadcast();
-                break;
-            }
-            case 4: {
-                this.doBroadcast();
-                break;
-            }
-            case 3: {
-                this.doBroadcast();
-                break;
-            }
-            case 2: {
-                this.doBroadcast();
-                break;
-            }
-            case 1: {
-                this.doBroadcast();
                 break;
             }
             case -10: {
