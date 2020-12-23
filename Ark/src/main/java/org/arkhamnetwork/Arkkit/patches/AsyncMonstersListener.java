@@ -1,66 +1,16 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.gmail.nossr50.mcMMO
- *  com.google.common.collect.Lists
- *  com.google.common.collect.MapMaker
- *  com.massivecraft.factions.Board
- *  com.massivecraft.factions.FLocation
- *  com.massivecraft.factions.Faction
- *  org.bukkit.Material
- *  org.bukkit.craftbukkit.v1_7_R4.entity.CraftEntity
- *  org.bukkit.entity.Ageable
- *  org.bukkit.entity.Creeper
- *  org.bukkit.entity.Enderman
- *  org.bukkit.entity.Entity
- *  org.bukkit.entity.EntityType
- *  org.bukkit.entity.Ghast
- *  org.bukkit.entity.IronGolem
- *  org.bukkit.entity.LivingEntity
- *  org.bukkit.entity.MagmaCube
- *  org.bukkit.entity.MushroomCow
- *  org.bukkit.entity.Zombie
- *  org.bukkit.event.EventHandler
- *  org.bukkit.event.EventPriority
- *  org.bukkit.event.Listener
- *  org.bukkit.event.entity.CreatureSpawnEvent
- *  org.bukkit.event.entity.CreatureSpawnEvent$SpawnReason
- *  org.bukkit.event.entity.EntityDamageEvent
- *  org.bukkit.event.entity.EntityDamageEvent$DamageCause
- *  org.bukkit.event.entity.EntityDeathEvent
- *  org.bukkit.inventory.EntityEquipment
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.metadata.FixedMetadataValue
- *  org.bukkit.metadata.MetadataValue
- *  org.bukkit.plugin.Plugin
- */
+
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.gmail.nossr50.mcMMO;
-import com.google.common.collect.MapMaker;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.collect.Lists;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.Faction;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
-import org.bukkit.entity.Ageable;
-import org.bukkit.entity.Creeper;
-import org.bukkit.entity.Enderman;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Ghast;
-import org.bukkit.entity.IronGolem;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.MagmaCube;
-import org.bukkit.entity.MushroomCow;
-import org.bukkit.entity.Zombie;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -73,12 +23,24 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
 final class AsyncMonstersListener
 implements Listener {
     private boolean stackIG = true;
     private boolean nerfMobSpawners = Arkkit.get().getConfig().getBoolean("settings.async_monsters.nerfWildSpawners");
     AsyncMonsters instance;
-    public Set<Entity> deadEntitySet = Collections.newSetFromMap(new MapMaker().expireAfterWrite(25L, TimeUnit.SECONDS).concurrencyLevel(16).weakKeys().makeMap());
+    //public Set<Entity> deadEntitySet = Collections.newSetFromMap(CacheBuilder.newBuilder().expireAfterWrite(25L, TimeUnit.SECONDS).concurrencyLevel(16).weakKeys().build());
+
+    public Set<Entity> deadEntitySet = (Set<Entity>) CacheBuilder.newBuilder()
+            .expireAfterWrite(25L, TimeUnit.SECONDS)
+            .concurrencyLevel(16)
+            .weakKeys()
+            .build();
+
     private HashMap<Material, Material> condensable = new HashMap<Material, Material>(){
         {
             this.put(Material.IRON_INGOT, Material.IRON_BLOCK);
