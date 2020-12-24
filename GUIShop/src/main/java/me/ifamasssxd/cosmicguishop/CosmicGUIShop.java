@@ -10,21 +10,31 @@
  */
 package me.ifamasssxd.cosmicguishop;
 
+import com.google.common.collect.Lists;
 import lombok.SneakyThrows;
 import me.ifamasssxd.cosmicguishop.commands.CommandBankNote;
 import me.ifamasssxd.cosmicguishop.commands.CommandShop;
+import me.ifamasssxd.cosmicguishop.commands.CommandXpShop;
 import me.ifamasssxd.cosmicguishop.listeners.MenuListener;
 import me.ifamasssxd.cosmicguishop.listeners.PlayerListener;
+import me.ifamasssxd.cosmicguishop.listeners.XPShopMenuListener;
 import me.ifamasssxd.cosmicguishop.struct.ShopManager;
+import me.ifamasssxd.cosmicguishop.utils.Base64Utils;
 import net.milkbowl.vault.economy.Economy;
+import org.bukkit.Material;
 import org.bukkit.command.CommandExecutor;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class CosmicGUIShop
-        extends JavaPlugin {
+import java.io.File;
+import java.util.ArrayList;
+
+public class CosmicGUIShop extends JavaPlugin {
     private static CosmicGUIShop instance;
+    private static CosmicGUIShop plugin;
     private static Economy economy;
     private ShopManager shopManager;
 
@@ -39,13 +49,44 @@ public class CosmicGUIShop
     @SneakyThrows
     public void onEnable() {
         instance = this;
-        economy = (Economy) this.getServer().getServicesManager().getRegistration(Economy.class).getProvider();
+        plugin = this;
+        FileConfiguration config = this.getConfig();
+
+        economy = this.getServer().getServicesManager().getRegistration(Economy.class).getProvider();
         this.shopManager = new ShopManager();
         this.shopManager.loadAllShopItems();
-        this.getServer().getPluginManager().registerEvents((Listener) new PlayerListener(), (Plugin) this);
-        this.getServer().getPluginManager().registerEvents((Listener) new MenuListener(), (Plugin) this);
-        this.getCommand("cosmicshop").setExecutor((CommandExecutor) new CommandShop());
-        this.getCommand("banknote").setExecutor((CommandExecutor)new CommandBankNote());
+        this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
+        this.getServer().getPluginManager().registerEvents(new MenuListener(), this);
+        this.getServer().getPluginManager().registerEvents(new XPShopMenuListener(), this);
+        this.getCommand("cosmicshop").setExecutor(new CommandShop());
+        this.getCommand("banknote").setExecutor(new CommandBankNote());
+        this.getCommand("xpshop").setExecutor(new CommandXpShop());
+
+        // XPShop File
+        File file = new File(this.getDataFolder() + File.separator + "config.yml");
+        if (file.exists()) {
+            this.getLogger().info("Xp Shop Config Loaded");
+        } else {
+            String l = Base64Utils.toBase64(new ItemStack[]{new ItemStack(Material.EMERALD_ORE)}, 9) + ":10";
+            ArrayList<String> list = Lists.newArrayList(l);
+            this.getConfig().addDefault("items", (Object)list);
+            this.getLogger().info("Created Xp Shop Config");
+        }
+
+    }
+
+    @Override
+    public void onDisable() {
+        plugin = null;
+    }
+
+    public static CosmicGUIShop getInstance() {
+        return plugin;
+    }
+
+    public void loadConfig() {
+        this.getConfig().options().copyDefaults(true);
+        this.saveConfig();
     }
 
     public ShopManager getShopManager() {
