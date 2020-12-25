@@ -65,14 +65,13 @@ public class CosmicGUIShop extends JavaPlugin {
         // XPShop File
         File file = new File(this.getDataFolder() + File.separator + "config.yml");
         if (file.exists()) {
-            this.getLogger().info("Xp Shop Config Loaded");
+            this.getLogger().info("XP Shop Config Loaded");
         } else {
             String l = Base64Utils.toBase64(new ItemStack[]{new ItemStack(Material.EMERALD_ORE)}, 9) + ":10";
             ArrayList<String> list = Lists.newArrayList(l);
-            this.getConfig().addDefault("items", (Object)list);
-            this.getLogger().info("Created Xp Shop Config");
+            this.getConfig().addDefault("items", list);
+            this.getLogger().info("Created XP Shop Config");
         }
-
     }
 
     @Override
