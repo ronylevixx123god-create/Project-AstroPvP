@@ -56,8 +56,6 @@ import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.Faction;
-import io.apice.clientcomms.ClientCommsAPI;
-import io.apice.clientcomms.EventType;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -78,16 +76,6 @@ import me.ifamasssxd.cosmicbosses.bosses.soulreaper.SoulReaper;
 import me.ifamasssxd.cosmicbosses.bosses.xmasbattlefield.BattlefieldSnowman;
 import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijki;
 import me.ifamasssxd.cosmicbosses.evilabomination.EvilAbomination;
-import me.ifamasssxd.cosmicbosses.struct.AntiFarm;
-import me.ifamasssxd.cosmicbosses.struct.BlockModifier;
-import me.ifamasssxd.cosmicbosses.struct.BossAbility;
-import me.ifamasssxd.cosmicbosses.struct.BossMessage;
-import me.ifamasssxd.cosmicbosses.struct.DamageTracker;
-import me.ifamasssxd.cosmicbosses.struct.GlobalBoss;
-import me.ifamasssxd.cosmicbosses.struct.Healable;
-import me.ifamasssxd.cosmicbosses.struct.MiniBoss;
-import me.ifamasssxd.cosmicbosses.struct.Phase;
-import me.ifamasssxd.cosmicbosses.struct.RewardInventory;
 import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
 import me.ifamasssxd.cosmicbosses.struct.enums.DamageType;
 import me.ifamasssxd.cosmicbosses.struct.enums.Difficulty;
@@ -237,7 +225,7 @@ implements Healable {
             return;
         }
         if (event.getDamager() instanceof Player && CosmicBosses.getInstance().isFactionUpgradesEnabled()) {
-            double mult;
+            double mult = 0;
             int heroicLevel = UpgradeUtils.getUpgradeLevel((Player)((Player)event.getDamager()), (String)"HEROIC_BOSS_MASTERY");
             if (heroicLevel > 0) {
                 mult = heroicLevel == 1 ? 2.05 : (heroicLevel == 2 ? 2.15 : (heroicLevel == 3 ? 2.25 : 1.0));
@@ -349,21 +337,12 @@ implements Healable {
     }
 
     protected void alert() {
-        ArrayList pls;
         String msg;
         if (this instanceof SoulReaper || this instanceof HolidaySpirit || this instanceof BattlefieldSnowman || this instanceof DungeonYijki || this instanceof EvilAbomination || this instanceof PlagueBloater && this.getEntity().getWorld().getName().equals(CosmicBosses.battlefieldWorld)) {
             return;
         }
         if (this.naturallySpawned) {
             msg = this.getColor(true) + "(!) " + this.getColor(false) + "A " + this.getColor(true) + ChatColor.UNDERLINE.toString() + this.getCustomName() + this.getColor(false) + " Boss has been summoned to the /spawn WarZone, at " + this.getColor(true) + this.location.getBlockX() + "x, " + this.location.getBlockY() + "y, " + this.location.getBlockZ() + "z " + this.getColor(false) + "defend the planet!";
-            try {
-                for (Player p : Bukkit.getOnlinePlayers()) {
-                    ClientCommsAPI.sendEvent((Player)p, (String)"Previous Warzone Boss", (EventType)EventType.COUNT_UP, (long)System.currentTimeMillis(), (long)0L);
-                }
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
         } else {
             msg = this.getColor(true) + "(!) " + this.getColor(false) + "A " + this.getColor(true) + ChatColor.UNDERLINE.toString() + this.getCustomName() + this.getColor(false) + " Boss has been summoned nearby, defend the planet!";
         }
@@ -372,7 +351,7 @@ implements Healable {
         }
         Location loc = this.getLocation();
         String debug = (Object)ChatColor.YELLOW + "Spawning boss " + this.getCustomName() + (Object)ChatColor.YELLOW + " at " + (Object)ChatColor.YELLOW + ChatColor.BOLD.toString() + "x" + loc.getBlockX() + " y" + loc.getBlockY() + " z" + loc.getBlockZ() + "!";
-        ArrayList arrayList = pls = this.naturallySpawned ? Lists.newArrayList((Iterable)Bukkit.getOnlinePlayers()) : Lists.newArrayList();
+        ArrayList<Player> pls = this.naturallySpawned ? Lists.newArrayList((Iterable)Bukkit.getOnlinePlayers()) : Lists.newArrayList();
         if (!this.naturallySpawned) {
             for (Entity ent : this.getEntity().getNearbyEntities(32.0, 32.0, 32.0)) {
                 if (!(ent instanceof Player)) continue;
@@ -559,7 +538,7 @@ implements Healable {
     }
 
     public void sendMessage(String msg, Sound sound, float speed) {
-        ArrayList players = Lists.newArrayList();
+        ArrayList<Player> players = Lists.newArrayList();
         for (UUID uuid : this.getDamageTracker().keySet()) {
             Player p = Bukkit.getPlayer((UUID)uuid);
             if (p == null) continue;
@@ -637,7 +616,7 @@ implements Healable {
             for (final Player pl : topDamage) {
                 ArrayList<ItemStack> lootGiven;
                 if (this.getLootPool().isEmpty()) break;
-                List<ItemStack> list = lootGiven = loot.containsKey(pl.getUniqueId()) ? loot.get(pl.getUniqueId()) : new ArrayList<ItemStack>();
+                List<ItemStack> list = lootGiven = loot.containsKey(pl.getUniqueId()) ? (ArrayList<ItemStack>) loot.get(pl.getUniqueId()) : new ArrayList<ItemStack>();
                 if (lootGiven.size() >= 2) continue;
                 ItemStack reward = this.getLootPool().remove();
                 lootGiven.add(reward);

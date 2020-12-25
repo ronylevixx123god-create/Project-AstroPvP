@@ -5,12 +5,12 @@ package me.ifamasssxd.cosmicbosses.boss.type;
 
 import java.util.HashMap;
 
-import me.ifamasssxd.cosmicbosses.boss.rarity.BossRarity;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import me.ifamasssxd.cosmicbosses.boss.rarity.*;
 
 public abstract class Boss {
     public static HashMap<Entity, Boss> boss_map = new HashMap();

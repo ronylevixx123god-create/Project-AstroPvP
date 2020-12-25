@@ -22,7 +22,7 @@ implements Listener {
         if (e.getPlayer().hasMetadata("no_exp_gain")) {
             e.setCancelled(true);
             e.setRawXpGained(0.0f);
-            e.getPlayer().removeMetadata("no_exp_gain", (Plugin)CosmicBosses.getInstance());
+            e.getPlayer().removeMetadata("no_exp_gain", CosmicBosses.getInstance());
         }
     }
 }

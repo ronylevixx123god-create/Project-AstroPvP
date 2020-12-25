@@ -253,8 +253,8 @@ implements Listener {
     public void onTNTExplode(EntityExplodeEvent e) {
         boolean deathPlague;
         if (e.getEntity() instanceof TNTPrimed && ((deathPlague = e.getEntity().hasMetadata("death_plague")) || e.getEntity().hasMetadata("dragon_bomb"))) {
-            for (Block block : Lists.newArrayList((Iterable)e.blockList())) {
-                e.blockList().remove((Object)block);
+            for (Block block : e.blockList()) {
+                e.blockList().remove(block);
             }
             if (deathPlague) {
                 e.setCancelled(true);
@@ -274,7 +274,7 @@ implements Listener {
             me.ifamasssxd.cosmicbosses.boss.type.Boss b = me.ifamasssxd.cosmicbosses.boss.type.Boss.boss_map.get(ent);
             b.onBossDamaged(e);
             if (e instanceof EntityDamageByEntityEvent && (((EntityDamageByEntityEvent)e).getDamager() instanceof Player || ((EntityDamageByEntityEvent)e).getDamager() instanceof Projectile && ((Projectile)((EntityDamageByEntityEvent)e).getDamager()).getShooter() instanceof Player)) {
-                Player pl;
+                Player pl = null;
                 Player player = ((EntityDamageByEntityEvent)e).getDamager() instanceof Player ? (Player)((EntityDamageByEntityEvent)e).getDamager() : (pl = ((EntityDamageByEntityEvent)e).getDamager() instanceof Projectile ? (Player)((Projectile)((EntityDamageByEntityEvent)e).getDamager()).getShooter() : null);
                 if (pl != null) {
                     double dmg = (double) MiscUtil.getEnchantDamageModifier(pl) * e.getDamage() + e.getDamage();
@@ -300,7 +300,7 @@ implements Listener {
         LivingEntity ent = e.getEntity();
         if (me.ifamasssxd.cosmicbosses.boss.type.Boss.boss_map.containsKey(ent)) {
             me.ifamasssxd.cosmicbosses.boss.type.Boss b = me.ifamasssxd.cosmicbosses.boss.type.Boss.boss_map.get(ent);
-            if (CosmicBossEggsPlugin.getPlugin().getServer().getPluginManager().isPluginEnabled("CosmicSpaceChests")) {
+            if (CosmicBosses.getInstance().getServer().getPluginManager().isPluginEnabled("CosmicSpaceChests")) {
                 ItemRarity ir = CosmicSpaceChestsAPI.getItemRarity((int)b.rarity.i);
                 MiscUtil.launchFirework(ent.getLocation(), ir);
                 int x = 0;
@@ -351,12 +351,13 @@ implements Listener {
         if (e.getEntity() instanceof Fireball && (shooter = (Entity)((Object)e.getEntity().getShooter())) != null && shooter.getType() == EntityType.BLAZE && me.ifamasssxd.cosmicbosses.boss.type.Boss.boss_map.containsKey(shooter)) {
             BlazeBoss b = (BlazeBoss) me.ifamasssxd.cosmicbosses.boss.type.Boss.boss_map.get(shooter);
             final Projectile orig_proj = e.getEntity();
-            CosmicBossEggsPlugin.getPlugin().getServer().getScheduler().scheduleSyncDelayedTask((Plugin)CosmicBosses.getInstance(), new Runnable(){
+            Entity finalShooter = shooter;
+            CosmicBosses.getInstance().getServer().getScheduler().scheduleSyncDelayedTask((Plugin)CosmicBosses.getInstance(), new Runnable(){
 
                 @Override
                 public void run() {
                     if (!orig_proj.hasMetadata("no_spawn")) {
-                        SmallFireball FB = ((Blaze)shooter).launchProjectile(SmallFireball.class);
+                        SmallFireball FB = ((Blaze) finalShooter).launchProjectile(SmallFireball.class);
                         FB.setMetadata("no_spawn", new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), true));
                         FB.setVelocity(orig_proj.getVelocity());
                     }

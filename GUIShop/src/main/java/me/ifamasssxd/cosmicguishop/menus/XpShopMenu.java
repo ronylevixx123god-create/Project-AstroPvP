@@ -79,8 +79,9 @@ public class XpShopMenu implements Menu{
     public void onClick(Player player, int slot, ClickType type, InventoryClickEvent e) {
         e.setCancelled(true);
         ItemStack item = e.getCurrentItem();
-        if (item == null || item.getType().equals(Material.AIR) || item.getItemMeta().getDisplayName().startsWith(CC.GreenB + "Astro Xp Shop") || item.getItemMeta().getDisplayName().equals("&f"))
+        if (item == null || item.getType().equals(Material.AIR) || item.getItemMeta().getDisplayName().startsWith(CC.GreenB + "Astro Xp Shop") || item.getItemMeta().getDisplayName().equals("&f")) {
             return;
+        }
         int cost = (int) getCostFromItem(item);
         if (cost == 0)
             return;

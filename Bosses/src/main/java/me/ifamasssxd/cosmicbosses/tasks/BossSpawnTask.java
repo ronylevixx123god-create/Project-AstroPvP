@@ -18,7 +18,7 @@ import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
 import me.ifamasssxd.cosmicbosses.utils.BossUtils;
-import me.ifamasssxd.cosmicbosses.utils.WorldGuardUtils;
+import org.arkhamnetwork.Arkkit.utils.WorldGuardUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -73,9 +73,7 @@ implements Runnable {
     }
 
     private Player getRandomWarzonePlayer() {
-        ArrayList players = Lists.newArrayList((Iterable)Bukkit.getOnlinePlayers());
-        Collections.shuffle(players);
-        for (Player retr : players) {
+        for (Player retr : Bukkit.getOnlinePlayers()) {
             if (retr.hasMetadata("NPC") || !(retr.getLocation().getY() < 256.0) || !BossUtils.canAffectPlayer(retr, false) || WorldGuardUtils.isPvPDisabled(retr.getLocation()) || WorldGuardUtils.getRegionName(retr.getLocation()).startsWith("spawn_") || WorldGuardUtils.getRegionName(retr.getLocation()).contains("warp")) continue;
             return retr;
         }

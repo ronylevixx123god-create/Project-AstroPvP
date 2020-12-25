@@ -69,7 +69,7 @@ public class AntiFarm {
         Location targetTeleport;
         Entity target = this.getTarget();
         double distance = target != null && target.getWorld().equals((Object)this.getEntity().getWorld()) ? target.getLocation().distanceSquared(this.getEntity().getLocation()) : -1.0;
-        List nearby = this.getBoss().getEntity().getNearbyEntities(15.0, 15.0, 15.0);
+        List<Entity> nearby = this.getBoss().getEntity().getNearbyEntities(15.0, 15.0, 15.0);
         if (target != null && target instanceof Player && target.getWorld().equals((Object)this.getEntity().getWorld()) && distance <= 1000.0 && BossUtils.canAffectPlayer((Player)target, false)) {
             Location newLocation = target.getLocation().clone();
             if (this.getBoss().getEntity().isInsideVehicle()) {

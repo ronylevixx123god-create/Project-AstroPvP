@@ -119,7 +119,7 @@ implements CommandExecutor {
                 return true;
             }
             if (args[0].equalsIgnoreCase("spawn") && sender instanceof Player) {
-                HashSet map = null;
+                HashSet<Byte> map = null;
                 try {
                     Block target = p.getTargetBlock(map, 6);
                     if (target == null) {

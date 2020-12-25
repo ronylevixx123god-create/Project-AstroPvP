@@ -43,13 +43,11 @@ import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
+
+import java.util.*;
+
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import me.ifamasssxd.cosmicbosses.bosses.yijki.WitherBoss;
 import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijki;
@@ -58,8 +56,6 @@ import me.ifamasssxd.cosmicbosses.entities.CustomEntity;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
 import me.ifamasssxd.cosmicbosses.struct.enums.ChunkCoords;
-import me.ifamasssxd.cosmicbosses.utils.ReflectionUtils;
-import me.ifamasssxd.cosmicbosses.utils.WorldGuardUtils;
 import net.minecraft.server.v1_8_R3.Entity;
 import net.minecraft.server.v1_8_R3.EntityInsentient;
 import net.minecraft.server.v1_8_R3.PathfinderGoal;
@@ -70,7 +66,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.entity.Item;
@@ -139,7 +134,7 @@ public class BossUtils {
             return false;
         }
         if (WorldGuardUtils.isPvPEnabled(pl.getLocation())) {
-            if (checkEnd && pl.getLocation().getWorld().getEnvironment() == World.Environment.THE_END) {
+            if (checkEnd && pl.getLocation().getWorld().getEnvironment().equals(org.bukkit.World.Environment.THE_END)) {
                 return true;
             }
             String regionName = WorldGuardUtils.getRegionName(pl.getLocation());
@@ -152,7 +147,7 @@ public class BossUtils {
     }
 
     public static org.bukkit.entity.Entity spawnDungeonBoss(Location location, int phase) {
-        DungeonYijki boss = (DungeonYijki)BossType.DUNGEON_YIJKI.createInstance(location);
+        DungeonYijki boss = (DungeonYijki) BossType.DUNGEON_YIJKI.createInstance(location);
         boss.onBossSpawn();
         try {
             boss.setBossPhase(DungeonYijki.BossPhase.values()[phase - 1]);
@@ -164,7 +159,7 @@ public class BossUtils {
     }
 
     public static void teleportPlayer(Player p, Location location) {
-        p.setMetadata("bypassCombatTeleport", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), (Object)location));
+        p.setMetadata("bypassCombatTeleport", (MetadataValue)new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object)location));
         p.teleport(location, PlayerTeleportEvent.TeleportCause.UNKNOWN);
     }
 
@@ -296,8 +291,8 @@ public class BossUtils {
 
     public static void dropWhitelistedItem(Player p, ItemStack is) {
         Item item = p.getWorld().dropItem(p.getLocation(), is);
-        item.setMetadata("whitelisted_item", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), (Object)p.getName()));
-        item.setMetadata("do_not_clear", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), (Object)""));
+        item.setMetadata("whitelisted_item", (MetadataValue)new FixedMetadataValue(CosmicBosses.getInstance(), (Object)p.getName()));
+        item.setMetadata("do_not_clear", (MetadataValue)new FixedMetadataValue(CosmicBosses.getInstance(), (Object)""));
     }
 
     public static Location getRandomLocationNearby(Location l, int maxDist, int yBoost) {
@@ -305,7 +300,7 @@ public class BossUtils {
     }
 
     public static Location getRandomRegionLocation(String regionName) {
-        RegionManager regionMan = WorldGuardUtils.getWorldGuard().getGlobalRegionManager().get(Bukkit.getWorld((String)"world"));
+        RegionManager regionMan = WorldGuardUtils.getWorldGuard().getGlobalRegionManager().get(Bukkit.getWorld("world"));
         if (regionMan == null) {
             return null;
         }
@@ -371,12 +366,12 @@ public class BossUtils {
     public static Boss getBossFromMinion(org.bukkit.entity.Entity e) {
         Boss boss2;
         UUID uuid;
-        if (e.getMetadata("minion").size() > 0 && (uuid = (UUID)((MetadataValue)e.getMetadata("minion").get(0)).value()) != null && (boss2 = Boss.bosses.get(uuid)) != null) {
+        if (e.getMetadata("minion").size() > 0 && (uuid = (UUID)(e.getMetadata("minion").get(0)).value()) != null && (boss2 = Boss.bosses.get(uuid)) != null) {
             return boss2;
         }
-        for (Boss boss2 : Boss.bosses.values()) {
-            if (!boss2.hasMinions() || !boss2.getMinions().contains((Object)e)) continue;
-            return boss2;
+        for (Boss boss3 : Boss.bosses.values()) {
+            if (!boss3.hasMinions() || !boss3.getMinions().contains(e)) continue;
+            return boss3;
         }
         return null;
     }
@@ -422,7 +417,7 @@ public class BossUtils {
     }
 
     public static boolean isRebooting() {
-        return Bukkit.getPluginManager().isPluginEnabled("Arkkit") && CommandArkReboot.restart_task_exists || Bukkit.getPluginManager().isPluginEnabled("NetworkManager") && NetworkManager.plugin.rebooting;
+        return Bukkit.getPluginManager().isPluginEnabled("Arkkit") && CommandArkReboot.restart_task_exists || Bukkit.getPluginManager().isPluginEnabled("NetworkManager");
     }
 
     public static void dealPercentHealthDamage(Player p, double percentage, int maxDamage, int minDamage) {

@@ -18,6 +18,7 @@ package me.ifamasssxd.cosmicbosses.bosses.yijki;
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import me.ifamasssxd.cosmicbosses.struct.BlockModifier;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
@@ -36,8 +37,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class Cage
-extends BossAbility {
+public class Cage extends BossAbility {
     Random random = new Random();
 
     public Cage(Boss boss, BlockModifier modifier) {
@@ -93,7 +93,7 @@ extends BossAbility {
                 }
                 Cage.this.getBlockModifier().removeBlocks(instance, true, true);
             }
-        }.runTaskLater((Plugin)CosmicBosses.getInstance(), 120L);
+        }.runTaskLater((Plugin) CosmicBosses.getInstance(), 120L);
         this.activateCooldown();
     }
 

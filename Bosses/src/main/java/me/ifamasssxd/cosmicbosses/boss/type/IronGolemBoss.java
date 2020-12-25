@@ -9,10 +9,9 @@
  */
 package me.ifamasssxd.cosmicbosses.boss.type;
 
-import com.cosmicpvp.CosmicBossEggs.CosmicBossEggsPlugin;
-
 import java.util.Random;
 
+import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import me.ifamasssxd.cosmicbosses.boss.rarity.BossRarity;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.Packet;
@@ -61,9 +60,9 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
         ig.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, Integer.MAX_VALUE, 1));
         ig.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, Integer.MAX_VALUE, 0));
         this.entity = ig;
-        ig.setMetadata("cbe_boss", new FixedMetadataValue(CosmicBossEggsPlugin.getPlugin(), this.type.name()));
+        ig.setMetadata("cbe_boss", new FixedMetadataValue(CosmicBosses.getInstance(), this.type.name()));
         me.ifamasssxd.cosmicbosses.boss.type.Boss.boss_map.put(ig, this);
-        this.target_task_id = CosmicBossEggsPlugin.getPlugin().getServer().getScheduler().runTaskTimer((Plugin)CosmicBossEggsPlugin.getPlugin(), new Runnable(){
+        this.target_task_id = CosmicBosses.getInstance().getServer().getScheduler().runTaskTimer(CosmicBosses.getInstance(), new Runnable(){
 
             @Override
             public void run() {
@@ -73,7 +72,7 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
                 }
             }
         }, 20L, 20L).getTaskId();
-        this.anti_water_task_id = CosmicBossEggsPlugin.getPlugin().getServer().getScheduler().runTaskTimer((Plugin)CosmicBossEggsPlugin.getPlugin(), new Runnable(){
+        this.anti_water_task_id = CosmicBosses.getInstance().getServer().getScheduler().runTaskTimer(CosmicBosses.getInstance(), new Runnable(){
 
             @Override
             public void run() {
@@ -83,7 +82,7 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
                 }
             }
         }, 20L, 20L).getTaskId();
-        this.jump_task_id = CosmicBossEggsPlugin.getPlugin().getServer().getScheduler().runTaskTimer((Plugin)CosmicBossEggsPlugin.getPlugin(), new Runnable(){
+        this.jump_task_id = CosmicBosses.getInstance().getServer().getScheduler().runTaskTimer(CosmicBosses.getInstance(), new Runnable(){
 
             @Override
             public void run() {
@@ -101,12 +100,12 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
             final Location loc = e.getEntity().getLocation().subtract(0.0, 1.0, 0.0);
             final Block b = loc.getBlock();
             loc.add(0.0, 2.0, 0.0);
-            CosmicBossEggsPlugin.getPlugin().getServer().getScheduler().runTaskAsynchronously((Plugin)CosmicBossEggsPlugin.getPlugin(), new Runnable(){
+            CosmicBosses.getInstance().getServer().getScheduler().runTaskAsynchronously(CosmicBosses.getInstance(), new Runnable(){
 
                 @Override
                 public void run() {
                     PacketPlayOutWorldEvent particles = new PacketPlayOutWorldEvent(2001, new BlockPosition(Math.round(loc.getBlockX()), Math.round(loc.getBlockY()), Math.round(loc.getBlockZ())), b.getTypeId(), false);
-                    ((CraftServer)CosmicBossEggsPlugin.getPlugin().getServer()).getServer().getPlayerList().sendPacketNearby((double)loc.getBlockX(), (double)loc.getBlockY(), (double)loc.getBlockZ(), 16.0, ((CraftWorld)loc.getWorld()).getHandle().dimension, (Packet) particles);
+                    ((CraftServer)CosmicBosses.getInstance().getServer()).getServer().getPlayerList().sendPacketNearby((double)loc.getBlockX(), (double)loc.getBlockY(), (double)loc.getBlockZ(), 16.0, ((CraftWorld)loc.getWorld()).getHandle().dimension, (Packet) particles);
                 }
             });
             for (Entity ent : e.getEntity().getNearbyEntities(8.0, 8.0, 8.0)) {
@@ -118,9 +117,9 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
 
     @Override
     public void onBossDeath(EntityDeathEvent e) {
-        CosmicBossEggsPlugin.getPlugin().getServer().getScheduler().cancelTask(this.target_task_id);
-        CosmicBossEggsPlugin.getPlugin().getServer().getScheduler().cancelTask(this.anti_water_task_id);
-        CosmicBossEggsPlugin.getPlugin().getServer().getScheduler().cancelTask(this.jump_task_id);
+        CosmicBosses.getInstance().getServer().getScheduler().cancelTask(this.target_task_id);
+        CosmicBosses.getInstance().getServer().getScheduler().cancelTask(this.anti_water_task_id);
+        CosmicBosses.getInstance().getServer().getScheduler().cancelTask(this.jump_task_id);
         Boss.boss_map.remove(this.entity);
     }
 

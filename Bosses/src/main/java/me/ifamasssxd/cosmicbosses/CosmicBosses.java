@@ -15,15 +15,16 @@
  */
 package me.ifamasssxd.cosmicbosses;
 
+import com.cosmicpvp.cosmicutils.utils.StringUtils;
 import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+
 import me.ifamasssxd.cosmicbosses.bosses.GuardBoss;
 import me.ifamasssxd.cosmicbosses.bosses.dragon.EndDragon;
 import me.ifamasssxd.cosmicbosses.commands.CommandBoss;
-import me.ifamasssxd.cosmicbosses.commands.CommandBossEgg;
 import me.ifamasssxd.cosmicbosses.commands.CommandBossRewards;
 import me.ifamasssxd.cosmicbosses.commands.CommandSpawnBoss;
 import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijki;
@@ -37,10 +38,9 @@ import me.ifamasssxd.cosmicbosses.tasks.BleedTask;
 import me.ifamasssxd.cosmicbosses.tasks.BossSpawnTask;
 import me.ifamasssxd.cosmicbosses.tasks.BossUpdateTask;
 import me.ifamasssxd.cosmicbosses.utils.MapUtils;
-import me.ifamasssxd.cosmicbosses.utils.ScoreboardUtils;
-import me.ifamasssxd.cosmicbosses.utils.StringUtils;
-import me.ifamasssxd.cosmicbosses.utils.WorldGuardUtils;
 import me.ifamasssxd.factionupgrades.struct.FactionUpgrade;
+import org.arkhamnetwork.Arkkit.utils.ScoreboardUtils;
+import org.arkhamnetwork.Arkkit.utils.WorldGuardUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -55,6 +55,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class CosmicBosses
 extends JavaPlugin {
     private static CosmicBosses instance;
+    private static CosmicBosses cbe;
     private static boolean mcMMOEnabled;
     private boolean eggEnabled = false;
     private boolean naturalSpawnEnabled = false;
@@ -71,8 +72,8 @@ extends JavaPlugin {
 
     public void onEnable() {
         cbe = this;
-
         instance = this;
+
         this.saveDefaultConfig();
         mcMMOEnabled = Bukkit.getPluginManager().isPluginEnabled("mcMMO");
         this.registerCommands();
@@ -80,7 +81,7 @@ extends JavaPlugin {
         this.registerTasks();
         for (Player p : Bukkit.getOnlinePlayers()) {
             PlayerListener.aSyncPlayerMap.put(p.getUniqueId(), p);
-            ScoreboardUtils.clearBossScoreboard(p);
+            // SCOREBOARD OOF ScoreboardUtils.clearBossScoreboard(p);
         }
         CustomEntity.registerEntities();
         StringUtils.getCenteredMessage(" Swag");
@@ -110,7 +111,7 @@ extends JavaPlugin {
         this.blockChangeManager.restoreAllBlocks();
         this.saveBosses();
         for (Player p : Bukkit.getOnlinePlayers()) {
-            ScoreboardUtils.clearBossScoreboard(p);
+            // SCOREBOARD OOF ScoreboardUtils.clearBossScoreboard(p);
         }
         CustomEntity.unregisterEntities();
 
@@ -173,7 +174,7 @@ extends JavaPlugin {
     }
 
     public void saveBosses() {
-        ArrayList bossList = Lists.newArrayList();
+        ArrayList<String> bossList = Lists.newArrayList();
         for (Boss boss : Boss.bosses.values()) {
             if (!boss.isBossSpawned()) continue;
             if (boss instanceof GuardBoss || boss instanceof DungeonYijki || boss instanceof MiniBoss || boss instanceof EndDragon) {

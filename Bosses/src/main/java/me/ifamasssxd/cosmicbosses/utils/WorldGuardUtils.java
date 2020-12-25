@@ -20,9 +20,13 @@
 package me.ifamasssxd.cosmicbosses.utils;
 
 import com.google.common.collect.Lists;
+import java.lang.reflect.Method;
+import java.util.Iterator;
+import java.util.List;
+
 import com.sk89q.worldedit.BlockVector;
 import com.sk89q.worldedit.Vector;
-import com.sk89q.worldedit.bukkit.BukkitUtil;
+import com.sk89q.worldguard.bukkit.BukkitUtil;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
@@ -30,9 +34,6 @@ import com.sk89q.worldguard.protection.flags.Flag;
 import com.sk89q.worldguard.protection.flags.StateFlag;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import java.lang.reflect.Method;
-import java.util.Iterator;
-import java.util.List;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -66,7 +67,7 @@ public class WorldGuardUtils {
     }
 
     public static boolean isInRegionsFast(Location location, String ... regionNames) {
-        return WorldGuardUtils.isInRegionsFast(location, Lists.newArrayList((Object[])regionNames));
+        return WorldGuardUtils.isInRegionsFast(location, Lists.newArrayList(regionNames));
     }
 
     public static boolean isInRegionsFast(Location location, List<String> regionNames) {
@@ -90,7 +91,7 @@ public class WorldGuardUtils {
             Class<?> bukkitUtil = wg.getClass().getClassLoader().loadClass("com.sk89q.worldguard.bukkit.BukkitUtil");
             Method toVector = bukkitUtil.getMethod("toVector", Block.class);
             Vector blockVector = (Vector)toVector.invoke(null, new Object[]{l.getBlock()});
-            List regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs(blockVector);
+            List<String> regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs(blockVector);
             if (regionSet.size() < 0) {
                 return "";
             }
@@ -131,7 +132,7 @@ public class WorldGuardUtils {
             if (highest != null && (highest == null || region.getPriority() <= highest.getPriority())) continue;
             highest = region;
         }
-        return highest == null || !highest.getFlags().containsKey((Object)DefaultFlag.PVP) || highest.getFlag((Flag)DefaultFlag.PVP) != StateFlag.State.DENY;
+        return highest == null || !highest.getFlags().containsKey(DefaultFlag.PVP) || highest.getFlag(DefaultFlag.PVP) != StateFlag.State.DENY;
     }
 
     /*
@@ -141,7 +142,7 @@ public class WorldGuardUtils {
      */
     public static boolean isPvPDisabled(Location l) {
         try {
-            BlockVector blockVector = BukkitUtil.toVector((Block)l.getBlock());
+            BlockVector blockVector = BukkitUtil.toVector(l.getBlock());
             List regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs((Vector)blockVector);
             if (regionSet.size() < 1) {
                 try {
@@ -188,8 +189,8 @@ public class WorldGuardUtils {
 
     public static boolean isLavaFlowDisabled(Location l) {
         try {
-            BlockVector blockVector = BukkitUtil.toVector((Block)l.getBlock());
-            List regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs((Vector)blockVector);
+            com.sk89q.worldedit.BlockVector blockVector = BukkitUtil.toVector((Block)l.getBlock());
+            List<String> regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs((Vector)blockVector);
             if (regionSet.size() < 1) {
                 try {
                     return (StateFlag.State)wg.getGlobalRegionManager().get(l.getWorld()).getRegion("__global__").getFlags().get((Object)DefaultFlag.LAVA_FLOW) == StateFlag.State.DENY;

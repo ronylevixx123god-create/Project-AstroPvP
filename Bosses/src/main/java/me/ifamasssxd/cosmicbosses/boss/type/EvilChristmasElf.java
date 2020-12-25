@@ -13,7 +13,7 @@
  */
 package me.ifamasssxd.cosmicbosses.boss.type;
 
-import com.cosmicpvp.CosmicBossEggs.CosmicBossEggsPlugin;
+import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import me.ifamasssxd.cosmicbosses.utils.MiscUtil;
 import me.ifamasssxd.cosmicbosses.utils.ParticleEffect;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
@@ -74,7 +74,7 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
         pz.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, Integer.MAX_VALUE, 1));
         l.getWorld().playSound(l, Sound.ZOMBIE_HURT, 2.0f, 0.5f);
         this.entity = pz;
-        pz.setMetadata("cbe_boss", new FixedMetadataValue((Plugin) CosmicBossEggsPlugin.getPlugin(), this.type.name()));
+        pz.setMetadata("cbe_boss", new FixedMetadataValue(CosmicBosses.getInstance(), this.type.name()));
         me.ifamasssxd.cosmicbosses.boss.type.Boss.boss_map.put(pz, this);
     }
 
@@ -82,7 +82,7 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
     public void onBossDamaged(EntityDamageEvent e) {
         int i;
         final Location loc = e.getEntity().getLocation().add(0.0, 1.0, 0.0);
-        Bukkit.getScheduler().runTaskAsynchronously((Plugin)CosmicBossEggsPlugin.getPlugin(), new Runnable(){
+        Bukkit.getScheduler().runTaskAsynchronously(CosmicBosses.getInstance(), new Runnable(){
 
             @Override
             public void run() {
@@ -131,18 +131,18 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
         }
         int reaction = new Random().nextInt(10);
         if (reaction <= 5) {
-            CosmicBossEggsPlugin.getPlugin().getServer().getScheduler().runTaskAsynchronously((Plugin)CosmicBossEggsPlugin.getPlugin(), new Runnable(){
+            CosmicBosses.getInstance().getServer().getScheduler().runTaskAsynchronously(CosmicBosses.getInstance(), new Runnable(){
 
                 @Override
                 public void run() {
                     PacketPlayOutWorldEvent particles = new PacketPlayOutWorldEvent(2001, new BlockPosition(Math.round(loc.getBlockX()), Math.round(loc.getBlockY()), Math.round(loc.getBlockZ())), loc.getWorld().getHighestBlockAt(loc).getTypeId(), false);
-                    ((CraftServer)CosmicBossEggsPlugin.getPlugin().getServer()).getServer().getPlayerList().sendPacketNearby((double)loc.getBlockX(), (double)loc.getBlockY(), (double)loc.getBlockZ(), 16.0, ((CraftWorld)loc.getWorld()).getHandle().dimension, (Packet) particles);
+                    ((CraftServer)CosmicBosses.getInstance().getServer()).getServer().getPlayerList().sendPacketNearby((double)loc.getBlockX(), (double)loc.getBlockY(), (double)loc.getBlockZ(), 16.0, ((CraftWorld)loc.getWorld()).getHandle().dimension, (Packet) particles);
                 }
             });
             Location new_loc = loc.add(new Random().nextInt(50), new Random().nextInt(10), new Random().nextInt(50));
             this.pullEntityToLocation(this.entity, new_loc);
         } else if (reaction == 9) {
-            Bukkit.getScheduler().runTaskAsynchronously((Plugin)CosmicBossEggsPlugin.getPlugin(), new Runnable(){
+            Bukkit.getScheduler().runTaskAsynchronously(CosmicBosses.getInstance(), new Runnable(){
 
                 @Override
                 public void run() {
@@ -162,7 +162,7 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
             });
             this.entity.remove();
         } else if (this.entity.getVehicle() != null) {
-            Bukkit.getScheduler().runTaskAsynchronously((Plugin)CosmicBossEggsPlugin.getPlugin(), new Runnable(){
+            Bukkit.getScheduler().runTaskAsynchronously(CosmicBosses.getInstance(), new Runnable(){
 
                 @Override
                 public void run() {
@@ -187,7 +187,7 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
     @Override
     public void onBossDeath(EntityDeathEvent e) {
         final Location loc = e.getEntity().getLocation().add(0.0, 1.0, 0.0);
-        Bukkit.getScheduler().runTaskAsynchronously((Plugin)CosmicBossEggsPlugin.getPlugin(), new Runnable(){
+        Bukkit.getScheduler().runTaskAsynchronously(CosmicBosses.getInstance(), new Runnable(){
 
             @Override
             public void run() {

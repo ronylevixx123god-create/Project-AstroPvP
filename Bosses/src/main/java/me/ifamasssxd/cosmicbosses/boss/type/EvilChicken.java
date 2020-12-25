@@ -12,7 +12,6 @@
  */
 package me.ifamasssxd.cosmicbosses.boss.type;
 
-import com.cosmicpvp.CosmicBossEggs.CosmicBossEggsPlugin;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import me.ifamasssxd.cosmicbosses.utils.ParticleEffect;
 import java.util.HashSet;
@@ -174,7 +173,7 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
                 this.entity.remove();
             } else {
                 this.entity.getWorld().spawnEntity(this.entity.getLocation().add(0.0, 1.0, 0.0), EntityType.WITCH);
-                CosmicBossEggsPlugin.getPlugin().getServer().getScheduler().runTaskAsynchronously((Plugin)CosmicBosses.getInstance(), new Runnable(){
+                CosmicBosses.getInstance().getServer().getScheduler().runTaskAsynchronously((Plugin)CosmicBosses.getInstance(), new Runnable(){
 
                     @Override
                     public void run() {

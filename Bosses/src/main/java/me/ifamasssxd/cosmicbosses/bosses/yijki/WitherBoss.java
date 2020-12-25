@@ -44,7 +44,6 @@ package me.ifamasssxd.cosmicbosses.bosses.yijki;
 
 import java.util.List;
 import java.util.Random;
-import me.ifamasssxd.cosmicbosses.bosses.yijki.PathfinderGoalWitherBossArrowAttack;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.cosmicbosses.struct.Phase;
 import me.ifamasssxd.cosmicbosses.utils.ReflectionUtils;

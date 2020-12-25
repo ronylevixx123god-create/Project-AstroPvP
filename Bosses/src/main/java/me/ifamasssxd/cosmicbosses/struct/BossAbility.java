@@ -3,9 +3,6 @@
  */
 package me.ifamasssxd.cosmicbosses.struct;
 
-import me.ifamasssxd.cosmicbosses.struct.BlockModifier;
-import me.ifamasssxd.cosmicbosses.struct.Boss;
-
 public abstract class BossAbility<T extends Boss> {
     public T boss;
     protected BlockModifier blockModifier;

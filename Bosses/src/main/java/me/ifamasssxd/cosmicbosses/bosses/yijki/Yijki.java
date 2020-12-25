@@ -49,15 +49,9 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
-import me.ifamasssxd.cosmicbosses.bosses.yijki.Cage;
-import me.ifamasssxd.cosmicbosses.bosses.yijki.WitherBoss;
 import me.ifamasssxd.cosmicbosses.commands.CommandBoss;
 import me.ifamasssxd.cosmicbosses.entities.CustomEntity;
-import me.ifamasssxd.cosmicbosses.struct.BlockModifier;
-import me.ifamasssxd.cosmicbosses.struct.Boss;
-import me.ifamasssxd.cosmicbosses.struct.BossMessage;
-import me.ifamasssxd.cosmicbosses.struct.GlobalBoss;
-import me.ifamasssxd.cosmicbosses.struct.Phase;
+import me.ifamasssxd.cosmicbosses.struct.*;
 import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
 import me.ifamasssxd.cosmicbosses.struct.enums.DamageType;
 import me.ifamasssxd.cosmicbosses.struct.enums.Difficulty;
@@ -95,9 +89,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
-public class Yijki
-extends Boss
-implements GlobalBoss {
+public class Yijki extends Boss implements GlobalBoss {
     Cage cage;
     long lastPhaseSwitch = 0L;
     private Phase lastPhase = this.getPhase();

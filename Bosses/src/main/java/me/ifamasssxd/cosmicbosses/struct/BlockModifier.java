@@ -13,8 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import me.ifamasssxd.cosmicbosses.struct.BossAbility;
-import me.ifamasssxd.cosmicbosses.struct.NewBlockData;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -131,7 +129,7 @@ public class BlockModifier {
     }
 
     public void storeBlockToRemove(BossAbility ability, Location l) {
-        ArrayList<Location> locs = this.toRemove.containsKey(ability) ? this.toRemove.get(ability) : new ArrayList<Location>();
+        ArrayList<Location> locs = this.toRemove.containsKey(ability) ? (ArrayList<Location>) this.toRemove.get(ability) : new ArrayList<Location>();
         locs.add(l.clone());
         this.toRemove.put(ability, locs);
     }

@@ -41,9 +41,9 @@ import org.bukkit.util.Vector;
 
 public class BlockChangeManager {
     private ConcurrentHashMap<Location, StoredBlock> storedBlocks = new ConcurrentHashMap();
-    public List<Material> validBreakables = Lists.newArrayList((Object[])new Material[]{Material.STONE, Material.GRASS, Material.COAL_BLOCK, Material.DIRT, Material.STAINED_CLAY, Material.ICE, Material.IRON_BLOCK, Material.DIAMOND_BLOCK, Material.LOG, Material.LEAVES, Material.COBBLESTONE, Material.SMOOTH_BRICK, Material.CACTUS, Material.SANDSTONE, Material.SAND});
-    private List<BlockFace> faces = Lists.newArrayList((Object[])new BlockFace[]{BlockFace.EAST, BlockFace.SOUTH, BlockFace.NORTH, BlockFace.WEST, BlockFace.UP, BlockFace.DOWN});
-    private List<Material> flowers = Lists.newArrayList((Object[])new Material[]{Material.LONG_GRASS, Material.BROWN_MUSHROOM, Material.RED_ROSE, Material.RED_MUSHROOM, Material.YELLOW_FLOWER, Material.CACTUS, Material.SUGAR_CANE_BLOCK});
+    public List<Material> validBreakables = Lists.newArrayList(Material.STONE, Material.GRASS, Material.COAL_BLOCK, Material.DIRT, Material.STAINED_CLAY, Material.ICE, Material.IRON_BLOCK, Material.DIAMOND_BLOCK, Material.LOG, Material.LEAVES, Material.COBBLESTONE, Material.SMOOTH_BRICK, Material.CACTUS, Material.SANDSTONE, Material.SAND);
+    private List<BlockFace> faces = Lists.newArrayList(BlockFace.EAST, BlockFace.SOUTH, BlockFace.NORTH, BlockFace.WEST, BlockFace.UP, BlockFace.DOWN);
+    private List<Material> flowers = Lists.newArrayList(Material.LONG_GRASS, Material.BROWN_MUSHROOM, Material.RED_ROSE, Material.RED_MUSHROOM, Material.YELLOW_FLOWER, Material.CACTUS, Material.SUGAR_CANE_BLOCK);
     Random random = new Random();
 
     public BlockChangeManager() {
@@ -59,7 +59,7 @@ public class BlockChangeManager {
     }
 
     public void restoreAllBlocks() {
-        ((ConcurrentHashMap.KeySetView)this.storedBlocks.keySet()).forEach(this::restoreBlock);
+        (this.storedBlocks.keySet()).forEach(this::restoreBlock);
     }
 
     public void restoreAllBlocks(int bossId) {

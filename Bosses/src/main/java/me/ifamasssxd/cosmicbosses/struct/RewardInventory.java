@@ -16,6 +16,7 @@ import com.cosmicpvp.cosmicutils.utils.ItemSerialization;
 import com.cosmicpvp.cosmicutils.utils.JSONUtils;
 import com.google.gson.reflect.TypeToken;
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,9 +36,9 @@ public class RewardInventory {
     private long expirationTime = -1L;
     private UUID uuid;
 
-    public static void loadBossRewards(JavaPlugin plugin) {
+    public static void loadBossRewards(JavaPlugin plugin) throws IOException {
         bossRewardsFile = JSONUtils.getOrCreateFile((File)plugin.getDataFolder(), (String)"pendingPlayerBossRewards.json");
-        HashMap maps = (HashMap)JSONUtils.fromJson((File)bossRewardsFile, (Type)token);
+        HashMap<UUID, RewardInventorySave> maps = (HashMap)JSONUtils.fromJson(bossRewardsFile, token);
         if (maps != null) {
             maps.forEach((uuid, rewardSave) -> {
                 if (rewardSave.getExpiration() > 0L && System.currentTimeMillis() >= rewardSave.getExpiration()) {

@@ -41,7 +41,7 @@ public class CommandBossEgg implements CommandExecutor {
             pl.playSound(pl.getLocation(), Sound.ORB_PICKUP, 1.0f, 1.0f);
         }
         if (cmd.getName().equalsIgnoreCase("givecbe")) {
-            String p_name;
+            String p_name = null;
             if (sender instanceof Player && !((Player)sender).isOp()) {
                 return true;
             }
