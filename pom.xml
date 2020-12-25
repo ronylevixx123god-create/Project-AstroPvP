@@ -12,9 +12,9 @@
     <modules>
         <module>Utils</module>
         <module>Ark</module>
-        <module>GUIShop</module>
         <module>AuctionHouse</module>
         <module>SpaceChests</module>
+        <module>GUIShop</module>
     </modules>
 
     <build>
