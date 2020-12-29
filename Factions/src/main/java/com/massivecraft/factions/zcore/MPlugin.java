@@ -18,6 +18,7 @@
  */
 package com.massivecraft.factions.zcore;
 
+import com.google.gson.GsonBuilder;
 import com.massivecraft.factions.Conf;
 import com.massivecraft.factions.zcore.persist.EM;
 import com.massivecraft.factions.zcore.persist.SaveTask;

@@ -11,13 +11,13 @@
 package com.massivecraft.factions;
 
 import com.google.common.collect.Lists;
+import com.google.gson.reflect.TypeToken;
 import com.massivecraft.factions.util.MiscUtil;
 import com.massivecraft.factions.zcore.persist.EntityCollection;
 import com.massivecraft.factions.zcore.util.TextUtil;
 import javafx.beans.binding.MapExpression;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.craftbukkit.libs.com.google.gson.reflect.TypeToken;
 
 import java.io.File;
 import java.lang.reflect.Type;

@@ -1,14 +1,3 @@
-/*
- * Decompiled with CFR 0.145.
- *
- * Could not load the following classes:
- *  com.google.common.collect.Lists
- *  org.bukkit.Bukkit
- *  org.bukkit.Location
- *  org.bukkit.World
- *  org.bukkit.configuration.ConfigurationSection
- *  org.bukkit.configuration.file.YamlConfiguration
- */
 package com.massivecraft.factions;
 
 import com.google.common.collect.Lists;

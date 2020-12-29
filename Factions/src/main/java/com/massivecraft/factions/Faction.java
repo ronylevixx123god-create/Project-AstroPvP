@@ -1,22 +1,3 @@
-/*
- * Decompiled with CFR 0.145.
- *
- * Could not load the following classes:
- *  com.google.common.collect.Lists
- *  org.arkhamnetwork.Arkkit.patches.chat_filter.ChatUtils
- *  org.arkhamnetwork.Arkkit.patches.networkevents.IgnoreUtils
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.Location
- *  org.bukkit.OfflinePlayer
- *  org.bukkit.Server
- *  org.bukkit.command.CommandSender
- *  org.bukkit.entity.Player
- *  org.bukkit.inventory.Inventory
- *  org.bukkit.plugin.Plugin
- *  org.bukkit.scheduler.BukkitScheduler
- *  org.bukkit.scheduler.BukkitTask
- */
 package com.massivecraft.factions;
 
 import com.google.common.collect.Lists;
@@ -29,7 +10,6 @@ import com.massivecraft.factions.util.MiscUtil;
 import com.massivecraft.factions.util.RelationUtil;
 import com.massivecraft.factions.zcore.persist.Entity;
 import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatUtils;
-import org.arkhamnetwork.Arkkit.patches.networkevents.IgnoreUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -52,7 +32,7 @@ public class Faction
     public String motd;
     public double money = 0.0;
     private Map<Role, Set<RolePerm>> activeRolePerms = new ConcurrentHashMap<Role, Set<RolePerm>>();
-    private Map<UUID, Set<RolePerm>> activePlayerRolePerms = new ConcurrentHashMap<UUID, Set<RolePerm>>();
+    private final Map<UUID, Set<RolePerm>> activePlayerRolePerms = new ConcurrentHashMap<UUID, Set<RolePerm>>();
     private long lastTruceTime;
     private long lastAllyTime;
     private int trucesAvailable;
@@ -835,7 +815,7 @@ public class Faction
 
     public void sendModMessage(Player sender, String message) {
         for (FPlayer fplayer : this.getFPlayersWhereOnline(true)) {
-            if (!fplayer.getRole().isAtLeast(Role.MODERATOR) && !fplayer.getRole().isCoLeader() || IgnoreUtils.isIgnored(fplayer.getPlayer(), sender.getName()))
+            if (!fplayer.getRole().isAtLeast(Role.MODERATOR) && !fplayer.getRole().isCoLeader()))
                 continue;
             fplayer.sendMessage(ChatUtils.getFilteredMessage(message, fplayer.getPlayer(), true));
         }

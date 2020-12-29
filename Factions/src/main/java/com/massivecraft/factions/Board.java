@@ -1,30 +1,3 @@
-/*
- * Decompiled with CFR 0.145.
- *
- * Could not load the following classes:
- *  com.compilex.CosmicOutposts.CosmicOutpostsAPI
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.factionpoints.CosmicFactionPoints
- *  com.cosmicpvp.factionpoints.FactionsCoreChunkAPI
- *  com.cosmicpvp.factionpoints.managers.CoreChunkManager
- *  com.cosmicpvp.factionpoints.struct.ExpiringChunkData
- *  com.google.common.collect.Lists
- *  com.google.common.collect.MapMaker
- *  com.wimbli.WorldBorder.BorderData
- *  com.wimbli.WorldBorder.WorldBorder
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.Chunk
- *  org.bukkit.Location
- *  org.bukkit.World
- *  org.bukkit.block.BlockState
- *  org.bukkit.block.CreatureSpawner
- *  org.bukkit.command.CommandSender
- *  org.bukkit.craftbukkit.libs.com.google.gson.Gson
- *  org.bukkit.craftbukkit.libs.com.google.gson.reflect.TypeToken
- *  org.bukkit.entity.EntityType
- *  org.bukkit.entity.Player
- */
 package com.massivecraft.factions;
 
 import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
@@ -34,6 +7,7 @@ import com.cosmicpvp.factionpoints.FactionsCoreChunkAPI;
 import com.cosmicpvp.factionpoints.struct.ExpiringChunkData;
 import com.google.common.collect.Lists;
 import com.google.common.collect.MapMaker;
+import com.google.gson.reflect.TypeToken;
 import com.massivecraft.factions.struct.FactionPermissions;
 import com.massivecraft.factions.struct.Permission;
 import com.massivecraft.factions.struct.PermissionManager;
@@ -49,7 +23,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.CreatureSpawner;
-import org.bukkit.craftbukkit.libs.com.google.gson.reflect.TypeToken;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
@@ -65,8 +38,8 @@ public class Board {
     public static List<String> disbandingFactions;
     private static transient File file = new File(P.p.getDataFolder(), "board.json");
     private static Board me;
-    private static Map<String, MobSpawnerData[]> expiringSpawnerCountMap;
-    private static Map<String, List<FancyMessage>> expiringChunkSpawnerHoverData;
+    private static final Map<String, MobSpawnerData[]> expiringSpawnerCountMap;
+    private static final Map<String, List<FancyMessage>> expiringChunkSpawnerHoverData;
 
     static {
         disbandingFactions = new ArrayList<>();

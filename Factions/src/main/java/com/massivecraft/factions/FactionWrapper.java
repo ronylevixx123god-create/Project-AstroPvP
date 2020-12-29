@@ -1,16 +1,9 @@
-/*
- * Decompiled with CFR 0.145.
- *
- * Could not load the following classes:
- *  net.minecraft.util.com.google.common.collect.Lists
- *  org.bukkit.Location
- */
 package com.massivecraft.factions;
 
+import com.google.common.collect.Lists;
 import com.massivecraft.factions.iface.EconomyParticipator;
 import com.massivecraft.factions.struct.Relation;
 import com.massivecraft.factions.struct.Role;
-import net.minecraft.util.com.google.common.collect.Lists;
 import org.bukkit.Location;
 
 import java.util.*;
