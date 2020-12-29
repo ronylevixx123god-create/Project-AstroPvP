@@ -793,14 +793,12 @@ public class Faction
 
     public void sendMessage(Player sender, String message) {
         for (FPlayer fplayer : this.getFPlayersWhereOnline(true)) {
-            if (IgnoreUtils.isIgnored(fplayer.getPlayer(), sender.getName())) continue;
             fplayer.sendMessage(message);
         }
     }
 
     public void sendMessage(Player sender, String message, boolean filter) {
         for (FPlayer fplayer : this.getFPlayersWhereOnline(true)) {
-            if (IgnoreUtils.isIgnored(fplayer.getPlayer(), sender.getName())) continue;
             fplayer.sendMessage(filter ? ChatUtils.getFilteredMessage(message, fplayer.getPlayer(), true) : message);
         }
     }
@@ -815,8 +813,7 @@ public class Faction
 
     public void sendModMessage(Player sender, String message) {
         for (FPlayer fplayer : this.getFPlayersWhereOnline(true)) {
-            if (!fplayer.getRole().isAtLeast(Role.MODERATOR) && !fplayer.getRole().isCoLeader()))
-                continue;
+            if (!fplayer.getRole().isAtLeast(Role.MODERATOR) && !fplayer.getRole().isCoLeader()) continue;
             fplayer.sendMessage(ChatUtils.getFilteredMessage(message, fplayer.getPlayer(), true));
         }
     }

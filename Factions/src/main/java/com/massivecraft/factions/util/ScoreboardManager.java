@@ -39,11 +39,12 @@ import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.integration.Econ;
 import com.massivecraft.factions.struct.Relation;
 import com.massivecraft.factions.zcore.util.NumberUtils;
-import net.minecraft.server.v1_7_R4.*;
+import com.massivecraft.factions.zcore.util.WebLinkUtils;
+import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.MetadataValue;
@@ -134,7 +135,7 @@ public class ScoreboardManager {
             name = name.substring(0, 16);
         ScoreboardScore playerName = scoreboardComp.getPlayerScoreForObjective(name, scoreboardObjective);
         playerName.setScore(15);
-        scores.add(new PacketPlayOutScoreboardScore(playerName, 1));
+        scores.add(new PacketPlayOutScoreboardScore(playerName.getPlayerName(), scoreboardObjective));
         int index = 15;
         scores.add(getScore(ChatColor.BLACK + " ", scoreboardComp, scoreboardObjective, index--));
         scores.add(getScore(ChatColor.AQUA + ChatColor.BOLD.toString() + "Account", scoreboardComp, scoreboardObjective, index--));
@@ -231,7 +232,8 @@ public class ScoreboardManager {
             name = name.substring(0, 16);
         ScoreboardScore playerName = scoreboardComp.getPlayerScoreForObjective(name, objective);
         playerName.setScore(score);
-        return new PacketPlayOutScoreboardScore(playerName, 0);
+        // POSSIBLY FUCKED
+        return new PacketPlayOutScoreboardScore(playerName.getPlayerName(), objective);
     }
 
     private static int getExpAtLevel(Player player) {

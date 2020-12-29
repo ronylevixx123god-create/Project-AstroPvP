@@ -34,6 +34,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 import java.text.DecimalFormat;
+import java.util.Collections;
 
 public class CmdTNT
         extends FCommand {
@@ -103,9 +104,9 @@ public class CmdTNT
                 int tntToDeposit = stacks == -1 ? playerTNTStacks : Math.min(playerTNTStacks, stacks);
                 int stacksDeposited = 0;
                 PlayerInventory targetInventory = this.fme.getPlayer().getInventory();
-                Block targetBlock = this.fme.getPlayer().getTargetBlock(null, 5);
+                Block targetBlock = this.fme.getPlayer().getTargetBlock(Collections.singleton(Material.AIR), 5);
                 if (targetBlock.getState() instanceof Chest) {
-                    Chest c = (Chest) this.fme.getPlayer().getTargetBlock(null, 5).getState();
+                    Chest c = (Chest) this.fme.getPlayer().getTargetBlock(Collections.singleton(Material.AIR), 5).getState();
                     int chestTntStacks = this.getTNTStacksInInventory(c.getInventory());
                     if (chestTntStacks > 0) {
                         tntToDeposit = stacks == -1 ? chestTntStacks : Math.min(chestTntStacks, stacks);

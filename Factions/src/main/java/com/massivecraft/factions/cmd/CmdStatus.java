@@ -19,7 +19,6 @@ import com.massivecraft.factions.integration.Econ;
 import com.massivecraft.factions.util.AuthenticationUtils;
 import com.massivecraft.factions.util.MapUtils;
 import com.massivecraft.factions.util.TimeUtil;
-import me.ifamasssxd.cosmicplaytime.CosmicPlaytime;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
@@ -47,8 +46,6 @@ public class CmdStatus
         if (faction != null && faction.isNormal()) {
             try {
                 this.sender.sendMessage("");
-                CosmicPlaytime playtime = (CosmicPlaytime) Bukkit.getPluginManager().getPlugin("CosmicPlaytime");
-                if (playtime != null) {
                     long start = System.currentTimeMillis();
                     LinkedHashMap<FPlayer, Long> mostRecentPlayers = new LinkedHashMap<FPlayer, Long>();
                     int online = 0;
@@ -78,8 +75,7 @@ public class CmdStatus
                         this.sender.sendMessage(builder.toString());
                     }
                     this.sender.sendMessage("");
-                    Bukkit.getLogger().info("Sent " + sorted.size() + " fplayers to " + this.sender.getName() + " in " + (System.currentTimeMillis() - start) + "ms");
-                }
+                    //Bukkit.getLogger().info("Sent " + sorted.size() + " fplayers to " + this.sender.getName() + " in " + (System.currentTimeMillis() - start) + "ms");
             } catch (Exception e) {
                 e.printStackTrace();
             }

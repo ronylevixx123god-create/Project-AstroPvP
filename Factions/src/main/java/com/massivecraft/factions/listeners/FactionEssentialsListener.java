@@ -28,10 +28,10 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class FactionEssentialsListener
-        implements Listener {
+public class FactionEssentialsListener implements Listener {
     private long sellTimeframe = TimeUnit.SECONDS.toMillis(30L);
-
+}
+    /*
     @EventHandler
     public void onPlayerSellItems(PlayerSellEvent event) {
         boolean sellHand = false;
@@ -58,5 +58,5 @@ public class FactionEssentialsListener
             }
         }
     }
-}
+}*/
 

@@ -30,7 +30,6 @@
  */
 package com.massivecraft.factions.listeners;
 
-import com.compilex.CosmicReputation.ReputationAPI;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.earth2me.essentials.User;
 import com.earth2me.essentials.utils.DateUtil;
@@ -47,7 +46,6 @@ import mkremins.fanciful.FancyMessage;
 import org.arkhamnetwork.Arkkit.libs.SeasonalWin;
 import org.arkhamnetwork.Arkkit.patches.SeasonalPrefixes;
 import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatUtils;
-import org.arkhamnetwork.Arkkit.patches.networkevents.IgnoreUtils;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -72,7 +70,7 @@ public class FactionsChatListener implements Listener {
     public P p;
     private final DecimalFormat eloFormat = new DecimalFormat("#.#");
     private final DecimalFormat formatter = new DecimalFormat("#,###");
-    private final Pattern webpattern = Pattern.compile("[-a-zA-Z0-9@:%_\\+.~#?&//=]{2,256}\\.[a-z]{2,4}\\b(\\/[-a-zA-Z0-9@:%_\\+.~#?&//=]*)?");
+    private final Pattern webpattern = Pattern.compile("[-a-zA-Z0-9@:%_+.~#?&//=]{2,256}\\.[a-z]{2,4}\\b(/[-a-zA-Z0-9@:%_+.~#?&//=]*)?");
     private final Pattern COLOR_PATTERN = Pattern.compile("(?i)" + '§' + "[0-9A-FK-OR]");
     private final boolean vanillaGalaxy = (new File("plugins/CosmicDuelNoRanked.jar")).exists();
 
@@ -112,7 +110,8 @@ public class FactionsChatListener implements Listener {
                         if (silentMuted) {
                             talkingPlayer.sendMessage(String.format(Conf.factionChatFormat, nameAndTitle, playerName, ChatUtils.getFilteredMessage(msg, talkingPlayer, true)));
                         } else {
-                            myFaction.getFPlayersWhereOnline(true).stream().filter((pl) -> !IgnoreUtils.isIgnored(pl.getPlayer(), talkingPlayer.getName())).forEach((fpl) -> {
+
+                            myFaction.getFPlayersWhereOnline(true).forEach(fpl -> {
                                 if (fpl.isCachedAsOnline()) {
                                     fpl.getPlayer().sendMessage(String.format(Conf.factionChatFormat, nameAndTitle, playerName, ChatUtils.getFilteredMessage(msg, fpl.getPlayer(), true)));
                                 }
@@ -144,10 +143,8 @@ public class FactionsChatListener implements Listener {
                                 talkingPlayer.sendMessage(String.format(Conf.modChatFormat, nameAndTitle, playerName, ChatUtils.getFilteredMessage(msg, talkingPlayer, true)));
                             } else {
                                 for (FPlayer pl : myFaction.getFPlayersWhereOnline(true)) {
-                                    if (!IgnoreUtils.isIgnored(pl.getPlayer(), talkingPlayer.getName())) {
-                                        if (pl.getRole().isAtLeast(Role.MODERATOR) || pl.getRole().isCoLeader()) {
-                                            pl.getPlayer().sendMessage(String.format(Conf.modChatFormat, nameAndTitle, playerName, ChatUtils.getFilteredMessage(msg, pl.getPlayer(), true)));
-                                        }
+                                    if (pl.getRole().isAtLeast(Role.MODERATOR) || pl.getRole().isCoLeader()) {
+                                        pl.getPlayer().sendMessage(String.format(Conf.modChatFormat, nameAndTitle, playerName, ChatUtils.getFilteredMessage(msg, pl.getPlayer(), true)));
                                     }
                                 }
                             }
@@ -173,7 +170,7 @@ public class FactionsChatListener implements Listener {
                             if (silentMuted) {
                                 talkingPlayer.sendMessage(String.format(Conf.allianceChatFormat, ChatColor.stripColor(me.getNameAndTagAsync()), ChatUtils.getFilteredMessage(msg, talkingPlayer, true)));
                             } else {
-                                myFaction.getFPlayersWhereOnline(true).stream().filter((pl) -> !IgnoreUtils.isIgnored(pl.getPlayer(), talkingPlayer.getName())).forEach((fpl) -> {
+                                myFaction.getFPlayersWhereOnline(true).forEach(fpl -> {
                                     fpl.getPlayer().sendMessage(String.format(Conf.allianceChatFormat, ChatColor.stripColor(me.getNameAndTagAsync()), ChatUtils.getFilteredMessage(msg, fpl.getPlayer(), true)));
                                 });
                             }
@@ -183,9 +180,7 @@ public class FactionsChatListener implements Listener {
                             while(var10.hasNext()) {
                                 fplayer = var10.next();
                                 if (myFaction.getRelationTo(fplayer) == Relation.ALLY) {
-                                    if (!IgnoreUtils.isIgnored(fplayer.getPlayer(), talkingPlayer.getName())) {
-                                        fplayer.sendMessage(String.format(Conf.allianceChatFormat, ChatColor.stripColor(me.getNameAndTagAsync()), ChatUtils.getFilteredMessage(msg, fplayer.getPlayer(), true)));
-                                    }
+                                    fplayer.sendMessage(String.format(Conf.allianceChatFormat, ChatColor.stripColor(me.getNameAndTagAsync()), ChatUtils.getFilteredMessage(msg, fplayer.getPlayer(), true)));
                                 } else if (fplayer.isSpyingChat()) {
                                     fplayer.sendMessage("[ACspy] " + myFaction.getTag() + ": " + String.format(Conf.allianceChatFormat, ChatColor.stripColor(me.getNameAndTagAsync()), ChatUtils.getFilteredMessage(msg, fplayer.getPlayer(), true)));
                                 }
@@ -200,9 +195,7 @@ public class FactionsChatListener implements Listener {
                             if (silentMuted) {
                                 talkingPlayer.sendMessage(msg);
                             } else {
-                                myFaction.getFPlayersWhereOnline(true).stream().filter((pl) -> {
-                                    return !IgnoreUtils.isIgnored(pl.getPlayer(), talkingPlayer.getName());
-                                }).forEach((fpl) -> {
+                                myFaction.getFPlayersWhereOnline(true).forEach(fpl -> {
                                     fpl.getPlayer().sendMessage(String.format(Conf.truceChatFormat, ChatColor.stripColor(me.getNameAndTagAsync()), ChatUtils.getFilteredMessage(msg, fpl.getPlayer(), true)));
                                 });
                                 var10 = FPlayers.i.getOnline().iterator();
@@ -210,9 +203,7 @@ public class FactionsChatListener implements Listener {
                                 while(var10.hasNext()) {
                                     fplayer = var10.next();
                                     if (myFaction.getRelationTo(fplayer) == Relation.TRUCE) {
-                                        if (!IgnoreUtils.isIgnored(fplayer.getPlayer(), talkingPlayer.getName())) {
-                                            fplayer.sendMessage(String.format(Conf.truceChatFormat, ChatColor.stripColor(me.getNameAndTagAsync()), ChatUtils.getFilteredMessage(msg, talkingPlayer, true)));
-                                        }
+                                        fplayer.sendMessage(String.format(Conf.truceChatFormat, ChatColor.stripColor(me.getNameAndTagAsync()), ChatUtils.getFilteredMessage(msg, talkingPlayer, true)));
                                     } else if (fplayer.isSpyingChat()) {
                                         fplayer.sendMessage("[FTCspy] " + myFaction.getTag() + ": " + String.format(Conf.truceChatFormat, ChatColor.stripColor(me.getNameAndTagAsync()), ChatUtils.getFilteredMessage(msg, fplayer.getPlayer(), true)));
                                     }

@@ -16,6 +16,7 @@ import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.cosmicpvp.cosmicutils.utils.ReflectionUtils;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.Factions;
+import lombok.SneakyThrows;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -24,6 +25,7 @@ import java.lang.reflect.Field;
 
 public class CommandAdminFaction
         implements CommandExecutor {
+    @SneakyThrows
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if (!sender.isOp()) {
             return true;

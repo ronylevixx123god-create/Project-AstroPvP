@@ -17,6 +17,7 @@
  */
 package com.massivecraft.factions.cmd;
 
+import com.google.common.collect.Lists;
 import com.massivecraft.factions.*;
 import com.massivecraft.factions.event.FPlayerLeaveEvent;
 import com.massivecraft.factions.event.FactionDisbandEvent;
@@ -25,7 +26,6 @@ import com.massivecraft.factions.listeners.menu.FDisbandConfirm;
 import com.massivecraft.factions.struct.Permission;
 import com.massivecraft.factions.struct.Relation;
 import com.massivecraft.factions.struct.RolePerm;
-import net.minecraft.util.com.google.common.collect.Lists;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 

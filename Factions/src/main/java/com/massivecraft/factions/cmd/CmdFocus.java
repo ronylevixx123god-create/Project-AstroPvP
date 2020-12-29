@@ -1,7 +1,5 @@
 package com.massivecraft.factions.cmd;
 
-import com.cosmicpvp.scoreboard.TeamAPI;
-import org.arkhamnetwork.Arkkit.patches.networkevents.IgnoreUtils;
 import com.massivecraft.factions.struct.Relation;
 import org.bukkit.ChatColor;
 import com.massivecraft.factions.Faction;
@@ -75,11 +73,12 @@ public class CmdFocus extends FCommand
                     removeFocus = myFaction.focusedPlayer;
                 }
             }
-            TeamAPI.handleFactionFocusPlayer(playerToFocus.getPlayer(), myFaction);
+            // SCOREBOARD FOR FOCUS
+            //TeamAPI.handleFactionFocusPlayer(playerToFocus.getPlayer(), myFaction);
             myFaction.focusedPlayer = playerToFocus;
-            if (removeFocus != null && removeFocus.isOnline()) {
-                TeamAPI.handleFactionUnfocusPlayer(removeFocus.getPlayer(), myFaction);
-            }
+            //if (removeFocus != null && removeFocus.isOnline()) {
+            //    TeamAPI.handleFactionUnfocusPlayer(removeFocus.getPlayer(), myFaction);
+            //}
             if (command) {
                 myFaction.msg("", new Object[0]);
             }
@@ -92,9 +91,6 @@ public class CmdFocus extends FCommand
             }
             for (final FPlayer fplayer : FPlayers.i.getOnline()) {
                 if (myFaction.getRelationTo(fplayer) == Relation.ALLY) {
-                    if (IgnoreUtils.isIgnored(fplayer.getPlayer(), pSender.getPlayer().getName())) {
-                        continue;
-                    }
                     fplayer.sendMessage(ChatColor.DARK_PURPLE.toString() + ChatColor.BOLD + pSender.getNameAndTagAsync() + ChatColor.LIGHT_PURPLE + " has focused " + ChatColor.DARK_PURPLE + ChatColor.BOLD + playerToFocus.getTag() + " " + playerToFocus.getPlayer().getName());
                 }
                 else {

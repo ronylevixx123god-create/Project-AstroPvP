@@ -17,6 +17,8 @@
 package com.massivecraft.factions.cmd;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.MapMaker;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.P;
@@ -35,7 +37,7 @@ public class CmdChest extends FCommand {
     private Map<UUID, Long> lastExecuted;
 
     public CmdChest() {
-        this.lastExecuted = new MapMaker().expireAfterWrite(1L, TimeUnit.SECONDS).makeMap();
+        this.lastExecuted = (Map<UUID, Long>) CacheBuilder.newBuilder().expireAfterWrite(1L, TimeUnit.SECONDS).build();
         this.aliases.add("chest");
         this.errorOnToManyArgs = false;
         this.disableOnLock = true;

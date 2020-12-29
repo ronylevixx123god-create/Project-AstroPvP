@@ -5,8 +5,8 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.factionpoints.CosmicFactionPoints;
 import com.cosmicpvp.factionpoints.FactionsCoreChunkAPI;
 import com.cosmicpvp.factionpoints.struct.ExpiringChunkData;
+import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.Lists;
-import com.google.common.collect.MapMaker;
 import com.google.gson.reflect.TypeToken;
 import com.massivecraft.factions.struct.FactionPermissions;
 import com.massivecraft.factions.struct.Permission;
@@ -16,7 +16,6 @@ import com.massivecraft.factions.util.AsciiCompass;
 import com.massivecraft.factions.util.TimeUtil;
 import com.massivecraft.factions.zcore.util.DiscUtil;
 import com.wimbli.WorldBorder.BorderData;
-import com.wimbli.WorldBorder.WorldBorder;
 import mkremins.fanciful.FancyMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -43,8 +42,8 @@ public class Board {
 
     static {
         disbandingFactions = new ArrayList<>();
-        expiringSpawnerCountMap = new MapMaker().expireAfterWrite(1L, TimeUnit.MINUTES).makeMap();
-        expiringChunkSpawnerHoverData = new MapMaker().expireAfterWrite(1L, TimeUnit.MINUTES).makeMap();
+        expiringSpawnerCountMap = (Map<String, MobSpawnerData[]>) CacheBuilder.newBuilder().expireAfterWrite(1L, TimeUnit.MINUTES).build();
+        expiringChunkSpawnerHoverData = (Map<String, List<FancyMessage>>) CacheBuilder.newBuilder().expireAfterWrite(1L, TimeUnit.MINUTES).build();
     }
 
     public Board() {

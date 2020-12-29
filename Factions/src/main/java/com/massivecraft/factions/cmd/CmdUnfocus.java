@@ -12,7 +12,6 @@ package com.massivecraft.factions.cmd;
 
 //import com.cosmicpvp.scoreboard.TeamAPI;
 
-import com.cosmicpvp.scoreboard.TeamAPI;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
@@ -44,9 +43,10 @@ public class CmdUnfocus
             }
             Player pUnfocus = faction.focusedPlayer.getPlayer();
             faction.focusedPlayer = null;
-            if (pUnfocus.isOnline()) {
-                TeamAPI.handleFactionUnfocusPlayer(pUnfocus, faction);
-            }
+            // TEAM API
+            //if (pUnfocus.isOnline()) {
+            //    TeamAPI.handleFactionUnfocusPlayer(pUnfocus, faction);
+            //}
             faction.msg(ChatColor.GREEN.toString() + ChatColor.BOLD + "*** " + ChatColor.GREEN + "Your faction no longer has an /f focus target.");
         }
     }
