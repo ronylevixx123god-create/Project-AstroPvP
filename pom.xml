@@ -16,6 +16,7 @@
         <module>SpaceChests</module>
         <module>Bosses</module>
         <module>GUIShop</module>
+        <module>Factions</module>
     </modules>
 
     <build>
