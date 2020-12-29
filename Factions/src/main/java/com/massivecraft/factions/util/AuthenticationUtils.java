@@ -1,12 +1,3 @@
-/*
- * Decompiled with CFR 0.145.
- *
- * Could not load the following classes:
- *  me.ifamasssxd.cosmicauth.CosmicAuth
- *  me.ifamasssxd.cosmicauth.manager.AuthenticationManager
- *  org.bukkit.Bukkit
- *  org.bukkit.plugin.Plugin
- */
 package com.massivecraft.factions.util;
 
 import me.ifamasssxd.cosmicauth.CosmicAuth;

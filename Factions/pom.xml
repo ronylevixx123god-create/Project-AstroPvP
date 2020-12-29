@@ -81,7 +81,13 @@
 
 
         <!-- System Repos -->
-
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>CosmicAuth</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/CosmicAuthentication.jar</systemPath>
+        </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>permissions</artifactId>

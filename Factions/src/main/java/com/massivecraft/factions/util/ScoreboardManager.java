@@ -39,7 +39,6 @@ import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.integration.Econ;
 import com.massivecraft.factions.struct.Relation;
 import com.massivecraft.factions.zcore.util.NumberUtils;
-import com.massivecraft.factions.zcore.util.WebLinkUtils;
 import net.minecraft.server.v1_7_R4.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

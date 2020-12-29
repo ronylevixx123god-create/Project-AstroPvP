@@ -18,7 +18,6 @@ import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.P;
 import com.massivecraft.factions.struct.FLogManager;
 import com.massivecraft.factions.struct.LogTimer;
-import net.ess3.api.events.PlayerSellEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;

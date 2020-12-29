@@ -14,9 +14,9 @@
  */
 package com.massivecraft.factions.util;
 
+import com.google.gson.*;
 import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.P;
-import org.bukkit.craftbukkit.libs.com.google.gson.*;
 
 import java.lang.reflect.Type;
 import java.util.HashSet;

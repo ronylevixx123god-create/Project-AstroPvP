@@ -12,14 +12,15 @@ package com.massivecraft.factions.struct.managers;
 
 import com.cosmicpvp.cosmicutils.utils.ItemSerialization;
 import com.cosmicpvp.cosmicutils.utils.JSONUtils;
+import com.google.gson.reflect.TypeToken;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.P;
 import com.massivecraft.factions.zcore.util.ItemUtil;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.libs.com.google.gson.reflect.TypeToken;
 import org.bukkit.inventory.Inventory;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +30,7 @@ public class FChestManager {
     private Type token = new TypeToken<Map<String, String>>(){}.getType();
     private Map<String, Inventory> fchestItems = new HashMap<String, Inventory>();
 
-    public void onEnable(P p) {
+    public void onEnable(P p) throws IOException {
         this.fChestFile = JSONUtils.getOrCreateFile(p.getDataFolder(), "factionChests.json");
         Map factionItems = (Map)JSONUtils.fromJson(this.fChestFile, this.token);
         if (factionItems != null) {
@@ -58,7 +59,7 @@ public class FChestManager {
         return this.fchestItems.computeIfAbsent(faction.getId(), e -> Bukkit.createInventory(null, 54, "/f chest"));
     }
 
-    public void onDisable(P p) {
+    public void onDisable(P p) throws IOException {
         HashMap toSave = new HashMap();
         this.fchestItems.forEach((fId, items) -> {
             try {

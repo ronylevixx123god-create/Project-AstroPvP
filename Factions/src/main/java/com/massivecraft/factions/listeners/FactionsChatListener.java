@@ -263,29 +263,10 @@ public class FactionsChatListener implements Listener {
             }
         }
 
-        List<FancyMessage> reputationHoverInfo = null;
-        int reputationLevel = 0;
-        if (Bukkit.getPluginManager().isPluginEnabled("CosmicReputation")) {
-            reputationLevel = ReputationAPI.getReputationLevel(event.getPlayer().getUniqueId());
-            if (reputationLevel > 0 && ReputationAPI.getReputationReasons(event.getPlayer().getUniqueId()) != null) {
-                reputationHoverInfo = new ArrayList<>();
-                reputationHoverInfo.add(new FancyMessage(ChatColor.AQUA + "" + ChatColor.BOLD + event.getPlayer().getName() + "'s Reputation Level: " + ChatColor.LIGHT_PURPLE + ChatColor.UNDERLINE + reputationLevel));
-                reputationHoverInfo.add(new FancyMessage(ChatColor.GRAY + "This level is increased by being in one of the"));
-                reputationHoverInfo.add(new FancyMessage(ChatColor.GRAY + "top 10 /f top factions at the end of each season."));
-                reputationHoverInfo.add(new FancyMessage(ChatColor.GRAY + ""));
-                String[] var11 = ReputationAPI.getReputationReasons(event.getPlayer().getUniqueId());
-                int var12 = var11.length;
-
-                for (String s : var11) {
-                    reputationHoverInfo.add(new FancyMessage(s));
-                }
-            }
-        }
-
         List<FancyMessage> creatorHoverInfo = null;
         String channelName = null;
         String channelURL = null;
-        if (ArkPlugins.CONTENT_CREATOR.getArkPlugin().isRunning()) {
+        if (ArkPlugins.YOUTUBERS.getArkPlugin().isRunning()) {
             Player p = event.getPlayer();
             if (p.hasMetadata("contentCreatorName")) {
                 channelName = p.getMetadata("contentCreatorName").get(0).asString();
@@ -323,9 +304,6 @@ public class FactionsChatListener implements Listener {
         }
 
         String player_display_name = event.getPlayer().getDisplayName();
-        if (reputationLevel > 0) {
-            player_faction_info.add(new FancyMessage(ChatColor.valueOf(Conf.hoverNames) + "Reputation: " + ChatColor.valueOf(Conf.hoverChatColor) + reputationLevel));
-        }
 
         player_faction_info.add(new FancyMessage(ChatColor.valueOf(Conf.hoverNames) + "Power: " + ChatColor.valueOf(Conf.hoverChatColor) + follower.getPowerRounded() + ChatColor.valueOf(Conf.hoverSlashColor) + "/" + ChatColor.valueOf(Conf.hoverChatColor) + (int)Conf.powerPlayerMax));
         player_faction_info.add(new FancyMessage(ChatColor.valueOf(Conf.hoverNames) + "Logged in: " + ChatColor.valueOf(Conf.hoverChatColor) + DateUtil.formatDateDiff(user.getLastLogin()) + " ago"));
@@ -343,12 +321,12 @@ public class FactionsChatListener implements Listener {
             String[] current_message_string = current_string.split("/UniqueSplitString/");
             fancy_message = seasonalHoverInfo != null ? (new FancyMessage(current_message_string[0])).formattedTooltip(seasonalHoverInfo) : new FancyMessage(current_message_string[0]);
             if (current_message_string.length > 1) {
-                if (reputationLevel <= 0 && channelURL == null) {
+                if (channelURL == null) {
                     fancy_message.then(player_display_name).formattedTooltip(player_faction_info).command("/f who " + event.getPlayer().getName());
                 } else {
                     String playerRank = player_display_name.substring(0, player_display_name.lastIndexOf(">") + 1);
                     String playerName = player_display_name.substring(player_display_name.lastIndexOf(">") + 1);
-                    fancy_message.then(playerRank).formattedTooltip(creatorHoverInfo != null ? creatorHoverInfo : reputationHoverInfo).link(channelURL).then(playerName).formattedTooltip(player_faction_info).command("/f who " + event.getPlayer().getName());
+                    fancy_message.then(playerRank).formattedTooltip(creatorHoverInfo).link(channelURL).then(playerName).formattedTooltip(player_faction_info).command("/f who " + event.getPlayer().getName());
                 }
 
                 int current_count = 0;

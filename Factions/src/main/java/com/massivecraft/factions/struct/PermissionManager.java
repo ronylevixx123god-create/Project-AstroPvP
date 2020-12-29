@@ -10,14 +10,14 @@
  */
 package com.massivecraft.factions.struct;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.P;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.libs.com.google.gson.Gson;
-import org.bukkit.craftbukkit.libs.com.google.gson.GsonBuilder;
-import org.bukkit.craftbukkit.libs.com.google.gson.reflect.TypeToken;
 
 import java.io.File;
 import java.io.FileReader;

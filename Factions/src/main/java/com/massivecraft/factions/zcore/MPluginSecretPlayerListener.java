@@ -38,7 +38,7 @@ public class MPluginSecretPlayerListener
     }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-    public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
+    public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) throws NoSuchMethodException {
         if (this.p.handleCommand(event.getPlayer(), event.getMessage())) {
             if (this.p.logPlayerCommands()) {
                 this.p.getServer().getLogger().log(Level.INFO, "[PLAYER_COMMAND] {0}: {1}", new Object[]{event.getPlayer().getName(), event.getMessage()});

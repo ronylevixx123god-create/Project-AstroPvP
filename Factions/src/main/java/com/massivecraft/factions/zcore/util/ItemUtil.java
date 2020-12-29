@@ -15,10 +15,10 @@
  */
 package com.massivecraft.factions.zcore.util;
 
-import net.minecraft.server.v1_7_R4.NBTTagCompound;
-import net.minecraft.server.v1_7_R4.NBTTagList;
+import net.minecraft.server.v1_8_R3.NBTTagCompound;
+import net.minecraft.server.v1_8_R3.NBTTagList;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_7_R4.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -56,7 +56,7 @@ public class ItemUtil {
     }
 
     public static ItemStack addUnsafeEnchantment(ItemStack item) {
-        net.minecraft.server.v1_7_R4.ItemStack is = CraftItemStack.asNMSCopy(item);
+        net.minecraft.server.v1_8_R3.ItemStack is = CraftItemStack.asNMSCopy(item);
         if (is != null) {
             NBTTagCompound comp = is.getTag();
             if (comp == null) {

@@ -10,6 +10,7 @@
 package com.massivecraft.factions.struct;
 
 import com.cosmicpvp.cosmicutils.utils.JSONUtils;
+import com.google.gson.reflect.TypeToken;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.Factions;
 import com.massivecraft.factions.P;
@@ -27,7 +28,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import net.minecraft.util.com.google.common.reflect.TypeToken;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 

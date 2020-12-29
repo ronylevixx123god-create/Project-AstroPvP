@@ -1,24 +1,8 @@
-/*
- * Decompiled with CFR 0.145.
- *
- * Could not load the following classes:
- *  org.bukkit.Bukkit
- *  org.bukkit.Server
- *  org.bukkit.command.CommandSender
- *  org.bukkit.craftbukkit.libs.com.google.gson.Gson
- *  org.bukkit.craftbukkit.libs.com.google.gson.GsonBuilder
- *  org.bukkit.craftbukkit.libs.com.google.gson.reflect.TypeToken
- *  org.bukkit.event.Listener
- *  org.bukkit.plugin.Plugin
- *  org.bukkit.plugin.PluginDescriptionFile
- *  org.bukkit.plugin.PluginManager
- *  org.bukkit.plugin.java.JavaPlugin
- *  org.bukkit.scheduler.BukkitScheduler
- *  org.bukkit.scheduler.BukkitTask
- */
 package com.massivecraft.factions.zcore;
 
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.massivecraft.factions.Conf;
 import com.massivecraft.factions.zcore.persist.EM;
 import com.massivecraft.factions.zcore.persist.SaveTask;
@@ -27,9 +11,6 @@ import com.massivecraft.factions.zcore.util.Persist;
 import com.massivecraft.factions.zcore.util.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.libs.com.google.gson.Gson;
-import org.bukkit.craftbukkit.libs.com.google.gson.GsonBuilder;
-import org.bukkit.craftbukkit.libs.com.google.gson.reflect.TypeToken;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.Type;
@@ -47,9 +28,7 @@ public abstract class MPlugin
     protected boolean loadSuccessful = false;
     private Integer saveTask = null;
     private boolean autoSave = true;
-    private MPluginSecretPlayerListener mPluginSecretPlayerListener;
-    private MPluginSecretServerListener mPluginSecretServerListener;
-    private List<MCommand<?>> baseCommands = new ArrayList<>();
+    private final List<MCommand<?>> baseCommands = new ArrayList<>();
     private long timeEnableStart;
 
     public boolean getAutoSave() {
@@ -81,10 +60,10 @@ public abstract class MPlugin
         } catch (ClassCastException refCmd) {
             // empty catch block
         }
-        this.mPluginSecretPlayerListener = new MPluginSecretPlayerListener(this);
-        this.mPluginSecretServerListener = new MPluginSecretServerListener(this);
-        this.getServer().getPluginManager().registerEvents(this.mPluginSecretPlayerListener, this);
-        this.getServer().getPluginManager().registerEvents(this.mPluginSecretServerListener, this);
+        MPluginSecretPlayerListener mPluginSecretPlayerListener = new MPluginSecretPlayerListener(this);
+        MPluginSecretServerListener mPluginSecretServerListener = new MPluginSecretServerListener(this);
+        this.getServer().getPluginManager().registerEvents(mPluginSecretPlayerListener, this);
+        this.getServer().getPluginManager().registerEvents(mPluginSecretServerListener, this);
         if (this.saveTask == null && Conf.saveToFileEveryXMinutes > 0.0) {
             long saveTicks = (long) (1200.0 * Conf.saveToFileEveryXMinutes);
             this.saveTask = Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this, new SaveTask(this), saveTicks, saveTicks).getTaskId();

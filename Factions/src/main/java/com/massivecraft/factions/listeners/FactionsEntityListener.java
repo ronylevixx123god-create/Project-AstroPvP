@@ -283,7 +283,7 @@ public class FactionsEntityListener
         FLocation defenderFLoc = new FLocation(defenderLoc);
         Faction defLocFaction = Board.getFactionAt(defenderFLoc);
         if (damager instanceof Projectile && damager instanceof Entity && ((Projectile) damager).getShooter() != null) {
-            damager = ((Projectile) damager).getShooter();
+            damager = (Entity) ((Projectile) damager).getShooter();
         }
         if (damager == damagee) {
             return true;
