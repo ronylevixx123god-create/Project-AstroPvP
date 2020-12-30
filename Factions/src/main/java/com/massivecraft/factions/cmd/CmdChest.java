@@ -1,25 +1,7 @@
-/*
- * Decompiled with CFR 0.145.
- *
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.google.common.collect.MapMaker
- *  org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog
- *  org.arkhamnetwork.Arkkit.plugins.ArkPlugin
- *  org.arkhamnetwork.Arkkit.plugins.ArkPlugins
- *  org.bukkit.Location
- *  org.bukkit.Sound
- *  org.bukkit.command.CommandSender
- *  org.bukkit.entity.Player
- *  org.bukkit.inventory.Inventory
- *  org.bukkit.inventory.InventoryView
- */
-package com.massivecraft.factions.cmd;
+ package com.massivecraft.factions.cmd;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import com.google.common.collect.MapMaker;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.P;
 import com.massivecraft.factions.struct.RolePerm;

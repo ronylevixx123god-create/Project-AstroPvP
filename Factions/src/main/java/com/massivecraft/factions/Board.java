@@ -1,5 +1,6 @@
 package com.massivecraft.factions;
 
+
 import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.factionpoints.CosmicFactionPoints;
@@ -16,6 +17,7 @@ import com.massivecraft.factions.util.AsciiCompass;
 import com.massivecraft.factions.util.TimeUtil;
 import com.massivecraft.factions.zcore.util.DiscUtil;
 import com.wimbli.WorldBorder.BorderData;
+import com.wimbli.WorldBorder.WorldBorder;
 import mkremins.fanciful.FancyMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -44,6 +46,7 @@ public class Board {
         disbandingFactions = new ArrayList<>();
         expiringSpawnerCountMap = (Map<String, MobSpawnerData[]>) CacheBuilder.newBuilder().expireAfterWrite(1L, TimeUnit.MINUTES).build();
         expiringChunkSpawnerHoverData = (Map<String, List<FancyMessage>>) CacheBuilder.newBuilder().expireAfterWrite(1L, TimeUnit.MINUTES).build();
+
     }
 
     public Board() {
@@ -118,15 +121,15 @@ public class Board {
                 if (!l.equals(flocation)) continue;
                 wrapper.chunkClaims.remove(l);
             }
-            for (Map.Entry entry : wrapper.allyWarps.entrySet()) {
-                if (!((Location) entry.getValue()).getChunk().equals(((Location) entry.getValue()).getWorld().getChunkAt((int) flocation.getX(), (int) flocation.getZ())))
+            for (Map.Entry<String, Location> entry : wrapper.allyWarps.entrySet()) {
+                if (!(entry.getValue()).getChunk().equals((entry.getValue()).getWorld().getChunkAt((int) flocation.getX(), (int) flocation.getZ())))
                     continue;
                 wrapper.allyWarps.remove(entry.getKey());
-                faction.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "You have removed the ally warp for " + Factions.i.get((String) entry.getKey()).getTag() + " due to unclaiming land.");
+                faction.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "You have removed the ally warp for " + Factions.i.get(entry.getKey()).getTag() + " due to unclaiming land.");
             }
-            for (Map.Entry entry : wrapper.allAllyWarps.entrySet()) {
-                Location l = (Location) entry.getValue();
-                String name = (String) entry.getKey();
+            for (Map.Entry<String, Location> entry : wrapper.allAllyWarps.entrySet()) {
+                Location l = entry.getValue();
+                String name = entry.getKey();
                 if (!l.getChunk().equals(l.getWorld().getChunkAt((int) flocation.getX(), (int) flocation.getZ())))
                     continue;
                 wrapper.allyWarps.remove(name);
@@ -377,7 +380,7 @@ public class Board {
     }
 
     private static List<FancyMessage> getChunkSpawnerHoverData(FLocation fLocation) {
-        List hoverData = expiringChunkSpawnerHoverData.getOrDefault(fLocation.toString(), new ArrayList<>());
+        List<FancyMessage> hoverData = expiringChunkSpawnerHoverData.getOrDefault(fLocation.toString(), new ArrayList<>());
         if (hoverData.size() > 0) {
             return hoverData;
         }
@@ -386,8 +389,8 @@ public class Board {
             spawnerTypeCounts.put(m.getSpawnerType(), spawnerTypeCounts.getOrDefault(m.getSpawnerType(), 0) + m.getSpawnerCount());
         }
         hoverData.add(new FancyMessage(CC.Aqua + "Chunk: " + CC.White + fLocation.toRawString()));
-        for (Map.Entry entry : spawnerTypeCounts.entrySet()) {
-            hoverData.add(new FancyMessage(CC.White + entry.getValue() + "x " + CC.Gray + ((EntityType) entry.getKey()).name().replace("_", " ")));
+        for (Map.Entry<EntityType, Integer> entry : spawnerTypeCounts.entrySet()) {
+            hoverData.add(new FancyMessage(CC.White + entry.getValue() + "x " + CC.Gray + (entry.getKey()).name().replace("_", " ")));
         }
         return hoverData;
     }
@@ -474,7 +477,7 @@ public class Board {
         try {
             Type type = new TypeToken<Map<String, Map<String, String>>>() {
             }.getType();
-            Map worldCoordIds = P.p.gson.fromJson(DiscUtil.read(file), type);
+            Map<String, Map<String, String>> worldCoordIds = P.p.gson.fromJson(DiscUtil.read(file), type);
             Board.loadFromSaveFormat(worldCoordIds);
         } catch (Exception e) {
             e.printStackTrace();

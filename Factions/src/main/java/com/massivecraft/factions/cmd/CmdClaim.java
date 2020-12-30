@@ -17,8 +17,8 @@
 package com.massivecraft.factions.cmd;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.Lists;
-import com.google.common.collect.MapMaker;
 import com.massivecraft.factions.*;
 import com.massivecraft.factions.struct.FLogType;
 import com.massivecraft.factions.struct.Permission;
@@ -30,13 +30,15 @@ import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class CmdClaim extends FCommand {
-    public static Set<String> chunkCoordsPendingClaim = Collections.newSetFromMap((new MapMaker()).expireAfterWrite(10L, TimeUnit.SECONDS).concurrencyLevel(16).makeMap());
+    public static Set<String> chunkCoordsPendingClaim = (Set<String>) CacheBuilder.newBuilder().expireAfterWrite(1L,TimeUnit.MINUTES).build();
+
+
+
     Set<Material> seeThrough;
 
     public CmdClaim() {

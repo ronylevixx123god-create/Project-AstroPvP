@@ -47,6 +47,7 @@ import com.massivecraft.factions.zcore.MPlugin;
 import com.massivecraft.factions.zcore.util.MojangUUIDFetcher;
 import com.massivecraft.factions.zcore.util.TextUtil;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import lombok.SneakyThrows;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -130,6 +131,7 @@ public class P extends MPlugin {
         this.setAutoSave(val);
     }
 
+    @SneakyThrows
     public void onEnable() {
         try {
             Class.forName("org.bukkit.craftbukkit.libs.com.google.gson.reflect.TypeToken");

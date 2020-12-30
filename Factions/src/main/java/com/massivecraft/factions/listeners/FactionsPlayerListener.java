@@ -71,6 +71,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -573,9 +575,11 @@ public class FactionsPlayerListener
 
     private void sendTargetBlockUpdate(Player player) {
         try {
-            Block target = player.getTargetBlock(null, 4);
+            Block target = player.getTargetBlock((HashSet<Byte>) null, 4);
             if (target != null && (target.getType().name().contains("WATER") || target.getType().name().contains("LAVA"))) {
-                AsyncPacketSenderThread.queuePacket(((CraftPlayer) player).getHandle(), new PacketPlayOutBlockChange(target.getX(), target.getY(), target.getZ(), ((CraftWorld) player.getWorld()).getHandle()));
+
+                // TODO: LOOK INTO AsyncPacketSenderThread
+                // AsyncPacketSenderThread.queuePacket(((CraftPlayer) player).getHandle(), new PacketPlayOutBlockChange(target.getX(), target.getY(), target.getZ(), ((CraftWorld) player.getWorld()).getHandle()));
             }
         } catch (Exception target) {
             // empty catch block
@@ -635,7 +639,8 @@ public class FactionsPlayerListener
         this.onPlayerInteractNew(spoofedEvent);
         if (spoofedEvent.useItemInHand() == Event.Result.DENY || spoofedEvent.useInteractedBlock() == Event.Result.DENY) {
             event.setCancelled(true);
-            AsyncPacketSenderThread.queuePacket(((CraftPlayer) player).getHandle(), new PacketPlayOutBlockChange(block.getX(), block.getY(), block.getZ(), ((CraftWorld) player.getWorld()).getHandle()));
+            // TODO: LOOK INTO AsyncPacketSenderThread
+            //AsyncPacketSenderThread.queuePacket(((CraftPlayer) player).getHandle(), new PacketPlayOutBlockChange(block.getX(), block.getY(), block.getZ(), ((CraftWorld) player.getWorld()).getHandle()));
             if (FactionPermissions.debug) {
                 Bukkit.getLogger().info("Cancelling " + event.getPlayer().getName() + " Bucket fill event: " + spoofedEvent.useItemInHand() + " block: " + spoofedEvent.useInteractedBlock());
             }
