@@ -8,6 +8,7 @@ import com.cosmicpvp.factionpoints.FactionsCoreChunkAPI;
 import com.cosmicpvp.factionpoints.struct.ExpiringChunkData;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.Lists;
+import com.google.common.collect.MapMaker;
 import com.google.gson.reflect.TypeToken;
 import com.massivecraft.factions.struct.FactionPermissions;
 import com.massivecraft.factions.struct.Permission;
@@ -39,13 +40,16 @@ public class Board {
     public static List<String> disbandingFactions;
     private static transient File file = new File(P.p.getDataFolder(), "board.json");
     private static Board me;
-    private static final Map<String, MobSpawnerData[]> expiringSpawnerCountMap;
-    private static final Map<String, List<FancyMessage>> expiringChunkSpawnerHoverData;
+    private static final CacheBuilder<Object, Object> expiringSpawnerCountMap;
+    private static final CacheBuilder<Object, Object> expiringChunkSpawnerHoverData;
 
     static {
         disbandingFactions = new ArrayList<>();
-        expiringSpawnerCountMap = (Map<String, MobSpawnerData[]>) CacheBuilder.newBuilder().expireAfterWrite(1L, TimeUnit.MINUTES).build();
-        expiringChunkSpawnerHoverData = (Map<String, List<FancyMessage>>) CacheBuilder.newBuilder().expireAfterWrite(1L, TimeUnit.MINUTES).build();
+        //expiringSpawnerCountMap = new MapMaker().expireAfterWrite(1L, TimeUnit.MINUTES).makeMap();
+        //expiringChunkSpawnerHoverData = new MapMaker().expireAfterWrite(1L, TimeUnit.MINUTES).makeMap();
+
+        expiringSpawnerCountMap = CacheBuilder.newBuilder().expireAfterWrite(1L, TimeUnit.MINUTES);
+        expiringChunkSpawnerHoverData = CacheBuilder.newBuilder().expireAfterWrite(1L, TimeUnit.MINUTES);
 
     }
 
@@ -356,7 +360,7 @@ public class Board {
 
 
     private static int getSpawnersInChunk(FLocation fLocation) {
-        MobSpawnerData[] data = expiringSpawnerCountMap.get(fLocation.toString());
+        MobSpawnerData[] data = (MobSpawnerData[]) expiringSpawnerCountMap.build().asMap().get(fLocation.toString());
         if (data != null) {
             return Board.getSpawnerCount(data);
         }
@@ -366,8 +370,8 @@ public class Board {
             listData.add(new MobSpawnerData((CreatureSpawner) spawner));
         }
         MobSpawnerData[] array = (MobSpawnerData[]) listData.toArray(new MobSpawnerData[listData.size()]);
-        expiringSpawnerCountMap.put(fLocation.toString(), array);
-        expiringChunkSpawnerHoverData.put(fLocation.toString(), Board.getChunkSpawnerHoverData(fLocation));
+        expiringSpawnerCountMap.build().asMap().put(fLocation.toString(), array);
+        expiringChunkSpawnerHoverData.build().asMap().put(fLocation.toString(), Board.getChunkSpawnerHoverData(fLocation));
         return Board.getSpawnerCount(array);
     }
 
@@ -380,12 +384,13 @@ public class Board {
     }
 
     private static List<FancyMessage> getChunkSpawnerHoverData(FLocation fLocation) {
-        List<FancyMessage> hoverData = expiringChunkSpawnerHoverData.getOrDefault(fLocation.toString(), new ArrayList<>());
+        //List<FancyMessage> hoverData = expiringChunkSpawnerHoverData.getOrDefault(fLocation.toString(), new ArrayList<>());
+        List<FancyMessage> hoverData = (List<FancyMessage>) expiringChunkSpawnerHoverData.build().asMap().getOrDefault(fLocation.toString(), new ArrayList<>());
         if (hoverData.size() > 0) {
             return hoverData;
         }
         HashMap<EntityType, Integer> spawnerTypeCounts = new HashMap<EntityType, Integer>();
-        for (MobSpawnerData m : expiringSpawnerCountMap.get(fLocation.toString())) {
+        for (MobSpawnerData m : (MobSpawnerData[]) expiringSpawnerCountMap.build().asMap().get(fLocation.toString())) {
             spawnerTypeCounts.put(m.getSpawnerType(), spawnerTypeCounts.getOrDefault(m.getSpawnerType(), 0) + m.getSpawnerCount());
         }
         hoverData.add(new FancyMessage(CC.Aqua + "Chunk: " + CC.White + fLocation.toRawString()));
