@@ -134,7 +134,7 @@ public class P extends MPlugin {
     @SneakyThrows
     public void onEnable() {
         try {
-            Class.forName("org.bukkit.craftbukkit.libs.com.google.gson.reflect.TypeToken");
+            Class.forName("com.google.common.reflect.TypeToken");
         } catch (ClassNotFoundException ex) {
             this.log(Level.SEVERE, "GSON lib not found. Your CraftBukkit build is too old (< 1.3.2) or otherwise not compatible.");
             this.suicide();

@@ -35,9 +35,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class CmdClaim extends FCommand {
-    public static Set<String> chunkCoordsPendingClaim = (Set<String>) CacheBuilder.newBuilder().expireAfterWrite(1L,TimeUnit.MINUTES).build();
-
-
+    public static Set<String> chunkCoordsPendingClaim = CacheBuilder.newBuilder().expireAfterWrite(1L,TimeUnit.MINUTES).build().asMap();
 
     Set<Material> seeThrough;
 

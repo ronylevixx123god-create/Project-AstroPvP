@@ -11,8 +11,7 @@ import com.massivecraft.factions.util.AuthenticationUtils;
 
 import java.util.Collections;
 
-public class FCmdRoot
-        extends FCommand {
+public class FCmdRoot extends FCommand {
     public CmdRoles cmdRoles = new CmdRoles();
     public CmdAdmin cmdAdmin = new CmdAdmin();
     public CmdAutoClaim cmdAutoClaim = new CmdAutoClaim();
