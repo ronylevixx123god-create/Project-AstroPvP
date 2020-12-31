@@ -18,6 +18,7 @@
         <module>GUIShop</module>
         <module>Factions</module>
         <module>Slotbot</module>
+        <module>Core</module>
     </modules>
 
     <build>

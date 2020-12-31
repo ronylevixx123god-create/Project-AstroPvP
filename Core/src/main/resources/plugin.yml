@@ -1,0 +1,26 @@
+name: AstroCore
+version: ${project.version}
+main: net.astropvp.core.Main
+authors: [Tucker, Bryside]
+description: Astro Core
+commands:
+  bless:
+    aliases: ['blessme']
+  heal:
+    aliases: ['healme']
+  discord:
+    aliases: ['discord']
+  pots:
+    aliases: ['pot']
+  broadcast:
+    aliases: ['bc']
+  invsee:
+    aliases: ['inventorysee']
+  givechunkbuster:
+    aliases: ['givecb']
+  trash:
+    aliases: ['bin']
+  lastmanstanding:
+    aliases: [ 'lms' ]
+  dupe:
+    description: /dupe

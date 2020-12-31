@@ -1,0 +1,17 @@
+bless:
+  msg: '&e&l** &e&lBLESSED &e&l**'
+  cooldownMessage: '&7[&a&lAstro&e&lPvP&7] &c/bless is still on cooldown'
+
+heal:
+  msg: '&6&l** &6&lHEALED &6&l**'
+  cooldownMessage: '&7[&a&lAstro&e&lPvP&7] &c/heal is still on cooldown'
+
+broadcast:
+  enabled: true
+  commands:
+    - '/bc'
+    - '/broadcast'
+  message:
+    - ' '
+    - '&a&lAstro&e&lPvP &8| &f%broadcast%'
+    - ' '

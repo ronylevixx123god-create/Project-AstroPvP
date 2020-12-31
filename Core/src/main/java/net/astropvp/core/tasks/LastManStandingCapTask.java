@@ -1,0 +1,95 @@
+package net.astropvp.core.tasks;
+
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
+import com.cosmicpvp.cosmicutils.utils.HCFOutpostUtils;
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
+import java.util.concurrent.ThreadLocalRandom;
+
+import net.astropvp.core.cachers.LastManStandingCacher;
+import net.astropvp.core.enums.CapType;
+import net.astropvp.core.utils.StringUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.World;
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+
+public class LastManStandingCapTask extends BukkitRunnable {
+    private static World world = Bukkit.getWorlds().get(0);
+
+    public void run() {
+        for (int i = LastManStandingCacher.getCachers().size() - 1; i >= 0; i--) {
+            LastManStandingCacher cacher = LastManStandingCacher.getCachers().get(i);
+            Player player = cacher.getPlayer();
+            if (player != null &&
+                    player.isOnline()) {
+                try {
+                    CapType type = WorldGuardUtils.inRegion(player.getLocation(), "lms_region_desert") ? CapType.DESERT : (WorldGuardUtils.inRegion(player.getLocation(), "lms_region_spawn") ? CapType.SPAWN : null);
+                    if (type == null) {
+                        LastManStandingCacher.getCachers().remove(i);
+                        continue;
+                    }
+                } catch (NullPointerException e) {
+                    cacher.remove();
+                }
+                if (player.isFlying()) {
+                    cacher.remove();
+                    player.sendMessage(String.valueOf(CC.RedB) + "(!) " + CC.Red + "Since you were flying, you lost your LMS Timer.");
+                    player.setFlying(false);
+                    player.setAllowFlight(false);
+                }
+            }
+            continue;
+        }
+        LastManStandingCacher cacher2 = LastManStandingCacher.getLongestPlayerAlive(CapType.DESERT);
+        LastManStandingCacher other = LastManStandingCacher.getLongestPlayerAlive(CapType.SPAWN);
+        ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
+        LastManStandingCacher[] cachers = { cacher2, other };
+        LastManStandingCacher[] array;
+        for (int length = (array = cachers).length, j = 0; j < length; j++) {
+            LastManStandingCacher x = array[j];
+            if (x != null) {
+                x.add();
+                if (x.getLMSTime() % 60 == 0 && x.getLMSTime() != 0) {
+                    Player player2 = x.getPlayer();
+                    if (Math.random() < 0.5D) {
+                        int give = ThreadLocalRandom.current().nextInt(150000, 300001);
+                        if (HCFOutpostUtils.doesControlOutpost(player2, "frozen"))
+                            give *= 1;
+                        player2.sendMessage(String.valueOf(CC.WhiteB) + "+ " + StringUtils.formatWithCommas(give) + "XP " + CC.Gray + "(LMS Reward " + CC.White + "#" + (x.getLMSTime() / 60) + CC.Gray + ")");
+                        player2.giveExp(give);
+                        x.addExperience(give);
+                        if (Math.random() <= 0.07) {
+                            Bukkit.broadcastMessage("");
+                            Bukkit.broadcastMessage(CC.translate("&b&l*** &9&l&n" + player2.getName() + "&3&l GOT LUCKY AND RECEIVED A SLOTBOT TICKET FROM LMS &b&l***"));
+                            Bukkit.broadcastMessage("");
+                            Bukkit.dispatchCommand(console, "kit slotbot " + player2.getName());
+                        }
+                    } else {
+                        double multiplier = 1.0D;
+                        if (HCFOutpostUtils.doesControlOutpost(player2, "frozen"))
+                            multiplier += 0.25D;
+                        int give2 = (int)(multiplier * ThreadLocalRandom.current().nextInt(1000000, 3000001));
+                        player2.sendMessage(String.valueOf(CC.WhiteB) + "+ $" + StringUtils.formatWithCommas(give2) + " " + CC.Gray + "(LMS Reward " + CC.White + "#" + (x.getLMSTime() / 60) + CC.Gray + ")");
+                        EconomyUtils.depositBalance((OfflinePlayer)player2, give2);
+                        x.addMoney(give2);
+
+                        if (Math.random() <= 0.07) {
+                            Bukkit.broadcastMessage("");
+                            Bukkit.broadcastMessage(CC.translate("&b&l*** &9&l&n" + player2.getName() + "&3&l GOT LUCKY AND RECEIVED A SLOTBOT TICKET FROM LMS &b&l***"));
+                            Bukkit.broadcastMessage("");
+                            Bukkit.dispatchCommand(console, "kit slotbot " + player2.getName());
+                        }
+                    }
+                }
+            }
+        }
+        for (Player player3 : world.getPlayers()) {
+            CapType type2 = WorldGuardUtils.inRegion(player3.getLocation(), "lms_region_desert") ? CapType.DESERT : (WorldGuardUtils.inRegion(player3.getLocation(), "lms_region_spawn") ? CapType.SPAWN : null);
+            if (type2 != null && LastManStandingCacher.getPlayer(player3) == null)
+                new LastManStandingCacher(player3, type2);
+        }
+    }
+}

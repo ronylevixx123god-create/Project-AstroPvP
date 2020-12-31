@@ -16,6 +16,7 @@
         <module name="Slotbot" />
         <module name="Ark" />
         <module name="Arkkit" />
+        <module name="Core" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
