@@ -1,17 +1,14 @@
 package me.ily2bb.slotbot.objects;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.UUID;
 import me.ily2bb.slotbot.utils.LootTable;
 import me.ily2bb.slotbot.utils.Utils;
 import org.arkhamnetwork.Arkkit.patches.ItemLinking;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.*;
 
 public class ItemListCacher {
     public static HashSet caches = new HashSet();
@@ -29,7 +26,7 @@ public class ItemListCacher {
         ItemStack[] var3 = items;
         int var4 = items.length;
 
-        for(int var5 = 0; var5 < var4; ++var5) {
+        for (int var5 = 0; var5 < var4; ++var5) {
             ItemStack x = var3[var5];
             this.items.add(x);
         }
@@ -54,8 +51,8 @@ public class ItemListCacher {
                 return null;
             }
 
-            cacher = (ItemListCacher)var2.next();
-        } while(cacher == null || cacher.getUUID() == null || !cacher.getUUID().equals(u));
+            cacher = (ItemListCacher) var2.next();
+        } while (cacher == null || cacher.getUUID() == null || !cacher.getUUID().equals(u));
 
         return cacher;
     }
@@ -69,7 +66,7 @@ public class ItemListCacher {
         Player[] onlinePlayers = Bukkit.getOnlinePlayers().toArray(new Player[0]);
         int length = Bukkit.getOnlinePlayers().size();
 
-        for(int i = 0; i < length; ++i) {
+        for (int i = 0; i < length; ++i) {
             Player player = onlinePlayers[i];
             if (player.getUniqueId().equals(this.player)) {
                 return player;
@@ -92,12 +89,12 @@ public class ItemListCacher {
         int y = 0;
         Iterator var3 = this.items.iterator();
 
-        while(var3.hasNext()) {
-            ItemStack item = (ItemStack)var3.next();
+        while (var3.hasNext()) {
+            ItemStack item = (ItemStack) var3.next();
             Iterator var5 = broadcastItems.iterator();
 
-            while(var5.hasNext()) {
-                ItemStack x = (ItemStack)var5.next();
+            while (var5.hasNext()) {
+                ItemStack x = (ItemStack) var5.next();
                 if (x.equals(item)) {
                     ++y;
                 }
@@ -112,7 +109,7 @@ public class ItemListCacher {
             StringBuilder spaces = new StringBuilder();
             int size = 40 - p.getName().length();
 
-            for(int x2 = 0; x2 < size; ++x2) {
+            for (int x2 = 0; x2 < size; ++x2) {
                 spaces.append(" ");
             }
 
@@ -123,11 +120,11 @@ public class ItemListCacher {
             Player[] onlinePlayers = Bukkit.getOnlinePlayers().toArray(new Player[0]);
             int length = Bukkit.getOnlinePlayers().size();
 
-            for(int l = 0; l < length; ++l) {
+            for (int l = 0; l < length; ++l) {
                 Player pl = onlinePlayers[l];
 
-                for(int i = 0; i < this.items.size(); ++i) {
-                    ItemStack k = (ItemStack)this.items.get(i);
+                for (int i = 0; i < this.items.size(); ++i) {
+                    ItemStack k = (ItemStack) this.items.get(i);
                     String itemName = Utils.getDisplayName(k);
                     String line = CC.AquaB + "* " + CC.White + k.getAmount() + "x " + itemName;
                     ItemLinking.sendItemViaJSON(line, k, pl);

@@ -1,21 +1,31 @@
 package me.ily2bb.slotbot.objects;
 
-import org.bukkit.inventory.*;
-import org.bukkit.entity.*;
-import com.cosmicpvp.cosmicutils.utils.*;
-import org.bukkit.inventory.meta.*;
-import java.util.*;
-import org.bukkit.*;
-import me.ily2bb.slotbot.*;
-import me.ily2bb.slotbot.utils.*;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import me.ily2bb.slotbot.SlotBotPlugin;
+import me.ily2bb.slotbot.utils.Inventories;
+import me.ily2bb.slotbot.utils.LootTable;
+import me.ily2bb.slotbot.utils.Utils;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
-public class ItemDeleter
-{
+import java.util.HashSet;
+import java.util.List;
+import java.util.UUID;
+
+public class ItemDeleter {
     public static HashSet<ItemDeleter> deleters;
+
+    static {
+        ItemDeleter.deleters = new HashSet<ItemDeleter>();
+    }
+
     private ItemStack item;
     private UUID player;
     private Inventory inventory;
-    
+
     public ItemDeleter(final Player player, ItemStack item, final Inventory inventory) {
         if (isDeletingItem(player)) {
             player.sendMessage(String.valueOf(CC.Red) + "You are already deleting a different item");
@@ -24,14 +34,14 @@ public class ItemDeleter
         item = item.clone();
         if (item.hasItemMeta() && item.getItemMeta().hasLore()) {
             final ItemMeta meta = item.getItemMeta();
-            final List<String> lore = (List<String>)meta.getLore();
+            final List<String> lore = (List<String>) meta.getLore();
             for (int i = lore.size() - 1; i >= 0; --i) {
                 final String l = lore.get(i);
                 if (l.startsWith(CC.GreenB + "CHANCE:")) {
                     lore.remove(i);
                 }
             }
-            meta.setLore((List)lore);
+            meta.setLore((List) lore);
             item.setItemMeta(meta);
         }
         this.item = item;
@@ -39,7 +49,7 @@ public class ItemDeleter
         this.inventory = inventory;
         ItemDeleter.deleters.add(this);
     }
-    
+
     public static ItemDeleter getPlayer(final Player player) {
         final UUID u = player.getUniqueId();
         for (final ItemDeleter deleter : ItemDeleter.deleters) {
@@ -49,21 +59,21 @@ public class ItemDeleter
         }
         return null;
     }
-    
+
     public static void removeItemDeleter(final ItemDeleter deleter) {
         if (ItemDeleter.deleters.contains(deleter)) {
             ItemDeleter.deleters.remove(deleter);
         }
     }
-    
+
     public static boolean isDeletingItem(final Player player) {
         return getPlayer(player) != null;
     }
-    
+
     public void addDeletionPane(final int slot) {
         this.inventory.setItem(slot, this.getDeletionPane());
     }
-    
+
     public ItemStack getDeletionPane() {
         ItemStack item = LootTable.createPane(14);
         item = Utils.addGlow(item);
@@ -75,19 +85,19 @@ public class ItemDeleter
         item.setItemMeta(meta);
         return item;
     }
-    
+
     public ItemStack getItem() {
         return this.item;
     }
-    
+
     public Inventory getInventory() {
         return this.inventory;
     }
-    
+
     public boolean isDeletionPane(final ItemStack item) {
-        return item.equals((Object)this.getDeletionPane());
+        return item.equals((Object) this.getDeletionPane());
     }
-    
+
     public Player getPlayer() {
         if (this.player != null) {
             Player[] onlinePlayers = Bukkit.getOnlinePlayers().toArray(new Player[0]);
@@ -100,21 +110,21 @@ public class ItemDeleter
         }
         return null;
     }
-    
+
     public UUID getUUID() {
         return this.player;
     }
-    
+
     public void deleteItem() {
         ItemDeleter.deleters.remove(this);
         final Player player = this.getPlayer();
         if (this.item != null) {
-            final List<String> list = (List<String>)SlotBotPlugin.getInstance().getConfig().getList("items");
+            final List<String> list = (List<String>) SlotBotPlugin.getInstance().getConfig().getList("items");
             for (int i = list.size() - 1; i >= 0; --i) {
                 final String l = list.get(i);
-                if (Utils.getItem(l).equals((Object)this.item)) {
+                if (Utils.getItem(l).equals((Object) this.item)) {
                     list.remove(i);
-                    SlotBotPlugin.getInstance().getConfig().set("items", (Object)list);
+                    SlotBotPlugin.getInstance().getConfig().set("items", (Object) list);
                     SlotBotPlugin.getInstance().saveConfig();
                     SlotBotPlugin.getInstance().loadConfig();
                     player.sendMessage(String.valueOf(CC.Red) + "You have deleted the item: " + CC.Green + Utils.getDisplayName(Utils.getItem(l)) + ", Percentage: " + Utils.getPercentage(l) + "%");
@@ -125,9 +135,5 @@ public class ItemDeleter
                 }
             }
         }
-    }
-    
-    static {
-        ItemDeleter.deleters = new HashSet<ItemDeleter>();
     }
 }

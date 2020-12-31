@@ -1,29 +1,34 @@
 package me.ily2bb.slotbot.managers;
 
-import org.bukkit.inventory.*;
-import org.bukkit.entity.*;
-import me.ily2bb.slotbot.*;
-import me.ily2bb.slotbot.objects.*;
-import org.bukkit.enchantments.*;
-import me.ily2bb.slotbot.utils.*;
-import org.bukkit.*;
-import org.bukkit.plugin.*;
-import org.bukkit.scheduler.*;
+import me.ily2bb.slotbot.SlotBotPlugin;
+import me.ily2bb.slotbot.objects.Glow;
+import me.ily2bb.slotbot.utils.Inventories;
+import me.ily2bb.slotbot.utils.LootTable;
+import me.ily2bb.slotbot.utils.Utils;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitScheduler;
 
-public class SlotBotManager
-{
+public class SlotBotManager {
     public static int getSlotBotTickets(final Inventory inventory) {
         int total = 0;
         final ItemStack item = LootTable.createRoller(0);
         for (int i = 0; i < inventory.getSize(); ++i) {
             final ItemStack x = inventory.getItem(i);
-            if (x != null && x.equals((Object)item)) {
+            if (x != null && x.equals((Object) item)) {
                 ++total;
             }
         }
         return total;
     }
-    
+
     public static void startRolling(final Player player, final Inventory inventory, final int slots) {
         if (slots >= 1) {
             Inventories.startRollingInColumn(player, inventory, 2);
@@ -41,17 +46,16 @@ public class SlotBotManager
             Inventories.startRollingInColumn(player, inventory, 6);
         }
         final BukkitScheduler scheduler = Bukkit.getScheduler();
-        scheduler.scheduleSyncDelayedTask((Plugin)SlotBotPlugin.getInstance(), (Runnable)new BukkitRunnable() {
+        scheduler.scheduleSyncDelayedTask((Plugin) SlotBotPlugin.getInstance(), (Runnable) new BukkitRunnable() {
             int time = 10;
-            
+
             public void run() {
                 for (int i = 18; i <= 26; ++i) {
                     ItemStack x = inventory.getItem(i);
                     if (x.getType() == Material.STAINED_GLASS_PANE) {
-                        if (!x.containsEnchantment((Enchantment)new Glow(70))) {
+                        if (!x.containsEnchantment((Enchantment) new Glow(70))) {
                             x = Utils.addGlow(x);
-                        }
-                        else {
+                        } else {
                             x = Utils.removeGlow(x);
                         }
                         inventory.setItem(i, x);
@@ -67,7 +71,7 @@ public class SlotBotManager
                 player.updateInventory();
                 --this.time;
                 if (this.time <= 0) {
-                    Bukkit.getScheduler().runTaskLater((Plugin)SlotBotPlugin.getInstance(), () -> player.closeInventory(), 30L);
+                    Bukkit.getScheduler().runTaskLater((Plugin) SlotBotPlugin.getInstance(), () -> player.closeInventory(), 30L);
                     this.cancel();
                 }
                 int x2 = 0;
@@ -80,6 +84,6 @@ public class SlotBotManager
                     this.cancel();
                 }
             }
-        }.runTaskTimer((Plugin)SlotBotPlugin.getInstance(), 10L, 10L));
+        }.runTaskTimer((Plugin) SlotBotPlugin.getInstance(), 10L, 10L));
     }
 }

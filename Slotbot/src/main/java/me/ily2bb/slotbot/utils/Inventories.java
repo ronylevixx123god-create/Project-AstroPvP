@@ -1,21 +1,24 @@
 package me.ily2bb.slotbot.utils;
 
-import me.ily2bb.slotbot.*;
-import com.cosmicpvp.cosmicutils.utils.*;
-import java.util.*;
-import org.bukkit.inventory.*;
-import org.bukkit.inventory.meta.*;
-import org.bukkit.entity.*;
-import org.bukkit.plugin.*;
-import org.bukkit.metadata.*;
-import org.bukkit.*;
-import me.ily2bb.slotbot.objects.*;
-import org.bukkit.scheduler.*;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import me.ily2bb.slotbot.SlotBotPlugin;
+import me.ily2bb.slotbot.objects.ItemListCacher;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitScheduler;
 
-public class Inventories
-{
+import java.util.ArrayList;
+import java.util.List;
+
+public class Inventories {
     public static Inventory createLootboxInventory(final boolean showPercentage) {
-        final List<String> list = (List<String>)SlotBotPlugin.getInstance().getConfig().getList("items");
+        final List<String> list = (List<String>) SlotBotPlugin.getInstance().getConfig().getList("items");
         final int len = list.size() + 9;
         final int size = (len <= 9) ? 9 : ((len <= 18) ? 18 : ((len <= 27) ? 27 : ((len <= 36) ? 36 : ((len <= 45) ? 45 : ((len <= 54) ? 54 : 54)))));
         final Inventory inventory = Bukkit.createInventory(null, size, CC.DarkGray + "Astro Slot Bot Loot");
@@ -42,7 +45,7 @@ public class Inventories
         }
         return inventory;
     }
-    
+
     public static Inventory createInventory(final int slots) {
         final Inventory inventory = Bukkit.createInventory(null, 54, CC.DarkGray + "Astro Slot Bot");
         final ItemStack item = LootTable.createLootTable();
@@ -102,7 +105,7 @@ public class Inventories
         }
         return inventory;
     }
-    
+
     public static Inventory createRollingInventory(final Player player, final int slots) {
         final Inventory inventory = Bukkit.createInventory(null, 54, CC.DarkGray + "Astro Slot Bot");
         final ItemStack item = LootTable.createLootTable();
@@ -129,23 +132,22 @@ public class Inventories
         }
         return inventory;
     }
-    
+
     public static void startRollingInColumn(final Player player, final Inventory inventory, final int column) {
         player.setMetadata("slot_rolling_" + column, new FixedMetadataValue(SlotBotPlugin.getInstance(), null));
         final Object[] objects = Utils.getMap();
         final ItemStack item = Utils.getRandomItemFromLootTable(objects);
         final BukkitScheduler scheduler = Bukkit.getScheduler();
-        scheduler.scheduleSyncDelayedTask(SlotBotPlugin.getInstance(), (Runnable)new BukkitRunnable() {
+        scheduler.scheduleSyncDelayedTask(SlotBotPlugin.getInstance(), (Runnable) new BukkitRunnable() {
             final ItemStack[] previousItems = new ItemStack[6];
             int time = 45;
-            
+
             public void run() {
                 if (this.previousItems[0] == null) {
                     for (int i = 0; i < this.previousItems.length; ++i) {
                         this.previousItems[i] = Utils.getRandomItemFromLootTable(objects);
                     }
-                }
-                else {
+                } else {
                     for (int i = this.previousItems.length - 2; i >= 0; --i) {
                         this.previousItems[i + 1] = this.previousItems[i];
                     }
@@ -188,13 +190,11 @@ public class Inventories
                     }
                     if (!Utils.isInventoryFull(player)) {
                         player.getInventory().addItem(this.previousItems[2]);
-                    }
-                    else {
+                    } else {
                         player.getWorld().dropItem(player.getLocation(), this.previousItems[2]);
                     }
                     this.cancel();
-                }
-                else if (!player.hasMetadata("slot_rolling_" + column)) {
+                } else if (!player.hasMetadata("slot_rolling_" + column)) {
                     ItemListCacher cacher2 = ItemListCacher.getCache(player);
                     boolean announce2 = false;
                     if (cacher2 == null) {
@@ -207,8 +207,7 @@ public class Inventories
                     }
                     if (!Utils.isInventoryFull(player)) {
                         player.getInventory().addItem(item);
-                    }
-                    else {
+                    } else {
                         player.getWorld().dropItem(player.getLocation(), item);
                     }
                     this.cancel();

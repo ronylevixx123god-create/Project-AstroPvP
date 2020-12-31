@@ -1,7 +1,6 @@
 package me.ily2bb.slotbot.listener;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import java.util.List;
 import me.ily2bb.slotbot.CosmicSlotBotAPI;
 import me.ily2bb.slotbot.SlotBotPlugin;
 import me.ily2bb.slotbot.managers.SlotBotManager;
@@ -10,13 +9,10 @@ import me.ily2bb.slotbot.utils.Inventories;
 import me.ily2bb.slotbot.utils.LootTable;
 import me.ily2bb.slotbot.utils.Utils;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -25,12 +21,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
+import java.util.List;
+
 public class SlotBotInventoryListener implements Listener {
     public static void returnTickets(int tickets, Player player) {
         player.sendMessage(String.valueOf(CC.GreenB) + "(!) " + CC.Green + "The bot has returned " + tickets + " " + ((tickets > 1) ? "tickets" : "ticket") + " to your inventory.");
         for (int i = 0; i < tickets; i++) {
             if (!Utils.isInventoryFull(player)) {
-                player.getInventory().addItem(new ItemStack[] { CosmicSlotBotAPI.createSlotBotItem() });
+                player.getInventory().addItem(new ItemStack[]{CosmicSlotBotAPI.createSlotBotItem()});
             } else {
                 player.getWorld().dropItem(player.getLocation(), CosmicSlotBotAPI.createSlotBotItem());
             }
@@ -42,7 +40,7 @@ public class SlotBotInventoryListener implements Listener {
     public void inventoryClick(InventoryClickEvent e) {
         if (!(e.getWhoClicked() instanceof Player))
             return;
-        Player player = (Player)e.getWhoClicked();
+        Player player = (Player) e.getWhoClicked();
         Inventory inventory = e.getInventory();
         if (inventory.getTitle().contentEquals(CC.DarkGray + "Astro Slot Bot")) {
             ItemStack item = e.getCurrentItem();
@@ -53,7 +51,7 @@ public class SlotBotInventoryListener implements Listener {
             if (item.equals(LootTable.createLootTable())) {
                 player.closeInventory();
                 player.playSound(player.getLocation(), Sound.CHEST_OPEN, 3.0F, 3.0F);
-                Bukkit.getScheduler().runTaskLater((Plugin)SlotBotPlugin.getInstance(), () -> player.openInventory(Inventories.createLootboxInventory(player.isOp())), 1L);
+                Bukkit.getScheduler().runTaskLater((Plugin) SlotBotPlugin.getInstance(), () -> player.openInventory(Inventories.createLootboxInventory(player.isOp())), 1L);
             } else if (item.equals(LootTable.createRoller(0))) {
                 if (tickets > 0)
                     returnTickets(1, player);
@@ -118,7 +116,7 @@ public class SlotBotInventoryListener implements Listener {
             if (item.equals(LootTable.createBackButton())) {
                 player.closeInventory();
                 player.playSound(player.getLocation(), Sound.CHEST_CLOSE, 3.0F, 3.0F);
-                Bukkit.getScheduler().runTaskLater((Plugin)SlotBotPlugin.getInstance(), () -> player.openInventory(Inventories.createInventory(0)), 1L);
+                Bukkit.getScheduler().runTaskLater((Plugin) SlotBotPlugin.getInstance(), () -> player.openInventory(Inventories.createInventory(0)), 1L);
             } else {
                 if (!player.hasPermission("slotbot.item.delete"))
                     return;
@@ -173,11 +171,11 @@ public class SlotBotInventoryListener implements Listener {
         if (!inventory.getTitle().contentEquals(CC.DarkGray + "Astro Slot Bot"))
             return;
         int slots = SlotBotManager.getSlotBotTickets(inventory);
-        Player player = (Player)e.getPlayer();
+        Player player = (Player) e.getPlayer();
         if (slots <= 0) {
             for (int i = 2; i <= 6; i++) {
                 if (player.hasMetadata("slot_rolling_" + i))
-                    player.removeMetadata("slot_rolling_" + i, (Plugin)SlotBotPlugin.getInstance());
+                    player.removeMetadata("slot_rolling_" + i, (Plugin) SlotBotPlugin.getInstance());
             }
             return;
         }
@@ -191,7 +189,7 @@ public class SlotBotInventoryListener implements Listener {
         Inventory inventory = e.getInventory();
         if (!inventory.getTitle().contentEquals(CC.DarkGray + "Astro Slot Bot Loot"))
             return;
-        Player player = (Player)e.getPlayer();
+        Player player = (Player) e.getPlayer();
         ItemDeleter deleter = ItemDeleter.getPlayer(player);
         if (deleter == null)
             return;
