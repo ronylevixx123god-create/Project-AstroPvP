@@ -1,27 +1,45 @@
+/*
+ * Decompiled with CFR 0.150.
+ *
+ * Could not load the following classes:
+ *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
+ *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
+ *  com.google.common.collect.Lists
+ *  me.astropvp.astropvpskins.AstroItemSkinsAPI
+ *  me.astropvp.astropvpskins.enums.SkinType
+ *  net.minecraft.server.v1_7_R4.NBTBase
+ *  net.minecraft.util.io.netty.util.internal.ThreadLocalRandom
+ *  org.apache.commons.lang.StringUtils
+ *  org.arkhamnetwork.Arkkit.Arkkit
+ *  org.arkhamnetwork.Arkkit.patches.ItemID
+ *  org.arkhamnetwork.Arkkit.plugins.ArkPlugins
+ *  org.bukkit.ChatColor
+ *  org.bukkit.Color
+ *  org.bukkit.DyeColor
+ *  org.bukkit.Material
+ *  org.bukkit.enchantments.Enchantment
+ *  org.bukkit.entity.Entity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.inventory.meta.ItemMeta
+ *  org.bukkit.inventory.meta.LeatherArmorMeta
+ *  org.bukkit.metadata.FixedMetadataValue
+ *  org.bukkit.metadata.MetadataValue
+ *  org.bukkit.plugin.Plugin
+ */
 package com.compilex.CosmicArmorSets;
 
-import com.compilex.CosmicArmorSets.enums.AbilityArmorSet;
-import com.compilex.CosmicArmorSets.enums.ArmorSet;
-import com.compilex.CosmicArmorSets.enums.CachedArmorSet;
-import com.compilex.CosmicArmorSets.enums.HeroicArmorType;
-import com.compilex.CosmicArmorSets.enums.HeroicWeaponType;
-import com.compilex.CosmicArmorSets.enums.WeaponedArmorSet;
+import com.compilex.CosmicArmorSets.enums.*;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.google.common.collect.Lists;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import net.minecraft.server.v1_7_R4.NBTBase;
-import net.minecraft.util.io.netty.util.internal.ThreadLocalRandom;
+import net.minecraft.server.v1_8_R3.NBTBase;
 import org.apache.commons.lang.StringUtils;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
@@ -40,86 +58,80 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
+
 public class CosmicArmorSetsAPI {
-    public static HashMap<UUID, ArmorSet> oldArmorSet = new HashMap<>();
+    public static HashMap<UUID, ArmorSet> oldArmorSet = new HashMap();
 
     public static ItemStack createRandomArmorSetUpgrade() {
         String star = CC.GoldB + "* " + CC.Gold;
-        ItemStack retr = (new ItemBuilder(Material.CHEST, CC.GoldB + "Random Heroic Upgrade " + CC.Gray + "(Right Click)", new String[]{CC.Gray + "Click to receive a random " + CC.GoldU + "Heroic Armorset Upgrade", CC.Gray + "from one of the following armor sets!", "", CC.GoldB + "Available Armor Sets", star + ArmorSet.YETI.getDisplayName(), star + ArmorSet.MOTHER_OF_YIJKI.getDisplayName(), star + ArmorSet.SUPREME.getDisplayName(), star + ArmorSet.RANGER.getDisplayName(), star + ArmorSet.PHANTOM.getDisplayName(), star + ArmorSet.DIMENSIONAL_TRAVELER.getDisplayName()})).build();
-        if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning())
-            retr = ItemID.assignItemID(null, retr);
-        return (new NBTWrapper(retr)).setString("cosmicType", "RANDOM_ARMOR_UPGRADE").build();
+        ItemStack retr = new ItemBuilder(Material.CHEST, CC.GoldB + "Random Heroic Upgrade " + CC.Gray + "(Right Click)", new String[]{CC.Gray + "Click to receive a random " + CC.GoldU + "Heroic Armorset Upgrade", CC.Gray + "from one of the following armor sets!", "", CC.GoldB + "Available Armor Sets", star + ArmorSet.YETI.getDisplayName(), star + ArmorSet.MOTHER_OF_YIJKI.getDisplayName(), star + ArmorSet.SUPREME.getDisplayName(), star + ArmorSet.RANGER.getDisplayName(), star + ArmorSet.PHANTOM.getDisplayName(), star + ArmorSet.DIMENSIONAL_TRAVELER.getDisplayName()}).build();
+        if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
+            retr = ItemID.assignItemID(null, (ItemStack) retr);
+        }
+        return new NBTWrapper(retr).setString("cosmicType", "RANDOM_ARMOR_UPGRADE").build();
     }
 
     public static ArmorSet getRandomArmorSetFromUpgrade() {
-        List<ArmorSet> avail;
-        if (Math.random() <= 0.7D) {
-            avail = Lists.newArrayList(new ArmorSet[]{ArmorSet.YETI, ArmorSet.SUPREME, ArmorSet.RANGER});
-        } else {
-            avail = Lists.newArrayList(new ArmorSet[]{ArmorSet.PHANTOM, ArmorSet.MOTHER_OF_YIJKI, ArmorSet.DIMENSIONAL_TRAVELER});
-        }
-        return avail.get(ThreadLocalRandom.current().nextInt(avail.size()));
+        ArrayList avail = Math.random() <= 0.7 ? Lists.newArrayList((Object[]) new ArmorSet[]{ArmorSet.YETI, ArmorSet.SUPREME, ArmorSet.RANGER}) : Lists.newArrayList((Object[]) new ArmorSet[]{ArmorSet.PHANTOM, ArmorSet.MOTHER_OF_YIJKI, ArmorSet.DIMENSIONAL_TRAVELER});
+        return (ArmorSet) avail.get(ThreadLocalRandom.current().nextInt(avail.size()));
     }
 
-    //bs
-
     public static ItemStack createArmorSetUpgrade(ArmorSet armorset, double successRate) {
-        if (armorset == ArmorSet.KOTH)
+        if (armorset == ArmorSet.KOTH) {
             armorset = ArmorSet.RANGER;
-        String armorLore = (armorset == null) ? (CC.Gray + "armor set") : (armorset.getDisplayName() + CC.Gray + " armor");
-        ItemStack retr = (new NBTWrapper((new ItemBuilder(Material.INK_SACK, CC.GoldB + "Heroic " + ((armorset != null) ? (CC.Gold + "(" + armorset.getDisplayName() + CC.Gold + ") " + CC.GoldB) : "Armor") + "Upgrade", new String[]{"", CC.Gray + "Apply to any " + armorLore, CC.Gray + "for a " + CC.Gold + (int) successRate + "%" + CC.Gray + " chance to imbue it", CC.Gray + "with the power of Heroic Armor!", "", CC.Gray + "This will increase the armor's base", CC.Gray + "stats as well as add a " + CC.Gold + "12.5% negation", CC.Gray + "to enemy " + CC.Gold + "Infinite Luck" + CC.Gray + " enchantments."})).data((short) DyeColor.YELLOW.getDyeData()).build())).setString("cosmicType", "HEROIC_ARMOR_UPGRADE").setNBTBase("cosmicData", (NBTBase) (new NBTTagCompoundBuilder()).setDouble("success", Double.valueOf(successRate)).setString("setType", (armorset == null) ? "ANY" : armorset.name()).get()).build();
-        if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning())
-            retr = ItemID.assignItemID(null, retr);
+        }
+        String armorLore = armorset == null ? CC.Gray + "armor set" : armorset.getDisplayName() + CC.Gray + " armor";
+        ItemStack retr = new NBTWrapper(new ItemBuilder(Material.INK_SACK, CC.GoldB + "Heroic " + (armorset != null ? CC.Gold + "(" + armorset.getDisplayName() + CC.Gold + ") " + CC.GoldB : "Armor") + "Upgrade", new String[]{"", CC.Gray + "Apply to any " + armorLore, CC.Gray + "for a " + CC.Gold + (int) successRate + "%" + CC.Gray + " chance to imbue it", CC.Gray + "with the power of Heroic Armor!", "", CC.Gray + "This will increase the armor's base", CC.Gray + "stats as well as add a " + CC.Gold + "12.5% negation", CC.Gray + "to enemy " + CC.Gold + "Infinite Luck" + CC.Gray + " enchantments."}).data((short) DyeColor.YELLOW.getDyeData()).build()).setString("cosmicType", "HEROIC_ARMOR_UPGRADE").setNBTBase("cosmicData", (NBTBase) new NBTTagCompoundBuilder().setDouble("success", Double.valueOf(successRate)).setString("setType", armorset == null ? "ANY" : armorset.name()).get()).build();
+        if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
+            retr = ItemID.assignItemID(null, (ItemStack) retr);
+        }
         return retr;
     }
 
     public static ItemStack[] getArmorSet(ArmorSet as) {
-        ItemStack[] item = new ItemStack[4];
-        item[0] = as.getArmorSetInfo().getHelmet(true);
-        item[1] = as.getArmorSetInfo().getChestplate(true);
-        item[2] = as.getArmorSetInfo().getLeggings(true);
-        item[3] = as.getArmorSetInfo().getBoots(true);
-        if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning())
+        ItemStack[] item = new ItemStack[]{as.getArmorSetInfo().getHelmet(true), as.getArmorSetInfo().getChestplate(true), as.getArmorSetInfo().getLeggings(true), as.getArmorSetInfo().getBoots(true)};
+        if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
             for (ItemStack i : item) {
-                if (ItemID.hasItemID(i))
-                    ItemID.removeItemID(i);
+                if (!ItemID.hasItemID((ItemStack) i)) continue;
+                ItemID.removeItemID((ItemStack) i);
             }
+        }
         return item;
     }
 
     public static ItemStack[] createAbilityArmorSet(AbilityArmorSet as, boolean applyIID) {
-        ItemStack[] item = new ItemStack[4];
-        item[0] = as.getArmorSetInfo().getHelmet(true);
-        item[1] = as.getArmorSetInfo().getChestplate(true);
-        item[2] = as.getArmorSetInfo().getLeggings(true);
-        item[3] = as.getArmorSetInfo().getBoots(true);
-        if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning())
+        ItemStack[] item = new ItemStack[]{as.getArmorSetInfo().getHelmet(true), as.getArmorSetInfo().getChestplate(true), as.getArmorSetInfo().getLeggings(true), as.getArmorSetInfo().getBoots(true)};
+        if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
             for (ItemStack i : item) {
-                if (ItemID.hasItemID(i))
-                    ItemID.removeItemID(i);
-                if (applyIID)
-                    ItemID.assignItemID(null, i);
+                if (ItemID.hasItemID((ItemStack) i)) {
+                    ItemID.removeItemID((ItemStack) i);
+                }
+                if (!applyIID) continue;
+                ItemID.assignItemID(null, (ItemStack) i);
             }
+        }
         return item;
     }
 
     public static ItemStack createHeroicWeapon(HeroicWeaponType type) {
-        return createHeroicWeapon(type, true);
+        return CosmicArmorSetsAPI.createHeroicWeapon(type, true);
     }
 
     public static ItemStack createHeroicWeapon(HeroicWeaponType type, boolean addLore) {
-        return convertIntoHeroicWeapon(type, (new ItemBuilder(type.getMaterial())).name(type.getName()).build(), addLore);
+        return CosmicArmorSetsAPI.convertIntoHeroicWeapon(type, new ItemBuilder(type.getMaterial()).name(type.getName()).build(), addLore);
     }
 
     public static ItemStack convertIntoHeroicWeapon(HeroicWeaponType type, ItemStack retr, boolean addLore) {
         retr.setType(type.getMaterial());
-        retr = createHeroicWeaponNBT(new NBTWrapper(retr), type).build();
+        retr = CosmicArmorSetsAPI.createHeroicWeaponNBT(new NBTWrapper(retr), type).build();
         if (addLore) {
             ItemMeta im = retr.getItemMeta();
             List<String> existing = im.hasLore() ? im.getLore() : Lists.newArrayList();
             existing.add("");
             existing.add(CC.Gray + type.getDurability() + " Durability");
-            existing.add(CC.DarkRed + "+" + getTrimmedNumber(type.getAttackModifier()) + " Bonus Attack Damage");
+            existing.add(CC.DarkRed + "+" + CosmicArmorSetsAPI.getTrimmedNumber(type.getAttackModifier()) + " Bonus Attack Damage");
             existing.add(CC.DarkRed + "This weapon is stronger than diamond.");
             im.setLore(existing);
             retr.setItemMeta(im);
@@ -133,100 +145,108 @@ public class CosmicArmorSetsAPI {
 
     private static String getTrimmedNumber(double value) {
         String modString = String.valueOf(value);
-        if (modString.endsWith(".0"))
+        if (modString.endsWith(".0")) {
             modString = modString.substring(0, modString.length() - 2);
+        }
         return modString;
     }
 
     public static NBTWrapper createHeroicWeaponNBT(NBTWrapper wrapper, HeroicWeaponType type) {
         NBTTagCompoundBuilder compoundBuilder = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
-        compoundBuilder.setString("type", type.name()).setInt("durability", Integer.valueOf(type.getDurability())).setDouble("dmgIncr", Double.valueOf(type.getAttackModifier())).setInt("maxDurability", Integer.valueOf(type.getDurability())).get();
-        return wrapper.setString("cosmicType", "HEROIC_WEAPON").setNBTBase("cosmicData", (NBTBase) compoundBuilder.get());
+        compoundBuilder.setString("type", type.name()).setInt("durability", type.getDurability()).setDouble("dmgIncr", type.getAttackModifier()).setInt("maxDurability", type.getDurability()).get();
+        return wrapper.setString("cosmicType", "HEROIC_WEAPON").setNBTBase("cosmicData", compoundBuilder.get());
     }
 
     public static boolean isHeroicArmor(ItemStack item) {
-        if (item == null)
+        if (item == null) {
             return false;
+        }
         NBTWrapper wrapper = new NBTWrapper(item);
         return wrapper.getString("cosmicType").equals("HEROIC_ARMOR");
     }
 
     public static boolean hasInfiniteLuck(Player player, int level, Player attacker) {
-        if (!player.hasMetadata("infiniteLucky"))
+        boolean canNegate;
+        if (!player.hasMetadata("infiniteLucky")) {
             return false;
+        }
         int luckyLevel = ((MetadataValue) player.getMetadata("infiniteLucky").get(0)).asInt();
-        boolean canNegate = (luckyLevel >= level);
+        boolean bl = canNegate = luckyLevel >= level;
         if (canNegate && attacker != null) {
-            double chanceToNegate = 0.0D;
+            double chanceToNegate = 0.0;
             for (ItemStack item : player.getInventory().getArmorContents()) {
-                if (item != null) {
-                    Material type = item.getType();
-                    if ((type == Material.LEATHER_CHESTPLATE || type == Material.LEATHER_HELMET || type == Material.LEATHER_BOOTS || type == Material.LEATHER_LEGGINGS) && isHeroicArmor(item))
-                        chanceToNegate += 12.5D;
-                }
+                Material type;
+                if (item == null || (type = item.getType()) != Material.LEATHER_CHESTPLATE && type != Material.LEATHER_HELMET && type != Material.LEATHER_BOOTS && type != Material.LEATHER_LEGGINGS || !CosmicArmorSetsAPI.isHeroicArmor(item))
+                    continue;
+                chanceToNegate += 12.5;
             }
-            if (chanceToNegate * 0.01D >= Math.random())
+            if (chanceToNegate * 0.01 >= Math.random()) {
                 return false;
+            }
         }
         return canNegate;
     }
 
     public static double getPoltergeistChance(Player player) {
-        List<MetadataValue> values = player.getMetadata("poltergeist");
-        if (values == null || values.isEmpty())
-            return 0.0D;
-        return ((MetadataValue) values.get(0)).asInt() * 12.5D;
+        List values = player.getMetadata("poltergeist");
+        if (values == null || values.isEmpty()) {
+            return 0.0;
+        }
+        return (double) ((MetadataValue) values.get(0)).asInt() * 12.5;
     }
 
     public static ItemStack getWeaponFromArmorSet(ArmorSet set) {
-        if (set.getArmorSetInfo() instanceof WeaponedArmorSet)
-            return ((WeaponedArmorSet) set.getArmorSetInfo()).getWeapon(true);
+        if (set.getArmorSetInfo() instanceof WeaponedArmorSet) {
+            return ((WeaponedArmorSet) ((Object) set.getArmorSetInfo())).getWeapon(true);
+        }
         return null;
     }
 
     public static ArmorSet getCachedArmorSet(Player player) {
         if (player.hasMetadata("armorSet") && player.hasMetadata("armorLock") && player.hasMetadata("armorSet_cacheTimeout") && System.currentTimeMillis() < ((MetadataValue) player.getMetadata("armorSet_cacheTimeout").get(0)).asLong()) {
             String setName = ((MetadataValue) player.getMetadata("armorSet").get(0)).asString();
-            return (setName != null && setName.length() > 0) ? ArmorSet.valueOf(setName) : null;
+            return setName != null && setName.length() > 0 ? ArmorSet.valueOf(setName) : null;
         }
         return null;
     }
 
     public static AbilityArmorSet getCachedAbilityArmorSet(Player player) {
-        CachedArmorSet<AbilityArmorSet> calculated = CosmicArmorSetsPlugin.get_().getPlayerAbilityArmorSets().get(player);
-        if (calculated != null)
-            return (AbilityArmorSet) calculated.getSet();
+        CachedArmorSet<AbilityArmorSet> calculated = CosmicArmorSetsPlugin.get_().getPlayerAbilityArmorSets().get((Object) player);
+        if (calculated != null) {
+            return calculated.getSet();
+        }
         return null;
     }
 
     public static AbilityArmorSet getAbilityArmorSet(Player player) {
         CachedArmorSet<AbilityArmorSet> calculated = CosmicArmorSetsPlugin.get_().getPlayerAbilityArmorSets().get(player);
-        if (calculated != null && System.currentTimeMillis() - calculated.getLastUpdated() < 1000L)
-            return (AbilityArmorSet) calculated.getSet();
-        AbilityArmorSet found = getAbilityArmorSet(player.getInventory().getArmorContents());
+        if (calculated != null && System.currentTimeMillis() - calculated.getLastUpdated() < 1000L) {
+            return calculated.getSet();
+        }
+        AbilityArmorSet found = CosmicArmorSetsAPI.getAbilityArmorSet(player.getInventory().getArmorContents());
         if (calculated != null && found != null && found == calculated.getSet()) {
             calculated.setLastUpdated(System.currentTimeMillis());
             return found;
         }
         if (found != null) {
             if (calculated != null) {
-                ((AbilityArmorSet) calculated.getSet()).getArmorSetInfo().onUnequip(player);
+                calculated.getSet().getArmorSetInfo().onUnequip(player);
                 found.getArmorSetInfo().onEquip(player);
                 calculated.setSet(found);
             } else {
-                CosmicArmorSetsPlugin.get_().getPlayerAbilityArmorSets().put(player, new CachedArmorSet(found, System.currentTimeMillis()));
+                CosmicArmorSetsPlugin.get_().getPlayerAbilityArmorSets().put(player, new CachedArmorSet<AbilityArmorSet>(found, System.currentTimeMillis()));
                 found.getArmorSetInfo().onEquip(player);
             }
-            found.getArmorSetInfo().getEquipDescription().forEach(player::sendMessage);
+            found.getArmorSetInfo().getEquipDescription().forEach(((Player) player)::sendMessage);
         } else if (calculated != null) {
-            ((AbilityArmorSet) calculated.getSet()).getArmorSetInfo().onUnequip(player);
-            CosmicArmorSetsPlugin.get_().getPlayerAbilityArmorSets().remove(player);
+            calculated.getSet().getArmorSetInfo().onUnequip(player);
+            CosmicArmorSetsPlugin.get_().getPlayerAbilityArmorSets().remove((Object) player);
         }
         return found;
     }
 
     public static AbilityArmorSet getAbilityArmorSetFromItem(ItemStack item) {
-        String armorSet = getAbilityArmorSetStringFromItem(item);
+        String armorSet = CosmicArmorSetsAPI.getAbilityArmorSetStringFromItem(item);
         return AbilityArmorSet.fromName(armorSet);
     }
 
@@ -235,8 +255,9 @@ public class CosmicArmorSetsAPI {
         if (wrapper.hasKey("cosmicData")) {
             NBTTagCompoundBuilder cosmicData = new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData"));
             String abilityArmorSet = cosmicData.getString("abilitySet");
-            if (abilityArmorSet == null || abilityArmorSet.isEmpty())
+            if (abilityArmorSet == null || abilityArmorSet.isEmpty()) {
                 return null;
+            }
             return abilityArmorSet;
         }
         return null;
@@ -247,96 +268,109 @@ public class CosmicArmorSetsAPI {
         int matched = 0;
         int omni = 0;
         for (ItemStack item : armor) {
-            if (item != null && item.getType() != Material.AIR) {
-                String armorSetFound = getAbilityArmorSetStringFromItem(item);
-                if (armorSetFound != null && !armorSetFound.isEmpty()) {
-                    if (lastArmorSetFound == null && !armorSetFound.equalsIgnoreCase("OMNI"))
-                        lastArmorSetFound = armorSetFound;
-                    if (!armorSetFound.equals(lastArmorSetFound) && !armorSetFound.equalsIgnoreCase("OMNI"))
-                        return null;
-                    if (armorSetFound.equalsIgnoreCase("OMNI")) {
-                        omni++;
-                    } else {
-                        matched++;
-                    }
-                } else {
+            if (item == null || item.getType() == Material.AIR) continue;
+            String armorSetFound = CosmicArmorSetsAPI.getAbilityArmorSetStringFromItem(item);
+            if (armorSetFound != null && !armorSetFound.isEmpty()) {
+                if (lastArmorSetFound == null && !armorSetFound.equalsIgnoreCase("OMNI")) {
+                    lastArmorSetFound = armorSetFound;
+                }
+                if (!armorSetFound.equals(lastArmorSetFound) && !armorSetFound.equalsIgnoreCase("OMNI")) {
                     return null;
                 }
+                if (armorSetFound.equalsIgnoreCase("OMNI")) {
+                    ++omni;
+                    continue;
+                }
+                ++matched;
+                continue;
             }
+            return null;
         }
-        if (lastArmorSetFound != null && matched + omni == 4)
+        if (lastArmorSetFound != null && matched + omni == 4) {
             return AbilityArmorSet.fromName(lastArmorSetFound);
+        }
         return null;
     }
 
     public static Map<ArmorSet, Integer> getBonusCrystalsEquipped(Player player) {
-        Map<ArmorSet, Integer> found = null;
+        HashMap<ArmorSet, Integer> found = null;
         for (ItemStack armor : player.getInventory().getArmorContents()) {
-            if (armor != null && armor.getType() != Material.AIR) {
-                List<ArmorSet> sets = ArmorSet.getFromArmorBonusCrystal(armor);
-                if (sets != null && !sets.isEmpty()) {
-                    if (found == null)
-                        found = new HashMap<>();
-                    for (ArmorSet set : sets) {
-                        Integer current = found.get(set);
-                        found.put(set, Integer.valueOf((current == null) ? 1 : (current.intValue() + 1)));
-                    }
-                }
+            List<ArmorSet> sets;
+            if (armor == null || armor.getType() == Material.AIR || (sets = ArmorSet.getFromArmorBonusCrystal(armor)) == null || sets.isEmpty())
+                continue;
+            if (found == null) {
+                found = new HashMap<ArmorSet, Integer>();
+            }
+            Iterator<ArmorSet> iterator = sets.iterator();
+            while (iterator.hasNext()) {
+                ArmorSet set;
+                Integer current = (Integer) found.get((Object) (set = iterator.next()));
+                found.put(set, current == null ? 1 : current + 1);
             }
         }
-        return (found == null) ? Collections.<ArmorSet, Integer>emptyMap() : found;
+        return found == null ? Collections.emptyMap() : found;
     }
 
     public static Map<ArmorSet, Integer> getBonusCrystalsEquippedWithCorruptionIncluded(Player player, Entity other) {
-        Map<ArmorSet, Integer> found = null;
+        HashMap<ArmorSet, Integer> found = null;
         for (ItemStack armor : player.getInventory().getArmorContents()) {
-            if (armor != null && armor.getType() != Material.AIR) {
-                List<ArmorSet> sets = ArmorSet.getFromArmorBonusCrystal(armor);
-                if (other instanceof Player && (AstroItemSkinsAPI.hasSkinEquipped((Player) other, SkinType.CORRUPT_AMULET_CORRUPTION) && armor.getType().toString().endsWith("_CHESTPLATE"))) {
-                    if (!AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.LEVIATHAN_TROPHY)) {
-                        sets.removeAll(ArmorSet.getFromArmorBonusCrystal(((Player) other).getInventory().getChestplate()));
-                    } else {
-
-                    }
-                }
-                if (sets != null && !sets.isEmpty()) {
-                    if (found == null)
-                        found = new HashMap<>();
-                    for (ArmorSet set : sets) {
-                        Integer current = found.get(set);
-                        found.put(set, Integer.valueOf((current == null) ? 1 : (current.intValue() + 1)));
-                    }
-                }
+            if (armor == null || armor.getType() == Material.AIR) continue;
+            List<ArmorSet> sets = ArmorSet.getFromArmorBonusCrystal(armor);
+            if (other instanceof Player && AstroItemSkinsAPI.hasSkinEquipped((Player) ((Player) other), (SkinType) SkinType.CORRUPT_AMULET_CORRUPTION) && armor.getType().toString().endsWith("_CHESTPLATE") && !AstroItemSkinsAPI.hasSkinEquipped((Player) player, (SkinType) SkinType.LEVIATHAN_TROPHY)) {
+                sets.removeAll(ArmorSet.getFromArmorBonusCrystal(((Player) other).getInventory().getChestplate()));
+            }
+            if (sets == null || sets.isEmpty()) continue;
+            if (found == null) {
+                found = new HashMap<ArmorSet, Integer>();
+            }
+            Iterator<ArmorSet> iterator = sets.iterator();
+            while (iterator.hasNext()) {
+                ArmorSet set;
+                Integer current = (Integer) found.get((Object) (set = iterator.next()));
+                found.put(set, current == null ? 1 : current + 1);
             }
         }
-        return (found == null) ? Collections.<ArmorSet, Integer>emptyMap() : found;
+        return found == null ? Collections.emptyMap() : found;
     }
 
     public static ArmorSet getArmorSet(Player p) {
-        boolean armorSetMetadata = p.hasMetadata("armorSet");
-        if (armorSetMetadata && p.hasMetadata("armorLock") && p.hasMetadata("armorSet_cacheTimeout") && System.currentTimeMillis() < ((MetadataValue) p.getMetadata("armorSet_cacheTimeout").get(0)).asLong()) {
-            String setName = ((MetadataValue) p.getMetadata("armorSet").get(0)).asString();
-            return (setName != null && setName.length() > 0) ? ArmorSet.valueOf(setName) : null;
-        }
-        ArmorSet previous = null;
-        if (armorSetMetadata) {
-            String setName = ((MetadataValue) p.getMetadata("armorSet").get(0)).asString();
-            if (setName != null && setName.length() > 0)
-                previous = ArmorSet.valueOf(setName);
-        }
-        ArmorSet as = getArmorSet(p.getEquipment().getArmorContents());
-        if (as != null) {
-            if (previous != null)
+        ArmorSet as;
+        block8:
+        {
+            ArmorSet previous;
+            block6:
+            {
+                block7:
+                {
+                    String setName;
+                    boolean armorSetMetadata = p.hasMetadata("armorSet");
+                    if (armorSetMetadata && p.hasMetadata("armorLock") && p.hasMetadata("armorSet_cacheTimeout") && System.currentTimeMillis() < ((MetadataValue) p.getMetadata("armorSet_cacheTimeout").get(0)).asLong()) {
+                        String setName2 = ((MetadataValue) p.getMetadata("armorSet").get(0)).asString();
+                        return setName2 != null && setName2.length() > 0 ? ArmorSet.valueOf(setName2) : null;
+                    }
+                    previous = null;
+                    if (armorSetMetadata && (setName = ((MetadataValue) p.getMetadata("armorSet").get(0)).asString()) != null && setName.length() > 0) {
+                        previous = ArmorSet.valueOf(setName);
+                    }
+                    if ((as = CosmicArmorSetsAPI.getArmorSet(p.getEquipment().getArmorContents())) == null)
+                        break block6;
+                    if (previous != null) {
+                        previous.getArmorSetInfo().onUnequip(p);
+                    }
+                    as.getArmorSetInfo().onEquip(p);
+                    if (previous == null) break block7;
+                    if (previous == as) break block8;
+                }
+                as.getArmorSetInfo().getEquipDescription().forEach(((Player) p)::sendMessage);
+                break block8;
+            }
+            if (previous != null) {
                 previous.getArmorSetInfo().onUnequip(p);
-            as.getArmorSetInfo().onEquip(p);
-            if (previous == null || previous != as)
-                as.getArmorSetInfo().getEquipDescription().forEach(p::sendMessage);
-        } else if (previous != null) {
-            previous.getArmorSetInfo().onUnequip(p);
+            }
         }
-        p.setMetadata("armorSet", (MetadataValue) new FixedMetadataValue((Plugin) CosmicArmorSetsPlugin.get_(), (as != null) ? as.name() : null));
-        p.setMetadata("armorSet_cacheTimeout", (MetadataValue) new FixedMetadataValue((Plugin) CosmicArmorSetsPlugin.get_(), Long.valueOf(System.currentTimeMillis() + 30000L)));
-        p.setMetadata("armorLock", (MetadataValue) new FixedMetadataValue((Plugin) Arkkit.get(), Long.valueOf(System.currentTimeMillis())));
+        p.setMetadata("armorSet", (MetadataValue) new FixedMetadataValue((Plugin) CosmicArmorSetsPlugin.get_(), (Object) (as != null ? as.name() : null)));
+        p.setMetadata("armorSet_cacheTimeout", (MetadataValue) new FixedMetadataValue((Plugin) CosmicArmorSetsPlugin.get_(), (Object) (System.currentTimeMillis() + 30000L)));
+        p.setMetadata("armorLock", (MetadataValue) new FixedMetadataValue((Plugin) Arkkit.get(), (Object) System.currentTimeMillis()));
         return as;
     }
 
@@ -346,41 +380,45 @@ public class CosmicArmorSetsAPI {
         ArmorSet armorSet = null;
         for (ItemStack i : items) {
             ArmorSet foundSet = ArmorSet.getArmorSetFromItem(i);
-            if (foundSet != null) {
-                boolean isOmni = ChatColor.stripColor(foundSet.getDisplayName()).equalsIgnoreCase("omni");
-                if (armorSet == null && !isOmni)
-                    armorSet = foundSet;
-                if (armorSet != foundSet && !isOmni)
-                    return null;
-                if (isOmni) {
-                    omniCount++;
-                } else {
-                    setCount++;
-                }
+            if (foundSet == null) continue;
+            boolean isOmni = ChatColor.stripColor((String) foundSet.getDisplayName()).equalsIgnoreCase("omni");
+            if (armorSet == null && !isOmni) {
+                armorSet = foundSet;
             }
+            if (armorSet != foundSet && !isOmni) {
+                return null;
+            }
+            if (isOmni) {
+                ++omniCount;
+                continue;
+            }
+            ++setCount;
         }
-        if (setCount + omniCount == 4 && armorSet != null)
+        if (setCount + omniCount == 4 && armorSet != null) {
             return armorSet;
+        }
         return null;
     }
 
     public static ItemStack createHeroicPeice(HeroicArmorType type) {
-        return createHeroicPeice(type.getMaterial(), CC.DarkRedB + "Heroic " + type.getName(), type.getArmorModifier(), type.getDurability());
+        return CosmicArmorSetsAPI.createHeroicPeice(type.getMaterial(), CC.DarkRedB + "Heroic " + type.getName(), type.getArmorModifier(), type.getDurability());
     }
 
     public static ItemStack createHeroicPeice(Material type, String name, int armorModifier, int durability) {
-        if (name == null)
-            name = CC.DarkRedB + "Heroic " + StringUtils.capitaliseAllWords(type.name().split("_")[1].toLowerCase());
-        List<String> lore = Lists.newArrayList(new String[]{"", CC.Gray + "+" + armorModifier + " Armor Value", CC.Gray + durability + " Durability", CC.DarkRed + "This armor is stronger than diamond."});
-        ItemStack item = (new ItemBuilder(type, name, new String[0])).lore(lore).build();
-        ItemMeta im = item.getItemMeta();
-        if (im instanceof LeatherArmorMeta) {
+        ArrayList lore;
+        ItemStack item;
+        ItemMeta im;
+        if (name == null) {
+            name = CC.DarkRedB + "Heroic " + StringUtils.capitaliseAllWords((String) type.name().split("_")[1].toLowerCase());
+        }
+        if ((im = (item = new ItemBuilder(type, name, new String[0]).lore((List) (lore = Lists.newArrayList((Object[]) new String[]{"", CC.Gray + "+" + armorModifier + " Armor Value", CC.Gray + durability + " Durability", CC.DarkRed + "This armor is stronger than diamond."}))).build()).getItemMeta()) instanceof LeatherArmorMeta) {
             LeatherArmorMeta lm = (LeatherArmorMeta) im;
             lm.setColor(Color.RED);
             item.setItemMeta((ItemMeta) lm);
         }
-        if (type.name().endsWith("_BOOTS"))
+        if (type.name().endsWith("_BOOTS")) {
             item.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+        }
         item.addUnsafeEnchantment(Enchantment.DURABILITY, 3);
         NBTWrapper wrapper = new NBTWrapper(item);
         wrapper.setString("cosmicType", "HEROIC_ARMOR").setNBTBase("cosmicData", (NBTBase) wrapper.getCompoundOrCreate("cosmicData").setInt("durability", Integer.valueOf(durability)).setInt("armorModifier", Integer.valueOf(armorModifier)).setInt("maxDurability", Integer.valueOf(durability)).get());
@@ -392,16 +430,17 @@ public class CosmicArmorSetsAPI {
         int modifier = type.getArmorModifier();
         NBTWrapper wrapper = new NBTWrapper(item);
         NBTTagCompoundBuilder builder = wrapper.getCompoundOrCreate("cosmicData");
-        if (builder.hasKey("abilitySet"))
-            modifier = (int) Math.ceil(modifier / 2.0D);
+        if (builder.hasKey("abilitySet")) {
+            modifier = (int) Math.ceil((double) modifier / 2.0);
+        }
         wrapper.setString("cosmicType", "HEROIC_ARMOR");
         wrapper.setNBTBase("cosmicData", (NBTBase) builder.setInt("durability", Integer.valueOf(type.getDurability())).setInt("maxDurability", Integer.valueOf(type.getDurability())).setInt("armorModifier", Integer.valueOf(modifier)).get());
         ItemStack finished = wrapper.build();
         ItemMeta im = finished.getItemMeta();
         if (addLore) {
-            List<String> lore = im.hasLore() ? im.getLore() : Lists.newArrayList();
-            String strongerLine = CC.DarkRed + "This armor is stronger than diamond.";
-            if (!lore.contains(strongerLine)) {
+            String strongerLine;
+            List lore = im.hasLore() ? im.getLore() : Lists.newArrayList();
+            if (!lore.contains(strongerLine = CC.DarkRed + "This armor is stronger than diamond.")) {
                 lore.add("");
                 lore.add(CC.Gray + "+" + modifier + " Armor Value");
                 lore.add(CC.Gray + type.getDurability() + " Durability");
@@ -409,9 +448,11 @@ public class CosmicArmorSetsAPI {
             }
             im.setLore(lore);
         }
-        if (im instanceof LeatherArmorMeta)
+        if (im instanceof LeatherArmorMeta) {
             ((LeatherArmorMeta) im).setColor(Color.RED);
+        }
         item.setItemMeta(im);
         return item;
     }
 }
+

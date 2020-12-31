@@ -7,22 +7,17 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="GUIShop (1)" />
+        <module name="GUIShop" />
         <module name="Utils" />
         <module name="AuctionHouse" />
         <module name="SpaceChests" />
         <module name="Factions" />
+        <module name="ArmorSets" />
         <module name="Bosses" />
         <module name="Slotbot" />
         <module name="Ark" />
         <module name="Arkkit" />
         <module name="Core" />
-      </profile>
-      <profile name="Annotation profile for ProjectAstro" enabled="true">
-        <sourceOutputDir name="../ArmorSets/target/generated-sources/annotations" />
-        <sourceTestOutputDir name="../ArmorSets/target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="GUIShop" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

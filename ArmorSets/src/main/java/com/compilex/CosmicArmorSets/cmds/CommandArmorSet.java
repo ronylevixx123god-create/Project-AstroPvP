@@ -1,107 +1,105 @@
-/*    */ package com.compilex.CosmicArmorSets.cmds;
-/*    */ 
-/*    */ import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
-/*    */ import com.compilex.CosmicArmorSets.CosmicArmorSetsPlugin;
-/*    */ import com.compilex.CosmicArmorSets.enums.ArmorSet;
-/*    */ import com.compilex.CosmicArmorSets.enums.HeroicWeaponType;
-/*    */ import com.compilex.CosmicArmorSets.enums.armorsets.DimensionalTravelerSet;
-/*    */ import com.compilex.CosmicArmorSets.enums.armorsets.MotherOfYijki;
-/*    */ import com.compilex.CosmicArmorSets.menu.ArmorSetHelpMenu;
-/*    */ import com.compilex.CosmicKOTH.utils.KothItemUtils;
-/*    */ import com.cosmicpvp.cosmicutils.utils.CC;
-/*    */ import com.cosmicpvp.cosmicutils.utils.NumberUtils;
-/*    */ import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
-/*    */ import com.google.common.collect.Lists;
-/*    */ import java.util.Arrays;
-/*    */ import org.bukkit.command.Command;
-/*    */ import org.bukkit.command.CommandExecutor;
-/*    */ import org.bukkit.command.CommandSender;
-/*    */ import org.bukkit.entity.Player;
-/*    */ import org.bukkit.inventory.ItemStack;
-/*    */ import org.bukkit.plugin.java.JavaPlugin;
-/*    */ 
-/*    */ public class CommandArmorSet
-/*    */   implements CommandExecutor
-/*    */ {
-/*    */   public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-/* 27 */     if (args.length == 1 && args[0].equalsIgnoreCase("help") && sender instanceof Player) {
-/* 28 */       (new ArmorSetHelpMenu((Player)sender)).openGUI((JavaPlugin)CosmicArmorSetsPlugin.get_());
-/* 29 */       return true;
-/*    */     } 
-/*    */     
-/* 32 */     if (!sender.isOp()) {
-/* 33 */       return true;
-/*    */     }
-/* 35 */     if (args.length == 0) {
-/* 36 */       sender.sendMessage("/armorset <armorSet>/AXE/SWORD/extractioncrystal [crystal]");
-/* 37 */       return true;
-/*    */     } 
-/* 39 */     if (args.length == 1 && (args[0].equals("travelerpassive") || args[0].equalsIgnoreCase("dimensionalpassive"))) {
-/* 40 */       ((DimensionalTravelerSet) ArmorSet.DIMENSIONAL_TRAVELER.getArmorSetInfo()).onDimensionalRift((Player)sender);
-/* 41 */       sender.sendMessage(CC.Red + "Proc'ing Dimensional Traveler!");
-/* 42 */       return true;
-/*    */     } 
-/*    */     
-/* 45 */     if (args.length == 1 && args[0].equals("yijkirev")) {
-/* 46 */       Player p = (Player)sender;
-/* 47 */       ((MotherOfYijki)ArmorSet.MOTHER_OF_YIJKI.getArmorSetInfo()).activateYijki(p.getLocation(), p);
-/* 48 */       return true;
-/* 49 */     }  if (args.length == 1 && args[0].equalsIgnoreCase("rangerbow")) {
-/* 50 */       ((Player)sender).getInventory().addItem(new ItemStack[] { ArmorSet.createRangerBow() });
-/* 51 */       return true;
-/*    */     } 
-/*    */     
-/* 54 */     if (args.length >= 1) {
-/*    */       
-/* 56 */       if (args[0].equalsIgnoreCase("AXE") || args[0].equalsIgnoreCase("SWORD")) {
-/* 57 */         HeroicWeaponType type = HeroicWeaponType.valueOf(args[0]);
-/*    */         
-/* 59 */         ((Player)sender).getInventory().addItem(new ItemStack[] { CosmicArmorSetsAPI.createHeroicWeapon(type) });
-/* 60 */         return true;
-/*    */       } 
-/*    */       
-/* 63 */       ArmorSet as = null;
-/*    */       try {
-/* 65 */         as = ArmorSet.valueOf(args[0].toUpperCase());
-/* 66 */       } catch (Exception exception) {}
-/*    */ 
-/*    */       
-/* 69 */       if (args.length >= 2 && args[1].equalsIgnoreCase("crystal") && as != null) {
-/* 70 */         Player pSender = (Player)sender;
-/* 71 */         Double given = (args.length == 3) ? NumberUtils.parseDoubleOrNull(args[2]) : null;
-/* 72 */         PlayerUtil.giveOrDropProtectedItem(pSender, ArmorSet.createCrystal(Lists.newArrayList(new ArmorSet[] { as }), (given == null) ? 20.0D : given.doubleValue()), -1);
-/* 73 */         sender.sendMessage(CC.Red + "Crystal added!");
-/* 74 */         return true;
-/*    */       } 
-/*    */       
-/* 77 */       if (as != null && as.getArmorSetInfo() != null && 
-/* 78 */         sender instanceof Player) {
-/* 79 */         Player pSender = (Player)sender;
-/* 80 */         for (ItemStack i : CosmicArmorSetsAPI.getArmorSet(as)) {
-/* 81 */           pSender.getInventory().addItem(new ItemStack[] { i });
-/*    */         } 
-/*    */         
-/* 84 */         ItemStack weapon = CosmicArmorSetsAPI.getWeaponFromArmorSet(as);
-/* 85 */         if (weapon != null) {
-/* 86 */           pSender.getInventory().addItem(new ItemStack[] { weapon });
-/*    */         }
-/* 88 */         if (as == ArmorSet.KOTH) {
-/* 89 */           pSender.getInventory().addItem(new ItemStack[] { KothItemUtils.getKothAxe(pSender.getName()) });
-/* 90 */           pSender.getInventory().addItem(new ItemStack[] { KothItemUtils.getKothSwordPvP(pSender.getName()) });
-/*    */         } 
-/*    */         
-/* 93 */         return true;
-/*    */       } 
-/*    */     } 
-/*    */ 
-/*    */     
-/* 98 */     sender.sendMessage(CC.Red + "Armor Sets: " + Arrays.toString((Object[])ArmorSet.values()));
-/* 99 */     return true;
-/*    */   }
-/*    */ }
-
-
-/* Location:              C:\Users\tucke\Desktop\CosmicArmorSets.jar!\com\compilex\CosmicArmorSets\cmds\CommandArmorSet.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
+/*
+ * Decompiled with CFR 0.150.
+ *
+ * Could not load the following classes:
+ *  com.compilex.CosmicKOTH.utils.KothItemUtils
+ *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.utils.NumberUtils
+ *  com.cosmicpvp.cosmicutils.utils.PlayerUtil
+ *  com.google.common.collect.Lists
+ *  org.bukkit.command.Command
+ *  org.bukkit.command.CommandExecutor
+ *  org.bukkit.command.CommandSender
+ *  org.bukkit.entity.Player
+ *  org.bukkit.inventory.ItemStack
  */
+package com.compilex.CosmicArmorSets.cmds;
+
+import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
+import com.compilex.CosmicArmorSets.CosmicArmorSetsPlugin;
+import com.compilex.CosmicArmorSets.enums.ArmorSet;
+import com.compilex.CosmicArmorSets.enums.HeroicWeaponType;
+import com.compilex.CosmicArmorSets.enums.armorsets.DimensionalTravelerSet;
+import com.compilex.CosmicArmorSets.enums.armorsets.MotherOfYijki;
+import com.compilex.CosmicArmorSets.menu.ArmorSetHelpMenu;
+import com.compilex.CosmicKOTH.utils.KothItemUtils;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.NumberUtils;
+import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
+import com.google.common.collect.Lists;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.Arrays;
+
+public class CommandArmorSet
+        implements CommandExecutor {
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        if (args.length == 1 && args[0].equalsIgnoreCase("help") && sender instanceof Player) {
+            new ArmorSetHelpMenu((Player) sender).openGUI(CosmicArmorSetsPlugin.get_());
+            return true;
+        }
+        if (!sender.isOp()) {
+            return true;
+        }
+        if (args.length == 0) {
+            sender.sendMessage("/armorset <armorSet>/AXE/SWORD/extractioncrystal [crystal]");
+            return true;
+        }
+        if (args.length == 1 && (args[0].equals("travelerpassive") || args[0].equalsIgnoreCase("dimensionalpassive"))) {
+            ((DimensionalTravelerSet) ArmorSet.DIMENSIONAL_TRAVELER.getArmorSetInfo()).onDimensionalRift((Player) sender);
+            sender.sendMessage(CC.Red + "Proc'ing Dimensional Traveler!");
+            return true;
+        }
+        if (args.length == 1 && args[0].equals("yijkirev")) {
+            Player p = (Player) sender;
+            ((MotherOfYijki) ArmorSet.MOTHER_OF_YIJKI.getArmorSetInfo()).activateYijki(p.getLocation(), p);
+            return true;
+        }
+        if (args.length == 1 && args[0].equalsIgnoreCase("rangerbow")) {
+            ((Player) sender).getInventory().addItem(new ItemStack[]{ArmorSet.createRangerBow()});
+            return true;
+        }
+        if (args.length >= 1) {
+            if (args[0].equalsIgnoreCase("AXE") || args[0].equalsIgnoreCase("SWORD")) {
+                HeroicWeaponType type = HeroicWeaponType.valueOf(args[0]);
+                ((Player) sender).getInventory().addItem(CosmicArmorSetsAPI.createHeroicWeapon(type));
+                return true;
+            }
+            ArmorSet as = null;
+            try {
+                as = ArmorSet.valueOf(args[0].toUpperCase());
+            } catch (Exception exception) {
+                // empty catch block
+            }
+            if (args.length >= 2 && args[1].equalsIgnoreCase("crystal") && as != null) {
+                Player pSender = (Player) sender;
+                Double given = args.length == 3 ? NumberUtils.parseDoubleOrNull(args[2]) : null;
+                PlayerUtil.giveOrDropProtectedItem(pSender, ArmorSet.createCrystal(Lists.newArrayList(as), given == null ? 20.0 : given), (int) -1);
+                sender.sendMessage(CC.Red + "Crystal added!");
+                return true;
+            }
+            if (as != null && as.getArmorSetInfo() != null && sender instanceof Player) {
+                Player pSender = (Player) sender;
+                for (ItemStack i : CosmicArmorSetsAPI.getArmorSet(as)) {
+                    pSender.getInventory().addItem(i);
+                }
+                ItemStack weapon = CosmicArmorSetsAPI.getWeaponFromArmorSet(as);
+                if (weapon != null) {
+                    pSender.getInventory().addItem(weapon);
+                }
+                if (as == ArmorSet.KOTH) {
+                    pSender.getInventory().addItem(KothItemUtils.getKothAxe(pSender.getName()));
+                    pSender.getInventory().addItem(KothItemUtils.getKothSwordPvP(pSender.getName()));
+                }
+                return true;
+            }
+        }
+        sender.sendMessage(CC.Red + "Armor Sets: " + Arrays.toString(ArmorSet.values()));
+        return true;
+    }
+}
+

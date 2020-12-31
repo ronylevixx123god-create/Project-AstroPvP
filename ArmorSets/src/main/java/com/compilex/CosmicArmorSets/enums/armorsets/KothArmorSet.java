@@ -1,383 +1,227 @@
-/*     */
+/*
+ * Decompiled with CFR 0.150.
+ *
+ * Could not load the following classes:
+ *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
+ *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
+ *  com.google.common.collect.Lists
+ *  com.rit.sucy.CustomEnchantment
+ *  com.rit.sucy.EnchantmentAPI
+ *  org.arkhamnetwork.enchantments.EnchantmentBook
+ *  org.arkhamnetwork.enchantments.libs.PlayerPotionEffects
+ *  org.arkhamnetwork.enchantments.util.ArmorSlot
+ *  org.arkhamnetwork.enchantments.util.ArmorUtil
+ *  org.bukkit.Bukkit
+ *  org.bukkit.ChatColor
+ *  org.bukkit.Material
+ *  org.bukkit.enchantments.Enchantment
+ *  org.bukkit.entity.Entity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.Event
+ *  org.bukkit.event.entity.EntityDamageByEntityEvent
+ *  org.bukkit.event.entity.EntityDamageEvent
+ *  org.bukkit.event.entity.EntityDamageEvent$DamageCause
+ *  org.bukkit.event.entity.EntityDamageEvent$DamageModifier
+ *  org.bukkit.event.player.PlayerQuitEvent
+ *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.potion.PotionEffectType
+ */
 package com.compilex.CosmicArmorSets.enums.armorsets;
-/*     */
 
 import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
-/*     */ import com.compilex.CosmicArmorSets.enums.ArmorSet;
-/*     */ import com.compilex.CosmicArmorSets.enums.ArmorSetInfo;
-/*     */ import com.compilex.CosmicArmorSets.enums.HeroicArmorType;
-/*     */ import com.compilex.CosmicArmorSets.enums.OtherPlayerEventListenerSet;
-/*     */ import com.compilex.CosmicArmorSets.utils.ItemUtils;
-/*     */ import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
-/*     */ import com.cosmicpvp.cosmicutils.utils.CC;
-/*     */ import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
-/*     */ import com.google.common.collect.Lists;
-/*     */ import com.rit.sucy.CustomEnchantment;
-/*     */ import com.rit.sucy.EnchantmentAPI;
-/*     */ import java.text.SimpleDateFormat;
-/*     */ import java.util.Arrays;
-/*     */ import java.util.Date;
-/*     */ import java.util.HashSet;
-/*     */ import java.util.List;
-/*     */ import java.util.Set;
-/*     */ import org.arkhamnetwork.enchantments.EnchantmentBook;
-/*     */ import org.arkhamnetwork.enchantments.enchantments.axes.Blessed;
-/*     */ import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
+import com.compilex.CosmicArmorSets.enums.ArmorSetInfo;
+import com.compilex.CosmicArmorSets.enums.HeroicArmorType;
+import com.compilex.CosmicArmorSets.enums.OtherPlayerEventListenerSet;
+import com.compilex.CosmicArmorSets.utils.ItemUtils;
+import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import com.google.common.collect.Lists;
+import com.rit.sucy.CustomEnchantment;
+import com.rit.sucy.EnchantmentAPI;
+import org.arkhamnetwork.enchantments.EnchantmentBook;
+import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
 import org.arkhamnetwork.enchantments.util.ArmorSlot;
-/*     */ import org.arkhamnetwork.enchantments.util.ArmorUtil;
+import org.arkhamnetwork.enchantments.util.ArmorUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-/*     */ import org.bukkit.Material;
-/*     */ import org.bukkit.enchantments.Enchantment;
-/*     */ import org.bukkit.entity.Entity;
-/*     */ import org.bukkit.entity.Player;
-/*     */ import org.bukkit.event.Event;
-/*     */ import org.bukkit.event.entity.EntityDamageByEntityEvent;
-/*     */ import org.bukkit.event.entity.EntityDamageEvent;
-/*     */ import org.bukkit.event.player.PlayerQuitEvent;
-/*     */ import org.bukkit.inventory.ItemStack;
+import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
-/*     */
-/*     */ public class KothArmorSet extends ArmorSetInfo implements OtherPlayerEventListenerSet {
-    /*  35 */   private SimpleDateFormat format = new SimpleDateFormat("EEE MM/dd/yy");
-    /*  36 */   private ChatColor color = ChatColor.LIGHT_PURPLE;
-    /*     */
-    /*  38 */   private Set<Player> kothEquippedPlayers = new HashSet<>();
+import java.text.SimpleDateFormat;
+import java.util.*;
 
-    /*     */
-    /*     */
-    /*     */
+public class KothArmorSet
+        extends ArmorSetInfo
+        implements OtherPlayerEventListenerSet {
+    private SimpleDateFormat format = new SimpleDateFormat("EEE MM/dd/yy");
+    private ChatColor color = ChatColor.LIGHT_PURPLE;
+    private Set<Player> kothEquippedPlayers = new HashSet<Player>();
+
+    @Override
     public void onEquip(Player player) {
-        /*  42 */
-        PlayerPotionEffects.untrackPotionEffect(player, PotionEffectType.SLOW);
-        PlayerPotionEffects.untrackPotionEffect(player, PotionEffectType.SLOW_DIGGING);
-        /*     */
+        PlayerPotionEffects.untrackPotionEffect((Player) player, (PotionEffectType) PotionEffectType.SLOW);
+        PlayerPotionEffects.untrackPotionEffect((Player) player, (PotionEffectType) PotionEffectType.SLOW_DIGGING);
     }
 
-    /*     */
-    /*     */
-    /*     */
+    @Override
     public void onUnequip(Player player) {
-        PlayerPotionEffects.untrackPotionEffect(player, PotionEffectType.SLOW);
-        PlayerPotionEffects.untrackPotionEffect(player, PotionEffectType.SLOW_DIGGING);
+        PlayerPotionEffects.untrackPotionEffect((Player) player, (PotionEffectType) PotionEffectType.SLOW);
+        PlayerPotionEffects.untrackPotionEffect((Player) player, (PotionEffectType) PotionEffectType.SLOW_DIGGING);
     }
-    /*  47 */
-    /*     */
 
-    /*     */
-    /*     */
-    /*     */
-    /*     */
-    /*     */
+    @Override
     public ItemStack getHelmet(boolean transmog) {
-        /*  61 */
-        return getHelmet(transmog, (String) null);
-        /*     */
+        return this.getHelmet(transmog, null);
     }
 
-    /*     */
-    /*     */
-    /*     */
     public ItemStack getHelmet(boolean applyTransmog, String playerName) {
-        /*  66 */
-        ItemStack kothItem = createKothItem(Material.DIAMOND_HELMET, "Helmet", playerName);
-        /*     */
-        /*  68 */
-        List<String> customEnchantments = Arrays.asList(new String[]{"Drunk", "Deathbringer", "Enlighted", "Armored", "Tank", "Angelic", "Implants"});
-        /*  69 */
+        ItemStack kothItem = this.createKothItem(Material.DIAMOND_HELMET, "Helmet", playerName);
+        List<String> customEnchantments = Arrays.asList("Drunk", "Deathbringer", "Enlighted", "Armored", "Tank", "Angelic", "Implants");
         for (String s : customEnchantments) {
-            /*  70 */
-            addEnchantment(s, getMaxEnchantLevel(s), kothItem);
-            /*     */
+            this.addEnchantment(s, this.getMaxEnchantLevel(s), kothItem);
         }
-        /*     */
-        /*  73 */
-        return applyTransmog ? EnchantmentBook.applyTransmogScroll(kothItem) : kothItem;
-        /*     */
+        return applyTransmog ? EnchantmentBook.applyTransmogScroll((ItemStack) kothItem) : kothItem;
     }
 
-    /*     */
-    /*     */
-    /*     */
-    /*     */
+    @Override
     public ItemStack getChestplate(boolean transmog) {
-        /*  79 */
-        return getChestplate(transmog, (String) null);
-        /*     */
+        return this.getChestplate(transmog, null);
     }
 
-    /*     */
-    /*     */
-    /*     */
     public ItemStack getChestplate(boolean applyTransmog, String playerName) {
-        /*  84 */
-        ItemStack kothItem = createKothItem(Material.DIAMOND_CHESTPLATE, "Chestplate", playerName);
-        /*     */
-        /*  86 */
-        List<String> customEnchantments = Arrays.asList(new String[]{"Blood Lust", "Overload", "Deathbringer", "Enlighted", "Armored", "Angelic", "Tank", "Dodge"});
-        /*  87 */
+        ItemStack kothItem = this.createKothItem(Material.DIAMOND_CHESTPLATE, "Chestplate", playerName);
+        List<String> customEnchantments = Arrays.asList("Blood Lust", "Overload", "Deathbringer", "Enlighted", "Armored", "Angelic", "Tank", "Dodge");
         for (String s : customEnchantments) {
-            /*  88 */
-            addEnchantment(s, getMaxEnchantLevel(s), kothItem);
-            /*     */
+            this.addEnchantment(s, this.getMaxEnchantLevel(s), kothItem);
         }
-        /*     */
-        /*  91 */
-        return applyTransmog ? EnchantmentBook.applyTransmogScroll(kothItem) : kothItem;
-        /*     */
+        return applyTransmog ? EnchantmentBook.applyTransmogScroll((ItemStack) kothItem) : kothItem;
     }
 
-    /*     */
-    /*     */
-    /*     */
-    /*     */
+    @Override
     public ItemStack getLeggings(boolean transmog) {
-        /*  97 */
-        return getLeggings(transmog, (String) null);
-        /*     */
+        return this.getLeggings(transmog, null);
     }
 
-    /*     */
-    /*     */
-    /*     */
     public ItemStack getLeggings(boolean applyTransmog, String playerName) {
-        /* 102 */
-        ItemStack kothItem = createKothItem(Material.DIAMOND_LEGGINGS, "Leggings", playerName);
-        /* 103 */
-        List<String> customEnchantments = Arrays.asList(new String[]{"Clarity", "Deathbringer", "Enlighted", "Armored", "Tank", "Angelic", "Valor", "Cactus"});
-        /* 104 */
+        ItemStack kothItem = this.createKothItem(Material.DIAMOND_LEGGINGS, "Leggings", playerName);
+        List<String> customEnchantments = Arrays.asList("Clarity", "Deathbringer", "Enlighted", "Armored", "Tank", "Angelic", "Valor", "Cactus");
         for (String s : customEnchantments) {
-            /* 105 */
-            addMaxedEnchant(EnchantmentAPI.getEnchantment(s), kothItem);
-            /*     */
+            this.addMaxedEnchant(EnchantmentAPI.getEnchantment((String) s), kothItem);
         }
-        /* 107 */
-        if (Math.random() < 0.075D) {
-            /* 108 */
-            addMaxedEnchant(EnchantmentAPI.getEnchantment("Nature Wrath"), kothItem);
-            /*     */
+        if (Math.random() < 0.075) {
+            this.addMaxedEnchant(EnchantmentAPI.getEnchantment((String) "Nature Wrath"), kothItem);
         }
-        /*     */
-        /*     */
-        /* 112 */
-        return applyTransmog ? EnchantmentBook.applyTransmogScroll(kothItem) : kothItem;
-        /*     */
+        return applyTransmog ? EnchantmentBook.applyTransmogScroll((ItemStack) kothItem) : kothItem;
     }
 
-    /*     */
-    /*     */
-    /*     */
-    /*     */
     public ItemStack addMaxedEnchant(CustomEnchantment enchantment, ItemStack item) {
-        /* 118 */
-        if (enchantment == null) return item;
-        /* 119 */
+        if (enchantment == null) {
+            return item;
+        }
         enchantment.addToItem(item, enchantment.getMaxLevel());
-        /* 120 */
         return item;
-        /*     */
     }
 
-    /*     */
-    /*     */
-    /*     */
-    /*     */
+    @Override
     public ItemStack getBoots(boolean transmog) {
-        /* 126 */
-        return getBoots(transmog, (String) null);
-        /*     */
+        return this.getBoots(transmog, null);
     }
 
-    /*     */
-    /*     */
-    /*     */
     public ItemStack getBoots(boolean applyTransmog, String playerName) {
-        /* 131 */
-        ItemStack kothItem = createKothItem(Material.DIAMOND_BOOTS, "Boots", playerName);
-        /*     */
-        /* 133 */
-        List<String> customEnchantments = Arrays.asList(new String[]{"Deathbringer", "Enlighted", "Gears", "Armored", "Tank", "Angelic", "Rocket Escape"});
-        /* 134 */
+        ItemStack kothItem = this.createKothItem(Material.DIAMOND_BOOTS, "Boots", playerName);
+        List<String> customEnchantments = Arrays.asList("Deathbringer", "Enlighted", "Gears", "Armored", "Tank", "Angelic", "Rocket Escape");
         for (String s : customEnchantments) {
-            /* 135 */
-            addMaxedEnchant(EnchantmentAPI.getEnchantment(s), kothItem);
-            /*     */
+            this.addMaxedEnchant(EnchantmentAPI.getEnchantment((String) s), kothItem);
         }
-        /*     */
-        /*     */
-        /* 139 */
-        return applyTransmog ? EnchantmentBook.applyTransmogScroll(kothItem) : kothItem;
-        /*     */
+        return applyTransmog ? EnchantmentBook.applyTransmogScroll((ItemStack) kothItem) : kothItem;
     }
 
-    /*     */
-    /*     */
-    /*     */
     public ItemStack createKothItem(Material material, String itemName, String playerName) {
-        /* 144 */
-        String bold = this.color + CC.Bold + "* " + this.color;
-        /* 145 */
-        ItemStack kothItem = ItemUtils.buildItem(material, (short) 0,
-                /* 146 */         getKothName() + " " + CC.WhiteB + CC.Underline + itemName + CC.Reset, "", this.color + CC.Bold + "KOTH SET BONUS", bold + "+20% PvP Damage", bold + "+50% PvE Damage", bold + "Auto Bless", bold + "No Fall Damage", CC.Gray + "(" + CC.GrayI + "Requires all 4 koth items" + CC.Gray + ")", "", ChatColor.AQUA.toString() + ChatColor.UNDERLINE.toString() + this.format.format(new Date()));
-        /*     */
-        /*     */
-        /* 159 */
+        String bold = (Object) this.color + CC.Bold + "* " + (Object) this.color;
+        ItemStack kothItem = ItemUtils.buildItem(material, (short) 0, this.getKothName() + " " + CC.WhiteB + CC.Underline + itemName + CC.Reset, "", (Object) this.color + CC.Bold + "KOTH SET BONUS", bold + "+20% PvP Damage", bold + "+50% PvE Damage", bold + "Auto Bless", bold + "No Fall Damage", CC.Gray + "(" + CC.GrayI + "Requires all 4 koth items" + CC.Gray + ")", "", ChatColor.AQUA.toString() + ChatColor.UNDERLINE.toString() + this.format.format(new Date()));
         kothItem.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5);
-        /* 160 */
         kothItem.addUnsafeEnchantment(Enchantment.DURABILITY, 3);
-        /* 161 */
         return CosmicArmorSetsAPI.convertItemToHeroic(kothItem, HeroicArmorType.getFromMaterial(material), true);
-        /*     */
     }
 
-    /*     */
-    /*     */
     public String getKothName() {
-        /* 165 */
-        return ChatColor.translateAlternateColorCodes('&', "&f&l&k!&r &c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH &f&l&k!&r");
-        /*     */
+        return ChatColor.translateAlternateColorCodes((char) '&', (String) "&f&l&k!&r &c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH &f&l&k!&r");
     }
 
-    /*     */
-    /*     */
-    /*     */
-    /*     */
+    @Override
     public List<String> getEquipDescription() {
-        /* 171 */
-        String boldStar = this.color + CC.Bold + " * " + this.color;
-        /* 172 */
-        return Lists.newArrayList(new String[]{this.color + CC.Bold + "KOTH SET BONUS", boldStar + "+20% PvP DMG", boldStar + "+50% PvE damage", boldStar + "Auto Bless", boldStar + "No Fall Damage"});
-        /*     */
+        String boldStar = (Object) this.color + CC.Bold + " * " + (Object) this.color;
+        return Lists.newArrayList((Object[]) new String[]{(Object) this.color + CC.Bold + "KOTH SET BONUS", boldStar + "+20% PvP DMG", boldStar + "+50% PvE damage", boldStar + "Auto Bless", boldStar + "No Fall Damage"});
     }
 
-    /*     */
-    /*     */
-    /*     */
-    /*     */
-    /*     */
-    /*     */
-    /*     */
-    /*     */
+    @Override
     public boolean onPlayerDamaged(Player damaged, EntityDamageByEntityEvent event) {
-        /* 182 */
         return false;
-        /*     */
     }
 
-    /*     */
-    /*     */
-    /*     */
-    /*     */
-    /*     */
+    @Override
     public boolean onPlayerAttacked(Player damager, EntityDamageByEntityEvent event) {
-        /* 189 */
-        if (isBlockedOutpostWorld((Entity) damager)) return false;
-        /*     */
-        /* 191 */
+        NBTWrapper wrapper;
+        if (this.isBlockedOutpostWorld((Entity) damager)) {
+            return false;
+        }
         if (event.getEntity() instanceof Player) {
-            /* 192 */
-            event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.2D);
-            /*     */
+            event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.2);
         } else {
-            /* 194 */
-            event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.5D);
-            /*     */
+            event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.5);
         }
-        /* 196 */
         ItemStack item = damager.getItemInHand();
-        /* 197 */
-        if (event.getEntity() instanceof Player && item != null && (item
-/* 198 */.getType() == Material.GOLD_AXE || item.getType() == Material.GOLD_SWORD)) {
-            /* 199 */
-            NBTWrapper wrapper = new NBTWrapper(item);
-            /* 200 */
-            if (wrapper.getString("cosmicType").equals("HEROIC_WEAPON")) {
-                /* 201 */
-                NBTTagCompoundBuilder builder = wrapper.getCompound("cosmicData");
-                /* 202 */
-                String kothWeapon = (builder != null) ? builder.getString("KOTH_WEAPON") : "";
-                /* 203 */
-                if (kothWeapon.equalsIgnoreCase("AXE")) {
-                    /*     */
-                    /* 205 */
-                    Player damaged = (Player) event.getEntity();
-                    /* 206 */
-                    for (ArmorSlot slot : ArmorSlot.values()) {
-                        /* 207 */
-                        if (Math.random() <= 0.5D) {
-                            /* 208 */
-                            ArmorUtil.modifyPlayerArmor(damaged, slot, -(2 + this.random.nextInt(2)), false);
-                            /* 209 */
-                            Bukkit.getLogger().info("Damaging " + slot + " from " + damaged.getName() + " from " + damager.getName() + "'s Koth Axe!");
-                            /*     */
-                        }
-                        /*     */
-                    }
-                    /* 212 */
-                } else if (kothWeapon.equalsIgnoreCase("SWORD")) {
-                    /* 213 */
-                    event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.075D);
-                    /*     */
+        if (event.getEntity() instanceof Player && item != null && (item.getType() == Material.GOLD_AXE || item.getType() == Material.GOLD_SWORD) && (wrapper = new NBTWrapper(item)).getString("cosmicType").equals("HEROIC_WEAPON")) {
+            String kothWeapon;
+            NBTTagCompoundBuilder builder = wrapper.getCompound("cosmicData");
+            String string = kothWeapon = builder != null ? builder.getString("KOTH_WEAPON") : "";
+            if (kothWeapon.equalsIgnoreCase("AXE")) {
+                Player damaged = (Player) event.getEntity();
+                for (ArmorSlot slot : ArmorSlot.values()) {
+                    if (!(Math.random() <= 0.5)) continue;
+                    ArmorUtil.modifyPlayerArmor((Player) damaged, (ArmorSlot) slot, (int) (-(2 + this.random.nextInt(2))), (boolean) false);
+                    Bukkit.getLogger().info("Damaging " + (Object) slot + " from " + damaged.getName() + " from " + damager.getName() + "'s Koth Axe!");
                 }
-                /*     */
+            } else if (kothWeapon.equalsIgnoreCase("SWORD")) {
+                event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.075);
             }
-            /*     */
         }
-        /*     */
-        /* 218 */
         return false;
-        /*     */
     }
 
-    /*     */
-    /*     */
-    /*     */
+    @Override
     public boolean onPlayerDamagedBonus(Player damaged, int multiplier, EntityDamageByEntityEvent event) {
-        /* 223 */
         return false;
-        /*     */
     }
 
-    /*     */
-    /*     */
-    /*     */
+    @Override
     public boolean onPlayerAttackedBonus(Player damager, int multiplier, EntityDamageByEntityEvent event) {
-        /* 228 */
-        if (isBlockedOutpostWorld((Entity) damager)) return false;
-        /*     */
-        /* 230 */
-        return modifyDamage(damager, event, (event.getEntity() instanceof Player) ? 5.0D : 12.5D, multiplier);
-        /*     */
+        if (this.isBlockedOutpostWorld((Entity) damager)) {
+            return false;
+        }
+        return this.modifyDamage(damager, event, event.getEntity() instanceof Player ? 5.0 : 12.5, multiplier);
     }
 
-    /*     */
-    /*     */
-    /*     */
+    @Override
     public void onPlayerEvent(Event event) {
-        /* 235 */
         if (event instanceof EntityDamageEvent) {
-            /* 236 */
             EntityDamageEvent damageEvent = (EntityDamageEvent) event;
-            /* 237 */
             if (damageEvent.getCause() == EntityDamageEvent.DamageCause.FALL) {
-                /* 238 */
                 damageEvent.setCancelled(true);
-                /*     */
             }
-            /* 240 */
         } else if (event instanceof PlayerQuitEvent) {
-            /* 241 */
-            this.kothEquippedPlayers.remove(((PlayerQuitEvent) event).getPlayer());
-            /*     */
+            this.kothEquippedPlayers.remove((Object) ((PlayerQuitEvent) event).getPlayer());
         }
-        /*     */
     }
-    /*     */
 }
 
-
-/* Location:              C:\Users\tucke\Desktop\CosmicArmorSets.jar!\com\compilex\CosmicArmorSets\enums\armorsets\KothArmorSet.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

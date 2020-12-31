@@ -1,3 +1,27 @@
+/*
+ * Decompiled with CFR 0.150.
+ *
+ * Could not load the following classes:
+ *  com.cosmicpvp.cosmicutils.utils.UpgradeUtils
+ *  org.bukkit.Material
+ *  org.bukkit.entity.Arrow
+ *  org.bukkit.entity.Entity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.entity.Projectile
+ *  org.bukkit.event.Event
+ *  org.bukkit.event.EventHandler
+ *  org.bukkit.event.EventPriority
+ *  org.bukkit.event.Listener
+ *  org.bukkit.event.entity.EntityChangeBlockEvent
+ *  org.bukkit.event.entity.EntityDamageByEntityEvent
+ *  org.bukkit.event.entity.EntityDamageEvent
+ *  org.bukkit.event.entity.EntityDamageEvent$DamageModifier
+ *  org.bukkit.event.entity.FoodLevelChangeEvent
+ *  org.bukkit.event.player.PlayerChangedWorldEvent
+ *  org.bukkit.event.player.PlayerCommandPreprocessEvent
+ *  org.bukkit.event.player.PlayerQuitEvent
+ *  org.bukkit.plugin.Plugin
+ */
 package com.compilex.CosmicArmorSets.listeners;
 
 import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
@@ -9,12 +33,10 @@ import com.compilex.CosmicArmorSets.enums.OtherPlayerEventListenerSet;
 import com.compilex.CosmicArmorSets.enums.armorsets.DimensionalTravelerSet;
 import com.compilex.CosmicArmorSets.enums.armorsets.EngineerSet;
 import com.compilex.CosmicArmorSets.enums.armorsets.SupremeArmorSet;
-import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
-
-import java.util.Map;
-
 import org.bukkit.Material;
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.Event;
@@ -25,19 +47,20 @@ import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
 
+import java.util.Map;
+
 public class SetBonusListener
         implements Listener {
-
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onPlayerCommand(PlayerCommandPreprocessEvent event) {
-        if (event.getMessage() != null && event.getMessage().equals("/help armorset"))
+        if (event.getMessage() != null && event.getMessage().equals("/help armorset")) {
             event.setMessage("/armorset help");
+        }
     }
 
     @EventHandler
@@ -46,73 +69,64 @@ public class SetBonusListener
         ArmorSet stored = CosmicArmorSetsAPI.getCachedArmorSet(player);
         if (stored != null) {
             stored.getArmorSetInfo().onUnequip(player);
-            player.removeMetadata("armorSet", CosmicArmorSetsPlugin.get_());
-            player.removeMetadata("armorLock", CosmicArmorSetsPlugin.get_());
+            player.removeMetadata("armorSet", (Plugin) CosmicArmorSetsPlugin.get_());
+            player.removeMetadata("armorLock", (Plugin) CosmicArmorSetsPlugin.get_());
         }
-        ((DimensionalTravelerSet) ArmorSet.DIMENSIONAL_TRAVELER.getArmorSetInfo()).onPlayerEvent(event);
-        ((EngineerSet) ArmorSet.ENGINEER.getArmorSetInfo()).onPlayerEvent(event);
-
-
-        CachedArmorSet<AbilityArmorSet> armor = CosmicArmorSetsPlugin.get_().getPlayerAbilityArmorSets().remove(player);
-        if (armor != null)
+        ((DimensionalTravelerSet) ArmorSet.DIMENSIONAL_TRAVELER.getArmorSetInfo()).onPlayerEvent((Event) event);
+        ((EngineerSet) ArmorSet.ENGINEER.getArmorSetInfo()).onPlayerEvent((Event) event);
+        CachedArmorSet<AbilityArmorSet> armor = CosmicArmorSetsPlugin.get_().getPlayerAbilityArmorSets().remove((Object) player);
+        if (armor != null) {
             armor.getSet().getArmorSetInfo().onUnequip(player);
+        }
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerChangeWorld(PlayerChangedWorldEvent event) {
-        ((SupremeArmorSet) ArmorSet.SUPREME.getArmorSetInfo()).onPlayerEvent(event);
+        ((SupremeArmorSet) ArmorSet.SUPREME.getArmorSetInfo()).onPlayerEvent((Event) event);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onEntityChangeBlock(EntityChangeBlockEvent event) {
         if (event.getTo() != Material.AIR) {
-            ((DimensionalTravelerSet) ArmorSet.DIMENSIONAL_TRAVELER.getArmorSetInfo()).onPlayerEvent(event);
-            ((EngineerSet) ArmorSet.ENGINEER.getArmorSetInfo()).onPlayerEvent(event);
-
+            ((DimensionalTravelerSet) ArmorSet.DIMENSIONAL_TRAVELER.getArmorSetInfo()).onPlayerEvent((Event) event);
+            ((EngineerSet) ArmorSet.ENGINEER.getArmorSetInfo()).onPlayerEvent((Event) event);
         }
     }
-
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPlayerDamage(EntityDamageByEntityEvent event) {
         double damageAtStart = event.getDamage(EntityDamageEvent.DamageModifier.BASE);
         Player damager = null;
-        if (event.getDamager() instanceof org.bukkit.entity.Arrow && ((Projectile) event.getDamager()).getShooter() instanceof Player) {
+        if (event.getDamager() instanceof Arrow && ((Projectile) event.getDamager()).getShooter() instanceof Player) {
             damager = (Player) ((Projectile) event.getDamager()).getShooter();
         } else if (event.getDamager() instanceof Player) {
             damager = (Player) event.getDamager();
         }
-
         if (damager != null) {
+            Map<ArmorSet, Integer> bonuses;
+            AbilityArmorSet set;
             ArmorSet damagerArmorSet = CosmicArmorSetsAPI.getArmorSet(damager);
-            if (damagerArmorSet != null && (event.getDamager() instanceof Player || (damagerArmorSet.getArmorSetInfo().supportsBowDamage() && event.getDamager() instanceof Projectile))) {
+            if (damagerArmorSet != null && (event.getDamager() instanceof Player || damagerArmorSet.getArmorSetInfo().supportsBowDamage() && event.getDamager() instanceof Projectile)) {
                 damagerArmorSet.getArmorSetInfo().onPlayerAttacked(damager, event);
             }
-            if (damagerArmorSet == null) {
-                AbilityArmorSet set = CosmicArmorSetsAPI.getAbilityArmorSet(damager);
-                if (set != null && (event.getDamager() instanceof Player || (set.getArmorSetInfo().supportsBowDamage() && event.getDamager() instanceof Projectile))) {
-                    set.getArmorSetInfo().onPlayerAttacked(damager, event);
-                }
+            if (damagerArmorSet == null && (set = CosmicArmorSetsAPI.getAbilityArmorSet(damager)) != null && (event.getDamager() instanceof Player || set.getArmorSetInfo().supportsBowDamage() && event.getDamager() instanceof Projectile)) {
+                set.getArmorSetInfo().onPlayerAttacked(damager, event);
             }
-            if (!(damager.hasMetadata("blackout"))) {
-                Map<ArmorSet, Integer> bonuses = CosmicArmorSetsAPI.getBonusCrystalsEquippedWithCorruptionIncluded(damager, event.getEntity());
-                if (!bonuses.isEmpty()) {
-                    for (Map.Entry<ArmorSet, Integer> ent : bonuses.entrySet()) {
-                        ent.getKey().getArmorSetInfo().onPlayerAttackedBonus(damager, ent.getValue().intValue(), event);
-                    }
+            if (!damager.hasMetadata("blackout") && !(bonuses = CosmicArmorSetsAPI.getBonusCrystalsEquippedWithCorruptionIncluded(damager, event.getEntity())).isEmpty()) {
+                for (Map.Entry<ArmorSet, Integer> ent : bonuses.entrySet()) {
+                    ent.getKey().getArmorSetInfo().onPlayerAttackedBonus(damager, ent.getValue(), event);
                 }
             }
         }
         if (event.getEntity() instanceof Player) {
-            if (event.getDamage(EntityDamageEvent.DamageModifier.BASE) != damageAtStart) {
-                int reduceLevel = UpgradeUtils.getUpgradeLevel((Player) event.getEntity(), "HEROIC_ARMOR_SET");
-                if (reduceLevel > 0) {
-                    event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * ((reduceLevel == 1) ? 0.9D : ((reduceLevel == 2) ? 0.85D : ((reduceLevel == 3) ? 0.8D : ((reduceLevel == 4) ? 0.75D : 1.0D)))));
-                }
+            Map<ArmorSet, Integer> bonuses;
+            Player damaged;
+            ArmorSet damagedArmorSet;
+            int reduceLevel;
+            if (event.getDamage(EntityDamageEvent.DamageModifier.BASE) != damageAtStart && (reduceLevel = UpgradeUtils.getUpgradeLevel((Player) ((Player) event.getEntity()), (String) "HEROIC_ARMOR_SET")) > 0) {
+                event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * (reduceLevel == 1 ? 0.9 : (reduceLevel == 2 ? 0.85 : (reduceLevel == 3 ? 0.8 : (reduceLevel == 4 ? 0.75 : 1.0)))));
             }
-            Player damaged = (Player) event.getEntity();
-            ArmorSet damagedArmorSet = CosmicArmorSetsAPI.getArmorSet(damaged);
-            if (damagedArmorSet != null) {
+            if ((damagedArmorSet = CosmicArmorSetsAPI.getArmorSet(damaged = (Player) event.getEntity())) != null) {
                 damagedArmorSet.getArmorSetInfo().onPlayerDamaged(damaged, event);
             } else {
                 AbilityArmorSet abilityArmorSet = CosmicArmorSetsAPI.getAbilityArmorSet(damaged);
@@ -120,12 +134,10 @@ public class SetBonusListener
                     abilityArmorSet.getArmorSetInfo().onPlayerDamaged(damaged, event);
                 }
             }
-            if (!damaged.hasMetadata("blackout")) {
-                Map<ArmorSet, Integer> bonuses = CosmicArmorSetsAPI.getBonusCrystalsEquippedWithCorruptionIncluded(damaged, damager);
-                if (!bonuses.isEmpty())
-                    for (Map.Entry<ArmorSet, Integer> ent : bonuses.entrySet()) {
-                        ent.getKey().getArmorSetInfo().onPlayerDamagedBonus(damaged, ent.getValue(), event);
-                    }
+            if (!damaged.hasMetadata("blackout") && !(bonuses = CosmicArmorSetsAPI.getBonusCrystalsEquippedWithCorruptionIncluded(damaged, (Entity) damager)).isEmpty()) {
+                for (Map.Entry<ArmorSet, Integer> ent : bonuses.entrySet()) {
+                    ent.getKey().getArmorSetInfo().onPlayerDamagedBonus(damaged, ent.getValue(), event);
+                }
             }
         }
     }
@@ -133,27 +145,24 @@ public class SetBonusListener
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onEntityDamage(EntityDamageEvent event) {
         if (event.getEntity() instanceof Player) {
+            AbilityArmorSet abilityArmorSet;
             Player extraDamage = (Player) event.getEntity();
             ArmorSet set = CosmicArmorSetsAPI.getArmorSet(extraDamage);
             if (set != null && set.getArmorSetInfo() instanceof OtherPlayerEventListenerSet) {
-                ((OtherPlayerEventListenerSet) set.getArmorSetInfo()).onPlayerEvent(event);
-            } else if (set == null) {
-                AbilityArmorSet abilityArmorSet = CosmicArmorSetsAPI.getCachedAbilityArmorSet(extraDamage);
-                if (abilityArmorSet != null && abilityArmorSet.getArmorSetInfo() instanceof OtherPlayerEventListenerSet)
-                    ((OtherPlayerEventListenerSet) abilityArmorSet.getArmorSetInfo()).onPlayerEvent(event);
+                ((OtherPlayerEventListenerSet) ((Object) set.getArmorSetInfo())).onPlayerEvent((Event) event);
+            } else if (set == null && (abilityArmorSet = CosmicArmorSetsAPI.getCachedAbilityArmorSet(extraDamage)) != null && abilityArmorSet.getArmorSetInfo() instanceof OtherPlayerEventListenerSet) {
+                ((OtherPlayerEventListenerSet) ((Object) abilityArmorSet.getArmorSetInfo())).onPlayerEvent((Event) event);
             }
         }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onEntityDamage(FoodLevelChangeEvent event) {
-        if (event.getEntity() instanceof Player) {
-            Player extraDamage = (Player) event.getEntity();
-            ArmorSet set = CosmicArmorSetsAPI.getArmorSet(extraDamage);
-            if (set != null && set.getArmorSetInfo() instanceof OtherPlayerEventListenerSet)
-                ((OtherPlayerEventListenerSet) set.getArmorSetInfo()).onPlayerEvent(event);
+        Player extraDamage;
+        ArmorSet set;
+        if (event.getEntity() instanceof Player && (set = CosmicArmorSetsAPI.getArmorSet(extraDamage = (Player) event.getEntity())) != null && set.getArmorSetInfo() instanceof OtherPlayerEventListenerSet) {
+            ((OtherPlayerEventListenerSet) ((Object) set.getArmorSetInfo())).onPlayerEvent((Event) event);
         }
     }
 }
-
 

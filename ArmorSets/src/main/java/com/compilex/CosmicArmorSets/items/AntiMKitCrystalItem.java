@@ -1,3 +1,36 @@
+/*
+ * Decompiled with CFR 0.150.
+ *
+ * Could not load the following classes:
+ *  com.cosmicpvp.cosmicutils.compat.ASound
+ *  com.cosmicpvp.cosmicutils.exceptions.CosmicException
+ *  com.cosmicpvp.cosmicutils.exceptions.PrefixedException
+ *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
+ *  com.cosmicpvp.cosmicutils.nbt.NBTTagListBuilder
+ *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.utils.GeneralUtil
+ *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.utils.ItemUtils
+ *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.utils.NumberUtils
+ *  com.google.common.collect.Lists
+ *  com.rit.sucy.CustomEnchantment
+ *  com.rit.sucy.EnchantmentAPI
+ *  me.ifamasssxd.cosmicskycustoms.exceptions.ItemDupedException
+ *  me.ifamasssxd.cosmicskycustoms.struct.CosmicItem
+ *  me.ifamasssxd.cosmicskycustoms.struct.InventoryInteractable
+ *  me.ifamasssxd.cosmicskycustoms.struct.InventoryItemType
+ *  net.minecraft.server.v1_7_R4.NBTBase
+ *  org.arkhamnetwork.enchantments.MasteryCustomEnchantment
+ *  org.bukkit.DyeColor
+ *  org.bukkit.Material
+ *  org.bukkit.Sound
+ *  org.bukkit.craftbukkit.libs.com.google.gson.internal.Pair
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.inventory.InventoryClickEvent
+ *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.inventory.meta.ItemMeta
+ */
 package com.compilex.CosmicArmorSets.items;
 
 import com.compilex.CosmicArmorSets.enums.AbilityArmorSet;
@@ -6,23 +39,15 @@ import com.cosmicpvp.cosmicutils.exceptions.CosmicException;
 import com.cosmicpvp.cosmicutils.exceptions.PrefixedException;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagListBuilder;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
-import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
-import com.cosmicpvp.cosmicutils.utils.ItemUtils;
-import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
-import com.cosmicpvp.cosmicutils.utils.NumberUtils;
+import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
 import me.ifamasssxd.cosmicskycustoms.exceptions.ItemDupedException;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
 import me.ifamasssxd.cosmicskycustoms.struct.InventoryInteractable;
 import me.ifamasssxd.cosmicskycustoms.struct.InventoryItemType;
+import net.minecraft.server.v1_7_R4.NBTBase;
 import org.arkhamnetwork.enchantments.MasteryCustomEnchantment;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -33,86 +58,71 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class AntiMKitCrystalItem extends CosmicItem implements InventoryInteractable {
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+public class AntiMKitCrystalItem
+        extends CosmicItem
+        implements InventoryInteractable {
     public AntiMKitCrystalItem() {
         super("ANTI_MKIT");
     }
 
     public ItemStack createItem(Player player, Object... objects) {
         if (objects != null && objects.length >= 2) {
-            Integer success = NumberUtils.parseIntOrNull(objects[0].toString());
+            Integer success = NumberUtils.parseIntOrNull((String) objects[0].toString());
             if (success == null) {
                 success = 1;
             }
-
-            Set set = new HashSet();
-
-            for(int i = 1; i < objects.length; ++i) {
+            Set<AbilityArmorSet> set = new HashSet();
+            for (int i = 1; i < objects.length; ++i) {
                 Object object = objects[i];
                 AbilityArmorSet armorSet = null;
                 if (object instanceof AbilityArmorSet) {
-                    armorSet = (AbilityArmorSet)object;
+                    armorSet = (AbilityArmorSet) ((Object) object);
                 } else if (object instanceof Set) {
-                    set = (Set)object;
+                    set = (Set) object;
                 } else {
                     armorSet = AbilityArmorSet.fromName(object.toString());
                 }
-
-                if (armorSet != null) {
-                    ((Set)set).add(armorSet);
-                }
+                if (armorSet == null) continue;
+                set.add(armorSet);
             }
-
-            List lore = Lists.newArrayList(new String[]{CC.Green + success + "% Success Rate", CC.Gray + "Apply to any piece of armor", CC.Gray + "to negate the following", CC.Gray + "custom Mastery Enchantments:"});
+            ArrayList lore = Lists.newArrayList((Object[]) new String[]{CC.Green + success + "% Success Rate", CC.Gray + "Apply to any piece of armor", CC.Gray + "to negate the following", CC.Gray + "custom Mastery Enchantments:"});
             NBTTagListBuilder list = new NBTTagListBuilder();
-            Iterator var13 = ((Set)set).iterator();
-
-            Iterator var9;
-            while(var13.hasNext()) {
-                AbilityArmorSet found = (AbilityArmorSet)var13.next();
-                if (((Set)set).size() > 1) {
+            for (AbilityArmorSet found : set) {
+                if (set.size() > 1) {
                     lore.add(found.getDisplayName());
                 }
-
                 list.addString(found.name());
-                var9 = EnchantmentAPI.getEnchantments().iterator();
-
-                while(var9.hasNext()) {
-                    CustomEnchantment ench = (CustomEnchantment)var9.next();
-                    if (ench instanceof MasteryCustomEnchantment && found.name().equals(((MasteryCustomEnchantment)ench).getArmorSet())) {
-                        lore.add(String.valueOf(CC.GoldB) + " * " + CC.DarkRed + ench.name());
-                    }
+                for (CustomEnchantment ench : EnchantmentAPI.getEnchantments()) {
+                    if (!(ench instanceof MasteryCustomEnchantment) || !found.name().equals(((MasteryCustomEnchantment) ench).getArmorSet()))
+                        continue;
+                    lore.add(String.valueOf(CC.GoldB) + " * " + CC.DarkRed + ench.name());
                 }
             }
-
             String name = null;
-            if (((Set)set).size() > 1) {
+            if (set.size() > 1) {
                 StringBuilder builder = new StringBuilder();
-                var9 = ((Set)set).iterator();
-
-                while(var9.hasNext()) {
-                    AbilityArmorSet found2 = (AbilityArmorSet)var9.next();
+                for (AbilityArmorSet found2 : set) {
                     builder.append(found2.getFirstDisplayNameLetter()).append(CC.Gold).append(", ");
                 }
-
                 String combined = builder.toString();
                 if (combined.endsWith(", ")) {
                     combined = combined.substring(0, combined.length() - 2);
                 }
-
                 name = String.valueOf(CC.GoldB) + "Multi Anti M-Kit Crystal (" + combined + CC.GoldB + ")";
-            } else if (!((Set)set).isEmpty()) {
-                name = String.valueOf(CC.GoldB) + "Anti M-Kit Crystal (" + ((AbilityArmorSet)((Set)set).stream().findFirst().orElse((Object)null)).getDisplayName() + CC.GoldB + ")";
+            } else if (!set.isEmpty()) {
+                name = String.valueOf(CC.GoldB) + "Anti M-Kit Crystal (" + ((AbilityArmorSet) set.stream().findFirst().orElse(null)).getDisplayName() + CC.GoldB + ")";
             }
-
             if (name == null) {
                 return null;
-            } else {
-                return this.applyItemData((new ItemBuilder(Material.INK_SACK, name, new String[0])).lore(lore).data((short)DyeColor.YELLOW.getDyeData()).build()).setNBTBase("cosmicData", (new NBTTagCompoundBuilder()).setNBTBase("mKits", list.build()).setInt("success", success).get()).assignIID().build();
             }
-        } else {
-            return null;
+            return this.applyItemData(new ItemBuilder(Material.INK_SACK, name, new String[0]).lore((List) lore).data((short) DyeColor.YELLOW.getDyeData()).build()).setNBTBase("cosmicData", (NBTBase) new NBTTagCompoundBuilder().setNBTBase("mKits", (NBTBase) list.build()).setInt("success", success).get()).assignIID().build();
         }
+        return null;
     }
 
     public boolean acceptsInventoryClickType(InventoryItemType inventoryItemType) {
@@ -120,72 +130,60 @@ public class AntiMKitCrystalItem extends CosmicItem implements InventoryInteract
     }
 
     public void onInventoryClick(Player player, ItemStack itemStack, NBTWrapper nbtWrapper, NBTWrapper clickedWrapper, ItemStack clicked, InventoryClickEvent inventoryClickEvent) throws CosmicException {
-        if (GeneralUtil.isArmor(clicked)) {
-            Pair crystal = AbilityArmorSet.getFromAntiMkitCrystal(nbtWrapper);
-            if (crystal != null) {
-                if (AbilityArmorSet.getAntiMkitCrystal(clickedWrapper) != null) {
-                    throw new PrefixedException("You can not apply more than 1 Anti M-Kit Crystal to a single piece of gear!");
-                }
-
-                if (nbtWrapper.isBlacklistedIID()) {
-                    throw new ItemDupedException("Anti M-Kit Crystal already used!");
-                }
-
-                inventoryClickEvent.setCancelled(true);
-                if (itemStack.getAmount() > 1) {
-                    itemStack.setAmount(itemStack.getAmount() - 1);
-                } else {
-                    player.setItemOnCursor((ItemStack)null);
-                }
-
-                nbtWrapper.blacklistIID("anti m-kit player: " + player.getName());
-                if (Math.random() > (double)(Integer)crystal.second * 0.01D) {
-                    player.getWorld().playSound(player.getLocation(), Sound.FIZZ, 3.0F, 1.1F);
-                    ASound.GLASS.play(player, 3.0F, 1.1F);
-                    player.updateInventory();
-                    throw new PrefixedException(String.valueOf(ItemUtils.getDisplayName(itemStack)) + CC.Red + " fails to apply and has been destroyed!");
-                }
-
-                inventoryClickEvent.setCurrentItem(this.applyToItem(clickedWrapper, clicked, crystal));
-                ASound.LEVEL_UP.play(player, 3.0F, 1.1F);
-                player.sendMessage(String.valueOf(CC.GoldB) + "(!) " + CC.Gold + ItemUtils.getDisplayName(itemStack) + CC.Gold + " has been applied to " + ItemUtils.getDisplayName(clicked) + CC.Gold + "!");
-                player.sendMessage(String.valueOf(CC.Gray) + "While equipped you will be immune to any Mastery Enchantments associated with that /mkit(s)!");
-                player.updateInventory();
+        Pair<Set<AbilityArmorSet>, Integer> crystal;
+        if (GeneralUtil.isArmor((ItemStack) clicked) && (crystal = AbilityArmorSet.getFromAntiMkitCrystal(nbtWrapper)) != null) {
+            if (AbilityArmorSet.getAntiMkitCrystal(clickedWrapper) != null) {
+                throw new PrefixedException("You can not apply more than 1 Anti M-Kit Crystal to a single piece of gear!");
             }
-
+            if (nbtWrapper.isBlacklistedIID()) {
+                throw new ItemDupedException("Anti M-Kit Crystal already used!");
+            }
+            inventoryClickEvent.setCancelled(true);
+            if (itemStack.getAmount() > 1) {
+                itemStack.setAmount(itemStack.getAmount() - 1);
+            } else {
+                player.setItemOnCursor((ItemStack) null);
+            }
+            nbtWrapper.blacklistIID("anti m-kit player: " + player.getName());
+            if (Math.random() > (double) ((Integer) crystal.second).intValue() * 0.01) {
+                player.getWorld().playSound(player.getLocation(), Sound.FIZZ, 3.0f, 1.1f);
+                ASound.GLASS.play(player, 3.0f, 1.1f);
+                player.updateInventory();
+                throw new PrefixedException(String.valueOf(ItemUtils.getDisplayName((ItemStack) itemStack)) + CC.Red + " fails to apply and has been destroyed!");
+            }
+            inventoryClickEvent.setCurrentItem(this.applyToItem(clickedWrapper, clicked, crystal));
+            ASound.LEVEL_UP.play(player, 3.0f, 1.1f);
+            player.sendMessage(String.valueOf(CC.GoldB) + "(!) " + CC.Gold + ItemUtils.getDisplayName((ItemStack) itemStack) + CC.Gold + " has been applied to " + ItemUtils.getDisplayName((ItemStack) clicked) + CC.Gold + "!");
+            player.sendMessage(String.valueOf(CC.Gray) + "While equipped you will be immune to any Mastery Enchantments associated with that /mkit(s)!");
+            player.updateInventory();
         }
     }
 
     private ItemStack applyToItem(NBTWrapper wrapper, ItemStack item, Pair pair) {
+        String str;
         NBTTagCompoundBuilder builder = wrapper.getCompoundOrCreate("cosmicData");
         NBTTagListBuilder list = new NBTTagListBuilder();
-        Set set = (Set)pair.first;
+        Set set = (Set) pair.first;
         StringBuilder loreBuild = new StringBuilder();
-        Iterator var8 = set.iterator();
-
-        while(var8.hasNext()) {
-            AbilityArmorSet armor = (AbilityArmorSet)var8.next();
+        for (AbilityArmorSet armor : set) {
             list.addString(armor.name());
             loreBuild.append(armor.getDisplayName()).append(CC.Gray).append(", ");
         }
-
-        builder.setNBTBase("antiMkits", list.build());
-        wrapper.setNBTBase("cosmicData", builder.get());
+        builder.setNBTBase("antiMkits", (NBTBase) list.build());
+        wrapper.setNBTBase("cosmicData", (NBTBase) builder.get());
         item = wrapper.build();
         ItemMeta im = item.getItemMeta();
         List lore = im.getLore();
         if (lore == null) {
             lore = Lists.newArrayList();
         }
-
-        String str = loreBuild.toString();
-        if (str.endsWith(", ")) {
+        if ((str = loreBuild.toString()).endsWith(", ")) {
             str = str.substring(0, str.length() - 2);
         }
-
-        ((List)lore).add(String.valueOf(CC.GoldB) + "Anti M-Kit Crystal (" + str + CC.GoldB + ")");
-        im.setLore((List)lore);
+        lore.add(String.valueOf(CC.GoldB) + "Anti M-Kit Crystal (" + str + CC.GoldB + ")");
+        im.setLore(lore);
         item.setItemMeta(im);
         return item;
     }
 }
+
