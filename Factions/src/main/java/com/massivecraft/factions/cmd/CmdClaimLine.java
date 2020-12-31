@@ -71,11 +71,11 @@ public class CmdClaimLine
             ArrayList<Chunk> toClaim = new ArrayList<Chunk>();
             for (Block bl : b) {
                 if (toClaim.contains(bl.getChunk())) continue;
-                if (CmdClaim.chunkCoordsPendingClaim.contains(bl.getChunk().getX() + "," + bl.getChunk().getZ())) {
+                if (CmdClaim.chunkCoordsPendingClaim.containsKey(bl.getChunk().getX() + "," + bl.getChunk().getZ())) {
                     this.msg("<b>A chunk in your line already has an /f claim pending on it.");
                     return;
                 }
-                CmdClaim.chunkCoordsPendingClaim.add(bl.getChunk().getX() + "," + bl.getChunk().getZ());
+                CmdClaim.chunkCoordsPendingClaim.put(bl.getChunk().getX() + "," + bl.getChunk().getZ(), bl.getChunk().getX() + "," + bl.getChunk().getZ());
                 toClaim.add(bl.getChunk());
             }
             int claimed = 0;
