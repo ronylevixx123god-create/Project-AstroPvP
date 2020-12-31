@@ -90,7 +90,7 @@ public class ItemDeleter
     
     public Player getPlayer() {
         if (this.player != null) {
-            Player[] onlinePlayers = Bukkit.getOnlinePlayers();
+            Player[] onlinePlayers = Bukkit.getOnlinePlayers().toArray(new Player[0]);
             for (int length = onlinePlayers.length, i = 0; i < length; ++i) {
                 final Player player = onlinePlayers[i];
                 if (player.getUniqueId().equals(this.player)) {

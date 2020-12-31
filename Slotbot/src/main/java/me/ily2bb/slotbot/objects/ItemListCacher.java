@@ -66,8 +66,8 @@ public class ItemListCacher {
     }
 
     public Player getPlayer() {
-        Player[] onlinePlayers = Bukkit.getOnlinePlayers();
-        int length = Bukkit.getOnlinePlayers().length;
+        Player[] onlinePlayers = Bukkit.getOnlinePlayers().toArray(new Player[0]);
+        int length = Bukkit.getOnlinePlayers().size();
 
         for(int i = 0; i < length; ++i) {
             Player player = onlinePlayers[i];
@@ -120,8 +120,8 @@ public class ItemListCacher {
             String sentence = "     " + CC.Gray + this.getPlayer().getName() + " rolled the slot /bot with " + CC.White + this.items.size() + " tickets " + CC.Gray + "and won:";
             Bukkit.broadcastMessage(sentence);
             Bukkit.broadcastMessage(spaces + CC.AquaB + "");
-            Player[] onlinePlayers = Bukkit.getOnlinePlayers();
-            int length = Bukkit.getOnlinePlayers().length;
+            Player[] onlinePlayers = Bukkit.getOnlinePlayers().toArray(new Player[0]);
+            int length = Bukkit.getOnlinePlayers().size();
 
             for(int l = 0; l < length; ++l) {
                 Player pl = onlinePlayers[l];

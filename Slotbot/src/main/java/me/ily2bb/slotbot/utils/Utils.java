@@ -1,6 +1,7 @@
 package me.ily2bb.slotbot.utils;
 
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
+import net.minecraft.server.v1_8_R3.NBTBase;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -10,12 +11,11 @@ import org.bukkit.inventory.*;
 import org.bukkit.util.io.*;
 import java.io.*;
 import com.cosmicpvp.cosmicutils.utils.*;
-import com.cosmicpvp.cosmicutils.nbt.*;
-import net.minecraft.server.v1_7_R4.*;
 import org.bukkit.entity.*;
 import me.ily2bb.slotbot.*;
-import net.minecraft.util.io.netty.util.internal.*;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
+
 import me.ily2bb.slotbot.objects.*;
 import org.bukkit.enchantments.*;
 import org.bukkit.inventory.meta.*;
@@ -27,10 +27,10 @@ public class Utils
     public static String toBase64(final Inventory inventory, final int size) {
         try {
             final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            final BukkitObjectOutputStream dataOutput = new BukkitObjectOutputStream((OutputStream)outputStream);
+            final BukkitObjectOutputStream dataOutput = new BukkitObjectOutputStream(outputStream);
             dataOutput.writeInt(size);
             for (int i = 0; i < inventory.getSize(); ++i) {
-                dataOutput.writeObject((Object)inventory.getItem(i));
+                dataOutput.writeObject(inventory.getItem(i));
             }
             dataOutput.close();
             return Base64Coder.encodeLines(outputStream.toByteArray());
@@ -41,7 +41,7 @@ public class Utils
     }
     
     public static String toBase64(final ItemStack[] is, final int size) {
-        final Inventory inventory = Bukkit.createInventory((InventoryHolder)null, size);
+        final Inventory inventory = Bukkit.createInventory(null, size);
         inventory.setContents(is);
         return toBase64(inventory, size);
     }
@@ -49,8 +49,8 @@ public class Utils
     public static Inventory fromBase64(final String data) {
         try {
             final ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64Coder.decodeLines(data));
-            final BukkitObjectInputStream dataInput = new BukkitObjectInputStream((InputStream)inputStream);
-            final Inventory inventory = Bukkit.getServer().createInventory((InventoryHolder)null, dataInput.readInt());
+            final BukkitObjectInputStream dataInput = new BukkitObjectInputStream(inputStream);
+            final Inventory inventory = Bukkit.getServer().createInventory(null, dataInput.readInt());
             for (int i = 0; i < inventory.getSize(); ++i) {
                 inventory.setItem(i, (ItemStack)dataInput.readObject());
             }
@@ -67,7 +67,7 @@ public class Utils
         final NBTWrapper wrapper = new NBTWrapper(item);
         final NBTTagCompoundBuilder compoundBuilder = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
         compoundBuilder.setString("itemSkinType", line);
-        finalItem = wrapper.setNBTBase("cosmicData", (NBTBase)compoundBuilder.get()).build();
+        finalItem = wrapper.setNBTBase("cosmicData", compoundBuilder.get()).build();
         return finalItem;
     }
     
@@ -88,7 +88,7 @@ public class Utils
     
     public static int getPercentage(final String line) {
         final String[] split = line.split(":");
-        return Integer.valueOf(split[split.length - 1]);
+        return Integer.parseInt(split[split.length - 1]);
     }
     
     public static boolean isShowing(final String line) {

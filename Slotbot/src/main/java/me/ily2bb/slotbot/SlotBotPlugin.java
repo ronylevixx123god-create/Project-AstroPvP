@@ -36,10 +36,10 @@ public class SlotBotPlugin extends JavaPlugin
             this.getLogger().info(ChatColor.translateAlternateColorCodes('&', "&aSuccessfully loaded Slot Bots..."));
         }
         else {
-            final String l = String.valueOf(Utils.toBase64(new ItemStack[] { DungeonsAPI.get().getCosmonautFuel() }, 9)) + ":show:1";
+            final String l = Utils.toBase64(new ItemStack[]{DungeonsAPI.get().getCosmonautFuel()}, 9) + ":show:1";
             final List<String> list = Arrays.asList(l);
-            this.getConfig().addDefault("items", (Object)list);
-            this.getConfig().addDefault("slot-bot-enabled", (Object)true);
+            this.getConfig().addDefault("items", list);
+            this.getConfig().addDefault("slot-bot-enabled", true);
             this.getLogger().info(ChatColor.translateAlternateColorCodes('&', "&aSuccessfully created config for Slot Bots..."));
         }
         this.loadConfig();
@@ -60,16 +60,16 @@ public class SlotBotPlugin extends JavaPlugin
     }
     
     public void registerListeners() {
-        this.registerListener((Listener)new SlotBotInventoryListener());
+        this.registerListener(new SlotBotInventoryListener());
     }
     
     public void registerCommands() {
-        this.getCommand("slot").setExecutor((CommandExecutor)new CommandSlotBot());
-        this.getCommand("addskin").setExecutor((CommandExecutor)new CommandSkinCommand());
+        this.getCommand("slot").setExecutor(new CommandSlotBot());
+        this.getCommand("addskin").setExecutor(new CommandSkinCommand());
     }
     
     public void registerListener(final Listener listener) {
-        Bukkit.getServer().getPluginManager().registerEvents(listener, (Plugin)this);
+        Bukkit.getServer().getPluginManager().registerEvents(listener, this);
         Bukkit.getServer().getPluginManager().registerEvents(new Cracked(), this);
     }
     
