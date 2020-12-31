@@ -1,0 +1,15 @@
+name: CosmicArmorSets
+main: com.compilex.CosmicArmorSets.CosmicArmorSetsPlugin
+version: 1.0
+depend: [CosmicPvPUtils, CosmicSkyCustomItems]
+commands:
+  armorset:
+    description: Root command.
+    usage: /<command>
+  heroicarmor:
+    description: command
+  heroicupgrade:
+    description: Command
+  masteryshard:
+    description: Mastery Shard
+    aliases: [masteryshards]

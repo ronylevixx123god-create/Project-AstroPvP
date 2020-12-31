@@ -1,0 +1,191 @@
+/*
+ * Decompiled with CFR 0.150.
+ *
+ * Could not load the following classes:
+ *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
+ *  com.google.common.collect.Lists
+ *  org.arkhamnetwork.enchantments.EnchantmentBook
+ *  org.bukkit.Color
+ *  org.bukkit.Material
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.entity.EntityDamageByEntityEvent
+ *  org.bukkit.inventory.ItemStack
+ */
+package com.compilex.CosmicArmorSets.enums.abilityarmorsets;
+
+import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
+import com.compilex.CosmicArmorSets.enums.AbilityArmorSet;
+import com.compilex.CosmicArmorSets.enums.AbilityArmorSetInfo;
+import com.compilex.CosmicArmorSets.enums.HeroicArmorType;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
+import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import com.google.common.collect.Lists;
+import org.arkhamnetwork.enchantments.EnchantmentBook;
+import org.bukkit.Color;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+
+public class NecromancerAbilitySet
+        extends AbilityArmorSetInfo {
+    private String color = CC.DarkGreen;
+    private String bulletPoint = this.color + CC.Bold + " * " + this.color;
+    private Color armorColor = Color.GREEN;
+
+    @Override
+    public List<String> getAbilityArmorLore() {
+        return Lists.newArrayList();
+    }
+
+    @Override
+    public ItemStack getHelmet(Player player, boolean applyTransmog, boolean mastery) {
+        ItemStack helmet = this.setLeatherColor(CosmicArmorSetsAPI.convertItemToHeroic(AbilityArmorSet.NECROMANCER.applyAbilityNBT(new NBTWrapper(new ItemBuilder(Material.DIAMOND_HELMET, this.color + CC.Bold + "Skull of Souls", new String[]{CC.GrayI + "A floating skull imbued with", CC.GrayI + "evil enchantments and demonic energy."}).build())).build(), HeroicArmorType.HELMET, true), this.armorColor);
+        this.addNearlyMaxedEnchants(helmet, "Armored", "Implants", "Drunk", "Arrow Deflect", "Death God", "Resilience", "Protection", "Ender Shift");
+        if (this.random.nextDouble() <= 0.6) {
+            this.addNearlyMaxed(helmet, "Valor");
+        }
+        if (this.random.nextDouble() <= 0.6) {
+            this.addNearlyMaxed(helmet, "Angelic");
+        }
+        if (this.random.nextDouble() <= 0.6) {
+            this.addNearlyMaxed(helmet, "Tank");
+        }
+        if (this.random.nextDouble() <= 0.2) {
+            this.addNearlyMaxedEnchants(helmet, "Paladin Armored");
+        }
+        if (this.random.nextDouble() <= 0.175) {
+            this.addNearlyMaxedEnchants(helmet, "Alien Implants");
+        }
+        if (mastery) {
+            this.addRandomMasteryEnchants(helmet, 2);
+        }
+        return applyTransmog ? EnchantmentBook.applyTransmogScroll((ItemStack) helmet) : helmet;
+    }
+
+    @Override
+    public ItemStack getChestplate(Player player, boolean applyTransmog, boolean mastery) {
+        ItemStack chestplate = this.setLeatherColor(CosmicArmorSetsAPI.convertItemToHeroic(AbilityArmorSet.NECROMANCER.applyAbilityNBT(new NBTWrapper(new ItemBuilder(Material.DIAMOND_CHESTPLATE, this.color + CC.Bold + "Robe of the Necromancer", new String[]{CC.GrayI + "Spider Silk woven robes that camouflage", CC.GrayI + "into the darkness of the night"}).build())).build(), HeroicArmorType.CHESTPLATE, true), this.armorColor);
+        this.addNearlyMaxedEnchants(chestplate, "Armored", "Overload", "Deathbringer", "Enlighted", "Diminish", "Aegis", "Leadership", "Blood Lust", "Shockwave");
+        if (this.random.nextDouble() <= 0.6) {
+            this.addNearlyMaxed(chestplate, "Valor");
+        }
+        if (this.random.nextDouble() <= 0.6) {
+            this.addNearlyMaxed(chestplate, "Angelic");
+        }
+        if (this.random.nextDouble() <= 0.6) {
+            this.addNearlyMaxed(chestplate, "Tank");
+        }
+        if (this.random.nextDouble() <= 0.2) {
+            this.addNearlyMaxed(chestplate, "Paladin Armored");
+        }
+        if (this.random.nextDouble() <= 0.175) {
+            this.addNearlyMaxed(chestplate, "Godly Overload");
+        }
+        if (this.random.nextDouble() <= 0.225) {
+            this.addNearlyMaxed(chestplate, "Planetary Deathbringer");
+        }
+        if (this.random.nextDouble() <= 0.225) {
+            this.addNearlyMaxed(chestplate, "Divine Enlighted");
+        }
+        if (this.random.nextDouble() <= 0.15) {
+            this.addNearlyMaxed(chestplate, "Vengeful Diminish");
+        }
+        if (mastery) {
+            this.addRandomMasteryEnchants(chestplate, 2);
+        }
+        return applyTransmog ? EnchantmentBook.applyTransmogScroll((ItemStack) chestplate) : chestplate;
+    }
+
+    @Override
+    public ItemStack getLeggings(Player player, boolean applyTransmog, boolean mastery) {
+        ItemStack leggings = this.setLeatherColor(CosmicArmorSetsAPI.convertItemToHeroic(AbilityArmorSet.NECROMANCER.applyAbilityNBT(new NBTWrapper(new ItemBuilder(Material.DIAMOND_LEGGINGS, this.color + CC.Bold + "Tattered Wrappings of Death", new String[]{CC.GrayI + "Once tormented by death, it now", CC.GrayI + "loyally serves and protects you."}).build())).build(), HeroicArmorType.LEGGINGS, true), this.armorColor);
+        this.addNearlyMaxedEnchants(leggings, "Armored", "Nature Wrath", "Clarity", "Obsidianshield", "Cactus", "Lucky", "Voodoo", "Spirits");
+        if (this.random.nextDouble() <= 0.6) {
+            this.addNearlyMaxed(leggings, "Valor");
+        }
+        if (this.random.nextDouble() <= 0.6) {
+            this.addNearlyMaxed(leggings, "Angelic");
+        }
+        if (this.random.nextDouble() <= 0.6) {
+            this.addNearlyMaxed(leggings, "Tank");
+        }
+        if (this.random.nextDouble() <= 0.2) {
+            this.addNearlyMaxed(leggings, "Paladin Armored");
+        }
+        if (this.random.nextDouble() <= 0.3) {
+            this.addNearlyMaxed(leggings, "Immortal");
+        }
+        if (mastery) {
+            this.addRandomMasteryEnchants(leggings, 2);
+        }
+        return applyTransmog ? EnchantmentBook.applyTransmogScroll((ItemStack) leggings) : leggings;
+    }
+
+    @Override
+    public ItemStack getBoots(Player player, boolean applyTransmog, boolean mastery) {
+        ItemStack boots = this.setLeatherColor(CosmicArmorSetsAPI.convertItemToHeroic(AbilityArmorSet.NECROMANCER.applyAbilityNBT(new NBTWrapper(new ItemBuilder(Material.DIAMOND_BOOTS, this.color + CC.Bold + "Demon Foot", new String[]{CC.GrayI + "A good luck charm for those who are", CC.GrayI + "masters of the dark magick of necromancy."}).build())).build(), HeroicArmorType.BOOTS, true), this.armorColor);
+        this.addNearlyMaxedEnchants(boots, "Armored", "Metaphysical", "Ender Walker", "Springs", "Rocket Escape", "Dodge", "Phoenix", "Guardians");
+        this.addMaxedEnchant(boots, "Gears");
+        if (this.random.nextDouble() <= 0.6) {
+            this.addNearlyMaxed(boots, "Valor");
+        }
+        if (this.random.nextDouble() <= 0.6) {
+            this.addNearlyMaxed(boots, "Angelic");
+        }
+        if (this.random.nextDouble() <= 0.6) {
+            this.addNearlyMaxed(boots, "Tank");
+        }
+        if (this.random.nextDouble() <= 0.2) {
+            this.addNearlyMaxed(boots, "Paladin Armored");
+        }
+        if (this.random.nextDouble() <= 0.225) {
+            this.addNearlyMaxed(boots, "Ethereal Dodge");
+        }
+        if (this.random.nextDouble() <= 0.35) {
+            this.addNearlyMaxed(boots, "Phoenix");
+        }
+        if (this.random.nextDouble() <= 0.125) {
+            this.addNearlyMaxed(boots, "Guided Rocket Escape");
+        }
+        if (mastery) {
+            this.addRandomMasteryEnchants(boots, 2);
+        }
+        return applyTransmog ? EnchantmentBook.applyTransmogScroll((ItemStack) boots) : boots;
+    }
+
+    public ItemStack addRandomMasteryEnchants(ItemStack item, int count) {
+        ArrayList enchants = Lists.newArrayList((Object[]) new String[]{"Mortal Coil", "Soul Siphon", "Rot and Decay", "Demonic Gateway"});
+        for (int i = 0; i < count && !enchants.isEmpty(); ++i) {
+            String random = (String) enchants.get(ThreadLocalRandom.current().nextInt(enchants.size()));
+            if (random != null) {
+                enchants.remove(random);
+            }
+            this.addNearlyMaxed(item, random);
+        }
+        return item;
+    }
+
+    @Override
+    public List<String> getEquipDescription() {
+        return Lists.newArrayList();
+    }
+
+    @Override
+    public boolean onPlayerDamaged(Player damaged, EntityDamageByEntityEvent event) {
+        return false;
+    }
+
+    @Override
+    public boolean onPlayerAttacked(Player damager, EntityDamageByEntityEvent event) {
+        return false;
+    }
+}
+
