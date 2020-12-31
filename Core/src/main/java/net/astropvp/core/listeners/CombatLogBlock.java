@@ -1,7 +1,6 @@
 package net.astropvp.core.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
-import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -33,7 +32,7 @@ public class CombatLogBlock implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void stopPvP(PlayerCommandPreprocessEvent event) {
-        if (FactionUtils.isWarZone(event.getPlayer().getLocation()) && event.getMessage().toLowerCase().startsWith("/pvp") || FactionUtils.isWarZone(event.getPlayer().getLocation()) && event.getMessage().toLowerCase().startsWith("/wildpvp") ) {
+        if (FactionUtils.isWarZone(event.getPlayer().getLocation()) && event.getMessage().toLowerCase().startsWith("/pvp") || FactionUtils.isWarZone(event.getPlayer().getLocation()) && event.getMessage().toLowerCase().startsWith("/wildpvp")) {
             event.setCancelled(true);
             event.getPlayer().sendMessage("§cYou cannot set a pvp here!");
         }

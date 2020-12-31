@@ -4,8 +4,6 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
 import com.cosmicpvp.cosmicutils.utils.HCFOutpostUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
-import java.util.concurrent.ThreadLocalRandom;
-
 import net.astropvp.core.cachers.LastManStandingCacher;
 import net.astropvp.core.enums.CapType;
 import net.astropvp.core.utils.StringUtils;
@@ -15,6 +13,8 @@ import org.bukkit.World;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.concurrent.ThreadLocalRandom;
 
 public class LastManStandingCapTask extends BukkitRunnable {
     private static World world = Bukkit.getWorlds().get(0);
@@ -46,7 +46,7 @@ public class LastManStandingCapTask extends BukkitRunnable {
         LastManStandingCacher cacher2 = LastManStandingCacher.getLongestPlayerAlive(CapType.DESERT);
         LastManStandingCacher other = LastManStandingCacher.getLongestPlayerAlive(CapType.SPAWN);
         ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-        LastManStandingCacher[] cachers = { cacher2, other };
+        LastManStandingCacher[] cachers = {cacher2, other};
         LastManStandingCacher[] array;
         for (int length = (array = cachers).length, j = 0; j < length; j++) {
             LastManStandingCacher x = array[j];
@@ -71,9 +71,9 @@ public class LastManStandingCapTask extends BukkitRunnable {
                         double multiplier = 1.0D;
                         if (HCFOutpostUtils.doesControlOutpost(player2, "frozen"))
                             multiplier += 0.25D;
-                        int give2 = (int)(multiplier * ThreadLocalRandom.current().nextInt(1000000, 3000001));
+                        int give2 = (int) (multiplier * ThreadLocalRandom.current().nextInt(1000000, 3000001));
                         player2.sendMessage(String.valueOf(CC.WhiteB) + "+ $" + StringUtils.formatWithCommas(give2) + " " + CC.Gray + "(LMS Reward " + CC.White + "#" + (x.getLMSTime() / 60) + CC.Gray + ")");
-                        EconomyUtils.depositBalance((OfflinePlayer)player2, give2);
+                        EconomyUtils.depositBalance((OfflinePlayer) player2, give2);
                         x.addMoney(give2);
 
                         if (Math.random() <= 0.07) {

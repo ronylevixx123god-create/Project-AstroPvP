@@ -1,12 +1,13 @@
 package net.astropvp.core.utils;
 
 import com.google.common.collect.Sets;
-import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+
+import java.util.Set;
 
 public class LocationUtils {
     public static Location setY(Location location, int y) {
@@ -39,9 +40,9 @@ public class LocationUtils {
     }
 
     public static String toStringLocation(Location location) {
-        int x = (int)location.getX();
-        int y = (int)location.getY();
-        int z = (int)location.getZ();
+        int x = (int) location.getX();
+        int y = (int) location.getY();
+        int z = (int) location.getZ();
         String world = location.getWorld().getName();
         String result = String.valueOf(world) + " " + x + " " + y + " " + z;
         return result;

@@ -5,8 +5,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
-public class CommandAliases implements Listener
-{
+public class CommandAliases implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerCommandPreprocess(final PlayerCommandPreprocessEvent e) {
         String cmd = e.getMessage().toLowerCase();

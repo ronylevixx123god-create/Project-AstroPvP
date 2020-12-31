@@ -64,8 +64,8 @@ public class ServerFixes implements Listener {
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e) {
         Player player = e.getPlayer();
-        if(e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-            if(player.getItemInHand().getType().equals(Material.EYE_OF_ENDER)) {
+        if (e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+            if (player.getItemInHand().getType().equals(Material.EYE_OF_ENDER)) {
                 e.setCancelled(true);
             }
         }
@@ -74,8 +74,8 @@ public class ServerFixes implements Listener {
     @EventHandler
     public void onPlayerInteractSnowball(PlayerInteractEvent e) {
         Player player = e.getPlayer();
-        if(e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-            if(player.getItemInHand().getType().equals(Material.SNOW_BALL) && player.getItemInHand().getItemMeta().hasLore()) {
+        if (e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+            if (player.getItemInHand().getType().equals(Material.SNOW_BALL) && player.getItemInHand().getItemMeta().hasLore()) {
                 player.sendMessage(CC.translate("&cYou can't throw omni crystals!"));
                 e.setCancelled(true);
             }
@@ -130,7 +130,7 @@ public class ServerFixes implements Listener {
             e.getInventory().setResult(new ItemStack(Material.AIR));
             for (HumanEntity he : e.getViewers()) {
                 if (he instanceof Player)
-                    ((Player)he).sendMessage(ChatColor.RED + "You are not allowed to craft this!");
+                    ((Player) he).sendMessage(ChatColor.RED + "You are not allowed to craft this!");
             }
         }
     }
@@ -142,7 +142,6 @@ public class ServerFixes implements Listener {
             System.out.println("Weather event cancelled!");
         }
     }
-
 
 
     @EventHandler
@@ -183,5 +182,5 @@ public class ServerFixes implements Listener {
                 .getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION)
             e.setCancelled(true);
     }
-    
+
 }

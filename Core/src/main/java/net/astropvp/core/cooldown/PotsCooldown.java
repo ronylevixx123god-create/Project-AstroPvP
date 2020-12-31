@@ -14,9 +14,9 @@ public class PotsCooldown {
     private ChatManager c = new ChatManager();
 
     public boolean getCooldown(Player pl) {
-        if(cooldown.containsKey(pl.getUniqueId())) {
+        if (cooldown.containsKey(pl.getUniqueId())) {
             long ptime = cooldown.get(pl.getUniqueId());
-            long time = (ptime/1000 +300) - (System.currentTimeMillis() / 1000);
+            long time = (ptime / 1000 + 300) - (System.currentTimeMillis() / 1000);
             pl.sendMessage(c.translate("&cYou must wait &n" + time + "&cs before doing /pots again!"));
             pl.playSound(pl.getLocation(), Sound.VILLAGER_NO, 1F, 1F);
             return true;
@@ -27,11 +27,11 @@ public class PotsCooldown {
     public void enterCooldown(Player pl) {
         if (pl.isOp()) return;
         cooldown.put(pl.getUniqueId(), System.currentTimeMillis());
-        new BukkitRunnable(){
+        new BukkitRunnable() {
             public void run() {
                 cooldown.remove(pl.getUniqueId());
             }
-        }.runTaskLater(Main.getInstance(), 20L*150);
+        }.runTaskLater(Main.getInstance(), 20L * 150);
     }
 
 }

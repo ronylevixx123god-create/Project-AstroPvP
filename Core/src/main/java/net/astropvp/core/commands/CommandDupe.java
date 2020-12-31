@@ -16,7 +16,7 @@ public class CommandDupe implements CommandExecutor {
             sender.sendMessage(String.valueOf(CC.DarkRed) + "You have to be a player to use this command...");
             return false;
         }
-        Player player = (Player)sender;
+        Player player = (Player) sender;
         ItemStack item = player.getItemInHand();
         if (item == null || !item.hasItemMeta() || !item.getItemMeta().hasDisplayName() || !item.getItemMeta().hasLore()) {
             sender.sendMessage("§cYou cannot dupe this item!");

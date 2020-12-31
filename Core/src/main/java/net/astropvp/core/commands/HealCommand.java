@@ -2,28 +2,23 @@ package net.astropvp.core.commands;
 
 import net.astropvp.core.Main;
 import net.astropvp.core.cooldown.HealCooldown;
-import net.astropvp.core.cooldown.PotsCooldown;
 import net.astropvp.core.utils.ChatManager;
-import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffectType;
-
-import java.util.HashMap;
 
 public class HealCommand implements CommandExecutor {
-        private HealCooldown cooldown = new HealCooldown();
-        private FileConfiguration config;
+    private HealCooldown cooldown = new HealCooldown();
+    private FileConfiguration config;
 
-	public HealCommand() {
+    public HealCommand() {
         this.config = Main.getPlugin(Main.class).getConfig();
     }
 
-        public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
-        final Player player = (Player)sender;
+    public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
+        final Player player = (Player) sender;
         if (cooldown.getCooldown(player)) return false;
 
         player.setHealth(player.getMaxHealth());
@@ -32,5 +27,5 @@ public class HealCommand implements CommandExecutor {
         return false;
     }
 
-    }
+}
 

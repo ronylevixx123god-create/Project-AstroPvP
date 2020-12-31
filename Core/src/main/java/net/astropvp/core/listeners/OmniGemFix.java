@@ -8,7 +8,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.inventory.InventoryEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -30,7 +29,7 @@ public class OmniGemFix implements Listener {
             Player plr = e.getPlayer();
             plr.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cYou &ncannot&r &cuse stacked gems!"));
             plr.closeInventory();
-            plr.getItemInHand().setAmount(plr.getItemInHand().getAmount() - (plr.getItemInHand().getAmount()-1));
+            plr.getItemInHand().setAmount(plr.getItemInHand().getAmount() - (plr.getItemInHand().getAmount() - 1));
             e.setCancelled(true);
         }
     }
@@ -51,7 +50,7 @@ public class OmniGemFix implements Listener {
             Player plr = e.getPlayer();
             plr.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cYou &ncannot&r &cuse stacked gems!"));
             plr.closeInventory();
-            plr.getItemInHand().setAmount(plr.getItemInHand().getAmount() - (plr.getItemInHand().getAmount()-1));
+            plr.getItemInHand().setAmount(plr.getItemInHand().getAmount() - (plr.getItemInHand().getAmount() - 1));
             e.setCancelled(true);
         }
 

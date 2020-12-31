@@ -18,7 +18,7 @@ public class FirstJoin implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerJoin(final PlayerJoinEvent event) {
         final Player player = event.getPlayer();
-        this.chest=CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("StarterBundle");
+        this.chest = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("StarterBundle");
 
         if (!player.hasPlayedBefore()) {
             ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
