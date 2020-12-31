@@ -17,6 +17,7 @@
         <module>Bosses</module>
         <module>GUIShop</module>
         <module>Factions</module>
+        <module>Slotbot</module>
     </modules>
 
     <build>

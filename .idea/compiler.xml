@@ -13,6 +13,7 @@
         <module name="SpaceChests" />
         <module name="Factions" />
         <module name="Bosses" />
+        <module name="Slotbot" />
         <module name="Ark" />
         <module name="Arkkit" />
       </profile>

@@ -1,0 +1,94 @@
+package me.ily2bb.slotbot;
+
+import com.compilex.CosmicDungeons.DungeonsAPI;
+import org.bukkit.plugin.java.*;
+import org.bukkit.configuration.file.*;
+import java.io.*;
+import org.bukkit.inventory.*;
+import me.ily2bb.slotbot.utils.*;
+import java.util.*;
+import me.ily2bb.slotbot.listener.*;
+import org.bukkit.event.*;
+import org.bukkit.command.*;
+import me.ily2bb.slotbot.commands.*;
+import org.bukkit.*;
+import org.bukkit.plugin.*;
+import org.bukkit.enchantments.*;
+import me.ily2bb.slotbot.objects.*;
+import java.lang.reflect.*;
+
+public class SlotBotPlugin extends JavaPlugin
+{
+    public static SlotBotPlugin me;
+    FileConfiguration config;
+    
+    public SlotBotPlugin() {
+        this.config = this.getConfig();
+    }
+    
+    public static SlotBotPlugin getInstance() {
+        return SlotBotPlugin.me;
+    }
+    
+    public void onEnable() {
+        final File file = new File(this.getDataFolder() + File.separator + "config.yml");
+        if (file.exists()) {
+            this.getLogger().info(ChatColor.translateAlternateColorCodes('&', "&aSuccessfully loaded Slot Bots..."));
+        }
+        else {
+            final String l = String.valueOf(Utils.toBase64(new ItemStack[] { DungeonsAPI.get().getCosmonautFuel() }, 9)) + ":show:1";
+            final List<String> list = Arrays.asList(l);
+            this.getConfig().addDefault("items", (Object)list);
+            this.getConfig().addDefault("slot-bot-enabled", (Object)true);
+            this.getLogger().info(ChatColor.translateAlternateColorCodes('&', "&aSuccessfully created config for Slot Bots..."));
+        }
+        this.loadConfig();
+        this.config = this.getConfig();
+        this.registerListeners();
+        this.registerCommands();
+        this.registerGlow();
+        SlotBotPlugin.me = this;
+    }
+    
+    public void loadConfig() {
+        this.getConfig().options().copyDefaults(true);
+        this.saveConfig();
+    }
+    
+    public void onDisable() {
+        SlotBotPlugin.me = null;
+    }
+    
+    public void registerListeners() {
+        this.registerListener((Listener)new SlotBotInventoryListener());
+    }
+    
+    public void registerCommands() {
+        this.getCommand("slot").setExecutor((CommandExecutor)new CommandSlotBot());
+        this.getCommand("addskin").setExecutor((CommandExecutor)new CommandSkinCommand());
+    }
+    
+    public void registerListener(final Listener listener) {
+        Bukkit.getServer().getPluginManager().registerEvents(listener, (Plugin)this);
+        Bukkit.getServer().getPluginManager().registerEvents(new Cracked(), this);
+    }
+    
+    public void registerGlow() {
+        try {
+            final Field f = Enchantment.class.getDeclaredField("acceptingNew");
+            f.setAccessible(true);
+            f.set(null, true);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            final Glow glow = new Glow(70);
+            Enchantment.registerEnchantment((Enchantment)glow);
+        }
+        catch (IllegalArgumentException ex) {}
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
