@@ -11,26 +11,26 @@ import org.bukkit.util.Vector;
 
 public class PotionFix implements Listener {
 
-	@EventHandler
-	public void onProjectileLaunch(ProjectileLaunchEvent event) {
-		if (event.getEntityType() == EntityType.SPLASH_POTION) {
-			Projectile projectile = event.getEntity();
-			if (projectile.getShooter() instanceof Player && ((Player)projectile.getShooter()).isSprinting()) {
-				double speed = 1.0;
-				Vector velocity = projectile.getVelocity();
-				velocity.setY(velocity.getY() - speed);
-				projectile.setVelocity(velocity);
-			}
-		}
-	}
+    @EventHandler
+    public void onProjectileLaunch(ProjectileLaunchEvent event) {
+        if (event.getEntityType() == EntityType.SPLASH_POTION) {
+            Projectile projectile = event.getEntity();
+            if (projectile.getShooter() instanceof Player && ((Player) projectile.getShooter()).isSprinting()) {
+                double speed = 1.0;
+                Vector velocity = projectile.getVelocity();
+                velocity.setY(velocity.getY() - speed);
+                projectile.setVelocity(velocity);
+            }
+        }
+    }
 
-	@EventHandler
-	public void onPotionSplash(PotionSplashEvent event) {
-		if (event.getEntity().getShooter() instanceof Player) {
-			Player shooter = (Player)event.getEntity().getShooter();
-			if (event.getIntensity(shooter) > 0.5D)
-				event.setIntensity(shooter, 1.0D);
+    @EventHandler
+    public void onPotionSplash(PotionSplashEvent event) {
+        if (event.getEntity().getShooter() instanceof Player) {
+            Player shooter = (Player) event.getEntity().getShooter();
+            if (event.getIntensity(shooter) > 0.5D)
+                event.setIntensity(shooter, 1.0D);
 
-		}
-	}
+        }
+    }
 }

@@ -3,8 +3,6 @@ package net.astropvp.core.commands;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.google.common.collect.Lists;
-import java.util.List;
-
 import net.astropvp.core.cachers.LastManStandingCacher;
 import net.astropvp.core.enums.CapType;
 import net.astropvp.core.utils.StringUtils;
@@ -14,11 +12,13 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+
 public class LastManStandingCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command arg1, String arg2, String[] args) {
         if (!(sender instanceof Player))
             return false;
-        Player player = (Player)sender;
+        Player player = (Player) sender;
         if (args.length == 0 || !args[0].contentEquals("top")) {
             LastManStandingCacher capper = LastManStandingCacher.getLongestPlayerAlive(CapType.SPAWN);
             player.sendMessage("");
@@ -27,7 +27,7 @@ public class LastManStandingCommand implements CommandExecutor {
             player.sendMessage(String.valueOf(CC.AquaB) + "Current SPAWN LMS: " + CC.DarkAqua + ((capper == null) ? "N/A" : (String.valueOf(FactionUtils.getFPlayer(capper.getPlayer()).getRole().getPrefix()) + ChatColor.stripColor(FactionUtils.getFPlayer(capper.getPlayer()).getFaction().getTag()) + " " + capper.getPlayerName() + " " + CC.Gray + "[" + capper.formatTimeCapped(capper.getLMSTime()) + "]")));
             if (capper != null) {
                 player.sendMessage(String.valueOf(CC.AquaB) + "Total Earned: " + CC.DarkAqua + "$" + StringUtils.formatWithCommas(capper.getMoneyEarned()) + CC.AquaB + " + " + CC.DarkAqua + StringUtils.formatWithCommas(capper.getExperienceEarned()) + "XP");
-                player.sendMessage(String.valueOf(CC.AquaB) + "Last Location: " + CC.DarkAqua + (int)capper.getPlayer().getLocation().getX() + CC.Bold + "x " + CC.DarkAqua + (int)capper.getPlayer().getLocation().getY() + CC.Bold + "y " + CC.DarkAqua + (int)capper.getPlayer().getLocation().getZ() + CC.Bold + "z");
+                player.sendMessage(String.valueOf(CC.AquaB) + "Last Location: " + CC.DarkAqua + (int) capper.getPlayer().getLocation().getX() + CC.Bold + "x " + CC.DarkAqua + (int) capper.getPlayer().getLocation().getY() + CC.Bold + "y " + CC.DarkAqua + (int) capper.getPlayer().getLocation().getZ() + CC.Bold + "z");
             }
             player.sendMessage(String.valueOf(CC.AquaB) + "Players: " + CC.DarkAqua + LastManStandingCacher.getPlayersAround(CapType.SPAWN));
             player.sendMessage("");
@@ -35,7 +35,7 @@ public class LastManStandingCommand implements CommandExecutor {
             player.sendMessage(String.valueOf(CC.AquaB) + "Current DESERT LMS: " + CC.DarkAqua + ((capper == null) ? "N/A" : (String.valueOf(FactionUtils.getFPlayer(capper.getPlayer()).getRole().getPrefix()) + ChatColor.stripColor(FactionUtils.getFPlayer(capper.getPlayer()).getFaction().getTag()) + " " + capper.getPlayerName() + " " + CC.Gray + "[" + capper.formatTimeCapped(capper.getLMSTime()) + "]")));
             if (capper != null) {
                 player.sendMessage(String.valueOf(CC.AquaB) + "Total Earned: " + CC.DarkAqua + "$" + StringUtils.formatWithCommas(capper.getMoneyEarned()) + CC.AquaB + " + " + CC.DarkAqua + StringUtils.formatWithCommas(capper.getExperienceEarned()) + "XP");
-                player.sendMessage(String.valueOf(CC.AquaB) + "Last Location: " + CC.DarkAqua + (int)capper.getPlayer().getLocation().getX() + CC.Bold + "x " + CC.DarkAqua + (int)capper.getPlayer().getLocation().getY() + CC.Bold + "y " + CC.DarkAqua + (int)capper.getPlayer().getLocation().getZ() + CC.Bold + "z");
+                player.sendMessage(String.valueOf(CC.AquaB) + "Last Location: " + CC.DarkAqua + (int) capper.getPlayer().getLocation().getX() + CC.Bold + "x " + CC.DarkAqua + (int) capper.getPlayer().getLocation().getY() + CC.Bold + "y " + CC.DarkAqua + (int) capper.getPlayer().getLocation().getZ() + CC.Bold + "z");
             }
             player.sendMessage(String.valueOf(CC.AquaB) + "Players: " + CC.DarkAqua + LastManStandingCacher.getPlayersAround(CapType.DESERT));
             player.sendMessage("");

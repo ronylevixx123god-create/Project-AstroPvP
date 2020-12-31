@@ -1,11 +1,11 @@
 package net.astropvp.core.cachers;
 
 import com.google.common.collect.Lists;
-import java.util.List;
-
 import net.astropvp.core.enums.CapType;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+
+import java.util.List;
 
 public class LastManStandingCacher {
     private static List<LastManStandingCacher> cachers = Lists.newArrayList();
@@ -30,6 +30,44 @@ public class LastManStandingCacher {
         this.moneyEarned = 0;
         this.cap = cap;
         cachers.add(this);
+    }
+
+    public static LastManStandingCacher getPlayer(Player player) {
+        String name = player.getName();
+        for (LastManStandingCacher cacher : cachers) {
+            if (cacher.getPlayerName().equals(name))
+                return cacher;
+        }
+        return null;
+    }
+
+    public static LastManStandingCacher getLongestPlayerAlive(CapType type) {
+        if (cachers.size() == 0)
+            return null;
+        LastManStandingCacher cacher = null;
+        for (LastManStandingCacher x : cachers) {
+            if (x.getCapType() != type)
+                continue;
+            long time = x.getSecondsPlayerWasCapping();
+            if (cacher != null && time <= cacher.getMilisecondsPlayerWasCapping())
+                continue;
+            cacher = x;
+        }
+        return cacher;
+    }
+
+    public static int getPlayersAround(CapType type) {
+        int count = 0;
+        for (LastManStandingCacher cacher : cachers) {
+            if (cacher.getCapType() != type)
+                continue;
+            count++;
+        }
+        return count;
+    }
+
+    public static List<LastManStandingCacher> getCachers() {
+        return cachers;
     }
 
     public Player getPlayer() {
@@ -78,7 +116,7 @@ public class LastManStandingCacher {
     }
 
     public int getMilisecondsPlayerWasCapping() {
-        return (int)(System.currentTimeMillis() - this.whenPlayerCapped);
+        return (int) (System.currentTimeMillis() - this.whenPlayerCapped);
     }
 
     public String getPlayerName() {
@@ -101,43 +139,5 @@ public class LastManStandingCacher {
         if (seconds > 0 || builder.toString().length() == 0)
             builder.append(String.valueOf(seconds) + "s, ");
         return builder.toString().substring(0, builder.toString().length() - 2);
-    }
-
-    public static LastManStandingCacher getPlayer(Player player) {
-        String name = player.getName();
-        for (LastManStandingCacher cacher : cachers) {
-            if (cacher.getPlayerName().equals(name))
-                return cacher;
-        }
-        return null;
-    }
-
-    public static LastManStandingCacher getLongestPlayerAlive(CapType type) {
-        if (cachers.size() == 0)
-            return null;
-        LastManStandingCacher cacher = null;
-        for (LastManStandingCacher x : cachers) {
-            if (x.getCapType() != type)
-                continue;
-            long time = x.getSecondsPlayerWasCapping();
-            if (cacher != null && time <= cacher.getMilisecondsPlayerWasCapping())
-                continue;
-            cacher = x;
-        }
-        return cacher;
-    }
-
-    public static int getPlayersAround(CapType type) {
-        int count = 0;
-        for (LastManStandingCacher cacher : cachers) {
-            if (cacher.getCapType() != type)
-                continue;
-            count++;
-        }
-        return count;
-    }
-
-    public static List<LastManStandingCacher> getCachers() {
-        return cachers;
     }
 }

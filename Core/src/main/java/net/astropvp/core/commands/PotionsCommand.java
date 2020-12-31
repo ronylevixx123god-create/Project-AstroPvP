@@ -2,7 +2,6 @@ package net.astropvp.core.commands;
 
 import net.astropvp.core.Main;
 import net.astropvp.core.cooldown.PotsCooldown;
-import net.astropvp.core.utils.ChatManager;
 import net.astropvp.core.utils.Utils;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.ChatColor;

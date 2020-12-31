@@ -16,5 +16,5 @@ public class MobSpawnerFix implements Listener {
         double doubleSpawnChance = 0.99D;
         if (Math.random() < doubleSpawnChance)
             e.getEntity().setMetadata("monsterAmount", new FixedMetadataValue(Bukkit.getPluginManager().getPlugin("Arkkit"), e.getEntity().hasMetadata("monsterAmount") ? (e.getEntity().getMetadata("monsterAmount").get(0).asInt() + 5) : 5));
-        }
     }
+}
