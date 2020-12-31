@@ -36,6 +36,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.google.common.collect.Lists;
 import com.google.common.collect.MapMaker;
+import javafx.util.Pair;
 import me.ifamasssxd.cosmicskycustoms.struct.CustomItemBuilder;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
@@ -71,7 +72,7 @@ public class ArmorSetCrystalTinkererListener
             if (set != null) {
                 event.setCancelled(false);
                 item.setXpValue(0.0);
-                item.setOfferForItem(ArmorSet.createCrystal(Lists.newArrayList((Object[]) new ArmorSet[]{set}), 20.0));
+                item.setOfferForItem(ArmorSet.createCrystal(Lists.newArrayList(set), 20.0));
             } else if (item.getItem() != null && item.getItem().getType() != Material.AIR && (fromArmor = AbilityArmorSet.getSetFromMasteryShard(item.getItem())) != null) {
                 event.setCancelled(false);
                 item.setXpValue(0.0);

@@ -37,6 +37,8 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.google.common.collect.Lists;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import net.minecraft.server.v1_8_R3.NBTBase;
 import org.apache.commons.lang.StringUtils;
 import org.arkhamnetwork.Arkkit.Arkkit;
@@ -314,7 +316,7 @@ public class CosmicArmorSetsAPI {
         for (ItemStack armor : player.getInventory().getArmorContents()) {
             if (armor == null || armor.getType() == Material.AIR) continue;
             List<ArmorSet> sets = ArmorSet.getFromArmorBonusCrystal(armor);
-            if (other instanceof Player && AstroItemSkinsAPI.hasSkinEquipped((Player) other, (SkinType) SkinType.CORRUPT_AMULET_CORRUPTION) && armor.getType().toString().endsWith("_CHESTPLATE") && !AstroItemSkinsAPI.hasSkinEquipped((Player) player, (SkinType) SkinType.LEVIATHAN_TROPHY)) {
+            if (other instanceof Player && AstroItemSkinsAPI.hasSkinEquipped((Player) other, SkinType.CORRUPT_AMULET_CORRUPTION) && armor.getType().toString().endsWith("_CHESTPLATE") && !AstroItemSkinsAPI.hasSkinEquipped((Player) player, (SkinType) SkinType.LEVIATHAN_TROPHY)) {
                 sets.removeAll(ArmorSet.getFromArmorBonusCrystal(((Player) other).getInventory().getChestplate()));
             }
             if (sets == null || sets.isEmpty()) continue;
@@ -324,7 +326,7 @@ public class CosmicArmorSetsAPI {
             Iterator<ArmorSet> iterator = sets.iterator();
             while (iterator.hasNext()) {
                 ArmorSet set;
-                Integer current = (Integer) found.get((Object) (set = iterator.next()));
+                Integer current = found.get(set = iterator.next());
                 found.put(set, current == null ? 1 : current + 1);
             }
         }

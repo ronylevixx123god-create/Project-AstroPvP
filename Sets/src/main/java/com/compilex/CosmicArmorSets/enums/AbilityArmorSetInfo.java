@@ -97,12 +97,23 @@ public abstract class AbilityArmorSetInfo
     }
 
     public ItemStack addNearlyMaxed(ItemStack item, String enchantName) {
-        CustomEnchantment enchantment = EnchantmentAPI.getEnchantment((String) enchantName);
+        CustomEnchantment enchantment = EnchantmentAPI.getEnchantment(enchantName);
         if (enchantment != null) {
-            int maxLevel;
-            int level = enchantment.heroicEnchantment ? 1 + ThreadLocalRandom.current().nextInt(maxLevel) : (maxLevel == 1 ? maxLevel : (maxLevel == 2 ? maxLevel - ThreadLocalRandom.current().nextInt(2) : (maxLevel == 3 ? maxLevel - ThreadLocalRandom.current().nextInt(3) : maxLevel - ThreadLocalRandom.current().nextInt(4))));
-            if (level == (maxLevel = enchantment.getMaxLevel()) && level > 1 && Math.random() < 0.25) {
-                --level;
+            int level, maxLevel = enchantment.getMaxLevel();
+            if (enchantment.heroicEnchantment) {
+                level = 1 + ThreadLocalRandom.current().nextInt(maxLevel);
+            }
+            else if (maxLevel == 1) {
+                level = maxLevel;
+            } else if (maxLevel == 2) {
+                level = maxLevel - ThreadLocalRandom.current().nextInt(2);
+            } else if (maxLevel == 3) {
+                level = maxLevel - ThreadLocalRandom.current().nextInt(3);
+            } else {
+                level = maxLevel - ThreadLocalRandom.current().nextInt(4);
+            }
+            if (level == maxLevel && level > 1 && Math.random() < 0.25D) {
+                level--;
             }
             if (enchantment.heroicEnchantment && enchantment.nonHeroicVersion != null) {
                 enchantment.nonHeroicVersion.addToItem(item, enchantment.nonHeroicVersion.getMaxLevel());

@@ -165,7 +165,7 @@ public enum AbilityArmorSet {
 
 	@Deprecated
 	public ItemStack createAntiMkitShard(int success) {
-		return new CustomItemBuilder("ANTI_MKIT", new Object[]{success, this}).build();
+		return (new CustomItemBuilder("ANTI_MKIT", new Object[] { Integer.valueOf(success), this })).build();
 	}
 
 	public ItemStack createMasteryShard(boolean applyIID) {
@@ -185,7 +185,7 @@ public enum AbilityArmorSet {
 	}
 
 	public String getFirstDisplayNameLetter() {
-		return (Object) this.color + CC.Bold + this.name().substring(0, 1);
+		return this.color + CC.Bold + this.name().substring(0, 1);
 	}
 
 	public AbilityArmorSetInfo getArmorSetInfo() {

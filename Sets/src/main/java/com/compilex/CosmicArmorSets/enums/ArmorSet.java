@@ -31,7 +31,7 @@ import com.google.common.collect.Lists;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import me.ifamasssxd.cosmicskycustoms.struct.CustomItemBuilder;
-import net.minecraft.server.v1_7_R4.NBTBase;
+import net.minecraft.server.v1_8_R3.NBTBase;
 import org.arkhamnetwork.enchantments.EnchantmentBook;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -46,20 +46,20 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public enum ArmorSet {
-    PHANTOM(new PhantomArmorSet(), ChatColor.RED, CC.RedB + "Phantom", Lists.newArrayList((Object[]) new String[]{"+5% DMG"})),
-    YETI(new YetiArmorSet(), ChatColor.AQUA, CC.AquaB + "Yeti", Lists.newArrayList((Object[]) new String[]{"-2.5% Incoming DMG", "+2.5% Outgoing DMG"})),
-    CHAMPION(new ChampionArmorSet(), ChatColor.GOLD, CC.GoldB + "Champion", Lists.newArrayList((Object[]) new String[]{"20% More Damage", "-7.5% Incoming Damage", "3.5% Champion Wrath Ability"})),
-    MOTHER_OF_YIJKI(new MotherOfYijki(), ChatColor.WHITE, CC.WhiteB + "Mother of Yijki", Lists.newArrayList((Object[]) new String[]{"-5% Incoming DMG", "20% Revenge of Yijki Ability"})),
-    RANGER(new RangerArmorSet(), ChatColor.GREEN, CC.GreenB + "Ranger", Lists.newArrayList((Object[]) new String[]{"-5% Incoming Bow DMG", "+6% Outgoing Bow DMG", "20% Immune to Teleblock"})),
-    SUPREME(new SupremeArmorSet(), ChatColor.DARK_RED, CC.DarkRedB + "Supreme", Lists.newArrayList((Object[]) new String[]{"+3% Outgoing DMG"})),
-    DIMENSIONAL_TRAVELER(new DimensionalTravelerSet(), ChatColor.DARK_PURPLE, CC.DarkPurpleB + "Dimensional Traveler", Lists.newArrayList((Object[]) new String[]{"+7.5% Outgoing DMG", "20% Dimensional Shift Ability"})),
-    DRAGON_SLAYER(new DragonSlayerArmorSet(), ChatColor.YELLOW, CC.YellowB + "Dragon Slayer", Lists.newArrayList((Object[]) new String[]{"+3% PvP DMG", "-5% Incoming DMG", "10% Silence Immunity", "10% Freeze Immunity"})),
-    ENGINEER(new EngineerSet(), ChatColor.GOLD, CC.GoldB + "Engineer", Lists.newArrayList((Object[]) new String[]{"-9% Incoming DMG", "20% B-2 Bomber Passive Ability"})),
-    KOTH(new KothArmorSet(), ChatColor.AQUA, CC.WhiteB + CC.Magic + ";" + CC.RedB + " K" + CC.GoldB + "." + CC.YellowB + "O" + CC.GreenB + "." + CC.AquaB + "T" + CC.DarkPurpleB + "." + CC.LightPurpleB + "H " + CC.WhiteB + CC.Magic + ";", Lists.newArrayList((Object[]) new String[]{"+5% PvP DMG", "+12.5% PvE DMG"})),
-    ASTRO(new AstroSet(), ChatColor.GREEN, CC.GreenB + "Astro", Lists.newArrayList((Object[]) new String[]{"+5% Outgoing DMG", "-5% Incoming DMG", "10% Passive Astro Killer Ability"})),
-    OMNI(new OmniArmorSet(), ChatColor.DARK_BLUE, CC.DarkBlueB + "Omni", Lists.newArrayList((Object[]) new String[]{""})),
-    ULTRA(new UltraArmorSet(), ChatColor.GRAY, CC.GreenB + "Ultra", Lists.newArrayList((Object[]) new String[]{"+15% Outgoing DMG", "-7.5% Incoming DMG", "4.5% Ultra Rage Ability", "8.5% Ultra Holy Negation", "4.5% Chance to Bypass Utility Belt", "x1.5 World Destroyer Duration"})),
-    ANCIENT(new AncientArmorSet(), ChatColor.DARK_AQUA, CC.DarkAquaB + "Ancient", Lists.newArrayList((Object[]) new String[]{"+7% Outgoing DMG", "3% More Damage", "10% Leviathan's Curse Ability"}));
+    PHANTOM(new PhantomArmorSet(), ChatColor.RED, CC.RedB + "Phantom", Lists.newArrayList("+5% DMG")),
+    YETI(new YetiArmorSet(), ChatColor.AQUA, CC.AquaB + "Yeti", Lists.newArrayList("-2.5% Incoming DMG", "+2.5% Outgoing DMG")),
+    CHAMPION(new ChampionArmorSet(), ChatColor.GOLD, CC.GoldB + "Champion", Lists.newArrayList("20% More Damage", "-7.5% Incoming Damage", "3.5% Champion Wrath Ability")),
+    MOTHER_OF_YIJKI(new MotherOfYijki(), ChatColor.WHITE, CC.WhiteB + "Mother of Yijki", Lists.newArrayList("-5% Incoming DMG", "20% Revenge of Yijki Ability")),
+    RANGER(new RangerArmorSet(), ChatColor.GREEN, CC.GreenB + "Ranger", Lists.newArrayList("-5% Incoming Bow DMG", "+6% Outgoing Bow DMG", "20% Immune to Teleblock")),
+    SUPREME(new SupremeArmorSet(), ChatColor.DARK_RED, CC.DarkRedB + "Supreme", Lists.newArrayList("+3% Outgoing DMG")),
+    DIMENSIONAL_TRAVELER(new DimensionalTravelerSet(), ChatColor.DARK_PURPLE, CC.DarkPurpleB + "Dimensional Traveler", Lists.newArrayList("+7.5% Outgoing DMG", "20% Dimensional Shift Ability")),
+    DRAGON_SLAYER(new DragonSlayerArmorSet(), ChatColor.YELLOW, CC.YellowB + "Dragon Slayer", Lists.newArrayList("+3% PvP DMG", "-5% Incoming DMG", "10% Silence Immunity", "10% Freeze Immunity")),
+    ENGINEER(new EngineerSet(), ChatColor.GOLD, CC.GoldB + "Engineer", Lists.newArrayList("-9% Incoming DMG", "20% B-2 Bomber Passive Ability")),
+    KOTH(new KothArmorSet(), ChatColor.AQUA, CC.WhiteB + CC.Magic + ";" + CC.RedB + " K" + CC.GoldB + "." + CC.YellowB + "O" + CC.GreenB + "." + CC.AquaB + "T" + CC.DarkPurpleB + "." + CC.LightPurpleB + "H " + CC.WhiteB + CC.Magic + ";", Lists.newArrayList("+5% PvP DMG", "+12.5% PvE DMG")),
+    ASTRO(new AstroSet(), ChatColor.GREEN, CC.GreenB + "Astro", Lists.newArrayList("+5% Outgoing DMG", "-5% Incoming DMG", "10% Passive Astro Killer Ability")),
+    OMNI(new OmniArmorSet(), ChatColor.DARK_BLUE, CC.DarkBlueB + "Omni", Lists.newArrayList("")),
+    ULTRA(new UltraArmorSet(), ChatColor.GRAY, CC.GreenB + "Ultra", Lists.newArrayList("+15% Outgoing DMG", "-7.5% Incoming DMG", "4.5% Ultra Rage Ability", "8.5% Ultra Holy Negation", "4.5% Chance to Bypass Utility Belt", "x1.5 World Destroyer Duration")),
+    ANCIENT(new AncientArmorSet(), ChatColor.DARK_AQUA, CC.DarkAquaB + "Ancient", Lists.newArrayList("+7% Outgoing DMG", "3% More Damage", "10% Leviathan's Curse Ability"));
 
     public ItemStack helmet;
     public ItemStack chestplate;
@@ -96,7 +96,7 @@ public enum ArmorSet {
     }
 
     public static ItemStack createRangerBow(boolean transmog) {
-        ItemStack item = new ItemBuilder(Material.BOW, CC.GreenB + "Ranger Bow", new String[]{String.valueOf(CC.Green) + "A finely crafted bow imbued", String.valueOf(CC.Green) + "with the energy of the Sun.", "", CC.GreenB + "RANGER WEAPON BONUS", CC.GreenB + "* " + CC.Green + "Ranger Bow grants 30% increased bow damage.", CC.GreenB + "* " + CC.Green + "Enemies deal 25% less damage to you.", CC.GrayI + "(Requires all 4 ranger armor items.)"}).build();
+        ItemStack item = new ItemBuilder(Material.BOW, CC.GreenB + "Ranger Bow", CC.Green + "A finely crafted bow imbued", CC.Green + "with the energy of the Sun.", "", CC.GreenB + "RANGER WEAPON BONUS", CC.GreenB + "* " + CC.Green + "Ranger Bow grants 30% increased bow damage.", CC.GreenB + "* " + CC.Green + "Enemies deal 25% less damage to you.", CC.GrayI + "(Requires all 4 ranger armor items.)").build();
         item.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 5);
         item.addUnsafeEnchantment(Enchantment.DURABILITY, 3);
         item.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 2);
@@ -221,8 +221,8 @@ public enum ArmorSet {
             nbtTagListBuilder.addString(s.name());
             sb.append(s.getDisplayName()).append(CC.Gray).append(", ");
         });
-        data.setNBTBase("crystalBonuses", (NBTBase) nbtTagListBuilder.build());
-        wrapper.setNBTBase("cosmicData", (NBTBase) data.get());
+        data.setNBTBase("crystalBonuses", nbtTagListBuilder.build());
+        wrapper.setNBTBase("cosmicData", data.get());
         item = wrapper.build();
         ItemMeta im = item.getItemMeta();
         List<String> lore = im.getLore() == null ? Lists.newArrayList() : im.getLore();

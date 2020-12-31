@@ -196,8 +196,8 @@ public class ArmorSetBonusCrystalItem
             }
             event.setCurrentItem(ArmorSet.applyCrystalToItem(sets, clicked));
             player.sendMessage("");
-            player.sendMessage(String.valueOf(String.valueOf(CC.GoldB)) + "(!) " + ItemUtils.getDisplayName((ItemStack) cursor) + " " + CC.Gold + "applied to " + clicked.getItemMeta().getDisplayName() + CC.Gold + "!");
-            player.sendMessage(String.valueOf(String.valueOf(CC.GoldB)) + "Crystal Bonus:");
+            player.sendMessage(CC.GoldB + "(!) " + ItemUtils.getDisplayName(cursor) + " " + CC.Gold + "applied to " + clicked.getItemMeta().getDisplayName() + CC.Gold + "!");
+            player.sendMessage(CC.GoldB + "Crystal Bonus:");
             for (ArmorSet set : sets) {
                 player.sendMessage(" " + set.getDisplayName() + ":");
                 set.getCrystalDescription().forEach(de -> player.sendMessage((Object) set.getColor() + CC.Bold + "  * " + (Object) set.getColor() + de));

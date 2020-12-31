@@ -73,7 +73,7 @@ public class YetiArmorSet
 
     @Override
     public List<String> getEquipDescription() {
-        return Lists.newArrayList((Object[]) new String[]{(Object) ChatColor.WHITE + "" + (Object) ChatColor.BOLD + "YETI SET BONUS: " + (Object) ChatColor.WHITE + "+10% ATK / -10% DMG"});
+        return Lists.newArrayList((Object) ChatColor.WHITE + "" + (Object) ChatColor.BOLD + "YETI SET BONUS: " + (Object) ChatColor.WHITE + "+10% ATK / -10% DMG");
     }
 
     @Override
@@ -104,8 +104,8 @@ public class YetiArmorSet
                 if (!(Math.random() <= 0.75)) continue;
                 ArmorUtil.modifyPlayerArmor((Player) damaged, (ArmorSlot) armorSlot, (int) -1, (boolean) false);
             }
-            for (ArmorSlot armorSlot : damaged.getEquipment().getArmorContents()) {
-                if (!CosmicArmorSetsAPI.isHeroicArmor((ItemStack) armorSlot)) continue;
+            for (ItemStack armorSlot : damaged.getEquipment().getArmorContents()) {
+                if (!CosmicArmorSetsAPI.isHeroicArmor(armorSlot)) continue;
                 ++heroicArmorItems;
             }
             event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * (2.075 + (double) heroicArmorItems * 0.03));

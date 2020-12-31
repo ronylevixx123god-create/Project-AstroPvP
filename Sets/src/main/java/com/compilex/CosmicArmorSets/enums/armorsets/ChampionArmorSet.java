@@ -69,27 +69,27 @@ public class ChampionArmorSet
 
     @Override
     public ItemStack getHelmet(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_HELMET, (short) 0, "&6&lChampion Crown", CC.Gray + "The Champion Crown", "", "&6&lCHAMPION SET BONUS", "&6&l* &6You deal 40% more damage.", "&6&l* &6Champion Wrath Ability", "&6&l* &6Auto Bless.", "&6&l* &6You take 20% less damage.", "&7(&oRequires all 4 Champion items.&7)"), new LinkedList<Object>(Arrays.asList((Object[]) new CustomEnchantment[]{EnchantmentAPI.getEnchantment((String) "Alien Implants"), EnchantmentAPI.getEnchantment((String) "Planetary Deathbringer"), EnchantmentAPI.getEnchantment((String) "Drunk"), EnchantmentAPI.getEnchantment((String) "Enlighted"), EnchantmentAPI.getEnchantment((String) "Armored"), EnchantmentAPI.getEnchantment((String) "Tank"), EnchantmentAPI.getEnchantment((String) "Angelic"), EnchantmentAPI.getEnchantment((String) "Hardened"), EnchantmentAPI.getEnchantment((String) "Valor"), EnchantmentAPI.getEnchantment((String) "Dodge"), EnchantmentAPI.getEnchantment((String) "Guardians"), EnchantmentAPI.getEnchantment((String) "Sticky"), EnchantmentAPI.getEnchantment((String) "Implants"), EnchantmentAPI.getEnchantment((String) "Repair Guard")}))));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_HELMET, (short) 0, "&6&lChampion Crown", CC.Gray + "The Champion Crown", "", "&6&lCHAMPION SET BONUS", "&6&l* &6You deal 40% more damage.", "&6&l* &6Champion Wrath Ability", "&6&l* &6Auto Bless.", "&6&l* &6You take 20% less damage.", "&7(&oRequires all 4 Champion items.&7)"), new LinkedList(Arrays.asList(EnchantmentAPI.getEnchantment("Alien Implants"), EnchantmentAPI.getEnchantment("Planetary Deathbringer"), EnchantmentAPI.getEnchantment("Drunk"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Hardened"), EnchantmentAPI.getEnchantment("Valor"), EnchantmentAPI.getEnchantment("Dodge"), EnchantmentAPI.getEnchantment("Guardians"), EnchantmentAPI.getEnchantment("Sticky"), EnchantmentAPI.getEnchantment("Implants"), EnchantmentAPI.getEnchantment("Repair Guard")))));
     }
 
     @Override
     public ItemStack getChestplate(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_CHESTPLATE, (short) 0, "&6&lChampion Body", CC.Gray + "The Champion Body", "", "&6&lCHAMPION SET BONUS", "&6&l* &6You deal 40% more damage.", "&6&l* &6Champion Wrath Ability", "&6&l* &6Auto Bless.", "&6&l* &6You take 20% less damage.", "&7(&oRequires all 4 Champion items.&7)"), new LinkedList<Object>(Arrays.asList((Object[]) new CustomEnchantment[]{EnchantmentAPI.getEnchantment((String) "Godly Overload"), EnchantmentAPI.getEnchantment((String) "Paladin Armored"), EnchantmentAPI.getEnchantment((String) "Blood Lust"), EnchantmentAPI.getEnchantment((String) "Enlighted"), EnchantmentAPI.getEnchantment((String) "Deathbringer"), EnchantmentAPI.getEnchantment((String) "Armored"), EnchantmentAPI.getEnchantment((String) "Tank"), EnchantmentAPI.getEnchantment((String) "Angelic"), EnchantmentAPI.getEnchantment((String) "Arrow Deflect"), EnchantmentAPI.getEnchantment((String) "Dodge"), EnchantmentAPI.getEnchantment((String) "Valor"), EnchantmentAPI.getEnchantment((String) "Aegis"), EnchantmentAPI.getEnchantment((String) "Spirit Link"), EnchantmentAPI.getEnchantment((String) "Leadership")}))));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_CHESTPLATE, (short) 0, "&6&lChampion Body", CC.Gray + "The Champion Body", "", "&6&lCHAMPION SET BONUS", "&6&l* &6You deal 40% more damage.", "&6&l* &6Champion Wrath Ability", "&6&l* &6Auto Bless.", "&6&l* &6You take 20% less damage.", "&7(&oRequires all 4 Champion items.&7)"), new LinkedList(Arrays.asList(EnchantmentAPI.getEnchantment("Godly Overload"), EnchantmentAPI.getEnchantment("Paladin Armored"), EnchantmentAPI.getEnchantment("Blood Lust"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Arrow Deflect"), EnchantmentAPI.getEnchantment("Dodge"), EnchantmentAPI.getEnchantment("Valor"), EnchantmentAPI.getEnchantment("Aegis"), EnchantmentAPI.getEnchantment("Spirit Link"), EnchantmentAPI.getEnchantment("Leadership")))));
     }
 
     @Override
     public ItemStack getLeggings(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_LEGGINGS, (short) 0, "&6&lChampion Jeans", CC.Gray + "The Champion Jeans", "", "&6&lCHAMPION SET BONUS", "&6&l* &6You deal 40% more damage.", "&6&l* &6Champion Wrath Ability", "&6&l* &6Auto Bless.", "&6&l* &6You take 20% less damage.", "&7(&oRequires all 4 Champion items.&7)"), new LinkedList<Object>(Arrays.asList((Object[]) new CustomEnchantment[]{EnchantmentAPI.getEnchantment((String) "Paladin Armored"), EnchantmentAPI.getEnchantment((String) "Enlighted"), EnchantmentAPI.getEnchantment((String) "Clarity"), EnchantmentAPI.getEnchantment((String) "Deathbringer"), EnchantmentAPI.getEnchantment((String) "Nature Wrath"), EnchantmentAPI.getEnchantment((String) "Lucky"), EnchantmentAPI.getEnchantment((String) "Armored"), EnchantmentAPI.getEnchantment((String) "Angelic"), EnchantmentAPI.getEnchantment((String) "Obsidianshield"), EnchantmentAPI.getEnchantment((String) "Cactus"), EnchantmentAPI.getEnchantment((String) "Valor"), EnchantmentAPI.getEnchantment((String) "Metaphysical"), EnchantmentAPI.getEnchantment((String) "Death God"), EnchantmentAPI.getEnchantment((String) "Dodge")}))));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_LEGGINGS, (short) 0, "&6&lChampion Jeans", CC.Gray + "The Champion Jeans", "", "&6&lCHAMPION SET BONUS", "&6&l* &6You deal 40% more damage.", "&6&l* &6Champion Wrath Ability", "&6&l* &6Auto Bless.", "&6&l* &6You take 20% less damage.", "&7(&oRequires all 4 Champion items.&7)"), new LinkedList(Arrays.asList(EnchantmentAPI.getEnchantment("Paladin Armored"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Clarity"), EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Nature Wrath"), EnchantmentAPI.getEnchantment("Lucky"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Obsidianshield"), EnchantmentAPI.getEnchantment("Cactus"), EnchantmentAPI.getEnchantment("Valor"), EnchantmentAPI.getEnchantment("Metaphysical"), EnchantmentAPI.getEnchantment("Death God"), EnchantmentAPI.getEnchantment("Dodge")))));
     }
 
     @Override
     public ItemStack getBoots(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_BOOTS, (short) 0, "&6&lChampion Kicks", CC.Gray + "The Champion Boots", "", "&6&lCHAMPION SET BONUS", "&6&l* &6You deal 40% more damage.", "&6&l* &6Champion Wrath Ability", "&6&l* &6Auto Bless.", "&6&l* &6You take 20% less damage.", "&7(&oRequires all 4 Champion items.&7)"), new LinkedList<Object>(Arrays.asList((Object[]) new CustomEnchantment[]{EnchantmentAPI.getEnchantment((String) "Ethereal Dodge"), EnchantmentAPI.getEnchantment((String) "Divine Enlighted"), EnchantmentAPI.getEnchantment((String) "Gears"), EnchantmentAPI.getEnchantment((String) "Deathbringer"), EnchantmentAPI.getEnchantment((String) "Tank"), EnchantmentAPI.getEnchantment((String) "Angelic"), EnchantmentAPI.getEnchantment((String) "Ender Walker"), EnchantmentAPI.getEnchantment((String) "Hardened"), EnchantmentAPI.getEnchantment((String) "Rocket Escape"), EnchantmentAPI.getEnchantment((String) "Springs"), EnchantmentAPI.getEnchantment((String) "Valor"), EnchantmentAPI.getEnchantment((String) "Dodge"), EnchantmentAPI.getEnchantment((String) "Sticky"), EnchantmentAPI.getEnchantment((String) "Diminish")}))));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_BOOTS, (short) 0, "&6&lChampion Kicks", CC.Gray + "The Champion Boots", "", "&6&lCHAMPION SET BONUS", "&6&l* &6You deal 40% more damage.", "&6&l* &6Champion Wrath Ability", "&6&l* &6Auto Bless.", "&6&l* &6You take 20% less damage.", "&7(&oRequires all 4 Champion items.&7)"), new LinkedList(Arrays.asList(EnchantmentAPI.getEnchantment("Ethereal Dodge"), EnchantmentAPI.getEnchantment("Divine Enlighted"), EnchantmentAPI.getEnchantment("Gears"), EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Ender Walker"), EnchantmentAPI.getEnchantment("Hardened"), EnchantmentAPI.getEnchantment("Rocket Escape"), EnchantmentAPI.getEnchantment("Springs"), EnchantmentAPI.getEnchantment("Valor"), EnchantmentAPI.getEnchantment("Dodge"), EnchantmentAPI.getEnchantment("Sticky"), EnchantmentAPI.getEnchantment("Diminish")))));
     }
 
     @Override
     public List<String> getEquipDescription() {
-        return TranslateList.translateList((Object) ChatColor.GOLD + "" + (Object) ChatColor.BOLD + "CHAMPION SET BONUS: ", "\u00a76\u00a7l* \u00a76+40% DMG", "\u00a76\u00a7l*\u00a76 Enemies deal 20% less damage", "\u00a76\u00a7l*\u00a76 Champion Wrath Ability", "\u00a76\u00a7l* \u00a76Auto Bless");
+        return TranslateList.translateList(ChatColor.GOLD + "" + ChatColor.BOLD + "CHAMPION SET BONUS: ", "\u00a76\u00a7l* \u00a76+40% DMG", "\u00a76\u00a7l*\u00a76 Enemies deal 20% less damage", "\u00a76\u00a7l*\u00a76 Champion Wrath Ability", "\u00a76\u00a7l* \u00a76Auto Bless");
     }
 
     @Override
@@ -138,7 +138,7 @@ public class ChampionArmorSet
 
     @Override
     public boolean onPlayerAttackedBonus(Player damager, int applied, EntityDamageByEntityEvent event) {
-        if (this.isBlockedOutpostWorld((Entity) damager)) {
+        if (this.isBlockedOutpostWorld(damager)) {
             return false;
         }
         if (Math.random() <= 0.005 * (double) applied) {
@@ -149,45 +149,45 @@ public class ChampionArmorSet
 
     @Override
     public void onEquip(Player player) {
-        PlayerPotionEffects.untrackPotionEffect((Player) player, (PotionEffectType) PotionEffectType.SLOW);
-        PlayerPotionEffects.untrackPotionEffect((Player) player, (PotionEffectType) PotionEffectType.SLOW_DIGGING);
+        PlayerPotionEffects.untrackPotionEffect(player, PotionEffectType.SLOW);
+        PlayerPotionEffects.untrackPotionEffect(player, PotionEffectType.SLOW_DIGGING);
     }
 
     @Override
     public void onUnequip(Player player) {
-        PlayerPotionEffects.untrackPotionEffect((Player) player, (PotionEffectType) PotionEffectType.SLOW);
-        PlayerPotionEffects.untrackPotionEffect((Player) player, (PotionEffectType) PotionEffectType.SLOW_DIGGING);
+        PlayerPotionEffects.untrackPotionEffect(player, PotionEffectType.SLOW);
+        PlayerPotionEffects.untrackPotionEffect(player, PotionEffectType.SLOW_DIGGING);
     }
 
     public void activateChampionAbility(final Player player, final Player target) {
         player.sendMessage("");
-        player.sendMessage(CC.translate((String) "&6&l* CHAMPION WRATH PROC *"));
-        player.sendMessage(CC.translate((String) "&a&lBUFF: &cBanshee RKO Proc &aActivated"));
-        player.sendMessage(CC.translate((String) "&a&lBUFF: &cAnti Utility Proc &aActivated"));
-        player.sendMessage(CC.translate((String) "&a&lBUFF: &cWorld Destroyer Ticks &aActivated"));
-        player.sendMessage(CC.translate((String) "&4&lTARGET: &f") + target.getName());
+        player.sendMessage(CC.translate("&6&l* CHAMPION WRATH PROC *"));
+        player.sendMessage(CC.translate("&a&lBUFF: &cBanshee RKO Proc &aActivated"));
+        player.sendMessage(CC.translate("&a&lBUFF: &cAnti Utility Proc &aActivated"));
+        player.sendMessage(CC.translate("&a&lBUFF: &cWorld Destroyer Ticks &aActivated"));
+        player.sendMessage(CC.translate("&4&lTARGET: &f") + target.getName());
         player.sendMessage("");
-        target.sendMessage(CC.translate((String) ("&6&l* CHAMPION WRATH &7[&c" + player.getName() + "&7]")));
-        player.setMetadata("immune_freeze", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), (Object) true));
-        player.setMetadata("banshee_active", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), (Object) true));
-        target.setMetadata("noDefenseProcs", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), (Object) true));
-        target.setMetadata("bansheed", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), (Object) true));
-        target.setMetadata("championed", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), (Object) true));
+        target.sendMessage(CC.translate(("&6&l* CHAMPION WRATH &7[&c" + player.getName() + "&7]")));
+        player.setMetadata("immune_freeze", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
+        player.setMetadata("banshee_active", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
+        target.setMetadata("noDefenseProcs", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
+        target.setMetadata("bansheed", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
+        target.setMetadata("championed", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
         target.playSound(target.getLocation(), Sound.BLAZE_DEATH, 10.0f, 10.0f);
         PlayerPotionEffects.trackPotionEffect((Player) player, (SpecificCustomEnchantment) new SpecificCustomEnchantment((CustomEnchantment) new Gears(), 5), (PotionEffect) new PotionEffect(PotionEffectType.SPEED, 160, 4));
         new BukkitRunnable() {
 
             public void run() {
-                player.removeMetadata("immune_freeze", (Plugin) CosmicSkyInventoryPets.get());
-                player.removeMetadata("banshee_active", (Plugin) CosmicSkyInventoryPets.get());
-                target.removeMetadata("noDefenseProcs", (Plugin) CosmicSkyInventoryPets.get());
-                target.removeMetadata("bansheed", (Plugin) CosmicSkyInventoryPets.get());
-                target.removeMetadata("championed", (Plugin) CosmicSkyInventoryPets.get());
-                target.sendMessage(CC.translate((String) ("&6&l* CHAMPION WRATH FROM &7" + player.getName() + " &c&lEXPIRED &6&l*")));
-                PlayerPotionEffects.untrackPotionEffect((Player) player, (PotionEffectType) PotionEffectType.SPEED);
-                PlayerPotionEffects.trackPotionEffect((Player) player, (SpecificCustomEnchantment) new SpecificCustomEnchantment((CustomEnchantment) new Gears(), 3), (PotionEffect) new PotionEffect(PotionEffectType.SPEED, 160, 3));
+                player.removeMetadata("immune_freeze", CosmicSkyInventoryPets.get());
+                player.removeMetadata("banshee_active", CosmicSkyInventoryPets.get());
+                target.removeMetadata("noDefenseProcs", CosmicSkyInventoryPets.get());
+                target.removeMetadata("bansheed", CosmicSkyInventoryPets.get());
+                target.removeMetadata("championed", CosmicSkyInventoryPets.get());
+                target.sendMessage(CC.translate(("&6&l* CHAMPION WRATH FROM &7" + player.getName() + " &c&lEXPIRED &6&l*")));
+                PlayerPotionEffects.untrackPotionEffect((Player) player, PotionEffectType.SPEED);
+                PlayerPotionEffects.trackPotionEffect((Player) player, new SpecificCustomEnchantment((CustomEnchantment) new Gears(), 3), (PotionEffect) new PotionEffect(PotionEffectType.SPEED, 160, 3));
             }
-        }.runTaskLater((Plugin) CosmicSkyInventoryPets.get(), 160L);
+        }.runTaskLater(CosmicSkyInventoryPets.get(), 160L);
     }
 
     @Override

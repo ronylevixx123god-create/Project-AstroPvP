@@ -13,6 +13,8 @@ import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.Relation;
 import com.rit.sucy.EnchantmentAPI;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.arkhamnetwork.enchantments.enchantments.armor.Phoenix;
 import org.bukkit.*;
@@ -51,7 +53,7 @@ public class MotherOfYijki
 
     @Override
     public ItemStack getBoots(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_BOOTS, (short) 0, "&f&lFootwraps of Yijki the Destroyer of Worlds", "&f&oLight as a feather, heavy as", "&f&oa mountain - the footwraps of Yijki.", "", "&f&lYIJKI SET BONUS", "&f&l* &fEnemies deal 30% less damage to you.", "&f&l* &fRevenge of Yijki Passive Ability", "&7(&oRequires all 4 yijki items.&7)"), new LinkedList(Arrays.asList(EnchantmentAPI.getEnchantment("Divine Enlighted"), EnchantmentAPI.getEnchantment("Gears"), EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Ender Walker"), EnchantmentAPI.getEnchantment("Hardened"), EnchantmentAPI.getEnchantment("Rocket Escape"), EnchantmentAPI.getEnchantment("Springs"), EnchantmentAPI.getEnchantment("Valor"), EnchantmentAPI.getEnchantment("Dodge"), EnchantmentAPI.getEnchantment("Guardians"), EnchantmentAPI.getEnchantment("Sticky"), EnchantmentAPI.getEnchantment("Diminish"))));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_BOOTS, (short) 0, "&f&lFootwraps of Yijki the Destroyer of Worlds", "&f&oLight as a feather, heavy as", "&f&oa mountain - the footwraps of Yijki.", "", "&f&lYIJKI SET BONUS", "&f&l* &fEnemies deal 30% less damage to you.", "&f&l* &fRevenge of Yijki Passive Ability", "&7(&oRequires all 4 yijki items.&7)"), new LinkedList(Arrays.asList(EnchantmentAPI.getEnchantment("Divine Enlighted"), EnchantmentAPI.getEnchantment("Gears"), EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Ender Walker"), EnchantmentAPI.getEnchantment("Hardened"), EnchantmentAPI.getEnchantment("Rocket Escape"), EnchantmentAPI.getEnchantment("Springs"), EnchantmentAPI.getEnchantment("Valor"), EnchantmentAPI.getEnchantment("Dodge"), EnchantmentAPI.getEnchantment("Guardians"), EnchantmentAPI.getEnchantment("Sticky"), EnchantmentAPI.getEnchantment("Diminish")))));
     }
 
     @Override
@@ -101,7 +103,7 @@ public class MotherOfYijki
             Player pNear = (Player) nearbyEnt;
             FPlayer fpNear = (FPlayer) FPlayers.i.get((OfflinePlayer) pNear);
             if (CosmicArmorSetsAPI.hasInfiniteLuck(pNear, 4, player)) continue;
-            if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, (SkinType) SkinType.CUPID_AMULET)) {
+            if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CUPID_AMULET)) {
                 player.sendMessage(CC.translate("&c&l* Amulet of Angles &7(Block Yijki) &c&l*"));
                 continue;
             }

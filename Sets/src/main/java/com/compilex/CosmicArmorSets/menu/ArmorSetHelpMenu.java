@@ -56,7 +56,7 @@ public class ArmorSetHelpMenu
             }
             ++slotIndex;
         }
-        this.setItem(0, new InventoryItem(new ItemBuilder(Material.BOOK, CC.LightPurpleB + "Armor Sets", new String[]{"", CC.Gray + "Armor Sets are custom sets of armor", CC.Gray + "that have special 'Set Bonuses'.", CC.Gray + "These bonuses are only active if", CC.Gray + "you have ALL pieces of a specific", CC.Gray + "set equipped.", "", CC.Gray + "Sample versions of all available", CC.Gray + "armor sets are currently displayed."}).build()));
+        this.setItem(0, new InventoryItem(new ItemBuilder(Material.BOOK, CC.LightPurpleB + "Armor Sets", "", CC.Gray + "Armor Sets are custom sets of armor", CC.Gray + "that have special 'Set Bonuses'.", CC.Gray + "These bonuses are only active if", CC.Gray + "you have ALL pieces of a specific", CC.Gray + "set equipped.", "", CC.Gray + "Sample versions of all available", CC.Gray + "armor sets are currently displayed.").build()));
     }
 }
 

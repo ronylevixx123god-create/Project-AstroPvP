@@ -36,7 +36,6 @@ import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.compilex.CosmicArmorSets.enums.HeroicArmorType;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.*;
-import net.minecraft.server.v1_7_R4.NBTBase;
 import org.apache.commons.lang.StringUtils;
 import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
@@ -147,9 +146,9 @@ public class ArmorSetUpgradeListener
                     return;
                 }
                 Long iid = null;
-                if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning() && (iid = Long.valueOf(ItemID.getItemID((ItemStack) cursor))) != -1L && ItemID.blacklist_iid.contains(iid)) {
+                if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning() && (iid = ItemID.getItemID(cursor)) != -1L && ItemID.blacklist_iid.contains(iid)) {
                     player.sendMessage(CC.RedB + "(!) " + CC.Red + "That Armor Upgrade has already been used!");
-                    player.getInventory().removeItem(new ItemStack[]{cursor});
+                    player.getInventory().removeItem(cursor);
                     player.setItemOnCursor(null);
                     player.updateInventory();
                     Bukkit.getLogger().info("[CosmicArmorSets] Removing blacklisted armor upgrade from " + player.getName() + ": " + (Object) cursor);
@@ -207,15 +206,15 @@ public class ArmorSetUpgradeListener
                     } else if (clickedArmorSet == ArmorSet.OMNI) {
                         color = 2765648;
                     }
-                    display.setInt("color", Integer.valueOf(color));
-                    wrapper.setNBTBase("display", (NBTBase) display.get());
+                    display.setInt("color", color);
+                    wrapper.setNBTBase("display", display.get());
                     retItem = wrapper.build();
                     event.setCurrentItem(retItem);
-                    player.sendMessage(CC.GreenB + "(!) " + CC.Green + "You have upgraded your " + ItemUtils.getDisplayName((ItemStack) clicked) + CC.Green + " to the Heroic Armor version!");
+                    player.sendMessage(CC.GreenB + "(!) " + CC.Green + "You have upgraded your " + ItemUtils.getDisplayName(clicked) + CC.Green + " to the Heroic Armor version!");
                 } else {
-                    player.sendMessage(CC.RedB + "(!) " + CC.Red + "You failed to apply your " + ItemUtils.getDisplayName((ItemStack) cursor) + CC.Red + "!");
+                    player.sendMessage(CC.RedB + "(!) " + CC.Red + "You failed to apply your " + ItemUtils.getDisplayName(cursor) + CC.Red + "!");
                     player.playSound(player.getLocation(), Sound.LAVA_POP, 1.0f, 0.9f);
-                    ParticleEffect.playEffect((ParticleEffect) ParticleEffect.LAVA, (Location) player.getLocation().add(0.0, 0.4, 0.0), (float) 0.1f, (int) 30);
+                    ParticleEffect.playEffect(ParticleEffect.LAVA, player.getLocation().add(0.0, 0.4, 0.0), 0.1f, (int) 30);
                     CosmicArmorSetsPlugin.get_().getLogger().info(player.getName() + " failed to apply Heroic Armor Upgrade!");
                 }
             }

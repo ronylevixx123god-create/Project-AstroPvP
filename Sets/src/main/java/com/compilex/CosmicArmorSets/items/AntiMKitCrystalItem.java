@@ -43,16 +43,16 @@ import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
+import javafx.util.Pair;
 import me.ifamasssxd.cosmicskycustoms.exceptions.ItemDupedException;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
 import me.ifamasssxd.cosmicskycustoms.struct.InventoryInteractable;
 import me.ifamasssxd.cosmicskycustoms.struct.InventoryItemType;
-import net.minecraft.server.v1_7_R4.NBTBase;
+import net.minecraft.server.v1_8_R3.NBTBase;
 import org.arkhamnetwork.enchantments.MasteryCustomEnchantment;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.craftbukkit.libs.com.google.gson.internal.Pair;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -180,7 +180,7 @@ public class AntiMKitCrystalItem
         if ((str = loreBuild.toString()).endsWith(", ")) {
             str = str.substring(0, str.length() - 2);
         }
-        lore.add(String.valueOf(CC.GoldB) + "Anti M-Kit Crystal (" + str + CC.GoldB + ")");
+        lore.add(CC.GoldB + "Anti M-Kit Crystal (" + str + CC.GoldB + ")");
         im.setLore(lore);
         item.setItemMeta(im);
         return item;

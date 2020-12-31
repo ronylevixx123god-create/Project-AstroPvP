@@ -38,7 +38,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
 import me.ifamasssxd.cosmichcf.struct.OutpostType;
-import net.minecraft.server.v1_7_R4.NBTBase;
+import net.minecraft.server.v1_8_R3.NBTBase;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -108,8 +108,8 @@ public class HeroicArmorListener
                 }
                 if (armorModifier != requiredModifier) {
                     Bukkit.getLogger().info("Updating outdated Heroic Armor with modifier: " + armorModifier + " new: " + typeToCompare.getArmorModifier() + " for " + player.getName());
-                    builder.setInt("armorModifier", Integer.valueOf(requiredModifier));
-                    wrapper.setNBTBase("cosmicData", (NBTBase) builder.get());
+                    builder.setInt("armorModifier", requiredModifier);
+                    wrapper.setNBTBase("cosmicData", builder.get());
                     ItemStack item = wrapper.build();
                     ItemMeta im = item.getItemMeta();
                     List lore = im.getLore();

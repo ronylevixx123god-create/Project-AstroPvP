@@ -97,7 +97,7 @@ public class CustomItemBuilder
                 }
             }
         } catch (Exception e) {
-            Bukkit.getLogger().info("Unable to generate " + (Object) ((Object) this.type) + " CustomItem!");
+            Bukkit.getLogger().info("Unable to generate " + this.type + " CustomItem!");
             e.printStackTrace();
         }
         if (retr == null) {
