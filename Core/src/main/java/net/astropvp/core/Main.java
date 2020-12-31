@@ -3,12 +3,10 @@ package net.astropvp.core;
 import net.astropvp.core.commands.*;
 import net.astropvp.core.listeners.*;
 import net.astropvp.core.tasks.LastManStandingCapTask;
-import net.astropvp.core.utils.ConfigManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
-import sun.plugin2.main.server.Plugin;
 
 public class Main extends JavaPlugin {
 

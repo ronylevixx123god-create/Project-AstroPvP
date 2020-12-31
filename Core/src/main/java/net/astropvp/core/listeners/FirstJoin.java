@@ -2,14 +2,9 @@ package net.astropvp.core.listeners;
 
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
-import org.apache.logging.log4j.core.net.Priority;
-import org.arkhamnetwork.Arkkit.patches.EssentialsWarpAliases;
-import org.arkhamnetwork.Arkkit.utils.EssentialsUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.craftbukkit.v1_7_R4.command.ConsoleCommandCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

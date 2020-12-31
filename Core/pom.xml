@@ -72,7 +72,12 @@
             <version>0.1</version>
             <scope>provided</scope>
         </dependency>
-
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>Factions</artifactId>
+            <version>0.1</version>
+            <scope>provided</scope>
+        </dependency>
 
         <!-- System repos -->
         <dependency>
@@ -81,6 +86,27 @@
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/CosmicDungeons.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>enchantments</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/Enchantments.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>armorsets</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/CosmicArmorSets.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>mchests</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/CosmicMysteryChest.jar</systemPath>
         </dependency>
     </dependencies>
 

@@ -1,10 +1,6 @@
 package net.astropvp.core.listeners;
 
-import com.sk89q.worldguard.bukkit.WorldGuardBlockListener;
-import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
-import org.arkhamnetwork.Arkkit.Arkkit;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;

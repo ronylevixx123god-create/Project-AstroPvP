@@ -1,6 +1,5 @@
 package net.astropvp.core.listeners;
 
-import net.minecraft.util.com.google.common.util.concurrent.ServiceManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
