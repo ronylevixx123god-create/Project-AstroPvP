@@ -46,27 +46,27 @@ public class PhantomArmorSet
         implements WeaponedArmorSet {
     @Override
     public ItemStack getHelmet(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_HELMET, (short) 0, "&c&lPhantom Hood", "&cThe fabled hood of the Phantom.", "", "&c&lPHANTOM SET BONUS", "&cDeal +25% damage to all enemies.", "&7(&oRequires all 4 phantom items.&7)"), Arrays.asList(new CustomEnchantment[]{EnchantmentAPI.getEnchantment((String) "Deathbringer"), EnchantmentAPI.getEnchantment((String) "Drunk"), EnchantmentAPI.getEnchantment((String) "Enlighted"), EnchantmentAPI.getEnchantment((String) "Implants"), EnchantmentAPI.getEnchantment((String) "Tank"), EnchantmentAPI.getEnchantment((String) "Armored"), EnchantmentAPI.getEnchantment((String) "Angelic")})));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_HELMET, (short) 0, "&c&lPhantom Hood", "&cThe fabled hood of the Phantom.", "", "&c&lPHANTOM SET BONUS", "&cDeal +25% damage to all enemies.", "&7(&oRequires all 4 phantom items.&7)"), Arrays.asList(EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Drunk"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Implants"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Angelic"))));
     }
 
     @Override
     public ItemStack getChestplate(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_CHESTPLATE, (short) 0, "&c&lPhantom Shroud", "&cThe legendary shroud of the Phantom.", "", "&c&lPHANTOM SET BONUS", "&cDeal +25% damage to all enemies.", "&7(&oRequires all 4 phantom items.&7)"), Arrays.asList(new CustomEnchantment[]{EnchantmentAPI.getEnchantment((String) "Overload"), EnchantmentAPI.getEnchantment((String) "Blood Lust"), EnchantmentAPI.getEnchantment((String) "Enlighted"), EnchantmentAPI.getEnchantment((String) "Armored"), EnchantmentAPI.getEnchantment((String) "Tank"), EnchantmentAPI.getEnchantment((String) "Dodge"), EnchantmentAPI.getEnchantment((String) "Angelic")})));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_CHESTPLATE, (short) 0, "&c&lPhantom Shroud", "&cThe legendary shroud of the Phantom.", "", "&c&lPHANTOM SET BONUS", "&cDeal +25% damage to all enemies.", "&7(&oRequires all 4 phantom items.&7)"), Arrays.asList(EnchantmentAPI.getEnchantment("Overload"), EnchantmentAPI.getEnchantment("Blood Lust"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Dodge"), EnchantmentAPI.getEnchantment("Angelic"))));
     }
 
     @Override
     public ItemStack getLeggings(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_LEGGINGS, (short) 0, "&c&lPhantom Robeset", "&cThe demonic robe of the Phantom.", "", "&c&lPHANTOM SET BONUS", "&cDeal +25% damage to all enemies.", "&7(&oRequires all 4 phantom items.&7)"), Arrays.asList(new CustomEnchantment[]{EnchantmentAPI.getEnchantment((String) "Deathbringer"), EnchantmentAPI.getEnchantment((String) "Clarity"), EnchantmentAPI.getEnchantment((String) "Enlighted"), EnchantmentAPI.getEnchantment((String) "Obsidianshield"), EnchantmentAPI.getEnchantment((String) "Tank"), EnchantmentAPI.getEnchantment((String) "Armored"), EnchantmentAPI.getEnchantment((String) "Angelic"), EnchantmentAPI.getEnchantment((String) "Cactus")})));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_LEGGINGS, (short) 0, "&c&lPhantom Robeset", "&cThe demonic robe of the Phantom.", "", "&c&lPHANTOM SET BONUS", "&cDeal +25% damage to all enemies.", "&7(&oRequires all 4 phantom items.&7)"), Arrays.asList(EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Clarity"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Obsidianshield"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Cactus"))));
     }
 
     @Override
     public ItemStack getBoots(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_BOOTS, (short) 0, "&c&lPhantom Sandals", "&cThe silent sandals of the Phantom.", "", "&c&lPHANTOM SET BONUS", "&cDeal +25% damage to all enemies.", "&7(&oRequires all 4 phantom items.&7)"), Arrays.asList(new CustomEnchantment[]{EnchantmentAPI.getEnchantment((String) "Gears"), EnchantmentAPI.getEnchantment((String) "Enlighted"), EnchantmentAPI.getEnchantment((String) "Deathbringer"), EnchantmentAPI.getEnchantment((String) "Rocket Escape"), EnchantmentAPI.getEnchantment((String) "Springs"), EnchantmentAPI.getEnchantment((String) "Armored"), EnchantmentAPI.getEnchantment((String) "Tank")})));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_BOOTS, (short) 0, "&c&lPhantom Sandals", "&cThe silent sandals of the Phantom.", "", "&c&lPHANTOM SET BONUS", "&cDeal +25% damage to all enemies.", "&7(&oRequires all 4 phantom items.&7)"), Arrays.asList(EnchantmentAPI.getEnchantment("Gears"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Rocket Escape"), EnchantmentAPI.getEnchantment("Springs"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Tank"))));
     }
 
     @Override
     public List<String> getEquipDescription() {
-        return Lists.newArrayList((Object[]) new String[]{(Object) ChatColor.RED + "" + (Object) ChatColor.BOLD + "PHANTOM SET BONUS: " + (Object) ChatColor.RED + "+25% DMG"});
+        return Lists.newArrayList((ChatColor.RED + "" + ChatColor.BOLD + "PHANTOM SET BONUS: " + ChatColor.RED + "+25% DMG"));
     }
 
     @Override
@@ -108,7 +108,7 @@ public class PhantomArmorSet
 
     @Override
     public ItemStack getWeapon(boolean applyTransmog) {
-        return new NBTWrapper(new ItemBuilder(Material.DIAMOND_SWORD, CC.RedB + "Phantom Scythe", new String[]{CC.Gray + "An eerie blade designed to", CC.Gray + "cut through the enemies.", "", CC.RedB + "PHANTOM WEAPON BONUS", CC.Red + "Deal +10% damage to all enemies.", CC.Gray + "(" + CC.GrayI + "Requires all 4 phantom items." + CC.Gray + ")"}).enchant(Enchantment.DAMAGE_ALL, 5).enchant(Enchantment.DURABILITY, 3).build()).setString("cosmicType", "PHANTOM_SWORD").build();
+        return new NBTWrapper(new ItemBuilder(Material.DIAMOND_SWORD, CC.RedB + "Phantom Scythe", CC.Gray + "An eerie blade designed to", CC.Gray + "cut through the enemies.", "", CC.RedB + "PHANTOM WEAPON BONUS", CC.Red + "Deal +10% damage to all enemies.", CC.Gray + "(" + CC.GrayI + "Requires all 4 phantom items." + CC.Gray + ")").enchant(Enchantment.DAMAGE_ALL, 5).enchant(Enchantment.DURABILITY, 3).build()).setString("cosmicType", "PHANTOM_SWORD").build();
     }
 }
 

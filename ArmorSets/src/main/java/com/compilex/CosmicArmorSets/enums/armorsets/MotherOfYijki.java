@@ -1,38 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
- *  com.cosmicpvp.cosmicutils.utils.UpgradeUtils
- *  com.cosmicpvp.cosmicutils.utils.WorldGuardUtils
- *  com.google.common.collect.Lists
- *  com.massivecraft.factions.FPlayer
- *  com.massivecraft.factions.FPlayers
- *  com.massivecraft.factions.iface.RelationParticipator
- *  com.massivecraft.factions.struct.Relation
- *  com.rit.sucy.CustomEnchantment
- *  com.rit.sucy.EnchantmentAPI
- *  me.astropvp.astropvpskins.AstroItemSkinsAPI
- *  me.astropvp.astropvpskins.enums.SkinType
- *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
- *  org.arkhamnetwork.enchantments.enchantments.armor.Phoenix
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.Location
- *  org.bukkit.Material
- *  org.bukkit.OfflinePlayer
- *  org.bukkit.Sound
- *  org.bukkit.enchantments.Enchantment
- *  org.bukkit.entity.Entity
- *  org.bukkit.entity.LivingEntity
- *  org.bukkit.entity.Player
- *  org.bukkit.event.entity.EntityDamageByEntityEvent
- *  org.bukkit.event.entity.EntityDamageEvent$DamageModifier
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.plugin.Plugin
- */
 package com.compilex.CosmicArmorSets.enums.armorsets;
 
 import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
@@ -47,10 +12,7 @@ import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.Relation;
-import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
-import me.astropvp.astropvpskins.AstroItemSkinsAPI;
-import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.arkhamnetwork.enchantments.enchantments.armor.Phoenix;
 import org.bukkit.*;
@@ -74,22 +36,22 @@ public class MotherOfYijki
         implements WeaponedArmorSet {
     @Override
     public ItemStack getHelmet(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_HELMET, (short) 0, "&f&lMask of Yijki the Destroyer of Worlds", "&f&oThe god-mask of Yijki, imbued with", "&f&othe power of absolute destruction.", "", "&f&lYIJKI SET BONUS", "&f&l* &fEnemies deal 30% less damage to you.", "&f&l* &fRevenge of Yijki Passive Ability", "&7(&oRequires all 4 yijki items.&7)"), new LinkedList<Object>(Arrays.asList((Object[]) new CustomEnchantment[]{EnchantmentAPI.getEnchantment((String) "Planetary Deathbringer"), EnchantmentAPI.getEnchantment((String) "Drunk"), EnchantmentAPI.getEnchantment((String) "Enlighted"), EnchantmentAPI.getEnchantment((String) "Armored"), EnchantmentAPI.getEnchantment((String) "Tank"), EnchantmentAPI.getEnchantment((String) "Angelic"), EnchantmentAPI.getEnchantment((String) "Hardened"), EnchantmentAPI.getEnchantment((String) "Valor"), EnchantmentAPI.getEnchantment((String) "Dodge"), EnchantmentAPI.getEnchantment((String) "Guardians"), EnchantmentAPI.getEnchantment((String) "Sticky"), EnchantmentAPI.getEnchantment((String) "Implants"), EnchantmentAPI.getEnchantment((String) "Repair Guard")}))));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_HELMET, (short) 0, "&f&lMask of Yijki the Destroyer of Worlds", "&f&oThe god-mask of Yijki, imbued with", "&f&othe power of absolute destruction.", "", "&f&lYIJKI SET BONUS", "&f&l* &fEnemies deal 30% less damage to you.", "&f&l* &fRevenge of Yijki Passive Ability", "&7(&oRequires all 4 yijki items.&7)"), new LinkedList(Arrays.asList(EnchantmentAPI.getEnchantment("Planetary Deathbringer"), EnchantmentAPI.getEnchantment("Drunk"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Hardened"), EnchantmentAPI.getEnchantment("Valor"), EnchantmentAPI.getEnchantment("Dodge"), EnchantmentAPI.getEnchantment("Guardians"), EnchantmentAPI.getEnchantment("Sticky"), EnchantmentAPI.getEnchantment("Implants"), EnchantmentAPI.getEnchantment("Repair Guard")))));
     }
 
     @Override
     public ItemStack getChestplate(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_CHESTPLATE, (short) 0, "&f&lMantel of Yijki the Destroyer of Worlds", "&f&oThe forebidden mantel of Yijki,", "&f&owoven from the dust of fallen stars.", "", "&f&lYIJKI SET BONUS", "&f&l* &fEnemies deal 30% less damage to you.", "&f&l* &fRevenge of Yijki Passive Ability", "&7(&oRequires all 4 yijki items.&7)"), new LinkedList<Object>(Arrays.asList((Object[]) new CustomEnchantment[]{EnchantmentAPI.getEnchantment((String) "Godly Overload"), EnchantmentAPI.getEnchantment((String) "Blood Lust"), EnchantmentAPI.getEnchantment((String) "Enlighted"), EnchantmentAPI.getEnchantment((String) "Deathbringer"), EnchantmentAPI.getEnchantment((String) "Armored"), EnchantmentAPI.getEnchantment((String) "Tank"), EnchantmentAPI.getEnchantment((String) "Angelic"), EnchantmentAPI.getEnchantment((String) "Arrow Deflect"), EnchantmentAPI.getEnchantment((String) "Dodge"), EnchantmentAPI.getEnchantment((String) "Valor"), EnchantmentAPI.getEnchantment((String) "Hardened"), EnchantmentAPI.getEnchantment((String) "Aegis"), EnchantmentAPI.getEnchantment((String) "Spirit Link"), EnchantmentAPI.getEnchantment((String) "Blood Link"), EnchantmentAPI.getEnchantment((String) "Leadership")}))));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_CHESTPLATE, (short) 0, "&f&lMantel of Yijki the Destroyer of Worlds", "&f&oThe forebidden mantel of Yijki,", "&f&owoven from the dust of fallen stars.", "", "&f&lYIJKI SET BONUS", "&f&l* &fEnemies deal 30% less damage to you.", "&f&l* &fRevenge of Yijki Passive Ability", "&7(&oRequires all 4 yijki items.&7)"), new LinkedList(Arrays.asList(EnchantmentAPI.getEnchantment("Godly Overload"), EnchantmentAPI.getEnchantment("Blood Lust"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Arrow Deflect"), EnchantmentAPI.getEnchantment("Dodge"), EnchantmentAPI.getEnchantment("Valor"), EnchantmentAPI.getEnchantment("Hardened"), EnchantmentAPI.getEnchantment("Aegis"), EnchantmentAPI.getEnchantment("Spirit Link"), EnchantmentAPI.getEnchantment("Blood Link"), EnchantmentAPI.getEnchantment("Leadership")))));
     }
 
     @Override
     public ItemStack getLeggings(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_LEGGINGS, (short) 0, "&f&lRobeset of Yijki the Destroyer of Worlds", "&f&oThe fabled robes of Yijki,", "&f&ohalf angelic, half demonic.", "", "&f&lYIJKI SET BONUS", "&f&l* &fEnemies deal 30% less damage to you.", "&f&l* &fRevenge of Yijki Passive Ability", "&7(&oRequires all 4 yijki items.&7)"), new LinkedList<Object>(Arrays.asList((Object[]) new CustomEnchantment[]{EnchantmentAPI.getEnchantment((String) "Enlighted"), EnchantmentAPI.getEnchantment((String) "Clarity"), EnchantmentAPI.getEnchantment((String) "Deathbringer"), EnchantmentAPI.getEnchantment((String) "Nature Wrath"), EnchantmentAPI.getEnchantment((String) "Lucky"), EnchantmentAPI.getEnchantment((String) "Armored"), EnchantmentAPI.getEnchantment((String) "Tank"), EnchantmentAPI.getEnchantment((String) "Angelic"), EnchantmentAPI.getEnchantment((String) "Obsidianshield"), EnchantmentAPI.getEnchantment((String) "Cactus"), EnchantmentAPI.getEnchantment((String) "Valor"), EnchantmentAPI.getEnchantment((String) "Hardened"), EnchantmentAPI.getEnchantment((String) "Metaphysical"), EnchantmentAPI.getEnchantment((String) "Death God"), EnchantmentAPI.getEnchantment((String) "Dodge")}))));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_LEGGINGS, (short) 0, "&f&lRobeset of Yijki the Destroyer of Worlds", "&f&oThe fabled robes of Yijki,", "&f&ohalf angelic, half demonic.", "", "&f&lYIJKI SET BONUS", "&f&l* &fEnemies deal 30% less damage to you.", "&f&l* &fRevenge of Yijki Passive Ability", "&7(&oRequires all 4 yijki items.&7)"), new LinkedList(Arrays.asList(EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Clarity"), EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Nature Wrath"), EnchantmentAPI.getEnchantment("Lucky"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Obsidianshield"), EnchantmentAPI.getEnchantment("Cactus"), EnchantmentAPI.getEnchantment("Valor"), EnchantmentAPI.getEnchantment("Hardened"), EnchantmentAPI.getEnchantment("Metaphysical"), EnchantmentAPI.getEnchantment("Death God"), EnchantmentAPI.getEnchantment("Dodge")))));
     }
 
     @Override
     public ItemStack getBoots(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_BOOTS, (short) 0, "&f&lFootwraps of Yijki the Destroyer of Worlds", "&f&oLight as a feather, heavy as", "&f&oa mountain - the footwraps of Yijki.", "", "&f&lYIJKI SET BONUS", "&f&l* &fEnemies deal 30% less damage to you.", "&f&l* &fRevenge of Yijki Passive Ability", "&7(&oRequires all 4 yijki items.&7)"), new LinkedList<Object>(Arrays.asList((Object[]) new CustomEnchantment[]{EnchantmentAPI.getEnchantment((String) "Divine Enlighted"), EnchantmentAPI.getEnchantment((String) "Gears"), EnchantmentAPI.getEnchantment((String) "Deathbringer"), EnchantmentAPI.getEnchantment((String) "Armored"), EnchantmentAPI.getEnchantment((String) "Tank"), EnchantmentAPI.getEnchantment((String) "Angelic"), EnchantmentAPI.getEnchantment((String) "Ender Walker"), EnchantmentAPI.getEnchantment((String) "Hardened"), EnchantmentAPI.getEnchantment((String) "Rocket Escape"), EnchantmentAPI.getEnchantment((String) "Springs"), EnchantmentAPI.getEnchantment((String) "Valor"), EnchantmentAPI.getEnchantment((String) "Dodge"), EnchantmentAPI.getEnchantment((String) "Guardians"), EnchantmentAPI.getEnchantment((String) "Sticky"), EnchantmentAPI.getEnchantment((String) "Diminish")}))));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_BOOTS, (short) 0, "&f&lFootwraps of Yijki the Destroyer of Worlds", "&f&oLight as a feather, heavy as", "&f&oa mountain - the footwraps of Yijki.", "", "&f&lYIJKI SET BONUS", "&f&l* &fEnemies deal 30% less damage to you.", "&f&l* &fRevenge of Yijki Passive Ability", "&7(&oRequires all 4 yijki items.&7)"), new LinkedList(Arrays.asList(EnchantmentAPI.getEnchantment("Divine Enlighted"), EnchantmentAPI.getEnchantment("Gears"), EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Ender Walker"), EnchantmentAPI.getEnchantment("Hardened"), EnchantmentAPI.getEnchantment("Rocket Escape"), EnchantmentAPI.getEnchantment("Springs"), EnchantmentAPI.getEnchantment("Valor"), EnchantmentAPI.getEnchantment("Dodge"), EnchantmentAPI.getEnchantment("Guardians"), EnchantmentAPI.getEnchantment("Sticky"), EnchantmentAPI.getEnchantment("Diminish"))));
     }
 
     @Override
@@ -99,7 +61,7 @@ public class MotherOfYijki
 
     @Override
     public List<String> getEquipDescription() {
-        return Lists.newArrayList((Object[]) new String[]{(Object) ChatColor.RED + "" + (Object) ChatColor.BOLD + "MOTHER OF YIJKI SET BONUS: " + (Object) ChatColor.RED + "-30% INCOMING DMG"});
+        return Lists.newArrayList(ChatColor.RED + "" + ChatColor.BOLD + "MOTHER OF YIJKI SET BONUS: " + ChatColor.RED + "-30% INCOMING DMG");
     }
 
     @Override
@@ -126,12 +88,12 @@ public class MotherOfYijki
     public void activateYijki(Location center, Player player) {
         ArrayList<Location> procLocations = new ArrayList<Location>();
         ArrayList<Player> nearbyPlayers = new ArrayList<Player>();
-        FPlayer fp = (FPlayer) FPlayers.i.get((OfflinePlayer) player);
+        FPlayer fp = FPlayers.i.get(player);
         for (int i = 0; i < 16; ++i) {
             Location l = LocationUtils.getNearbyLocation(center, 8, 2, 0);
             l.getWorld().playSound(l, Sound.WITHER_SPAWN, 1.0f, 0.4f);
-            ParticleEffect.playEffect((ParticleEffect) ParticleEffect.WITCH_MAGIC, (Location) l, (float) 0.7f, (int) 32);
-            ParticleEffect.playEffect((ParticleEffect) ParticleEffect.WITCH_MAGIC, (Location) l.clone().add(0.0, 1.0, 0.0), (float) 0.7f, (int) 32);
+            ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, l, 0.7f, 32);
+            ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, l.clone().add(0.0, 1.0, 0.0), 0.7f, 32);
             procLocations.add(l);
         }
         for (Entity nearbyEnt : player.getNearbyEntities(32.0, 64.0, 32.0)) {
@@ -140,7 +102,7 @@ public class MotherOfYijki
             FPlayer fpNear = (FPlayer) FPlayers.i.get((OfflinePlayer) pNear);
             if (CosmicArmorSetsAPI.hasInfiniteLuck(pNear, 4, player)) continue;
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, (SkinType) SkinType.CUPID_AMULET)) {
-                player.sendMessage(CC.translate((String) "&c&l* Amulet of Angles &7(Block Yijki) &c&l*"));
+                player.sendMessage(CC.translate("&c&l* Amulet of Angles &7(Block Yijki) &c&l*"));
                 continue;
             }
             if (fpNear.getRelationTo((RelationParticipator) fp).isAtLeast(Relation.TRUCE) || !WorldGuardUtils.isPvPEnabled((Location) pNear.getLocation()))
@@ -164,7 +126,7 @@ public class MotherOfYijki
                         continue;
                     }
                     int damage = 16;
-                    int heroLevel = UpgradeUtils.getUpgradeLevel((Player) pNear, (String) "HEROIC_ARMOR_SET");
+                    int heroLevel = UpgradeUtils.getUpgradeLevel((Player) pNear, "HEROIC_ARMOR_SET");
                     damage = (int) ((double) damage * (heroLevel == 1 ? 0.95 : (heroLevel == 2 ? 0.9 : (heroLevel == 3 ? 0.85 : (heroLevel == 4 ? 0.75 : 1.0)))));
                     if (Phoenix.hasPhoenixEquipped((Player) pNear) && Phoenix.procPhoenix((Player) pNear, (LivingEntity) player, (double) damage))
                         continue;
@@ -190,12 +152,12 @@ public class MotherOfYijki
 
     @Override
     public ItemStack getWeapon(boolean applyTransmog) {
-        return new NBTWrapper(new ItemBuilder(Material.DIAMOND_SWORD, CC.WhiteB + "Yijki's World Ender", new String[]{CC.Gray + "An absolutely massive, corrupted", CC.Gray + "executioner blade imbued with", CC.Gray + "highly destructive dark magic.", "", CC.WhiteB + "YIJKI WEAPON BONUS", CC.White + "Deal +20% damage to all enemies.", CC.White + "125% Revenge of Yijki Ability", CC.White + "Immune to Rot and Decay", CC.Gray + "(" + CC.GrayI + "Requires all 4 yijki items." + CC.Gray + ")"}).enchant(Enchantment.DAMAGE_ALL, 5).enchant(Enchantment.DURABILITY, 3).build()).setString("cosmicType", "YIJKI_SWORD").build();
+        return new NBTWrapper(new ItemBuilder(Material.DIAMOND_SWORD, CC.WhiteB + "Yijki's World Ender", CC.Gray + "An absolutely massive, corrupted", CC.Gray + "executioner blade imbued with", CC.Gray + "highly destructive dark magic.", "", CC.WhiteB + "YIJKI WEAPON BONUS", CC.White + "Deal +20% damage to all enemies.", CC.White + "125% Revenge of Yijki Ability", CC.White + "Immune to Rot and Decay", CC.Gray + "(" + CC.GrayI + "Requires all 4 yijki items." + CC.Gray + ")").enchant(Enchantment.DAMAGE_ALL, 5).enchant(Enchantment.DURABILITY, 3).build()).setString("cosmicType", "YIJKI_SWORD").build();
     }
 
     @Override
     public boolean onPlayerDamagedBonus(Player damaged, int multiplier, EntityDamageByEntityEvent event) {
-        if (this.isBlockedOutpostWorld((Entity) damaged)) {
+        if (this.isBlockedOutpostWorld(damaged)) {
             return false;
         }
         this.modifyDamage(damaged, event, -5.0, multiplier);

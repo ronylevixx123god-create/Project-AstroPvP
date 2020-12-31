@@ -77,27 +77,27 @@ public class AncientArmorSet
 
     @Override
     public ItemStack getHelmet(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_HELMET, (short) 0, "&3&lAncient Cap", "&3&oPowerful, martime helmet of", "&3&othe great Leviathan legend.", "", "&3&lANCIENT SET BONUS", "&3&l* &3+35% Outgoing Damage.", "&3&l* &3+10% Outgoing Damage from Soul Enchants.", "&3&l* &3-15% Incoming Damage.", "&3&l* &3Immune to Abyssal Stronghold perks.", "&3&l* &3-50% Knockback.", "&3&l* &3Auto Bless.", "&3&l* &3Leviathan's Curse Ability.", "&7(&oRequires all 4 Ancient items.&3)"), new LinkedList<Object>(Arrays.asList((Object[]) new CustomEnchantment[]{EnchantmentAPI.getEnchantment((String) "Godly Overload"), EnchantmentAPI.getEnchantment((String) "Paladin Armored"), EnchantmentAPI.getEnchantment((String) "Blood Lust"), EnchantmentAPI.getEnchantment((String) "Enlighted"), EnchantmentAPI.getEnchantment((String) "Deathbringer"), EnchantmentAPI.getEnchantment((String) "Armored"), EnchantmentAPI.getEnchantment((String) "Tank"), EnchantmentAPI.getEnchantment((String) "Angelic"), EnchantmentAPI.getEnchantment((String) "Arrow Deflect"), EnchantmentAPI.getEnchantment((String) "Dodge"), EnchantmentAPI.getEnchantment((String) "Valor"), EnchantmentAPI.getEnchantment((String) "Aegis"), EnchantmentAPI.getEnchantment((String) "Spirit Link"), EnchantmentAPI.getEnchantment((String) "Leadership")}))));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_HELMET, (short) 0, "&3&lAncient Cap", "&3&oPowerful, martime helmet of", "&3&othe great Leviathan legend.", "", "&3&lANCIENT SET BONUS", "&3&l* &3+35% Outgoing Damage.", "&3&l* &3+10% Outgoing Damage from Soul Enchants.", "&3&l* &3-15% Incoming Damage.", "&3&l* &3Immune to Abyssal Stronghold perks.", "&3&l* &3-50% Knockback.", "&3&l* &3Auto Bless.", "&3&l* &3Leviathan's Curse Ability.", "&7(&oRequires all 4 Ancient items.&3)"), new LinkedList(Arrays.asList(EnchantmentAPI.getEnchantment("Godly Overload"), EnchantmentAPI.getEnchantment("Paladin Armored"), EnchantmentAPI.getEnchantment("Blood Lust"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Arrow Deflect"), EnchantmentAPI.getEnchantment("Dodge"), EnchantmentAPI.getEnchantment("Valor"), EnchantmentAPI.getEnchantment("Aegis"), EnchantmentAPI.getEnchantment("Spirit Link"), EnchantmentAPI.getEnchantment("Leadership")))));
     }
 
     @Override
     public ItemStack getChestplate(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_CHESTPLATE, (short) 0, "&3&lAncient Body", "&3&oPowerful, martime chestplate of", "&3&othe great Leviathan legend.", "", "&3&lANCIENT SET BONUS", "&3&l* &3+35% Outgoing Damage.", "&3&l* &3+10% Outgoing Damage from Soul Enchants.", "&3&l* &3-15% Incoming Damage.", "&3&l* &3Immune to Abyssal Stronghold perks.", "&3&l* &3-50% Knockback.", "&3&l* &3Auto Bless.", "&3&l* &3Leviathan's Curse Ability.", "&7(&oRequires all 4 Ancient items.&3)"), new LinkedList<Object>(Arrays.asList((Object[]) new CustomEnchantment[]{EnchantmentAPI.getEnchantment((String) "Godly Overload"), EnchantmentAPI.getEnchantment((String) "Paladin Armored"), EnchantmentAPI.getEnchantment((String) "Blood Lust"), EnchantmentAPI.getEnchantment((String) "Enlighted"), EnchantmentAPI.getEnchantment((String) "Deathbringer"), EnchantmentAPI.getEnchantment((String) "Armored"), EnchantmentAPI.getEnchantment((String) "Tank"), EnchantmentAPI.getEnchantment((String) "Angelic"), EnchantmentAPI.getEnchantment((String) "Arrow Deflect"), EnchantmentAPI.getEnchantment((String) "Dodge"), EnchantmentAPI.getEnchantment((String) "Valor"), EnchantmentAPI.getEnchantment((String) "Aegis"), EnchantmentAPI.getEnchantment((String) "Spirit Link"), EnchantmentAPI.getEnchantment((String) "Leadership")}))));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_CHESTPLATE, (short) 0, "&3&lAncient Body", "&3&oPowerful, martime chestplate of", "&3&othe great Leviathan legend.", "", "&3&lANCIENT SET BONUS", "&3&l* &3+35% Outgoing Damage.", "&3&l* &3+10% Outgoing Damage from Soul Enchants.", "&3&l* &3-15% Incoming Damage.", "&3&l* &3Immune to Abyssal Stronghold perks.", "&3&l* &3-50% Knockback.", "&3&l* &3Auto Bless.", "&3&l* &3Leviathan's Curse Ability.", "&7(&oRequires all 4 Ancient items.&3)"), new LinkedList(Arrays.asList(EnchantmentAPI.getEnchantment("Godly Overload"), EnchantmentAPI.getEnchantment("Paladin Armored"), EnchantmentAPI.getEnchantment("Blood Lust"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Arrow Deflect"), EnchantmentAPI.getEnchantment("Dodge"), EnchantmentAPI.getEnchantment("Valor"), EnchantmentAPI.getEnchantment("Aegis"), EnchantmentAPI.getEnchantment("Spirit Link"), EnchantmentAPI.getEnchantment("Leadership")))));
     }
 
     @Override
     public ItemStack getLeggings(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_LEGGINGS, (short) 0, "&3&lAncient Legs", "&3&oPowerful, martime leggings of", "&3&othe great Leviathan legend.", "", "&3&lANCIENT SET BONUS", "&3&l* &3+35% Outgoing Damage.", "&3&l* &3+10% Outgoing Damage from Soul Enchants.", "&3&l* &3-15% Incoming Damage.", "&3&l* &3Immune to Abyssal Stronghold perks.", "&3&l* &3-50% Knockback.", "&3&l* &3Auto Bless.", "&3&l* &3Leviathan's Curse Ability.", "&7(&oRequires all 4 Ancient items.&3)"), new LinkedList<Object>(Arrays.asList((Object[]) new CustomEnchantment[]{EnchantmentAPI.getEnchantment((String) "Godly Overload"), EnchantmentAPI.getEnchantment((String) "Paladin Armored"), EnchantmentAPI.getEnchantment((String) "Blood Lust"), EnchantmentAPI.getEnchantment((String) "Enlighted"), EnchantmentAPI.getEnchantment((String) "Deathbringer"), EnchantmentAPI.getEnchantment((String) "Armored"), EnchantmentAPI.getEnchantment((String) "Tank"), EnchantmentAPI.getEnchantment((String) "Angelic"), EnchantmentAPI.getEnchantment((String) "Arrow Deflect"), EnchantmentAPI.getEnchantment((String) "Dodge"), EnchantmentAPI.getEnchantment((String) "Valor"), EnchantmentAPI.getEnchantment((String) "Aegis"), EnchantmentAPI.getEnchantment((String) "Spirit Link"), EnchantmentAPI.getEnchantment((String) "Leadership")}))));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_LEGGINGS, (short) 0, "&3&lAncient Legs", "&3&oPowerful, martime leggings of", "&3&othe great Leviathan legend.", "", "&3&lANCIENT SET BONUS", "&3&l* &3+35% Outgoing Damage.", "&3&l* &3+10% Outgoing Damage from Soul Enchants.", "&3&l* &3-15% Incoming Damage.", "&3&l* &3Immune to Abyssal Stronghold perks.", "&3&l* &3-50% Knockback.", "&3&l* &3Auto Bless.", "&3&l* &3Leviathan's Curse Ability.", "&7(&oRequires all 4 Ancient items.&3)"), new LinkedList(Arrays.asList(EnchantmentAPI.getEnchantment("Godly Overload"), EnchantmentAPI.getEnchantment("Paladin Armored"), EnchantmentAPI.getEnchantment("Blood Lust"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Arrow Deflect"), EnchantmentAPI.getEnchantment("Dodge"), EnchantmentAPI.getEnchantment("Valor"), EnchantmentAPI.getEnchantment("Aegis"), EnchantmentAPI.getEnchantment("Spirit Link"), EnchantmentAPI.getEnchantment("Leadership")))));
     }
 
     @Override
     public ItemStack getBoots(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_BOOTS, (short) 0, "&3&lAncient Boots", "&3&oPowerful, martime boots of", "&3&othe great Leviathan legend.", "", "&3&lANCIENT SET BONUS", "&3&l* &3+35% Outgoing Damage.", "&3&l* &3+10% Outgoing Damage from Soul Enchants.", "&3&l* &3-15% Incoming Damage.", "&3&l* &3Immune to Abyssal Stronghold perks.", "&3&l* &3-50% Knockback.", "&3&l* &3Auto Bless.", "&3&l* &3Leviathan's Curse Ability.", "&7(&oRequires all 4 Ancient items.&3)"), new LinkedList<Object>(Arrays.asList((Object[]) new CustomEnchantment[]{EnchantmentAPI.getEnchantment((String) "Godly Overload"), EnchantmentAPI.getEnchantment((String) "Paladin Armored"), EnchantmentAPI.getEnchantment((String) "Blood Lust"), EnchantmentAPI.getEnchantment((String) "Enlighted"), EnchantmentAPI.getEnchantment((String) "Deathbringer"), EnchantmentAPI.getEnchantment((String) "Armored"), EnchantmentAPI.getEnchantment((String) "Tank"), EnchantmentAPI.getEnchantment((String) "Angelic"), EnchantmentAPI.getEnchantment((String) "Arrow Deflect"), EnchantmentAPI.getEnchantment((String) "Dodge"), EnchantmentAPI.getEnchantment((String) "Valor"), EnchantmentAPI.getEnchantment((String) "Aegis"), EnchantmentAPI.getEnchantment((String) "Spirit Link"), EnchantmentAPI.getEnchantment((String) "Leadership")}))));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_BOOTS, (short) 0, "&3&lAncient Boots", "&3&oPowerful, martime boots of", "&3&othe great Leviathan legend.", "", "&3&lANCIENT SET BONUS", "&3&l* &3+35% Outgoing Damage.", "&3&l* &3+10% Outgoing Damage from Soul Enchants.", "&3&l* &3-15% Incoming Damage.", "&3&l* &3Immune to Abyssal Stronghold perks.", "&3&l* &3-50% Knockback.", "&3&l* &3Auto Bless.", "&3&l* &3Leviathan's Curse Ability.", "&7(&oRequires all 4 Ancient items.&3)"), new LinkedList(Arrays.asList(EnchantmentAPI.getEnchantment("Godly Overload"), EnchantmentAPI.getEnchantment("Paladin Armored"), EnchantmentAPI.getEnchantment("Blood Lust"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Arrow Deflect"), EnchantmentAPI.getEnchantment("Dodge"), EnchantmentAPI.getEnchantment("Valor"), EnchantmentAPI.getEnchantment("Aegis"), EnchantmentAPI.getEnchantment("Spirit Link"), EnchantmentAPI.getEnchantment("Leadership")))));
     }
 
     @Override
     public List<String> getEquipDescription() {
-        return TranslateList.translateList((Object) ChatColor.DARK_AQUA + "" + (Object) ChatColor.BOLD + "&3&lANCIENT SET BONUS", "&3&l* &3+35% Outgoing Damage.", "&3&l* &3+10% Outgoing Damage from Soul Enchants.", "&3&l* &3-15% Incoming Damage.", "&3&l* &3Immune to Abyssal Stronghold perks.", "&3&l* &3-50% Knockback.", "&3&l* &3Auto Bless.", "&3&l* &3Leviathan's Curse Ability.");
+        return TranslateList.translateList(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "&3&lANCIENT SET BONUS", "&3&l* &3+35% Outgoing Damage.", "&3&l* &3+10% Outgoing Damage from Soul Enchants.", "&3&l* &3-15% Incoming Damage.", "&3&l* &3Immune to Abyssal Stronghold perks.", "&3&l* &3-50% Knockback.", "&3&l* &3Auto Bless.", "&3&l* &3Leviathan's Curse Ability.");
     }
 
     @Override
@@ -121,7 +121,7 @@ public class AncientArmorSet
     public boolean onPlayerAttacked(Player damager, EntityDamageByEntityEvent event) {
         if (Math.random() <= 0.05 || damager.isOp() && damager.isSneaking()) {
             this.removeResistance(damager);
-            if (this.isBlockedOutpostWorld((Entity) damager)) {
+            if (this.isBlockedOutpostWorld(damager)) {
                 return false;
             }
             this.startAncientEffect(damager, (Player) event.getEntity());
@@ -156,14 +156,14 @@ public class AncientArmorSet
 
     @Override
     public void onEquip(Player player) {
-        PlayerPotionEffects.untrackPotionEffect((Player) player, (PotionEffectType) PotionEffectType.SLOW);
-        PlayerPotionEffects.untrackPotionEffect((Player) player, (PotionEffectType) PotionEffectType.SLOW_DIGGING);
+        PlayerPotionEffects.untrackPotionEffect(player, PotionEffectType.SLOW);
+        PlayerPotionEffects.untrackPotionEffect(player, PotionEffectType.SLOW_DIGGING);
     }
 
     @Override
     public void onUnequip(Player player) {
-        PlayerPotionEffects.untrackPotionEffect((Player) player, (PotionEffectType) PotionEffectType.SLOW);
-        PlayerPotionEffects.untrackPotionEffect((Player) player, (PotionEffectType) PotionEffectType.SLOW_DIGGING);
+        PlayerPotionEffects.untrackPotionEffect(player, PotionEffectType.SLOW);
+        PlayerPotionEffects.untrackPotionEffect(player, PotionEffectType.SLOW_DIGGING);
     }
 
     @Override
@@ -173,45 +173,45 @@ public class AncientArmorSet
     private void startAncientEffect(final Player player, final Player pTarget) {
         this.focusTargetPlayer(player, pTarget);
         player.sendMessage("");
-        player.sendMessage(CC.translate((String) ("&3&l      * LEVIATHAN'S CURSE &7(" + pTarget.getName() + ")&3&l *")));
-        player.sendMessage(CC.translate((String) ("&3&l      * &7+150% damage to &f" + pTarget.getName() + "&7 for 10s")));
+        player.sendMessage(CC.translate(("&3&l      * LEVIATHAN'S CURSE &7(" + pTarget.getName() + ")&3&l *")));
+        player.sendMessage(CC.translate(("&3&l      * &7+150% damage to &f" + pTarget.getName() + "&7 for 10s")));
         player.sendMessage("");
-        pTarget.setMetadata("noDefenseProcs", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) true));
-        pTarget.setMetadata("bloodHoundNoBless", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), (Object) "ancient"));
+        pTarget.setMetadata("noDefenseProcs", new FixedMetadataValue(Enchantments.getInstance(), true));
+        pTarget.setMetadata("bloodHoundNoBless", new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), "ancient"));
         pTarget.removePotionEffect(PotionEffectType.SLOW);
         pTarget.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 0));
         this.removeNearMeta(player, pTarget);
         pTarget.sendMessage("");
-        pTarget.sendMessage(CC.translate((String) ("&3&l* LEVIATHAN'S CURSE &7(" + player.getName() + "'s Ancient Armor Set) &3&l*")));
-        pTarget.sendMessage(CC.translate((String) ("&3&l   * &7+150% damage from " + player.getName() + " for 10s")));
-        pTarget.sendMessage(CC.translate((String) "&3&l      * &710s Silence and Slowness I"));
-        pTarget.sendMessage(CC.translate((String) "&3&l        * &730s visible on /near"));
+        pTarget.sendMessage(CC.translate(("&3&l* LEVIATHAN'S CURSE &7(" + player.getName() + "'s Ancient Armor Set) &3&l*")));
+        pTarget.sendMessage(CC.translate(("&3&l   * &7+150% damage from " + player.getName() + " for 10s")));
+        pTarget.sendMessage(CC.translate("&3&l      * &710s Silence and Slowness I"));
+        pTarget.sendMessage(CC.translate("&3&l        * &730s visible on /near"));
         pTarget.sendMessage("");
         player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 10.0f, 10.0f);
         new BukkitRunnable() {
 
             public void run() {
-                pTarget.removeMetadata("noDefenseProcs", (Plugin) Enchantments.getInstance());
+                pTarget.removeMetadata("noDefenseProcs", Enchantments.getInstance());
                 pTarget.removeMetadata("bloodHoundNoBless", (Plugin) CosmicSkyInventoryPets.get());
-                CmdUnfocus.unfocusPlayer((Faction) ((FPlayer) FPlayers.i.get((OfflinePlayer) player)).getFaction(), (Player) pTarget);
+                CmdUnfocus.unfocusPlayer(FPlayers.i.get(player).getFaction(), pTarget);
             }
         }.runTaskLater((Plugin) CosmicSkyInventoryPets.get(), 200L);
     }
 
     private void removeNearMeta(Player player, Player pTarget) {
         if (pTarget.hasMetadata("heroicGhostEnchantment")) {
-            pTarget.setMetadata("heroicGhostEnchantmentTemp", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), (Object) System.currentTimeMillis()));
+            pTarget.setMetadata("heroicGhostEnchantmentTemp", new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), System.currentTimeMillis()));
             pTarget.removeMetadata("heroicGhostEnchantment", (Plugin) Enchantments.getInstance());
         }
     }
 
     private void focusTargetPlayer(Player player, Player pTarget) {
         if (pTarget instanceof Player) {
-            FPlayer fPlayer = (FPlayer) FPlayers.i.get((OfflinePlayer) player);
+            FPlayer fPlayer = FPlayers.i.get(player);
             Faction myFaction = fPlayer.getFaction();
-            FPlayer targetPlayer = (FPlayer) FPlayers.i.get((OfflinePlayer) pTarget);
+            FPlayer targetPlayer = FPlayers.i.get(pTarget);
             if (myFaction.isNormal()) {
-                CmdFocus.focusPlayer((FPlayer) fPlayer, (Faction) myFaction, (FPlayer) targetPlayer, (boolean) false);
+                CmdFocus.focusPlayer(fPlayer, myFaction, targetPlayer, false);
             }
         }
     }
