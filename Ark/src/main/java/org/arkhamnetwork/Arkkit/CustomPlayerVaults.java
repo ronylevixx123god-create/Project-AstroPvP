@@ -1,6 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- */
 package org.arkhamnetwork.Arkkit;
 
 import java.util.HashMap;

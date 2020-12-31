@@ -13,7 +13,7 @@ import java.util.List;
 public class CommandDupe implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command arg1, String arg2, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage(String.valueOf(CC.DarkRed) + "You have to be a player to use this command...");
+            sender.sendMessage(CC.DarkRed + "You have to be a player to use this command...");
             return false;
         }
         Player player = (Player) sender;
@@ -26,13 +26,13 @@ public class CommandDupe implements CommandExecutor {
         String display = itemMeta.getDisplayName();
         String color = display.substring(0, 2);
         List<String> lore = itemMeta.getLore();
-        boolean isOpened = lore.contains(String.valueOf(CC.Gray) + "Drag n' Drop onto item to enchant.");
+        boolean isOpened = lore.contains(CC.Gray + "Drag n' Drop onto item to enchant.");
         if (!isOpened) {
-            if (display.indexOf(" ") == -1) {
+            if (!display.contains(" ")) {
                 sender.sendMessage("§cYou may not dupe this item.");
                 return false;
             }
-            display = display.substring(display.indexOf(" ") + 1, display.length());
+            display = display.substring(display.indexOf(" ") + 1);
         }
         if ((!display.startsWith("Enchantment Book") && !isOpened) || color.contains(CC.DarkRed)) {
             sender.sendMessage("§cYou cannot dupe this item.");
