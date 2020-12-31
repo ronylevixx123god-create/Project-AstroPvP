@@ -22,7 +22,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-import lombok.SneakyThrows;
 import me.ifamasssxd.cosmicbosses.bosses.GuardBoss;
 import me.ifamasssxd.cosmicbosses.bosses.dragon.EndDragon;
 import me.ifamasssxd.cosmicbosses.commands.CommandBoss;
@@ -71,7 +70,6 @@ extends JavaPlugin {
         return instance;
     }
 
-    @SneakyThrows
     public void onEnable() {
         cbe = this;
         instance = this;
