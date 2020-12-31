@@ -1,0 +1,98 @@
+package com.compilex.CosmicArmorSets.items;
+
+import com.compilex.CosmicArmorSets.enums.ArmorSet;
+import com.cosmicpvp.cosmicutils.compat.ASound;
+import com.cosmicpvp.cosmicutils.exceptions.CosmicException;
+import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
+import com.cosmicpvp.cosmicutils.nbt.NBTTagListBuilder;
+import com.cosmicpvp.cosmicutils.utils.*;
+import com.google.common.collect.Lists;
+import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
+import me.ifamasssxd.cosmicskycustoms.struct.InventoryInteractable;
+import me.ifamasssxd.cosmicskycustoms.struct.InventoryItemType;
+import net.minecraft.server.v1_7_R4.NBTBase;
+import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+
+public class OmniCrystal extends CosmicItem implements InventoryInteractable {
+
+    private static String itemKey;
+
+    public OmniCrystal() {
+        super("omni_crystal");
+    }
+
+    @Override
+    public ItemStack createItem(Player player, Object... objects) {
+        /* 31 */
+        Integer chance = objects.length >= 1 ? NumberUtils.parseIntOrNull(objects[0].toString()) : null;
+        /* 32 */
+        if (chance == null) chance = 1;
+
+        return this.applyItemData(new ItemBuilder(Material.SNOW_BALL).lore(
+                CC.translate("&7Apply to any non-specialty"),
+                CC.translate("&7armor piece to"),
+                CC.translate("&7transform it into an &3Omni Item:"),
+                CC.translate("&7An item that acts as any"),
+                CC.translate("&7unique /help armorset piece."),
+                "",
+                CC.translate("&3EX: &71 Omni item, 3 Phantom items equipped"),
+                CC.translate("&7would apply the Phantom Set Bonus to the player"))
+                .name(CC.translate(String.format("&3&lOmni Crystal (&7%d%%&3&l)", chance))).build()).setNBTBase("cosmicData", (NBTBase) (new NBTTagCompoundBuilder()).setInt("success", chance).get()).build();
+    }
+
+
+    public boolean acceptsInventoryClickType(InventoryItemType inventoryItemType) {
+        return (inventoryItemType == InventoryItemType.CURSOR);
+    }
+
+    @Override
+    public void onInventoryClick(Player player, ItemStack cursor, NBTWrapper cursorWrapper, NBTWrapper clickedWrapper, ItemStack clicked, InventoryClickEvent event) throws CosmicException {
+        if (clickedWrapper == null || !GeneralUtil.isArmor(clicked))
+            return;
+        event.setCancelled(true);
+        if (!cursorWrapper.getCosmicData().hasKey("success"))
+            return;
+        if (ArmorSet.getArmorSetFromItem(clicked) != null)
+            return;
+        if (player.getItemOnCursor().getAmount() <= 1)
+            player.setItemOnCursor(null);
+        else {
+            ItemStack newCUrsor = player.getItemOnCursor();
+            newCUrsor.setAmount(newCUrsor.getAmount() - 1);
+            player.setItemOnCursor(newCUrsor);
+        }
+        int chance = cursorWrapper.getCosmicData().getInt("success");
+        if (ThreadLocalRandom.current().nextInt(101) >= chance) {
+            player.playSound(player.getLocation(), Sound.GLASS, 1.0f, 2.0f);
+            return;
+        }
+        ItemMeta meta = clicked.getItemMeta();
+        if (meta.hasLore()) {
+            List<String> lore = meta.getLore();
+            lore.add("");
+            lore.add(CC.translate("&3&lOMNI SET BONUS"));
+            lore.add(CC.translate("&3&l* &3Acts as ANY Armor Set type/piece"));
+            meta.setLore(lore);
+        }
+        ASound.LEVEL_UP.play(player, 1.1F);
+        clicked.setItemMeta(meta);
+
+        clickedWrapper = new NBTWrapper(clicked);
+        NBTTagCompoundBuilder cosmicData = clickedWrapper.getCompound("cosmicData");
+        cosmicData.setInt("omniArmorSet", 1);
+        clickedWrapper.setNBTBase("cosmicData", cosmicData.get());
+        NBTTagCompoundBuilder display = clickedWrapper.hasKey("display") ? new NBTTagCompoundBuilder(clickedWrapper.getNBTBase("display")) : new NBTTagCompoundBuilder();
+        display.setInt("color", 16711680);
+        clickedWrapper.setNBTBase("display", display.get());
+        event.setCurrentItem(clickedWrapper.build());
+    }
+
+}

@@ -19,6 +19,7 @@
         <module>Factions</module>
         <module>Slotbot</module>
         <module>Core</module>
+        <module>ArmorSets</module>
     </modules>
 
     <build>

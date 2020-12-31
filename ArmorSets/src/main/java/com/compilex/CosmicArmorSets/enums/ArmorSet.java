@@ -1,0 +1,309 @@
+package com.compilex.CosmicArmorSets.enums;
+
+import com.compilex.CosmicArmorSets.enums.armorsets.*;
+import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
+import com.cosmicpvp.cosmicutils.nbt.NBTTagListBuilder;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
+import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import com.google.common.collect.Lists;
+import com.rit.sucy.CustomEnchantment;
+import com.rit.sucy.EnchantmentAPI;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+import me.ifamasssxd.cosmicskycustoms.struct.CustomItemBuilder;
+import net.minecraft.server.v1_7_R4.NBTBase;
+import org.arkhamnetwork.enchantments.EnchantmentBook;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+public enum ArmorSet {
+	PHANTOM(new PhantomArmorSet(), ChatColor.RED, CC.RedB + "Phantom", Lists.newArrayList("+5% DMG")),
+	YETI(new YetiArmorSet(), ChatColor.AQUA, CC.AquaB + "Yeti", Lists.newArrayList("-2.5% Incoming DMG", "+2.5% Outgoing DMG")),
+	CHAMPION(new ChampionArmorSet(), ChatColor.GOLD, CC.GoldB + "Champion", Lists.newArrayList("20% More Damage","-7.5% Incoming Damage", "3.5% Champion Wrath Ability" )),
+	MOTHER_OF_YIJKI(new MotherOfYijki(), ChatColor.WHITE, CC.WhiteB + "Mother of Yijki", Lists.newArrayList("-5% Incoming DMG", "20% Revenge of Yijki Ability")),
+	RANGER(new RangerArmorSet(), ChatColor.GREEN, CC.GreenB + "Ranger", Lists.newArrayList("-5% Incoming Bow DMG", "+6% Outgoing Bow DMG", "20% Immune to Teleblock")),
+	SUPREME(new SupremeArmorSet(), ChatColor.DARK_RED, CC.DarkRedB + "Supreme", Lists.newArrayList("+3% Outgoing DMG")),
+	DIMENSIONAL_TRAVELER(new DimensionalTravelerSet(), ChatColor.DARK_PURPLE, CC.DarkPurpleB + "Dimensional Traveler", Lists.newArrayList("+7.5% Outgoing DMG", "20% Dimensional Shift Ability")),
+	DRAGON_SLAYER(new DragonSlayerArmorSet(), ChatColor.YELLOW, CC.YellowB + "Dragon Slayer", Lists.newArrayList("+3% PvP DMG", "-5% Incoming DMG", "10% Silence Immunity", "10% Freeze Immunity")),
+	ENGINEER(new EngineerSet(), ChatColor.GOLD, CC.GoldB + "Engineer", Lists.newArrayList("-9% Incoming DMG", "20% B-2 Bomber Passive Ability")),
+	KOTH(new KothArmorSet(), ChatColor.AQUA, CC.WhiteB + CC.Magic + ";" + CC.RedB + " K" + CC.GoldB + "." + CC.YellowB + "O" + CC.GreenB + "." + CC.AquaB + "T" + CC.DarkPurpleB + "." + CC.LightPurpleB + "H " + CC.WhiteB + CC.Magic + ";", Lists.newArrayList("+5% PvP DMG", "+12.5% PvE DMG")),
+	ASTRO(new AstroSet(), ChatColor.GREEN, CC.GreenB + "Astro", Lists.newArrayList("+5% Outgoing DMG", "-5% Incoming DMG", "10% Passive Astro Killer Ability")),
+	OMNI(new OmniArmorSet(), ChatColor.DARK_BLUE, CC.DarkBlueB + "Omni", Lists.newArrayList("")),
+	ULTRA(new UltraArmorSet(), ChatColor.GRAY, CC.GreenB + "Ultra", Lists.newArrayList("+15% Outgoing DMG", "-7.5% Incoming DMG", "4.5% Ultra Rage Ability", "8.5% Ultra Holy Negation", "4.5% Chance to Bypass Utility Belt", "x1.5 World Destroyer Duration")),
+	ANCIENT(new AncientArmorSet(), ChatColor.DARK_AQUA, CC.DarkAquaB + "Ancient", Lists.newArrayList("+7% Outgoing DMG", "3% More Damage", "10% Leviathan's Curse Ability"));
+	;
+
+	public ItemStack helmet;
+
+	public ItemStack chestplate;
+
+	public ItemStack leggings;
+
+	public ItemStack boots;
+
+	public ItemStack[] armorSetItems;
+
+	public ArmorSetInfo armorSetInfo;
+
+	private ChatColor color;
+
+	private String displayName;
+
+	private List<String> crystalDescription;
+
+	ArmorSet(ArmorSetInfo info, ChatColor color, String displayName, List<String> crystalDescription) {
+		this.armorSetInfo = info;
+		this.color = color;
+		this.crystalDescription = crystalDescription;
+		this.displayName = displayName;
+	}
+
+	ArmorSet(ItemStack helmet, ItemStack chestplate, ItemStack leggings, ItemStack boots) {
+		this.helmet = helmet;
+		this.chestplate = chestplate;
+		this.leggings = leggings;
+		this.boots = boots;
+		(this.armorSetItems = new ItemStack[4])[0] = this.helmet;
+		this.armorSetItems[1] = this.chestplate;
+		this.armorSetItems[2] = this.leggings;
+		this.armorSetItems[3] = this.boots;
+	}
+
+	public ItemStack getRandomPeice(boolean applyTransmog) {
+		return getArmorPeice(ThreadLocalRandom.current().nextInt(this.armorSetItems.length), applyTransmog);
+	}
+
+	public ItemStack getArmorPeice(int index, boolean applyTransmog) {
+		if (index >= this.armorSetItems.length)
+			index = 0;
+		if (this.armorSetInfo != null) {
+			if (index == 0)
+				return this.armorSetInfo.getHelmet(applyTransmog);
+			if (index == 1)
+				return this.armorSetInfo.getChestplate(applyTransmog);
+			if (index == 2)
+				return this.armorSetInfo.getLeggings(applyTransmog);
+			if (index == 3)
+				return this.armorSetInfo.getBoots(applyTransmog);
+		}
+		return applyTransmog ? EnchantmentBook.applyTransmogScroll(this.armorSetItems[index]) : this.armorSetItems[index];
+	}
+
+	public static ItemStack createRangerBow() {
+		return createRangerBow(true);
+	}
+
+	public static ItemStack createRangerBow(boolean transmog) {
+		ItemStack item = (new ItemBuilder(Material.BOW, CC.GreenB + "Ranger Bow", new String[] {String.valueOf(CC.Green) + "A finely crafted bow imbued", String.valueOf(CC.Green) + "with the energy of the Sun.", "", CC.GreenB + "RANGER WEAPON BONUS", CC.GreenB + "* " + CC.Green + "Ranger Bow grants 30% increased bow damage.", CC.GreenB + "* " + CC.Green + "Enemies deal 25% less damage to you.", CC.GrayI + "(Requires all 4 ranger armor items.)" })).build();
+		item.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 5);
+		item.addUnsafeEnchantment(Enchantment.DURABILITY, 3);
+		item.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 2);
+		item.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 1);
+		addMaxedEnchant(item, "Sniper");
+		addMaxedEnchant(item, "Lethal Sniper");
+		addMaxedEnchant(item, "Silence");
+		addMaxedEnchant(item, "Rage");
+		addMaxedEnchant(item, "Eagle Eye");
+		addMaxedEnchant(item, "Arrow Lifesteal");
+		addMaxedEnchant(item, "Hellfire");
+		addMaxedEnchant(item, "Piercing");
+		addMaxedEnchant(item, "Blind");
+		addMaxedEnchant(item, "Venom");
+		addMaxedEnchant(item, "Snare");
+		addMaxedEnchant(item, "Virus");
+		addMaxedEnchant(item, "Healing");
+		return transmog ? EnchantmentBook.applyTransmogScroll(item) : item;
+	}
+
+	public String getFirstDisplayNameLetter() {
+		return this.color + CC.Bold + name().charAt(0);
+	}
+
+	public static boolean isRangerBow(ItemStack item) {
+		return (item != null && item.hasItemMeta() && item.getItemMeta().hasDisplayName() && item
+				.getType() == Material.BOW && item
+				.getItemMeta().getDisplayName().startsWith(CC.GreenB + "Ranger Bow"));
+	}
+
+	public static void addEnchantmentLevel(ItemStack item, String enchantName, int level) {
+		CustomEnchantment enchant = EnchantmentAPI.getEnchantment(enchantName);
+		if (enchant != null)
+			enchant.addToItem(item, level);
+	}
+
+	public static void addMaxedEnchant(ItemStack item, String enchantName) {
+		CustomEnchantment enchant = EnchantmentAPI.getEnchantment(enchantName);
+		if (enchant != null)
+			enchant.addToItem(item, enchant.getMaxLevel());
+	}
+
+	private static ItemStack addNearlyMaxedEnchantmentLevel(ItemStack item, String enchantName) {
+		CustomEnchantment enchant = EnchantmentAPI.getEnchantment(enchantName);
+		if (enchant.heroicEnchantment) {
+			enchant.addToItem(item, 1 + ThreadLocalRandom.current().nextInt(enchant.getMaxLevel()));
+		} else {
+			enchant.addToItem(item, Math.min(enchant.getMaxLevel(),
+					Math.max(1, enchant.getMaxLevel() - 2) + ThreadLocalRandom.current().nextInt(3)));
+		}
+		return item;
+	}
+
+	public static ArmorSet fromName(String name) {
+		ArmorSet[] values;
+		for (int length = (values = values()).length, i = 0; i < length; i++) {
+			ArmorSet set = values[i];
+			if (set.name().equalsIgnoreCase(name))
+				return set;
+		}
+		return null;
+	}
+
+	public static ItemStack createCrystal(List<ArmorSet> armorSet, double applyChance) {
+		return (new CustomItemBuilder("bonusArmorCrystal", new Object[] { armorSet, Double.valueOf(applyChance) })).build();
+	}
+
+	public static List<ArmorSet> getArmorCrystalBonusesFromCrystal(NBTTagCompoundBuilder wrapper) {
+		if (wrapper.hasKey("bonus")) {
+			ArmorSet set = fromName(wrapper.getString("bonus"));
+			if (set != null) {
+				List<ArmorSet> retr = Arrays.asList(set);
+				return retr;
+			}
+		} else if (wrapper.hasKey("bonuses")) {
+			List<ArmorSet> retr2 = Lists.newArrayList();
+			NBTTagListBuilder list = new NBTTagListBuilder(wrapper.getNBTBase("bonuses"));
+			for (int i = 0; i < list.size(); i++) {
+				String bonus = list.getStringAt(i);
+				if (bonus != null && !bonus.isEmpty()) {
+					ArmorSet from = fromName(bonus);
+					if (from != null)
+						retr2.add(from);
+				}
+			}
+			return retr2;
+		}
+		return Collections.emptyList();
+	}
+
+	public static List<ArmorSet> getFromArmorBonusCrystal(NBTWrapper wrapper) {
+		NBTTagCompoundBuilder cosmicData = wrapper.getCompound("cosmicData");
+		if (cosmicData == null)
+			return null;
+		List<ArmorSet> retr = Lists.newArrayList();
+		if (cosmicData.hasKey("crystalBonus")) {
+			String upgrade = cosmicData.getString("crystalBonus");
+			if (upgrade == null)
+				return null;
+			ArmorSet from = fromName(upgrade);
+			if (from != null)
+				retr.add(from);
+		} else if (cosmicData.hasKey("crystalBonuses")) {
+			NBTTagListBuilder list = new NBTTagListBuilder(cosmicData.getNBTBase("crystalBonuses"));
+			for (int i = 0; i < list.size(); i++) {
+				String bonus = list.getStringAt(i);
+				if (bonus != null && !bonus.isEmpty()) {
+					ArmorSet from2 = fromName(bonus);
+					if (from2 != null)
+						retr.add(from2);
+				}
+			}
+		}
+		return retr;
+	}
+
+	public static List<ArmorSet> getFromArmorBonusCrystal(ItemStack item) {
+		if (item == null)
+			return null;
+		return getFromArmorBonusCrystal(new NBTWrapper(item));
+	}
+
+	public static ItemStack applyCrystalToItem(List<ArmorSet> set, ItemStack item) {
+		NBTWrapper wrapper = new NBTWrapper(item);
+		NBTTagCompoundBuilder data = wrapper.getCompoundOrCreate("cosmicData");
+		NBTTagListBuilder nbtTagListBuilder = new NBTTagListBuilder();
+		StringBuilder sb = new StringBuilder();
+		set.forEach(s -> {
+			nbtTagListBuilder.addString(s.name());
+			sb.append(s.getDisplayName()).append(CC.Gray).append(", ");
+		});
+		data.setNBTBase("crystalBonuses", nbtTagListBuilder.build());
+		wrapper.setNBTBase("cosmicData", data.get());
+		item = wrapper.build();
+		ItemMeta im = item.getItemMeta();
+		List<String> lore = (im.getLore() == null) ? Lists.newArrayList() : im.getLore();
+		String str = sb.toString();
+		if (str.endsWith(", "))
+			str = str.substring(0, str.length() - 2);
+		lore.add(CC.GoldB + "Armor Crystal (" + str + CC.GoldB + ")");
+		im.setLore(lore);
+		item.setItemMeta(im);
+		return item;
+	}
+
+	public static ItemStack removeCrystalFromItem(NBTWrapper wrapper) {
+		NBTTagCompoundBuilder data = wrapper.getCompoundOrCreate("cosmicData");
+		data.remove("crystalBonus");
+		data.remove("crystalBonuses");
+		wrapper.setNBTBase("cosmicData", data.get());
+		ItemStack item = wrapper.build();
+		ItemMeta im = item.getItemMeta();
+		List<String> lore = im.getLore();
+		if (lore != null) {
+			lore.removeIf(s -> s.startsWith(CC.GoldB + "Armor Crystal ("));
+			im.setLore(lore);
+		}
+		item.setItemMeta(im);
+		return item;
+	}
+
+	public static ItemStack removeCrystalFromItem(ItemStack item) {
+		return removeCrystalFromItem(new NBTWrapper(item));
+	}
+
+	public static ArmorSet getArmorSetFromItem(ItemStack i) {
+		if (i != null && i.hasItemMeta() && i.getItemMeta().hasLore())
+			for (int reverseIndex = i.getItemMeta().getLore().size() - 1; reverseIndex >= 0; reverseIndex--) {
+				String s = i.getItemMeta().getLore().get(reverseIndex);
+				if (s.contains("SET BONUS") && !s.contains("~")) {
+					String set = ChatColor.stripColor(s.split(" ")[0]);
+					if (set.equals("YIJKI")) {
+						set = "MOTHER_OF_YIJKI";
+					} else if (set.equals("TRAVELER")) {
+						set = "DIMENSIONAL_TRAVELER";
+					} else if (set.equalsIgnoreCase("DRAGON")) {
+						set = "DRAGON_SLAYER";
+					}
+					try {
+						return valueOf(set);
+					} catch (Exception e) {
+						e.printStackTrace();
+						return null;
+					}
+				}
+			}
+		return null;
+	}
+
+	public ArmorSetInfo getArmorSetInfo() {
+		return this.armorSetInfo;
+	}
+
+	public ChatColor getColor() {
+		return this.color;
+	}
+
+	public String getDisplayName() {
+		return this.displayName;
+	}
+
+	public List<String> getCrystalDescription() {
+		return this.crystalDescription;
+	}
+}
