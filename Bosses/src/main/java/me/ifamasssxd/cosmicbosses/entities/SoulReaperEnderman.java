@@ -70,7 +70,6 @@ import org.bukkit.event.entity.EntityTeleportEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
-import org.spigotmc.ProtocolData;
 
 public class SoulReaperEnderman
 extends EntityMonster {
@@ -148,7 +147,7 @@ extends EntityMonster {
             return false;
         }
         Vec3D vec3d = entityhuman.j(1.0f).a();
-        Vec3D vec3d1 = Vec3D.a((double)(this.locX - entityhuman.locX), (double)(this.boundingBox.b + (double)(this.length / 2.0f) - (entityhuman.locY + (double)entityhuman.getHeadHeight())), (double)(this.locZ - entityhuman.locZ));
+        Vec3D vec3d1 = Vec3D.a((double)(this.locX - entityhuman.locX), (double)(this.getBoundingBox().b + (double)(this.length / 2.0f) - (entityhuman.locY + (double)entityhuman.getHeadHeight())), (double)(this.locZ - entityhuman.locZ));
         double d0 = vec3d1.b();
         double d1 = vec3d.b(vec3d1 = vec3d1.a());
         return d1 > 1.0 - 0.025 / d0 && entityhuman.hasLineOfSight((Entity)this);
@@ -307,7 +306,7 @@ extends EntityMonster {
                 }
                 Location to = teleport.getTo();
                 this.setPosition(to.getX(), to.getY(), to.getZ());
-                if (this.world.getCubes((Entity)this, this.boundingBox).isEmpty() && !this.world.containsLiquid(this.boundingBox)) {
+                if (this.world.getCubes((Entity)this, this.getBoundingBox()).isEmpty() && !this.world.containsLiquid(this.getBoundingBox())) {
                     flag = true;
                 }
             }

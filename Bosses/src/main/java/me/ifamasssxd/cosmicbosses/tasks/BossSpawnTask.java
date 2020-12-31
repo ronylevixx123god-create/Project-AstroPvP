@@ -39,14 +39,8 @@ implements Runnable {
         }
         BossType type = null;
         int chance = this.random.nextInt(100);
-        if (chance < 40) {
-            type = BossType.BROOD_MOTHER;
-        } else if (chance < 70) {
-            type = BossType.KING_SLIME;
-        } else if (chance < 85) {
+        if (chance < 85) {
             type = BossType.SKELETON_HORSE;
-        } else if (chance < 94) {
-            type = BossType.PLAGUE_BLOATER;
         } else if (chance < 100) {
             type = BossType.DEMONIC_WITHER;
         }

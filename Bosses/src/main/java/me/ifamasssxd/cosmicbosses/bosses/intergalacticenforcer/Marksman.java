@@ -124,16 +124,16 @@ implements GuardBoss {
     public void onBossSpawn() {
         Skeleton skeleton = (Skeleton)this.spawnBoss();
         EntitySkeleton entity = ((CraftSkeleton)skeleton).getHandle();
-        ReflectionUtils.setObject(EntitySkeleton.class, (Object)entity, (Object)new PathfinderGoalBossArrowAttack((IRangedEntity)entity, 1.0, 5, 20, 15.0f), "bp");
-        BossUtils.clearGoalSelectors((EntityInsentient)entity);
-        PathfinderGoalSelector targetSelector = BossUtils.getSelector((EntityInsentient)entity, "targetSelector");
-        PathfinderGoalSelector goalSelector = BossUtils.getSelector((EntityInsentient)entity, "goalSelector");
-        goalSelector.a(1, (PathfinderGoal)new PathfinderGoalFloat((EntityInsentient)entity));
-        goalSelector.a(5, (PathfinderGoal)new PathfinderGoalMoveTowardsRestriction((EntityCreature)entity, 1.3));
-        goalSelector.a(6, (PathfinderGoal)new PathfinderGoalLookAtPlayer((EntityInsentient)entity, EntityHuman.class, 8.0f));
-        goalSelector.a(6, (PathfinderGoal)new PathfinderGoalRandomLookaround((EntityInsentient)entity));
-        targetSelector.a(1, (PathfinderGoal)new PathfinderGoalHurtByTarget((EntityCreature)entity, false));
-        targetSelector.a(2, (PathfinderGoal)new PathfinderGoalNearestAttackableTarget((EntityCreature)entity, EntityHuman.class, 0, true));
+        ReflectionUtils.setObject(EntitySkeleton.class,entity,new PathfinderGoalBossArrowAttack(entity, 1.0, 5, 20, 15.0f), "bp");
+        BossUtils.clearGoalSelectors(entity);
+        PathfinderGoalSelector targetSelector = BossUtils.getSelector(entity, "targetSelector");
+        PathfinderGoalSelector goalSelector = BossUtils.getSelector(entity, "goalSelector");
+        goalSelector.a(1, new PathfinderGoalFloat(entity));
+        goalSelector.a(5, new PathfinderGoalMoveTowardsRestriction(entity, 1.3));
+        goalSelector.a(6, new PathfinderGoalLookAtPlayer(entity, EntityHuman.class, 8.0f));
+        goalSelector.a(6, new PathfinderGoalRandomLookaround(entity));
+        targetSelector.a(1, new PathfinderGoalHurtByTarget(entity, false));
+        targetSelector.a(2, new PathfinderGoalNearestAttackableTarget(entity, EntityHuman.class, 0, true));
         skeleton.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 2));
         this.setHelmet(new CustomItem(new ItemStack(Material.GOLD_HELMET)).setUnbreakable(true).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 10).addEnchant(Enchantment.PROTECTION_FIRE, 5).build());
         this.setChestplate(new CustomItem(new ItemStack(Material.GOLD_CHESTPLATE)).setUnbreakable(true).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 10).build());
@@ -149,7 +149,7 @@ implements GuardBoss {
 
     @Override
     public String getCustomName() {
-        return ChatColor.DARK_PURPLE.toString() + (Object)ChatColor.BOLD + "Intergalactic Marksman";
+        return ChatColor.DARK_PURPLE.toString() +ChatColor.BOLD + "Intergalactic Marksman";
     }
 
     @Override

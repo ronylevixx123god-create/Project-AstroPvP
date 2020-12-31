@@ -47,37 +47,7 @@ import java.util.Random;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.cosmicbosses.struct.Phase;
 import me.ifamasssxd.cosmicbosses.utils.ReflectionUtils;
-import net.minecraft.server.v1_8_R3.Block;
-import net.minecraft.server.v1_8_R3.Blocks;
-import net.minecraft.server.v1_8_R3.DamageSource;
-import net.minecraft.server.v1_8_R3.Entity;
-import net.minecraft.server.v1_8_R3.EntityCreature;
-import net.minecraft.server.v1_8_R3.EntityHuman;
-import net.minecraft.server.v1_8_R3.EntityInsentient;
-import net.minecraft.server.v1_8_R3.EntityLiving;
-import net.minecraft.server.v1_8_R3.EntityMonster;
-import net.minecraft.server.v1_8_R3.EntityPlayer;
-import net.minecraft.server.v1_8_R3.EntityWither;
-import net.minecraft.server.v1_8_R3.EntityWitherSkull;
-import net.minecraft.server.v1_8_R3.EnumDifficulty;
-import net.minecraft.server.v1_8_R3.EnumMonsterType;
-import net.minecraft.server.v1_8_R3.GenericAttributes;
-import net.minecraft.server.v1_8_R3.IEntitySelector;
-import net.minecraft.server.v1_8_R3.IRangedEntity;
-import net.minecraft.server.v1_8_R3.Material;
-import net.minecraft.server.v1_8_R3.MathHelper;
-import net.minecraft.server.v1_8_R3.MobEffect;
-import net.minecraft.server.v1_8_R3.NBTTagCompound;
-import net.minecraft.server.v1_8_R3.Packet;
-import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
-import net.minecraft.server.v1_8_R3.PathfinderGoal;
-import net.minecraft.server.v1_8_R3.PathfinderGoalFloat;
-import net.minecraft.server.v1_8_R3.PathfinderGoalHurtByTarget;
-import net.minecraft.server.v1_8_R3.PathfinderGoalLookAtPlayer;
-import net.minecraft.server.v1_8_R3.PathfinderGoalNearestAttackableTarget;
-import net.minecraft.server.v1_8_R3.PathfinderGoalRandomLookaround;
-import net.minecraft.server.v1_8_R3.World;
-import net.minecraft.server.v1_8_R3.WorldServer;
+import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.craftbukkit.v1_8_R3.event.CraftEventFactory;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
@@ -101,10 +71,10 @@ implements IRangedEntity {
 
     protected void c() {
         super.c();
-        this.datawatcher.a(17, (Object)new Integer(0));
-        this.datawatcher.a(18, (Object)new Integer(0));
-        this.datawatcher.a(19, (Object)new Integer(0));
-        this.datawatcher.a(20, (Object)new Integer(0));
+        this.datawatcher.a(17, 0);
+        this.datawatcher.a(18, 0);
+        this.datawatcher.a(19, 0);
+        this.datawatcher.a(20, 0);
     }
 
     public void b(NBTTagCompound nbttagcompound) {
@@ -245,14 +215,14 @@ implements IRangedEntity {
             double d9 = this.v(j);
             double d10 = this.w(j);
             if (!this.isInvisible()) {
-                this.world.addParticle("smoke", d8 + this.random.nextGaussian() * (double)0.3f, d9 + this.random.nextGaussian() * (double)0.3f, d10 + this.random.nextGaussian() * (double)0.3f, 0.0, 0.0, 0.0);
+                this.world.addParticle(EnumParticle.valueOf("smoke"), d8 + this.random.nextGaussian() * (double)0.3f, d9 + this.random.nextGaussian() * (double)0.3f, d10 + this.random.nextGaussian() * (double)0.3f, 0.0, 0.0, 0.0);
             }
             if (!flag || this.world.random.nextInt(4) != 0) continue;
-            this.world.addParticle("mobSpell", d8 + this.random.nextGaussian() * (double)0.3f, d9 + this.random.nextGaussian() * (double)0.3f, d10 + this.random.nextGaussian() * (double)0.3f, (double)0.7f, (double)0.7f, 0.5);
+            this.world.addParticle(EnumParticle.valueOf("mobSpell"), d8 + this.random.nextGaussian() * (double)0.3f, d9 + this.random.nextGaussian() * (double)0.3f, d10 + this.random.nextGaussian() * (double)0.3f, (double)0.7f, (double)0.7f, 0.5);
         }
         if (this.ca() > 0) {
             for (j = 0; j < 3; ++j) {
-                this.world.addParticle("mobSpell", this.locX + this.random.nextGaussian() * 1.0, this.locY + (double)(this.random.nextFloat() * 3.3f), this.locZ + this.random.nextGaussian() * 1.0, (double)0.7f, (double)0.7f, (double)0.9f);
+                this.world.addParticle(EnumParticle.valueOf("mobSpell"), this.locX + this.random.nextGaussian() * 1.0, this.locY + (double)(this.random.nextFloat() * 3.3f), this.locZ + this.random.nextGaussian() * 1.0, (double)0.7f, (double)0.7f, (double)0.9f);
             }
         }
     }
@@ -320,7 +290,7 @@ implements IRangedEntity {
                     this.b(witherTargetId, 0);
                     continue;
                 }
-                List list = this.world.a(EntityHuman.class, this.boundingBox.grow(50.0, 8.0, 50.0), (IEntitySelector)ReflectionUtils.getObject(EntityWither.class, (Object)this, "bw"));
+                List list = this.world.a(EntityHuman.class, this.getBoundingBox().grow(50.0, 8.0, 50.0), (IEntitySelector)ReflectionUtils.getObject(EntityWither.class, (Object)this, "bw"));
                 int targetsFound = 0;
                 for (int i1 = 0; i1 < 10 && !list.isEmpty(); ++i1) {
                     EntityLiving entityliving = (EntityLiving)list.get(this.random.nextInt(list.size()));

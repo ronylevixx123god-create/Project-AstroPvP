@@ -29,7 +29,7 @@ public class ItemBuilder {
     }
 
     public static ItemStack createSkull(String owner, String name, String ... lore) {
-        ItemStack is = new ItemStack(Material.SKULL_ITEM, 1, 3);
+        ItemStack is = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
         SkullMeta sm = (SkullMeta)is.getItemMeta();
         sm.setOwner(owner);
         sm.setDisplayName(name);

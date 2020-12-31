@@ -60,6 +60,7 @@ import me.ifamasssxd.cosmicbosses.utils.CustomItem;
 import me.ifamasssxd.cosmicbosses.utils.ItemBuilder;
 import net.minecraft.server.v1_8_R3.Entity;
 import net.minecraft.server.v1_8_R3.EntityHorse;
+import net.minecraft.server.v1_8_R3.EntitySkeleton;
 import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -173,7 +174,7 @@ extends Boss {
 
     @Override
     public void onUpdate() {
-        EntityHorse insent;
+        EntitySkeleton insent;
         Creature boss;
         ++this.loops;
         LivingEntity entity = this.getEntity();

@@ -182,7 +182,7 @@ implements GuardBoss {
         this.setBoots(new CustomItem(new ItemStack(Material.DIAMOND_BOOTS)).setUnbreakable(true).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2).build());
         ((CraftLivingEntity)skeleton).getHandle().getAttributeInstance(GenericAttributes.d).setValue((double)0.43f);
         Horse horse = (Horse)this.spawnMinion(EntityType.HORSE, skeleton.getLocation());
-        this.horseEntity = new WeakReference<Horse>(horse);
+        this.horseEntity = new WeakReference<>(horse);
         EntityHorse entHorse = ((CraftHorse)horse).getHandle();
         entHorse.getAttributeInstance(GenericAttributes.d).setValue(entHorse.getAttributeInstance(GenericAttributes.d).getValue() * (double)1.19f);
         horse.setMetadata("horse", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), (Object)""));

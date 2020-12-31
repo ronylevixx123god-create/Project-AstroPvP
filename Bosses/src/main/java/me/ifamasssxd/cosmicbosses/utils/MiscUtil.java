@@ -13,6 +13,7 @@ import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
 import net.minecraft.server.v1_8_R3.Enchantment;
 import org.bukkit.ChatColor;
@@ -61,8 +62,8 @@ public class MiscUtil {
         String et_name = b.custom_name.split(" ")[b.custom_name.split(" ").length - 1];
         is.setDurability(MiscUtil.getMobID(et_name));
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName((Object)((Object)cc) + "Spawn " + b.custom_name);
-        im.setLore(new ArrayList<String>(Arrays.asList(ChatColor.GRAY.toString() + (Object)((Object)ChatColor.ITALIC) + "Be careful where you put this.")));
+        im.setDisplayName(cc + "Spawn " + b.custom_name);
+        im.setLore(new ArrayList<>(Collections.singletonList(ChatColor.GRAY.toString() + ChatColor.ITALIC + "Be careful where you put this.")));
         is.setItemMeta(im);
         return is;
     }
@@ -89,7 +90,7 @@ public class MiscUtil {
     }
 
     public static ItemStack getPlayerHead(String playerName) {
-        ItemStack i = new ItemStack(Material.SKULL_ITEM, 1, 3);
+        ItemStack i = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
         SkullMeta sm = (SkullMeta)i.getItemMeta();
         sm.setOwner(playerName);
         i.setItemMeta(sm);
@@ -112,11 +113,11 @@ public class MiscUtil {
         ItemStack weapon = pl.getItemInHand();
         float damage_mod = 0.0f;
         if (weapon != null) {
-            if (weapon.getType() != Material.BOW && weapon.getEnchantments().containsKey((Object) Enchantment.DAMAGE_ALL)) {
-                damage_mod = (float)weapon.getEnchantments().get((Object)Enchantment.DAMAGE_ALL).intValue() * 0.625f;
+            if (weapon.getType() != Material.BOW && weapon.getEnchantments().containsKey(Enchantment.DAMAGE_ALL)) {
+                damage_mod = (float) weapon.getEnchantments().get(Enchantment.DAMAGE_ALL) * 0.625f;
             }
-            if (weapon.getType() == Material.BOW && weapon.getEnchantments().containsKey((Object)Enchantment.ARROW_DAMAGE)) {
-                damage_mod = 0.25f * ((float)weapon.getEnchantments().get((Object)Enchantment.ARROW_DAMAGE).intValue() + 1.0f);
+            if (weapon.getType() == Material.BOW && weapon.getEnchantments().containsKey(Enchantment.ARROW_DAMAGE)) {
+                damage_mod = 0.25f * ((float) weapon.getEnchantments().get(Enchantment.ARROW_DAMAGE) + 1.0f);
             }
         }
         return damage_mod;

@@ -36,7 +36,7 @@ extends PathfinderGoalBossArrowAttack {
 
     @Override
     public void e() {
-        double d0 = this.a.e(this.c.locX, this.c.boundingBox.b, this.c.locZ);
+        double d0 = this.a.e(this.c.locX, this.c.getBoundingBox().b, this.c.locZ);
         boolean flag = this.a.getEntitySenses().canSee((Entity)this.c);
         this.f = flag ? ++this.f : 0;
         if (d0 <= (double)this.j && this.f >= 20) {

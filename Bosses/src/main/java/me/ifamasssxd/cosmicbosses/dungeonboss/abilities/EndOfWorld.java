@@ -18,7 +18,7 @@ import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonAbility;
 import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijki;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.cosmicbosses.utils.BossUtils;
-import net.citizensnpcs.npc.entity.EntityHumanNPC;
+import net.citizensnpcs.nms.v1_8_R3.entity.EntityHumanNPC;
 import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

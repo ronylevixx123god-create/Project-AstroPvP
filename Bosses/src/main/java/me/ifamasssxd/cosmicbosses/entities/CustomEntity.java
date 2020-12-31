@@ -61,7 +61,6 @@ public enum CustomEntity {
     WITHER("Wither", 64, EntityType.WITHER, EntityWither.class, WitherBoss.class),
     ABOMINATION_ZOMBIE("ZombieAbomination", EntityType.ZOMBIE.getTypeId(), EntityType.ZOMBIE, EntityZombie.class, EvilAbominationEntity.class),
     ENDERMAN("Endermans", EntityType.ENDERMAN.getTypeId(), EntityType.ENDERMAN, EntityEnderman.class, SoulReaperEnderman.class),
-    SNOWMAN("HolidaySpirit", EntityType.SNOWMAN.getTypeId(), EntityType.SNOWMAN, EntitySnowman.class, HolidaySpiritEntity.class),
     DUNGEON_YIJKI("DungeonYijki", EntityType.WITHER.getTypeId(), EntityType.WITHER, EntityWither.class, DungeonYijkiEntity.class),
     DUNGEON_MOTHER_OF_YIJKI("MotherOfYijki", EntityType.WITHER.getTypeId(), EntityType.WITHER, EntityWither.class, MotherOfYijkiEntity.class),
     DUNGEON_HEALING_BLAZE("DungeonBlaze", EntityType.BLAZE.getTypeId(), EntityType.BLAZE, EntityBlaze.class, HealingBlazeEntity.class),
@@ -69,8 +68,6 @@ public enum CustomEntity {
     DUNGEON_DISCIPEL("DungeonDisciple", EntityType.SKELETON.getTypeId(), EntityType.SKELETON, EntitySkeleton.class, YijkiDiscipleEntity.class),
     DUNGEON_BLAZE("DeathCurseBlaze", EntityType.BLAZE.getTypeId(), EntityType.BLAZE, EntityBlaze.class, DeathCurseBlaze.class),
     DUNGEON_YIJKI_RUNNER("DungeonYijkiRunner", EntityType.WITHER.getTypeId(), EntityType.WITHER, EntityWither.class, YijkiRunnerEntity.class),
-    END_DRAGON("EndDragon", EntityType.ENDER_DRAGON.getTypeId(), EntityType.ENDER_DRAGON, EntityEnderDragon.class, EndDragonEntity.class),
-    BATTLEFIELD_SNOW("ChristmasSpirit", EntityType.SNOWMAN.getTypeId(), EntityType.SNOWMAN, EntitySnowman.class, BattlefieldSnowmanEntity.class);
 
     private String name;
     private int id;

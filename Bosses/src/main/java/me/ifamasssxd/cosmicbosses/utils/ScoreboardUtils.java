@@ -24,7 +24,6 @@ import java.util.HashMap;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
-import me.ifamasssxd.cosmicbosses.bosses.dragon.EndDragon;
 import me.ifamasssxd.cosmicbosses.bosses.yijki.Yijki;
 import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijki;
 import me.ifamasssxd.cosmicbosses.dungeonboss.abilities.EndOfWorld;
@@ -63,7 +62,7 @@ public class ScoreboardUtils {
         if (sb.getObjective("boss") != null) {
             sb.getObjective("boss").unregister();
         }
-        p.removeMetadata("boss_scoreboard", (Plugin)CosmicBosses.getInstance());
+        p.removeMetadata("boss_scoreboard", CosmicBosses.getInstance());
         wrappers.remove(p.getUniqueId());
     }
 
@@ -110,37 +109,28 @@ public class ScoreboardUtils {
             MotherOfYijki moy;
             EndOfWorld eowAbility;
             String name;
-            DungeonYijki dungeonYijki = (DungeonYijki)boss;
-            wrapper.setScore(8, (Object)ChatColor.AQUA + ChatColor.BOLD.toString() + "Ability");
+            DungeonYijki dungeonYijki = (DungeonYijki) boss;
+            wrapper.setScore(8, (Object) ChatColor.AQUA + ChatColor.BOLD.toString() + "Ability");
             String string = name = dungeonYijki.getActiveAbility() != null ? dungeonYijki.getActiveAbility().getAbilityName() : "None";
             if (name.length() > 14) {
                 name = name.substring(0, 14);
             }
-            wrapper.setScore(7, (Object)ChatColor.AQUA + name);
+            wrapper.setScore(7, (Object) ChatColor.AQUA + name);
             wrapper.setScore(6, ChatColor.BLUE.toString());
             Yijki.WitherPhase phase = Yijki.WitherPhase.getPhase(boss.getPhase());
-            wrapper.setScore(5, (Object)ChatColor.GREEN + ChatColor.BOLD.toString() + "Weakness");
+            wrapper.setScore(5, (Object) ChatColor.GREEN + ChatColor.BOLD.toString() + "Weakness");
             String phaseName = phase.getPhaseName();
-            if (dungeonYijki instanceof MotherOfYijki && ((MotherOfYijki)dungeonYijki).inDifferentDimension) {
+            if (dungeonYijki instanceof MotherOfYijki && ((MotherOfYijki) dungeonYijki).inDifferentDimension) {
                 phaseName = "Invincible";
             }
-            wrapper.setScore(4, (Object)ChatColor.GREEN + phaseName);
+            wrapper.setScore(4, (Object) ChatColor.GREEN + phaseName);
             wrapper.setScore(3, ChatColor.GRAY.toString());
-            if (boss instanceof MotherOfYijki && (eowAbility = (moy = (MotherOfYijki)boss).getEndOfWorldAbility()) != null && eowAbility.getSecondsCounted() > 0) {
+            if (boss instanceof MotherOfYijki && (eowAbility = (moy = (MotherOfYijki) boss).getEndOfWorldAbility()) != null && eowAbility.getSecondsCounted() > 0) {
                 int secondsTillEnd = eowAbility.getCOUNTDOWN_TIME() - eowAbility.getSecondsCounted();
                 showDamageDealt = false;
                 wrapper.setScore(2, CC.RedB + "World Ending");
-                wrapper.setScore(1, CC.White + TimeUtils.formatSeconds((long)secondsTillEnd));
+                wrapper.setScore(1, CC.White + TimeUtils.formatSeconds((long) secondsTillEnd));
             }
-        } else if (boss instanceof EndDragon && boss.isBossSpawned()) {
-            wrapper.setScore(8, CC.RedB + "Distance");
-            if (boss.getEntity().getLocation().getWorld().getName().equals(p.getWorld().getName())) {
-                double distanceFromBoss = boss.getEntity().getLocation().distance(p.getLocation());
-                wrapper.setScore(7, CC.White + " " + NumberUtils.formatMoney((double)distanceFromBoss) + "m");
-            } else {
-                wrapper.setScore(7, CC.White + "/warp end");
-            }
-            wrapper.setScore(6, ChatColor.BLUE.toString());
         }
         Integer damage = (Integer)boss.getDamageTracker().get(p.getUniqueId());
         if (damage != null && damage > 0 && showDamageDealt) {

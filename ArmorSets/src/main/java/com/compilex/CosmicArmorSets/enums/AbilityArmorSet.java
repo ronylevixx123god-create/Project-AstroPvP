@@ -25,11 +25,13 @@ import com.compilex.CosmicArmorSets.enums.abilityarmorsets.ArchitectAbilitySet;
 import com.compilex.CosmicArmorSets.enums.abilityarmorsets.DeathKnightAbilitySet;
 import com.compilex.CosmicArmorSets.enums.abilityarmorsets.GhostAbilitySet;
 import com.compilex.CosmicArmorSets.enums.abilityarmorsets.NecromancerAbilitySet;
+import com.cosmicpvp.cosmicutils.itembuilder.CustomItemBuilder;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagListBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import javafx.util.Pair;
 import net.minecraft.server.v1_8_R3.NBTBase;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
@@ -143,7 +145,7 @@ public enum AbilityArmorSet {
 					applied.add(set2);
 				}
 			}
-			return new Pair(applied, (Object) success);
+			return new Pair(applied, success);
 		}
 		return null;
 	}
@@ -167,7 +169,7 @@ public enum AbilityArmorSet {
 	}
 
 	public ItemStack createMasteryShard(boolean applyIID) {
-		ItemStack item = new NBTWrapper(new ItemBuilder(this.masteryShardItem.getItemType(), String.valueOf(String.valueOf(CC.GoldB)) + "Mastery Shard " + CC.Gold + "(" + this.displayName + CC.Gold + ")", new String[]{String.valueOf(String.valueOf(CC.Gray)) + "Apply to an enchantment book", String.valueOf(String.valueOf(CC.Gray)) + "to imbue it with the power to", String.valueOf(String.valueOf(CC.Gray)) + "affect " + this.displayName + CC.Gray + " Mastery Kit items."}).data((short) this.masteryShardItem.getData()).build()).setString("cosmicType", "MASTERY_SHARD").setNBTBase("cosmicData", (NBTBase) new NBTTagCompoundBuilder().setString("masteryShard", this.name()).get()).build();
+		ItemStack item = new NBTWrapper(new ItemBuilder(this.masteryShardItem.getItemType(), CC.GoldB + "Mastery Shard " + CC.Gold + "(" + this.displayName + CC.Gold + ")", CC.Gray + "Apply to an enchantment book", String.valueOf(String.valueOf(CC.Gray)) + "to imbue it with the power to", String.valueOf(String.valueOf(CC.Gray)) + "affect " + this.displayName + CC.Gray + " Mastery Kit items.").data((short) this.masteryShardItem.getData()).build()).setString("cosmicType", "MASTERY_SHARD").setNBTBase("cosmicData", (NBTBase) new NBTTagCompoundBuilder().setString("masteryShard", this.name()).get()).build();
 		if (applyIID && ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
 			item = ItemID.assignItemID(null, (ItemStack) item);
 		}
@@ -177,7 +179,7 @@ public enum AbilityArmorSet {
 	public NBTWrapper applyAbilityNBT(NBTWrapper wrapper) {
 		NBTTagCompoundBuilder builder = wrapper.getCompoundOrCreate("cosmicData");
 		builder.setString("abilitySet", this.name());
-		builder.setShort("noEnchants", Short.valueOf((short) 1));
+		builder.setShort("noEnchants", (short) 1);
 		wrapper.setNBTBase("cosmicData", (NBTBase) builder.get());
 		return wrapper;
 	}

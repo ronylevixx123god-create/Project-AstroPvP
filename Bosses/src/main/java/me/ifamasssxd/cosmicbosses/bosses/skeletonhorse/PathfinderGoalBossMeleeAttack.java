@@ -65,7 +65,7 @@ extends PathfinderGoalMeleeAttack {
         if (this.b.bT() == null || this.b.bT() != null && !this.b.bT().isAlive()) {
             CraftEventFactory.callEntityTargetEvent((Entity)this.b, null, (EntityTargetEvent.TargetReason)reason);
         }
-        return entityliving == null ? false : (!entityliving.isAlive() ? false : (!this.e ? !this.b.getNavigation().g() : this.b.b(MathHelper.floor((double)entityliving.locX), MathHelper.floor((double)entityliving.locY), MathHelper.floor((double)entityliving.locZ))));
+        return entityliving != null && (!entityliving.isAlive() ? false : (!this.e ? !this.b.getNavigation().g() : this.b.b(MathHelper.floor(entityliving.locX), MathHelper.floor(entityliving.locY), MathHelper.floor(entityliving.locZ))));
     }
 
     public void c() {

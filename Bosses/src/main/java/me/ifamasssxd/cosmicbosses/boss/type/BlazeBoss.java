@@ -3,7 +3,6 @@
  */
 package me.ifamasssxd.cosmicbosses.boss.type;
 
-import com.cosmicpvp.CosmicBossEggs.CosmicBossEggsPlugin;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import me.ifamasssxd.cosmicbosses.utils.ParticleEffect;
 import java.util.HashSet;
@@ -95,16 +94,12 @@ extends me.ifamasssxd.cosmicbosses.boss.type.Boss {
     }
 
     private void playFireEffect(final Location l, final int c) {
-        CosmicBossEggsPlugin.getPlugin().getServer().getScheduler().runTaskAsynchronously((Plugin)CosmicBosses.getInstance(), new Runnable(){
-
-            @Override
-            public void run() {
-                try {
-                    ParticleEffect.sendToLocation(ParticleEffect.FLAME, l, new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.25f, c);
-                }
-                catch (Exception err) {
-                    err.printStackTrace();
-                }
+        CosmicBosses.getInstance().getServer().getScheduler().runTaskAsynchronously(CosmicBosses.getInstance(), () -> {
+            try {
+                ParticleEffect.sendToLocation(ParticleEffect.FLAME, l, new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.25f, c);
+            }
+            catch (Exception err) {
+                err.printStackTrace();
             }
         });
     }

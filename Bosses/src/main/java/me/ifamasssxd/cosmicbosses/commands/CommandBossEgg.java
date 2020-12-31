@@ -88,7 +88,7 @@ public class CommandBossEgg implements CommandExecutor {
             }
         }
         if (cmd.getName().equalsIgnoreCase("cbe")) {
-            if (sender instanceof Player && !((Player)sender).isOp()) {
+            if (sender instanceof Player && !sender.isOp()) {
                 return true;
             }
             if (args.length == 1) {
