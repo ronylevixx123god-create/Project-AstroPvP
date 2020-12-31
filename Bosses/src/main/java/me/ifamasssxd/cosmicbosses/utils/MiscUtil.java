@@ -89,7 +89,7 @@ public class MiscUtil {
     }
 
     public static ItemStack getPlayerHead(String playerName) {
-        ItemStack i = new ItemStack(Material.SKULL_ITEM, 1, 3);
+        ItemStack i = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
         SkullMeta sm = (SkullMeta)i.getItemMeta();
         sm.setOwner(playerName);
         i.setItemMeta(sm);

@@ -25,7 +25,6 @@
 package me.ifamasssxd.cosmicbosses.entities;
 
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
-import me.ifamasssxd.cosmicbosses.bosses.EntityHolidayGolem;
 import me.ifamasssxd.cosmicbosses.bosses.holidayspirit.HolidaySpirit;
 import me.ifamasssxd.cosmicbosses.bosses.holidayspirit.PathfinderGoalArrowAttackSnowman;
 import me.ifamasssxd.cosmicbosses.struct.blockmanager.BlockChangeManager;

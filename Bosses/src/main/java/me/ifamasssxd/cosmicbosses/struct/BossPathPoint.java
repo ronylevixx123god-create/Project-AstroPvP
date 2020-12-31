@@ -20,14 +20,14 @@ extends PathPoint {
     private final Field h;
     private BossPathPoint previous;
 
-    public BossPathPoint(int i, int i1, int i2) {
+    public BossPathPoint(int i, int i1, int i2) throws NoSuchFieldException {
         super(i, i1, i2);
-        Class<?> superClass = ((Object)((Object)this)).getClass().getSuperclass();
-        this.d = ReflectionUtils.getField(superClass, (String)"d");
-        this.e = ReflectionUtils.getField(superClass, (String)"e");
-        this.f = ReflectionUtils.getField(superClass, (String)"f");
-        this.g = ReflectionUtils.getField(superClass, (String)"g");
-        this.h = ReflectionUtils.getField(superClass, (String)"h");
+        Class<?> superClass = ((Object) this).getClass().getSuperclass();
+        this.d = ReflectionUtils.getField(superClass, "d");
+        this.e = ReflectionUtils.getField(superClass, "e");
+        this.f = ReflectionUtils.getField(superClass, "f");
+        this.g = ReflectionUtils.getField(superClass, "g");
+        this.h = ReflectionUtils.getField(superClass, "h");
     }
 
     public int getX() {
@@ -82,7 +82,7 @@ extends PathPoint {
 
     public float getDistanceToNext() {
         try {
-            return ((Float)this.f.get((Object)this)).floatValue();
+            return ((Float)this.f.get(this)).floatValue();
         }
         catch (IllegalAccessException e1) {
             e1.printStackTrace();
@@ -92,7 +92,7 @@ extends PathPoint {
 
     public void setDistanceToNext(float distance) {
         try {
-            this.f.set((Object)this, Float.valueOf(distance));
+            this.f.set(this, Float.valueOf(distance));
         }
         catch (IllegalAccessException e1) {
             e1.printStackTrace();
@@ -101,7 +101,7 @@ extends PathPoint {
 
     public float getDistanceToTarget() {
         try {
-            return ((Float)this.g.get((Object)this)).floatValue();
+            return ((Float)this.g.get(this)).floatValue();
         }
         catch (IllegalAccessException e1) {
             e1.printStackTrace();

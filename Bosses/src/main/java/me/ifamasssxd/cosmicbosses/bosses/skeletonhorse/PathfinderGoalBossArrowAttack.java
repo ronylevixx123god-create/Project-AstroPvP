@@ -72,7 +72,7 @@ extends PathfinderGoalArrowAttack {
     }
 
     public void e() {
-        double d0 = this.a.e(this.c.locX, this.c.boundingBox.b, this.c.locZ);
+        double d0 = this.a.e(this.c.locX, this.c.getBoundingBox().b, this.c.locZ);
         boolean flag = this.a.getEntitySenses().canSee((Entity)this.c);
         this.f = flag ? ++this.f : 0;
         if (d0 <= (double)this.j && this.f >= 20) {
@@ -86,7 +86,7 @@ extends PathfinderGoalArrowAttack {
             if (d0 > (double)this.j || !flag) {
                 return;
             }
-            float f1 = f = MathHelper.sqrt((double)d0) / this.i;
+            float f1 = f = MathHelper.sqrt(d0) / this.i;
             if (f < 0.1f) {
                 f1 = 0.1f;
             }

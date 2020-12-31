@@ -1,17 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.server.v1_7_R4.Entity
- *  net.minecraft.server.v1_7_R4.EntityCreature
- *  net.minecraft.server.v1_7_R4.EntityLiving
- *  net.minecraft.server.v1_7_R4.MathHelper
- *  net.minecraft.server.v1_7_R4.PathEntity
- *  net.minecraft.server.v1_7_R4.PathfinderGoalMeleeAttack
- *  net.minecraft.server.v1_7_R4.World
- *  org.bukkit.craftbukkit.v1_7_R4.event.CraftEventFactory
- *  org.bukkit.event.entity.EntityTargetEvent$TargetReason
- */
 package me.ifamasssxd.cosmicbosses.bosses.skeletonhorse;
 
 import net.minecraft.server.v1_8_R3.Entity;

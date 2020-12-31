@@ -113,9 +113,9 @@ extends DungeonAbility {
             ((DungeonYijki)this.boss).getBossEntity().getNavigation().h();
             this.boss.getEntity().teleport(((DungeonYijki)this.boss).getRandomSpawnLocation());
             ((DungeonYijki)this.boss).getBossEntity().getNavigation().h();
-            Bukkit.getLogger().info("Teleporting Yijki back to " + (Object)this.boss.getLocation());
+            Bukkit.getLogger().info("Teleporting Yijki back to " + this.boss.getLocation());
         }
-        ParticleEffect.sendToLocation((ParticleEffect)ParticleEffect.WITCH_MAGIC, (Location)this.boss.getEntity().getLocation(), (float)1.0f, (float)1.0f, (float)1.0f, (float)0.1f, (int)50);
+        ParticleEffect.sendToLocation(ParticleEffect.WITCH_MAGIC, this.boss.getEntity().getLocation(), 1.0f, 1.0f, 1.0f, 0.1f, 50);
     }
 
     @Override
