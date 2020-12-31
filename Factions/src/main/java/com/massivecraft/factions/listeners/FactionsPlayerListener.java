@@ -318,7 +318,7 @@ public class FactionsPlayerListener
             }
         }
         if (me.getAutoClaimFor() != null) {
-            if (!CmdClaim.chunkCoordsPendingClaim.contains(event.getTo().getChunk().getX() + "," + event.getTo().getChunk().getZ())) {
+            if (!CmdClaim.chunkCoordsPendingClaim.containsKey(event.getTo().getChunk().getX() + "," + event.getTo().getChunk().getZ())) {
                 me.attemptClaimAsync(me.getAutoClaimFor(), event.getTo(), true);
                 P.p.logFactionEvent(me.getAutoClaimFor(), FLogType.CHUNK_CLAIMS, me.getNameAsync(), CC.GreenB + "CLAIMED", String.valueOf(1), new FLocation(player.getLocation()).formatXAndZ(","));
             } else {

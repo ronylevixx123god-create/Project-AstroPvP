@@ -1,19 +1,4 @@
-/*
- * Decompiled with CFR 0.145.
- *
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.google.common.collect.Lists
- *  com.google.common.collect.MapMaker
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.Chunk
- *  org.bukkit.Location
- *  org.bukkit.Material
- *  org.bukkit.World
- *  org.bukkit.command.CommandSender
- *  org.bukkit.entity.Player
- */
+
 package com.massivecraft.factions.cmd;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
@@ -32,10 +17,11 @@ import org.bukkit.entity.Player;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 
-public class CmdClaim extends FCommand {
-    public static Set<String> chunkCoordsPendingClaim = CacheBuilder.newBuilder().expireAfterWrite(1L,TimeUnit.MINUTES).build().asMap();
+public class CmdClaim extends FCommand { ;
+    public static ConcurrentMap<Object, Object> chunkCoordsPendingClaim = CacheBuilder.newBuilder().expireAfterWrite(1L,TimeUnit.MINUTES).build().asMap();
 
     Set<Material> seeThrough;
 
@@ -71,11 +57,11 @@ public class CmdClaim extends FCommand {
             }
             String chunkCoords = this.me.getLocation().getChunk().getX() + "," + this.me.getLocation().getChunk().getZ();
             if (radius < 2) {
-                if (CmdClaim.chunkCoordsPendingClaim.contains(chunkCoords)) {
+                if (CmdClaim.chunkCoordsPendingClaim.containsKey(chunkCoords)) {
                     this.msg("<b>There is already a pending /f claim on this chunk.");
                     return;
                 }
-                CmdClaim.chunkCoordsPendingClaim.add(chunkCoords);
+                chunkCoordsPendingClaim.putIfAbsent(chunkCoords, chunkCoords);
                 try {
                     if (this.fme.attemptClaimAsync(forFaction, this.me.getLocation(), true)) {
                         P.p.logFactionEvent(forFaction, FLogType.CHUNK_CLAIMS, this.fme.getNameAsync(), CC.GreenB + "CLAIMED", "1", new FLocation(this.me.getLocation()).formatXAndZ(","));
@@ -95,14 +81,17 @@ public class CmdClaim extends FCommand {
                 for (int xMod = -radius; xMod < radius; ++xMod) {
                     for (int zMod = -radius; zMod < radius; ++zMod) {
                         String ichunkCoords = centerChunk.getX() + xMod + "," + (centerChunk.getZ() + zMod);
-                        if (CmdClaim.chunkCoordsPendingClaim.contains(ichunkCoords)) {
+                        if (CmdClaim.chunkCoordsPendingClaim.containsKey(ichunkCoords)) {
                             this.msg("<b>A chunk within your radius already has a pending /f claim.");
                             return;
                         }
                         chunkCoordsToAttemptRadiusClaim.add(ichunkCoords);
                     }
                 }
-                CmdClaim.chunkCoordsPendingClaim.addAll(chunkCoordsToAttemptRadiusClaim);
+
+                for (String str : chunkCoordsToAttemptRadiusClaim) {
+                    chunkCoordsPendingClaim.put(str, str);
+                }
                 FPlayer fPlayer = this.fme;
                 Player player = this.me;
                 new SpiralTask(new FLocation(player), radius) {

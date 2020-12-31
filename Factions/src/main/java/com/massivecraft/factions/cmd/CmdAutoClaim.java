@@ -57,7 +57,7 @@ public class CmdAutoClaim
                 }
                 CmdAutoClaim.this.fme.setAutoClaimFor(forFaction);
                 CmdAutoClaim.this.msg("<i>Now auto-claiming land for <h>%s<i>.", forFaction.describeToAsync(CmdAutoClaim.this.fme));
-                if (CmdClaim.chunkCoordsPendingClaim.contains(CmdAutoClaim.this.me.getLocation().getChunk().getX() + "," + CmdAutoClaim.this.me.getLocation().getChunk().getZ())) {
+                if (CmdClaim.chunkCoordsPendingClaim.containsKey(CmdAutoClaim.this.me.getLocation().getChunk().getX() + "," + CmdAutoClaim.this.me.getLocation().getChunk().getZ())) {
                     CmdAutoClaim.this.msg("<b>There is a pending /f claim on the chunk you're standing in.");
                     return;
                 }

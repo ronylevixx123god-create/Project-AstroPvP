@@ -1,6 +1,7 @@
  package com.massivecraft.factions.cmd;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.P;
@@ -13,13 +14,14 @@ import org.bukkit.inventory.Inventory;
 
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 
 public class CmdChest extends FCommand {
-    private Map<UUID, Long> lastExecuted;
+    private Cache<Object, Object> lastExecuted;
 
     public CmdChest() {
-        this.lastExecuted = (Map<UUID, Long>) CacheBuilder.newBuilder().expireAfterWrite(1L, TimeUnit.SECONDS).build();
+        this.lastExecuted = CacheBuilder.newBuilder().expireAfterWrite(1L, TimeUnit.SECONDS).build();
         this.aliases.add("chest");
         this.errorOnToManyArgs = false;
         this.disableOnLock = true;
@@ -51,7 +53,7 @@ public class CmdChest extends FCommand {
             return;
         }
         final Player player = (Player) this.sender;
-        final Long lastExecuted = this.lastExecuted.get(player.getUniqueId());
+        final Long lastExecuted = (Long) this.lastExecuted.getIfPresent(player.getUniqueId());
         if (lastExecuted != null && lastExecuted > System.currentTimeMillis()) {
             player.sendMessage(CC.RedB + "(!) " + CC.Red + "You must wait at least 1 second before using this command again.");
             return;
