@@ -1,0 +1,27 @@
+package org.arkhamnetwork.enchantments.enchantments.armor;
+
+import org.bukkit.event.player.*;
+import org.bukkit.event.entity.*;
+import org.bukkit.entity.*;
+import org.bukkit.metadata.*;
+import org.bukkit.event.*;
+
+final class LeadershipListener implements Listener
+{
+    @EventHandler
+    public void onPlayerQuit(PlayerQuitEvent e) {
+        Leadership.Leaderships.remove(e.getPlayer().getName());
+    }
+    
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    public void onEntityDamage(EntityDamageByEntityEvent e) {
+        if (e.getDamager() instanceof Player && e.getDamager().hasMetadata("leadershipLevel")) {
+            final int level = ((Player)e.getDamager()).getMetadata("leadershipLevel").get(0).asInt();
+            final boolean koth = e.getDamager().getWorld().getName().equals("world_koth");
+            final boolean outpost = e.getDamager().getWorld().getName().startsWith("cosmic-station");
+            final double incre = Math.min(1.75, 1.0 + level * ((koth || outpost) ? 0.05 : 0.1));
+            double damage = e.getDamage(EntityDamageEvent.DamageModifier.BASE);
+            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * incre);
+        }
+    }
+}

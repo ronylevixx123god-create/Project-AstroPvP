@@ -1,0 +1,86 @@
+package org.arkhamnetwork.enchantments.enchantments.armor;
+
+import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
+import com.rit.sucy.*;
+import org.arkhamnetwork.enchantments.util.*;
+import org.bukkit.World;
+import org.bukkit.entity.Entity;
+import org.bukkit.event.entity.*;
+import org.arkhamnetwork.Arkkit.libs.*;
+import org.arkhamnetwork.enchantments.*;
+import org.bukkit.potion.*;
+import org.bukkit.plugin.*;
+import org.bukkit.entity.*;
+import org.bukkit.craftbukkit.v1_7_R4.*;
+import java.util.*;
+import org.bukkit.*;
+import net.minecraft.server.v1_7_R4.*;
+import org.bukkit.craftbukkit.v1_7_R4.entity.*;
+
+public class EnderWalker extends CustomEnchantment
+{
+    public EnderWalker() {
+        super("Ender Walker", GeneralUtil.boots, 2);
+        this.max = 5;
+        this.base = 20.0;
+        this.interval = 10.0;
+    }
+    
+    public void applyEquipEffect(final Player player, final int level) {
+        player.playSound(player.getLocation(), Sound.WITHER_HURT, 1.0f, 0.6f);
+    }
+    
+    public void applyUnequipEffect(final Player player, final int level) {
+    }
+    
+    public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
+        if (e.getCause() == EntityDamageEvent.DamageCause.WITHER || e.getCause() == EntityDamageEvent.DamageCause.POISON) {
+            e.setCancelled(true);
+            final boolean heal = Math.random() <= level * 0.15;
+            if (heal && GeneralUtil.healPlayer(player, e.getDamage(EntityDamageEvent.DamageModifier.BASE))) {
+                ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, player.getLocation().add(0.0, 1.0, 0.0), 0.8f, 40);
+            }
+            e.setDamage(0.0);
+            Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), (Runnable)new Runnable() {
+                @Override
+                public void run() {
+                    if (!player.hasPotionEffect(PotionEffectType.BLINDNESS) && !player.hasMetadata("clarityEnchant")) {
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 200, 0));
+                    }
+                }
+            }, 2L);
+            ParticleEffect.playEffect(ParticleEffect.PORTAL, player.getLocation().add(0.0, 1.0, 0.0), 0.8f, 70);
+        }
+    }
+    
+    private List<Player> getNearbyPlayers(final List<Entity> ents) {
+        final List<Player> players = new ArrayList<Player>();
+        for (final Entity e : ents) {
+            if (e instanceof Player) {
+                players.add((Player)e);
+            }
+        }
+        return players;
+    }
+    
+    public static void updateEntity(final Entity entity, final List<Player> observers) {
+        final World world = entity.getWorld();
+        final WorldServer worldServer = ((CraftWorld)world).getHandle();
+        final EntityTracker tracker = worldServer.tracker;
+        final EntityTrackerEntry entry = (EntityTrackerEntry)tracker.trackedEntities.get(entity.getEntityId());
+        final List<EntityPlayer> nmsPlayers = getNmsPlayers(observers);
+        if (entry != null) {
+            entry.trackedPlayers.removeAll(nmsPlayers);
+            entry.scanPlayers((List)nmsPlayers);
+        }
+    }
+    
+    private static List<EntityPlayer> getNmsPlayers(final List<Player> players) {
+        final List<EntityPlayer> nsmPlayers = new ArrayList<EntityPlayer>();
+        for (final Player bukkitPlayer : players) {
+            final CraftPlayer craftPlayer = (CraftPlayer)bukkitPlayer;
+            nsmPlayers.add(craftPlayer.getHandle());
+        }
+        return nsmPlayers;
+    }
+}

@@ -1,0 +1,131 @@
+package org.arkhamnetwork.enchantments.mastery;
+
+import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
+import org.arkhamnetwork.enchantments.util.*;
+import java.util.concurrent.*;
+import org.arkhamnetwork.enchantments.*;
+import org.arkhamnetwork.enchantments.util.GeneralUtil;
+import org.bukkit.plugin.*;
+import org.bukkit.event.entity.*;
+import org.arkhamnetwork.enchantments.events.*;
+import com.rit.sucy.*;
+import org.arkhamnetwork.Arkkit.libs.*;
+import org.bukkit.entity.*;
+import com.cosmicpvp.cosmicutils.utils.*;
+import java.util.*;
+import org.arkhamnetwork.enchantments.listeners.*;
+import org.bukkit.*;
+import org.bukkit.event.*;
+
+public class MasteryMarkOfTheBeast extends MasteryCustomEnchantment
+{
+    private Map<UUID, Long> markedPlayers;
+    private MarkOfTheBeastListener listener;
+    
+    public MasteryMarkOfTheBeast() {
+        super("Mark of the Beast", GeneralUtil.armor, 11);
+        this.markedPlayers = new ConcurrentHashMap<UUID, Long>();
+        this.listener = new MarkOfTheBeastListener(this);
+        this.armorSet = "GHOST";
+        Bukkit.getPluginManager().registerEvents((Listener)this.listener, (Plugin)Enchantments.getInstance());
+        this.max = 6;
+        this.base = 15.0;
+    }
+    
+    public void applyDefenseEffect(final LivingEntity damagedPlayer, final LivingEntity attackerEnt, final int enchantLevel, final EntityDamageEvent event) {
+        if (!(damagedPlayer instanceof Player) || !(attackerEnt instanceof Player)) {
+            return;
+        }
+        final Player damaged = (Player)damagedPlayer;
+        final Player attacker = (Player)attackerEnt;
+        if (enchantLevel * 0.005 >= Math.random()) {
+            if (GeneralUtil.isAlly(damaged, attacker)) {
+                return;
+            }
+            if (!new CustomEnchantProcOnEntityEvent((LivingEntity)damaged, (LivingEntity)attacker, (Event)event, this, enchantLevel).callEvent()) {
+                return;
+            }
+            final double seconds = enchantLevel / 3 + 2;
+            final UUID uuid = attacker.getUniqueId();
+            if (!this.markedPlayers.containsKey(uuid)) {
+                this.markedPlayers.put(uuid, (long)(System.currentTimeMillis() + seconds * 1000.0));
+                ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, damaged.getEyeLocation(), 0.6f, 20);
+                for (final Entity entity : attacker.getNearbyEntities((double)(20 + enchantLevel * 2), (double)(20 + enchantLevel * 2), (double)(20 + enchantLevel * 2))) {
+                    if (entity instanceof Player) {
+                        ((Player)entity).sendMessage(CC.YellowB + "* MARK OF THE BEAST [" + CC.Gray + attacker.getName() + ": " + NumberUtils.formatSeconds(seconds) + "s" + CC.YellowB + "] *");
+                    }
+                }
+                attacker.sendMessage(CC.RedB + "* MARK OF THE BEAST [" + CC.Gray + NumberUtils.formatSeconds(seconds) + "s" + CC.RedB + "] *");
+                Player player = (Player) attackerEnt;
+                Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Enchantments.getInstance(), () -> {
+                    if (player.isValid()) {
+                        player.sendMessage(CC.RedB + "* MARK OFF " + CC.RedB + "*");
+                    }
+                    this.markedPlayers.remove(player);
+                }, (long)(20.0 * seconds));
+            }
+        }
+    }
+    public  void applyDefenseEffectIgnoreAntiMkit(final LivingEntity damagedPlayer, final LivingEntity attackerEnt, final int enchantLevel, final EntityDamageEvent event) {
+        if (!(damagedPlayer instanceof Player) || !(attackerEnt instanceof Player)) {
+            return;
+        }
+        final Player damaged = (Player)damagedPlayer;
+        final Player attacker = (Player)attackerEnt;
+        if (0.002 >= Math.random()) {
+            if (GeneralUtil.isAlly(damaged, attacker)) {
+                return;
+            }
+            final double seconds = enchantLevel / 3 + 2;
+            final UUID uuid = attacker.getUniqueId();
+            if (!markedPlayers.containsKey(uuid)) {
+                this.markedPlayers.put(uuid, (long)(System.currentTimeMillis() + seconds * 1000.0));
+                ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, damaged.getEyeLocation(), 0.6f, 20);
+                for (final Entity entity : attacker.getNearbyEntities((double)(20 + enchantLevel * 2), (double)(20 + enchantLevel * 2), (double)(20 + enchantLevel * 2))) {
+                    if (entity instanceof Player) {
+                        ((Player)entity).sendMessage(CC.YellowB + "* MARK OF THE BEAST [" + CC.Gray + attacker.getName() + ": " + NumberUtils.formatSeconds(seconds) + "s" + CC.YellowB + "] *");
+                    }
+                }
+                attacker.sendMessage(CC.RedB + "* MARK OF THE BEAST [" + CC.Gray + NumberUtils.formatSeconds(seconds) + "s" + CC.RedB + "] *");
+                Player player = (Player) attackerEnt;
+                Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Enchantments.getInstance(), () -> {
+                    if (player.isValid()) {
+                        player.sendMessage(CC.RedB + "* MARK OFF " + CC.RedB + "*");
+                    }
+                    this.markedPlayers.remove(player);
+                }, (long)(20.0 * seconds));
+            }
+        }
+    }
+    
+    public Map<UUID, Long> getMarkedPlayers() {
+        return this.markedPlayers;
+    }
+    
+    public MarkOfTheBeastListener getListener() {
+        return this.listener;
+    }
+    
+    class MarkOfTheBeastListener extends CustomEnchantListener<MasteryMarkOfTheBeast>
+    {
+        public MarkOfTheBeastListener(final MasteryMarkOfTheBeast enchant) {
+            super(enchant);
+        }
+        
+        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+        public void onPLayerDamage(final EntityDamageEvent event) {
+            if (!(event.getEntity() instanceof Player)) {
+                return;
+            }
+            final Player player = (Player)event.getEntity();
+            final Long expirations = ((MasteryMarkOfTheBeast)this.customEnchant).getMarkedPlayers().get(player.getUniqueId());
+            if (expirations != null && expirations > System.currentTimeMillis()) {
+                final double original = event.getDamage(EntityDamageEvent.DamageModifier.BASE);
+                event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 2.0);
+                if (original > 0.01) {
+                    player.sendMessage(CC.Red + "* MARK OF THE BEAST [2X DMG] *");
+                }
+            }
+        }
+    }
+}

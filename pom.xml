@@ -20,6 +20,7 @@
         <module>Slotbot</module>
         <module>Core</module>
         <module>Sets</module>
+        <module>Enchantments</module>
     </modules>
 
     <build>
