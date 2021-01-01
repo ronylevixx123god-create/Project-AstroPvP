@@ -28,7 +28,7 @@ public class WorldGuardUtils
             final Class<?> bukkitUtil = WorldGuardUtils.wg.getClass().getClassLoader().loadClass("com.sk89q.worldguard.bukkit.BukkitUtil");
             final Method toVector = bukkitUtil.getMethod("toVector", Block.class);
             final Vector blockVector = (Vector)toVector.invoke(null, l.getBlock());
-            final List<String> regionSet = (List<String>)WorldGuardUtils.wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs(blockVector);
+            final List<String> regionSet = WorldGuardUtils.wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs(blockVector);
             if (regionSet.size() < 1) {
                 return "";
             }

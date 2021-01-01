@@ -30,7 +30,7 @@ public class SkillSwipe extends CustomEnchantment
             if (random < chance) {
                 ExpUtils.setTotalExperience((Player)target, targetXp - amountToSteal);
                 ExpUtils.setTotalExperience((Player)user, ExpUtils.getTotalExperience((Player)user) + amountToSteal);
-                user.getWorld().spawnEntity(user.getTargetBlock((HashSet)null, 1).getLocation(), EntityType.EXPERIENCE_ORB);
+                user.getWorld().spawnEntity(user.getTargetBlock((HashSet<Byte>) null, 1).getLocation(), EntityType.EXPERIENCE_ORB);
             }
         }
     }
