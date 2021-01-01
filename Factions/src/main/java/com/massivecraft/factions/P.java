@@ -23,6 +23,12 @@
  */
 package com.massivecraft.factions;
 
+import com.conaxgames.factions.boosters.commands.CommandBooster;
+import com.conaxgames.factions.boosters.commands.CommandCheckBooster;
+import com.conaxgames.factions.boosters.listeners.BoosterListener;
+import com.conaxgames.factions.boosters.listeners.mcMMOListener;
+import com.conaxgames.factions.boosters.struct.BoosterManager;
+import com.conaxgames.factions.boosters.tasks.BoosterTask;
 import com.conaxgames.factions.utils.cmds.Command2FA;
 import com.conaxgames.factions.utils.cmds.CommandAllowTp;
 import com.conaxgames.factions.utils.cmds.CommandCTool;
@@ -97,6 +103,7 @@ public class P extends MPlugin {
     public static WorldGuardPlugin wg = null;
 
     private CosmicFlyingPlugin cosmicFlyingPlugin;
+    public BoosterManager boosterManager;
 
     public P() {
         p = this;
@@ -170,13 +177,17 @@ public class P extends MPlugin {
         getCommand("kills").setExecutor(new CmdKills());
         getCommand("deaths").setExecutor(new CmdDeaths());
 
-        // This is factions utils stuff :)
+        // TODO: THIS IS THE onEnable for all additions put into Factions.
         this.mcMMOTestUtil();
-        this.registerUtilListeners();
-        this.registerUtilCommands();
+        this.registerNewListeners();
+        this.registerNewCommands();
         this.cosmicFlyingPlugin = new CosmicFlyingPlugin();
         this.cosmicFlyingPlugin.onEnable();
-        // This is factions utils stuff :)
+
+        this.boosterManager = new BoosterManager();
+        this.boosterManager.loadActiveBoosters();
+        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, (Runnable)new BoosterTask(), 20L, 20L);
+        // TODO: THIS IS THE onEnable for all additions put into Factions.
 
        this.getBaseCommands().add(this.cmdBase);
         EssentialsFeatures.setup();
@@ -245,25 +256,33 @@ public class P extends MPlugin {
         }
     }
 
-    private void registerUtilCommands() {
+    private void registerNewCommands() throws IOException {
         this.getCommand("ctool").setExecutor(new CommandCTool());
         this.getCommand("allowtp").setExecutor(new CommandAllowTp());
         this.getCommand("2fa").setExecutor(new Command2FA());
         this.getCommand("togglesmoke").setExecutor(new CommandToggleSmoke(this));
+
+        this.getCommand("givefacbooster").setExecutor(new CommandBooster());
+        this.getCommand("booster").setExecutor(new CommandCheckBooster());
     }
 
-    private void registerUtilListeners() {
+    private void registerNewListeners() {
         this.getServer().getPluginManager().registerEvents(new RandomListener(), this);
         this.getServer().getPluginManager().registerEvents(new CreeperEggLimiter(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerFallListener(), this);
         this.getServer().getPluginManager().registerEvents(new InvalidDeathFix(), this);
         this.getServer().getPluginManager().registerEvents(new VIPCommandBlocker(), this);
         this.getServer().getPluginManager().registerEvents(new NetherMobSpawnerListener(), this);
+
+        this.getServer().getPluginManager().registerEvents((Listener)new BoosterListener(this.boosterManager), (Plugin)this);
+        if (this.getServer().getPluginManager().isPluginEnabled("mcMMO")) {
+            this.getServer().getPluginManager().registerEvents((Listener)new mcMMOListener(), (Plugin)this);
+        }
     }
 
     private void mcMMOTestUtil() {
         if (new File("plugins/mcMMO-beta.jar").exists() || new File("plugins/mcMMO.jar").exists()) {
-            Bukkit.getScheduler().runTaskLater((Plugin)this, new Runnable(){
+            Bukkit.getScheduler().runTaskLater(this, new Runnable(){
                 @Override
                 public void run() {
                     if (!Bukkit.getPluginManager().isPluginEnabled("mcMMO")) {
@@ -273,6 +292,10 @@ public class P extends MPlugin {
                 }
             }, 200L);
         }
+    }
+
+    public BoosterManager getBoosterManager() {
+        return this.boosterManager;
     }
 
     public CosmicFlyingPlugin getCosmicFlyingPlugin() {
@@ -291,6 +314,7 @@ public class P extends MPlugin {
         return new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().excludeFieldsWithModifiers(128, 64).registerTypeAdapter(LazyLocation.class, new MyLocationTypeAdapter()).registerTypeAdapter(mapFLocToStringSetType, new MapFLocToStringSetTypeAdapter());
     }
 
+    @SneakyThrows
     @Override
     public void onDisable() {
         if (this.loadSuccessful) {
@@ -310,6 +334,7 @@ public class P extends MPlugin {
         for (Player pl : Bukkit.getOnlinePlayers()) {
             pl.removeMetadata("last_enderpearl_throw", this);
         }
+        this.boosterManager.saveActiveBoosters();
         CommandToggleSmoke.saveToggles();
         if (this.AutoLeaveTask != null) {
             this.getServer().getScheduler().cancelTask(this.AutoLeaveTask);

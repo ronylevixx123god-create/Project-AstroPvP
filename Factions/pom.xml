@@ -168,13 +168,6 @@
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>factionbooster</artifactId>
-            <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/CosmicFactionBoosters.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
             <artifactId>crate</artifactId>
             <version>0.1</version>
             <scope>system</scope>
