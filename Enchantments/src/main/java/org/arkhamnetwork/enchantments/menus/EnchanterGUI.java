@@ -30,13 +30,13 @@ public class EnchanterGUI extends CosmicGUI {
             int xpPrice = (int)rarity.getPrice();
             String realPriceString = NumberUtils.formatMoney(rarity.getPrice());
             int adjustedPrice = capsInfernal ? (int)(xpPrice * 0.9D) : xpPrice;
-            setItem(index++, (new ItemBuilder(Material.STAINED_GLASS_PANE, rarity.getColor() + CC.Bold + rarity.getName() + " Enchantment" + CC.Gray + " (Right Click)", new String[] { CC.Gray + "Examine to receive a random", rarity
+            setItem(index++, (new ItemBuilder(Material.STAINED_GLASS_PANE, rarity.getColor() + CC.Bold + rarity.getName() + " Enchantment" + CC.Gray + " (Right Click)", CC.Gray + "Examine to receive a random", rarity
 
                     .getColor() + rarity.getName().toLowerCase() + CC.Gray + " enchantment book.", "", CC.Gray + "Use " + rarity
 
                     .getColor() + "/help enchants " + rarity.getName().toLowerCase() + CC.Gray + " to view a list", CC.Gray + "of possible enchantments you could unlock!", "", CC.AquaB + "COST " + CC.White + (capsInfernal ? (CC.White + CC.Strike + realPriceString + CC.White + " -> " + CC.Aqua +
 
-                    NumberUtils.formatMoney(adjustedPrice) + CC.White + " EXP " + CC.Gray + "(Infernal Stronghold)") : (realPriceString + " EXP")) })).data(
+                    NumberUtils.formatMoney(adjustedPrice) + CC.White + " EXP " + CC.Gray + "(Infernal Stronghold)") : (realPriceString + " EXP")))).data(
                     (short)rarity.getPaneColor().getWoolData()).build(), () -> {
                 int playerXp = ExpUtils.getTotalExperience(this.player);
                 int price = (int)rarity.getPrice();
@@ -54,7 +54,7 @@ public class EnchanterGUI extends CosmicGUI {
                 }
                 ExpUtils.setTotalExperience(this.player, playerXp - newAdjustedPrice);
                 this.player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "- " + NumberUtils.formatMoney(newAdjustedPrice) + " xp");
-                this.player.getInventory().addItem(new ItemStack[] { TieredEnchantments.getMysteryEnchantmentBook(rarity.getTier()) });
+                this.player.getInventory().addItem(TieredEnchantments.getMysteryEnchantmentBook(rarity.getTier()));
                 this.player.playSound(this.player.getLocation(), Sound.VILLAGER_HAGGLE, 1.0F, 0.44F);
                 Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), "contest add " + this.player.getName() + " enchanterXP " + newAdjustedPrice);
                 if (Bukkit.getPluginManager().isPluginEnabled("CosmicFactionQuests"))
@@ -63,7 +63,7 @@ public class EnchanterGUI extends CosmicGUI {
                     } else if (rarity.getTier() == 4) {
                         Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), "fquests add ULTIMATE_ENCHANTER " + this.player.getName());
                     }
-                Bukkit.getPluginManager().callEvent((Event)new CustomCosmicPlayerEvent(this.player, "ENCHANTER_BUY", new Object[] { rarity.name(), Integer.valueOf(newAdjustedPrice) }));
+                Bukkit.getPluginManager().callEvent((Event)new CustomCosmicPlayerEvent(this.player, "ENCHANTER_BUY", new Object[] { rarity.name(), newAdjustedPrice}));
             });
         }
     }

@@ -1,0 +1,6 @@
+name: AstroBackpacksAddon
+main: me.astropvp.AstroBackpacks
+version: 1.0
+author: MattHawkk
+commands:
+  givebackpack:

@@ -1,8 +1,8 @@
 package org.arkhamnetwork.enchantments.util;
 
+import net.minecraft.server.v1_8_R3.Packet;
 import org.bukkit.*;
 import org.bukkit.entity.*;
-import net.minecraft.server.v1_7_R4.*;
 
 final class ParticleEffectPacket
 {

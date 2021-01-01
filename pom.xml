@@ -21,6 +21,7 @@
         <module>Core</module>
         <module>Sets</module>
         <module>Enchantments</module>
+        <module>Backpacks</module>
     </modules>
 
     <build>

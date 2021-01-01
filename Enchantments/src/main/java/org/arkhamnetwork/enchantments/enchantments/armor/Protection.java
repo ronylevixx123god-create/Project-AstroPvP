@@ -5,7 +5,6 @@ import com.rit.sucy.*;
 import org.arkhamnetwork.enchantments.util.*;
 import com.google.common.collect.*;
 import org.bukkit.scheduler.*;
-import org.zencode.shortninja.staffplus.*;
 import com.massivecraft.factions.*;
 import org.bukkit.*;
 import org.bukkit.entity.*;

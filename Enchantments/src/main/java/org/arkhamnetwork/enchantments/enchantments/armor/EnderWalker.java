@@ -2,20 +2,22 @@ package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.rit.sucy.*;
+import net.minecraft.server.v1_8_R3.EntityPlayer;
+import net.minecraft.server.v1_8_R3.EntityTracker;
+import net.minecraft.server.v1_8_R3.EntityTrackerEntry;
+import net.minecraft.server.v1_8_R3.WorldServer;
 import org.arkhamnetwork.enchantments.util.*;
 import org.bukkit.World;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.entity.*;
-import org.arkhamnetwork.Arkkit.libs.*;
 import org.arkhamnetwork.enchantments.*;
 import org.bukkit.potion.*;
 import org.bukkit.plugin.*;
 import org.bukkit.entity.*;
-import org.bukkit.craftbukkit.v1_7_R4.*;
 import java.util.*;
 import org.bukkit.*;
-import net.minecraft.server.v1_7_R4.*;
-import org.bukkit.craftbukkit.v1_7_R4.entity.*;
 
 public class EnderWalker extends CustomEnchantment
 {
@@ -67,7 +69,7 @@ public class EnderWalker extends CustomEnchantment
         final World world = entity.getWorld();
         final WorldServer worldServer = ((CraftWorld)world).getHandle();
         final EntityTracker tracker = worldServer.tracker;
-        final EntityTrackerEntry entry = (EntityTrackerEntry)tracker.trackedEntities.get(entity.getEntityId());
+        final EntityTrackerEntry entry = tracker.trackedEntities.get(entity.getEntityId());
         final List<EntityPlayer> nmsPlayers = getNmsPlayers(observers);
         if (entry != null) {
             entry.trackedPlayers.removeAll(nmsPlayers);

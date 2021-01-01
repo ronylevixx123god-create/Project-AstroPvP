@@ -46,7 +46,7 @@ public class SoulModeTask implements Runnable {
                     }
                     if (cost > 0) {
                         KillTrackerAPI.removeSoulsFromGems(p, cost);
-                        p.setMetadata("lastSoulRemoveEvent", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), Long.valueOf(System.currentTimeMillis())));
+                        p.setMetadata("lastSoulRemoveEvent", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), System.currentTimeMillis()));
                         if (!p.hasMetadata("spectator"))
                             ParticleEffect.playEffect(ParticleEffect.SPELL, p.getLocation().add(0.0D, 1.0D, 0.0D), 0.5F, 65);
                         p.playSound(p.getLocation(), Sound.EAT, 0.4F, 0.2F);

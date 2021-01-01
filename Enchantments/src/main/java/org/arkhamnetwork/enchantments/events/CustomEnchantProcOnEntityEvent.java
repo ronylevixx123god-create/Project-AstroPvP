@@ -74,5 +74,4 @@ public class CustomEnchantProcOnEntityEvent extends Event implements Cancellable
     static {
         CustomEnchantProcOnEntityEvent.handlerList = new HandlerList();
     }
-
 }

@@ -1,15 +1,15 @@
 package org.arkhamnetwork.enchantments.util;
 
+import net.minecraft.server.v1_8_R3.*;
 import org.arkhamnetwork.enchantments.*;
 import org.bukkit.Chunk;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_7_R4.entity.*;
-import org.bukkit.craftbukkit.v1_7_R4.*;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.plugin.*;
 import org.bukkit.*;
 import org.bukkit.entity.*;
-import net.minecraft.server.v1_7_R4.*;
 import java.util.*;
 
 public class DimensionSpoof
@@ -68,7 +68,7 @@ public class DimensionSpoof
         final WorldServer ws = ((CraftWorld)player.getWorld()).getHandle();
         final EntityTracker tracker = ws.tracker;
         for (final Entity ent : player.getNearbyEntities(32.0, 32.0, 32.0)) {
-            final EntityTrackerEntry entry = (EntityTrackerEntry)tracker.trackedEntities.get(ent.getEntityId());
+            final EntityTrackerEntry entry = tracker.trackedEntities.get(ent.getEntityId());
             final List nms = new ArrayList();
             nms.add(((CraftPlayer)player).getHandle());
             entry.trackedPlayers.removeAll(nms);

@@ -43,6 +43,6 @@ public class SoulModeListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerItemHeld(PlayerItemHeldEvent e) {
-        e.getPlayer().setMetadata("lastItemHeldChange", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), Integer.valueOf(MinecraftServerUtils.getCurrentServerTick())));
+        e.getPlayer().setMetadata("lastItemHeldChange", new FixedMetadataValue(Enchantments.getInstance(), MinecraftServerUtils.getCurrentServerTick()));
     }
 }

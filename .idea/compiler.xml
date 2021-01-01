@@ -8,15 +8,16 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="GUIShop" />
-        <module name="Utils" />
         <module name="AuctionHouse" />
         <module name="SpaceChests" />
         <module name="Factions" />
-        <module name="Sets" />
         <module name="Enchantments" />
         <module name="Bosses" />
         <module name="Slotbot" />
+        <module name="Utils" />
+        <module name="Sets" />
         <module name="Ark" />
+        <module name="Backpacks" />
         <module name="Arkkit" />
         <module name="Core" />
       </profile>

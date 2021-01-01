@@ -22,7 +22,6 @@ import org.arkhamnetwork.Arkkit.libs.*;
 import org.arkhamnetwork.enchantments.util.*;
 import org.bukkit.entity.*;
 import org.bukkit.*;
-import org.zencode.shortninja.staffplus.*;
 import org.arkhamnetwork.enchantments.events.*;
 import org.bukkit.event.*;
 import org.arkhamnetwork.enchantments.mastery.*;
@@ -136,9 +135,10 @@ public class NatureWrath extends CustomEnchantment
                 if (GeneralUtil.isAtleastTruce(playerWhoProced, pEnt) || pEnt.hasMetadata("natureWrathTask") || pEnt.getGameMode() != GameMode.SURVIVAL || this.ess.getUser(pEnt).isGodModeEnabled()) {
                     continue;
                 }
-                if (StaffPlus.get().mode.isActive(pEnt.getName())) {
+                // TODO: ADD STAFF FREEZE
+                /*if (StaffPlus.get().mode.isActive(pEnt.getName())) {
                     continue;
-                }
+                }*/
                 final CustomEnchantProcOnEntityEvent event = new CustomEnchantProcOnEntityEvent((LivingEntity)playerWhoProced, (LivingEntity)pEnt, (Event)e, this, level);
                 boolean freeze = true;
                 if (!event.callEvent()) {

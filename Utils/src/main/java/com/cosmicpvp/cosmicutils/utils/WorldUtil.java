@@ -22,6 +22,7 @@ package com.cosmicpvp.cosmicutils.utils;
 
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
@@ -40,27 +41,27 @@ import java.util.Map;
 import java.util.logging.Level;
 
 public class WorldUtil {
-    /*public static void sendWorldEffect(Block b, int effectID) {
+    public static void sendWorldEffect(Block b, int effectID) {
         PacketPlayOutWorldEvent particles = new PacketPlayOutWorldEvent(effectID, new BlockPosition(b.getX(), b.getY(), b.getZ()), b.getTypeId(), false);
-        ParticleEffect.sendWorldEventPacket(particles, (Location)b.getLocation());
+        ParticleEffect.sendWorldEventPacket(particles, b.getLocation());
     }
 
     public static void sendWorldEffect(Block b, int materialID, int effectID) {
         PacketPlayOutWorldEvent particles = new PacketPlayOutWorldEvent(effectID, new BlockPosition(b.getX(), b.getY(), b.getZ()), materialID, false);
-        ParticleEffect.sendWorldEventPacket(particles, (Location)b.getLocation());
-    } */
+        ParticleEffect.sendWorldEventPacket(particles, b.getLocation());
+    }
 
     public static void sendBlockBreakAnimation(Block block, int breaks, List<Player> players) {
         PacketPlayOutBlockBreakAnimation animation = new PacketPlayOutBlockBreakAnimation(0, new BlockPosition(block.getX(), block.getY(), block.getZ()), breaks);
         for (Player pl : players) {
-            ((CraftPlayer) pl).getHandle().playerConnection.sendPacket((Packet) animation);
+            ((CraftPlayer) pl).getHandle().playerConnection.sendPacket(animation);
         }
     }
 
-    /*public static void sendWorldBreakPacket(Block b) {
+    public static void sendWorldBreakPacket(Block b) {
         PacketPlayOutWorldEvent particles = new PacketPlayOutWorldEvent(2001, new BlockPosition(b.getX(), b.getY(), b.getZ()), b.getTypeId(), false);
-        ParticleEffect.sendWorldEventPacket(particles, (Location)b.getLocation());
-    } */
+        ParticleEffect.sendWorldEventPacket(particles, b.getLocation());
+    }
 
     public static boolean allowEnderPortalOutsideOverworld(boolean allowed) {
         BlockEnderPortal.a = allowed;

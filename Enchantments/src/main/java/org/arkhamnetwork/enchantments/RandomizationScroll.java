@@ -43,7 +43,7 @@ public class RandomizationScroll
             newLore.add(s);
         }
         final ItemMeta im = enchantmentBook.getItemMeta();
-        im.setLore((List)newLore);
+        im.setLore(newLore);
         enchantmentBook.setItemMeta(im);
     }
 }

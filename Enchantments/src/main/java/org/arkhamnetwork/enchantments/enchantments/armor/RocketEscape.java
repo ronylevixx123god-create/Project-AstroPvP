@@ -71,7 +71,7 @@ public class RocketEscape extends CustomEnchantment
                 pl.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.GREEN + "Your Rocket Escape boots have activated, recover while they last!");
                 pl.sendMessage("");
                 pl.playSound(pl.getLocation(), Sound.EXPLODE, 1.0f, 0.54f);
-                pl.setMetadata("no_fall_damage", (MetadataValue)new FixedMetadataValue((Plugin)CosmicFactionUtils.getPlugin(), (Object)true));
+                pl.setMetadata("no_fall_damage", (MetadataValue)new FixedMetadataValue((Plugin)CosmicFactionUtils.getPlugin(), true));
                 pl.setVelocity(new Vector(0, (pl.getWorld().getName().equals("world_duels") || pl.getWorld().getName().equals("world_duels2")) ? (2 + level) : (4 + level * 2), 0));
                 PlayerPotionEffects.untrackPotionEffect(pl, PotionEffectType.SLOW);
                 PlayerPotionEffects.untrackPotionEffect(pl, PotionEffectType.SLOW_DIGGING);

@@ -13,21 +13,9 @@ import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
 
-import com.sk89q.worldguard.bukkit.WorldGuardPlayerListener;
-import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import net.minecraft.server.v1_7_R4.Entity;
-import net.minecraft.server.v1_7_R4.EntityHuman;
-import net.minecraft.server.v1_7_R4.EntityPlayer;
-import net.minecraft.server.v1_7_R4.EntityTrackerEntry;
-import net.minecraft.server.v1_7_R4.MinecraftServer;
-import net.minecraft.server.v1_7_R4.NetworkManager;
-import net.minecraft.server.v1_7_R4.Packet;
-import net.minecraft.server.v1_7_R4.PacketPlayOutEntityDestroy;
-import net.minecraft.server.v1_7_R4.PacketPlayOutEntityStatus;
-import net.minecraft.server.v1_7_R4.PacketPlayOutNamedEntitySpawn;
-import net.minecraft.server.v1_7_R4.PlayerConnection;
-import net.minecraft.server.v1_7_R4.PlayerInteractManager;
-import net.minecraft.server.v1_7_R4.WorldServer;
+import lombok.SneakyThrows;
+import me.ifamasssxd.cosmicduel.utils.TitleManager;
+import net.minecraft.server.v1_8_R3.*;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.MasteryCustomEnchantment;
 import org.arkhamnetwork.enchantments.events.CustomEnchantProcOnEntityEvent;
@@ -35,7 +23,7 @@ import org.arkhamnetwork.enchantments.listeners.CustomEnchantListener;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -58,6 +46,7 @@ public class MasteryFeignDeath extends MasteryCustomEnchantment {
         Bukkit.getPluginManager().registerEvents((Listener)new FeignDeathListener(this), (Plugin)Enchantments.getInstance());
     }
 
+    @SneakyThrows
     public void applyDefenseEffect(LivingEntity damagedEnt, LivingEntity attacker, int enchantLevel, EntityDamageEvent event) {
         if (!(event instanceof EntityDamageByEntityEvent) || !(attacker instanceof Player) || event.isCancelled())
             return;
@@ -73,11 +62,11 @@ public class MasteryFeignDeath extends MasteryCustomEnchantment {
         }
     }
 
-    public static void vanishPlayer(Player damaged, int enchantLevel) {
+    public static void vanishPlayer(Player damaged, int enchantLevel) throws NoSuchFieldException, IllegalAccessException {
         double seconds = enchantLevel * 1.5D;
-        damaged.setMetadata("feign_vanish", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), Double.valueOf(System.currentTimeMillis() + seconds * 1000.0D)));
-        damaged.setMetadata("feign_hits_max", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), Integer.valueOf(enchantLevel)));
-        deathCooldown.put(damaged.getUniqueId(), Long.valueOf(System.currentTimeMillis() + 10000L));
+        damaged.setMetadata("feign_vanish", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), System.currentTimeMillis() + seconds * 1000.0D));
+        damaged.setMetadata("feign_hits_max", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), enchantLevel));
+        deathCooldown.put(damaged.getUniqueId(), System.currentTimeMillis() + 10000L);
         EntityPlayer player = ((CraftPlayer)damaged).getHandle();
         EntityPlayer fake = new EntityPlayer(player.server, (WorldServer)player.world, player.getProfile(), new PlayerInteractManager(player.world));
         fake.playerConnection = new PlayerConnection(player.server, new NetworkManager(false), fake) {

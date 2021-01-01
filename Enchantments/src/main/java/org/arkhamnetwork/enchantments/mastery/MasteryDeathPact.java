@@ -1,8 +1,6 @@
 package org.arkhamnetwork.enchantments.mastery;
 
-import com.cosmicpvp.cosmicutils.CosmicUtils;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import org.arkhamnetwork.enchantments.*;
+import org.arkhamnetwork.enchantments.MasteryCustomEnchantment;
 import org.arkhamnetwork.enchantments.events.CustomEnchantProcOnEntityEvent;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.entity.LivingEntity;

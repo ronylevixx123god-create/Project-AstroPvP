@@ -7,7 +7,6 @@ import com.google.common.collect.*;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.scheduler.*;
-import org.zencode.shortninja.staffplus.*;
 import com.massivecraft.factions.*;
 import org.bukkit.entity.*;
 import org.bukkit.*;
@@ -51,8 +50,12 @@ public class Destruction extends CustomEnchantment
                     leveledPlayers.forEach(player -> {
                         int val$level = level;
                         Player p = player;
-                        if (player.isValid() && !player.isDead() && !player.hasMetadata("spectator") && !StaffPlus.get().freeze.isActive(player.getName()) && !Destruction.this.ess3.getUser(player).isGodModeEnabled()) {
-                            FPlayer fplayer = (FPlayer)FPlayers.i.get((OfflinePlayer)player);
+
+                        // TODO: ADD STAFF FREEZE
+                      //  if (player.isValid() && !player.isDead() && !player.hasMetadata("spectator") && !StaffPlus.get().freeze.isActive(player.getName()) && !Destruction.this.ess3.getUser(player).isGodModeEnabled()) {
+
+                        if (player.isValid() && !player.isDead() && !player.hasMetadata("spectator") && !Destruction.this.ess3.getUser(player).isGodModeEnabled()) {
+                        FPlayer fplayer = (FPlayer)FPlayers.i.get((OfflinePlayer)player);
                             int n = 4;
                             Iterator<Entity> iterator = player.getNearbyEntities((double)n, (double)n, (double)n).iterator();
                             while (iterator.hasNext()) {
@@ -63,8 +66,10 @@ public class Destruction extends CustomEnchantment
                                         if (p.hasMetadata("NPC")) {
                                             continue;
                                         }
-                                        else if (!p.hasMetadata("spectator") && !StaffPlus.get().freeze.isActive(p.getName()) && !Destruction.this.ess3.getUser(p).isVanished()) {
-                                            FPlayer fp = (FPlayer)FPlayers.i.get((OfflinePlayer)p);
+                                        // TODO: ADD STAFF FREEZE
+                                        //else if (!p.hasMetadata("spectator") && !StaffPlus.get().freeze.isActive(p.getName()) && !Destruction.this.ess3.getUser(p).isVanished()) {
+                                        else if (!p.hasMetadata("spectator") && !Destruction.this.ess3.getUser(p).isVanished()) {
+                                        FPlayer fp = (FPlayer)FPlayers.i.get((OfflinePlayer)p);
                                             if (fp.getFaction().getRelationTo((RelationParticipator)fplayer.getFaction()).isAtMost(Relation.NEUTRAL) && !WorldGuardUtils.isPvPDisabled(p.getLocation())) {
                                                 if (p.getHealth() > 0.0 && !p.isDead()) {
                                                     p.damage((val$level == 5) ? 2.0 : 1.0);

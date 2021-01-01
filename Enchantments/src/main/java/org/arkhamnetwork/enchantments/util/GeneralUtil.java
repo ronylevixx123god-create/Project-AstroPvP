@@ -10,7 +10,6 @@ import com.massivecraft.factions.iface.*;
 import com.massivecraft.factions.struct.*;
 import com.massivecraft.factions.*;
 import org.bukkit.entity.*;
-import net.minecraft.server.v1_7_R4.*;
 import org.bukkit.util.*;
 import org.bukkit.*;
 import org.arkhamnetwork.enchantments.*;

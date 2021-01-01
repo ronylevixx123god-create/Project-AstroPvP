@@ -9,6 +9,8 @@ import com.rit.sucy.CustomEnchantment;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+
+import lombok.SneakyThrows;
 import me.ifamasssxd.cosmicmasks.MaskType;
 import me.ifamasssxd.factionupgrades.FactionUpgradeAPI;
 import me.ifamasssxd.factionupgrades.struct.FactionUpgrade;
@@ -66,6 +68,7 @@ public class Phoenix extends CustomEnchantment {
         applyUnequipEffect(player, enchantLevel, (ItemStack)null);
     }
 
+    @SneakyThrows
     public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
         if (player instanceof Player) {
             double dmg = e.getDamage(EntityDamageEvent.DamageModifier.BASE);
@@ -77,12 +80,12 @@ public class Phoenix extends CustomEnchantment {
         }
     }
 
-    public static boolean procPhoenix(Player player, LivingEntity damager, double dmg) {
+    public static boolean procPhoenix(Player player, LivingEntity damager, double dmg) throws NoSuchFieldException, IllegalAccessException {
         Integer level = phoenixEquipped.get(player.getUniqueId());
         return (level != null && procPhoenix(player, damager, level.intValue(), dmg));
     }
 
-    public static boolean procPhoenix(Player player, LivingEntity damager, int level, double dmg) {
+    public static boolean procPhoenix(Player player, LivingEntity damager, int level, double dmg) throws NoSuchFieldException, IllegalAccessException {
         if (player.getHealth() <= 0.0D)
             return false;
         if (player.hasMetadata("witchered"))
