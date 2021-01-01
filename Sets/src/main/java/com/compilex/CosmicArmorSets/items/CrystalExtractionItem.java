@@ -12,6 +12,7 @@ import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
 import me.ifamasssxd.cosmicskycustoms.struct.CustomItemBuilder;
 import me.ifamasssxd.cosmicskycustoms.struct.InventoryInteractable;
 import me.ifamasssxd.cosmicskycustoms.struct.InventoryItemType;
+import net.minecraft.server.v1_8_R3.NBTBase;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -33,7 +34,7 @@ public class CrystalExtractionItem
         if (successRate == null) {
             successRate = 1;
         }
-        return this.applyItemData(new CosmicItemBuilder(Material.GHAST_TEAR, CC.GoldB + "Crystal Extractor", new String[]{CC.Gray + "Removes 1 random crystal from", CC.Gray + "an armor piece and converts it", CC.Gray + "into its applicable form:", CC.WhiteB + " * " + CC.GoldB + "Anti M-Kit Crystal (" + CC.White + successRate + "% Success" + CC.GoldB + ")", CC.WhiteB + " " + CC.WhiteB + CC.Underline + "OR", CC.WhiteB + " * " + CC.GoldB + "Armor Crystal (" + CC.White + successRate + "% Success" + CC.GoldB + ")"}).build()).setNBTBase("cosmicData", (NBTBase) new NBTTagCompoundBuilder().setInt("success", successRate).get()).build();
+        return this.applyItemData(new CosmicItemBuilder(Material.GHAST_TEAR, CC.GoldB + "Crystal Extractor", CC.Gray + "Removes 1 random crystal from", CC.Gray + "an armor piece and converts it", CC.Gray + "into its applicable form:", CC.WhiteB + " * " + CC.GoldB + "Anti M-Kit Crystal (" + CC.White + successRate + "% Success" + CC.GoldB + ")", CC.WhiteB + " " + CC.WhiteB + CC.Underline + "OR", CC.WhiteB + " * " + CC.GoldB + "Armor Crystal (" + CC.White + successRate + "% Success" + CC.GoldB + ")").build()).setNBTBase("cosmicData", new NBTTagCompoundBuilder().setInt("success", successRate).get()).build();
     }
 
     public boolean acceptsInventoryClickType(InventoryItemType inventoryItemType) {
@@ -58,10 +59,10 @@ public class CrystalExtractionItem
         ItemStack returnCursor = null;
         if (armorCrystalApplied != null && !armorCrystalApplied.isEmpty() && (antiMkitCrystalApplied == null || Math.random() <= 0.5)) {
             updated = ArmorSet.removeCrystalFromItem(clicked);
-            returnCursor = ArmorSet.createCrystal(armorCrystalApplied, crystalExtractionSuccess.intValue());
+            returnCursor = ArmorSet.createCrystal(armorCrystalApplied, crystalExtractionSuccess);
         } else {
             updated = AbilityArmorSet.removeAntiMkitCrystalFromItem(clicked);
-            returnCursor = new CustomItemBuilder("ANTI_MKIT", new Object[]{crystalExtractionSuccess, antiMkitCrystalApplied}).build();
+            returnCursor = new CustomItemBuilder("ANTI_MKIT", crystalExtractionSuccess, antiMkitCrystalApplied).build();
         }
         if (updated != null) {
             e.setCancelled(true);

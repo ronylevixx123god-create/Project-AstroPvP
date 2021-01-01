@@ -69,7 +69,7 @@ public class OmniCrystal
             return;
         }
         event.setCancelled(true);
-        if (!cursorWrapper.getCosmicData().hasKey("success")) {
+        if (!cursorWrapper.getconaxData().hasKey("success")) {
             return;
         }
         if (ArmorSet.getArmorSetFromItem(clicked) != null) {
@@ -82,7 +82,7 @@ public class OmniCrystal
             newCUrsor.setAmount(newCUrsor.getAmount() - 1);
             player.setItemOnCursor(newCUrsor);
         }
-        int chance = cursorWrapper.getCosmicData().getInt("success");
+        int chance = cursorWrapper.getconaxData().getInt("success");
         if (ThreadLocalRandom.current().nextInt(101) >= chance) {
             player.playSound(player.getLocation(), Sound.GLASS, 1.0f, 2.0f);
             return;

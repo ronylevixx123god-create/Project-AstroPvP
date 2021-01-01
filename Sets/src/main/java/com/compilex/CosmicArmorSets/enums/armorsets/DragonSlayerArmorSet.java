@@ -71,7 +71,7 @@ public class DragonSlayerArmorSet
     @Override
     public ItemStack getHelmet(boolean applyTransmog) {
         ItemStack kothItem = this.createArmor(Material.DIAMOND_HELMET, "Decapitated Dragon Skull", "helmet");
-        this.addEnchants(kothItem, Lists.newArrayList((Object[]) new String[]{"Drunk", "Armored", "Deathbringer", "Tank", "Angelic", "Implants", "Valor", "Death God", "Repair Guard", "Ender Shift", "Paladin Armored", "Planetary Deathbringer", "Alien Implants"}), 0.4);
+        this.addEnchants(kothItem, Lists.newArrayList("Drunk", "Armored", "Deathbringer", "Tank", "Angelic", "Implants", "Valor", "Death God", "Repair Guard", "Ender Shift", "Paladin Armored", "Planetary Deathbringer", "Alien Implants"), 0.4);
         if (this.random.nextDouble() <= 0.3) {
             this.addEnchantment("Immortal", ItemUtils.getRandomArmorSetEnchantLevel("Immortal"), kothItem);
         }
@@ -81,7 +81,7 @@ public class DragonSlayerArmorSet
     @Override
     public ItemStack getChestplate(boolean applyTransmog) {
         ItemStack kothItem = this.createArmor(Material.DIAMOND_CHESTPLATE, "Firey Chestplate of Dragons", "chestplate");
-        this.addEnchants(kothItem, Lists.newArrayList((Object[]) new String[]{"Overload", "Leadership", "Armored", "Tank", "Angelic", "Valor", "Aegis", "Dodge", "Frozen", "Enchant Reflect", "Godly Overload"}), 0.4);
+        this.addEnchants(kothItem, Lists.newArrayList("Overload", "Leadership", "Armored", "Tank", "Angelic", "Valor", "Aegis", "Dodge", "Frozen", "Enchant Reflect", "Godly Overload"), 0.4);
         if (this.random.nextDouble() <= 0.05) {
             this.addMaxedEnchant(this.getEnchantment("Enchant Reflect"), kothItem);
             this.addEnchantment("Heroic Enchant Reflect", ItemUtils.getRandomArmorSetEnchantLevel("Heroic Enchant Reflect"), kothItem);
@@ -92,7 +92,7 @@ public class DragonSlayerArmorSet
     @Override
     public ItemStack getLeggings(boolean applyTransmog) {
         ItemStack kothItem = this.createArmor(Material.DIAMOND_LEGGINGS, "Scorched Leggings of Dragons", "leggings");
-        this.addEnchants(kothItem, Lists.newArrayList((Object[]) new String[]{"Enlighted", "Lucky", "Obsidianshield", "Armored", "Tank", "Valor", "Angelic", "Arrow Deflect", "Clarity", "Cactus", "Divine Enlighted"}), 0.4);
+        this.addEnchants(kothItem, Lists.newArrayList("Enlighted", "Lucky", "Obsidianshield", "Armored", "Tank", "Valor", "Angelic", "Arrow Deflect", "Clarity", "Cactus", "Divine Enlighted"), 0.4);
         if (Math.random() < 0.075) {
             this.addMaxedEnchant(EnchantmentAPI.getEnchantment((String) "Nature Wrath"), kothItem);
         }
@@ -134,7 +134,7 @@ public class DragonSlayerArmorSet
     @Override
     public ItemStack getBoots(boolean applyTransmog) {
         ItemStack kothItem = this.createArmor(Material.DIAMOND_BOOTS, "Dragon Slayer Battle Boots", "boots");
-        this.addEnchants(kothItem, Lists.newArrayList((Object[]) new String[]{"Gears", "Rocket Escape", "Armored", "Tank", "Valor", "Angelic", "Springs", "Gaurdians", "Voodoo", "Ender Walker", "Ghost", "Ghostly Ghost"}), 0.4);
+        this.addEnchants(kothItem, Lists.newArrayList("Gears", "Rocket Escape", "Armored", "Tank", "Valor", "Angelic", "Springs", "Gaurdians", "Voodoo", "Ender Walker", "Ghost", "Ghostly Ghost"), 0.4);
         if (this.random.nextDouble() <= 0.075) {
             this.addEnchantment("Phoenix", ItemUtils.getRandomArmorSetEnchantLevel("Phoenix"), kothItem);
         }
@@ -143,7 +143,7 @@ public class DragonSlayerArmorSet
 
     @Override
     public List<String> getEquipDescription() {
-        return Lists.newArrayList((Object[]) new String[]{CC.YellowB + "DRAGON SLAYER SET BONUS:", CC.YellowB + " * " + CC.Yellow + "+15% OUTGOING DAMAGE", CC.YellowB + " * " + CC.Yellow + "-20% INCOMING DAMAGE", CC.YellowB + " * " + CC.Yellow + "Immune to Freezes", CC.YellowB + " * " + CC.Yellow + "Mastery Enchant Reflect X", CC.YellowB + " * " + CC.Yellow + "Negate 75% of Enemy Silence", CC.YellowB + " * " + CC.Yellow + "25% Mastery Enchant Negation"});
+        return Lists.newArrayList(CC.YellowB + "DRAGON SLAYER SET BONUS:", CC.YellowB + " * " + CC.Yellow + "+15% OUTGOING DAMAGE", CC.YellowB + " * " + CC.Yellow + "-20% INCOMING DAMAGE", CC.YellowB + " * " + CC.Yellow + "Immune to Freezes", CC.YellowB + " * " + CC.Yellow + "Mastery Enchant Reflect X", CC.YellowB + " * " + CC.Yellow + "Negate 75% of Enemy Silence", CC.YellowB + " * " + CC.Yellow + "25% Mastery Enchant Negation");
     }
 
     @Override

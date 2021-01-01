@@ -1,36 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.compat.ASound
- *  com.cosmicpvp.cosmicutils.exceptions.CosmicException
- *  com.cosmicpvp.cosmicutils.exceptions.PrefixedException
- *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
- *  com.cosmicpvp.cosmicutils.nbt.NBTTagListBuilder
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.GeneralUtil
- *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.utils.ItemUtils
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
- *  com.cosmicpvp.cosmicutils.utils.NumberUtils
- *  com.google.common.collect.Lists
- *  com.rit.sucy.CustomEnchantment
- *  com.rit.sucy.EnchantmentAPI
- *  me.ifamasssxd.cosmicskycustoms.exceptions.ItemDupedException
- *  me.ifamasssxd.cosmicskycustoms.struct.CosmicItem
- *  me.ifamasssxd.cosmicskycustoms.struct.InventoryInteractable
- *  me.ifamasssxd.cosmicskycustoms.struct.InventoryItemType
- *  net.minecraft.server.v1_7_R4.NBTBase
- *  org.arkhamnetwork.enchantments.MasteryCustomEnchantment
- *  org.bukkit.DyeColor
- *  org.bukkit.Material
- *  org.bukkit.Sound
- *  org.bukkit.craftbukkit.libs.com.google.gson.internal.Pair
- *  org.bukkit.entity.Player
- *  org.bukkit.event.inventory.InventoryClickEvent
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
- */
 package com.compilex.CosmicArmorSets.items;
 
 import com.compilex.CosmicArmorSets.enums.AbilityArmorSet;
@@ -120,7 +87,7 @@ public class AntiMKitCrystalItem
             if (name == null) {
                 return null;
             }
-            return this.applyItemData(new ItemBuilder(Material.INK_SACK, name, new String[0]).lore((List) lore).data((short) DyeColor.YELLOW.getDyeData()).build()).setNBTBase("cosmicData", (NBTBase) new NBTTagCompoundBuilder().setNBTBase("mKits", (NBTBase) list.build()).setInt("success", success).get()).assignIID().build();
+            return this.applyItemData(new ItemBuilder(Material.INK_SACK, name).lore(lore).data((short) DyeColor.YELLOW.getDyeData()).build()).setNBTBase("cosmicData", (NBTBase) new NBTTagCompoundBuilder().setNBTBase("mKits", (NBTBase) list.build()).setInt("success", success).get()).assignIID().build();
         }
         return null;
     }
@@ -145,7 +112,7 @@ public class AntiMKitCrystalItem
                 player.setItemOnCursor((ItemStack) null);
             }
             nbtWrapper.blacklistIID("anti m-kit player: " + player.getName());
-            if (Math.random() > (double) ((Integer) crystal.second).intValue() * 0.01) {
+            if (Math.random() > (double) (Integer) crystal.second * 0.01) {
                 player.getWorld().playSound(player.getLocation(), Sound.FIZZ, 3.0f, 1.1f);
                 ASound.GLASS.play(player, 3.0f, 1.1f);
                 player.updateInventory();

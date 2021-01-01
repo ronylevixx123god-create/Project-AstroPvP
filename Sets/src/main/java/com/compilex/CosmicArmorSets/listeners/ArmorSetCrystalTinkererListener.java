@@ -46,7 +46,6 @@ import org.arkhamnetwork.enchantments.events.PlayerAttemptTinkerItem;
 import org.arkhamnetwork.enchantments.libs.TinkeredItem;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.libs.com.google.gson.internal.Pair;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

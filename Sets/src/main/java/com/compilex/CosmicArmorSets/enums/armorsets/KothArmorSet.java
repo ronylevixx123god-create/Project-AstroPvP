@@ -151,7 +151,7 @@ public class KothArmorSet
         ItemStack kothItem = ItemUtils.buildItem(material, (short) 0, this.getKothName() + " " + CC.WhiteB + CC.Underline + itemName + CC.Reset, "", (Object) this.color + CC.Bold + "KOTH SET BONUS", bold + "+20% PvP Damage", bold + "+50% PvE Damage", bold + "Auto Bless", bold + "No Fall Damage", CC.Gray + "(" + CC.GrayI + "Requires all 4 koth items" + CC.Gray + ")", "", ChatColor.AQUA.toString() + ChatColor.UNDERLINE.toString() + this.format.format(new Date()));
         kothItem.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5);
         kothItem.addUnsafeEnchantment(Enchantment.DURABILITY, 3);
-        return CosmicArmorSetsAPI.convertItemToHeroic(kothItem, HeroicArmorType.getFromMaterial(material), true);
+        return CosmicArmorSetsAPI.convertItemToHeroic(kothItem, Objects.requireNonNull(HeroicArmorType.getFromMaterial(material)), true);
     }
 
     public String getKothName() {
@@ -161,7 +161,7 @@ public class KothArmorSet
     @Override
     public List<String> getEquipDescription() {
         String boldStar = (Object) this.color + CC.Bold + " * " + (Object) this.color;
-        return Lists.newArrayList((Object[]) new String[]{(Object) this.color + CC.Bold + "KOTH SET BONUS", boldStar + "+20% PvP DMG", boldStar + "+50% PvE damage", boldStar + "Auto Bless", boldStar + "No Fall Damage"});
+        return Lists.newArrayList((Object) this.color + CC.Bold + "KOTH SET BONUS", boldStar + "+20% PvP DMG", boldStar + "+50% PvE damage", boldStar + "Auto Bless", boldStar + "No Fall Damage");
     }
 
     @Override
