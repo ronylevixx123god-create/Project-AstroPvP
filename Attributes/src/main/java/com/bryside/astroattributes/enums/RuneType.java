@@ -6,15 +6,14 @@ import com.compilex.CosmicArmorSets.enums.HeroicWeaponType;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import net.minecraft.server.v1_8_R3.NBTBase;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public enum RuneType {
    ATLAS("ATLAS", 0, new AtlasRune()),
@@ -96,7 +95,7 @@ public enum RuneType {
             l = (String)var3.next();
          } while((!l.contains("Apply:")));
 
-         return Integer.valueOf(l.substring(l.indexOf(":") + 4, l.indexOf("%")));
+         return Integer.parseInt(l.substring(l.indexOf(":") + 4, l.indexOf("%")));
       }
    }
 
@@ -110,9 +109,9 @@ public enum RuneType {
       HeroicWeaponType heroicWeaponType = HeroicWeaponType.SWORD;
       NBTWrapper wrapper = new NBTWrapper(item);
       NBTTagCompoundBuilder compoundBuilder = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
-      compoundBuilder.setString("type", type.name()).setInt("durability", Integer.valueOf(heroicWeaponType.getDurability())).setDouble("dmgIncr", Double.valueOf(heroicWeaponType.getAttackModifier())).setInt("maxDurability", Integer.valueOf(heroicWeaponType.getDurability())).get();
-      item = wrapper.setString("cosmicType", "HEROIC_WEAPON").setNBTBase("cosmicData", (NBTBase)compoundBuilder.get()).build();
-      item = wrapper.setNBTBase("cosmicData", (NBTBase)(new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData"))).setInt("titanAttributeXp", Integer.valueOf(0)).setString("titanAttributeType", "ATLAS").setLong("titanAttributeLastLevelup", Long.valueOf(0L)).get()).build();
+      compoundBuilder.setString("type", type.name()).setInt("durability", heroicWeaponType.getDurability()).setDouble("dmgIncr", heroicWeaponType.getAttackModifier()).setInt("maxDurability", heroicWeaponType.getDurability()).get();
+      item = wrapper.setString("cosmicType", "HEROIC_WEAPON").setNBTBase("cosmicData", (NBTBase) compoundBuilder.get()).build();
+      item = wrapper.setNBTBase("cosmicData", (NBTBase) (new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData"))).setInt("titanAttributeXp", 0).setString("titanAttributeType", "ATLAS").setLong("titanAttributeLastLevelup", Long.valueOf(0L)).get()).build();
       return item;
    }
 
