@@ -56,14 +56,14 @@ public class EnchanterGUI extends CosmicGUI {
                 this.player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "- " + NumberUtils.formatMoney(newAdjustedPrice) + " xp");
                 this.player.getInventory().addItem(TieredEnchantments.getMysteryEnchantmentBook(rarity.getTier()));
                 this.player.playSound(this.player.getLocation(), Sound.VILLAGER_HAGGLE, 1.0F, 0.44F);
-                Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), "contest add " + this.player.getName() + " enchanterXP " + newAdjustedPrice);
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "contest add " + this.player.getName() + " enchanterXP " + newAdjustedPrice);
                 if (Bukkit.getPluginManager().isPluginEnabled("CosmicFactionQuests"))
                     if (rarity.getTier() == 5) {
-                        Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), "fquests add LEGENDARY_ENCHANTER " + this.player.getName());
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "fquests add LEGENDARY_ENCHANTER " + this.player.getName());
                     } else if (rarity.getTier() == 4) {
-                        Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), "fquests add ULTIMATE_ENCHANTER " + this.player.getName());
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "fquests add ULTIMATE_ENCHANTER " + this.player.getName());
                     }
-                Bukkit.getPluginManager().callEvent((Event)new CustomCosmicPlayerEvent(this.player, "ENCHANTER_BUY", new Object[] { rarity.name(), newAdjustedPrice}));
+                Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(this.player, "ENCHANTER_BUY", new Object[] { rarity.name(), newAdjustedPrice}));
             });
         }
     }

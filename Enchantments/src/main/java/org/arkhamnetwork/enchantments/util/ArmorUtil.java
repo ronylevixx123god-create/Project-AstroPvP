@@ -1,15 +1,17 @@
 package org.arkhamnetwork.enchantments.util;
 
+import net.minecraft.server.v1_8_R3.Items;
+import net.minecraft.server.v1_8_R3.NBTBase;
+import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Item;
 import org.bukkit.inventory.*;
 import org.bukkit.*;
 
 import com.cosmicpvp.cosmicutils.utils.ItemUtils;
-import org.bukkit.craftbukkit.v1_7_R4.entity.*;
 import org.bukkit.entity.*;
-import net.minecraft.server.v1_7_R4.*;
 import org.bukkit.inventory.ItemStack;
 
 public class ArmorUtil
@@ -95,11 +97,11 @@ public class ArmorUtil
 
     public static int getArmorValue(final Player pl) {
         int armor_val = 0;
-        for (final net.minecraft.server.v1_7_R4.ItemStack item : ((CraftPlayer)pl).getHandle().inventory.getArmorContents()) {
+        for (final net.minecraft.server.v1_8_R3.ItemStack item : ((CraftPlayer)pl).getHandle().inventory.getArmorContents()) {
             Label_0343: {
                 if (item != null) {
-                    if (item.tag != null && item.tag.hasKey("cosmicData")) {
-                        final NBTBase base = item.tag.get("cosmicData");
+                    if (item.tag != null && item.tag.hasKey("conaxData")) {
+                        final NBTBase base = item.tag.get("conaxData");
                         if (base instanceof NBTTagCompound) {
                             final NBTTagCompound comp = (NBTTagCompound)base;
                             if (comp.hasKey("armorModifier")) {
@@ -157,16 +159,16 @@ public class ArmorUtil
                     if (items == Items.DIAMOND_BOOTS) {
                         armor_val += 3;
                     }
-                    if (items == Items.GOLD_HELMET) {
+                    if (items == Items.GOLDEN_HELMET) {
                         armor_val += 2;
                     }
-                    if (items == Items.GOLD_CHESTPLATE) {
+                    if (items == Items.GOLDEN_CHESTPLATE) {
                         armor_val += 5;
                     }
-                    if (items == Items.GOLD_LEGGINGS) {
+                    if (items == Items.GOLDEN_LEGGINGS) {
                         armor_val += 3;
                     }
-                    if (items == Items.GOLD_BOOTS) {
+                    if (items == Items.GOLDEN_BOOTS) {
                         ++armor_val;
                     }
                 }

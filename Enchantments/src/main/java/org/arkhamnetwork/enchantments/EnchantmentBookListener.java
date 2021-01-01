@@ -110,13 +110,13 @@ public class EnchantmentBookListener implements Listener
                 }
                 if (currentItemType != Material.AIR) {
                     final NBTWrapper clickedWrapper = new NBTWrapper(e.getCurrentItem());
-                    final NBTTagCompoundBuilder cosmicData = clickedWrapper.getCompound("cosmicData");
+                    final NBTTagCompoundBuilder cosmicData = clickedWrapper.getCompound("conaxData");
                     boolean allowed = false;
                     if (cosmicData != null && cosmicData.hasKey("noEnchants")) {
                         final NBTWrapper cursor = new NBTWrapper(e.getCursor());
                         final String abilitySet = cosmicData.getString("abilitySet");
                         final NBTTagCompoundBuilder builder;
-                        if ((builder = cursor.getCompound("cosmicData")) != null && builder.hasKey("masteryShard") && cosmicData.hasKey("abilitySet") && new NBTTagListBuilder(builder.getNBTBase("masteryShard")).contains(cosmicData.getString("abilitySet"))) {
+                        if ((builder = cursor.getCompound("conaxData")) != null && builder.hasKey("masteryShard") && cosmicData.hasKey("abilitySet") && new NBTTagListBuilder(builder.getNBTBase("masteryShard")).contains(cosmicData.getString("abilitySet"))) {
                             allowed = true;
                         }
                         if (!allowed) {
@@ -307,7 +307,7 @@ public class EnchantmentBookListener implements Listener
                     return;
                 }
                 final NBTWrapper clickedWrapper = new NBTWrapper(e.getCurrentItem());
-                final NBTTagCompoundBuilder cosmicData = clickedWrapper.getCompound("cosmicData");
+                final NBTTagCompoundBuilder cosmicData = clickedWrapper.getCompound("conaxData");
                 if (cosmicData != null && cosmicData.hasKey("noEnchants")) {
                     pl.sendMessage(CC.RedB + "(!) " + CC.Red + "This armor is too powerful to have its enchantments extracted by black scrolls!");
                     return;
@@ -337,8 +337,8 @@ public class EnchantmentBookListener implements Listener
                     blackscrollMod = 10;
                 }
                 int chance;
-                if (heroicBlackscroll && wrapper.hasKey("cosmicData")) {
-                    final NBTTagCompoundBuilder builder = new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData"));
+                if (heroicBlackscroll && wrapper.hasKey("conaxData")) {
+                    final NBTTagCompoundBuilder builder = new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData"));
                     final int minChance = builder.getInt("min");
                     int newMaxChance;
                     final int maxChance = newMaxChance = builder.getInt("max");

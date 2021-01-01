@@ -1,28 +1,39 @@
 package org.arkhamnetwork.enchantments.mastery;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
-import org.arkhamnetwork.enchantments.*;
+import com.cosmicpvp.cosmicutils.utils.*;
+import com.massivecraft.factions.Faction;
+import lombok.SneakyThrows;
+import net.minecraft.server.v1_8_R3.Blocks;
+import net.minecraft.server.v1_8_R3.EntityFallingBlock;
+import net.minecraft.server.v1_8_R3.EntityHuman;
+import net.minecraft.server.v1_8_R3.WorldServer;
+import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.MasteryCustomEnchantment;
+import org.arkhamnetwork.enchantments.events.CustomEnchantProcOnEntityEvent;
+import org.arkhamnetwork.enchantments.listeners.CustomEnchantListener;
+import org.arkhamnetwork.enchantments.util.ArmorSlot;
 import org.arkhamnetwork.enchantments.util.ArmorUtil;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.bukkit.Material;
-import org.bukkit.entity.Entity;
-import org.bukkit.plugin.*;
-import org.arkhamnetwork.enchantments.events.*;
-import com.rit.sucy.*;
-import org.bukkit.entity.*;
-import org.bukkit.potion.*;
-import org.bukkit.metadata.*;
-import org.arkhamnetwork.Arkkit.libs.*;
-import org.bukkit.craftbukkit.v1_7_R4.*;
-import com.massivecraft.factions.*;
-import org.arkhamnetwork.enchantments.util.*;
 import org.bukkit.*;
-import java.util.*;
-import com.cosmicpvp.cosmicutils.utils.*;
-import net.minecraft.server.v1_7_R4.*;
-import org.arkhamnetwork.enchantments.listeners.*;
-import org.bukkit.event.entity.*;
-import org.bukkit.event.*;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.EntityChangeBlockEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+
+import java.util.List;
+import java.util.UUID;
 
 public class MasteryTombstone extends MasteryCustomEnchantment
 {
@@ -33,6 +44,7 @@ public class MasteryTombstone extends MasteryCustomEnchantment
         Bukkit.getPluginManager().registerEvents((Listener)new TombstoneSanityListener(this), (Plugin)Enchantments.getInstance());
     }
     
+    @SneakyThrows
     public void applyDefenseEffect(final LivingEntity user, final LivingEntity target, final int enchantLevel, final EntityDamageEvent event) {
         if (!(target instanceof Player)) {
             return;
@@ -105,7 +117,7 @@ public class MasteryTombstone extends MasteryCustomEnchantment
                             return;
                         }
                         WorldUtil.sendWorldEffect(loc.getBlock(), Material.ANVIL.getId(), 2001);
-                        final List near = this.world.getEntities((net.minecraft.server.v1_7_R4.Entity)this, this.boundingBox);
+                        final List near = this.world.getEntities(this, this.getBoundingBox());
                         this.world.getWorld().playSound(this.getBukkitEntity().getLocation(), Sound.ANVIL_LAND, 2.0f, 1.1f);
                         for (final Object ent : near) {
                             if (ent instanceof EntityHuman) {
@@ -138,9 +150,9 @@ public class MasteryTombstone extends MasteryCustomEnchantment
                 };
                 block.a(block.dropItem = false);
                 block.ticksLived = 1;
-                ReflectionUtils.setObject((Object)block, ReflectionUtils.getField((Class)EntityFallingBlock.class, "f"), (Object)true);
-                world.addEntity((net.minecraft.server.v1_7_R4.Entity)block, CreatureSpawnEvent.SpawnReason.CUSTOM);
-                block.getBukkitEntity().setMetadata("no_block", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)""));
+                ReflectionUtils.setObject((Object)block, ReflectionUtils.getField((Class)EntityFallingBlock.class, "f"), true);
+                world.addEntity(block, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                block.getBukkitEntity().setMetadata("no_block", (MetadataValue)new FixedMetadataValue(Enchantments.getInstance(), (Object)""));
             }
             damaged.sendMessage(CC.RedB + "* TOMBSTONE [" + CC.Gray + affected + " players" + CC.RedB + "] *");
         }

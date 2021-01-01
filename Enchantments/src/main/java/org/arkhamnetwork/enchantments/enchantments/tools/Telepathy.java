@@ -65,7 +65,7 @@ public class Telepathy extends CustomEnchantment
                 boolean silkTouchedBlock = false;
                 if (hasSilkTouch) {
                     final int amount = drop.getAmount();
-                    final Item item = Item.getItemOf(net.minecraft.server.v1_7_R4.Block.getById(bbe.getBlock().getTypeId()));
+                    final Item item = Item.getItemOf(net.minecraft.server.v1_8_R3.Block.getById(bbe.getBlock().getTypeId()));
                     short durability = bbe.getBlock().getData();
                     final Material mm = Material.getMaterial(Item.getId(item));
                     if (mm == Material.ANVIL) {
@@ -95,7 +95,7 @@ public class Telepathy extends CustomEnchantment
                     return;
                 }
                 if (player.getInventory().firstEmpty() != -1) {
-                    player.getInventory().addItem(new ItemStack[] { drop });
+                    player.getInventory().addItem(drop);
                 }
                 else {
                     player.getWorld().dropItem(player.getLocation(), drop);
