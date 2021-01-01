@@ -23,6 +23,12 @@
  */
 package com.massivecraft.factions;
 
+import com.conaxgames.factions.utils.cmds.Command2FA;
+import com.conaxgames.factions.utils.cmds.CommandAllowTp;
+import com.conaxgames.factions.utils.cmds.CommandCTool;
+import com.conaxgames.factions.utils.cmds.CommandToggleSmoke;
+import com.conaxgames.factions.utils.flying.CosmicFlyingPlugin;
+import com.conaxgames.factions.utils.listeners.*;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -52,8 +58,10 @@ import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -80,14 +88,15 @@ public class P extends MPlugin {
     public String currentVersion = "1.1";
     public FCmdRoot cmdBase;
     public CmdAutoHelp cmdAutoHelp;
-    private PermissionManager permissionManager;
+    private final PermissionManager permissionManager;
     private boolean locked = false;
     private Integer AutoLeaveTask = null;
     private FLogManager flogManager;
-    private FChestManager fChestManager;
+    private final FChestManager fChestManager;
     private FileManager fileManager;
     public static WorldGuardPlugin wg = null;
 
+    private CosmicFlyingPlugin cosmicFlyingPlugin;
 
     public P() {
         p = this;
@@ -161,6 +170,14 @@ public class P extends MPlugin {
         getCommand("kills").setExecutor(new CmdKills());
         getCommand("deaths").setExecutor(new CmdDeaths());
 
+        // This is factions utils stuff :)
+        this.mcMMOTestUtil();
+        this.registerUtilListeners();
+        this.registerUtilCommands();
+        this.cosmicFlyingPlugin = new CosmicFlyingPlugin();
+        this.cosmicFlyingPlugin.onEnable();
+        // This is factions utils stuff :)
+
        this.getBaseCommands().add(this.cmdBase);
         EssentialsFeatures.setup();
         Econ.setup();
@@ -228,6 +245,40 @@ public class P extends MPlugin {
         }
     }
 
+    private void registerUtilCommands() {
+        this.getCommand("ctool").setExecutor(new CommandCTool());
+        this.getCommand("allowtp").setExecutor(new CommandAllowTp());
+        this.getCommand("2fa").setExecutor(new Command2FA());
+        this.getCommand("togglesmoke").setExecutor(new CommandToggleSmoke(this));
+    }
+
+    private void registerUtilListeners() {
+        this.getServer().getPluginManager().registerEvents(new RandomListener(), this);
+        this.getServer().getPluginManager().registerEvents(new CreeperEggLimiter(), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerFallListener(), this);
+        this.getServer().getPluginManager().registerEvents(new InvalidDeathFix(), this);
+        this.getServer().getPluginManager().registerEvents(new VIPCommandBlocker(), this);
+        this.getServer().getPluginManager().registerEvents(new NetherMobSpawnerListener(), this);
+    }
+
+    private void mcMMOTestUtil() {
+        if (new File("plugins/mcMMO-beta.jar").exists() || new File("plugins/mcMMO.jar").exists()) {
+            Bukkit.getScheduler().runTaskLater((Plugin)this, new Runnable(){
+                @Override
+                public void run() {
+                    if (!Bukkit.getPluginManager().isPluginEnabled("mcMMO")) {
+                        Bukkit.getLogger().info("mcMMO failed to load! (parties.yml error?) rebooting server!");
+                        Bukkit.shutdown();
+                    }
+                }
+            }, 200L);
+        }
+    }
+
+    public CosmicFlyingPlugin getCosmicFlyingPlugin() {
+        return this.cosmicFlyingPlugin;
+    }
+
     private WorldGuardPlugin getWorldGuard() {
         Plugin plugin = this.getServer().getPluginManager().getPlugin("WorldGuard");
         return plugin != null && plugin instanceof WorldGuardPlugin ? (WorldGuardPlugin)plugin : null;
@@ -256,6 +307,10 @@ public class P extends MPlugin {
         } else {
             Bukkit.getLogger().info("[Factions] Not saving Board or config due to not loading successfully!");
         }
+        for (Player pl : Bukkit.getOnlinePlayers()) {
+            pl.removeMetadata("last_enderpearl_throw", this);
+        }
+        CommandToggleSmoke.saveToggles();
         if (this.AutoLeaveTask != null) {
             this.getServer().getScheduler().cancelTask(this.AutoLeaveTask);
             this.AutoLeaveTask = null;
