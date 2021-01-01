@@ -36,6 +36,12 @@ import com.conaxgames.factions.utils.cmds.CommandToggleSmoke;
 import com.conaxgames.factions.utils.flying.CosmicFlyingPlugin;
 import com.conaxgames.factions.utils.listeners.*;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.factionpoints.commands.CommandFactionPoints;
+import com.cosmicpvp.factionpoints.listeners.CoreChunkListener;
+import com.cosmicpvp.factionpoints.listeners.FactionListener;
+import com.cosmicpvp.factionpoints.listeners.FactionPointListener;
+import com.cosmicpvp.factionpoints.managers.CoreChunkManager;
+import com.cosmicpvp.factionpoints.managers.PointManager;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.massivecraft.factions.cmd.CmdAutoHelp;
@@ -104,6 +110,11 @@ public class P extends MPlugin {
 
     private CosmicFlyingPlugin cosmicFlyingPlugin;
     public BoosterManager boosterManager;
+    public PointManager pointManager;
+    private CoreChunkManager chunkManager;
+    public static boolean debug;
+    private long startOfMap;
+    private boolean vanillaPlanet = false;
 
     public P() {
         p = this;
@@ -186,7 +197,16 @@ public class P extends MPlugin {
 
         this.boosterManager = new BoosterManager();
         this.boosterManager.loadActiveBoosters();
-        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, (Runnable)new BoosterTask(), 20L, 20L);
+        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new BoosterTask(), 20L, 20L);
+
+        this.saveDefaultConfig();
+        this.pointManager = new PointManager();
+        this.chunkManager = new CoreChunkManager();
+        this.pointManager.onEnable(this);
+        this.chunkManager.onEnable(this);
+        this.startOfMap = this.getConfig().getLong("startOfMap");
+        this.vanillaPlanet = this.getConfig().getBoolean("vanilla", false);
+
         // TODO: THIS IS THE onEnable for all additions put into Factions.
 
        this.getBaseCommands().add(this.cmdBase);
@@ -235,7 +255,6 @@ public class P extends MPlugin {
 
         //Setup Discord Bot
 
-
         this.postEnable();
         this.loadSuccessful = true;
         this.fChestManager.onEnable(this);
@@ -264,6 +283,8 @@ public class P extends MPlugin {
 
         this.getCommand("givefacbooster").setExecutor(new CommandBooster());
         this.getCommand("booster").setExecutor(new CommandCheckBooster());
+
+        this.getCommand("factionpoints").setExecutor(new CommandFactionPoints());
     }
 
     private void registerNewListeners() {
@@ -274,10 +295,14 @@ public class P extends MPlugin {
         this.getServer().getPluginManager().registerEvents(new VIPCommandBlocker(), this);
         this.getServer().getPluginManager().registerEvents(new NetherMobSpawnerListener(), this);
 
-        this.getServer().getPluginManager().registerEvents((Listener)new BoosterListener(this.boosterManager), (Plugin)this);
+        this.getServer().getPluginManager().registerEvents(new BoosterListener(this.boosterManager), this);
         if (this.getServer().getPluginManager().isPluginEnabled("mcMMO")) {
-            this.getServer().getPluginManager().registerEvents((Listener)new mcMMOListener(), (Plugin)this);
+            this.getServer().getPluginManager().registerEvents(new mcMMOListener(), this);
         }
+
+        this.getServer().getPluginManager().registerEvents(new FactionPointListener(), this);
+        this.getServer().getPluginManager().registerEvents(new CoreChunkListener(), this);
+        this.getServer().getPluginManager().registerEvents(new FactionListener(), this);
     }
 
     private void mcMMOTestUtil() {
@@ -292,6 +317,41 @@ public class P extends MPlugin {
                 }
             }, 200L);
         }
+    }
+
+    public static void debugCosmicFactionPoints(String debugString) {
+        if (!debug) {
+            return;
+        }
+        Bukkit.getLogger().info("[CosmicFactionPoints] " + debugString);
+    }
+
+    public static void logCosmicFactionPoints(String debugString) {
+        Bukkit.getLogger().info("[CosmicFactionPoints] " + debugString);
+    }
+
+    public PointManager getPointManager() {
+        return this.pointManager;
+    }
+
+    public CoreChunkManager getChunkManager() {
+        return this.chunkManager;
+    }
+
+    public long getStartOfMap() {
+        return this.startOfMap;
+    }
+
+    public void setStartOfMap(long startOfMap) {
+        this.startOfMap = startOfMap;
+    }
+
+    public boolean isVanillaPlanet() {
+        return this.vanillaPlanet;
+    }
+
+    static {
+        debug = false;
     }
 
     public BoosterManager getBoosterManager() {
@@ -334,6 +394,8 @@ public class P extends MPlugin {
         for (Player pl : Bukkit.getOnlinePlayers()) {
             pl.removeMetadata("last_enderpearl_throw", this);
         }
+        this.pointManager.onDisable(this);
+        this.chunkManager.onDisable(this);
         this.boosterManager.saveActiveBoosters();
         CommandToggleSmoke.saveToggles();
         if (this.AutoLeaveTask != null) {
