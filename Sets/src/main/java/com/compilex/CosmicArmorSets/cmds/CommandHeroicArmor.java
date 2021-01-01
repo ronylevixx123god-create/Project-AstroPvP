@@ -33,10 +33,10 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
 
-public class CommandHeroicArmor
-        implements CommandExecutor {
+public class CommandHeroicArmor implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if (!sender.isOp()) {
+            sender.sendMessage(CC.Red + "No permission.");
             return true;
         }
         if (args.length >= 2) {

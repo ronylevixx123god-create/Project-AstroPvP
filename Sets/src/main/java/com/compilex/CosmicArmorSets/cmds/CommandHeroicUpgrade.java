@@ -35,7 +35,7 @@ public class CommandHeroicUpgrade
         implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!sender.isOp()) {
-            sender.sendMessage(SpigotConfig.unknownCommandMessage);
+            sender.sendMessage(CC.Red + "No permission.");
             return true;
         }
         if (args.length >= 3) {

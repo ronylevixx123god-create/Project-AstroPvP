@@ -75,13 +75,15 @@ import com.massivecraft.factions.struct.Relation;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
-import net.minecraft.server.v1_7_R4.World;
-import net.minecraft.server.v1_7_R4.*;
+import net.minecraft.server.v1_8_R3.*;
 import org.arkhamnetwork.enchantments.enchantments.armor.Clarity;
+import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.*;
-import org.bukkit.craftbukkit.v1_7_R4.CraftWorld;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.FallingBlock;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -103,34 +105,34 @@ import java.util.concurrent.ThreadLocalRandom;
 public class DimensionalTravelerSet
         extends ArmorSetInfo
         implements OtherPlayerEventListenerSet {
-    List<Material> materials = Lists.newArrayList((Object[]) new Material[]{Material.ENDER_STONE, Material.NETHERRACK});
-    private Map<UUID, Float> storedPlayerWalkSpeeds = new HashMap<UUID, Float>();
-    private Set<FallingBlock> fallingBlocks = Collections.newSetFromMap(new WeakHashMap());
-    private Map<UUID, DimensionalDamageTracker> tracker = new MapMaker().concurrencyLevel(16).makeMap();
+    List<Material> materials = Lists.newArrayList(Material.ENDER_STONE, Material.NETHERRACK);
+    private final Map<UUID, Float> storedPlayerWalkSpeeds = new HashMap<UUID, Float>();
+    private final Set<FallingBlock> fallingBlocks = Collections.newSetFromMap(new WeakHashMap());
+    private final Map<UUID, DimensionalDamageTracker> tracker = new MapMaker().concurrencyLevel(16).makeMap();
 
     @Override
     public ItemStack getHelmet(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_HELMET, (short) 0, "&5&lInterdimensional Hood", CC.Gray + "A hood that fades in and out of", CC.Gray + "existence inside the dimension of the owner.", "", "&5&lTRAVELER SET BONUS", "&5&l* &5You deal 30% more damage.", "&5&l* &5Dimensional Shift Passive Ability", "&7(&oRequires all 4 dimensional traveler items.&7)"), new LinkedList<CustomEnchantment>(Arrays.asList(new CustomEnchantment[]{EnchantmentAPI.getEnchantment((String) "Alien Implants"), EnchantmentAPI.getEnchantment((String) "Planetary Deathbringer"), EnchantmentAPI.getEnchantment((String) "Drunk"), EnchantmentAPI.getEnchantment((String) "Enlighted"), EnchantmentAPI.getEnchantment((String) "Armored"), EnchantmentAPI.getEnchantment((String) "Tank"), EnchantmentAPI.getEnchantment((String) "Angelic"), EnchantmentAPI.getEnchantment((String) "Hardened"), EnchantmentAPI.getEnchantment((String) "Valor"), EnchantmentAPI.getEnchantment((String) "Dodge"), EnchantmentAPI.getEnchantment((String) "Guardians"), EnchantmentAPI.getEnchantment((String) "Sticky"), EnchantmentAPI.getEnchantment((String) "Implants"), EnchantmentAPI.getEnchantment((String) "Repair Guard")}))));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_HELMET, (short) 0, "&5&lInterdimensional Hood", CC.Gray + "A hood that fades in and out of", CC.Gray + "existence inside the dimension of the owner.", "", "&5&lTRAVELER SET BONUS", "&5&l* &5You deal 30% more damage.", "&5&l* &5Dimensional Shift Passive Ability", "&7(&oRequires all 4 dimensional traveler items.&7)"), new LinkedList<CustomEnchantment>(Arrays.asList(EnchantmentAPI.getEnchantment("Alien Implants"), EnchantmentAPI.getEnchantment("Planetary Deathbringer"), EnchantmentAPI.getEnchantment("Drunk"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Hardened"), EnchantmentAPI.getEnchantment("Valor"), EnchantmentAPI.getEnchantment("Dodge"), EnchantmentAPI.getEnchantment("Guardians"), EnchantmentAPI.getEnchantment("Sticky"), EnchantmentAPI.getEnchantment("Implants"), EnchantmentAPI.getEnchantment("Repair Guard")))));
     }
 
     @Override
     public ItemStack getChestplate(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_CHESTPLATE, (short) 0, "&5&lChestplate of Ad Infinitum", CC.Gray + "A cross-dimensional chestplate", CC.Gray + "with impossibly infinite density", CC.Gray + "and defensive properties.", "", "&5&lTRAVELER SET BONUS", "&5&l* &5You deal 30% more damage.", "&5&l* &5Dimensional Shift Passive Ability", "&7(&oRequires all 4 dimensional traveler items.&7)"), new LinkedList<CustomEnchantment>(Arrays.asList(new CustomEnchantment[]{EnchantmentAPI.getEnchantment((String) "Godly Overload"), EnchantmentAPI.getEnchantment((String) "Paladin Armored"), EnchantmentAPI.getEnchantment((String) "Blood Lust"), EnchantmentAPI.getEnchantment((String) "Enlighted"), EnchantmentAPI.getEnchantment((String) "Deathbringer"), EnchantmentAPI.getEnchantment((String) "Armored"), EnchantmentAPI.getEnchantment((String) "Tank"), EnchantmentAPI.getEnchantment((String) "Angelic"), EnchantmentAPI.getEnchantment((String) "Arrow Deflect"), EnchantmentAPI.getEnchantment((String) "Dodge"), EnchantmentAPI.getEnchantment((String) "Valor"), EnchantmentAPI.getEnchantment((String) "Aegis"), EnchantmentAPI.getEnchantment((String) "Spirit Link"), EnchantmentAPI.getEnchantment((String) "Leadership")}))));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_CHESTPLATE, (short) 0, "&5&lChestplate of Ad Infinitum", CC.Gray + "A cross-dimensional chestplate", CC.Gray + "with impossibly infinite density", CC.Gray + "and defensive properties.", "", "&5&lTRAVELER SET BONUS", "&5&l* &5You deal 30% more damage.", "&5&l* &5Dimensional Shift Passive Ability", "&7(&oRequires all 4 dimensional traveler items.&7)"), new LinkedList<CustomEnchantment>(Arrays.asList(EnchantmentAPI.getEnchantment("Godly Overload"), EnchantmentAPI.getEnchantment("Paladin Armored"), EnchantmentAPI.getEnchantment("Blood Lust"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Arrow Deflect"), EnchantmentAPI.getEnchantment("Dodge"), EnchantmentAPI.getEnchantment("Valor"), EnchantmentAPI.getEnchantment("Aegis"), EnchantmentAPI.getEnchantment("Spirit Link"), EnchantmentAPI.getEnchantment("Leadership")))));
     }
 
     @Override
     public ItemStack getLeggings(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_LEGGINGS, (short) 0, "&5&lTimeless Robes", CC.Gray + "Robes that evade the 4th dimension and", CC.Gray + "are in a state of constant existence", CC.Gray + "across all planets of reality.", "", "&5&lTRAVELER SET BONUS", "&5&l* &5You deal 30% more damage.", "&5&l* &5Dimensional Shift Passive Ability", "&7(&oRequires all 4 dimensional traveler items.&7)"), new LinkedList<CustomEnchantment>(Arrays.asList(new CustomEnchantment[]{EnchantmentAPI.getEnchantment((String) "Paladin Armored"), EnchantmentAPI.getEnchantment((String) "Enlighted"), EnchantmentAPI.getEnchantment((String) "Clarity"), EnchantmentAPI.getEnchantment((String) "Deathbringer"), EnchantmentAPI.getEnchantment((String) "Nature Wrath"), EnchantmentAPI.getEnchantment((String) "Lucky"), EnchantmentAPI.getEnchantment((String) "Armored"), EnchantmentAPI.getEnchantment((String) "Angelic"), EnchantmentAPI.getEnchantment((String) "Obsidianshield"), EnchantmentAPI.getEnchantment((String) "Cactus"), EnchantmentAPI.getEnchantment((String) "Valor"), EnchantmentAPI.getEnchantment((String) "Metaphysical"), EnchantmentAPI.getEnchantment((String) "Death God"), EnchantmentAPI.getEnchantment((String) "Dodge")}))));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_LEGGINGS, (short) 0, "&5&lTimeless Robes", CC.Gray + "Robes that evade the 4th dimension and", CC.Gray + "are in a state of constant existence", CC.Gray + "across all planets of reality.", "", "&5&lTRAVELER SET BONUS", "&5&l* &5You deal 30% more damage.", "&5&l* &5Dimensional Shift Passive Ability", "&7(&oRequires all 4 dimensional traveler items.&7)"), new LinkedList<CustomEnchantment>(Arrays.asList(EnchantmentAPI.getEnchantment("Paladin Armored"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Clarity"), EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Nature Wrath"), EnchantmentAPI.getEnchantment("Lucky"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Obsidianshield"), EnchantmentAPI.getEnchantment("Cactus"), EnchantmentAPI.getEnchantment("Valor"), EnchantmentAPI.getEnchantment("Metaphysical"), EnchantmentAPI.getEnchantment("Death God"), EnchantmentAPI.getEnchantment("Dodge")))));
     }
 
     @Override
     public ItemStack getBoots(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_BOOTS, (short) 0, "&5&lWarp Speed Sandals", CC.Gray + "Sandals capable of breaking through", CC.Gray + "dimensional barriers to allow the barer", CC.Gray + "to perform impossible feats.", "", "&5&lTRAVELER SET BONUS", "&5&l* &5You deal 30% more damage.", "&5&l* &5Dimensional Shift Passive Ability", "&7(&oRequires all 4 dimensional traveler items.&7)"), new LinkedList<CustomEnchantment>(Arrays.asList(new CustomEnchantment[]{EnchantmentAPI.getEnchantment((String) "Ethereal Dodge"), EnchantmentAPI.getEnchantment((String) "Divine Enlighted"), EnchantmentAPI.getEnchantment((String) "Gears"), EnchantmentAPI.getEnchantment((String) "Deathbringer"), EnchantmentAPI.getEnchantment((String) "Tank"), EnchantmentAPI.getEnchantment((String) "Angelic"), EnchantmentAPI.getEnchantment((String) "Ender Walker"), EnchantmentAPI.getEnchantment((String) "Hardened"), EnchantmentAPI.getEnchantment((String) "Rocket Escape"), EnchantmentAPI.getEnchantment((String) "Springs"), EnchantmentAPI.getEnchantment((String) "Valor"), EnchantmentAPI.getEnchantment((String) "Dodge"), EnchantmentAPI.getEnchantment((String) "Sticky"), EnchantmentAPI.getEnchantment((String) "Diminish")}))));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_BOOTS, (short) 0, "&5&lWarp Speed Sandals", CC.Gray + "Sandals capable of breaking through", CC.Gray + "dimensional barriers to allow the barer", CC.Gray + "to perform impossible feats.", "", "&5&lTRAVELER SET BONUS", "&5&l* &5You deal 30% more damage.", "&5&l* &5Dimensional Shift Passive Ability", "&7(&oRequires all 4 dimensional traveler items.&7)"), new LinkedList<CustomEnchantment>(Arrays.asList(EnchantmentAPI.getEnchantment("Ethereal Dodge"), EnchantmentAPI.getEnchantment("Divine Enlighted"), EnchantmentAPI.getEnchantment("Gears"), EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Ender Walker"), EnchantmentAPI.getEnchantment("Hardened"), EnchantmentAPI.getEnchantment("Rocket Escape"), EnchantmentAPI.getEnchantment("Springs"), EnchantmentAPI.getEnchantment("Valor"), EnchantmentAPI.getEnchantment("Dodge"), EnchantmentAPI.getEnchantment("Sticky"), EnchantmentAPI.getEnchantment("Diminish")))));
     }
 
     @Override
     public List<String> getEquipDescription() {
-        return Lists.newArrayList((Object[]) new String[]{(Object) ChatColor.RED + "" + (Object) ChatColor.BOLD + "DIMENSIONAL TRAVELER SET BONUS: " + (Object) ChatColor.RED + "+30% DMG"});
+        return Lists.newArrayList(ChatColor.RED + "" + ChatColor.BOLD + "DIMENSIONAL TRAVELER SET BONUS: " + ChatColor.RED + "+30% DMG");
     }
 
     public Map<UUID, Float> getStoredPlayerWalkSpeeds() {
@@ -139,7 +141,7 @@ public class DimensionalTravelerSet
 
     @Override
     public boolean onPlayerDamaged(Player damaged, EntityDamageByEntityEvent event) {
-        if (this.isBlockedOutpostWorld((org.bukkit.entity.Entity) damaged)) {
+        if (this.isBlockedOutpostWorld(damaged)) {
             return false;
         }
         if (damaged.getWorld().getName().contains("dungeon")) {
@@ -151,7 +153,7 @@ public class DimensionalTravelerSet
         if (event.isCancelled()) {
             return false;
         }
-        if (Math.random() < 0.005 || event.getDamager() instanceof Player && ((Player) event.getDamager()).getName().equals("iFamasssxD") && ((Player) event.getDamager()).isSneaking()) {
+        if (Math.random() < 0.005 || event.getDamager() instanceof Player && event.getDamager().getName().equals("iFamasssxD") && ((Player) event.getDamager()).isSneaking()) {
             this.onDimensionalRift(damaged);
         }
         return true;
@@ -168,16 +170,16 @@ public class DimensionalTravelerSet
 
     public void onDimensionalRift(Player damaged) {
         HashSet<Player> nearbyPlayers = new HashSet<Player>();
-        FPlayer damagedFPlayer = FactionUtils.getFPlayer((Player) damaged);
+        FPlayer damagedFPlayer = FactionUtils.getFPlayer(damaged);
         for (org.bukkit.entity.Entity nearbyEnt : damaged.getNearbyEntities(25.0, 32.0, 25.0)) {
             boolean needsToFreeze;
             Player pNear;
             FPlayer fpNear;
-            if (!(nearbyEnt instanceof Player) || (fpNear = (FPlayer) FPlayers.i.get((OfflinePlayer) (pNear = (Player) nearbyEnt))).hasFaction() && fpNear.getRelationTo((RelationParticipator) damagedFPlayer).isAtLeast(Relation.TRUCE) || EssentialsUtils.isInGodMode((Player) pNear) || pNear.hasMetadata("spectator") || !WorldGuardUtils.isPvPEnabled((Location) pNear.getLocation()) || pNear.hasMetadata("NPC") || CosmicArmorSetsAPI.hasInfiniteLuck(pNear, 5, damaged))
+            if (!(nearbyEnt instanceof Player) || (fpNear = FPlayers.i.get(pNear = (Player) nearbyEnt)).hasFaction() && fpNear.getRelationTo(damagedFPlayer).isAtLeast(Relation.TRUCE) || EssentialsUtils.isInGodMode(pNear) || pNear.hasMetadata("spectator") || !WorldGuardUtils.isPvPEnabled(pNear.getLocation()) || pNear.hasMetadata("NPC") || CosmicArmorSetsAPI.hasInfiniteLuck(pNear, 5, damaged))
                 continue;
             double chance = CosmicArmorSetsAPI.getPoltergeistChance(pNear);
             if (chance > (double) (ThreadLocalRandom.current().nextInt(150) + 1)) {
-                pNear.setMetadata("ignoreTraveler", (MetadataValue) new FixedMetadataValue((Plugin) CosmicArmorSetsPlugin.get_(), (Object) (System.currentTimeMillis() + 8000L)));
+                pNear.setMetadata("ignoreTraveler", new FixedMetadataValue(CosmicArmorSetsPlugin.get_(), System.currentTimeMillis() + 8000L));
                 pNear.sendMessage(CC.DarkRedB + "* POLTERGEIST [" + CC.Gray + "Immune: Dimensional Traveler" + CC.DarkRedB + "] *");
                 continue;
             }
@@ -186,19 +188,19 @@ public class DimensionalTravelerSet
                 this.storedPlayerWalkSpeeds.put(pNear.getUniqueId(), Float.valueOf(pNear.getWalkSpeed()));
                 pNear.setWalkSpeed(0.0f);
             }
-            if (Clarity.canBlindnessApply((Player) pNear, (int) 0)) {
+            if (Clarity.canBlindnessApply(pNear, 0)) {
                 pNear.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 60, 0));
             }
             pNear.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 80, 0));
             pNear.playSound(pNear.getLocation().add(0.0, 4.0, 0.0), Sound.ENDERMAN_TELEPORT, 1.0f, 1.1f);
             pNear.playSound(pNear.getLocation().add(0.0, 4.0, 0.0), Sound.ANVIL_LAND, 1.0f, 1.1f);
-            pNear.sendMessage(CC.DarkPurpleB + "** DIMENSIONAL SHIFT (" + CC.Red + (Object) fpNear.getRelationTo((RelationParticipator) damagedFPlayer).getColor() + damaged.getName() + " [4s]" + CC.DarkPurpleB + ") **");
+            pNear.sendMessage(CC.DarkPurpleB + "** DIMENSIONAL SHIFT (" + CC.Red + fpNear.getRelationTo(damagedFPlayer).getColor() + damaged.getName() + " [4s]" + CC.DarkPurpleB + ") **");
             if (needsToFreeze) {
                 nearbyPlayers.add(pNear);
             }
             this.spawnDimensionalBlocks(pNear, damagedFPlayer.getFaction(), damaged);
         }
-        Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin) CosmicArmorSetsPlugin.get_(), () -> nearbyPlayers.forEach(this::unfreeze), 80L);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(CosmicArmorSetsPlugin.get_(), () -> nearbyPlayers.forEach(this::unfreeze), 80L);
     }
 
     private void unfreeze(Player player) {
@@ -221,7 +223,7 @@ public class DimensionalTravelerSet
             for (int x = -radius; x <= radius; ++x) {
                 for (int z = -radius; z <= radius; ++z) {
                     if (this.random.nextBoolean()) continue;
-                    this.fallingBlocks.add(this.createFallingBlock(new Location(start.getWorld(), (double) (startX + x), (double) newY, (double) (startZ + z)), original, faction));
+                    this.fallingBlocks.add(this.createFallingBlock(new Location(start.getWorld(), startX + x, newY, startZ + z), original, faction));
                 }
             }
         }
@@ -229,10 +231,11 @@ public class DimensionalTravelerSet
 
     private FallingBlock createFallingBlock(Location location, final Player original, final Faction faction) {
         final Material mat = this.materials.get(this.random.nextInt(this.materials.size()));
-        EntityFallingBlock block = new EntityFallingBlock((World) ((CraftWorld) location.getWorld()).getHandle(), location.getBlockX(), location.getBlockY(), location.getBlockZ(), Block.getById((int) mat.getId()), 0) {
+        EntityFallingBlock block = new EntityFallingBlock((World) ((CraftWorld) location.getWorld()).getHandle(), location.getBlockX(), location.getBlockY(), location.getBlockZ(), Block.getById(mat.getId()), 0) {
             boolean damagedPlayed;
 
             {
+                //TODO: BOWP - no idea, spigot numbers
                 super(x0, x1, x2, x3, x4, x5);
                 this.damagedPlayed = false;
             }
@@ -247,12 +250,17 @@ public class DimensionalTravelerSet
             public void h() {
                 if (this.ticksLived >= 1) {
                     try {
-                        List arraylist = this.world.getEntities((Entity) this, this.boundingBox, entity -> entity instanceof EntityHuman);
+                        List<Entity> arraylist = this.world.getEntities(this, this.getBoundingBox());
+                        arraylist.forEach(entity -> {
+                            if (!(entity instanceof HumanEntity)) {
+                                arraylist.remove(entity);
+                            }
+                        });
                         int killed = 0;
                         for (Entity ent : arraylist) {
                             CraftPlayer player;
                             if (!this.isAlive()) break;
-                            if (!(ent instanceof EntityHuman) || (player = (CraftPlayer) ent.getBukkitEntity()).getGameMode() == GameMode.CREATIVE || player.equals((Object) original) || player.isDead() || EssentialsUtils.isInGodMode((Player) player) || player.hasMetadata("spectator") || player.hasMetadata("NPC") || player.getHealth() <= 0.0 || !WorldGuardUtils.isPvPEnabled((Location) player.getLocation()) || DimensionalTravelerSet.this.isIgnoring((Player) player) || faction.isNormal() && faction.getRelationTo((RelationParticipator) FPlayers.i.get((OfflinePlayer) player)).isAtLeast(Relation.TRUCE))
+                            if (!(ent instanceof EntityHuman) || (player = (CraftPlayer) ent.getBukkitEntity()).getGameMode() == GameMode.CREATIVE || player.equals(original) || player.isDead() || EssentialsUtils.isInGodMode(player) || player.hasMetadata("spectator") || player.hasMetadata("NPC") || player.getHealth() <= 0.0 || !WorldGuardUtils.isPvPEnabled(player.getLocation()) || DimensionalTravelerSet.this.isIgnoring(player) || faction.isNormal() && faction.getRelationTo(FPlayers.i.get(player)).isAtLeast(Relation.TRUCE))
                                 continue;
                             DimensionalDamageTracker tracked = DimensionalTravelerSet.this.tracker.computeIfAbsent(player.getUniqueId(), e -> new DimensionalDamageTracker());
                             if (tracked.checkHit()) {
@@ -260,13 +268,13 @@ public class DimensionalTravelerSet
                                 continue;
                             }
                             double damage = 3.0;
-                            if (!ArmorSetInfo.subtractDirectHealth((Player) player, (LivingEntity) original, damage)) {
+                            if (!ArmorSetInfo.subtractDirectHealth(player, original, damage)) {
                                 this.die();
                                 continue;
                             }
                             this.damagedPlayed = true;
                             tracked.trackHit();
-                            DimensionalTravelerSet.this.unfreeze((Player) player);
+                            DimensionalTravelerSet.this.unfreeze(player);
                             player.playSound(player.getLocation(), Sound.ZOMBIE_WOODBREAK, 1.0f, 1.1f);
                             Bukkit.getLogger().info("[CosmicArmorSets] Damaging " + player.getName() + " for " + damage + " due to " + original.getName() + "'s Dimensional Traveler Block");
                             ++killed;
@@ -276,7 +284,7 @@ public class DimensionalTravelerSet
                             Bukkit.getLogger().info("Damaging " + killed + " players damage from falling block!");
                             return;
                         }
-                        if (this.ticksLived % 20 == 0 && (this.world.getType((int) this.locX, (int) this.locY, (int) this.locZ) == Blocks.WEB || this.world.getType((int) this.locX, (int) this.locY - 1, (int) this.locZ) == Blocks.WEB)) {
+                        if (this.ticksLived % 20 == 0 && (this.world.getType(new BlockPosition(this.locX, this.locY, this.locZ)) == Blocks.WEB || this.world.getType(new BlockPosition(this.locX, this.locY - 1, this.locZ)) == Blocks.WEB)) {
                             this.die();
                         }
                     } catch (Exception e2) {
@@ -290,16 +298,16 @@ public class DimensionalTravelerSet
             }
         };
         block.ticksLived = 1;
-        ((CraftWorld) location.getWorld()).getHandle().addEntity((Entity) block, CreatureSpawnEvent.SpawnReason.CUSTOM);
+        ((CraftWorld) location.getWorld()).getHandle().addEntity(block, CreatureSpawnEvent.SpawnReason.CUSTOM);
         FallingBlock fallingBlock = (FallingBlock) block.getBukkitEntity();
-        fallingBlock.setMetadata("dimensionalShift", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) faction.getId()));
+        fallingBlock.setMetadata("dimensionalShift", new FixedMetadataValue(CosmicBosses.getInstance(), faction.getId()));
         fallingBlock.setDropItem(false);
         return fallingBlock;
     }
 
     @Override
     public boolean onPlayerAttacked(Player damager, EntityDamageByEntityEvent event) {
-        OutpostTier outpostTier = CosmicOutpostsAPI.getOutpostTierOfWorld((org.bukkit.entity.Entity) event.getDamager());
+        OutpostTier outpostTier = CosmicOutpostsAPI.getOutpostTierOfWorld(event.getDamager());
         return outpostTier != OutpostTier.TRAINEE && outpostTier != OutpostTier.VANILLA && outpostTier != OutpostTier.HERO;
     }
 
@@ -311,7 +319,7 @@ public class DimensionalTravelerSet
         if (damaged.getWorld().getName().contains("dungeon")) {
             return false;
         }
-        if (this.isBlockedOutpostWorld((org.bukkit.entity.Entity) damaged)) {
+        if (this.isBlockedOutpostWorld(damaged)) {
             return false;
         }
         if (Math.random() <= 0.002) {
@@ -322,7 +330,7 @@ public class DimensionalTravelerSet
 
     @Override
     public boolean onPlayerAttackedBonus(Player damager, int multiplier, EntityDamageByEntityEvent event) {
-        if (this.isBlockedOutpostWorld((org.bukkit.entity.Entity) damager)) {
+        if (this.isBlockedOutpostWorld(damager)) {
             return false;
         }
         return this.modifyDamage(damager, event, 7.5, multiplier);
@@ -332,7 +340,7 @@ public class DimensionalTravelerSet
     public void onPlayerEvent(Event event) {
         if (event instanceof EntityChangeBlockEvent) {
             org.bukkit.entity.Entity falling = ((EntityChangeBlockEvent) event).getEntity();
-            if (this.fallingBlocks.remove((Object) falling)) {
+            if (this.fallingBlocks.remove(falling)) {
                 ((EntityChangeBlockEvent) event).setCancelled(true);
                 falling.remove();
             }

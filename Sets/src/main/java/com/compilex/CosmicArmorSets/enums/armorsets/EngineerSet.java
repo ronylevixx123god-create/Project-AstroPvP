@@ -71,16 +71,18 @@ import com.massivecraft.factions.struct.Relation;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
-import net.minecraft.server.v1_7_R4.World;
-import net.minecraft.server.v1_7_R4.*;
+import net.minecraft.server.v1_8_R3.World;
+import net.minecraft.server.v1_8_R3.*;
 import org.arkhamnetwork.enchantments.EnchantmentBook;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicCustomEnchantment;
 import org.bukkit.*;
-import org.bukkit.craftbukkit.v1_7_R4.CraftWorld;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
+import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.FallingBlock;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
@@ -105,43 +107,43 @@ public class EngineerSet
         OtherPlayerEventListenerSet {
     public static HashMap<org.bukkit.entity.Entity, Player> blocksAndProccer = Maps.newHashMap();
     private final ChatColor color = ChatColor.GOLD;
-    private Set<FallingBlock> fallingBlocks = Collections.newSetFromMap(new WeakHashMap());
+    private final Set<FallingBlock> fallingBlocks = Collections.newSetFromMap(new WeakHashMap());
 
     public EngineerSet() {
-        Bukkit.getPluginManager().registerEvents((Listener) this, (Plugin) Enchantments.getInstance());
+        Bukkit.getPluginManager().registerEvents(this, Enchantments.getInstance());
     }
 
     @Override
     public void onEquip(Player player) {
-        EnchantmentAPI.getEnchantment((String) "Gears").applyEquipEffect(player, 4);
+        EnchantmentAPI.getEnchantment("Gears").applyEquipEffect(player, 4);
     }
 
     @Override
     public void onUnequip(Player player) {
-        EnchantmentAPI.getEnchantment((String) "Gears").applyUnequipEffect(player, 4);
+        EnchantmentAPI.getEnchantment("Gears").applyUnequipEffect(player, 4);
     }
 
     @Override
     public ItemStack getHelmet(boolean applyTransmog) {
         ItemStack kothItem = this.createArmor(Material.DIAMOND_HELMET, "Engineer Face Mask", "helmet");
-        return applyTransmog ? EnchantmentBook.applyTransmogScroll((ItemStack) kothItem) : kothItem;
+        return applyTransmog ? EnchantmentBook.applyTransmogScroll(kothItem) : kothItem;
     }
 
     @Override
     public ItemStack getChestplate(boolean applyTransmog) {
         ItemStack kothItem = this.createArmor(Material.DIAMOND_CHESTPLATE, "Engineer Explosion-Proof Vest", "chestplate");
-        return applyTransmog ? EnchantmentBook.applyTransmogScroll((ItemStack) kothItem) : kothItem;
+        return applyTransmog ? EnchantmentBook.applyTransmogScroll(kothItem) : kothItem;
     }
 
     @Override
     public ItemStack getLeggings(boolean applyTransmog) {
         ItemStack kothItem = this.createArmor(Material.DIAMOND_LEGGINGS, "Engineer Protective Chaps", "leggings");
-        return applyTransmog ? EnchantmentBook.applyTransmogScroll((ItemStack) kothItem) : kothItem;
+        return applyTransmog ? EnchantmentBook.applyTransmogScroll(kothItem) : kothItem;
     }
 
     public ItemStack addEnchants(ItemStack item, List<String> enchants, double heroic) {
         for (String cen : enchants) {
-            CustomEnchantment ce = EnchantmentAPI.getEnchantment((String) cen);
+            CustomEnchantment ce = EnchantmentAPI.getEnchantment(cen);
             if (ce == null) continue;
             if (ce instanceof HeroicCustomEnchantment) {
                 if (heroic > 0.0 && Math.random() > heroic) continue;
@@ -163,7 +165,7 @@ public class EngineerSet
     }
 
     public ItemStack addRandomLeveledEnchant(String enchantName, ItemStack item) {
-        CustomEnchantment enchantment = EnchantmentAPI.getEnchantment((String) enchantName);
+        CustomEnchantment enchantment = EnchantmentAPI.getEnchantment(enchantName);
         if (enchantment == null) {
             return item;
         }
@@ -174,12 +176,12 @@ public class EngineerSet
     @Override
     public ItemStack getBoots(boolean applyTransmog) {
         ItemStack kothItem = this.createArmor(Material.DIAMOND_BOOTS, "Engineer Steel Toed Boots", "boots");
-        return applyTransmog ? EnchantmentBook.applyTransmogScroll((ItemStack) kothItem) : kothItem;
+        return applyTransmog ? EnchantmentBook.applyTransmogScroll(kothItem) : kothItem;
     }
 
     @Override
     public List<String> getEquipDescription() {
-        return Lists.newArrayList((Object[]) new String[]{CC.GoldB + "ENGINEER SET BONUS:", CC.GoldB + " * " + CC.Gold + "Enemies deal 35% less damage to you.", CC.GoldB + " * " + CC.Gold + "Invisible on /near (Coming Soon)", CC.GoldB + " * " + CC.Gold + "Immune to Teleblock", CC.GoldB + " * " + CC.Gold + "Gears IV", CC.GoldB + " * " + CC.Gold + "B-2 Bomber Passive ability"});
+        return Lists.newArrayList(CC.GoldB + "ENGINEER SET BONUS:", CC.GoldB + " * " + CC.Gold + "Enemies deal 35% less damage to you.", CC.GoldB + " * " + CC.Gold + "Invisible on /near (Coming Soon)", CC.GoldB + " * " + CC.Gold + "Immune to Teleblock", CC.GoldB + " * " + CC.Gold + "Gears IV", CC.GoldB + " * " + CC.Gold + "B-2 Bomber Passive ability");
     }
 
     @Override
@@ -191,20 +193,21 @@ public class EngineerSet
     }
 
     public void onEngineerAbility(Player player) {
-        List affected;
-        List players = affected = player.getNearbyEntities(25.0, 25.0, 25.0).stream().filter(ent -> ent instanceof Player).filter(e -> !GeneralUtil.isAtleastTruce((Player) player, (Player) ((Player) e))).filter(e -> ((Player) e).getGameMode() != GameMode.CREATIVE).map(e -> (Player) e).collect(Collectors.toList());
-        player.sendMessage(CC.translate((String) ("&a&l* B-2 BOMBER DEPLOYED [&7" + affected.size() + " &7players&a&l] *")));
+        List<Player> affected;
+        List<Player> players = affected = player.getNearbyEntities(25.0, 25.0, 25.0).stream().filter(ent -> ent instanceof Player).filter(e -> !GeneralUtil.isAtleastTruce(player, e)).filter(e -> ((Player) e).getGameMode() != GameMode.CREATIVE).map(e -> (Player) e).collect(Collectors.toList());
+        player.sendMessage(CC.translate("&a&l* B-2 BOMBER DEPLOYED [&7" + affected.size() + " &7players&a&l] *"));
         for (Player enemy : affected) {
-            enemy.sendMessage(CC.translate((String) ("&6&l* B-2 BOMB, RUN! &7(" + player.getName() + ") &6&l*")));
-            this.fallingBlocks.add(this.createFallingBlock(enemy.getLocation().add(0.0, 5.0, 0.0), player, FactionUtils.getFaction((Player) player)));
+            enemy.sendMessage(CC.translate("&6&l* B-2 BOMB, RUN! &7(" + player.getName() + ") &6&l*"));
+            this.fallingBlocks.add(this.createFallingBlock(enemy.getLocation().add(0.0, 5.0, 0.0), player, FactionUtils.getFaction(player)));
         }
     }
 
     private FallingBlock createFallingBlock(Location location, final Player original, final Faction faction) {
         final Material mat = Material.TNT;
-        EntityFallingBlock block = new EntityFallingBlock((World) ((CraftWorld) location.getWorld()).getHandle(), location.getX(), location.getY(), location.getZ(), Block.getById((int) mat.getId()), 0) {
+        EntityFallingBlock block = new EntityFallingBlock((World) ((CraftWorld) location.getWorld()).getHandle(), location.getX(), location.getY(), location.getZ(), Block.getById(mat.getId()), 0) {
             boolean damagedPlayed;
 
+            // TODO: BOWP spigot numbers
             {
                 super(x0, x1, x2, x3, x4, x5);
                 this.damagedPlayed = false;
@@ -214,7 +217,7 @@ public class EngineerSet
                 if (this.isAlive() && this.damagedPlayed) {
                     this.world.getWorld().playEffect(this.getBukkitEntity().getLocation(), Effect.STEP_SOUND, mat.getId());
                 }
-                ParticleEffect.playEffect((ParticleEffect) ParticleEffect.CLOUD, (Location) this.getBukkitEntity().getLocation(), (float) 0.6f, (int) 5);
+                ParticleEffect.playEffect(ParticleEffect.CLOUD, this.getBukkitEntity().getLocation(), 0.6f, 5);
                 this.bukkitEntity.getLocation().getWorld().playSound(this.bukkitEntity.getLocation(), Sound.ZOMBIE_WOOD, 1.2f, 0.9f);
                 super.die();
             }
@@ -222,23 +225,29 @@ public class EngineerSet
             public void h() {
                 if (this.ticksLived >= 1) {
                     try {
-                        List arraylist = this.world.getEntities((Entity) this, this.boundingBox, entity -> entity instanceof EntityHuman);
+                        List<Entity> arraylist = this.world.getEntities(this, this.getBoundingBox());
+                        arraylist.forEach(entity -> {
+                            if (!(entity instanceof HumanEntity)) {
+                                arraylist.remove(entity);
+                            }
+                        });
+
                         int killed = 0;
                         for (Entity ent : arraylist) {
                             CraftPlayer player;
                             if (!this.isAlive()) break;
-                            if (!(ent instanceof EntityHuman) || (player = (CraftPlayer) ent.getBukkitEntity()).getGameMode() == GameMode.CREATIVE || player.equals((Object) original) || player.isDead() || EssentialsUtils.isInGodMode((Player) player) || player.hasMetadata("spectator") || player.hasMetadata("NPC") || player.getHealth() <= 0.0 || !WorldGuardUtils.isPvPEnabled((Location) player.getLocation()) || faction.isNormal() && faction.getRelationTo((RelationParticipator) FPlayers.i.get((OfflinePlayer) player)).isAtLeast(Relation.TRUCE))
+                            if (!(ent instanceof EntityHuman) || (player = (CraftPlayer) ent.getBukkitEntity()).getGameMode() == GameMode.CREATIVE || player.equals(original) || player.isDead() || EssentialsUtils.isInGodMode(player) || player.hasMetadata("spectator") || player.hasMetadata("NPC") || player.getHealth() <= 0.0 || !WorldGuardUtils.isPvPEnabled(player.getLocation()) || faction.isNormal() && faction.getRelationTo(FPlayers.i.get(player)).isAtLeast(Relation.TRUCE))
                                 continue;
                             if (player.hasMetadata("b2-bombed")) {
                                 this.die();
                                 continue;
                             }
                             player.setWalkSpeed(0.0f);
-                            player.sendMessage(CC.translate((String) ("&c&l* B-2 BOMBED [&7" + original.getName() + " (Frozen for 3s)&c&l] *")));
-                            player.setMetadata("b2-bombed", (MetadataValue) new FixedMetadataValue((Plugin) CosmicArmorSetsPlugin.get_(), (Object) true));
-                            Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin) CosmicArmorSetsPlugin.get_(), () -> {
+                            player.sendMessage(CC.translate("&c&l* B-2 BOMBED [&7" + original.getName() + " (Frozen for 3s)&c&l] *"));
+                            player.setMetadata("b2-bombed", new FixedMetadataValue(CosmicArmorSetsPlugin.get_(), true));
+                            Bukkit.getScheduler().runTaskLaterAsynchronously(CosmicArmorSetsPlugin.get_(), () -> {
                                 if (player.isOnline()) {
-                                    EngineerSet.this.unfreeze((Player) player);
+                                    EngineerSet.this.unfreeze(player);
                                 }
                             }, 60L);
                             this.damagedPlayed = true;
@@ -249,7 +258,7 @@ public class EngineerSet
                             Bukkit.getLogger().info("Damaging " + killed + " players damage from falling block!");
                             return;
                         }
-                        if (this.ticksLived % 20 == 0 && (this.world.getType((int) this.locX, (int) this.locY, (int) this.locZ) == Blocks.WEB || this.world.getType((int) this.locX, (int) this.locY - 1, (int) this.locZ) == Blocks.WEB)) {
+                        if (this.ticksLived % 20 == 0 && (this.world.getType(new BlockPosition(this.locX, this.locY, this.locZ)) == Blocks.WEB || this.world.getType(new BlockPosition(this.locX, this.locY - 1, this.locZ)) == Blocks.WEB)) {
                             this.die();
                         }
                     } catch (Exception e) {
@@ -263,9 +272,9 @@ public class EngineerSet
             }
         };
         block.ticksLived = 1;
-        ((CraftWorld) location.getWorld()).getHandle().addEntity((Entity) block, CreatureSpawnEvent.SpawnReason.CUSTOM);
+        ((CraftWorld) location.getWorld()).getHandle().addEntity(block, CreatureSpawnEvent.SpawnReason.CUSTOM);
         FallingBlock fallingBlock = (FallingBlock) block.getBukkitEntity();
-        fallingBlock.setMetadata("b2Bomber", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) faction.getId()));
+        fallingBlock.setMetadata("b2Bomber", new FixedMetadataValue(CosmicBosses.getInstance(), faction.getId()));
         fallingBlock.setDropItem(false);
         return fallingBlock;
     }
@@ -274,7 +283,7 @@ public class EngineerSet
     public void onPlayerEvent(Event event) {
         if (event instanceof EntityChangeBlockEvent) {
             org.bukkit.entity.Entity falling = ((EntityChangeBlockEvent) event).getEntity();
-            if (this.fallingBlocks.remove((Object) falling)) {
+            if (this.fallingBlocks.remove(falling)) {
                 ((EntityChangeBlockEvent) event).setCancelled(true);
                 falling.remove();
             }
@@ -286,7 +295,7 @@ public class EngineerSet
     }
 
     private void unfreeze(Player player) {
-        player.removeMetadata("b2-bombed", (Plugin) CosmicArmorSetsPlugin.get_());
+        player.removeMetadata("b2-bombed", CosmicArmorSetsPlugin.get_());
         player.setWalkSpeed(0.2f);
     }
 
@@ -324,8 +333,8 @@ public class EngineerSet
     }
 
     public ItemStack createArmor(Material material, String itemName, String loreType) {
-        String bold = (Object) this.color + CC.Bold + "* " + (Object) this.color;
-        ItemStack armor = ItemUtils.buildItem(material, (short) 0, (Object) this.color + CC.Bold + itemName + CC.Reset, (Object) this.color + CC.Italic + "Next-gen Gnometech " + loreType + " for demolition specialists", "", (Object) this.color + CC.Bold + "ENGINEER SET BONUS", bold + "Enemies deal 35% less damage to you.", bold + "Invisible on /near", bold + "Immune to Teleblock", bold + "Gears IV", bold + "B-2 Bomber Passive Ability", CC.Gray + "(" + CC.GrayI + "Requires all 4 engineer set items" + CC.Gray + ")");
+        String bold = this.color + CC.Bold + "* " + this.color;
+        ItemStack armor = ItemUtils.buildItem(material, (short) 0, this.color + CC.Bold + itemName + CC.Reset, this.color + CC.Italic + "Next-gen Gnometech " + loreType + " for demolition specialists", "", this.color + CC.Bold + "ENGINEER SET BONUS", bold + "Enemies deal 35% less damage to you.", bold + "Invisible on /near", bold + "Immune to Teleblock", bold + "Gears IV", bold + "B-2 Bomber Passive Ability", CC.Gray + "(" + CC.GrayI + "Requires all 4 engineer set items" + CC.Gray + ")");
         armor.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5);
         armor.addUnsafeEnchantment(Enchantment.DURABILITY, 3);
         return armor;
@@ -333,7 +342,7 @@ public class EngineerSet
 
     @Override
     public ItemStack getWeapon(boolean p0) {
-        return new NBTWrapper(new ItemBuilder(Material.DIAMOND_SWORD, CC.GoldB + "Engineer Hammer", new String[]{CC.Gray + "A titan-forged grandmaster", CC.Gray + "warhammer that crushes all.", "", CC.GoldB + "ENGINEER WEAPON BONUS", CC.Gold + "Deal +15% damage to all enemies.", CC.Gold + "120% B-2 Bomber Ability", CC.Gold + "Immune to World Destroyer Pet", CC.Gold + "Immune to Shockwave, Obliterate, Guardians", CC.Gray + "(" + CC.GrayI + "Requires all 4 engineer items." + CC.Gray + ")"}).enchant(Enchantment.DAMAGE_ALL, 5).enchant(Enchantment.DURABILITY, 3).build()).setString("cosmicType", "ENGINEER_SWORD").build();
+        return new NBTWrapper(new ItemBuilder(Material.DIAMOND_SWORD, CC.GoldB + "Engineer Hammer", CC.Gray + "A titan-forged grandmaster", CC.Gray + "warhammer that crushes all.", "", CC.GoldB + "ENGINEER WEAPON BONUS", CC.Gold + "Deal +15% damage to all enemies.", CC.Gold + "120% B-2 Bomber Ability", CC.Gold + "Immune to World Destroyer Pet", CC.Gold + "Immune to Shockwave, Obliterate, Guardians", CC.Gray + "(" + CC.GrayI + "Requires all 4 engineer items." + CC.Gray + ")").enchant(Enchantment.DAMAGE_ALL, 5).enchant(Enchantment.DURABILITY, 3).build()).setString("cosmicType", "ENGINEER_SWORD").build();
     }
 }
 

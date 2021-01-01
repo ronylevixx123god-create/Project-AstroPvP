@@ -31,6 +31,7 @@ public class CommandMasteryShard
         implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if (!sender.isOp()) {
+            sender.sendMessage(CC.Red + "No permission.");
             return true;
         }
         if (args.length >= 3 && args[0].equalsIgnoreCase("give")) {
