@@ -4,9 +4,9 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
 import java.util.UUID;
 
+import com.massivecraft.factions.P;
 import me.astropvp.AstroBackpacksAPI;
 import me.astropvp.objects.BackpackType;
-import me.cosmicpvp.CosmicFactionUtils.CosmicFactionUtils;
 import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.enchantments.armor.RocketEscape;
@@ -38,7 +38,7 @@ public class HeroicRocketEscape extends HeroicCustomEnchantment {
     private boolean canEscape(Player pl) {
         if (!RocketEscape.last_rocket_escape.containsKey(pl.getUniqueId().toString()))
             return true;
-        return (System.currentTimeMillis() - ((Long)RocketEscape.last_rocket_escape.get(pl.getUniqueId().toString())).longValue() > 180000L);
+        return (System.currentTimeMillis() - (Long) RocketEscape.last_rocket_escape.get(pl.getUniqueId().toString()) > 180000L);
     }
 
     public void applyDefenseEffect(LivingEntity player, LivingEntity target, int level, EntityDamageEvent event) {
@@ -55,7 +55,7 @@ public class HeroicRocketEscape extends HeroicCustomEnchantment {
             if (player.getHealth() - dmg <= 0.0D &&
                     canEscape((Player)player)) {
                 Player pl = (Player)player;
-                RocketEscape.last_rocket_escape.put(pl.getUniqueId().toString(), Long.valueOf(System.currentTimeMillis()));
+                RocketEscape.last_rocket_escape.put(pl.getUniqueId().toString(), System.currentTimeMillis());
                 if (pl.hasMetadata("sabotage") &&
                         System.currentTimeMillis() - ((MetadataValue)pl.getMetadata("sabotage").get(0)).asLong() <= 1000L) {
                     int sabotageLevel = ((MetadataValue)pl.getMetadata("sabotageLevel").get(0)).asInt();
@@ -78,7 +78,7 @@ public class HeroicRocketEscape extends HeroicCustomEnchantment {
                 pl.sendMessage(CC.GreenB + "(!) " + CC.Green + "Your Guided Rocket Escape boots have activated, flight temporarily enabled, recover while they last!");
                 pl.sendMessage("");
                 pl.playSound(pl.getLocation(), Sound.EXPLODE, 1.0F, 0.54F);
-                pl.setMetadata("no_fall_damage", (MetadataValue)new FixedMetadataValue((Plugin)CosmicFactionUtils.getPlugin(), Boolean.valueOf(true)));
+                pl.setMetadata("no_fall_damage", (MetadataValue)new FixedMetadataValue(P.getP(), Boolean.TRUE));
                 Vector velocity = new Vector(0, (pl.getWorld().getName().equals("world_duels") || pl.getWorld().getName().equals("world_duels2")) ? (2 + level) : (4 + level * 2), 0);
                 Bukkit.getPluginManager().callEvent((Event)new PlayerVelocityEvent(pl, velocity));
                 pl.setVelocity(velocity);
@@ -90,7 +90,7 @@ public class HeroicRocketEscape extends HeroicCustomEnchantment {
                 Location loc = pl.getLocation();
                 ParticleEffect.sendToLocation(ParticleEffect.CLOUD, loc, (float)Math.random() * 2.0F, (float)Math.random() * 2.0F, (float)Math.random() * 2.0F, 1.25F, 69);
                 long flightDuration = level;
-                pl.setMetadata("allow_flight", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), Long.valueOf(System.currentTimeMillis() + flightDuration * 1000L)));
+                pl.setMetadata("allow_flight", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), System.currentTimeMillis() + flightDuration * 1000L));
                 pl.setAllowFlight(true);
                 pl.setFlying(true);
                 pl.setFlySpeed(0.2F + level * 0.03F);

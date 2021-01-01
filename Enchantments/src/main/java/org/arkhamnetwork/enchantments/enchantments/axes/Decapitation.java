@@ -1,6 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
 import com.rit.sucy.*;
+import org.apache.commons.lang.WordUtils;
 import org.arkhamnetwork.enchantments.util.*;
 import org.arkhamnetwork.enchantments.*;
 import org.bukkit.plugin.*;
@@ -13,7 +14,6 @@ import org.bukkit.inventory.*;
 import org.bukkit.*;
 import java.text.*;
 import org.bukkit.inventory.meta.*;
-import net.minecraft.util.org.apache.commons.lang3.text.*;
 import java.util.*;
 
 public class Decapitation extends CustomEnchantment
@@ -48,7 +48,7 @@ public class Decapitation extends CustomEnchantment
             final Player p_dead = e.getEntity();
             if (DecapitationEvents.decapitationEnchant.contains(p_dead.getName())) {
                 Bukkit.getLogger().info("HEADLESS ENCH -- Dropping skull of " + p_dead.getName() + "!");
-                if (p_dead.getKiller() != null && p_dead.getKiller() instanceof Player) {
+                if (p_dead.getKiller() != null && p_dead.getKiller() != null) {
                     e.getDrops().add(this.getPlayerHead(p_dead.getName(), p_dead.getKiller()));
                     if (Bukkit.getPluginManager().isPluginEnabled("CosmicContests") && !p_dead.getKiller().hasMetadata("cosmicContests_gotHead_" + p_dead.getName())) {
                         Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), "contests add " + p_dead.getKiller().getName() + " headsCollected 1");
@@ -69,7 +69,7 @@ public class Decapitation extends CustomEnchantment
             sm.setDisplayName(ChatColor.WHITE + "Skull of " + p_name);
             final SimpleDateFormat month_date = new SimpleDateFormat("MMMM");
             final String monthName = month_date.format(DecapitationEvents.calendar.getTime());
-            sm.setLore((List)new ArrayList(Arrays.asList(ChatColor.GRAY + "Defeated by " + ChatColor.WHITE + pKiller.getName() + ChatColor.GRAY + " on ", ChatColor.WHITE + monthName + " " + DecapitationEvents.calendar.get(5) + ", " + DecapitationEvents.calendar.get(1) + ChatColor.GRAY + " at ", ChatColor.WHITE + "" + pKiller.getLocation().getBlockX() + ", " + pKiller.getLocation().getBlockY() + ", " + pKiller.getLocation().getBlockZ() + ChatColor.GRAY + " with a(n) ", ChatColor.WHITE + this.getItemName(pKiller.getItemInHand()) + "!")));
+            sm.setLore(new ArrayList(Arrays.asList(ChatColor.GRAY + "Defeated by " + ChatColor.WHITE + pKiller.getName() + ChatColor.GRAY + " on ", ChatColor.WHITE + monthName + " " + DecapitationEvents.calendar.get(5) + ", " + DecapitationEvents.calendar.get(1) + ChatColor.GRAY + " at ", ChatColor.WHITE + "" + pKiller.getLocation().getBlockX() + ", " + pKiller.getLocation().getBlockY() + ", " + pKiller.getLocation().getBlockZ() + ChatColor.GRAY + " with a(n) ", ChatColor.WHITE + this.getItemName(pKiller.getItemInHand()) + "!")));
             is.setItemMeta((ItemMeta)sm);
             return is;
         }

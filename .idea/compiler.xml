@@ -12,6 +12,7 @@
         <module name="SpaceChests" />
         <module name="Factions" />
         <module name="Enchantments" />
+        <module name="Attributes" />
         <module name="Bosses" />
         <module name="Slotbot" />
         <module name="Utils" />

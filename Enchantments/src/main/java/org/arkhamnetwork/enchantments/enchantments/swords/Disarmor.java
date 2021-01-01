@@ -65,10 +65,10 @@ public class Disarmor extends CustomEnchantment
         }
         if (armor != null) {
             if (p.getInventory().firstEmpty() != -1) {
-                p.getInventory().addItem(new ItemStack[] { armor });
+                p.getInventory().addItem(armor);
             }
             else {
-                p.getWorld().dropItem(p.getTargetBlock((HashSet)null, 1).getLocation(), armor);
+                p.getWorld().dropItem(p.getTargetBlock((HashSet<Byte>) null, 1).getLocation(), armor);
             }
         }
         p.sendMessage("");

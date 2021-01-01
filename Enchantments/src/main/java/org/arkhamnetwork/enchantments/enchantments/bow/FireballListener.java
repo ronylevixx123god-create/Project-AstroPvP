@@ -5,7 +5,6 @@ import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.event.*;
 import org.bukkit.event.entity.*;
 import org.bukkit.metadata.*;
-import org.zencode.shortninja.staffplus.*;
 import org.bukkit.entity.*;
 import org.arkhamnetwork.enchantments.*;
 import org.bukkit.plugin.*;
@@ -72,9 +71,10 @@ final class FireballListener implements Listener
                     if (u.isGodModeEnabled() || u.isVanished()) {
                         continue;
                     }
-                    if (StaffPlus.get().freeze.isActive(pEnt.getName())) {
+                    // TODO: ADD STAFF FREEZE
+                    /*if (StaffPlus.get().freeze.isActive(pEnt.getName())) {
                         continue;
-                    }
+                    }*/
                 }
                 if (WorldGuardUtils.isPvPDisabled(ent.getLocation())) {
                     continue;
@@ -83,17 +83,14 @@ final class FireballListener implements Listener
                     continue;
                 }
                 if (ent instanceof LivingEntity) {
-                    ((LivingEntity)ent).setFireTicks(((LivingEntity)ent).getFireTicks() + level * 20);
+                    ent.setFireTicks(ent.getFireTicks() + level * 20);
                 }
                 final LivingEntity le = (LivingEntity)ent;
                 if (Bukkit.getPlayer(enchantment_owner) != null) {
-                    Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable)new Runnable() {
-                        @Override
-                        public void run() {
-                            if (!le.isDead()) {
-                                final int dmg = 1 + level;
-                                le.damage(duelWorld ? (dmg / 1.5) : ((double)dmg));
-                            }
+                    Bukkit.getScheduler().runTaskLater(Enchantments.getInstance(), () -> {
+                        if (!le.isDead()) {
+                            final int dmg = 1 + level;
+                            le.damage(duelWorld ? (dmg / 1.5) : ((double)dmg));
                         }
                     }, 1L);
                 }

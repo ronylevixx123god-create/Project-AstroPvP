@@ -1,6 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
 import com.rit.sucy.*;
+import org.apache.commons.lang.WordUtils;
 import org.arkhamnetwork.enchantments.util.*;
 import org.arkhamnetwork.enchantments.*;
 import org.bukkit.plugin.*;
@@ -13,7 +14,6 @@ import org.bukkit.inventory.*;
 import org.bukkit.*;
 import java.text.*;
 import org.bukkit.inventory.meta.*;
-import net.minecraft.util.org.apache.commons.lang3.text.*;
 import java.util.*;
 
 public class Headless extends CustomEnchantment
@@ -69,7 +69,7 @@ public class Headless extends CustomEnchantment
             sm.setDisplayName(ChatColor.WHITE + "Skull of " + p_name);
             final SimpleDateFormat month_date = new SimpleDateFormat("MMMM");
             final String monthName = month_date.format(HeadlessEvents.calendar.getTime());
-            sm.setLore((List)new ArrayList(Arrays.asList(ChatColor.GRAY + "Defeated by " + ChatColor.WHITE + pKiller.getName() + ChatColor.GRAY + " on ", ChatColor.WHITE + monthName + " " + HeadlessEvents.calendar.get(5) + ", " + HeadlessEvents.calendar.get(1) + ChatColor.GRAY + " at ", ChatColor.WHITE + "" + pKiller.getLocation().getBlockX() + ", " + pKiller.getLocation().getBlockY() + ", " + pKiller.getLocation().getBlockZ() + ChatColor.GRAY + " with a(n) ", ChatColor.WHITE + this.getItemName(pKiller.getItemInHand()) + "!")));
+            sm.setLore(new ArrayList(Arrays.asList(ChatColor.GRAY + "Defeated by " + ChatColor.WHITE + pKiller.getName() + ChatColor.GRAY + " on ", ChatColor.WHITE + monthName + " " + HeadlessEvents.calendar.get(5) + ", " + HeadlessEvents.calendar.get(1) + ChatColor.GRAY + " at ", ChatColor.WHITE + "" + pKiller.getLocation().getBlockX() + ", " + pKiller.getLocation().getBlockY() + ", " + pKiller.getLocation().getBlockZ() + ChatColor.GRAY + " with a(n) ", ChatColor.WHITE + this.getItemName(pKiller.getItemInHand()) + "!")));
             is.setItemMeta((ItemMeta)sm);
             return is;
         }

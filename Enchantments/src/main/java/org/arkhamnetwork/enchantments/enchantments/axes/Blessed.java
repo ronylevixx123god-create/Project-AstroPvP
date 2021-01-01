@@ -1,6 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
 import com.rit.sucy.*;
+import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.arkhamnetwork.enchantments.util.*;
 import com.google.common.collect.*;
 import org.bukkit.event.entity.*;
@@ -10,7 +11,6 @@ import com.cosmicpvp.cosmicutils.customevents.*;
 import org.bukkit.event.*;
 import com.compilex.CosmicArmorSets.*;
 import com.compilex.CosmicArmorSets.enums.*;
-import net.minecraft.server.v1_7_R4.*;
 import org.arkhamnetwork.enchantments.*;
 import org.bukkit.metadata.*;
 import org.bukkit.plugin.*;
