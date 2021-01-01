@@ -18,9 +18,8 @@ import org.bukkit.entity.Player;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class Faction
-        extends Entity
-        implements EconomyParticipator {
+public class Faction extends Entity implements EconomyParticipator {
+
     public final Map<String, Relation> relationWish = new ConcurrentHashMap<String, Relation>();
     private final Map<FLocation, Set<String>> claimOwnership = new ConcurrentHashMap<FLocation, Set<String>>();
     private final transient Set<FPlayer> fplayers = new HashSet<FPlayer>();
