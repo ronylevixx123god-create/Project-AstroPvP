@@ -1,27 +1,28 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
-import com.rit.sucy.*;
-import java.util.*;
-
+import com.massivecraft.factions.P;
+import com.rit.sucy.CustomEnchantment;
 import me.astropvp.AstroBackpacksAPI;
 import me.astropvp.objects.BackpackType;
+import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
 import org.arkhamnetwork.enchantments.util.ArmorUtil;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.bukkit.event.entity.*;
-import org.bukkit.entity.*;
-import org.arkhamnetwork.enchantments.util.*;
-import com.cosmicpvp.cosmicutils.utils.*;
-import me.cosmicpvp.CosmicFactionUtils.*;
-import org.bukkit.metadata.*;
-import org.bukkit.plugin.*;
-import org.bukkit.util.*;
-import org.arkhamnetwork.enchantments.libs.*;
-import org.bukkit.potion.*;
-import org.arkhamnetwork.Arkkit.libs.*;
-import org.arkhamnetwork.enchantments.*;
 import org.bukkit.*;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.UUID;
 
 public class RocketEscape extends CustomEnchantment
 {
@@ -71,7 +72,7 @@ public class RocketEscape extends CustomEnchantment
                 pl.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.GREEN + "Your Rocket Escape boots have activated, recover while they last!");
                 pl.sendMessage("");
                 pl.playSound(pl.getLocation(), Sound.EXPLODE, 1.0f, 0.54f);
-                pl.setMetadata("no_fall_damage", (MetadataValue)new FixedMetadataValue((Plugin)CosmicFactionUtils.getPlugin(), true));
+                pl.setMetadata("no_fall_damage", new FixedMetadataValue(P.getP(), true));
                 pl.setVelocity(new Vector(0, (pl.getWorld().getName().equals("world_duels") || pl.getWorld().getName().equals("world_duels2")) ? (2 + level) : (4 + level * 2), 0));
                 PlayerPotionEffects.untrackPotionEffect(pl, PotionEffectType.SLOW);
                 PlayerPotionEffects.untrackPotionEffect(pl, PotionEffectType.SLOW_DIGGING);

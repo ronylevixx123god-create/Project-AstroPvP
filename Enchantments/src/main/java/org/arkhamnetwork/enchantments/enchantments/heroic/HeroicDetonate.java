@@ -223,7 +223,7 @@ public class HeroicDetonate extends CustomEnchantment
             }
         }
         if (autoSellMoney > 0.0) {
-            CosmicGUIShop.getEconomy().depositPlayer((OfflinePlayer)pl, autoSellMoney);
+            CosmicGUIShop.getEconomy().depositPlayer(pl, autoSellMoney);
         }
         if (brokeBlock && !tookDurability && pickaxe) {
             if (pickaxeItem.getDurability() >= pickaxeItem.getType().getMaxDurability() - 1) {
