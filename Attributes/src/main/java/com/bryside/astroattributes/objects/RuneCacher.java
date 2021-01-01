@@ -1,179 +1,179 @@
 package com.bryside.astroattributes.objects;
 
+import com.bryside.astroattributes.enums.RuneType;
 import com.bryside.astroattributes.utils.Utils;
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.bryside.astroattributes.enums.RuneType;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class RuneCacher {
-   public static HashSet caches = new HashSet();
-   private int experience;
-   private int level;
-   private boolean canLevelUp;
-   private RuneType type;
-   private Player player;
-   private UUID playerUuid;
-   private List lore;
+    public static HashSet caches = new HashSet();
+    private int experience;
+    private int level;
+    private boolean canLevelUp;
+    private RuneType type;
+    private Player player;
+    private UUID playerUuid;
+    private List lore;
 
-   public RuneCacher(ItemStack item) {
-      if (item != null && item.hasItemMeta()) {
-         ItemMeta meta = item.getItemMeta();
-         if (meta.hasLore()) {
-            Iterator var3 = meta.getLore().iterator();
+    public RuneCacher(ItemStack item) {
+        if (item != null && item.hasItemMeta()) {
+            ItemMeta meta = item.getItemMeta();
+            if (meta.hasLore()) {
+                Iterator var3 = meta.getLore().iterator();
 
-            while(var3.hasNext()) {
-               String l = (String)var3.next();
-               if (l.startsWith(CC.RedB + "TITAN ATTRIBUTE:")) {
-                  String name = l.substring(l.indexOf(":") + 6, l.indexOf("(") - 5);
-                  int level = Integer.valueOf(l.substring(l.indexOf("Level") + 6, l.indexOf(")") - 4));
-                  this.level = level;
-                  this.type = RuneType.valueOf(name);
-               } else if (l.startsWith(CC.RedB + "TITAN XP:")) {
-                  int experience = Integer.valueOf(l.substring(l.indexOf(":") + 6, l.indexOf("/") - 1));
-                  this.experience = experience;
-                  if (this.type != null && this.type.getRune().getExpForLevel(this.level) <= experience && this.level < this.type.getRune().getMaxLevel()) {
-                     this.canLevelUp = true;
-                  }
-               }
-            }
-
-         }
-      }
-   }
-
-   public RuneCacher(ItemStack item, Player player) {
-      if (item.hasItemMeta()) {
-         ItemMeta meta = item.getItemMeta();
-         if (meta.hasLore()) {
-            if (Utils.isWeapon(item)) {
-               if (!isContained(player)) {
-                  Iterator var4 = meta.getLore().iterator();
-
-                  while(var4.hasNext()) {
-                     String l = (String)var4.next();
-                     if (l.startsWith(CC.RedB + "TITAN ATTRIBUTE:")) {
+                while (var3.hasNext()) {
+                    String l = (String) var3.next();
+                    if (l.startsWith(CC.RedB + "TITAN ATTRIBUTE:")) {
                         String name = l.substring(l.indexOf(":") + 6, l.indexOf("(") - 5);
                         int level = Integer.valueOf(l.substring(l.indexOf("Level") + 6, l.indexOf(")") - 4));
                         this.level = level;
                         this.type = RuneType.valueOf(name);
-                     } else if (l.startsWith(CC.RedB + "TITAN XP:")) {
+                    } else if (l.startsWith(CC.RedB + "TITAN XP:")) {
                         int experience = Integer.valueOf(l.substring(l.indexOf(":") + 6, l.indexOf("/") - 1));
                         this.experience = experience;
                         if (this.type != null && this.type.getRune().getExpForLevel(this.level) <= experience && this.level < this.type.getRune().getMaxLevel()) {
-                           this.canLevelUp = true;
+                            this.canLevelUp = true;
                         }
-                     }
-                  }
+                    }
+                }
 
-                  if (this.type != null) {
-                     caches.add(this);
-                  }
-
-                  this.playerUuid = player.getUniqueId();
-                  this.player = player;
-                  this.lore = meta.getLore();
-               }
             }
-         }
-      }
-   }
+        }
+    }
 
-   public static RuneCacher getRuneCacher(Player player) {
-      UUID u = player.getUniqueId();
-      Iterator var2 = caches.iterator();
+    public RuneCacher(ItemStack item, Player player) {
+        if (item.hasItemMeta()) {
+            ItemMeta meta = item.getItemMeta();
+            if (meta.hasLore()) {
+                if (Utils.isWeapon(item)) {
+                    if (!isContained(player)) {
+                        Iterator var4 = meta.getLore().iterator();
 
-      RuneCacher rune;
-      do {
-         if (!var2.hasNext()) {
-            return null;
-         }
+                        while (var4.hasNext()) {
+                            String l = (String) var4.next();
+                            if (l.startsWith(CC.RedB + "TITAN ATTRIBUTE:")) {
+                                String name = l.substring(l.indexOf(":") + 6, l.indexOf("(") - 5);
+                                int level = Integer.valueOf(l.substring(l.indexOf("Level") + 6, l.indexOf(")") - 4));
+                                this.level = level;
+                                this.type = RuneType.valueOf(name);
+                            } else if (l.startsWith(CC.RedB + "TITAN XP:")) {
+                                int experience = Integer.valueOf(l.substring(l.indexOf(":") + 6, l.indexOf("/") - 1));
+                                this.experience = experience;
+                                if (this.type != null && this.type.getRune().getExpForLevel(this.level) <= experience && this.level < this.type.getRune().getMaxLevel()) {
+                                    this.canLevelUp = true;
+                                }
+                            }
+                        }
 
-         rune = (RuneCacher)var2.next();
-      } while(rune == null || !rune.getUUID().equals(u));
+                        if (this.type != null) {
+                            caches.add(this);
+                        }
 
-      return rune;
-   }
+                        this.playerUuid = player.getUniqueId();
+                        this.player = player;
+                        this.lore = meta.getLore();
+                    }
+                }
+            }
+        }
+    }
 
-   public static boolean isContained(Player player) {
-      return getRuneCacher(player) != null;
-   }
+    public static RuneCacher getRuneCacher(Player player) {
+        UUID u = player.getUniqueId();
+        Iterator var2 = caches.iterator();
 
-   public static void removeCache(RuneCacher rune) {
-      caches.remove(rune);
-   }
+        RuneCacher rune;
+        do {
+            if (!var2.hasNext()) {
+                return null;
+            }
 
-   public boolean replaceCache(ItemStack item) {
-      if (!item.hasItemMeta()) {
-         return false;
-      } else {
-         ItemMeta meta = item.getItemMeta();
-         if (!meta.hasLore()) {
+            rune = (RuneCacher) var2.next();
+        } while (rune == null || !rune.getUUID().equals(u));
+
+        return rune;
+    }
+
+    public static boolean isContained(Player player) {
+        return getRuneCacher(player) != null;
+    }
+
+    public static void removeCache(RuneCacher rune) {
+        caches.remove(rune);
+    }
+
+    public boolean replaceCache(ItemStack item) {
+        if (!item.hasItemMeta()) {
             return false;
-         } else {
-            boolean occured = false;
-            Iterator var4 = meta.getLore().iterator();
+        } else {
+            ItemMeta meta = item.getItemMeta();
+            if (!meta.hasLore()) {
+                return false;
+            } else {
+                boolean occured = false;
+                Iterator var4 = meta.getLore().iterator();
 
-            while(var4.hasNext()) {
-               String l = (String)var4.next();
-               if (l.startsWith(CC.RedB + "TITAN ATTRIBUTE:")) {
-                  String name = l.substring(l.indexOf(":") + 6, l.indexOf("(") - 5);
-                  int level = Integer.valueOf(l.substring(l.indexOf("Level") + 6, l.indexOf(")") - 4));
-                  this.level = level;
-                  this.type = RuneType.valueOf(name);
-                  occured = true;
-               } else if (l.startsWith(CC.RedB + "TITAN XP:")) {
-                  int experience = Integer.valueOf(l.substring(l.indexOf(":") + 6, l.indexOf("/") - 1));
-                  this.experience = experience;
-                  if (this.type != null && this.type.getRune().getExpForLevel(this.level) <= experience && this.level < this.type.getRune().getMaxLevel()) {
-                     this.canLevelUp = true;
-                  }
-               }
+                while (var4.hasNext()) {
+                    String l = (String) var4.next();
+                    if (l.startsWith(CC.RedB + "TITAN ATTRIBUTE:")) {
+                        String name = l.substring(l.indexOf(":") + 6, l.indexOf("(") - 5);
+                        int level = Integer.valueOf(l.substring(l.indexOf("Level") + 6, l.indexOf(")") - 4));
+                        this.level = level;
+                        this.type = RuneType.valueOf(name);
+                        occured = true;
+                    } else if (l.startsWith(CC.RedB + "TITAN XP:")) {
+                        int experience = Integer.valueOf(l.substring(l.indexOf(":") + 6, l.indexOf("/") - 1));
+                        this.experience = experience;
+                        if (this.type != null && this.type.getRune().getExpForLevel(this.level) <= experience && this.level < this.type.getRune().getMaxLevel()) {
+                            this.canLevelUp = true;
+                        }
+                    }
+                }
+
+                return occured;
             }
+        }
+    }
 
-            return occured;
-         }
-      }
-   }
+    public boolean canLevelUp() {
+        return this.canLevelUp;
+    }
 
-   public boolean canLevelUp() {
-      return this.canLevelUp;
-   }
+    public RuneType getRuneType() {
+        return this.type;
+    }
 
-   public RuneType getRuneType() {
-      return this.type;
-   }
+    public int getLevel() {
+        return this.level;
+    }
 
-   public int getLevel() {
-      return this.level;
-   }
+    public int getExperience() {
+        return this.experience;
+    }
 
-   public int getExperience() {
-      return this.experience;
-   }
+    public Player getPlayer() {
+        return this.player;
+    }
 
-   public Player getPlayer() {
-      return this.player;
-   }
+    public UUID getUUID() {
+        return this.player.getUniqueId();
+    }
 
-   public UUID getUUID() {
-      return this.player.getUniqueId();
-   }
-
-   public boolean isStillCached(ItemStack item) {
-      if (!item.hasItemMeta()) {
-         return false;
-      } else if (!item.getItemMeta().hasLore()) {
-         return false;
-      } else {
-         ItemMeta itemMeta = item.getItemMeta();
-         return itemMeta.getLore().equals(this.lore);
-      }
-   }
+    public boolean isStillCached(ItemStack item) {
+        if (!item.hasItemMeta()) {
+            return false;
+        } else if (!item.getItemMeta().hasLore()) {
+            return false;
+        } else {
+            ItemMeta itemMeta = item.getItemMeta();
+            return itemMeta.getLore().equals(this.lore);
+        }
+    }
 }

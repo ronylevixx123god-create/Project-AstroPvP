@@ -1,10 +1,8 @@
 package com.bryside.astroattributes.runes;
 
-import com.bryside.astroattributes.DragonRunesPlugin;
 import com.bryside.astroattributes.objects.Rune;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.google.common.collect.Maps;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -61,14 +59,14 @@ public class OuranosRune extends Rune implements Listener {
     }
 
     public void procDamageEvent(EntityDamageByEntityEvent e, int level, Player damager) {
-            int amount = 10 * level < 80 ? 10 * level : 70;
-            if (ThreadLocalRandom.current().nextInt(14) <= 1) {
-                damager.sendMessage(CC.translate("&4&l*OURANOS* &cAoE Damage. &7[" + amount + "&7 DMG"));
-                damager.playSound(damager.getLocation(), Sound.ENDERMAN_TELEPORT, 3, 3);
-            }
-
-
+        int amount = 10 * level < 80 ? 10 * level : 70;
+        if (ThreadLocalRandom.current().nextInt(14) <= 1) {
+            damager.sendMessage(CC.translate("&4&l*OURANOS* &cAoE Damage. &7[" + amount + "&7 DMG"));
+            damager.playSound(damager.getLocation(), Sound.ENDERMAN_TELEPORT, 3, 3);
         }
+
+
+    }
 
 
 }

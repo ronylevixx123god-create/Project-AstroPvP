@@ -1,10 +1,8 @@
 package com.bryside.astroattributes.runes;
 
-import com.bryside.astroattributes.DragonRunesPlugin;
 import com.bryside.astroattributes.objects.Rune;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.google.common.collect.Maps;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -18,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class PrometheusRune  extends Rune implements Listener {
+public class PrometheusRune extends Rune implements Listener {
     HashMap atlases = Maps.newHashMap();
     HashMap hits = Maps.newHashMap();
 
@@ -57,12 +55,12 @@ public class PrometheusRune  extends Rune implements Listener {
     }
 
     public void procDamageEvent(EntityDamageByEntityEvent e, int level, Player damager) {
-            int amount = 10 * level < 80 ? 10 * level : 70;
-            if (ThreadLocalRandom.current().nextInt(14) <= 0.1) {
-                damager.sendMessage(CC.translate("&4&l*PROMETHEUS* &cExtra Damage. &7[" + amount + "&7 DMG"));
-                damager.playSound(damager.getLocation(), Sound.ENDERMAN_TELEPORT, 3, 3);
-            }
+        int amount = 10 * level < 80 ? 10 * level : 70;
+        if (ThreadLocalRandom.current().nextInt(14) <= 0.1) {
+            damager.sendMessage(CC.translate("&4&l*PROMETHEUS* &cExtra Damage. &7[" + amount + "&7 DMG"));
+            damager.playSound(damager.getLocation(), Sound.ENDERMAN_TELEPORT, 3, 3);
         }
+    }
 
 
 }

@@ -1,26 +1,17 @@
 package com.bryside.astroattributes.runes;
 
-import com.bryside.astroattributes.DragonRunesPlugin;
 import com.bryside.astroattributes.objects.Rune;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.google.common.collect.Maps;
-import org.arkhamnetwork.enchantments.util.ParticleEffect;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class KronosRune extends Rune implements Listener {
     HashMap atlases = Maps.newHashMap();
@@ -63,7 +54,6 @@ public class KronosRune extends Rune implements Listener {
     public void setNeededHits(Player player, Integer integer) {
         this.hits.put(player, integer);
     }
-
 
 
 }

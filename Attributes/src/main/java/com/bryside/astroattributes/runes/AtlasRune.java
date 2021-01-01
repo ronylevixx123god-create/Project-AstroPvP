@@ -7,8 +7,6 @@ import com.google.common.collect.Maps;
 import org.arkhamnetwork.enchantments.util.ParticleEffect;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -23,6 +21,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 
 public class AtlasRune extends Rune implements Listener {
+
+    HashMap<Player, Integer> atlases = Maps.newHashMap();
+    HashMap<Player, Integer> hits = Maps.newHashMap();
 
     public String[] getLore(int level, int chance) {
         if (level > this.getMaxLevel()) {
@@ -57,9 +58,6 @@ public class AtlasRune extends Rune implements Listener {
         item.setItemMeta(itemMeta);
         return item;
     }
-
-    HashMap<Player, Integer> atlases = Maps.newHashMap();
-    HashMap<Player, Integer> hits = Maps.newHashMap();
 
     public void setNeededHits(Player player, Integer integer) {
         hits.put(player, integer);

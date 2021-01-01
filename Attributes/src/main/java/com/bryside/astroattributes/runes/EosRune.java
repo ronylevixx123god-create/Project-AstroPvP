@@ -1,17 +1,11 @@
 package com.bryside.astroattributes.runes;
 
-import com.bryside.astroattributes.DragonRunesPlugin;
 import com.bryside.astroattributes.objects.Rune;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.google.common.collect.Maps;
-import org.arkhamnetwork.enchantments.util.ParticleEffect;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
@@ -22,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class EosRune  extends Rune implements Listener {
+public class EosRune extends Rune implements Listener {
     HashMap atlases = Maps.newHashMap();
     HashMap hits = Maps.newHashMap();
 
@@ -49,12 +43,12 @@ public class EosRune  extends Rune implements Listener {
         String[] lore2;
         int length = (lore2 = this.getLore(level, success)).length;
 
-        for(int i = 0; i < length; ++i) {
+        for (int i = 0; i < length; ++i) {
             String l = lore2[i];
-            ((List)lore).add(l);
+            ((List) lore).add(l);
         }
 
-        itemMeta.setLore((List)lore);
+        itemMeta.setLore((List) lore);
         itemMeta.setDisplayName(this.getDisplayName());
         item.setItemMeta(itemMeta);
         return item;
@@ -62,7 +56,7 @@ public class EosRune  extends Rune implements Listener {
 
 
     public void procDamageEvent(EntityDamageByEntityEvent e, int level, Player damager) {
-        if (this.hits.get(damager) != null && Integer.valueOf((Integer)this.hits.get(damager)) - 1 > 0) {
+        if (this.hits.get(damager) != null && Integer.valueOf((Integer) this.hits.get(damager)) - 1 > 0) {
         } else if (this.hits.get(damager) == null) {
         } else {
             int amount = 10 * level < 80 ? 10 * level : 70;

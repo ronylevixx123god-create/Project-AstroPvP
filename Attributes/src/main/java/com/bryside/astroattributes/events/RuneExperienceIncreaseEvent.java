@@ -7,51 +7,51 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
 
 public final class RuneExperienceIncreaseEvent extends Event implements Cancellable {
-   private static final HandlerList handlers = new HandlerList();
-   private boolean cancelled;
-   private Player player;
-   private int experience;
-   private ItemStack item;
+    private static final HandlerList handlers = new HandlerList();
+    private boolean cancelled;
+    private Player player;
+    private int experience;
+    private ItemStack item;
 
-   public RuneExperienceIncreaseEvent(Player player, ItemStack item, int experience) {
-      this.player = player;
-      this.experience = experience;
-      this.item = item;
-   }
+    public RuneExperienceIncreaseEvent(Player player, ItemStack item, int experience) {
+        this.player = player;
+        this.experience = experience;
+        this.item = item;
+    }
 
-   public static final HandlerList getHandlerList() {
-      return handlers;
-   }
+    public static final HandlerList getHandlerList() {
+        return handlers;
+    }
 
-   public final HandlerList getHandlers() {
-      return handlers;
-   }
+    public final HandlerList getHandlers() {
+        return handlers;
+    }
 
-   public final boolean isCancelled() {
-      return this.cancelled;
-   }
+    public final boolean isCancelled() {
+        return this.cancelled;
+    }
 
-   public final void setCancelled(boolean cancelled) {
-      this.cancelled = cancelled;
-   }
+    public final void setCancelled(boolean cancelled) {
+        this.cancelled = cancelled;
+    }
 
-   public Player getPlayer() {
-      return this.player;
-   }
+    public Player getPlayer() {
+        return this.player;
+    }
 
-   public ItemStack getItem() {
-      return this.item;
-   }
+    public ItemStack getItem() {
+        return this.item;
+    }
 
-   public void increaseExperience(int experience) {
-      this.experience += experience;
-   }
+    public void increaseExperience(int experience) {
+        this.experience += experience;
+    }
 
-   public int getExperience() {
-      return this.experience;
-   }
+    public int getExperience() {
+        return this.experience;
+    }
 
-   public void setExperience(int experience) {
-      this.experience = experience;
-   }
+    public void setExperience(int experience) {
+        this.experience = experience;
+    }
 }
