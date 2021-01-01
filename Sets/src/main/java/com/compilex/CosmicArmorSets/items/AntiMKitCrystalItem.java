@@ -109,10 +109,10 @@ public class AntiMKitCrystalItem
             if (itemStack.getAmount() > 1) {
                 itemStack.setAmount(itemStack.getAmount() - 1);
             } else {
-                player.setItemOnCursor((ItemStack) null);
+                player.setItemOnCursor(null);
             }
             nbtWrapper.blacklistIID("anti m-kit player: " + player.getName());
-            if (Math.random() > (double) (Integer) crystal.second * 0.01) {
+            if (Math.random() > (double) crystal.getValue() * 0.01) {
                 player.getWorld().playSound(player.getLocation(), Sound.FIZZ, 3.0f, 1.1f);
                 ASound.GLASS.play(player, 3.0f, 1.1f);
                 player.updateInventory();
@@ -126,11 +126,13 @@ public class AntiMKitCrystalItem
         }
     }
 
+    // TODO: BOWP
+
     private ItemStack applyToItem(NBTWrapper wrapper, ItemStack item, Pair pair) {
         String str;
         NBTTagCompoundBuilder builder = wrapper.getCompoundOrCreate("cosmicData");
         NBTTagListBuilder list = new NBTTagListBuilder();
-        Set set = (Set) pair.first;
+        Set<AbilityArmorSet> set = (Set<AbilityArmorSet>) pair.getKey();
         StringBuilder loreBuild = new StringBuilder();
         for (AbilityArmorSet armor : set) {
             list.addString(armor.name());

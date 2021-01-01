@@ -45,6 +45,7 @@ import com.massivecraft.factions.cmd.CmdFocus;
 import com.massivecraft.factions.cmd.CmdUnfocus;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
+import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
 import org.bukkit.ChatColor;
