@@ -11,6 +11,7 @@ import com.rit.sucy.EnchantmentAPI;
 import me.ifamasssxd.cosmicguishop.CosmicGUIShop;
 import net.minecraft.server.v1_8_R3.Blocks;
 import net.minecraft.server.v1_8_R3.ChunkSection;
+import net.minecraft.server.v1_8_R3.IBlockData;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.libs.EnchantBreakBlockEvent;
 import org.arkhamnetwork.enchantments.mastery.MasteryAutoSell;
@@ -238,12 +239,14 @@ public class Detonate extends CustomEnchantment {
                 }
                 final ChunkSection[] array = sections;
                 final int n = b.getY() >> 4;
-                final ChunkSection chunkSection = new ChunkSection(b.getY() >> 4 << 4, !chunk.world.worldProvider.f);
+                final ChunkSection chunkSection = new ChunkSection(b.getY() >> 4 << 4, !chunk.world.worldProvider.d());
                 array[n] = chunkSection;
                 chunksection = chunkSection;
             }
-            chunksection.setTypeId(b.getX() & 0xF, b.getY() & 0xF, b.getZ() & 0xF, Blocks.BEDROCK);
-            chunksection.setData(b.getX() & 0xF, b.getY() & 0xF, b.getZ() & 0xF, (int) data);
+            chunksection.setType(b.getX() & 0xF, b.getY() & 0xF, b.getZ() & 0xF, (IBlockData) Blocks.BEDROCK);
+
+            // TODO: LOOK INTO SETDATA
+            // chunksection.setData(b.getX() & 0xF, b.getY() & 0xF, b.getZ() & 0xF, (int) data);
         } catch (Exception e) {
             e.printStackTrace();
         }

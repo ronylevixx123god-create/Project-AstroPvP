@@ -37,8 +37,8 @@ public class DimensionSpoof {
                 final CraftPlayer cp = (CraftPlayer) pl;
                 final EntityPlayer ep = cp.getHandle();
                 final WorldServer worldserver = ((CraftWorld) pl.getWorld()).getHandle();
-                final PacketPlayOutRespawn packet_a = new PacketPlayOutRespawn((int) (byte) dimension, worldserver.difficulty, worldserver.getWorldData().getType(), ep.playerInteractManager.getGameMode());
-                cp.getHandle().playerConnection.sendPacket((Packet) packet_a);
+                final PacketPlayOutRespawn packet_a = new PacketPlayOutRespawn((byte) dimension, worldserver.getDifficulty(), worldserver.getWorldData().getType(), ep.playerInteractManager.getGameMode());
+                cp.getHandle().playerConnection.sendPacket(packet_a);
                 final Chunk c = pl.getLocation().getChunk();
                 for (int x = -6; x < 6; ++x) {
                     for (int z = -6; z < 6; ++z) {
