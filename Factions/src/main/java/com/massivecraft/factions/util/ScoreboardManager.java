@@ -1,40 +1,9 @@
-/*
- * Decompiled with CFR 0.145.
- *
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.ReflectionUtils
- *  com.cosmicpvp.cosmicutils.utils.UserScoreboard
- *  com.cosmicpvp.scoreboard.CosmicScoreboardPlugin
- *  com.cosmicpvp.scoreboard.libs.PlaceholderManager
- *  net.milkbowl.vault.economy.Economy
- *  net.minecraft.server.v1_7_R4.EntityPlayer
- *  net.minecraft.server.v1_7_R4.IScoreboardCriteria
- *  net.minecraft.server.v1_7_R4.Packet
- *  net.minecraft.server.v1_7_R4.PacketPlayOutScoreboardDisplayObjective
- *  net.minecraft.server.v1_7_R4.PacketPlayOutScoreboardObjective
- *  net.minecraft.server.v1_7_R4.PacketPlayOutScoreboardScore
- *  net.minecraft.server.v1_7_R4.PlayerConnection
- *  net.minecraft.server.v1_7_R4.Scoreboard
- *  net.minecraft.server.v1_7_R4.ScoreboardBaseCriteria
- *  net.minecraft.server.v1_7_R4.ScoreboardObjective
- *  net.minecraft.server.v1_7_R4.ScoreboardScore
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.OfflinePlayer
- *  org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer
- *  org.bukkit.entity.Entity
- *  org.bukkit.entity.Player
- *  org.bukkit.metadata.MetadataValue
- *  org.bukkit.scoreboard.DisplaySlot
- *  org.bukkit.scoreboard.Objective
- *  org.bukkit.scoreboard.Scoreboard
- */
 package com.massivecraft.factions.util;
 
 import com.cosmicpvp.cosmicutils.utils.ReflectionUtils;
 import com.cosmicpvp.cosmicutils.utils.UserScoreboard;
-import com.cosmicpvp.scoreboard.CosmicScoreboardPlugin;
 import com.massivecraft.factions.*;
+import com.massivecraft.factions.board.BoardAdapter;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.integration.Econ;
 import com.massivecraft.factions.struct.Relation;
@@ -56,10 +25,45 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class ScoreboardManager {
+public class ScoreboardManager implements BoardAdapter {
+
+
+    // TODO: FINISH NEW SCOREBOARD API
+    @Override
+    public List<String> getScoreboard(Player player, com.massivecraft.factions.board.Board board) {
+        return this.mainBoard(player);
+    }
+
+    @Override
+    public void preLoop() {
+    }
+
+    @Override
+    public String getTitle(Player player) {
+        return "test";
+    }
+
+    public List<String> mainBoard(Player player) {
+        List<String> board = new LinkedList<>();
+
+        board.add(ChatColor.GREEN + "Test");
+
+        return board;
+    }
+
+    @Override
+    public long getInterval() {
+        return 20L;
+    }
+
+    @Override
+    public void onScoreboardCreate(Player player, org.bukkit.scoreboard.Scoreboard scoreboard) {
+    }
+
+
     public static HashSet<UUID> playerObjectives = new HashSet<>();
 
-    private static DateFormat format = new SimpleDateFormat("MM/dd");
+    private static final DateFormat format = new SimpleDateFormat("MM/dd");
 
     public static boolean nearby = true;
 
@@ -88,12 +92,12 @@ public class ScoreboardManager {
         if (player == null)
             return;
         if (player.hasMetadata("boss_scoreboard") && player.getMetadata("boss_scoreboard").size() > 0) {
-            long expire = ((MetadataValue)player.getMetadata("boss_scoreboard").get(0)).asLong();
+            long expire = player.getMetadata("boss_scoreboard").get(0).asLong();
             if (expire > System.currentTimeMillis())
                 return;
         }
         if (player.hasMetadata("custom_scoreboard") && player.getMetadata("custom_scoreboard").size() > 0) {
-            long expire = ((MetadataValue)player.getMetadata("custom_scoreboard").get(0)).asLong();
+            long expire = player.getMetadata("custom_scoreboard").get(0).asLong();
             if (expire > System.currentTimeMillis())
                 return;
         }
@@ -116,8 +120,8 @@ public class ScoreboardManager {
         PlayerConnection playerConnection = (craftPlayer.getHandle()).playerConnection;
         if (playerConnection.isDisconnected())
             return;
-        ScoreboardObjective scoreboardObjective = (scoreboardComp.getObjective("Factions") != null) ? scoreboardComp.getObjective("Factions") : scoreboardComp.registerObjective("Factions", (IScoreboardCriteria)new ScoreboardBaseCriteria("dummy"));
-        Faction faction = ((FPlayer)FPlayers.i.get((OfflinePlayer)player)).getFaction();
+        ScoreboardObjective scoreboardObjective = (scoreboardComp.getObjective("Factions") != null) ? scoreboardComp.getObjective("Factions") : scoreboardComp.registerObjective("Factions", new ScoreboardBaseCriteria("dummy"));
+        Faction faction = FPlayers.i.get(player).getFaction();
         if (faction == null)
             faction = Factions.i.getNone();
         LinkedList<PacketPlayOutScoreboardScore> scores = new LinkedList<>();
@@ -142,7 +146,7 @@ public class ScoreboardManager {
         scores.add(getScore(ChatColor.WHITE + player.getName(), scoreboardComp, scoreboardObjective, index--));
         scores.add(getScore(ChatColor.YELLOW + " ", scoreboardComp, scoreboardObjective, index--));
         scores.add(getScore(ChatColor.GOLD + ChatColor.BOLD.toString() + "Balance", scoreboardComp, scoreboardObjective, index--));
-        scores.add(getScore(ChatColor.WHITE.toString() + "$" + NumberUtils.formatMoney((long)Econ.econ.getBalance((OfflinePlayer)player)), scoreboardComp, scoreboardObjective, index--));
+        scores.add(getScore(ChatColor.WHITE.toString() + "$" + NumberUtils.formatMoney((long)Econ.econ.getBalance(player)), scoreboardComp, scoreboardObjective, index--));
         scores.add(getScore(ChatColor.LIGHT_PURPLE + "  ", scoreboardComp, scoreboardObjective, index--));
         scores.add(getScore(ChatColor.LIGHT_PURPLE + ChatColor.BOLD.toString() + "XP", scoreboardComp, scoreboardObjective, index--));
         scores.add(getScore(ChatColor.WHITE.toString() + NumberUtils.formatMoney(getTotalExperience(player)), scoreboardComp, scoreboardObjective, index--));
@@ -155,24 +159,24 @@ public class ScoreboardManager {
         if (!playerObjectives.contains(player.getUniqueId())) {
             PacketPlayOutScoreboardObjective scoreboardP = new PacketPlayOutScoreboardObjective(scoreboardObjective, 0);
             PacketPlayOutScoreboardDisplayObjective displayP = new PacketPlayOutScoreboardDisplayObjective(1, scoreboardObjective);
-            (craftPlayer.getHandle()).playerConnection.sendPacket((Packet)scoreboardP);
-            (craftPlayer.getHandle()).playerConnection.sendPacket((Packet)displayP);
+            (craftPlayer.getHandle()).playerConnection.sendPacket(scoreboardP);
+            (craftPlayer.getHandle()).playerConnection.sendPacket(displayP);
             playerObjectives.add(player.getUniqueId());
         } else {
             PacketPlayOutScoreboardObjective scoreboardP = new PacketPlayOutScoreboardObjective(scoreboardObjective, 1);
             PacketPlayOutScoreboardDisplayObjective displayP = new PacketPlayOutScoreboardDisplayObjective(1, scoreboardObjective);
             PacketPlayOutScoreboardObjective scoreboardP2 = new PacketPlayOutScoreboardObjective(scoreboardObjective, 0);
             PacketPlayOutScoreboardDisplayObjective displayP2 = new PacketPlayOutScoreboardDisplayObjective(1, scoreboardObjective);
-            (craftPlayer.getHandle()).playerConnection.sendPacket((Packet)scoreboardP);
-            (craftPlayer.getHandle()).playerConnection.sendPacket((Packet)displayP);
-            (craftPlayer.getHandle()).playerConnection.sendPacket((Packet)scoreboardP2);
-            (craftPlayer.getHandle()).playerConnection.sendPacket((Packet)displayP2);
+            (craftPlayer.getHandle()).playerConnection.sendPacket(scoreboardP);
+            (craftPlayer.getHandle()).playerConnection.sendPacket(displayP);
+            (craftPlayer.getHandle()).playerConnection.sendPacket(scoreboardP2);
+            (craftPlayer.getHandle()).playerConnection.sendPacket(displayP2);
         }
         for (PacketPlayOutScoreboardScore score : scores)
-            playerConnection.sendPacket((Packet)score);
+            playerConnection.sendPacket(score);
     }
 
-    private static DecimalFormat newFormat = new DecimalFormat("#.##");
+    private static final DecimalFormat newFormat = new DecimalFormat("#.##");
 
     private static String getFactionString(Faction faction) {
         int online = 0;
@@ -191,7 +195,7 @@ public class ScoreboardManager {
         return newFormat.format(kdr) + ChatColor.GRAY + " [" + kills + ":" + deaths + "]";
     }
 
-    private static DecimalFormat decimalFormat = new DecimalFormat("#,###");
+    private static final DecimalFormat decimalFormat = new DecimalFormat("#,###");
 
     private static String getNearestPlayer(Faction current, Player player) {
         int pvp = 0, nonPvp = 0;
@@ -200,12 +204,12 @@ public class ScoreboardManager {
                 Player pl = (Player)ent;
                 if (!player.canSee(pl))
                     continue;
-                FPlayer fp = (FPlayer)FPlayers.i.get((OfflinePlayer)pl);
+                FPlayer fp = FPlayers.i.get(pl);
                 if (fp == null)
                     continue;
-                Relation relation = current.getRelationTo((RelationParticipator)fp);
+                Relation relation = current.getRelationTo(fp);
                 if (pl.hasMetadata("ghostEnchantment")) {
-                    int ghostLevel = ((MetadataValue)pl.getMetadata("ghostEnchantment").get(0)).asInt();
+                    int ghostLevel = pl.getMetadata("ghostEnchantment").get(0).asInt();
                     if (relation.isAtMost(Relation.NEUTRAL)) {
                         Relation r = fp.getRelationToLocation();
                         if ((ghostLevel >= 1 && r.isMember()) || (ghostLevel >= 2 && r.isAlly()) || (ghostLevel >= 3 && r.isTruce()))
@@ -276,9 +280,9 @@ public class ScoreboardManager {
         if (playerObjectives.contains(player.getUniqueId())) {
             CraftPlayer craftPlayer = (CraftPlayer)player;
             Scoreboard scoreboardComp = new Scoreboard();
-            ScoreboardObjective scoreboardObjective = scoreboardComp.registerObjective("Factions", (IScoreboardCriteria)new ScoreboardBaseCriteria("dummy"));
-            (craftPlayer.getHandle()).playerConnection.sendPacket((Packet)new PacketPlayOutScoreboardObjective(scoreboardObjective, 1));
-            (craftPlayer.getHandle()).playerConnection.sendPacket((Packet)new PacketPlayOutScoreboardDisplayObjective(1, scoreboardObjective));
+            ScoreboardObjective scoreboardObjective = scoreboardComp.registerObjective("Factions", new ScoreboardBaseCriteria("dummy"));
+            (craftPlayer.getHandle()).playerConnection.sendPacket(new PacketPlayOutScoreboardObjective(scoreboardObjective, 1));
+            (craftPlayer.getHandle()).playerConnection.sendPacket(new PacketPlayOutScoreboardDisplayObjective(1, scoreboardObjective));
             playerObjectives.remove(player.getUniqueId());
         }
     }
