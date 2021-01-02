@@ -40,8 +40,6 @@ import com.cosmicpvp.factionpoints.commands.CommandFactionPoints;
 import com.cosmicpvp.factionpoints.listeners.CoreChunkListener;
 import com.cosmicpvp.factionpoints.listeners.FactionListener;
 import com.cosmicpvp.factionpoints.listeners.FactionPointListener;
-import com.cosmicpvp.factionpoints.managers.CoreChunkManager;
-import com.cosmicpvp.factionpoints.managers.PointManager;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.massivecraft.factions.cmd.CmdAutoHelp;
@@ -55,6 +53,7 @@ import com.massivecraft.factions.integration.EssentialsFeatures;
 import com.massivecraft.factions.listeners.*;
 import com.massivecraft.factions.listeners.menu.MenuListener;
 import com.massivecraft.factions.listeners.menu.fchest.FChestListener;
+import com.massivecraft.factions.manager.BoardManager;
 import com.massivecraft.factions.struct.*;
 import com.massivecraft.factions.struct.managers.FChestManager;
 import com.massivecraft.factions.util.LazyLocation;
@@ -70,10 +69,8 @@ import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -107,11 +104,12 @@ public class P extends MPlugin {
     private final FChestManager fChestManager;
     private FileManager fileManager;
     public static WorldGuardPlugin wg = null;
-
+    private BoardManager boardManager;
     private CosmicFlyingPlugin cosmicFlyingPlugin;
     public BoosterManager boosterManager;
-    public PointManager pointManager;
-    private CoreChunkManager chunkManager;
+    // TODO: FINISH FACTION POINTS
+    /*public PointManager pointManager;
+    private CoreChunkManager chunkManager; */
     public static boolean debug;
     private long startOfMap;
     private boolean vanillaPlanet = false;
@@ -188,6 +186,8 @@ public class P extends MPlugin {
         getCommand("kills").setExecutor(new CmdKills());
         getCommand("deaths").setExecutor(new CmdDeaths());
 
+        P.getP().setBoardManager(new BoardManager(new ScoreboardManager()));
+
         // TODO: THIS IS THE onEnable for all additions put into Factions.
         this.mcMMOTestUtil();
         this.registerNewListeners();
@@ -200,10 +200,11 @@ public class P extends MPlugin {
         this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new BoosterTask(), 20L, 20L);
 
         this.saveDefaultConfig();
-        this.pointManager = new PointManager();
-        this.chunkManager = new CoreChunkManager();
-        this.pointManager.onEnable(this);
-        this.chunkManager.onEnable(this);
+        // TODO: FINISH ADDING FACTION POINTS (CONVERT FROM .kt)
+       /* this.pointManager = new PointManager();
+        this.chunkManager = new CoreChunkManager(); */
+       /* this.pointManager.onEnable(this);
+        this.chunkManager.onEnable(this); */
         this.startOfMap = this.getConfig().getLong("startOfMap");
         this.vanillaPlanet = this.getConfig().getBoolean("vanilla", false);
 
@@ -224,17 +225,6 @@ public class P extends MPlugin {
         this.getServer().getPluginManager().registerEvents(new MenuListener(), this);
         this.citizensEnabled = this.getServer().getPluginManager().isPluginEnabled("Citizens");
         this.outpostsEnabled = new File("plugins/CosmicOutposts.jar").exists();
-        this.getServer().getScheduler().runTaskTimer(this, () -> {
-            if (Conf.factionScoreboardEnable) {
-                for (Player player : P.this.getServer().getOnlinePlayers()) {
-                    try {
-                        ScoreboardManager.setPlayerFactionScoreboardAsync(player);
-                    } catch (Exception err) {
-                        err.printStackTrace();
-                    }
-                }
-            }
-        }, 50L, 50L);
         try {
             Class.forName("net.ess3.api.events.PlayerSellEvent");
             this.getServer().getPluginManager().registerEvents(new FactionEssentialsListener(), this);
@@ -273,6 +263,12 @@ public class P extends MPlugin {
             }
             Conf.lastLoadedVersion = this.currentVersion;
         }
+    }
+
+    public void setBoardManager(BoardManager boardManager) {
+        this.boardManager = boardManager;
+        long interval = this.boardManager.getAdapter().getInterval();
+        this.getServer().getScheduler().runTaskTimerAsynchronously(this, this.boardManager, 0L, interval);
     }
 
     private void registerNewCommands() throws IOException {
@@ -330,13 +326,13 @@ public class P extends MPlugin {
         Bukkit.getLogger().info("[CosmicFactionPoints] " + debugString);
     }
 
-    public PointManager getPointManager() {
+   /* public PointManager getPointManager() {
         return this.pointManager;
     }
 
     public CoreChunkManager getChunkManager() {
         return this.chunkManager;
-    }
+    } */
 
     public long getStartOfMap() {
         return this.startOfMap;
@@ -394,8 +390,9 @@ public class P extends MPlugin {
         for (Player pl : Bukkit.getOnlinePlayers()) {
             pl.removeMetadata("last_enderpearl_throw", this);
         }
-        this.pointManager.onDisable(this);
-        this.chunkManager.onDisable(this);
+        // TODO: FINISH ADDING FACTION POINTS (CONVERT FROM .kt)
+        /*this.pointManager.onDisable(this);
+        this.chunkManager.onDisable(this);*/
         this.boosterManager.saveActiveBoosters();
         CommandToggleSmoke.saveToggles();
         if (this.AutoLeaveTask != null) {

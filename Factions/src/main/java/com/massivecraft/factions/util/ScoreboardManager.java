@@ -4,7 +4,6 @@ import com.cosmicpvp.cosmicutils.utils.ReflectionUtils;
 import com.cosmicpvp.cosmicutils.utils.UserScoreboard;
 import com.massivecraft.factions.*;
 import com.massivecraft.factions.board.BoardAdapter;
-import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.integration.Econ;
 import com.massivecraft.factions.struct.Relation;
 import com.massivecraft.factions.zcore.util.NumberUtils;
@@ -12,11 +11,9 @@ import com.massivecraft.factions.zcore.util.WebLinkUtils;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.metadata.MetadataValue;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 
@@ -46,6 +43,9 @@ public class ScoreboardManager implements BoardAdapter {
     public List<String> mainBoard(Player player) {
         List<String> board = new LinkedList<>();
 
+        board.add(" ");
+        board.add(ChatColor.AQUA + ChatColor.BOLD.toString() + "Account");
+        board.add(ChatColor.WHITE + player.getName());
         board.add(ChatColor.GREEN + "Test");
 
         return board;
@@ -58,8 +58,10 @@ public class ScoreboardManager implements BoardAdapter {
 
     @Override
     public void onScoreboardCreate(Player player, org.bukkit.scoreboard.Scoreboard scoreboard) {
+
     }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public static HashSet<UUID> playerObjectives = new HashSet<>();
 
@@ -75,72 +77,8 @@ public class ScoreboardManager implements BoardAdapter {
 
     private static boolean checked = false;
 
-    private static boolean usingNewScoreboard() {
-        if (checked)
-            return newScoreboardManager;
-        try {
-            newScoreboardManager = (ReflectionUtils.getMethod(CosmicScoreboardPlugin.getPlugin().getClass(), "getPlaceholderManager") != null);
-            Bukkit.getLogger().info("New Scoreboard Manager: " + newScoreboardManager);
-        } catch (Exception e) {
-            Bukkit.getLogger().info("Unable to load new PlaceholderManager data!");
-        }
-        checked = true;
-        return newScoreboardManager;
-    }
+    /*public static void setPlayerFactionScoreboardAsync(Player player) {
 
-    public static void setPlayerFactionScoreboardAsync(Player player) {
-        if (player == null)
-            return;
-        if (player.hasMetadata("boss_scoreboard") && player.getMetadata("boss_scoreboard").size() > 0) {
-            long expire = player.getMetadata("boss_scoreboard").get(0).asLong();
-            if (expire > System.currentTimeMillis())
-                return;
-        }
-        if (player.hasMetadata("custom_scoreboard") && player.getMetadata("custom_scoreboard").size() > 0) {
-            long expire = player.getMetadata("custom_scoreboard").get(0).asLong();
-            if (expire > System.currentTimeMillis())
-                return;
-        }
-        try {
-            if (usingNewScoreboard() &&
-                    CosmicScoreboardPlugin.getPlugin().getPlaceholderManager().hasPlaceholders(player)) {
-                UserScoreboard scoreboard = (UserScoreboard)CosmicScoreboardPlugin.getPlugin().getPlaceholderManager().getStoredScoreboards().get(player.getUniqueId());
-                Objective koth;
-                if (scoreboard != null && (koth = scoreboard.getScoreboard().getObjective("koth")) != null) {
-                    koth.unregister();
-                    scoreboard.setSlot(DisplaySlot.SIDEBAR);
-                }
-                return;
-            }
-        } catch (Exception exception) {}
-        if (player.hasMetadata("toggle_scoreboard") && player.getMetadata("toggle_scoreboard").size() > 0)
-            return;
-        Scoreboard scoreboardComp = new Scoreboard();
-        CraftPlayer craftPlayer = (CraftPlayer)player;
-        PlayerConnection playerConnection = (craftPlayer.getHandle()).playerConnection;
-        if (playerConnection.isDisconnected())
-            return;
-        ScoreboardObjective scoreboardObjective = (scoreboardComp.getObjective("Factions") != null) ? scoreboardComp.getObjective("Factions") : scoreboardComp.registerObjective("Factions", new ScoreboardBaseCriteria("dummy"));
-        Faction faction = FPlayers.i.get(player).getFaction();
-        if (faction == null)
-            faction = Factions.i.getNone();
-        LinkedList<PacketPlayOutScoreboardScore> scores = new LinkedList<>();
-        if (faction != Factions.i.getNone()) {
-            scoreboardObjective.setDisplayName(ChatColor.GREEN + "" + ChatColor.BOLD + " " + faction
-                    .getTag() + " " + ChatColor.GRAY +
-                    getDateSuffix());
-        } else {
-            scoreboardObjective.setDisplayName(ChatColor.GREEN + "" + ChatColor.BOLD + " Astro" + ChatColor.YELLOW + ChatColor.BOLD + "PvP " + ChatColor.GRAY +
-
-                    getDateSuffix());
-        }
-        String name = ChatColor.GRAY + player.getName();
-        if (name.length() > 16)
-            name = name.substring(0, 16);
-        ScoreboardScore playerName = scoreboardComp.getPlayerScoreForObjective(name, scoreboardObjective);
-        playerName.setScore(15);
-        scores.add(new PacketPlayOutScoreboardScore(playerName.getPlayerName(), scoreboardObjective));
-        int index = 15;
         scores.add(getScore(ChatColor.BLACK + " ", scoreboardComp, scoreboardObjective, index--));
         scores.add(getScore(ChatColor.AQUA + ChatColor.BOLD.toString() + "Account", scoreboardComp, scoreboardObjective, index--));
         scores.add(getScore(ChatColor.WHITE + player.getName(), scoreboardComp, scoreboardObjective, index--));
@@ -174,7 +112,7 @@ public class ScoreboardManager implements BoardAdapter {
         }
         for (PacketPlayOutScoreboardScore score : scores)
             playerConnection.sendPacket(score);
-    }
+    } */
 
     private static final DecimalFormat newFormat = new DecimalFormat("#.##");
 
