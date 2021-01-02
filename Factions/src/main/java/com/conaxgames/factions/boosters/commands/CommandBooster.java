@@ -13,8 +13,8 @@
  */
 package com.conaxgames.factions.boosters.commands;
 
-import me.ifamasssxd.cosmicfactionboosters.CosmicFactionBoosters;
-import me.ifamasssxd.cosmicfactionboosters.enums.BoosterType;
+import com.conaxgames.factions.boosters.enums.BoosterType;
+import com.massivecraft.factions.P;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -62,13 +62,13 @@ implements CommandExecutor {
             if (duration < 0) {
                 duration = 1;
             }
-            ItemStack item = CosmicFactionBoosters.get().getBoosterManager().createBooster(boosterType, duration, mult);
-            pl.getInventory().addItem(new ItemStack[]{item});
+            ItemStack item = P.getP().getBoosterManager().createBooster(boosterType, duration, mult);
+            pl.getInventory().addItem(item);
             pl.updateInventory();
-            sender.sendMessage((Object)ChatColor.RED + "Booster given to " + pl.getName());
+            sender.sendMessage(ChatColor.RED + "Booster given to " + pl.getName());
             return true;
         }
-        sender.sendMessage((Object)ChatColor.RED + "Usage: /gfb <EXP/MCMMO> <name> <mult> <duration>");
+        sender.sendMessage(ChatColor.RED + "Usage: /gfb <EXP/MCMMO> <name> <mult> <duration>");
         return false;
     }
 }

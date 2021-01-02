@@ -177,9 +177,6 @@ public class FactionsPlayerListener
                 if (!event.getFPlayer().hasFaction() || event.getFPlayer().getFaction() == null) {
                     return;
                 }
-                for (Player player : event.getFPlayer().getFaction().getOnlinePlayers()) {
-                    ScoreboardManager.setPlayerFactionScoreboardAsync(player);
-                }
             }
         }, 10L);
     }
@@ -189,11 +186,6 @@ public class FactionsPlayerListener
         Bukkit.getServer().getScheduler().runTaskLaterAsynchronously(this.p, () -> {
             if (event.getFPlayer() == null || event.getFPlayer().isOffline()) {
                 return;
-            }
-            if (Conf.factionScoreboardEnable) {
-                for (Player player : FPlayers.i.get(event.getFPlayer().getPlayer()).getFaction().getOnlinePlayers()) {
-                    ScoreboardManager.setPlayerFactionScoreboardAsync(player);
-                }
             }
         }, 10L);
     }
