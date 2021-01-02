@@ -3,10 +3,7 @@ package org.arkhamnetwork.enchantments.mastery;
 import com.cosmicpvp.cosmicutils.utils.*;
 import com.massivecraft.factions.Faction;
 import lombok.SneakyThrows;
-import net.minecraft.server.v1_8_R3.Blocks;
-import net.minecraft.server.v1_8_R3.EntityFallingBlock;
-import net.minecraft.server.v1_8_R3.EntityHuman;
-import net.minecraft.server.v1_8_R3.WorldServer;
+import net.minecraft.server.v1_8_R3.*;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.MasteryCustomEnchantment;
 import org.arkhamnetwork.enchantments.events.CustomEnchantProcOnEntityEvent;
@@ -15,6 +12,7 @@ import org.arkhamnetwork.enchantments.util.ArmorSlot;
 import org.arkhamnetwork.enchantments.util.ArmorUtil;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.*;
+import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -109,7 +107,7 @@ public class MasteryTombstone extends MasteryCustomEnchantment {
                 final Location loc = near.getLocation();
                 final WorldServer world = ((CraftWorld) damaged.getWorld()).getHandle();
                 near.playSound(near.getLocation().add(0.0, 5.0, 0.0), Sound.ANVIL_LAND, 3.0f, 1.1f);
-                final EntityFallingBlock block = new EntityFallingBlock(world, loc.getX(), loc.getY() + 5.0, loc.getZ(), Blocks.ANVIL) {
+                final EntityFallingBlock block = new EntityFallingBlock(world, loc.getX(), loc.getY() + 5.0, loc.getZ(), (IBlockData) Blocks.ANVIL) {
                     protected void b(final float f) {
                         if (this.dead) {
                             return;

@@ -56,7 +56,8 @@ public class MasteryFeignDeath extends MasteryCustomEnchantment {
             public void sendPacket(Packet packet) {
             }
 
-            public void a() {
+            public NetworkManager a() {
+                return null;
             }
 
             public void chat(String s, boolean async) {
