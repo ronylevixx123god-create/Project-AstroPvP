@@ -3,6 +3,7 @@ package org.arkhamnetwork.enchantments.enchantments.armor;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
+import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.MapMaker;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.iface.RelationParticipator;
@@ -29,10 +30,11 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 
 public class AvengingAngel extends CustomEnchantment {
-    private Map<UUID, Long> cooldowns = (new MapMaker()).expireAfterWrite(20L, TimeUnit.SECONDS).makeMap();
+    private ConcurrentMap<Object, Object> cooldowns = CacheBuilder.newBuilder().expireAfterWrite(20L, TimeUnit.SECONDS).build().asMap();
 
     public AvengingAngel() {
         super("Avenging Angel", GeneralUtil.armor, 10);

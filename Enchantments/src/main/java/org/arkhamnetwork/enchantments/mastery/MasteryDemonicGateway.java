@@ -2,6 +2,7 @@ package org.arkhamnetwork.enchantments.mastery;
 
 import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.base.Predicate;
+import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.MapMaker;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
@@ -35,17 +36,18 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
 public class MasteryDemonicGateway extends MasteryCustomEnchantment {
-    private Map<UUID, Long> demonicGateway;
-    private Map<EnderCrystal, Integer> crystalShootTicks;
+    private ConcurrentMap<Object, Object> demonicGateway;
+    private ConcurrentMap<Object, Object> crystalShootTicks;
 
     public MasteryDemonicGateway() {
         super("Demonic Gateway", GeneralUtil.armor, 11);
-        this.demonicGateway = new MapMaker().expireAfterWrite(10L, TimeUnit.SECONDS).makeMap();
-        this.crystalShootTicks = new MapMaker().expireAfterWrite(5L, TimeUnit.SECONDS).makeMap();
+        this.demonicGateway = CacheBuilder.newBuilder().expireAfterWrite(10L, TimeUnit.SECONDS).build().asMap();
+        this.crystalShootTicks = CacheBuilder.newBuilder().expireAfterWrite(5L, TimeUnit.SECONDS).build().asMap();
         this.max = 6;
         this.armorSet = "NECROMANCER";
         Bukkit.getPluginManager().registerEvents((Listener) new MasteryDemonicGatewayListener(this), (Plugin) Enchantments.getInstance());

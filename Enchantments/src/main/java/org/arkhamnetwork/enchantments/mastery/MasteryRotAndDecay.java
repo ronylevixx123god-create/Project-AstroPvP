@@ -3,6 +3,7 @@ package org.arkhamnetwork.enchantments.mastery;
 import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
 import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.cosmicpvp.cosmicutils.utils.*;
+import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.MapMaker;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.iface.RelationParticipator;
@@ -44,14 +45,15 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
 public class MasteryRotAndDecay extends MasteryCustomEnchantment {
-    private Map<UUID, Long> decayingMessage = (new MapMaker()).expireAfterWrite(5L, TimeUnit.SECONDS).makeMap();
+    private ConcurrentMap<Object, Object> decayingMessage = CacheBuilder.newBuilder().expireAfterWrite(5L, TimeUnit.SECONDS).build().asMap();
 
-    private Map<UUID, Integer> rotAndDecayStacks = (new MapMaker()).expireAfterWrite(3L, TimeUnit.SECONDS).makeMap();
+    private ConcurrentMap<Object, Object> rotAndDecayStacks = CacheBuilder.newBuilder().expireAfterWrite(3L, TimeUnit.SECONDS).build().asMap();
 
     public MasteryRotAndDecay() {
         super("Rot and Decay", GeneralUtil.armor, 11);
@@ -69,7 +71,7 @@ public class MasteryRotAndDecay extends MasteryCustomEnchantment {
                     return false;
             }
         }
-        Integer currentStacks = this.rotAndDecayStacks.getOrDefault(player.getUniqueId(), Integer.valueOf(0));
+        Integer currentStacks = (Integer) this.rotAndDecayStacks.getOrDefault(player.getUniqueId(), Integer.valueOf(0));
         Integer integer1 = currentStacks, integer2 = currentStacks = Integer.valueOf(currentStacks.intValue() + 1);
         int maxStacksAllowed = Math.min(6, level);
         if (currentStacks.intValue() >= maxStacksAllowed)
