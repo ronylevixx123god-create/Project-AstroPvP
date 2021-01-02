@@ -302,6 +302,13 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/AstroItemSkins.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>enchantmentapi</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/EnchantmentsAPI.jar</systemPath>
+        </dependency>
     </dependencies>
 
 </project>

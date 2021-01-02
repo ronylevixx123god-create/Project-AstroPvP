@@ -2,6 +2,7 @@ package org.arkhamnetwork.enchantments.enchantments.tools;
 
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
+import net.minecraft.server.v1_8_R3.Item;
 import org.arkhamnetwork.CosmicCustomTNT.enums.TNTTypes;
 import org.arkhamnetwork.CosmicCustomTNT.listeners.TNTListener;
 import org.arkhamnetwork.enchantments.libs.EnchantBreakBlockEvent;
@@ -10,7 +11,6 @@ import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockEvent;
