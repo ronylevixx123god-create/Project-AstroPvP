@@ -3,7 +3,6 @@ package org.arkhamnetwork.enchantments.mastery;
 import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.base.Predicate;
 import com.google.common.cache.CacheBuilder;
-import com.google.common.collect.MapMaker;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
@@ -35,7 +34,9 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
@@ -122,7 +123,7 @@ public class MasteryDemonicGateway extends MasteryCustomEnchantment {
                                     continue;
                                 }
                                 allDead = false;
-                                Integer cooldownTicks = MasteryDemonicGateway.this.crystalShootTicks.get(crystal);
+                                Integer cooldownTicks = (Integer) MasteryDemonicGateway.this.crystalShootTicks.get(crystal);
                                 if (cooldownTicks != null && cooldownTicks > 0) {
                                     MasteryDemonicGateway.this.crystalShootTicks.put(crystal, --cooldownTicks);
                                 } else {
