@@ -36,10 +36,13 @@ import com.conaxgames.factions.utils.cmds.CommandToggleSmoke;
 import com.conaxgames.factions.utils.flying.CosmicFlyingPlugin;
 import com.conaxgames.factions.utils.listeners.*;
 import com.cosmicpvp.cosmicutils.utils.CC;
+<<<<<<< HEAD
 import com.cosmicpvp.factionpoints.commands.CommandFactionPoints;
 import com.cosmicpvp.factionpoints.listeners.CoreChunkListener;
 import com.cosmicpvp.factionpoints.listeners.FactionListener;
 import com.cosmicpvp.factionpoints.listeners.FactionPointListener;
+=======
+>>>>>>> parent of 0d45a8c... FACTION POINTS
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.massivecraft.factions.cmd.CmdAutoHelp;
@@ -107,12 +110,15 @@ public class P extends MPlugin {
     private BoardManager boardManager;
     private CosmicFlyingPlugin cosmicFlyingPlugin;
     public BoosterManager boosterManager;
+<<<<<<< HEAD
     // TODO: FINISH FACTION POINTS
     /*public PointManager pointManager;
     private CoreChunkManager chunkManager; */
     public static boolean debug;
     private long startOfMap;
     private boolean vanillaPlanet = false;
+=======
+>>>>>>> parent of 0d45a8c... FACTION POINTS
 
     public P() {
         p = this;
@@ -197,6 +203,7 @@ public class P extends MPlugin {
 
         this.boosterManager = new BoosterManager();
         this.boosterManager.loadActiveBoosters();
+<<<<<<< HEAD
         this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new BoosterTask(), 20L, 20L);
 
         this.saveDefaultConfig();
@@ -208,6 +215,9 @@ public class P extends MPlugin {
         this.startOfMap = this.getConfig().getLong("startOfMap");
         this.vanillaPlanet = this.getConfig().getBoolean("vanilla", false);
 
+=======
+        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, (Runnable)new BoosterTask(), 20L, 20L);
+>>>>>>> parent of 0d45a8c... FACTION POINTS
         // TODO: THIS IS THE onEnable for all additions put into Factions.
 
        this.getBaseCommands().add(this.cmdBase);
@@ -245,6 +255,7 @@ public class P extends MPlugin {
 
         //Setup Discord Bot
 
+
         this.postEnable();
         this.loadSuccessful = true;
         this.fChestManager.onEnable(this);
@@ -279,8 +290,6 @@ public class P extends MPlugin {
 
         this.getCommand("givefacbooster").setExecutor(new CommandBooster());
         this.getCommand("booster").setExecutor(new CommandCheckBooster());
-
-        this.getCommand("factionpoints").setExecutor(new CommandFactionPoints());
     }
 
     private void registerNewListeners() {
@@ -291,14 +300,10 @@ public class P extends MPlugin {
         this.getServer().getPluginManager().registerEvents(new VIPCommandBlocker(), this);
         this.getServer().getPluginManager().registerEvents(new NetherMobSpawnerListener(), this);
 
-        this.getServer().getPluginManager().registerEvents(new BoosterListener(this.boosterManager), this);
+        this.getServer().getPluginManager().registerEvents((Listener)new BoosterListener(this.boosterManager), (Plugin)this);
         if (this.getServer().getPluginManager().isPluginEnabled("mcMMO")) {
-            this.getServer().getPluginManager().registerEvents(new mcMMOListener(), this);
+            this.getServer().getPluginManager().registerEvents((Listener)new mcMMOListener(), (Plugin)this);
         }
-
-        this.getServer().getPluginManager().registerEvents(new FactionPointListener(), this);
-        this.getServer().getPluginManager().registerEvents(new CoreChunkListener(), this);
-        this.getServer().getPluginManager().registerEvents(new FactionListener(), this);
     }
 
     private void mcMMOTestUtil() {
@@ -315,6 +320,7 @@ public class P extends MPlugin {
         }
     }
 
+<<<<<<< HEAD
     public static void debugCosmicFactionPoints(String debugString) {
         if (!debug) {
             return;
@@ -350,6 +356,8 @@ public class P extends MPlugin {
         debug = false;
     }
 
+=======
+>>>>>>> parent of 0d45a8c... FACTION POINTS
     public BoosterManager getBoosterManager() {
         return this.boosterManager;
     }
@@ -390,9 +398,12 @@ public class P extends MPlugin {
         for (Player pl : Bukkit.getOnlinePlayers()) {
             pl.removeMetadata("last_enderpearl_throw", this);
         }
+<<<<<<< HEAD
         // TODO: FINISH ADDING FACTION POINTS (CONVERT FROM .kt)
         /*this.pointManager.onDisable(this);
         this.chunkManager.onDisable(this);*/
+=======
+>>>>>>> parent of 0d45a8c... FACTION POINTS
         this.boosterManager.saveActiveBoosters();
         CommandToggleSmoke.saveToggles();
         if (this.AutoLeaveTask != null) {
