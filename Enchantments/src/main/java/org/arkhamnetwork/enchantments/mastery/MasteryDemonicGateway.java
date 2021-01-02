@@ -1,6 +1,7 @@
 package org.arkhamnetwork.enchantments.mastery;
 
 import com.cosmicpvp.cosmicutils.utils.*;
+import com.google.common.base.Predicate;
 import com.google.common.collect.MapMaker;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
@@ -124,7 +125,7 @@ public class MasteryDemonicGateway extends MasteryCustomEnchantment {
                                     MasteryDemonicGateway.this.crystalShootTicks.put(crystal, --cooldownTicks);
                                 } else {
                                     final EntityEnderCrystal ender = (EntityEnderCrystal) ((CraftEntity) crystal).getHandle();
-                                    final List nearbyPlayers = ender.world.a((Class) EntityHuman.class, ender.getBoundingBox().grow(crystalScanRadius, crystalScanRadius, crystalScanRadius), ent -> ent instanceof EntityHuman && damaged.canSee((Player) ent.getBukkitEntity()) && ((Player) ent.getBukkitEntity()).getGameMode() == GameMode.SURVIVAL && WorldGuardUtils.isPvPEnabled(new Location(damaged.getWorld(), ent.locX, ent.locY, ent.locZ)));
+                                    final List nearbyPlayers = ender.world.a(EntityHuman.class, ender.getBoundingBox().grow(crystalScanRadius, crystalScanRadius, crystalScanRadius), (Predicate<? super EntityHuman>) ent -> ent != null && damaged.canSee((Player) ent.getBukkitEntity()) && ((Player) ent.getBukkitEntity()).getGameMode() == GameMode.SURVIVAL && WorldGuardUtils.isPvPEnabled(new Location(damaged.getWorld(), ent.locX, ent.locY, ent.locZ)));
                                     final Location crystalLocation = crystal.getLocation();
                                     for (final Object obj : nearbyPlayers) {
                                         if (obj instanceof EntityHuman) {
