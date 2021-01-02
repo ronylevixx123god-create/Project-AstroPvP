@@ -30,7 +30,6 @@ import com.cosmicpvp.factionpoints.FactionsCoreChunkAPI;
 import com.cosmicpvp.factionpoints.FactionsPointsAPI;
 import com.cosmicpvp.factionpoints.struct.CoreChunkData;
 import com.cosmicpvp.factionpoints.struct.ExpiringChunkData;
-import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.MapMaker;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
@@ -46,8 +45,6 @@ import com.wimbli.WorldBorder.BorderData;
 import com.wimbli.WorldBorder.WorldBorder;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -59,7 +56,7 @@ import org.bukkit.plugin.Plugin;
 
 public class FactionListener
 implements Listener {
-    private ConcurrentMap<Object, Object> expiringMsgs = CacheBuilder.newBuilder().expireAfterWrite(30L,TimeUnit.SECONDS).build().asMap();
+    private Map<UUID, Long> expiringMsgs = new MapMaker().expireAfterWrite(30L, TimeUnit.SECONDS).makeMap();
 
     @EventHandler
     public void onFactionCreate(FactionCreateEvent event) {

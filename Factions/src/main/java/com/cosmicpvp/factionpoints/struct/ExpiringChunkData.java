@@ -9,6 +9,7 @@ package com.cosmicpvp.factionpoints.struct;
 
 import com.google.gson.annotations.SerializedName;
 import com.massivecraft.factions.Faction;
+import org.bukkit.craftbukkit.libs.com.google.gson.annotations.SerializedName;
 
 public class ExpiringChunkData {
     public long timeClaimed;

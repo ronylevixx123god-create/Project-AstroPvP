@@ -40,7 +40,7 @@ public class CoreChunkData {
     private Long lastRaided;
     public Long coreChunkClaimTime;
     public Long coreChunkRemovedAt;
-    private int lastPointsLost;
+    private Double lastPointsLost;
     private String lastFactionWhoRaided;
     private LinkedList<RaidLog> raidLogList;
     private static final long coreChunkTimeNeeded = TimeUnit.HOURS.toMillis(24L);
@@ -142,7 +142,7 @@ public class CoreChunkData {
         return this.coreChunkRemovedAt;
     }
 
-    public int getLastPointsLost() {
+    public Double getLastPointsLost() {
         return this.lastPointsLost;
     }
 
@@ -170,7 +170,7 @@ public class CoreChunkData {
         this.coreChunkRemovedAt = coreChunkRemovedAt;
     }
 
-    public void setLastPointsLost(Integer lastPointsLost) {
+    public void setLastPointsLost(Double lastPointsLost) {
         this.lastPointsLost = lastPointsLost;
     }
 

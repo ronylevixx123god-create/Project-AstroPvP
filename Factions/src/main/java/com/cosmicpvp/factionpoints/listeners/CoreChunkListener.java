@@ -21,6 +21,7 @@ import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.Faction;
 import org.bukkit.block.Block;
+import org.bukkit.craftbukkit.v1_7_R4.entity.CraftTNTPrimed;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftTNTPrimed;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.EventHandler;
@@ -36,7 +37,7 @@ implements Listener {
             return;
         }
         FLocation location = new FLocation(event.getLocation());
-        Faction inside = Board.getFactionAt(location);
+        Faction inside = Board.getFactionAt((FLocation)location);
         if (inside == null || !inside.isNormal()) {
             return;
         }
@@ -45,12 +46,12 @@ implements Listener {
             return;
         }
         TNTPrimed primed = (TNTPrimed)event.getEntity();
-        Block source = ((CraftTNTPrimed)primed).getHandle().sourceLoc.getBlock();
-        Faction cameFrom = Board.getFactionAt(new FLocation(source));
-        if (cameFrom != null && cameFrom.equals(inside)) {
+        Block source = ((CraftTNTPrimed)primed).getHandle().getSourceLocation();
+        Faction cameFrom = Board.getFactionAt((FLocation)new FLocation(source));
+        if (cameFrom != null && cameFrom.equals((Object)inside)) {
             return;
         }
-        if (coreChunk.getMasterChunk().equals(location) && coreChunk.canBeRaided() && cameFrom != null && cameFrom.isNormal()) {
+        if (coreChunk.getMasterChunk().equals((Object)location) && coreChunk.canBeRaided() && cameFrom != null && cameFrom.isNormal()) {
             coreChunk.onRaidedByFaction(inside, cameFrom, primed.getLocation(), source);
         }
     }
