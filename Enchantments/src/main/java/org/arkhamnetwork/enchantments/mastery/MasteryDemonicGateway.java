@@ -2,14 +2,18 @@ package org.arkhamnetwork.enchantments.mastery;
 
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
-import net.minecraft.server.v1_7_R4.Entity;
-import net.minecraft.server.v1_7_R4.MathHelper;
+import net.minecraft.server.v1_8_R3.*;
 import org.arkhamnetwork.enchantments.util.*;
 import com.google.common.collect.*;
 import org.arkhamnetwork.enchantments.*;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
+import org.arkhamnetwork.enchantments.util.MathHelper;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.entity.Entity;
 import org.bukkit.plugin.*;
 import org.arkhamnetwork.enchantments.events.*;
 import com.rit.sucy.*;
@@ -18,12 +22,9 @@ import org.bukkit.scheduler.*;
 import java.util.concurrent.*;
 import org.bukkit.util.*;
 import java.util.*;
-import org.bukkit.craftbukkit.v1_7_R4.*;
-import org.bukkit.craftbukkit.v1_7_R4.entity.*;
 import com.massivecraft.factions.*;
 import com.massivecraft.factions.iface.*;
 import com.massivecraft.factions.struct.*;
-import net.minecraft.server.v1_7_R4.*;
 import org.bukkit.block.*;
 import com.cosmicpvp.cosmicutils.utils.*;
 import org.arkhamnetwork.enchantments.listeners.*;
@@ -82,7 +83,7 @@ public class MasteryDemonicGateway extends MasteryCustomEnchantment
                     crystal.setMetadata("demonicGateway", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)damaged.getName()));
                     crystal.getWorld().strikeLightningEffect(crystal.getLocation());
                     spawnedCrystals.add(crystal);
-                    final Entity entity = ((CraftEntity)crystal).getHandle();
+                    final Entity entity = (Entity) ((CraftEntity)crystal).getHandle();
                     try {
                         ReflectionUtils.setObject((Object)entity, ReflectionUtils.getField((Class)Entity.class, "invulnerable"), (Object)true);
                     }
@@ -124,7 +125,7 @@ public class MasteryDemonicGateway extends MasteryCustomEnchantment
                                 }
                                 else {
                                     final EntityEnderCrystal ender = (EntityEnderCrystal)((CraftEntity)crystal).getHandle();
-                                    final List nearbyPlayers = ender.world.a((Class)EntityHuman.class, ender.boundingBox.grow(crystalScanRadius, crystalScanRadius, crystalScanRadius), ent -> ent instanceof EntityHuman && damaged.canSee((Player)ent.getBukkitEntity()) && ((Player)ent.getBukkitEntity()).getGameMode() == GameMode.SURVIVAL && WorldGuardUtils.isPvPEnabled(new Location(damaged.getWorld(), ent.locX, ent.locY, ent.locZ)));
+                                    final List nearbyPlayers = ender.world.a((Class) EntityHuman.class, ender.getBoundingBox().grow(crystalScanRadius, crystalScanRadius, crystalScanRadius), ent -> ent instanceof EntityHuman && damaged.canSee((Player)ent.getBukkitEntity()) && ((Player)ent.getBukkitEntity()).getGameMode() == GameMode.SURVIVAL && WorldGuardUtils.isPvPEnabled(new Location(damaged.getWorld(), ent.locX, ent.locY, ent.locZ)));
                                     final Location crystalLocation = crystal.getLocation();
                                     for (final Object obj : nearbyPlayers) {
                                         if (obj instanceof EntityHuman) {
@@ -167,7 +168,7 @@ public class MasteryDemonicGateway extends MasteryCustomEnchantment
         final WorldServer world = ((CraftWorld)location.getWorld()).getHandle();
         final EntityWitherSkull skull = new EntityWitherSkull(world, ((CraftPlayer)shooterPlayer).getHandle(), direction.getX(), direction.getY(), direction.getZ()) {
             public void setDirection(final double d0, final double d1, final double d2) {
-                final double d3 = MathHelper.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
+                final double d3 = MathHelper.sqrt_double(d0 * d0 + d1 * d1 + d2 * d2);
                 this.dirX = d0 / d3 * 0.1;
                 this.dirY = d1 / d3 * 0.1;
                 this.dirZ = d2 / d3 * 0.1;
@@ -193,7 +194,7 @@ public class MasteryDemonicGateway extends MasteryCustomEnchantment
                 if (!this.world.isStatic) {
                     if (movingobjectposition.entity != null) {
                         if (this.shooter != null) {
-                            movingobjectposition.entity.damageEntity(DamageSource.projectile((Entity)this, (Entity)this.shooter), 8.0f);
+                            movingobjectposition.entity.damageEntity(DamageSource.projectile(this, this.shooter), 8.0f);
                         }
                         else {
                             movingobjectposition.entity.damageEntity(DamageSource.MAGIC, 5.0f);
@@ -220,7 +221,7 @@ public class MasteryDemonicGateway extends MasteryCustomEnchantment
         skull.getBukkitEntity().setMetadata("skullLevel", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)level));
         skull.getBukkitEntity().setMetadata("crystalSkull", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)shooterPlayer.getName()));
         skull.getBukkitEntity().setMetadata("crystalShooter", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)crystal));
-        world.addEntity((Entity)skull, CreatureSpawnEvent.SpawnReason.CUSTOM);
+        world.addEntity(skull, CreatureSpawnEvent.SpawnReason.CUSTOM);
         return skull;
     }
     

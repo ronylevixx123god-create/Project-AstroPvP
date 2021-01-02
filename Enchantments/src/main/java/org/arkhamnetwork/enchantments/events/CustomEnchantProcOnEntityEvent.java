@@ -1,44 +1,37 @@
 package org.arkhamnetwork.enchantments.events;
 
-import org.bukkit.event.*;
-import org.bukkit.entity.*;
-import com.rit.sucy.*;
+import com.rit.sucy.CustomEnchantment;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.event.Cancellable;
+import org.bukkit.event.Event;
+import org.bukkit.event.HandlerList;
 
-public class CustomEnchantProcOnEntityEvent extends Event implements Cancellable
-{
-    private static HandlerList handlerList;
-    private boolean cancelled;
-    private LivingEntity player;
-    private LivingEntity target;
-    private Event event;
-    private CustomEnchantment enchant;
-    private int enchantLevel;
-    
-    public CustomEnchantProcOnEntityEvent(final LivingEntity player, final LivingEntity target, final Event rawEvent, final CustomEnchantment enchant, final int enchantLevel) {
+public class CustomEnchantProcOnEntityEvent extends Event implements Cancellable {
+    public CustomEnchantProcOnEntityEvent(LivingEntity player, LivingEntity target, Event rawEvent, CustomEnchantment enchant, int enchantLevel) {
         this.player = player;
         this.enchant = enchant;
         this.target = target;
         this.event = rawEvent;
         this.enchantLevel = enchantLevel;
     }
-    
+
     public boolean isCancelled() {
         return this.cancelled;
     }
-    
-    public void setCancelled(final boolean cancel) {
+
+    public void setCancelled(boolean cancel) {
         this.cancelled = cancel;
     }
-    
+
     public static HandlerList getHandlerList() {
-        return CustomEnchantProcOnEntityEvent.handlerList;
+        return handlerList;
     }
-    
+
     public HandlerList getHandlers() {
-        return CustomEnchantProcOnEntityEvent.handlerList;
+        return handlerList;
     }
-    
-    public CustomEnchantProcOnEntityEvent(final boolean cancelled, final LivingEntity player, final LivingEntity target, final Event event, final CustomEnchantment enchant, final int enchantLevel) {
+
+    public CustomEnchantProcOnEntityEvent(boolean cancelled, LivingEntity player, LivingEntity target, Event event, CustomEnchantment enchant, int enchantLevel) {
         this.cancelled = cancelled;
         this.player = player;
         this.target = target;
@@ -46,32 +39,42 @@ public class CustomEnchantProcOnEntityEvent extends Event implements Cancellable
         this.enchant = enchant;
         this.enchantLevel = enchantLevel;
     }
-    
+
     public LivingEntity getPlayer() {
         return this.player;
     }
-    
+
     public LivingEntity getTarget() {
         return this.target;
     }
-    
+
     public Event getEvent() {
         return this.event;
     }
-    
+
     public CustomEnchantment getEnchant() {
         return this.enchant;
     }
-    
+
     public int getEnchantLevel() {
         return this.enchantLevel;
     }
-    
-    public void setEvent(final Event event) {
+
+    public void setEvent(Event event) {
         this.event = event;
     }
-    
-    static {
-        CustomEnchantProcOnEntityEvent.handlerList = new HandlerList();
-    }
+
+    private static HandlerList handlerList = new HandlerList();
+
+    private boolean cancelled;
+
+    private LivingEntity player;
+
+    private LivingEntity target;
+
+    private Event event;
+
+    private CustomEnchantment enchant;
+
+    private int enchantLevel;
 }

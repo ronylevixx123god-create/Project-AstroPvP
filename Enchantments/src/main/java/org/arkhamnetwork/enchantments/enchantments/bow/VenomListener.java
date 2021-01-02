@@ -31,7 +31,7 @@ final class VenomListener implements Listener
             final int radius;
             final int level = radius = e.getEntity().getMetadata(Venom.venomEncahntmentMetadata).get(0).asInt();
             final String enchantment_owner = e.getEntity().hasMetadata(Venom.venomEncahntmentOwnerMetadata) ? e.getEntity().getMetadata(Venom.venomEncahntmentOwnerMetadata).get(0).asString() : null;
-            for (final Entity ent : e.getEntity().getNearbyEntities((double)radius, (double)radius, (double)radius)) {
+            for (final Entity ent : e.getEntity().getNearbyEntities(radius, radius, radius)) {
                 if (ent.hasMetadata("spectator")) {
                     continue;
                 }
@@ -42,7 +42,7 @@ final class VenomListener implements Listener
                     continue;
                 }
                 if (enchantment_owner != null && ent instanceof Player) {
-                    if (((Player)ent).getName().equals(enchantment_owner)) {
+                    if (ent.getName().equals(enchantment_owner)) {
                         continue;
                     }
                     if (this.isAlly((Player)ent, Bukkit.getPlayer(enchantment_owner))) {

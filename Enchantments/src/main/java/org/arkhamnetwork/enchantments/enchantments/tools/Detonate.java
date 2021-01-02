@@ -4,11 +4,14 @@ import java.util.concurrent.*;
 
 import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
+import net.minecraft.server.v1_8_R3.Blocks;
+import net.minecraft.server.v1_8_R3.ChunkSection;
 import org.arkhamnetwork.enchantments.*;
 import org.arkhamnetwork.enchantments.util.BlockUtils;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.craftbukkit.v1_8_R3.CraftChunk;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.*;
 import com.rit.sucy.*;
@@ -27,8 +30,6 @@ import com.massivecraft.factions.*;
 import org.bukkit.entity.*;
 import org.bukkit.block.*;
 import java.util.*;
-import org.bukkit.craftbukkit.v1_7_R4.*;
-import net.minecraft.server.v1_7_R4.*;
 import org.bukkit.*;
 import java.lang.reflect.*;
 
@@ -228,7 +229,7 @@ public class Detonate extends CustomEnchantment
     
     private void setBlockSuperFast(final Block b, final int typeId, final byte data) {
         final Chunk c = b.getChunk();
-        final net.minecraft.server.v1_7_R4.Chunk chunk = ((CraftChunk)c).getHandle();
+        final net.minecraft.server.v1_8_R3.Chunk chunk = ((CraftChunk)c).getHandle();
         try {
             final Field f = chunk.getClass().getDeclaredField("sections");
             f.setAccessible(true);

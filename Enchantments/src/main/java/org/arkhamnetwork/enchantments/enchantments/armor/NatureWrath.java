@@ -36,7 +36,7 @@ public class NatureWrath extends CustomEnchantment
     Essentials ess;
     boolean cosmicOutposts;
     boolean factionUpgrades;
-    
+
     public NatureWrath() {
         super("Nature Wrath", GeneralUtil.armor, 2);
         this.max = 4;
@@ -48,7 +48,7 @@ public class NatureWrath extends CustomEnchantment
         this.factionUpgrades = Bukkit.getPluginManager().isPluginEnabled("FactionUpgrades");
         Bukkit.getPluginManager().registerEvents((Listener)new NatureWrathListener(), (Plugin) Enchantments.getInstance());
     }
-    
+
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         if (!CommandEnchDust.soulEnabled) {
             return;
@@ -106,7 +106,7 @@ public class NatureWrath extends CustomEnchantment
             }
         }
     }
-    
+
     public int procNaturesWrath(final Player playerWhoProced, final LivingEntity affected, final int level, final EntityDamageEvent e, final double durationModifier) {
         final int radius = 8 + level * 5;
         final List<String> affectedPlayers = new ArrayList<String>();
@@ -139,7 +139,7 @@ public class NatureWrath extends CustomEnchantment
                 /*if (StaffPlus.get().mode.isActive(pEnt.getName())) {
                     continue;
                 }*/
-                final CustomEnchantProcOnEntityEvent event = new CustomEnchantProcOnEntityEvent((LivingEntity)playerWhoProced, (LivingEntity)pEnt, (Event)e, this, level);
+                final CustomEnchantProcOnEntityEvent event = new CustomEnchantProcOnEntityEvent(playerWhoProced, pEnt, e, this, level);
                 boolean freeze = true;
                 if (!event.callEvent()) {
                     if (event.getEvent() == null) {
@@ -171,8 +171,8 @@ public class NatureWrath extends CustomEnchantment
                 pEnt.playSound(pEnt.getLocation(), Sound.ENDERDRAGON_GROWL, 2.0f, 2.0f);
                 final NatureWrathTask nwt = new NatureWrathTask(pEnt, level);
                 nwt.runTaskTimer((Plugin)Enchantments.getInstance(), 20L, 20L);
-                pEnt.setMetadata("lastNatureWrathEffect", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)System.currentTimeMillis()));
-                pEnt.setMetadata("natureWrathTask", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)nwt));
+                pEnt.setMetadata("lastNatureWrathEffect", new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)System.currentTimeMillis()));
+                pEnt.setMetadata("natureWrathTask", new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)nwt));
             }
         }
         final String[] players = affectedPlayers.toArray(new String[affectedPlayers.size()]);

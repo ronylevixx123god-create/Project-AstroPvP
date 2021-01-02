@@ -1,5 +1,7 @@
 package org.arkhamnetwork.enchantments;
 
+import com.google.common.base.CaseFormat;
+import net.minecraft.server.v1_8_R3.NBTBase;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.arkhamnetwork.enchantments.util.ItemUtils;
 import org.bukkit.Material;
@@ -11,12 +13,10 @@ import org.arkhamnetwork.Arkkit.plugins.*;
 import org.arkhamnetwork.Arkkit.patches.*;
 import org.bukkit.event.inventory.*;
 import com.cosmicpvp.cosmicutils.utils.*;
-import net.minecraft.server.v1_7_R4.*;
 import com.cosmicpvp.CosmicSpaceChests.libs.*;
 import com.cosmicpvp.CosmicSpaceChests.*;
 import com.rit.sucy.*;
 import com.rit.sucy.service.*;
-import net.minecraft.util.com.google.common.base.*;
 import org.arkhamnetwork.enchantments.util.*;
 import org.bukkit.entity.*;
 import org.bukkit.*;
@@ -106,7 +106,7 @@ public class EnchantmentBook
         }
         final int selectedMax = min + ran.nextInt(max - min + 1);
         final ItemStack is = ItemUtils.buildItem(Material.INK_SACK, (short)0, CC.LightPurpleB + "Heroic Black Scroll", ChatColor.GRAY.toString() + "Removes a random enchantment", ChatColor.GRAY.toString() + "from an item and converts", ChatColor.GRAY.toString() + "it into a " + ChatColor.LIGHT_PURPLE + min + "%-" + selectedMax + "%" + ChatColor.GRAY + " success book.", CC.LightPurpleB + "(!)" + CC.LightPurple + " Chance to extract Heroic Enchantments");
-        return new NBTWrapper((applyIID && ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) ? ItemID.assignItemID((InventoryClickEvent)null, is) : is).setString("cosmicType", "heroicBlackscroll").setNBTBase("conaxData", (NBTBase)new NBTTagCompoundBuilder().setInt("min", Integer.valueOf(min)).setInt("max", Integer.valueOf(selectedMax)).get()).setGlowing().build();
+        return new NBTWrapper((applyIID && ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) ? ItemID.assignItemID((InventoryClickEvent)null, is) : is).setString("cosmicType", "heroicBlackscroll").setNBTBase("conaxData", new NBTTagCompoundBuilder().setInt("min", Integer.valueOf(min)).setInt("max", Integer.valueOf(selectedMax)).get()).setGlowing().build();
     }
     
     public static ItemStack getTransmogScroll() {

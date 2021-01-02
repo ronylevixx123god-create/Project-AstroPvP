@@ -1,16 +1,19 @@
 package org.arkhamnetwork.enchantments.enchantments.bow;
 
 import com.cosmicpvp.cosmicutils.compat.ASound;
-import com.rit.sucy.*;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.WorldUtil;
+import com.rit.sucy.CustomEnchantment;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import org.arkhamnetwork.enchantments.util.ItemSkinUtils;
-import org.bukkit.event.entity.*;
-import org.bukkit.metadata.*;
-import org.bukkit.entity.*;
-import org.bukkit.potion.*;
-import com.cosmicpvp.cosmicutils.utils.*;
-import org.bukkit.*;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class Snare extends CustomEnchantment
 {

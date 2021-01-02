@@ -1,6 +1,5 @@
 package org.arkhamnetwork.enchantments.enchantments.tools;
 
-import net.minecraft.server.v1_7_R4.Item;
 import org.bukkit.*;
 import org.arkhamnetwork.enchantments.util.*;
 import java.util.*;
@@ -16,7 +15,6 @@ import org.arkhamnetwork.enchantments.libs.*;
 import org.bukkit.inventory.*;
 import org.bukkit.enchantments.*;
 import org.arkhamnetwork.enchantments.mastery.*;
-import net.minecraft.server.v1_7_R4.*;
 import org.arkhamnetwork.CosmicCustomTNT.listeners.*;
 import org.arkhamnetwork.CosmicCustomTNT.enums.*;
 import org.bukkit.inventory.ItemStack;

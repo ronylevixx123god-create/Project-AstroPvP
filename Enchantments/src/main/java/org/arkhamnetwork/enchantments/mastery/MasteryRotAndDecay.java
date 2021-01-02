@@ -24,9 +24,11 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-import net.minecraft.server.v1_7_R4.EntityPlayer;
-import net.minecraft.server.v1_7_R4.EntityTrackerEntry;
-import net.minecraft.server.v1_7_R4.WorldServer;
+
+import lombok.SneakyThrows;
+import net.minecraft.server.v1_8_R3.EntityPlayer;
+import net.minecraft.server.v1_8_R3.EntityTrackerEntry;
+import net.minecraft.server.v1_8_R3.WorldServer;
 import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.MasteryCustomEnchantment;
@@ -46,7 +48,7 @@ import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -102,6 +104,7 @@ public class MasteryRotAndDecay extends MasteryCustomEnchantment {
         return true;
     }
 
+    @SneakyThrows
     public void applyDefenseEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageEvent event) {
         if (target == null || !(target instanceof Player) || !(event instanceof EntityDamageByEntityEvent))
             return;
@@ -170,7 +173,7 @@ public class MasteryRotAndDecay extends MasteryCustomEnchantment {
         }
     }
 
-    public void applyRotAndDecayEffect(final Player sourcePlayer, Block centerBlock, int radius, final int enchantLevel, EntityDamageEvent event) {
+    public void applyRotAndDecayEffect(final Player sourcePlayer, Block centerBlock, int radius, final int enchantLevel, EntityDamageEvent event) throws NoSuchFieldException, IllegalAccessException {
         int duration = enchantLevel;
         final Set<Location> blocks = new HashSet<>();
         int endX = centerBlock.getX() + radius, endY = centerBlock.getY() + radius, endZ = centerBlock.getZ() + radius;
@@ -201,7 +204,7 @@ public class MasteryRotAndDecay extends MasteryCustomEnchantment {
                     if (tracked instanceof EntityPlayer) {
                         EntityPlayer pl = tracked;
                         if (pl.playerConnection == null || pl.playerConnection.isDisconnected() || (
-                                event != null && !(new CustomEnchantProcOnEntityEvent((LivingEntity)sourcePlayer, (LivingEntity)pl.getBukkitEntity(), (Event)event, (CustomEnchantment)this, enchantLevel)).callEvent()))
+                                event != null && !(new CustomEnchantProcOnEntityEvent(sourcePlayer, pl.getBukkitEntity(), event, this, enchantLevel)).callEvent()))
                             continue;
                         affected.add(pl);
                     }
@@ -230,7 +233,7 @@ public class MasteryRotAndDecay extends MasteryCustomEnchantment {
             }
             Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Enchantments.getInstance(), () -> {
                 try {
-                    Map<Location, MaterialData> found = (Map<Location, MaterialData>)blocks;
+                    Map<Location, MaterialData> found = (Map<Location, MaterialData>) blocks;
                     affected.forEach(null);
                 } catch (Exception exception) {}
                 affected.clear();

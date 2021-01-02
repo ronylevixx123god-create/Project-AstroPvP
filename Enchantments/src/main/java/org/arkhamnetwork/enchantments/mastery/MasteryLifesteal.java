@@ -1,18 +1,20 @@
 package org.arkhamnetwork.enchantments.mastery;
 
+import com.cosmicpvp.cosmicutils.utils.WorldUtil;
+import com.google.common.collect.Lists;
 import me.ifamasssxd.cosmicmasks.MaskType;
-import org.arkhamnetwork.enchantments.*;
-import org.arkhamnetwork.enchantments.util.*;
+import org.arkhamnetwork.enchantments.MasteryCustomEnchantment;
+import org.arkhamnetwork.enchantments.events.CustomEnchantProcOnEntityEvent;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.bukkit.event.entity.*;
-import com.google.common.collect.*;
-import org.arkhamnetwork.enchantments.events.*;
-import org.bukkit.entity.*;
-import org.bukkit.event.*;
-import com.rit.sucy.*;
-import com.cosmicpvp.cosmicutils.utils.*;
-import org.bukkit.*;
-import java.util.*;
+import org.bukkit.EntityEffect;
+import org.bukkit.Material;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+
+import java.util.List;
 
 public class MasteryLifesteal extends MasteryCustomEnchantment
 {

@@ -57,7 +57,7 @@ public class Phoenix extends CustomEnchantment {
     }
 
     public void applyEquipEffect(Player player, int enchantLevel) {
-        phoenixEquipped.put(player.getUniqueId(), Integer.valueOf(enchantLevel));
+        phoenixEquipped.put(player.getUniqueId(), enchantLevel);
     }
 
     public void applyUnequipEffect(Player player, int level, ItemStack item) {
