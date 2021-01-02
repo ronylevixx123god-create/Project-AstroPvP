@@ -96,7 +96,7 @@ extends CosmicGUI {
             if (data2 == null) {
                 this.closeWithDelay();
                 this.player.sendMessage(CC.Red + "Unable to find proper point data!");
-                CosmicFactionPoints.log("Unable to create or find point data for " + this.faction.getTag() + "!");
+                P.logCosmicFactionPoints("Unable to create or find point data for " + this.faction.getTag() + "!");
                 return;
             }
             if (data2.getPointsPurchasedToday() >= POINTS_PER_DAY) {

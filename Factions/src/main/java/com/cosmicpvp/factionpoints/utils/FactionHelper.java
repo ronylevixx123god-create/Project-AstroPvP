@@ -45,7 +45,7 @@ public class FactionHelper {
             allClaims.remove(chunkCore);
             allClaims.removeAll(attachedToCore);
             CoreChunkManager manager = P.getP().getChunkManager();
-            for (FLocation notAttached : allClaims) {
+            for (Object notAttached : allClaims) {
                 data2 = manager.getChunksToExpire().get(notAttached);
                 if (data2 != null && data2.getFId() != null && data2.getFId().equals(faction.getId()) && data2.getExpirationTime() > System.currentTimeMillis()) {
                     if (!data2.isConnectedToWarzone() || data2.getExpirationTime() == 0L) continue;
@@ -59,7 +59,7 @@ public class FactionHelper {
                 }
                 if (data2 == null) {
                     data2 = new ExpiringChunkData(System.currentTimeMillis(), System.currentTimeMillis() + time, faction.getId());
-                    manager.getChunksToExpire().put(notAttached, data2);
+                    manager.getChunksToExpire().put((FLocation) notAttached, data2);
                 } else if (!data2.isConnectedToWarzone()) {
                     data2.setExpirationTime(data2.getTimeClaimed() + time);
                 }

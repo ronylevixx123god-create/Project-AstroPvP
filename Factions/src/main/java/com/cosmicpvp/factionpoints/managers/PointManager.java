@@ -28,8 +28,11 @@ import com.cosmicpvp.factionpoints.struct.CoreChunkData;
 import com.cosmicpvp.factionpoints.struct.PointChangeLogs;
 import com.cosmicpvp.factionpoints.struct.PointData;
 import com.google.common.collect.MapMaker;
+import com.google.common.reflect.TypeToken;
 import com.massivecraft.factions.Faction;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -37,12 +40,12 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
+
 import kotlin.Metadata;
 import kotlin.TypeCastException;
 import kotlin.jvm.internal.Intrinsics;
 import kotlin.jvm.internal.StringCompanionObject;
 import kotlin.jvm.internal.TypeIntrinsics;
-import net.minecraft.util.com.google.gson.reflect.TypeToken;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -250,7 +253,7 @@ extends CosmicManager<CosmicFactionPoints> {
         return this.factionPoints.remove(faction);
     }
 
-    public void onEnable(@NotNull CosmicFactionPoints cosmicFactionPoints) {
+    public void onEnable(@NotNull CosmicFactionPoints cosmicFactionPoints) throws IOException {
         Intrinsics.checkParameterIsNotNull((Object)cosmicFactionPoints, "cosmicFactionPoints");
         this.factionPointsFile = JSONUtils.getOrCreateFile((File)cosmicFactionPoints.getDataFolder(), (String)"factionPointsData.json");
         this.factionLogFile = JSONUtils.getOrCreateFile((File)cosmicFactionPoints.getDataFolder(), (String)"pointLogs.json");
@@ -337,7 +340,7 @@ extends CosmicManager<CosmicFactionPoints> {
         CosmicFactionPoints.get().saveConfig();
     }
 
-    public void onDisable(@NotNull CosmicFactionPoints cosmicFactionPoints) {
+    public void onDisable(@NotNull CosmicFactionPoints cosmicFactionPoints) throws IOException {
         Intrinsics.checkParameterIsNotNull((Object)cosmicFactionPoints, "cosmicFactionPoints");
         if (this.loadedData) {
             File file = this.factionPointsFile;
