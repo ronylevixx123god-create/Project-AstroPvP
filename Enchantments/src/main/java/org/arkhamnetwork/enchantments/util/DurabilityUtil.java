@@ -1,11 +1,10 @@
 package org.arkhamnetwork.enchantments.util;
 
-import org.bukkit.entity.*;
-import org.bukkit.*;
-import org.bukkit.inventory.*;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
-public class DurabilityUtil
-{
+public class DurabilityUtil {
     public static boolean healLowestArmorPiece(final Player p, final short amount) {
         ArmorSlot lowest = null;
         short lowestDura = 0;
@@ -24,12 +23,12 @@ public class DurabilityUtil
         }
         if (lowest != null) {
             final ItemStack j = p.getEquipment().getArmorContents()[lowest.getIndex()];
-            j.setDurability((short)Math.max(0, (short)(j.getDurability() - amount)));
+            j.setDurability((short) Math.max(0, (short) (j.getDurability() - amount)));
             return true;
         }
         return false;
     }
-    
+
     public static boolean healMostDamagedArmorPeice(final Player p, final short amount) {
         ArmorSlot lowest = null;
         short highestDamagedPeice = 0;
@@ -48,7 +47,7 @@ public class DurabilityUtil
         }
         if (lowest != null) {
             final ItemStack j = p.getEquipment().getArmorContents()[lowest.getIndex()];
-            j.setDurability((short)Math.max(0, (short)(j.getDurability() - amount)));
+            j.setDurability((short) Math.max(0, (short) (j.getDurability() - amount)));
             return true;
         }
         return false;

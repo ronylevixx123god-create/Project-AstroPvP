@@ -2,42 +2,44 @@ package org.arkhamnetwork.enchantments.enchantments.bow;
 
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
-import org.arkhamnetwork.enchantments.*;
-import org.bukkit.plugin.*;
-import org.bukkit.entity.*;
-import org.arkhamnetwork.enchantments.util.*;
-import org.arkhamnetwork.Arkkit.utils.*;
-import org.bukkit.metadata.*;
-import org.bukkit.event.player.*;
-import org.arkhamnetwork.Arkkit.libs.*;
+import com.rit.sucy.CustomEnchantment;
+import com.rit.sucy.EnchantmentAPI;
+import com.rit.sucy.enchanting.EListener;
+import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.*;
-import org.bukkit.event.*;
-import org.bukkit.event.entity.*;
-import com.rit.sucy.enchanting.*;
-import com.rit.sucy.*;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
 
-public class Teleportation extends CustomEnchantment
-{
+public class Teleportation extends CustomEnchantment {
     public Teleportation() {
-        super("Teleportation", new Material[] { Material.BOW }, 3);
+        super("Teleportation", new Material[]{Material.BOW}, 3);
         this.max = 5;
         this.base = 20.0;
         this.interval = 10.0;
-        Bukkit.getPluginManager().registerEvents((Listener)new TeleportationEvents(), (Plugin)Enchantments.getInstance());
+        Bukkit.getPluginManager().registerEvents((Listener) new TeleportationEvents(), (Plugin) Enchantments.getInstance());
     }
-    
-    private static class TeleportationEvents implements Listener
-    {
+
+    private static class TeleportationEvents implements Listener {
         @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = false)
         public void onArrowHit(final EntityDamageByEntityEvent e) {
             if (e.getDamager() instanceof Projectile && e.getDamager().hasMetadata("teleportation_level")) {
                 Player player = null;
                 Player playerHit = null;
-                if (((Projectile)e.getDamager()).getShooter() instanceof Player) {
-                    player = (Player)((Projectile)e.getDamager()).getShooter();
+                if (((Projectile) e.getDamager()).getShooter() instanceof Player) {
+                    player = (Player) ((Projectile) e.getDamager()).getShooter();
                 }
                 if (e.getEntity() instanceof Player) {
-                    playerHit = (Player)e.getEntity();
+                    playerHit = (Player) e.getEntity();
                 }
                 if (player == null || playerHit == null) {
                     return;
@@ -74,26 +76,26 @@ public class Teleportation extends CustomEnchantment
                         player.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "You cannot teleport from PvP-enabled to PvP-disabled with Teleportation in The End or KOTH.");
                         return;
                     }
-                    player.setMetadata("ignore_combat_tag", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)tp));
+                    player.setMetadata("ignore_combat_tag", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) tp));
                     player.teleport(tp, PlayerTeleportEvent.TeleportCause.UNKNOWN);
-                    player.removeMetadata("ignore_combat_tag", (Plugin)Enchantments.getInstance());
+                    player.removeMetadata("ignore_combat_tag", (Plugin) Enchantments.getInstance());
                     if (playerHit instanceof Player) {
                         player.playSound(player.getLocation(), Sound.ORB_PICKUP, 0.75f, 0.341f);
                     }
                     final Location loc = playerHit.getLocation().add(0.0, 0.5, 0.0);
-                    ParticleEffect.sendToLocation(ParticleEffect.WITCH_MAGIC, loc, (float)Math.random(), (float)Math.random(), (float)Math.random(), 0.5f, 35);
+                    ParticleEffect.sendToLocation(ParticleEffect.WITCH_MAGIC, loc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 35);
                 }
             }
         }
-        
+
         @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
         public void onPlayerShootBow(final EntityShootBowEvent e) {
             if (e.getEntity() instanceof Player) {
-                final Player p = (Player)e.getEntity();
-                if (e.getBow() != null && EListener.getValidEnchantments(e.getBow(), p).containsKey((Object)EnchantmentAPI.getEnchantment("Teleportation"))) {
+                final Player p = (Player) e.getEntity();
+                if (e.getBow() != null && EListener.getValidEnchantments(e.getBow(), p).containsKey((Object) EnchantmentAPI.getEnchantment("Teleportation"))) {
                     final Location loc = e.getProjectile().getLocation();
-                    e.getProjectile().setMetadata("teleportation_level", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), EnchantmentAPI.getEnchantments(e.getBow()).get(EnchantmentAPI.getEnchantment("Teleportation"))));
-                    ParticleEffect.sendToLocation(ParticleEffect.WITCH_MAGIC, loc, (float)Math.random(), (float)Math.random(), (float)Math.random(), 0.5f, 35);
+                    e.getProjectile().setMetadata("teleportation_level", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), EnchantmentAPI.getEnchantments(e.getBow()).get(EnchantmentAPI.getEnchantment("Teleportation"))));
+                    ParticleEffect.sendToLocation(ParticleEffect.WITCH_MAGIC, loc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 35);
                 }
             }
         }

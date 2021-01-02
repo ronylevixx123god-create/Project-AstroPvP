@@ -1,41 +1,47 @@
 package org.arkhamnetwork.enchantments;
 
-import java.io.*;
-
+import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
+import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
+import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
+import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
+import com.cosmicpvp.cosmicutils.nbt.NBTTagListBuilder;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
+import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
+import com.rit.sucy.CustomEnchantment;
+import com.rit.sucy.EnchantmentAPI;
 import org.apache.commons.lang.StringUtils;
-import org.bukkit.entity.*;
-import org.apache.commons.lang.*;
-import org.bukkit.inventory.*;
-import com.compilex.CosmicOutposts.*;
-import org.arkhamnetwork.Arkkit.plugins.*;
-import org.arkhamnetwork.Arkkit.patches.*;
-import com.cosmicpvp.cosmicutils.customevents.*;
-import com.rit.sucy.*;
-import com.cosmicpvp.cosmicutils.nbt.*;
+import org.arkhamnetwork.Arkkit.patches.ItemID;
+import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
+import org.arkhamnetwork.enchantments.util.TieredEnchantments;
 import org.bukkit.*;
-import org.bukkit.event.*;
-import org.bukkit.event.inventory.*;
-import com.cosmicpvp.CosmicSpaceChests.*;
-import com.google.common.collect.*;
-import java.util.concurrent.*;
-import org.bukkit.metadata.*;
-import com.cosmicpvp.cosmicutils.utils.*;
-import java.util.*;
-import org.arkhamnetwork.enchantments.util.*;
-import com.cosmicpvp.CosmicSpaceChests.libs.*;
-import org.bukkit.event.player.*;
-import org.bukkit.event.block.*;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 
-public class EnchantmentBookListener implements Listener
-{
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+
+public class EnchantmentBookListener implements Listener {
     File f;
-    
+
     public EnchantmentBookListener() {
         this.f = new File("no_enchant_limits");
     }
-    
+
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onInventoryClick(final InventoryClickEvent e) {
         if (!e.getInventory().getTitle().equals("container.crafting")) {
@@ -43,12 +49,12 @@ public class EnchantmentBookListener implements Listener
         }
         if (e.getCursor() != null && EnchantmentBook.isEnchantmentBook(e.getCursor())) {
             if (e.getRawSlot() < 9 && e.getRawSlot() >= 0) {
-                final Player pl = (Player)e.getWhoClicked();
+                final Player pl = (Player) e.getWhoClicked();
                 pl.sendMessage(ChatColor.RED + "You cannot apply enchantments to your armor while it is equipped.");
                 return;
             }
             if (e.getCurrentItem() != null) {
-                final Player pl = (Player)e.getWhoClicked();
+                final Player pl = (Player) e.getWhoClicked();
                 final CustomEnchantment ce = EnchantmentBook.getEnchantment(e.getCursor());
                 if (ce == null) {
                     return;
@@ -69,13 +75,12 @@ public class EnchantmentBookListener implements Listener
                 final ItemStack ench_book = e.getCursor().clone();
                 if (EnchantmentAPI.itemHasEnchantment(to_enchant, ce.name())) {
                     CustomEnchantment toCheck = ce;
-                    final Map<CustomEnchantment, Integer> enchants = (Map<CustomEnchantment, Integer>)EnchantmentAPI.getEnchantments(to_enchant);
+                    final Map<CustomEnchantment, Integer> enchants = (Map<CustomEnchantment, Integer>) EnchantmentAPI.getEnchantments(to_enchant);
                     Integer level = enchants.get(toCheck);
                     if (level == null) {
                         if (toCheck.heroicEnchantment) {
                             toCheck = ce.nonHeroicVersion;
-                        }
-                        else {
+                        } else {
                             toCheck = ce.heroicVersion;
                         }
                         level = enchants.get(toCheck);
@@ -129,9 +134,8 @@ public class EnchantmentBookListener implements Listener
                 }
                 if (pl.hasPermission("cosmicpvp.heroic") && Math.random() <= 0.05) {
                     pl.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "(!) " + ChatColor.GREEN + "Due to your " + ChatColor.UNDERLINE + "Heroic Rank" + ChatColor.GREEN + " status, this book will attempt to apply to your equipment but will not be consumed!");
-                }
-                else {
-                    pl.setItemOnCursor((ItemStack)null);
+                } else {
+                    pl.setItemOnCursor((ItemStack) null);
                 }
                 e.setCancelled(true);
                 e.setResult(Event.Result.DENY);
@@ -151,25 +155,23 @@ public class EnchantmentBookListener implements Listener
                     final Location l = pl.getLocation();
                     ParticleEffect.sendToLocation(ParticleEffect.SPELL, l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
                     ParticleEffect.sendToLocation(ParticleEffect.MAGIC_CRIT, l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.65f, 30);
-                    Bukkit.getPluginManager().callEvent((Event)new CustomCosmicPlayerEvent(pl, "APPLY_ENCHANT", new Object[] { ench_book, EnchantmentBook.getEnchantmentBookSuccessRate(ench_book) }));
-                }
-                else {
+                    Bukkit.getPluginManager().callEvent((Event) new CustomCosmicPlayerEvent(pl, "APPLY_ENCHANT", new Object[]{ench_book, EnchantmentBook.getEnchantmentBookSuccessRate(ench_book)}));
+                } else {
                     pl.playSound(pl.getLocation(), Sound.LAVA_POP, 1.0f, 0.75f);
                     pl.playEffect(EntityEffect.WOLF_HEARTS);
                     final Location l = pl.getLocation();
                     try {
                         ParticleEffect.sendToLocation(ParticleEffect.LAVA, l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.35f, 20);
-                    }
-                    catch (Exception e2) {
+                    } catch (Exception e2) {
                         e2.printStackTrace();
                     }
                 }
                 pl.updateInventory();
-                Bukkit.getPluginManager().callEvent((Event)new CustomCosmicPlayerEvent(pl, "FAILED_ENCHANT", new Object[] { ench_book, EnchantmentBook.getEnchantmentBookSuccessRate(ench_book) }));
+                Bukkit.getPluginManager().callEvent((Event) new CustomCosmicPlayerEvent(pl, "FAILED_ENCHANT", new Object[]{ench_book, EnchantmentBook.getEnchantmentBookSuccessRate(ench_book)}));
             }
         }
     }
-    
+
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onWhitescrollApply(final InventoryClickEvent e) {
         if (!e.getInventory().getTitle().equals("container.crafting")) {
@@ -180,7 +182,7 @@ public class EnchantmentBookListener implements Listener
                 return;
             }
             if (e.getCurrentItem() != null) {
-                final Player pl = (Player)e.getWhoClicked();
+                final Player pl = (Player) e.getWhoClicked();
                 if (!EnchantmentBook.isEquipment(e.getCurrentItem()) || EnchantmentBook.hasWhitescroll(e.getCurrentItem()) || e.getCurrentItem().getMaxStackSize() != 1) {
                     return;
                 }
@@ -188,9 +190,8 @@ public class EnchantmentBookListener implements Listener
                     final ItemStack whitescroll = e.getCursor().clone();
                     whitescroll.setAmount(whitescroll.getAmount() - 1);
                     pl.setItemOnCursor(whitescroll);
-                }
-                else {
-                    pl.setItemOnCursor((ItemStack)null);
+                } else {
+                    pl.setItemOnCursor((ItemStack) null);
                 }
                 final ItemStack to_enchant = e.getCurrentItem();
                 e.setCancelled(true);
@@ -202,15 +203,14 @@ public class EnchantmentBookListener implements Listener
                 try {
                     ParticleEffect.sendToLocation(ParticleEffect.SPELL, l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
                     ParticleEffect.sendToLocation(ParticleEffect.MAGIC_CRIT, l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.65f, 30);
-                }
-                catch (Exception e2) {
+                } catch (Exception e2) {
                     e2.printStackTrace();
                 }
                 pl.updateInventory();
             }
         }
     }
-    
+
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onRandomizationScrollApply(final InventoryClickEvent e) {
         if (!e.getInventory().getTitle().equals("container.crafting")) {
@@ -221,7 +221,7 @@ public class EnchantmentBookListener implements Listener
                 return;
             }
             if (e.getCurrentItem() != null) {
-                final Player pl = (Player)e.getWhoClicked();
+                final Player pl = (Player) e.getWhoClicked();
                 if (!EnchantmentBook.isEnchantmentBook(e.getCurrentItem())) {
                     return;
                 }
@@ -243,9 +243,8 @@ public class EnchantmentBookListener implements Listener
                 if (e.getCursor().getAmount() > 1) {
                     scroll.setAmount(scroll.getAmount() - 1);
                     pl.setItemOnCursor(scroll);
-                }
-                else {
-                    pl.setItemOnCursor((ItemStack)null);
+                } else {
+                    pl.setItemOnCursor((ItemStack) null);
                 }
                 final ItemStack enchantmentBook = e.getCurrentItem();
                 e.setCancelled(true);
@@ -256,16 +255,15 @@ public class EnchantmentBookListener implements Listener
                 try {
                     ParticleEffect.sendToLocation(ParticleEffect.WITCH_MAGIC, l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
                     ParticleEffect.sendToLocation(ParticleEffect.LAVA, l.add(0.0, 0.75, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.68f, 10);
-                }
-                catch (Exception e2) {
+                } catch (Exception e2) {
                     e2.printStackTrace();
                 }
                 pl.updateInventory();
-                Bukkit.getPluginManager().callEvent((Event)new CustomCosmicPlayerEvent(pl, "RAND_SCROLL_USE", new Object[] { bookRarity }));
+                Bukkit.getPluginManager().callEvent((Event) new CustomCosmicPlayerEvent(pl, "RAND_SCROLL_USE", new Object[]{bookRarity}));
             }
         }
     }
-    
+
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onBlackscrollApply(final InventoryClickEvent e) {
         if (!e.getInventory().getTitle().equals("container.crafting")) {
@@ -279,10 +277,10 @@ public class EnchantmentBookListener implements Listener
                 return;
             }
             if (e.getCurrentItem() != null) {
-                final Player pl = (Player)e.getWhoClicked();
+                final Player pl = (Player) e.getWhoClicked();
                 final ItemStack to_enchant = e.getCurrentItem();
                 final Map<CustomEnchantment, Integer> allEnchants;
-                if (!EnchantmentBook.isEquipment(to_enchant) || e.getCurrentItem().getMaxStackSize() != 1 || (allEnchants = (Map<CustomEnchantment, Integer>)EnchantmentAPI.getEnchantments(to_enchant)).isEmpty()) {
+                if (!EnchantmentBook.isEquipment(to_enchant) || e.getCurrentItem().getMaxStackSize() != 1 || (allEnchants = (Map<CustomEnchantment, Integer>) EnchantmentAPI.getEnchantments(to_enchant)).isEmpty()) {
                     return;
                 }
                 if (e.getSlotType() == InventoryType.SlotType.ARMOR) {
@@ -315,15 +313,14 @@ public class EnchantmentBookListener implements Listener
                 if (e.getCursor().getAmount() > 1) {
                     blackscroll.setAmount(blackscroll.getAmount() - 1);
                     pl.setItemOnCursor(blackscroll);
-                }
-                else {
+                } else {
                     if (heroicBlackscroll && ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
                         final long itemID = ItemID.getItemID(blackscroll);
                         if (itemID != -1L) {
                             ItemID.blacklistIID(itemID, "blackScrollUse");
                         }
                     }
-                    pl.setItemOnCursor((ItemStack)null);
+                    pl.setItemOnCursor((ItemStack) null);
                 }
                 e.setCancelled(true);
                 e.setResult(Event.Result.DENY);
@@ -353,8 +350,7 @@ public class EnchantmentBookListener implements Listener
                         }
                     }
                     chance = minChance + random.nextInt(newMaxChance - minChance + 1);
-                }
-                else {
+                } else {
                     chance = EnchantmentBook.getBlackScrollBookSuccessRate(blackscroll) + blackscrollMod;
                 }
                 if (pl.hasMetadata("blackscrollPet_Effect")) {
@@ -374,7 +370,7 @@ public class EnchantmentBookListener implements Listener
             }
         }
     }
-    
+
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onMagicDustApply(final InventoryClickEvent e) {
         if (!e.getInventory().getTitle().equals("container.crafting")) {
@@ -385,7 +381,7 @@ public class EnchantmentBookListener implements Listener
                 return;
             }
             if (e.getCurrentItem() != null) {
-                final Player pl = (Player)e.getWhoClicked();
+                final Player pl = (Player) e.getWhoClicked();
                 if (!EnchantmentBook.isEnchantmentBook(e.getCurrentItem()) || EnchantmentBook.getEnchantmentBookSuccessRate(e.getCurrentItem()) >= 100 || e.getCurrentItem().getAmount() > 1) {
                     return;
                 }
@@ -425,9 +421,8 @@ public class EnchantmentBookListener implements Listener
                     final ItemStack dust = e.getCursor().clone();
                     dust.setAmount(dust.getAmount() - 1);
                     pl.setItemOnCursor(dust);
-                }
-                else {
-                    pl.setItemOnCursor((ItemStack)null);
+                } else {
+                    pl.setItemOnCursor((ItemStack) null);
                 }
                 final ItemStack to_enchant = e.getCurrentItem();
                 e.setCancelled(true);
@@ -439,15 +434,14 @@ public class EnchantmentBookListener implements Listener
                 try {
                     ParticleEffect.sendToLocation(ParticleEffect.SPELL, l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
                     ParticleEffect.sendToLocation(ParticleEffect.MAGIC_CRIT, l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.65f, 30);
-                }
-                catch (Exception e2) {
+                } catch (Exception e2) {
                     e2.printStackTrace();
                 }
                 pl.updateInventory();
             }
         }
     }
-    
+
     @EventHandler
     public void onSecretDustExamine(final PlayerInteractEvent e) {
         final Player pl = e.getPlayer();
@@ -466,12 +460,10 @@ public class EnchantmentBookListener implements Listener
                 final Location l = pl.getLocation();
                 try {
                     ParticleEffect.sendToLocation(ParticleEffect.LAVA, l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.35f, 20);
-                }
-                catch (Exception e2) {
+                } catch (Exception e2) {
                     e2.printStackTrace();
                 }
-            }
-            else {
+            } else {
                 final ItemRarity ir = ItemRarity.valueOf(ChatColor.stripColor(e.getItem().getItemMeta().getDisplayName().split(" ")[0].toUpperCase()));
                 final boolean primalDust = Math.random() < 0.05;
                 int successAdd = new Random().nextInt(EnchantmentBook.getSecretDustMaxSuccessIncrease(e.getItem())) + 1;
@@ -480,16 +472,14 @@ public class EnchantmentBookListener implements Listener
                 }
                 if (primalDust) {
                     newDust = EnchantmentBook.getPlatinumMagicDust(ir, successAdd);
-                }
-                else {
+                } else {
                     newDust = EnchantmentBook.getMagicDust(ir, successAdd);
                 }
                 final Location i = pl.getLocation();
                 try {
                     ParticleEffect.sendToLocation(ParticleEffect.SPELL, i.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
                     ParticleEffect.sendToLocation(ParticleEffect.MAGIC_CRIT, i.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.65f, 30);
-                }
-                catch (Exception e3) {
+                } catch (Exception e3) {
                     e3.printStackTrace();
                 }
                 pl.playSound(pl.getLocation(), Sound.ORB_PICKUP, 1.0f, 0.96f);
@@ -498,15 +488,14 @@ public class EnchantmentBookListener implements Listener
                 final ItemStack secretDust = e.getItem();
                 secretDust.setAmount(secretDust.getAmount() - 1);
                 pl.setItemInHand(secretDust);
+            } else {
+                pl.setItemInHand((ItemStack) null);
             }
-            else {
-                pl.setItemInHand((ItemStack)null);
-            }
-            pl.getInventory().addItem(new ItemStack[] { newDust });
+            pl.getInventory().addItem(new ItemStack[]{newDust});
             pl.updateInventory();
         }
     }
-    
+
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onTransmogscrollApply(final InventoryClickEvent e) {
         if (!e.getInventory().getTitle().equals("container.crafting")) {
@@ -517,7 +506,7 @@ public class EnchantmentBookListener implements Listener
                 return;
             }
             if (e.getCurrentItem() != null) {
-                final Player pl = (Player)e.getWhoClicked();
+                final Player pl = (Player) e.getWhoClicked();
                 if (!EnchantmentBook.isEquipment(e.getCurrentItem()) || e.getCurrentItem().getMaxStackSize() != 1) {
                     return;
                 }
@@ -525,9 +514,8 @@ public class EnchantmentBookListener implements Listener
                     final ItemStack whitescroll = e.getCursor().clone();
                     whitescroll.setAmount(whitescroll.getAmount() - 1);
                     pl.setItemOnCursor(whitescroll);
-                }
-                else {
-                    pl.setItemOnCursor((ItemStack)null);
+                } else {
+                    pl.setItemOnCursor((ItemStack) null);
                 }
                 final ItemStack to_enchant = e.getCurrentItem();
                 e.setCancelled(true);
@@ -539,21 +527,20 @@ public class EnchantmentBookListener implements Listener
                 try {
                     ParticleEffect.sendToLocation(ParticleEffect.SPELL, l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
                     ParticleEffect.sendToLocation(ParticleEffect.WITCH_MAGIC, l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.65f, 30);
-                }
-                catch (Exception e2) {
+                } catch (Exception e2) {
                     e2.printStackTrace();
                 }
                 pl.updateInventory();
             }
         }
     }
-    
+
     @EventHandler
     public void onPlayerInteract(final PlayerInteractEvent e) {
         final Player pl = e.getPlayer();
         if ((e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && e.hasItem() && EnchantmentBook.isEnchantmentBook(e.getItem())) {
             if (e.getItem().getDurability() != 0) {
-                e.getItem().setDurability((short)0);
+                e.getItem().setDurability((short) 0);
             }
             pl.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "To apply this enchantment to an item, simply drag n' drop the book onto the item you'd like to enchant in your inventory!");
             pl.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7The &bSuccess Rate&7 is the chance of the book successfully being applied to your equipment. The &bDestruction Chance&7 is the percent chance of your piece of equipment being &nDESTROYED&7 if the book fails to apply."));

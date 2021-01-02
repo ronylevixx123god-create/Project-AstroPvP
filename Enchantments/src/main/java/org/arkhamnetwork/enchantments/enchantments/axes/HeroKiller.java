@@ -1,27 +1,27 @@
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
-import org.arkhamnetwork.enchantments.util.*;
+import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
+import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import com.rit.sucy.CustomEnchantment;
+import com.rit.sucy.EnchantmentAPI;
+import me.ifamasssxd.killtracker.KillTrackerAPI;
+import org.arkhamnetwork.enchantments.cmds.CommandEnchDust;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.bukkit.event.entity.*;
-import org.arkhamnetwork.enchantments.cmds.*;
-import org.bukkit.entity.*;
-import com.rit.sucy.*;
-import com.cosmicpvp.cosmicutils.nms.*;
-import org.bukkit.metadata.*;
-import me.ifamasssxd.killtracker.*;
-import org.bukkit.inventory.*;
-import org.bukkit.*;
-import com.cosmicpvp.cosmicutils.utils.*;
+import org.bukkit.Material;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.inventory.ItemStack;
 
-public class HeroKiller extends CustomEnchantment
-{
+public class HeroKiller extends CustomEnchantment {
     public HeroKiller() {
         super("Hero Killer", GeneralUtil.axe, 2);
         this.max = 3;
         this.base = 10.0;
         this.interval = 10.0;
     }
-    
+
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
         if (!CommandEnchDust.soulEnabled) {
             return;
@@ -29,7 +29,7 @@ public class HeroKiller extends CustomEnchantment
         if (!(playerHit instanceof Player)) {
             return;
         }
-        final Player p = (Player)player;
+        final Player p = (Player) player;
         final ItemStack used = p.getItemInHand();
         if (used == null || !EnchantmentAPI.itemHasEnchantment(used, this.enchantName)) {
             return;
@@ -41,7 +41,7 @@ public class HeroKiller extends CustomEnchantment
             return;
         }
         if (KillTrackerAPI.hasGodMode(p) && KillTrackerAPI.getAllSouls(p) > 0) {
-            if (!this.isWearingHeroic((Player)playerHit)) {
+            if (!this.isWearingHeroic((Player) playerHit)) {
                 return;
             }
             if (!p.hasMetadata("lastSoulRemoveEvent") || System.currentTimeMillis() - p.getMetadata("lastSoulRemoveEvent").get(0).asLong() > 1000L) {
@@ -51,7 +51,7 @@ public class HeroKiller extends CustomEnchantment
             e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1.0 + increase));
         }
     }
-    
+
     private boolean isWearingHeroic(final Player player) {
         for (final ItemStack armor : player.getInventory().getArmorContents()) {
             if (armor != null) {

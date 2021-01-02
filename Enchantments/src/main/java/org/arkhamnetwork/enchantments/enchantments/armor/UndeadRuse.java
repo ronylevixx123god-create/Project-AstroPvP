@@ -1,45 +1,51 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
-import com.rit.sucy.*;
-import org.arkhamnetwork.enchantments.util.*;
-import org.arkhamnetwork.enchantments.*;
-import org.bukkit.event.*;
-import org.bukkit.plugin.*;
-import org.bukkit.event.entity.*;
-import java.util.*;
-import org.arkhamnetwork.Arkkit.libs.*;
-import org.bukkit.entity.*;
-import org.bukkit.metadata.*;
-import org.bukkit.potion.*;
-import org.bukkit.*;
+import com.rit.sucy.CustomEnchantment;
+import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.util.GeneralUtil;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Zombie;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
-public class UndeadRuse extends CustomEnchantment
-{
+import java.util.HashSet;
+
+public class UndeadRuse extends CustomEnchantment {
     public UndeadRuse() {
         super("Undead Ruse", GeneralUtil.armor, 2);
         this.max = 10;
         this.base = 20.0;
         this.interval = 10.0;
-        Bukkit.getPluginManager().registerEvents(new UndeadRuseListener(), (Plugin)Enchantments.getInstance());
+        Bukkit.getPluginManager().registerEvents(new UndeadRuseListener(), (Plugin) Enchantments.getInstance());
     }
-    
+
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
-        if (e instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent)e).getDamager() instanceof Player) {
+        if (e instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent) e).getDamager() instanceof Player) {
             double chance = 0.01 * level;
             if (chance > 0.04) {
                 chance = 0.04;
             }
             if (Math.random() < chance) {
-                int zombie_count = (int)(Math.random() / 2.0 * level) + 1;
-                final Player p = (Player)player;
+                int zombie_count = (int) (Math.random() / 2.0 * level) + 1;
+                final Player p = (Player) player;
                 final Location spawnLoc = p.getTargetBlock((HashSet<Byte>) null, 5).getLocation().add(0.0, 1.0, 0.0);
-                ParticleEffect.sendToLocation(ParticleEffect.WITCH_MAGIC, spawnLoc, (float)Math.random(), (float)Math.random(), (float)Math.random(), 0.5f, 20);
+                ParticleEffect.sendToLocation(ParticleEffect.WITCH_MAGIC, spawnLoc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 20);
                 while (zombie_count > 0) {
                     --zombie_count;
                     if (spawnLoc.getChunk().getEntities().length < 50) {
-                        final Zombie z = (Zombie)player.getWorld().spawnEntity(spawnLoc, EntityType.ZOMBIE);
-                        z.setMetadata("undeadruseSummoner", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)p.getName()));
+                        final Zombie z = (Zombie) player.getWorld().spawnEntity(spawnLoc, EntityType.ZOMBIE);
+                        z.setMetadata("undeadruseSummoner", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) p.getName()));
                         z.setCustomName(ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD.toString() + p.getName() + "'s Undead Minion");
                         z.setCustomNameVisible(true);
                         z.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, (level > 6) ? 2 : ((level > 3) ? 1 : 0)));
@@ -53,10 +59,10 @@ public class UndeadRuse extends CustomEnchantment
                     }
                 }
                 if (attacker instanceof Player) {
-                    final Player pAttacker = (Player)attacker;
+                    final Player pAttacker = (Player) attacker;
                     pAttacker.hidePlayer(p);
                     ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, p.getLocation(), 0.75f, 35);
-                    Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), (Runnable)new Runnable() {
+                    Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
                         @Override
                         public void run() {
                             pAttacker.showPlayer(p);

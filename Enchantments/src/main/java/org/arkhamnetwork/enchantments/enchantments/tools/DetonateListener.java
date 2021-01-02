@@ -1,12 +1,12 @@
 package org.arkhamnetwork.enchantments.enchantments.tools;
 
-import org.bukkit.event.player.*;
-import org.bukkit.*;
-import com.rit.sucy.*;
-import org.bukkit.event.*;
+import com.rit.sucy.EnchantmentAPI;
+import org.bukkit.Material;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerInteractEvent;
 
-final class DetonateListener implements Listener
-{
+final class DetonateListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onTagBlockFace(final PlayerInteractEvent event) {
         if (event.getPlayer() == null) {

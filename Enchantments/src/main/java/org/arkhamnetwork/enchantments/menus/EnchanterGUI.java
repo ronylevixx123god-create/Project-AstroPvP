@@ -13,10 +13,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
-import org.bukkit.inventory.ItemStack;
 
 public class EnchanterGUI extends CosmicGUI {
     public EnchanterGUI(Player player) {
@@ -27,9 +24,9 @@ public class EnchanterGUI extends CosmicGUI {
         boolean capsInfernal = HCFOutpostUtils.doesControlOutpost(this.player, "infernal");
         int index = 0;
         for (EnchanterRarity rarity : EnchanterRarity.values()) {
-            int xpPrice = (int)rarity.getPrice();
+            int xpPrice = (int) rarity.getPrice();
             String realPriceString = NumberUtils.formatMoney(rarity.getPrice());
-            int adjustedPrice = capsInfernal ? (int)(xpPrice * 0.9D) : xpPrice;
+            int adjustedPrice = capsInfernal ? (int) (xpPrice * 0.9D) : xpPrice;
             setItem(index++, (new ItemBuilder(Material.STAINED_GLASS_PANE, rarity.getColor() + CC.Bold + rarity.getName() + " Enchantment" + CC.Gray + " (Right Click)", CC.Gray + "Examine to receive a random", rarity
 
                     .getColor() + rarity.getName().toLowerCase() + CC.Gray + " enchantment book.", "", CC.Gray + "Use " + rarity
@@ -37,10 +34,10 @@ public class EnchanterGUI extends CosmicGUI {
                     .getColor() + "/help enchants " + rarity.getName().toLowerCase() + CC.Gray + " to view a list", CC.Gray + "of possible enchantments you could unlock!", "", CC.AquaB + "COST " + CC.White + (capsInfernal ? (CC.White + CC.Strike + realPriceString + CC.White + " -> " + CC.Aqua +
 
                     NumberUtils.formatMoney(adjustedPrice) + CC.White + " EXP " + CC.Gray + "(Infernal Stronghold)") : (realPriceString + " EXP")))).data(
-                    (short)rarity.getPaneColor().getWoolData()).build(), () -> {
+                    (short) rarity.getPaneColor().getWoolData()).build(), () -> {
                 int playerXp = ExpUtils.getTotalExperience(this.player);
-                int price = (int)rarity.getPrice();
-                int newAdjustedPrice = HCFOutpostUtils.doesControlOutpost(this.player, "infernal") ? (int)(price * 0.9D) : price;
+                int price = (int) rarity.getPrice();
+                int newAdjustedPrice = HCFOutpostUtils.doesControlOutpost(this.player, "infernal") ? (int) (price * 0.9D) : price;
                 if (newAdjustedPrice > playerXp) {
                     this.player.sendMessage(ChatColor.RED + "You do not have enough EXP to purchase that.");
                     this.player.sendMessage(ChatColor.GRAY + "Your XP: " + playerXp);
@@ -63,7 +60,7 @@ public class EnchanterGUI extends CosmicGUI {
                     } else if (rarity.getTier() == 4) {
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "fquests add ULTIMATE_ENCHANTER " + this.player.getName());
                     }
-                Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(this.player, "ENCHANTER_BUY", new Object[] { rarity.name(), newAdjustedPrice}));
+                Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(this.player, "ENCHANTER_BUY", new Object[]{rarity.name(), newAdjustedPrice}));
             });
         }
     }

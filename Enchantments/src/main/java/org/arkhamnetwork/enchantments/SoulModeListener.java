@@ -1,15 +1,19 @@
 package org.arkhamnetwork.enchantments;
 
-import org.bukkit.event.block.*;
-import me.ifamasssxd.killtracker.*;
-import org.arkhamnetwork.enchantments.cmds.*;
-import org.bukkit.*;
-import org.bukkit.entity.*;
-import org.bukkit.event.player.*;
-import com.cosmicpvp.cosmicutils.nms.*;
-import org.bukkit.metadata.*;
-import org.bukkit.plugin.*;
-import org.bukkit.event.*;
+import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
+import me.ifamasssxd.killtracker.KillTrackerAPI;
+import org.arkhamnetwork.enchantments.cmds.CommandEnchDust;
+import org.bukkit.ChatColor;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
 
 public class SoulModeListener implements Listener {
     @EventHandler
@@ -17,7 +21,7 @@ public class SoulModeListener implements Listener {
         if (e.hasItem() && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && KillTrackerAPI.isSoulGem(e.getItem()) && CommandEnchDust.soulEnabled) {
             Player p = e.getPlayer();
             if (KillTrackerAPI.hasSoulAmount(p, 1)) {
-                if (!KillTrackerAPI.hasGodMode(p) && p.hasMetadata("soulTrap") && ((MetadataValue)p.getMetadata("soulTrap").get(0)).asLong() > System.currentTimeMillis()) {
+                if (!KillTrackerAPI.hasGodMode(p) && p.hasMetadata("soulTrap") && ((MetadataValue) p.getMetadata("soulTrap").get(0)).asLong() > System.currentTimeMillis()) {
                     p.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You " + ChatColor.UNDERLINE + "cannot" + ChatColor.RED + " enable soul mode while in a Soul Trap!");
                     return;
                 }

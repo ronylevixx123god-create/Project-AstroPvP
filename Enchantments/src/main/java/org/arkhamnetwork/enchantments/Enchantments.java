@@ -4,195 +4,60 @@ import com.earth2me.essentials.Essentials;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantPlugin;
 import com.rit.sucy.EnchantmentAPI;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
-import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
-import org.arkhamnetwork.enchantments.cmds.CommandAlchemist;
-import org.arkhamnetwork.enchantments.cmds.CommandApply;
-import org.arkhamnetwork.enchantments.cmds.CommandBlackscroll;
-import org.arkhamnetwork.enchantments.cmds.CommandEnchBook;
-import org.arkhamnetwork.enchantments.cmds.CommandEnchDust;
-import org.arkhamnetwork.enchantments.cmds.CommandEnchOrb;
-import org.arkhamnetwork.enchantments.cmds.CommandEnchScroll;
-import org.arkhamnetwork.enchantments.cmds.CommandEnchanter;
-import org.arkhamnetwork.enchantments.cmds.CommandTinkerer;
-import org.arkhamnetwork.enchantments.cmds.CommandTransmog;
-import org.arkhamnetwork.enchantments.enchantments.armor.Aegis;
-import org.arkhamnetwork.enchantments.enchantments.armor.Angelic;
-import org.arkhamnetwork.enchantments.enchantments.armor.AntiGravity;
-import org.arkhamnetwork.enchantments.enchantments.armor.Aquatic;
-import org.arkhamnetwork.enchantments.enchantments.armor.Armored;
-import org.arkhamnetwork.enchantments.enchantments.armor.ArrowDeflect;
-import org.arkhamnetwork.enchantments.enchantments.armor.AvengingAngel;
-import org.arkhamnetwork.enchantments.enchantments.armor.BloodLink;
-import org.arkhamnetwork.enchantments.enchantments.armor.BloodLust;
-import org.arkhamnetwork.enchantments.enchantments.armor.Cactus;
-import org.arkhamnetwork.enchantments.enchantments.armor.Clarity;
-import org.arkhamnetwork.enchantments.enchantments.armor.Commander;
-import org.arkhamnetwork.enchantments.enchantments.armor.CreeperArmor;
-import org.arkhamnetwork.enchantments.enchantments.armor.Curse;
-import org.arkhamnetwork.enchantments.enchantments.armor.DeathGod;
-import org.arkhamnetwork.enchantments.enchantments.armor.Deathbringer;
-import org.arkhamnetwork.enchantments.enchantments.armor.Destruction;
-import org.arkhamnetwork.enchantments.enchantments.armor.Diminish;
-import org.arkhamnetwork.enchantments.enchantments.armor.Dodge;
-import org.arkhamnetwork.enchantments.enchantments.armor.Drunk;
-import org.arkhamnetwork.enchantments.enchantments.armor.EnderShift;
-import org.arkhamnetwork.enchantments.enchantments.armor.EnderWalker;
-import org.arkhamnetwork.enchantments.enchantments.armor.Enlighted;
-import org.arkhamnetwork.enchantments.enchantments.armor.Frozen;
-import org.arkhamnetwork.enchantments.enchantments.armor.Gears;
-import org.arkhamnetwork.enchantments.enchantments.armor.Ghost;
-import org.arkhamnetwork.enchantments.enchantments.armor.Glowing;
-import org.arkhamnetwork.enchantments.enchantments.armor.Guardians;
-import org.arkhamnetwork.enchantments.enchantments.armor.Hardened;
-import org.arkhamnetwork.enchantments.enchantments.armor.Heavy;
-import org.arkhamnetwork.enchantments.enchantments.armor.Immortal;
-import org.arkhamnetwork.enchantments.enchantments.armor.Implants;
-import org.arkhamnetwork.enchantments.enchantments.armor.Leadership;
-import org.arkhamnetwork.enchantments.enchantments.armor.Lifebloom;
-import org.arkhamnetwork.enchantments.enchantments.armor.Lucky;
-import org.arkhamnetwork.enchantments.enchantments.armor.Marksman;
-import org.arkhamnetwork.enchantments.enchantments.armor.Metaphysical;
-import org.arkhamnetwork.enchantments.enchantments.armor.Molten;
-import org.arkhamnetwork.enchantments.enchantments.armor.NatureWrath;
-import org.arkhamnetwork.enchantments.enchantments.armor.Nutrition;
-import org.arkhamnetwork.enchantments.enchantments.armor.Obsidianshield;
-import org.arkhamnetwork.enchantments.enchantments.armor.Overload;
-import org.arkhamnetwork.enchantments.enchantments.armor.Paradox;
-import org.arkhamnetwork.enchantments.enchantments.armor.Phoenix;
-import org.arkhamnetwork.enchantments.enchantments.armor.PlagueCarrier;
-import org.arkhamnetwork.enchantments.enchantments.armor.Poisoned;
-import org.arkhamnetwork.enchantments.enchantments.armor.Protection;
-import org.arkhamnetwork.enchantments.enchantments.armor.Ragdoll;
-import org.arkhamnetwork.enchantments.enchantments.armor.Reflect;
-import org.arkhamnetwork.enchantments.enchantments.armor.RepairGuard;
-import org.arkhamnetwork.enchantments.enchantments.armor.Resilience;
-import org.arkhamnetwork.enchantments.enchantments.armor.RocketEscape;
-import org.arkhamnetwork.enchantments.enchantments.armor.SelfDestruct;
-import org.arkhamnetwork.enchantments.enchantments.armor.Shockwave;
-import org.arkhamnetwork.enchantments.enchantments.armor.SmokeBomb;
-import org.arkhamnetwork.enchantments.enchantments.armor.SpiritLink;
-import org.arkhamnetwork.enchantments.enchantments.armor.Spirits;
-import org.arkhamnetwork.enchantments.enchantments.armor.Springs;
-import org.arkhamnetwork.enchantments.enchantments.armor.Sticky;
-import org.arkhamnetwork.enchantments.enchantments.armor.Stormcaller;
-import org.arkhamnetwork.enchantments.enchantments.armor.Tank;
-import org.arkhamnetwork.enchantments.enchantments.armor.Trickster;
-import org.arkhamnetwork.enchantments.enchantments.armor.UndeadRuse;
-import org.arkhamnetwork.enchantments.enchantments.armor.Valor;
-import org.arkhamnetwork.enchantments.enchantments.armor.Voodoo;
-import org.arkhamnetwork.enchantments.enchantments.armor.Wither;
+import org.arkhamnetwork.enchantments.cmds.*;
+import org.arkhamnetwork.enchantments.enchantments.armor.*;
 import org.arkhamnetwork.enchantments.enchantments.armor.boots.Nimble;
 import org.arkhamnetwork.enchantments.enchantments.axes.*;
-import org.arkhamnetwork.enchantments.enchantments.bow.ArrowLifesteal;
-import org.arkhamnetwork.enchantments.enchantments.bow.Cowification;
-import org.arkhamnetwork.enchantments.enchantments.bow.DimensionRift;
-import org.arkhamnetwork.enchantments.enchantments.bow.EagleEye;
-import org.arkhamnetwork.enchantments.enchantments.bow.Explosive;
-import org.arkhamnetwork.enchantments.enchantments.bow.Farcast;
-import org.arkhamnetwork.enchantments.enchantments.bow.Healing;
-import org.arkhamnetwork.enchantments.enchantments.bow.Hellfire;
-import org.arkhamnetwork.enchantments.enchantments.bow.Hijack;
-import org.arkhamnetwork.enchantments.enchantments.bow.Infernal;
-import org.arkhamnetwork.enchantments.enchantments.bow.Lightning;
-import org.arkhamnetwork.enchantments.enchantments.bow.Longbow;
-import org.arkhamnetwork.enchantments.enchantments.bow.Pacify;
-import org.arkhamnetwork.enchantments.enchantments.bow.Piercing;
-import org.arkhamnetwork.enchantments.enchantments.bow.Snare;
-import org.arkhamnetwork.enchantments.enchantments.bow.Sniper;
-import org.arkhamnetwork.enchantments.enchantments.bow.TargetTracking;
-import org.arkhamnetwork.enchantments.enchantments.bow.Teleblock;
-import org.arkhamnetwork.enchantments.enchantments.bow.Teleportation;
-import org.arkhamnetwork.enchantments.enchantments.bow.Unfocus;
-import org.arkhamnetwork.enchantments.enchantments.bow.Venom;
-import org.arkhamnetwork.enchantments.enchantments.bow.Virus;
-import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicArmored;
-import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicAssassin;
-import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicBlacksmith;
-import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicBleed;
-import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicBlock;
-import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicCactus;
-import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicCleave;
-import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicDeathbringer;
-import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicDetonate;
-import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicDiminish;
-import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicDodge;
-import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicEnlighted;
-import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicGhost;
-import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicImplants;
-import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicInquisitive;
-import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicLifesteal;
-import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicLuck;
-import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicMetaphysical;
-import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicOverload;
-import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicPlagueCarrier;
-import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicReflect;
-import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicRocketEscape;
-import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicSniper;
-import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicTank;
-import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicTeleportation;
-import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicTrap;
+import org.arkhamnetwork.enchantments.enchantments.bow.*;
+import org.arkhamnetwork.enchantments.enchantments.heroic.*;
 import org.arkhamnetwork.enchantments.enchantments.swords.*;
-import org.arkhamnetwork.enchantments.enchantments.tools.AutoSmelt;
-import org.arkhamnetwork.enchantments.enchantments.tools.Detonate;
-import org.arkhamnetwork.enchantments.enchantments.tools.Experience;
-import org.arkhamnetwork.enchantments.enchantments.tools.Fuse;
-import org.arkhamnetwork.enchantments.enchantments.tools.Haste;
-import org.arkhamnetwork.enchantments.enchantments.tools.ObsidianDestroyer;
-import org.arkhamnetwork.enchantments.enchantments.tools.Oxygenate;
-import org.arkhamnetwork.enchantments.enchantments.tools.Skilling;
-import org.arkhamnetwork.enchantments.enchantments.tools.Telepathy;
+import org.arkhamnetwork.enchantments.enchantments.tools.*;
 import org.arkhamnetwork.enchantments.enchantments.weapons.Training;
 import org.arkhamnetwork.enchantments.items.EMPPulseItem;
-import org.arkhamnetwork.enchantments.listeners.CosmicAlchemistListener;
-import org.arkhamnetwork.enchantments.listeners.EnchanterListener;
-import org.arkhamnetwork.enchantments.listeners.EnchantmentLoginListener;
-import org.arkhamnetwork.enchantments.listeners.EnchantmentOrbListener;
-import org.arkhamnetwork.enchantments.listeners.ExploitListener;
-import org.arkhamnetwork.enchantments.listeners.PlayerPotionEffectListener;
-import org.arkhamnetwork.enchantments.listeners.TinkererListener;
-import org.arkhamnetwork.enchantments.listeners.TinkererTradeListener;
-import org.arkhamnetwork.enchantments.listeners.VanillaDamageListener;
+import org.arkhamnetwork.enchantments.listeners.*;
 import org.arkhamnetwork.enchantments.mastery.*;
 import org.arkhamnetwork.enchantments.tasks.PlayerPotionEffectPersistTask;
 import org.arkhamnetwork.enchantments.util.WorldGuardUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
-import org.bukkit.plugin.Plugin;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Enchantments extends EnchantPlugin {
-    private static Enchantments instance;
-
-    private static Essentials ess3;
-
     public static volatile ConcurrentHashMap<Player, Location> playerLocations;
-
-    public boolean dungeonsEnabled = false;
-
-    public boolean armorsetEnabled = false;
-
-    private MasteryPermafrost permafrostEnchant;
-
+    private static Enchantments instance;
+    private static Essentials ess3;
     private static Hex hex;
-
+    public boolean dungeonsEnabled = false;
+    public boolean armorsetEnabled = false;
+    private MasteryPermafrost permafrostEnchant;
     private IceAspect iceAspectEnchant;
 
     private NatureWrath naturesWrathEnchant;
 
+    public static Essentials getEssentials() {
+        return ess3;
+    }
+
+    public static Hex getHex() {
+        return hex;
+    }
+
+    public static Enchantments getInstance() {
+        return instance;
+    }
+
     public void onEnable() {
         instance = this;
-        ess3 = (Essentials)Bukkit.getPluginManager().getPlugin("Essentials");
+        ess3 = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
         playerLocations = new ConcurrentHashMap<>();
         WorldGuardUtils.hook();
         registerEnchantments();
@@ -244,10 +109,7 @@ public class Enchantments extends EnchantPlugin {
         }
     }
 
-    public void registerEnchantments() {}
-
-    public static Essentials getEssentials() {
-        return ess3;
+    public void registerEnchantments() {
     }
 
     public void onDisable() {
@@ -290,12 +152,6 @@ public class Enchantments extends EnchantPlugin {
         getCommand("alchemist").setExecutor(new CommandAlchemist());
         getCommand("apply").setExecutor(new CommandApply());
         getCommand("blackscroll").setExecutor(new CommandBlackscroll());
-    }
-
-    public static Hex getHex() { return hex; }
-
-    public static Enchantments getInstance() {
-        return instance;
     }
 
     public IceAspect getIceAspectEnchant() {

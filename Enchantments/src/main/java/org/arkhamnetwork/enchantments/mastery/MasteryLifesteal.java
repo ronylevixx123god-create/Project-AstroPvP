@@ -16,14 +16,13 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import java.util.List;
 
-public class MasteryLifesteal extends MasteryCustomEnchantment
-{
+public class MasteryLifesteal extends MasteryCustomEnchantment {
     public MasteryLifesteal() {
         super("Chain Lifesteal", GeneralUtil.armor, 10);
         this.max = 5;
         this.armorSet = "DEATH_KNIGHT";
     }
-    
+
     @Override
     public void applyDamagedOtherPlayer(final Player damager, final Player damaged, final EntityDamageByEntityEvent event, final int enchantLevel) {
         if (Math.random() <= enchantLevel * 0.05) {
@@ -31,13 +30,13 @@ public class MasteryLifesteal extends MasteryCustomEnchantment
                 return;
             }
             final double radius = 1 + enchantLevel / 2;
-            final int maxTargets = (int)(1.0 + Math.ceil(enchantLevel / 2));
+            final int maxTargets = (int) (1.0 + Math.ceil(enchantLevel / 2));
             int scanned = 0;
-            final List<Entity> nearby = (List<Entity>)Lists.newArrayList((Iterable)damaged.getNearbyEntities(radius, radius, radius));
-            nearby.add((Entity)damaged);
+            final List<Entity> nearby = (List<Entity>) Lists.newArrayList((Iterable) damaged.getNearbyEntities(radius, radius, radius));
+            nearby.add((Entity) damaged);
             for (final Entity ent : nearby) {
                 if (ent instanceof Player) {
-                    final Player nearbyPlayer = (Player)ent;
+                    final Player nearbyPlayer = (Player) ent;
                     if (nearbyPlayer.equals(damager)) {
                         continue;
                     }
@@ -47,7 +46,7 @@ public class MasteryLifesteal extends MasteryCustomEnchantment
                     if (GeneralUtil.isAtleastTruce(damaged, nearbyPlayer)) {
                         continue;
                     }
-                    if (!new CustomEnchantProcOnEntityEvent((LivingEntity)damager, (LivingEntity)damaged, (Event)event, this, enchantLevel).callEvent()) {
+                    if (!new CustomEnchantProcOnEntityEvent((LivingEntity) damager, (LivingEntity) damaged, (Event) event, this, enchantLevel).callEvent()) {
                         continue;
                     }
                     if (scanned >= maxTargets) {
@@ -56,7 +55,7 @@ public class MasteryLifesteal extends MasteryCustomEnchantment
                     ++scanned;
                     final double toSteal = 0.5 + this.random.nextDouble() * enchantLevel;
                     GeneralUtil.reducePlayerHealth(nearbyPlayer, toSteal);
-                    GeneralUtil.healPlayer((LivingEntity)damaged, toSteal);
+                    GeneralUtil.healPlayer((LivingEntity) damaged, toSteal);
                     WorldUtil.sendWorldEffect(nearbyPlayer.getEyeLocation().getBlock(), Material.REDSTONE_BLOCK.getId(), 2001);
                     if (nearbyPlayer.isDead()) {
                         event.setCancelled(true);

@@ -24,7 +24,7 @@ public class Armored extends CustomEnchantment {
             return;
         ItemStack i = null;
         if (attacker instanceof Player) {
-            Player pAttacker = (Player)attacker;
+            Player pAttacker = (Player) attacker;
             i = pAttacker.getItemInHand();
         }
         double damage_negation = level * 0.01875D;

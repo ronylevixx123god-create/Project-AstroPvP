@@ -1,33 +1,36 @@
 package org.arkhamnetwork.enchantments.enchantments.bow;
 
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
+import com.earth2me.essentials.User;
 import org.arkhamnetwork.enchantments.Enchantments;
-import org.bukkit.event.*;
-import org.bukkit.event.entity.*;
-import org.bukkit.metadata.*;
-import org.bukkit.entity.*;
-import org.arkhamnetwork.enchantments.*;
-import org.bukkit.plugin.*;
-import org.arkhamnetwork.Arkkit.libs.*;
-import org.bukkit.*;
-import java.util.*;
-import com.earth2me.essentials.*;
-import org.arkhamnetwork.enchantments.util.*;
+import org.arkhamnetwork.enchantments.util.GeneralUtil;
+import org.arkhamnetwork.enchantments.util.WorldGuardUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Sound;
+import org.bukkit.entity.EnderDragon;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
 
-final class FireballListener implements Listener
-{
+final class FireballListener implements Listener {
     @EventHandler
     public void onEntityDamage(final EntityDamageEvent e) {
         if (e.getEntity().hasMetadata("hellfire")) {
             e.setCancelled(true);
             e.setDamage(0.0);
-            if (e instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent)e).getDamager() instanceof Player) {
-                ((Player)((EntityDamageByEntityEvent)e).getDamager()).playSound(e.getEntity().getLocation(), Sound.FIRE, 1.0f, 0.7f);
+            if (e instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent) e).getDamager() instanceof Player) {
+                ((Player) ((EntityDamageByEntityEvent) e).getDamager()).playSound(e.getEntity().getLocation(), Sound.FIRE, 1.0f, 0.7f);
                 e.getEntity().remove();
             }
         }
     }
-    
+
     @EventHandler
     public void onProjectileHit(final ProjectileHitEvent e) {
         if (e.getEntity().hasMetadata(Hellfire.hellfireEncahntmentMetadata)) {
@@ -47,7 +50,7 @@ final class FireballListener implements Listener
             }
             final String enchantment_owner = e.getEntity().hasMetadata(Hellfire.hellfireEncahntmentOwnerMetadata) ? e.getEntity().getMetadata(Hellfire.hellfireEncahntmentOwnerMetadata).get(0).asString() : null;
             final Player owner = Bukkit.getPlayer(enchantment_owner);
-            for (final Entity ent : e.getEntity().getNearbyEntities((double)radius, (double)radius, (double)radius)) {
+            for (final Entity ent : e.getEntity().getNearbyEntities((double) radius, (double) radius, (double) radius)) {
                 if (ent.hasMetadata("spectator")) {
                     continue;
                 }
@@ -55,10 +58,10 @@ final class FireballListener implements Listener
                     continue;
                 }
                 if (enchantment_owner != null && ent instanceof Player) {
-                    if (((Player)ent).getName().equals(enchantment_owner) || this.isAlly((Player)ent, owner)) {
+                    if (((Player) ent).getName().equals(enchantment_owner) || this.isAlly((Player) ent, owner)) {
                         continue;
                     }
-                    if (!this.canHurt((Player)ent, owner)) {
+                    if (!this.canHurt((Player) ent, owner)) {
                         continue;
                     }
                 }
@@ -66,7 +69,7 @@ final class FireballListener implements Listener
                     continue;
                 }
                 if (ent instanceof Player) {
-                    final Player pEnt = (Player)ent;
+                    final Player pEnt = (Player) ent;
                     final User u = Hellfire.ess3.getUser(pEnt);
                     if (u.isGodModeEnabled() || u.isVanished()) {
                         continue;
@@ -85,28 +88,28 @@ final class FireballListener implements Listener
                 if (ent instanceof LivingEntity) {
                     ent.setFireTicks(ent.getFireTicks() + level * 20);
                 }
-                final LivingEntity le = (LivingEntity)ent;
+                final LivingEntity le = (LivingEntity) ent;
                 if (Bukkit.getPlayer(enchantment_owner) != null) {
                     Bukkit.getScheduler().runTaskLater(Enchantments.getInstance(), () -> {
                         if (!le.isDead()) {
                             final int dmg = 1 + level;
-                            le.damage(duelWorld ? (dmg / 1.5) : ((double)dmg));
+                            le.damage(duelWorld ? (dmg / 1.5) : ((double) dmg));
                         }
                     }, 1L);
                 }
                 final Location eloc = ent.getLocation().add(0.0, 1.0, 0.0);
-                ParticleEffect.sendToLocation(ParticleEffect.LAVA, eloc, (float)Math.random(), (float)Math.random(), (float)Math.random(), 0.5f, 16);
+                ParticleEffect.sendToLocation(ParticleEffect.LAVA, eloc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 16);
             }
-            ParticleEffect.sendToLocation(ParticleEffect.LARGE_EXPLODE, loc, (float)Math.random(), (float)Math.random(), (float)Math.random(), 0.5f, 8);
-            ParticleEffect.sendToLocation(ParticleEffect.FLAME, loc, (float)Math.random(), (float)Math.random(), (float)Math.random(), 0.25f, 45);
+            ParticleEffect.sendToLocation(ParticleEffect.LARGE_EXPLODE, loc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 8);
+            ParticleEffect.sendToLocation(ParticleEffect.FLAME, loc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.25f, 45);
             e.getEntity().remove();
         }
     }
-    
+
     private boolean isAlly(final Player p1, final Player p2) {
         return GeneralUtil.isAlly(p1, p2);
     }
-    
+
     private boolean canHurt(final Player p1, final Player p2) {
         return GeneralUtil.isEnemy(p1, p2);
     }

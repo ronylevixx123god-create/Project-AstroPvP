@@ -18,13 +18,14 @@ public class BloodLust extends CustomEnchantment {
         this.interval = 4.0D;
     }
 
-    public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {}
+    public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
+    }
 
     public void applyEquipEffect(Player player, int enchantLevel) {
-        player.setMetadata("bloodLust", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), Integer.valueOf(enchantLevel)));
+        player.setMetadata("bloodLust", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), Integer.valueOf(enchantLevel)));
     }
 
     public void applyUnequipEffect(Player player, int enchantLevel) {
-        player.removeMetadata("bloodLust", (Plugin)Enchantments.getInstance());
+        player.removeMetadata("bloodLust", (Plugin) Enchantments.getInstance());
     }
 }

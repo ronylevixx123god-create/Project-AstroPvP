@@ -1,7 +1,6 @@
 package org.arkhamnetwork.enchantments.listeners;
 
-import org.bukkit.event.*;
+import org.bukkit.event.Listener;
 
-public class EnchantmentSanityListener implements Listener
-{
+public class EnchantmentSanityListener implements Listener {
 }

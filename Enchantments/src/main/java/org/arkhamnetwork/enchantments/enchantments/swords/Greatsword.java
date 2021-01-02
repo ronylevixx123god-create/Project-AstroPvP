@@ -1,19 +1,19 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
-import com.rit.sucy.*;
-import org.arkhamnetwork.enchantments.util.*;
-import org.bukkit.entity.*;
-import org.bukkit.event.entity.*;
+import com.rit.sucy.CustomEnchantment;
+import org.arkhamnetwork.enchantments.util.GeneralUtil;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 
-public class Greatsword extends CustomEnchantment
-{
+public class Greatsword extends CustomEnchantment {
     public Greatsword() {
         super("Greatsword", GeneralUtil.swords, 7);
         this.max = 5;
         this.base = 20.0;
         this.interval = 5.0;
     }
-    
+
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
         final boolean enemyHasBow = playerHit.getEquipment().getItemInHand().getType().name().equals("BOW");
         if (!enemyHasBow) {

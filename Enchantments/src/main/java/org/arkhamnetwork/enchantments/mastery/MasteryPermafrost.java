@@ -5,11 +5,6 @@ import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.Faction;
-import com.rit.sucy.CustomEnchantment;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.MasteryCustomEnchantment;
 import org.arkhamnetwork.enchantments.listeners.CustomEnchantListener;
@@ -35,6 +30,11 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+
 public class MasteryPermafrost extends MasteryCustomEnchantment {
     private Map<Block, PlayerMaterialData> blocksToRestore = new ConcurrentHashMap<>();
 
@@ -42,7 +42,7 @@ public class MasteryPermafrost extends MasteryCustomEnchantment {
         super("Permafrost", GeneralUtil.armor, 10);
         this.max = 6;
         this.armorSet = "DEATH_KNIGHT";
-        Bukkit.getPluginManager().registerEvents((Listener)new PermaFrostListener(this), (Plugin)Enchantments.getInstance());
+        Bukkit.getPluginManager().registerEvents((Listener) new PermaFrostListener(this), (Plugin) Enchantments.getInstance());
     }
 
     public void onDisable() {
@@ -54,9 +54,9 @@ public class MasteryPermafrost extends MasteryCustomEnchantment {
         double chance = 0.02D + enchantLevel / 3.0D * 0.01D;
         if (Math.random() <= chance) {
             int radius = Math.min(2 + enchantLevel, 5);
-            Player damaged = (Player)user;
+            Player damaged = (Player) user;
             List<Block> blocks = Lists.newArrayList();
-            int duration = (int)Math.ceil(4.0D + enchantLevel / 3.0D);
+            int duration = (int) Math.ceil(4.0D + enchantLevel / 3.0D);
             Block meBlock = damaged.getLocation().getBlock();
             Location bl = meBlock.getLocation();
             int sq = radius * radius;
@@ -87,7 +87,7 @@ public class MasteryPermafrost extends MasteryCustomEnchantment {
                 if (this.random.nextDouble() <= 0.4D)
                     WorldUtil.sendWorldEffect(block, material.getId(), 2001);
             }
-            Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Enchantments.getInstance(), () -> {
+            Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin) Enchantments.getInstance(), () -> {
                 for (Block block : blocks) {
                     PlayerMaterialData data = this.blocksToRestore.remove(block);
                     if (data != null)
@@ -138,14 +138,14 @@ public class MasteryPermafrost extends MasteryCustomEnchantment {
             if (event.getEntity() instanceof Player) {
                 Player damager = null;
                 if (event.getDamager() instanceof Player) {
-                    damager = (Player)event.getDamager();
-                } else if (event.getDamager() instanceof Projectile && ((Projectile)event.getDamager()).getShooter() instanceof Player) {
-                    damager = (Player)((Projectile)event.getDamager()).getShooter();
+                    damager = (Player) event.getDamager();
+                } else if (event.getDamager() instanceof Projectile && ((Projectile) event.getDamager()).getShooter() instanceof Player) {
+                    damager = (Player) ((Projectile) event.getDamager()).getShooter();
                 }
                 if (damager != null) {
-                    Player damaged = (Player)event.getEntity();
+                    Player damaged = (Player) event.getEntity();
                     Block underneath = damaged.getLocation().getBlock().getRelative(0, -1, 0);
-                    MasteryPermafrost.PlayerMaterialData stored = (MasteryPermafrost.PlayerMaterialData)((MasteryPermafrost)this.customEnchant).blocksToRestore.get(underneath);
+                    MasteryPermafrost.PlayerMaterialData stored = (MasteryPermafrost.PlayerMaterialData) ((MasteryPermafrost) this.customEnchant).blocksToRestore.get(underneath);
                     if (stored != null && stored.getOwner().equals(damaged.getUniqueId())) {
                         double toReduce = (14 + stored.getLevel());
                         event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1.0D - 0.01D * toReduce));
@@ -158,13 +158,13 @@ public class MasteryPermafrost extends MasteryCustomEnchantment {
 
         @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
         public void onBlockMelt(BlockFadeEvent event) {
-            if (((MasteryPermafrost)this.customEnchant).blocksToRestore.containsKey(event.getBlock()))
+            if (((MasteryPermafrost) this.customEnchant).blocksToRestore.containsKey(event.getBlock()))
                 event.setCancelled(true);
         }
 
         @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
         public void onBlockBreak(BlockBreakEvent event) {
-            if (((MasteryPermafrost)this.customEnchant).blocksToRestore.containsKey(event.getBlock()))
+            if (((MasteryPermafrost) this.customEnchant).blocksToRestore.containsKey(event.getBlock()))
                 event.setCancelled(true);
         }
     }

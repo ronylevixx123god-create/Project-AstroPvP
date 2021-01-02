@@ -1,14 +1,18 @@
 package org.arkhamnetwork.enchantments.util;
 
-import org.arkhamnetwork.enchantments.*;
-import org.bukkit.*;
-import java.util.*;
-import com.rit.sucy.*;
+import com.rit.sucy.CustomEnchantment;
+import org.arkhamnetwork.enchantments.Enchantments;
+import org.bukkit.Bukkit;
 
-public class EnchantmentDescriptions
-{
+import java.util.HashMap;
+
+public class EnchantmentDescriptions {
     private static HashMap<String, String> descriptions;
-    
+
+    static {
+        EnchantmentDescriptions.descriptions = null;
+    }
+
     private static void loadConfig() {
         EnchantmentDescriptions.descriptions = new HashMap<String, String>();
         for (final String s : Enchantments.getInstance().getConfig().getStringList("descriptions")) {
@@ -20,15 +24,11 @@ public class EnchantmentDescriptions
             }
         }
     }
-    
+
     public static String getDescription(final CustomEnchantment ce) {
         if (EnchantmentDescriptions.descriptions == null) {
             loadConfig();
         }
         return EnchantmentDescriptions.descriptions.containsKey(ce.name().toLowerCase()) ? EnchantmentDescriptions.descriptions.get(ce.name().toLowerCase()) : "???";
-    }
-    
-    static {
-        EnchantmentDescriptions.descriptions = null;
     }
 }

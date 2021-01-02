@@ -1,28 +1,33 @@
 package org.arkhamnetwork.enchantments.listeners;
 
-import org.arkhamnetwork.enchantments.menus.*;
-import org.bukkit.plugin.java.*;
-import org.bukkit.event.*;
-import org.bukkit.event.player.*;
-import org.bukkit.event.block.*;
-import org.arkhamnetwork.enchantments.util.*;
-import org.bukkit.inventory.*;
-import org.bukkit.command.*;
+import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.MaskUtils;
+import com.google.common.collect.Lists;
+import com.rit.sucy.enchanting.EListener;
+import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.MasteryCustomEnchantment;
+import org.arkhamnetwork.enchantments.enchantments.armor.Reflect;
+import org.arkhamnetwork.enchantments.menus.EnchanterGUI;
+import org.arkhamnetwork.enchantments.util.TieredEnchantments;
 import org.bukkit.*;
-import org.bukkit.inventory.meta.*;
-import org.bukkit.event.entity.*;
-import com.google.common.collect.*;
-import com.rit.sucy.enchanting.*;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
-import org.arkhamnetwork.enchantments.*;
-import com.cosmicpvp.cosmicutils.utils.*;
-import org.arkhamnetwork.enchantments.enchantments.armor.*;
-import com.cosmicpvp.CosmicSpaceChests.libs.*;
-import com.rit.sucy.*;
-import java.util.*;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.FireworkMeta;
+import org.bukkit.plugin.java.JavaPlugin;
 
-public class EnchanterListener implements Listener
-{
+public class EnchanterListener implements Listener {
     private static String enchanterName;
     private static Inventory enchanterInventory;
     private static short WHITE;
@@ -31,14 +36,40 @@ public class EnchanterListener implements Listener
     private static short YELLOW;
     private static short GOLD;
 
+    static {
+        EnchanterListener.enchanterName = "Astro Enchanter";
+        EnchanterListener.WHITE = 0;
+        EnchanterListener.GREEN = 5;
+        EnchanterListener.BLUE = 3;
+        EnchanterListener.YELLOW = 4;
+        EnchanterListener.GOLD = 1;
+    }
+
+    public static double getEnchanterBookPrice(final ItemRarity ir) {
+        if (ir == ItemRarity.SIMPLE) {
+            return 0.0;
+        }
+        if (ir == ItemRarity.UNIQUE) {
+            return 0.0;
+        }
+        if (ir == ItemRarity.ELITE) {
+            return 0.0;
+        }
+        if (ir == ItemRarity.ULTIMATE) {
+            return 0.0;
+        }
+
+        return (ir == ItemRarity.LEGENDARY) ? 0.0 : 2.147483647E9;
+    }
+
     @EventHandler
     public void onPlayerRightClickEnchanter(final PlayerInteractEntityEvent e) {
         if (e.getRightClicked().hasMetadata("NPC") && e.getRightClicked() instanceof Player) {
-            final Player pEntity = (Player)e.getRightClicked();
+            final Player pEntity = (Player) e.getRightClicked();
             if (pEntity.getName().equals(EnchanterListener.enchanterName)) {
                 final Player p = e.getPlayer();
                 e.setCancelled(true);
-                new EnchanterGUI(p).openGUI((JavaPlugin)Enchantments.getInstance());
+                new EnchanterGUI(p).openGUI((JavaPlugin) Enchantments.getInstance());
                 p.playSound(p.getLocation(), Sound.VILLAGER_HAGGLE, 1.0f, 1.4f);
             }
         }
@@ -70,18 +101,17 @@ public class EnchanterListener implements Listener
             if (i.getAmount() > 1) {
                 i.setAmount(i.getAmount() - 1);
                 p.setItemInHand(i);
-            }
-            else {
-                p.setItemInHand((ItemStack)null);
+            } else {
+                p.setItemInHand((ItemStack) null);
             }
             ItemStack book = TieredEnchantments.getRandomEnchantmentBook(tier);
-            p.getInventory().addItem(new ItemStack[] { book });
+            p.getInventory().addItem(new ItemStack[]{book});
             p.updateInventory();
             p.playSound(p.getLocation(), Sound.BAT_TAKEOFF, 0.7f, 1.4f);
             p.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW.toString() + "You examine the " + i.getItemMeta().getDisplayName().substring(0, i.getItemMeta().getDisplayName().indexOf(ChatColor.GRAY.toString())) + "...");
             p.sendMessage(ChatColor.YELLOW + "and discover " + book.getItemMeta().getDisplayName() + "!");
-            Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), "contest add " + p.getName() + " beopened 1");
-            final Firework fw = (Firework)p.getWorld().spawnEntity(p.getLocation(), EntityType.FIREWORK);
+            Bukkit.dispatchCommand((CommandSender) Bukkit.getConsoleSender(), "contest add " + p.getName() + " beopened 1");
+            final Firework fw = (Firework) p.getWorld().spawnEntity(p.getLocation(), EntityType.FIREWORK);
             final FireworkMeta fwm = fw.getFireworkMeta();
             Color c = null;
             if (tier == 1) {
@@ -117,19 +147,19 @@ public class EnchanterListener implements Listener
         if (event.getEntity() instanceof Player) {
             Player dmgr = null;
             if (event.getDamager() instanceof Player) {
-                dmgr = (Player)event.getDamager();
-            } else if (event.getDamager() instanceof Projectile && ((Projectile)event.getDamager()).getShooter() instanceof Player) {
-                dmgr = (Player)((Projectile)event.getDamager()).getShooter();
+                dmgr = (Player) event.getDamager();
+            } else if (event.getDamager() instanceof Projectile && ((Projectile) event.getDamager()).getShooter() instanceof Player) {
+                dmgr = (Player) ((Projectile) event.getDamager()).getShooter();
             }
             if (dmgr == null)
                 return;
             Player finalDmgr = dmgr;
             EListener.getValidEnchantments(dmgr, Lists.newArrayList(dmgr.getInventory().getArmorContents())).asMap().forEach((enchantment, levels) -> {
                 if (enchantment instanceof MasteryCustomEnchantment) {
-                    MasteryCustomEnchantment enchant = (MasteryCustomEnchantment)enchantment;
-                    Player damaged = (Player)event.getEntity();
+                    MasteryCustomEnchantment enchant = (MasteryCustomEnchantment) enchantment;
+                    Player damaged = (Player) event.getEntity();
                     boolean riftMask = MaskUtils.hasMaskEquipped(damaged, "RIFT");
-                    int masteryReflect = Reflect.getReflectLevel((LivingEntity)damaged, "mastery");
+                    int masteryReflect = Reflect.getReflectLevel((LivingEntity) damaged, "mastery");
                     if (!enchant.canStack()) {
                         if (riftMask && Math.random() <= 0.5D)
                             return;
@@ -148,31 +178,5 @@ public class EnchanterListener implements Listener
                 }
             });
         }
-    }
-
-    public static double getEnchanterBookPrice(final ItemRarity ir) {
-        if (ir == ItemRarity.SIMPLE) {
-            return 0.0;
-        }
-        if (ir == ItemRarity.UNIQUE) {
-            return 0.0;
-        }
-        if (ir == ItemRarity.ELITE) {
-            return 0.0;
-        }
-        if (ir == ItemRarity.ULTIMATE) {
-            return 0.0;
-        }
-
-        return (ir == ItemRarity.LEGENDARY) ? 0.0 : 2.147483647E9;
-    }
-
-    static {
-        EnchanterListener.enchanterName = "Astro Enchanter";
-        EnchanterListener.WHITE = 0;
-        EnchanterListener.GREEN = 5;
-        EnchanterListener.BLUE = 3;
-        EnchanterListener.YELLOW = 4;
-        EnchanterListener.GOLD = 1;
     }
 }

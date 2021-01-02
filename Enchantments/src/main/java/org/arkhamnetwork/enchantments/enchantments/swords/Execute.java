@@ -1,22 +1,23 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
-import com.rit.sucy.*;
-import org.arkhamnetwork.enchantments.util.*;
+import com.cosmicpvp.cosmicutils.utils.WorldUtil;
+import com.rit.sucy.CustomEnchantment;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.bukkit.event.entity.*;
-import org.bukkit.entity.*;
-import com.cosmicpvp.cosmicutils.utils.*;
-import org.bukkit.*;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 
-public class Execute extends CustomEnchantment
-{
+public class Execute extends CustomEnchantment {
     public Execute() {
         super("Execute", GeneralUtil.swords, 2);
         this.max = 7;
         this.base = 15.0;
         this.interval = 3.0;
     }
-    
+
     public void applyEffect(final LivingEntity player, final LivingEntity target, final int level, final EntityDamageByEntityEvent e) {
         if (!(target instanceof Player)) {
             return;

@@ -1,26 +1,29 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
-import com.rit.sucy.*;
-import org.arkhamnetwork.enchantments.util.*;
+import com.cosmicpvp.cosmicutils.utils.WorldUtil;
+import com.rit.sucy.CustomEnchantment;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.bukkit.event.entity.*;
-import org.bukkit.entity.*;
-import org.bukkit.metadata.*;
-import com.cosmicpvp.cosmicutils.utils.*;
-import org.bukkit.block.*;
-import org.bukkit.inventory.*;
-import java.util.*;
-import org.bukkit.*;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.block.BlockFace;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.inventory.ItemStack;
 
-public class Disarmor extends CustomEnchantment
-{
+import java.util.HashSet;
+import java.util.Random;
+
+public class Disarmor extends CustomEnchantment {
     public Disarmor() {
         super("Disarmor", GeneralUtil.swords, 2);
         this.max = 8;
         this.base = 15.0;
         this.interval = 3.0;
     }
-    
+
     public void applyEffect(final LivingEntity player, final LivingEntity target, final int level, final EntityDamageByEntityEvent e) {
         if (!(target instanceof Player)) {
             return;
@@ -35,7 +38,7 @@ public class Disarmor extends CustomEnchantment
             chance -= stickyLevel * 0.0025;
         }
         if (random < chance) {
-            this.unequipRandomArmor((Player)target, (Player)player);
+            this.unequipRandomArmor((Player) target, (Player) player);
             final Location l = target.getLocation();
             l.getWorld().playSound(l, Sound.ANVIL_BREAK, 1.0f, 0.6f);
             WorldUtil.sendWorldEffect(l.getBlock(), Material.DIAMOND_ORE.getId(), 2001);
@@ -43,31 +46,27 @@ public class Disarmor extends CustomEnchantment
             WorldUtil.sendWorldEffect(l.getBlock().getRelative(BlockFace.UP, 2), Material.DIAMOND_ORE.getId(), 2001);
         }
     }
-    
+
     private void unequipRandomArmor(final Player p, final Player playerDisarming) {
         final int i = new Random().nextInt(4);
         ItemStack armor = null;
         if (i == 1) {
             armor = p.getEquipment().getHelmet();
-            p.getEquipment().setHelmet((ItemStack)null);
-        }
-        else if (i == 2) {
+            p.getEquipment().setHelmet((ItemStack) null);
+        } else if (i == 2) {
             armor = p.getEquipment().getChestplate();
-            p.getEquipment().setChestplate((ItemStack)null);
-        }
-        else if (i == 3) {
+            p.getEquipment().setChestplate((ItemStack) null);
+        } else if (i == 3) {
             armor = p.getEquipment().getLeggings();
-            p.getEquipment().setLeggings((ItemStack)null);
-        }
-        else if (i == 4) {
+            p.getEquipment().setLeggings((ItemStack) null);
+        } else if (i == 4) {
             armor = p.getEquipment().getBoots();
-            p.getEquipment().setBoots((ItemStack)null);
+            p.getEquipment().setBoots((ItemStack) null);
         }
         if (armor != null) {
             if (p.getInventory().firstEmpty() != -1) {
                 p.getInventory().addItem(armor);
-            }
-            else {
+            } else {
                 p.getWorld().dropItem(p.getTargetBlock((HashSet<Byte>) null, 1).getLocation(), armor);
             }
         }

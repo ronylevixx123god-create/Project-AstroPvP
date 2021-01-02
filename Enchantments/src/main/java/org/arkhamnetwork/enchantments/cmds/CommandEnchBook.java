@@ -1,19 +1,23 @@
 package org.arkhamnetwork.enchantments.cmds;
 
-import org.bukkit.command.*;
-import org.bukkit.entity.*;
-import com.rit.sucy.*;
-import org.bukkit.enchantments.*;
-import org.bukkit.inventory.*;
-import org.arkhamnetwork.enchantments.*;
-import org.bukkit.*;
-import java.util.*;
-import com.cosmicpvp.cosmicutils.utils.*;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.rit.sucy.CustomEnchantment;
+import com.rit.sucy.EnchantmentAPI;
+import org.arkhamnetwork.enchantments.EnchantmentBook;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
-public class CommandEnchBook implements CommandExecutor
-{
+import java.util.Random;
+
+public class CommandEnchBook implements CommandExecutor {
     public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
-        if (sender instanceof Player && !((Player)sender).isOp()) {
+        if (sender instanceof Player && !((Player) sender).isOp()) {
             return true;
         }
         if (args.length < 1) {
@@ -29,9 +33,8 @@ public class CommandEnchBook implements CommandExecutor
                         continue;
                     }
                     if (pl.getInventory().firstEmpty() != -1) {
-                        pl.getInventory().addItem(new ItemStack[] { EnchantmentBook.getEnchantmentBook(ce, ce.getMaxLevel())});
-                    }
-                    else {
+                        pl.getInventory().addItem(new ItemStack[]{EnchantmentBook.getEnchantmentBook(ce, ce.getMaxLevel())});
+                    } else {
                         pl.getWorld().dropItem(pl.getLocation(), EnchantmentBook.getEnchantmentBook(ce, ce.getMaxLevel()));
                     }
                 }
@@ -52,8 +55,7 @@ public class CommandEnchBook implements CommandExecutor
                     sender.sendMessage(ChatColor.RED + "Max level: " + ce2.getMaxLevel());
                     return true;
                 }
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 sender.sendMessage("Please enter a valid level!");
             }
@@ -62,14 +64,13 @@ public class CommandEnchBook implements CommandExecutor
             amount = new Random().nextInt(ce2.getMaxLevel()) + 1;
         }
         if (pl.getInventory().firstEmpty() != -1) {
-            pl.getInventory().addItem(new ItemStack[] { EnchantmentBook.getEnchantmentBook(ce2, amount) });
-        }
-        else {
+            pl.getInventory().addItem(new ItemStack[]{EnchantmentBook.getEnchantmentBook(ce2, amount)});
+        } else {
             pl.getWorld().dropItem(pl.getLocation(), EnchantmentBook.getEnchantmentBook(ce2, amount));
         }
         return true;
     }
-    
+
     private void sendHelp(final CommandSender sender) {
         sender.sendMessage(CC.Red + "/enchbook <player> [enchant] [level] ");
     }

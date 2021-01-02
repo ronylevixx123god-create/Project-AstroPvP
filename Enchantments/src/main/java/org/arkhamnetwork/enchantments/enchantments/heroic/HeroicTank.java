@@ -1,24 +1,24 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
-import org.bukkit.event.entity.*;
-import org.bukkit.entity.*;
-import com.cosmicpvp.cosmicutils.utils.*;
-import org.bukkit.inventory.*;
-import org.bukkit.*;
+import com.cosmicpvp.cosmicutils.utils.WorldUtil;
+import org.bukkit.Location;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.inventory.ItemStack;
 
-public class HeroicTank extends HeroicCustomEnchantment
-{
+public class HeroicTank extends HeroicCustomEnchantment {
     public HeroicTank() {
         super("Reinforced Tank", "Tank");
     }
-    
+
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         if (!(player instanceof Player)) {
             return;
         }
         ItemStack i = null;
         if (attacker instanceof Player) {
-            final Player pAttacker = (Player)attacker;
+            final Player pAttacker = (Player) attacker;
             i = pAttacker.getItemInHand();
         }
         final double damage_negation = level * 0.0225;

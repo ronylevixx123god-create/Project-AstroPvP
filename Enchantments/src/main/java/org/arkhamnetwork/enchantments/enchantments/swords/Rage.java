@@ -24,6 +24,22 @@ public class Rage extends CustomEnchantment {
         Bukkit.getPluginManager().registerEvents(new RageListener(), Enchantments.getInstance());
     }
 
+    private static int getPVPHitCombo(Player p) {
+        return p.hasMetadata("pvp_rageHitCombo") ? (p.getMetadata("pvp_rageHitCombo").get(0)).asInt() : 0;
+    }
+
+    public static void subtractPVPHitCombo(Player p) {
+        p.setMetadata("pvp_rageHitCombo", new FixedMetadataValue(Enchantments.getInstance(), Math.max(0, getPVPHitCombo(p) - 1)));
+    }
+
+    private static int getPVEHitCombo(Player p) {
+        return p.hasMetadata("pve_rageHitCombo") ? (p.getMetadata("pve_rageHitCombo").get(0)).asInt() : 0;
+    }
+
+    public static void subtractPVEHitCombo(Player p) {
+        p.setMetadata("pve_rageHitCombo", new FixedMetadataValue(Enchantments.getInstance(), Math.max(0, getPVEHitCombo(p) - 1)));
+    }
+
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
         if (!event.isCancelled() && event.getDamage(EntityDamageEvent.DamageModifier.BASE) > 0.0D && user instanceof Player) {
             Player pUser = (Player) user;
@@ -64,28 +80,12 @@ public class Rage extends CustomEnchantment {
         }
     }
 
-    private static int getPVPHitCombo(Player p) {
-        return p.hasMetadata("pvp_rageHitCombo") ? (p.getMetadata("pvp_rageHitCombo").get(0)).asInt() : 0;
-    }
-
     private void addPVPHitCombo(Player p) {
         p.setMetadata("pvp_rageHitCombo", new FixedMetadataValue(Enchantments.getInstance(), getPVPHitCombo(p) + 1));
     }
 
-    public static void subtractPVPHitCombo(Player p) {
-        p.setMetadata("pvp_rageHitCombo", new FixedMetadataValue(Enchantments.getInstance(), Math.max(0, getPVPHitCombo(p) - 1)));
-    }
-
-    private static int getPVEHitCombo(Player p) {
-        return p.hasMetadata("pve_rageHitCombo") ? (p.getMetadata("pve_rageHitCombo").get(0)).asInt() : 0;
-    }
-
     private void addPVEHitCombo(Player p) {
         p.setMetadata("pve_rageHitCombo", new FixedMetadataValue(Enchantments.getInstance(), getPVEHitCombo(p) + 1));
-    }
-
-    public static void subtractPVEHitCombo(Player p) {
-        p.setMetadata("pve_rageHitCombo", new FixedMetadataValue(Enchantments.getInstance(), Math.max(0, getPVEHitCombo(p) - 1)));
     }
 
     private void playRageEffect(Location loc, int level) {

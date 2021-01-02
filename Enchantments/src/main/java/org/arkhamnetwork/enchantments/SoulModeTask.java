@@ -1,18 +1,19 @@
 package org.arkhamnetwork.enchantments;
 
+import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
-import org.arkhamnetwork.enchantments.cmds.*;
-import org.bukkit.entity.*;
-import me.ifamasssxd.killtracker.*;
-import org.bukkit.*;
-import com.compilex.CosmicOutposts.*;
-import com.cosmicpvp.cosmicutils.utils.*;
-import org.bukkit.plugin.*;
-import org.bukkit.metadata.*;
-import org.arkhamnetwork.enchantments.util.*;
-import java.util.*;
-import com.rit.sucy.*;
-import org.bukkit.inventory.*;
+import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
+import com.rit.sucy.EnchantmentAPI;
+import me.ifamasssxd.killtracker.KillTrackerAPI;
+import org.arkhamnetwork.enchantments.cmds.CommandEnchDust;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
 
 public class SoulModeTask implements Runnable {
     boolean cosmicOutposts;
@@ -41,12 +42,12 @@ public class SoulModeTask implements Runnable {
                         cost = Math.max(0, cost / 2);
                     int heroic = UpgradeUtils.getUpgradeLevel(p, "HEROIC_SOUL_MASTERY");
                     if (heroic > 0 && cost > 0) {
-                        cost *= (int)((heroic == 1) ? 0.7D : ((heroic == 2) ? 0.55D : 1.0D));
-                        cost = (int)Math.ceil(cost);
+                        cost *= (int) ((heroic == 1) ? 0.7D : ((heroic == 2) ? 0.55D : 1.0D));
+                        cost = (int) Math.ceil(cost);
                     }
                     if (cost > 0) {
                         KillTrackerAPI.removeSoulsFromGems(p, cost);
-                        p.setMetadata("lastSoulRemoveEvent", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), System.currentTimeMillis()));
+                        p.setMetadata("lastSoulRemoveEvent", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), System.currentTimeMillis()));
                         if (!p.hasMetadata("spectator"))
                             ParticleEffect.playEffect(ParticleEffect.SPELL, p.getLocation().add(0.0D, 1.0D, 0.0D), 0.5F, 65);
                         p.playSound(p.getLocation(), Sound.EAT, 0.4F, 0.2F);

@@ -1,19 +1,10 @@
 package org.arkhamnetwork.enchantments.libs;
 
-import java.util.*;
+import java.util.TreeMap;
 
-public class RomanNumber
-{
+public class RomanNumber {
     private static final TreeMap<Integer, String> map;
-    
-    public static final String toRoman(final int number) {
-        final int l = RomanNumber.map.floorKey(number);
-        if (number == l) {
-            return RomanNumber.map.get(number);
-        }
-        return RomanNumber.map.get(l) + toRoman(number - l);
-    }
-    
+
     static {
         (map = new TreeMap<Integer, String>()).put(1000, "M");
         RomanNumber.map.put(900, "CM");
@@ -28,5 +19,13 @@ public class RomanNumber
         RomanNumber.map.put(5, "V");
         RomanNumber.map.put(4, "IV");
         RomanNumber.map.put(1, "I");
+    }
+
+    public static final String toRoman(final int number) {
+        final int l = RomanNumber.map.floorKey(number);
+        if (number == l) {
+            return RomanNumber.map.get(number);
+        }
+        return RomanNumber.map.get(l) + toRoman(number - l);
     }
 }

@@ -1,43 +1,90 @@
 package org.arkhamnetwork.enchantments.libs;
 
-import org.bukkit.entity.*;
-import java.util.concurrent.*;
-import java.util.function.*;
-import org.arkhamnetwork.enchantments.cmds.*;
-import org.arkhamnetwork.Arkkit.plugins.*;
-import org.arkhamnetwork.Arkkit.utils.*;
-import org.bukkit.potion.*;
-import org.bukkit.*;
-import java.util.*;
-import org.arkhamnetwork.enchantments.*;
-import com.compilex.CosmicDungeons.*;
-import org.arkhamnetwork.enchantments.mastery.*;
-import com.compilex.CosmicDungeons.dungeons.libs.*;
-import com.rit.sucy.*;
-import org.arkhamnetwork.enchantments.listeners.*;
+import com.compilex.CosmicDungeons.DungeonsAPI;
+import com.compilex.CosmicDungeons.dungeons.libs.DungeonPlayer;
+import com.rit.sucy.CustomEnchantment;
+import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
+import org.arkhamnetwork.Arkkit.utils.WorldGuardUtils;
+import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.cmds.CommandApply;
+import org.arkhamnetwork.enchantments.listeners.PlayerPotionEffectListener;
+import org.arkhamnetwork.enchantments.mastery.MasteryMortalCoil;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
-public class PlayerPotionEffects
-{
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.Consumer;
+
+public class PlayerPotionEffects {
     String playerName;
     UUID playerUUID;
     Player bukkitPlayer;
     ConcurrentHashMap<SpecificCustomEnchantment, CopyOnWriteArrayList<AbstractPotionEffect>> effects;
-    
+
     public PlayerPotionEffects(final Player p) {
         this.bukkitPlayer = p;
         this.playerName = p.getName();
         this.playerUUID = p.getUniqueId();
         this.effects = new ConcurrentHashMap<SpecificCustomEnchantment, CopyOnWriteArrayList<AbstractPotionEffect>>();
     }
-    
+
+    public static PlayerPotionEffects getTrackedPotionEffects(final Player p) {
+        return PlayerPotionEffectListener.getPlayerPotionEffectTracker().computeIfAbsent(p.getUniqueId(), def -> new PlayerPotionEffects(p));
+    }
+
+    public static void trackPotionEffect(final Player p, final SpecificCustomEnchantment ce, final PotionEffect pe) {
+        getTrackedPotionEffects(p).addPotionEffect(ce, pe);
+    }
+
+    public static void trackPotionEffect(final Player p, final SpecificCustomEnchantment ce, final PotionEffect pe, final Consumer<AbstractPotionEffect> addedEffectConsumer) {
+        getTrackedPotionEffects(p).addPotionEffect(ce, pe, addedEffectConsumer);
+    }
+
+    public static void untrackPotionEffect(final Player p, final SpecificCustomEnchantment ce) {
+        final PlayerPotionEffects effects = getTrackedPotionEffects(p);
+        if (effects == null) {
+            return;
+        }
+        effects.removePotionEffect(ce);
+    }
+
+    public static void untrackPotionEffect(final Player p, final SpecificCustomEnchantment ce, final PotionEffectType specificEffect) {
+        final PlayerPotionEffects effects = getTrackedPotionEffects(p);
+        if (effects == null) {
+            return;
+        }
+        effects.removePotionEffect(ce, specificEffect);
+    }
+
+    public static void untrackPotionEffect(final Player p, final PotionEffectType specificEffect) {
+        final PlayerPotionEffects effects = getTrackedPotionEffects(p);
+        if (effects == null) {
+            return;
+        }
+        effects.removePotionEffect(specificEffect, true);
+    }
+
+    public static void applyPotionEffects(final Player p, final boolean alertChanges) {
+        getTrackedPotionEffects(p).applyPotionEffects(alertChanges);
+    }
+
+    public static void resetPotionTracker(final Player p) {
+        getTrackedPotionEffects(p).effects.clear();
+    }
+
     public Player getPlayer() {
         return this.bukkitPlayer;
     }
-    
+
     public void addPotionEffect(final SpecificCustomEnchantment ce, final PotionEffect pe) {
         this.addPotionEffect(ce, pe, null);
     }
-    
+
     public void addPotionEffect(final SpecificCustomEnchantment ce, final PotionEffect pe, final Consumer<AbstractPotionEffect> consumer) {
         boolean hasBetterActiveEffect = false;
         for (final Map.Entry<SpecificCustomEnchantment, CopyOnWriteArrayList<AbstractPotionEffect>> effects : this.effects.entrySet()) {
@@ -45,7 +92,7 @@ public class PlayerPotionEffects
                 break;
             }
             for (final AbstractPotionEffect ape : effects.getValue()) {
-                if (ape.getEffectType().equals((Object)pe.getType()) && ape.getPotionLevel() >= pe.getAmplifier()) {
+                if (ape.getEffectType().equals((Object) pe.getType()) && ape.getPotionLevel() >= pe.getAmplifier()) {
                     if (CommandApply.debug) {
                         Bukkit.getLogger().info("[PPE] Skipped adding of potionEffect from " + pe.toString() + " to " + this.getPlayerName() + " from " + ce.toString() + " due to existing LVL:" + ape.getPotionLevel() + " of effect from " + effects.getKey().toString() + "!");
                     }
@@ -59,10 +106,9 @@ public class PlayerPotionEffects
             final CopyOnWriteArrayList<AbstractPotionEffect> effects2 = this.effects.get(ce);
             effects2.add(retr = new AbstractPotionEffect(pe.getType(), pe.getAmplifier()));
             this.effects.put(ce, effects2);
-        }
-        else {
+        } else {
             final ConcurrentHashMap<SpecificCustomEnchantment, CopyOnWriteArrayList<AbstractPotionEffect>> effects3 = this.effects;
-            final AbstractPotionEffect[] a = { null };
+            final AbstractPotionEffect[] a = {null};
             retr = (a[0] = new AbstractPotionEffect(pe.getType(), pe.getAmplifier()));
             effects3.put(ce, new CopyOnWriteArrayList<AbstractPotionEffect>(Arrays.asList(a)));
         }
@@ -82,12 +128,12 @@ public class PlayerPotionEffects
             }
         }
     }
-    
+
     public void removePotionEffect(final SpecificCustomEnchantment ce, final PotionEffectType effectType) {
         final CopyOnWriteArrayList<AbstractPotionEffect> pEffects = this.effects.containsKey(ce) ? this.effects.get(ce) : null;
         if (pEffects != null) {
             for (final AbstractPotionEffect effect : pEffects) {
-                if (effect.getEffectType().equals((Object)effectType)) {
+                if (effect.getEffectType().equals((Object) effectType)) {
                     this.getPlayer().removePotionEffect(effect.getEffectType());
                     pEffects.remove(effect);
                     if (!CommandApply.debug) {
@@ -98,19 +144,18 @@ public class PlayerPotionEffects
             }
             if (pEffects.size() > 0) {
                 this.effects.put(ce, pEffects);
-            }
-            else {
+            } else {
                 this.effects.remove(ce);
             }
         }
     }
-    
+
     public void removePotionEffect(final PotionEffectType effectType, final boolean alertChanges) {
         for (final Map.Entry<SpecificCustomEnchantment, CopyOnWriteArrayList<AbstractPotionEffect>> data : this.effects.entrySet()) {
             if (data.getValue() != null) {
                 final CopyOnWriteArrayList<AbstractPotionEffect> pEffects = data.getValue();
                 for (final AbstractPotionEffect effect : pEffects) {
-                    if (effect.getEffectType().equals((Object)effectType)) {
+                    if (effect.getEffectType().equals((Object) effectType)) {
                         if (alertChanges) {
                             this.getPlayer().sendMessage(ChatColor.RED.toString() + ChatColor.BOLD + "[-] " + ChatColor.RED + "" + data.getKey().getEnchantment().name() + " " + RomanNumber.toRoman(data.getKey().getEnchantmentLevel()) + ":" + ChatColor.GRAY + " removing " + effectType.getName() + " " + RomanNumber.toRoman(effect.getPotionLevel() + 1));
                         }
@@ -123,15 +168,14 @@ public class PlayerPotionEffects
                 }
                 if (pEffects.size() > 0) {
                     this.effects.put(data.getKey(), pEffects);
-                }
-                else {
+                } else {
                     this.effects.remove(data.getKey());
                 }
                 this.getPlayer().removePotionEffect(effectType);
             }
         }
     }
-    
+
     public void removePotionEffect(final SpecificCustomEnchantment ce) {
         final CopyOnWriteArrayList<AbstractPotionEffect> effects = this.effects.get(ce);
         if (effects != null) {
@@ -173,7 +217,7 @@ public class PlayerPotionEffects
             }
         }
     }
-    
+
     public void applyPotionEffects(final boolean alertChanges) {
         final Player p = this.getPlayer();
         if (p == null) {
@@ -214,10 +258,9 @@ public class PlayerPotionEffects
                         continue;
                     }
                     p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "[+] " + ChatColor.GREEN + "" + data.getKey().getEnchantment().name() + " " + RomanNumber.toRoman(data.getKey().getEnchantmentLevel()) + ":" + ChatColor.GRAY + " applying " + ape.getEffectType().getName() + " " + RomanNumber.toRoman(ape.getPotionLevel() + 1));
-                }
-                else {
+                } else {
                     for (final PotionEffect pe : p.getActivePotionEffects()) {
-                        if (pe.getType().equals((Object)ape.getEffectType()) && ape.getPotionLevel() > pe.getAmplifier() && pe.getDuration() > 100000) {
+                        if (pe.getType().equals((Object) ape.getEffectType()) && ape.getPotionLevel() > pe.getAmplifier() && pe.getDuration() > 100000) {
                             p.removePotionEffect(ape.getEffectType());
                             p.addPotionEffect(new PotionEffect(ape.getEffectType(), Integer.MAX_VALUE, ape.getPotionLevel(), true));
                             if (!alertChanges) {
@@ -233,7 +276,7 @@ public class PlayerPotionEffects
             }
         }
     }
-    
+
     public boolean hasPotionEffect(final PotionEffectType pet, final int level) {
         for (final CopyOnWriteArrayList<AbstractPotionEffect> activeEffects : this.effects.values()) {
             for (final AbstractPotionEffect ape : activeEffects) {
@@ -244,77 +287,33 @@ public class PlayerPotionEffects
         }
         return false;
     }
-    
+
     private int getHighestEnchantmentLevel(final CustomEnchantment ce) {
         int highest = 0;
         for (final SpecificCustomEnchantment sce : this.effects.keySet()) {
-            if (sce.getEnchantment().equals((Object)ce) && sce.getEnchantmentLevel() > highest) {
+            if (sce.getEnchantment().equals((Object) ce) && sce.getEnchantmentLevel() > highest) {
                 highest = sce.getEnchantmentLevel();
             }
         }
         return highest;
     }
-    
-    public static PlayerPotionEffects getTrackedPotionEffects(final Player p) {
-        return PlayerPotionEffectListener.getPlayerPotionEffectTracker().computeIfAbsent(p.getUniqueId(), def -> new PlayerPotionEffects(p));
-    }
-    
-    public static void trackPotionEffect(final Player p, final SpecificCustomEnchantment ce, final PotionEffect pe) {
-        getTrackedPotionEffects(p).addPotionEffect(ce, pe);
-    }
-    
-    public static void trackPotionEffect(final Player p, final SpecificCustomEnchantment ce, final PotionEffect pe, final Consumer<AbstractPotionEffect> addedEffectConsumer) {
-        getTrackedPotionEffects(p).addPotionEffect(ce, pe, addedEffectConsumer);
-    }
-    
-    public static void untrackPotionEffect(final Player p, final SpecificCustomEnchantment ce) {
-        final PlayerPotionEffects effects = getTrackedPotionEffects(p);
-        if (effects == null) {
-            return;
-        }
-        effects.removePotionEffect(ce);
-    }
-    
-    public static void untrackPotionEffect(final Player p, final SpecificCustomEnchantment ce, final PotionEffectType specificEffect) {
-        final PlayerPotionEffects effects = getTrackedPotionEffects(p);
-        if (effects == null) {
-            return;
-        }
-        effects.removePotionEffect(ce, specificEffect);
-    }
-    
-    public static void untrackPotionEffect(final Player p, final PotionEffectType specificEffect) {
-        final PlayerPotionEffects effects = getTrackedPotionEffects(p);
-        if (effects == null) {
-            return;
-        }
-        effects.removePotionEffect(specificEffect, true);
-    }
-    
-    public static void applyPotionEffects(final Player p, final boolean alertChanges) {
-        getTrackedPotionEffects(p).applyPotionEffects(alertChanges);
-    }
-    
-    public static void resetPotionTracker(final Player p) {
-        getTrackedPotionEffects(p).effects.clear();
-    }
-    
+
     public String getPlayerName() {
         return this.playerName;
     }
-    
+
     public UUID getPlayerUUID() {
         return this.playerUUID;
     }
-    
+
     public Player getBukkitPlayer() {
         return this.bukkitPlayer;
     }
-    
+
     public void setBukkitPlayer(final Player bukkitPlayer) {
         this.bukkitPlayer = bukkitPlayer;
     }
-    
+
     public ConcurrentHashMap<SpecificCustomEnchantment, CopyOnWriteArrayList<AbstractPotionEffect>> getEffects() {
         return this.effects;
     }

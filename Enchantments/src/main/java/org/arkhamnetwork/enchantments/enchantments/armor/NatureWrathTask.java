@@ -1,20 +1,20 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
-import org.bukkit.scheduler.*;
-import org.bukkit.entity.*;
-import org.bukkit.*;
-import org.arkhamnetwork.Arkkit.libs.*;
+import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
+import org.bukkit.ChatColor;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
-final class NatureWrathTask extends BukkitRunnable
-{
-    Player victim;
+final class NatureWrathTask extends BukkitRunnable {
     public int enchantLevel;
-    
+    Player victim;
+
     public NatureWrathTask(final Player p, final int level) {
         this.victim = p;
         this.enchantLevel = level;
     }
-    
+
     public void run() {
         if (this.victim != null && !this.victim.isDead()) {
             this.victim.getWorld().strikeLightningEffect(this.victim.getLocation());

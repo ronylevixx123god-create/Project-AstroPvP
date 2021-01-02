@@ -35,23 +35,22 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.List;
 import java.util.UUID;
 
-public class MasteryTombstone extends MasteryCustomEnchantment
-{
+public class MasteryTombstone extends MasteryCustomEnchantment {
     public MasteryTombstone() {
         super("Tombstone", GeneralUtil.armor, 10);
         this.max = 10;
         this.armorSet = "DEATH_KNIGHT";
-        Bukkit.getPluginManager().registerEvents((Listener)new TombstoneSanityListener(this), (Plugin)Enchantments.getInstance());
+        Bukkit.getPluginManager().registerEvents((Listener) new TombstoneSanityListener(this), (Plugin) Enchantments.getInstance());
     }
-    
+
     @SneakyThrows
     public void applyDefenseEffect(final LivingEntity user, final LivingEntity target, final int enchantLevel, final EntityDamageEvent event) {
         if (!(target instanceof Player)) {
             return;
         }
-        final Player damaged = (Player)user;
+        final Player damaged = (Player) user;
         if (Math.random() <= 0.02 * (enchantLevel / 3.0)) {
-            if (!new CustomEnchantProcOnEntityEvent(user, target, (Event)event, this, enchantLevel).callEvent()) {
+            if (!new CustomEnchantProcOnEntityEvent(user, target, (Event) event, this, enchantLevel).callEvent()) {
                 return;
             }
             final int toEffect = 4 + enchantLevel / 2;
@@ -66,7 +65,7 @@ public class MasteryTombstone extends MasteryCustomEnchantment
                 if (!(entity instanceof Player)) {
                     continue;
                 }
-                final Player near = (Player)entity;
+                final Player near = (Player) entity;
                 if (!this.canEffectPlayer(near)) {
                     continue;
                 }
@@ -82,10 +81,10 @@ public class MasteryTombstone extends MasteryCustomEnchantment
                 near.setWalkSpeed(0.0f);
                 near.removePotionEffect(PotionEffectType.JUMP);
                 near.removePotionEffect(PotionEffectType.SLOW);
-                near.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, (int)durationTicks, 128));
-                near.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, (int)durationTicks, 128));
+                near.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, (int) durationTicks, 128));
+                near.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, (int) durationTicks, 128));
                 Player player = (Player) target;
-                Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), () -> {
+                Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), () -> {
                     player.setWalkSpeed(0.2f);
                     player.removePotionEffect(PotionEffectType.SLOW);
                     return;
@@ -93,23 +92,22 @@ public class MasteryTombstone extends MasteryCustomEnchantment
                 near.playSound(near.getLocation(), Sound.WITHER_HURT, 1.0f, 0.25f);
                 if (near.hasMetadata("immune_silence") && Math.random() < 0.75) {
                     near.sendMessage(CC.RedB + "* SILENCE BLOCKED [" + CC.Gray + damaged.getName() + CC.RedB + "] *");
-                }
-                else {
-                    near.setMetadata("noDefenseProcs", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)true));
+                } else {
+                    near.setMetadata("noDefenseProcs", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) true));
                     ParticleEffect.playEffect(ParticleEffect.ENCHANTMENT_TABLE, near.getEyeLocation(), 0.4f, 20);
                     ParticleEffect.playEffect(ParticleEffect.PORTAL, near.getEyeLocation(), 0.4f, 20);
                 }
                 ++affected;
                 near.sendMessage(CC.DarkPurpleB + "* TOMBSTONE (" + CC.Gray + damaged.getName() + " " + ChatColor.GRAY + "[" + silenceDuration / 20L + "s]" + CC.DarkPurpleB + ") *");
                 final Player player2 = (Player) user;
-                Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), () -> {
-                    player2.removeMetadata("noDefenseProcs", (Plugin)Enchantments.getInstance());
+                Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), () -> {
+                    player2.removeMetadata("noDefenseProcs", (Plugin) Enchantments.getInstance());
                     ParticleEffect.playEffect(ParticleEffect.ENCHANTMENT_TABLE, player2.getEyeLocation(), 0.4f, 20);
                     ParticleEffect.playEffect(ParticleEffect.PORTAL, player2.getEyeLocation(), 0.4f, 30);
                     return;
                 }, silenceDuration);
                 final Location loc = near.getLocation();
-                final WorldServer world = ((CraftWorld)damaged.getWorld()).getHandle();
+                final WorldServer world = ((CraftWorld) damaged.getWorld()).getHandle();
                 near.playSound(near.getLocation().add(0.0, 5.0, 0.0), Sound.ANVIL_LAND, 3.0f, 1.1f);
                 final EntityFallingBlock block = new EntityFallingBlock(world, loc.getX(), loc.getY() + 5.0, loc.getZ(), Blocks.ANVIL) {
                     protected void b(final float f) {
@@ -121,7 +119,7 @@ public class MasteryTombstone extends MasteryCustomEnchantment
                         this.world.getWorld().playSound(this.getBukkitEntity().getLocation(), Sound.ANVIL_LAND, 2.0f, 1.1f);
                         for (final Object ent : near) {
                             if (ent instanceof EntityHuman) {
-                                final Player pl = (Player)((EntityHuman)ent).getBukkitEntity();
+                                final Player pl = (Player) ((EntityHuman) ent).getBukkitEntity();
                                 if (pl == null) {
                                     continue;
                                 }
@@ -150,20 +148,19 @@ public class MasteryTombstone extends MasteryCustomEnchantment
                 };
                 block.a(block.dropItem = false);
                 block.ticksLived = 1;
-                ReflectionUtils.setObject((Object)block, ReflectionUtils.getField((Class)EntityFallingBlock.class, "f"), true);
+                ReflectionUtils.setObject((Object) block, ReflectionUtils.getField((Class) EntityFallingBlock.class, "f"), true);
                 world.addEntity(block, CreatureSpawnEvent.SpawnReason.CUSTOM);
-                block.getBukkitEntity().setMetadata("no_block", (MetadataValue)new FixedMetadataValue(Enchantments.getInstance(), (Object)""));
+                block.getBukkitEntity().setMetadata("no_block", (MetadataValue) new FixedMetadataValue(Enchantments.getInstance(), (Object) ""));
             }
             damaged.sendMessage(CC.RedB + "* TOMBSTONE [" + CC.Gray + affected + " players" + CC.RedB + "] *");
         }
     }
-    
-    class TombstoneSanityListener extends CustomEnchantListener<MasteryTombstone>
-    {
+
+    class TombstoneSanityListener extends CustomEnchantListener<MasteryTombstone> {
         public TombstoneSanityListener(final MasteryTombstone enchant) {
             super(enchant);
         }
-        
+
         @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
         public void onEntityChange(final EntityChangeBlockEvent event) {
             if (event.getEntity().hasMetadata("no_block")) {

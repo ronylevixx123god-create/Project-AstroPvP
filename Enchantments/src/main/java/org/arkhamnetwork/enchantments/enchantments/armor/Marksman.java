@@ -1,27 +1,29 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
-import org.arkhamnetwork.enchantments.util.*;
-import org.bukkit.entity.*;
-import org.bukkit.event.entity.*;
-import com.rit.sucy.*;
-import org.bukkit.inventory.*;
-import java.util.*;
+import com.rit.sucy.CustomEnchantment;
+import com.rit.sucy.EnchantmentAPI;
+import org.arkhamnetwork.enchantments.util.GeneralUtil;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.inventory.ItemStack;
 
-public class Marksman extends CustomEnchantment
-{
+import java.util.Map;
+
+public class Marksman extends CustomEnchantment {
     public Marksman() {
         super("Marksman", GeneralUtil.armor, 4);
         this.max = 4;
         this.base = 20.0;
         this.interval = 5.0;
     }
-    
+
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
         if (e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE) {
             int marksmanLevel = 0;
             for (final ItemStack i : player.getEquipment().getArmorContents()) {
                 if (i != null) {
-                    final Map<CustomEnchantment, Integer> enchants = (Map<CustomEnchantment, Integer>)EnchantmentAPI.getEnchantments(i);
+                    final Map<CustomEnchantment, Integer> enchants = (Map<CustomEnchantment, Integer>) EnchantmentAPI.getEnchantments(i);
                     if (enchants.containsKey(this)) {
                         marksmanLevel += enchants.get(this);
                     }

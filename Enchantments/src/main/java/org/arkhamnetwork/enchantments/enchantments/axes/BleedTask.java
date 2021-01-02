@@ -1,18 +1,17 @@
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
-import org.bukkit.scheduler.*;
-import org.bukkit.*;
+import org.bukkit.Sound;
+import org.bukkit.scheduler.BukkitRunnable;
 
-final class BleedTask extends BukkitRunnable
-{
+final class BleedTask extends BukkitRunnable {
     BleedEvent event;
     int x;
-    
+
     public BleedTask(final BleedEvent e) {
         this.x = 0;
         this.event = e;
     }
-    
+
     public void run() {
         if (this.event.ticks <= this.x) {
             this.event.stop();

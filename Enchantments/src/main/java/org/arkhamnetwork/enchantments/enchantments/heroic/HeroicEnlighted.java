@@ -15,10 +15,10 @@ public class HeroicEnlighted extends CustomEnchantment {
         this.max = 3;
         this.base = 15.0D;
         this.interval = 8.0D;
-        Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), () -> {
             this.heroicEnchantment = true;
             this.nonHeroicVersion = EnchantmentAPI.getEnchantment("Enlighted");
-        },2L);
+        }, 2L);
     }
 
     public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
@@ -27,6 +27,6 @@ public class HeroicEnlighted extends CustomEnchantment {
         double random = Math.random();
         double chance = 0.013D * level;
         if (random < chance)
-            Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), () -> GeneralUtil.setPlayerHealth(player, player.getHealth() + 2.0D), 1L);
+            Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), () -> GeneralUtil.setPlayerHealth(player, player.getHealth() + 2.0D), 1L);
     }
 }

@@ -1,43 +1,55 @@
 package org.arkhamnetwork.enchantments.enchantments.bow;
 
-import org.arkhamnetwork.enchantments.*;
+import com.cosmicpvp.cosmicutils.utils.WorldUtil;
+import com.massivecraft.factions.FPlayer;
+import com.massivecraft.factions.FPlayers;
+import com.massivecraft.factions.Faction;
+import com.massivecraft.factions.iface.RelationParticipator;
+import com.rit.sucy.CustomEnchantment;
+import com.rit.sucy.EnchantmentAPI;
+import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.util.DurabilityUtil;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.bukkit.plugin.*;
-import com.massivecraft.factions.iface.*;
-import java.util.*;
-import org.bukkit.entity.*;
-import org.bukkit.potion.*;
-import org.arkhamnetwork.enchantments.util.*;
-import com.cosmicpvp.cosmicutils.utils.*;
-import com.massivecraft.factions.*;
-import org.bukkit.*;
-import org.bukkit.event.*;
-import org.bukkit.event.entity.*;
-import com.rit.sucy.*;
-import org.bukkit.metadata.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
-public class Healing extends CustomEnchantment
-{
+import java.util.Random;
+
+public class Healing extends CustomEnchantment {
     public Healing() {
-        super("Healing", new Material[] { Material.BOW }, 3);
+        super("Healing", new Material[]{Material.BOW}, 3);
         this.max = 4;
         this.base = 20.0;
         this.interval = 10.0;
-        Bukkit.getPluginManager().registerEvents((Listener)new HealingEvents(), (Plugin)Enchantments.getInstance());
+        Bukkit.getPluginManager().registerEvents((Listener) new HealingEvents(), (Plugin) Enchantments.getInstance());
     }
-    
-    private static class HealingEvents implements Listener
-    {
+
+    private static class HealingEvents implements Listener {
         @EventHandler(priority = EventPriority.LOWEST)
         public void onArrowHit(final EntityDamageByEntityEvent e) {
             if (e.getDamager() instanceof Projectile && e.getDamager().hasMetadata("healing_level")) {
                 Player player = null;
                 Player playerHit = null;
-                if (((Projectile)e.getDamager()).getShooter() instanceof Player) {
-                    player = (Player)((Projectile)e.getDamager()).getShooter();
+                if (((Projectile) e.getDamager()).getShooter() instanceof Player) {
+                    player = (Player) ((Projectile) e.getDamager()).getShooter();
                 }
                 if (e.getEntity() instanceof Player) {
-                    playerHit = (Player)e.getEntity();
+                    playerHit = (Player) e.getEntity();
                 }
                 if (player == null || playerHit == null) {
                     return;
@@ -57,7 +69,7 @@ public class Healing extends CustomEnchantment
                 final FPlayer fPlayer = FPlayers.i.get(player.getUniqueId().toString());
                 final Faction f = fPlayer.getFaction();
                 final Faction fply = FPlayers.i.get(playerHit.getUniqueId().toString()).getFaction();
-                if (f.isNormal() && fply.isNormal() && (fply.getRelationTo((RelationParticipator)f).isAlly() || fply.equals(f))) {
+                if (f.isNormal() && fply.isNormal() && (fply.getRelationTo((RelationParticipator) f).isAlly() || fply.equals(f))) {
                     final int min_heal = 1 * level;
                     final int max_heal = 3 * level;
                     final double heal = new Random().nextInt(max_heal - min_heal) + min_heal;
@@ -69,16 +81,15 @@ public class Healing extends CustomEnchantment
                     }
                     final double current_hp = playerHit.getHealth();
                     if (current_hp + heal > playerHit.getMaxHealth()) {
-                        GeneralUtil.setPlayerHealth((LivingEntity)playerHit, playerHit.getMaxHealth());
+                        GeneralUtil.setPlayerHealth((LivingEntity) playerHit, playerHit.getMaxHealth());
                         if (!absorption) {
                             playerHit.addPotionEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, 20 * (4 + level), level - 1));
                         }
-                    }
-                    else {
-                        GeneralUtil.healPlayer((LivingEntity)playerHit, heal);
+                    } else {
+                        GeneralUtil.healPlayer((LivingEntity) playerHit, heal);
                     }
                     if (Math.random() < 0.25 * level) {
-                        DurabilityUtil.healMostDamagedArmorPeice(player, (short)1);
+                        DurabilityUtil.healMostDamagedArmorPeice(player, (short) 1);
                     }
                     if (absorption) {
                         playerHit.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 20 * (1 + level), level - 3));
@@ -91,12 +102,12 @@ public class Healing extends CustomEnchantment
                 }
             }
         }
-        
+
         @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
         public void onPlayerShootBow(final EntityShootBowEvent e) {
             if (e.getBow() != null && EnchantmentAPI.itemHasEnchantment(e.getBow(), "Healing")) {
                 final Location loc = e.getProjectile().getLocation();
-                e.getProjectile().setMetadata("healing_level", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), EnchantmentAPI.getEnchantments(e.getBow()).get(EnchantmentAPI.getEnchantment("Healing"))));
+                e.getProjectile().setMetadata("healing_level", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), EnchantmentAPI.getEnchantments(e.getBow()).get(EnchantmentAPI.getEnchantment("Healing"))));
                 WorldUtil.sendWorldEffect(loc.getBlock(), Material.EMERALD_BLOCK.getId(), 2001);
             }
         }

@@ -24,22 +24,30 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.UUID;
 
-public class RocketEscape extends CustomEnchantment
-{
+public class RocketEscape extends CustomEnchantment {
     public static HashMap<String, Long> last_rocket_escape;
     public static HashSet<UUID> rocket_escapists;
-    
+
+    static {
+        RocketEscape.last_rocket_escape = new HashMap<String, Long>();
+        RocketEscape.rocket_escapists = new HashSet<UUID>();
+    }
+
     public RocketEscape() {
         super("Rocket Escape", GeneralUtil.boots, 3);
         this.max = 3;
         this.base = 25.0;
         this.interval = 15.0;
     }
-    
+
+    public static boolean isEscaping(final Player pl) {
+        return RocketEscape.rocket_escapists.contains(pl.getUniqueId());
+    }
+
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         if (player instanceof Player) {
             double dmg = e.getFinalDamage();
-            dmg *= ArmorUtil.getArmorDamageNullificationPercent((float)ArmorUtil.getArmorValue((Player)player));
+            dmg *= ArmorUtil.getArmorDamageNullificationPercent((float) ArmorUtil.getArmorValue((Player) player));
             if (player.getWorld().getEnvironment() == World.Environment.THE_END) {
                 return;
             }
@@ -49,8 +57,8 @@ public class RocketEscape extends CustomEnchantment
             if (player.getWorld().getName().equals("world_koth")) {
                 return;
             }
-            if (player.getHealth() - dmg <= 0.0 && this.canEscape((Player)player)) {
-                final Player pl = (Player)player;
+            if (player.getHealth() - dmg <= 0.0 && this.canEscape((Player) player)) {
+                final Player pl = (Player) player;
                 RocketEscape.last_rocket_escape.put(pl.getUniqueId().toString(), System.currentTimeMillis());
                 if (pl.hasMetadata("sabotage") && System.currentTimeMillis() - pl.getMetadata("sabotage").get(0).asLong() <= 1000L) {
                     final int sabotageLevel = pl.getMetadata("sabotageLevel").get(0).asInt();
@@ -61,7 +69,7 @@ public class RocketEscape extends CustomEnchantment
                     }
 
                     if (pl.getInventory().getChestplate() != null && AstroBackpacksAPI.itemHasSkin(pl.getInventory().getChestplate()) && AstroBackpacksAPI.getBackpackByItem(pl.getInventory().getChestplate()).equals(BackpackType.CURSED_WINGS)) {
-                        pl.playSound(pl.getLocation(), Sound.ANVIL_BREAK , 5, 5);
+                        pl.playSound(pl.getLocation(), Sound.ANVIL_BREAK, 5, 5);
                         pl.sendMessage("§6§l* CURSED WINGS BLOCKED §nROCKET ESCAPE§r §7[" + attacker.getKiller().getName() + "§7] §6§l*");
                         return;
                     }
@@ -80,30 +88,21 @@ public class RocketEscape extends CustomEnchantment
                 final UUID uuid = player.getUniqueId();
                 RocketEscape.rocket_escapists.add(uuid);
                 final Location loc = pl.getLocation();
-                ParticleEffect.sendToLocation(ParticleEffect.CLOUD, loc, (float)Math.random() * 2.0f, (float)Math.random() * 2.0f, (float)Math.random() * 2.0f, 1.25f, 69);
-                Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), (Runnable)new Runnable() {
+                ParticleEffect.sendToLocation(ParticleEffect.CLOUD, loc, (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, 1.25f, 69);
+                Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
                     @Override
                     public void run() {
                         if (Bukkit.getPlayer(String.valueOf(uuid)) != null) {
-                            ParticleEffect.sendToLocation(ParticleEffect.CLOUD, Bukkit.getPlayer(String.valueOf(uuid)).getLocation(), (float)Math.random() * 2.0f, (float)Math.random() * 2.0f, (float)Math.random() * 2.0f, 1.25f, 69);
+                            ParticleEffect.sendToLocation(ParticleEffect.CLOUD, Bukkit.getPlayer(String.valueOf(uuid)).getLocation(), (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, 1.25f, 69);
                         }
                         RocketEscape.rocket_escapists.remove(uuid);
                     }
-                }, (long)(30 * (level + 2) + 5));
+                }, (long) (30 * (level + 2) + 5));
             }
         }
     }
-    
+
     private boolean canEscape(final Player pl) {
         return !RocketEscape.last_rocket_escape.containsKey(pl.getUniqueId().toString()) || System.currentTimeMillis() - RocketEscape.last_rocket_escape.get(pl.getUniqueId().toString()) > 30000L;
-    }
-    
-    public static boolean isEscaping(final Player pl) {
-        return RocketEscape.rocket_escapists.contains(pl.getUniqueId());
-    }
-    
-    static {
-        RocketEscape.last_rocket_escape = new HashMap<String, Long>();
-        RocketEscape.rocket_escapists = new HashSet<UUID>();
     }
 }

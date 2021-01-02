@@ -5,7 +5,6 @@ import com.google.common.collect.MapMaker;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
-import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.Relation;
 import net.minecraft.server.v1_8_R3.*;
 import org.arkhamnetwork.enchantments.Enchantments;
@@ -38,31 +37,30 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
-public class MasteryDemonicGateway extends MasteryCustomEnchantment
-{
+public class MasteryDemonicGateway extends MasteryCustomEnchantment {
     private Map<UUID, Long> demonicGateway;
     private Map<EnderCrystal, Integer> crystalShootTicks;
-    
+
     public MasteryDemonicGateway() {
         super("Demonic Gateway", GeneralUtil.armor, 11);
         this.demonicGateway = new MapMaker().expireAfterWrite(10L, TimeUnit.SECONDS).makeMap();
         this.crystalShootTicks = new MapMaker().expireAfterWrite(5L, TimeUnit.SECONDS).makeMap();
         this.max = 6;
         this.armorSet = "NECROMANCER";
-        Bukkit.getPluginManager().registerEvents((Listener)new MasteryDemonicGatewayListener(this), (Plugin)Enchantments.getInstance());
+        Bukkit.getPluginManager().registerEvents((Listener) new MasteryDemonicGatewayListener(this), (Plugin) Enchantments.getInstance());
     }
-    
+
     public void applyDefenseEffect(final LivingEntity user, final LivingEntity target, final int enchantLevel, final EntityDamageEvent event) {
         if (!(target instanceof Player)) {
             return;
         }
-        final Player damaged = (Player)user;
+        final Player damaged = (Player) user;
         final double chance = 0.015 + 0.005 * enchantLevel;
         if (Math.random() <= chance) {
             if (this.demonicGateway.containsKey(damaged.getUniqueId())) {
                 return;
             }
-            if (!new CustomEnchantProcOnEntityEvent((LivingEntity)damaged, target, (Event)event, this, enchantLevel).callEvent()) {
+            if (!new CustomEnchantProcOnEntityEvent((LivingEntity) damaged, target, (Event) event, this, enchantLevel).callEvent()) {
                 return;
             }
             final int crystalsToSpawn = Math.min(2 + enchantLevel / 2, 5);
@@ -79,19 +77,17 @@ public class MasteryDemonicGateway extends MasteryCustomEnchantment
                 final Location toSpawn = this.getOpenBlock(location, 4);
                 if (toSpawn == null || !WorldGuardUtils.isPvPEnabled(toSpawn)) {
                     Bukkit.getLogger().info("[Demonic Gateway] Skipping spawn at " + location + " for ender crystal..");
-                }
-                else {
-                    final EnderCrystal crystal = (EnderCrystal)toSpawn.getWorld().spawnEntity(toSpawn.clone().add(0.0, 1.0, 0.0), EntityType.ENDER_CRYSTAL);
+                } else {
+                    final EnderCrystal crystal = (EnderCrystal) toSpawn.getWorld().spawnEntity(toSpawn.clone().add(0.0, 1.0, 0.0), EntityType.ENDER_CRYSTAL);
                     crystal.getWorld().playSound(crystal.getLocation(), Sound.GHAST_FIREBALL, 3.0f, 0.9f);
                     crystal.getWorld().playEffect(crystal.getLocation(), Effect.MOBSPAWNER_FLAMES, 1);
-                    crystal.setMetadata("demonicGateway", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)damaged.getName()));
+                    crystal.setMetadata("demonicGateway", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) damaged.getName()));
                     crystal.getWorld().strikeLightningEffect(crystal.getLocation());
                     spawnedCrystals.add(crystal);
-                    final Entity entity = (Entity) ((CraftEntity)crystal).getHandle();
+                    final Entity entity = (Entity) ((CraftEntity) crystal).getHandle();
                     try {
-                        ReflectionUtils.setObject((Object)entity, ReflectionUtils.getField((Class)Entity.class, "invulnerable"), (Object)true);
-                    }
-                    catch (Exception e) {
+                        ReflectionUtils.setObject((Object) entity, ReflectionUtils.getField((Class) Entity.class, "invulnerable"), (Object) true);
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
@@ -101,7 +97,7 @@ public class MasteryDemonicGateway extends MasteryCustomEnchantment
                 this.demonicGateway.put(damaged.getUniqueId(), System.currentTimeMillis());
                 for (final org.bukkit.entity.Entity nearbyEntity : damaged.getNearbyEntities(24.0, 24.0, 24.0)) {
                     if (nearbyEntity instanceof Player) {
-                        final Player pNear = (Player)nearbyEntity;
+                        final Player pNear = (Player) nearbyEntity;
                         if (GeneralUtil.isAtleastTruce(pNear, damaged)) {
                             continue;
                         }
@@ -126,16 +122,15 @@ public class MasteryDemonicGateway extends MasteryCustomEnchantment
                                 Integer cooldownTicks = MasteryDemonicGateway.this.crystalShootTicks.get(crystal);
                                 if (cooldownTicks != null && cooldownTicks > 0) {
                                     MasteryDemonicGateway.this.crystalShootTicks.put(crystal, --cooldownTicks);
-                                }
-                                else {
-                                    final EntityEnderCrystal ender = (EntityEnderCrystal)((CraftEntity)crystal).getHandle();
-                                    final List nearbyPlayers = ender.world.a((Class) EntityHuman.class, ender.getBoundingBox().grow(crystalScanRadius, crystalScanRadius, crystalScanRadius), ent -> ent instanceof EntityHuman && damaged.canSee((Player)ent.getBukkitEntity()) && ((Player)ent.getBukkitEntity()).getGameMode() == GameMode.SURVIVAL && WorldGuardUtils.isPvPEnabled(new Location(damaged.getWorld(), ent.locX, ent.locY, ent.locZ)));
+                                } else {
+                                    final EntityEnderCrystal ender = (EntityEnderCrystal) ((CraftEntity) crystal).getHandle();
+                                    final List nearbyPlayers = ender.world.a((Class) EntityHuman.class, ender.getBoundingBox().grow(crystalScanRadius, crystalScanRadius, crystalScanRadius), ent -> ent instanceof EntityHuman && damaged.canSee((Player) ent.getBukkitEntity()) && ((Player) ent.getBukkitEntity()).getGameMode() == GameMode.SURVIVAL && WorldGuardUtils.isPvPEnabled(new Location(damaged.getWorld(), ent.locX, ent.locY, ent.locZ)));
                                     final Location crystalLocation = crystal.getLocation();
                                     for (final Object obj : nearbyPlayers) {
                                         if (obj instanceof EntityHuman) {
                                             MasteryDemonicGateway.this.crystalShootTicks.put(crystal, 8 + ThreadLocalRandom.current().nextInt(6));
-                                            final EntityHuman toShoot = (EntityHuman)obj;
-                                            final Player player = (Player)toShoot.getBukkitEntity();
+                                            final EntityHuman toShoot = (EntityHuman) obj;
+                                            final Player player = (Player) toShoot.getBukkitEntity();
                                             if (player.equals(damaged)) {
                                                 continue;
                                             }
@@ -159,28 +154,28 @@ public class MasteryDemonicGateway extends MasteryCustomEnchantment
                             this.cancel();
                         }
                     }
-                }.runTaskTimer((Plugin)Enchantments.getInstance(), 30L, 3L);
-                Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Enchantments.getInstance(), () -> spawnedCrystals.forEach(crystalEntity -> {
+                }.runTaskTimer((Plugin) Enchantments.getInstance(), 30L, 3L);
+                Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin) Enchantments.getInstance(), () -> spawnedCrystals.forEach(crystalEntity -> {
                     ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, crystalEntity.getLocation(), 0.75f, 16);
                     crystalEntity.remove();
-                }), (long)(spawnDuration * 20.0));
+                }), (long) (spawnDuration * 20.0));
             }
         }
     }
-    
+
     public EntityWitherSkull createCrystalSkullProjectile(final Faction faction, final Player shooterPlayer, final EnderCrystal crystal, final Location location, final int level, final Vector direction) {
-        final WorldServer world = ((CraftWorld)location.getWorld()).getHandle();
-        final EntityWitherSkull skull = new EntityWitherSkull(world, ((CraftPlayer)shooterPlayer).getHandle(), direction.getX(), direction.getY(), direction.getZ()) {
+        final WorldServer world = ((CraftWorld) location.getWorld()).getHandle();
+        final EntityWitherSkull skull = new EntityWitherSkull(world, ((CraftPlayer) shooterPlayer).getHandle(), direction.getX(), direction.getY(), direction.getZ()) {
             public void setDirection(final double d0, final double d1, final double d2) {
                 final double d3 = MathHelper.sqrt_double(d0 * d0 + d1 * d1 + d2 * d2);
                 this.dirX = d0 / d3 * 0.1;
                 this.dirY = d1 / d3 * 0.1;
                 this.dirZ = d2 / d3 * 0.1;
             }
-            
+
             protected void a(final MovingObjectPosition movingobjectposition) {
                 if (movingobjectposition.entity instanceof EntityHuman) {
-                    final Player pl = (Player)movingobjectposition.entity.getBukkitEntity();
+                    final Player pl = (Player) movingobjectposition.entity.getBukkitEntity();
                     if (pl == null || pl.hasMetadata("NPC") || pl.hasMetadata("spectator") || pl.getGameMode() != GameMode.SURVIVAL) {
                         return;
                     }
@@ -219,16 +214,16 @@ public class MasteryDemonicGateway extends MasteryCustomEnchantment
         skull.locZ = location.getZ();
         skull.setDirection(direction.getX(), direction.getY(), direction.getZ());
         skull.getBukkitEntity().setVelocity(direction);
-        skull.getBukkitEntity().setMetadata("skullLevel", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)level));
-        skull.getBukkitEntity().setMetadata("crystalSkull", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)shooterPlayer.getName()));
-        skull.getBukkitEntity().setMetadata("crystalShooter", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)crystal));
+        skull.getBukkitEntity().setMetadata("skullLevel", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) level));
+        skull.getBukkitEntity().setMetadata("crystalSkull", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) shooterPlayer.getName()));
+        skull.getBukkitEntity().setMetadata("crystalShooter", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) crystal));
         world.addEntity(skull, CreatureSpawnEvent.SpawnReason.CUSTOM);
         return skull;
     }
-    
+
     public Location getOpenBlock(final Location start, final int yToCheck) {
         for (int y = -yToCheck; y < yToCheck; ++y) {
-            final Location newLoc = start.clone().add(0.0, (double)y, 0.0);
+            final Location newLoc = start.clone().add(0.0, (double) y, 0.0);
             if (newLoc.getY() > 0.0) {
                 final Block block = newLoc.getBlock();
                 final Material type = block.getType();
@@ -239,22 +234,22 @@ public class MasteryDemonicGateway extends MasteryCustomEnchantment
         }
         return null;
     }
-    
+
     private boolean isSpawnable(final Material type) {
         return type == Material.AIR || type == Material.WATER || type == Material.STATIONARY_WATER || type == Material.LAVA || type == Material.STATIONARY_LAVA;
     }
-    
+
     public void trapTarget(final Player player, final String damagerName, final int level) {
         if (player.getWalkSpeed() < 0.2f) {
             return;
         }
         player.setWalkSpeed(0.0f);
-        final int duration = (int)Math.min(5.0, 1.0 + level * 0.125);
+        final int duration = (int) Math.min(5.0, 1.0 + level * 0.125);
         Bukkit.getLogger().info("Trapping " + player.getName() + " by " + duration + " seconds!");
-        player.sendMessage(CC.RedB + "* DEMONIC GATEWAY TRAP [by: " + CC.Gray + damagerName + " (" + NumberUtils.formatSeconds((double)duration) + "s)" + CC.RedB + "] *");
-        Enchantments.getInstance().getServer().getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), () -> player.setWalkSpeed(0.2f), (long)(duration * 20));
+        player.sendMessage(CC.RedB + "* DEMONIC GATEWAY TRAP [by: " + CC.Gray + damagerName + " (" + NumberUtils.formatSeconds((double) duration) + "s)" + CC.RedB + "] *");
+        Enchantments.getInstance().getServer().getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), () -> player.setWalkSpeed(0.2f), (long) (duration * 20));
     }
-    
+
     public String getRomanNumeral(final int i) {
         switch (i) {
             case 1: {
@@ -280,13 +275,12 @@ public class MasteryDemonicGateway extends MasteryCustomEnchantment
             }
         }
     }
-    
-    class MasteryDemonicGatewayListener extends CustomEnchantListener<MasteryDemonicGateway>
-    {
+
+    class MasteryDemonicGatewayListener extends CustomEnchantListener<MasteryDemonicGateway> {
         public MasteryDemonicGatewayListener(final MasteryDemonicGateway enchant) {
             super(enchant);
         }
-        
+
         @EventHandler
         public void onEntityExplodePrime(final ExplosionPrimeEvent event) {
             if (event.getEntity().hasMetadata("crystalSkull") || event.getEntity().hasMetadata("demonicGateway")) {
@@ -294,7 +288,7 @@ public class MasteryDemonicGateway extends MasteryCustomEnchantment
                 ParticleEffect.sendToLocation(ParticleEffect.LARGE_EXPLODE, event.getEntity().getLocation(), 0.5f, 0.5f, 0.5f, 0.1f, 10);
             }
         }
-        
+
         @EventHandler
         public void onEntityExplode(final EntityExplodeEvent event) {
             if (event.getEntity().hasMetadata("crystalSkull") || event.getEntity().hasMetadata("demonicGateway")) {
@@ -302,14 +296,14 @@ public class MasteryDemonicGateway extends MasteryCustomEnchantment
                 ParticleEffect.sendToLocation(ParticleEffect.LARGE_EXPLODE, event.getEntity().getLocation(), 0.5f, 0.5f, 0.5f, 0.1f, 10);
             }
         }
-        
+
         @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
         public void onEntityDamage(final EntityDamageEvent event) {
             if (event.getEntity() instanceof EnderCrystal && event.getEntity().hasMetadata("demonicGateway")) {
                 event.setCancelled(true);
             }
         }
-        
+
         @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
         public void onSkullExplodes(final EntityDamageByEntityEvent event) {
             if (event.getEntity().hasMetadata("demonicGateway")) {
@@ -321,14 +315,14 @@ public class MasteryDemonicGateway extends MasteryCustomEnchantment
             }
             if (event.getDamager() instanceof WitherSkull && event.getDamager().hasMetadata("crystalSkull") && WorldGuardUtils.isPvPEnabled(event.getEntity().getLocation()) && event.getDamager().isValid()) {
                 final org.bukkit.entity.Entity witherSkull = event.getDamager();
-                final Player damaged = (Player)event.getEntity();
+                final Player damaged = (Player) event.getEntity();
                 final double toDeal = damaged.getMaxHealth() * 0.05;
                 event.setCancelled(true);
                 witherSkull.remove();
                 if (witherSkull.hasMetadata("skullLevel") && !damaged.isDead()) {
                     final String shooterName = witherSkull.getMetadata("crystalSkull").get(0).asString();
                     final int level = witherSkull.getMetadata("skullLevel").get(0).asInt();
-                    if (!new CustomEnchantProcOnEntityEvent((LivingEntity)((WitherSkull)witherSkull).getShooter(), (LivingEntity)damaged, null, this.customEnchant, level).callEvent()) {
+                    if (!new CustomEnchantProcOnEntityEvent((LivingEntity) ((WitherSkull) witherSkull).getShooter(), (LivingEntity) damaged, null, this.customEnchant, level).callEvent()) {
                         return;
                     }
                     if (Math.random() <= 0.06 + level * 0.03) {
@@ -339,7 +333,7 @@ public class MasteryDemonicGateway extends MasteryCustomEnchantment
                 GeneralUtil.reducePlayerHealth(damaged, toDeal);
                 Bukkit.getLogger().info("[DemonicGateway] Damaging " + damaged.getName() + " by " + toDeal + " HP!");
                 if (witherSkull.hasMetadata("crystalShooter") && !damaged.isDead() && damaged.getWalkSpeed() > 0.0f) {
-                    final EnderCrystal crystal = (EnderCrystal)witherSkull.getMetadata("crystalShooter").get(0).value();
+                    final EnderCrystal crystal = (EnderCrystal) witherSkull.getMetadata("crystalShooter").get(0).value();
                     if (crystal != null && !crystal.isDead() && crystal.getWorld().getName().equals(event.getEntity().getWorld().getName())) {
                         final double distance = crystal.getLocation().distanceSquared(event.getEntity().getLocation());
                         if (distance < 16.0) {
@@ -348,7 +342,7 @@ public class MasteryDemonicGateway extends MasteryCustomEnchantment
                             Bukkit.getLogger().info("[Demonic gate] Pushing away " + damaged.getName() + " from Crystal: " + NumberUtils.formatSeconds(distance));
                         }
                     }
-                    witherSkull.removeMetadata("crystalShooter", (Plugin)Enchantments.getInstance());
+                    witherSkull.removeMetadata("crystalShooter", (Plugin) Enchantments.getInstance());
                 }
             }
         }

@@ -2,8 +2,6 @@ package org.arkhamnetwork.enchantments.enchantments.heroic;
 
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
-import java.util.HashMap;
-import java.util.HashSet;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
@@ -17,19 +15,22 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
 
+import java.util.HashMap;
+import java.util.HashSet;
+
 public class HeroicDeathbringer extends CustomEnchantment {
     public HeroicDeathbringer() {
         super("Planetary Deathbringer", GeneralUtil.armor, 9);
         this.max = 3;
         this.base = 25.0D;
         this.interval = 7.0D;
-        Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), new Runnable() {
+        Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), new Runnable() {
             public void run() {
                 HeroicDeathbringer.this.heroicEnchantment = true;
                 HeroicDeathbringer.this.nonHeroicVersion = EnchantmentAPI.getEnchantment("Deathbringer");
             }
-        },  2L);
-        Bukkit.getPluginManager().registerEvents(new DeathbringEvents(), (Plugin)Enchantments.getInstance());
+        }, 2L);
+        Bukkit.getPluginManager().registerEvents(new DeathbringEvents(), (Plugin) Enchantments.getInstance());
     }
 
     public void applyEquipEffect(Player player, int enchantLevel) {
@@ -43,7 +44,11 @@ public class HeroicDeathbringer extends CustomEnchantment {
     }
 
     private static class DeathbringEvents implements Listener {
-        private DeathbringEvents() {}
+        private static HashSet<Player> doubleDamage = new HashSet<>();
+        private static HashMap<Player, Integer> playerLevels = new HashMap<>();
+
+        private DeathbringEvents() {
+        }
 
         @EventHandler
         public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
@@ -64,9 +69,5 @@ public class HeroicDeathbringer extends CustomEnchantment {
             doubleDamage.remove(e.getPlayer());
             playerLevels.remove(e.getPlayer());
         }
-
-        private static HashSet<Player> doubleDamage = new HashSet<>();
-
-        private static HashMap<Player, Integer> playerLevels = new HashMap<>();
     }
 }

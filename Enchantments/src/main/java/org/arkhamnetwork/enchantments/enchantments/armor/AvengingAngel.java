@@ -8,9 +8,6 @@ import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.Relation;
 import com.rit.sucy.CustomEnchantment;
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
 import org.arkhamnetwork.enchantments.libs.SpecificCustomEnchantment;
@@ -30,6 +27,10 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+
 public class AvengingAngel extends CustomEnchantment {
     private Map<UUID, Long> cooldowns = (new MapMaker()).expireAfterWrite(20L, TimeUnit.SECONDS).makeMap();
 
@@ -38,7 +39,7 @@ public class AvengingAngel extends CustomEnchantment {
         this.max = 4;
         this.base = 25.0D;
         this.interval = 10.0D;
-        Bukkit.getPluginManager().registerEvents((Listener)new AvengingAngelListener(this), (Plugin)Enchantments.getInstance());
+        Bukkit.getPluginManager().registerEvents((Listener) new AvengingAngelListener(this), (Plugin) Enchantments.getInstance());
     }
 
     public void applyEquipEffect(Player player, int level, ItemStack item) {
@@ -46,11 +47,11 @@ public class AvengingAngel extends CustomEnchantment {
     }
 
     public void applyEquipEffect(Player player, int level) {
-        player.setMetadata("avenging_angel", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), Integer.valueOf(level)));
+        player.setMetadata("avenging_angel", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), Integer.valueOf(level)));
     }
 
     public void applyUnequipEffect(Player player, int enchantLevel) {
-        player.removeMetadata("avenging_angel", (Plugin)Enchantments.getInstance());
+        player.removeMetadata("avenging_angel", (Plugin) Enchantments.getInstance());
     }
 
     public void applyUnequipEffect(Player player, int enchantLevel, ItemStack item) {
@@ -76,20 +77,20 @@ public class AvengingAngel extends CustomEnchantment {
                         .hasMetadata("avenging_angel")) {
                     double distanceFromPlayer = pl.getLocation().distanceSquared(location);
                     Faction fac;
-                    if (distanceFromPlayer < distance && (fac = FactionUtils.getFaction(pl, false)) != null && faction.getRelationTo((RelationParticipator)fac).isAtLeast(Relation.ALLY)) {
-                        int angelLevel = ((MetadataValue)pl.getMetadata("avenging_angel").get(0)).asInt();
+                    if (distanceFromPlayer < distance && (fac = FactionUtils.getFaction(pl, false)) != null && faction.getRelationTo((RelationParticipator) fac).isAtLeast(Relation.ALLY)) {
+                        int angelLevel = ((MetadataValue) pl.getMetadata("avenging_angel").get(0)).asInt();
                         double distanceNeeded = Math.min(50 + angelLevel * 12, 100);
                         if (distanceNeeded * distanceNeeded >= distanceFromPlayer) {
                             int duration = 6 + angelLevel;
                             AvengingAngel.this.cooldowns.put(pl.getUniqueId(), Long.valueOf(System.currentTimeMillis() + 10000L));
                             double healed = pl.getMaxHealth() - pl.getHealth();
-                            GeneralUtil.healPlayer((LivingEntity)pl, healed);
+                            GeneralUtil.healPlayer((LivingEntity) pl, healed);
                             pl.sendMessage(CC.YellowB + "* AVENGING ANGEL [" + CC.Gray + "+" + NumberUtils.formatMoney(healed) + " HP (" + dead.getName() + ")" + CC.YellowB + " *");
                             PlayerPotionEffects.trackPotionEffect(pl, new SpecificCustomEnchantment(this.customEnchant, angelLevel), new PotionEffect(PotionEffectType.ABSORPTION, 20 * duration, 5));
-                            Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), () -> {
+                            Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), () -> {
                                 PlayerPotionEffects.untrackPotionEffect(pl, new SpecificCustomEnchantment(this.customEnchant, angelLevel));
                                 pl.removePotionEffect(PotionEffectType.ABSORPTION);
-                            },(20 * duration));
+                            }, (20 * duration));
                             Bukkit.getLogger().info("[Enchantments] Healing " + pl.getName() + " to full HP due to " + dead.getName() + " dieing!");
                         }
                     }

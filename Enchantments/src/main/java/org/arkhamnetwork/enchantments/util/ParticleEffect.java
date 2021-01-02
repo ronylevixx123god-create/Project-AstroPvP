@@ -1,12 +1,16 @@
 package org.arkhamnetwork.enchantments.util;
 
-import org.bukkit.entity.*;
-import org.bukkit.*;
-import java.lang.reflect.*;
-import java.util.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
-public enum ParticleEffect
-{
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
+
+public enum ParticleEffect {
     HUGE_EXPLOSION("hugeexplosion", 0),
     LARGE_EXPLODE("largeexplode", 1),
     FIREWORKS_SPARK("fireworksSpark", 2),
@@ -42,25 +46,27 @@ public enum ParticleEffect
     HAPPY_VILLAGER("happyVillager", 32),
     ICONCRACK("iconcrack", 33),
     TILECRACK("tilecrack", 34);
-    
-    private String name;
-    private int id;
+
     private static final Map<String, ParticleEffect> NAME_MAP;
     private static final Map<Integer, ParticleEffect> ID_MAP;
-    
+
+    static {
+        NAME_MAP = new HashMap<String, ParticleEffect>();
+        ID_MAP = new HashMap<Integer, ParticleEffect>();
+        for (final ParticleEffect effect : values()) {
+            ParticleEffect.NAME_MAP.put(effect.name, effect);
+            ParticleEffect.ID_MAP.put(effect.id, effect);
+        }
+    }
+
+    private String name;
+    private int id;
+
     private ParticleEffect(final String name, final int id) {
         this.name = name;
         this.id = id;
     }
-    
-    public String getName() {
-        return this.name;
-    }
-    
-    public int getId() {
-        return this.id;
-    }
-    
+
     public static ParticleEffect fromName(final String name) {
         if (name == null) {
             return null;
@@ -72,42 +78,42 @@ public enum ParticleEffect
         }
         return null;
     }
-    
+
     public static ParticleEffect fromId(final int id) {
         return ParticleEffect.ID_MAP.get(id);
     }
-    
+
     @Deprecated
     public static void sendToPlayer(final ParticleEffect effect, final Player player, final Location location, final float offsetX, final float offsetY, final float offsetZ, final float speed, final int count) {
         org.arkhamnetwork.Arkkit.libs.ParticleEffect.sendToPlayer(org.arkhamnetwork.Arkkit.libs.ParticleEffect.valueOf(effect.name()), player, location, offsetX, offsetY, offsetZ, speed, count);
     }
-    
+
     @Deprecated
     public static void sendToLocation(final ParticleEffect effect, final Location location, final float offsetX, final float offsetY, final float offsetZ, final float speed, final int count) {
         org.arkhamnetwork.Arkkit.libs.ParticleEffect.sendToLocation(org.arkhamnetwork.Arkkit.libs.ParticleEffect.valueOf(effect.name()), location, offsetX, offsetY, offsetZ, speed, count);
     }
-    
+
     public static void sendCrackToPlayer(final boolean icon, final int id, final byte data, final Player player, final Location location, final float offsetX, final float offsetY, final float offsetZ, final int count) throws Exception {
         final Object packet = createCrackPacket(icon, id, data, location, offsetX, offsetY, offsetZ, count);
         sendPacket(player, packet);
     }
-    
+
     public static void sendCrackToLocation(final boolean icon, final int id, final byte data, final Location location, final float offsetX, final float offsetY, final float offsetZ, final int count) throws Exception {
         final Object packet = createCrackPacket(icon, id, data, location, offsetX, offsetY, offsetZ, count);
         for (final Player player : Bukkit.getServer().getOnlinePlayers()) {
             sendPacket(player, packet);
         }
     }
-    
+
     public static Object createPacket(final ParticleEffect effect, final Location location, final float offsetX, final float offsetY, final float offsetZ, final float speed, int count) throws Exception {
         if (count <= 0) {
             count = 1;
         }
         final Object packet = getPacket63WorldParticles();
         setValue(packet, "a", effect.name);
-        setValue(packet, "b", (float)location.getX());
-        setValue(packet, "c", (float)location.getY());
-        setValue(packet, "d", (float)location.getZ());
+        setValue(packet, "b", (float) location.getX());
+        setValue(packet, "c", (float) location.getY());
+        setValue(packet, "d", (float) location.getZ());
         setValue(packet, "e", offsetX);
         setValue(packet, "f", offsetY);
         setValue(packet, "g", offsetZ);
@@ -115,7 +121,7 @@ public enum ParticleEffect
         setValue(packet, "i", count);
         return packet;
     }
-    
+
     public static Object createCrackPacket(final boolean icon, final int id, final byte data, final Location location, final float offsetX, final float offsetY, final float offsetZ, int count) throws Exception {
         if (count <= 0) {
             count = 1;
@@ -126,9 +132,9 @@ public enum ParticleEffect
             modifier = "tilecrack_" + id + "_" + data;
         }
         setValue(packet, "a", modifier);
-        setValue(packet, "b", (float)location.getX());
-        setValue(packet, "c", (float)location.getY());
-        setValue(packet, "d", (float)location.getZ());
+        setValue(packet, "b", (float) location.getX());
+        setValue(packet, "c", (float) location.getY());
+        setValue(packet, "d", (float) location.getZ());
         setValue(packet, "e", offsetX);
         setValue(packet, "f", offsetY);
         setValue(packet, "g", offsetZ);
@@ -136,27 +142,27 @@ public enum ParticleEffect
         setValue(packet, "i", count);
         return packet;
     }
-    
+
     @Deprecated
     public static void playEffect(final ParticleEffect pe, final Location l, final float speed, final int amount) {
         org.arkhamnetwork.Arkkit.libs.ParticleEffect.playEffect(org.arkhamnetwork.Arkkit.libs.ParticleEffect.valueOf(pe.name()), l, speed, amount);
     }
-    
+
     private static void setValue(final Object instance, final String fieldName, final Object value) throws Exception {
         final Field field = instance.getClass().getDeclaredField(fieldName);
         field.setAccessible(true);
         field.set(instance, value);
     }
-    
+
     private static Object getEntityPlayer(final Player p) throws Exception {
-        final Method getHandle = p.getClass().getMethod("getHandle", (Class<?>[])new Class[0]);
+        final Method getHandle = p.getClass().getMethod("getHandle", (Class<?>[]) new Class[0]);
         return getHandle.invoke(p, new Object[0]);
     }
-    
+
     private static String getPackageName() {
         return "net.minecraft.server." + Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
     }
-    
+
     private static Object getPacket63WorldParticles() throws Exception {
         final Class<?> packet = Class.forName(getPackageName() + ".PacketPlayOutWorldParticles");
         for (final Constructor<?> cst : packet.getConstructors()) {
@@ -166,7 +172,7 @@ public enum ParticleEffect
         }
         return packet.getConstructors()[0].newInstance(new Object[0]);
     }
-    
+
     private static void sendPacket(final Player p, final Object packet) throws Exception {
         final Object eplayer = getEntityPlayer(p);
         final Field playerConnectionField = eplayer.getClass().getField("playerConnection");
@@ -178,13 +184,12 @@ public enum ParticleEffect
             }
         }
     }
-    
-    static {
-        NAME_MAP = new HashMap<String, ParticleEffect>();
-        ID_MAP = new HashMap<Integer, ParticleEffect>();
-        for (final ParticleEffect effect : values()) {
-            ParticleEffect.NAME_MAP.put(effect.name, effect);
-            ParticleEffect.ID_MAP.put(effect.id, effect);
-        }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public int getId() {
+        return this.id;
     }
 }

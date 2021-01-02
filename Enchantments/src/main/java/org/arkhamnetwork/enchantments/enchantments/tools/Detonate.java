@@ -1,44 +1,49 @@
 package org.arkhamnetwork.enchantments.enchantments.tools;
 
-import java.util.concurrent.*;
-
+import com.cosmicpvp.cosmicutils.utils.CoreProtectUtils;
 import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
+import com.massivecraft.factions.*;
+import com.massivecraft.factions.struct.FactionPermission;
+import com.massivecraft.factions.struct.LogTimer;
+import com.rit.sucy.CustomEnchantment;
+import com.rit.sucy.EnchantmentAPI;
+import me.ifamasssxd.cosmicguishop.CosmicGUIShop;
 import net.minecraft.server.v1_8_R3.Blocks;
 import net.minecraft.server.v1_8_R3.ChunkSection;
-import org.arkhamnetwork.enchantments.*;
+import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.libs.EnchantBreakBlockEvent;
+import org.arkhamnetwork.enchantments.mastery.MasteryAutoSell;
 import org.arkhamnetwork.enchantments.util.BlockUtils;
-import org.bukkit.Chunk;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_8_R3.CraftChunk;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.*;
-import com.rit.sucy.*;
-import org.bukkit.event.block.*;
-import org.arkhamnetwork.enchantments.util.*;
-import org.bukkit.material.*;
-import org.arkhamnetwork.Arkkit.libs.*;
-import org.bukkit.inventory.*;
-import org.arkhamnetwork.enchantments.libs.*;
-import org.bukkit.event.*;
-import com.cosmicpvp.cosmicutils.utils.*;
-import org.arkhamnetwork.enchantments.mastery.*;
-import com.massivecraft.factions.struct.*;
-import me.ifamasssxd.cosmicguishop.*;
-import com.massivecraft.factions.*;
-import org.bukkit.entity.*;
-import org.bukkit.block.*;
-import java.util.*;
 import org.bukkit.*;
-import java.lang.reflect.*;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.BlockState;
+import org.bukkit.block.CreatureSpawner;
+import org.bukkit.craftbukkit.v1_8_R3.CraftChunk;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.MaterialData;
+import org.bukkit.plugin.Plugin;
 
-public class Detonate extends CustomEnchantment
-{
-    private static ConcurrentHashMap<UUID, BlockFace> loggedBlockFaces;
+import java.lang.reflect.Field;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+
+public class Detonate extends CustomEnchantment {
     protected static List<Material> pickaxeMaterials;
     protected static List<Material> spadeMaterials;
-    
+    private static ConcurrentHashMap<UUID, BlockFace> loggedBlockFaces;
+
+    static {
+        Detonate.loggedBlockFaces = new ConcurrentHashMap<UUID, BlockFace>();
+    }
+
     public Detonate() {
         super("Detonate", GeneralUtil.tools, 6);
         this.max = 9;
@@ -46,13 +51,17 @@ public class Detonate extends CustomEnchantment
         this.interval = 10.0;
         Detonate.pickaxeMaterials = new ArrayList<Material>(Arrays.asList(Material.SANDSTONE, Material.STONE, Material.COBBLESTONE, Material.MOSSY_COBBLESTONE, Material.SMOOTH_BRICK, Material.OBSIDIAN, Material.MOB_SPAWNER, Material.COAL_ORE, Material.IRON_ORE, Material.GOLD_ORE, Material.DIAMOND_ORE, Material.LAPIS_ORE, Material.REDSTONE_ORE, Material.EMERALD_ORE, Material.NETHERRACK));
         Detonate.spadeMaterials = new ArrayList<Material>(Arrays.asList(Material.DIRT, Material.SAND, Material.GRAVEL, Material.GRASS, Material.MYCEL, Material.CLAY));
-        Bukkit.getPluginManager().registerEvents((Listener)new DetonateListener(), (Plugin)Enchantments.getInstance());
-        Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), () -> this.heroicVersion = EnchantmentAPI.getEnchantment("Atomic Detonate"), 2L);
+        Bukkit.getPluginManager().registerEvents((Listener) new DetonateListener(), (Plugin) Enchantments.getInstance());
+        Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), () -> this.heroicVersion = EnchantmentAPI.getEnchantment("Atomic Detonate"), 2L);
     }
-    
+
+    public static void updateSavedBlockFace(final Player p, final BlockFace b) {
+        Detonate.loggedBlockFaces.put(p.getUniqueId(), b);
+    }
+
     public void applyToolEffect(final Player player, final Block block, final int enchantLevel, final BlockEvent event) {
         if (event instanceof BlockBreakEvent) {
-            final BlockBreakEvent bbe = (BlockBreakEvent)event;
+            final BlockBreakEvent bbe = (BlockBreakEvent) event;
             if (!bbe.isCancelled()) {
                 final Material type = block.getType();
                 if (type == Material.REDSTONE_COMPARATOR || type == Material.SPONGE || type == Material.REDSTONE_COMPARATOR_ON || type == Material.REDSTONE_COMPARATOR_OFF) {
@@ -62,15 +71,11 @@ public class Detonate extends CustomEnchantment
             }
         }
     }
-    
-    public static void updateSavedBlockFace(final Player p, final BlockFace b) {
-        Detonate.loggedBlockFaces.put(p.getUniqueId(), b);
-    }
-    
+
     private BlockFace getBlockFace(final Player p) {
         return Detonate.loggedBlockFaces.containsKey(p.getUniqueId()) ? Detonate.loggedBlockFaces.get(p.getUniqueId()) : null;
     }
-    
+
     private void explode(final Player pl, final Block b, final int level) {
         final ItemStack pickaxeItem = pl.getItemInHand();
         final boolean hasAutoSmelt = EnchantmentAPI.itemHasEnchantment(pl.getItemInHand(), "Auto Smelt");
@@ -110,7 +115,7 @@ public class Detonate extends CustomEnchantment
                 if (!f.isNone()) {
                     final FactionWrapper wrapper = FactionWrappers.get(f);
                     if (fp == null) {
-                        fp = (FPlayer)FPlayers.i.get((OfflinePlayer)pl);
+                        fp = (FPlayer) FPlayers.i.get((OfflinePlayer) pl);
                     }
                     final FactionPermission permission = FactionPermission.getFromBlock(new MaterialData(m));
                     if (permission != null && !f.hasPermission(fp, floc, permission, "interact")) {
@@ -120,8 +125,7 @@ public class Detonate extends CustomEnchantment
                         if (!wrapper.doesPlayerHaveChunkAccess(floc, fp, true)) {
                             continue;
                         }
-                    }
-                    else {
+                    } else {
                         if (!fp.getRelationToLocation().isMember()) {
                             continue;
                         }
@@ -137,20 +141,19 @@ public class Detonate extends CustomEnchantment
                 if (m == Material.MOB_SPAWNER) {
                     final BlockState state = bl.getState();
                     if (state instanceof CreatureSpawner) {
-                        spawnerType = ((CreatureSpawner)state).getSpawnedType();
+                        spawnerType = ((CreatureSpawner) state).getSpawnedType();
                     }
                 }
                 ParticleEffect.playEffect(ParticleEffect.LARGE_EXPLODE, bl.getLocation().add(0.0, 0.5, 0.0), 0.025f, 1);
                 if (bl.getDrops(pl.getItemInHand()).size() > 0) {
                     ItemStack loot = null;
                     try {
-                        loot = (ItemStack)bl.getDrops(pl.getItemInHand()).toArray()[0];
-                    }
-                    catch (Exception err) {
+                        loot = (ItemStack) bl.getDrops(pl.getItemInHand()).toArray()[0];
+                    } catch (Exception err) {
                         continue;
                     }
                     final EnchantBreakBlockEvent enchantEvent = new EnchantBreakBlockEvent(pl, bl, m);
-                    Bukkit.getPluginManager().callEvent((Event)enchantEvent);
+                    Bukkit.getPluginManager().callEvent((Event) enchantEvent);
                     if (enchantEvent.isCancelled()) {
                         continue;
                     }
@@ -165,32 +168,29 @@ public class Detonate extends CustomEnchantment
                             loot.setType(Material.GOLD_INGOT);
                         }
                         final CustomEnchantment enchantment = EnchantmentAPI.getEnchantment("Auto Smelt");
-                        final Map<CustomEnchantment, Integer> enchants = (Map<CustomEnchantment, Integer>)EnchantmentAPI.getEnchantments(pl.getItemInHand());
+                        final Map<CustomEnchantment, Integer> enchants = (Map<CustomEnchantment, Integer>) EnchantmentAPI.getEnchantments(pl.getItemInHand());
                         if (enchantment != null && enchants != null) {
                             final Integer autoSmeltLevel = enchants.get(enchantment);
                             if (autoSmeltLevel != null) {
-                                loot.setAmount((int)autoSmeltLevel);
+                                loot.setAmount((int) autoSmeltLevel);
                             }
                         }
                     }
                     brokeBlock = true;
                     CoreProtectUtils.logBreak(pl.getName(), bl.getLocation(), m.getId(), bl.getData());
-                    bl.setTypeIdAndData(0, (byte)0, false);
+                    bl.setTypeIdAndData(0, (byte) 0, false);
                     if (loot.getType() == Material.RAILS) {
                         continue;
                     }
                     final double price = autoSell ? (MasteryAutoSell.getSellPrice(loot.getData()) * loot.getAmount()) : 0.0;
                     if (price > 0.0) {
                         autoSellMoney += price;
-                    }
-                    else if (telepathy && pl.getInventory().firstEmpty() != -1) {
-                        pl.getInventory().addItem(new ItemStack[] { loot });
-                    }
-                    else {
+                    } else if (telepathy && pl.getInventory().firstEmpty() != -1) {
+                        pl.getInventory().addItem(new ItemStack[]{loot});
+                    } else {
                         pl.getWorld().dropItem(pl.getLocation(), loot);
                     }
-                }
-                else {
+                } else {
                     CoreProtectUtils.logBreak(pl.getName(), bl.getLocation(), m.getId(), bl.getData());
                     bl.breakNaturally(pl.getItemInHand());
                     tookDurability = true;
@@ -200,40 +200,37 @@ public class Detonate extends CustomEnchantment
                 }
                 try {
                     P.p.blockListener.handleSpawnerUpdate(f, pl, new ItemStack(m, 1, spawnerType.getTypeId()), LogTimer.TimerSubType.SPAWNER_BREAK);
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }
         if (autoSellMoney > 0.0) {
-            CosmicGUIShop.getEconomy().depositPlayer((OfflinePlayer)pl, autoSellMoney);
+            CosmicGUIShop.getEconomy().depositPlayer((OfflinePlayer) pl, autoSellMoney);
         }
         if (brokeBlock && !tookDurability && pickaxe) {
             if (pickaxeItem.getDurability() >= pickaxeItem.getType().getMaxDurability() - 1) {
-                if (pickaxeItem.equals((Object)pl.getItemInHand())) {
-                    pl.setItemInHand((ItemStack)null);
-                }
-                else {
-                    pl.getInventory().removeItem(new ItemStack[] { pickaxeItem });
+                if (pickaxeItem.equals((Object) pl.getItemInHand())) {
+                    pl.setItemInHand((ItemStack) null);
+                } else {
+                    pl.getInventory().removeItem(new ItemStack[]{pickaxeItem});
                 }
                 pl.updateInventory();
                 pl.playSound(pl.getLocation(), Sound.ITEM_BREAK, 1.0f, 1.0f);
                 Bukkit.getLogger().info("Destroying pickaxe " + pickaxeItem + " for " + pl.getName() + " due to durability: " + pickaxeItem.getDurability());
-            }
-            else {
-                pickaxeItem.setDurability((short)(pickaxeItem.getDurability() + 1));
+            } else {
+                pickaxeItem.setDurability((short) (pickaxeItem.getDurability() + 1));
             }
         }
     }
-    
+
     private void setBlockSuperFast(final Block b, final int typeId, final byte data) {
         final Chunk c = b.getChunk();
-        final net.minecraft.server.v1_8_R3.Chunk chunk = ((CraftChunk)c).getHandle();
+        final net.minecraft.server.v1_8_R3.Chunk chunk = ((CraftChunk) c).getHandle();
         try {
             final Field f = chunk.getClass().getDeclaredField("sections");
             f.setAccessible(true);
-            final ChunkSection[] sections = (ChunkSection[])f.get(chunk);
+            final ChunkSection[] sections = (ChunkSection[]) f.get(chunk);
             ChunkSection chunksection = sections[b.getY() >> 4];
             if (chunksection == null) {
                 if (typeId == 0) {
@@ -246,14 +243,9 @@ public class Detonate extends CustomEnchantment
                 chunksection = chunkSection;
             }
             chunksection.setTypeId(b.getX() & 0xF, b.getY() & 0xF, b.getZ() & 0xF, Blocks.BEDROCK);
-            chunksection.setData(b.getX() & 0xF, b.getY() & 0xF, b.getZ() & 0xF, (int)data);
-        }
-        catch (Exception e) {
+            chunksection.setData(b.getX() & 0xF, b.getY() & 0xF, b.getZ() & 0xF, (int) data);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-    
-    static {
-        Detonate.loggedBlockFaces = new ConcurrentHashMap<UUID, BlockFace>();
     }
 }

@@ -1,25 +1,29 @@
 package org.arkhamnetwork.enchantments.util;
 
 import com.sk89q.worldedit.Vector;
-import com.sk89q.worldguard.bukkit.*;
-import org.bukkit.*;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.sk89q.worldguard.protection.flags.DefaultFlag;
+import com.sk89q.worldguard.protection.flags.StateFlag;
+import org.arkhamnetwork.enchantments.Enchantments;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.block.*;
-import com.sk89q.worldedit.*;
-import java.lang.reflect.*;
-import java.util.*;
-import com.sk89q.worldguard.protection.flags.*;
-import org.arkhamnetwork.enchantments.*;
-import org.bukkit.plugin.*;
+import org.bukkit.block.Block;
+import org.bukkit.plugin.Plugin;
 
-public class WorldGuardUtils
-{
+import java.lang.reflect.Method;
+import java.util.List;
+
+public class WorldGuardUtils {
     private static WorldGuardPlugin wg;
-    
+
+    static {
+        WorldGuardUtils.wg = null;
+    }
+
     public static void hook() {
         WorldGuardUtils.wg = getWorldGuard();
     }
-    
+
     public static String getRegionName(final Location l) {
         if (!Bukkit.getPluginManager().isPluginEnabled("WorldGuard")) {
             return "";
@@ -27,7 +31,7 @@ public class WorldGuardUtils
         try {
             final Class<?> bukkitUtil = WorldGuardUtils.wg.getClass().getClassLoader().loadClass("com.sk89q.worldguard.bukkit.BukkitUtil");
             final Method toVector = bukkitUtil.getMethod("toVector", Block.class);
-            final Vector blockVector = (Vector)toVector.invoke(null, l.getBlock());
+            final Vector blockVector = (Vector) toVector.invoke(null, l.getBlock());
             final List<String> regionSet = WorldGuardUtils.wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs(blockVector);
             if (regionSet.size() < 1) {
                 return "";
@@ -49,23 +53,21 @@ public class WorldGuardUtils
                 return_region = "";
             }
             return return_region;
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             return "";
         }
     }
-    
+
     public static boolean isPvPDisabled(final Location l) {
         try {
             final Class<?> bukkitUtil = WorldGuardUtils.wg.getClass().getClassLoader().loadClass("com.sk89q.worldguard.bukkit.BukkitUtil");
             final Method toVector = bukkitUtil.getMethod("toVector", Block.class);
-            final Vector blockVector = (Vector)toVector.invoke(null, l.getBlock());
-            final List<String> regionSet = (List<String>)WorldGuardUtils.wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs(blockVector);
+            final Vector blockVector = (Vector) toVector.invoke(null, l.getBlock());
+            final List<String> regionSet = (List<String>) WorldGuardUtils.wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs(blockVector);
             if (regionSet.size() < 1) {
                 try {
                     return WorldGuardUtils.wg.getGlobalRegionManager().get(l.getWorld()).getRegion("__global__").getFlags().get(DefaultFlag.PVP) == StateFlag.State.DENY;
-                }
-                catch (Exception err) {
+                } catch (Exception err) {
                     return false;
                 }
             }
@@ -78,8 +80,7 @@ public class WorldGuardUtils
                     if (return_priority == -1) {
                         return_flag = (pvp_flag == StateFlag.State.DENY);
                         return_priority = region_priority;
-                    }
-                    else {
+                    } else {
                         if (region_priority <= return_priority) {
                             continue;
                         }
@@ -89,21 +90,16 @@ public class WorldGuardUtils
                 }
             }
             return return_flag;
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             return true;
         }
     }
-    
+
     private static WorldGuardPlugin getWorldGuard() {
         final Plugin plugin = Enchantments.getInstance().getServer().getPluginManager().getPlugin("WorldGuard");
         if (plugin == null || !(plugin instanceof WorldGuardPlugin)) {
             return null;
         }
-        return (WorldGuardPlugin)plugin;
-    }
-    
-    static {
-        WorldGuardUtils.wg = null;
+        return (WorldGuardPlugin) plugin;
     }
 }

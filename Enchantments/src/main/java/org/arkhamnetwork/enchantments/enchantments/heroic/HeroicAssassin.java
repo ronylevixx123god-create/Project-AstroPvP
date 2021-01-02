@@ -16,10 +16,10 @@ public class HeroicAssassin extends CustomEnchantment {
         this.max = 5;
         this.base = 15.0D;
         this.interval = 6.0D;
-        Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), () -> {
             this.heroicEnchantment = true;
             this.nonHeroicVersion = EnchantmentAPI.getEnchantment("Assassin");
-        },2L);
+        }, 2L);
     }
 
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {

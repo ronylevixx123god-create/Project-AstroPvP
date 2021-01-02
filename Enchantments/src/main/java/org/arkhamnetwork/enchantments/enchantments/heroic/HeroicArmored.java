@@ -21,11 +21,11 @@ public class HeroicArmored extends HeroicCustomEnchantment {
             return;
         ItemStack i = null;
         if (attacker instanceof Player) {
-            Player pAttacker = (Player)attacker;
+            Player pAttacker = (Player) attacker;
             i = pAttacker.getItemInHand();
             if (Math.random() < level * 0.01D) {
-                Blessed.blessPlayer((Player)player);
-                Bukkit.getLogger().info("Blessing " + ((Player)player).getName() + " from level " + level + " heroic armored!");
+                Blessed.blessPlayer((Player) player);
+                Bukkit.getLogger().info("Blessing " + ((Player) player).getName() + " from level " + level + " heroic armored!");
             }
         }
         double damage_negation = level * 0.005D;

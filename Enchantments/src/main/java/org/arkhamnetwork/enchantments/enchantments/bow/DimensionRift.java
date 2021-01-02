@@ -2,34 +2,43 @@ package org.arkhamnetwork.enchantments.enchantments.bow;
 
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
-import com.rit.sucy.*;
-import org.bukkit.entity.*;
-import com.massivecraft.factions.*;
-import org.arkhamnetwork.enchantments.util.*;
-import org.bukkit.block.*;
-import org.arkhamnetwork.Arkkit.libs.*;
-import org.bukkit.*;
-import org.arkhamnetwork.enchantments.*;
-import com.cosmicpvp.cosmicutils.utils.*;
-import org.bukkit.potion.*;
-import org.bukkit.util.*;
-import java.util.*;
-import org.bukkit.plugin.*;
-import org.bukkit.scheduler.*;
-import org.bukkit.event.entity.*;
+import com.cosmicpvp.cosmicutils.utils.WorldUtil;
+import com.massivecraft.factions.Board;
+import com.massivecraft.factions.FLocation;
+import com.rit.sucy.CustomEnchantment;
+import org.arkhamnetwork.enchantments.Enchantments;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Chest;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
-public class DimensionRift extends CustomEnchantment
-{
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+
+public class DimensionRift extends CustomEnchantment {
     public static HashMap<Integer, HashMap<Location, Material>> blockRevertTasks;
-    
+
+    static {
+        DimensionRift.blockRevertTasks = new HashMap<Integer, HashMap<Location, Material>>();
+    }
+
     public DimensionRift() {
-        super("Dimension Rift", new Material[] { Material.BOW }, 3);
+        super("Dimension Rift", new Material[]{Material.BOW}, 3);
         this.max = 4;
         this.base = 17.0;
         this.interval = 4.0;
     }
-    
+
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
         if (Math.random() > level * 0.05) {
             return;
@@ -54,7 +63,7 @@ public class DimensionRift extends CustomEnchantment
         }
         for (int x = (level >= 4) ? -1 : 0; x <= 1; ++x) {
             for (int z = (level >= 3) ? -1 : 0; z <= 1; ++z) {
-                final Location l = enemyLoc.clone().add((double)x, 0.0, (double)z);
+                final Location l = enemyLoc.clone().add((double) x, 0.0, (double) z);
                 final Material m = l.getBlock().getType();
                 if ((m.isBlock() || m == Material.AIR) && !(l.getBlock().getState() instanceof Chest) && m != Material.SOUL_SAND && m != Material.WEB && m != Material.BEDROCK && m != Material.ENDER_PORTAL && m != Material.PORTAL) {
                     blocks.put(l.clone(), m);
@@ -72,7 +81,7 @@ public class DimensionRift extends CustomEnchantment
                 }
             }
         }
-        final BukkitTask bt = Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), (Runnable)new Runnable() {
+        final BukkitTask bt = Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
             @Override
             public void run() {
                 final HashSet<Player> playersToBoost = new HashSet<Player>();
@@ -83,7 +92,7 @@ public class DimensionRift extends CustomEnchantment
                             playersToBoost.add(p);
                         }
                     }
-                    data.getKey().getBlock().setType((Material)data.getValue());
+                    data.getKey().getBlock().setType((Material) data.getValue());
                     WorldUtil.sendWorldEffect(data.getKey().getBlock(), data.getValue().getId(), 2001);
                     for (final Player p : playersToBoost) {
                         p.removePotionEffect(PotionEffectType.JUMP);
@@ -91,21 +100,17 @@ public class DimensionRift extends CustomEnchantment
                     }
                 }
             }
-        }, (long)(level * 15 + 40));
-        DimensionRift.blockRevertTasks.put(bt.getTaskId(), (HashMap<Location, Material>)blocks.clone());
-        Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), (Runnable)new Runnable() {
+        }, (long) (level * 15 + 40));
+        DimensionRift.blockRevertTasks.put(bt.getTaskId(), (HashMap<Location, Material>) blocks.clone());
+        Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
             @Override
             public void run() {
                 DimensionRift.blockRevertTasks.remove(bt.getTaskId());
             }
-        }, (long)(level * 15 + 40 + 1));
+        }, (long) (level * 15 + 40 + 1));
     }
-    
+
     public void applyProjectileEffect(final LivingEntity player, final int level, final ProjectileLaunchEvent e) {
         ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, e.getEntity().getLocation(), 0.7f, 16);
-    }
-    
-    static {
-        DimensionRift.blockRevertTasks = new HashMap<Integer, HashMap<Location, Material>>();
     }
 }

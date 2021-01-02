@@ -1,6 +1,5 @@
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
-import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import me.ifamasssxd.killtracker.KillTrackerAPI;
@@ -37,7 +36,7 @@ public class Rogue extends CustomEnchantment {
             return;
         if (player.hasMetadata("noSoulProcs"))
             return;
-        final Player p = (Player)player;
+        final Player p = (Player) player;
         final ItemStack used = p.getItemInHand();
         if (used == null || !EnchantmentAPI.itemHasEnchantment(used, this.enchantName)) {
             return;
@@ -57,6 +56,7 @@ public class Rogue extends CustomEnchantment {
             }
         }
     }
+
     public boolean isPlayerBehind(final Player player, final Entity theEntity) {
         final Location playerLoc = player.getLocation();
         final Location targetLoc = theEntity.getLocation();

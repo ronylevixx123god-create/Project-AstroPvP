@@ -22,7 +22,7 @@ public class HeroicBlock extends HeroicCustomEnchantment {
         if (damaged instanceof Player) {
             if (damaged.hasMetadata("neutralized"))
                 return;
-            Player player = (Player)damaged;
+            Player player = (Player) damaged;
             double random = Math.random();
             double chance = (player.isBlocking() ? 0.16D : 0.7D) * level;
             if (random < chance) {
@@ -37,11 +37,11 @@ public class HeroicBlock extends HeroicCustomEnchantment {
                     player.sendMessage(CC.GreenB + "* BLOCKED §7[" + NumberUtils.formatSeconds(finalDamage) + "]§&§l *");
                     ParticleEffect.playEffect(ParticleEffect.CRIT, player.getLocation().add(0.0D, 1.0D, 0.0D), 0.75F, 25);
                     if (damageToReflect > 0.0D) {
-                        Player attacking = (Player)attacker;
+                        Player attacking = (Player) attacker;
                         attacking.damage(damageToReflect);
                         player.getWorld().playSound(player.getLocation(), Sound.ZOMBIE_METAL, 10.0F, 2.0F);
                         ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, attacking.getLocation().add(0.0D, 1.0D, 0.0D), 0.75F, 25);
-                        attacking.sendMessage(CC.RedB + "* " + player.getName() + " REFLECTIVE BLOCK [" + CC.Gray + (int)(reduceDamage * 100.0D) + "% DMG" + CC.RedB + "]");
+                        attacking.sendMessage(CC.RedB + "* " + player.getName() + " REFLECTIVE BLOCK [" + CC.Gray + (int) (reduceDamage * 100.0D) + "% DMG" + CC.RedB + "]");
                     }
                 }
             }

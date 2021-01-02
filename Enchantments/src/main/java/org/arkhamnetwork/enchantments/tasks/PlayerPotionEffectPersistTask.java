@@ -1,26 +1,26 @@
 package org.arkhamnetwork.enchantments.tasks;
 
-import org.bukkit.*;
-import org.arkhamnetwork.enchantments.listeners.*;
-import org.arkhamnetwork.enchantments.libs.*;
-import com.compilex.CosmicOutposts.*;
-import com.compilex.CosmicOutposts.outpost.enums.*;
-import com.cosmicpvp.cosmicutils.nms.*;
-import org.bukkit.metadata.*;
-import java.util.*;
-import org.bukkit.entity.*;
+import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
+import com.compilex.CosmicOutposts.outpost.enums.OutpostTier;
+import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
+import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
+import org.arkhamnetwork.enchantments.listeners.PlayerPotionEffectListener;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
-public class PlayerPotionEffectPersistTask implements Runnable
-{
+import java.util.Map;
+import java.util.UUID;
+
+public class PlayerPotionEffectPersistTask implements Runnable {
     boolean cosmicOutpostsEnabled;
     boolean statusPlusEnabled;
-    
+
     public PlayerPotionEffectPersistTask() {
         this.cosmicOutpostsEnabled = false;
         this.statusPlusEnabled = false;
         this.cosmicOutpostsEnabled = Bukkit.getPluginManager().isPluginEnabled("CosmicOutposts");
     }
-    
+
     @Override
     public void run() {
         for (final Map.Entry<UUID, PlayerPotionEffects> trackedEffects : PlayerPotionEffectListener.getPlayerPotionEffectTracker().entrySet()) {

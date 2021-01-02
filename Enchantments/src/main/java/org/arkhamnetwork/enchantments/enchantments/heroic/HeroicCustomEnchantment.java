@@ -1,31 +1,33 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
-import java.util.*;
-import org.bukkit.*;
-import org.arkhamnetwork.enchantments.*;
-import com.rit.sucy.*;
-import org.bukkit.plugin.*;
+import com.rit.sucy.CustomEnchantment;
+import com.rit.sucy.EnchantmentAPI;
+import org.arkhamnetwork.enchantments.Enchantments;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.plugin.Plugin;
 
-public abstract class HeroicCustomEnchantment extends CustomEnchantment
-{
+import java.util.Random;
+
+public abstract class HeroicCustomEnchantment extends CustomEnchantment {
     protected Random random;
-    
+
     public HeroicCustomEnchantment(final String name, final String nonHeroicName, final Material[] naturalItems, final int weight) {
         this(name, nonHeroicName, naturalItems, weight, true, false);
     }
-    
+
     public HeroicCustomEnchantment(final String name, final String nonHeroicName) {
         this(name, nonHeroicName, new Material[0], 0, true, true);
     }
-    
+
     public HeroicCustomEnchantment(final String name, final String nonHeroicName, final boolean copyall) {
         this(name, nonHeroicName, new Material[0], 0, true, copyall);
     }
-    
+
     public HeroicCustomEnchantment(final String name, final String nonHeroicName, final Material[] naturalItems, final int weight, final boolean useDefaultBase, final boolean copyAllDefaultStats) {
         super(name, naturalItems, weight);
         this.random = new Random();
-        Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), () -> {
             this.heroicEnchantment = true;
             this.nonHeroicVersion = EnchantmentAPI.getEnchantment(nonHeroicName);
             if (copyAllDefaultStats || useDefaultBase) {
@@ -40,7 +42,7 @@ public abstract class HeroicCustomEnchantment extends CustomEnchantment
             this.nonHeroicVersion.heroicVersion = this;
         }, 2L);
     }
-    
+
     public void debug(final String msg) {
         Enchantments.getInstance().getLogger().info("[" + this.name() + "] " + msg);
     }

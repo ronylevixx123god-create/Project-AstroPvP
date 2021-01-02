@@ -1,21 +1,13 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
-import com.rit.sucy.*;
-import org.arkhamnetwork.enchantments.util.*;
-import com.google.common.collect.*;
-import org.bukkit.scheduler.*;
-import com.massivecraft.factions.*;
-import org.bukkit.*;
-import org.bukkit.entity.*;
-import com.massivecraft.factions.iface.*;
-import com.massivecraft.factions.struct.*;
-import org.arkhamnetwork.Arkkit.libs.*;
-import org.bukkit.potion.*;
-import java.util.*;
-import org.arkhamnetwork.enchantments.*;
-import org.bukkit.plugin.*;
-import org.bukkit.metadata.*;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
+import com.rit.sucy.CustomEnchantment;
+import org.arkhamnetwork.enchantments.util.GeneralUtil;
+import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitTask;
+
+import java.util.HashMap;
 
 public class Protection extends CustomEnchantment {
     private static HashMap<Integer, BukkitTask> protectionTasks;

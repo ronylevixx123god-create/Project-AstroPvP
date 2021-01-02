@@ -2,29 +2,12 @@ package org.arkhamnetwork.enchantments.mastery;
 
 import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
 import com.compilex.CosmicArmorSets.enums.ArmorSet;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.FactionUtils;
-import com.cosmicpvp.cosmicutils.utils.ItemUtils;
-import com.cosmicpvp.cosmicutils.utils.LocationUtils;
-import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
-import com.cosmicpvp.cosmicutils.utils.NumberUtils;
-import com.cosmicpvp.cosmicutils.utils.ReflectionUtils;
+import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.MapMaker;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.Relation;
 import com.rit.sucy.CustomEnchantment;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
-
 import lombok.SneakyThrows;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
 import net.minecraft.server.v1_8_R3.EntityTrackerEntry;
@@ -38,22 +21,11 @@ import org.arkhamnetwork.enchantments.util.ArmorSlot;
 import org.arkhamnetwork.enchantments.util.ArmorUtil;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.arkhamnetwork.enchantments.util.WorldGuardUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.EntityEffect;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Zombie;
+import org.bukkit.entity.*;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -71,6 +43,11 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
+
 public class MasteryRotAndDecay extends MasteryCustomEnchantment {
     private Map<UUID, Long> decayingMessage = (new MapMaker()).expireAfterWrite(5L, TimeUnit.SECONDS).makeMap();
 
@@ -80,7 +57,7 @@ public class MasteryRotAndDecay extends MasteryCustomEnchantment {
         super("Rot and Decay", GeneralUtil.armor, 11);
         this.max = 10;
         this.armorSet = "NECROMANCER";
-        Bukkit.getPluginManager().registerEvents((Listener)new RotAndDecayListener(this), (Plugin)Enchantments.getInstance());
+        Bukkit.getPluginManager().registerEvents((Listener) new RotAndDecayListener(this), (Plugin) Enchantments.getInstance());
     }
 
     public boolean decayDamage(Player player, int level) {
@@ -114,12 +91,12 @@ public class MasteryRotAndDecay extends MasteryCustomEnchantment {
         if (Math.random() <= chance) {
             if (WorldGuardUtils.isPvPDisabled(user.getLocation()))
                 return;
-            if (!(new CustomEnchantProcOnEntityEvent(user, target, (Event)event, (CustomEnchantment)this, enchantLevel)).callEvent())
+            if (!(new CustomEnchantProcOnEntityEvent(user, target, (Event) event, (CustomEnchantment) this, enchantLevel)).callEvent())
                 return;
             World world = user.getLocation().getWorld();
             int radius = 3 + enchantLevel / 3;
             Block block = user.getLocation().getBlock();
-            Player damaged = (Player)user;
+            Player damaged = (Player) user;
             Location playerLoc = user.getLocation();
             applyRotAndDecayEffect(damaged, block, radius, enchantLevel, event);
             int cleanedUp = 0;
@@ -130,11 +107,11 @@ public class MasteryRotAndDecay extends MasteryCustomEnchantment {
                     continue;
                 String summoner = null;
                 if (ent.hasMetadata("undeadruseSummoner")) {
-                    summoner = ((MetadataValue)ent.getMetadata("undeadruseSummoner").get(0)).asString();
+                    summoner = ((MetadataValue) ent.getMetadata("undeadruseSummoner").get(0)).asString();
                 } else if (ent.hasMetadata("guardianSummoner")) {
-                    summoner = ((MetadataValue)ent.getMetadata("guardianSummoner").get(0)).asString();
+                    summoner = ((MetadataValue) ent.getMetadata("guardianSummoner").get(0)).asString();
                 } else if (ent.hasMetadata("acenstoralSummoner")) {
-                    summoner = ((MetadataValue)ent.getMetadata("acenstoralSummoner").get(0)).asString();
+                    summoner = ((MetadataValue) ent.getMetadata("acenstoralSummoner").get(0)).asString();
                 }
                 if (summoner != null) {
                     Player pSummoner = Bukkit.getPlayer(summoner);
@@ -153,10 +130,10 @@ public class MasteryRotAndDecay extends MasteryCustomEnchantment {
             while (zombiesWeNeed > 0) {
                 zombiesWeNeed--;
                 if ((playerLoc.getChunk().getEntities()).length < 50) {
-                    Zombie z = (Zombie)playerLoc.getWorld().spawnEntity(playerLoc.clone().add(0.0D, 1.0D, 0.0D), EntityType.ZOMBIE);
-                    z.setMetadata("undeadruseSummoner", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), damaged.getName()));
-                    z.setMetadata("rotAndDecay", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), damaged.getName()));
-                    z.setMetadata("no_drops", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), damaged.getName()));
+                    Zombie z = (Zombie) playerLoc.getWorld().spawnEntity(playerLoc.clone().add(0.0D, 1.0D, 0.0D), EntityType.ZOMBIE);
+                    z.setMetadata("undeadruseSummoner", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), damaged.getName()));
+                    z.setMetadata("rotAndDecay", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), damaged.getName()));
+                    z.setMetadata("no_drops", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), damaged.getName()));
                     z.setBaby(false);
                     z.setCanPickupItems(false);
                     z.setCustomName(ChatColor.DARK_GREEN.toString() + ChatColor.BOLD.toString() + damaged.getName() + "'s Rotting Corpse");
@@ -193,13 +170,13 @@ public class MasteryRotAndDecay extends MasteryCustomEnchantment {
             }
         }
         Location playerLoc = centerBlock.getLocation();
-        final EntityPlayer player = ((CraftPlayer)sourcePlayer).getHandle();
+        final EntityPlayer player = ((CraftPlayer) sourcePlayer).getHandle();
         final Set<EntityPlayer> affected = new HashSet<>();
         affected.add(player);
         if (blocks.size() > 0) {
-            EntityTrackerEntry entry = (EntityTrackerEntry)(((WorldServer)player.world).getTracker()).trackedEntities.get(player.getId());
+            EntityTrackerEntry entry = (EntityTrackerEntry) (((WorldServer) player.world).getTracker()).trackedEntities.get(player.getId());
             if (entry != null) {
-                CopyOnWriteArrayList<EntityPlayer> trackedPlayers = (CopyOnWriteArrayList<EntityPlayer>)ReflectionUtils.getObject(EntityTrackerEntry.class, entry, "trackedPlayers");
+                CopyOnWriteArrayList<EntityPlayer> trackedPlayers = (CopyOnWriteArrayList<EntityPlayer>) ReflectionUtils.getObject(EntityTrackerEntry.class, entry, "trackedPlayers");
                 for (EntityPlayer tracked : trackedPlayers) {
                     if (tracked instanceof EntityPlayer) {
                         EntityPlayer pl = tracked;
@@ -218,24 +195,25 @@ public class MasteryRotAndDecay extends MasteryCustomEnchantment {
             for (Location loc : blocks) {
                 for (EntityPlayer affect : affected) {
                     if (affect.equals(player)) {
-                        affect.getBukkitEntity().sendBlockChange(loc, Material.GLOWSTONE, (byte)0);
+                        affect.getBukkitEntity().sendBlockChange(loc, Material.GLOWSTONE, (byte) 0);
                         continue;
                     }
                     if (faction != null) {
-                        Faction fpl = FactionUtils.getFaction((Player)affect.getBukkitEntity(), false);
-                        if (fpl != null && faction.getRelationTo((RelationParticipator)fpl).isAtLeast(Relation.TRUCE)) {
-                            affect.getBukkitEntity().sendBlockChange(loc, Material.GLOWSTONE, (byte)0);
+                        Faction fpl = FactionUtils.getFaction((Player) affect.getBukkitEntity(), false);
+                        if (fpl != null && faction.getRelationTo((RelationParticipator) fpl).isAtLeast(Relation.TRUCE)) {
+                            affect.getBukkitEntity().sendBlockChange(loc, Material.GLOWSTONE, (byte) 0);
                             continue;
                         }
                     }
-                    affect.getBukkitEntity().sendBlockChange(loc, Material.ENDER_STONE, (byte)0);
+                    affect.getBukkitEntity().sendBlockChange(loc, Material.ENDER_STONE, (byte) 0);
                 }
             }
-            Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Enchantments.getInstance(), () -> {
+            Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin) Enchantments.getInstance(), () -> {
                 try {
                     Map<Location, MaterialData> found = (Map<Location, MaterialData>) blocks;
                     affected.forEach(null);
-                } catch (Exception exception) {}
+                } catch (Exception exception) {
+                }
                 affected.clear();
             }, (20 * duration));
             (new BukkitRunnable() {
@@ -255,14 +233,14 @@ public class MasteryRotAndDecay extends MasteryCustomEnchantment {
                         CraftPlayer player = entPlayer.getBukkitEntity();
                         if (player.getGameMode() != GameMode.SURVIVAL || player.hasMetadata("spectator"))
                             continue;
-                        Location current = new Location((World)entPlayer.getWorld().getWorld(), Math.floor(entPlayer.locX), Math.floor(entPlayer.locY), Math.floor(entPlayer.locZ));
+                        Location current = new Location((World) entPlayer.getWorld().getWorld(), Math.floor(entPlayer.locX), Math.floor(entPlayer.locY), Math.floor(entPlayer.locZ));
                         if ((!blocks.contains(current) && !blocks.contains(current.clone().add(0.0D, -1.0D, 0.0D))) ||
-                                GeneralUtil.isAtleastTruce((Player)player, sourcePlayer))
+                                GeneralUtil.isAtleastTruce((Player) player, sourcePlayer))
                             continue;
-                        MasteryRotAndDecay.this.decayDamage((Player)entPlayer.getBukkitEntity(), enchantLevel);
+                        MasteryRotAndDecay.this.decayDamage((Player) entPlayer.getBukkitEntity(), enchantLevel);
                     }
                 }
-            }).runTaskTimer((Plugin)Enchantments.getInstance(), 20L, 10L);
+            }).runTaskTimer((Plugin) Enchantments.getInstance(), 20L, 10L);
         }
     }
 
@@ -281,8 +259,8 @@ public class MasteryRotAndDecay extends MasteryCustomEnchantment {
         public void onEntityDamage(EntityDamageByEntityEvent event) {
             if (event.getEntity() instanceof Player && event.getDamager() instanceof Zombie &&
                     event.getDamager().hasMetadata("rotAndDecay")) {
-                String who = ((MetadataValue)event.getDamager().getMetadata("rotAndDecay").get(0)).asString();
-                Player damagedPlayer = (Player)event.getEntity();
+                String who = ((MetadataValue) event.getDamager().getMetadata("rotAndDecay").get(0)).asString();
+                Player damagedPlayer = (Player) event.getEntity();
                 event.setCancelled(true);
                 event.setDamage(0.0D);
                 event.getDamager().remove();
@@ -306,7 +284,7 @@ public class MasteryRotAndDecay extends MasteryCustomEnchantment {
                         if (armorItem != null) {
                             Material type = armorItem.getType();
                             if (type != Material.AIR) {
-                                short duraToTake = (short)(int)Math.ceil(ItemUtils.getMaxDurability(armorItem) * 0.025D);
+                                short duraToTake = (short) (int) Math.ceil(ItemUtils.getMaxDurability(armorItem) * 0.025D);
                                 ArmorSlot slot = ArmorSlot.getArmorType(armorItem);
                                 if (slot != null) {
                                     ArmorUtil.modifyPlayerArmor(damagedPlayer, slot, -duraToTake, false);

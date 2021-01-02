@@ -1,29 +1,32 @@
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
+import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
-import org.arkhamnetwork.enchantments.util.*;
-import org.bukkit.event.entity.*;
-import org.arkhamnetwork.enchantments.cmds.*;
-import org.bukkit.entity.*;
-import com.rit.sucy.*;
-import com.cosmicpvp.cosmicutils.nms.*;
-import me.ifamasssxd.killtracker.*;
-import org.arkhamnetwork.enchantments.*;
-import org.bukkit.metadata.*;
-import org.bukkit.plugin.*;
-import org.bukkit.*;
-import org.arkhamnetwork.Arkkit.libs.*;
-import org.bukkit.inventory.*;
+import com.rit.sucy.CustomEnchantment;
+import com.rit.sucy.EnchantmentAPI;
+import me.ifamasssxd.killtracker.KillTrackerAPI;
+import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.cmds.CommandEnchDust;
+import org.arkhamnetwork.enchantments.util.GeneralUtil;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Sound;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
 
-public class SoulTrap extends CustomEnchantment
-{
+public class SoulTrap extends CustomEnchantment {
     public SoulTrap() {
         super("Soul Trap", GeneralUtil.axe, 2);
         this.max = 3;
         this.base = 10.0;
         this.interval = 10.0;
     }
-    
+
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
         if (!CommandEnchDust.soulEnabled) {
             return;
@@ -31,8 +34,8 @@ public class SoulTrap extends CustomEnchantment
         if (!(playerHit instanceof Player)) {
             return;
         }
-        final Player p = (Player)player;
-        final Player pHit = (Player)playerHit;
+        final Player p = (Player) player;
+        final Player pHit = (Player) playerHit;
         final double radius = 1.0 * level;
         final double chance = 0.07 * level;
         final long duration = level;
@@ -63,11 +66,10 @@ public class SoulTrap extends CustomEnchantment
             if (toTake > 0) {
                 KillTrackerAPI.removeSoulsFromGems(pHit, toTake);
                 Bukkit.getLogger().info("removing " + toTake + " souls from " + pHit.getName() + " form " + p.getName() + "'s Soul Trap!");
+            } else {
+                pHit.damage((double) (1 + level));
             }
-            else {
-                pHit.damage((double)(1 + level));
-            }
-            pHit.setMetadata("soulTrap", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)(System.currentTimeMillis() + duration * 1000L)));
+            pHit.setMetadata("soulTrap", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) (System.currentTimeMillis() + duration * 1000L)));
             pHit.sendMessage(ChatColor.BLUE.toString() + ChatColor.BOLD.toString() + "** SOUL TRAP " + ChatColor.GRAY + "[" + duration + "s]" + ChatColor.BLUE + ChatColor.BOLD + "**");
             if (KillTrackerAPI.hasGodMode(pHit)) {
                 KillTrackerAPI.toggleGodMode(pHit);

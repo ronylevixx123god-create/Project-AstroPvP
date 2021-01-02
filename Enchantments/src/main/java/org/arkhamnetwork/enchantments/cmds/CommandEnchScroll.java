@@ -1,14 +1,15 @@
 package org.arkhamnetwork.enchantments.cmds;
 
-import org.bukkit.command.*;
-import org.bukkit.*;
-import com.cosmicpvp.CosmicSpaceChests.libs.*;
-import org.arkhamnetwork.enchantments.*;
-import org.bukkit.inventory.*;
-import org.bukkit.entity.*;
+import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
+import org.arkhamnetwork.enchantments.RandomizationScroll;
+import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
-public class CommandEnchScroll implements CommandExecutor
-{
+public class CommandEnchScroll implements CommandExecutor {
     public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
         if (!sender.isOp()) {
             return true;
@@ -26,9 +27,8 @@ public class CommandEnchScroll implements CommandExecutor
                 i = RandomizationScroll.getRandomizationScroll(ItemRarity.valueOf(args[2]));
             }
             if (pl.getInventory().firstEmpty() != -1) {
-                pl.getInventory().addItem(new ItemStack[] { i });
-            }
-            else {
+                pl.getInventory().addItem(new ItemStack[]{i});
+            } else {
                 pl.getWorld().dropItem(pl.getLocation(), i);
             }
         }

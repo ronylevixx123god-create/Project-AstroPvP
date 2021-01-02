@@ -1,21 +1,23 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
-import com.rit.sucy.*;
-import java.util.*;
-import org.bukkit.scheduler.*;
-import org.arkhamnetwork.enchantments.util.*;
-import org.bukkit.event.entity.*;
-import java.util.concurrent.*;
-import org.bukkit.entity.*;
-import org.arkhamnetwork.enchantments.*;
-import org.bukkit.plugin.*;
-import org.bukkit.*;
-import org.bukkit.metadata.*;
+import com.rit.sucy.CustomEnchantment;
+import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.util.GeneralUtil;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitTask;
 
-public class Angelic extends CustomEnchantment
-{
+import java.util.HashMap;
+import java.util.concurrent.ThreadLocalRandom;
+
+public class Angelic extends CustomEnchantment {
     HashMap<String, BukkitTask> playerTasks;
-    
+
     public Angelic() {
         super("Angelic", GeneralUtil.armor, 2);
         this.playerTasks = new HashMap<String, BukkitTask>();
@@ -23,7 +25,7 @@ public class Angelic extends CustomEnchantment
         this.base = 15.0;
         this.interval = 3.0;
     }
-    
+
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         final double random = Math.random();
         final double chance = 0.03 * level;
@@ -49,15 +51,15 @@ public class Angelic extends CustomEnchantment
             if (player.hasMetadata("angelicTaskID")) {
                 return;
             }
-            final int taskID = new RegenerationTask((Player)player, healDuration, healDelay, healAmount).runTaskTimer((Plugin)Enchantments.getInstance(), 0L, healDelay).getTaskId();
-            Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin)Enchantments.getInstance(), (Runnable)new Runnable() {
+            final int taskID = new RegenerationTask((Player) player, healDuration, healDelay, healAmount).runTaskTimer((Plugin) Enchantments.getInstance(), 0L, healDelay).getTaskId();
+            Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
                 @Override
                 public void run() {
                     Bukkit.getScheduler().cancelTask(taskID);
-                    Bukkit.getScheduler().runTask((Plugin)Enchantments.getInstance(), () -> player.removeMetadata("angelicTaskID", (Plugin)Enchantments.getInstance()));
+                    Bukkit.getScheduler().runTask((Plugin) Enchantments.getInstance(), () -> player.removeMetadata("angelicTaskID", (Plugin) Enchantments.getInstance()));
                 }
             }, healDuration);
-            player.setMetadata("angelicTaskID", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)taskID));
+            player.setMetadata("angelicTaskID", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) taskID));
         }
     }
 }

@@ -1,21 +1,20 @@
 package org.arkhamnetwork.enchantments.util;
 
+import com.cosmicpvp.cosmicutils.utils.ItemUtils;
 import net.minecraft.server.v1_8_R3.Items;
 import net.minecraft.server.v1_8_R3.NBTBase;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Item;
-import org.bukkit.inventory.*;
-import org.bukkit.*;
-
-import com.cosmicpvp.cosmicutils.utils.ItemUtils;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 
-public class ArmorUtil
-{
+public class ArmorUtil {
     public static float getArmorDamageNullificationPercent(final float armor_val) {
         if (armor_val == 0.0f) {
             return 1.0f;
@@ -38,8 +37,8 @@ public class ArmorUtil
         if (maxDurability <= 0) {
             return null;
         }
-        final double amount = (int)(maxDurability * 0.01 * percent);
-        return modifyPlayerArmor(player, slot, (int)(-amount), false);
+        final double amount = (int) (maxDurability * 0.01 * percent);
+        return modifyPlayerArmor(player, slot, (int) (-amount), false);
     }
 
     public static ItemStack modifyPlayerArmor(final Player player, final ArmorSlot slot, final int amount) {
@@ -55,8 +54,7 @@ public class ArmorUtil
             }
             if (amount > 0) {
                 item = ItemUtils.addDurability(item, amount);
-            }
-            else {
+            } else {
                 item = ItemUtils.subtractDurability(item, Math.abs(amount));
             }
             if (item != null && item.getDurability() > item.getType().getMaxDurability()) {
@@ -68,14 +66,11 @@ public class ArmorUtil
         }
         if (slot == ArmorSlot.HELMET) {
             player.getInventory().setHelmet(item);
-        }
-        else if (slot == ArmorSlot.CHESTPLATE) {
+        } else if (slot == ArmorSlot.CHESTPLATE) {
             player.getInventory().setChestplate(item);
-        }
-        else if (slot == ArmorSlot.LEGGINGS) {
+        } else if (slot == ArmorSlot.LEGGINGS) {
             player.getInventory().setLeggings(item);
-        }
-        else if (slot == ArmorSlot.BOOTS) {
+        } else if (slot == ArmorSlot.BOOTS) {
             player.getInventory().setBoots(item);
         }
         return item;
@@ -97,13 +92,14 @@ public class ArmorUtil
 
     public static int getArmorValue(final Player pl) {
         int armor_val = 0;
-        for (final net.minecraft.server.v1_8_R3.ItemStack item : ((CraftPlayer)pl).getHandle().inventory.getArmorContents()) {
-            Label_0343: {
+        for (final net.minecraft.server.v1_8_R3.ItemStack item : ((CraftPlayer) pl).getHandle().inventory.getArmorContents()) {
+            Label_0343:
+            {
                 if (item != null) {
                     if (item.tag != null && item.tag.hasKey("conaxData")) {
                         final NBTBase base = item.tag.get("conaxData");
                         if (base instanceof NBTTagCompound) {
-                            final NBTTagCompound comp = (NBTTagCompound)base;
+                            final NBTTagCompound comp = (NBTTagCompound) base;
                             if (comp.hasKey("armorModifier")) {
                                 armor_val += comp.getInt("armorModifier");
                                 break Label_0343;

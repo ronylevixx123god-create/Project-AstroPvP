@@ -1,28 +1,29 @@
 package org.arkhamnetwork.enchantments.enchantments.tools;
 
-import org.bukkit.*;
-import org.arkhamnetwork.enchantments.util.*;
-import java.util.*;
-
+import com.rit.sucy.CustomEnchantment;
+import com.rit.sucy.EnchantmentAPI;
+import org.arkhamnetwork.CosmicCustomTNT.enums.TNTTypes;
+import org.arkhamnetwork.CosmicCustomTNT.listeners.TNTListener;
+import org.arkhamnetwork.enchantments.libs.EnchantBreakBlockEvent;
+import org.arkhamnetwork.enchantments.mastery.MasteryAutoSell;
+import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.*;
-import org.bukkit.block.*;
-import org.bukkit.event.block.*;
-import com.rit.sucy.*;
-import org.arkhamnetwork.enchantments.libs.*;
-import org.bukkit.inventory.*;
-import org.bukkit.enchantments.*;
-import org.arkhamnetwork.enchantments.mastery.*;
-import org.arkhamnetwork.CosmicCustomTNT.listeners.*;
-import org.arkhamnetwork.CosmicCustomTNT.enums.*;
+import org.bukkit.entity.Item;
+import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class Telepathy extends CustomEnchantment
-{
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
+public class Telepathy extends CustomEnchantment {
     private List<Material> fortuneBlocks;
-    
+
     public Telepathy() {
         super("Telepathy", GeneralUtil.tools, 6);
         this.fortuneBlocks = new ArrayList<Material>(Arrays.asList(Material.COAL_ORE, Material.DIAMOND_ORE, Material.EMERALD_ORE, Material.QUARTZ_ORE, Material.LAPIS_ORE));
@@ -30,10 +31,10 @@ public class Telepathy extends CustomEnchantment
         this.base = 10.0;
         this.interval = 10.0;
     }
-    
+
     public void applyToolEffect(final Player player, final Block block, final int enchantLevel, final BlockEvent event) {
         if (event instanceof BlockBreakEvent) {
-            final BlockBreakEvent bbe = (BlockBreakEvent)event;
+            final BlockBreakEvent bbe = (BlockBreakEvent) event;
             final Material m = bbe.getBlock().getType();
             if (m == Material.SPONGE) {
                 return;
@@ -46,7 +47,7 @@ public class Telepathy extends CustomEnchantment
                 if (bbe.getBlock().getDrops(player.getItemInHand()).size() < 0) {
                     return;
                 }
-                final Collection<ItemStack> drops = (Collection<ItemStack>)bbe.getBlock().getDrops(player.getItemInHand());
+                final Collection<ItemStack> drops = (Collection<ItemStack>) bbe.getBlock().getDrops(player.getItemInHand());
                 if (drops.size() <= 0) {
                     return;
                 }
@@ -54,7 +55,7 @@ public class Telepathy extends CustomEnchantment
                 if (!enchantBreakEvent.callEvent()) {
                     return;
                 }
-                ItemStack drop = (ItemStack)drops.toArray()[0];
+                ItemStack drop = (ItemStack) drops.toArray()[0];
                 final boolean hasSilkTouch = player.getItemInHand().containsEnchantment(Enchantment.SILK_TOUCH);
                 final boolean hasAutoSell = EnchantmentAPI.itemHasEnchantment(player.getItemInHand(), "Auto Sell");
                 if (hasAutoSell && MasteryAutoSell.getSellPrice(drop.getData()) > 0.0) {
@@ -87,21 +88,20 @@ public class Telepathy extends CustomEnchantment
                         drop.setAmount(fortuneDropAmount);
                     }
                 }
-                bbe.getBlock().setTypeIdAndData(0, (byte)0, true);
+                bbe.getBlock().setTypeIdAndData(0, (byte) 0, true);
                 player.giveExp(bbe.getExpToDrop());
                 if (bbe.getBlock().getType() == Material.RAILS) {
                     return;
                 }
                 if (player.getInventory().firstEmpty() != -1) {
                     player.getInventory().addItem(drop);
-                }
-                else {
+                } else {
                     player.getWorld().dropItem(player.getLocation(), drop);
                 }
             }
         }
     }
-    
+
     private int getBlockDropsFromEnchantedTool(final Block b, final ItemStack tool) {
         final Material m = b.getType();
         if (tool.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS) > 0) {

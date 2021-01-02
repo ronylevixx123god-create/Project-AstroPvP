@@ -1,21 +1,22 @@
 package org.arkhamnetwork.enchantments.util;
 
 import net.minecraft.server.v1_8_R3.*;
-import org.arkhamnetwork.enchantments.*;
+import org.arkhamnetwork.enchantments.Enchantments;
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
-import org.bukkit.plugin.*;
-import org.bukkit.*;
-import org.bukkit.entity.*;
-import java.util.*;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
-public class DimensionSpoof
-{
+import java.util.ArrayList;
+import java.util.List;
+
+public class DimensionSpoof {
     public static void setPlayerEnvironment(final Player pl, final World.Environment env) {
-        Bukkit.getScheduler().runTaskAsynchronously((Plugin)Enchantments.getInstance(), (Runnable)new Runnable() {
+        Bukkit.getScheduler().runTaskAsynchronously((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
             @Override
             public void run() {
                 int dimension = 0;
@@ -33,11 +34,11 @@ public class DimensionSpoof
                 }
                 final boolean fly = pl.isFlying();
                 final double hp = pl.getHealth();
-                final CraftPlayer cp = (CraftPlayer)pl;
+                final CraftPlayer cp = (CraftPlayer) pl;
                 final EntityPlayer ep = cp.getHandle();
-                final WorldServer worldserver = ((CraftWorld)pl.getWorld()).getHandle();
-                final PacketPlayOutRespawn packet_a = new PacketPlayOutRespawn((int)(byte)dimension, worldserver.difficulty, worldserver.getWorldData().getType(), ep.playerInteractManager.getGameMode());
-                cp.getHandle().playerConnection.sendPacket((Packet)packet_a);
+                final WorldServer worldserver = ((CraftWorld) pl.getWorld()).getHandle();
+                final PacketPlayOutRespawn packet_a = new PacketPlayOutRespawn((int) (byte) dimension, worldserver.difficulty, worldserver.getWorldData().getType(), ep.playerInteractManager.getGameMode());
+                cp.getHandle().playerConnection.sendPacket((Packet) packet_a);
                 final Chunk c = pl.getLocation().getChunk();
                 for (int x = -6; x < 6; ++x) {
                     for (int z = -6; z < 6; ++z) {
@@ -46,7 +47,7 @@ public class DimensionSpoof
                 }
                 pl.setFlying(fly);
                 pl.setHealth(hp);
-                Enchantments.getInstance().getServer().getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), (Runnable)new Runnable() {
+                Enchantments.getInstance().getServer().getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
                     @Override
                     public void run() {
                         updatePlayerView(pl);
@@ -56,21 +57,21 @@ public class DimensionSpoof
             }
         });
     }
-    
+
     private static void updatePlayerView(final Player player) {
-        if (player == null || ((CraftPlayer)player).getHandle().activeContainer == null) {
+        if (player == null || ((CraftPlayer) player).getHandle().activeContainer == null) {
             return;
         }
-        ((CraftPlayer)player).getHandle().updateInventory(((CraftPlayer)player).getHandle().activeContainer);
+        ((CraftPlayer) player).getHandle().updateInventory(((CraftPlayer) player).getHandle().activeContainer);
     }
-    
+
     private static void updateEntities(final Player player) {
-        final WorldServer ws = ((CraftWorld)player.getWorld()).getHandle();
+        final WorldServer ws = ((CraftWorld) player.getWorld()).getHandle();
         final EntityTracker tracker = ws.tracker;
         for (final Entity ent : player.getNearbyEntities(32.0, 32.0, 32.0)) {
             final EntityTrackerEntry entry = tracker.trackedEntities.get(ent.getEntityId());
             final List nms = new ArrayList();
-            nms.add(((CraftPlayer)player).getHandle());
+            nms.add(((CraftPlayer) player).getHandle());
             entry.trackedPlayers.removeAll(nms);
             entry.scanPlayers(nms);
         }

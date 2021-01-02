@@ -27,21 +27,21 @@ public class DoubleStrike extends CustomEnchantment {
         double random = Math.random();
         double chance = 0.02D * level;
         if (random < chance) {
-            double dmg = VanillaDamageListener.getLastFinalDamage((Entity)playerHit);
+            double dmg = VanillaDamageListener.getLastFinalDamage((Entity) playerHit);
             if (dmg == 0.0D)
                 dmg = e.getDamage(EntityDamageEvent.DamageModifier.BASE);
             final double fdmg = dmg;
             Player pp = (Player) e.getDamager();
-            Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), new Runnable() {
+            Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), new Runnable() {
                 public void run() {
                     if (!playerHit.isDead() && playerHit.getHealth() > 0.0D) {
-                        playerHit.setMetadata("doubleStriked", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), Long.valueOf(System.currentTimeMillis())));
-                        playerHit.damage(fdmg, (Entity)player);
+                        playerHit.setMetadata("doubleStriked", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), Long.valueOf(System.currentTimeMillis())));
+                        playerHit.damage(fdmg, (Entity) player);
                         pp.sendMessage("§6§l** DOUBLE STRIKE **");
                     }
                 }
-            },2L);
-            ParticleEffect.sendToLocation(ParticleEffect.RED_DUST, playerHit.getLocation(), (float)Math.random(), (float)Math.random(), (float)Math.random(), 0.5F, 20);
+            }, 2L);
+            ParticleEffect.sendToLocation(ParticleEffect.RED_DUST, playerHit.getLocation(), (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5F, 20);
         }
     }
 }

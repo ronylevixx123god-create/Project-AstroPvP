@@ -1,14 +1,17 @@
 package org.arkhamnetwork.enchantments.cmds;
 
-import org.bukkit.command.*;
-import org.bukkit.*;
-import org.arkhamnetwork.enchantments.*;
-import com.cosmicpvp.cosmicutils.utils.*;
-import org.bukkit.entity.*;
-import org.bukkit.inventory.*;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.NumberUtils;
+import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
+import org.arkhamnetwork.enchantments.EnchantmentBook;
+import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
-public class CommandBlackscroll implements CommandExecutor
-{
+public class CommandBlackscroll implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!sender.isOp()) {
             return true;
@@ -26,12 +29,10 @@ public class CommandBlackscroll implements CommandExecutor
                 if (giveNum != null) {
                     if (maxNum != null) {
                         item = EnchantmentBook.getHeroicBlackscroll(giveNum, maxNum, true);
-                    }
-                    else {
+                    } else {
                         item = EnchantmentBook.getHeroicBlackscroll(10, giveNum, true);
                     }
-                }
-                else {
+                } else {
                     item = EnchantmentBook.getHeroicBlackscroll(true);
                 }
                 PlayerUtil.giveOrDropProtectedItem(pl, item, -1);

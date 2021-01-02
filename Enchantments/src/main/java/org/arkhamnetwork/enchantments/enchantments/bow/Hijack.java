@@ -1,23 +1,23 @@
 package org.arkhamnetwork.enchantments.enchantments.bow;
 
-import com.rit.sucy.*;
-import org.bukkit.event.entity.*;
-import org.bukkit.metadata.*;
-import org.arkhamnetwork.enchantments.enchantments.armor.*;
-import org.arkhamnetwork.Arkkit.libs.*;
-import org.bukkit.*;
+import com.rit.sucy.CustomEnchantment;
+import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
+import org.arkhamnetwork.enchantments.enchantments.armor.Guardians;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.*;
-import java.util.*;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 
-public class Hijack extends CustomEnchantment
-{
+public class Hijack extends CustomEnchantment {
     public Hijack() {
-        super("Hijack", new Material[] { Material.BOW }, 2);
+        super("Hijack", new Material[]{Material.BOW}, 2);
         this.max = 4;
         this.base = 10.0;
         this.interval = 8.0;
     }
-    
+
     public void applyEffect(final LivingEntity user, final LivingEntity target, final int enchantLevel, final EntityDamageByEntityEvent event) {
         if (event.getCause() != EntityDamageEvent.DamageCause.PROJECTILE) {
             return;
@@ -25,7 +25,7 @@ public class Hijack extends CustomEnchantment
         final double random = Math.random();
         final double chance = enchantLevel * 0.08;
         if (random < chance) {
-            final Player pUser = (Player)user;
+            final Player pUser = (Player) user;
             if (target.getType() == EntityType.IRON_GOLEM && target.hasMetadata("guardianSummoner")) {
                 final String oldSummoner = target.getMetadata("guardianSummoner").get(0).asString();
                 target.remove();
@@ -33,8 +33,8 @@ public class Hijack extends CustomEnchantment
                 ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, ig.getLocation().add(0.0, 1.0, 0.0), 1.2f, 60);
                 for (final Entity ent : ig.getNearbyEntities(24.0, 24.0, 24.0)) {
                     if (ent instanceof Player) {
-                        ((Player)ent).sendMessage(ChatColor.DARK_PURPLE.toString() + ChatColor.BOLD.toString() + "*** HIJACK (" + ChatColor.GRAY + ChatColor.STRIKETHROUGH + oldSummoner + ChatColor.DARK_PURPLE + ChatColor.BOLD + " -> " + ChatColor.WHITE + pUser.getName() + ChatColor.DARK_PURPLE + ChatColor.BOLD + ") ***");
-                        ((Player)ent).playSound(ent.getLocation(), Sound.IRONGOLEM_DEATH, 0.8f, 1.2f);
+                        ((Player) ent).sendMessage(ChatColor.DARK_PURPLE.toString() + ChatColor.BOLD.toString() + "*** HIJACK (" + ChatColor.GRAY + ChatColor.STRIKETHROUGH + oldSummoner + ChatColor.DARK_PURPLE + ChatColor.BOLD + " -> " + ChatColor.WHITE + pUser.getName() + ChatColor.DARK_PURPLE + ChatColor.BOLD + ") ***");
+                        ((Player) ent).playSound(ent.getLocation(), Sound.IRONGOLEM_DEATH, 0.8f, 1.2f);
                     }
                 }
             }
