@@ -1,38 +1,42 @@
 package org.arkhamnetwork.enchantments.mastery;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
-import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
+import com.cosmicpvp.cosmicutils.utils.*;
+import com.google.common.collect.MapMaker;
+import com.massivecraft.factions.FPlayer;
+import com.massivecraft.factions.FPlayers;
+import com.massivecraft.factions.Faction;
+import com.massivecraft.factions.iface.RelationParticipator;
+import com.massivecraft.factions.struct.Relation;
 import net.minecraft.server.v1_8_R3.*;
-import org.arkhamnetwork.enchantments.util.*;
-import com.google.common.collect.*;
-import org.arkhamnetwork.enchantments.*;
+import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.MasteryCustomEnchantment;
+import org.arkhamnetwork.enchantments.events.CustomEnchantProcOnEntityEvent;
+import org.arkhamnetwork.enchantments.listeners.CustomEnchantListener;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.arkhamnetwork.enchantments.util.MathHelper;
 import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
-import org.bukkit.plugin.*;
-import org.arkhamnetwork.enchantments.events.*;
-import com.rit.sucy.*;
-import org.bukkit.metadata.*;
-import org.bukkit.scheduler.*;
-import java.util.concurrent.*;
-import org.bukkit.util.*;
-import java.util.*;
-import com.massivecraft.factions.*;
-import com.massivecraft.factions.iface.*;
-import com.massivecraft.factions.struct.*;
-import org.bukkit.block.*;
-import com.cosmicpvp.cosmicutils.utils.*;
-import org.arkhamnetwork.enchantments.listeners.*;
-import org.bukkit.event.*;
-import org.bukkit.event.entity.*;
 import org.bukkit.entity.*;
-import org.bukkit.*;
+import org.bukkit.event.Event;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.*;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
+
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 
 public class MasteryDemonicGateway extends MasteryCustomEnchantment
 {
@@ -180,23 +184,21 @@ public class MasteryDemonicGateway extends MasteryCustomEnchantment
                     if (pl == null || pl.hasMetadata("NPC") || pl.hasMetadata("spectator") || pl.getGameMode() != GameMode.SURVIVAL) {
                         return;
                     }
-                    final FPlayer other = (FPlayer)FPlayers.i.get((OfflinePlayer)pl);
-                    if (other != null && faction != null && other.hasFaction() && other.getFaction().getRelationTo((RelationParticipator)faction).isAtLeast(Relation.TRUCE)) {
+                    final FPlayer other = FPlayers.i.get(pl);
+                    if (other != null && faction != null && other.hasFaction() && other.getFaction().getRelationTo(faction).isAtLeast(Relation.TRUCE)) {
                         return;
                     }
-                    if (!new CustomEnchantProcOnEntityEvent((LivingEntity)shooterPlayer, (LivingEntity)pl, null, MasteryDemonicGateway.this, level).callEvent()) {
+                    if (!new CustomEnchantProcOnEntityEvent(shooterPlayer, pl, null, MasteryDemonicGateway.this, level).callEvent()) {
                         return;
                     }
-                }
-                else if (movingobjectposition.entity != null) {
+                } else if (movingobjectposition.entity != null) {
                     return;
                 }
-                if (!this.world.isStatic) {
+                if (!this.world.isClientSide) {
                     if (movingobjectposition.entity != null) {
                         if (this.shooter != null) {
                             movingobjectposition.entity.damageEntity(DamageSource.projectile(this, this.shooter), 8.0f);
-                        }
-                        else {
+                        } else {
                             movingobjectposition.entity.damageEntity(DamageSource.MAGIC, 5.0f);
                         }
                     }
@@ -205,7 +207,6 @@ public class MasteryDemonicGateway extends MasteryCustomEnchantment
             }
         };
         skull.fromMobSpawner = true;
-        skull.height = 0.0f;
         final EntityWitherSkull entityWitherSkull = skull;
         final EntityWitherSkull entityWitherSkull2 = skull;
         final EntityWitherSkull entityWitherSkull3 = skull;
