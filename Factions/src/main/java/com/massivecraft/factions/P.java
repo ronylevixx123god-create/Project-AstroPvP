@@ -40,6 +40,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.massivecraft.factions.cmd.CmdAutoHelp;
 import com.massivecraft.factions.cmd.CommandAdminFaction;
+import com.massivecraft.factions.cmd.CommandFactionQuest;
 import com.massivecraft.factions.cmd.FCmdRoot;
 import com.massivecraft.factions.cmd.killtracker.CmdDeaths;
 import com.massivecraft.factions.cmd.killtracker.CmdKills;
@@ -50,6 +51,8 @@ import com.massivecraft.factions.listeners.*;
 import com.massivecraft.factions.listeners.menu.MenuListener;
 import com.massivecraft.factions.listeners.menu.fchest.FChestListener;
 import com.massivecraft.factions.manager.BoardManager;
+import com.massivecraft.factions.quests.QuestUpdateTask;
+import com.massivecraft.factions.quests.managers.FactionQuestManager;
 import com.massivecraft.factions.struct.*;
 import com.massivecraft.factions.struct.managers.FChestManager;
 import com.massivecraft.factions.util.LazyLocation;
@@ -67,6 +70,7 @@ import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -113,6 +117,9 @@ public class P extends MPlugin {
     public static boolean debug;
     private long startOfMap;
     private boolean vanillaPlanet = false;
+    private FactionQuestManager factionQuestManager;
+    private boolean fpointsEnabled = false;
+    private boolean fundEnabled;
 
     public P() {
         p = this;
@@ -208,6 +215,13 @@ public class P extends MPlugin {
         this.vanillaPlanet = this.getConfig().getBoolean("vanilla", false);
 
         this.getServer().getScheduler().scheduleSyncRepeatingTask(this, (Runnable)new BoosterTask(), 20L, 20L);
+
+        this.factionQuestManager = new FactionQuestManager();
+        this.factionQuestManager.loadData(this);
+        this.getServer().getScheduler().scheduleSyncRepeatingTask((Plugin)this, (Runnable)new QuestUpdateTask(), 20L, 600L);
+        this.fundEnabled = this.getServer().getPluginManager().isPluginEnabled("CosmicFund");
+        this.fpointsEnabled = new File("plugins/CosmicFactionPoints.jar").exists();
+
            // TODO: THIS IS THE onEnable for all additions put into Factions.
 
        this.getBaseCommands().add(this.cmdBase);
@@ -281,6 +295,8 @@ public class P extends MPlugin {
 
         this.getCommand("givefacbooster").setExecutor(new CommandBooster());
         this.getCommand("booster").setExecutor(new CommandCheckBooster());
+
+        this.getCommand("fquest").setExecutor((CommandExecutor)new CommandFactionQuest());
     }
 
     private void registerNewListeners() {
@@ -290,6 +306,10 @@ public class P extends MPlugin {
         this.getServer().getPluginManager().registerEvents(new InvalidDeathFix(), this);
         this.getServer().getPluginManager().registerEvents(new VIPCommandBlocker(), this);
         this.getServer().getPluginManager().registerEvents(new NetherMobSpawnerListener(), this);
+
+        this.getServer().getPluginManager().registerEvents((Listener)new FactionEventListener(), (Plugin)this);
+        this.getServer().getPluginManager().registerEvents((Listener)new QuestListener(), (Plugin)this);
+        this.getServer().getPluginManager().registerEvents((Listener)new QuestRerollItemListener(), (Plugin)this);
 
         this.getServer().getPluginManager().registerEvents((Listener)new BoosterListener(this.boosterManager), (Plugin)this);
         if (this.getServer().getPluginManager().isPluginEnabled("mcMMO")) {
@@ -390,6 +410,7 @@ public class P extends MPlugin {
         /*this.pointManager.onDisable(this);
         this.chunkManager.onDisable(this);*/
         this.boosterManager.saveActiveBoosters();
+        this.factionQuestManager.saveData();
         CommandToggleSmoke.saveToggles();
         if (this.AutoLeaveTask != null) {
             this.getServer().getScheduler().cancelTask(this.AutoLeaveTask);
@@ -423,6 +444,18 @@ public class P extends MPlugin {
         if (Conf.autoLeaveRoutineRunsEveryXMinutes > 0.0) {
             // empty if block
         }
+    }
+
+    public FactionQuestManager getFactionQuestManager() {
+        return this.factionQuestManager;
+    }
+
+    public boolean isFpointsEnabled() {
+        return this.fpointsEnabled;
+    }
+
+    public boolean isFundEnabled() {
+        return this.fundEnabled;
     }
 
     @Override

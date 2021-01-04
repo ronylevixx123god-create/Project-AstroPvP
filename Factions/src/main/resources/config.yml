@@ -65,3 +65,6 @@ help:
     - '&c/f notifications &8- &7Disable or enable faction claim notifications.'
     - '&c/f wild &8- &7Teleport to a random location is a specific radius.'
     - '&7&m--------------------&r &e/f help &7&m-----------------------'
+flying-mechanics: true
+flying-only-in-bases: false
+flying-in-ally-bases: false

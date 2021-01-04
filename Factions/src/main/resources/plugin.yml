@@ -7,6 +7,9 @@ softdepend: [WorldGuard, CosmicAuthentication, Citizens, PermissionsEx, Permissi
              nChat, ChatManager, CAPI, AuthMe, AuthDB, CaptureThePoints, CombatTag, WorldEdit, WorldGuard, WorldBorder]
 depend: [Vault, Essentials]
 commands:
+  fquest:
+    description: Faction quests command.
+    aliases: [ fquests, factionquests, facquests ]
   allowtp:
     description: Allow specified player to teleport to VIP bases
     usage: /<command>
@@ -24,7 +27,7 @@ commands:
   booster:
     aliases: [ boosters, boostertimer, boost ]
   kills:
-    description: kills base command
+    description: kills basfe command
   deaths:
     description: deaths base command
   factions:
