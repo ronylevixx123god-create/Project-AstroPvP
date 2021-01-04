@@ -38,10 +38,7 @@ import com.conaxgames.factions.utils.listeners.*;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import com.massivecraft.factions.cmd.CmdAutoHelp;
-import com.massivecraft.factions.cmd.CommandAdminFaction;
-import com.massivecraft.factions.cmd.CommandFactionQuest;
-import com.massivecraft.factions.cmd.FCmdRoot;
+import com.massivecraft.factions.cmd.*;
 import com.massivecraft.factions.cmd.killtracker.CmdDeaths;
 import com.massivecraft.factions.cmd.killtracker.CmdKills;
 import com.massivecraft.factions.cmd.killtracker.FileManager;
@@ -305,6 +302,11 @@ public class P extends MPlugin {
         this.getCommand("booster").setExecutor(new CommandCheckBooster());
 
         this.getCommand("fquest").setExecutor((CommandExecutor)new CommandFactionQuest());
+
+        this.getCommand("fsetbanner").setExecutor((CommandExecutor)new CommandSetBanner());
+        this.getCommand("fbanner").setExecutor((CommandExecutor)new CommandBanner());
+        this.getCommand("frecall").setExecutor((CommandExecutor)new CommandRecall());
+
     }
 
     private void registerNewListeners() {
@@ -323,6 +325,10 @@ public class P extends MPlugin {
         if (this.getServer().getPluginManager().isPluginEnabled("mcMMO")) {
             this.getServer().getPluginManager().registerEvents(new mcMMOListener(), (Plugin)this);
         }
+
+        this.bannerListener = new BannerListener();
+        this.getServer().getPluginManager().registerEvents((Listener)this.bannerListener, (Plugin)this);
+        this.getServer().getPluginManager().registerEvents((Listener)new CommandListener(), (Plugin)this);
     }
 
     private void mcMMOTestUtil() {
