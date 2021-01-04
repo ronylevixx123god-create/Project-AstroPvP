@@ -30,7 +30,6 @@ import java.util.List;
 
 import com.massivecraft.factions.P;
 import com.massivecraft.factions.manager.BannerManager;
-import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
 import net.minecraft.server.v1_8_R3.NBTBase;
 import org.bukkit.DyeColor;
 import org.bukkit.entity.Player;
