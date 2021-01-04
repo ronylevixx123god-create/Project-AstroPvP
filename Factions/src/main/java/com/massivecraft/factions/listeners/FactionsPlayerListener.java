@@ -211,6 +211,12 @@ public class FactionsPlayerListener
         if (fplayer == null) {
             return;
         }
+
+        if (P.getP().getBoardManager() != null) {
+            P.getP().getBoardManager().getPlayerBoards().put(player.getUniqueId(), new com.massivecraft.factions.board.Board(player, P.getP().getBoardManager().getAdapter()));
+        }
+
+
         fplayer.setLastLoginTime(System.currentTimeMillis());
         fplayer.updateLastKnownName(event.getPlayer().getName());
         Faction fac = fplayer.getFaction();
@@ -239,6 +245,12 @@ public class FactionsPlayerListener
         if (fac == null || !fac.isNormal()) {
             return;
         }
+
+        if (P.getP().getBoardManager() != null) {
+            P.getP().getBoardManager().getPlayerBoards().remove(player.getUniqueId());
+        }
+
+
         String message = ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW.toString() + ChatColor.BOLD + player.getName() + ChatColor.YELLOW + " has logged out.";
         for (FPlayer member : fac.getFPlayers()) {
             if (member.equals(fplayer)) continue;
@@ -642,6 +654,14 @@ public class FactionsPlayerListener
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerKick(PlayerKickEvent event) {
         FPlayer badGuy = FPlayers.i.get(event.getPlayer().getUniqueId().toString());
+
+        Player player = event.getPlayer();
+        if (player != null) {
+            if (P.getP().getBoardManager() != null) {
+                P.getP().getBoardManager().getPlayerBoards().remove(player.getUniqueId());
+            }
+        }
+
         if (badGuy == null) {
             return;
         }

@@ -7,6 +7,22 @@ softdepend: [WorldGuard, CosmicAuthentication, Citizens, PermissionsEx, Permissi
              nChat, ChatManager, CAPI, AuthMe, AuthDB, CaptureThePoints, CombatTag, WorldEdit, WorldGuard, WorldBorder]
 depend: [Vault, Essentials]
 commands:
+  allowtp:
+    description: Allow specified player to teleport to VIP bases
+    usage: /<command>
+  ctool:
+    description: Cosmic tool.
+    usage: /<command>
+  2fa:
+    description: Explains how 2FA authentication works.
+    usage: /<command>
+  togglesmoke:
+    description: toggle smoke.
+  givefacbooster:
+    description: Give boosters
+    aliases: [ gfb ]
+  booster:
+    aliases: [ boosters, boostertimer, boost ]
   kills:
     description: kills base command
   deaths:

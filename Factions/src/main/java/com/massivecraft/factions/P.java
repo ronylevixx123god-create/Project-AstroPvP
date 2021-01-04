@@ -60,6 +60,8 @@ import com.massivecraft.factions.zcore.MPlugin;
 import com.massivecraft.factions.zcore.util.MojangUUIDFetcher;
 import com.massivecraft.factions.zcore.util.TextUtil;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.SneakyThrows;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
@@ -101,6 +103,7 @@ public class P extends MPlugin {
     private final FChestManager fChestManager;
     private FileManager fileManager;
     public static WorldGuardPlugin wg = null;
+    @Getter @Setter
     private BoardManager boardManager;
     private CosmicFlyingPlugin cosmicFlyingPlugin;
     public BoosterManager boosterManager;
@@ -237,11 +240,12 @@ public class P extends MPlugin {
         } catch (IOException e) {
             //e.printStackTrace();
         }
+        P.getP().setBoardManager(new BoardManager(new ScoreboardManager()));
+        this.log("boarD?????nigger");
 
         int minute = 1200;
 
         //Setup Discord Bot
-
 
         this.postEnable();
         this.loadSuccessful = true;
