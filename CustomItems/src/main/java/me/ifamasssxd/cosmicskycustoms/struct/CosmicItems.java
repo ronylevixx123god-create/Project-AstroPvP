@@ -9,11 +9,10 @@ package me.ifamasssxd.cosmicskycustoms.struct;
 
 import java.util.Arrays;
 import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
-import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public enum CosmicItems {
+public enum CosmicItems {;
 
     private String internalName;
     private CosmicItem item;

@@ -198,7 +198,7 @@ implements Listener {
                         event.getPlayer().sendMessage(e.getMessage());
                         if (!(e instanceof ItemDupedException)) break block7;
                         event.getPlayer().getInventory().setItemInHand(null);
-                        event.getPlayer().getInventory().removeItem(new ItemStack[]{event.getItem()});
+                        event.getPlayer().getInventory().removeItem(event.getItem());
                         event.getPlayer().updateInventory();
                         DiscordAPI.sendMessage((CosmicDiscordChannels)CosmicDiscordChannels.ADMIN_LOGS, (String)(event.getPlayer().getName() + " tried to use duped item: " + customItem.getClass().getSimpleName() + " world: " + event.getPlayer().getWorld().getName() + " on " + CosmicUtils.get().getServerName()));
                     }

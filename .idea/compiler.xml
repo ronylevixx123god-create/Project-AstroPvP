@@ -15,6 +15,7 @@
         <module name="Attributes" />
         <module name="Bosses" />
         <module name="Slotbot" />
+        <module name="CustomItems" />
         <module name="Utils" />
         <module name="Sets" />
         <module name="Ark" />

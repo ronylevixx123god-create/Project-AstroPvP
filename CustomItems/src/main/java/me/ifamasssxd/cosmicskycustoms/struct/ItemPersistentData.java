@@ -25,6 +25,9 @@ public class ItemPersistentData {
         this.sampleVersion = this.createSampleInstance();
     }
 
+    public ItemPersistentData(Constructor<? extends CosmicPersistentItem> constructor, Constructor<? extends CosmicPersistentItem> constructor1, Class<? extends CosmicPersistentItem> clazz, Object sampleVersion, String internal) {
+    }
+
     public CosmicPersistentItem createInstance(ItemStack itemStack, NBTWrapper wrapper) throws IllegalAccessException, InvocationTargetException, InstantiationException {
         return this.constructor.newInstance(new Object[]{itemStack, wrapper, this.internalName});
     }
