@@ -68,3 +68,7 @@ help:
 flying-mechanics: true
 flying-only-in-bases: false
 flying-in-ally-bases: false
+soulCost: 500
+bannerCost: 100000
+setBannerCost: 10000000
+bannerCooldown: 10

@@ -50,6 +50,7 @@ import com.massivecraft.factions.integration.EssentialsFeatures;
 import com.massivecraft.factions.listeners.*;
 import com.massivecraft.factions.listeners.menu.MenuListener;
 import com.massivecraft.factions.listeners.menu.fchest.FChestListener;
+import com.massivecraft.factions.manager.BannerManager;
 import com.massivecraft.factions.manager.BoardManager;
 import com.massivecraft.factions.quests.QuestUpdateTask;
 import com.massivecraft.factions.quests.managers.FactionQuestManager;
@@ -120,6 +121,13 @@ public class P extends MPlugin {
     private FactionQuestManager factionQuestManager;
     private boolean fpointsEnabled = false;
     private boolean fundEnabled;
+
+    @Getter @Setter
+    private BannerManager bannerManager;
+    @Getter @Setter
+    private BannerItem bannerItem;
+    @Getter @Setter
+    private BannerListener bannerListener;
 
     public P() {
         p = this;
