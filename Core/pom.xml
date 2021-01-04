@@ -76,7 +76,8 @@
             <groupId>com.conaxgames</groupId>
             <artifactId>Factions</artifactId>
             <version>0.1</version>
-            <scope>provided</scope>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/Factions-0.1.jar</systemPath>
         </dependency>
 
         <!-- System repos -->

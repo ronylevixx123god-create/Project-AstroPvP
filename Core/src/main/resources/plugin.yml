@@ -24,3 +24,10 @@ commands:
     aliases: [ 'lms' ]
   dupe:
     description: /dupe
+  givetracker:
+    description: Gives a player a kill tracker.
+  withdrawsouls:
+    description: Take souls from items.
+    aliases: [takesouls, removesouls, withdraws, splitsouls, ws, withdrawsoul]
+  givesoulgem:
+    description: Give soul gem with the given amount.

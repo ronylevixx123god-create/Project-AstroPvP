@@ -41,8 +41,8 @@ public class ItemUtils {
     public static void removeTracker(ItemStack is, Tracker tracker) {
         if (is.hasItemMeta() && is.getItemMeta().hasLore()) {
             ItemMeta im = is.getItemMeta();
-            List lore = im.getLore();
-            for (String s : new ArrayList(lore)) {
+            List<String> lore = im.getLore();
+            for (String s : lore) {
                 if (!s.contains(ItemUtils.getSoulString(tracker)) || !s.contains(KillTracker.LORE_SUFFIX)) continue;
                 lore.remove(s);
                 break;
@@ -61,7 +61,7 @@ public class ItemUtils {
     }
 
     public static void setTrackedKills(ItemStack is, Tracker tracker, int amount) {
-        List lore;
+        List lore = null;
         if (is.getItemMeta() == null) {
             return;
         }
@@ -70,7 +70,7 @@ public class ItemUtils {
         if (is.getItemMeta().hasLore() && im.getLore().size() > 0 && ItemUtils.containsString(im.getLore(), ItemUtils.getSoulString(tracker))) {
             alreadySet = true;
         }
-        List list = alreadySet ? (im.hasLore() ? im.getLore() : new ArrayList()) : (lore = im.hasLore() ? im.getLore() : new ArrayList());
+        List<String> list = alreadySet ? (im.hasLore() ? im.getLore() : new ArrayList()) : (lore = im.hasLore() ? im.getLore() : new ArrayList());
         if (alreadySet) {
             for (int i = 0; i < lore.size(); ++i) {
                 String s = (String)lore.get(i);

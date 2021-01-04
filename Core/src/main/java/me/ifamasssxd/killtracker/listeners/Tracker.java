@@ -51,7 +51,7 @@ public enum Tracker {
 
     public static Tracker getTrackerType(ItemStack is) {
         if (is.hasItemMeta() && is.getItemMeta().hasLore()) {
-            List lore = is.getItemMeta().getLore();
+            List<String> lore = is.getItemMeta().getLore();
             for (String s : lore) {
                 if (!s.contains(KillTracker.LORE_SUFFIX)) continue;
                 for (Tracker tracker : Tracker.values()) {

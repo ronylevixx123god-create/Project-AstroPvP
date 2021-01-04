@@ -83,7 +83,7 @@ implements Listener {
     @EventHandler(priority=EventPriority.MONITOR)
     public void onPlayerKillPlayer(PlayerDeathEvent e) {
         if (e.getEntity().getKiller() != null) {
-            long time;
+            long time = 0;
             EntityDamageByEntityEvent damageEvent;
             Player killer = e.getEntity().getKiller();
             if (killer.equals((Object)e.getEntity())) {
@@ -107,7 +107,7 @@ implements Listener {
                 killer.sendMessage((Object)ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You cannot harvest more Souls for another " + TextUtils.getFormattedCooldown(time) + "!");
                 return;
             }
-            if (!PlayerListener.canPlayerKillPlayer(killer, e.getEntity()) && (time = PlayerListener.getPlayerExpireTime(killer, e.getEntity())) != null) {
+            if (!PlayerListener.canPlayerKillPlayer(killer, e.getEntity()) && (time == PlayerListener.getPlayerExpireTime(killer, e.getEntity()))) {
                 killer.sendMessage((Object)ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You cannot collect " + e.getEntity().getName() + "'s Soul for another " + TextUtils.getFormattedCooldown(time));
                 return;
             }

@@ -20,7 +20,7 @@ import me.ifamasssxd.killtracker.KillTracker;
 import me.ifamasssxd.killtracker.KillTrackerAPI;
 import me.ifamasssxd.killtracker.listeners.Tracker;
 import me.ifamasssxd.killtracker.utils.ItemUtils;
-import net.minecraft.util.org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.ChatColor;
