@@ -1,6 +1,6 @@
 package net.astropvp.core.listeners;
 
-import net.astropvp.core.Main;
+import net.astropvp.core.AstroCore;
 import net.astropvp.core.utils.ChatManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -13,7 +13,7 @@ public class MOTD implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
 
-        Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater(AstroCore.getInstance(), () -> {
             Player player = e.getPlayer();
             for (int i = 0; i < 120; i++) {
                 player.sendMessage("§c ");

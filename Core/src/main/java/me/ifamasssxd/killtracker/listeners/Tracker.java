@@ -8,7 +8,8 @@
 package me.ifamasssxd.killtracker.listeners;
 
 import java.util.List;
-import me.ifamasssxd.killtracker.KillTracker;
+
+import net.astropvp.core.AstroCore;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
@@ -53,9 +54,9 @@ public enum Tracker {
         if (is.hasItemMeta() && is.getItemMeta().hasLore()) {
             List<String> lore = is.getItemMeta().getLore();
             for (String s : lore) {
-                if (!s.contains(KillTracker.LORE_SUFFIX)) continue;
+                if (!s.contains(AstroCore.LORE_SUFFIX)) continue;
                 for (Tracker tracker : Tracker.values()) {
-                    if (!s.startsWith((Object)tracker.getColor() + ChatColor.BOLD.toString() + (tracker.trackMobKills() ? "Monster " : "") + "Souls Harvested" + (Object)tracker.getColor() + KillTracker.LORE_SUFFIX)) continue;
+                    if (!s.startsWith((Object)tracker.getColor() + ChatColor.BOLD.toString() + (tracker.trackMobKills() ? "Monster " : "") + "Souls Harvested" + (Object)tracker.getColor() + AstroCore.LORE_SUFFIX)) continue;
                     return tracker;
                 }
             }

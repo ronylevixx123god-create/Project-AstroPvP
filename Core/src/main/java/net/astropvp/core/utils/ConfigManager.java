@@ -1,6 +1,6 @@
 package net.astropvp.core.utils;
 
-import net.astropvp.core.Main;
+import net.astropvp.core.AstroCore;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class ConfigManager {
 
-    private Main plugin;
+    private AstroCore plugin;
 
 
     private String name;
@@ -21,7 +21,7 @@ public class ConfigManager {
     private YamlConfiguration config;
     private ConsoleCommandSender console;
 
-    public ConfigManager(String name, File path, String folder, Main plugin) {
+    public ConfigManager(String name, File path, String folder, AstroCore plugin) {
         this.name = name;
         this.path = path;
         this.folder = folder;
@@ -71,11 +71,11 @@ public class ConfigManager {
 
 
             this.config = YamlConfiguration.loadConfiguration(this.file);
-            console.sendMessage(Main.getPlugin(Main.class).getConsolePrefix() + " " + this.name + " has been created!");
+            console.sendMessage(AstroCore.getPlugin(AstroCore.class).getConsolePrefix() + " " + this.name + " has been created!");
 
         } else {
             this.loadConfig();
-            console.sendMessage(Main.getPlugin(Main.class).getConsolePrefix() + " " + this.name + " already exists. Loaded saved " + this.name);
+            console.sendMessage(AstroCore.getPlugin(AstroCore.class).getConsolePrefix() + " " + this.name + " already exists. Loaded saved " + this.name);
         }
     }
 

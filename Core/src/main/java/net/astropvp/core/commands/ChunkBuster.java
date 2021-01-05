@@ -1,6 +1,6 @@
 package net.astropvp.core.commands;
 
-import net.astropvp.core.Main;
+import net.astropvp.core.AstroCore;
 import net.astropvp.core.utils.ChunkBusterUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -12,9 +12,9 @@ import org.bukkit.inventory.ItemStack;
 
 public class ChunkBuster implements CommandExecutor {
 
-    private Main plugin;
+    private AstroCore plugin;
 
-    public ChunkBuster(Main plugin) {
+    public ChunkBuster(AstroCore plugin) {
         this.plugin = plugin;
     }
 

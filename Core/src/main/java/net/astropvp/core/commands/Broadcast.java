@@ -1,6 +1,6 @@
 package net.astropvp.core.commands;
 
-import net.astropvp.core.Main;
+import net.astropvp.core.AstroCore;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -12,13 +12,13 @@ import org.bukkit.entity.Player;
 import java.util.List;
 
 public class Broadcast implements CommandExecutor {
-    private Main main;
+    private AstroCore astroCore;
 
     private List<String> broadcastCommands;
 
-    public Broadcast(Main main) {
-        this.main = main;
-        this.broadcastCommands = main.getConfig().getStringList("broadcast.commands");
+    public Broadcast(AstroCore astroCore) {
+        this.astroCore = astroCore;
+        this.broadcastCommands = astroCore.getConfig().getStringList("broadcast.commands");
     }
 
     public StringBuilder generateMessage(String[] message) {
@@ -33,7 +33,7 @@ public class Broadcast implements CommandExecutor {
 
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
         boolean followThrough = true;
-        if (!this.main.getConfig().getBoolean("broadcast.enabled"))
+        if (!this.astroCore.getConfig().getBoolean("broadcast.enabled"))
             followThrough = false;
         if (!commandSender.isOp()) {
             return false;
@@ -41,7 +41,7 @@ public class Broadcast implements CommandExecutor {
         if (args.length == 0)
             followThrough = false;
         if (followThrough)
-            for (String broadcast : this.main.getConfig().getStringList("broadcast.message")) {
+            for (String broadcast : this.astroCore.getConfig().getStringList("broadcast.message")) {
                 String message = generateMessage(args).toString();
                 Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', broadcast.replace("%broadcast%", message)));
                 for (Player player : Bukkit.getOnlinePlayers())

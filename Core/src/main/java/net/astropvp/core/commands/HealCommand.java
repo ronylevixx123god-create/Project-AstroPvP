@@ -1,6 +1,6 @@
 package net.astropvp.core.commands;
 
-import net.astropvp.core.Main;
+import net.astropvp.core.AstroCore;
 import net.astropvp.core.cooldown.HealCooldown;
 import net.astropvp.core.utils.ChatManager;
 import org.bukkit.command.Command;
@@ -14,7 +14,7 @@ public class HealCommand implements CommandExecutor {
     private FileConfiguration config;
 
     public HealCommand() {
-        this.config = Main.getPlugin(Main.class).getConfig();
+        this.config = AstroCore.getPlugin(AstroCore.class).getConfig();
     }
 
     public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {

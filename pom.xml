@@ -30,7 +30,7 @@
         <defaultGoal>clean install</defaultGoal>
         <resources>
             <resource>
-                <directory>src/main/resources</directory>
+                <directory>src/astroCore/resources</directory>
                 <filtering>true</filtering>
             </resource>
         </resources>

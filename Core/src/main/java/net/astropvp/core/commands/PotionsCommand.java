@@ -1,6 +1,6 @@
 package net.astropvp.core.commands;
 
-import net.astropvp.core.Main;
+import net.astropvp.core.AstroCore;
 import net.astropvp.core.cooldown.PotsCooldown;
 import net.astropvp.core.utils.Utils;
 import net.milkbowl.vault.economy.Economy;
@@ -14,16 +14,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class PotionsCommand implements CommandExecutor {
-    private Main plugin;
+    private AstroCore plugin;
     private PotsCooldown cooldown = new PotsCooldown();
     private Utils utils = new Utils();
 
-    public PotionsCommand(Main plugin) {
+    public PotionsCommand(AstroCore plugin) {
         this.plugin = plugin;
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        Economy economy = Main.getEcon();
+        Economy economy = AstroCore.getEcon();
         if (!(sender instanceof Player)) {
             utils.console("&cCannot execute command from console.");
             return true;

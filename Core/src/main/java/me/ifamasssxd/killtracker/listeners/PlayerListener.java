@@ -29,11 +29,11 @@ import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
 import java.util.HashMap;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
-import me.ifamasssxd.killtracker.KillTracker;
+
 import me.ifamasssxd.killtracker.PlayerKillTracker;
-import me.ifamasssxd.killtracker.listeners.Tracker;
 import me.ifamasssxd.killtracker.utils.ItemUtils;
 import me.ifamasssxd.killtracker.utils.TextUtils;
+import net.astropvp.core.AstroCore;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -86,7 +86,7 @@ implements Listener {
             long time = 0;
             EntityDamageByEntityEvent damageEvent;
             Player killer = e.getEntity().getKiller();
-            if (killer.equals((Object)e.getEntity())) {
+            if (killer.equals(e.getEntity())) {
                 return;
             }
             ItemStack hand = killer.getItemInHand();
@@ -104,11 +104,11 @@ implements Listener {
                 return;
             }
             if (lastSoulCollected.containsKey(killer.getUniqueId()) && (time = lastSoulCollected.get(killer.getUniqueId()).longValue()) > System.currentTimeMillis()) {
-                killer.sendMessage((Object)ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You cannot harvest more Souls for another " + TextUtils.getFormattedCooldown(time) + "!");
+                killer.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot harvest more Souls for another " + TextUtils.getFormattedCooldown(time) + "!");
                 return;
             }
             if (!PlayerListener.canPlayerKillPlayer(killer, e.getEntity()) && (time == PlayerListener.getPlayerExpireTime(killer, e.getEntity()))) {
-                killer.sendMessage((Object)ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You cannot collect " + e.getEntity().getName() + "'s Soul for another " + TextUtils.getFormattedCooldown(time));
+                killer.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot collect " + e.getEntity().getName() + "'s Soul for another " + TextUtils.getFormattedCooldown(time));
                 return;
             }
             if (!PlayerListener.logPlayerKill(killer, e.getEntity())) {
@@ -121,14 +121,14 @@ implements Listener {
             killer.playSound(killer.getLocation(), Sound.ORB_PICKUP, 1.0f, 1.4f);
             ItemUtils.setTrackedKills(hand, tracker, ++kills);
             lastSoulCollected.put(killer.getUniqueId(), System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(2L));
-            Bukkit.getPluginManager().callEvent((Event)new CustomCosmicPlayerEvent(killer, "SOUL_HARVEST", new Object[]{e.getEntity()}));
+            Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(killer, "SOUL_HARVEST", new Object[]{e.getEntity()}));
         }
     }
 
     @EventHandler
     public void onPlayerShootBow(EntityShootBowEvent e) {
         if (e.getEntity() != null && e.getEntity() instanceof Player && Tracker.getTrackerType(e.getBow()) != null) {
-            e.getProjectile().setMetadata("bow_used", (MetadataValue)new FixedMetadataValue((Plugin)KillTracker.get(), (Object)e.getBow()));
+            e.getProjectile().setMetadata("bow_used", new FixedMetadataValue(AstroCore.getInstance(), e.getBow()));
         }
     }
 
@@ -137,15 +137,15 @@ implements Listener {
         if (tracker == null) {
             return null;
         }
-        return (Long)tracker.get(dead.getName());
+        return tracker.get(dead.getName());
     }
 
     public static boolean logPlayerKill(Player p, Player dead) {
         long time;
-        if (p.hasMetadata("kill_tracker_cooldown") && p.getMetadata("kill_tracker_cooldown").size() > 0 && (time = ((MetadataValue)p.getMetadata("kill_tracker_cooldown").get(0)).asLong()) > System.currentTimeMillis()) {
+        if (p.hasMetadata("kill_tracker_cooldown") && p.getMetadata("kill_tracker_cooldown").size() > 0 && (time = p.getMetadata("kill_tracker_cooldown").get(0).asLong()) > System.currentTimeMillis()) {
             return false;
         }
-        p.setMetadata("kill_tracker_cooldown", (MetadataValue)new FixedMetadataValue((Plugin)KillTracker.get(), (Object)(System.currentTimeMillis() + 100L)));
+        p.setMetadata("kill_tracker_cooldown", new FixedMetadataValue(AstroCore.getInstance(), System.currentTimeMillis() + 100L));
         PlayerKillTracker tracker = null;
         tracker = playerKills.containsKey(p.getName()) ? playerKills.get(p.getName()) : new PlayerKillTracker();
         tracker.put(dead.getName(), System.currentTimeMillis() + 600000L);
@@ -156,7 +156,7 @@ implements Listener {
     public static boolean canPlayerKillPlayer(Player p, Player dead) {
         PlayerKillTracker tracker = playerKills.get(p.getName());
         if (tracker != null) {
-            Long expire = (Long)tracker.get(dead.getName());
+            Long expire = tracker.get(dead.getName());
             if (expire != null && expire <= System.currentTimeMillis()) {
                 tracker.remove(dead.getName());
                 return true;
@@ -178,7 +178,7 @@ implements Listener {
                     public void run() {
                         if (p.isDead() || p.getTicksLived() <= 3) {
                             ItemStack bow;
-                            ItemStack itemStack = bow = arrow.hasMetadata("bow_used") && arrow.getMetadata("bow_used").size() > 0 ? (ItemStack)((MetadataValue)arrow.getMetadata("bow_used").get(0)).value() : null;
+                            ItemStack itemStack = bow = arrow.hasMetadata("bow_used") && arrow.getMetadata("bow_used").size() > 0 ? (ItemStack) arrow.getMetadata("bow_used").get(0).value() : null;
                             if (shooter != null && bow != null && bow.getType() == Material.BOW) {
                                 Long time;
                                 Tracker tracker = Tracker.getTrackerType(bow);
@@ -186,11 +186,11 @@ implements Listener {
                                     return;
                                 }
                                 if (!PlayerListener.canPlayerKillPlayer(shooter, p) && (time = PlayerListener.getPlayerExpireTime(shooter, p)) != null) {
-                                    shooter.sendMessage((Object)ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You cannot collect " + p.getName() + "'s Soul for another " + TextUtils.getFormattedCooldown(time));
+                                    shooter.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot collect " + p.getName() + "'s Soul for another " + TextUtils.getFormattedCooldown(time));
                                     return;
                                 }
                                 if (lastSoulCollected.containsKey(shooter.getUniqueId()) && (time = lastSoulCollected.get(shooter.getUniqueId()).longValue()) > System.currentTimeMillis()) {
-                                    shooter.sendMessage((Object)ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You cannot harvest more Souls for another " + TextUtils.getFormattedCooldown(time) + "!");
+                                    shooter.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot harvest more Souls for another " + TextUtils.getFormattedCooldown(time) + "!");
                                     return;
                                 }
                                 PlayerListener.logPlayerKill(shooter, p);
@@ -204,7 +204,7 @@ implements Listener {
                             }
                         }
                     }
-                }.runTaskLater((Plugin)KillTracker.get(), 1L);
+                }.runTaskLater(AstroCore.getInstance(), 1L);
             }
         }
     }

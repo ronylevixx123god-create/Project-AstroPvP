@@ -9,8 +9,8 @@
  */
 package me.ifamasssxd.help.commands;
 
-import me.ifamasssxd.help.CosmicHelp;
 import me.ifamasssxd.help.gui.HCFSpawnGUI;
+import net.astropvp.core.AstroCore;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -22,11 +22,11 @@ implements CommandExecutor {
         if (!(sender instanceof Player)) {
             return true;
         }
-        if (!CosmicHelp.get().getHelpCommand().isHardCoreFactions()) {
+        if (!AstroCore.getInstance().getHelpCommand().isHardCoreFactions()) {
             return true;
         }
         Player player = (Player)sender;
-        new HCFSpawnGUI(player).openGUI(CosmicHelp.get());
+        new HCFSpawnGUI(player).openGUI(AstroCore.getInstance());
         return false;
     }
 }

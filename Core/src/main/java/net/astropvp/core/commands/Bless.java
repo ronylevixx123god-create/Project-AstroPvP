@@ -1,6 +1,6 @@
 package net.astropvp.core.commands;
 
-import net.astropvp.core.Main;
+import net.astropvp.core.AstroCore;
 import net.astropvp.core.cooldown.BlessCooldown;
 import net.astropvp.core.utils.ChatManager;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
@@ -16,7 +16,7 @@ public class Bless implements CommandExecutor {
     private BlessCooldown cooldown = new BlessCooldown();
 
     public Bless() {
-        this.config = Main.getPlugin(Main.class).getConfig();
+        this.config = AstroCore.getPlugin(AstroCore.class).getConfig();
     }
 
     public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {

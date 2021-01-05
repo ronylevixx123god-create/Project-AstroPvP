@@ -1,6 +1,6 @@
 name: AstroCore
 version: ${project.version}
-main: net.astropvp.core.Main
+main: net.astropvp.core.AstroCore
 authors: [ Tucker, Bryside ]
 description: Astro Core
 commands:
@@ -31,3 +31,9 @@ commands:
     aliases: [takesouls, removesouls, withdraws, splitsouls, ws, withdrawsoul]
   givesoulgem:
     description: Give soul gem with the given amount.
+  helpenchants:
+    description: Enchantment help.
+  wiki:
+    description: Wiki
+  spawnmenu:
+    description: Spawn menu for HCF.

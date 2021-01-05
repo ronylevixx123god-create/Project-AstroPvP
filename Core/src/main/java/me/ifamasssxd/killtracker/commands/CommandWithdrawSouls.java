@@ -16,10 +16,10 @@
  */
 package me.ifamasssxd.killtracker.commands;
 
-import me.ifamasssxd.killtracker.KillTracker;
 import me.ifamasssxd.killtracker.KillTrackerAPI;
 import me.ifamasssxd.killtracker.listeners.Tracker;
 import me.ifamasssxd.killtracker.utils.ItemUtils;
+import net.astropvp.core.AstroCore;
 import org.apache.commons.lang3.StringUtils;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
@@ -118,7 +118,7 @@ implements CommandExecutor {
                 p.sendMessage((Object)ChatColor.RED + "Player Souls: " + (Object)ChatColor.GRAY + kills);
                 return true;
             }
-            int n = shards = tracker.trackMobKills() ? amount : amount * tracker.getRank() * KillTracker.get().getConfig().getInt("soulMultiplier", 5);
+            int n = shards = tracker.trackMobKills() ? amount : amount * tracker.getRank() * AstroCore.getInstance().getConfig().getInt("soulMultiplier", 5);
             if (p.getInventory().firstEmpty() == -1) {
                 p.sendMessage((Object)ChatColor.RED + "You do not have enough inventory space for the Soul Gem.");
                 return true;

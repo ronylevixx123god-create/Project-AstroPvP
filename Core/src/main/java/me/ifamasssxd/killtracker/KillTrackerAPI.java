@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import me.ifamasssxd.killtracker.KillTracker;
+
 import me.ifamasssxd.killtracker.events.PlayerSubtractSoulsEvent;
 import me.ifamasssxd.killtracker.listeners.PlayerListener;
 import me.ifamasssxd.killtracker.listeners.Tracker;
@@ -68,7 +68,7 @@ public class KillTrackerAPI {
             if (is == null || is.getType() == Material.AIR || !KillTrackerAPI.isSoulGem(is)) continue;
             int souls = KillTrackerAPI.getSouls(is);
             if (to_remove >= souls) {
-                p.getInventory().removeItem(new ItemStack[]{is});
+                p.getInventory().removeItem(is);
                 to_remove -= souls;
                 continue;
             }

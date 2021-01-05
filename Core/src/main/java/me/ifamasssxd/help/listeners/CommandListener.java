@@ -23,10 +23,10 @@ import com.cosmicpvp.cosmicutils.utils.StringUtils;
 import com.google.common.collect.Lists;
 import java.util.ArrayList;
 
-import me.ifamasssxd.help.CosmicHelp;
 import me.ifamasssxd.help.gui.HCFClaimingGUI;
 import me.ifamasssxd.help.gui.HCFClassGui;
 import me.ifamasssxd.help.json.JSONMessage;
+import net.astropvp.core.AstroCore;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -34,8 +34,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
-public class CommandListener
-implements Listener {
+public class CommandListener implements Listener {
     @EventHandler(priority=EventPriority.LOW)
     public void onPlayerPreProcess(PlayerCommandPreprocessEvent event) {
         String command = event.getMessage().contains(" ") ? event.getMessage().split(" ")[0].toLowerCase() : event.getMessage().toLowerCase();
@@ -69,13 +68,13 @@ implements Listener {
                 }
                 if (pageNumber.equalsIgnoreCase("lootbox")) {
                     ArrayList msg = Lists.newArrayList((Object[])new String[]{"", "&b&lAstro Lootbox", CC.Gray + "Astro Lootboxes are special items that are released on a weekly basis. They are displayed by the " + CC.Aqua + "Lootbox Merchant at /spawn" + CC.Gray + " or in the " + CC.Aqua + "/lootbox" + CC.Gray + " menu.", "", CC.Gray + "Lootboxes are " + CC.Aqua + "only available for a specific amount of time " + CC.Gray + "before they sell out, expire, and are gone forever.", "", CC.Gray + "Lootboxes contain " + CC.Aqua + "random combination" + CC.Gray + " of extremely rare, typically otherwise unobtainable items. Don't miss your chance, collect every " + CC.Aqua + "/lootbox" + CC.Gray + " you can!", ""});
-                    msg.forEach(pl -> player.sendMessage(ChatColor.translateAlternateColorCodes((char)'&', (String)pl)));
+                    msg.forEach(pl -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', (String)pl)));
                     event.setCancelled(true);
                     return;
                 }
                 if (pageNumber.equalsIgnoreCase("end") && CosmicUtils.get().isArkkitEnabled()) {
                     ArrayList msg = Lists.newArrayList((Object[])new String[]{"", "&d&lThe Ender Dimension", "&7The End is a dangerous, hardcore, PvP-enabled realm that you &c&ncannot&7 teleport directly out of; in order to escape, you must find the &cExit Portal.", "", "&7The End disables all &nSoul, Heroic, and Mastery enchantments.&7 In addition, Knockback enchantments are decreased and command execution is limited.", "", "&7Custom Creepers and Ender Monsters naturally spawn throughout the End. The Custom Creepers drop custom eggs, and the Ender Monsters drop amplified XP, Money, and /gkit Items. The more you kill, the better the loot.", "", "&7The &4&lTimeless Dragon&7 boss spawns in the center pit of The End every &n7-12 hours.&7 One of the strongest enemies in the game, with some of the best loot, including pieces of the infamous \"&e&lDragon Slayer&7\" armor set.", "", "&7The End can be accessed through the /warp menu or by executing &d&n/warp end", ""});
-                    msg.forEach(pl -> player.sendMessage(ChatColor.translateAlternateColorCodes((char)'&', (String)pl)));
+                    msg.forEach(pl -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', (String)pl)));
                     event.setCancelled(true);
                     return;
                 }
@@ -94,38 +93,38 @@ implements Listener {
                     event.setCancelled(true);
                     return;
                 }
-                if ((CosmicHelp.get().getHelpCommand().isHardCoreFactions() || CosmicHelp.get().getHelpCommand().isClassesEnabled()) && pageNumber.equalsIgnoreCase("classes")) {
-                    new HCFClassGui(event.getPlayer()).openGUI(CosmicHelp.get());
+                if ((AstroCore.getInstance().getHelpCommand().isHardCoreFactions() || AstroCore.getInstance().getHelpCommand().isClassesEnabled()) && pageNumber.equalsIgnoreCase("classes")) {
+                    new HCFClassGui(event.getPlayer()).openGUI(AstroCore.getInstance());
                     event.setCancelled(true);
                     event.setMessage("/null");
                     return;
                 }
-                if (CosmicHelp.get().getHelpCommand().isHcfOutpostsEnabled() && (pageNumber.equalsIgnoreCase("stronghold") || pageNumber.equalsIgnoreCase("strongholds"))) {
+                if (AstroCore.getInstance().getHelpCommand().isHcfOutpostsEnabled() && (pageNumber.equalsIgnoreCase("stronghold") || pageNumber.equalsIgnoreCase("strongholds"))) {
                     event.setMessage("/stronghold menu");
                     return;
                 }
-                if (CosmicHelp.get().getHelpCommand().isHcfCrateEnabled() && (pageNumber.equalsIgnoreCase("crate") || pageNumber.equalsIgnoreCase("crates"))) {
+                if (AstroCore.getInstance().getHelpCommand().isHcfCrateEnabled() && (pageNumber.equalsIgnoreCase("crate") || pageNumber.equalsIgnoreCase("crates"))) {
                     event.setMessage("/crate help");
                     return;
                 }
-                if (CosmicHelp.get().getHelpCommand().isHardCoreFactions()) {
+                if (AstroCore.getInstance().getHelpCommand().isHardCoreFactions()) {
                     if (pageNumber.equalsIgnoreCase("claiming")) {
-                        new HCFClaimingGUI(event.getPlayer()).openGUI(CosmicHelp.get());
+                        new HCFClaimingGUI(event.getPlayer()).openGUI(AstroCore.getInstance());
                         event.setCancelled(true);
                         event.setMessage("/null");
                         return;
                     }
                     if (pageNumber.equalsIgnoreCase("nether")) {
                         player.sendMessage("");
-                        player.sendMessage(StringUtils.getCenteredMessage((String)(CC.RedB + "The Nether")));
+                        player.sendMessage(StringUtils.getCenteredMessage(CC.RedB + "The Nether"));
                         player.sendMessage(CC.Gray + "The nether is a dangerous place full of resources that can be used to give your faction an edge over the competition!");
                         player.sendMessage("");
-                        player.sendMessage(StringUtils.getCenteredMessage((String)(CC.RedB + "Resources Available")));
-                        JSONMessage.createRunMessage(StringUtils.getCenteredMessage((String)(CC.RedB + " * " + CC.Yellow + "Glowstone Mountain")), ChatColor.YELLOW, "/glowstonemountain", CC.Yellow + "/glowstonemountain\n\n" + CC.Green + "Click for more info!").sendToPlayer(player);
-                        JSONMessage.createRunMessage(StringUtils.getCenteredMessage((String)(CC.RedB + " * " + CC.Red + "Nether KOTH")), ChatColor.RED, "/koth nether", CC.Yellow + "/koth nether\n\n" + CC.Green + "Click for more info!").sendToPlayer(player);
-                        player.sendMessage(StringUtils.getCenteredMessage((String)(CC.RedB + " * " + CC.Red + "Nether Fortresses")));
-                        player.sendMessage(StringUtils.getCenteredMessage((String)(CC.RedB + " * " + CC.Aqua + "Ghast Tears")));
-                        player.sendMessage(StringUtils.getCenteredMessage((String)(CC.RedB + " * " + CC.Gold + "Magma Cream")));
+                        player.sendMessage(StringUtils.getCenteredMessage(CC.RedB + "Resources Available"));
+                        JSONMessage.createRunMessage(StringUtils.getCenteredMessage(CC.RedB + " * " + CC.Yellow + "Glowstone Mountain"), ChatColor.YELLOW, "/glowstonemountain", CC.Yellow + "/glowstonemountain\n\n" + CC.Green + "Click for more info!").sendToPlayer(player);
+                        JSONMessage.createRunMessage(StringUtils.getCenteredMessage(CC.RedB + " * " + CC.Red + "Nether KOTH"), ChatColor.RED, "/koth nether", CC.Yellow + "/koth nether\n\n" + CC.Green + "Click for more info!").sendToPlayer(player);
+                        player.sendMessage(StringUtils.getCenteredMessage(CC.RedB + " * " + CC.Red + "Nether Fortresses"));
+                        player.sendMessage(StringUtils.getCenteredMessage(CC.RedB + " * " + CC.Aqua + "Ghast Tears"));
+                        player.sendMessage(StringUtils.getCenteredMessage(CC.RedB + " * " + CC.Gold + "Magma Cream"));
                         player.sendMessage("");
                         event.setCancelled(true);
                         event.setMessage("/null");
@@ -133,15 +132,15 @@ implements Listener {
                     }
                     if (pageNumber.equalsIgnoreCase("end")) {
                         player.sendMessage("");
-                        player.sendMessage(StringUtils.getCenteredMessage((String)(CC.LightPurpleB + "The End")));
-                        player.sendMessage(StringUtils.getCenteredMessage((String)(CC.Gray + "The end is a dark, gloomy land where dangerous creatures can be found and slain for their drops!")));
+                        player.sendMessage(StringUtils.getCenteredMessage(CC.LightPurpleB + "The End"));
+                        player.sendMessage(StringUtils.getCenteredMessage(CC.Gray + "The end is a dark, gloomy land where dangerous creatures can be found and slain for their drops!"));
                         this.sendCentered(player, CC.Gray + "Enter the End Portals at " + CC.LightPurple + "+/-1500x" + CC.Gray + ", " + CC.LightPurple + "+/-1500z!");
                         player.sendMessage("");
-                        player.sendMessage(StringUtils.getCenteredMessage((String)(CC.LightPurpleB + "Resources Available")));
-                        JSONMessage.createRunMessage(StringUtils.getCenteredMessage((String)(CC.LightPurpleB + " * " + CC.LightPurple + "End KOTH")), ChatColor.LIGHT_PURPLE, "/koth end", CC.Yellow + "/koth end\n\n" + CC.Green + "Click for more info!").sendToPlayer(player);
-                        player.sendMessage(StringUtils.getCenteredMessage((String)(CC.LightPurpleB + " * " + CC.Yellow + "Endermen")));
-                        player.sendMessage(StringUtils.getCenteredMessage((String)(CC.LightPurpleB + " * " + CC.Green + "Creepers")));
-                        player.sendMessage(StringUtils.getCenteredMessage((String)(CC.LightPurpleB + " * " + CC.Green + "Slimes")));
+                        player.sendMessage(StringUtils.getCenteredMessage(CC.LightPurpleB + "Resources Available"));
+                        JSONMessage.createRunMessage(StringUtils.getCenteredMessage(CC.LightPurpleB + " * " + CC.LightPurple + "End KOTH"), ChatColor.LIGHT_PURPLE, "/koth end", CC.Yellow + "/koth end\n\n" + CC.Green + "Click for more info!").sendToPlayer(player);
+                        player.sendMessage(StringUtils.getCenteredMessage(CC.LightPurpleB + " * " + CC.Yellow + "Endermen"));
+                        player.sendMessage(StringUtils.getCenteredMessage(CC.LightPurpleB + " * " + CC.Green + "Creepers"));
+                        player.sendMessage(StringUtils.getCenteredMessage(CC.LightPurpleB + " * " + CC.Green + "Slimes"));
                         player.sendMessage("");
                         event.setCancelled(true);
                         event.setMessage("/null");
@@ -202,7 +201,7 @@ implements Listener {
                     }
                     if (pageNumber.equalsIgnoreCase("crates")) {
                         player.sendMessage("");
-                        player.sendMessage(StringUtils.getCenteredMessage((String)(CC.AquaB + "HCF Crates")));
+                        player.sendMessage(StringUtils.getCenteredMessage(CC.AquaB + "HCF Crates"));
                         JSONMessage message = new JSONMessage("");
                         message.addText(CC.Gray + "Crate Keys can be obtained from falling ");
                         message.addRunCommand(CC.AquaB + "Treasure Drops", ChatColor.AQUA, "/help treasuredrops", CC.Aqua + "/help treasuredrops\n\n" + CC.Yellow + "Click to view info about Treasure Drops!");
@@ -213,14 +212,14 @@ implements Listener {
                         message.addText(CC.Gray + "!", ChatColor.GRAY);
                         message.sendToPlayer(player);
                         player.sendMessage("");
-                        player.sendMessage(StringUtils.getCenteredMessage((String)(CC.WhiteB + "Crates Available...")));
-                        player.sendMessage(StringUtils.getCenteredMessage((String)(CC.BlueB + "Elite Crate")));
-                        player.sendMessage(StringUtils.getCenteredMessage((String)(CC.YellowB + "Ultimate Crate")));
-                        player.sendMessage(StringUtils.getCenteredMessage((String)(CC.GoldB + "Legendary Crate")));
-                        player.sendMessage(StringUtils.getCenteredMessage((String)(CC.RedB + "Kill Message Crate")));
-                        player.sendMessage(StringUtils.getCenteredMessage((String)(CC.Aqua + CC.Magic + "|" + CC.Aqua + " " + String.format("%sK%s.%sO%s.%sT%s.%sH" + CC.Aqua + " " + CC.Magic + "|" + CC.GreenB + " Crate", CC.RedB, CC.GoldB, CC.YellowB, CC.GreenB, CC.AquaB, CC.BlueB, CC.LightPurpleB, CC.DarkPurpleB))));
+                        player.sendMessage(StringUtils.getCenteredMessage(CC.WhiteB + "Crates Available..."));
+                        player.sendMessage(StringUtils.getCenteredMessage(CC.BlueB + "Elite Crate"));
+                        player.sendMessage(StringUtils.getCenteredMessage(CC.YellowB + "Ultimate Crate"));
+                        player.sendMessage(StringUtils.getCenteredMessage(CC.GoldB + "Legendary Crate"));
+                        player.sendMessage(StringUtils.getCenteredMessage(CC.RedB + "Kill Message Crate"));
+                        player.sendMessage(StringUtils.getCenteredMessage(CC.Aqua + CC.Magic + "|" + CC.Aqua + " " + String.format("%sK%s.%sO%s.%sT%s.%sH" + CC.Aqua + " " + CC.Magic + "|" + CC.GreenB + " Crate", CC.RedB, CC.GoldB, CC.YellowB, CC.GreenB, CC.AquaB, CC.BlueB, CC.LightPurpleB, CC.DarkPurpleB)));
                         player.sendMessage("");
-                        player.sendMessage(StringUtils.getCenteredMessage((String)(CC.Gray + "Visit the spawn to view all potential crate prizes!")));
+                        player.sendMessage(StringUtils.getCenteredMessage(CC.Gray + "Visit the spawn to view all potential crate prizes!"));
                         player.sendMessage("");
                         event.setCancelled(true);
                         event.setMessage("/null");
@@ -240,29 +239,29 @@ implements Listener {
                         return;
                     }
                 }
-                if ((given = NumberUtils.parseIntOrNull((String)pageNumber)) != null) {
+                if ((given = NumberUtils.parseIntOrNull(pageNumber)) != null) {
                     page = given;
                 }
             }
             event.setCancelled(true);
-            CosmicHelp.get().getHelpCommand().onCommand(event.getPlayer(), page);
+            AstroCore.getInstance().getHelpCommand().onCommand(event.getPlayer(), page);
             event.setMessage("/null");
         } else if (command.equals("/client")) {
             Player pl2 = event.getPlayer();
             pl2.sendMessage("");
-            pl2.sendMessage((Object)ChatColor.AQUA + ChatColor.BOLD.toString() + "Astro" + (Object)ChatColor.LIGHT_PURPLE + ChatColor.BOLD.toString() + "Client");
-            pl2.sendMessage((Object)ChatColor.WHITE + ChatColor.UNDERLINE.toString() + "https://client.astropvp.net");
-            pl2.sendMessage((Object)ChatColor.GRAY + "Click the link above to visit the forums.");
-            pl2.sendMessage((Object)ChatColor.GRAY + "Use " + (Object)ChatColor.GRAY + ChatColor.UNDERLINE.toString() + "/syncaccount" + (Object)ChatColor.GRAY + " to sync your forums account with your in game rank.");
+            pl2.sendMessage(ChatColor.AQUA + ChatColor.BOLD.toString() + "Astro" + ChatColor.LIGHT_PURPLE + ChatColor.BOLD.toString() + "Client");
+            pl2.sendMessage(ChatColor.WHITE + ChatColor.UNDERLINE.toString() + "https://client.astropvp.net");
+            pl2.sendMessage(ChatColor.GRAY + "Click the link above to visit the forums.");
+            pl2.sendMessage(ChatColor.GRAY + "Use " + ChatColor.GRAY + ChatColor.UNDERLINE.toString() + "/syncaccount" + ChatColor.GRAY + " to sync your forums account with your in game rank.");
             pl2.sendMessage("");
             event.setCancelled(true);
             event.setMessage("/null");
         } else if (command.equals("/buylink") || command.equals("/buy")) {
             Player pl3 = event.getPlayer();
             pl3.sendMessage("");
-            pl3.sendMessage((Object)ChatColor.AQUA + ChatColor.BOLD.toString() + "Astro" + (Object)ChatColor.LIGHT_PURPLE + ChatColor.BOLD.toString() + "PvP Store");
-            pl3.sendMessage((Object)ChatColor.WHITE + ChatColor.UNDERLINE.toString() + "http://buy.astropvp.net");
-            pl3.sendMessage((Object)ChatColor.GRAY + "Click the link above to visit the shop.");
+            pl3.sendMessage(ChatColor.AQUA + ChatColor.BOLD.toString() + "Astro" + ChatColor.LIGHT_PURPLE + ChatColor.BOLD.toString() + "PvP Store");
+            pl3.sendMessage(ChatColor.WHITE + ChatColor.UNDERLINE.toString() + "http://buy.astropvp.net");
+            pl3.sendMessage(ChatColor.GRAY + "Click the link above to visit the shop.");
             pl3.sendMessage("");
             event.setCancelled(true);
             event.setMessage("/null");
@@ -274,7 +273,7 @@ implements Listener {
     }
 
     private void sendCentered(Player player, String msg) {
-        player.sendMessage(StringUtils.getCenteredMessage((String)msg));
+        player.sendMessage(StringUtils.getCenteredMessage(msg));
     }
 }
 

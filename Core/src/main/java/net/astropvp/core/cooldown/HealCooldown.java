@@ -1,6 +1,6 @@
 package net.astropvp.core.cooldown;
 
-import net.astropvp.core.Main;
+import net.astropvp.core.AstroCore;
 import net.astropvp.core.utils.ChatManager;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -31,7 +31,7 @@ public class HealCooldown {
             public void run() {
                 cooldown.remove(pl.getUniqueId());
             }
-        }.runTaskLater(Main.getInstance(), 20L * 150);
+        }.runTaskLater(AstroCore.getInstance(), 20L * 150);
     }
 
 }

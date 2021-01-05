@@ -1,5 +1,16 @@
 package net.astropvp.core;
 
+import me.ifamasssxd.help.commands.CommandHelp;
+import me.ifamasssxd.help.commands.CommandHelpEnchants;
+import me.ifamasssxd.help.commands.CommandSpawnMenu;
+import me.ifamasssxd.help.commands.CommandWiki;
+import me.ifamasssxd.help.listeners.CommandListener;
+import me.ifamasssxd.killtracker.commands.CommandGiveSoulGem;
+import me.ifamasssxd.killtracker.commands.CommandGiveTracker;
+import me.ifamasssxd.killtracker.commands.CommandWithdrawSouls;
+import me.ifamasssxd.killtracker.listeners.ItemListener;
+import me.ifamasssxd.killtracker.listeners.PlayerListener;
+import me.ifamasssxd.killtracker.listeners.SoulGemListener;
 import net.astropvp.core.commands.*;
 import net.astropvp.core.listeners.*;
 import net.astropvp.core.tasks.LastManStandingCapTask;
@@ -8,19 +19,22 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class Main extends JavaPlugin {
+public class AstroCore extends JavaPlugin {
 
-    private static Main instance;
+    private static AstroCore instance;
     private static Economy econ = null;
     private final String consolePrefix = "[AstroCore]";
 
-    public static Main getInstance() {
+    public static AstroCore getInstance() {
         return instance;
     }
 
     public static Economy getEcon() {
         return econ;
     }
+
+    private CommandHelp commandHelp;
+    public static String LORE_SUFFIX = ":  ";
 
     public void onEnable() {
         instance = this;
@@ -30,6 +44,20 @@ public class Main extends JavaPlugin {
         events();
         new LastManStandingCapTask().runTaskTimer(this, 20L, 20L);
 
+        this.commandHelp = new CommandHelp();
+        if (commandHelp.isEnchantsEnabled()) {
+            this.getCommand("helpenchants").setExecutor(new CommandHelpEnchants());
+        }
+        this.getCommand("wiki").setExecutor(new CommandWiki());
+        this.getCommand("spawnmenu").setExecutor(new CommandSpawnMenu());
+        this.getCommand("withdrawsouls").setExecutor(new CommandWithdrawSouls());
+        this.getCommand("givetracker").setExecutor(new CommandGiveTracker());
+        this.getCommand("givesoulgem").setExecutor(new CommandGiveSoulGem());
+
+        this.getServer().getPluginManager().registerEvents(new CommandListener(), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
+        this.getServer().getPluginManager().registerEvents(new ItemListener(), this);
+        this.getServer().getPluginManager().registerEvents(new SoulGemListener(), this);
     }
 
     public void commands() {
@@ -76,6 +104,10 @@ public class Main extends JavaPlugin {
             return false;
         econ = rsp.getProvider();
         return (econ != null);
+    }
+
+    public CommandHelp getHelpCommand() {
+        return this.commandHelp;
     }
 
 }
