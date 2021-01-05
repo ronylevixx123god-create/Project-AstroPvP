@@ -37,3 +37,7 @@ commands:
     description: Wiki
   spawnmenu:
     description: Spawn menu for HCF.
+  csponge:
+    description: Root command.
+    usage: /<command>
+

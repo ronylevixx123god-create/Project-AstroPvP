@@ -1,5 +1,11 @@
 package net.astropvp.core;
 
+import com.cosmicpvp.CosmicSponges.CosmicSpongesAPI;
+import com.cosmicpvp.CosmicSponges.libs.SpongeChunk;
+import com.cosmicpvp.CosmicSponges.listeners.BlockFlowListener;
+import com.cosmicpvp.CosmicSponges.listeners.ChunkListener;
+import com.cosmicpvp.CosmicSponges.listeners.SpongeModifyListener;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import me.ifamasssxd.help.commands.CommandHelp;
 import me.ifamasssxd.help.commands.CommandHelpEnchants;
 import me.ifamasssxd.help.commands.CommandSpawnMenu;
@@ -15,9 +21,15 @@ import net.astropvp.core.commands.*;
 import net.astropvp.core.listeners.*;
 import net.astropvp.core.tasks.LastManStandingCapTask;
 import net.milkbowl.vault.economy.Economy;
+import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
+import org.bukkit.World;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
+import java.util.HashMap;
 
 public class AstroCore extends JavaPlugin {
 
@@ -35,6 +47,7 @@ public class AstroCore extends JavaPlugin {
 
     private CommandHelp commandHelp;
     public static String LORE_SUFFIX = ":  ";
+    private File spongeDirectory;
 
     public void onEnable() {
         instance = this;
@@ -48,6 +61,21 @@ public class AstroCore extends JavaPlugin {
         if (commandHelp.isEnchantsEnabled()) {
             this.getCommand("helpenchants").setExecutor(new CommandHelpEnchants());
         }
+
+        CosmicSpongesAPI.setCachedSpongeChunks(new HashMap<String, SpongeChunk>());
+        this.buildDB();
+        for (World w : Bukkit.getWorlds()) {
+            for (Chunk c : w.getLoadedChunks()) {
+                CosmicSpongesAPI.cacheSpongeChunk(c);
+            }
+        }
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "arkunload lava_sponge");
+        WorldGuardPlugin.inst().getConfig().set("simulation.sponge.enable", false);
+        for (World w : Bukkit.getWorlds()) {
+            WorldGuardPlugin.inst().getGlobalStateManager().get(w).simulateSponge = false;
+        }
+        CosmicSpongesAPI.debug = false;
+
         this.getCommand("wiki").setExecutor(new CommandWiki());
         this.getCommand("spawnmenu").setExecutor(new CommandSpawnMenu());
         this.getCommand("withdrawsouls").setExecutor(new CommandWithdrawSouls());
@@ -58,6 +86,10 @@ public class AstroCore extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
         this.getServer().getPluginManager().registerEvents(new ItemListener(), this);
         this.getServer().getPluginManager().registerEvents(new SoulGemListener(), this);
+
+        this.getServer().getPluginManager().registerEvents(new ChunkListener(), this);
+        this.getServer().getPluginManager().registerEvents(new BlockFlowListener(), this);
+        this.getServer().getPluginManager().registerEvents(new SpongeModifyListener(), this);
     }
 
     public void commands() {
@@ -108,6 +140,21 @@ public class AstroCore extends JavaPlugin {
 
     public CommandHelp getHelpCommand() {
         return this.commandHelp;
+    }
+
+    private void buildDB() {
+        this.spongeDirectory = new File("plugins/CosmicSponges/spongeChunks");
+        if (!this.spongeDirectory.exists()) {
+            this.spongeDirectory.mkdirs();
+        }
+        for (World w : Bukkit.getWorlds()) {
+            File subDir = new File("plugins/CosmicSponges/spongeChunks/" + w.getName());
+            subDir.mkdir();
+        }
+    }
+
+    public File getSpongeDirectory() {
+        return this.spongeDirectory;
     }
 
 }
