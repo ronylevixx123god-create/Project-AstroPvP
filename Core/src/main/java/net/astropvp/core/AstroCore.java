@@ -23,6 +23,11 @@ import me.ifamasssxd.betterpay.PayListener;
 import me.ifamasssxd.betterpay.PayToggle;
 import me.ifamasssxd.betterpay.commands.CommandTogglePay;
 import me.ifamasssxd.corechunkfinder.CoreChunkFinderCommand;
+import me.ifamasssxd.cosmicbosses.struct.Boss;
+import me.ifamasssxd.cosmicheroicenvoys.commands.CommandSetHeroicBossSpawn;
+import me.ifamasssxd.cosmicheroicenvoys.commands.CommandSpawnHeroicBoss;
+import me.ifamasssxd.cosmicheroicenvoys.listeners.EnvoyListener;
+import me.ifamasssxd.cosmicheroicenvoys.managers.EnvoyManager;
 import me.ifamasssxd.cosmicjackpot.listeners.JackpotListener;
 import me.ifamasssxd.cosmicjackpot.struct.JackpotManager;
 import me.ifamasssxd.help.commands.CommandHelp;
@@ -88,6 +93,8 @@ public class AstroCore extends JavaPlugin {
     // CoreChunkFinder
     @Getter
     private boolean tntDebug = false;
+    // Heroic Envoys
+    public EnvoyManager envoyManager;
 
     @SneakyThrows
     public void onEnable() {
@@ -136,6 +143,11 @@ public class AstroCore extends JavaPlugin {
         this.dataManager.cacheAllEquippedTitles();
         hcf = new File("plugins/HCFactions.jar").exists();
 
+        this.envoyManager = new EnvoyManager();
+        this.envoyManager.startTimer();
+        this.getCommand("spawnheroicboss").setExecutor(new CommandSpawnHeroicBoss());
+        this.getCommand("setheroicbossspawn").setExecutor(new CommandSetHeroicBossSpawn());
+
         this.getCommand("corechunkfinder").setExecutor(new CoreChunkFinderCommand());
         this.getServer().getPluginManager().registerEvents((Listener)this, this);
 
@@ -160,6 +172,8 @@ public class AstroCore extends JavaPlugin {
         Bukkit.getServer().getPluginManager().registerEvents(new TitleInventoryListener(this.dataManager), this);
         Bukkit.getServer().getPluginManager().registerEvents(new PlayerJoinQuitListener(this.dataManager), this);
         Bukkit.getServer().getPluginManager().registerEvents(new PermissionListener(this.dataManager), this);
+
+        this.getServer().getPluginManager().registerEvents(new EnvoyListener(), this);
     }
 
     @SneakyThrows
@@ -169,6 +183,14 @@ public class AstroCore extends JavaPlugin {
         this.jackpotManager.saveFileData();
         this.dataManager.saveAllEquippedTitlesToSQL();
         this.filterManager.saveFilters();
+
+        Boss bos;
+        if (this.envoyManager.getBossUUID() != null && this.envoyManager.getBossLocation() != null && (bos = (Boss)Boss.bosses.get(this.envoyManager.getBossUUID())) != null) {
+            bos.onDeath(null);
+            bos.getEntity().remove();
+            Boss.bosses.remove(bos.getEntity().getUniqueId());
+            System.out.println("Removing boss!");
+        }
     }
 
 

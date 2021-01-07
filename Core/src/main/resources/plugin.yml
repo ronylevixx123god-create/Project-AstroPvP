@@ -55,4 +55,8 @@ commands:
     description: Set the title of a player. Only usable from console.
   corechunkfinder:
     description: Core chunk command.
+  setheroicbossspawn:
+    description: Set boss spawn.
+  spawnheroicboss:
+    description: Spawn boss.
 

@@ -16,11 +16,14 @@ broadcast:
     - '&a&lAstro&e&lPvP &8| &f%broadcast%'
     - ' '
 
+# KILL TRACKER
 soulMultiplier: 5
 
+# JACKPOT
 tax: 0.10
 drawTime: 14400
 
+# ITEMFILTER
 items:
   - 'DIAMOND_CHESTPLATE'
   - 'DIAMOND_LEGGINGS'
@@ -41,3 +44,10 @@ items:
   - 'SOUL_SAND'
   - 'GLOWSTONE'
   - 'DIODE'
+
+# HEROIC ENVOY
+#4 hours in seconds
+spawnTimeInSeconds: 14400
+#Seconds of extra delay to spawn the chest. (5 Mins = 300)
+randomDelay: 1800
+
