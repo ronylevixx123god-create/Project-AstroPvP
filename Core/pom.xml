@@ -109,6 +109,69 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/CosmicMysteryChest.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>SpaceChests</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/CosmicSpaceChests.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>Bosses</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/CosmicBosses.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>BossEggs</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/CosmicBossEggs.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>EnchAPI</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/EnchantmentsAPI.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>Permissions</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/CompilexPermissions_2_1_1_1.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>FacPoints</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/CosmicFactionPoints.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>CConquest</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/CosmicConquest.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>ItemFilter</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/ItemFilter.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>FacBoosters</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/CosmicFactionBoosters.jar</systemPath>
+        </dependency>
     </dependencies>
 
 

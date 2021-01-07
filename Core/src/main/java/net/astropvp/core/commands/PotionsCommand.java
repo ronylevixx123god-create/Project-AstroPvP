@@ -23,7 +23,7 @@ public class PotionsCommand implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        Economy economy = AstroCore.getEcon();
+        Economy economy = AstroCore.getInstance().getEcon();
         if (!(sender instanceof Player)) {
             utils.console("&cCannot execute command from console.");
             return true;

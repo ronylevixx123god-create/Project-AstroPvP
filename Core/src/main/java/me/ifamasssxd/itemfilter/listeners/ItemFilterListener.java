@@ -28,6 +28,7 @@ import java.util.UUID;
 import me.ifamasssxd.itemfilter.Filter;
 import me.ifamasssxd.itemfilter.FilterManager;
 import me.ifamasssxd.itemfilter.ItemCategory;
+import net.astropvp.core.AstroCore;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -54,9 +55,9 @@ implements Listener {
     public void onInventoryClose(InventoryCloseEvent event) {
         Player player = (Player)event.getPlayer();
         if (event.getInventory().getName().startsWith("Item Filter:") && player.hasMetadata("filter_edit")) {
-            player.removeMetadata("filter_edit", (Plugin)ItemFilter.get());
-            Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)ItemFilter.get(), () -> {
-                player.openInventory(ItemFilter.get().getFilterManager().getCategoryMenu((Player)event.getPlayer()));
+            player.removeMetadata("filter_edit", AstroCore.getInstance());
+            Bukkit.getScheduler().scheduleSyncDelayedTask(AstroCore.getInstance(), () -> {
+                player.openInventory(AstroCore.getInstance().getFilterManager().getCategoryMenu((Player)event.getPlayer()));
                 player.playSound(player.getLocation(), Sound.BAT_TAKEOFF, 0.3f, 1.4f);
             }, 1L);
         }
@@ -72,7 +73,7 @@ implements Listener {
             if (item == null || type == Material.AIR) {
                 return;
             }
-            FilterManager manager = ItemFilter.get().getFilterManager();
+            FilterManager manager = AstroCore.getInstance().getFilterManager();
             if (event.getRawSlot() + 1 > event.getInventory().getSize()) {
                 return;
             }
@@ -96,13 +97,13 @@ implements Listener {
             if (event.getRawSlot() + 1 > event.getInventory().getSize()) {
                 return;
             }
-            FilterManager manager = ItemFilter.get().getFilterManager();
+            FilterManager manager = AstroCore.getInstance().getFilterManager();
             ItemCategory category = ItemCategory.getFromItemName(item.getItemMeta().getDisplayName());
             if (category == null) {
                 return;
             }
             Player player = (Player)event.getWhoClicked();
-            player.setMetadata("filter_edit", (MetadataValue)new FixedMetadataValue((Plugin)ItemFilter.get(), (Object)""));
+            player.setMetadata("filter_edit", new FixedMetadataValue(AstroCore.getInstance(), ""));
             player.openInventory(manager.getFilterInventory(category, (Player)event.getWhoClicked()));
             player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1.0f, 2.0f);
         }
@@ -139,13 +140,13 @@ implements Listener {
         if (item == null || type == Material.AIR) {
             return;
         }
-        FilterManager manager = ItemFilter.get().getFilterManager();
+        FilterManager manager = AstroCore.getInstance().getFilterManager();
         Filter filter = manager.getItemFilters().get(player.getUniqueId());
         if (filter != null && filter.isEnabled() && !filter.canPickupItem(item, type)) {
             if (!this.alerted.contains(player.getUniqueId())) {
                 player.sendMessage("");
-                player.sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "You cannot pickup some items because you have an Item /filter enabled!");
-                player.sendMessage((Object)ChatColor.GRAY + "Use" + (Object)ChatColor.WHITE + "/ft " + (Object)ChatColor.GRAY + "to disable your active /filter");
+                player.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "You cannot pickup some items because you have an Item /filter enabled!");
+                player.sendMessage(ChatColor.GRAY + "Use" + ChatColor.WHITE + "/ft " + ChatColor.GRAY + "to disable your active /filter");
                 player.sendMessage("");
                 this.alerted.add(player.getUniqueId());
             }

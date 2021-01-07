@@ -12,6 +12,7 @@ package me.ifamasssxd.itemfilter.commands;
 
 import me.ifamasssxd.itemfilter.Filter;
 import me.ifamasssxd.itemfilter.FilterManager;
+import me.ifamasssxd.itemfilter.ItemFilter;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -34,7 +35,7 @@ implements CommandExecutor {
                     manager.getItemFilters().put(player.getUniqueId(), filter);
                 }
                 filter.setEnabled(!filter.isEnabled());
-                player.sendMessage((Object)(filter.isEnabled() ? ChatColor.GREEN : ChatColor.RED) + "(!) Item Filter " + (filter.isEnabled() ? (Object)ChatColor.GREEN + ChatColor.BOLD.toString() + "ENABLED" : (Object)ChatColor.RED + ChatColor.BOLD.toString() + "DISABLED"));
+                player.sendMessage((filter.isEnabled() ? ChatColor.GREEN : ChatColor.RED) + "(!) Item Filter " + (filter.isEnabled() ? ChatColor.GREEN + ChatColor.BOLD.toString() + "ENABLED" : ChatColor.RED + ChatColor.BOLD.toString() + "DISABLED"));
                 if (!filter.isEnabled()) {
                     ItemFilter.get().getItemListener().alerted.remove(player.getUniqueId());
                 }
@@ -46,12 +47,12 @@ implements CommandExecutor {
             }
         }
         player.sendMessage("");
-        player.sendMessage((Object)ChatColor.AQUA + ChatColor.BOLD.toString() + "Item Filter Commands");
-        player.sendMessage((Object)ChatColor.WHITE + "/filter toggle (alias /ft)");
-        player.sendMessage((Object)ChatColor.GRAY + "Toggle item pickup filter.");
+        player.sendMessage(ChatColor.AQUA + ChatColor.BOLD.toString() + "Item Filter Commands");
+        player.sendMessage(ChatColor.WHITE + "/filter toggle (alias /ft)");
+        player.sendMessage(ChatColor.GRAY + "Toggle item pickup filter.");
         player.sendMessage("");
-        player.sendMessage((Object)ChatColor.WHITE + "/filter edit (alias /fe)");
-        player.sendMessage((Object)ChatColor.GRAY + "Edit items you pickup while the item filter is enabled.");
+        player.sendMessage(ChatColor.WHITE + "/filter edit (alias /fe)");
+        player.sendMessage(ChatColor.GRAY + "Edit items you pickup while the item filter is enabled.");
         player.sendMessage("");
         return true;
     }

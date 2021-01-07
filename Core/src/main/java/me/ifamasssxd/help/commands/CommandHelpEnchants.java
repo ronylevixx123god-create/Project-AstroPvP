@@ -16,11 +16,11 @@
  */
 package me.ifamasssxd.help.commands;
 
-import com.rit.sucy.CustomEnchantment;
-import com.rit.sucy.EnchantmentAPI;
 import java.util.Collections;
 import java.util.LinkedList;
 
+import com.rit.sucy.CustomEnchantment;
+import com.rit.sucy.EnchantmentAPI;
 import me.ifamasssxd.help.json.JSONMessage;
 import org.apache.commons.lang.StringUtils;
 import org.arkhamnetwork.enchantments.util.EnchantmentDescriptions;
@@ -41,13 +41,13 @@ implements CommandExecutor {
         int maxPages;
         Player player = (Player)sender;
         int specificTier = -1;
-        if (args.length > 0 && !StringUtils.isNumeric((String)args[0]) && (specificTier = this.getTierID(args[0])) == 0) {
+        if (args.length > 0 && !StringUtils.isNumeric(args[0]) && (specificTier = this.getTierID(args[0])) == 0) {
             return true;
         }
         double PER_PAGE = 10.0;
         int page = 1;
         if (args.length >= 1) {
-            if (StringUtils.isNumeric((String)args[args.length - 1])) {
+            if (StringUtils.isNumeric(args[args.length - 1])) {
                 page = Integer.parseInt(args[args.length - 1]);
                 if (page <= 0) {
                     page = 1;
@@ -61,19 +61,19 @@ implements CommandExecutor {
         }
         int startIndex = (int)((double)page * PER_PAGE - PER_PAGE);
         player.sendMessage("");
-        player.sendMessage((Object)ChatColor.AQUA + ChatColor.BOLD.toString() + "Enchantment Guide " + (Object)ChatColor.AQUA + ChatColor.BOLD.toString() + "(" + (Object)ChatColor.LIGHT_PURPLE + ChatColor.BOLD.toString() + page + (Object)ChatColor.AQUA + ChatColor.BOLD.toString() + "/" + (Object)ChatColor.LIGHT_PURPLE + ChatColor.BOLD.toString() + maxPages + (Object)ChatColor.AQUA + ChatColor.BOLD.toString() + ")");
+        player.sendMessage(ChatColor.AQUA + ChatColor.BOLD.toString() + "Enchantment Guide " + ChatColor.AQUA + ChatColor.BOLD.toString() + "(" + ChatColor.LIGHT_PURPLE + ChatColor.BOLD.toString() + page + ChatColor.AQUA + ChatColor.BOLD.toString() + "/" + ChatColor.LIGHT_PURPLE + ChatColor.BOLD.toString() + maxPages + ChatColor.AQUA + ChatColor.BOLD.toString() + ")");
         player.sendMessage("");
         for (int i = startIndex; (double)i < (double)startIndex + PER_PAGE && i < customEnchants.size(); ++i) {
             CustomEnchantment enchant = customEnchants.get(i);
-            ChatColor color = TieredEnchantments.getTierColor((CustomEnchantment)enchant);
-            int tier = TieredEnchantments.getEnchantmentTier((String)enchant.name());
+            ChatColor color = TieredEnchantments.getTierColor(enchant);
+            int tier = TieredEnchantments.getEnchantmentTier(enchant.name());
             JSONMessage message = new JSONMessage(color.toString());
-            message.addHoverData((Object)color + ChatColor.BOLD.toString() + enchant.name() + (Object)ChatColor.GRAY + " [Level 1-" + enchant.getMaxLevel() + "]", (Object)ChatColor.GRAY + ChatColor.UNDERLINE.toString() + "Tier\n" + (Object)this.getTierColor(tier) + this.getTierName(tier) + "\n\n" + (Object)ChatColor.GRAY + ChatColor.UNDERLINE.toString() + "Description\n" + (Object)ChatColor.GRAY + this.getBrokenUpString(EnchantmentDescriptions.getDescription((CustomEnchantment)enchant), 40, ChatColor.GRAY));
+            message.addHoverData(color + ChatColor.BOLD.toString() + enchant.name() + ChatColor.GRAY + " [Level 1-" + enchant.getMaxLevel() + "]", ChatColor.GRAY + ChatColor.UNDERLINE.toString() + "Tier\n" + this.getTierColor(tier) + this.getTierName(tier) + "\n\n" + ChatColor.GRAY + ChatColor.UNDERLINE.toString() + "Description\n" + ChatColor.GRAY + this.getBrokenUpString(EnchantmentDescriptions.getDescription(enchant), 40, ChatColor.GRAY));
             message.sendToPlayer(player);
         }
         player.sendMessage("");
-        player.sendMessage((Object)ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.YELLOW + "Hover over an Enchantment to learn more about it.");
-        player.sendMessage((Object)ChatColor.GRAY + "Use " + (Object)ChatColor.GRAY + ChatColor.UNDERLINE.toString() + "/help enchants <page>" + (Object)ChatColor.GRAY + " to browse other enchantments.");
+        player.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "Hover over an Enchantment to learn more about it.");
+        player.sendMessage(ChatColor.GRAY + "Use " + ChatColor.GRAY + ChatColor.UNDERLINE.toString() + "/help enchants <page>" + ChatColor.GRAY + " to browse other enchantments.");
         player.sendMessage("");
         return false;
     }
@@ -83,7 +83,7 @@ implements CommandExecutor {
             this.customEnchants = new LinkedList(EnchantmentAPI.getEnchantments());
             for (CustomEnchantment enchant : EnchantmentAPI.getEnchantments()) {
                 if (!this.isVanillaEnchant(enchant.name())) continue;
-                this.customEnchants.remove((Object)enchant);
+                this.customEnchants.remove(enchant);
             }
             Collections.sort(this.customEnchants, (o1, o2) -> o1.name().compareTo(o2.name()));
         }
@@ -94,7 +94,7 @@ implements CommandExecutor {
         if (tier == -1) {
             return this.getCustomEnchants();
         }
-        LinkedList<CustomEnchantment> enchants = new LinkedList<CustomEnchantment>(TieredEnchantments.getAllEnchantmentsInTier((int)tier));
+        LinkedList<CustomEnchantment> enchants = new LinkedList<CustomEnchantment>(TieredEnchantments.getAllEnchantmentsInTier(tier));
         Collections.sort(enchants, (o1, o2) -> o1.name().compareTo(o2.name()));
         return enchants;
     }
@@ -110,7 +110,7 @@ implements CommandExecutor {
             char c = chars[i];
             if (count >= lineLength && (c == ' ' || c == ',')) {
                 count = 0;
-                builder.append("\n").append((Object)startLineColor);
+                builder.append("\n").append(startLineColor);
                 continue;
             }
             ++count;
@@ -121,7 +121,7 @@ implements CommandExecutor {
 
     private boolean isVanillaEnchant(String name) {
         try {
-            if (Enchantment.getByName((String)name) != null) {
+            if (Enchantment.getByName(name) != null) {
                 return true;
             }
         }

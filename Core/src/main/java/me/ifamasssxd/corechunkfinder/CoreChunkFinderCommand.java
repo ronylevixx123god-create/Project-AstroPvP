@@ -103,7 +103,7 @@ implements CommandExecutor {
                 sender.sendMessage(CC.Red + "invalid epoch time given!");
                 return true;
             }
-            ExpiringChunkData data = (ExpiringChunkData)CosmicFactionPoints.get().getChunkManager().getChunksToExpire().get((Object)new FLocation((Player)sender));
+            ExpiringChunkData data = (ExpiringChunkData) CosmicFactionPoints.get().getChunkManager().getChunksToExpire().get((Object)new FLocation((Player)sender));
             if (data == null) {
                 sender.sendMessage(CC.Red + "No chunk data stored at your location!");
                 return true;

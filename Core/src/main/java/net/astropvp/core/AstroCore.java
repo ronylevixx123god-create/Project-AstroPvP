@@ -242,6 +242,11 @@ public class AstroCore extends JavaPlugin {
         return consolePrefix;
     }
 
+    public Economy getEcon() {
+        return econ;
+    }
+
+
     static {
         hcf = false;
     }

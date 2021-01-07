@@ -24,41 +24,40 @@ package me.ifamasssxd.cosmicheroicenvoys.managers;
 
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.cosmicpvp.CosmicSpaceChests.utils.MiscUtil;
-import io.apice.clientcomms.ClientCommsAPI;
-import io.apice.clientcomms.EventType;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.UUID;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
 import me.ifamasssxd.cosmicheroicenvoys.utils.LocationUtils;
 import me.ifamasssxd.cosmicheroicenvoys.utils.MiscUtils;
+import net.astropvp.core.AstroCore;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.UUID;
 
 public class EnvoyManager {
     private Location bossLocation;
     private int spawnTimeInSeconds = 0;
     private int randomDelay = 0;
     private int spawnTimer = 0;
-    private Random random = new Random();
+    private final Random random = new Random();
     private UUID bossUUID;
     private BukkitRunnable task;
     public long lastBossSpawn = System.currentTimeMillis();
 
     public void startTimer() {
-        this.bossLocation = LocationUtils.getLocation(CosmicHeroicEnvoys.get().getConfig().getString("bossSpawn"));
-        this.randomDelay = CosmicHeroicEnvoys.get().getConfig().getInt("randomDelay");
-        this.spawnTimeInSeconds = CosmicHeroicEnvoys.get().getConfig().getInt("spawnTimeInSeconds", 14400);
+        this.bossLocation = LocationUtils.getLocation(AstroCore.getInstance().getConfig().getString("bossSpawn"));
+        this.randomDelay = AstroCore.getInstance().getConfig().getInt("randomDelay");
+        this.spawnTimeInSeconds = AstroCore.getInstance().getConfig().getInt("spawnTimeInSeconds", 14400);
         this.startEnvoyTimer();
     }
 
@@ -81,20 +80,12 @@ public class EnvoyManager {
         Boss boss = BossType.PLAGUE_BLOATER.createInstance(this.bossLocation);
         boss.onBossSpawn();
         LivingEntity entity = boss.getEntity();
-        entity.setMetadata("heroicEnvoyBoss", (MetadataValue)new FixedMetadataValue((Plugin)CosmicHeroicEnvoys.get(), (Object)""));
-        Bukkit.broadcastMessage((String)"");
-        Bukkit.broadcastMessage((String)(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "** HEROIC ENVOY BOSS SPAWNED AT BATTLEFIELD! **"));
-        Bukkit.broadcastMessage((String)((Object)ChatColor.GRAY + "Kill the boss at " + (Object)ChatColor.GRAY + ChatColor.UNDERLINE.toString() + "/warp battlefield" + (Object)ChatColor.GRAY + " to spawn a Heroic Envoy and unlock " + (Object)ChatColor.GRAY + (Object)ChatColor.UNDERLINE + "faction crystals" + (Object)ChatColor.GRAY + "!"));
-        Bukkit.broadcastMessage((String)"");
+        entity.setMetadata("heroicEnvoyBoss", new FixedMetadataValue(AstroCore.getInstance(), ""));
+        Bukkit.broadcastMessage("");
+        Bukkit.broadcastMessage(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "** HEROIC ENVOY BOSS SPAWNED AT BATTLEFIELD! **");
+        Bukkit.broadcastMessage(ChatColor.GRAY + "Kill the boss at " + ChatColor.GRAY + ChatColor.UNDERLINE.toString() + "/warp battlefield" + ChatColor.GRAY + " to spawn a Heroic Envoy and unlock " + ChatColor.GRAY + ChatColor.UNDERLINE + "faction crystals" + ChatColor.GRAY + "!");
+        Bukkit.broadcastMessage("");
         this.bossUUID = boss.getUuid();
-        try {
-            for (Player p : Bukkit.getOnlinePlayers()) {
-                ClientCommsAPI.sendEvent((Player)p, (String)"Previous Conquest Chest", (EventType)EventType.COUNT_UP, (long)this.lastBossSpawn, (long)0L);
-            }
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public void startEnvoyTimer() {
@@ -126,39 +117,39 @@ public class EnvoyManager {
                     return;
                 }
                 if (EnvoyManager.this.spawnTimer % 240 == 0 && EnvoyManager.this.bossUUID != null && MiscUtils.getEntity(EnvoyManager.this.bossUUID, EnvoyManager.this.bossLocation.getWorld()) != null) {
-                    Bukkit.broadcastMessage((String)"");
-                    Bukkit.broadcastMessage((String)((Object)ChatColor.AQUA + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.AQUA + ChatColor.BOLD.toString() + "A Heroic Envoy Boss is at /warp battlefield!"));
-                    Bukkit.broadcastMessage((String)((Object)ChatColor.GRAY + "Defeat it to unlock a heroic envoy and " + (Object)ChatColor.GRAY + "faction crystals!"));
-                    Bukkit.broadcastMessage((String)"");
+                    Bukkit.broadcastMessage("");
+                    Bukkit.broadcastMessage(ChatColor.AQUA + ChatColor.BOLD.toString() + "(!) " + ChatColor.AQUA + ChatColor.BOLD.toString() + "A Heroic Envoy Boss is at /warp battlefield!");
+                    Bukkit.broadcastMessage(ChatColor.GRAY + "Defeat it to unlock a heroic envoy and " + ChatColor.GRAY + "faction crystals!");
+                    Bukkit.broadcastMessage("");
                 }
                 if (EnvoyManager.this.spawnTimer == 300) {
                     EnvoyManager.this.notifyPlayers("5 MINUTES");
-                    Bukkit.broadcastMessage((String)((Object)ChatColor.GRAY + "Go to " + (Object)ChatColor.GRAY + ChatColor.UNDERLINE.toString() + "/warp battlefield" + (Object)ChatColor.GRAY + " and prepare to battle!"));
+                    Bukkit.broadcastMessage(ChatColor.GRAY + "Go to " + ChatColor.GRAY + ChatColor.UNDERLINE.toString() + "/warp battlefield" + ChatColor.GRAY + " and prepare to battle!");
                 } else if (EnvoyManager.this.spawnTimer == 60) {
                     EnvoyManager.this.notifyPlayers("1 MINUTE");
-                    Bukkit.broadcastMessage((String)((Object)ChatColor.GRAY + "Go to " + (Object)ChatColor.GRAY + ChatColor.UNDERLINE.toString() + "/warp battlefield" + (Object)ChatColor.GRAY + " and prepare to battle!"));
+                    Bukkit.broadcastMessage(ChatColor.GRAY + "Go to " + ChatColor.GRAY + ChatColor.UNDERLINE.toString() + "/warp battlefield" + ChatColor.GRAY + " and prepare to battle!");
                 } else if (EnvoyManager.this.spawnTimer == 30 || EnvoyManager.this.spawnTimer <= 5 && EnvoyManager.this.spawnTimer > 0) {
                     EnvoyManager.this.notifyPlayers(EnvoyManager.this.spawnTimer + " SECOND" + (EnvoyManager.this.spawnTimer == 1 ? "" : "S"));
                     if (EnvoyManager.this.spawnTimer == 1) {
-                        Bukkit.broadcastMessage((String)((Object)ChatColor.GRAY + "        Use " + (Object)ChatColor.GRAY + ChatColor.UNDERLINE.toString() + "/warp battlefield" + (Object)ChatColor.GRAY + " to fight the Heroic Boss!"));
+                        Bukkit.broadcastMessage(ChatColor.GRAY + "        Use " + ChatColor.GRAY + ChatColor.UNDERLINE.toString() + "/warp battlefield" + ChatColor.GRAY + " to fight the Heroic Boss!");
                     }
                 }
                 EnvoyManager.this.spawnTimer--;
             }
         };
-        this.task.runTaskTimer((Plugin)CosmicHeroicEnvoys.get(), 20L, 20L);
+        this.task.runTaskTimer(AstroCore.getInstance(), 20L, 20L);
     }
 
     public void notifyPlayers(String timer) {
-        Bukkit.broadcastMessage((String)(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "*** HEROIC ENVOY BOSS SPAWNING IN " + ChatColor.LIGHT_PURPLE.toString() + (Object)ChatColor.BOLD + timer + ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + " ***"));
+        Bukkit.broadcastMessage(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "*** HEROIC ENVOY BOSS SPAWNING IN " + ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD + timer + ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + " ***");
     }
 
     public void spawnEnvoyBlocks(Location center) {
         this.bossUUID = null;
-        Bukkit.broadcastMessage((String)"");
-        Bukkit.broadcastMessage((String)(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "*** THE HEROIC ENVOY BOSS HAS BEEN DEFEATED! ***"));
-        Bukkit.broadcastMessage((String)((Object)ChatColor.GRAY + "         A Heroic Envoy is now falling near its corpse!"));
-        Bukkit.broadcastMessage((String)"");
+        Bukkit.broadcastMessage("");
+        Bukkit.broadcastMessage(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "*** THE HEROIC ENVOY BOSS HAS BEEN DEFEATED! ***");
+        Bukkit.broadcastMessage(ChatColor.GRAY + "         A Heroic Envoy is now falling near its corpse!");
+        Bukkit.broadcastMessage("");
         ArrayList dropLocations = new ArrayList();
         double chests_per_location = 10 + this.random.nextInt(5);
         Bukkit.getLogger().info("BattlefieldEvent: Dropping " + chests_per_location + " chests around " + center.getBlockX() + ", " + center.getBlockY() + ", " + center.getBlockZ());
@@ -166,7 +157,7 @@ public class EnvoyManager {
         int i = 0;
         while ((double)i < chests_per_location) {
             Location nearby = EnvoyManager.getNearbyLocation(center, 30, 30);
-            if (!MiscUtil.getRegionName((Location)nearby).startsWith("spawn_")) {
+            if (!MiscUtil.getRegionName(nearby).startsWith("spawn_")) {
                 this.dropChest(nearby);
                 ++dropped;
             }
@@ -177,16 +168,16 @@ public class EnvoyManager {
 
     public void dropChest(Location l) {
         ItemRarity rarity = this.getRandomItemRarity();
-        CosmicHeroicEnvoys.get().getLogger().info("(DE) Falling heroic envoy with rarity " + rarity.name() + " near " + l.toString());
+        AstroCore.getInstance().getLogger().info("(DE) Falling heroic envoy with rarity " + rarity.name() + " near " + l.toString());
         FallingBlock entity = l.getWorld().spawnFallingBlock(l, Material.CHEST, (byte)0);
-        entity.setMetadata("chestRarity", (MetadataValue)new FixedMetadataValue((Plugin)CosmicHeroicEnvoys.get(), (Object)rarity.name()));
+        entity.setMetadata("chestRarity", new FixedMetadataValue(AstroCore.getInstance(), rarity.name()));
     }
 
     public static Location getNearbyLocation(Location l, int radius, int y_boost) {
         Random rand = new Random();
         Location rand_loc = l.clone();
-        rand_loc.add((double)((rand.nextBoolean() ? 1 : -1) * (rand.nextInt(radius) + 8)), 0.0, (double)((rand.nextBoolean() ? 1 : -1) * (rand.nextInt(radius) + 8)));
-        rand_loc.add(0.5, (double)y_boost, 0.5);
+        rand_loc.add((rand.nextBoolean() ? 1 : -1) * (rand.nextInt(radius) + 8), 0.0, (rand.nextBoolean() ? 1 : -1) * (rand.nextInt(radius) + 8));
+        rand_loc.add(0.5, y_boost, 0.5);
         while ((rand_loc.getBlock().getType() != Material.AIR || rand_loc.getBlock().getLocation().subtract(0.0, 1.0, 0.0).getBlock().getType() != Material.AIR) && rand_loc.getY() < 255.0) {
             rand_loc = rand_loc.add(0.0, 1.0, 0.0);
         }
