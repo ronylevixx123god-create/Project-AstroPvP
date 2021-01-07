@@ -20,3 +20,24 @@ soulMultiplier: 5
 
 tax: 0.10
 drawTime: 14400
+
+items:
+  - 'DIAMOND_CHESTPLATE'
+  - 'DIAMOND_LEGGINGS'
+  - 'DIAMOND_BOOTS'
+  - 'DIAMOND_HELMET'
+  - 'DIAMOND_SWORD'
+  - 'DIAMOND_AXE'
+  - 'BOW'
+  - 'ARROW'
+  - 'REDSTONE'
+  - 'INK_SACK:4'
+  - 'OBSIDIAN'
+  - 'DISPENSER'
+  - 'HOPPER'
+  - 'DROPPER'
+  - 'CACTUS'
+  - 'SUGAR_CANE'
+  - 'SOUL_SAND'
+  - 'GLOWSTONE'
+  - 'DIODE'

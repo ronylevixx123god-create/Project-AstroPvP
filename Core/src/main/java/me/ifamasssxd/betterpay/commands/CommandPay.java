@@ -34,6 +34,7 @@ import com.earth2me.essentials.commands.NotEnoughArgumentsException;
 import com.earth2me.essentials.commands.PlayerExemptException;
 import com.earth2me.essentials.commands.PlayerNotFoundException;
 import com.earth2me.essentials.utils.FormatUtil;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Locale;
 

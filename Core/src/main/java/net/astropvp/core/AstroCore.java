@@ -10,6 +10,7 @@ import com.earth2me.essentials.I18n;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.SneakyThrows;
 import me.ifamasssxd.betterpay.PayListener;
 import me.ifamasssxd.betterpay.PayToggle;
 import me.ifamasssxd.betterpay.commands.CommandTogglePay;
@@ -20,6 +21,9 @@ import me.ifamasssxd.help.commands.CommandHelpEnchants;
 import me.ifamasssxd.help.commands.CommandSpawnMenu;
 import me.ifamasssxd.help.commands.CommandWiki;
 import me.ifamasssxd.help.listeners.CommandListener;
+import me.ifamasssxd.itemfilter.FilterManager;
+import me.ifamasssxd.itemfilter.commands.CommandFilter;
+import me.ifamasssxd.itemfilter.listeners.ItemFilterListener;
 import me.ifamasssxd.killtracker.commands.CommandGiveSoulGem;
 import me.ifamasssxd.killtracker.commands.CommandGiveTracker;
 import me.ifamasssxd.killtracker.commands.CommandWithdrawSouls;
@@ -64,10 +68,13 @@ public class AstroCore extends JavaPlugin {
     private JackpotManager jackpotManager;
     public static Economy economy;
 
-    @Getter @Setter
     Essentials ess;
     private PayToggle payToggles;
 
+    private FilterManager filterManager;
+    private ItemFilterListener itemListener;
+
+    @SneakyThrows
     public void onEnable() {
         instance = this;
         saveDefaultConfig();
@@ -104,6 +111,12 @@ public class AstroCore extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new JackpotListener(), this);
         this.getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> this.jackpotManager.onJackpotTick(), 20L, 20L);
 
+        this.filterManager = new FilterManager();
+        this.filterManager.loadFilters();
+        this.itemListener = new ItemFilterListener();
+        this.getServer().getPluginManager().registerEvents(this.itemListener, this);
+        this.getCommand("filter").setExecutor(new CommandFilter());
+
         this.getCommand("wiki").setExecutor(new CommandWiki());
         this.getCommand("spawnmenu").setExecutor(new CommandSpawnMenu());
         this.getCommand("withdrawsouls").setExecutor(new CommandWithdrawSouls());
@@ -120,10 +133,12 @@ public class AstroCore extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new SpongeModifyListener(), this);
     }
 
+    @SneakyThrows
     public void onDisable() {
         instance = null;
         this.payToggles.saveToggles();
         this.jackpotManager.saveFileData();
+        this.filterManager.saveFilters();
     }
 
 

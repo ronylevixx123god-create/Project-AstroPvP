@@ -45,3 +45,6 @@ commands:
     description: Jackpot command.
   togglepay:
     description: Toggle payments.
+  filter:
+    description: Filter items.
+    aliases: [itemfilter, filters]
