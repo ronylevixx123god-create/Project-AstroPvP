@@ -3,6 +3,7 @@ version: ${project.version}
 main: net.astropvp.core.AstroCore
 authors: [ Tucker, Bryside ]
 description: Astro Core
+depend: [Vault, CosmicPvPUtils, Essentials]
 commands:
   bless:
     aliases: [ 'blessme' ]
@@ -40,4 +41,7 @@ commands:
   csponge:
     description: Root command.
     usage: /<command>
-
+  jackpot:
+    description: Jackpot command.
+  togglepay:
+    description: Toggle payments.

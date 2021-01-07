@@ -5,7 +5,16 @@ import com.cosmicpvp.CosmicSponges.libs.SpongeChunk;
 import com.cosmicpvp.CosmicSponges.listeners.BlockFlowListener;
 import com.cosmicpvp.CosmicSponges.listeners.ChunkListener;
 import com.cosmicpvp.CosmicSponges.listeners.SpongeModifyListener;
+import com.earth2me.essentials.Essentials;
+import com.earth2me.essentials.I18n;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import lombok.Getter;
+import lombok.Setter;
+import me.ifamasssxd.betterpay.PayListener;
+import me.ifamasssxd.betterpay.PayToggle;
+import me.ifamasssxd.betterpay.commands.CommandTogglePay;
+import me.ifamasssxd.cosmicjackpot.listeners.JackpotListener;
+import me.ifamasssxd.cosmicjackpot.struct.JackpotManager;
 import me.ifamasssxd.help.commands.CommandHelp;
 import me.ifamasssxd.help.commands.CommandHelpEnchants;
 import me.ifamasssxd.help.commands.CommandSpawnMenu;
@@ -17,6 +26,7 @@ import me.ifamasssxd.killtracker.commands.CommandWithdrawSouls;
 import me.ifamasssxd.killtracker.listeners.ItemListener;
 import me.ifamasssxd.killtracker.listeners.PlayerListener;
 import me.ifamasssxd.killtracker.listeners.SoulGemListener;
+import me.matthawkk.tasks.AutoBroadcastTask;
 import net.astropvp.core.commands.*;
 import net.astropvp.core.listeners.*;
 import net.astropvp.core.tasks.LastManStandingCapTask;
@@ -24,6 +34,7 @@ import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -31,6 +42,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.util.HashMap;
 
+@Getter @Setter
 public class AstroCore extends JavaPlugin {
 
     private static AstroCore instance;
@@ -49,6 +61,13 @@ public class AstroCore extends JavaPlugin {
     public static String LORE_SUFFIX = ":  ";
     private File spongeDirectory;
 
+    private JackpotManager jackpotManager;
+    public static Economy economy;
+
+    @Getter @Setter
+    Essentials ess;
+    private PayToggle payToggles;
+
     public void onEnable() {
         instance = this;
         saveDefaultConfig();
@@ -56,6 +75,7 @@ public class AstroCore extends JavaPlugin {
         commands();
         events();
         new LastManStandingCapTask().runTaskTimer(this, 20L, 20L);
+        Bukkit.getScheduler().runTaskTimer(this, new AutoBroadcastTask(), 20L, 6000L);
 
         this.commandHelp = new CommandHelp();
         if (commandHelp.isEnchantsEnabled()) {
@@ -76,6 +96,14 @@ public class AstroCore extends JavaPlugin {
         }
         CosmicSpongesAPI.debug = false;
 
+        this.ess = (Essentials)Bukkit.getPluginManager().getPlugin("Essentials");
+        this.payToggles = new PayToggle("toggles.yml");
+
+        this.jackpotManager = new JackpotManager();
+        this.jackpotManager.loadFileData(this);
+        this.getServer().getPluginManager().registerEvents(new JackpotListener(), this);
+        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> this.jackpotManager.onJackpotTick(), 20L, 20L);
+
         this.getCommand("wiki").setExecutor(new CommandWiki());
         this.getCommand("spawnmenu").setExecutor(new CommandSpawnMenu());
         this.getCommand("withdrawsouls").setExecutor(new CommandWithdrawSouls());
@@ -92,6 +120,13 @@ public class AstroCore extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new SpongeModifyListener(), this);
     }
 
+    public void onDisable() {
+        instance = null;
+        this.payToggles.saveToggles();
+        this.jackpotManager.saveFileData();
+    }
+
+
     public void commands() {
         getCommand("bless").setExecutor(new Bless());
         getCommand("dupe").setExecutor(new CommandDupe());
@@ -103,6 +138,7 @@ public class AstroCore extends JavaPlugin {
         getCommand("givechunkbuster").setExecutor(new ChunkBuster(this));
         getCommand("trash").setExecutor(new TrashCommand());
         getCommand("lastmanstanding").setExecutor(new LastManStandingCommand());
+        getCommand("togglepay").setExecutor(new CommandTogglePay());
     }
 
     public void events() {
@@ -122,6 +158,11 @@ public class AstroCore extends JavaPlugin {
         pm.registerEvents(new DamageFixes(), this);
         pm.registerEvents(new LastManStandingListener(), this);
         pm.registerEvents(new MobSpawnerFix(), this);
+        pm.registerEvents(new PayListener(), this);
+    }
+
+    public void showError(Player sender, Throwable exception, String commandLabel) {
+        sender.sendMessage(I18n.tl("errorWithMessage", exception.getMessage()));
     }
 
     public String getConsolePrefix() {

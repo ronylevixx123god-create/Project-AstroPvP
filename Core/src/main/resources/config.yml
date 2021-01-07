@@ -17,3 +17,6 @@ broadcast:
     - ' '
 
 soulMultiplier: 5
+
+tax: 0.10
+drawTime: 14400
