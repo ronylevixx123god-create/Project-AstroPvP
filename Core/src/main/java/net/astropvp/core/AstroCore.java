@@ -5,6 +5,14 @@ import com.cosmicpvp.CosmicSponges.libs.SpongeChunk;
 import com.cosmicpvp.CosmicSponges.listeners.BlockFlowListener;
 import com.cosmicpvp.CosmicSponges.listeners.ChunkListener;
 import com.cosmicpvp.CosmicSponges.listeners.SpongeModifyListener;
+import com.cosmicpvp.titles.cmds.CommandTitle;
+import com.cosmicpvp.titles.cmds.CommandTitleSet;
+import com.cosmicpvp.titles.listeners.PermissionListener;
+import com.cosmicpvp.titles.listeners.PlayerJoinQuitListener;
+import com.cosmicpvp.titles.listeners.TitleInventoryListener;
+import com.cosmicpvp.titles.sql.SQLConnection;
+import com.cosmicpvp.titles.sql.SQLHandler;
+import com.cosmicpvp.titles.sql.TitleDatabaseManager;
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.I18n;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
@@ -74,6 +82,9 @@ public class AstroCore extends JavaPlugin {
     private FilterManager filterManager;
     private ItemFilterListener itemListener;
 
+    public TitleDatabaseManager dataManager;
+    public static boolean hcf;
+
     @SneakyThrows
     public void onEnable() {
         instance = this;
@@ -115,13 +126,20 @@ public class AstroCore extends JavaPlugin {
         this.filterManager.loadFilters();
         this.itemListener = new ItemFilterListener();
         this.getServer().getPluginManager().registerEvents(this.itemListener, this);
-        this.getCommand("filter").setExecutor(new CommandFilter());
 
+        this.setupSQL();
+        this.dataManager = new TitleDatabaseManager();
+        this.dataManager.cacheAllEquippedTitles();
+        hcf = new File("plugins/HCFactions.jar").exists();
+
+        this.getCommand("filter").setExecutor(new CommandFilter());
         this.getCommand("wiki").setExecutor(new CommandWiki());
         this.getCommand("spawnmenu").setExecutor(new CommandSpawnMenu());
         this.getCommand("withdrawsouls").setExecutor(new CommandWithdrawSouls());
         this.getCommand("givetracker").setExecutor(new CommandGiveTracker());
         this.getCommand("givesoulgem").setExecutor(new CommandGiveSoulGem());
+        this.getCommand("title").setExecutor(new CommandTitle());
+        this.getCommand("titleset").setExecutor(new CommandTitleSet());
 
         this.getServer().getPluginManager().registerEvents(new CommandListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
@@ -131,6 +149,10 @@ public class AstroCore extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new ChunkListener(), this);
         this.getServer().getPluginManager().registerEvents(new BlockFlowListener(), this);
         this.getServer().getPluginManager().registerEvents(new SpongeModifyListener(), this);
+
+        Bukkit.getServer().getPluginManager().registerEvents(new TitleInventoryListener(this.dataManager), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new PlayerJoinQuitListener(this.dataManager), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new PermissionListener(this.dataManager), this);
     }
 
     @SneakyThrows
@@ -138,6 +160,7 @@ public class AstroCore extends JavaPlugin {
         instance = null;
         this.payToggles.saveToggles();
         this.jackpotManager.saveFileData();
+        this.dataManager.saveAllEquippedTitlesToSQL();
         this.filterManager.saveFilters();
     }
 
@@ -180,8 +203,18 @@ public class AstroCore extends JavaPlugin {
         sender.sendMessage(I18n.tl("errorWithMessage", exception.getMessage()));
     }
 
+    private void setupSQL() {
+        SQLHandler.initializeSQL(AstroCore.getInstance());
+        SQLConnection.executeSQLQuery("CREATE TABLE IF NOT EXISTS `titledata` (`UUID` VARCHAR(36) NOT NULL, `ActiveTitle` VARCHAR(255), primary key(UUID))", false);
+        SQLConnection.executeSQLQuery("DELETE FROM `titledata` WHERE ActiveTitle='none'", false);
+    }
+
     public String getConsolePrefix() {
         return consolePrefix;
+    }
+
+    static {
+        hcf = false;
     }
 
     private boolean setupEconomy() {

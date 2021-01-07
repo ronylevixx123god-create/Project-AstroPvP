@@ -48,3 +48,8 @@ commands:
   filter:
     description: Filter items.
     aliases: [itemfilter, filters]
+  title:
+    description: Open title selection UI. If used from console, all titles are listed.
+    aliases: [titles, playertitle, playertitles]
+  titleset:
+    description: Set the title of a player. Only usable from console.
