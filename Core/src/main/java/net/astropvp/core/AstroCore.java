@@ -22,6 +22,7 @@ import lombok.SneakyThrows;
 import me.ifamasssxd.betterpay.PayListener;
 import me.ifamasssxd.betterpay.PayToggle;
 import me.ifamasssxd.betterpay.commands.CommandTogglePay;
+import me.ifamasssxd.corechunkfinder.CoreChunkFinderCommand;
 import me.ifamasssxd.cosmicjackpot.listeners.JackpotListener;
 import me.ifamasssxd.cosmicjackpot.struct.JackpotManager;
 import me.ifamasssxd.help.commands.CommandHelp;
@@ -45,8 +46,12 @@ import net.astropvp.core.tasks.LastManStandingCapTask;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
+import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -60,30 +65,29 @@ public class AstroCore extends JavaPlugin {
     private static AstroCore instance;
     private static Economy econ = null;
     private final String consolePrefix = "[AstroCore]";
-
     public static AstroCore getInstance() {
         return instance;
     }
 
-    public static Economy getEcon() {
-        return econ;
-    }
-
+    // Sponges
     private CommandHelp commandHelp;
     public static String LORE_SUFFIX = ":  ";
     private File spongeDirectory;
-
+    // Jackpot
     private JackpotManager jackpotManager;
     public static Economy economy;
-
+    // BetterPay
     Essentials ess;
     private PayToggle payToggles;
-
+    // ItemFilter
     private FilterManager filterManager;
     private ItemFilterListener itemListener;
-
+    // PlayerTitles
     public TitleDatabaseManager dataManager;
     public static boolean hcf;
+    // CoreChunkFinder
+    @Getter
+    private boolean tntDebug = false;
 
     @SneakyThrows
     public void onEnable() {
@@ -131,6 +135,9 @@ public class AstroCore extends JavaPlugin {
         this.dataManager = new TitleDatabaseManager();
         this.dataManager.cacheAllEquippedTitles();
         hcf = new File("plugins/HCFactions.jar").exists();
+
+        this.getCommand("corechunkfinder").setExecutor(new CoreChunkFinderCommand());
+        this.getServer().getPluginManager().registerEvents((Listener)this, this);
 
         this.getCommand("filter").setExecutor(new CommandFilter());
         this.getCommand("wiki").setExecutor(new CommandWiki());
@@ -215,6 +222,14 @@ public class AstroCore extends JavaPlugin {
 
     static {
         hcf = false;
+    }
+
+    public boolean isTntDebug() {
+        return this.tntDebug;
+    }
+
+    public void setTntDebug(boolean tntDebug) {
+        this.tntDebug = tntDebug;
     }
 
     private boolean setupEconomy() {

@@ -53,3 +53,6 @@ commands:
     aliases: [titles, playertitle, playertitles]
   titleset:
     description: Set the title of a player. Only usable from console.
+  corechunkfinder:
+    description: Core chunk command.
+
