@@ -26,6 +26,7 @@
  */
 package com.compilex.CosmicOutposts.outpost.tasks;
 
+import com.compilex.CosmicKOTH.CosmicKOTHPlugin;
 import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
 import com.compilex.CosmicOutposts.outpost.Outpost;
 import com.compilex.CosmicOutposts.outpost.enums.OutpostTier;
@@ -285,20 +286,20 @@ implements Runnable {
         Bukkit.broadcastMessage((String)"");
         this.defendingFaction = this.attackingFaction;
         this.attackingFaction = null;
-        Bukkit.getServer().getScheduler().runTask((Plugin)CosmicOutpostsPlugin.get_(), new Runnable(){
+        Bukkit.getServer().getScheduler().runTask((Plugin) CosmicKOTHPlugin.get_(), new Runnable(){
 
             @Override
             public void run() {
                 for (Player p : CapTask.this.outpost.getWorld().getPlayers()) {
                     if (CosmicOutpostsAPI.getOutpostPlayerControls(p) != null && CosmicOutpostsAPI.getOutpostPlayerControls(p).equals(CapTask.this.outpost)) {
-                        p.setMetadata("ignore_combat_tag", (MetadataValue)new FixedMetadataValue((Plugin)CosmicOutpostsPlugin.get_(), (Object)true));
+                        p.setMetadata("ignore_combat_tag", (MetadataValue)new FixedMetadataValue((Plugin)CosmicKOTHPlugin.get_(), (Object)true));
                         p.teleport(CapTask.this.outpost.getDefenderSpawn(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
-                        p.removeMetadata("ignore_combat_tag", (Plugin)CosmicOutpostsPlugin.get_());
+                        p.removeMetadata("ignore_combat_tag", (Plugin)CosmicKOTHPlugin.get_());
                         continue;
                     }
-                    p.setMetadata("ignore_combat_tag", (MetadataValue)new FixedMetadataValue((Plugin)CosmicOutpostsPlugin.get_(), (Object)true));
+                    p.setMetadata("ignore_combat_tag", (MetadataValue)new FixedMetadataValue((Plugin)CosmicKOTHPlugin.get_(), (Object)true));
                     p.teleport(CapTask.this.outpost.getAttackerSpawn(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
-                    p.removeMetadata("ignore_combat_tag", (Plugin)CosmicOutpostsPlugin.get_());
+                    p.removeMetadata("ignore_combat_tag", (Plugin)CosmicKOTHPlugin.get_());
                 }
             }
         });
@@ -417,7 +418,7 @@ implements Runnable {
     }
 
     public boolean doesFactionControlAnOutpost(String factionTag) {
-        for (Outpost outpost : CosmicOutpostsPlugin.get_().getOutposts()) {
+        for (Outpost outpost : CosmicKOTHPlugin.get_().getOutposts()) {
             if (outpost.getControllingFaction() == null || !outpost.getControllingFaction().equals(factionTag)) continue;
             return true;
         }
@@ -457,7 +458,7 @@ implements Runnable {
     public List<Player> getPlayersInCapZone() {
         ArrayList<Player> l = new ArrayList<Player>();
         for (Player p : Arkkit.get().getAsyncPlayerMap().values()) {
-            if (!p.getWorld().equals((Object)this.outpost.getWorld()) || !WorldGuardUtils.getRegionName(p.getLocation()).equals(Outpost.OUTPOST_CAP_REGION) || p.getGameMode() != GameMode.SURVIVAL || CosmicOutpostsPlugin.get_().getEss3().getUser(p).isVanished()) continue;
+            if (!p.getWorld().equals((Object)this.outpost.getWorld()) || !WorldGuardUtils.getRegionName(p.getLocation()).equals(Outpost.OUTPOST_CAP_REGION) || p.getGameMode() != GameMode.SURVIVAL || CosmicKOTHPlugin.get_().getEss3().getUser(p).isVanished()) continue;
             l.add(p);
         }
         return l;

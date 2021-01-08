@@ -43,6 +43,7 @@
  */
 package com.compilex.CosmicOutposts.listeners;
 
+import com.compilex.CosmicKOTH.CosmicKOTHPlugin;
 import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
 import com.compilex.CosmicOutposts.outpost.Outpost;
 import com.compilex.CosmicOutposts.outpost.enums.OutpostTier;
@@ -120,7 +121,7 @@ implements Listener {
         Player p;
         Faction f;
         if (e.getMessage().startsWith("/f tag") && (f = ((FPlayer)FPlayers.i.get((OfflinePlayer)(p = e.getPlayer()))).getFaction()).isNormal()) {
-            for (Outpost o : CosmicOutpostsPlugin.get_().getOutposts()) {
+            for (Outpost o : CosmicKOTHPlugin.get_().getOutposts()) {
                 if (!(o.getControllingFaction() != null && o.getControllingFaction().equals(f.getTag()) || o.getCapTask().getAttackingFaction() != null && o.getCapTask().getAttackingFaction().equals((Object)f)) && (o.getCapTask().getDefendingFaction() == null || !o.getCapTask().getDefendingFaction().equals((Object)f))) continue;
                 e.setCancelled(true);
                 e.setMessage("/null");
@@ -141,7 +142,7 @@ implements Listener {
             } else {
                 e.setCancelled(true);
                 e.setDamage(0.0);
-                p.setMetadata("ignore_combat_tag", (MetadataValue)new FixedMetadataValue((Plugin)CosmicOutpostsPlugin.get_(), (Object)true));
+                p.setMetadata("ignore_combat_tag", (MetadataValue)new FixedMetadataValue((Plugin)CosmicKOTHPlugin.get_(), (Object)true));
                 try {
                     Outpost o = CosmicOutpostsAPI.getOutpost((Entity)p);
                     if (CosmicOutpostsAPI.isDefender(p, o)) {
@@ -153,7 +154,7 @@ implements Listener {
                 catch (Exception err) {
                     err.printStackTrace();
                 }
-                p.removeMetadata("ignore_combat_tag", (Plugin)CosmicOutpostsPlugin.get_());
+                p.removeMetadata("ignore_combat_tag", (Plugin)CosmicKOTHPlugin.get_());
             }
         }
     }
@@ -172,7 +173,7 @@ implements Listener {
     public void onPlayerDeath(PlayerDeathEvent e) {
         if (e.getEntity().getWorld().getName().contains("cosmic-station")) {
             long deathBanDuration = e.getEntity().hasPermission("cosmicpvp.heroic") ? TimeUnit.SECONDS.toMillis(60L) : TimeUnit.SECONDS.toMillis(120L);
-            e.getEntity().setMetadata("deathBan_" + e.getEntity().getWorld().getName(), (MetadataValue)new FixedMetadataValue((Plugin)CosmicOutpostsPlugin.get_(), (Object)(System.currentTimeMillis() + deathBanDuration)));
+            e.getEntity().setMetadata("deathBan_" + e.getEntity().getWorld().getName(), (MetadataValue)new FixedMetadataValue((Plugin)CosmicKOTHPlugin.get_(), (Object)(System.currentTimeMillis() + deathBanDuration)));
         }
     }
 
@@ -187,7 +188,7 @@ implements Listener {
                 e.setCancelled(true);
                 return;
             }
-            Bukkit.getScheduler().runTaskLater((Plugin)CosmicOutpostsPlugin.get_(), new Runnable(){
+            Bukkit.getScheduler().runTaskLater((Plugin)CosmicKOTHPlugin.get_(), new Runnable(){
 
                 @Override
                 public void run() {

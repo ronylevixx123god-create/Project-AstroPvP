@@ -16,6 +16,7 @@
  */
 package com.compilex.CosmicOutposts.listeners;
 
+import com.compilex.CosmicKOTH.CosmicKOTHPlugin;
 import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -44,31 +45,31 @@ implements Listener {
             }
             if (e.getRawSlot() == 3) {
                 p.closeInventory();
-                if (CosmicOutpostsAPI.isDefender(p, CosmicOutpostsPlugin.get_().getTraineeOutpost())) {
-                    p.teleport(CosmicOutpostsPlugin.get_().getTraineeOutpost().getDefenderSpawn(), PlayerTeleportEvent.TeleportCause.PLUGIN);
+                if (CosmicOutpostsAPI.isDefender(p, CosmicKOTHPlugin.get_().getTraineeOutpost())) {
+                    p.teleport(CosmicKOTHPlugin.get_().getTraineeOutpost().getDefenderSpawn(), PlayerTeleportEvent.TeleportCause.PLUGIN);
                 } else {
-                    p.teleport(CosmicOutpostsPlugin.get_().getTraineeOutpost().getAttackerSpawn(), PlayerTeleportEvent.TeleportCause.PLUGIN);
+                    p.teleport(CosmicKOTHPlugin.get_().getTraineeOutpost().getAttackerSpawn(), PlayerTeleportEvent.TeleportCause.PLUGIN);
                 }
             } else if (e.getRawSlot() == 5) {
                 p.closeInventory();
-                if (CosmicOutpostsAPI.isDefender(p, CosmicOutpostsPlugin.get_().getHeroOutpost())) {
-                    p.teleport(CosmicOutpostsPlugin.get_().getHeroOutpost().getDefenderSpawn(), PlayerTeleportEvent.TeleportCause.PLUGIN);
+                if (CosmicOutpostsAPI.isDefender(p, CosmicKOTHPlugin.get_().getHeroOutpost())) {
+                    p.teleport(CosmicKOTHPlugin.get_().getHeroOutpost().getDefenderSpawn(), PlayerTeleportEvent.TeleportCause.PLUGIN);
                 } else {
-                    p.teleport(CosmicOutpostsPlugin.get_().getHeroOutpost().getAttackerSpawn(), PlayerTeleportEvent.TeleportCause.PLUGIN);
+                    p.teleport(CosmicKOTHPlugin.get_().getHeroOutpost().getAttackerSpawn(), PlayerTeleportEvent.TeleportCause.PLUGIN);
                 }
             } else if (e.getRawSlot() == 7) {
                 p.closeInventory();
-                if (CosmicOutpostsAPI.isDefender(p, CosmicOutpostsPlugin.get_().getCosmonautOutpost())) {
-                    p.teleport(CosmicOutpostsPlugin.get_().getCosmonautOutpost().getDefenderSpawn(), PlayerTeleportEvent.TeleportCause.PLUGIN);
+                if (CosmicOutpostsAPI.isDefender(p, CosmicKOTHPlugin.get_().getCosmonautOutpost())) {
+                    p.teleport(CosmicKOTHPlugin.get_().getCosmonautOutpost().getDefenderSpawn(), PlayerTeleportEvent.TeleportCause.PLUGIN);
                 } else {
-                    p.teleport(CosmicOutpostsPlugin.get_().getCosmonautOutpost().getAttackerSpawn(), PlayerTeleportEvent.TeleportCause.PLUGIN);
+                    p.teleport(CosmicKOTHPlugin.get_().getCosmonautOutpost().getAttackerSpawn(), PlayerTeleportEvent.TeleportCause.PLUGIN);
                 }
             } else if (e.getRawSlot() == 1) {
                 p.closeInventory();
-                if (CosmicOutpostsAPI.isDefender(p, CosmicOutpostsPlugin.get_().getVanillaOutpost())) {
-                    p.teleport(CosmicOutpostsPlugin.get_().getVanillaOutpost().getDefenderSpawn(), PlayerTeleportEvent.TeleportCause.PLUGIN);
+                if (CosmicOutpostsAPI.isDefender(p, CosmicKOTHPlugin.get_().getVanillaOutpost())) {
+                    p.teleport(CosmicKOTHPlugin.get_().getVanillaOutpost().getDefenderSpawn(), PlayerTeleportEvent.TeleportCause.PLUGIN);
                 } else {
-                    p.teleport(CosmicOutpostsPlugin.get_().getVanillaOutpost().getAttackerSpawn(), PlayerTeleportEvent.TeleportCause.PLUGIN);
+                    p.teleport(CosmicKOTHPlugin.get_().getVanillaOutpost().getAttackerSpawn(), PlayerTeleportEvent.TeleportCause.PLUGIN);
                 }
             }
             p.playSound(p.getLocation(), Sound.PORTAL_TRAVEL, 1.0f, 2.0f);
