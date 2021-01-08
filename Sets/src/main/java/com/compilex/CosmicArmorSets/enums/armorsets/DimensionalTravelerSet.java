@@ -75,8 +75,8 @@ import com.massivecraft.factions.struct.Relation;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
-import net.minecraft.server.v1_8_R3.*;
 import net.minecraft.server.v1_8_R3.World;
+import net.minecraft.server.v1_8_R3.*;
 import org.arkhamnetwork.enchantments.enchantments.armor.Clarity;
 import org.bukkit.Material;
 import org.bukkit.*;
@@ -104,10 +104,10 @@ import java.util.concurrent.ThreadLocalRandom;
 public class DimensionalTravelerSet
         extends ArmorSetInfo
         implements OtherPlayerEventListenerSet {
-    List<Material> materials = Lists.newArrayList(Material.ENDER_STONE, Material.NETHERRACK);
     private final Map<UUID, Float> storedPlayerWalkSpeeds = new HashMap<UUID, Float>();
     private final Set<FallingBlock> fallingBlocks = Collections.newSetFromMap(new WeakHashMap());
     private final Map<UUID, DimensionalDamageTracker> tracker = new MapMaker().concurrencyLevel(16).makeMap();
+    List<Material> materials = Lists.newArrayList(Material.ENDER_STONE, Material.NETHERRACK);
 
     @Override
     public ItemStack getHelmet(boolean applyTransmog) {
@@ -250,17 +250,17 @@ public class DimensionalTravelerSet
                             if (!(ent instanceof EntityHuman))
                                 continue;
                             CraftPlayer player = (CraftPlayer) ent.getBukkitEntity();
-                            if (player.getGameMode() == GameMode.CREATIVE || player.equals(original) || player.isDead() || EssentialsUtils.isInGodMode((Player) player) || player.hasMetadata("spectator") || player.hasMetadata("NPC"))
+                            if (player.getGameMode() == GameMode.CREATIVE || player.equals(original) || player.isDead() || EssentialsUtils.isInGodMode(player) || player.hasMetadata("spectator") || player.hasMetadata("NPC"))
                                 continue;
                             if (player.getHealth() <= 0.0D)
                                 continue;
                             if (!WorldGuardUtils.isPvPEnabled(player.getLocation()))
                                 continue;
-                            if (DimensionalTravelerSet.this.isIgnoring((Player) player))
+                            if (DimensionalTravelerSet.this.isIgnoring(player))
                                 continue;
-                            if (faction.isNormal() && faction.getRelationTo((RelationParticipator) FPlayers.i.get((OfflinePlayer) player)).isAtLeast(Relation.TRUCE))
+                            if (faction.isNormal() && faction.getRelationTo(FPlayers.i.get(player)).isAtLeast(Relation.TRUCE))
                                 continue;
-                            if (CosmicArmorSetsAPI.hasInfiniteLuck((Player) player, 5, original))
+                            if (CosmicArmorSetsAPI.hasInfiniteLuck(player, 5, original))
                                 continue;
                             DimensionalDamageTracker tracked = DimensionalTravelerSet.this.tracker.computeIfAbsent(player.getUniqueId(), e -> new DimensionalDamageTracker());
                             if (tracked.checkHit()) {
@@ -268,13 +268,13 @@ public class DimensionalTravelerSet
                                 continue;
                             }
                             double damage = Math.min(player.getMaxHealth(), 44.0D) * 0.15D;
-                            if (!ArmorSetInfo.subtractDirectHealth((Player) player, (LivingEntity) original, damage)) {
+                            if (!ArmorSetInfo.subtractDirectHealth(player, original, damage)) {
                                 die();
                                 continue;
                             }
                             this.damagedPlayed = true;
                             tracked.trackHit();
-                            DimensionalTravelerSet.this.unfreeze((Player) player);
+                            DimensionalTravelerSet.this.unfreeze(player);
                             player.playSound(player.getLocation(), Sound.ZOMBIE_WOODBREAK, 1.0F, 1.1F);
                             Bukkit.getLogger().info("[CosmicArmorSets] Damaging " + player.getName() + " for " + damage + " due to " + original.getName() + "'s Dimensional Traveler Block");
                             killed++;
@@ -295,9 +295,9 @@ public class DimensionalTravelerSet
             }
         };
         block.ticksLived = 1;
-        ((CraftWorld) location.getWorld()).getHandle().addEntity((Entity) block, CreatureSpawnEvent.SpawnReason.CUSTOM);
+        ((CraftWorld) location.getWorld()).getHandle().addEntity(block, CreatureSpawnEvent.SpawnReason.CUSTOM);
         FallingBlock fallingBlock = (FallingBlock) block.getBukkitEntity();
-        fallingBlock.setMetadata("dimensionalShift", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), faction.getId()));
+        fallingBlock.setMetadata("dimensionalShift", new FixedMetadataValue(CosmicBosses.getInstance(), faction.getId()));
         fallingBlock.setDropItem(false);
         return fallingBlock;
     }

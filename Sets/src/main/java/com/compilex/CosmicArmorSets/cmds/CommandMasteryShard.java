@@ -35,22 +35,22 @@ public class CommandMasteryShard
             return true;
         }
         if (args.length >= 3 && args[0].equalsIgnoreCase("give")) {
-            Player pl = Bukkit.getPlayer((String) args[1]);
+            Player pl = Bukkit.getPlayer(args[1]);
             if (pl == null) {
                 sender.sendMessage(CC.Red + "Invalid online player!");
                 return true;
             }
             AbilityArmorSet set = AbilityArmorSet.fromName(args[2]);
             if (set == null) {
-                sender.sendMessage(CC.Red + "Invalid Ability Armor set: " + Arrays.toString((Object[]) AbilityArmorSet.values()));
+                sender.sendMessage(CC.Red + "Invalid Ability Armor set: " + Arrays.toString(AbilityArmorSet.values()));
                 return true;
             }
             if (args.length >= 4 && args[3].equalsIgnoreCase("anticrystal")) {
-                Integer crystal = args.length >= 5 ? NumberUtils.parseIntOrNull((String) args[4]) : null;
-                PlayerUtil.giveOrDropProtectedItem((Player) pl, (ItemStack) set.createAntiMkitShard(crystal == null || crystal <= 0 ? 1 : crystal), (int) -1);
+                Integer crystal = args.length >= 5 ? NumberUtils.parseIntOrNull(args[4]) : null;
+                PlayerUtil.giveOrDropProtectedItem(pl, set.createAntiMkitShard(crystal == null || crystal <= 0 ? 1 : crystal), -1);
                 return true;
             }
-            PlayerUtil.giveOrDropProtectedItem((Player) pl, (ItemStack) set.createMasteryShard(true), (int) -1);
+            PlayerUtil.giveOrDropProtectedItem(pl, set.createMasteryShard(true), -1);
             return true;
         }
         sender.sendMessage(CC.Red + "/masteryshard give <player> <abilitySet> [anticrystal]");

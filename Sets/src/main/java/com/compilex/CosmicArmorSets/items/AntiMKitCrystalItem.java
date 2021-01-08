@@ -37,7 +37,7 @@ public class AntiMKitCrystalItem extends CosmicItem implements InventoryInteract
 
     public ItemStack createItem(Player player, Object... objects) {
         if (objects != null && objects.length >= 2) {
-            Integer success = NumberUtils.parseIntOrNull((String) objects[0].toString());
+            Integer success = NumberUtils.parseIntOrNull(objects[0].toString());
             if (success == null) {
                 success = 1;
             }
@@ -46,7 +46,7 @@ public class AntiMKitCrystalItem extends CosmicItem implements InventoryInteract
                 Object object = objects[i];
                 AbilityArmorSet armorSet = null;
                 if (object instanceof AbilityArmorSet) {
-                    armorSet = (AbilityArmorSet) ((Object) object);
+                    armorSet = (AbilityArmorSet) object;
                 } else if (object instanceof Set) {
                     set = (Set) object;
                 } else {
@@ -65,7 +65,7 @@ public class AntiMKitCrystalItem extends CosmicItem implements InventoryInteract
                 for (CustomEnchantment ench : EnchantmentAPI.getEnchantments()) {
                     if (!(ench instanceof MasteryCustomEnchantment) || !found.name().equals(((MasteryCustomEnchantment) ench).getArmorSet()))
                         continue;
-                    lore.add(String.valueOf(CC.GoldB) + " * " + CC.DarkRed + ench.name());
+                    lore.add(CC.GoldB + " * " + CC.DarkRed + ench.name());
                 }
             }
             String name = null;
@@ -78,14 +78,14 @@ public class AntiMKitCrystalItem extends CosmicItem implements InventoryInteract
                 if (combined.endsWith(", ")) {
                     combined = combined.substring(0, combined.length() - 2);
                 }
-                name = String.valueOf(CC.GoldB) + "Multi Anti M-Kit Crystal (" + combined + CC.GoldB + ")";
+                name = CC.GoldB + "Multi Anti M-Kit Crystal (" + combined + CC.GoldB + ")";
             } else if (!set.isEmpty()) {
-                name = String.valueOf(CC.GoldB) + "Anti M-Kit Crystal (" + ((AbilityArmorSet) set.stream().findFirst().orElse(null)).getDisplayName() + CC.GoldB + ")";
+                name = CC.GoldB + "Anti M-Kit Crystal (" + set.stream().findFirst().orElse(null).getDisplayName() + CC.GoldB + ")";
             }
             if (name == null) {
                 return null;
             }
-            return this.applyItemData(new ItemBuilder(Material.INK_SACK, name).lore(lore).data((short) DyeColor.YELLOW.getDyeData()).build()).setNBTBase("cosmicData", (NBTBase) new NBTTagCompoundBuilder().setNBTBase("mKits", (NBTBase) list.build()).setInt("success", success).get()).assignIID().build();
+            return this.applyItemData(new ItemBuilder(Material.INK_SACK, name).lore(lore).data(DyeColor.YELLOW.getDyeData()).build()).setNBTBase("cosmicData", new NBTTagCompoundBuilder().setNBTBase("mKits", list.build()).setInt("success", success).get()).assignIID().build();
         }
         return null;
     }
@@ -96,7 +96,7 @@ public class AntiMKitCrystalItem extends CosmicItem implements InventoryInteract
 
     public void onInventoryClick(Player player, ItemStack itemStack, NBTWrapper nbtWrapper, NBTWrapper clickedWrapper, ItemStack clicked, InventoryClickEvent inventoryClickEvent) throws CosmicException {
         Pair<Set<AbilityArmorSet>, Integer> crystal;
-        if (GeneralUtil.isArmor((ItemStack) clicked) && (crystal = AbilityArmorSet.getFromAntiMkitCrystal(nbtWrapper)) != null) {
+        if (GeneralUtil.isArmor(clicked) && (crystal = AbilityArmorSet.getFromAntiMkitCrystal(nbtWrapper)) != null) {
             if (AbilityArmorSet.getAntiMkitCrystal(clickedWrapper) != null) {
                 throw new PrefixedException("You can not apply more than 1 Anti M-Kit Crystal to a single piece of gear!");
             }
@@ -114,12 +114,12 @@ public class AntiMKitCrystalItem extends CosmicItem implements InventoryInteract
                 player.getWorld().playSound(player.getLocation(), Sound.FIZZ, 3.0f, 1.1f);
                 ASound.GLASS.play(player, 3.0f, 1.1f);
                 player.updateInventory();
-                throw new PrefixedException(String.valueOf(ItemUtils.getDisplayName((ItemStack) itemStack)) + CC.Red + " fails to apply and has been destroyed!");
+                throw new PrefixedException(ItemUtils.getDisplayName(itemStack) + CC.Red + " fails to apply and has been destroyed!");
             }
             inventoryClickEvent.setCurrentItem(this.applyToItem(clickedWrapper, clicked, crystal));
             ASound.LEVEL_UP.play(player, 3.0f, 1.1f);
-            player.sendMessage(String.valueOf(CC.GoldB) + "(!) " + CC.Gold + ItemUtils.getDisplayName((ItemStack) itemStack) + CC.Gold + " has been applied to " + ItemUtils.getDisplayName((ItemStack) clicked) + CC.Gold + "!");
-            player.sendMessage(String.valueOf(CC.Gray) + "While equipped you will be immune to any Mastery Enchantments associated with that /mkit(s)!");
+            player.sendMessage(CC.GoldB + "(!) " + CC.Gold + ItemUtils.getDisplayName(itemStack) + CC.Gold + " has been applied to " + ItemUtils.getDisplayName(clicked) + CC.Gold + "!");
+            player.sendMessage(CC.Gray + "While equipped you will be immune to any Mastery Enchantments associated with that /mkit(s)!");
             player.updateInventory();
         }
     }
@@ -136,8 +136,8 @@ public class AntiMKitCrystalItem extends CosmicItem implements InventoryInteract
             list.addString(armor.name());
             loreBuild.append(armor.getDisplayName()).append(CC.Gray).append(", ");
         }
-        builder.setNBTBase("antiMkits", (NBTBase) list.build());
-        wrapper.setNBTBase("cosmicData", (NBTBase) builder.get());
+        builder.setNBTBase("antiMkits", list.build());
+        wrapper.setNBTBase("cosmicData", builder.get());
         item = wrapper.build();
         ItemMeta im = item.getItemMeta();
         List lore = im.getLore();

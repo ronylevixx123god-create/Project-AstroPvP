@@ -35,8 +35,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class CosmicArmorSetsPlugin
         extends JavaPlugin {
     private static CosmicArmorSetsPlugin p;
-    private Map<Player, CachedArmorSet<AbilityArmorSet>> playerAbilityArmorSets = new ConcurrentHashMap<Player, CachedArmorSet<AbilityArmorSet>>();
-    private boolean debugging = false;
+    private final Map<Player, CachedArmorSet<AbilityArmorSet>> playerAbilityArmorSets = new ConcurrentHashMap<Player, CachedArmorSet<AbilityArmorSet>>();
+    private final boolean debugging = false;
 
     public static CosmicArmorSetsPlugin get_() {
         return p;

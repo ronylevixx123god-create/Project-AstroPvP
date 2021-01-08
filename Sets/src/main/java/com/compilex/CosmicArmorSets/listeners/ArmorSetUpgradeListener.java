@@ -72,29 +72,29 @@ public class ArmorSetUpgradeListener
         if (wrapper.getString("cosmicType").equals("RANDOM_ARMOR_UPGRADE")) {
             long id;
             event.setCancelled(true);
-            if (!player.getWorld().getName().equals(((World) Bukkit.getWorlds().get(0)).getName())) {
+            if (!player.getWorld().getName().equals(Bukkit.getWorlds().get(0).getName())) {
                 player.sendMessage(CC.RedB + "(!) " + CC.Red + "You can only unlock a Armor Upgrade in the Overworld!");
                 return;
             }
-            if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning() && item.getAmount() == 1 && (id = ItemID.getItemID((ItemStack) item)) != -1L) {
+            if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning() && item.getAmount() == 1 && (id = ItemID.getItemID(item)) != -1L) {
                 if (ItemID.blacklist_iid.contains(id)) {
                     player.sendMessage(CC.RedB + "(!) " + CC.Red + "You attempted to claim an already claimed Upgrade!");
                     player.setItemInHand(null);
                     player.updateInventory();
-                    Bukkit.getLogger().info(player.getName() + " used a Blacklisted Random Armor Upgrade: " + id + " item: " + (Object) item);
+                    Bukkit.getLogger().info(player.getName() + " used a Blacklisted Random Armor Upgrade: " + id + " item: " + item);
                     return;
                 }
-                ItemID.blacklistIID((long) id, (String) ("random armor upgrade use " + player.getName()));
+                ItemID.blacklistIID(id, "random armor upgrade use " + player.getName());
             }
             ArmorSet received = CosmicArmorSetsAPI.getRandomArmorSetFromUpgrade();
             ItemStack retr = CosmicArmorSetsAPI.createArmorSetUpgrade(received, 1 + ThreadLocalRandom.current().nextInt(100));
             if (item.getAmount() > 1) {
                 item.setAmount(item.getAmount() - 1);
-                PlayerUtil.giveOrDropProtectedItem((Player) player, (ItemStack) retr, (int) -1);
+                PlayerUtil.giveOrDropProtectedItem(player, retr, -1);
             } else {
                 player.setItemInHand(retr);
             }
-            player.sendMessage(CC.GreenB + "(!) " + CC.Green + "You have received a " + ItemUtils.getDisplayName((ItemStack) retr) + CC.Green + " from your Random Heroic Upgrade!");
+            player.sendMessage(CC.GreenB + "(!) " + CC.Green + "You have received a " + ItemUtils.getDisplayName(retr) + CC.Green + " from your Random Heroic Upgrade!");
             player.updateInventory();
             player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0f, 1.1f);
         }
@@ -106,7 +106,7 @@ public class ArmorSetUpgradeListener
             return;
         }
         Player player = (Player) event.getWhoClicked();
-        if (event.getWhoClicked().getInventory() == null || !event.getWhoClicked().getInventory().equals((Object) player.getInventory())) {
+        if (event.getWhoClicked().getInventory() == null || !event.getWhoClicked().getInventory().equals(player.getInventory())) {
             return;
         }
         ItemStack clicked = event.getCurrentItem();
@@ -114,14 +114,14 @@ public class ArmorSetUpgradeListener
         if (cursor == null) {
             return;
         }
-        if (clicked == null || clicked.getType() == Material.AIR || !GeneralUtil.isArmor((ItemStack) clicked)) {
+        if (clicked == null || clicked.getType() == Material.AIR || !GeneralUtil.isArmor(clicked)) {
             return;
         }
         NBTWrapper cursorWrapper = null;
         String cosmicType = null;
         if (cursor.getType() == Material.INK_SACK && (cosmicType = (cursorWrapper = new NBTWrapper(cursor)).getString("cosmicType")).equals("HEROIC_ARMOR_UPGRADE")) {
             event.setCancelled(true);
-            if (!player.getWorld().getName().equals(((World) Bukkit.getWorlds().get(0)).getName()) && !player.getName().equals("world_end")) {
+            if (!player.getWorld().getName().equals(Bukkit.getWorlds().get(0).getName()) && !player.getName().equals("world_end")) {
                 player.sendMessage(CC.Red + "(!) " + CC.Red + "You must apply this Upgrade in the Overworld!");
                 return;
             }
@@ -135,9 +135,9 @@ public class ArmorSetUpgradeListener
                 boolean allSetsAllowed = setType.equalsIgnoreCase("ALL");
                 ArmorSet requiredSet = ArmorSet.fromName(setType);
                 ArmorSet clickedArmorSet = ArmorSet.getArmorSetFromItem(clicked);
-                boolean bl = correctApplication = allSetsAllowed && clickedArmorSet != null || requiredSet != null && requiredSet.equals((Object) clickedArmorSet);
+                boolean bl = correctApplication = allSetsAllowed && clickedArmorSet != null || requiredSet != null && requiredSet.equals(clickedArmorSet);
                 if (!correctApplication) {
-                    player.sendMessage(CC.RedB + "(!) " + CC.Red + "You must apply this Heroic Armor Upgrade to a " + (allSetsAllowed || requiredSet == null ? "" : StringUtils.capitaliseAllWords((String) requiredSet.name().replace("_", " ").toLowerCase())) + CC.Red + " Armor Set piece!");
+                    player.sendMessage(CC.RedB + "(!) " + CC.Red + "You must apply this Heroic Armor Upgrade to a " + (allSetsAllowed || requiredSet == null ? "" : StringUtils.capitaliseAllWords(requiredSet.name().replace("_", " ").toLowerCase())) + CC.Red + " Armor Set piece!");
                     return;
                 }
                 HeroicArmorType type = HeroicArmorType.getFromMaterial(clicked.getType());
@@ -151,7 +151,7 @@ public class ArmorSetUpgradeListener
                     player.getInventory().removeItem(cursor);
                     player.setItemOnCursor(null);
                     player.updateInventory();
-                    Bukkit.getLogger().info("[CosmicArmorSets] Removing blacklisted armor upgrade from " + player.getName() + ": " + (Object) cursor);
+                    Bukkit.getLogger().info("[CosmicArmorSets] Removing blacklisted armor upgrade from " + player.getName() + ": " + cursor);
                     return;
                 }
                 double chance = builder.getDouble("success");
@@ -167,12 +167,12 @@ public class ArmorSetUpgradeListener
                     player.setItemOnCursor(null);
                     player.updateInventory();
                     if (iid != null && ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
-                        ItemID.blacklistIID((long) iid, (String) ("armorset upgrade " + player.getName() + iid));
+                        ItemID.blacklistIID(iid, "armorset upgrade " + player.getName() + iid);
                     }
                 }
                 if (chance >= (double) (ThreadLocalRandom.current().nextInt(100) + 1)) {
-                    Bukkit.getLogger().info("Upgrading " + player.getName() + "'s " + (Object) clicked + " item to heroic version!");
-                    ParticleEffect.playEffect((ParticleEffect) ParticleEffect.HAPPY_VILLAGER, (Location) player.getLocation().add(0.0, 0.4, 0.0), (float) 0.1f, (int) 30);
+                    Bukkit.getLogger().info("Upgrading " + player.getName() + "'s " + clicked + " item to heroic version!");
+                    ParticleEffect.playEffect(ParticleEffect.HAPPY_VILLAGER, player.getLocation().add(0.0, 0.4, 0.0), 0.1f, 30);
                     player.getWorld().playSound(player.getLocation(), Sound.VILLAGER_YES, 1.4f, 0.9f);
                     player.getWorld().playSound(player.getLocation(), Sound.LEVEL_UP, 1.4f, 0.9f);
                     ItemStack retItem = CosmicArmorSetsAPI.convertItemToHeroic(clicked, type, true);
@@ -214,7 +214,7 @@ public class ArmorSetUpgradeListener
                 } else {
                     player.sendMessage(CC.RedB + "(!) " + CC.Red + "You failed to apply your " + ItemUtils.getDisplayName(cursor) + CC.Red + "!");
                     player.playSound(player.getLocation(), Sound.LAVA_POP, 1.0f, 0.9f);
-                    ParticleEffect.playEffect(ParticleEffect.LAVA, player.getLocation().add(0.0, 0.4, 0.0), 0.1f, (int) 30);
+                    ParticleEffect.playEffect(ParticleEffect.LAVA, player.getLocation().add(0.0, 0.4, 0.0), 0.1f, 30);
                     CosmicArmorSetsPlugin.get_().getLogger().info(player.getName() + " failed to apply Heroic Armor Upgrade!");
                 }
             }

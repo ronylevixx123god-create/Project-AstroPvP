@@ -17,10 +17,10 @@ public enum HeroicWeaponType {
     public Material material;
     public String name;
     public int durability;
-    private double attackModifier;
-    private double vanillaBaseDamage;
+    private final double attackModifier;
+    private final double vanillaBaseDamage;
 
-    private HeroicWeaponType(Material material, String name, int durability, double attackModifier, double vanillaBaseDamage) {
+    HeroicWeaponType(Material material, String name, int durability, double attackModifier, double vanillaBaseDamage) {
         this.material = material;
         this.name = name;
         this.durability = durability;

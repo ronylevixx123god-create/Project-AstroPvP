@@ -39,10 +39,10 @@ public class ArmorSetHelpMenu
         for (ArmorSet armorSet : ArmorSet.values()) {
             int index = 0;
             if (armorSet.getArmorSetInfo() instanceof WeaponedArmorSet) {
-                this.setItem(slotIndex + index++ * 9, new InventoryItem(((WeaponedArmorSet) ((Object) armorSet.getArmorSetInfo())).getWeapon(true)));
+                this.setItem(slotIndex + index++ * 9, new InventoryItem(((WeaponedArmorSet) armorSet.getArmorSetInfo()).getWeapon(true)));
             } else if (armorSet.getArmorSetInfo() instanceof KothArmorSet) {
-                this.setItem(8 + index * 9, new InventoryItem(KothItemUtils.getKothAxe((String) this.player.getName())));
-                this.setItem(slotIndex + index++ * 9, new InventoryItem(KothItemUtils.getKothSwordPvP((String) this.player.getName())));
+                this.setItem(8 + index * 9, new InventoryItem(KothItemUtils.getKothAxe(this.player.getName())));
+                this.setItem(slotIndex + index++ * 9, new InventoryItem(KothItemUtils.getKothSwordPvP(this.player.getName())));
             } else if (armorSet.getArmorSetInfo() instanceof DragonSlayerArmorSet) {
                 ItemStack item = new MaskBuilder("DRAGON_MASK").build();
                 if (item != null) {

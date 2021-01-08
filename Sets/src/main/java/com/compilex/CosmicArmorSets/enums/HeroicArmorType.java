@@ -14,12 +14,12 @@ public enum HeroicArmorType {
     LEGGINGS(Material.LEATHER_LEGGINGS, "Leggings", 6, 935),
     BOOTS(Material.LEATHER_BOOTS, "Boots", 3, 686);
 
-    private Material material;
-    private String name;
-    private int armorModifier;
-    private int durability;
+    private final Material material;
+    private final String name;
+    private final int armorModifier;
+    private final int durability;
 
-    private HeroicArmorType(Material material, String name, int armorModifier, int durability) {
+    HeroicArmorType(Material material, String name, int armorModifier, int durability) {
         this.material = material;
         this.name = name;
         this.armorModifier = armorModifier;

@@ -53,15 +53,15 @@ public abstract class ArmorSetInfo {
     }
 
     public ItemStack addEnchantment(String name, int level, ItemStack item) {
-        return EnchantmentAPI.getEnchantment((String) name).addToItem(item, level);
+        return EnchantmentAPI.getEnchantment(name).addToItem(item, level);
     }
 
     public CustomEnchantment getEnchantment(String name) {
-        return EnchantmentAPI.getEnchantment((String) name);
+        return EnchantmentAPI.getEnchantment(name);
     }
 
     public int getMaxEnchantLevel(String name) {
-        return EnchantmentAPI.getEnchantment((String) name).getMaxLevel();
+        return EnchantmentAPI.getEnchantment(name).getMaxLevel();
     }
 
     public abstract ItemStack getHelmet(boolean var1);
@@ -83,7 +83,7 @@ public abstract class ArmorSetInfo {
     public abstract boolean onPlayerAttackedBonus(Player var1, int var2, EntityDamageByEntityEvent var3);
 
     protected ItemStack getWithTransmog(boolean applyTransmog, ItemStack item) {
-        return applyTransmog ? EnchantmentBook.applyTransmogScroll((ItemStack) item) : item;
+        return applyTransmog ? EnchantmentBook.applyTransmogScroll(item) : item;
     }
 
     protected boolean isBlockedOutpostWorld(Entity damager) {
@@ -100,7 +100,7 @@ public abstract class ArmorSetInfo {
         }
         if (starterDamage != event.getDamage(EntityDamageEvent.DamageModifier.BASE)) {
             if (CosmicArmorSetsPlugin.get_().isDebugging()) {
-                CosmicArmorSetsPlugin.get_().getLogger().info("(" + this.getClass().getSimpleName() + ") Modifying damage from bonus by " + multiplierIncrementInHundreds + " equipped: " + multiplier + " modifier: " + modifier + " for " + player.getName() + " was " + starterDamage + " -> " + event.getDamage(EntityDamageEvent.DamageModifier.BASE) + " damaged: " + (event.getEntity() instanceof Player ? ((Player) event.getEntity()).getName() : event.getEntity().getType().name()));
+                CosmicArmorSetsPlugin.get_().getLogger().info("(" + this.getClass().getSimpleName() + ") Modifying damage from bonus by " + multiplierIncrementInHundreds + " equipped: " + multiplier + " modifier: " + modifier + " for " + player.getName() + " was " + starterDamage + " -> " + event.getDamage(EntityDamageEvent.DamageModifier.BASE) + " damaged: " + (event.getEntity() instanceof Player ? event.getEntity().getName() : event.getEntity().getType().name()));
                 if (player.isOp()) {
                     player.sendMessage(CC.Red + "Modified Damage: " + modifier + " (" + starterDamage + " old: " + event.getDamage(EntityDamageEvent.DamageModifier.BASE) + ")");
                 }

@@ -27,7 +27,6 @@ import com.compilex.CosmicArmorSets.enums.OtherPlayerEventListenerSet;
 import com.compilex.CosmicArmorSets.utils.ItemUtils;
 import com.compilex.CosmicArmorSets.utils.TranslateList;
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import org.bukkit.ChatColor;
@@ -56,32 +55,32 @@ public class UltraArmorSet
 
     @Override
     public ItemStack getHelmet(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_HELMET, (short) 0, "&7&lUltra Helmet", CC.Gray + "The Ultra Leggings", "", "&7&lULTRA SET BONUS", "&7&l* &7You deal 35% more damage.", "&7&l* &7Enemies deal 20% less damage to you.", "&7&l* &740% Holy Ultra Negation.", "&7&l* &710% Chance to proc Ultra Rage.", "&7&l* &7x1.5 World Destroyer Duration.", "&7&l* &750% Chance to Bypass Utility Belt.", "&7(&oRequires all 4 Ultra items.&7)"), new LinkedList(Arrays.asList(EnchantmentAPI.getEnchantment((String) "Godly Overload"), EnchantmentAPI.getEnchantment((String) "Paladin Armored"), EnchantmentAPI.getEnchantment((String) "Blood Lust"), EnchantmentAPI.getEnchantment((String) "Enlighted"), EnchantmentAPI.getEnchantment((String) "Deathbringer"), EnchantmentAPI.getEnchantment((String) "Armored"), EnchantmentAPI.getEnchantment((String) "Tank"), EnchantmentAPI.getEnchantment((String) "Angelic"), EnchantmentAPI.getEnchantment((String) "Arrow Deflect"), EnchantmentAPI.getEnchantment((String) "Dodge"), EnchantmentAPI.getEnchantment((String) "Valor"), EnchantmentAPI.getEnchantment((String) "Aegis"), EnchantmentAPI.getEnchantment((String) "Spirit Link"), EnchantmentAPI.getEnchantment((String) "Leadership")))));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_HELMET, (short) 0, "&7&lUltra Helmet", CC.Gray + "The Ultra Leggings", "", "&7&lULTRA SET BONUS", "&7&l* &7You deal 35% more damage.", "&7&l* &7Enemies deal 20% less damage to you.", "&7&l* &740% Holy Ultra Negation.", "&7&l* &710% Chance to proc Ultra Rage.", "&7&l* &7x1.5 World Destroyer Duration.", "&7&l* &750% Chance to Bypass Utility Belt.", "&7(&oRequires all 4 Ultra items.&7)"), new LinkedList(Arrays.asList(EnchantmentAPI.getEnchantment("Godly Overload"), EnchantmentAPI.getEnchantment("Paladin Armored"), EnchantmentAPI.getEnchantment("Blood Lust"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Arrow Deflect"), EnchantmentAPI.getEnchantment("Dodge"), EnchantmentAPI.getEnchantment("Valor"), EnchantmentAPI.getEnchantment("Aegis"), EnchantmentAPI.getEnchantment("Spirit Link"), EnchantmentAPI.getEnchantment("Leadership")))));
     }
 
     @Override
     public ItemStack getChestplate(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_CHESTPLATE, (short) 0, "&7&lUltra Body", CC.Gray + "The Ultra Leggings", "", "&7&lULTRA SET BONUS", "&7&l* &7You deal 35% more damage.", "&7&l* &7Enemies deal 20% less damage to you.", "&7&l* &740% Holy Ultra Negation.", "&7&l* &710% Chance to proc Ultra Rage.", "&7&l* &7x1.5 World Destroyer Duration.", "&7&l* &750% Chance to Bypass Utility Belt.", "&7(&oRequires all 4 Ultra items.&7)"), new LinkedList(Arrays.asList(EnchantmentAPI.getEnchantment((String) "Godly Overload"), EnchantmentAPI.getEnchantment((String) "Paladin Armored"), EnchantmentAPI.getEnchantment((String) "Blood Lust"), EnchantmentAPI.getEnchantment((String) "Enlighted"), EnchantmentAPI.getEnchantment((String) "Deathbringer"), EnchantmentAPI.getEnchantment((String) "Armored"), EnchantmentAPI.getEnchantment((String) "Tank"), EnchantmentAPI.getEnchantment((String) "Angelic"), EnchantmentAPI.getEnchantment((String) "Arrow Deflect"), EnchantmentAPI.getEnchantment((String) "Dodge"), EnchantmentAPI.getEnchantment((String) "Valor"), EnchantmentAPI.getEnchantment((String) "Aegis"), EnchantmentAPI.getEnchantment((String) "Spirit Link"), EnchantmentAPI.getEnchantment((String) "Leadership")))));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_CHESTPLATE, (short) 0, "&7&lUltra Body", CC.Gray + "The Ultra Leggings", "", "&7&lULTRA SET BONUS", "&7&l* &7You deal 35% more damage.", "&7&l* &7Enemies deal 20% less damage to you.", "&7&l* &740% Holy Ultra Negation.", "&7&l* &710% Chance to proc Ultra Rage.", "&7&l* &7x1.5 World Destroyer Duration.", "&7&l* &750% Chance to Bypass Utility Belt.", "&7(&oRequires all 4 Ultra items.&7)"), new LinkedList(Arrays.asList(EnchantmentAPI.getEnchantment("Godly Overload"), EnchantmentAPI.getEnchantment("Paladin Armored"), EnchantmentAPI.getEnchantment("Blood Lust"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Arrow Deflect"), EnchantmentAPI.getEnchantment("Dodge"), EnchantmentAPI.getEnchantment("Valor"), EnchantmentAPI.getEnchantment("Aegis"), EnchantmentAPI.getEnchantment("Spirit Link"), EnchantmentAPI.getEnchantment("Leadership")))));
     }
 
     @Override
     public ItemStack getLeggings(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_LEGGINGS, (short) 0, "&7&lUltra Jeans", CC.Gray + "The Ultra Leggings", "", "&7&lULTRA SET BONUS", "&7&l* &7You deal 35% more damage.", "&7&l* &7Enemies deal 20% less damage to you.", "&7&l* &740% Holy Ultra Negation.", "&7&l* &710% Chance to proc Ultra Rage.", "&7&l* &7x1.5 World Destroyer Duration.", "&7&l* &750% Chance to Bypass Utility Belt.", "&7(&oRequires all 4 Ultra items.&7)"), new LinkedList(Arrays.asList(EnchantmentAPI.getEnchantment((String) "Godly Overload"), EnchantmentAPI.getEnchantment((String) "Paladin Armored"), EnchantmentAPI.getEnchantment((String) "Blood Lust"), EnchantmentAPI.getEnchantment((String) "Enlighted"), EnchantmentAPI.getEnchantment((String) "Deathbringer"), EnchantmentAPI.getEnchantment((String) "Armored"), EnchantmentAPI.getEnchantment((String) "Tank"), EnchantmentAPI.getEnchantment((String) "Angelic"), EnchantmentAPI.getEnchantment((String) "Arrow Deflect"), EnchantmentAPI.getEnchantment((String) "Dodge"), EnchantmentAPI.getEnchantment((String) "Valor"), EnchantmentAPI.getEnchantment((String) "Aegis"), EnchantmentAPI.getEnchantment((String) "Spirit Link"), EnchantmentAPI.getEnchantment((String) "Leadership")))));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_LEGGINGS, (short) 0, "&7&lUltra Jeans", CC.Gray + "The Ultra Leggings", "", "&7&lULTRA SET BONUS", "&7&l* &7You deal 35% more damage.", "&7&l* &7Enemies deal 20% less damage to you.", "&7&l* &740% Holy Ultra Negation.", "&7&l* &710% Chance to proc Ultra Rage.", "&7&l* &7x1.5 World Destroyer Duration.", "&7&l* &750% Chance to Bypass Utility Belt.", "&7(&oRequires all 4 Ultra items.&7)"), new LinkedList(Arrays.asList(EnchantmentAPI.getEnchantment("Godly Overload"), EnchantmentAPI.getEnchantment("Paladin Armored"), EnchantmentAPI.getEnchantment("Blood Lust"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Arrow Deflect"), EnchantmentAPI.getEnchantment("Dodge"), EnchantmentAPI.getEnchantment("Valor"), EnchantmentAPI.getEnchantment("Aegis"), EnchantmentAPI.getEnchantment("Spirit Link"), EnchantmentAPI.getEnchantment("Leadership")))));
     }
 
     @Override
     public ItemStack getBoots(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_BOOTS, (short) 0, "&7&lUltra Kicks", CC.Gray + "The Ultra Leggings", "", "&7&lULTRA SET BONUS", "&7&l* &7You deal 35% more damage.", "&7&l* &7Enemies deal 20% less damage to you.", "&7&l* &740% Holy Ultra Negation.", "&7&l* &710% Chance to proc Ultra Rage.", "&7&l* &7x1.5 World Destroyer Duration.", "&7&l* &750% Chance to Bypass Utility Belt.", "&7(&oRequires all 4 Ultra items.&7)"), new LinkedList(Arrays.asList(EnchantmentAPI.getEnchantment((String) "Godly Overload"), EnchantmentAPI.getEnchantment((String) "Paladin Armored"), EnchantmentAPI.getEnchantment((String) "Blood Lust"), EnchantmentAPI.getEnchantment((String) "Enlighted"), EnchantmentAPI.getEnchantment((String) "Deathbringer"), EnchantmentAPI.getEnchantment((String) "Armored"), EnchantmentAPI.getEnchantment((String) "Tank"), EnchantmentAPI.getEnchantment((String) "Angelic"), EnchantmentAPI.getEnchantment((String) "Arrow Deflect"), EnchantmentAPI.getEnchantment((String) "Dodge"), EnchantmentAPI.getEnchantment((String) "Valor"), EnchantmentAPI.getEnchantment((String) "Aegis"), EnchantmentAPI.getEnchantment((String) "Spirit Link"), EnchantmentAPI.getEnchantment((String) "Leadership")))));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_BOOTS, (short) 0, "&7&lUltra Kicks", CC.Gray + "The Ultra Leggings", "", "&7&lULTRA SET BONUS", "&7&l* &7You deal 35% more damage.", "&7&l* &7Enemies deal 20% less damage to you.", "&7&l* &740% Holy Ultra Negation.", "&7&l* &710% Chance to proc Ultra Rage.", "&7&l* &7x1.5 World Destroyer Duration.", "&7&l* &750% Chance to Bypass Utility Belt.", "&7(&oRequires all 4 Ultra items.&7)"), new LinkedList(Arrays.asList(EnchantmentAPI.getEnchantment("Godly Overload"), EnchantmentAPI.getEnchantment("Paladin Armored"), EnchantmentAPI.getEnchantment("Blood Lust"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Arrow Deflect"), EnchantmentAPI.getEnchantment("Dodge"), EnchantmentAPI.getEnchantment("Valor"), EnchantmentAPI.getEnchantment("Aegis"), EnchantmentAPI.getEnchantment("Spirit Link"), EnchantmentAPI.getEnchantment("Leadership")))));
     }
 
     @Override
     public List<String> getEquipDescription() {
-        return TranslateList.translateList((Object) ChatColor.GRAY + "" + (Object) ChatColor.BOLD + "&7&lULTRA SET BONUS", "&7&l* &7You deal 35% more damage.", "&7&l* &7Enemies deal 20% less damage to you.", "&7&l* &740% Holy Ultra Negation.", "&7&l* &710% Chance to proc Ultra Rage.", "&7&l* &7x1.5 World Destroyer Duration.", "&7&l* &750% Chance to Bypass Utility Belt.");
+        return TranslateList.translateList(ChatColor.GRAY + "" + ChatColor.BOLD + "&7&lULTRA SET BONUS", "&7&l* &7You deal 35% more damage.", "&7&l* &7Enemies deal 20% less damage to you.", "&7&l* &740% Holy Ultra Negation.", "&7&l* &710% Chance to proc Ultra Rage.", "&7&l* &7x1.5 World Destroyer Duration.", "&7&l* &750% Chance to Bypass Utility Belt.");
     }
 
     @Override
     public boolean onPlayerDamaged(Player damaged, EntityDamageByEntityEvent event) {
-        if (this.isBlockedOutpostWorld((Entity) damaged)) {
+        if (this.isBlockedOutpostWorld(damaged)) {
             return false;
         }
         if (event.getEntity() instanceof Player) {
@@ -97,7 +96,7 @@ public class UltraArmorSet
 
     @Override
     public boolean onPlayerAttacked(Player damager, EntityDamageByEntityEvent event) {
-        if (this.isBlockedOutpostWorld((Entity) damager)) {
+        if (this.isBlockedOutpostWorld(damager)) {
             return false;
         }
         event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.45);
@@ -113,7 +112,7 @@ public class UltraArmorSet
         if (event.isCancelled()) {
             return false;
         }
-        if (this.isBlockedOutpostWorld((Entity) damaged)) {
+        if (this.isBlockedOutpostWorld(damaged)) {
             return false;
         }
         this.modifyDamage(damaged, event, -10.0, multiplier);
@@ -123,7 +122,7 @@ public class UltraArmorSet
     @Override
     public boolean onPlayerAttackedBonus(Player damager, int applied, EntityDamageByEntityEvent event) {
         this.removeResistance(damager);
-        if (this.isBlockedOutpostWorld((Entity) damager)) {
+        if (this.isBlockedOutpostWorld(damager)) {
             return false;
         }
         if (Math.random() <= 0.005 * (double) applied) {
@@ -142,17 +141,17 @@ public class UltraArmorSet
 
     public void activateUltraAbility(Player player, final Player target) {
         target.setLastDamage(target.getLastDamage() * 1.1);
-        target.sendMessage(CC.translate((String) ("&e&l*&5&l*&c&l* &7&lULTRA RAGE &f[&c" + player.getName() + "&f] &c&l*&5&l*&e&l*")));
-        player.sendMessage(CC.translate((String) "&e&l*&5&l*&c&l* &7&lULTRA RAGE &f[&aUltra Rage&f] &c&l*&5&l*&e&l*"));
-        target.setMetadata("ultra", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), (Object) true));
-        target.setMetadata("bansheed", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), (Object) true));
+        target.sendMessage(CC.translate("&e&l*&5&l*&c&l* &7&lULTRA RAGE &f[&c" + player.getName() + "&f] &c&l*&5&l*&e&l*"));
+        player.sendMessage(CC.translate("&e&l*&5&l*&c&l* &7&lULTRA RAGE &f[&aUltra Rage&f] &c&l*&5&l*&e&l*"));
+        target.setMetadata("ultra", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
+        target.setMetadata("bansheed", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
         new BukkitRunnable() {
 
             public void run() {
-                target.removeMetadata("ultra", (Plugin) CosmicSkyInventoryPets.get());
-                target.removeMetadata("bansheed", (Plugin) CosmicSkyInventoryPets.get());
+                target.removeMetadata("ultra", CosmicSkyInventoryPets.get());
+                target.removeMetadata("bansheed", CosmicSkyInventoryPets.get());
             }
-        }.runTaskLater((Plugin) CosmicSkyInventoryPets.get(), 160L);
+        }.runTaskLater(CosmicSkyInventoryPets.get(), 160L);
     }
 
     @Override

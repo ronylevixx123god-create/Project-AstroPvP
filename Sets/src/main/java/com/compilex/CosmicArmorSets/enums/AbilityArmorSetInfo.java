@@ -88,8 +88,7 @@ public abstract class AbilityArmorSetInfo
             int level, maxLevel = enchantment.getMaxLevel();
             if (enchantment.heroicEnchantment) {
                 level = 1 + ThreadLocalRandom.current().nextInt(maxLevel);
-            }
-            else if (maxLevel == 1) {
+            } else if (maxLevel == 1) {
                 level = maxLevel;
             } else if (maxLevel == 2) {
                 level = maxLevel - ThreadLocalRandom.current().nextInt(2);

@@ -70,7 +70,7 @@ public class SupremeArmorSet
         WeaponedArmorSet {
     @Override
     public ItemStack getHelmet(boolean applyTransmog) {
-        LinkedList<CustomEnchantment> enchants = new LinkedList<CustomEnchantment>(Arrays.asList(EnchantmentAPI.getEnchantment((String) "Drunk"), EnchantmentAPI.getEnchantment((String) "Deathbringer"), EnchantmentAPI.getEnchantment((String) "Enlighted"), EnchantmentAPI.getEnchantment((String) "Armored"), EnchantmentAPI.getEnchantment((String) "Dodge"), EnchantmentAPI.getEnchantment((String) "Tank"), EnchantmentAPI.getEnchantment((String) "Spirits"), EnchantmentAPI.getEnchantment((String) "Marksman"), EnchantmentAPI.getEnchantment((String) "Angelic"), EnchantmentAPI.getEnchantment((String) "Heavy"), EnchantmentAPI.getEnchantment((String) "Valor"), EnchantmentAPI.getEnchantment((String) "Smoke Bomb"), EnchantmentAPI.getEnchantment((String) "Hardened")));
+        LinkedList<CustomEnchantment> enchants = new LinkedList<CustomEnchantment>(Arrays.asList(EnchantmentAPI.getEnchantment("Drunk"), EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Dodge"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Spirits"), EnchantmentAPI.getEnchantment("Marksman"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Heavy"), EnchantmentAPI.getEnchantment("Valor"), EnchantmentAPI.getEnchantment("Smoke Bomb"), EnchantmentAPI.getEnchantment("Hardened")));
         if (Math.random() <= 0.1) {
             enchants.add(this.getEnchantment("Phoenix"));
         } else {
@@ -81,7 +81,7 @@ public class SupremeArmorSet
 
     @Override
     public ItemStack getChestplate(boolean applyTransmog) {
-        ItemStack item = ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_CHESTPLATE, (short) 0, "&4&lSupreme Vest", "&4&oAn aerodynamic vest that", "&4&ois capable of sustaining flight.", "", "&4&lSUPREME SET BONUS", "&4&l* &4Gears IV", "&4&l* &4No Fall Damage / Food Loss", "&4&l* &4Deal +15% damage to all enemies", "&4&l* &4Enemy arrows deal 10% more damage to you.", "&4&l* &4+200% Clout", "&7(&oRequires all 4 supreme items.&7)"), new LinkedList(Arrays.asList(EnchantmentAPI.getEnchantment((String) "Aegis"), EnchantmentAPI.getEnchantment((String) "Deathbringer"), EnchantmentAPI.getEnchantment((String) "Blood Lust"), EnchantmentAPI.getEnchantment((String) "Diminish"), EnchantmentAPI.getEnchantment((String) "Armored"), EnchantmentAPI.getEnchantment((String) "Overload"), EnchantmentAPI.getEnchantment((String) "Leadership"), EnchantmentAPI.getEnchantment((String) "Blood Link"), EnchantmentAPI.getEnchantment((String) "Tank"), EnchantmentAPI.getEnchantment((String) "Marksman"), EnchantmentAPI.getEnchantment((String) "Angelic"), EnchantmentAPI.getEnchantment((String) "Repair Guard"))));
+        ItemStack item = ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_CHESTPLATE, (short) 0, "&4&lSupreme Vest", "&4&oAn aerodynamic vest that", "&4&ois capable of sustaining flight.", "", "&4&lSUPREME SET BONUS", "&4&l* &4Gears IV", "&4&l* &4No Fall Damage / Food Loss", "&4&l* &4Deal +15% damage to all enemies", "&4&l* &4Enemy arrows deal 10% more damage to you.", "&4&l* &4+200% Clout", "&7(&oRequires all 4 supreme items.&7)"), new LinkedList(Arrays.asList(EnchantmentAPI.getEnchantment("Aegis"), EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Blood Lust"), EnchantmentAPI.getEnchantment("Diminish"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Overload"), EnchantmentAPI.getEnchantment("Leadership"), EnchantmentAPI.getEnchantment("Blood Link"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Marksman"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Repair Guard"))));
         if (Math.random() <= 0.1) {
             this.addEnchantment("Enlighted", this.getMaxEnchantLevel("Enlighted"), item);
             this.addEnchantment("Divine Enlighted", ItemUtils.getRandomArmorSetEnchantLevel("Divine Enlighted"), item);
@@ -93,7 +93,7 @@ public class SupremeArmorSet
 
     @Override
     public ItemStack getLeggings(boolean applyTransmog) {
-        ItemStack item = ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_LEGGINGS, (short) 0, "&4&lSupreme Chaps", "&4&oLightweight and clout powered,", "&4&oprovides enough thrust to boost", "&4&oeven the most feeble into the skies.", "", "&4&lSUPREME SET BONUS", "&4&l* &4Gears IV", "&4&l* &4No Fall Damage / Food Loss", "&4&l* &4Deal +15% damage to all enemies", "&4&l* &4Enemy arrows deal 10% more damage to you.", "&4&l* &4+200% Clout", "&7(&oRequires all 4 supreme items.&7)"), new LinkedList(Arrays.asList(EnchantmentAPI.getEnchantment((String) "Deathbringer"), EnchantmentAPI.getEnchantment((String) "Enlighted"), EnchantmentAPI.getEnchantment((String) "Armored"), EnchantmentAPI.getEnchantment((String) "Clarity"), EnchantmentAPI.getEnchantment((String) "Tank"), EnchantmentAPI.getEnchantment((String) "Lucky"), EnchantmentAPI.getEnchantment((String) "Angelic"), EnchantmentAPI.getEnchantment((String) "Guardians"), EnchantmentAPI.getEnchantment((String) "Obsidianshield"), EnchantmentAPI.getEnchantment((String) "Valor"), EnchantmentAPI.getEnchantment((String) "Sticky"), EnchantmentAPI.getEnchantment((String) "Cactus"))));
+        ItemStack item = ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_LEGGINGS, (short) 0, "&4&lSupreme Chaps", "&4&oLightweight and clout powered,", "&4&oprovides enough thrust to boost", "&4&oeven the most feeble into the skies.", "", "&4&lSUPREME SET BONUS", "&4&l* &4Gears IV", "&4&l* &4No Fall Damage / Food Loss", "&4&l* &4Deal +15% damage to all enemies", "&4&l* &4Enemy arrows deal 10% more damage to you.", "&4&l* &4+200% Clout", "&7(&oRequires all 4 supreme items.&7)"), new LinkedList(Arrays.asList(EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Clarity"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Lucky"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Guardians"), EnchantmentAPI.getEnchantment("Obsidianshield"), EnchantmentAPI.getEnchantment("Valor"), EnchantmentAPI.getEnchantment("Sticky"), EnchantmentAPI.getEnchantment("Cactus"))));
         if (Math.random() <= 0.1) {
             this.addEnchantment("Nature Wrath", ItemUtils.getRandomArmorSetEnchantLevel("Nature Wrath"), item);
         } else {
@@ -104,7 +104,7 @@ public class SupremeArmorSet
 
     @Override
     public ItemStack getBoots(boolean applyTransmog) {
-        ItemStack item = ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_BOOTS, (short) 0, "&4&lSupreme Thruster Boots", "&4&oSupreme boots capable of", "&4&oconverting clout into flight.", "", "&4&lSUPREME SET BONUS", "&4&l* &4Gears IV", "&4&l* &4No Fall Damage / Food Loss", "&4&l* &4Deal +15% damage to all enemies", "&4&l* &4Enemy arrows deal 10% more damage to you.", "&4&l* &4+200% Clout", "&7(&oRequires all 4 supreme items.&7)"), new LinkedList(Arrays.asList(EnchantmentAPI.getEnchantment((String) "Gears"), EnchantmentAPI.getEnchantment((String) "Enlighted"), EnchantmentAPI.getEnchantment((String) "Armored"), EnchantmentAPI.getEnchantment((String) "Tank"), EnchantmentAPI.getEnchantment((String) "Marksman"), EnchantmentAPI.getEnchantment((String) "Angelic"), EnchantmentAPI.getEnchantment((String) "Heavy"), EnchantmentAPI.getEnchantment((String) "Ender Walker"), EnchantmentAPI.getEnchantment((String) "Hardened"), EnchantmentAPI.getEnchantment((String) "Rocket Escape"))));
+        ItemStack item = ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_BOOTS, (short) 0, "&4&lSupreme Thruster Boots", "&4&oSupreme boots capable of", "&4&oconverting clout into flight.", "", "&4&lSUPREME SET BONUS", "&4&l* &4Gears IV", "&4&l* &4No Fall Damage / Food Loss", "&4&l* &4Deal +15% damage to all enemies", "&4&l* &4Enemy arrows deal 10% more damage to you.", "&4&l* &4+200% Clout", "&7(&oRequires all 4 supreme items.&7)"), new LinkedList(Arrays.asList(EnchantmentAPI.getEnchantment("Gears"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Marksman"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Heavy"), EnchantmentAPI.getEnchantment("Ender Walker"), EnchantmentAPI.getEnchantment("Hardened"), EnchantmentAPI.getEnchantment("Rocket Escape"))));
         item = this.addEnchantment("Springs", 2, item);
         if (Math.random() <= 0.1) {
             item = this.addEnchantment("Deathbringer", this.getMaxEnchantLevel("Deathbringer"), item);
@@ -118,7 +118,7 @@ public class SupremeArmorSet
 
     @Override
     public List<String> getEquipDescription() {
-        return Lists.newArrayList((Object) ChatColor.DARK_RED + "" + (Object) ChatColor.BOLD + "SUPREME SET BONUS:", CC.DarkRedB + " * " + CC.DarkRed + "+15% OUTGOING DAMAGE", CC.DarkRedB + " * " + CC.DarkRed + "+10% INCOMING ARROW DAMAGE", CC.DarkRedB + " * " + CC.DarkRed + "NO FALL DAMAGE", CC.DarkRedB + " * " + CC.DarkRed + "NO FOOD LOSS", CC.DarkRedB + " * " + CC.DarkRed + "GEARS IV", CC.DarkRedB + " * " + CC.DarkRed + "+200% CLOUT (Flight Enabled)");
+        return Lists.newArrayList(ChatColor.DARK_RED + "" + ChatColor.BOLD + "SUPREME SET BONUS:", CC.DarkRedB + " * " + CC.DarkRed + "+15% OUTGOING DAMAGE", CC.DarkRedB + " * " + CC.DarkRed + "+10% INCOMING ARROW DAMAGE", CC.DarkRedB + " * " + CC.DarkRed + "NO FALL DAMAGE", CC.DarkRedB + " * " + CC.DarkRed + "NO FOOD LOSS", CC.DarkRedB + " * " + CC.DarkRed + "GEARS IV", CC.DarkRedB + " * " + CC.DarkRed + "+200% CLOUT (Flight Enabled)");
     }
 
     @Override
@@ -144,7 +144,7 @@ public class SupremeArmorSet
 
     @Override
     public boolean onPlayerAttackedBonus(Player damager, int multiplier, EntityDamageByEntityEvent event) {
-        if (this.isBlockedOutpostWorld((Entity) damager)) {
+        if (this.isBlockedOutpostWorld(damager)) {
             return false;
         }
         return this.modifyDamage(damager, event, 3.0, multiplier);
@@ -152,16 +152,16 @@ public class SupremeArmorSet
 
     @Override
     public void onEquip(Player player) {
-        OutpostTier outpostTier = CosmicOutpostsAPI.getOutpostTierOfWorld((LivingEntity) player);
+        OutpostTier outpostTier = CosmicOutpostsAPI.getOutpostTierOfWorld(player);
         if (outpostTier == OutpostTier.TRAINEE || outpostTier == OutpostTier.VANILLA || outpostTier == OutpostTier.HERO) {
             return;
         }
-        EnchantmentAPI.getEnchantment((String) "Gears").applyEquipEffect(player, 4);
+        EnchantmentAPI.getEnchantment("Gears").applyEquipEffect(player, 4);
     }
 
     @Override
     public void onUnequip(Player player) {
-        EnchantmentAPI.getEnchantment((String) "Gears").applyUnequipEffect(player, 4);
+        EnchantmentAPI.getEnchantment("Gears").applyUnequipEffect(player, 4);
     }
 
     @Override
@@ -177,7 +177,7 @@ public class SupremeArmorSet
                 e.setCancelled(true);
             }
         } else if (event instanceof PlayerChangedWorldEvent && (world = (PlayerChangedWorldEvent) event).getFrom() != null) {
-            Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin) CosmicArmorSetsPlugin.get_(), () -> {
+            Bukkit.getScheduler().scheduleSyncDelayedTask(CosmicArmorSetsPlugin.get_(), () -> {
                 this.onUnequip(world.getPlayer());
                 Bukkit.getLogger().info("Removing Gears 4 affected from " + ((PlayerChangedWorldEvent) event).getPlayer().getName());
             }, 1L);
@@ -203,7 +203,7 @@ public class SupremeArmorSet
 
     @Override
     public ItemStack getWeapon(boolean applyTransmog) {
-        ItemStack item = new NBTWrapper(new ItemBuilder(Material.DIAMOND_SWORD, CC.DarkRedB + "Supreme Fanny Pack", new String[]{CC.Gray + "They laughed at you, they", CC.Gray + "told you a fanny pack is not", CC.Gray + "a practical piece of clothing...", CC.Gray + "now they will pay for their ignorance!", "", CC.DarkRedB + "SUPREME WEAPON BONUS", CC.DarkRed + "Deal +20% damage to all enemies", CC.DarkRed + "Enemies deal 10% less damage to you.", CC.Gray + "(" + CC.GrayI + "Requires all 4 supreme items." + CC.Gray + ")"}).enchant(Enchantment.DAMAGE_ALL, 5).enchant(Enchantment.DURABILITY, 3).build()).setString("cosmicType", "SUPREME_SWORD").build();
+        ItemStack item = new NBTWrapper(new ItemBuilder(Material.DIAMOND_SWORD, CC.DarkRedB + "Supreme Fanny Pack", CC.Gray + "They laughed at you, they", CC.Gray + "told you a fanny pack is not", CC.Gray + "a practical piece of clothing...", CC.Gray + "now they will pay for their ignorance!", "", CC.DarkRedB + "SUPREME WEAPON BONUS", CC.DarkRed + "Deal +20% damage to all enemies", CC.DarkRed + "Enemies deal 10% less damage to you.", CC.Gray + "(" + CC.GrayI + "Requires all 4 supreme items." + CC.Gray + ")").enchant(Enchantment.DAMAGE_ALL, 5).enchant(Enchantment.DURABILITY, 3).build()).setString("cosmicType", "SUPREME_SWORD").build();
         this.addEnchantment("Block", this.getMaxEnchantLevel("Block"), item);
         this.addEnchantment("Reflective Block", this.getMaxEnchantLevel("Reflective Block"), item);
         return item;

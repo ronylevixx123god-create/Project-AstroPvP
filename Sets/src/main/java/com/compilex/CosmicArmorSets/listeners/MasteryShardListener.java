@@ -57,14 +57,14 @@ public class MasteryShardListener
         if (cursor == null || cursor.getType() == Material.AIR) {
             return;
         }
-        if (event.getWhoClicked().getInventory() == null || event.getWhoClicked().getOpenInventory() == null || !event.getWhoClicked().getInventory().equals((Object) event.getWhoClicked().getOpenInventory().getBottomInventory())) {
+        if (event.getWhoClicked().getInventory() == null || event.getWhoClicked().getOpenInventory() == null || !event.getWhoClicked().getInventory().equals(event.getWhoClicked().getOpenInventory().getBottomInventory())) {
             return;
         }
         if (event.getWhoClicked().getWorld().getName().startsWith("world_duels")) {
             return;
         }
         NBTWrapper cursorWrapper = new NBTWrapper(cursor);
-        if (cursorWrapper.getString("cosmicType").equals("MASTERY_SHARD") && EnchantmentBook.isEnchantmentBook((ItemStack) clicked)) {
+        if (cursorWrapper.getString("cosmicType").equals("MASTERY_SHARD") && EnchantmentBook.isEnchantmentBook(clicked)) {
             AbilityArmorSet set;
             event.setCancelled(true);
             Player player = (Player) event.getWhoClicked();
@@ -79,8 +79,8 @@ public class MasteryShardListener
                     return;
                 }
                 shardList.addString(set.name());
-                clickedCosmicData.setNBTBase("masteryShard", (NBTBase) shardList.build());
-                clickedWrapper.setNBTBase("cosmicData", (NBTBase) clickedCosmicData.get());
+                clickedCosmicData.setNBTBase("masteryShard", shardList.build());
+                clickedWrapper.setNBTBase("cosmicData", clickedCosmicData.get());
                 ItemStack newBook = clickedWrapper.build();
                 ItemMeta im = newBook.getItemMeta();
                 List<String> lore = im.getLore() == null ? Lists.newArrayList() : im.getLore();
@@ -89,7 +89,7 @@ public class MasteryShardListener
                 newBook.setItemMeta(im);
                 player.setItemOnCursor(null);
                 event.setCurrentItem(newBook);
-                player.sendMessage(CC.GoldB + "(!) " + CC.GoldU + ChatColor.stripColor((String) set.getDisplayName()) + " Mastery Shard" + CC.Gold + " applied to your " + ItemUtils.getDisplayName((ItemStack) clicked) + CC.Gold + "!");
+                player.sendMessage(CC.GoldB + "(!) " + CC.GoldU + ChatColor.stripColor(set.getDisplayName()) + " Mastery Shard" + CC.Gold + " applied to your " + ItemUtils.getDisplayName(clicked) + CC.Gold + "!");
                 player.sendMessage(CC.Gray + "This book is now powerful enough to attempt to apply to the " + set.getDisplayName() + CC.Gray + " /mkit items!");
                 player.playSound(player.getLocation(), Sound.BAT_TAKEOFF, 1.0f, 1.1f);
                 return;

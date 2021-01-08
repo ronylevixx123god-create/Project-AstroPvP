@@ -53,11 +53,11 @@ public class OmniCrystal
 
     public ItemStack createItem(Player player, Object... objects) {
         Integer chance;
-        Integer n = chance = objects.length >= 1 ? NumberUtils.parseIntOrNull((String) objects[0].toString()) : null;
+        Integer n = chance = objects.length >= 1 ? NumberUtils.parseIntOrNull(objects[0].toString()) : null;
         if (chance == null) {
             chance = 1;
         }
-        return this.applyItemData(new ItemBuilder(Material.SNOW_BALL).lore(new String[]{CC.translate((String) "&7Apply to any non-specialty"), CC.translate((String) "&7armor piece to"), CC.translate((String) "&7transform it into an &3Omni Item:"), CC.translate((String) "&7An item that acts as any"), CC.translate((String) "&7unique /help armorset piece."), "", CC.translate((String) "&3EX: &71 Omni item, 3 Phantom items equipped"), CC.translate((String) "&7would apply the Phantom Set Bonus to the player")}).name(CC.translate((String) String.format("&3&lOmni Crystal (&7%d%%&3&l)", chance))).build()).setNBTBase("cosmicData", (NBTBase) new NBTTagCompoundBuilder().setInt("success", chance).get()).build();
+        return this.applyItemData(new ItemBuilder(Material.SNOW_BALL).lore(CC.translate("&7Apply to any non-specialty"), CC.translate("&7armor piece to"), CC.translate("&7transform it into an &3Omni Item:"), CC.translate("&7An item that acts as any"), CC.translate("&7unique /help armorset piece."), "", CC.translate("&3EX: &71 Omni item, 3 Phantom items equipped"), CC.translate("&7would apply the Phantom Set Bonus to the player")).name(CC.translate(String.format("&3&lOmni Crystal (&7%d%%&3&l)", chance))).build()).setNBTBase("cosmicData", new NBTTagCompoundBuilder().setInt("success", chance).get()).build();
     }
 
     public boolean acceptsInventoryClickType(InventoryItemType inventoryItemType) {
@@ -65,7 +65,7 @@ public class OmniCrystal
     }
 
     public void onInventoryClick(Player player, ItemStack cursor, NBTWrapper cursorWrapper, NBTWrapper clickedWrapper, ItemStack clicked, InventoryClickEvent event) throws CosmicException {
-        if (clickedWrapper == null || !GeneralUtil.isArmor((ItemStack) clicked)) {
+        if (clickedWrapper == null || !GeneralUtil.isArmor(clicked)) {
             return;
         }
         event.setCancelled(true);
@@ -91,8 +91,8 @@ public class OmniCrystal
         if (meta.hasLore()) {
             List lore = meta.getLore();
             lore.add("");
-            lore.add(CC.translate((String) "&3&lOMNI SET BONUS"));
-            lore.add(CC.translate((String) "&3&l* &3Acts as ANY Armor Set type/piece"));
+            lore.add(CC.translate("&3&lOMNI SET BONUS"));
+            lore.add(CC.translate("&3&l* &3Acts as ANY Armor Set type/piece"));
             meta.setLore(lore);
         }
         ASound.LEVEL_UP.play(player, 1.1f);

@@ -60,7 +60,7 @@ public class CommandArmorSet
             return true;
         }
         if (args.length == 1 && args[0].equalsIgnoreCase("rangerbow")) {
-            ((Player) sender).getInventory().addItem(new ItemStack[]{ArmorSet.createRangerBow()});
+            ((Player) sender).getInventory().addItem(ArmorSet.createRangerBow());
             return true;
         }
         if (args.length >= 1) {
@@ -78,7 +78,7 @@ public class CommandArmorSet
             if (args.length >= 2 && args[1].equalsIgnoreCase("crystal") && as != null) {
                 Player pSender = (Player) sender;
                 Double given = args.length == 3 ? NumberUtils.parseDoubleOrNull(args[2]) : null;
-                PlayerUtil.giveOrDropProtectedItem(pSender, ArmorSet.createCrystal(Lists.newArrayList(as), given == null ? 20.0 : given), (int) -1);
+                PlayerUtil.giveOrDropProtectedItem(pSender, ArmorSet.createCrystal(Lists.newArrayList(as), given == null ? 20.0 : given), -1);
                 sender.sendMessage(CC.Red + "Crystal added!");
                 return true;
             }

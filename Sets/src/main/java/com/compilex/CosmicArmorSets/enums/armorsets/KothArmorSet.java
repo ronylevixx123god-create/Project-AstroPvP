@@ -63,20 +63,20 @@ import java.util.*;
 public class KothArmorSet
         extends ArmorSetInfo
         implements OtherPlayerEventListenerSet {
-    private SimpleDateFormat format = new SimpleDateFormat("EEE MM/dd/yy");
-    private ChatColor color = ChatColor.LIGHT_PURPLE;
-    private Set<Player> kothEquippedPlayers = new HashSet<Player>();
+    private final SimpleDateFormat format = new SimpleDateFormat("EEE MM/dd/yy");
+    private final ChatColor color = ChatColor.LIGHT_PURPLE;
+    private final Set<Player> kothEquippedPlayers = new HashSet<Player>();
 
     @Override
     public void onEquip(Player player) {
-        PlayerPotionEffects.untrackPotionEffect((Player) player, (PotionEffectType) PotionEffectType.SLOW);
-        PlayerPotionEffects.untrackPotionEffect((Player) player, (PotionEffectType) PotionEffectType.SLOW_DIGGING);
+        PlayerPotionEffects.untrackPotionEffect(player, PotionEffectType.SLOW);
+        PlayerPotionEffects.untrackPotionEffect(player, PotionEffectType.SLOW_DIGGING);
     }
 
     @Override
     public void onUnequip(Player player) {
-        PlayerPotionEffects.untrackPotionEffect((Player) player, (PotionEffectType) PotionEffectType.SLOW);
-        PlayerPotionEffects.untrackPotionEffect((Player) player, (PotionEffectType) PotionEffectType.SLOW_DIGGING);
+        PlayerPotionEffects.untrackPotionEffect(player, PotionEffectType.SLOW);
+        PlayerPotionEffects.untrackPotionEffect(player, PotionEffectType.SLOW_DIGGING);
     }
 
     @Override
@@ -90,7 +90,7 @@ public class KothArmorSet
         for (String s : customEnchantments) {
             this.addEnchantment(s, this.getMaxEnchantLevel(s), kothItem);
         }
-        return applyTransmog ? EnchantmentBook.applyTransmogScroll((ItemStack) kothItem) : kothItem;
+        return applyTransmog ? EnchantmentBook.applyTransmogScroll(kothItem) : kothItem;
     }
 
     @Override
@@ -104,7 +104,7 @@ public class KothArmorSet
         for (String s : customEnchantments) {
             this.addEnchantment(s, this.getMaxEnchantLevel(s), kothItem);
         }
-        return applyTransmog ? EnchantmentBook.applyTransmogScroll((ItemStack) kothItem) : kothItem;
+        return applyTransmog ? EnchantmentBook.applyTransmogScroll(kothItem) : kothItem;
     }
 
     @Override
@@ -116,12 +116,12 @@ public class KothArmorSet
         ItemStack kothItem = this.createKothItem(Material.DIAMOND_LEGGINGS, "Leggings", playerName);
         List<String> customEnchantments = Arrays.asList("Clarity", "Deathbringer", "Enlighted", "Armored", "Tank", "Angelic", "Valor", "Cactus");
         for (String s : customEnchantments) {
-            this.addMaxedEnchant(EnchantmentAPI.getEnchantment((String) s), kothItem);
+            this.addMaxedEnchant(EnchantmentAPI.getEnchantment(s), kothItem);
         }
         if (Math.random() < 0.075) {
-            this.addMaxedEnchant(EnchantmentAPI.getEnchantment((String) "Nature Wrath"), kothItem);
+            this.addMaxedEnchant(EnchantmentAPI.getEnchantment("Nature Wrath"), kothItem);
         }
-        return applyTransmog ? EnchantmentBook.applyTransmogScroll((ItemStack) kothItem) : kothItem;
+        return applyTransmog ? EnchantmentBook.applyTransmogScroll(kothItem) : kothItem;
     }
 
     public ItemStack addMaxedEnchant(CustomEnchantment enchantment, ItemStack item) {
@@ -141,27 +141,27 @@ public class KothArmorSet
         ItemStack kothItem = this.createKothItem(Material.DIAMOND_BOOTS, "Boots", playerName);
         List<String> customEnchantments = Arrays.asList("Deathbringer", "Enlighted", "Gears", "Armored", "Tank", "Angelic", "Rocket Escape");
         for (String s : customEnchantments) {
-            this.addMaxedEnchant(EnchantmentAPI.getEnchantment((String) s), kothItem);
+            this.addMaxedEnchant(EnchantmentAPI.getEnchantment(s), kothItem);
         }
-        return applyTransmog ? EnchantmentBook.applyTransmogScroll((ItemStack) kothItem) : kothItem;
+        return applyTransmog ? EnchantmentBook.applyTransmogScroll(kothItem) : kothItem;
     }
 
     public ItemStack createKothItem(Material material, String itemName, String playerName) {
-        String bold = (Object) this.color + CC.Bold + "* " + (Object) this.color;
-        ItemStack kothItem = ItemUtils.buildItem(material, (short) 0, this.getKothName() + " " + CC.WhiteB + CC.Underline + itemName + CC.Reset, "", (Object) this.color + CC.Bold + "KOTH SET BONUS", bold + "+20% PvP Damage", bold + "+50% PvE Damage", bold + "Auto Bless", bold + "No Fall Damage", CC.Gray + "(" + CC.GrayI + "Requires all 4 koth items" + CC.Gray + ")", "", ChatColor.AQUA.toString() + ChatColor.UNDERLINE.toString() + this.format.format(new Date()));
+        String bold = this.color + CC.Bold + "* " + this.color;
+        ItemStack kothItem = ItemUtils.buildItem(material, (short) 0, this.getKothName() + " " + CC.WhiteB + CC.Underline + itemName + CC.Reset, "", this.color + CC.Bold + "KOTH SET BONUS", bold + "+20% PvP Damage", bold + "+50% PvE Damage", bold + "Auto Bless", bold + "No Fall Damage", CC.Gray + "(" + CC.GrayI + "Requires all 4 koth items" + CC.Gray + ")", "", ChatColor.AQUA.toString() + ChatColor.UNDERLINE.toString() + this.format.format(new Date()));
         kothItem.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5);
         kothItem.addUnsafeEnchantment(Enchantment.DURABILITY, 3);
         return CosmicArmorSetsAPI.convertItemToHeroic(kothItem, Objects.requireNonNull(HeroicArmorType.getFromMaterial(material)), true);
     }
 
     public String getKothName() {
-        return ChatColor.translateAlternateColorCodes((char) '&', (String) "&f&l&k!&r &c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH &f&l&k!&r");
+        return ChatColor.translateAlternateColorCodes('&', "&f&l&k!&r &c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH &f&l&k!&r");
     }
 
     @Override
     public List<String> getEquipDescription() {
-        String boldStar = (Object) this.color + CC.Bold + " * " + (Object) this.color;
-        return Lists.newArrayList((Object) this.color + CC.Bold + "KOTH SET BONUS", boldStar + "+20% PvP DMG", boldStar + "+50% PvE damage", boldStar + "Auto Bless", boldStar + "No Fall Damage");
+        String boldStar = this.color + CC.Bold + " * " + this.color;
+        return Lists.newArrayList(this.color + CC.Bold + "KOTH SET BONUS", boldStar + "+20% PvP DMG", boldStar + "+50% PvE damage", boldStar + "Auto Bless", boldStar + "No Fall Damage");
     }
 
     @Override
@@ -172,7 +172,7 @@ public class KothArmorSet
     @Override
     public boolean onPlayerAttacked(Player damager, EntityDamageByEntityEvent event) {
         NBTWrapper wrapper;
-        if (this.isBlockedOutpostWorld((Entity) damager)) {
+        if (this.isBlockedOutpostWorld(damager)) {
             return false;
         }
         if (event.getEntity() instanceof Player) {
@@ -189,8 +189,8 @@ public class KothArmorSet
                 Player damaged = (Player) event.getEntity();
                 for (ArmorSlot slot : ArmorSlot.values()) {
                     if (!(Math.random() <= 0.5)) continue;
-                    ArmorUtil.modifyPlayerArmor((Player) damaged, (ArmorSlot) slot, (int) (-(2 + this.random.nextInt(2))), (boolean) false);
-                    Bukkit.getLogger().info("Damaging " + (Object) slot + " from " + damaged.getName() + " from " + damager.getName() + "'s Koth Axe!");
+                    ArmorUtil.modifyPlayerArmor(damaged, slot, -(2 + this.random.nextInt(2)), false);
+                    Bukkit.getLogger().info("Damaging " + slot + " from " + damaged.getName() + " from " + damager.getName() + "'s Koth Axe!");
                 }
             } else if (kothWeapon.equalsIgnoreCase("SWORD")) {
                 event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.075);
@@ -206,7 +206,7 @@ public class KothArmorSet
 
     @Override
     public boolean onPlayerAttackedBonus(Player damager, int multiplier, EntityDamageByEntityEvent event) {
-        if (this.isBlockedOutpostWorld((Entity) damager)) {
+        if (this.isBlockedOutpostWorld(damager)) {
             return false;
         }
         return this.modifyDamage(damager, event, event.getEntity() instanceof Player ? 5.0 : 12.5, multiplier);
@@ -220,7 +220,7 @@ public class KothArmorSet
                 damageEvent.setCancelled(true);
             }
         } else if (event instanceof PlayerQuitEvent) {
-            this.kothEquippedPlayers.remove((Object) ((PlayerQuitEvent) event).getPlayer());
+            this.kothEquippedPlayers.remove(((PlayerQuitEvent) event).getPlayer());
         }
     }
 }

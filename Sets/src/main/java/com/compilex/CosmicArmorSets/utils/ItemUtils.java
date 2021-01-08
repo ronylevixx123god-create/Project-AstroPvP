@@ -31,22 +31,22 @@ public class ItemUtils {
         ItemStack is = new ItemStack(m, 1, metaData);
         ItemMeta im = is.getItemMeta();
         if (name != null) {
-            im.setDisplayName(ChatColor.translateAlternateColorCodes((char) '&', (String) name));
+            im.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
         }
         if (description != null) {
             ArrayList lore = Lists.newArrayList();
             for (String desc : description) {
                 if (desc == null) continue;
-                lore.add(ChatColor.translateAlternateColorCodes((char) '&', (String) desc));
+                lore.add(ChatColor.translateAlternateColorCodes('&', desc));
             }
-            im.setLore((List) lore);
+            im.setLore(lore);
         }
         is.setItemMeta(im);
         return is;
     }
 
     public static int getRandomArmorSetEnchantLevel(String enchantment) {
-        CustomEnchantment ce = EnchantmentAPI.getEnchantment((String) enchantment);
+        CustomEnchantment ce = EnchantmentAPI.getEnchantment(enchantment);
         if (ce.heroicEnchantment) {
             return 1 + new Random().nextInt(ce.getMaxLevel());
         }

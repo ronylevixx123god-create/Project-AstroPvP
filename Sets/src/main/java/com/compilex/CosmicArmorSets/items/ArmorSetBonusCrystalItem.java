@@ -75,9 +75,9 @@ public class ArmorSetBonusCrystalItem
             list.addString(s.name());
             loreBuild = loreBuild + s.getDisplayName() + CC.Gray + ", ";
         }
-        data.setNBTBase("crystalBonuses", (NBTBase) list.build());
-        data.setNBTBase("bonuses", (NBTBase) list.build());
-        wrapper.setNBTBase("cosmicData", (NBTBase) data.get());
+        data.setNBTBase("crystalBonuses", list.build());
+        data.setNBTBase("bonuses", list.build());
+        wrapper.setNBTBase("cosmicData", data.get());
         item = wrapper.build();
         ItemMeta im = item.getItemMeta();
         List<String> lore = im.getLore() == null ? Lists.newArrayList() : im.getLore();
@@ -100,14 +100,14 @@ public class ArmorSetBonusCrystalItem
                 continue;
             }
             if (object instanceof ArmorSet) {
-                set.add((ArmorSet) ((Object) object));
+                set.add((ArmorSet) object);
                 continue;
             }
             if (object instanceof List) {
                 set = (List) object;
                 continue;
             }
-            Number num = NumberUtils.parseNumberOrNull((String) object.toString());
+            Number num = NumberUtils.parseNumberOrNull(object.toString());
             if (num != null) {
                 chance = num;
                 continue;
@@ -124,11 +124,11 @@ public class ArmorSetBonusCrystalItem
         NBTTagListBuilder list = new NBTTagListBuilder();
         for (ArmorSet s : set) {
             list.addString(s.name());
-            lore.add(" " + (Object) s.getColor() + CC.Bold + s.getDisplayName());
+            lore.add(" " + s.getColor() + CC.Bold + s.getDisplayName());
             ArrayList list2 = Lists.newArrayList();
             ArmorSet set2 = s;
             for (String str : s.getCrystalDescription()) {
-                lore.add("  " + (Object) s.getColor() + CC.Bold + "* " + (Object) s.getColor() + str);
+                lore.add("  " + s.getColor() + CC.Bold + "* " + s.getColor() + str);
             }
         }
         String name = null;
@@ -143,9 +143,9 @@ public class ArmorSetBonusCrystalItem
             }
             name = CC.GoldB + "Multi Armor Set Crystal (" + combined + CC.GoldB + ")";
         } else if (!set.isEmpty()) {
-            name = CC.GoldB + "Armor Crystal (" + ((ArmorSet) set.stream().findFirst().orElse(null)).getDisplayName() + CC.GoldB + ")";
+            name = CC.GoldB + "Armor Crystal (" + set.stream().findFirst().orElse(null).getDisplayName() + CC.GoldB + ")";
         }
-        return this.applyItemData(new ItemBuilder(Material.NETHER_STAR, name, new String[0]).lore((List) lore).build()).setNBTBase("cosmicData", (NBTBase) new NBTTagCompoundBuilder().setNBTBase("bonuses", (NBTBase) list.build()).setDouble("bonusChance", Double.valueOf(chance.doubleValue())).get()).assignIID().build();
+        return this.applyItemData(new ItemBuilder(Material.NETHER_STAR, name).lore(lore).build()).setNBTBase("cosmicData", new NBTTagCompoundBuilder().setNBTBase("bonuses", list.build()).setDouble("bonusChance", Double.valueOf(chance.doubleValue())).get()).assignIID().build();
     }
 
     public boolean acceptsInventoryClickType(InventoryItemType inventoryItemType) {
@@ -153,7 +153,7 @@ public class ArmorSetBonusCrystalItem
     }
 
     public void onInventoryClick(Player player, ItemStack cursor, NBTWrapper cursorWrapper, NBTWrapper clickedWrapper, ItemStack clicked, InventoryClickEvent event) throws CosmicException {
-        if (clickedWrapper == null || !GeneralUtil.isArmor((ItemStack) clicked)) {
+        if (clickedWrapper == null || !GeneralUtil.isArmor(clicked)) {
             return;
         }
         event.setCancelled(true);
@@ -171,7 +171,7 @@ public class ArmorSetBonusCrystalItem
             if (cursorWrapper.isBlacklistedIID()) {
                 throw new ItemDupedException("Armor set crystal already used!");
             }
-            if (!player.getWorld().getName().equals(((World) Bukkit.getWorlds().get(0)).getName()) && !player.getName().equals("world_end")) {
+            if (!player.getWorld().getName().equals(Bukkit.getWorlds().get(0).getName()) && !player.getName().equals("world_end")) {
                 throw new PrefixedException("You must apply this Armor Set Crystal in the Overworld!");
             }
             List<ArmorSet> bonusApplied = ArmorSet.getFromArmorBonusCrystal(clickedWrapper);
@@ -185,14 +185,14 @@ public class ArmorSetBonusCrystalItem
                 player.setItemOnCursor(null);
             }
             if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
-                ItemID.blacklistIID((long) cursorWrapper.getIID(), (String) (String.valueOf(String.valueOf(player.getName())) + " bonus crystal"));
+                ItemID.blacklistIID(cursorWrapper.getIID(), String.valueOf(player.getName()) + " bonus crystal");
             }
             double d = chanceToApply = data.hasKey("bonusChance") ? data.getDouble("bonusChance") : 20.0;
             if (Math.random() > chanceToApply * 0.01) {
                 ASound.GLASS.play(player, 1.1f, 0.8f);
-                Bukkit.getLogger().info(String.valueOf(String.valueOf(player.getName())) + " failed to apply " + sets.toString() + " armor set crystal!");
+                Bukkit.getLogger().info(String.valueOf(player.getName()) + " failed to apply " + sets.toString() + " armor set crystal!");
                 player.updateInventory();
-                throw new PrefixedException("Your Armor Crystal (" + ItemUtils.getDisplayName((ItemStack) cursor) + CC.Red + ") fails to apply!");
+                throw new PrefixedException("Your Armor Crystal (" + ItemUtils.getDisplayName(cursor) + CC.Red + ") fails to apply!");
             }
             event.setCurrentItem(ArmorSet.applyCrystalToItem(sets, clicked));
             player.sendMessage("");
@@ -200,8 +200,8 @@ public class ArmorSetBonusCrystalItem
             player.sendMessage(CC.GoldB + "Crystal Bonus:");
             for (ArmorSet set : sets) {
                 player.sendMessage(" " + set.getDisplayName() + ":");
-                set.getCrystalDescription().forEach(de -> player.sendMessage((Object) set.getColor() + CC.Bold + "  * " + (Object) set.getColor() + de));
-                Bukkit.getLogger().info("Applying " + set.name() + " Set Bonus Crystal to " + ItemUtils.getDisplayName((ItemStack) clicked));
+                set.getCrystalDescription().forEach(de -> player.sendMessage(set.getColor() + CC.Bold + "  * " + set.getColor() + de));
+                Bukkit.getLogger().info("Applying " + set.name() + " Set Bonus Crystal to " + ItemUtils.getDisplayName(clicked));
             }
             player.sendMessage("");
             ASound.LEVEL_UP.play(player, 1.1f);

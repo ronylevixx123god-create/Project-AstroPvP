@@ -52,20 +52,20 @@ import java.util.Random;
 public class DragonSlayerArmorSet
         extends ArmorSetInfo
         implements OtherPlayerEventListenerSet {
-    private ChatColor color = ChatColor.YELLOW;
+    private final ChatColor color = ChatColor.YELLOW;
 
     @Override
     public void onEquip(Player player) {
-        player.setMetadata("mastery_reflect_enchant", (MetadataValue) new FixedMetadataValue((Plugin) CosmicArmorSetsPlugin.get_(), (Object) 10));
-        player.setMetadata("immune_silence", (MetadataValue) new FixedMetadataValue((Plugin) CosmicArmorSetsPlugin.get_(), (Object) System.currentTimeMillis()));
-        player.setMetadata("immune_freeze", (MetadataValue) new FixedMetadataValue((Plugin) CosmicArmorSetsPlugin.get_(), (Object) System.currentTimeMillis()));
+        player.setMetadata("mastery_reflect_enchant", new FixedMetadataValue(CosmicArmorSetsPlugin.get_(), 10));
+        player.setMetadata("immune_silence", new FixedMetadataValue(CosmicArmorSetsPlugin.get_(), System.currentTimeMillis()));
+        player.setMetadata("immune_freeze", new FixedMetadataValue(CosmicArmorSetsPlugin.get_(), System.currentTimeMillis()));
     }
 
     @Override
     public void onUnequip(Player player) {
-        player.removeMetadata("mastery_reflect_enchant", (Plugin) CosmicArmorSetsPlugin.get_());
-        player.removeMetadata("immune_silence", (Plugin) CosmicArmorSetsPlugin.get_());
-        player.removeMetadata("immune_freeze", (Plugin) CosmicArmorSetsPlugin.get_());
+        player.removeMetadata("mastery_reflect_enchant", CosmicArmorSetsPlugin.get_());
+        player.removeMetadata("immune_silence", CosmicArmorSetsPlugin.get_());
+        player.removeMetadata("immune_freeze", CosmicArmorSetsPlugin.get_());
     }
 
     @Override
@@ -75,7 +75,7 @@ public class DragonSlayerArmorSet
         if (this.random.nextDouble() <= 0.3) {
             this.addEnchantment("Immortal", ItemUtils.getRandomArmorSetEnchantLevel("Immortal"), kothItem);
         }
-        return applyTransmog ? EnchantmentBook.applyTransmogScroll((ItemStack) kothItem) : kothItem;
+        return applyTransmog ? EnchantmentBook.applyTransmogScroll(kothItem) : kothItem;
     }
 
     @Override
@@ -86,7 +86,7 @@ public class DragonSlayerArmorSet
             this.addMaxedEnchant(this.getEnchantment("Enchant Reflect"), kothItem);
             this.addEnchantment("Heroic Enchant Reflect", ItemUtils.getRandomArmorSetEnchantLevel("Heroic Enchant Reflect"), kothItem);
         }
-        return applyTransmog ? EnchantmentBook.applyTransmogScroll((ItemStack) kothItem) : kothItem;
+        return applyTransmog ? EnchantmentBook.applyTransmogScroll(kothItem) : kothItem;
     }
 
     @Override
@@ -94,14 +94,14 @@ public class DragonSlayerArmorSet
         ItemStack kothItem = this.createArmor(Material.DIAMOND_LEGGINGS, "Scorched Leggings of Dragons", "leggings");
         this.addEnchants(kothItem, Lists.newArrayList("Enlighted", "Lucky", "Obsidianshield", "Armored", "Tank", "Valor", "Angelic", "Arrow Deflect", "Clarity", "Cactus", "Divine Enlighted"), 0.4);
         if (Math.random() < 0.075) {
-            this.addMaxedEnchant(EnchantmentAPI.getEnchantment((String) "Nature Wrath"), kothItem);
+            this.addMaxedEnchant(EnchantmentAPI.getEnchantment("Nature Wrath"), kothItem);
         }
-        return applyTransmog ? EnchantmentBook.applyTransmogScroll((ItemStack) kothItem) : kothItem;
+        return applyTransmog ? EnchantmentBook.applyTransmogScroll(kothItem) : kothItem;
     }
 
     public ItemStack addEnchants(ItemStack item, List<String> enchants, double heroic) {
         for (String cen : enchants) {
-            CustomEnchantment ce = EnchantmentAPI.getEnchantment((String) cen);
+            CustomEnchantment ce = EnchantmentAPI.getEnchantment(cen);
             if (ce == null) continue;
             if (ce.heroicEnchantment) {
                 if (heroic > 0.0 && Math.random() > heroic) continue;
@@ -123,7 +123,7 @@ public class DragonSlayerArmorSet
     }
 
     public ItemStack addRandomLeveledEnchant(String enchantName, ItemStack item) {
-        CustomEnchantment enchantment = EnchantmentAPI.getEnchantment((String) enchantName);
+        CustomEnchantment enchantment = EnchantmentAPI.getEnchantment(enchantName);
         if (enchantment == null) {
             return item;
         }
@@ -138,7 +138,7 @@ public class DragonSlayerArmorSet
         if (this.random.nextDouble() <= 0.075) {
             this.addEnchantment("Phoenix", ItemUtils.getRandomArmorSetEnchantLevel("Phoenix"), kothItem);
         }
-        return applyTransmog ? EnchantmentBook.applyTransmogScroll((ItemStack) kothItem) : kothItem;
+        return applyTransmog ? EnchantmentBook.applyTransmogScroll(kothItem) : kothItem;
     }
 
     @Override
@@ -148,12 +148,12 @@ public class DragonSlayerArmorSet
 
     @Override
     public boolean onPlayerDamaged(Player damaged, EntityDamageByEntityEvent event) {
-        return !this.isBlockedOutpostWorld((Entity) damaged);
+        return !this.isBlockedOutpostWorld(damaged);
     }
 
     @Override
     public boolean onPlayerAttacked(Player damager, EntityDamageByEntityEvent event) {
-        if (this.isBlockedOutpostWorld((Entity) damager)) {
+        if (this.isBlockedOutpostWorld(damager)) {
             return false;
         }
         if (event.getEntity() instanceof Player) {
@@ -164,7 +164,7 @@ public class DragonSlayerArmorSet
 
     @Override
     public boolean onPlayerDamagedBonus(Player damaged, int multiplier, EntityDamageByEntityEvent event) {
-        if (this.isBlockedOutpostWorld((Entity) damaged)) {
+        if (this.isBlockedOutpostWorld(damaged)) {
             return false;
         }
         return this.modifyDamage(damaged, event, -5.0, multiplier);
@@ -172,7 +172,7 @@ public class DragonSlayerArmorSet
 
     @Override
     public boolean onPlayerAttackedBonus(Player damager, int multiplier, EntityDamageByEntityEvent event) {
-        if (this.isBlockedOutpostWorld((Entity) damager)) {
+        if (this.isBlockedOutpostWorld(damager)) {
             return false;
         }
         if (event.getEntity() instanceof Player) {
@@ -190,8 +190,8 @@ public class DragonSlayerArmorSet
     }
 
     public ItemStack createArmor(Material material, String itemName, String loreType) {
-        String bold = (Object) this.color + CC.Bold + "* " + (Object) this.color;
-        ItemStack armor = ItemUtils.buildItem(material, (short) 0, (Object) this.color + CC.Bold + itemName + CC.Reset, (Object) this.color + CC.Italic + "The mythical " + loreType + " of a Slayer of Dragons.", "", (Object) this.color + CC.Bold + "DRAGON SLAYER SET BONUS", bold + "+15% PvP Damage", bold + "-20% Incoming Damage", bold + "Immune to Freezes", bold + "Mastery Enchant Reflect X", bold + "Negate 75% of Enemy Silence", bold + "25% Mastery Enchant Negation", CC.Gray + "(" + CC.GrayI + "Requires all 4 dragon slayer items" + CC.Gray + ")");
+        String bold = this.color + CC.Bold + "* " + this.color;
+        ItemStack armor = ItemUtils.buildItem(material, (short) 0, this.color + CC.Bold + itemName + CC.Reset, this.color + CC.Italic + "The mythical " + loreType + " of a Slayer of Dragons.", "", this.color + CC.Bold + "DRAGON SLAYER SET BONUS", bold + "+15% PvP Damage", bold + "-20% Incoming Damage", bold + "Immune to Freezes", bold + "Mastery Enchant Reflect X", bold + "Negate 75% of Enemy Silence", bold + "25% Mastery Enchant Negation", CC.Gray + "(" + CC.GrayI + "Requires all 4 dragon slayer items" + CC.Gray + ")");
         armor.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5);
         armor.addUnsafeEnchantment(Enchantment.DURABILITY, 3);
         return armor;

@@ -36,9 +36,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class GhostAbilitySet
         extends AbilityArmorSetInfo {
-    private String color = CC.DarkAqua;
-    private String bulletPoint = this.color + CC.Bold + " * " + this.color;
-    private Color armorColor = Color.GRAY;
+    private final String color = CC.DarkAqua;
+    private final String bulletPoint = this.color + CC.Bold + " * " + this.color;
+    private final Color armorColor = Color.GRAY;
 
     @Override
     public List<String> getAbilityArmorLore() {
@@ -47,7 +47,7 @@ public class GhostAbilitySet
 
     @Override
     public ItemStack getHelmet(Player player, boolean applyTransmog, boolean mastery) {
-        ItemStack helmet = this.setLeatherColor(CosmicArmorSetsAPI.convertItemToHeroic(AbilityArmorSet.GHOST.applyAbilityNBT(new NBTWrapper(new ItemBuilder(Material.DIAMOND_HELMET, CC.DarkAquaB + "Ghostly Hood", new String[]{CC.GrayI + "A tattered hood haunted by", CC.GrayI + "the echoes of all lost souls."}).build())).build(), HeroicArmorType.HELMET, true), this.armorColor);
+        ItemStack helmet = this.setLeatherColor(CosmicArmorSetsAPI.convertItemToHeroic(AbilityArmorSet.GHOST.applyAbilityNBT(new NBTWrapper(new ItemBuilder(Material.DIAMOND_HELMET, CC.DarkAquaB + "Ghostly Hood", CC.GrayI + "A tattered hood haunted by", CC.GrayI + "the echoes of all lost souls.").build())).build(), HeroicArmorType.HELMET, true), this.armorColor);
         this.addNearlyMaxedEnchants(helmet, "Armored", "Implants", "Drunk", "Arrow Deflect", "Death God", "Resilience", "Protection", "Frozen");
         if (this.random.nextDouble() <= 0.6) {
             this.addNearlyMaxed(helmet, "Valor");
@@ -67,12 +67,12 @@ public class GhostAbilitySet
         if (mastery) {
             this.addRandomMasteryEnchants(helmet, 2);
         }
-        return applyTransmog ? EnchantmentBook.applyTransmogScroll((ItemStack) helmet) : helmet;
+        return applyTransmog ? EnchantmentBook.applyTransmogScroll(helmet) : helmet;
     }
 
     @Override
     public ItemStack getChestplate(Player player, boolean applyTransmog, boolean mastery) {
-        ItemStack chestplate = this.setLeatherColor(CosmicArmorSetsAPI.convertItemToHeroic(AbilityArmorSet.GHOST.applyAbilityNBT(new NBTWrapper(new ItemBuilder(Material.DIAMOND_CHESTPLATE, CC.DarkAquaB + "Ghostly Shroud", new String[]{CC.GrayI + "A thin, sheer shroud that seems", CC.GrayI + "to defy gravity in its movements."}).build())).build(), HeroicArmorType.CHESTPLATE, true), this.armorColor);
+        ItemStack chestplate = this.setLeatherColor(CosmicArmorSetsAPI.convertItemToHeroic(AbilityArmorSet.GHOST.applyAbilityNBT(new NBTWrapper(new ItemBuilder(Material.DIAMOND_CHESTPLATE, CC.DarkAquaB + "Ghostly Shroud", CC.GrayI + "A thin, sheer shroud that seems", CC.GrayI + "to defy gravity in its movements.").build())).build(), HeroicArmorType.CHESTPLATE, true), this.armorColor);
         this.addNearlyMaxedEnchants(chestplate, "Armored", "Overload", "Deathbringer", "Enlighted", "Diminish", "Aegis", "Leadership", "Blood Lust", "Shockwave");
         if (this.random.nextDouble() <= 0.6) {
             this.addNearlyMaxed(chestplate, "Valor");
@@ -101,12 +101,12 @@ public class GhostAbilitySet
         if (mastery) {
             this.addRandomMasteryEnchants(chestplate, 2);
         }
-        return applyTransmog ? EnchantmentBook.applyTransmogScroll((ItemStack) chestplate) : chestplate;
+        return applyTransmog ? EnchantmentBook.applyTransmogScroll(chestplate) : chestplate;
     }
 
     @Override
     public ItemStack getLeggings(Player player, boolean applyTransmog, boolean mastery) {
-        ItemStack leggings = this.setLeatherColor(CosmicArmorSetsAPI.convertItemToHeroic(AbilityArmorSet.GHOST.applyAbilityNBT(new NBTWrapper(new ItemBuilder(Material.DIAMOND_LEGGINGS, CC.DarkAquaB + "Ghostly Robes", new String[]{CC.GrayI + "A darkly woven silk robe imbued", CC.GrayI + "with onyx gemstones that", CC.GrayI + "emanate evil power."}).build())).build(), HeroicArmorType.LEGGINGS, true), this.armorColor);
+        ItemStack leggings = this.setLeatherColor(CosmicArmorSetsAPI.convertItemToHeroic(AbilityArmorSet.GHOST.applyAbilityNBT(new NBTWrapper(new ItemBuilder(Material.DIAMOND_LEGGINGS, CC.DarkAquaB + "Ghostly Robes", CC.GrayI + "A darkly woven silk robe imbued", CC.GrayI + "with onyx gemstones that", CC.GrayI + "emanate evil power.").build())).build(), HeroicArmorType.LEGGINGS, true), this.armorColor);
         this.addNearlyMaxedEnchants(leggings, "Armored", "Nature Wrath", "Clarity", "Obsidianshield", "Cactus", "Lucky", "Voodoo");
         if (this.random.nextDouble() <= 0.6) {
             this.addNearlyMaxed(leggings, "Valor");
@@ -126,12 +126,12 @@ public class GhostAbilitySet
         if (mastery) {
             this.addRandomMasteryEnchants(leggings, 2);
         }
-        return applyTransmog ? EnchantmentBook.applyTransmogScroll((ItemStack) leggings) : leggings;
+        return applyTransmog ? EnchantmentBook.applyTransmogScroll(leggings) : leggings;
     }
 
     @Override
     public ItemStack getBoots(Player player, boolean applyTransmog, boolean mastery) {
-        ItemStack boots = this.setLeatherColor(CosmicArmorSetsAPI.convertItemToHeroic(AbilityArmorSet.GHOST.applyAbilityNBT(new NBTWrapper(new ItemBuilder(Material.DIAMOND_BOOTS, CC.DarkAquaB + "Ghostly Whisp", new String[]{CC.GrayI + "Ghost don't have feet."}).build())).build(), HeroicArmorType.BOOTS, true), this.armorColor);
+        ItemStack boots = this.setLeatherColor(CosmicArmorSetsAPI.convertItemToHeroic(AbilityArmorSet.GHOST.applyAbilityNBT(new NBTWrapper(new ItemBuilder(Material.DIAMOND_BOOTS, CC.DarkAquaB + "Ghostly Whisp", CC.GrayI + "Ghost don't have feet.").build())).build(), HeroicArmorType.BOOTS, true), this.armorColor);
         this.addNearlyMaxedEnchants(boots, "Armored", "Metaphysical", "Ender Walker", "Springs", "Rocket Escape", "Dodge", "Phoenix", "Undead Ruse");
         this.addMaxedEnchant(boots, "Gears");
         if (this.random.nextDouble() <= 0.6) {
@@ -155,7 +155,7 @@ public class GhostAbilitySet
         if (mastery) {
             this.addRandomMasteryEnchants(boots, 2);
         }
-        return applyTransmog ? EnchantmentBook.applyTransmogScroll((ItemStack) boots) : boots;
+        return applyTransmog ? EnchantmentBook.applyTransmogScroll(boots) : boots;
     }
 
     public ItemStack addRandomMasteryEnchants(ItemStack item, int count) {

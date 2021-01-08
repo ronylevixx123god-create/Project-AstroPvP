@@ -79,7 +79,7 @@ public class HeroicArmorListener
             return;
         }
         Player player = (Player) event.getWhoClicked();
-        if (event.getWhoClicked().getInventory() != null && player.getOpenInventory() != null && event.getWhoClicked().getInventory().equals((Object) player.getOpenInventory().getBottomInventory()) && (current = event.getCurrentItem()) != null) {
+        if (event.getWhoClicked().getInventory() != null && player.getOpenInventory() != null && event.getWhoClicked().getInventory().equals(player.getOpenInventory().getBottomInventory()) && (current = event.getCurrentItem()) != null) {
             Material type = current.getType();
             NBTWrapper wrapper = null;
             HeroicArmorType typeToCompare = null;
@@ -133,7 +133,7 @@ public class HeroicArmorListener
         Material type;
         if (event.getEntity() instanceof Player) {
             double damageReduction = 0.0;
-            OutpostTier tier = CosmicOutpostsAPI.getOutpostTierOfWorld((Entity) event.getEntity());
+            OutpostTier tier = CosmicOutpostsAPI.getOutpostTierOfWorld(event.getEntity());
             if (tier != null && (tier == OutpostTier.VANILLA || tier == OutpostTier.TRAINEE)) {
                 return;
             }
@@ -175,10 +175,10 @@ public class HeroicArmorListener
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
             double damageMod = 0.0;
             double damageIncrease = 0.0;
-            if (CosmicUtils.get().isOutpostsEnabled() && CosmicOutpostsAPI.controlsTraineeOutpost((Player) ((Player) event.getDamager()))) {
+            if (CosmicUtils.get().isOutpostsEnabled() && CosmicOutpostsAPI.controlsTraineeOutpost((Player) event.getDamager())) {
                 damageMod += 0.025;
             }
-            if (HCFOutpostAPI.isControllingOutpost((Player) ((Player) event.getDamager()), (OutpostType) OutpostType.COURTYARD)) {
+            if (HCFOutpostAPI.isControllingOutpost((Player) event.getDamager(), OutpostType.COURTYARD)) {
                 damageMod += 0.0625;
             }
             for (ItemStack item : ((Player) event.getEntity()).getInventory().getArmorContents()) {
