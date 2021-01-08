@@ -47,7 +47,7 @@ extends CosmicGUI {
                 index += 2;
             }
             boolean toggled = toggle.getToggle(this.player, fplayer);
-            ArrayList lore = Lists.newArrayList((Object[])new String[]{CC.Gray + toggle.getCommand()});
+            ArrayList<String> lore = Lists.newArrayList(CC.Gray + toggle.getCommand());
             this.setItem(index++, new InventoryItem(new ItemBuilder(Material.STAINED_GLASS_PANE).data(toggled ? (short)DyeColor.LIME.getWoolData() : (short)DyeColor.RED.getWoolData()).lore(lore).name((toggled ? CC.GreenB : CC.RedB) + toggle.getDisplayName()).build()).click(() -> {
                 this.player.chat(toggle.getCommand());
                 this.redraw();
