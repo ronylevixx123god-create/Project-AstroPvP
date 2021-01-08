@@ -51,3 +51,6 @@ spawnTimeInSeconds: 14400
 #Seconds of extra delay to spawn the chest. (5 Mins = 300)
 randomDelay: 1800
 
+# COINFLIP
+resetStats: false
+alertAmount: 1000000

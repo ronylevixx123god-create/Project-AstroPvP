@@ -24,6 +24,10 @@ import me.ifamasssxd.betterpay.PayToggle;
 import me.ifamasssxd.betterpay.commands.CommandTogglePay;
 import me.ifamasssxd.corechunkfinder.CoreChunkFinderCommand;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
+import me.ifamasssxd.cosmiccoinflip.commands.CommandCoinFlip;
+import me.ifamasssxd.cosmiccoinflip.listeners.InventoryListener;
+import me.ifamasssxd.cosmiccoinflip.struct.CoinFlipManager;
+import me.ifamasssxd.cosmiccoinflip.struct.CoinFlipMatch;
 import me.ifamasssxd.cosmicheroicenvoys.commands.CommandSetHeroicBossSpawn;
 import me.ifamasssxd.cosmicheroicenvoys.commands.CommandSpawnHeroicBoss;
 import me.ifamasssxd.cosmicheroicenvoys.listeners.EnvoyListener;
@@ -49,10 +53,7 @@ import net.astropvp.core.commands.*;
 import net.astropvp.core.listeners.*;
 import net.astropvp.core.tasks.LastManStandingCapTask;
 import net.milkbowl.vault.economy.Economy;
-import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
-import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -85,16 +86,17 @@ public class AstroCore extends JavaPlugin {
     Essentials ess;
     private PayToggle payToggles;
     // ItemFilter
-    private FilterManager filterManager;
-    private ItemFilterListener itemListener;
+    @Getter private FilterManager filterManager;
+    @Getter private ItemFilterListener itemListener;
     // PlayerTitles
-    public TitleDatabaseManager dataManager;
-    public static boolean hcf;
+    @Getter public TitleDatabaseManager dataManager;
+    @Getter public static boolean hcf;
     // CoreChunkFinder
-    @Getter
-    private boolean tntDebug = false;
+    @Getter private boolean tntDebug = false;
     // Heroic Envoys
-    public EnvoyManager envoyManager;
+    @Getter public EnvoyManager envoyManager;
+    // Coin Flips
+    @Getter private CoinFlipManager coinFlipManager;
 
     @SneakyThrows
     public void onEnable() {
@@ -151,6 +153,19 @@ public class AstroCore extends JavaPlugin {
         this.getCommand("corechunkfinder").setExecutor(new CoreChunkFinderCommand());
         this.getServer().getPluginManager().registerEvents((Listener)this, this);
 
+        this.getCommand("coinflip").setExecutor(new CommandCoinFlip());
+        this.getServer().getPluginManager().registerEvents(new InventoryListener(), this);
+        this.getServer().getPluginManager().registerEvents(new me.ifamasssxd.cosmiccoinflip.listeners.PlayerListener(), this);
+        this.coinFlipManager = new CoinFlipManager();
+        this.coinFlipManager.loadCoinFlips();
+        this.coinFlipManager.loadToggles();
+        if (!this.getConfig().getBoolean("resetStats")) {
+            this.getConfig().set("resetStats", true);
+            this.saveConfig();
+            this.coinFlipManager.clearStats();
+        }
+
+
         this.getCommand("filter").setExecutor(new CommandFilter());
         this.getCommand("wiki").setExecutor(new CommandWiki());
         this.getCommand("spawnmenu").setExecutor(new CommandSpawnMenu());
@@ -185,12 +200,32 @@ public class AstroCore extends JavaPlugin {
         this.filterManager.saveFilters();
 
         Boss bos;
-        if (this.envoyManager.getBossUUID() != null && this.envoyManager.getBossLocation() != null && (bos = (Boss)Boss.bosses.get(this.envoyManager.getBossUUID())) != null) {
+        if (this.envoyManager.getBossUUID() != null && this.envoyManager.getBossLocation() != null && (bos = Boss.bosses.get(this.envoyManager.getBossUUID())) != null) {
             bos.onDeath(null);
             bos.getEntity().remove();
             Boss.bosses.remove(bos.getEntity().getUniqueId());
             System.out.println("Removing boss!");
         }
+
+        for (CoinFlipMatch active : this.coinFlipManager.getCoinFlipMatches()) {
+            if (active.getMatchState() == CoinFlipMatch.MatchState.WAITING) {
+                if (active.getStarterPlayer() == null) continue;
+                economy.depositPlayer((OfflinePlayer)active.getStarterPlayer(), active.getWager());
+                Bukkit.getLogger().info("Depositing $" + active.getWager() + " to " + active.getStarterPlayer().getName() + " due to reload...");
+                continue;
+            }
+            if (active.getMatchState() == CoinFlipMatch.MatchState.DONE) continue;
+            if (active.getStarterPlayer() != null) {
+                economy.depositPlayer((OfflinePlayer)active.getStarterPlayer(), active.getWager());
+                Bukkit.getLogger().info("Depositing $" + active.getWager() + " to " + active.getStarterPlayer().getName() + " due to reload...");
+            }
+            if (active.getSecondPlayer() == null) continue;
+            economy.depositPlayer((OfflinePlayer)active.getSecondPlayer(), active.getWager());
+            Bukkit.getLogger().info("Depositing $" + active.getWager() + " to " + active.getSecondPlayer().getName() + " due to reload...");
+        }
+        this.coinFlipManager.getCoinFlipMatches().clear();
+        this.coinFlipManager.saveCoinFlipRecords();
+        this.coinFlipManager.saveToggles();
     }
 
 
@@ -249,10 +284,6 @@ public class AstroCore extends JavaPlugin {
 
     static {
         hcf = false;
-    }
-
-    public boolean isTntDebug() {
-        return this.tntDebug;
     }
 
     public void setTntDebug(boolean tntDebug) {

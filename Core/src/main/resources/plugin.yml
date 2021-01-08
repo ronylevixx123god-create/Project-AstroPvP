@@ -59,4 +59,7 @@ commands:
     description: Set boss spawn.
   spawnheroicboss:
     description: Spawn boss.
+  coinflip:
+    description: Coin flip command.
+    aliases: [cf, coinflips]
 
