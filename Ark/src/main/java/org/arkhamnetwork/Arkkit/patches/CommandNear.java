@@ -33,14 +33,12 @@ import com.earth2me.essentials.commands.PlayerNotFoundException;
 import com.earth2me.essentials.utils.FormatUtil;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
-import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.Relation;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
 import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.metadata.MetadataValue;
 
 import java.util.List;
 import java.util.Locale;
@@ -108,14 +106,14 @@ final class CommandNear
         }
         if ((radius = Math.abs(radius)) > maxRadius && !user.isAuthorized("essentials.near.maxexempt")) {
             NearLegacy.ess3.getI18n();
-            user.sendMessage(I18n.tl("radiusTooBig", new Object[]{maxRadius}));
+            user.sendMessage(I18n.tl("radiusTooBig", maxRadius));
             radius = maxRadius;
         }
         if (otherUser == null || !user.isAuthorized("essentials.near.others")) {
             otherUser = user;
         }
         NearLegacy.ess3.getI18n();
-        user.sendMessage(I18n.tl("nearbyPlayers", new Object[]{this.getLocal(server, otherUser, radius)}));
+        user.sendMessage(I18n.tl("nearbyPlayers", this.getLocal(server, otherUser, radius)));
         return true;
     }
 
@@ -133,7 +131,7 @@ final class CommandNear
             }
         }
         NearLegacy.ess3.getI18n();
-        sender.sendMessage(I18n.tl("nearbyPlayers", new Object[]{this.getLocal(server, otherUser, radius)}));
+        sender.sendMessage(I18n.tl("nearbyPlayers", this.getLocal(server, otherUser, radius)));
     }
 
     private String getLocal(Server server, User user, long radius) {
@@ -168,7 +166,7 @@ final class CommandNear
             string = output.toString();
         } else {
             NearLegacy.ess3.getI18n();
-            string = I18n.tl("none", new Object[0]);
+            string = I18n.tl("none");
         }
         return string;
     }

@@ -34,7 +34,6 @@ import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.arkhamnetwork.enchantments.util.ParticleEffect;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.scheduler.CraftTask;
 import org.bukkit.entity.Player;
@@ -48,8 +47,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -122,7 +119,7 @@ final class HalloweenListener
             if (sugarLevel > 6) {
                 p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, duration, Math.min(3, sugarLevel / 2)));
             }
-            Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(p, "ITEM_USE", new Object[]{"CANDY", candy}));
+            Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(p, "ITEM_USE", "CANDY", candy));
         }
     }
 

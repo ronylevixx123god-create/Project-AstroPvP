@@ -38,9 +38,9 @@ import java.util.UUID;
 
 public class ValentinesDay
         extends ArkPlugin {
-    public Map<UUID, List<CandyGram>> pendingGrams = new HashMap<UUID, List<CandyGram>>();
     private final Type token = new TypeToken<HashMap<UUID, List<CandyGram>>>() {
     }.getType();
+    public Map<UUID, List<CandyGram>> pendingGrams = new HashMap<UUID, List<CandyGram>>();
     private File candyGramFile;
 
     public ValentinesDay(Plugin p) {

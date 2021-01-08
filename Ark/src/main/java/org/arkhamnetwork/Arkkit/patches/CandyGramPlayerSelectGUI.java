@@ -27,9 +27,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -37,9 +35,9 @@ import java.util.stream.Collectors;
 class CandyGramPlayerSelectGUI
         extends CosmicGUI {
     private static final Map<UUID, ItemStack> heads = new HashMap<UUID, ItemStack>();
-    int page = 1;
     private final CandyGramItem item;
     private final CosmicGUI previous;
+    int page = 1;
 
     public CandyGramPlayerSelectGUI(Player player, CandyGramItem item, CosmicGUI previousMenu) {
         super(player, "Select a Player", 54);

@@ -64,7 +64,6 @@ import org.arkhamnetwork.Arkkit.utils.WorldGuardUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -81,16 +80,14 @@ import org.bukkit.event.world.StructureGrowEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 import java.util.List;
 
 final class PhazeListener
         implements Listener {
-    List<Material> disabledMaterials = Lists.newArrayList(Material.PAPER, Material.EXP_BOTTLE, Material.REDSTONE_TORCH_ON, Material.NAME_TAG, Material.CHEST, Material.CHEST, Material.TNT, Material.MONSTER_EGG, Material.MOB_SPAWNER);
     private final List<Material> hollowMaterials;
+    List<Material> disabledMaterials = Lists.newArrayList(Material.PAPER, Material.EXP_BOTTLE, Material.REDSTONE_TORCH_ON, Material.NAME_TAG, Material.CHEST, Material.CHEST, Material.TNT, Material.MONSTER_EGG, Material.MOB_SPAWNER);
 
     PhazeListener() {
         this.hollowMaterials = new ArrayList<Material>();

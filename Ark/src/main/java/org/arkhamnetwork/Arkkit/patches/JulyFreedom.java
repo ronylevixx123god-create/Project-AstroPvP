@@ -35,7 +35,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -46,9 +45,9 @@ import java.util.Random;
 public class JulyFreedom
         extends ArkPlugin {
     private final int MOB_ITEM_DROP_CHANCE = 1;
+    private final Random random = new Random();
     List<Color> available = Lists.newArrayList(Color.RED, Color.WHITE, Color.BLUE);
     private boolean usingFactions = true;
-    private final Random random = new Random();
 
     public JulyFreedom(Plugin p) {
         super(p);

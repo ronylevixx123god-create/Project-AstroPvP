@@ -23,7 +23,6 @@ import org.arkhamnetwork.Arkkit.Arkkit;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.BufferedReader;
@@ -35,6 +34,9 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class BalanceManager {
+    private static final DecimalFormat format;
+    private static final HashSet<UUID> bannedCache;
+    private static final DecimalFormat df;
     public static ConcurrentHashMap<UUID, NameDouble> balanceMap = new ConcurrentHashMap<>();
     public static Gson gson = new Gson();
     public static volatile LinkedList<List<String>> pages;
@@ -44,9 +46,6 @@ public class BalanceManager {
     private static String topName;
     private static double topBalance;
     private static boolean minebansEnabled;
-    private static final DecimalFormat format;
-    private static final HashSet<UUID> bannedCache;
-    private static final DecimalFormat df;
 
     static {
         balancetop = null;

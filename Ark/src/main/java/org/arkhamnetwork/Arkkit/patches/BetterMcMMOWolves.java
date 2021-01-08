@@ -18,7 +18,6 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
-import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.Relation;
 import org.arkhamnetwork.Arkkit.utils.WorldGuardUtils;
 import org.bukkit.OfflinePlayer;

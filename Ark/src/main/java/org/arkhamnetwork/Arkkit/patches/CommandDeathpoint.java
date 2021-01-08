@@ -17,7 +17,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
 import org.arkhamnetwork.Arkkit.utils.WorldGuardUtils;

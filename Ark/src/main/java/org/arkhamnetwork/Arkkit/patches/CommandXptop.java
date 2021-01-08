@@ -27,7 +27,6 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.plugin.Plugin;
 
 final class CommandXptop
         extends AbstractCommand {

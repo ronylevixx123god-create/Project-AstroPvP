@@ -32,7 +32,6 @@ import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.entity.EnderPearl;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
@@ -47,11 +46,11 @@ public class ChunkGCTask
         extends BukkitRunnable {
     public static final int block_viewdistance_raw = Arkkit.get().getServer().getViewDistance();
     public static final int block_viewdistance = block_viewdistance_raw * 16;
+    private static final ConcurrentHashMap<String, CopyOnWriteArrayList<Long>> chunks_to_unload = new ConcurrentHashMap();
     public static volatile ConcurrentHashMap<String, CopyOnWriteArrayList<Long>> loaded_chunks = new ConcurrentHashMap();
     public static volatile HashMap<String, Integer> world_viewdistances = new HashMap();
     public static boolean bossesEnabled = false;
     public static HashSet<Integer> active_workers = new HashSet();
-    private static final ConcurrentHashMap<String, CopyOnWriteArrayList<Long>> chunks_to_unload = new ConcurrentHashMap();
     private static Class<? extends Boss> endDragonClass;
     private final Arkkit plugin = Arkkit.get();
 

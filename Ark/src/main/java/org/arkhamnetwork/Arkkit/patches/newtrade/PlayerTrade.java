@@ -28,9 +28,9 @@ import java.util.*;
 public class PlayerTrade {
     private final Player player1;
     private final Player player2;
+    private final Map<UUID, LinkedList<ItemStack>> currentlyTradedItems = new HashMap<UUID, LinkedList<ItemStack>>();
     private TradeMenu player1Menu;
     private TradeMenu player2Menu;
-    private final Map<UUID, LinkedList<ItemStack>> currentlyTradedItems = new HashMap<UUID, LinkedList<ItemStack>>();
     private int tradeCountdown = 10;
     private boolean tradeSuccess = false;
     private boolean cancelled = false;

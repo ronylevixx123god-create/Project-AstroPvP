@@ -16,7 +16,6 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

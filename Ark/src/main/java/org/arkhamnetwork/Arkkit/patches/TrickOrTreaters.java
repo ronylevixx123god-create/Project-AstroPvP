@@ -48,7 +48,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -68,7 +67,7 @@ public class TrickOrTreaters
 
             public void run() {
                 for (Player pl : Bukkit.getOnlinePlayers()) {
-                    if (WorldGuardUtils.isInRegionsFast(pl.getLocation(), new String[]{"spawn_region"}))
+                    if (WorldGuardUtils.isInRegionsFast(pl.getLocation(), "spawn_region"))
                         continue;
                     TrickOrTreaters.this.spawnTrickOrTreater(pl.getLocation());
                     return;

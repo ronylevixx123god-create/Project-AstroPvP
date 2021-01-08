@@ -55,7 +55,6 @@ import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
 import java.io.IOException;
@@ -195,7 +194,7 @@ public class LoreTag
                     pl.removeMetadata(lore_confirm_metadata, Arkkit.get());
                     pl.playSound(pl.getLocation(), Sound.LEVEL_UP, 1.0f, 0.5f);
                     e.setMessage("");
-                    Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(pl, "ITEM_USE", new Object[]{"LORETAG"}));
+                    Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(pl, "ITEM_USE", "LORETAG"));
                     return;
                 }
                 if (e.getMessage().equalsIgnoreCase("cancel") || e.getPlayer().hasMetadata(lore_confirm_metadata) && !e.getMessage().equalsIgnoreCase("confirm")) {

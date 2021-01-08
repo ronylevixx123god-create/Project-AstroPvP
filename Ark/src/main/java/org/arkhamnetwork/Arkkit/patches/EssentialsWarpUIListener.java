@@ -56,7 +56,6 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.plugin.Plugin;
 
 import java.util.*;
 
@@ -65,8 +64,6 @@ final class EssentialsWarpUIListener
     private final HashMap<String, List<Player>> warpPlayers;
     private final HashMap<String, List<Player>> warpPvPPlayers;
     private final HashMap<String, Long> warpPlayerCache;
-    private Inventory cachedWarpInventory = null;
-    private long warpInventoryCacheExpire = 0L;
     private final LinkedHashMap<String, WarpData> warps = new LinkedHashMap<String, WarpData>() {
         {
             this.put("hills", new WarpData("hills", ChatColor.GREEN + "" + ChatColor.BOLD + "Hills", Material.getMaterial(98), "&aA vanilla forest biome,", "&agood for more casual PvP/PvE."));
@@ -78,6 +75,8 @@ final class EssentialsWarpUIListener
             this.put("swamp", new WarpData("swamp", ChatColor.DARK_GREEN + "" + ChatColor.BOLD + "Swamp", Material.MOSSY_COBBLESTONE, "&2A deep swamp biome,", "&2good for more casual PvP/PvE."));
         }
     };
+    private Inventory cachedWarpInventory = null;
+    private long warpInventoryCacheExpire = 0L;
 
     EssentialsWarpUIListener() {
         this.warpPlayers = new HashMap();

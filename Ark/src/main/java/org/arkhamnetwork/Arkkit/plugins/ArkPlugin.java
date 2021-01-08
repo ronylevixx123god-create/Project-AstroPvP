@@ -29,11 +29,11 @@ import java.util.Random;
 
 public abstract class ArkPlugin {
     protected static Random random = new Random();
-    public long enable_time = 0L;
-    public boolean disableCalled = false;
     private final List<Listener> listeners = new ArrayList<Listener>();
     private final List<Integer> task_ids = new ArrayList<Integer>();
     private final List<Command> commands = new ArrayList<Command>();
+    public long enable_time = 0L;
+    public boolean disableCalled = false;
     private Plugin bukkit_plugin = null;
     private boolean running = false;
 

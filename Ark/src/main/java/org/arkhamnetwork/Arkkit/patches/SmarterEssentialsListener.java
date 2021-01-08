@@ -50,7 +50,6 @@ import net.ess3.api.events.NickChangeEvent;
 import org.apache.commons.lang3.text.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -62,12 +61,12 @@ import java.util.*;
 
 final class SmarterEssentialsListener
         implements Listener {
-    List<String> blockedMutedCommands;
-    boolean factions = false;
-    boolean essentials = false;
     private final List<String> message_aliases = new ArrayList<String>(Arrays.asList("msg", "message", "tell", "whisper", "m", "emsg", "w", "t", "etell", "ewhisper"));
     private final List<String> reply_aliases = new ArrayList<String>(Arrays.asList("reply", "r", "repl"));
     private final LinkedList<String> listCommandCache = new LinkedList();
+    List<String> blockedMutedCommands;
+    boolean factions = false;
+    boolean essentials = false;
     private long listCommandCacheExpiration = 0L;
 
     SmarterEssentialsListener() {

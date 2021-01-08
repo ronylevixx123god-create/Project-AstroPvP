@@ -17,7 +17,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
-import java.util.List;
 
 class CandyGram {
     private final CandyGramItem item;

@@ -7,14 +7,12 @@ import org.arkhamnetwork.Arkkit.patches.antiknockback.AntiKnockback;
 import org.arkhamnetwork.Arkkit.patches.balancetop.BalanceTop;
 import org.arkhamnetwork.Arkkit.patches.barannouncer.BarAnnouncer;
 import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatFilter;
-import org.arkhamnetwork.Arkkit.patches.chunkgc.ChunkGC;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
 import org.arkhamnetwork.Arkkit.patches.commandcooldown.CommandCooldowns;
 import org.arkhamnetwork.Arkkit.patches.createtitle.CreateTitle;
 import org.arkhamnetwork.Arkkit.patches.newtrade.BetterTrade;
 import org.arkhamnetwork.Arkkit.patches.trading.NewTrade;
 import org.arkhamnetwork.Arkkit.patches.voting.VotePatch;
-import org.bukkit.plugin.Plugin;
 
 public enum ArkPlugins {
     ANTI_DUPE(new AntiDupe(Arkkit.get()), "Blocks many common dupe exploits, adds /scanchests"),

@@ -20,11 +20,8 @@ import com.massivecraft.factions.FPlayers;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.text.DecimalFormat;
@@ -32,8 +29,8 @@ import java.util.*;
 
 final class WarzoneMoneyLMSTask
         extends BukkitRunnable {
-    protected static Player pLMS = null;
     private static final DecimalFormat df = new DecimalFormat("#,##0");
+    protected static Player pLMS = null;
 
     WarzoneMoneyLMSTask() {
     }

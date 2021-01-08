@@ -58,7 +58,6 @@ import com.google.common.collect.Lists;
 import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKitsAPI;
 import me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits;
 import me.cosmicpvp.CosmicGlobalKits.libs.MasteryKits;
-import net.minecraft.server.v1_8_R3.NBTBase;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
 import org.arkhamnetwork.Arkkit.libs.JSONMessage;
@@ -75,7 +74,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -154,13 +152,13 @@ public class EquipmentLootboxes
 
     class LootboxOpenMenuAnimation
             extends CosmicGUI {
+        private final int MAX_ANIMATION_TICKS;
+        private final boolean heroic;
         BukkitTask animationTask;
         List<ArmorSet> validArmorSets;
         private int animationTick;
-        private final int MAX_ANIMATION_TICKS;
         private boolean finished;
         private boolean readyToGive;
-        private final boolean heroic;
         private ItemStack lastArmorPeice;
 
         public LootboxOpenMenuAnimation(Player player, boolean heroicArmor) {
@@ -250,9 +248,9 @@ public class EquipmentLootboxes
             PlayerUtil.giveOrDropProtectedItem(this.player, this.lastArmorPeice, -1);
             Bukkit.getLogger().info("{EquipmentLootbox] Giving: " + this.lastArmorPeice + " to " + this.player.getName() + "!");
             this.player.updateInventory();
-            Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(this.player, "EQUIP_LOOTBOX_OPEN", new Object[]{this.lastArmorPeice}));
+            Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(this.player, "EQUIP_LOOTBOX_OPEN", this.lastArmorPeice));
             if (this.heroic) {
-                Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(this.player, "EQUIP_HEROIC_LOOTBOX_OPEN", new Object[]{this.lastArmorPeice}));
+                Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(this.player, "EQUIP_HEROIC_LOOTBOX_OPEN", this.lastArmorPeice));
             }
         }
 

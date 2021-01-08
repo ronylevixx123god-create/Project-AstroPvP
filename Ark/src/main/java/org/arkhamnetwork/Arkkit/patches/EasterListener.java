@@ -22,7 +22,6 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
-import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import org.arkhamnetwork.Arkkit.utils.RandomFireworks;
 import org.bukkit.ChatColor;
 import org.bukkit.FireworkEffect;

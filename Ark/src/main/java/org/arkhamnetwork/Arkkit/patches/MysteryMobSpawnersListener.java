@@ -28,7 +28,10 @@ import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.arkhamnetwork.Arkkit.utils.ItemUtils;
 import org.arkhamnetwork.Arkkit.utils.WorldGuardUtils;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -133,7 +136,7 @@ final class MysteryMobSpawnersListener
             } else if (i.getDurability() == 96) {
                 Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&b&l(!) &b&n" + e.getPlayer().getName() + "&b has just recieved a &d&lMooshroom Spawner&b from a Mystery Mob Spawner!"));
             }
-            Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(e.getPlayer(), "MYSTERY_SPAWNER_OPEN", new Object[]{i}));
+            Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(e.getPlayer(), "MYSTERY_SPAWNER_OPEN", i));
         }
     }
 

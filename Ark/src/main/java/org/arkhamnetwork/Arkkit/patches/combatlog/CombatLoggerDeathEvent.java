@@ -26,12 +26,12 @@ public class CombatLoggerDeathEvent
         extends Event
         implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
-    private boolean cancelled;
     private final LivingEntity combatLoggerEntity;
     private final String playerName;
     private final String playerUUIDString;
-    private List<ItemStack> inventoryItems;
     private final EntityDamageEvent rawEvent;
+    private boolean cancelled;
+    private List<ItemStack> inventoryItems;
 
     public CombatLoggerDeathEvent(LivingEntity combatLoggerEntity, String playerUUIDString, String playerName, EntityDamageEvent event, ItemStack[] itemsFromMetadata) {
         this.combatLoggerEntity = combatLoggerEntity;

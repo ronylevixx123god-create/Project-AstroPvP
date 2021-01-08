@@ -68,10 +68,10 @@ import java.util.concurrent.TimeUnit;
 
 public class EndDragon
         extends ArkPlugin {
-    private EndDragonData endDragonData;
-    private File endDragonFile;
     private final Type token = new TypeToken<EndDragonData>() {
     }.getType();
+    private EndDragonData endDragonData;
+    private File endDragonFile;
 
     public EndDragon(Plugin p) {
         super(p);
@@ -198,10 +198,10 @@ public class EndDragon
     }
 
     public class EndDragonData {
+        private final Map<UUID, EndDragonDamager> dragonDamager = new HashMap<UUID, EndDragonDamager>();
         private long lastSpawnTime;
         private long nextSpawnTime;
         private StorableLocation eggLocation;
-        private final Map<UUID, EndDragonDamager> dragonDamager = new HashMap<UUID, EndDragonDamager>();
 
         public long createNextSpawnTime() {
             this.nextSpawnTime = System.currentTimeMillis() + TimeUnit.HOURS.toMillis(7L) + (long) ThreadLocalRandom.current().nextInt((int) TimeUnit.HOURS.toMillis(3L));

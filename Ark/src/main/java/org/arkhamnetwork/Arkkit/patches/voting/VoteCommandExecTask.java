@@ -9,7 +9,6 @@
 package org.arkhamnetwork.Arkkit.patches.voting;
 
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class VoteCommandExecTask

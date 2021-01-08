@@ -21,9 +21,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class RandomFireworks {
+    private static final RandomFireworks fireWorks = new RandomFireworks();
     public static ArrayList<Color> colors = new ArrayList();
     public static ArrayList<FireworkEffect.Type> types = new ArrayList();
-    private static final RandomFireworks fireWorks = new RandomFireworks();
 
     public static RandomFireworks getManager() {
         if (colors == null || colors.size() == 0) {

@@ -13,7 +13,6 @@ package org.arkhamnetwork.Arkkit.patches.combatlog;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import org.bukkit.entity.Entity;
-import org.bukkit.metadata.MetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class DespawnNPCTask

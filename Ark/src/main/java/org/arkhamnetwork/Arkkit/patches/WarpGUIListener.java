@@ -33,7 +33,6 @@ import com.earth2me.essentials.User;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
-import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.struct.Role;
 import markehme.factionsplus.Cmds.CmdWarp;
 import org.apache.commons.lang.StringUtils;
@@ -41,7 +40,6 @@ import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.utils.EssentialsUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -53,8 +51,6 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
 
 import java.util.List;
 

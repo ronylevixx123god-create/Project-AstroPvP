@@ -18,10 +18,10 @@ public class EXPDirectDepositEvent
         extends Event
         implements Cancellable {
     public static final HandlerList list = new HandlerList();
+    private final Player player;
     private boolean cancelled = false;
     private int amountToGive;
     private int previousEXPTotal;
-    private final Player player;
 
     public EXPDirectDepositEvent(Player player, int amount, int previousEXP) {
         this.amountToGive = amount;

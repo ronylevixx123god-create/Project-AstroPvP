@@ -15,7 +15,6 @@ package org.arkhamnetwork.Arkkit.patches.balancetop;
 
 import net.ess3.api.events.UserBalanceUpdateEvent;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;

@@ -19,8 +19,6 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +27,14 @@ import java.util.concurrent.TimeUnit;
 
 final class AsyncMonstersListener
         implements Listener {
+    private final HashMap<Material, Material> condensable = new HashMap<Material, Material>() {
+        {
+            this.put(Material.IRON_INGOT, Material.IRON_BLOCK);
+            this.put(Material.GOLD_INGOT, Material.GOLD_BLOCK);
+            this.put(Material.DIAMOND, Material.DIAMOND_BLOCK);
+            this.put(Material.EMERALD, Material.EMERALD_BLOCK);
+        }
+    };
     public Set<Entity> deadEntitySet = (Set<Entity>) CacheBuilder.newBuilder()
             .expireAfterWrite(25L, TimeUnit.SECONDS)
             .concurrencyLevel(16)
@@ -38,14 +44,6 @@ final class AsyncMonstersListener
     private boolean stackIG = true;
     //public Set<Entity> deadEntitySet = Collections.newSetFromMap(CacheBuilder.newBuilder().expireAfterWrite(25L, TimeUnit.SECONDS).concurrencyLevel(16).weakKeys().build());
     private boolean nerfMobSpawners = Arkkit.get().getConfig().getBoolean("settings.async_monsters.nerfWildSpawners");
-    private final HashMap<Material, Material> condensable = new HashMap<Material, Material>() {
-        {
-            this.put(Material.IRON_INGOT, Material.IRON_BLOCK);
-            this.put(Material.GOLD_INGOT, Material.GOLD_BLOCK);
-            this.put(Material.DIAMOND, Material.DIAMOND_BLOCK);
-            this.put(Material.EMERALD, Material.EMERALD_BLOCK);
-        }
-    };
 
     AsyncMonstersListener(AsyncMonsters monsters) {
         this.instance = monsters;

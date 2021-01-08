@@ -12,16 +12,14 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.enchantments.util.ParticleEffect;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 final class HalloweenRainbowTask
         extends BukkitRunnable {
+    private final Player player;
     public int sugarLevel = 0;
     public long endTime;
-    private final Player player;
 
     public HalloweenRainbowTask(Player p, int sugarLevel) {
         this.sugarLevel = sugarLevel;

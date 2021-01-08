@@ -17,7 +17,6 @@ import org.arkhamnetwork.Arkkit.events.EXPDirectDepositEvent;
 import org.arkhamnetwork.Arkkit.libs.ExpUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;

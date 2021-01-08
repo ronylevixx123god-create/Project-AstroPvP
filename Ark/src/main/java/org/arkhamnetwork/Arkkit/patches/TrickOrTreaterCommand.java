@@ -17,12 +17,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.Collections;
-import java.util.List;
 
 final class TrickOrTreaterCommand
         extends ArkPluginCommand<TrickOrTreaters> {
     public TrickOrTreaterCommand(TrickOrTreaters patch, String command, String usage, String description) {
-        super(patch, command, usage, description, Lists.newArrayList(new String[]{"trickortreat"}));
+        super(patch, command, usage, description, Lists.newArrayList("trickortreat"));
     }
 
     @Override

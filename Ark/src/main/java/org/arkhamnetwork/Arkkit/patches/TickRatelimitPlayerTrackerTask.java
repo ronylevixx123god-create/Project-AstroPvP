@@ -12,7 +12,6 @@ package org.arkhamnetwork.Arkkit.patches;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 final class TickRatelimitPlayerTrackerTask

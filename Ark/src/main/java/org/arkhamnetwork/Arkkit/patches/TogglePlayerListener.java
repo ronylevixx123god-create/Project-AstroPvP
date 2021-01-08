@@ -35,7 +35,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.plugin.Plugin;
 import org.kitteh.vanish.VanishPlugin;
 
 import java.io.File;
@@ -44,8 +43,8 @@ import java.util.List;
 
 final class TogglePlayerListener
         implements Listener {
-    private Essentials ess3;
     private final boolean vanishNoPacket = new File("plugins/VanishNoPacket.jar").exists();
+    private Essentials ess3;
 
     TogglePlayerListener() {
         if (Bukkit.getPluginManager().isPluginEnabled("Essentials")) {

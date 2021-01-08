@@ -48,7 +48,6 @@ import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.utils.WorldGuardUtils;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.*;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -58,10 +57,6 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
-
-import java.util.UUID;
 
 final class EndTeleportListener
         implements Listener {

@@ -25,9 +25,9 @@ public class SpawnerLocation {
     private final int chunkZ;
     private final String worldName;
     private final EntityType spawnerType;
+    private final int spawnerCount;
     private Location bukkitLocation;
     private long placeTime;
-    private final int spawnerCount;
 
     @Deprecated
     public SpawnerLocation(int x, int y, int z, String worldName) {

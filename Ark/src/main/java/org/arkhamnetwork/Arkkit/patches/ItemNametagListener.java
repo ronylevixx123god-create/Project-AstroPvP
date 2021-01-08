@@ -46,8 +46,6 @@ import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -155,7 +153,7 @@ final class ItemNametagListener
                 pl.removeMetadata(ItemNametag.itemtag_confirm_metadata, Arkkit.get());
                 pl.playSound(pl.getLocation(), Sound.LEVEL_UP, 1.0f, 0.5f);
                 e.setMessage("");
-                Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(pl, "ITEM_USE", new Object[]{"NAMETAG"}));
+                Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(pl, "ITEM_USE", "NAMETAG"));
                 return;
             }
             if (e.getMessage().equalsIgnoreCase("cancel") || e.getPlayer().hasMetadata(ItemNametag.itemtag_confirm_metadata) && !e.getMessage().equalsIgnoreCase("confirm")) {

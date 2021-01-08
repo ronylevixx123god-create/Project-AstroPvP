@@ -24,7 +24,6 @@
 package org.arkhamnetwork.Arkkit.libs;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
@@ -45,8 +44,8 @@ import java.util.List;
 import java.util.Map;
 
 public class JSONMessage {
-    private JsonObject json;
     private final JsonParser parser = new JsonParser();
+    private JsonObject json;
 
     public JSONMessage() {
         this.initiateData();

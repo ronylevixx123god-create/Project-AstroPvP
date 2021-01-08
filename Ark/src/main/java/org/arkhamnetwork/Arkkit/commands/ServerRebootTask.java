@@ -16,13 +16,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 final class ServerRebootTask
         extends BukkitRunnable {
-    volatile int iteration = 60;
     private final String restartWarnMessage = ChatColor.translateAlternateColorCodes('&', "&e&l *** LOCAL SERVER REBOOTING IN [time] SECONDS ***");
+    volatile int iteration = 60;
 
     public ServerRebootTask(boolean force) {
         Bukkit.broadcastMessage("");

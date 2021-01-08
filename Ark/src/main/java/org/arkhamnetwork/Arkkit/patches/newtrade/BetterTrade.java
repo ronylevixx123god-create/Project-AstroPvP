@@ -31,7 +31,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -55,7 +54,7 @@ public class BetterTrade
             Bukkit.getLogger().info("Killing old trade system for new one..");
         }
         this.registerListener(new BetterTradeListener(this));
-        this.registerCommand(new BetterTradeCommand(this, "trade", "/<command>", "Trade items with other players!", Lists.newArrayList(new String[]{"trade", "trades", "exchange"})));
+        this.registerCommand(new BetterTradeCommand(this, "trade", "/<command>", "Trade items with other players!", Lists.newArrayList("trade", "trades", "exchange")));
         this.tradeTask = new BukkitRunnable() {
 
             public void run() {

@@ -8,8 +8,8 @@ enum CandyGramSender {
     ANONYMOUS("Anonymous", 10000),
     SECRET_ADMIRERER("Secret Admirer", 100000);
 
-    String name;
     private final int cost;
+    String name;
 
     CandyGramSender(String name, int cost) {
         this.name = name;

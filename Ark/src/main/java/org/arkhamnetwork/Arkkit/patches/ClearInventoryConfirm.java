@@ -31,10 +31,10 @@ public class ClearInventoryConfirm
         extends ArkPlugin {
     public static final String clearInventoryPending = "compilex_clearinventory_pending";
     public static final String clearInventoryConfirmed = "compilex_clearinventory_confirmed";
+    private final Set<UUID> clearInventoryToggled = new HashSet<UUID>();
     Essentials ess;
     private File clearInventoryToggles;
     private FileConfiguration config;
-    private final Set<UUID> clearInventoryToggled = new HashSet<UUID>();
 
     public ClearInventoryConfirm(Plugin p) {
         super(p);

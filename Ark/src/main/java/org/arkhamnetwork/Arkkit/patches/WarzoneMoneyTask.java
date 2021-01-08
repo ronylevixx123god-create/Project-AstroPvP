@@ -34,12 +34,8 @@ import org.arkhamnetwork.Arkkit.libs.ExpUtils;
 import org.arkhamnetwork.Arkkit.utils.EssentialsUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
@@ -189,7 +185,7 @@ final class WarzoneMoneyTask
                             }
                             pl.sendMessage(WarzoneMoney.LMS_PREFIX + ChatColor.YELLOW + p2.getName() + "'s location: " + ChatColor.GOLD + lastLocation.getBlockX() + "x, " + lastLocation.getBlockY() + "y, " + lastLocation.getBlockZ() + "z");
                         }
-                        Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(p2, "LMS_HOLD", new Object[]{minutesInWarzone}));
+                        Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(p2, "LMS_HOLD", minutesInWarzone));
                     }
                     if (!contestsEnabled) continue;
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "contests add " + p2.getName() + " warzoneTime 1");

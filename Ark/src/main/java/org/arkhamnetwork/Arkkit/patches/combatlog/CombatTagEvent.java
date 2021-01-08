@@ -18,9 +18,9 @@ public class CombatTagEvent
         extends Event
         implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
-    private boolean cancelled;
     private final Player combatPlayer;
     private final boolean alreadyInCombat;
+    private boolean cancelled;
 
     public CombatTagEvent(Player p, boolean alreadyInCombat) {
         this.combatPlayer = p;

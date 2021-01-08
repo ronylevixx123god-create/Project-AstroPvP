@@ -13,9 +13,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 final class ChristmasRainbowTask
         extends BukkitRunnable {
+    private final Player player;
     public int christmasSugarLevel = 0;
     public long endTime;
-    private final Player player;
 
     public ChristmasRainbowTask(Player p, int christmasSugarLevel) {
         this.christmasSugarLevel = christmasSugarLevel;

@@ -40,7 +40,6 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerAnimationEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
-import org.bukkit.metadata.MetadataValue;
 
 import java.util.Collections;
 

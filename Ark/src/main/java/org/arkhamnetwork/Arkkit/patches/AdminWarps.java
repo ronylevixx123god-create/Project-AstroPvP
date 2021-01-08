@@ -40,10 +40,10 @@ import java.util.Map;
 
 public class AdminWarps
         extends ArkPlugin {
-    private Map warps = new HashMap<String, WarpLocation>();
-    private File warpFile;
     private final Type warpMapToken = new TypeToken<HashMap<String, WarpLocation>>() {
     }.getType();
+    private Map warps = new HashMap<String, WarpLocation>();
+    private File warpFile;
 
     public AdminWarps(Plugin p) {
         super(p);
