@@ -48,10 +48,14 @@ package com.compilex.CosmicKOTH.utils;
 import com.compilex.CosmicCustomCreepers.enums.CreeperTypes;
 import com.compilex.CosmicDungeons.DungeonsAPI;
 import com.compilex.CosmicKOTH.struct.KothWorldType;
+import com.compilex.CosmicKOTH.utils.KothItemUtils;
+import com.compilex.CosmicKOTH.utils.KothItemUtilsVanilla;
 import com.cosmicpvp.CosmicRankQuests.CosmicRankQuestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.cosmicpvp.cosmicutils.itembuilder.BoosterBuilder;
+import com.cosmicpvp.cosmicutils.itembuilder.CustomCrateType;
+import com.cosmicpvp.cosmicutils.itembuilder.CustomItemBuilder;
 import com.cosmicpvp.cosmicutils.itembuilder.CustomTitleBuilder;
 import com.cosmicpvp.cosmicutils.itembuilder.EssentialsItemBuilder;
 import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
@@ -88,23 +92,20 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.cosmicpvp.cosmicutils.itembuilder.CustomItemBuilder;
-import com.cosmicpvp.cosmicutils.itembuilder.CustomCrateType;
-
 public class RewardUtils {
     private static Integer cachedMapIndex;
     private static long mapIndexUpdate;
-    private static final List<ItemBuilder> vanillaKothRewardsTier1;
-    private static final List<ItemBuilder> vanillaKothRewardsTier2;
-    private static final List<ItemBuilder> vanillaKothRewardsTier3;
+    private static List<ItemBuilder> vanillaKothRewardsTier1;
+    private static List<ItemBuilder> vanillaKothRewardsTier2;
+    private static List<ItemBuilder> vanillaKothRewardsTier3;
 
     public static ItemStack getKOTHLootbag(Player winner) {
-        return ItemUtils.buildItem(Material.ENDER_CHEST, (short)0, ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "CosmicPvP KOTH Lootbag", new String[]{ChatColor.GRAY + "A legendary loot filled satchel,", ChatColor.GRAY + "only obtainable by completing an", ChatColor.GRAY + "official CosmicPvP KOTH event.", "", ChatColor.GRAY + "Right-Click to open.", "", ChatColor.GOLD + "Captured by: " + ChatColor.UNDERLINE + (winner != null ? winner.getName() : "???")});
+        return ItemUtils.buildItem((Material)Material.ENDER_CHEST, (short)0, (String)(ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "CosmicPvP KOTH Lootbag"), (String[])new String[]{(Object)ChatColor.GRAY + "A legendary loot filled satchel,", (Object)ChatColor.GRAY + "only obtainable by completing an", (Object)ChatColor.GRAY + "official CosmicPvP KOTH event.", "", (Object)ChatColor.GRAY + "Right-Click to open.", "", (Object)ChatColor.GOLD + "Captured by: " + (Object)ChatColor.UNDERLINE + (winner != null ? winner.getName() : "???")});
     }
 
     public static boolean isKOTHLootbag(ItemStack i) {
         ItemStack lootbag = RewardUtils.getKOTHLootbag(null);
-        return i.getType() == lootbag.getType() && i.hasItemMeta() && i.getItemMeta().hasDisplayName() && i.getItemMeta().getDisplayName().equals(lootbag.getItemMeta().getDisplayName()) && i.getItemMeta().hasLore() && i.getItemMeta().getLore().get(0).equals(lootbag.getItemMeta().getLore().get(0));
+        return i.getType() == lootbag.getType() && i.hasItemMeta() && i.getItemMeta().hasDisplayName() && i.getItemMeta().getDisplayName().equals(lootbag.getItemMeta().getDisplayName()) && i.getItemMeta().hasLore() && ((String)i.getItemMeta().getLore().get(0)).equals(lootbag.getItemMeta().getLore().get(0));
     }
 
     public static List<ItemStack> getKOTHLoot(Player winner) {
@@ -163,39 +164,39 @@ public class RewardUtils {
         int i;
         ArrayList<ItemStack> rewards = new ArrayList<ItemStack>();
         ThreadLocalRandom random = ThreadLocalRandom.current();
-        rewards.add(CosmicSpaceChestsAPI.getSpaceFlare(ItemRarity.GOD));
+        rewards.add(CosmicSpaceChestsAPI.getSpaceFlare((ItemRarity)ItemRarity.GOD));
         for (i = 7; i > 0; --i) {
-            rewards.add(CosmicSpaceChestsAPI.getItems(ItemRarity.GOD, 1)[0]);
+            rewards.add(CosmicSpaceChestsAPI.getItems((ItemRarity)ItemRarity.GOD, (int)1)[0]);
         }
         if (Math.random() < 0.3) {
-            rewards.add(com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils.setAmount(ShowcaseExpander.getShowcaseExpanderItem(), 1 + new Random().nextInt(3)));
+            rewards.add(com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils.setAmount((ItemStack)ShowcaseExpander.getShowcaseExpanderItem(), (int)(1 + new Random().nextInt(3))));
         } else {
-            rewards.add(com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils.setAmount(EssentialsAddHomes.getAddHomeItem(), 1 + new Random().nextInt(2)));
+            rewards.add(com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils.setAmount((ItemStack)EssentialsAddHomes.getAddHomeItem(), (int)(1 + new Random().nextInt(2))));
         }
-        rewards.add(EnchantmentOrb.getEnchantmentOrb(90, 11 + ((Random)random).nextInt(2) + (Math.random() <= 0.2 ? 1 : 0), Math.random() < 0.35 ? OrbType.WEAPON : OrbType.ARMOR));
+        rewards.add(EnchantmentOrb.getEnchantmentOrb((int)90, (int)(11 + ((Random)random).nextInt(2) + (Math.random() <= 0.2 ? 1 : 0)), (OrbType)(Math.random() < 0.35 ? OrbType.WEAPON : OrbType.ARMOR)));
         i = new Random().nextInt(7);
         if (i == 0) {
-            rewards.add(com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils.getTitleVoucher("#KOTH"));
+            rewards.add(com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils.getTitleVoucher((String)"#KOTH"));
         } else if (i == 1) {
-            rewards.add(com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils.getTitleVoucher("69cps"));
+            rewards.add(com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils.getTitleVoucher((String)"69cps"));
         } else if (i == 2) {
-            rewards.add(com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils.getTitleVoucher("ssMeBro"));
+            rewards.add(com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils.getTitleVoucher((String)"ssMeBro"));
         } else if (i == 3) {
-            rewards.add(com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils.getTitleVoucher("VapeOP"));
+            rewards.add(com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils.getTitleVoucher((String)"VapeOP"));
         } else if (i == 4) {
-            rewards.add(com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils.getTitleVoucher("#Cleared"));
+            rewards.add(com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils.getTitleVoucher((String)"#Cleared"));
         } else if (i == 5) {
-            rewards.add(com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils.getTitleVoucher("#StackinForSanta"));
+            rewards.add(com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils.getTitleVoucher((String)"#StackinForSanta"));
         } else if (Math.random() < 0.04) {
-            rewards.add(com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils.getTitleVoucher("(\u3064\u2580\u00af\u2580)\u3064"));
+            rewards.add(com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils.getTitleVoucher((String)"(\u3064\u2580\u00af\u2580)\u3064"));
         }
         ItemStack book = new ItemStack(Material.ENCHANTED_BOOK, 1);
         EnchantmentStorageMeta ebm = (EnchantmentStorageMeta)book.getItemMeta();
         ebm.addStoredEnchant(Enchantment.DEPTH_STRIDER, 3, true);
-        book.setItemMeta(ebm);
+        book.setItemMeta((ItemMeta)ebm);
         rewards.add(book);
         if (Math.random() < 0.33) {
-            rewards.add(com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils.setAmount(DungeonsAPI.get().getEnchantedObsidian(), 1 + new Random().nextInt(3)));
+            rewards.add(com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils.setAmount((ItemStack)DungeonsAPI.get().getEnchantedObsidian(), (int)(1 + new Random().nextInt(3))));
         }
         if (Math.random() < 0.2) {
             rewards.add(DungeonsAPI.get().getCosmonautFuel());
@@ -207,7 +208,7 @@ public class RewardUtils {
             rewards.add(DungeonsAPI.get().getDungeon(0).getDungeonPortal().clone());
         }
         if (Math.random() < 0.25) {
-            rewards.add(CosmicConquestAPI.createHeroicToken(2 + ThreadLocalRandom.current().nextInt(9)));
+            rewards.add(CosmicConquestAPI.createHeroicToken((int)(2 + ThreadLocalRandom.current().nextInt(9))));
         }
         if (Math.random() <= 0.05) {
             rewards.add(DungeonsAPI.get().getTeleportationCrystal().clone());
@@ -219,22 +220,22 @@ public class RewardUtils {
             rewards.add(((EquipmentLootboxes)ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin()).createLootboxItem(true));
         }
         if (Math.random() <= 0.03) {
-            rewards.add(ItemID.removeItemID(com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils.setAmount(TieredEnchantments.getMysteryEnchantmentBook(7), 1)));
+            rewards.add(ItemID.removeItemID((ItemStack)com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils.setAmount((ItemStack)TieredEnchantments.getMysteryEnchantmentBook((int)7), (int)1)));
         }
         if (Math.random() <= 0.02) {
-            rewards.add(KillTrackerAPI.buildTracker(Tracker.Godly));
+            rewards.add(KillTrackerAPI.buildTracker((Tracker)Tracker.Godly));
         }
         if (Math.random() <= 0.04) {
-            rewards.add(new CustomItemBuilder(Math.random() < 0.7 ? "wildcard_gkit" : "wildcard_vkit", 0).build());
+            rewards.add(new me.ifamasssxd.cosmicskycustoms.struct.CustomItemBuilder(Math.random() < 0.7 ? "wildcard_gkit" : "wildcard_vkit", new Object[0]).build());
         }
         if (Math.random() <= 0.15) {
-            rewards.add(new CustomItemBuilder("mystery_fallen_hero", new Object[0]).amount(1, 2).build());
+            rewards.add(new me.ifamasssxd.cosmicskycustoms.struct.CustomItemBuilder("mystery_fallen_hero", new Object[0]).amount(1, 2).build());
         }
         if (Math.random() <= 0.01) {
-            rewards.add(new CustomItemBuilder("mystery_lootbox", new Object[0]).build());
+            rewards.add(new me.ifamasssxd.cosmicskycustoms.struct.CustomItemBuilder("mystery_lootbox", new Object[0]).build());
         }
         if (Math.random() <= 0.025) {
-            rewards.add(CustomItemUtils.createCosmicCrate("superior", "KOTH"));
+            rewards.add(CustomItemUtils.createCosmicCrate((String)"superior", (String)"KOTH"));
         }
         if (Math.random() <= 0.25 && (gem = new KitGemBuilder(false, true, true).build()) != null) {
             rewards.add(gem);
@@ -298,56 +299,51 @@ public class RewardUtils {
 
     public static ItemStack getRandomVanillaKOTHItem(int tier) {
         if (vanillaKothRewardsTier1.isEmpty()) {
-            vanillaKothRewardsTier1.add(RewardUtils.build(McmmoCredits.buildSkillCreditItem(SkillType.UNARMED, 75)));
-            vanillaKothRewardsTier1.add(RewardUtils.build(McmmoCredits.buildSkillCreditItem(SkillType.ARCHERY, 75)));
-            vanillaKothRewardsTier1.add(RewardUtils.build(McmmoCredits.buildSkillCreditItem(SkillType.SWORDS, 75)));
-            vanillaKothRewardsTier1.add(RewardUtils.build(McmmoCredits.buildSkillCreditItem(SkillType.MINING, 150)));
-            vanillaKothRewardsTier1.add(RewardUtils.build(McmmoCredits.buildSkillCreditItem(SkillType.WOODCUTTING, 150)));
-            vanillaKothRewardsTier1.add(RewardUtils.build(McmmoCredits.buildSkillCreditItem(SkillType.ACROBATICS, 125)));
+            vanillaKothRewardsTier1.add(RewardUtils.build(McmmoCredits.buildSkillCreditItem((SkillType)SkillType.UNARMED, (int)75)));
+            vanillaKothRewardsTier1.add(RewardUtils.build(McmmoCredits.buildSkillCreditItem((SkillType)SkillType.ARCHERY, (int)75)));
+            vanillaKothRewardsTier1.add(RewardUtils.build(McmmoCredits.buildSkillCreditItem((SkillType)SkillType.SWORDS, (int)75)));
+            vanillaKothRewardsTier1.add(RewardUtils.build(McmmoCredits.buildSkillCreditItem((SkillType)SkillType.MINING, (int)150)));
+            vanillaKothRewardsTier1.add(RewardUtils.build(McmmoCredits.buildSkillCreditItem((SkillType)SkillType.WOODCUTTING, (int)150)));
+            vanillaKothRewardsTier1.add(RewardUtils.build(McmmoCredits.buildSkillCreditItem((SkillType)SkillType.ACROBATICS, (int)125)));
             vanillaKothRewardsTier1.add(RewardUtils.build(RewardUtils.getVanillaEnchantmentBook(Enchantment.LOOT_BONUS_MOBS, 3)));
-            vanillaKothRewardsTier1.add(RewardUtils.build(RewardUtils.setAmount(CreeperTypes.getCCItem(CreeperTypes.Lucky), 3)));
+            vanillaKothRewardsTier1.add(RewardUtils.build(RewardUtils.setAmount(CreeperTypes.getCCItem((CreeperTypes)CreeperTypes.Lucky), 3)));
             vanillaKothRewardsTier1.add(new SpawnerItemBuilder(EntityType.BLAZE).setAmount(4));
-            vanillaKothRewardsTier1.add(new ItemBuilder(CreeperTypes.getCCItem(CreeperTypes.Lucky)));
-            vanillaKothRewardsTier1.add(RewardUtils.build(McmmoCredits.buildSkillCreditItem(SkillType.AXES, 75)));
-            vanillaKothRewardsTier1.add(RewardUtils.build(McmmoCredits.buildSkillCreditItem(SkillType.REPAIR, 75)));
-            vanillaKothRewardsTier1.add(RewardUtils.build(McmmoCredits.buildSkillCreditItem(SkillType.SALVAGE, 75)));
-            vanillaKothRewardsTier1.add(RewardUtils.build(McmmoCredits.buildSkillCreditItem(SkillType.ALCHEMY, 75)));
+            vanillaKothRewardsTier1.add(new ItemBuilder(CreeperTypes.getCCItem((CreeperTypes)CreeperTypes.Lucky)));
+            vanillaKothRewardsTier1.add(RewardUtils.build(McmmoCredits.buildSkillCreditItem((SkillType)SkillType.AXES, (int)75)));
+            vanillaKothRewardsTier1.add(RewardUtils.build(McmmoCredits.buildSkillCreditItem((SkillType)SkillType.REPAIR, (int)75)));
+            vanillaKothRewardsTier1.add(RewardUtils.build(McmmoCredits.buildSkillCreditItem((SkillType)SkillType.SALVAGE, (int)75)));
+            vanillaKothRewardsTier1.add(RewardUtils.build(McmmoCredits.buildSkillCreditItem((SkillType)SkillType.ALCHEMY, (int)75)));
             vanillaKothRewardsTier1.add(RewardUtils.build(new ItemStack(Material.MONSTER_EGG, 32, EntityType.CREEPER.getTypeId())));
-            vanillaKothRewardsTier1.add(new EssentialsItemBuilder("373:16425 16 effect:strength power:2 duration:134 name:&f&k;_&c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH_&f&k;_&4&lStrength_II_Ext. lore:&7Please_mom,_just_a_little_bit_longer!"));
-            vanillaKothRewardsTier1.add(new CustomTitleBuilder("#Cleared"));
+            vanillaKothRewardsTier1.add((ItemBuilder)new EssentialsItemBuilder("373:16425 16 effect:strength power:2 duration:134 name:&f&k;_&c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH_&f&k;_&4&lStrength_II_Ext. lore:&7Please_mom,_just_a_little_bit_longer!"));
+            vanillaKothRewardsTier1.add((ItemBuilder)new CustomTitleBuilder("#Cleared"));
         }
         if (vanillaKothRewardsTier2.isEmpty()) {
-            vanillaKothRewardsTier2.add(new BoosterBuilder("EXP", 1800, 2.0));
-            vanillaKothRewardsTier2.add(new BoosterBuilder("MCMMO", 1800, 2.0));
-            vanillaKothRewardsTier2.add(new BoosterBuilder("EXP", 900, 5.0));
-            vanillaKothRewardsTier2.add(new ItemBuilder(McmmoCredits.buildMcmmoCreditItem(50)));
+            vanillaKothRewardsTier2.add((ItemBuilder)new BoosterBuilder("EXP", 1800, 2.0));
+            vanillaKothRewardsTier2.add((ItemBuilder)new BoosterBuilder("MCMMO", 1800, 2.0));
+            vanillaKothRewardsTier2.add((ItemBuilder)new BoosterBuilder("EXP", 900, 5.0));
+            vanillaKothRewardsTier2.add(new ItemBuilder(McmmoCredits.buildMcmmoCreditItem((int)50)));
             vanillaKothRewardsTier2.add(new ItemBuilder(RewardUtils.getVanillaEnchantmentBook(Enchantment.DURABILITY, 4)));
             vanillaKothRewardsTier2.add(new ItemBuilder(RewardUtils.getVanillaEnchantmentBook(Enchantment.DURABILITY, 3)).setAmount(2));
             vanillaKothRewardsTier2.add(new ItemBuilder(RewardUtils.getVanillaEnchantmentBook(Enchantment.LOOT_BONUS_MOBS, 4)));
             vanillaKothRewardsTier2.add(new ItemBuilder(RewardUtils.getVanillaEnchantmentBook(Enchantment.LOOT_BONUS_MOBS, 5)));
-            vanillaKothRewardsTier2.add(new SpawnerItemBuilder(EntityType.MUSHROOM_COW));
-            vanillaKothRewardsTier2.add(new ItemBuilder(CustomCrateType.ELITE));
-            vanillaKothRewardsTier2.add(new ItemBuilder(CustomCrateType.ELITE).setAmount(2));
-            vanillaKothRewardsTier2.add(new ItemBuilder(CustomCrateType.ULTIMATE));
-            vanillaKothRewardsTier2.add(new CustomItemBuilder(CustomItemBuilder.CustomItemType.MYSTERY_MOBSPAWNER, 2));
-            vanillaKothRewardsTier2.add(new ItemBuilder(CustomCrateType.KILL_MESSAGES));
-            vanillaKothRewardsTier2.add(new ItemBuilder(CustomCrateType.KILL_MESSAGES).setAmount(2));
+            vanillaKothRewardsTier2.add((ItemBuilder)new SpawnerItemBuilder(EntityType.MUSHROOM_COW));
+            vanillaKothRewardsTier2.add((ItemBuilder)new CustomItemBuilder(CustomItemBuilder.CustomItemType.MYSTERY_MOBSPAWNER, 2));
             vanillaKothRewardsTier2.add(new ItemBuilder(RewardUtils.getVanillaEnchantmentBook(Enchantment.DEPTH_STRIDER, 3)).setAmount(2));
-            vanillaKothRewardsTier2.add(new EssentialsItemBuilder("373:16448 16 effect:speed power:2 duration:134 name:&f&k;_&c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH_&f&k;_&b&l Speed_Ext. lore:&7What_a_&5&lmagical_&7splash!"));
-            vanillaKothRewardsTier2.add(new EssentialsItemBuilder("373:8233 16 effect:strength power:2 duration:180 name:&f&k;_&c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH_&f&k;_&4&l Strength_II_Ext. lore:&7Please_mom,_just_a_little_bit_longer!"));
-            vanillaKothRewardsTier2.add(new EssentialsItemBuilder("373:8259 16 effect:fireresist power:1 duration:720 name:&f&k;_&c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH_&f&k;_&c&l Fire_Resistance_Ext."));
-            vanillaKothRewardsTier2.add(new EssentialsItemBuilder("373:5408 9 effect:healthboost power:1 duration:180 name:&f&k;_&c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH_&f&k;_&e&l Health_Boost_Ext."));
-            vanillaKothRewardsTier2.add(new EssentialsItemBuilder("373:5408 9 effect:absorption power:1 duration:180 name:&f&k;_&c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH_&f&k;_&6&l Absorption_Ext."));
-            vanillaKothRewardsTier2.add(new EssentialsItemBuilder("373:5408 9 effect:resistance power:1 duration:44 name:&f&k;_&c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH_&f&k;_&8&l Resistance_Ext."));
-            vanillaKothRewardsTier2.add(new CustomTitleBuilder("Unlucky"));
-            vanillaKothRewardsTier2.add(new CustomTitleBuilder("Oof"));
+            vanillaKothRewardsTier2.add((ItemBuilder)new EssentialsItemBuilder("373:16448 16 effect:speed power:2 duration:134 name:&f&k;_&c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH_&f&k;_&b&l Speed_Ext. lore:&7What_a_&5&lmagical_&7splash!"));
+            vanillaKothRewardsTier2.add((ItemBuilder)new EssentialsItemBuilder("373:8233 16 effect:strength power:2 duration:180 name:&f&k;_&c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH_&f&k;_&4&l Strength_II_Ext. lore:&7Please_mom,_just_a_little_bit_longer!"));
+            vanillaKothRewardsTier2.add((ItemBuilder)new EssentialsItemBuilder("373:8259 16 effect:fireresist power:1 duration:720 name:&f&k;_&c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH_&f&k;_&c&l Fire_Resistance_Ext."));
+            vanillaKothRewardsTier2.add((ItemBuilder)new EssentialsItemBuilder("373:5408 9 effect:healthboost power:1 duration:180 name:&f&k;_&c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH_&f&k;_&e&l Health_Boost_Ext."));
+            vanillaKothRewardsTier2.add((ItemBuilder)new EssentialsItemBuilder("373:5408 9 effect:absorption power:1 duration:180 name:&f&k;_&c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH_&f&k;_&6&l Absorption_Ext."));
+            vanillaKothRewardsTier2.add((ItemBuilder)new EssentialsItemBuilder("373:5408 9 effect:resistance power:1 duration:44 name:&f&k;_&c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH_&f&k;_&8&l Resistance_Ext."));
+            vanillaKothRewardsTier2.add((ItemBuilder)new CustomTitleBuilder("Unlucky"));
+            vanillaKothRewardsTier2.add((ItemBuilder)new CustomTitleBuilder("Oof"));
         }
         if (vanillaKothRewardsTier3.isEmpty()) {
             vanillaKothRewardsTier3.add(new SpawnerItemBuilder(EntityType.CREEPER).setAmount(3));
             vanillaKothRewardsTier3.add(new SpawnerItemBuilder(EntityType.ENDERMAN).setAmount(3));
-            ItemStack rankQuest1 = CosmicRankQuestsAPI.getRankQuestItem(1);
-            ItemStack rankQuest2 = CosmicRankQuestsAPI.getRankQuestItem(2);
-            ItemStack rankQuest3 = CosmicRankQuestsAPI.getRankQuestItem(3);
+            ItemStack rankQuest1 = CosmicRankQuestsAPI.getRankQuestItem((int)1);
+            ItemStack rankQuest2 = CosmicRankQuestsAPI.getRankQuestItem((int)2);
+            ItemStack rankQuest3 = CosmicRankQuestsAPI.getRankQuestItem((int)3);
             if (rankQuest1 != null) {
                 vanillaKothRewardsTier3.add(new ItemBuilder(rankQuest1));
             }
@@ -357,23 +353,20 @@ public class RewardUtils {
             if (rankQuest3 != null) {
                 vanillaKothRewardsTier3.add(new ItemBuilder(rankQuest3));
             }
-            vanillaKothRewardsTier3.add(new SpawnerItemBuilder(EntityType.IRON_GOLEM));
-            vanillaKothRewardsTier3.add(new SpawnerItemBuilder(EntityType.GHAST));
-            vanillaKothRewardsTier3.add(new ItemBuilder(CustomCrateType.LEGENDARY));
-            vanillaKothRewardsTier3.add(new ItemBuilder(CustomCrateType.ULTIMATE).setAmount(2));
-            vanillaKothRewardsTier3.add(new ItemBuilder(CustomCrateType.LEGENDARY).setAmount(2));
+            vanillaKothRewardsTier3.add((ItemBuilder)new SpawnerItemBuilder(EntityType.IRON_GOLEM));
+            vanillaKothRewardsTier3.add((ItemBuilder)new SpawnerItemBuilder(EntityType.GHAST));
             vanillaKothRewardsTier3.add(new SpawnerItemBuilder(EntityType.IRON_GOLEM).setAmount(2));
-            vanillaKothRewardsTier3.add(new EssentialsItemBuilder("373:5408 9 effect:healthboost power:2 duration:90 name:&f&k;_&c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH_&f&k;_&e&lHealth_Boost_II_Ext."));
-            vanillaKothRewardsTier3.add(new EssentialsItemBuilder("373:5408 9 effect:healthboost power:2 duration:90 name:&f&k;_&c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH_&f&k;_&6&lAbsorption_II_Ext."));
-            vanillaKothRewardsTier3.add(new EssentialsItemBuilder("373:5408 9 effect:healthboost power:2 duration:90 name:&f&k;_&c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH_&f&k;_&6&lAbsorption_II_Ext."));
-            vanillaKothRewardsTier3.add(new EssentialsItemBuilder("373:5408 9 effect:resistance power:2 duration:22 name:&f&k;_&c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH_&f&k;_&8&lResistance_II_Ext."));
+            vanillaKothRewardsTier3.add((ItemBuilder)new EssentialsItemBuilder("373:5408 9 effect:healthboost power:2 duration:90 name:&f&k;_&c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH_&f&k;_&e&lHealth_Boost_II_Ext."));
+            vanillaKothRewardsTier3.add((ItemBuilder)new EssentialsItemBuilder("373:5408 9 effect:healthboost power:2 duration:90 name:&f&k;_&c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH_&f&k;_&6&lAbsorption_II_Ext."));
+            vanillaKothRewardsTier3.add((ItemBuilder)new EssentialsItemBuilder("373:5408 9 effect:healthboost power:2 duration:90 name:&f&k;_&c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH_&f&k;_&6&lAbsorption_II_Ext."));
+            vanillaKothRewardsTier3.add((ItemBuilder)new EssentialsItemBuilder("373:5408 9 effect:resistance power:2 duration:22 name:&f&k;_&c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH_&f&k;_&8&lResistance_II_Ext."));
         }
         List<ItemBuilder> toCheck = tier <= 1 ? vanillaKothRewardsTier1 : (tier == 2 ? vanillaKothRewardsTier2 : (tier == 3 ? vanillaKothRewardsTier3 : vanillaKothRewardsTier1));
         return toCheck.get(ThreadLocalRandom.current().nextInt(toCheck.size())).build().clone();
     }
 
     private static ItemStack getMobSpawner(EntityType entityType) {
-        return ItemUtils.buildItem(Material.MOB_SPAWNER, entityType.getTypeId(), ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + RewardUtils.getEntityName(entityType) + ChatColor.GOLD.toString() + " Spawner", new String[]{ChatColor.GRAY + "Be careful where you place this!"});
+        return ItemUtils.buildItem((Material)Material.MOB_SPAWNER, (short)entityType.getTypeId(), (String)(ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + RewardUtils.getEntityName(entityType) + ChatColor.GOLD.toString() + " Spawner"), (String[])new String[]{(Object)ChatColor.GRAY + "Be careful where you place this!"});
     }
 
     private static String getEntityName(EntityType et) {
@@ -395,7 +388,7 @@ public class RewardUtils {
         ItemStack i = new ItemStack(Material.ENCHANTED_BOOK, 1);
         EnchantmentStorageMeta esm = (EnchantmentStorageMeta)i.getItemMeta();
         esm.addStoredEnchant(ench, level, true);
-        i.setItemMeta(esm);
+        i.setItemMeta((ItemMeta)esm);
         return i;
     }
 
