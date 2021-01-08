@@ -115,7 +115,8 @@ public enum AbilityArmorSet {
 			wrapper.setNBTBase("cosmicData", data.get());
 		}
 		if ((lore = (im = (item = wrapper.build()).getItemMeta()).getLore()) != null) {
-			lore.removeIf(s -> s.startsWith(CC.GoldB + "Anti M-Kit Crystal ("));
+			// TODO: .startsWith again ?!?!? 
+			lore.removeIf(s -> s.equals(CC.GoldB + "Anti M-Kit Crystal ("));
 			im.setLore(lore);
 		}
 		item.setItemMeta(im);

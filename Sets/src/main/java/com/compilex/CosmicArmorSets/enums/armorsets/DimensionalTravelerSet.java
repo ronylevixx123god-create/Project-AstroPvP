@@ -76,9 +76,9 @@ import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import net.minecraft.server.v1_8_R3.*;
+import net.minecraft.server.v1_8_R3.World;
 import org.arkhamnetwork.enchantments.enchantments.armor.Clarity;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -230,7 +230,7 @@ public class DimensionalTravelerSet
 
     private FallingBlock createFallingBlock(Location location, final Player original, final Faction faction) {
         final Material mat = this.materials.get(this.random.nextInt(this.materials.size()));
-        EntityFallingBlock block = new EntityFallingBlock((World) ((CraftWorld) location.getWorld()).getHandle(), location.getBlockX(), location.getBlockY(), location.getBlockZ(), Block.getById(mat.getId()), 0) {
+        EntityFallingBlock block = new EntityFallingBlock(location, (World) location.getWorld(), location.getX(), location.getY(), location.getZ(), Block.getById(mat.getId()).getBlockData()) {
             boolean damagedPlayed = false;
 
             public void die() {
