@@ -130,8 +130,9 @@ public class MotherOfYijki
                     int damage = 16;
                     int heroLevel = UpgradeUtils.getUpgradeLevel(pNear, "HEROIC_ARMOR_SET");
                     damage = (int) ((double) damage * (heroLevel == 1 ? 0.95 : (heroLevel == 2 ? 0.9 : (heroLevel == 3 ? 0.85 : (heroLevel == 4 ? 0.75 : 1.0)))));
-                    if (Phoenix.hasPhoenixEquipped(pNear) && Phoenix.procPhoenix(pNear, player, damage))
-                        continue;
+                    // TODO: FIX NULL ERROR WHEN COMPILE
+                    //                    if (Phoenix.hasPhoenixEquipped(pNear) && Phoenix.procPhoenix(pNear, player, damage))
+//                        continue;
                     pNear.setHealth(Math.max(1.0, pNear.getHealth() - (double) damage));
                 }
             }
