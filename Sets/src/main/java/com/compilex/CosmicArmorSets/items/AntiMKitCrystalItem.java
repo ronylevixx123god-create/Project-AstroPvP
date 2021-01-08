@@ -30,9 +30,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class AntiMKitCrystalItem
-        extends CosmicItem
-        implements InventoryInteractable {
+public class AntiMKitCrystalItem extends CosmicItem implements InventoryInteractable {
     public AntiMKitCrystalItem() {
         super("ANTI_MKIT");
     }

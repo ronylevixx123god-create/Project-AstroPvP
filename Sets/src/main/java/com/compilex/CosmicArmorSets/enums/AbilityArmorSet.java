@@ -25,13 +25,13 @@ import com.compilex.CosmicArmorSets.enums.abilityarmorsets.ArchitectAbilitySet;
 import com.compilex.CosmicArmorSets.enums.abilityarmorsets.DeathKnightAbilitySet;
 import com.compilex.CosmicArmorSets.enums.abilityarmorsets.GhostAbilitySet;
 import com.compilex.CosmicArmorSets.enums.abilityarmorsets.NecromancerAbilitySet;
-import com.cosmicpvp.cosmicutils.itembuilder.CustomItemBuilder;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagListBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import javafx.util.Pair;
+import me.ifamasssxd.cosmicskycustoms.struct.CustomItemBuilder;
 import net.minecraft.server.v1_8_R3.NBTBase;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
@@ -166,7 +166,7 @@ public enum AbilityArmorSet {
 
 	@Deprecated
 	public ItemStack createAntiMkitShard(int success) {
-		return (new CustomItemBuilder("ANTI_MKIT", new Object[] { Integer.valueOf(success), this })).build();
+		return new CustomItemBuilder("ANTI_MKIT", success, this ).build();
 	}
 
 	public ItemStack createMasteryShard(boolean applyIID) {

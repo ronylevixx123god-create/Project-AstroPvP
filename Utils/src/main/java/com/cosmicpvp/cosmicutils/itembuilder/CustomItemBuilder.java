@@ -19,6 +19,7 @@
  */
 package com.cosmicpvp.cosmicutils.itembuilder;
 
+import com.compilex.CosmicArmorSets.enums.AbilityArmorSet;
 import com.compilex.CosmicDungeons.DungeonsAPI;
 import com.compilex.CosmicDungeons.DungeonsRewardsAPI;
 import com.cosmicpvp.CosmicRankQuests.CosmicRankQuestsAPI;
