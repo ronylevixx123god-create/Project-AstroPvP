@@ -1,0 +1,12 @@
+name: CosmicKOTH
+main: com.compilex.CosmicKOTH.CosmicKOTHPlugin
+version: 1.0
+softdepend: [WorldGuard, WorldEdit, Essentials]
+load: postworld
+commands:
+  koth:
+    description: Display information regarding ongoing or upcoming KOTH events.
+    usage: /<command>
+  akoth:
+    description: Admin KOTH command.
+    usage: /<command>
