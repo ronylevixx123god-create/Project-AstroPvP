@@ -16,6 +16,7 @@
  */
 package com.compilex.CosmicOutposts.outpost.tasks;
 
+import com.compilex.CosmicKOTH.CosmicKOTHPlugin;
 import com.compilex.CosmicOutposts.outpost.Outpost;
 import com.compilex.CosmicOutposts.outpost.enums.OutpostTier;
 import com.compilex.CosmicOutposts.utils.LocationUtils;
@@ -76,7 +77,7 @@ implements Runnable {
                 Bukkit.broadcastMessage((String)"");
                 Boss b = BossType.SOUL_REAPER.createInstance(LocationUtils.getNearbyLocation(this.outpost.getDefenderSpawn().clone().subtract(0.0, 8.0, 0.0), 10, 6, 2));
                 b.onBossSpawn();
-                b.getEntity().setMetadata("do_not_clear", (MetadataValue)new FixedMetadataValue((Plugin)CosmicOutpostsPlugin.get_(), (Object)true));
+                b.getEntity().setMetadata("do_not_clear", (MetadataValue)new FixedMetadataValue((Plugin) CosmicKOTHPlugin.get_(), (Object)true));
             }
         }
         if (this.outpost.getOutpostTier() == OutpostTier.TRAINEE && this.outpost.getControllingFaction() != null) {
@@ -92,10 +93,10 @@ implements Runnable {
                     this.useNewEconomy = false;
                     e.printStackTrace();
                     String bankId = f.getAccountId();
-                    CosmicOutpostsPlugin.get_().getEconomy().depositPlayer(bankId, 25000.0);
+                    CosmicKOTHPlugin.get_().getEconomy().depositPlayer(bankId, 25000.0);
                 }
             } else {
-                CosmicOutpostsPlugin.get_().getEconomy().depositPlayer(f.getAccountId(), 25000.0);
+                CosmicKOTHPlugin.get_().getEconomy().depositPlayer(f.getAccountId(), 25000.0);
             }
             f.sendMessage(ChatColor.GREEN.toString() + (Object)ChatColor.BOLD + "+ $25,000 " + (Object)ChatColor.GREEN + "(/f money" + (Object)ChatColor.GRAY + " [Trainee Outpost Perk]" + (Object)ChatColor.GREEN + ")");
         }

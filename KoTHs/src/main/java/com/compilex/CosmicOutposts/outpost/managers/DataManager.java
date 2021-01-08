@@ -9,6 +9,7 @@
  */
 package com.compilex.CosmicOutposts.outpost.managers;
 
+import com.compilex.CosmicKOTH.CosmicKOTHPlugin;
 import com.compilex.CosmicOutposts.outpost.enums.OutpostTier;
 import com.compilex.CosmicOutposts.outpost.libs.OutpostCapTime;
 import com.google.common.reflect.TypeToken;
@@ -38,7 +39,7 @@ public class DataManager {
     public void loadStoredTimers() {
         try {
             long start = System.currentTimeMillis();
-            File dir = CosmicOutpostsPlugin.get_().getDataFolder();
+            File dir = CosmicKOTHPlugin.get_().getDataFolder();
             if (!dir.exists()) {
                 dir.mkdir();
             }

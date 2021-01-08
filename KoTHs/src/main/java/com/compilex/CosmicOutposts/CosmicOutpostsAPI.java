@@ -14,6 +14,7 @@
  */
 package com.compilex.CosmicOutposts;
 
+import com.compilex.CosmicKOTH.CosmicKOTHPlugin;
 import com.compilex.CosmicOutposts.outpost.Outpost;
 import com.compilex.CosmicOutposts.outpost.enums.OutpostTier;
 import com.compilex.CosmicOutposts.outpost.libs.OutpostCapTime;
@@ -27,18 +28,18 @@ import org.bukkit.entity.Player;
 
 public class CosmicOutpostsAPI {
     public static OutpostCapTime getFactionCapTime(Faction faction) {
-        return CosmicOutpostsPlugin.get_().getDataManager().getCapTimes(faction);
+        return CosmicKOTHPlugin.get_().getDataManager().getCapTimes(faction);
     }
 
     public static OutpostCapTime getFactionCapTime(String faction) {
-        return CosmicOutpostsPlugin.get_().getDataManager().getCapTimes(faction);
+        return CosmicKOTHPlugin.get_().getDataManager().getCapTimes(faction);
     }
 
     public static void incrementCapTime(Faction faction, OutpostTier tier, int amount) {
         if (faction == null) {
             return;
         }
-        CosmicOutpostsPlugin.get_().getDataManager().incrementCapTime(faction, tier, amount);
+        CosmicKOTHPlugin.get_().getDataManager().incrementCapTime(faction, tier, amount);
         FPlayer admin = faction.getFPlayerAdmin();
         if (admin != null && admin.getCachedUUID() != null) {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "contests add " + admin.getCachedUUID() + " opheld " + amount);
@@ -47,7 +48,7 @@ public class CosmicOutpostsAPI {
 
     @Deprecated
     public static OutpostTier getOutpostTierOfWorld(LivingEntity le) {
-        for (Outpost outpost : CosmicOutpostsPlugin.get_().getOutposts()) {
+        for (Outpost outpost : CosmicKOTHPlugin.get_().getOutposts()) {
             if (!le.getWorld().equals(outpost.getWorld())) continue;
             return outpost.getOutpostTier();
         }
@@ -55,7 +56,7 @@ public class CosmicOutpostsAPI {
     }
 
     public static OutpostTier getOutpostTierOfWorld(Entity le) {
-        for (Outpost outpost : CosmicOutpostsPlugin.get_().getOutposts()) {
+        for (Outpost outpost : CosmicKOTHPlugin.get_().getOutposts()) {
             if (!le.getWorld().equals(outpost.getWorld())) continue;
             return outpost.getOutpostTier();
         }
@@ -63,7 +64,7 @@ public class CosmicOutpostsAPI {
     }
 
     public static Outpost getOutpost(Entity le) {
-        for (Outpost outpost : CosmicOutpostsPlugin.get_().getOutposts()) {
+        for (Outpost outpost : CosmicKOTHPlugin.get_().getOutposts()) {
             if (outpost.getWorld() == null || !outpost.getWorld().equals(le.getWorld())) continue;
             return outpost;
         }
@@ -73,7 +74,7 @@ public class CosmicOutpostsAPI {
     public static Outpost getOutpostPlayerControls(Player p) {
         Faction playerFaction = FPlayers.i.get(p).getFaction();
         if (playerFaction.isNormal()) {
-            for (Outpost outpost : CosmicOutpostsPlugin.get_().getOutposts()) {
+            for (Outpost outpost : CosmicKOTHPlugin.get_().getOutposts()) {
                 if (outpost.getControllingFaction() == null || !outpost.getControllingFaction().equals(playerFaction.getTag())) continue;
                 return outpost;
             }
@@ -88,22 +89,22 @@ public class CosmicOutpostsAPI {
 
     public static boolean controlsVanillaOutpost(Player p) {
         Faction playerFaction = FPlayers.i.get(p).getFaction();
-        return playerFaction.isNormal() && CosmicOutpostsPlugin.get_().getVanillaOutpost().getControllingFaction() != null && CosmicOutpostsPlugin.get_().getVanillaOutpost().getControllingFaction().equals(playerFaction.getTag());
+        return playerFaction.isNormal() && CosmicKOTHPlugin.get_().getVanillaOutpost().getControllingFaction() != null && CosmicKOTHPlugin.get_().getVanillaOutpost().getControllingFaction().equals(playerFaction.getTag());
     }
 
     public static boolean controlsTraineeOutpost(Player p) {
         Faction playerFaction = FPlayers.i.get(p).getFaction();
-        return playerFaction.isNormal() && CosmicOutpostsPlugin.get_().getTraineeOutpost().getControllingFaction() != null && CosmicOutpostsPlugin.get_().getTraineeOutpost().getControllingFaction().equals(playerFaction.getTag());
+        return playerFaction.isNormal() && CosmicKOTHPlugin.get_().getTraineeOutpost().getControllingFaction() != null && CosmicKOTHPlugin.get_().getTraineeOutpost().getControllingFaction().equals(playerFaction.getTag());
     }
 
     public static boolean controlsHeroOutpost(Player p) {
         Faction playerFaction = FPlayers.i.get(p).getFaction();
-        return playerFaction.isNormal() && CosmicOutpostsPlugin.get_().getHeroOutpost().getControllingFaction() != null && CosmicOutpostsPlugin.get_().getHeroOutpost().getControllingFaction().equals(playerFaction.getTag());
+        return playerFaction.isNormal() && CosmicKOTHPlugin.get_().getHeroOutpost().getControllingFaction() != null && CosmicKOTHPlugin.get_().getHeroOutpost().getControllingFaction().equals(playerFaction.getTag());
     }
 
     public static boolean controlsCosmonautOutpost(Player p) {
         Faction playerFaction = FPlayers.i.get(p).getFaction();
-        return playerFaction.isNormal() && CosmicOutpostsPlugin.get_().getCosmonautOutpost().getControllingFaction() != null && CosmicOutpostsPlugin.get_().getCosmonautOutpost().getControllingFaction().equals(playerFaction.getTag());
+        return playerFaction.isNormal() && CosmicKOTHPlugin.get_().getCosmonautOutpost().getControllingFaction() != null && CosmicKOTHPlugin.get_().getCosmonautOutpost().getControllingFaction().equals(playerFaction.getTag());
     }
 }
 

@@ -34,6 +34,7 @@
  */
 package com.compilex.CosmicOutposts.listeners;
 
+import com.compilex.CosmicKOTH.CosmicKOTHPlugin;
 import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
 import com.compilex.CosmicOutposts.utils.MonsterUtils;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
@@ -74,8 +75,8 @@ implements Listener {
             return;
         }
         if (e.getEntity().getKiller() != null) {
-            Faction killerFaction = ((FPlayer)FPlayers.i.get((OfflinePlayer)e.getEntity().getKiller())).getFaction();
-            if (Bukkit.getPluginManager().isPluginEnabled("CosmicFactionBoosters") && BoosterAPI.hasActiveBooster((Faction)killerFaction, (BoosterType)BoosterType.EXP)) {
+            Faction killerFaction = FPlayers.i.get(e.getEntity().getKiller()).getFaction();
+            if (Bukkit.getPluginManager().isPluginEnabled("CosmicFactionBoosters") && BoosterAPI.hasActiveBooster(killerFaction, BoosterType.EXP)) {
                 return;
             }
             if (killerFaction.isNormal()) {
@@ -95,9 +96,9 @@ implements Listener {
                 if (xpMod > 1.0) {
                     Player p;
                     Player le = e.getEntity().getKiller();
-                    if (le instanceof Player && (!(p = le).hasMetadata("CosmicOutposts.lastXpBuffAlert") || System.currentTimeMillis() - ((MetadataValue)p.getMetadata("CosmicOutposts.lastXpBuffAlert").get(0)).asLong() > 10000L)) {
-                        p.setMetadata("CosmicOutposts.lastXpBuffAlert", (MetadataValue)new FixedMetadataValue((Plugin)CosmicOutpostsPlugin.get_(), (Object)System.currentTimeMillis()));
-                        p.sendMessage((Object)ChatColor.GREEN + ChatColor.BOLD.toString() + "+ " + xpMod + "x XP " + (Object)ChatColor.GREEN + "(" + killerFaction.getTag() + "'s Astro Outpost " + (Object)ChatColor.GRAY + "[Tier: " + CosmicOutpostsAPI.getOutpostPlayerControls((Player)p).getOutpostTier().chatPrefix + "]" + (Object)ChatColor.GREEN + ")");
+                    if (le instanceof Player && (!(p = le).hasMetadata("CosmicOutposts.lastXpBuffAlert") || System.currentTimeMillis() - p.getMetadata("CosmicOutposts.lastXpBuffAlert").get(0).asLong() > 10000L)) {
+                        p.setMetadata("CosmicOutposts.lastXpBuffAlert", new FixedMetadataValue((Plugin) CosmicKOTHPlugin.get_(), System.currentTimeMillis()));
+                        p.sendMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + "+ " + xpMod + "x XP " + ChatColor.GREEN + "(" + killerFaction.getTag() + "'s Astro Outpost " + ChatColor.GRAY + "[Tier: " + CosmicOutpostsAPI.getOutpostPlayerControls(p).getOutpostTier().chatPrefix + "]" + ChatColor.GREEN + ")");
                     }
                     e.setDroppedExp((int)Math.round((double)e.getDroppedExp() * xpMod));
                 }
@@ -107,8 +108,8 @@ implements Listener {
 
     @EventHandler
     public void onMcMMOGainXP(McMMOPlayerXpGainEvent e) {
-        Faction playerFaction = ((FPlayer)FPlayers.i.get((OfflinePlayer)e.getPlayer())).getFaction();
-        if (Bukkit.getPluginManager().isPluginEnabled("CosmicFactionBoosters") && BoosterAPI.hasActiveBooster((Faction)playerFaction, (BoosterType)BoosterType.MCMMO)) {
+        Faction playerFaction = FPlayers.i.get(e.getPlayer()).getFaction();
+        if (Bukkit.getPluginManager().isPluginEnabled("CosmicFactionBoosters") && BoosterAPI.hasActiveBooster(playerFaction, BoosterType.MCMMO)) {
             return;
         }
         if (playerFaction.isNormal()) {
@@ -127,9 +128,9 @@ implements Listener {
             }
             if (xpMod > 1.0) {
                 Player p = e.getPlayer();
-                if (!p.hasMetadata("CosmicOutposts.lastmcMMOBuffAlert") || System.currentTimeMillis() - ((MetadataValue)p.getMetadata("CosmicOutposts.lastmcMMOBuffAlert").get(0)).asLong() > 10000L) {
-                    p.setMetadata("CosmicOutposts.lastmcMMOBuffAlert", (MetadataValue)new FixedMetadataValue((Plugin)CosmicOutpostsPlugin.get_(), (Object)System.currentTimeMillis()));
-                    p.sendMessage((Object)ChatColor.GREEN + ChatColor.BOLD.toString() + "+ " + xpMod + "x mcMMO " + (Object)ChatColor.GREEN + "(" + playerFaction.getTag() + "'s Astro Outpost " + (Object)ChatColor.GRAY + "[Tier: " + CosmicOutpostsAPI.getOutpostPlayerControls((Player)p).getOutpostTier().chatPrefix + "]" + (Object)ChatColor.GREEN + ")");
+                if (!p.hasMetadata("CosmicOutposts.lastmcMMOBuffAlert") || System.currentTimeMillis() - p.getMetadata("CosmicOutposts.lastmcMMOBuffAlert").get(0).asLong() > 10000L) {
+                    p.setMetadata("CosmicOutposts.lastmcMMOBuffAlert", new FixedMetadataValue((Plugin)CosmicKOTHPlugin.get_(), System.currentTimeMillis()));
+                    p.sendMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + "+ " + xpMod + "x mcMMO " + ChatColor.GREEN + "(" + playerFaction.getTag() + "'s Astro Outpost " + ChatColor.GRAY + "[Tier: " + CosmicOutpostsAPI.getOutpostPlayerControls(p).getOutpostTier().chatPrefix + "]" + ChatColor.GREEN + ")");
                 }
                 e.setRawXpGained((float)((double)e.getRawXpGained() * xpMod));
             }
@@ -139,16 +140,16 @@ implements Listener {
     @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
     public void onCreatureSpawn(CreatureSpawnEvent e) {
         if (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER) {
-            Faction f = FactionChunkOwnershipCache.getCachedFactionChunkOwnership((Location)e.getLocation());
+            Faction f = FactionChunkOwnershipCache.getCachedFactionChunkOwnership(e.getLocation());
             if (f == null || f.isNone()) {
                 FLocation fl = new FLocation(e.getEntity().getLocation());
-                f = Board.getFactionAt((FLocation)fl);
+                f = Board.getFactionAt(fl);
             }
-            if (f.isNormal() && CosmicOutpostsPlugin.get_().getTraineeOutpost().getControllingFaction() != null && CosmicOutpostsPlugin.get_().getTraineeOutpost().getControllingFaction().equals(f.getTag())) {
-                e.getEntity().setMetadata("monsterAmount", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)(e.getEntity().hasMetadata("monsterAmount") ? ((MetadataValue)e.getEntity().getMetadata("monsterAmount").get(0)).asInt() + 2 : 2)));
+            if (f.isNormal() && CosmicKOTHPlugin.get_().getTraineeOutpost().getControllingFaction() != null && CosmicKOTHPlugin.get_().getTraineeOutpost().getControllingFaction().equals(f.getTag())) {
+                e.getEntity().setMetadata("monsterAmount", new FixedMetadataValue(Arkkit.get(), e.getEntity().hasMetadata("monsterAmount") ? e.getEntity().getMetadata("monsterAmount").get(0).asInt() + 2 : 2));
             }
-            if (f.isNormal() && CosmicOutpostsPlugin.get_().getVanillaOutpost().getControllingFaction() != null && CosmicOutpostsPlugin.get_().getVanillaOutpost().getControllingFaction().equals(f.getTag()) && Math.random() < 0.5) {
-                e.getEntity().setMetadata("monsterAmount", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)(e.getEntity().hasMetadata("monsterAmount") ? ((MetadataValue)e.getEntity().getMetadata("monsterAmount").get(0)).asInt() + 2 : 2)));
+            if (f.isNormal() && CosmicKOTHPlugin.get_().getVanillaOutpost().getControllingFaction() != null && CosmicKOTHPlugin.get_().getVanillaOutpost().getControllingFaction().equals(f.getTag()) && Math.random() < 0.5) {
+                e.getEntity().setMetadata("monsterAmount", new FixedMetadataValue(Arkkit.get(), e.getEntity().hasMetadata("monsterAmount") ? e.getEntity().getMetadata("monsterAmount").get(0).asInt() + 2 : 2));
             }
         }
     }
@@ -159,13 +160,13 @@ implements Listener {
             e.getDrops().clear();
             e.getEntity().getEquipment().clear();
             if (Math.random() < 0.65) {
-                e.getDrops().add(KillTrackerAPI.createSoulShard((int)(new Random().nextInt(50) + 20)));
+                e.getDrops().add(KillTrackerAPI.createSoulShard(new Random().nextInt(50) + 20));
             } else if (Math.random() < 0.25) {
-                e.getDrops().add(EnchantmentBook.getSecretDust((ItemRarity)ItemRarity.SOUL, (int)(new Random().nextInt(50) + 1)));
+                e.getDrops().add(EnchantmentBook.getSecretDust(ItemRarity.SOUL, new Random().nextInt(50) + 1));
             } else {
-                e.getDrops().add(CosmicSpaceChestsAPI.getItems((ItemRarity)(Math.random() < 0.2 ? ItemRarity.LEGENDARY : ItemRarity.ULTIMATE), (int)1)[0]);
+                e.getDrops().add(CosmicSpaceChestsAPI.getItems(Math.random() < 0.2 ? ItemRarity.LEGENDARY : ItemRarity.ULTIMATE, 1)[0]);
             }
-            CosmicOutpostsPlugin.get_().getCosmonautOutpost().getRewardTask().mobKilled = true;
+            CosmicKOTHPlugin.get_().getCosmonautOutpost().getRewardTask().mobKilled = true;
         }
         if (e.getEntity().hasMetadata("vanillaOutpostMonster")) {
             e.getDrops().clear();
@@ -174,7 +175,7 @@ implements Listener {
             if (drop != null) {
                 e.getDrops().add(drop);
             }
-            CosmicOutpostsPlugin.get_().getVanillaOutpost().getVanillaMonsterTask().mobKilled = true;
+            CosmicKOTHPlugin.get_().getVanillaOutpost().getVanillaMonsterTask().mobKilled = true;
         }
     }
 }

@@ -54,7 +54,6 @@ import com.cosmicpvp.CosmicRankQuests.CosmicRankQuestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.cosmicpvp.cosmicutils.itembuilder.BoosterBuilder;
-import com.cosmicpvp.cosmicutils.itembuilder.CustomCrateType;
 import com.cosmicpvp.cosmicutils.itembuilder.CustomItemBuilder;
 import com.cosmicpvp.cosmicutils.itembuilder.CustomTitleBuilder;
 import com.cosmicpvp.cosmicutils.itembuilder.EssentialsItemBuilder;
