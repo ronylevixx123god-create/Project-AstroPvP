@@ -19,6 +19,11 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
+import me.astropvp.commands.CommandGiveBackpack;
+import me.astropvp.listeners.BackpackListener;
+import me.astropvp.listeners.PlayerDamageListener;
+import me.astropvp.listeners.PortablePicnicListener;
+import me.astropvp.tasks.PortablePicnicTask;
 import me.ifamasssxd.betterpay.PayListener;
 import me.ifamasssxd.betterpay.PayToggle;
 import me.ifamasssxd.betterpay.commands.CommandTogglePay;
@@ -59,12 +64,9 @@ import net.astropvp.core.tasks.LastManStandingCapTask;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -177,6 +179,12 @@ public class AstroCore extends JavaPlugin {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new AutoGiveAllTask(), 20L, 20L);
 
         this.toggleManager.loadToggles();
+
+        this.getServer().getPluginManager().registerEvents(new BackpackListener(), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerDamageListener(), this);
+        this.getServer().getPluginManager().registerEvents(new PortablePicnicListener(), this);
+        Bukkit.getScheduler().runTaskTimer(this, new PortablePicnicTask(), 0L, 200L);
+        this.getCommand("givebackpack").setExecutor(new CommandGiveBackpack());
 
         this.getCommand("togglesb").setExecutor(new CommandScoreboard());
         this.getCommand("toggles").setExecutor(new CommandToggles());
