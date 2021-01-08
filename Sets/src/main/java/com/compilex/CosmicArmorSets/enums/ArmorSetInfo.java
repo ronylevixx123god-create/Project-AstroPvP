@@ -1,21 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.rit.sucy.CustomEnchantment
- *  com.rit.sucy.EnchantmentAPI
- *  org.arkhamnetwork.enchantments.EnchantmentBook
- *  org.arkhamnetwork.enchantments.enchantments.armor.Phoenix
- *  org.bukkit.Bukkit
- *  org.bukkit.entity.Entity
- *  org.bukkit.entity.LivingEntity
- *  org.bukkit.entity.Player
- *  org.bukkit.event.entity.EntityDamageByEntityEvent
- *  org.bukkit.event.entity.EntityDamageEvent$DamageModifier
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.potion.PotionEffectType
- */
 package com.compilex.CosmicArmorSets.enums;
 
 import com.compilex.CosmicArmorSets.CosmicArmorSetsPlugin;
@@ -45,10 +27,11 @@ public abstract class ArmorSetInfo {
             return false;
         }
         double newHealth = player.getHealth() - toSubtract;
-        if (newHealth <= 0.0 && Phoenix.hasPhoenixEquipped((Player) player) && Phoenix.procPhoenix((Player) player, (LivingEntity) damager, (double) toSubtract)) {
-            Bukkit.getLogger().info("[ArmorSets] Not killing " + player.getName() + " due to Phoenix proc!");
-            return false;
-        }
+        // TODO: FIX NULL ERROR WHEN COMPILE
+//        if (newHealth <= 0.0 && Phoenix.hasPhoenixEquipped(player) && Phoenix.procPhoenix(player, damager, toSubtract)) {
+//            Bukkit.getLogger().info("[ArmorSets] Not killing " + player.getName() + " due to Phoenix proc!");
+//            return false;
+//        }
         if (newHealth < 0.0) {
             newHealth = 0.0;
         }
@@ -71,15 +54,15 @@ public abstract class ArmorSetInfo {
     }
 
     public ItemStack addEnchantment(String name, int level, ItemStack item) {
-        return EnchantmentAPI.getEnchantment((String) name).addToItem(item, level);
+        return EnchantmentAPI.getEnchantment(name).addToItem(item, level);
     }
 
     public CustomEnchantment getEnchantment(String name) {
-        return EnchantmentAPI.getEnchantment((String) name);
+        return EnchantmentAPI.getEnchantment(name);
     }
 
     public int getMaxEnchantLevel(String name) {
-        return EnchantmentAPI.getEnchantment((String) name).getMaxLevel();
+        return EnchantmentAPI.getEnchantment(name).getMaxLevel();
     }
 
     public abstract ItemStack getHelmet(boolean var1);
@@ -101,7 +84,7 @@ public abstract class ArmorSetInfo {
     public abstract boolean onPlayerAttackedBonus(Player var1, int var2, EntityDamageByEntityEvent var3);
 
     protected ItemStack getWithTransmog(boolean applyTransmog, ItemStack item) {
-        return applyTransmog ? EnchantmentBook.applyTransmogScroll((ItemStack) item) : item;
+        return applyTransmog ? EnchantmentBook.applyTransmogScroll(item) : item;
     }
 
     protected boolean isBlockedOutpostWorld(Entity damager) {
@@ -118,7 +101,7 @@ public abstract class ArmorSetInfo {
         }
         if (starterDamage != event.getDamage(EntityDamageEvent.DamageModifier.BASE)) {
             if (CosmicArmorSetsPlugin.get_().isDebugging()) {
-                CosmicArmorSetsPlugin.get_().getLogger().info("(" + this.getClass().getSimpleName() + ") Modifying damage from bonus by " + multiplierIncrementInHundreds + " equipped: " + multiplier + " modifier: " + modifier + " for " + player.getName() + " was " + starterDamage + " -> " + event.getDamage(EntityDamageEvent.DamageModifier.BASE) + " damaged: " + (event.getEntity() instanceof Player ? ((Player) event.getEntity()).getName() : event.getEntity().getType().name()));
+                CosmicArmorSetsPlugin.get_().getLogger().info("(" + this.getClass().getSimpleName() + ") Modifying damage from bonus by " + multiplierIncrementInHundreds + " equipped: " + multiplier + " modifier: " + modifier + " for " + player.getName() + " was " + starterDamage + " -> " + event.getDamage(EntityDamageEvent.DamageModifier.BASE) + " damaged: " + (event.getEntity() instanceof Player ? event.getEntity().getName() : event.getEntity().getType().name()));
                 if (player.isOp()) {
                     player.sendMessage(CC.Red + "Modified Damage: " + modifier + " (" + starterDamage + " old: " + event.getDamage(EntityDamageEvent.DamageModifier.BASE) + ")");
                 }

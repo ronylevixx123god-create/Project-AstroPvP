@@ -101,26 +101,26 @@ public class MotherOfYijki
         for (Entity nearbyEnt : player.getNearbyEntities(32.0, 64.0, 32.0)) {
             if (!(nearbyEnt instanceof Player)) continue;
             Player pNear = (Player) nearbyEnt;
-            FPlayer fpNear = (FPlayer) FPlayers.i.get((OfflinePlayer) pNear);
+            FPlayer fpNear = FPlayers.i.get(pNear);
             if (CosmicArmorSetsAPI.hasInfiniteLuck(pNear, 4, player)) continue;
             if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CUPID_AMULET)) {
                 player.sendMessage(CC.translate("&c&l* Amulet of Angles &7(Block Yijki) &c&l*"));
                 continue;
             }
-            if (fpNear.getRelationTo((RelationParticipator) fp).isAtLeast(Relation.TRUCE) || !WorldGuardUtils.isPvPEnabled((Location) pNear.getLocation()))
+            if (fpNear.getRelationTo(fp).isAtLeast(Relation.TRUCE) || !WorldGuardUtils.isPvPEnabled(pNear.getLocation()))
                 continue;
-            pNear.sendMessage((Object) ChatColor.DARK_PURPLE + "" + (Object) ChatColor.BOLD + "** REVENGE OF YIJKI (" + (Object) ChatColor.RED + fp.getNameAsync() + " [1.5s]" + (Object) ChatColor.DARK_PURPLE + (Object) ChatColor.BOLD + ") **");
+            pNear.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "** REVENGE OF YIJKI (" + ChatColor.RED + fp.getNameAsync() + " [1.5s]" + ChatColor.DARK_PURPLE + ChatColor.BOLD + ") **");
             nearbyPlayers.add(pNear);
         }
-        Bukkit.getScheduler().runTaskLater((Plugin) CosmicArmorSetsPlugin.get_(), () -> {
+        Bukkit.getScheduler().runTaskLater(CosmicArmorSetsPlugin.get_(), () -> {
             for (Location l : procLocations) {
                 l.getWorld().strikeLightningEffect(l);
                 l.getWorld().playSound(l, Sound.WITHER_DEATH, 1.0f, 0.4f);
-                ParticleEffect.playEffect((ParticleEffect) ParticleEffect.LARGE_EXPLODE, (Location) l, (float) 0.7f, (int) 4);
-                ParticleEffect.playEffect((ParticleEffect) ParticleEffect.LARGE_EXPLODE, (Location) l.clone().add(0.0, 1.0, 0.0), (float) 0.7f, (int) 4);
+                ParticleEffect.playEffect(ParticleEffect.LARGE_EXPLODE, l, 0.7f, 4);
+                ParticleEffect.playEffect(ParticleEffect.LARGE_EXPLODE, l.clone().add(0.0, 1.0, 0.0), 0.7f, 4);
                 for (Player pNear : nearbyPlayers) {
                     FPlayer fpNear;
-                    if (!(pNear.getLocation().distanceSquared(l) <= 2.0) || (fpNear = (FPlayer) FPlayers.i.get((OfflinePlayer) pNear)).getRelationTo((RelationParticipator) fp).isAtLeast(Relation.TRUCE) || CosmicArmorSetsAPI.hasInfiniteLuck(pNear, 4, player) || !WorldGuardUtils.isPvPEnabled((Location) pNear.getLocation()))
+                    if (!(pNear.getLocation().distanceSquared(l) <= 2.0) || (fpNear = FPlayers.i.get(pNear)).getRelationTo(fp).isAtLeast(Relation.TRUCE) || CosmicArmorSetsAPI.hasInfiniteLuck(pNear, 4, player) || !WorldGuardUtils.isPvPEnabled(pNear.getLocation()))
                         continue;
                     double dmg = CosmicArmorSetsAPI.getPoltergeistChance(player);
                     if (dmg >= ThreadLocalRandom.current().nextDouble(100.0) + 1.0) {
@@ -128,10 +128,11 @@ public class MotherOfYijki
                         continue;
                     }
                     int damage = 16;
-                    int heroLevel = UpgradeUtils.getUpgradeLevel((Player) pNear, "HEROIC_ARMOR_SET");
+                    int heroLevel = UpgradeUtils.getUpgradeLevel(pNear, "HEROIC_ARMOR_SET");
                     damage = (int) ((double) damage * (heroLevel == 1 ? 0.95 : (heroLevel == 2 ? 0.9 : (heroLevel == 3 ? 0.85 : (heroLevel == 4 ? 0.75 : 1.0)))));
-                    if (Phoenix.hasPhoenixEquipped((Player) pNear) && Phoenix.procPhoenix((Player) pNear, (LivingEntity) player, (double) damage))
-                        continue;
+                    // TODO: FIX NULL ERROR WHEN COMPILE
+                    //                    if (Phoenix.hasPhoenixEquipped(pNear) && Phoenix.procPhoenix(pNear, player, damage))
+//                        continue;
                     pNear.setHealth(Math.max(1.0, pNear.getHealth() - (double) damage));
                 }
             }
@@ -142,7 +143,7 @@ public class MotherOfYijki
     public boolean onPlayerAttacked(Player damager, EntityDamageByEntityEvent event) {
         Material type;
         this.removeResistance(damager);
-        if (this.isBlockedOutpostWorld((Entity) damager)) {
+        if (this.isBlockedOutpostWorld(damager)) {
             return false;
         }
         ItemStack handItem = damager.getItemInHand();

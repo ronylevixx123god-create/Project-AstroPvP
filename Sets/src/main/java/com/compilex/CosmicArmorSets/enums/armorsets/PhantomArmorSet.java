@@ -27,7 +27,6 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.google.common.collect.Lists;
-import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -79,7 +78,7 @@ public class PhantomArmorSet
     public boolean onPlayerAttacked(Player damager, EntityDamageByEntityEvent event) {
         Material type;
         this.removeResistance(damager);
-        if (this.isBlockedOutpostWorld((Entity) damager)) {
+        if (this.isBlockedOutpostWorld(damager)) {
             return false;
         }
         if (event.getEntity() instanceof Player && CosmicArmorSetsAPI.hasInfiniteLuck((Player) event.getEntity(), 3, damager)) {
@@ -100,7 +99,7 @@ public class PhantomArmorSet
 
     @Override
     public boolean onPlayerAttackedBonus(Player damager, int applied, EntityDamageByEntityEvent event) {
-        if (this.isBlockedOutpostWorld((Entity) damager)) {
+        if (this.isBlockedOutpostWorld(damager)) {
             return false;
         }
         return this.modifyDamage(damager, event, 5.0, applied);

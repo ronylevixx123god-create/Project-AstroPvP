@@ -12,7 +12,6 @@ import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
 import me.ifamasssxd.cosmicskycustoms.struct.CustomItemBuilder;
 import me.ifamasssxd.cosmicskycustoms.struct.InventoryInteractable;
 import me.ifamasssxd.cosmicskycustoms.struct.InventoryItemType;
-import net.minecraft.server.v1_8_R3.NBTBase;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -30,7 +29,7 @@ public class CrystalExtractionItem
 
     public ItemStack createItem(Player player, Object... objects) {
         Integer successRate;
-        Integer n = successRate = objects != null && objects.length >= 1 ? NumberUtils.parseIntOrNull((String) objects[0].toString()) : null;
+        Integer n = successRate = objects != null && objects.length >= 1 ? NumberUtils.parseIntOrNull(objects[0].toString()) : null;
         if (successRate == null) {
             successRate = 1;
         }
@@ -42,7 +41,7 @@ public class CrystalExtractionItem
     }
 
     public void onInventoryClick(Player player, ItemStack itemStack, NBTWrapper crystal, NBTWrapper clicked, ItemStack other, InventoryClickEvent e) throws CosmicException {
-        if (!GeneralUtil.isArmor((ItemStack) other)) {
+        if (!GeneralUtil.isArmor(other)) {
             return;
         }
         List<ArmorSet> armorCrystalApplied = ArmorSet.getFromArmorBonusCrystal(clicked);
@@ -70,11 +69,11 @@ public class CrystalExtractionItem
             if (itemStack.getAmount() > 1) {
                 itemStack.setAmount(itemStack.getAmount() - 1);
                 player.setItemOnCursor(itemStack);
-                PlayerUtil.giveOrDropProtectedItem((Player) player, (ItemStack) returnCursor, (int) -1);
+                PlayerUtil.giveOrDropProtectedItem(player, returnCursor, -1);
             } else {
                 player.setItemOnCursor(returnCursor);
             }
-            player.sendMessage(CC.GreenB + "(!) " + ItemUtils.getDisplayName((ItemStack) returnCursor) + CC.Green + " extracted from " + ItemUtils.getDisplayName((ItemStack) updated) + CC.Green + "!");
+            player.sendMessage(CC.GreenB + "(!) " + ItemUtils.getDisplayName(returnCursor) + CC.Green + " extracted from " + ItemUtils.getDisplayName(updated) + CC.Green + "!");
             ASound.LEVEL_UP.play(player, 10.0f, 1.1f);
             player.updateInventory();
             ASound.WITHER_IDLE.play(player, 1.0f, 3.0f);

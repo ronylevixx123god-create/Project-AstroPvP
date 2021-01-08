@@ -36,7 +36,6 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.Lists;
-import com.google.common.collect.MapMaker;
 import javafx.util.Pair;
 import me.ifamasssxd.cosmicskycustoms.struct.CustomItemBuilder;
 import org.arkhamnetwork.Arkkit.patches.ItemID;

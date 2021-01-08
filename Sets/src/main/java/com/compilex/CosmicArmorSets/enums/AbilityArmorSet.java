@@ -48,157 +48,157 @@ import java.util.List;
 import java.util.Set;
 
 public enum AbilityArmorSet {
-	GHOST("GHOST", 0, new GhostAbilitySet(), ChatColor.DARK_AQUA, CC.DarkAquaB + "Ghost", new MaterialData(Material.INK_SACK, DyeColor.SILVER.getDyeData())),
-	NECROMANCER("NECROMANCER", 1, new NecromancerAbilitySet(), ChatColor.DARK_GREEN, CC.DarkGreenB + "Necromancer", new MaterialData(Material.INK_SACK, DyeColor.GREEN.getDyeData())),
-	DEATH_KNIGHT("DEATH_KNIGHT", 2, new DeathKnightAbilitySet(), ChatColor.BLUE, CC.BlueB + "Death Knight", new MaterialData(Material.INK_SACK, DyeColor.CYAN.getDyeData())),
-	ARCHITECT("ARCHITECT", 3, new ArchitectAbilitySet(), ChatColor.AQUA, CC.AquaB + "Architect", new MaterialData(Material.INK_SACK, DyeColor.CYAN.getDyeData()));
+    GHOST("GHOST", 0, new GhostAbilitySet(), ChatColor.DARK_AQUA, CC.DarkAquaB + "Ghost", new MaterialData(Material.INK_SACK, DyeColor.SILVER.getDyeData())),
+    NECROMANCER("NECROMANCER", 1, new NecromancerAbilitySet(), ChatColor.DARK_GREEN, CC.DarkGreenB + "Necromancer", new MaterialData(Material.INK_SACK, DyeColor.GREEN.getDyeData())),
+    DEATH_KNIGHT("DEATH_KNIGHT", 2, new DeathKnightAbilitySet(), ChatColor.BLUE, CC.BlueB + "Death Knight", new MaterialData(Material.INK_SACK, DyeColor.CYAN.getDyeData())),
+    ARCHITECT("ARCHITECT", 3, new ArchitectAbilitySet(), ChatColor.AQUA, CC.AquaB + "Architect", new MaterialData(Material.INK_SACK, DyeColor.CYAN.getDyeData()));
 
-	public static final String ANTI_MKIT_ARMOR_KEY = "antiMkit";
-	public static final String ANTI_MKIT_LIST_ARMOR_KEY = "antiMkits";
-	private AbilityArmorSetInfo armorSetInfo;
-	private ChatColor color;
-	private String displayName;
-	private MaterialData masteryShardItem;
+    public static final String ANTI_MKIT_ARMOR_KEY = "antiMkit";
+    public static final String ANTI_MKIT_LIST_ARMOR_KEY = "antiMkits";
+    private final AbilityArmorSetInfo armorSetInfo;
+    private final ChatColor color;
+    private final String displayName;
+    private final MaterialData masteryShardItem;
 
-	private AbilityArmorSet(String name, int ordinal, AbilityArmorSetInfo armorSetInfo, ChatColor color, String displayName, MaterialData masteryShardItem) {
-		this.armorSetInfo = armorSetInfo;
-		this.color = color;
-		this.displayName = displayName;
-		this.masteryShardItem = masteryShardItem;
-	}
+    AbilityArmorSet(String name, int ordinal, AbilityArmorSetInfo armorSetInfo, ChatColor color, String displayName, MaterialData masteryShardItem) {
+        this.armorSetInfo = armorSetInfo;
+        this.color = color;
+        this.displayName = displayName;
+        this.masteryShardItem = masteryShardItem;
+    }
 
-	public static AbilityArmorSet fromName(String name) {
-		return Arrays.stream(AbilityArmorSet.values()).filter(ab -> ab.name().equalsIgnoreCase(name)).findFirst().orElse(null);
-	}
+    public static AbilityArmorSet fromName(String name) {
+        return Arrays.stream(AbilityArmorSet.values()).filter(ab -> ab.name().equalsIgnoreCase(name)).findFirst().orElse(null);
+    }
 
-	public static Set<AbilityArmorSet> getAntiMkitCrystal(NBTWrapper wrapper) {
-		if (wrapper == null) {
-			return null;
-		}
-		NBTTagCompoundBuilder cosmicData = wrapper.getCompound("cosmicData");
-		if (cosmicData != null) {
-			HashSet<AbilityArmorSet> retr = null;
-			String abilityArmorSetEquipped = cosmicData.getString(ANTI_MKIT_ARMOR_KEY);
-			if (abilityArmorSetEquipped != null && !abilityArmorSetEquipped.isEmpty()) {
-				AbilityArmorSet set = AbilityArmorSet.fromName(abilityArmorSetEquipped);
-				retr = new HashSet();
-				retr.add(set);
-				return retr;
-			}
-			if (cosmicData.hasKey(ANTI_MKIT_LIST_ARMOR_KEY)) {
-				retr = new HashSet<AbilityArmorSet>();
-				NBTTagListBuilder list = new NBTTagListBuilder(cosmicData.getNBTBase(ANTI_MKIT_LIST_ARMOR_KEY));
-				for (int i = 0; i < list.size(); ++i) {
-					String setName = list.getStringAt(i);
-					AbilityArmorSet set2 = AbilityArmorSet.fromName(setName);
-					if (set2 == null) continue;
-					retr.add(set2);
-				}
-				return retr;
-			}
-		}
-		return null;
-	}
+    public static Set<AbilityArmorSet> getAntiMkitCrystal(NBTWrapper wrapper) {
+        if (wrapper == null) {
+            return null;
+        }
+        NBTTagCompoundBuilder cosmicData = wrapper.getCompound("cosmicData");
+        if (cosmicData != null) {
+            HashSet<AbilityArmorSet> retr = null;
+            String abilityArmorSetEquipped = cosmicData.getString(ANTI_MKIT_ARMOR_KEY);
+            if (abilityArmorSetEquipped != null && !abilityArmorSetEquipped.isEmpty()) {
+                AbilityArmorSet set = AbilityArmorSet.fromName(abilityArmorSetEquipped);
+                retr = new HashSet();
+                retr.add(set);
+                return retr;
+            }
+            if (cosmicData.hasKey(ANTI_MKIT_LIST_ARMOR_KEY)) {
+                retr = new HashSet<AbilityArmorSet>();
+                NBTTagListBuilder list = new NBTTagListBuilder(cosmicData.getNBTBase(ANTI_MKIT_LIST_ARMOR_KEY));
+                for (int i = 0; i < list.size(); ++i) {
+                    String setName = list.getStringAt(i);
+                    AbilityArmorSet set2 = AbilityArmorSet.fromName(setName);
+                    if (set2 == null) continue;
+                    retr.add(set2);
+                }
+                return retr;
+            }
+        }
+        return null;
+    }
 
-	public static Set<AbilityArmorSet> getAntiMkitCrystal(ItemStack armorItem) {
-		return AbilityArmorSet.getAntiMkitCrystal(new NBTWrapper(armorItem));
-	}
+    public static Set<AbilityArmorSet> getAntiMkitCrystal(ItemStack armorItem) {
+        return AbilityArmorSet.getAntiMkitCrystal(new NBTWrapper(armorItem));
+    }
 
-	public static ItemStack removeAntiMkitCrystalFromItem(NBTWrapper wrapper) {
-		ItemStack item;
-		ItemMeta im;
-		List lore;
-		NBTTagCompoundBuilder data = wrapper.getCompound("cosmicData");
-		if (data != null) {
-			data.remove(ANTI_MKIT_ARMOR_KEY);
-			data.remove(ANTI_MKIT_LIST_ARMOR_KEY);
-			wrapper.setNBTBase("cosmicData", data.get());
-		}
-		if ((lore = (im = (item = wrapper.build()).getItemMeta()).getLore()) != null) {
-			// TODO: .startsWith again ?!?!? 
-			lore.removeIf(s -> s.equals(CC.GoldB + "Anti M-Kit Crystal ("));
-			im.setLore(lore);
-		}
-		item.setItemMeta(im);
-		return item;
-	}
+    public static ItemStack removeAntiMkitCrystalFromItem(NBTWrapper wrapper) {
+        ItemStack item;
+        ItemMeta im;
+        List lore;
+        NBTTagCompoundBuilder data = wrapper.getCompound("cosmicData");
+        if (data != null) {
+            data.remove(ANTI_MKIT_ARMOR_KEY);
+            data.remove(ANTI_MKIT_LIST_ARMOR_KEY);
+            wrapper.setNBTBase("cosmicData", data.get());
+        }
+        if ((lore = (im = (item = wrapper.build()).getItemMeta()).getLore()) != null) {
+            // TODO: .startsWith again ?!?!?
+            lore.removeIf(s -> s.equals(CC.GoldB + "Anti M-Kit Crystal ("));
+            im.setLore(lore);
+        }
+        item.setItemMeta(im);
+        return item;
+    }
 
-	public static Pair<Set<AbilityArmorSet>, Integer> getFromAntiMkitCrystal(ItemStack item) {
-		return AbilityArmorSet.getFromAntiMkitCrystal(new NBTWrapper(item));
-	}
+    public static Pair<Set<AbilityArmorSet>, Integer> getFromAntiMkitCrystal(ItemStack item) {
+        return AbilityArmorSet.getFromAntiMkitCrystal(new NBTWrapper(item));
+    }
 
-	public static Pair<Set<AbilityArmorSet>, Integer> getFromAntiMkitCrystal(NBTWrapper wrapper) {
-		NBTTagCompoundBuilder builder;
-		if (wrapper.getString("cosmicType").equals("ANTI_MKIT") && (builder = wrapper.getCompound("cosmicData")) != null) {
-			int success = builder.getInt("success");
-			HashSet<AbilityArmorSet> applied = new HashSet<AbilityArmorSet>();
-			if (builder.hasKey("mKit")) {
-				AbilityArmorSet set = AbilityArmorSet.fromName(builder.getString("mKit"));
-				if (set != null) {
-					applied.add(set);
-				}
-			} else if (builder.hasKey("mKits")) {
-				NBTTagListBuilder list = new NBTTagListBuilder(builder.getNBTBase("mKits"));
-				for (int i = 0; i < list.size(); ++i) {
-					AbilityArmorSet set2;
-					String str = list.getStringAt(i);
-					if (str == null || (set2 = AbilityArmorSet.fromName(str)) == null) continue;
-					applied.add(set2);
-				}
-			}
-			return new Pair(applied, success);
-		}
-		return null;
-	}
+    public static Pair<Set<AbilityArmorSet>, Integer> getFromAntiMkitCrystal(NBTWrapper wrapper) {
+        NBTTagCompoundBuilder builder;
+        if (wrapper.getString("cosmicType").equals("ANTI_MKIT") && (builder = wrapper.getCompound("cosmicData")) != null) {
+            int success = builder.getInt("success");
+            HashSet<AbilityArmorSet> applied = new HashSet<AbilityArmorSet>();
+            if (builder.hasKey("mKit")) {
+                AbilityArmorSet set = AbilityArmorSet.fromName(builder.getString("mKit"));
+                if (set != null) {
+                    applied.add(set);
+                }
+            } else if (builder.hasKey("mKits")) {
+                NBTTagListBuilder list = new NBTTagListBuilder(builder.getNBTBase("mKits"));
+                for (int i = 0; i < list.size(); ++i) {
+                    AbilityArmorSet set2;
+                    String str = list.getStringAt(i);
+                    if (str == null || (set2 = AbilityArmorSet.fromName(str)) == null) continue;
+                    applied.add(set2);
+                }
+            }
+            return new Pair(applied, success);
+        }
+        return null;
+    }
 
-	public static AbilityArmorSet getSetFromMasteryShard(ItemStack masteryShard) {
-		NBTTagCompoundBuilder builder;
-		NBTWrapper cursorWrapper = new NBTWrapper(masteryShard);
-		if (cursorWrapper.getString("cosmicType").equals("MASTERY_SHARD") && (builder = cursorWrapper.getCompound("cosmicData")) != null && builder.hasKey("masteryShard")) {
-			return AbilityArmorSet.fromName(builder.getString("masteryShard"));
-		}
-		return null;
-	}
+    public static AbilityArmorSet getSetFromMasteryShard(ItemStack masteryShard) {
+        NBTTagCompoundBuilder builder;
+        NBTWrapper cursorWrapper = new NBTWrapper(masteryShard);
+        if (cursorWrapper.getString("cosmicType").equals("MASTERY_SHARD") && (builder = cursorWrapper.getCompound("cosmicData")) != null && builder.hasKey("masteryShard")) {
+            return AbilityArmorSet.fromName(builder.getString("masteryShard"));
+        }
+        return null;
+    }
 
-	public ItemStack removeAntiMkitCrystalFromItem(ItemStack item) {
-		return AbilityArmorSet.removeAntiMkitCrystalFromItem(new NBTWrapper(item));
-	}
+    public ItemStack removeAntiMkitCrystalFromItem(ItemStack item) {
+        return AbilityArmorSet.removeAntiMkitCrystalFromItem(new NBTWrapper(item));
+    }
 
-	@Deprecated
-	public ItemStack createAntiMkitShard(int success) {
-		return new CustomItemBuilder("ANTI_MKIT", success, this ).build();
-	}
+    @Deprecated
+    public ItemStack createAntiMkitShard(int success) {
+        return new CustomItemBuilder("ANTI_MKIT", success, this).build();
+    }
 
-	public ItemStack createMasteryShard(boolean applyIID) {
-		ItemStack item = new NBTWrapper(new ItemBuilder(this.masteryShardItem.getItemType(), CC.GoldB + "Mastery Shard " + CC.Gold + "(" + this.displayName + CC.Gold + ")", CC.Gray + "Apply to an enchantment book", String.valueOf(String.valueOf(CC.Gray)) + "to imbue it with the power to", String.valueOf(String.valueOf(CC.Gray)) + "affect " + this.displayName + CC.Gray + " Mastery Kit items.").data((short) this.masteryShardItem.getData()).build()).setString("cosmicType", "MASTERY_SHARD").setNBTBase("cosmicData", (NBTBase) new NBTTagCompoundBuilder().setString("masteryShard", this.name()).get()).build();
-		if (applyIID && ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
-			item = ItemID.assignItemID(null, (ItemStack) item);
-		}
-		return item;
-	}
+    public ItemStack createMasteryShard(boolean applyIID) {
+        ItemStack item = new NBTWrapper(new ItemBuilder(this.masteryShardItem.getItemType(), CC.GoldB + "Mastery Shard " + CC.Gold + "(" + this.displayName + CC.Gold + ")", CC.Gray + "Apply to an enchantment book", String.valueOf(CC.Gray) + "to imbue it with the power to", String.valueOf(CC.Gray) + "affect " + this.displayName + CC.Gray + " Mastery Kit items.").data(this.masteryShardItem.getData()).build()).setString("cosmicType", "MASTERY_SHARD").setNBTBase("cosmicData", new NBTTagCompoundBuilder().setString("masteryShard", this.name()).get()).build();
+        if (applyIID && ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
+            item = ItemID.assignItemID(null, item);
+        }
+        return item;
+    }
 
-	public NBTWrapper applyAbilityNBT(NBTWrapper wrapper) {
-		NBTTagCompoundBuilder builder = wrapper.getCompoundOrCreate("cosmicData");
-		builder.setString("abilitySet", this.name());
-		builder.setShort("noEnchants", (short) 1);
-		wrapper.setNBTBase("cosmicData", (NBTBase) builder.get());
-		return wrapper;
-	}
+    public NBTWrapper applyAbilityNBT(NBTWrapper wrapper) {
+        NBTTagCompoundBuilder builder = wrapper.getCompoundOrCreate("cosmicData");
+        builder.setString("abilitySet", this.name());
+        builder.setShort("noEnchants", (short) 1);
+        wrapper.setNBTBase("cosmicData", builder.get());
+        return wrapper;
+    }
 
-	public String getFirstDisplayNameLetter() {
-		return this.color + CC.Bold + this.name().substring(0, 1);
-	}
+    public String getFirstDisplayNameLetter() {
+        return this.color + CC.Bold + this.name().charAt(0);
+    }
 
-	public AbilityArmorSetInfo getArmorSetInfo() {
-		return this.armorSetInfo;
-	}
+    public AbilityArmorSetInfo getArmorSetInfo() {
+        return this.armorSetInfo;
+    }
 
-	public ChatColor getColor() {
-		return this.color;
-	}
+    public ChatColor getColor() {
+        return this.color;
+    }
 
-	public String getDisplayName() {
-		return this.displayName;
-	}
+    public String getDisplayName() {
+        return this.displayName;
+    }
 }
 

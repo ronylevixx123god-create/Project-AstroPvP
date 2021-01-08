@@ -45,7 +45,6 @@ import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.Relation;
-import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -70,32 +69,32 @@ public class AstroSet
 
     @Override
     public ItemStack getHelmet(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_HELMET, (short) 0, "&a&lAstro Hood", CC.Gray + "The Astro Hood", "", "&a&lASTRO SET BONUS", "&a&l* &aYou deal 30% more damage.", "&a&l* &aAstro Killer Passive Ability", "&a&l* &aGears IV.", "&a&l* &aYou take 10% less damage.", "&7(&oRequires all 4 Astro items.&7)"), new LinkedList<>(Arrays.asList(EnchantmentAPI.getEnchantment((String) "Alien Implants"), EnchantmentAPI.getEnchantment((String) "Planetary Deathbringer"), EnchantmentAPI.getEnchantment((String) "Drunk"), EnchantmentAPI.getEnchantment((String) "Enlighted"), EnchantmentAPI.getEnchantment((String) "Armored"), EnchantmentAPI.getEnchantment((String) "Tank"), EnchantmentAPI.getEnchantment((String) "Angelic"), EnchantmentAPI.getEnchantment((String) "Hardened"), EnchantmentAPI.getEnchantment((String) "Valor"), EnchantmentAPI.getEnchantment((String) "Dodge"), EnchantmentAPI.getEnchantment((String) "Guardians"), EnchantmentAPI.getEnchantment((String) "Sticky"), EnchantmentAPI.getEnchantment((String) "Implants"), EnchantmentAPI.getEnchantment((String) "Repair Guard")))));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_HELMET, (short) 0, "&a&lAstro Hood", CC.Gray + "The Astro Hood", "", "&a&lASTRO SET BONUS", "&a&l* &aYou deal 30% more damage.", "&a&l* &aAstro Killer Passive Ability", "&a&l* &aGears IV.", "&a&l* &aYou take 10% less damage.", "&7(&oRequires all 4 Astro items.&7)"), new LinkedList<>(Arrays.asList(EnchantmentAPI.getEnchantment("Alien Implants"), EnchantmentAPI.getEnchantment("Planetary Deathbringer"), EnchantmentAPI.getEnchantment("Drunk"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Hardened"), EnchantmentAPI.getEnchantment("Valor"), EnchantmentAPI.getEnchantment("Dodge"), EnchantmentAPI.getEnchantment("Guardians"), EnchantmentAPI.getEnchantment("Sticky"), EnchantmentAPI.getEnchantment("Implants"), EnchantmentAPI.getEnchantment("Repair Guard")))));
     }
 
     @Override
     public ItemStack getChestplate(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_CHESTPLATE, (short) 0, "&a&lAstro Gauntlet", CC.Gray + "The Astro Gauntlet", "", "&a&lASTRO SET BONUS", "&a&l* &aYou deal 30% more damage.", "&a&l* &aAstro Killer Passive Ability", "&a&l* &aGears IV.", "&a&l* &aYou take 10% less damage.", "&7(&oRequires all 4 Astro items.&7)"), new LinkedList<>(Arrays.asList(EnchantmentAPI.getEnchantment((String) "Godly Overload"), EnchantmentAPI.getEnchantment((String) "Paladin Armored"), EnchantmentAPI.getEnchantment((String) "Blood Lust"), EnchantmentAPI.getEnchantment((String) "Enlighted"), EnchantmentAPI.getEnchantment((String) "Deathbringer"), EnchantmentAPI.getEnchantment((String) "Armored"), EnchantmentAPI.getEnchantment((String) "Tank"), EnchantmentAPI.getEnchantment((String) "Angelic"), EnchantmentAPI.getEnchantment((String) "Arrow Deflect"), EnchantmentAPI.getEnchantment((String) "Dodge"), EnchantmentAPI.getEnchantment((String) "Valor"), EnchantmentAPI.getEnchantment((String) "Aegis"), EnchantmentAPI.getEnchantment((String) "Spirit Link"), EnchantmentAPI.getEnchantment((String) "Leadership")))));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_CHESTPLATE, (short) 0, "&a&lAstro Gauntlet", CC.Gray + "The Astro Gauntlet", "", "&a&lASTRO SET BONUS", "&a&l* &aYou deal 30% more damage.", "&a&l* &aAstro Killer Passive Ability", "&a&l* &aGears IV.", "&a&l* &aYou take 10% less damage.", "&7(&oRequires all 4 Astro items.&7)"), new LinkedList<>(Arrays.asList(EnchantmentAPI.getEnchantment("Godly Overload"), EnchantmentAPI.getEnchantment("Paladin Armored"), EnchantmentAPI.getEnchantment("Blood Lust"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Arrow Deflect"), EnchantmentAPI.getEnchantment("Dodge"), EnchantmentAPI.getEnchantment("Valor"), EnchantmentAPI.getEnchantment("Aegis"), EnchantmentAPI.getEnchantment("Spirit Link"), EnchantmentAPI.getEnchantment("Leadership")))));
     }
 
     @Override
     public ItemStack getLeggings(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_LEGGINGS, (short) 0, "&a&lAstro Robe", CC.Gray + "The Astro Robe", "", "&a&lASTRO SET BONUS", "&a&l* &aYou deal 30% more damage.", "&a&l* &aAstro Killer Passive Ability", "&a&l* &aGears IV.", "&a&l* &aYou take 10% less damage.", "&7(&oRequires all 4 Astro items.&7)"), new LinkedList<>(Arrays.asList(EnchantmentAPI.getEnchantment((String) "Paladin Armored"), EnchantmentAPI.getEnchantment((String) "Enlighted"), EnchantmentAPI.getEnchantment((String) "Clarity"), EnchantmentAPI.getEnchantment((String) "Deathbringer"), EnchantmentAPI.getEnchantment((String) "Nature Wrath"), EnchantmentAPI.getEnchantment((String) "Lucky"), EnchantmentAPI.getEnchantment((String) "Armored"), EnchantmentAPI.getEnchantment((String) "Angelic"), EnchantmentAPI.getEnchantment((String) "Obsidianshield"), EnchantmentAPI.getEnchantment((String) "Cactus"), EnchantmentAPI.getEnchantment((String) "Valor"), EnchantmentAPI.getEnchantment((String) "Metaphysical"), EnchantmentAPI.getEnchantment((String) "Death God"), EnchantmentAPI.getEnchantment((String) "Dodge")))));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_LEGGINGS, (short) 0, "&a&lAstro Robe", CC.Gray + "The Astro Robe", "", "&a&lASTRO SET BONUS", "&a&l* &aYou deal 30% more damage.", "&a&l* &aAstro Killer Passive Ability", "&a&l* &aGears IV.", "&a&l* &aYou take 10% less damage.", "&7(&oRequires all 4 Astro items.&7)"), new LinkedList<>(Arrays.asList(EnchantmentAPI.getEnchantment("Paladin Armored"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Clarity"), EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Nature Wrath"), EnchantmentAPI.getEnchantment("Lucky"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Obsidianshield"), EnchantmentAPI.getEnchantment("Cactus"), EnchantmentAPI.getEnchantment("Valor"), EnchantmentAPI.getEnchantment("Metaphysical"), EnchantmentAPI.getEnchantment("Death God"), EnchantmentAPI.getEnchantment("Dodge")))));
     }
 
     @Override
     public ItemStack getBoots(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_BOOTS, (short) 0, "&a&lAstro Kicks", CC.Gray + "The Astro Kicks", "", "&a&lASTRO SET BONUS", "&a&l* &aYou deal 30% more damage.", "&a&l* &aAstro Killer Passive Ability", "&a&l* &aGears IV.", "&a&l* &aYou take 10% less damage.", "&7(&oRequires all 4 Astro items.&7)"), new LinkedList<>(Arrays.asList(EnchantmentAPI.getEnchantment((String) "Ethereal Dodge"), EnchantmentAPI.getEnchantment((String) "Divine Enlighted"), EnchantmentAPI.getEnchantment((String) "Gears"), EnchantmentAPI.getEnchantment((String) "Deathbringer"), EnchantmentAPI.getEnchantment((String) "Tank"), EnchantmentAPI.getEnchantment((String) "Angelic"), EnchantmentAPI.getEnchantment((String) "Ender Walker"), EnchantmentAPI.getEnchantment((String) "Hardened"), EnchantmentAPI.getEnchantment((String) "Rocket Escape"), EnchantmentAPI.getEnchantment((String) "Springs"), EnchantmentAPI.getEnchantment((String) "Valor"), EnchantmentAPI.getEnchantment((String) "Dodge"), EnchantmentAPI.getEnchantment((String) "Sticky"), EnchantmentAPI.getEnchantment((String) "Diminish")))));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_BOOTS, (short) 0, "&a&lAstro Kicks", CC.Gray + "The Astro Kicks", "", "&a&lASTRO SET BONUS", "&a&l* &aYou deal 30% more damage.", "&a&l* &aAstro Killer Passive Ability", "&a&l* &aGears IV.", "&a&l* &aYou take 10% less damage.", "&7(&oRequires all 4 Astro items.&7)"), new LinkedList<>(Arrays.asList(EnchantmentAPI.getEnchantment("Ethereal Dodge"), EnchantmentAPI.getEnchantment("Divine Enlighted"), EnchantmentAPI.getEnchantment("Gears"), EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Ender Walker"), EnchantmentAPI.getEnchantment("Hardened"), EnchantmentAPI.getEnchantment("Rocket Escape"), EnchantmentAPI.getEnchantment("Springs"), EnchantmentAPI.getEnchantment("Valor"), EnchantmentAPI.getEnchantment("Dodge"), EnchantmentAPI.getEnchantment("Sticky"), EnchantmentAPI.getEnchantment("Diminish")))));
     }
 
     @Override
     public List<String> getEquipDescription() {
-        return Lists.newArrayList((Object) ChatColor.GREEN + "" + (Object) ChatColor.BOLD + "&a&lASTRO SET BONUS", "&a&l* &aYou deal 30% more damage.", "&a&l* &aAstro Killer Passive Ability", "&a&l* &aGears IV.", "&a&l* &aYou take 10% less damage.");
+        return Lists.newArrayList(ChatColor.GREEN + "" + ChatColor.BOLD + "&a&lASTRO SET BONUS", "&a&l* &aYou deal 30% more damage.", "&a&l* &aAstro Killer Passive Ability", "&a&l* &aGears IV.", "&a&l* &aYou take 10% less damage.");
     }
 
     @Override
     public boolean onPlayerDamaged(Player damaged, EntityDamageByEntityEvent event) {
-        if (this.isBlockedOutpostWorld((Entity) damaged)) {
+        if (this.isBlockedOutpostWorld(damaged)) {
             return false;
         }
         if (event.getEntity() instanceof Player) {
@@ -112,24 +111,24 @@ public class AstroSet
     @Override
     public boolean onPlayerAttacked(Player damager, EntityDamageByEntityEvent event) {
         if (Math.random() < 0.01) {
-            OutpostTier outpostTier = CosmicOutpostsAPI.getOutpostTierOfWorld((Entity) event.getDamager());
+            OutpostTier outpostTier = CosmicOutpostsAPI.getOutpostTierOfWorld(event.getDamager());
             if (outpostTier == OutpostTier.TRAINEE || outpostTier == OutpostTier.VANILLA || outpostTier == OutpostTier.HERO) {
                 return false;
             }
             event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.28);
             if (event.getEntity() instanceof Player && event.getEntity().getLocation().distance(damager.getLocation()) <= 2.0 && ((Player) event.getEntity()).getHealth() < damager.getHealth()) {
-                if (damager.hasMetadata("FalloutAbility") && System.currentTimeMillis() - ((MetadataValue) damager.getMetadata("FalloutAbility").get(0)).asLong() <= 120000L) {
+                if (damager.hasMetadata("FalloutAbility") && System.currentTimeMillis() - damager.getMetadata("FalloutAbility").get(0).asLong() <= 120000L) {
                     return false;
                 }
-                damager.setMetadata("FalloutAbility", (MetadataValue) new FixedMetadataValue((Plugin) CosmicArmorSetsPlugin.get_(), (Object) System.currentTimeMillis()));
-                FPlayer fp = (FPlayer) FPlayers.i.get((OfflinePlayer) damager);
+                damager.setMetadata("FalloutAbility", new FixedMetadataValue(CosmicArmorSetsPlugin.get_(), System.currentTimeMillis()));
+                FPlayer fp = FPlayers.i.get(damager);
                 for (Entity nearbyEnt : damager.getNearbyEntities(32.0, 64.0, 32.0)) {
                     if (nearbyEnt instanceof Player) {
                         Player pNear = (Player) nearbyEnt;
-                        FPlayer fpNear = (FPlayer) FPlayers.i.get((OfflinePlayer) pNear);
-                        if (fpNear.getRelationTo((RelationParticipator) fp).isAtLeast(Relation.TRUCE) || !WorldGuardUtils.isPvPEnabled((Location) pNear.getLocation()))
+                        FPlayer fpNear = FPlayers.i.get(pNear);
+                        if (fpNear.getRelationTo(fp).isAtLeast(Relation.TRUCE) || !WorldGuardUtils.isPvPEnabled(pNear.getLocation()))
                             continue;
-                        pNear.sendMessage((Object) ChatColor.GREEN + "" + (Object) ChatColor.BOLD + "** ASTRO KILLER (" + (Object) ChatColor.GRAY + fp.getNameAsync() + " [6s]" + (Object) ChatColor.GREEN + (Object) ChatColor.BOLD + ") **");
+                        pNear.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "** ASTRO KILLER (" + ChatColor.GRAY + fp.getNameAsync() + " [6s]" + ChatColor.GREEN + ChatColor.BOLD + ") **");
                     }
                     damager.getLocation().getWorld().playSound(damager.getLocation(), Sound.GHAST_SCREAM, 1.0f, 1.0f);
                     this.activateFalloutKillerAbility(damager, (Player) event.getEntity());
@@ -144,7 +143,7 @@ public class AstroSet
         if (event.isCancelled()) {
             return false;
         }
-        if (this.isBlockedOutpostWorld((Entity) damaged)) {
+        if (this.isBlockedOutpostWorld(damaged)) {
             return false;
         }
         this.modifyDamage(damaged, event, -5.0, multiplier);
@@ -154,7 +153,7 @@ public class AstroSet
     @Override
     public boolean onPlayerAttackedBonus(Player damager, int applied, EntityDamageByEntityEvent event) {
         if (Math.random() < 0.01) {
-            if (this.isBlockedOutpostWorld((Entity) damager)) {
+            if (this.isBlockedOutpostWorld(damager)) {
                 return false;
             }
             if (event.getDamager().getWorld().getName().equals("world_duels")) {
@@ -162,18 +161,18 @@ public class AstroSet
             }
             this.modifyDamage(damager, event, 5.0, applied);
             if (event.getEntity() instanceof Player && event.getEntity().getLocation().distance(damager.getLocation()) <= 2.0 && ((Player) event.getEntity()).getHealth() < damager.getHealth()) {
-                if (damager.hasMetadata("FalloutAbility") && System.currentTimeMillis() - ((MetadataValue) damager.getMetadata("FalloutAbility").get(0)).asLong() <= 65000L) {
+                if (damager.hasMetadata("FalloutAbility") && System.currentTimeMillis() - damager.getMetadata("FalloutAbility").get(0).asLong() <= 65000L) {
                     return false;
                 }
-                damager.setMetadata("FalloutAbility", (MetadataValue) new FixedMetadataValue((Plugin) CosmicArmorSetsPlugin.get_(), (Object) System.currentTimeMillis()));
-                FPlayer fp = (FPlayer) FPlayers.i.get((OfflinePlayer) damager);
+                damager.setMetadata("FalloutAbility", new FixedMetadataValue(CosmicArmorSetsPlugin.get_(), System.currentTimeMillis()));
+                FPlayer fp = FPlayers.i.get(damager);
                 for (Entity nearbyEnt : damager.getNearbyEntities(32.0, 64.0, 32.0)) {
                     Player pNear;
                     FPlayer fpNear;
-                    if (!(nearbyEnt instanceof Player) || (fpNear = (FPlayer) FPlayers.i.get((OfflinePlayer) (pNear = (Player) nearbyEnt))).getRelationTo((RelationParticipator) fp).isAtLeast(Relation.TRUCE) || !WorldGuardUtils.isPvPEnabled((Location) pNear.getLocation()))
+                    if (!(nearbyEnt instanceof Player) || (fpNear = FPlayers.i.get(pNear = (Player) nearbyEnt)).getRelationTo(fp).isAtLeast(Relation.TRUCE) || !WorldGuardUtils.isPvPEnabled(pNear.getLocation()))
                         continue;
                     pNear.sendMessage("");
-                    pNear.sendMessage((Object) ChatColor.GREEN + "" + (Object) ChatColor.BOLD + "** ASTRO KILLER (" + (Object) ChatColor.GRAY + fp.getNameAsync() + " [6s]" + (Object) ChatColor.GREEN + (Object) ChatColor.BOLD + ") **");
+                    pNear.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "** ASTRO KILLER (" + ChatColor.GRAY + fp.getNameAsync() + " [6s]" + ChatColor.GREEN + ChatColor.BOLD + ") **");
                     pNear.sendMessage("");
                 }
                 damager.getLocation().getWorld().playSound(damager.getLocation(), Sound.GHAST_SCREAM, 1.0f, 1.0f);
@@ -185,12 +184,12 @@ public class AstroSet
 
     @Override
     public void onEquip(Player player) {
-        EnchantmentAPI.getEnchantment((String) "Gears").applyEquipEffect(player, 4);
+        EnchantmentAPI.getEnchantment("Gears").applyEquipEffect(player, 4);
     }
 
     @Override
     public void onUnequip(Player player) {
-        EnchantmentAPI.getEnchantment((String) "Gears").applyUnequipEffect(player, 4);
+        EnchantmentAPI.getEnchantment("Gears").applyUnequipEffect(player, 4);
     }
 
     public Block setBlock(Location location, Material material) {
@@ -263,7 +262,7 @@ public class AstroSet
                     this.cancel();
                 }
             }
-        }.runTaskTimer((Plugin) CosmicArmorSetsPlugin.get_(), 0L, 20L);
+        }.runTaskTimer(CosmicArmorSetsPlugin.get_(), 0L, 20L);
     }
 
     @Override

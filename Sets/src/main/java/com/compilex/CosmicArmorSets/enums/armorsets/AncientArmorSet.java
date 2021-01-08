@@ -43,14 +43,12 @@ import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.cmd.CmdFocus;
 import com.massivecraft.factions.cmd.CmdUnfocus;
-import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -60,7 +58,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -103,7 +100,7 @@ public class AncientArmorSet
 
     @Override
     public boolean onPlayerDamaged(Player damaged, EntityDamageByEntityEvent event) {
-        if (this.isBlockedOutpostWorld((Entity) damaged)) {
+        if (this.isBlockedOutpostWorld(damaged)) {
             return false;
         }
         if (event.getEntity() instanceof Player) {
@@ -136,7 +133,7 @@ public class AncientArmorSet
         if (event.isCancelled()) {
             return false;
         }
-        if (this.isBlockedOutpostWorld((Entity) damaged)) {
+        if (this.isBlockedOutpostWorld(damaged)) {
             return false;
         }
         this.modifyDamage(damaged, event, -7.0, multiplier);
@@ -147,7 +144,7 @@ public class AncientArmorSet
     public boolean onPlayerAttackedBonus(Player damager, int applied, EntityDamageByEntityEvent event) {
         if (Math.random() <= 0.005 * (double) applied || damager.isOp() && damager.isSneaking()) {
             this.removeResistance(damager);
-            if (this.isBlockedOutpostWorld((Entity) damager)) {
+            if (this.isBlockedOutpostWorld(damager)) {
                 return false;
             }
             this.startAncientEffect(damager, (Player) event.getEntity());
@@ -178,7 +175,7 @@ public class AncientArmorSet
         player.sendMessage(CC.translate(("&3&l      * &7+150% damage to &f" + pTarget.getName() + "&7 for 10s")));
         player.sendMessage("");
         pTarget.setMetadata("noDefenseProcs", new FixedMetadataValue(Enchantments.getInstance(), true));
-        pTarget.setMetadata("bloodHoundNoBless", new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), "ancient"));
+        pTarget.setMetadata("bloodHoundNoBless", new FixedMetadataValue(CosmicSkyInventoryPets.get(), "ancient"));
         pTarget.removePotionEffect(PotionEffectType.SLOW);
         pTarget.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 0));
         this.removeNearMeta(player, pTarget);
@@ -193,16 +190,16 @@ public class AncientArmorSet
 
             public void run() {
                 pTarget.removeMetadata("noDefenseProcs", Enchantments.getInstance());
-                pTarget.removeMetadata("bloodHoundNoBless", (Plugin) CosmicSkyInventoryPets.get());
+                pTarget.removeMetadata("bloodHoundNoBless", CosmicSkyInventoryPets.get());
                 CmdUnfocus.unfocusPlayer(FPlayers.i.get(player).getFaction(), pTarget);
             }
-        }.runTaskLater((Plugin) CosmicSkyInventoryPets.get(), 200L);
+        }.runTaskLater(CosmicSkyInventoryPets.get(), 200L);
     }
 
     private void removeNearMeta(Player player, Player pTarget) {
         if (pTarget.hasMetadata("heroicGhostEnchantment")) {
-            pTarget.setMetadata("heroicGhostEnchantmentTemp", new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), System.currentTimeMillis()));
-            pTarget.removeMetadata("heroicGhostEnchantment", (Plugin) Enchantments.getInstance());
+            pTarget.setMetadata("heroicGhostEnchantmentTemp", new FixedMetadataValue(CosmicSkyInventoryPets.get(), System.currentTimeMillis()));
+            pTarget.removeMetadata("heroicGhostEnchantment", Enchantments.getInstance());
         }
     }
 

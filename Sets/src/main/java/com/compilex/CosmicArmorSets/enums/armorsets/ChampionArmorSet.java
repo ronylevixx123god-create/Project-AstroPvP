@@ -51,8 +51,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -94,7 +92,7 @@ public class ChampionArmorSet
 
     @Override
     public boolean onPlayerDamaged(Player damaged, EntityDamageByEntityEvent event) {
-        if (this.isBlockedOutpostWorld((Entity) damaged)) {
+        if (this.isBlockedOutpostWorld(damaged)) {
             return false;
         }
         if (event.getEntity() instanceof Player) {
@@ -111,7 +109,7 @@ public class ChampionArmorSet
     @Override
     public boolean onPlayerAttacked(Player damager, EntityDamageByEntityEvent event) {
         this.removeResistance(damager);
-        if (this.isBlockedOutpostWorld((Entity) damager)) {
+        if (this.isBlockedOutpostWorld(damager)) {
             return false;
         }
         if (event.getEntity() instanceof Player && CosmicArmorSetsAPI.hasInfiniteLuck((Player) event.getEntity(), 3, damager)) {
@@ -129,7 +127,7 @@ public class ChampionArmorSet
         if (event.isCancelled()) {
             return false;
         }
-        if (this.isBlockedOutpostWorld((Entity) damaged)) {
+        if (this.isBlockedOutpostWorld(damaged)) {
             return false;
         }
         this.modifyDamage(damaged, event, -5.0, multiplier);
@@ -174,7 +172,7 @@ public class ChampionArmorSet
         target.setMetadata("bansheed", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
         target.setMetadata("championed", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
         target.playSound(target.getLocation(), Sound.BLAZE_DEATH, 10.0f, 10.0f);
-        PlayerPotionEffects.trackPotionEffect((Player) player, (SpecificCustomEnchantment) new SpecificCustomEnchantment((CustomEnchantment) new Gears(), 5), (PotionEffect) new PotionEffect(PotionEffectType.SPEED, 160, 4));
+        PlayerPotionEffects.trackPotionEffect(player, new SpecificCustomEnchantment(new Gears(), 5), new PotionEffect(PotionEffectType.SPEED, 160, 4));
         new BukkitRunnable() {
 
             public void run() {
@@ -184,8 +182,8 @@ public class ChampionArmorSet
                 target.removeMetadata("bansheed", CosmicSkyInventoryPets.get());
                 target.removeMetadata("championed", CosmicSkyInventoryPets.get());
                 target.sendMessage(CC.translate(("&6&l* CHAMPION WRATH FROM &7" + player.getName() + " &c&lEXPIRED &6&l*")));
-                PlayerPotionEffects.untrackPotionEffect((Player) player, PotionEffectType.SPEED);
-                PlayerPotionEffects.trackPotionEffect((Player) player, new SpecificCustomEnchantment((CustomEnchantment) new Gears(), 3), (PotionEffect) new PotionEffect(PotionEffectType.SPEED, 160, 3));
+                PlayerPotionEffects.untrackPotionEffect(player, PotionEffectType.SPEED);
+                PlayerPotionEffects.trackPotionEffect(player, new SpecificCustomEnchantment(new Gears(), 3), new PotionEffect(PotionEffectType.SPEED, 160, 3));
             }
         }.runTaskLater(CosmicSkyInventoryPets.get(), 160L);
     }

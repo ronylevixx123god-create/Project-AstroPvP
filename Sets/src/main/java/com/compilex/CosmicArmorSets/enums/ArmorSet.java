@@ -70,14 +70,14 @@ public enum ArmorSet {
     private String displayName;
     private List<String> crystalDescription;
 
-    private ArmorSet(ArmorSetInfo info, ChatColor color, String displayName, List<String> crystalDescription) {
+    ArmorSet(ArmorSetInfo info, ChatColor color, String displayName, List<String> crystalDescription) {
         this.armorSetInfo = info;
         this.color = color;
         this.crystalDescription = crystalDescription;
         this.displayName = displayName;
     }
 
-    private ArmorSet(ItemStack helmet, ItemStack chestplate, ItemStack leggings, ItemStack boots) {
+    ArmorSet(ItemStack helmet, ItemStack chestplate, ItemStack leggings, ItemStack boots) {
         this.helmet = helmet;
         this.chestplate = chestplate;
         this.leggings = leggings;
@@ -113,7 +113,7 @@ public enum ArmorSet {
         ArmorSet.addMaxedEnchant(item, "Snare");
         ArmorSet.addMaxedEnchant(item, "Virus");
         ArmorSet.addMaxedEnchant(item, "Healing");
-        return transmog ? EnchantmentBook.applyTransmogScroll((ItemStack) item) : item;
+        return transmog ? EnchantmentBook.applyTransmogScroll(item) : item;
     }
 
     public static boolean isRangerBow(ItemStack item) {
@@ -121,21 +121,21 @@ public enum ArmorSet {
     }
 
     public static void addEnchantmentLevel(ItemStack item, String enchantName, int level) {
-        CustomEnchantment enchant = EnchantmentAPI.getEnchantment((String) enchantName);
+        CustomEnchantment enchant = EnchantmentAPI.getEnchantment(enchantName);
         if (enchant != null) {
             enchant.addToItem(item, level);
         }
     }
 
     public static void addMaxedEnchant(ItemStack item, String enchantName) {
-        CustomEnchantment enchant = EnchantmentAPI.getEnchantment((String) enchantName);
+        CustomEnchantment enchant = EnchantmentAPI.getEnchantment(enchantName);
         if (enchant != null) {
             enchant.addToItem(item, enchant.getMaxLevel());
         }
     }
 
     private static ItemStack addNearlyMaxedEnchantmentLevel(ItemStack item, String enchantName) {
-        CustomEnchantment enchant = EnchantmentAPI.getEnchantment((String) enchantName);
+        CustomEnchantment enchant = EnchantmentAPI.getEnchantment(enchantName);
         if (enchant.heroicEnchantment) {
             enchant.addToItem(item, 1 + ThreadLocalRandom.current().nextInt(enchant.getMaxLevel()));
         } else {
@@ -259,9 +259,9 @@ public enum ArmorSet {
     public static ArmorSet getArmorSetFromItem(ItemStack i) {
         if (i != null && i.hasItemMeta() && i.getItemMeta().hasLore()) {
             for (int reverseIndex = i.getItemMeta().getLore().size() - 1; reverseIndex >= 0; --reverseIndex) {
-                String s = (String) i.getItemMeta().getLore().get(reverseIndex);
+                String s = i.getItemMeta().getLore().get(reverseIndex);
                 if (!s.contains("SET BONUS") || s.contains("~")) continue;
-                String set = ChatColor.stripColor((String) s.split(" ")[0]);
+                String set = ChatColor.stripColor(s.split(" ")[0]);
                 if (set.equals("YIJKI")) {
                     set = "MOTHER_OF_YIJKI";
                 } else if (set.equals("TRAVELER")) {
@@ -302,11 +302,11 @@ public enum ArmorSet {
                 return this.armorSetInfo.getBoots(applyTransmog);
             }
         }
-        return applyTransmog ? EnchantmentBook.applyTransmogScroll((ItemStack) this.armorSetItems[index]) : this.armorSetItems[index];
+        return applyTransmog ? EnchantmentBook.applyTransmogScroll(this.armorSetItems[index]) : this.armorSetItems[index];
     }
 
     public String getFirstDisplayNameLetter() {
-        return (Object) this.color + CC.Bold + this.name().charAt(0);
+        return this.color + CC.Bold + this.name().charAt(0);
     }
 
     public ArmorSetInfo getArmorSetInfo() {

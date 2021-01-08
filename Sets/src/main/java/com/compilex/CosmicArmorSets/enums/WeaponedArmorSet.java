@@ -9,6 +9,6 @@ package com.compilex.CosmicArmorSets.enums;
 import org.bukkit.inventory.ItemStack;
 
 public interface WeaponedArmorSet {
-    public ItemStack getWeapon(boolean var1);
+    ItemStack getWeapon(boolean var1);
 }
 

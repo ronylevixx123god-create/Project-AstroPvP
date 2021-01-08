@@ -40,14 +40,14 @@ public class CommandHeroicArmor implements CommandExecutor {
             return true;
         }
         if (args.length >= 2) {
-            Player pl = Bukkit.getPlayer((String) args[1]);
+            Player pl = Bukkit.getPlayer(args[1]);
             if (pl == null) {
                 sender.sendMessage(CC.Red + "No player found!");
                 return true;
             }
             HeroicArmorType type = HeroicArmorType.getFromName(args[0]);
             if (type == null) {
-                sender.sendMessage(CC.Red + "Invalid Heroic Armor type! Valid: " + Arrays.toString((Object[]) HeroicArmorType.values()));
+                sender.sendMessage(CC.Red + "Invalid Heroic Armor type! Valid: " + Arrays.toString(HeroicArmorType.values()));
                 return true;
             }
             ItemStack item = CosmicArmorSetsAPI.createHeroicPeice(type);
@@ -55,22 +55,22 @@ public class CommandHeroicArmor implements CommandExecutor {
                 if (args[2].equalsIgnoreCase("ench")) {
                     item = new NBTWrapper(item).setGlowing().build();
                 } else {
-                    Integer parsed = NumberUtils.parseIntOrNull((String) args[2]);
+                    Integer parsed = NumberUtils.parseIntOrNull(args[2]);
                     if (parsed != null && parsed > 0) {
                         NBTWrapper wrapper = new NBTWrapper(item);
-                        item = wrapper.setNBTBase("cosmicData", (NBTBase) new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")).setInt("armorModifier", parsed).get()).build();
+                        item = wrapper.setNBTBase("cosmicData", new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")).setInt("armorModifier", parsed).get()).build();
                         sender.sendMessage(CC.Red + "Item given with armor modifier: " + parsed);
                     }
                 }
             }
             if (item != null) {
-                PlayerUtil.giveOrDropProtectedItem((Player) pl, (ItemStack) item, (int) -1);
+                PlayerUtil.giveOrDropProtectedItem(pl, item, -1);
             }
         } else if (args.length == 1 && args[0].equalsIgnoreCase("convert")) {
             Player player = (Player) sender;
             ItemStack hand = player.getItemInHand();
-            boolean armor = GeneralUtil.isArmor((ItemStack) hand);
-            boolean weapon = GeneralUtil.isWeapon((ItemStack) hand);
+            boolean armor = GeneralUtil.isArmor(hand);
+            boolean weapon = GeneralUtil.isWeapon(hand);
             if (!armor && !weapon) {
                 sender.sendMessage(CC.Red + "Invalid armor item!");
                 return true;

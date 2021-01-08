@@ -1,17 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  com.rit.sucy.CustomEnchantment
- *  com.rit.sucy.EnchantmentAPI
- *  org.bukkit.Color
- *  org.bukkit.enchantments.Enchantment
- *  org.bukkit.entity.Player
- *  org.bukkit.event.entity.EntityDamageByEntityEvent
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
- *  org.bukkit.inventory.meta.LeatherArmorMeta
- */
 package com.compilex.CosmicArmorSets.enums;
 
 import com.rit.sucy.CustomEnchantment;
@@ -74,13 +60,13 @@ public abstract class AbilityArmorSetInfo
         if (im instanceof LeatherArmorMeta) {
             LeatherArmorMeta lm = (LeatherArmorMeta) im;
             lm.setColor(color);
-            item.setItemMeta((ItemMeta) lm);
+            item.setItemMeta(lm);
         }
         return item;
     }
 
     public ItemStack addMaxedEnchant(ItemStack item, String name) {
-        CustomEnchantment enchant = EnchantmentAPI.getEnchantment((String) name);
+        CustomEnchantment enchant = EnchantmentAPI.getEnchantment(name);
         if (enchant != null) {
             enchant.addToItem(item, enchant.getMaxLevel());
         }
@@ -102,8 +88,7 @@ public abstract class AbilityArmorSetInfo
             int level, maxLevel = enchantment.getMaxLevel();
             if (enchantment.heroicEnchantment) {
                 level = 1 + ThreadLocalRandom.current().nextInt(maxLevel);
-            }
-            else if (maxLevel == 1) {
+            } else if (maxLevel == 1) {
                 level = maxLevel;
             } else if (maxLevel == 2) {
                 level = maxLevel - ThreadLocalRandom.current().nextInt(2);

@@ -46,7 +46,7 @@ public class OmniArmorSet
         wrapper.setNBTBase("cosmicData", cosmicData.get());
         NBTTagCompoundBuilder display = wrapper.hasKey("display") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("display")) : new NBTTagCompoundBuilder();
         display.setInt("color", 0xFF0000);
-        wrapper.setNBTBase("display", (NBTBase) display.get());
+        wrapper.setNBTBase("display", display.get());
         return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(wrapper.build(), Arrays.asList(EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Drunk"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Implants"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Angelic"))));
     }
 
@@ -56,10 +56,10 @@ public class OmniArmorSet
         NBTWrapper wrapper = new NBTWrapper(item);
         NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
         cosmicData.setInt("omniArmorSet", 1);
-        wrapper.setNBTBase("cosmicData", (NBTBase) cosmicData.get());
+        wrapper.setNBTBase("cosmicData", cosmicData.get());
         NBTTagCompoundBuilder display = wrapper.hasKey("display") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("display")) : new NBTTagCompoundBuilder();
         display.setInt("color", 0xFF0000);
-        wrapper.setNBTBase("display", (NBTBase) display.get());
+        wrapper.setNBTBase("display", display.get());
         return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(wrapper.build(), Arrays.asList(EnchantmentAPI.getEnchantment("Overload"), EnchantmentAPI.getEnchantment("Blood Lust"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Dodge"), EnchantmentAPI.getEnchantment("Angelic"))));
     }
 

@@ -36,9 +36,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class NecromancerAbilitySet
         extends AbilityArmorSetInfo {
-    private String color = CC.DarkGreen;
-    private String bulletPoint = this.color + CC.Bold + " * " + this.color;
-    private Color armorColor = Color.GREEN;
+    private final String color = CC.DarkGreen;
+    private final String bulletPoint = this.color + CC.Bold + " * " + this.color;
+    private final Color armorColor = Color.GREEN;
 
     @Override
     public List<String> getAbilityArmorLore() {
@@ -47,7 +47,7 @@ public class NecromancerAbilitySet
 
     @Override
     public ItemStack getHelmet(Player player, boolean applyTransmog, boolean mastery) {
-        ItemStack helmet = this.setLeatherColor(CosmicArmorSetsAPI.convertItemToHeroic(AbilityArmorSet.NECROMANCER.applyAbilityNBT(new NBTWrapper(new ItemBuilder(Material.DIAMOND_HELMET, this.color + CC.Bold + "Skull of Souls", new String[]{CC.GrayI + "A floating skull imbued with", CC.GrayI + "evil enchantments and demonic energy."}).build())).build(), HeroicArmorType.HELMET, true), this.armorColor);
+        ItemStack helmet = this.setLeatherColor(CosmicArmorSetsAPI.convertItemToHeroic(AbilityArmorSet.NECROMANCER.applyAbilityNBT(new NBTWrapper(new ItemBuilder(Material.DIAMOND_HELMET, this.color + CC.Bold + "Skull of Souls", CC.GrayI + "A floating skull imbued with", CC.GrayI + "evil enchantments and demonic energy.").build())).build(), HeroicArmorType.HELMET, true), this.armorColor);
         this.addNearlyMaxedEnchants(helmet, "Armored", "Implants", "Drunk", "Arrow Deflect", "Death God", "Resilience", "Protection", "Ender Shift");
         if (this.random.nextDouble() <= 0.6) {
             this.addNearlyMaxed(helmet, "Valor");
@@ -67,12 +67,12 @@ public class NecromancerAbilitySet
         if (mastery) {
             this.addRandomMasteryEnchants(helmet, 2);
         }
-        return applyTransmog ? EnchantmentBook.applyTransmogScroll((ItemStack) helmet) : helmet;
+        return applyTransmog ? EnchantmentBook.applyTransmogScroll(helmet) : helmet;
     }
 
     @Override
     public ItemStack getChestplate(Player player, boolean applyTransmog, boolean mastery) {
-        ItemStack chestplate = this.setLeatherColor(CosmicArmorSetsAPI.convertItemToHeroic(AbilityArmorSet.NECROMANCER.applyAbilityNBT(new NBTWrapper(new ItemBuilder(Material.DIAMOND_CHESTPLATE, this.color + CC.Bold + "Robe of the Necromancer", new String[]{CC.GrayI + "Spider Silk woven robes that camouflage", CC.GrayI + "into the darkness of the night"}).build())).build(), HeroicArmorType.CHESTPLATE, true), this.armorColor);
+        ItemStack chestplate = this.setLeatherColor(CosmicArmorSetsAPI.convertItemToHeroic(AbilityArmorSet.NECROMANCER.applyAbilityNBT(new NBTWrapper(new ItemBuilder(Material.DIAMOND_CHESTPLATE, this.color + CC.Bold + "Robe of the Necromancer", CC.GrayI + "Spider Silk woven robes that camouflage", CC.GrayI + "into the darkness of the night").build())).build(), HeroicArmorType.CHESTPLATE, true), this.armorColor);
         this.addNearlyMaxedEnchants(chestplate, "Armored", "Overload", "Deathbringer", "Enlighted", "Diminish", "Aegis", "Leadership", "Blood Lust", "Shockwave");
         if (this.random.nextDouble() <= 0.6) {
             this.addNearlyMaxed(chestplate, "Valor");
@@ -101,12 +101,12 @@ public class NecromancerAbilitySet
         if (mastery) {
             this.addRandomMasteryEnchants(chestplate, 2);
         }
-        return applyTransmog ? EnchantmentBook.applyTransmogScroll((ItemStack) chestplate) : chestplate;
+        return applyTransmog ? EnchantmentBook.applyTransmogScroll(chestplate) : chestplate;
     }
 
     @Override
     public ItemStack getLeggings(Player player, boolean applyTransmog, boolean mastery) {
-        ItemStack leggings = this.setLeatherColor(CosmicArmorSetsAPI.convertItemToHeroic(AbilityArmorSet.NECROMANCER.applyAbilityNBT(new NBTWrapper(new ItemBuilder(Material.DIAMOND_LEGGINGS, this.color + CC.Bold + "Tattered Wrappings of Death", new String[]{CC.GrayI + "Once tormented by death, it now", CC.GrayI + "loyally serves and protects you."}).build())).build(), HeroicArmorType.LEGGINGS, true), this.armorColor);
+        ItemStack leggings = this.setLeatherColor(CosmicArmorSetsAPI.convertItemToHeroic(AbilityArmorSet.NECROMANCER.applyAbilityNBT(new NBTWrapper(new ItemBuilder(Material.DIAMOND_LEGGINGS, this.color + CC.Bold + "Tattered Wrappings of Death", CC.GrayI + "Once tormented by death, it now", CC.GrayI + "loyally serves and protects you.").build())).build(), HeroicArmorType.LEGGINGS, true), this.armorColor);
         this.addNearlyMaxedEnchants(leggings, "Armored", "Nature Wrath", "Clarity", "Obsidianshield", "Cactus", "Lucky", "Voodoo", "Spirits");
         if (this.random.nextDouble() <= 0.6) {
             this.addNearlyMaxed(leggings, "Valor");
@@ -126,12 +126,12 @@ public class NecromancerAbilitySet
         if (mastery) {
             this.addRandomMasteryEnchants(leggings, 2);
         }
-        return applyTransmog ? EnchantmentBook.applyTransmogScroll((ItemStack) leggings) : leggings;
+        return applyTransmog ? EnchantmentBook.applyTransmogScroll(leggings) : leggings;
     }
 
     @Override
     public ItemStack getBoots(Player player, boolean applyTransmog, boolean mastery) {
-        ItemStack boots = this.setLeatherColor(CosmicArmorSetsAPI.convertItemToHeroic(AbilityArmorSet.NECROMANCER.applyAbilityNBT(new NBTWrapper(new ItemBuilder(Material.DIAMOND_BOOTS, this.color + CC.Bold + "Demon Foot", new String[]{CC.GrayI + "A good luck charm for those who are", CC.GrayI + "masters of the dark magick of necromancy."}).build())).build(), HeroicArmorType.BOOTS, true), this.armorColor);
+        ItemStack boots = this.setLeatherColor(CosmicArmorSetsAPI.convertItemToHeroic(AbilityArmorSet.NECROMANCER.applyAbilityNBT(new NBTWrapper(new ItemBuilder(Material.DIAMOND_BOOTS, this.color + CC.Bold + "Demon Foot", CC.GrayI + "A good luck charm for those who are", CC.GrayI + "masters of the dark magick of necromancy.").build())).build(), HeroicArmorType.BOOTS, true), this.armorColor);
         this.addNearlyMaxedEnchants(boots, "Armored", "Metaphysical", "Ender Walker", "Springs", "Rocket Escape", "Dodge", "Phoenix", "Guardians");
         this.addMaxedEnchant(boots, "Gears");
         if (this.random.nextDouble() <= 0.6) {
@@ -158,7 +158,7 @@ public class NecromancerAbilitySet
         if (mastery) {
             this.addRandomMasteryEnchants(boots, 2);
         }
-        return applyTransmog ? EnchantmentBook.applyTransmogScroll((ItemStack) boots) : boots;
+        return applyTransmog ? EnchantmentBook.applyTransmogScroll(boots) : boots;
     }
 
     public ItemStack addRandomMasteryEnchants(ItemStack item, int count) {

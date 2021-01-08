@@ -69,12 +69,12 @@ public class SetBonusListener
         ArmorSet stored = CosmicArmorSetsAPI.getCachedArmorSet(player);
         if (stored != null) {
             stored.getArmorSetInfo().onUnequip(player);
-            player.removeMetadata("armorSet", (Plugin) CosmicArmorSetsPlugin.get_());
-            player.removeMetadata("armorLock", (Plugin) CosmicArmorSetsPlugin.get_());
+            player.removeMetadata("armorSet", CosmicArmorSetsPlugin.get_());
+            player.removeMetadata("armorLock", CosmicArmorSetsPlugin.get_());
         }
-        ((DimensionalTravelerSet) ArmorSet.DIMENSIONAL_TRAVELER.getArmorSetInfo()).onPlayerEvent((Event) event);
-        ((EngineerSet) ArmorSet.ENGINEER.getArmorSetInfo()).onPlayerEvent((Event) event);
-        CachedArmorSet<AbilityArmorSet> armor = CosmicArmorSetsPlugin.get_().getPlayerAbilityArmorSets().remove((Object) player);
+        ((DimensionalTravelerSet) ArmorSet.DIMENSIONAL_TRAVELER.getArmorSetInfo()).onPlayerEvent(event);
+        ((EngineerSet) ArmorSet.ENGINEER.getArmorSetInfo()).onPlayerEvent(event);
+        CachedArmorSet<AbilityArmorSet> armor = CosmicArmorSetsPlugin.get_().getPlayerAbilityArmorSets().remove(player);
         if (armor != null) {
             armor.getSet().getArmorSetInfo().onUnequip(player);
         }
@@ -82,14 +82,14 @@ public class SetBonusListener
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerChangeWorld(PlayerChangedWorldEvent event) {
-        ((SupremeArmorSet) ArmorSet.SUPREME.getArmorSetInfo()).onPlayerEvent((Event) event);
+        ((SupremeArmorSet) ArmorSet.SUPREME.getArmorSetInfo()).onPlayerEvent(event);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onEntityChangeBlock(EntityChangeBlockEvent event) {
         if (event.getTo() != Material.AIR) {
-            ((DimensionalTravelerSet) ArmorSet.DIMENSIONAL_TRAVELER.getArmorSetInfo()).onPlayerEvent((Event) event);
-            ((EngineerSet) ArmorSet.ENGINEER.getArmorSetInfo()).onPlayerEvent((Event) event);
+            ((DimensionalTravelerSet) ArmorSet.DIMENSIONAL_TRAVELER.getArmorSetInfo()).onPlayerEvent(event);
+            ((EngineerSet) ArmorSet.ENGINEER.getArmorSetInfo()).onPlayerEvent(event);
         }
     }
 
@@ -123,7 +123,7 @@ public class SetBonusListener
             Player damaged;
             ArmorSet damagedArmorSet;
             int reduceLevel;
-            if (event.getDamage(EntityDamageEvent.DamageModifier.BASE) != damageAtStart && (reduceLevel = UpgradeUtils.getUpgradeLevel((Player) ((Player) event.getEntity()), (String) "HEROIC_ARMOR_SET")) > 0) {
+            if (event.getDamage(EntityDamageEvent.DamageModifier.BASE) != damageAtStart && (reduceLevel = UpgradeUtils.getUpgradeLevel((Player) event.getEntity(), "HEROIC_ARMOR_SET")) > 0) {
                 event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * (reduceLevel == 1 ? 0.9 : (reduceLevel == 2 ? 0.85 : (reduceLevel == 3 ? 0.8 : (reduceLevel == 4 ? 0.75 : 1.0)))));
             }
             if ((damagedArmorSet = CosmicArmorSetsAPI.getArmorSet(damaged = (Player) event.getEntity())) != null) {
@@ -134,7 +134,7 @@ public class SetBonusListener
                     abilityArmorSet.getArmorSetInfo().onPlayerDamaged(damaged, event);
                 }
             }
-            if (!damaged.hasMetadata("blackout") && !(bonuses = CosmicArmorSetsAPI.getBonusCrystalsEquippedWithCorruptionIncluded(damaged, (Entity) damager)).isEmpty()) {
+            if (!damaged.hasMetadata("blackout") && !(bonuses = CosmicArmorSetsAPI.getBonusCrystalsEquippedWithCorruptionIncluded(damaged, damager)).isEmpty()) {
                 for (Map.Entry<ArmorSet, Integer> ent : bonuses.entrySet()) {
                     ent.getKey().getArmorSetInfo().onPlayerDamagedBonus(damaged, ent.getValue(), event);
                 }
@@ -149,9 +149,9 @@ public class SetBonusListener
             Player extraDamage = (Player) event.getEntity();
             ArmorSet set = CosmicArmorSetsAPI.getArmorSet(extraDamage);
             if (set != null && set.getArmorSetInfo() instanceof OtherPlayerEventListenerSet) {
-                ((OtherPlayerEventListenerSet) ((Object) set.getArmorSetInfo())).onPlayerEvent((Event) event);
+                ((OtherPlayerEventListenerSet) set.getArmorSetInfo()).onPlayerEvent(event);
             } else if (set == null && (abilityArmorSet = CosmicArmorSetsAPI.getCachedAbilityArmorSet(extraDamage)) != null && abilityArmorSet.getArmorSetInfo() instanceof OtherPlayerEventListenerSet) {
-                ((OtherPlayerEventListenerSet) ((Object) abilityArmorSet.getArmorSetInfo())).onPlayerEvent((Event) event);
+                ((OtherPlayerEventListenerSet) abilityArmorSet.getArmorSetInfo()).onPlayerEvent(event);
             }
         }
     }
@@ -161,7 +161,7 @@ public class SetBonusListener
         Player extraDamage;
         ArmorSet set;
         if (event.getEntity() instanceof Player && (set = CosmicArmorSetsAPI.getArmorSet(extraDamage = (Player) event.getEntity())) != null && set.getArmorSetInfo() instanceof OtherPlayerEventListenerSet) {
-            ((OtherPlayerEventListenerSet) ((Object) set.getArmorSetInfo())).onPlayerEvent((Event) event);
+            ((OtherPlayerEventListenerSet) set.getArmorSetInfo()).onPlayerEvent(event);
         }
     }
 }
