@@ -25,12 +25,8 @@ import com.compilex.CosmicArmorSets.items.CrystalExtractionItem;
 import com.compilex.CosmicArmorSets.items.OmniCrystal;
 import com.compilex.CosmicArmorSets.listeners.*;
 import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
-import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Map;
@@ -50,21 +46,21 @@ public class CosmicArmorSetsPlugin
         p = this;
         p.registerListeners();
         this.registerCommands();
-        Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin) this, () -> {
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
             for (Player pl : Bukkit.getServer().getOnlinePlayers()) {
                 CosmicArmorSetsAPI.getArmorSet(pl);
             }
         }, 100L, 100L);
-        Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin) this, () -> {
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
             for (Player pl : Bukkit.getServer().getOnlinePlayers()) {
                 CosmicArmorSetsAPI.getAbilityArmorSet(pl);
             }
         }, 20L, 20L);
         if (Bukkit.getPluginManager().isPluginEnabled("CosmicSkyCustomItems")) {
-            CosmicSkyCustomItems.get().getItemManager().registerCustomItem((CosmicItem) new CrystalExtractionItem());
-            CosmicSkyCustomItems.get().getItemManager().registerCustomItem((CosmicItem) new AntiMKitCrystalItem());
-            CosmicSkyCustomItems.get().getItemManager().registerCustomItem((CosmicItem) new ArmorSetBonusCrystalItem());
-            CosmicSkyCustomItems.get().getItemManager().registerCustomItem((CosmicItem) new OmniCrystal());
+            CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new CrystalExtractionItem());
+            CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new AntiMKitCrystalItem());
+            CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new ArmorSetBonusCrystalItem());
+            CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new OmniCrystal());
         }
     }
 
@@ -79,11 +75,11 @@ public class CosmicArmorSetsPlugin
     }
 
     private void registerListeners() {
-        this.getServer().getPluginManager().registerEvents(new HeroicArmorListener(), (Plugin) this);
-        this.getServer().getPluginManager().registerEvents(new ArmorSetUpgradeListener(), (Plugin) this);
-        Bukkit.getServer().getPluginManager().registerEvents(new SetBonusListener(), (Plugin) this);
-        this.getServer().getPluginManager().registerEvents(new MasteryShardListener(), (Plugin) this);
-        this.getServer().getPluginManager().registerEvents(new ArmorSetCrystalTinkererListener(), (Plugin) this);
+        this.getServer().getPluginManager().registerEvents(new HeroicArmorListener(), this);
+        this.getServer().getPluginManager().registerEvents(new ArmorSetUpgradeListener(), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new SetBonusListener(), this);
+        this.getServer().getPluginManager().registerEvents(new MasteryShardListener(), this);
+        this.getServer().getPluginManager().registerEvents(new ArmorSetCrystalTinkererListener(), this);
     }
 
     public Map<Player, CachedArmorSet<AbilityArmorSet>> getPlayerAbilityArmorSets() {

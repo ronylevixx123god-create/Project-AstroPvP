@@ -1,21 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.rit.sucy.CustomEnchantment
- *  com.rit.sucy.EnchantmentAPI
- *  org.arkhamnetwork.enchantments.EnchantmentBook
- *  org.arkhamnetwork.enchantments.enchantments.armor.Phoenix
- *  org.bukkit.Bukkit
- *  org.bukkit.entity.Entity
- *  org.bukkit.entity.LivingEntity
- *  org.bukkit.entity.Player
- *  org.bukkit.event.entity.EntityDamageByEntityEvent
- *  org.bukkit.event.entity.EntityDamageEvent$DamageModifier
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.potion.PotionEffectType
- */
 package com.compilex.CosmicArmorSets.enums;
 
 import com.compilex.CosmicArmorSets.CosmicArmorSetsPlugin;
@@ -45,7 +27,7 @@ public abstract class ArmorSetInfo {
             return false;
         }
         double newHealth = player.getHealth() - toSubtract;
-        if (newHealth <= 0.0 && Phoenix.hasPhoenixEquipped((Player) player) && Phoenix.procPhoenix((Player) player, (LivingEntity) damager, (double) toSubtract)) {
+        if (newHealth <= 0.0 && Phoenix.hasPhoenixEquipped(player) && Phoenix.procPhoenix(player, damager, toSubtract)) {
             Bukkit.getLogger().info("[ArmorSets] Not killing " + player.getName() + " due to Phoenix proc!");
             return false;
         }
