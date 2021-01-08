@@ -63,7 +63,6 @@ public class BalanceManager {
 
     public static LinkedList<List<String>> getPages() {
         if (balancetop == null || lastupdate <= System.currentTimeMillis()) {
-            minebansEnabled = Bukkit.getPluginManager().isPluginEnabled("MineBans");
             System.out.println("Updating /baltop...");
             long start = System.currentTimeMillis();
             lastupdate = System.currentTimeMillis() + 1200000L;
@@ -127,10 +126,7 @@ public class BalanceManager {
     private static boolean isBanned(UUID uuid) {
         return bannedCache.contains(uuid);
     }
-
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
+    
     public static void loadBalances() {
         System.out.println("Loading balances..");
         long start = System.currentTimeMillis();
