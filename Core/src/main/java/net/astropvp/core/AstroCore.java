@@ -34,6 +34,9 @@ import me.ifamasssxd.cosmicheroicenvoys.listeners.EnvoyListener;
 import me.ifamasssxd.cosmicheroicenvoys.managers.EnvoyManager;
 import me.ifamasssxd.cosmicjackpot.listeners.JackpotListener;
 import me.ifamasssxd.cosmicjackpot.struct.JackpotManager;
+import me.ifamasssxd.cosmictoggles.commands.CommandScoreboard;
+import me.ifamasssxd.cosmictoggles.commands.CommandToggles;
+import me.ifamasssxd.cosmictoggles.manager.TogglesManager;
 import me.ifamasssxd.help.commands.CommandHelp;
 import me.ifamasssxd.help.commands.CommandHelpEnchants;
 import me.ifamasssxd.help.commands.CommandSpawnMenu;
@@ -101,6 +104,8 @@ public class AstroCore extends JavaPlugin {
     @Getter public EnvoyManager envoyManager;
     // Coin Flips
     @Getter private CoinFlipManager coinFlipManager;
+    // Cosmic Toggles
+    @Getter private TogglesManager toggleManager = new TogglesManager();
 
     @SneakyThrows
     public void onEnable() {
@@ -171,6 +176,13 @@ public class AstroCore extends JavaPlugin {
 
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new AutoGiveAllTask(), 20L, 20L);
 
+        this.toggleManager.loadToggles();
+
+        this.getCommand("togglesb").setExecutor(new CommandScoreboard());
+        this.getCommand("toggles").setExecutor(new CommandToggles());
+        this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
+
+
         this.getCommand("filter").setExecutor(new CommandFilter());
         this.getCommand("wiki").setExecutor(new CommandWiki());
         this.getCommand("spawnmenu").setExecutor(new CommandSpawnMenu());
@@ -234,6 +246,8 @@ public class AstroCore extends JavaPlugin {
         this.coinFlipManager.getCoinFlipMatches().clear();
         this.coinFlipManager.saveCoinFlipRecords();
         this.coinFlipManager.saveToggles();
+
+        this.toggleManager.saveToggles();
     }
 
 

@@ -15,6 +15,7 @@ import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import net.minecraft.server.v1_8_R3.*;
+import net.minecraft.server.v1_8_R3.World;
 import org.arkhamnetwork.enchantments.EnchantmentBook;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.Material;
@@ -135,7 +136,7 @@ public class EngineerSet extends ArmorSetInfo implements Listener, WeaponedArmor
 
     private FallingBlock createFallingBlock(Location location, final Player original, final Faction faction) {
         final Material mat = Material.TNT;
-        EntityFallingBlock block = new EntityFallingBlock(((CraftWorld) location.getWorld()).getHandle(), location.getX(), location.getY(), location.getZ(), Block.getById(mat.getId()), 0) {
+        EntityFallingBlock block = new EntityFallingBlock(location, (World) location.getWorld(), location.getX(), location.getY(), location.getZ(), Block.getById(mat.getId()).getBlockData()) {
             boolean damagedPlayed = false;
 
 

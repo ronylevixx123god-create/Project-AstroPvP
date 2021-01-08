@@ -68,4 +68,10 @@ commands:
     description: nextgiveall from autogiveall
   forcegiveall:
     description: forcegiveall from autogiveall
+  togglesb:
+    description: Toggle scoreboards from factions.
+    aliases: [togglescoreboard, sb]
+  toggles:
+    description: Toggles.
+    aliases: [settings, options]
 
