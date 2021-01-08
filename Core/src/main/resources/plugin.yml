@@ -62,4 +62,10 @@ commands:
   coinflip:
     description: Coin flip command.
     aliases: [cf, coinflips]
+  claim:
+    description: claim from autogiveall
+  nextgiveall:
+    description: nextgiveall from autogiveall
+  forcegiveall:
+    description: forcegiveall from autogiveall
 

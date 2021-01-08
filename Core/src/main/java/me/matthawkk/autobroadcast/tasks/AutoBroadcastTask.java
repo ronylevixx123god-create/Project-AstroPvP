@@ -5,11 +5,12 @@
  *  com.google.common.collect.Lists
  *  org.bukkit.Bukkit
  */
-package me.matthawkk.tasks;
+package me.matthawkk.autobroadcast.tasks;
 
 import com.google.common.collect.Lists;
 import java.util.List;
-import me.matthawkk.struct.BroadcastMessages;
+
+import me.matthawkk.autobroadcast.struct.BroadcastMessages;
 import org.bukkit.Bukkit;
 
 public class AutoBroadcastTask

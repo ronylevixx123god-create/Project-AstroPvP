@@ -48,12 +48,16 @@ import me.ifamasssxd.killtracker.commands.CommandWithdrawSouls;
 import me.ifamasssxd.killtracker.listeners.ItemListener;
 import me.ifamasssxd.killtracker.listeners.PlayerListener;
 import me.ifamasssxd.killtracker.listeners.SoulGemListener;
-import me.matthawkk.tasks.AutoBroadcastTask;
+import me.matthawkk.autobroadcast.tasks.AutoBroadcastTask;
+import me.matthawkk.autogiveall.tasks.AutoGiveAllTask;
 import net.astropvp.core.commands.*;
 import net.astropvp.core.listeners.*;
 import net.astropvp.core.tasks.LastManStandingCapTask;
 import net.milkbowl.vault.economy.Economy;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.World;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -165,6 +169,7 @@ public class AstroCore extends JavaPlugin {
             this.coinFlipManager.clearStats();
         }
 
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new AutoGiveAllTask(), 20L, 20L);
 
         this.getCommand("filter").setExecutor(new CommandFilter());
         this.getCommand("wiki").setExecutor(new CommandWiki());
@@ -174,6 +179,9 @@ public class AstroCore extends JavaPlugin {
         this.getCommand("givesoulgem").setExecutor(new CommandGiveSoulGem());
         this.getCommand("title").setExecutor(new CommandTitle());
         this.getCommand("titleset").setExecutor(new CommandTitleSet());
+        this.getCommand("claim").setExecutor(new me.matthawkk.autogiveall.commands.CommandClaim());
+        this.getCommand("forcegiveall").setExecutor(new me.matthawkk.autogiveall.commands.CommandForceGiveAll());
+        this.getCommand("nextgiveall").setExecutor(new me.matthawkk.autogiveall.commands.CommandNextGiveAll());
 
         this.getServer().getPluginManager().registerEvents(new CommandListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
@@ -210,17 +218,17 @@ public class AstroCore extends JavaPlugin {
         for (CoinFlipMatch active : this.coinFlipManager.getCoinFlipMatches()) {
             if (active.getMatchState() == CoinFlipMatch.MatchState.WAITING) {
                 if (active.getStarterPlayer() == null) continue;
-                economy.depositPlayer((OfflinePlayer)active.getStarterPlayer(), active.getWager());
+                economy.depositPlayer(active.getStarterPlayer(), active.getWager());
                 Bukkit.getLogger().info("Depositing $" + active.getWager() + " to " + active.getStarterPlayer().getName() + " due to reload...");
                 continue;
             }
             if (active.getMatchState() == CoinFlipMatch.MatchState.DONE) continue;
             if (active.getStarterPlayer() != null) {
-                economy.depositPlayer((OfflinePlayer)active.getStarterPlayer(), active.getWager());
+                economy.depositPlayer(active.getStarterPlayer(), active.getWager());
                 Bukkit.getLogger().info("Depositing $" + active.getWager() + " to " + active.getStarterPlayer().getName() + " due to reload...");
             }
             if (active.getSecondPlayer() == null) continue;
-            economy.depositPlayer((OfflinePlayer)active.getSecondPlayer(), active.getWager());
+            economy.depositPlayer(active.getSecondPlayer(), active.getWager());
             Bukkit.getLogger().info("Depositing $" + active.getWager() + " to " + active.getSecondPlayer().getName() + " due to reload...");
         }
         this.coinFlipManager.getCoinFlipMatches().clear();
