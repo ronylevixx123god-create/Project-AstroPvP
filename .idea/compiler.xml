@@ -9,8 +9,8 @@
         <outputRelativeToContentRoot value="true" />
         <module name="GUIShop" />
         <module name="AuctionHouse" />
-        <module name="SpaceChests" />
         <module name="Factions" />
+        <module name="SpaceChests" />
         <module name="Enchantments" />
         <module name="Attributes" />
         <module name="Bosses" />
@@ -27,6 +27,7 @@
     <bytecodeTargetLevel>
       <module name="ArmorSets" target="1.8" />
       <module name="MoneyNotes" target="1.8" />
+      <module name="SpaceChests (1)" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

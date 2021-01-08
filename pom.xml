@@ -24,6 +24,7 @@
         <module>Backpacks</module>
         <module>Attributes</module>
         <module>CustomItems</module>
+        <module>Explosive</module>
     </modules>
 
     <build>
