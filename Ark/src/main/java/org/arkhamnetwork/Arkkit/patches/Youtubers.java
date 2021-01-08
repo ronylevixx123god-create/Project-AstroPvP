@@ -1,9 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  org.bukkit.plugin.Plugin
- */
 package org.arkhamnetwork.Arkkit.patches;
 
 import org.arkhamnetwork.Arkkit.Arkkit;
@@ -27,9 +21,8 @@ public class Youtubers
         youtubers = new ArrayList<String>(Arrays.asList("Woofless", "TBNRfrags", "Lachlan", "Vikkstar123", "iFamasssxD"));
         this.registerCommand(new CommandTogglePlayer("toggleplayer", "/<command> [args]", "Toggles visibilty of players.", new ArrayList<String>(Arrays.asList("hideplayers", "showplayers", "ghost"))));
         if (Arkkit.get().getConfig().getBoolean("settings.youtubers.bless", true)) {
-            this.registerCommand(new CommandBless("bless", "/<command> [args]", "Bless command.", new ArrayList<String>(Arrays.asList("blessme"))));
+            this.registerCommand(new CommandBless("bless", "/<command> [args]", "Bless command.", new ArrayList<>(Arrays.asList("blessme"))));
         }
-        this.registerListener(new TogglePlayerListener());
     }
 
     @Override
