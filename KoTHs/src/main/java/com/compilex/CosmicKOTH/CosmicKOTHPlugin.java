@@ -43,19 +43,24 @@ import com.compilex.CosmicOutposts.outpost.enums.OutpostTier;
 import com.compilex.CosmicOutposts.outpost.managers.DataManager;
 import com.compilex.CosmicOutposts.utils.MonsterUtils;
 import com.earth2me.essentials.Essentials;
-import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.Factions;
 import com.massivecraft.factions.zcore.util.WorldUtil;
 import com.sk89q.worldedit.BlockVector;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import lombok.Getter;
 import lombok.Setter;
+import me.ifamasssxd.cosmichcf.commands.CommandOutpost;
+import me.ifamasssxd.cosmichcf.listeners.OutpostMcmmoPerkListener;
+import me.ifamasssxd.cosmichcf.listeners.OutpostPerkListener;
+import me.ifamasssxd.cosmichcf.listeners.OutpostPerkVanillaListener;
+import me.ifamasssxd.cosmichcf.listeners.OutpostWorldListener;
+import me.ifamasssxd.cosmichcf.managers.OutpostManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
@@ -66,9 +71,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class CosmicKOTHPlugin
 extends JavaPlugin {
@@ -89,6 +92,15 @@ extends JavaPlugin {
     @Getter @Setter private Economy economy;
     @Getter @Setter private DataManager dataManager;
 
+    @Getter @Setter private OutpostManager outpostManager;
+    @Getter @Setter private boolean trophiesEnabled = false;
+    @Getter @Setter private boolean vanillaPlanet = false;
+    @Getter @Setter private boolean cosmicGalaxyPlanet = false;
+    @Getter @Setter private boolean hcfPlanet = false;
+    @Getter @Setter private String baseName = "Outpost";
+    @Getter @Setter private String serverType = "hcf";
+    @Getter @Setter private Map<String, String> cachedMessages = new HashMap<String, String>();
+
     public void onEnable() {
         _ = this;
         WorldGuardUtils.hook();
@@ -100,6 +112,7 @@ extends JavaPlugin {
         this.registerCommands();
         this.registerListeners();
         this.registerTasks();
+        this.saveDefaultConfig();
 
         this.setupEconomy();
 
@@ -116,6 +129,15 @@ extends JavaPlugin {
 
         this.getCommand("outposts").setExecutor(new CommandOutposts());
         this.getCommand("aoutposts").setExecutor(new CommandAoutposts());
+
+        this.serverType = this.getConfig().getString("type", "hcf");
+        this.vanillaPlanet = this.serverType.equalsIgnoreCase("vanilla");
+        this.cosmicGalaxyPlanet = this.serverType.equalsIgnoreCase("cosmic");
+        this.hcfPlanet = this.serverType.equalsIgnoreCase("hcf");
+        this.baseName = this.getConfig().getString("outpost-name", "Stronghold");
+        this.outpostManager = new OutpostManager();
+        this.outpostManager.loadOutposts(this);
+        this.trophiesEnabled = new File("plugins/CosmicHCFTrophies.jar").exists();
     }
 
     public void onDisable() {
@@ -148,6 +170,9 @@ extends JavaPlugin {
         }
         this.getDataManager().saveStoredTimes();
         this.saveConfig();
+        if (this.outpostManager != null) {
+            this.outpostManager.onDisable(this);
+        }
     }
 
     private void fixLog() {
@@ -300,17 +325,41 @@ extends JavaPlugin {
     private void registerCommands() {
         this.getCommand("koth").setExecutor(new CommandKoth());
         this.getCommand("akoth").setExecutor(new CommandAdminKoth());
+        this.getCommand("stronghold").setExecutor((CommandExecutor)new CommandOutpost());
     }
 
     private void registerListeners() {
         Bukkit.getPluginManager().registerEvents(new KothSanityListener(), this);
         Bukkit.getPluginManager().registerEvents(new KothLootBagListener(), this);
         Bukkit.getPluginManager().registerEvents(new KothInventoryListener(), this);
+
+        this.getServer().getPluginManager().registerEvents((Listener)new OutpostWorldListener(), (Plugin)this);
+        if (this.isVanillaPlanet()) {
+            this.getServer().getPluginManager().registerEvents((Listener)new OutpostMcmmoPerkListener(), (Plugin)this);
+            this.getServer().getPluginManager().registerEvents((Listener)new OutpostPerkVanillaListener(), (Plugin)this);
+        } else if (this.isHcfPlanet()) {
+            this.getServer().getPluginManager().registerEvents((Listener)new OutpostPerkListener(), (Plugin)this);
+        }
     }
 
     private void registerTasks() {
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, new DateWatcherTask(), 1200L, 600L);
         Bukkit.getScheduler().runTaskTimer(this, new KothSanityTask(), 20L, 20L);
+    }
+
+    public String getMessage(String msg, String ... args) {
+        String message = this.cachedMessages.get(msg);
+        if (message != null) {
+            return String.format(message, args);
+        }
+        message = this.getConfig().getString("messages." + msg);
+        if (message == null) {
+            Bukkit.getLogger().info("Cant find message to " + msg + "!");
+            return "";
+        }
+        message = ChatColor.translateAlternateColorCodes((char)'&', (String)message);
+        this.cachedMessages.put(msg, message);
+        return String.format(message, args);
     }
 
     private boolean setupEconomy() {

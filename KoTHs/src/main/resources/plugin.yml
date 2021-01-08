@@ -10,3 +10,12 @@ commands:
   akoth:
     description: Admin KOTH command.
     usage: /<command>
+  stronghold:
+    description: Outpost command
+    aliases: [citadel, strongholds, sh]
+  outposts:
+    description: View information about Cosmic Outposts.
+    aliases: [outpost, o]
+  aoutposts:
+    description: Admin command.
+    aliases: [aoutpost]
