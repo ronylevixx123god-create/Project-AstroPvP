@@ -83,7 +83,6 @@ import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.FallingBlock;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -232,75 +231,73 @@ public class DimensionalTravelerSet
     private FallingBlock createFallingBlock(Location location, final Player original, final Faction faction) {
         final Material mat = this.materials.get(this.random.nextInt(this.materials.size()));
         EntityFallingBlock block = new EntityFallingBlock((World) ((CraftWorld) location.getWorld()).getHandle(), location.getBlockX(), location.getBlockY(), location.getBlockZ(), Block.getById(mat.getId()), 0) {
-            boolean damagedPlayed;
-
-            {
-                //TODO: BOWP - no idea, spigot numbers
-                super(x0, x1, x2, x3, x4, x5);
-                this.damagedPlayed = false;
-            }
+            boolean damagedPlayed = false;
 
             public void die() {
-                if (this.isAlive() && this.damagedPlayed) {
-                    this.world.getWorld().playEffect(this.getBukkitEntity().getLocation(), Effect.STEP_SOUND, mat.getId());
-                }
+                if (isAlive() && this.damagedPlayed)
+                    this.world.getWorld().playEffect(getBukkitEntity().getLocation(), Effect.STEP_SOUND, mat.getId());
                 super.die();
             }
 
             public void h() {
-                if (this.ticksLived >= 1) {
+                if (this.ticksLived >= 1)
                     try {
                         List<Entity> arraylist = this.world.getEntities(this, this.getBoundingBox());
-                        arraylist.forEach(entity -> {
-                            if (!(entity instanceof HumanEntity)) {
-                                arraylist.remove(entity);
-                            }
-                        });
                         int killed = 0;
                         for (Entity ent : arraylist) {
-                            CraftPlayer player;
-                            if (!this.isAlive()) break;
-                            if (!(ent instanceof EntityHuman) || (player = (CraftPlayer) ent.getBukkitEntity()).getGameMode() == GameMode.CREATIVE || player.equals(original) || player.isDead() || EssentialsUtils.isInGodMode(player) || player.hasMetadata("spectator") || player.hasMetadata("NPC") || player.getHealth() <= 0.0 || !WorldGuardUtils.isPvPEnabled(player.getLocation()) || DimensionalTravelerSet.this.isIgnoring(player) || faction.isNormal() && faction.getRelationTo(FPlayers.i.get(player)).isAtLeast(Relation.TRUCE))
+                            if (!isAlive())
+                                break;
+                            if (!(ent instanceof EntityHuman))
+                                continue;
+                            CraftPlayer player = (CraftPlayer) ent.getBukkitEntity();
+                            if (player.getGameMode() == GameMode.CREATIVE || player.equals(original) || player.isDead() || EssentialsUtils.isInGodMode((Player) player) || player.hasMetadata("spectator") || player.hasMetadata("NPC"))
+                                continue;
+                            if (player.getHealth() <= 0.0D)
+                                continue;
+                            if (!WorldGuardUtils.isPvPEnabled(player.getLocation()))
+                                continue;
+                            if (DimensionalTravelerSet.this.isIgnoring((Player) player))
+                                continue;
+                            if (faction.isNormal() && faction.getRelationTo((RelationParticipator) FPlayers.i.get((OfflinePlayer) player)).isAtLeast(Relation.TRUCE))
+                                continue;
+                            if (CosmicArmorSetsAPI.hasInfiniteLuck((Player) player, 5, original))
                                 continue;
                             DimensionalDamageTracker tracked = DimensionalTravelerSet.this.tracker.computeIfAbsent(player.getUniqueId(), e -> new DimensionalDamageTracker());
                             if (tracked.checkHit()) {
                                 Bukkit.getLogger().info("[DimensionalTraveler] Not damaging " + player.getName() + " due to being damaged 4 times in the last 10 seconds");
                                 continue;
                             }
-                            double damage = 3.0;
-                            if (!ArmorSetInfo.subtractDirectHealth(player, original, damage)) {
-                                this.die();
+                            double damage = Math.min(player.getMaxHealth(), 44.0D) * 0.15D;
+                            if (!ArmorSetInfo.subtractDirectHealth((Player) player, (LivingEntity) original, damage)) {
+                                die();
                                 continue;
                             }
                             this.damagedPlayed = true;
                             tracked.trackHit();
-                            DimensionalTravelerSet.this.unfreeze(player);
-                            player.playSound(player.getLocation(), Sound.ZOMBIE_WOODBREAK, 1.0f, 1.1f);
+                            DimensionalTravelerSet.this.unfreeze((Player) player);
+                            player.playSound(player.getLocation(), Sound.ZOMBIE_WOODBREAK, 1.0F, 1.1F);
                             Bukkit.getLogger().info("[CosmicArmorSets] Damaging " + player.getName() + " for " + damage + " due to " + original.getName() + "'s Dimensional Traveler Block");
-                            ++killed;
+                            killed++;
                         }
                         if (killed > 0) {
-                            this.die();
+                            die();
                             Bukkit.getLogger().info("Damaging " + killed + " players damage from falling block!");
                             return;
                         }
-                        if (this.ticksLived % 20 == 0 && (this.world.getType(new BlockPosition(this.locX, this.locY, this.locZ)) == Blocks.WEB || this.world.getType(new BlockPosition(this.locX, this.locY - 1, this.locZ)) == Blocks.WEB)) {
-                            this.die();
-                        }
-                    } catch (Exception e2) {
-                        e2.printStackTrace();
+                        if (this.ticksLived % 20 == 0 && (this.world.getType(new BlockPosition(this.locX, (int) this.locY, (int) this.locZ)) == Blocks.WEB || this.world.getType(new BlockPosition(this.locX, (int) this.locY - 1, (int) this.locZ)) == Blocks.WEB))
+                            die();
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                }
                 super.h();
-                if (this.onGround && this.isAlive()) {
-                    this.die();
-                }
+                if (this.onGround && isAlive())
+                    die();
             }
         };
         block.ticksLived = 1;
-        ((CraftWorld) location.getWorld()).getHandle().addEntity(block, CreatureSpawnEvent.SpawnReason.CUSTOM);
+        ((CraftWorld) location.getWorld()).getHandle().addEntity((Entity) block, CreatureSpawnEvent.SpawnReason.CUSTOM);
         FallingBlock fallingBlock = (FallingBlock) block.getBukkitEntity();
-        fallingBlock.setMetadata("dimensionalShift", new FixedMetadataValue(CosmicBosses.getInstance(), faction.getId()));
+        fallingBlock.setMetadata("dimensionalShift", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), faction.getId()));
         fallingBlock.setDropItem(false);
         return fallingBlock;
     }

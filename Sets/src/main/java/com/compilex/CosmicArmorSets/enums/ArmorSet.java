@@ -31,7 +31,6 @@ import com.google.common.collect.Lists;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import me.ifamasssxd.cosmicskycustoms.struct.CustomItemBuilder;
-import net.minecraft.server.v1_8_R3.NBTBase;
 import org.arkhamnetwork.enchantments.EnchantmentBook;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -154,14 +153,14 @@ public enum ArmorSet {
     }
 
     public static ItemStack createCrystal(List<ArmorSet> armorSet, double applyChance) {
-        return new CustomItemBuilder("bonusArmorCrystal", new Object[]{armorSet, applyChance}).build();
+        return new CustomItemBuilder("bonusArmorCrystal", armorSet, applyChance).build();
     }
 
     public static List<ArmorSet> getArmorCrystalBonusesFromCrystal(NBTTagCompoundBuilder wrapper) {
         if (wrapper.hasKey("bonus")) {
             ArmorSet set = ArmorSet.fromName(wrapper.getString("bonus"));
             if (set != null) {
-                List<ArmorSet> retr = Arrays.asList(new ArmorSet[]{set});
+                List<ArmorSet> retr = Arrays.asList(set);
                 return retr;
             }
         } else if (wrapper.hasKey("bonuses")) {
@@ -240,12 +239,13 @@ public enum ArmorSet {
         NBTTagCompoundBuilder data = wrapper.getCompoundOrCreate("cosmicData");
         data.remove("crystalBonus");
         data.remove("crystalBonuses");
-        wrapper.setNBTBase("cosmicData", (NBTBase) data.get());
+        wrapper.setNBTBase("cosmicData", data.get());
         ItemStack item = wrapper.build();
         ItemMeta im = item.getItemMeta();
         List lore = im.getLore();
         if (lore != null) {
-            lore.removeIf(s -> s.startsWith(CC.GoldB + "Armor Crystal ("));
+            // TODO: USING .startsWith wtf??!?
+            lore.removeIf(s -> s.equals(CC.GoldB + "Armor Crystal ("));
             im.setLore(lore);
         }
         item.setItemMeta(im);

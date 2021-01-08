@@ -38,7 +38,6 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
 import me.ifamasssxd.cosmichcf.struct.OutpostType;
-import net.minecraft.server.v1_8_R3.NBTBase;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -64,11 +63,11 @@ public class HeroicArmorListener
             if (type != null && (type == Material.GOLD_AXE || type == Material.GOLD_SWORD)) {
                 event.setCancelled(true);
                 if (event.getWhoClicked() instanceof Player) {
-                    ((Player) event.getWhoClicked()).sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot craft this weapon!");
+                    event.getWhoClicked().sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot craft this weapon!");
                 }
             } else if (type != null && (type == Material.LEATHER_HELMET || type == Material.LEATHER_CHESTPLATE || type == Material.LEATHER_LEGGINGS || type == Material.LEATHER_BOOTS) && event.getWhoClicked().getInventory().contains(Material.INK_SACK) && event.getWhoClicked() instanceof Player && !event.getWhoClicked().isOp()) {
                 event.setCancelled(true);
-                ((Player) event.getWhoClicked()).sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot manually dye Leather Armor!");
+                event.getWhoClicked().sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot manually dye Leather Armor!");
             }
         }
     }
