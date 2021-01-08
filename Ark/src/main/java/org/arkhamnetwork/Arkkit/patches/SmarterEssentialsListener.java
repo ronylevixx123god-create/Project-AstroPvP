@@ -1,44 +1,6 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  com.compilex.CompilexPermissions.PermissionsAPI
- *  com.compilex.CompilexServerSync.ServerSyncAPI
- *  com.compilex.CompilexServerSync.libs.GameServerState
- *  com.cosmicpvp.CosmicRankQuests.utils.PlayerRankUtils
- *  com.cosmicpvp.cosmicutils.compat.ParamBuilder
- *  com.cosmicpvp.cosmicutils.utils.FactionUtils
- *  com.earth2me.essentials.User
- *  com.gmail.nossr50.skills.mining.MiningManager
- *  com.gmail.nossr50.util.player.UserManager
- *  com.massivecraft.factions.FPlayer
- *  com.massivecraft.factions.Faction
- *  com.massivecraft.factions.struct.Relation
- *  net.ess3.api.events.NickChangeEvent
- *  net.minecraft.util.org.apache.commons.lang3.text.WordUtils
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.Location
- *  org.bukkit.entity.Player
- *  org.bukkit.event.EventHandler
- *  org.bukkit.event.EventPriority
- *  org.bukkit.event.Listener
- *  org.bukkit.event.entity.EntityDamageEvent
- *  org.bukkit.event.player.AsyncPlayerChatEvent
- *  org.bukkit.event.player.PlayerChatTabCompleteEvent
- *  org.bukkit.event.player.PlayerCommandPreprocessEvent
- *  org.bukkit.event.player.PlayerJoinEvent
- *  org.bukkit.event.player.PlayerPickupItemEvent
- *  org.bukkit.event.player.PlayerTeleportEvent
- *  org.bukkit.event.player.PlayerTeleportEvent$TeleportCause
- *  org.bukkit.event.player.PlayerVelocityEvent
- *  org.bukkit.event.player.VelocityTrigger
- */
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.compilex.CompilexPermissions.PermissionsAPI;
-import com.compilex.CompilexServerSync.ServerSyncAPI;
-import com.compilex.CompilexServerSync.libs.GameServerState;
 import com.cosmicpvp.CosmicRankQuests.utils.PlayerRankUtils;
 import com.cosmicpvp.cosmicutils.compat.ParamBuilder;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
@@ -150,7 +112,7 @@ final class SmarterEssentialsListener
             Faction fpFaction = FactionUtils.getFaction(p);
             Faction locationFaction = FactionUtils.getFactionAt(e.getTo());
             Relation relation = this.getRelationWish(fpFaction, locationFaction);
-            if (!(locationFaction == fpFaction || relation.isAlly() || relation.isTruce() || relation.isNeutral() || ((Boolean) FactionUtils.callFactionMethod(locationFaction, "isWarZone", null)).booleanValue() || ((Boolean) FactionUtils.callFactionMethod(locationFaction, "isSafeZone", null)).booleanValue() || ((Boolean) FactionUtils.callFactionMethod(locationFaction, "isNone", null)).booleanValue() || p.isOp())) {
+            if (!(locationFaction == fpFaction || relation.isAlly() || relation.isTruce() || relation.isNeutral() || (Boolean) FactionUtils.callFactionMethod(locationFaction, "isWarZone", null) || (Boolean) FactionUtils.callFactionMethod(locationFaction, "isSafeZone", null) || ((Boolean) FactionUtils.callFactionMethod(locationFaction, "isNone", null)).booleanValue() || p.isOp())) {
                 e.setCancelled(true);
                 e.getPlayer().sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot teleport to an enemy's territory.");
             }
@@ -207,9 +169,6 @@ final class SmarterEssentialsListener
             }
             this.listCommandCache.add("");
             this.listCommandCache.add(ChatColor.AQUA + "" + ChatColor.BOLD + "Factions: " + ChatColor.AQUA + this.getOnlinePlayersInFactions() + ChatColor.GRAY + " players" + ChatColor.GRAY + " online in " + ChatColor.AQUA + this.getOnlineFactionCount() + " different factions.");
-            if (ServerSyncAPI.getCurrentGameServerState() != GameServerState.ONLINE) {
-                this.listCommandCache.add(ChatColor.AQUA + "" + ChatColor.BOLD + "VIP Level: " + ServerSyncAPI.getCurrentGameServerState().getName());
-            }
             this.listCommandCache.add("");
             for (String msg : this.listCommandCache) {
                 p.sendMessage(msg);
