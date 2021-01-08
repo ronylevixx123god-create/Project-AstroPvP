@@ -25,6 +25,7 @@
         <module>Attributes</module>
         <module>CustomItems</module>
         <module>Explosive</module>
+        <module>KoTHs</module>
     </modules>
 
     <build>

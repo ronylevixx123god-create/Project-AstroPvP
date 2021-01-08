@@ -16,6 +16,8 @@
         <module name="Bosses" />
         <module name="Slotbot" />
         <module name="CustomItems" />
+        <module name="KoTHs" />
+        <module name="Explosive" />
         <module name="Utils" />
         <module name="Sets" />
         <module name="Ark" />
