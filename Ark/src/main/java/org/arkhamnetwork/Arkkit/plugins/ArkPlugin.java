@@ -1,15 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.command.Command
- *  org.bukkit.event.HandlerList
- *  org.bukkit.event.Listener
- *  org.bukkit.plugin.Plugin
- *  org.bukkit.scheduler.BukkitTask
- */
 package org.arkhamnetwork.Arkkit.plugins;
 
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;

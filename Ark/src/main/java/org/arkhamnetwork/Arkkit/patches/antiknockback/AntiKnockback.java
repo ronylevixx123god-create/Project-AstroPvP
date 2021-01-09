@@ -1,23 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  com.comphenix.protocol.PacketType
- *  com.comphenix.protocol.PacketType$Play$Server
- *  com.comphenix.protocol.ProtocolLibrary
- *  com.comphenix.protocol.events.PacketAdapter
- *  com.comphenix.protocol.events.PacketEvent
- *  com.comphenix.protocol.events.PacketListener
- *  com.google.common.collect.Lists
- *  org.bukkit.Bukkit
- *  org.bukkit.Location
- *  org.bukkit.Material
- *  org.bukkit.entity.Player
- *  org.bukkit.event.Event
- *  org.bukkit.plugin.Plugin
- *  org.bukkit.scheduler.BukkitRunnable
- *  org.bukkit.util.Vector
- */
 package org.arkhamnetwork.Arkkit.patches.antiknockback;
 
 import com.comphenix.protocol.PacketType;
@@ -72,7 +52,7 @@ public class AntiKnockback
                     }
                     final Location current = event.getPlayer().getLocation().clone();
                     int x = event.getPacket().getIntegers().readSafely(1);
-                    final Vector velocity = new Vector(x, y = event.getPacket().getIntegers().readSafely(2).intValue(), z = event.getPacket().getIntegers().readSafely(3).intValue());
+                    final Vector velocity = new Vector(x, y = event.getPacket().getIntegers().readSafely(2), z = event.getPacket().getIntegers().readSafely(3));
                     if (velocity.getY() <= 500.0 || !event.getPlayer().isOnGround()) {
                         return;
                     }

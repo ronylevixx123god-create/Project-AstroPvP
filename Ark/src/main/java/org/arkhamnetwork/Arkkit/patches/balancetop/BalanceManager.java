@@ -126,7 +126,7 @@ public class BalanceManager {
     private static boolean isBanned(UUID uuid) {
         return bannedCache.contains(uuid);
     }
-    
+
     public static void loadBalances() {
         System.out.println("Loading balances..");
         long start = System.currentTimeMillis();

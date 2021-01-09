@@ -31,9 +31,6 @@ class PlayerVaultGUIManager {
     PlayerVaultGUIManager() {
     }
 
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
     public void loadCustomVaults() {
         long start = System.currentTimeMillis();
         try {

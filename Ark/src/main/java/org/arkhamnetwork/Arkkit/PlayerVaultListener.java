@@ -142,9 +142,9 @@ class PlayerVaultListener
                 return;
             }
             player.removeMetadata("pv_name_edit", Arkkit.get());
-            CustomPlayerVaults customPlayerVaults = vaults = this.manager.getCustomPvs().containsKey(player.getUniqueId()) ? (CustomPlayerVaults) this.manager.getCustomPvs().get(player.getUniqueId()) : new CustomPlayerVaults();
-            if (!this.manager.getCustomPvs().containsKey(player.getUniqueId())) {
-                this.manager.getCustomPvs().put(player.getUniqueId(), vaults);
+            CustomPlayerVaults customPlayerVaults = vaults = this.manager.getCustomPvs().containsKey(player.getUniqueId()) ? (CustomPlayerVaults) manager.getCustomPvs().get(player.getUniqueId()) : new CustomPlayerVaults();
+            if (!manager.getCustomPvs().containsKey(player.getUniqueId())) {
+                manager.getCustomPvs().put(player.getUniqueId(), vaults);
             }
             CustomPV customPV = customPv = vaults.isCustomPV(vaultNumber) ? vaults.get(vaultNumber) : new CustomPV();
             if (!vaults.isCustomPV(vaultNumber)) {
