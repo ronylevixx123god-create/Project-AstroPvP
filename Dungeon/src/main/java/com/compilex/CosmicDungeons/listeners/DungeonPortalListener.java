@@ -7,8 +7,6 @@
  *  com.cosmicpvp.cosmicutils.utils.MaskUtils
  *  com.cosmicpvp.cosmicutils.utils.ParticleEffect
  *  com.cosmicpvp.cosmicutils.utils.TimeUtils
- *  com.cosmicpvp.cosmicutils.utils.TitleManager
- *  com.cosmicpvp.cosmicutils.utils.TitleManager$TitleColor
  *  com.cosmicpvp.cosmicutils.utils.UpgradeUtils
  *  com.cosmicpvp.cosmicutils.utils.WorldGuardUtils
  *  com.cosmicpvp.cosmicutils.utils.WorldUtil
@@ -57,33 +55,17 @@ import com.compilex.CosmicDungeons.dungeons.libs.DungeonState;
 import com.compilex.CosmicDungeons.dungeons.libs.DungeonType;
 import com.compilex.CosmicDungeons.menus.DungeonMasterKeyMenu;
 import com.compilex.CosmicDungeons.utils.PortalTrinketUtils;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.FactionUtils;
-import com.cosmicpvp.cosmicutils.utils.MaskUtils;
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
-import com.cosmicpvp.cosmicutils.utils.TimeUtils;
-import com.cosmicpvp.cosmicutils.utils.TitleManager;
-import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
-import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
-import com.cosmicpvp.cosmicutils.utils.WorldUtil;
-import com.gmail.filoghost.holograms.api.Hologram;
-import com.gmail.filoghost.holograms.api.HolographicDisplaysAPI;
+import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.Relation;
-import java.util.HashSet;
-import java.util.List;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
 import me.ifamasssxd.cosmichcf.struct.OutpostType;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.World;
+import net.astropvp.core.utils.TitleUtil;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -102,6 +84,9 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.HashSet;
+import java.util.List;
 
 public class DungeonPortalListener
 implements Listener {
@@ -175,8 +160,10 @@ implements Listener {
                     dp.setCurrentDungeon(dungeon);
                     dp.getBukkitPlayer().removeMetadata("lastRegionName", (Plugin)CosmicDungeonsPlugin.get_());
                     e.getPlayer().sendMessage((Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.GOLD + "You have entered the " + dungeon.getDungeonName() + (Object)ChatColor.GOLD + " /dungeon! You will be assigned your first /objective once the portal closes.");
-                    TitleManager.sendTitle((Player)e.getPlayer(), (String)dungeon.getDungeonName(), (TitleManager.TitleColor)TitleManager.TitleColor.GOLD);
-                    TitleManager.sendSubTitle((Player)e.getPlayer(), (String)"The /dungeon will begin once the entry portal closes.", (TitleManager.TitleColor)TitleManager.TitleColor.GRAY);
+
+                    TitleUtil.sendTitle(e.getPlayer(), ChatColor.GREEN + ChatColor.BOLD.toString() + dungeon.getDungeonName());
+                    TitleUtil.sendSubTitle(e.getPlayer(), ChatColor.GRAY + "The /dungeon will begin once the entry portal closes.");
+
                     if (this.isHeroicDungeon) {
                         for (int i = 0; i < debuffs.size(); ++i) {
                             e.getPlayer().setMetadata("heroicDungeon_" + debuffs.get(i), (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get(), (Object)System.currentTimeMillis()));
@@ -278,7 +265,7 @@ implements Listener {
                     boolean hasTimeReductionTrinket = PortalTrinketUtils.portalHasTrinket(portalItem, "TIME_REDUCTION_1") || PortalTrinketUtils.portalHasTrinket(portalItem, "TIME_REDUCTION_2") || PortalTrinketUtils.portalHasTrinket(portalItem, "TIME_REDUCTION_3");
                     boolean hasBossSlayerTrinket = PortalTrinketUtils.portalHasTrinket(portalItem, "BOSS_SLAYER");
                     if (p.getItemInHand().getAmount() > 1) {
-                        Player[] i = p.getItemInHand();
+                        ItemStack i = p.getItemInHand();
                         i.setAmount(i.getAmount() - 1);
                         p.setItemInHand((ItemStack)i);
                     } else {
@@ -311,13 +298,13 @@ implements Listener {
                     p.getWorld().playSound(portalBlockA.getLocation(), Sound.AMBIENCE_THUNDER, 2.0f, 0.35f);
                     dungeon.setDungeonStatus(DungeonState.LOADING);
                     dungeon.setPortalLocation(portalBlockA.getLocation());
-                    final Hologram holo_a = HolographicDisplaysAPI.createHologram((Plugin)CosmicDungeonsPlugin.get_(), (Location)portalBlockB.getLocation().add(0.5, 1.25, 0.5), (String[])new String[]{dungeon.getDungeonName()});
-                    final Hologram holo_b = HolographicDisplaysAPI.createHologram((Plugin)CosmicDungeonsPlugin.get_(), (Location)dungeon_portalBlockB.getLocation().add(0.5, 1.25, 0.5), (String[])new String[]{(Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "Exit Portal"});
-                    if (dungeon.isAbandondedSpaceship()) {
-                        dungeon.setObjectiveHologram(HolographicDisplaysAPI.createHologram((Plugin)CosmicDungeonsPlugin.get_(), (Location)new Location(dungeon.getWorld(), -2.0, 82.0, 90.0), (String[])new String[]{(Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "LOCKED", (Object)ChatColor.GRAY + "The airlock will automatically", (Object)ChatColor.GRAY + "unlock once the dungeon portal closes."}));
-                    } else if (dungeon.isDestroyedOutpost()) {
-                        dungeon.setObjectiveHologram(HolographicDisplaysAPI.createHologram((Plugin)CosmicDungeonsPlugin.get_(), (Location)new Location(dungeon.getWorld(), 287.0, 208.0, -12.0), (String[])new String[]{(Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "LOCKED", (Object)ChatColor.GRAY + "The airlock will automatically", (Object)ChatColor.GRAY + "unlock once the dungeon portal closes."}));
-                    }
+                    //final Hologram holo_a = HolographicDisplaysAPI.createHologram((Plugin)CosmicDungeonsPlugin.get_(), (Location)portalBlockB.getLocation().add(0.5, 1.25, 0.5), (String[])new String[]{dungeon.getDungeonName()});
+                    //final Hologram holo_b = HolographicDisplaysAPI.createHologram((Plugin)CosmicDungeonsPlugin.get_(), (Location)dungeon_portalBlockB.getLocation().add(0.5, 1.25, 0.5), (String[])new String[]{(Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "Exit Portal"});
+                    //if (dungeon.isAbandondedSpaceship()) {
+                    //    dungeon.setObjectiveHologram(HolographicDisplaysAPI.createHologram((Plugin)CosmicDungeonsPlugin.get_(), (Location)new Location(dungeon.getWorld(), -2.0, 82.0, 90.0), (String[])new String[]{(Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "LOCKED", (Object)ChatColor.GRAY + "The airlock will automatically", (Object)ChatColor.GRAY + "unlock once the dungeon portal closes."}));
+                    //} else if (dungeon.isDestroyedOutpost()) {
+                    //    dungeon.setObjectiveHologram(HolographicDisplaysAPI.createHologram((Plugin)CosmicDungeonsPlugin.get_(), (Location)new Location(dungeon.getWorld(), 287.0, 208.0, -12.0), (String[])new String[]{(Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "LOCKED", (Object)ChatColor.GRAY + "The airlock will automatically", (Object)ChatColor.GRAY + "unlock once the dungeon portal closes."}));
+                    //}
                     int closeTimer = 100;
                     int level = UpgradeUtils.getUpgradeLevel((Player)p, (String)"HEROIC_DUNGEON_PORTAL");
                     if (level == 1) {
@@ -374,8 +361,8 @@ implements Listener {
                                 DungeonPortalListener.this.portalBlocks.remove((Object)portalBlockB.getLocation());
                                 DungeonPortalListener.this.portalBlocks.remove((Object)dungeon_portalBlockA.getLocation());
                                 DungeonPortalListener.this.portalBlocks.remove((Object)dungeon_portalBlockB.getLocation());
-                                holo_a.delete();
-                                holo_b.delete();
+                                //holo_a.delete();
+                                //holo_b.delete();
                                 portalBlockA.getWorld().playSound(portalBlockA.getLocation(), Sound.AMBIENCE_THUNDER, 2.0f, 0.35f);
                                 ParticleEffect.playEffect((ParticleEffect)ParticleEffect.WITCH_MAGIC, (Location)portalBlockA.getLocation(), (float)0.45f, (int)50);
                                 ParticleEffect.playEffect((ParticleEffect)ParticleEffect.PORTAL, (Location)portalBlockA.getLocation(), (float)0.6f, (int)50);
@@ -400,7 +387,7 @@ implements Listener {
                             boolean bl = showGlobalAnnounce = this.countdown == 60 || finalCloseTimer == 45 && this.countdown == 30;
                             if (showGlobalAnnounce) {
                                 dungeon.broadcastMessage("The dungeon portal will close in " + this.countdown + "s...");
-                                dungeon.broadcastTitle("Dungeon Portal", "The dungeon portal will close in " + this.countdown + "s...", TitleManager.TitleColor.GOLD, TitleManager.TitleColor.YELLOW);
+                                TitleUtil.sendTitleList(dungeon.getPlayers(), ChatColor.GOLD + "The dungeon portal will close in " + ChatColor.YELLOW + this.countdown + "s...");
                                 Bukkit.broadcastMessage((String)"");
                                 Bukkit.broadcastMessage((String)((Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "*** DUNGEON PORTAL ***"));
                                 Bukkit.broadcastMessage((String)((Object)ChatColor.YELLOW + "The dungeon portal to "));
@@ -409,7 +396,7 @@ implements Listener {
                             } else if (this.countdown == 30 || this.countdown == 15 || this.countdown == 10 || this.countdown == 5 || finalCloseTimer - this.countdown == 15) {
                                 dungeon.broadcastMessage("The dungeon portal will close in " + this.countdown + "s...");
                                 if (this.countdown == 30 || this.countdown == 5) {
-                                    dungeon.broadcastTitle("Dungeon Portal", "The dungeon portal will close in " + this.countdown + "s...", TitleManager.TitleColor.GOLD, TitleManager.TitleColor.YELLOW);
+                                    TitleUtil.sendTitleList(dungeon.getPlayers(), ChatColor.GOLD + "The dungeon portal will close in " + ChatColor.RED + this.countdown + "s...");
                                 }
                             }
                             --this.countdown;

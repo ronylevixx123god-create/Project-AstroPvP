@@ -3,7 +3,6 @@
  * 
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.TitleManager$TitleColor
  *  org.bukkit.ChatColor
  *  org.bukkit.scheduler.BukkitRunnable
  */

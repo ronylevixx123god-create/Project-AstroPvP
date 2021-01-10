@@ -7,8 +7,6 @@
  *  com.cosmicpvp.cosmicutils.utils.CC
  *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
  *  com.cosmicpvp.cosmicutils.utils.RandomFireworks
- *  com.cosmicpvp.cosmicutils.utils.TitleManager
- *  com.cosmicpvp.cosmicutils.utils.TitleManager$TitleColor
  *  org.arkhamnetwork.Arkkit.patches.ItemID
  *  org.arkhamnetwork.Arkkit.plugins.ArkPlugins
  *  org.bukkit.Bukkit
@@ -34,6 +32,7 @@ import com.cosmicpvp.cosmicutils.utils.RandomFireworks;
 import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKitsAPI;
 import me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits;
 import me.cosmicpvp.CosmicGlobalKits.libs.MasteryKits;
+import net.astropvp.core.utils.TitleUtil;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.Bukkit;
@@ -116,10 +115,13 @@ implements Listener {
                 Bukkit.getLogger().info("[MKitUnlock] " + player.getName() + " (" + player.getUniqueId() + ") redeemed a " + kit.getName() + " kit item!");
                 RandomFireworks.getManager().launchRandomFirework(player.getLocation());
                 player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0f, 1.1f);
-                //TitleManager.sendTitle((Player)player, (String)kit.getName(), (TitleManager.TitleColor)TitleManager.TitleColor.GOLD);
-                //TitleManager.sendSubTitle((Player)player, (String)"Mastery Kit Unlock!", (TitleManager.TitleColor)TitleManager.TitleColor.GOLD);
+
+                TitleUtil.sendTitle(player, ChatColor.GOLD + ChatColor.BOLD.toString() + kit.getName());
+                TitleUtil.sendSubTitle(player, ChatColor.YELLOW + "Mastery Kit Unlocked!");
+
                 player.sendMessage(ChatColor.GOLD + ChatColor.BOLD.toString() + kit.getName());
                 player.sendMessage(ChatColor.YELLOW + "Mastery Kit Unlocked!");
+
                 player.updateInventory();
                 Bukkit.getPluginManager().callEvent((Event)new CustomCosmicPlayerEvent(player, "ITEM_USE", new Object[]{"MASTERY_KIT", kit.name()}));
             }

@@ -8,8 +8,6 @@
  *  com.cosmicpvp.cosmicutils.utils.CC
  *  com.cosmicpvp.cosmicutils.utils.InventoryUtils
  *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.utils.TitleManager
- *  com.cosmicpvp.cosmicutils.utils.TitleManager$TitleColor
  *  com.google.common.collect.Lists
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
@@ -35,6 +33,7 @@ import me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits;
 import me.cosmicpvp.CosmicGlobalKits.libs.MasteryKits;
 import me.cosmicpvp.CosmicGlobalKits.struct.GlobalKitData;
 import me.cosmicpvp.CosmicGlobalKits.struct.GlobalKitUser;
+import net.astropvp.core.utils.TitleUtil;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -103,8 +102,10 @@ extends CosmicGUI {
                     gkitData.handleUsed(this.player, kits);
                     this.player.playSound(this.player.getLocation(), Sound.LEVEL_UP, 1.0f, 0.9f);
                     kits.giveToPlayer(this.player);
-                    //TitleManager.sendTitle((Player)this.player, (String)kits.getName(), (TitleManager.TitleColor)TitleManager.TitleColor.RED);
-                    //TitleManager.sendSubTitle((Player)this.player, (String)(CC.GoldB + "Mastery Kit Claimed"), (TitleManager.TitleColor)TitleManager.TitleColor.GOLD);
+
+                    TitleUtil.sendTitle(player, ChatColor.RED + kits.getName());
+                    TitleUtil.sendSubTitle(player, CC.GoldB + "Mastery Kit Claimed!");
+
                     player.sendMessage(ChatColor.RED + kits.getName());
                     player.sendMessage(CC.GoldB + "Mastery Kit Claimed!");
                     return;

@@ -5,8 +5,6 @@
  *  com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsPlugin
  *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
  *  com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils
- *  com.cosmicpvp.cosmicutils.utils.TitleManager
- *  com.cosmicpvp.cosmicutils.utils.TitleManager$TitleColor
  *  com.cosmicpvp.cosmicutils.utils.VanishUtils
  *  com.cosmicpvp.cosmicutils.utils.WorldGuardUtils
  *  com.gmail.nossr50.api.PartyAPI
@@ -64,6 +62,7 @@ import me.ifamasssxd.cosmicduel.struct.Kit;
 import me.ifamasssxd.cosmicduel.struct.enums.*;
 import me.ifamasssxd.cosmicduel.utils.*;
 import me.ifamasssxd.factionupgrades.utils.ItemBuilder;
+import net.astropvp.core.utils.TitleUtil;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
 import org.arkhamnetwork.enchantments.EnchantmentBook;
@@ -271,13 +270,16 @@ extends NewDuel {
                     }
                     loserPlayer.saveRankedStats(true);
                     duelPlayer.saveRankedStats(true);
-                    Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(winner, "DUEL_WIN", new Object[]{this.isRanked(), loser}));
-                    Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(loser, "DUEL_LOSE", new Object[]{this.isRanked(), winner}));
+                    Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(winner, "DUEL_WIN", this.isRanked(), loser));
+                    Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(loser, "DUEL_LOSE", this.isRanked(), winner));
                 }
                 winner.sendMessage("");
                 loser.sendMessage("");
-                //this.sendTitle(ChatColor.GREEN + ChatColor.BOLD.toString() + "Winner", TitleManager.TitleColor.GREEN, winner, loser);
-                //this.sendSubTitle(ChatColor.GRAY + ChatColor.BOLD.toString() + winner.getName() + (this.isRanked() && duelPlayer != null ? ChatColor.GRAY + " (" + (int)duelPlayer.getElo() + " ELO)" : ""), TitleManager.TitleColor.AQUA, winner, loser);
+
+                TitleUtil.sendTitle(winner, ChatColor.GREEN + ChatColor.BOLD.toString() + "YOU WON!");
+                TitleUtil.sendTitle(loser, ChatColor.RED + ChatColor.BOLD.toString() + "YOU LOST!");
+                //this.sendTitle(ChatColor.GREEN + ChatColor.BOLD.toString() + "Winner", TM.TitleColor.GREEN, winner, loser);
+                //this.sendSubTitle(ChatColor.GRAY + ChatColor.BOLD.toString() + winner.getName() + (this.isRanked() && duelPlayer != null ? ChatColor.GRAY + " (" + (int)duelPlayer.getElo() + " ELO)" : ""), TM.TitleColor.AQUA, winner, loser);
             }
         } else if (endReason == EndReason.RELOAD || endReason == EndReason.NO_WINNER) {
             this.onEnd(false);
@@ -545,8 +547,10 @@ extends NewDuel {
         if (!this.originalLocation.containsKey(spectator.getUniqueId())) {
             this.originalLocation.put(spectator.getUniqueId(), spectator.getLocation());
         }
-        //TitleManager.sendTitle(spectator, ChatColor.GREEN + ChatColor.BOLD.toString() + "SPECTATOR", TitleManager.TitleColor.GREEN);
-        //TitleManager.sendSubTitle(spectator, ChatColor.YELLOW + "You are now spectating the duel.", TitleManager.TitleColor.GREEN);
+
+        TitleUtil.sendTitle(spectator, ChatColor.GREEN + ChatColor.BOLD.toString() + "SPECTATOR");
+        TitleUtil.sendSubTitle(spectator, ChatColor.YELLOW + "You are now spectating the duel.");
+
         spectator.sendMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + ChatColor.GREEN + "You are now " + ChatColor.GREEN + ChatColor.UNDERLINE + "SPECTATING" + ChatColor.GREEN + " this duel.");
         spectator.sendMessage(ChatColor.GRAY + "You can use " + ChatColor.YELLOW + "'/duel leave'" + ChatColor.GRAY + " to stop spectating.");
         this.forceTeleport(spectator, this.getArena().getSpawnLocation(true));

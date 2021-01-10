@@ -6,8 +6,6 @@
  *  com.cosmicpvp.cosmicutils.utils.FactionUtils
  *  com.cosmicpvp.cosmicutils.utils.ItemUtils
  *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
- *  com.cosmicpvp.cosmicutils.utils.TitleManager
- *  com.cosmicpvp.cosmicutils.utils.TitleManager$TitleColor
  *  com.gmail.filoghost.holograms.api.Hologram
  *  com.massivecraft.factions.Faction
  *  org.apache.commons.lang.Validate
@@ -34,12 +32,6 @@ import com.compilex.CosmicDungeons.DungeonsAPI;
 import com.compilex.CosmicDungeons.dungeons.events.AbandonedShipEvents;
 import com.compilex.CosmicDungeons.dungeons.events.DestroyedOutpostEvents;
 import com.compilex.CosmicDungeons.dungeons.events.DungeonEvents;
-import com.compilex.CosmicDungeons.dungeons.libs.DungeonEndReason;
-import com.compilex.CosmicDungeons.dungeons.libs.DungeonPlayer;
-import com.compilex.CosmicDungeons.dungeons.libs.DungeonState;
-import com.compilex.CosmicDungeons.dungeons.libs.DungeonType;
-import com.compilex.CosmicDungeons.dungeons.libs.TimeRestrictionTask;
-import com.compilex.CosmicDungeons.dungeons.libs.TopDungeonTime;
 import com.compilex.CosmicDungeons.events.DungeonStateChangeEvent;
 import com.compilex.CosmicDungeons.items.DungeonKeyItem;
 import com.compilex.CosmicDungeons.items.KeyPair;
@@ -51,25 +43,10 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.ItemUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
-import com.cosmicpvp.cosmicutils.utils.TitleManager;
-import com.gmail.filoghost.holograms.api.Hologram;
 import com.massivecraft.factions.Faction;
-import java.io.IOException;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang.Validate;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -79,6 +56,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
+
+import java.io.IOException;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class Dungeon {
     public World world;
@@ -95,7 +76,7 @@ public class Dungeon {
     private long dungeonStartTime;
     private boolean bossSlayerTrinket;
     private boolean heroicDungeon;
-    private Hologram objectiveHologram;
+    //private Hologram objectiveHologram;
     private String protectedFor;
     private boolean keyRequired = true;
     private boolean globalPortal = false;
@@ -171,9 +152,9 @@ public class Dungeon {
         return this.dungeonStartTime;
     }
 
-    public Hologram getObjectiveHologram() {
-        return this.objectiveHologram;
-    }
+    //public Hologram getObjectiveHologram() {
+        //return this.objectiveHologram;
+    //}
 
     public void setKeyRequired(boolean keyRequired) {
         this.keyRequired = keyRequired;
@@ -397,16 +378,6 @@ public class Dungeon {
         }
     }
 
-    public void broadcastTitle(String title, String subTitle, TitleManager.TitleColor titleColor, TitleManager.TitleColor subColor) {
-        for (Player p : this.getPlayers()) {
-            if (title != null) {
-                TitleManager.sendTitle((Player)p, (String)title, (TitleManager.TitleColor)titleColor);
-            }
-            if (subTitle == null) continue;
-            TitleManager.sendSubTitle((Player)p, (String)subTitle, (TitleManager.TitleColor)subColor);
-        }
-    }
-
     public Dungeon(World dungeonWorld, DungeonType type, String dungeonName, LinkedList<String> dungeonDescription) {
         this.world = dungeonWorld;
         Validate.notNull((Object)this.world);
@@ -441,7 +412,7 @@ public class Dungeon {
             }
             DungeonsAPI.get().resetDungeonWorldIO(this);
             this.setPortalLocation(null);
-            this.setObjectiveHologram(null);
+            //this.setObjectiveHologram(null);
             this.world = Bukkit.getWorld((String)this.worldName);
             this.setProtectedFor("-1");
             this.setBossSlayerTrinket(false);
@@ -537,14 +508,14 @@ public class Dungeon {
         this.broadcastMessage((Object)ChatColor.GOLD + "Time Limit: " + (Object)ChatColor.GREEN + TimeUtils.formatDifference(deadline + 1000L - System.currentTimeMillis()));
     }
 
-    public void setObjectiveHologram(Hologram h) {
+    /*public void setObjectiveHologram(Hologram h) {
         if (this.objectiveHologram != null) {
             this.objectiveHologram.delete();
         }
         if (h != null) {
             this.objectiveHologram = h;
         }
-    }
+    }*/
 
     public boolean isAbandondedSpaceship() {
         return this.dungeonType == DungeonType.ABANDONED_SHIP;

@@ -33,6 +33,7 @@ import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKits;
 import me.ifamasssxd.cosmicevolutionkits.utils.*;
+import net.astropvp.core.utils.TitleUtil;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import net.minecraft.server.v1_8_R3.NBTTagList;
 import org.arkhamnetwork.Arkkit.utils.WorldGuardUtils;
@@ -142,10 +143,12 @@ public class KitPlayer {
                 p.sendMessage(msg);
             }
         }
-        //TitleManager.sendTitle(player, ChatColor.GREEN + ChatColor.BOLD.toString() + "Level " + level, TitleManager.TitleColor.GREEN);
-        //TitleManager.sendSubTitle(player, parent.getKit().getItemName() + ChatColor.GREEN + " Level UP!", TitleManager.TitleColor.GREEN);
+
+        TitleUtil.sendTitle(player, ChatColor.GREEN + ChatColor.BOLD.toString() + "Level " + level);
+        TitleUtil.sendSubTitle(player, ChatColor.GRAY + parent.getKit().getItemName() + ChatColor.GREEN + " Level UP!");
+
         player.sendMessage(CC.GreenB + "Level " + level);
-        player.sendMessage(parent.getKit().getItemName() + ChatColor.GREEN + " Level UP!");
+        player.sendMessage(CC.Gray +parent.getKit().getItemName() + ChatColor.GREEN + " Level UP!");
         new BukkitRunnable() {
             int counter = 0;
 

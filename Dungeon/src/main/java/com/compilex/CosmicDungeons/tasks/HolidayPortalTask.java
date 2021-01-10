@@ -3,7 +3,6 @@
  * 
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils
- *  com.cosmicpvp.cosmicutils.utils.TitleManager$TitleColor
  *  com.gmail.filoghost.holograms.api.Hologram
  *  com.gmail.filoghost.holograms.api.HolographicDisplaysAPI
  *  com.google.common.collect.Lists

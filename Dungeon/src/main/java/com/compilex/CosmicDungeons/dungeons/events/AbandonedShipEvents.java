@@ -7,7 +7,6 @@
  *  com.cosmicpvp.cosmicutils.utils.FactionUtils
  *  com.cosmicpvp.cosmicutils.utils.RandomFireworks
  *  com.cosmicpvp.cosmicutils.utils.TimeUtils
- *  com.cosmicpvp.cosmicutils.utils.TitleManager$TitleColor
  *  com.cosmicpvp.cosmicutils.utils.WorldGuardUtils
  *  com.cosmicpvp.cosmicutils.utils.WorldUtil
  *  com.gmail.filoghost.holograms.api.Hologram

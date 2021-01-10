@@ -12,7 +12,6 @@
  *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
  *  com.cosmicpvp.cosmicutils.utils.PlayerUtil
  *  com.cosmicpvp.cosmicutils.utils.TimeUtils
- *  com.cosmicpvp.cosmicutils.utils.TitleManager$TitleColor
  *  com.massivecraft.factions.Faction
  *  me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost.MotherOfYijki
  *  org.bukkit.Bukkit
