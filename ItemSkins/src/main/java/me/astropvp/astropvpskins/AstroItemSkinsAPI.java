@@ -21,8 +21,8 @@ public class AstroItemSkinsAPI {
             return null;
         }
         NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder compoundBuilder = wrapper.hasKey("cosmicData") ?
-                new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) :
+        NBTTagCompoundBuilder compoundBuilder = wrapper.hasKey("conaxData") ?
+                new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")) :
                 new NBTTagCompoundBuilder();
         String l = compoundBuilder.getString("itemSkinType");
         if (l == null)

@@ -134,7 +134,7 @@ public enum MaskType {
     }
 
     public static MaskType fromWrapper(NBTWrapper wrapper) {
-        NBTTagCompoundBuilder cosmicData = wrapper.getCompound("cosmicData");
+        NBTTagCompoundBuilder cosmicData = wrapper.getCompound("conaxData");
         if (cosmicData == null) {
             return null;
         }
@@ -146,7 +146,7 @@ public enum MaskType {
         if (applyIID && ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
             retr = ItemID.assignItemID(null, retr);
         }
-        return this.applyNbt(new NBTWrapper(retr).setString("cosmicType", "COSMIC_MASK").setNBTBase("cosmicData", new NBTTagCompoundBuilder().setString("maskType", this.name()).get())).build();
+        return this.applyNbt(new NBTWrapper(retr).setString("cosmicType", "COSMIC_MASK").setNBTBase("conaxData", new NBTTagCompoundBuilder().setString("maskType", this.name()).get())).build();
     }
 
     public NBTWrapper applyNbt(NBTWrapper wrapper) {
@@ -158,13 +158,13 @@ public enum MaskType {
     public ItemStack applyMaskNBT(NBTWrapper maskWrapper, NBTWrapper itemWrapper) {
         ItemStack retr;
         ItemMeta im;
-        NBTTagCompoundBuilder builder = new NBTTagCompoundBuilder(itemWrapper.getNBTBase("cosmicData"));
+        NBTTagCompoundBuilder builder = new NBTTagCompoundBuilder(itemWrapper.getNBTBase("conaxData"));
         builder.setString("maskOverride", this.name());
         if (this == MULTI_MASK) {
             List<MaskType> masks = MultiMaskItem.getMasks(maskWrapper);
             builder.setString("multiMask", MultiMaskItem.listToString(masks));
         }
-        List<String> lore = (im = (retr = itemWrapper.setNBTBase("cosmicData", builder.get()).build()).getItemMeta()).getLore() == null ? Lists.newArrayList() : im.getLore();
+        List<String> lore = (im = (retr = itemWrapper.setNBTBase("conaxData", builder.get()).build()).getItemMeta()).getLore() == null ? Lists.newArrayList() : im.getLore();
         for (String str : lore) {
             if (!str.startsWith(CC.GrayB + "ATTACHED:")) continue;
             return retr;
@@ -189,17 +189,17 @@ public enum MaskType {
         ItemStack retr;
         ItemMeta im;
         List<String> lore;
-        NBTTagCompoundBuilder builder = new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData"));
+        NBTTagCompoundBuilder builder = new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData"));
         String current = builder.getString("maskOverride");
         if (current != null && !current.isEmpty()) {
             builder.remove("maskOverride");
-            wrapper.setNBTBase("cosmicData", builder.get());
+            wrapper.setNBTBase("conaxData", builder.get());
         }
-        if (helmet == Material.DIAMOND_HELMET && wrapper.hasKey("cosmicData")) {
+        if (helmet == Material.DIAMOND_HELMET && wrapper.hasKey("conaxData")) {
             builder.remove("durability");
             builder.remove("maxDurability");
             if (builder.get() != null && builder.get().isEmpty()) {
-                wrapper.remove("cosmicData");
+                wrapper.remove("conaxData");
             }
         }
         if ((lore = (im = (retr = wrapper.build()).getItemMeta()).getLore()) != null) {
