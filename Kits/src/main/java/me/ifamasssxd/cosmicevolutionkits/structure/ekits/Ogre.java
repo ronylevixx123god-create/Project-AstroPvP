@@ -93,7 +93,7 @@ extends EvolutionKit {
 
     @Override
     public List<String> getLore() {
-        return Lists.newArrayList((Object[])new String[]{"", (Object)ChatColor.DARK_GREEN + ChatColor.BOLD.toString() + "* " + (Object)ChatColor.DARK_GREEN + (Object)ChatColor.BOLD + "Ogre Mask", (Object)ChatColor.DARK_GREEN + ChatColor.BOLD.toString() + "* " + (Object)ChatColor.DARK_GREEN + (Object)ChatColor.BOLD + "Fat Tummy", "", (Object)ChatColor.GRAY + "The best offense is... a fat defense?", (Object)ChatColor.GOLD + "* Summer Break 2017"});
+        return Lists.newArrayList("", (Object)ChatColor.DARK_GREEN + ChatColor.BOLD.toString() + "* " + (Object)ChatColor.DARK_GREEN + (Object)ChatColor.BOLD + "Ogre Mask", (Object)ChatColor.DARK_GREEN + ChatColor.BOLD.toString() + "* " + (Object)ChatColor.DARK_GREEN + (Object)ChatColor.BOLD + "Fat Tummy", "", (Object)ChatColor.GRAY + "The best offense is... a fat defense?", (Object)ChatColor.GOLD + "* Summer Break 2017");
     }
 
     @Override

@@ -26,30 +26,11 @@
  */
 package me.ifamasssxd.cosmicevolutionkits.structure;
 
-import com.compilex.CosmicFund.CosmicFundAPI;
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
-import com.cosmicpvp.cosmicutils.utils.ItemUtils;
-import com.cosmicpvp.cosmicutils.utils.NBTTagCompoundBuilder;
-import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKit;
-import me.ifamasssxd.cosmicevolutionkits.structure.KitPlayer;
-import me.ifamasssxd.cosmicevolutionkits.structure.ekits.Alchemist;
-import me.ifamasssxd.cosmicevolutionkits.structure.ekits.Judgement;
-import me.ifamasssxd.cosmicevolutionkits.structure.ekits.Lucky;
-import me.ifamasssxd.cosmicevolutionkits.structure.ekits.Mimic;
-import me.ifamasssxd.cosmicevolutionkits.structure.ekits.Ogre;
-import me.ifamasssxd.cosmicevolutionkits.structure.ekits.Phoenix;
-import me.ifamasssxd.cosmicevolutionkits.structure.ekits.Slayer;
-import me.ifamasssxd.cosmicevolutionkits.structure.ekits.Troll;
+import me.ifamasssxd.cosmicevolutionkits.structure.ekits.*;
 import me.ifamasssxd.cosmicevolutionkits.utils.RandomFireworks;
-import me.ifamasssxd.cosmicevolutionkits.utils.TitleManager;
-import net.minecraft.server.v1_7_R4.NBTBase;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.arkhamnetwork.enchantments.EnchantmentBook;
@@ -57,10 +38,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public enum EvolutionKits {
     PHOENIX("Phoenix", TimeUnit.SECONDS.toMillis(259200L), new Phoenix()),
@@ -90,8 +73,8 @@ public enum EvolutionKits {
         EvolutionKits.addLore(lore, level, 8, "Magic Soul Dust", "G-Kit Generator", "Yijki Boss Egg", "Godly Randomization Scroll", "Fat Bucket", "Stun Grenades");
         EvolutionKits.addLore(lore, level, 9, "Heroic Black Scroll", "Heroic Mystery /cc", "Equipment Lootbox", "EMP Pulse", "Phoenix Feather", "Yijki Staff", "Monster Soul Tracker");
         EvolutionKits.addLore(lore, level, 10, "Holy White Scroll", "Heroic Upgrade", "Random Mask Generator", "Weapon/Armor Enchant Orb (13 Slot)", "Omni /gkit Gem", "Random Lootbox");
-        ItemStack retr = new NBTWrapper(new ItemBuilder(Material.CHEST).name(CC.GoldB + "Lucky Box (" + CC.Yellow + "LVL " + level + CC.GoldB + ") " + CC.Gray + "(Right Click)").lore((List)lore).build()).setString("cosmicType", "LUCKY_BOX").setNBTBase("cosmicData", (NBTBase)new com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder().setInt("level", Integer.valueOf(level)).get()).build();
-        return applyIID ? EnchantmentBook.applyTransmogScroll((ItemStack)retr) : retr;
+        ItemStack retr = new NBTWrapper(new ItemBuilder(Material.CHEST).name(CC.GoldB + "Lucky Box (" + CC.Yellow + "LVL " + level + CC.GoldB + ") " + CC.Gray + "(Right Click)").lore(lore).build()).setString("cosmicType", "LUCKY_BOX").setNBTBase("cosmicData", new com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder().setInt("level", Integer.valueOf(level)).get()).build();
+        return applyIID ? EnchantmentBook.applyTransmogScroll(retr) : retr;
     }
 
     private static List<String> addLore(List<String> current, int currentLevel, int required, String ... lines) {
@@ -102,7 +85,7 @@ public enum EvolutionKits {
             current.add(lineToAdd);
             lineToAdd = available ? CC.Yellow : CC.Gray + CC.Strike;
         }
-        if (ChatColor.stripColor((String)lineToAdd).length() > 0) {
+        if (ChatColor.stripColor(lineToAdd).length() > 0) {
             current.add(lineToAdd.substring(0, lineToAdd.contains(",") ? lineToAdd.lastIndexOf(",") : lineToAdd.length()));
         }
         return current;
@@ -115,9 +98,9 @@ public enum EvolutionKits {
     public ItemStack getLevelUpItem(boolean applyIID) {
         ItemStack item = me.ifamasssxd.cosmicevolutionkits.utils.ItemBuilder.buildItem(Material.INK_SACK, (short)1, this.getKit().getKitLevelUpItemName(), this.getKit().getKitLevelUpLore());
         if (applyIID && ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
-            item = ItemID.assignItemID(null, (ItemStack)item);
+            item = ItemID.assignItemID(null, item);
         }
-        return new NBTWrapper(item).setNBTBase("cosmicData", (NBTBase)new NBTTagCompoundBuilder().setString("vkit", this.name()).get()).setString("cosmicType", "VKIT_LEVELUP").build();
+        return new NBTWrapper(item).setNBTBase("cosmicData", new NBTTagCompoundBuilder().setString("vkit", this.name()).get()).setString("cosmicType", "VKIT_LEVELUP").build();
     }
 
     public static EvolutionKits getFromLevelUp(ItemStack item) {
@@ -137,17 +120,19 @@ public enum EvolutionKits {
     public boolean levelUpOrUnlock(Player player, String source) {
         String perm = "cosmicevolutionkits.kit." + this.name().toLowerCase();
         if (!player.hasPermission(perm)) {
-            Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)("pex user " + player.getName() + " add " + perm));
-            player.sendMessage(ChatColor.GOLD.toString() + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.GOLD + "You have UNLOCKED the " + this.kit.getItemName() + (Object)ChatColor.GOLD + " VKIT!");
-            player.sendMessage((Object)ChatColor.GRAY + "Redeem your new Evolution Kit through the /vkit menu!");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + player.getName() + " add " + perm);
+            player.sendMessage(ChatColor.GOLD.toString() + ChatColor.BOLD + "(!) " + ChatColor.GOLD + "You have UNLOCKED the " + this.kit.getItemName() + ChatColor.GOLD + " VKIT!");
+            player.sendMessage(ChatColor.GRAY + "Redeem your new Evolution Kit through the /vkit menu!");
             Bukkit.getLogger().info("[EvolutionKit] Unlocked Kit " + this.name() + " for " + player.getName() + " (" + player.getUniqueId() + ")!");
             player.playSound(player.getLocation(), Sound.VILLAGER_YES, 5.0f, 1.0f);
             player.playSound(player.getLocation(), Sound.FIREWORK_BLAST, 2.0f, 1.1f);
             player.playSound(player.getLocation(), Sound.LEVEL_UP, 2.0f, 1.1f);
             RandomFireworks.getManager().launchRandomFirework(player.getLocation());
-            TitleManager.sendTitle(player, this.kit.getItemName(), TitleManager.TitleColor.AQUA);
-            TitleManager.sendSubTitle(player, (Object)ChatColor.GREEN + "Evolution Kit Unlocked", TitleManager.TitleColor.GREEN);
-            Bukkit.getPluginManager().callEvent((Event)new CustomCosmicPlayerEvent(player, "VKIT_UNLOCK", new Object[]{this.kit}));
+            //TitleManager.sendTitle(player, this.kit.getItemName(), TitleManager.TitleColor.AQUA);
+            //TitleManager.sendSubTitle(player, (Object)ChatColor.GREEN + "Evolution Kit Unlocked", TitleManager.TitleColor.GREEN);
+            player.sendMessage(CC.Aqua + kit.getItemName());
+            player.sendMessage(CC.Green + "Evolution Kit Unlocked!");
+            Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(player, "VKIT_UNLOCK", new Object[]{this.kit}));
             return true;
         }
         KitPlayer kitPlayer = KitPlayer.kitPlayerMap.get(player.getUniqueId());
@@ -178,16 +163,16 @@ public enum EvolutionKits {
         }
         String itemName = item.getItemMeta().getDisplayName();
         for (EvolutionKits kit : EvolutionKits.values()) {
-            if (!kit.getKit().getKitGemItemName().equals(itemName) || !ItemUtils.isLoreSameWithoutIID(kit.getKit().getKitGemLore(), (List)item.getItemMeta().getLore())) continue;
+            if (!kit.getKit().getKitGemItemName().equals(itemName) || !ItemUtils.isLoreSameWithoutIID(kit.getKit().getKitGemLore(), item.getItemMeta().getLore())) continue;
             return kit;
         }
         return null;
     }
 
     public boolean checkFund(Player player) {
-        if (Bukkit.getPluginManager().isPluginEnabled("CosmicFund") && !CosmicFundAPI.isVkitsEnabled() && !player.isOp()) {
-            player.sendMessage(ChatColor.RED.toString() + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "Your planet has not yet unlocked access to /vkits. To unlock, your planet needs to reach the " + (Object)ChatColor.UNDERLINE + "/fund" + (Object)ChatColor.RED + " goal.");
-            player.sendMessage((Object)ChatColor.GRAY + "* Until the goal is met, NO PLAYERS can redeem or use /vkit.");
+        if (Bukkit.getPluginManager().isPluginEnabled("CosmicFund") && !player.isOp()) {
+            player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD + "(!) " + ChatColor.RED + "Your planet has not yet unlocked access to /vkits. To unlock, your planet needs to reach the " + ChatColor.UNDERLINE + "/fund" + ChatColor.RED + " goal.");
+            player.sendMessage(ChatColor.GRAY + "* Until the goal is met, NO PLAYERS can redeem or use /vkit.");
             return true;
         }
         return false;
@@ -202,7 +187,7 @@ public enum EvolutionKits {
         }
     }
 
-    private EvolutionKits(String name, long cooldown, EvolutionKit kit) {
+    EvolutionKits(String name, long cooldown, EvolutionKit kit) {
         this.name = name;
         this.cooldown = cooldown;
         this.kit = kit;

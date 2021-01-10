@@ -9,7 +9,8 @@ package me.ifamasssxd.cosmicevolutionkits.sql;
 import java.sql.PreparedStatement;
 import java.util.Collections;
 import java.util.concurrent.CopyOnWriteArrayList;
-import me.ifamasssxd.cosmicevolutionkits.CosmicEvolutionKits;
+
+import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKits;
 import org.bukkit.Bukkit;
 
 public class SQLQueryThread
@@ -30,7 +31,7 @@ implements Runnable {
         }
         StringBuilder executed = new StringBuilder();
         try {
-            PreparedStatement statement = CosmicEvolutionKits.get().getSqlDatabase().getConnection().prepareStatement("");
+            PreparedStatement statement = CosmicGlobalKits.getPlugin().getSqlDatabase().getConnection().prepareStatement("");
             try {
                 for (String query : this.querys) {
                     statement.addBatch(query);

@@ -30,7 +30,6 @@ import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKitsAPI;
 import me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits;
 import me.cosmicpvp.CosmicGlobalKits.struct.GlobalKitData;
 import me.cosmicpvp.CosmicGlobalKits.struct.GlobalKitUser;
-import me.ifamasssxd.cosmicevolutionkits.CosmicEvolutionKits;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

@@ -23,7 +23,7 @@ import com.cosmicpvp.cosmicutils.utils.InventoryUtils;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
-import me.ifamasssxd.cosmicevolutionkits.CosmicEvolutionKits;
+import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKits;
 import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKits;
 import me.ifamasssxd.cosmicevolutionkits.structure.KitPlayer;
 import org.bukkit.Bukkit;
@@ -76,7 +76,7 @@ extends CosmicGUI {
             this.unlocked = true;
             PlayerUtil.giveOrDropProtectedItem((Player)this.player, (ItemStack)this.itemWrapper.build(), (int)-1);
             ASound.CHICKEN_EGG_POP.play(this.player, 3.0f, 1.1f);
-            Bukkit.getScheduler().runTaskLater((Plugin)CosmicEvolutionKits.get(), () -> {
+            Bukkit.getScheduler().runTaskLater(CosmicGlobalKits.getPlugin(), () -> {
                 if (this.player.isValid()) {
                     this.player.updateInventory();
                 }

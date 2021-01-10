@@ -15,17 +15,13 @@
 package me.ifamasssxd.killtracker;
 
 import com.google.common.collect.Lists;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import me.ifamasssxd.killtracker.events.PlayerSubtractSoulsEvent;
 import me.ifamasssxd.killtracker.listeners.PlayerListener;
 import me.ifamasssxd.killtracker.listeners.Tracker;
 import me.ifamasssxd.killtracker.utils.ItemBuilder;
 import me.ifamasssxd.killtracker.utils.ItemUtils;
 import me.ifamasssxd.killtracker.utils.TextUtils;
+import net.astropvp.core.AstroCore;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.Bukkit;
@@ -34,6 +30,11 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class KillTrackerAPI {
     public static List<String> soulToggle = new ArrayList<String>();
@@ -52,7 +53,7 @@ public class KillTrackerAPI {
     }
 
     public static boolean isSoulGem(ItemStack is) {
-        return is != null && is.getType() == Material.EMERALD && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().hasLore() && ChatColor.stripColor((String)is.getItemMeta().getDisplayName()).contains("Soul Gem [") && is.getItemMeta().getLore().size() > 1;
+        return is != null && is.getType() == Material.EMERALD && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().hasLore() && ChatColor.stripColor(is.getItemMeta().getDisplayName()).contains("Soul Gem [") && is.getItemMeta().getLore().size() > 1;
     }
 
     public static void removeSoulsFromGems(Player p, int amount) {
@@ -83,7 +84,7 @@ public class KillTrackerAPI {
 
     public static boolean isBlacklistedSoul(ItemStack item, Map<Long, List<ItemStack>> list) {
         if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
-            long id = ItemID.getItemID((ItemStack)item);
+            long id = ItemID.getItemID(item);
             if (id == -1L) {
                 return false;
             }
@@ -97,7 +98,7 @@ public class KillTrackerAPI {
     public static boolean isBlacklistedSoul(Long id, ItemStack item, Map<Long, List<ItemStack>> list) {
         if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
             if (id == null) {
-                id = ItemID.getItemID((ItemStack)item);
+                id = ItemID.getItemID(item);
             }
             if (id == -1L) {
                 return false;
@@ -112,7 +113,7 @@ public class KillTrackerAPI {
     public static boolean isSameID(ItemStack item, ItemStack is) {
         long secondID;
         long id;
-        return ArkPlugins.ITEM_ID.getArkPlugin().isRunning() && (id = ItemID.getItemID((ItemStack)item)) != -1L && (secondID = ItemID.getItemID((ItemStack)is)) != -1L && secondID == id;
+        return ArkPlugins.ITEM_ID.getArkPlugin().isRunning() && (id = ItemID.getItemID(item)) != -1L && (secondID = ItemID.getItemID(is)) != -1L && secondID == id;
     }
 
     public static int getAllSouls(Player p) {
@@ -121,14 +122,14 @@ public class KillTrackerAPI {
         for (int slot = 0; slot < p.getInventory().getSize(); ++slot) {
             ItemStack is = p.getInventory().getItem(slot);
             if (is == null || is.getType() == Material.AIR || !KillTrackerAPI.isSoulGem(is)) continue;
-            long id = ItemID.getItemID((ItemStack)is);
+            long id = ItemID.getItemID(is);
             if (KillTrackerAPI.isBlacklistedSoul(id, is, dupedGems)) {
                 Bukkit.getLogger().info("Removing " + is.getAmount() + " (" + KillTrackerAPI.getSouls(is) + ") ID=" + id + " duped souls from " + p.getName());
-                p.getInventory().removeItem(new ItemStack[]{is});
+                p.getInventory().removeItem(is);
                 continue;
             }
             if (id == -1L && is.getAmount() == 1) {
-                is = ItemID.assignItemID(null, (ItemStack)is);
+                is = ItemID.assignItemID(null, is);
                 p.getInventory().setItem(slot, is);
                 p.updateInventory();
             }
@@ -138,7 +139,7 @@ public class KillTrackerAPI {
             if (lists.size() > 1) {
                 lists.forEach(is -> p.getInventory().removeItem(new ItemStack[]{is}));
                 if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
-                    ItemID.blacklistIID((long)iid, (String)("Duped Soul Gem (" + p.getName() + ")"));
+                    ItemID.blacklistIID(iid, "Duped Soul Gem (" + p.getName() + ")");
                 }
                 Bukkit.getLogger().info("Removing " + lists.size() + " Counts of Duped Gems (" + iid + ") for " + p.getName());
             }
@@ -155,17 +156,17 @@ public class KillTrackerAPI {
     public static int getSouls(ItemStack is) {
         if (is != null && is.getType() == Material.EMERALD && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().hasLore()) {
             String name = is.getItemMeta().getDisplayName();
-            if (!name.startsWith((Object)ChatColor.RED + ChatColor.BOLD.toString() + "Soul Gem [")) {
+            if (!name.startsWith(ChatColor.RED + ChatColor.BOLD.toString() + "Soul Gem [")) {
                 return 0;
             }
-            name = ChatColor.stripColor((String)is.getItemMeta().getDisplayName());
+            name = ChatColor.stripColor(is.getItemMeta().getDisplayName());
             return Integer.parseInt(name.split("\\[")[1].split("\\]")[0]);
         }
         return -1;
     }
 
     public static ItemStack buildTracker(Tracker tracker) {
-        return ItemBuilder.buildItem(Material.PAPER, tracker.getName() + " Soul Tracker", (Object)ChatColor.GRAY + "Apply to weapons to start tracking", tracker.getName() + " Souls" + (Object)ChatColor.GRAY + " collected from " + (tracker.trackMobKills() ? "mob" : "player") + " kills.", "", (Object)tracker.getColor() + "Collects: " + (Object)ChatColor.GRAY + (tracker.trackMobKills() ? "1 soul/100 mob kills" : tracker.getRank() * KillTracker.get().getConfig().getInt("soulMultiplier", 5) + " souls/player kill"), "", (Object)ChatColor.RED + ChatColor.BOLD.toString() + "WARNING: " + (Object)ChatColor.GRAY + "Previously tracked souls", (Object)ChatColor.GRAY + "will be released on apply.");
+        return ItemBuilder.buildItem(Material.PAPER, tracker.getName() + " Soul Tracker", ChatColor.GRAY + "Apply to weapons to start tracking", tracker.getName() + " Souls" + ChatColor.GRAY + " collected from " + (tracker.trackMobKills() ? "mob" : "player") + " kills.", "", tracker.getColor() + "Collects: " + ChatColor.GRAY + (tracker.trackMobKills() ? "1 soul/100 mob kills" : tracker.getRank() * AstroCore.getInstance().getConfig().getInt("soulMultiplier", 5) + " souls/player kill"), "", ChatColor.RED + ChatColor.BOLD.toString() + "WARNING: " + ChatColor.GRAY + "Previously tracked souls", ChatColor.GRAY + "will be released on apply.");
     }
 
     public static void attempSoulHarvest(ItemStack is, Player killer, Player dead) {
@@ -178,7 +179,7 @@ public class KillTrackerAPI {
             return;
         }
         if (!PlayerListener.canPlayerKillPlayer(killer, dead) && (time = PlayerListener.getPlayerExpireTime(killer, dead)) != null) {
-            killer.sendMessage((Object)ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You cannot collect " + dead.getName() + "'s Soul for another " + TextUtils.getFormattedCooldown(time));
+            killer.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot collect " + dead.getName() + "'s Soul for another " + TextUtils.getFormattedCooldown(time));
             return;
         }
         if (!PlayerListener.logPlayerKill(killer, dead)) {
@@ -193,7 +194,7 @@ public class KillTrackerAPI {
     }
 
     public static ItemStack createSoulShard(int amount) {
-        ItemStack is = ItemBuilder.buildItem(Material.EMERALD, (Object)ChatColor.RED + ChatColor.BOLD.toString() + "Soul Gem [" + KillTrackerAPI.getColor(amount) + amount + (Object)ChatColor.RED + (Object)ChatColor.RED + ChatColor.BOLD.toString() + "]", "", (Object)ChatColor.RED + ChatColor.BOLD.toString() + "* " + (Object)ChatColor.RED + "Click this item to toggle " + (Object)ChatColor.RED + ChatColor.UNDERLINE.toString() + "Soul Mode", (Object)ChatColor.GRAY + "While in Soul Mode your ACTIVE god tier", (Object)ChatColor.GRAY + "enchantment will activate and drain souls", (Object)ChatColor.GRAY + "for as long as this mode is enabled.", "", (Object)ChatColor.RED + ChatColor.BOLD.toString() + "* " + (Object)ChatColor.GRAY + "Use " + (Object)ChatColor.RED + ChatColor.UNDERLINE.toString() + "/splitsouls" + (Object)ChatColor.GRAY + " with this item", (Object)ChatColor.GRAY + "to split souls off of it.", "", (Object)ChatColor.RED + ChatColor.BOLD.toString() + "* " + (Object)ChatColor.GRAY + "Stack other " + (Object)ChatColor.RED + "Soul Gems" + (Object)ChatColor.GRAY + " ontop of this", (Object)ChatColor.GRAY + "one to combine their soul counts.");
+        ItemStack is = ItemBuilder.buildItem(Material.EMERALD, ChatColor.RED + ChatColor.BOLD.toString() + "Soul Gem [" + KillTrackerAPI.getColor(amount) + amount + ChatColor.RED + ChatColor.RED + ChatColor.BOLD.toString() + "]", "", ChatColor.RED + ChatColor.BOLD.toString() + "* " + ChatColor.RED + "Click this item to toggle " + ChatColor.RED + ChatColor.UNDERLINE.toString() + "Soul Mode", ChatColor.GRAY + "While in Soul Mode your ACTIVE god tier", ChatColor.GRAY + "enchantment will activate and drain souls", ChatColor.GRAY + "for as long as this mode is enabled.", "", ChatColor.RED + ChatColor.BOLD.toString() + "* " + ChatColor.GRAY + "Use " + ChatColor.RED + ChatColor.UNDERLINE.toString() + "/splitsouls" + ChatColor.GRAY + " with this item", ChatColor.GRAY + "to split souls off of it.", "", ChatColor.RED + ChatColor.BOLD.toString() + "* " + ChatColor.GRAY + "Stack other " + ChatColor.RED + "Soul Gems" + ChatColor.GRAY + " ontop of this", ChatColor.GRAY + "one to combine their soul counts.");
         return is;
     }
 

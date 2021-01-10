@@ -17,9 +17,6 @@ package me.ifamasssxd.cosmicevolutionkits.structure.ekits;
 import com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils;
 import com.google.common.collect.Lists;
 import com.rit.sucy.EnchantmentAPI;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKit;
 import me.ifamasssxd.cosmicevolutionkits.utils.EnchantedItemBuilder;
 import me.ifamasssxd.cosmicevolutionkits.utils.ItemBuilder;
@@ -29,6 +26,10 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class Troll
 extends EvolutionKit {
@@ -95,7 +96,7 @@ extends EvolutionKit {
 
     @Override
     public List<String> getLore() {
-        return Lists.newArrayList((Object[])new String[]{"", (Object)ChatColor.DARK_AQUA + ChatColor.BOLD.toString() + "* " + (Object)ChatColor.DARK_AQUA + (Object)ChatColor.BOLD + "Trollolololo\"L\"", (Object)ChatColor.DARK_AQUA + ChatColor.BOLD.toString() + "* " + (Object)ChatColor.DARK_AQUA + (Object)ChatColor.BOLD + "Axe of ( \u0361\u00b0 \u035c\u0296 \u0361\u00b0)", "", (Object)ChatColor.GRAY + "Who needs love when you can meme?", (Object)ChatColor.GOLD + "* Valentine 2017"});
+        return Lists.newArrayList("", (Object)ChatColor.DARK_AQUA + ChatColor.BOLD.toString() + "* " + (Object)ChatColor.DARK_AQUA + (Object)ChatColor.BOLD + "Trollolololo\"L\"", (Object)ChatColor.DARK_AQUA + ChatColor.BOLD.toString() + "* " + (Object)ChatColor.DARK_AQUA + (Object)ChatColor.BOLD + "Axe of ( \u0361\u00b0 \u035c\u0296 \u0361\u00b0)", "", (Object)ChatColor.GRAY + "Who needs love when you can meme?", (Object)ChatColor.GOLD + "* Valentine 2017");
     }
 
     @Override

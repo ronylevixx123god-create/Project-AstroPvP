@@ -155,7 +155,7 @@ extends EvolutionKit {
 
     @Override
     public List<String> getLore() {
-        return Lists.newArrayList((Object[])new String[]{"", (Object)this.mainColor + ChatColor.BOLD.toString() + "* " + (Object)this.mainColor + (Object)ChatColor.BOLD + "The Banhammer", (Object)this.mainColor + ChatColor.BOLD.toString() + "* " + (Object)this.mainColor + (Object)ChatColor.BOLD + "Divine Robes of Judgement", (Object)this.mainColor + ChatColor.BOLD.toString() + "* " + (Object)this.mainColor + (Object)ChatColor.BOLD + "Boots of Karma", (Object)this.mainColor + ChatColor.BOLD.toString() + "* " + (Object)this.mainColor + (Object)ChatColor.BOLD + "mcMMO Credits", (Object)this.mainColor + ChatColor.BOLD.toString() + "* " + (Object)this.mainColor + (Object)ChatColor.BOLD + "EXP", "", (Object)ChatColor.GRAY + "Will you use this kit for good, or evil? ", (Object)ChatColor.GOLD + "* Spring 2018"});
+        return Lists.newArrayList("", (Object)this.mainColor + ChatColor.BOLD.toString() + "* " + (Object)this.mainColor + (Object)ChatColor.BOLD + "The Banhammer", (Object)this.mainColor + ChatColor.BOLD.toString() + "* " + (Object)this.mainColor + (Object)ChatColor.BOLD + "Divine Robes of Judgement", (Object)this.mainColor + ChatColor.BOLD.toString() + "* " + (Object)this.mainColor + (Object)ChatColor.BOLD + "Boots of Karma", (Object)this.mainColor + ChatColor.BOLD.toString() + "* " + (Object)this.mainColor + (Object)ChatColor.BOLD + "mcMMO Credits", (Object)this.mainColor + ChatColor.BOLD.toString() + "* " + (Object)this.mainColor + (Object)ChatColor.BOLD + "EXP", "", (Object)ChatColor.GRAY + "Will you use this kit for good, or evil? ", (Object)ChatColor.GOLD + "* Spring 2018");
     }
 
     @Override

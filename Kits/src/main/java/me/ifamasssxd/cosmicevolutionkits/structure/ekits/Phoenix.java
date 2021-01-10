@@ -17,9 +17,6 @@ package me.ifamasssxd.cosmicevolutionkits.structure.ekits;
 import com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils;
 import com.google.common.collect.Lists;
 import com.rit.sucy.EnchantmentAPI;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKit;
 import me.ifamasssxd.cosmicevolutionkits.utils.EnchantedItemBuilder;
 import me.ifamasssxd.cosmicevolutionkits.utils.ItemBuilder;
@@ -29,6 +26,10 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class Phoenix
 extends EvolutionKit {
@@ -95,7 +96,7 @@ extends EvolutionKit {
 
     @Override
     public List<String> getLore() {
-        return Lists.newArrayList((Object[])new String[]{"", (Object)ChatColor.DARK_PURPLE + ChatColor.BOLD.toString() + "* " + (Object)ChatColor.DARK_PURPLE + (Object)ChatColor.BOLD + "Sandals of the Phoenix", (Object)ChatColor.DARK_PURPLE + ChatColor.BOLD.toString() + "* " + (Object)ChatColor.DARK_PURPLE + (Object)ChatColor.BOLD + "Sikanda", "", (Object)ChatColor.GRAY + "Return from the ashes once more.", (Object)ChatColor.GOLD + "* Astro Renewal Patch"});
+        return Lists.newArrayList("", (Object)ChatColor.DARK_PURPLE + ChatColor.BOLD.toString() + "* " + (Object)ChatColor.DARK_PURPLE + (Object)ChatColor.BOLD + "Sandals of the Phoenix", (Object)ChatColor.DARK_PURPLE + ChatColor.BOLD.toString() + "* " + (Object)ChatColor.DARK_PURPLE + (Object)ChatColor.BOLD + "Sikanda", "", (Object)ChatColor.GRAY + "Return from the ashes once more.", (Object)ChatColor.GOLD + "* Astro Renewal Patch");
     }
 
     @Override

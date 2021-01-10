@@ -27,7 +27,7 @@ import org.bukkit.inventory.ItemStack;
 public class Mimic
 extends EvolutionKit {
     private ChatColor mainColor = ChatColor.YELLOW;
-    private List<Material> validDisplayMaterials = Lists.newArrayList((Object[])new Material[]{Material.BLAZE_POWDER, Material.POTION, Material.SKULL_ITEM, Material.GOLD_SWORD, Material.DIAMOND_AXE, Material.BONE});
+    private List<Material> validDisplayMaterials = Lists.newArrayList(Material.BLAZE_POWDER, Material.POTION, Material.SKULL_ITEM, Material.GOLD_SWORD, Material.DIAMOND_AXE, Material.BONE);
 
     @Override
     public List<ItemStack> getItems(Player player, int level) {
@@ -73,7 +73,7 @@ extends EvolutionKit {
 
     @Override
     public List<String> getLore() {
-        return Lists.newArrayList((Object[])new String[]{"", (Object)this.mainColor + ChatColor.BOLD.toString() + "* " + (Object)this.mainColor + (Object)ChatColor.BOLD + "Random Evolution Kit Items", (Object)this.mainColor + ChatColor.BOLD.toString() + "* " + (Object)this.mainColor + (Object)ChatColor.BOLD + "A chance of...", (Object)this.mainColor + ChatColor.BOLD.toString() + "   - " + (Object)this.mainColor + "Random Soul Enchantment Book", "", CC.Gray + "Receive items from a random /vkit", CC.Gray + "equivalent to this Kit Level!", (Object)ChatColor.GOLD + "* Summer 2018"});
+        return Lists.newArrayList("", (Object)this.mainColor + ChatColor.BOLD.toString() + "* " + (Object)this.mainColor + (Object)ChatColor.BOLD + "Random Evolution Kit Items", (Object)this.mainColor + ChatColor.BOLD.toString() + "* " + (Object)this.mainColor + (Object)ChatColor.BOLD + "A chance of...", (Object)this.mainColor + ChatColor.BOLD.toString() + "   - " + (Object)this.mainColor + "Random Soul Enchantment Book", "", CC.Gray + "Receive items from a random /vkit", CC.Gray + "equivalent to this Kit Level!", (Object)ChatColor.GOLD + "* Summer 2018");
     }
 
     @Override

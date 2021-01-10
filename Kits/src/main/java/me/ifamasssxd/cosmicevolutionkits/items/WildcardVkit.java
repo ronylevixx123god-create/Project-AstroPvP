@@ -25,8 +25,7 @@ import com.cosmicpvp.cosmicutils.exceptions.CosmicException;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
-import me.ifamasssxd.cosmicevolutionkits.CosmicEvolutionKits;
-import me.ifamasssxd.cosmicevolutionkits.items.WildcardMenu;
+import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKits;
 import me.ifamasssxd.cosmicskycustoms.exceptions.ItemDupedException;
 import me.ifamasssxd.cosmicskycustoms.exceptions.PrefixedItemException;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
@@ -46,7 +45,7 @@ implements PlayerInteractable {
     }
 
     public ItemStack createItem(Player player, Object ... objects) {
-        return this.applyItemData(new ItemBuilder(Material.DIAMOND, CC.GoldB + "Omni Gem (" + CC.LightPurple + "/vkit" + CC.GoldB + ")", new String[]{CC.Gray + "Right click to select any", CC.LightPurple + "/vkit" + CC.Gray + " to level up or", CC.Gray + "redeem if not unlocked!"}).build()).assignIID().build();
+        return this.applyItemData(new ItemBuilder(Material.DIAMOND, CC.GoldB + "Omni Gem (" + CC.LightPurple + "/vkit" + CC.GoldB + ")", CC.Gray + "Right click to select any", CC.LightPurple + "/vkit" + CC.Gray + " to level up or", CC.Gray + "redeem if not unlocked!").build()).assignIID().build();
     }
 
     public void onPlayerInteractable(Player player, ItemStack item, NBTWrapper wrapper, PlayerInteractEvent e) throws CosmicException {
@@ -66,7 +65,7 @@ implements PlayerInteractable {
             player.setItemInHand(null);
         }
         ASound.VILLAGER_HAGGLE.play(player, 10.0f, 1.1f);
-        new WildcardMenu(player, wrapper).openGUI(CosmicEvolutionKits.get());
+        new WildcardMenu(player, wrapper).openGUI(CosmicGlobalKits.getPlugin());
     }
 }
 

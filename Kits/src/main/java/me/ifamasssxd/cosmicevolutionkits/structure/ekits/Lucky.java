@@ -158,7 +158,7 @@ extends EvolutionKit {
     }
 
     public void addItem(int level, ItemBuilder builder, double chance) {
-        this.lootTable.computeIfAbsent(level, table -> new LootTable()).addItem((Object)builder, chance);
+        this.lootTable.computeIfAbsent(level, table -> new LootTable()).addItem(builder, chance);
     }
 
     @Override
@@ -220,7 +220,7 @@ extends EvolutionKit {
 
     @Override
     public List<String> getLore() {
-        return Lists.newArrayList((Object[])new String[]{"", (Object)this.mainColor + CC.Bold + "* " + (Object)this.mainColor + "Lucky Box", "", CC.Gray + "Feeling Lucky? Test your luck with a Lucky Box!", CC.Gold + "* Fall 2018"});
+        return Lists.newArrayList("", (Object)this.mainColor + CC.Bold + "* " + (Object)this.mainColor + "Lucky Box", "", CC.Gray + "Feeling Lucky? Test your luck with a Lucky Box!", CC.Gold + "* Fall 2018");
     }
 
     @Override

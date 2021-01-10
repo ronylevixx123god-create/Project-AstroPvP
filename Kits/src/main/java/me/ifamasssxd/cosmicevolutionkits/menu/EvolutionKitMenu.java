@@ -15,8 +15,7 @@ package me.ifamasssxd.cosmicevolutionkits.menu;
 import com.cosmicpvp.cosmicutils.gui.CosmicGUI;
 import com.cosmicpvp.cosmicutils.gui.InventoryItem;
 import com.cosmicpvp.cosmicutils.utils.CC;
-import me.ifamasssxd.cosmicevolutionkits.CosmicEvolutionKits;
-import me.ifamasssxd.cosmicevolutionkits.menu.KitPreviewMenu;
+import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKits;
 import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKit;
 import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKits;
 import me.ifamasssxd.cosmicevolutionkits.structure.KitPlayer;
@@ -44,7 +43,7 @@ extends CosmicGUI {
             EvolutionKit internalKit = kit.getKit();
             this.setItem(internalKit.getInventorySlot(), new InventoryItem(kitPlayer.getKitItem(kit, this.player)).click(ClickType.RIGHT, () -> {
                 CosmicGUI previewMenu = new KitPreviewMenu(this.player, kit, kit == EvolutionKits.MIMIC ? ((Mimic)internalKit).getRandomNotRigged(this.player, 10) : internalKit.getItems(this.player, 10)).setParentGUI(this);
-                this.closeWithDelay(pl -> previewMenu.openGUI((JavaPlugin)CosmicEvolutionKits.get()));
+                this.closeWithDelay(pl -> previewMenu.openGUI(CosmicGlobalKits.getPlugin()));
             }).click(ClickType.LEFT, () -> {
                 if (kitPlayer.isLoadingData()) {
                     this.player.sendMessage(CC.RedB + "(!) " + CC.Red + "Please wait while your /vkit data is loaded!");

@@ -18,8 +18,7 @@ package me.ifamasssxd.cosmicevolutionkits.commands;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
-import java.util.Arrays;
-import me.ifamasssxd.cosmicevolutionkits.CosmicEvolutionKits;
+import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKits;
 import me.ifamasssxd.cosmicevolutionkits.menu.EvolutionKitMenu;
 import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKits;
 import me.ifamasssxd.cosmicevolutionkits.structure.KitPlayer;
@@ -30,6 +29,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.Arrays;
 
 public class CommandEvolutionKit
 implements CommandExecutor {
@@ -68,11 +69,11 @@ implements CommandExecutor {
                 }
                 if (action.equalsIgnoreCase("resetlevels")) {
                     kitplayer.getKitLevels().clear();
-                    CosmicEvolutionKits.get().getSqlQueryThread().addQuery("UPDATE " + CosmicEvolutionKits.get().getServerName() + "_evolutionKitData SET kitLevel = 1 WHERE uuid = '" + pl.getUniqueId() + "';");
+                    CosmicGlobalKits.getPlugin().getSqlQueryThread().addQuery("UPDATE " + CosmicGlobalKits.getPlugin().getServerName() + "_evolutionKitData SET kitLevel = 1 WHERE uuid = '" + pl.getUniqueId() + "';");
                     sender.sendMessage((Object)ChatColor.RED + "Reset " + pName + "'s Levels.");
                 } else {
                     kitplayer.getKitCooldowns().clear();
-                    CosmicEvolutionKits.get().getSqlQueryThread().addQuery("UPDATE " + CosmicEvolutionKits.get().getServerName() + "_evolutionKitData SET lastKitUse = 0 WHERE uuid = '" + pl.getUniqueId() + "';");
+                    CosmicGlobalKits.getPlugin().getSqlQueryThread().addQuery("UPDATE " + CosmicGlobalKits.getPlugin().getServerName() + "_evolutionKitData SET lastKitUse = 0 WHERE uuid = '" + pl.getUniqueId() + "';");
                     sender.sendMessage((Object)ChatColor.RED + "Cleared " + pName + "'s Cooldowns.");
                 }
                 return true;
@@ -123,7 +124,7 @@ implements CommandExecutor {
             player.sendMessage(CC.RedB + "(!) " + CC.Red + "Please wait while your /vkit data is loaded!");
             return true;
         }
-        new EvolutionKitMenu(player).openGUI(CosmicEvolutionKits.get());
+        new EvolutionKitMenu(player).openGUI(CosmicGlobalKits.getPlugin());
         return false;
     }
 }

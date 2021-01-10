@@ -11,13 +11,11 @@
  */
 package me.ifamasssxd.cosmicevolutionkits.utils;
 
-import me.ifamasssxd.cosmicevolutionkits.CosmicEvolutionKits;
+import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKits;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
 
 public class InventoryUtils {
     public static int getRoundedSize(int size) {
@@ -26,11 +24,11 @@ public class InventoryUtils {
 
     public static boolean giveItem(Player player, ItemStack item) {
         if (player.getInventory().firstEmpty() != -1) {
-            player.getInventory().addItem(new ItemStack[]{item});
+            player.getInventory().addItem(item);
             return true;
         }
         Item i = player.getWorld().dropItem(player.getLocation(), item);
-        i.setMetadata("no_pickup", (MetadataValue)new FixedMetadataValue((Plugin)CosmicEvolutionKits.get(), (Object)player.getName()));
+        i.setMetadata("no_pickup", new FixedMetadataValue(CosmicGlobalKits.getPlugin(), player.getName()));
         return false;
     }
 }

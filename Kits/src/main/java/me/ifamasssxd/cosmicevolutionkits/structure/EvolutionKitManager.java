@@ -9,14 +9,14 @@
 package me.ifamasssxd.cosmicevolutionkits.structure;
 
 import com.cosmicpvp.cosmicutils.gui.CosmicGUI;
-import me.ifamasssxd.cosmicevolutionkits.CosmicEvolutionKits;
+import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKits;
 import me.ifamasssxd.cosmicevolutionkits.menu.EvolutionKitMenu;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 public class EvolutionKitManager {
     public void startInventoryUpdater() {
-        Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)CosmicEvolutionKits.get(), () -> {
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(CosmicGlobalKits.getPlugin(), () -> {
             for (CosmicGUI gui : CosmicGUI.activeGUIs.values()) {
                 if (!(gui instanceof EvolutionKitMenu) || !((EvolutionKitMenu)gui).isOpen()) continue;
                 gui.redraw();

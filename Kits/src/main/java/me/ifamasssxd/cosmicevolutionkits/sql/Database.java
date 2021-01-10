@@ -14,7 +14,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.util.Collections;
-import me.ifamasssxd.cosmicevolutionkits.CosmicEvolutionKits;
+
+import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKits;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -30,9 +31,9 @@ public class Database {
     private Connection connection;
 
     public Database(String sqlFileName) {
-        File sqlFile = new File(CosmicEvolutionKits.get().getDataFolder(), sqlFileName);
+        File sqlFile = new File(CosmicGlobalKits.getPlugin().getDataFolder(), sqlFileName);
         if (!sqlFile.exists()) {
-            CosmicEvolutionKits.get().saveResource("sqlconfig.yml", true);
+            CosmicGlobalKits.getPlugin().saveResource("sqlconfig.yml", true);
         }
         YamlConfiguration config = YamlConfiguration.loadConfiguration((File)sqlFile);
         this.host = config.getString("sql.hostname");
@@ -47,7 +48,7 @@ public class Database {
      */
     public void executeUpdate(String update, boolean async) {
         if (async && Bukkit.isPrimaryThread()) {
-            Bukkit.getScheduler().scheduleAsyncDelayedTask((Plugin)CosmicEvolutionKits.get(), () -> this.executeUpdate(update, false));
+            Bukkit.getScheduler().scheduleAsyncDelayedTask(CosmicGlobalKits.getPlugin(), () -> this.executeUpdate(update, false));
             return;
         }
         try {
