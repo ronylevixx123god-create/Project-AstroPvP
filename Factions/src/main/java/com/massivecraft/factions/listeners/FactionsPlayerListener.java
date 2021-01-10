@@ -369,7 +369,7 @@ public class FactionsPlayerListener
             return;
         }
         ItemStack item = event.getItem();
-        if (item != null && item.getType() == Material.MONSTER_EGG && item.getDurability() != EntityType.CREEPER.getTypeId() && (in = Board.getFactionAt(new FLocation(clickedBlock))) != null && in.isWarZone() && MiscUtil.isBossEgg(item)) {
+        if (item != null && item.getType() == Material.MONSTER_EGG && item.getDurability() != EntityType.CREEPER.getTypeId() && (in = Board.getFactionAt(new FLocation(clickedBlock))) != null && in.isWarZone()) {
             return;
         }
         ItemStack hand = event.getPlayer().getItemInHand();

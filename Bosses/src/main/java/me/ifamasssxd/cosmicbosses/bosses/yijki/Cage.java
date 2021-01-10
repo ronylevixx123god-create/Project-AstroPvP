@@ -46,7 +46,7 @@ public class Cage extends BossAbility {
 
     @Override
     public void onAbility() {
-        for (Entity ent : ((Boss)this.getBoss()).getNearbyEntities(20.0, EntityType.PLAYER)) {
+        for (Entity ent : this.getBoss().getNearbyEntities(20.0, EntityType.PLAYER)) {
             Player p = (Player)ent;
             Location location = p.getLocation();
             if (!BossUtils.canAffectPlayer(p, true)) continue;
@@ -63,9 +63,9 @@ public class Cage extends BossAbility {
             for (int x = minX; x < maxX; ++x) {
                 for (int y = minY; y < maxY; ++y) {
                     for (int z = minZ; z < maxZ; ++z) {
-                        loc.setY((double)y);
-                        loc.setZ((double)z);
-                        loc.setX((double)x);
+                        loc.setY(y);
+                        loc.setZ(z);
+                        loc.setX(x);
                         loc = loc.getBlock().getLocation();
                         if (this.getBlockModifier().containsLocation(this, loc)) continue;
                         Block b = loc.getBlock();
