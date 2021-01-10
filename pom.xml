@@ -29,6 +29,7 @@
         <module>ItemSkins</module>
         <module>Kits</module>
         <module>Pets</module>
+        <module>CrateBoxes</module>
     </modules>
 
     <build>

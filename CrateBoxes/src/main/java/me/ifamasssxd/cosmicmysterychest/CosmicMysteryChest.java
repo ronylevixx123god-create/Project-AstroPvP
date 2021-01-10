@@ -12,18 +12,13 @@
  */
 package me.ifamasssxd.cosmicmysterychest;
 
-import me.ifamasssxd.cosmicmysterychest.ShardAnimations;
 import me.ifamasssxd.cosmicmysterychest.commands.CommandLootboxToggle;
 import me.ifamasssxd.cosmicmysterychest.commands.CommandMysteryChest;
 import me.ifamasssxd.cosmicmysterychest.items.MysteryLootboxItem;
 import me.ifamasssxd.cosmicmysterychest.listeners.MysteryChestListener;
 import me.ifamasssxd.cosmicmysterychest.managers.MysteryChestManager;
 import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
-import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.event.Listener;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class CosmicMysteryChest
@@ -44,12 +39,12 @@ extends JavaPlugin {
         this.toggle = new ShardAnimations("toggles.yml");
         this.chestManager = new MysteryChestManager();
         this.chestManager.onEnable(this);
-        this.getCommand("mysterychest").setExecutor((CommandExecutor)new CommandMysteryChest(this));
-        this.getCommand("lbtoggle").setExecutor((CommandExecutor)new CommandLootboxToggle());
-        this.getServer().getPluginManager().registerEvents((Listener)new MysteryChestListener(), (Plugin)this);
+        this.getCommand("mysterychest").setExecutor(new CommandMysteryChest(this));
+        this.getCommand("lbtoggle").setExecutor(new CommandLootboxToggle());
+        this.getServer().getPluginManager().registerEvents(new MysteryChestListener(), this);
         if (Bukkit.getPluginManager().isPluginEnabled("CosmicSkyCustomItems")) {
             this.mysteryLootboxItem = new MysteryLootboxItem();
-            CosmicSkyCustomItems.get().getItemManager().registerCustomItem((CosmicItem)this.mysteryLootboxItem);
+            CosmicSkyCustomItems.get().getItemManager().registerCustomItem(this.mysteryLootboxItem);
         }
     }
 

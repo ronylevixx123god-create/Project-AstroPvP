@@ -18,12 +18,13 @@ import com.cosmicpvp.cosmicutils.gui.InventoryItem;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.InventoryUtils;
 import com.google.common.collect.Lists;
-import java.util.LinkedList;
 import me.ifamasssxd.cosmicmysterychest.struct.CustomLoot;
 import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.LinkedList;
 
 public class MysteryChestItemViewerGUI
 extends CosmicGUI {
@@ -36,7 +37,7 @@ extends CosmicGUI {
 
     public void redraw() {
         int slot = 0;
-        LinkedList items = Lists.newLinkedList();
+        LinkedList<ItemStack> items = Lists.newLinkedList();
         for (CustomLoot item : this.chest.getLootItems()) {
             items.add(item.getItem());
         }

@@ -31,24 +31,14 @@ package me.ifamasssxd.cosmicmysterychest.guis;
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
 import com.cosmicpvp.cosmicutils.gui.CosmicGUI;
 import com.cosmicpvp.cosmicutils.gui.InventoryItem;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
-import com.cosmicpvp.cosmicutils.utils.ItemUtils;
-import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
-import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
+import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
-import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.ifamasssxd.cosmicmysterychest.struct.CustomLoot;
 import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
-import org.bukkit.Bukkit;
-import org.bukkit.DyeColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
@@ -56,6 +46,9 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
+
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class MysteryChestGUI
 extends CosmicGUI {
@@ -123,7 +116,7 @@ extends CosmicGUI {
                         }
                         MysteryChestGUI.this.redraw();
                     } else {
-                        int ticksToSkip;
+                        int ticksToSkip = 0;
                         int n = MysteryChestGUI.this.animationTick > 80 ? 4 : (MysteryChestGUI.this.animationTick > 60 ? 3 : (ticksToSkip = MysteryChestGUI.this.animationTick > 40 ? 2 : 2));
                         if (MysteryChestGUI.this.animationTick % ticksToSkip == 0) {
                             MysteryChestGUI.this.redraw();

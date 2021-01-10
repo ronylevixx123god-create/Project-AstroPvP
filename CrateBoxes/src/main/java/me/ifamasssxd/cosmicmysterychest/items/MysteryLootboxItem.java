@@ -27,15 +27,8 @@ import com.cosmicpvp.cosmicutils.compat.ASound;
 import com.cosmicpvp.cosmicutils.exceptions.CosmicException;
 import com.cosmicpvp.cosmicutils.exceptions.PrefixedException;
 import com.cosmicpvp.cosmicutils.struct.LootTable;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
-import com.cosmicpvp.cosmicutils.utils.ItemUtils;
-import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
-import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
-import com.cosmicpvp.cosmicutils.utils.RandomFireworks;
+import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
-import java.util.ArrayList;
-import java.util.List;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
 import me.ifamasssxd.cosmicskycustoms.exceptions.ItemDupedException;
@@ -45,6 +38,9 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MysteryLootboxItem
 extends CosmicItem
@@ -58,11 +54,11 @@ implements PlayerInteractable {
 
     public void calculateLootTable() {
         this.availableChests = new LootTable();
-        ArrayList boxes = Lists.newArrayList((Object[])new String[]{"lootbox_baked", "lootbox_genesis", "lootbox_sugarrush", "lootbox_lucky", "lootbox_darkdreams", "lootbox_chocolates", "lootbox_meltandrenew", "lootbox_aprilshowers", "lootbox_survival", "lootbox_snowday", "lootbox_hangover", "lootbox_easter2019", "lootbox_icy", "lootbox_stackable", "lootbox_summersavage", "lootbox_dungeoncrawler"});
+        ArrayList<String> boxes = Lists.newArrayList(new String[]{"lootbox_baked", "lootbox_genesis", "lootbox_sugarrush", "lootbox_lucky", "lootbox_darkdreams", "lootbox_chocolates", "lootbox_meltandrenew", "lootbox_aprilshowers", "lootbox_survival", "lootbox_snowday", "lootbox_hangover", "lootbox_easter2019", "lootbox_icy", "lootbox_stackable", "lootbox_summersavage", "lootbox_dungeoncrawler"});
         for (String box : boxes) {
             MysteryChest fromName = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get(box);
             if (fromName == null) continue;
-            this.availableChests.addItem((Object)fromName, 1.0);
+            this.availableChests.addItem(fromName, 1.0);
         }
     }
 

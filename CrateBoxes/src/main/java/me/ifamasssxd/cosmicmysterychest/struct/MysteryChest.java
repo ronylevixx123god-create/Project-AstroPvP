@@ -22,25 +22,24 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.google.common.collect.Lists;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
-import me.ifamasssxd.cosmicmysterychest.struct.CustomLoot;
 import me.ifamasssxd.cosmicmysterychest.utils.TimeUtil;
-import net.minecraft.server.v1_7_R4.NBTBase;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class MysteryChest {
-    private String internalName;
+    private final String internalName;
     private ItemStack handDisplay;
-    private int itemBundleSize;
+    private final int itemBundleSize;
     private List<ItemStack> garunteedItems;
-    private List<CustomLoot> lootItems;
+    private final List<CustomLoot> lootItems;
     private transient LootTable<CustomLoot> lootTable;
     public transient File file;
 
@@ -57,7 +56,7 @@ public class MysteryChest {
         if (this.handDisplay == null) {
             return this.internalName;
         }
-        return ItemUtils.getDisplayName((ItemStack)this.handDisplay);
+        return ItemUtils.getDisplayName(this.handDisplay);
     }
 
     public File getFile() {
@@ -81,7 +80,7 @@ public class MysteryChest {
         }
         CustomLoot loot = new CustomLoot(item, chance, jackpot);
         this.lootItems.add(loot);
-        this.getLootTable().addItem((Object)loot, chance);
+        this.getLootTable().addItem(loot, chance);
     }
 
     public void registerGarunteed(ItemStack item) {
@@ -109,26 +108,26 @@ public class MysteryChest {
         if (lore == null) {
             lore = Lists.newArrayList();
         }
-        ArrayList lootItems = Lists.newArrayList(this.lootItems);
-        List jackpotItems = lootItems.stream().filter(CustomLoot::isJackpotItem).collect(Collectors.toList());
+        ArrayList<CustomLoot> lootItems = Lists.newArrayList(this.lootItems);
+        List<CustomLoot> jackpotItems = lootItems.stream().filter(CustomLoot::isJackpotItem).collect(Collectors.toList());
         lootItems.removeAll(jackpotItems);
         lore.add("");
         lore.add(CC.WhiteB + "Random Loot (" + CC.Gray + this.getItemBundleSize() + " item" + (this.getItemBundleSize() > 1 ? "s" : "") + CC.WhiteB + ")");
         for (CustomLoot item : lootItems) {
-            lore.add(" " + CC.WhiteB + "* " + CC.White + item.getItem().getAmount() + "x " + ItemUtils.getDisplayName((ItemStack)item.getItem()));
+            lore.add(" " + CC.WhiteB + "* " + CC.White + item.getItem().getAmount() + "x " + ItemUtils.getDisplayName(item.getItem()));
         }
         if (jackpotItems.size() > 0) {
             lore.add("");
             lore.add(CC.WhiteB + "Jackpot Loot");
             for (CustomLoot item : jackpotItems) {
-                lore.add(" " + CC.WhiteB + "* " + CC.White + item.getItem().getAmount() + "x " + ItemUtils.getDisplayName((ItemStack)item.getItem()));
+                lore.add(" " + CC.WhiteB + "* " + CC.White + item.getItem().getAmount() + "x " + ItemUtils.getDisplayName(item.getItem()));
             }
         }
         if (this.garunteedItems != null && !this.garunteedItems.isEmpty()) {
             lore.add("");
             lore.add(CC.WhiteB + "Bonus Loot (" + CC.Gray + this.garunteedItems.size() + " item" + (this.garunteedItems.size() == 1 ? "" : "s") + CC.WhiteB + ")");
             for (ItemStack is : this.garunteedItems) {
-                lore.add(" " + CC.WhiteB + "* " + CC.White + is.getAmount() + "x " + ItemUtils.getDisplayName((ItemStack)is));
+                lore.add(" " + CC.WhiteB + "* " + CC.White + is.getAmount() + "x " + ItemUtils.getDisplayName(is));
             }
         }
         if (expiration != null && expiration > 0L) {
@@ -143,12 +142,12 @@ public class MysteryChest {
         if (expiration != null && expiration > 0L) {
             builder.setLong("expiration", expiration);
         }
-        wrapper.setNBTBase("cosmicData", (NBTBase)builder.get());
+        wrapper.setNBTBase("cosmicData", builder.get());
         hand = wrapper.build();
         hand.setAmount(1);
         if (iid && ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
-            hand = ItemID.removeItemID((ItemStack)hand);
-            hand = ItemID.assignItemID(null, (ItemStack)hand);
+            hand = ItemID.removeItemID(hand);
+            hand = ItemID.assignItemID(null, hand);
         }
         return hand;
     }
@@ -162,7 +161,7 @@ public class MysteryChest {
     }
 
     public CustomLoot getRandomPrize() {
-        return (CustomLoot)this.getLootTable().getRandomLoot();
+        return this.getLootTable().getRandomLoot();
     }
 
     public String getInternalName() {

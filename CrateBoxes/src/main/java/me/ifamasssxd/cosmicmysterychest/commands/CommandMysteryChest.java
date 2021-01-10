@@ -17,12 +17,7 @@
  */
 package me.ifamasssxd.cosmicmysterychest.commands;
 
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.ItemUtils;
-import com.cosmicpvp.cosmicutils.utils.NumberUtils;
-import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
-import com.cosmicpvp.cosmicutils.utils.TimeUtils;
-import java.util.concurrent.TimeUnit;
+import com.cosmicpvp.cosmicutils.utils.*;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.ifamasssxd.cosmicmysterychest.exceptions.MysteryChestException;
 import me.ifamasssxd.cosmicmysterychest.exceptions.MysteryChestSuccessException;
@@ -35,6 +30,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.concurrent.TimeUnit;
 
 public class CommandMysteryChest
 implements CommandExecutor {
@@ -123,7 +120,7 @@ implements CommandExecutor {
                     return true;
                 }
                 if (operation.equalsIgnoreCase("give") && args.length >= 3) {
-                    Long time;
+                    Long time = null;
                     int amount2;
                     Player pl = Bukkit.getPlayer((String)args[1]);
                     if (pl == null) {

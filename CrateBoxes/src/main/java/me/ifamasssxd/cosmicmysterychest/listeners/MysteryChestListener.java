@@ -139,7 +139,7 @@ implements Listener {
                     }
                     NBTWrapper nbtWrapper = new NBTWrapper(item);
                     long expiration = 0L;
-                    NBTTagCompoundBuilder data = nbtWrapper.getCosmicData();
+                    NBTTagCompoundBuilder data = nbtWrapper.getconaxData();
                     expiration = data.getLong("expiration");
                     if (expiration > 0L && expiration < System.currentTimeMillis()) {
                         String since = TimeUtil.formatTimeSincePastTime(expiration, true);

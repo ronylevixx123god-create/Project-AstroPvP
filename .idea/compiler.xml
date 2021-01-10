@@ -18,6 +18,7 @@
         <module name="Slotbot" />
         <module name="CustomItems" />
         <module name="KoTHs" />
+        <module name="CrateBoxes" />
         <module name="Pets" />
         <module name="Explosive" />
         <module name="Utils" />
