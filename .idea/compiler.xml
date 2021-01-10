@@ -20,6 +20,7 @@
         <module name="Disguises" />
         <module name="CustomItems" />
         <module name="KoTHs" />
+        <module name="Duels" />
         <module name="Pets" />
         <module name="Explosive" />
         <module name="Utils" />
@@ -34,6 +35,7 @@
     <bytecodeTargetLevel>
       <module name="ArmorSets" target="1.8" />
       <module name="CrateBoxes" target="8" />
+      <module name="Disguises (1)" target="8" />
       <module name="MoneyNotes" target="1.8" />
       <module name="SpaceChests (1)" target="1.8" />
     </bytecodeTargetLevel>

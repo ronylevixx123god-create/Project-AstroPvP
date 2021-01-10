@@ -23,7 +23,6 @@
  */
 package com.cosmicpvp.CosmicSpaceChests;
 
-import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsPlugin;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.cosmicpvp.CosmicSpaceChests.libs.LootGenerator;
 import com.cosmicpvp.CosmicSpaceChests.utils.CustomEnchants;
@@ -32,11 +31,6 @@ import com.cosmicpvp.CosmicSpaceChests.utils.LocationUtils;
 import com.cosmicpvp.cosmicutils.struct.factions.points.FactionPointUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.rit.sucy.CustomEnchantment;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.Bukkit;
@@ -50,16 +44,16 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
+
+import java.util.*;
 
 public class CosmicSpaceChestsAPI {
-    private static short WHITE_STAINED_GLASS = 0;
-    private static short GREEN_STAINED_GLASS = (short)5;
-    private static short BLUE_STAINED_GLASS = (short)3;
-    private static short YELLOW_STAINED_GLASS = (short)4;
-    private static short GOLD_STAINED_GLASS = 1;
-    private static short RED_STAINED_GLASS = (short)14;
+    private static final short WHITE_STAINED_GLASS = 0;
+    private static final short GREEN_STAINED_GLASS = (short)5;
+    private static final short BLUE_STAINED_GLASS = (short)3;
+    private static final short YELLOW_STAINED_GLASS = (short)4;
+    private static final short GOLD_STAINED_GLASS = 1;
+    private static final short RED_STAINED_GLASS = (short)14;
 
     public static boolean giveDropPackageChest(Player ply, ItemRarity ir) {
         if (ply.getInventory().firstEmpty() == -1) {
@@ -67,8 +61,8 @@ public class CosmicSpaceChestsAPI {
         }
         ChatColor cc = CosmicSpaceChestsAPI.getColor(ir);
         ItemStack is = CosmicSpaceChestsAPI.getDropPackageChest(ir);
-        ply.getInventory().addItem(new ItemStack[]{is});
-        ply.sendMessage((Object)ChatColor.GRAY + "You got a " + (Object)cc + (Object)ChatColor.UNDERLINE + ir.name + " Cosmic Chest!");
+        ply.getInventory().addItem(is);
+        ply.sendMessage(ChatColor.GRAY + "You got a " + cc + ChatColor.UNDERLINE + ir.name + " Cosmic Chest!");
         ply.updateInventory();
         return true;
     }
@@ -77,130 +71,130 @@ public class CosmicSpaceChestsAPI {
         ChatColor cc = CosmicSpaceChestsAPI.getColor(ir);
         ItemStack is = new ItemStack(Material.CHEST, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName((Object)cc + ChatColor.BOLD.toString() + ir.name + " Cosmic Chest" + (Object)ChatColor.GRAY + " (Right Click)");
-        ArrayList<String> lore = new ArrayList<String>(Arrays.asList((Object)ChatColor.GRAY + "A cache of equipment packaged by", (Object)ChatColor.GRAY + "the Intergalactic Cosmonaut Station.", "", (Object)ChatColor.GRAY + "Contains " + (Object)cc + (Object)ChatColor.UNDERLINE + "5 " + ir.name + " rarity" + (Object)ChatColor.GRAY + " items..."));
+        im.setDisplayName(cc + ChatColor.BOLD.toString() + ir.name + " Cosmic Chest" + ChatColor.GRAY + " (Right Click)");
+        ArrayList<String> lore = new ArrayList<String>(Arrays.asList(ChatColor.GRAY + "A cache of equipment packaged by", ChatColor.GRAY + "the Intergalactic Cosmonaut Station.", "", ChatColor.GRAY + "Contains " + cc + ChatColor.UNDERLINE + "5 " + ir.name + " rarity" + ChatColor.GRAY + " items..."));
         if (ir == ItemRarity.SIMPLE) {
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Vanilla Equipment");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Vanilla Potions");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Sheep Spawners");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Food");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Buckets");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Exploding Cake");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "$10,000 Money Notes");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "1,000XP Bottles");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Simple Player Titles");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Simple Secret Dust");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Simple Enchantment Book");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Simple Randomization Scroll");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Tier #1 Rank Quest");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Vanilla Equipment");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Vanilla Potions");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Sheep Spawners");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Food");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Buckets");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Exploding Cake");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "$10,000 Money Notes");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "1,000XP Bottles");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Simple Player Titles");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Simple Secret Dust");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Simple Enchantment Book");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Simple Randomization Scroll");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Tier #1 Rank Quest");
         }
         if (ir == ItemRarity.UNIQUE) {
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Unique Equipment");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Unique Custom TNT");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Pig/Chicken Spawners");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Hopper");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Cosmic Crackers");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "10 Level Skill Vouchers");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "5 Level mcMMO Voucher");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "$50,000 Money Notes");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "2,000-5,000XP Bottles");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Unique Player Titles");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Unique Secret Dust");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Unique Enchantment Book");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Simple/Unique Kill Tracker");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Unique Randomzation Scroll");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Tier #2 Rank Quest");
-            lore.add((Object)cc + "... and more!");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Unique Equipment");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Unique Custom TNT");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Pig/Chicken Spawners");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Hopper");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Cosmic Crackers");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "10 Level Skill Vouchers");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "5 Level mcMMO Voucher");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "$50,000 Money Notes");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "2,000-5,000XP Bottles");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Unique Player Titles");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Unique Secret Dust");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Unique Enchantment Book");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Simple/Unique Kill Tracker");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Unique Randomzation Scroll");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Tier #2 Rank Quest");
+            lore.add(cc + "... and more!");
         }
         if (ir == ItemRarity.ELITE) {
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Elite Equipment");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Elite Custom TNT");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Creeper Eggs");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Hoppers");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Zombie, Skeleton Spawners");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Spider, Wolf Spawners");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "30 Level (Secondary) Skill Vouchers");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "15 Level mcMMO Voucher");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "$100,000 Money Notes");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "5,000-20,000XP Bottles");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Elite Player Titles");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Elite Secret Dust");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Elite Enchantment Book");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Elite Randomzation Scroll");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Elite /gkit Fallen Heroes");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Tier #3 Rank Quest");
-            lore.add((Object)cc + "... and more!");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Elite Equipment");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Elite Custom TNT");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Creeper Eggs");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Hoppers");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Zombie, Skeleton Spawners");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Spider, Wolf Spawners");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "30 Level (Secondary) Skill Vouchers");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "15 Level mcMMO Voucher");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "$100,000 Money Notes");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "5,000-20,000XP Bottles");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Elite Player Titles");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Elite Secret Dust");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Elite Enchantment Book");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Elite Randomzation Scroll");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Elite /gkit Fallen Heroes");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Tier #3 Rank Quest");
+            lore.add(cc + "... and more!");
         }
         if (ir == ItemRarity.ULTIMATE) {
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Ultimate Equipment");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Ultimate /gkit Items");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Ultimate Boss Eggs");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "30 Level (Primary) Skill Vouchers");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "25 Level mcMMO Voucher");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "$250,000 Money Notes");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "25,000-75,000XP Bottles");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Item Nametags");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Transmog Scrolls");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "White & 50% Black Scrolls");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Blaze/IG Spawners");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Mystery Soul Book");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Mystery Mob Spawners");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "XP Boosters");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Ultimate /gkit Fallen Heroes");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Custom Creeper Eggs");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Tier #4 Rank Quest");
-            lore.add((Object)cc + "... and more!");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Ultimate Equipment");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Ultimate /gkit Items");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Ultimate Boss Eggs");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "30 Level (Primary) Skill Vouchers");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "25 Level mcMMO Voucher");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "$250,000 Money Notes");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "25,000-75,000XP Bottles");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Item Nametags");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Transmog Scrolls");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "White & 50% Black Scrolls");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Blaze/IG Spawners");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Mystery Soul Book");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Mystery Mob Spawners");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "XP Boosters");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Ultimate /gkit Fallen Heroes");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Custom Creeper Eggs");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Tier #4 Rank Quest");
+            lore.add(cc + "... and more!");
         }
         if (ir == ItemRarity.LEGENDARY) {
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Legendary Equipment");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Legendary /gkit Items");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Legendary Boss Eggs");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "75 Level (Primary) Skill Vouchers");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "50 Level mcMMO Voucher");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "$1,000,000 Money Notes");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "50,000-100,000XP Bottles");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "White & 75% Black Scrolls");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Cosmic Envoy Summon");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Nether Mob Spawners");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Lucky Creepers/TNT");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Legendary Player Titles");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Mystery Mob Spawners");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "XP Boosters");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "10 Slot Enchantment Orbs");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "/gkit + /vkit Fallen Heroes");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Godly Space Flare");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Showcase Expander");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Home Increaser");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Tier #5 Rank Quest");
-            lore.add((Object)cc + "... and more!");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Legendary Equipment");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Legendary /gkit Items");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Legendary Boss Eggs");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "75 Level (Primary) Skill Vouchers");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "50 Level mcMMO Voucher");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "$1,000,000 Money Notes");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "50,000-100,000XP Bottles");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "White & 75% Black Scrolls");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Cosmic Envoy Summon");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Nether Mob Spawners");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Lucky Creepers/TNT");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Legendary Player Titles");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Mystery Mob Spawners");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "XP Boosters");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "10 Slot Enchantment Orbs");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "/gkit + /vkit Fallen Heroes");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Godly Space Flare");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Showcase Expander");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Home Increaser");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Tier #5 Rank Quest");
+            lore.add(cc + "... and more!");
         }
         if (ir == ItemRarity.GOD) {
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Godly Equipment");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Godly /gkit Items");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Yijki / Plague Bloater Boss Eggs");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "200 Level mcMMO Voucher");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "$4,000,000 Money Notes");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "100,000-200,000XP Bottles");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Legendary Enchantment Books");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Cosmic Envoy Summon");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Nether Mob Spawners");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Lucky Creepers/TNT");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Mystery Mob Spawners");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Godly Randomization Scrolls");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "11 Slot Enchantment Orbs");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "/gkit + /vkit Fallen Heroes");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Soul Enchantment Books");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Faction Crystals");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Depth Strider Books");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Mystery Cosmic Crate");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Tier #5 Rank Quest");
-            lore.add((Object)cc + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Heroic Rank Crystal");
-            lore.add((Object)cc + "... and much more!");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Godly Equipment");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Godly /gkit Items");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Yijki / Plague Bloater Boss Eggs");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "200 Level mcMMO Voucher");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "$4,000,000 Money Notes");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "100,000-200,000XP Bottles");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Legendary Enchantment Books");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Cosmic Envoy Summon");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Nether Mob Spawners");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Lucky Creepers/TNT");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Mystery Mob Spawners");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Godly Randomization Scrolls");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "11 Slot Enchantment Orbs");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "/gkit + /vkit Fallen Heroes");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Soul Enchantment Books");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Faction Crystals");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Depth Strider Books");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Mystery Cosmic Crate");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Tier #5 Rank Quest");
+            lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Heroic Rank Crystal");
+            lore.add(cc + "... and much more!");
         }
         im.setLore(lore);
         is.setItemMeta(im);
         if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
-            ItemID.setItemID((ItemStack)is, (long)ItemID.generateNewItemID());
+            ItemID.setItemID(is, ItemID.generateNewItemID());
         }
         return is;
     }
@@ -209,15 +203,15 @@ public class CosmicSpaceChestsAPI {
         if (!(is != null && is.getType() == Material.CHEST && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().hasLore())) {
             return false;
         }
-        return ((String)is.getItemMeta().getLore().get(0)).equals((Object)ChatColor.GRAY + "A cache of equipment packaged by") || ((String)is.getItemMeta().getLore().get(0)).equals((Object)ChatColor.GRAY + "A supply drop full of loot!");
+        return is.getItemMeta().getLore().get(0).equals(ChatColor.GRAY + "A cache of equipment packaged by") || is.getItemMeta().getLore().get(0).equals(ChatColor.GRAY + "A supply drop full of loot!");
     }
 
     public static ItemStack getSpaceFlare(ItemRarity ir) {
         ChatColor cc = CosmicSpaceChestsAPI.getColor(ir);
         ItemStack is = new ItemStack(Material.TORCH, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName((Object)cc + ChatColor.BOLD.toString() + ir.name + " Space Flare" + (Object)ChatColor.GRAY + " (Right Click)");
-        im.setLore(new ArrayList<String>(Arrays.asList((Object)ChatColor.GRAY + "Drops a cache of equipment packaged by", (Object)ChatColor.GRAY + "the " + (Object)ChatColor.UNDERLINE + "Intergalactic Cosmonaut Station.", (Object)ChatColor.GRAY + "near your character's current position.")));
+        im.setDisplayName(cc + ChatColor.BOLD.toString() + ir.name + " Space Flare" + ChatColor.GRAY + " (Right Click)");
+        im.setLore(new ArrayList<String>(Arrays.asList(ChatColor.GRAY + "Drops a cache of equipment packaged by", ChatColor.GRAY + "the " + ChatColor.UNDERLINE + "Intergalactic Cosmonaut Station.", ChatColor.GRAY + "near your character's current position.")));
         is.setItemMeta(im);
         return is;
     }
@@ -226,7 +220,7 @@ public class CosmicSpaceChestsAPI {
         if (!(is != null && is.getType() == Material.TORCH && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().hasLore())) {
             return false;
         }
-        return ((String)is.getItemMeta().getLore().get(0)).equals((Object)ChatColor.GRAY + "Drops a cache of equipment packaged by");
+        return is.getItemMeta().getLore().get(0).equals(ChatColor.GRAY + "Drops a cache of equipment packaged by");
     }
 
     public static ItemRarity getItemRarityByColor(ItemStack i) {
@@ -390,7 +384,7 @@ public class CosmicSpaceChestsAPI {
 
     public static ItemStack getRandomStainedGlassItem(ItemRarity chestRarity) {
         ItemRarity ir = CosmicSpaceChestsAPI.getRandomSlotRarity();
-        ItemStack i = ItemUtils.buildItem(Material.STAINED_GLASS_PANE, (short)0, CosmicSpaceChestsAPI.getColor(ir).toString() + ChatColor.BOLD.toString() + ir.name + " Mystery Item", (Object)ChatColor.GRAY + "Click here to reveal a", CosmicSpaceChestsAPI.getColor(ir).toString() + ir.name + (Object)ChatColor.GRAY + " item from the " + CosmicSpaceChestsAPI.getColor(chestRarity).toString() + chestRarity.name, (Object)ChatColor.GRAY + "loot table.", "", CosmicSpaceChestsAPI.getColor(ir).toString() + ChatColor.BOLD.toString() + "+" + (int)(100.0 * (1.0 - LootGenerator.getSlotRarityModifier(ir))) + "%" + CosmicSpaceChestsAPI.getColor(ir).toString() + " Rare Loot Chance");
+        ItemStack i = ItemUtils.buildItem(Material.STAINED_GLASS_PANE, (short)0, CosmicSpaceChestsAPI.getColor(ir).toString() + ChatColor.BOLD.toString() + ir.name + " Mystery Item", ChatColor.GRAY + "Click here to reveal a", CosmicSpaceChestsAPI.getColor(ir).toString() + ir.name + ChatColor.GRAY + " item from the " + CosmicSpaceChestsAPI.getColor(chestRarity).toString() + chestRarity.name, ChatColor.GRAY + "loot table.", "", CosmicSpaceChestsAPI.getColor(ir).toString() + ChatColor.BOLD.toString() + "+" + (int)(100.0 * (1.0 - LootGenerator.getSlotRarityModifier(ir))) + "%" + CosmicSpaceChestsAPI.getColor(ir).toString() + " Rare Loot Chance");
         if (ir == ItemRarity.SIMPLE) {
             i.setDurability(WHITE_STAINED_GLASS);
         }
@@ -469,7 +463,7 @@ public class CosmicSpaceChestsAPI {
             if (is == null) continue;
             li.add(is);
         }
-        if ((ir == ItemRarity.LEGENDARY || ir == ItemRarity.GOD) && Math.random() <= 0.05 && (factionPoints = FactionPointUtils.getFactionPointsItem(null, null, (String)"space_chest", (Object)((Object)ir))) != null) {
+        if ((ir == ItemRarity.LEGENDARY || ir == ItemRarity.GOD) && Math.random() <= 0.05 && (factionPoints = FactionPointUtils.getFactionPointsItem(null, null, "space_chest", ir)) != null) {
             li.add(factionPoints);
         }
         return li;
@@ -559,34 +553,34 @@ public class CosmicSpaceChestsAPI {
         for (int attempts = 0; validDropLocations.size() < amountToSpawn && attempts < 8000; ++attempts) {
             String regionName;
             Location randomNearby = LocationUtils.getNearbyLocation(center, radius, Math.max(radius / 3, 1), 10);
-            if (randomNearby == null || (regionName = WorldGuardUtils.getRegionName((Location)randomNearby)).startsWith("spawn_")) continue;
+            if (randomNearby == null || (regionName = WorldGuardUtils.getRegionName(randomNearby)).startsWith("spawn_")) continue;
             validDropLocations.add(randomNearby);
         }
         validDropLocations.forEach(loc -> CosmicSpaceChestsAPI.dropChest(loc, chestRarity == null ? CosmicSpaceChestsAPI.getRandomItemRarity() : chestRarity));
-        Bukkit.getLogger().info("Dropping: " + validDropLocations.size() + " envoy chests around: " + center.getX() + ", " + center.getY() + ", " + center.getZ() + " desired: " + amountToSpawn + " rarity: " + (Object)((Object)chestRarity));
+        Bukkit.getLogger().info("Dropping: " + validDropLocations.size() + " envoy chests around: " + center.getX() + ", " + center.getY() + ", " + center.getZ() + " desired: " + amountToSpawn + " rarity: " + chestRarity);
     }
 
     public static CustomEnchantment getRandomCustomEnchant(Material m) {
         if (m.name().toLowerCase().contains("sword")) {
-            return CustomEnchants.SwordCustomEnchants.values()[new Random().nextInt((int)CustomEnchants.SwordCustomEnchants.values().length)].enchant;
+            return CustomEnchants.SwordCustomEnchants.values()[new Random().nextInt(CustomEnchants.SwordCustomEnchants.values().length)].enchant;
         }
         if (m.name().toLowerCase().contains("axe")) {
-            return CustomEnchants.AxeCustomEnchants.values()[new Random().nextInt((int)CustomEnchants.AxeCustomEnchants.values().length)].enchant;
+            return CustomEnchants.AxeCustomEnchants.values()[new Random().nextInt(CustomEnchants.AxeCustomEnchants.values().length)].enchant;
         }
         if (m.name().toLowerCase().contains("bow")) {
-            return CustomEnchants.BowCustomEnchants.values()[new Random().nextInt((int)CustomEnchants.BowCustomEnchants.values().length)].enchant;
+            return CustomEnchants.BowCustomEnchants.values()[new Random().nextInt(CustomEnchants.BowCustomEnchants.values().length)].enchant;
         }
         if (m.name().toLowerCase().contains("boots") || m.name().toLowerCase().contains("chestplate") || m.name().toLowerCase().contains("leggings") || m.name().toLowerCase().contains("helmet")) {
             if (m.name().toLowerCase().contains("boots") && new Random().nextBoolean()) {
-                return CustomEnchants.BootCustomEnchants.values()[new Random().nextInt((int)CustomEnchants.BootCustomEnchants.values().length)].enchant;
+                return CustomEnchants.BootCustomEnchants.values()[new Random().nextInt(CustomEnchants.BootCustomEnchants.values().length)].enchant;
             }
             if (m.name().toLowerCase().contains("helmet") && new Random().nextBoolean()) {
-                return CustomEnchants.HelmetCustomEnchants.values()[new Random().nextInt((int)CustomEnchants.HelmetCustomEnchants.values().length)].enchant;
+                return CustomEnchants.HelmetCustomEnchants.values()[new Random().nextInt(CustomEnchants.HelmetCustomEnchants.values().length)].enchant;
             }
-            return CustomEnchants.ArmorCustomEnchants.values()[new Random().nextInt((int)CustomEnchants.ArmorCustomEnchants.values().length)].enchant;
+            return CustomEnchants.ArmorCustomEnchants.values()[new Random().nextInt(CustomEnchants.ArmorCustomEnchants.values().length)].enchant;
         }
         if (m.name().toLowerCase().contains("hoe") || m.name().toLowerCase().contains("spade") || m.name().toLowerCase().contains("pickaxe")) {
-            return CustomEnchants.ToolCustomEnchants.values()[new Random().nextInt((int)CustomEnchants.ToolCustomEnchants.values().length)].enchant;
+            return CustomEnchants.ToolCustomEnchants.values()[new Random().nextInt(CustomEnchants.ToolCustomEnchants.values().length)].enchant;
         }
         return null;
     }
@@ -594,7 +588,7 @@ public class CosmicSpaceChestsAPI {
     public static void convertDropPackages(Player p) {
         for (int i = 0; i < 36; ++i) {
             ItemStack is = p.getInventory().getItem(i);
-            if (is == null || is.getType() != Material.CHEST || !is.hasItemMeta() || !is.getItemMeta().hasDisplayName() || !is.getItemMeta().hasLore() || !((String)is.getItemMeta().getLore().get(0)).equals((Object)ChatColor.GRAY + "A supply drop full of loot!")) continue;
+            if (is == null || is.getType() != Material.CHEST || !is.hasItemMeta() || !is.getItemMeta().hasDisplayName() || !is.getItemMeta().hasLore() || !is.getItemMeta().getLore().get(0).equals(ChatColor.GRAY + "A supply drop full of loot!")) continue;
             Bukkit.getLogger().info(p.getName() + " => + " + is.getItemMeta().getDisplayName() + " in slot " + i);
             String chestName = is.getItemMeta().getDisplayName();
             ItemRarity ir = null;
@@ -624,7 +618,7 @@ public class CosmicSpaceChestsAPI {
     public static void convertDropPackages(Inventory inv) {
         for (int i = 0; i < inv.getSize(); ++i) {
             ItemStack is = inv.getItem(i);
-            if (is == null || is.getType() != Material.CHEST || !is.hasItemMeta() || !is.getItemMeta().hasDisplayName() || !is.getItemMeta().hasLore() || !((String)is.getItemMeta().getLore().get(0)).equals((Object)ChatColor.GRAY + "A supply drop full of loot!")) continue;
+            if (is == null || is.getType() != Material.CHEST || !is.hasItemMeta() || !is.getItemMeta().hasDisplayName() || !is.getItemMeta().hasLore() || !is.getItemMeta().getLore().get(0).equals(ChatColor.GRAY + "A supply drop full of loot!")) continue;
             String chestName = is.getItemMeta().getDisplayName();
             ItemRarity ir = null;
             if (chestName.startsWith(ChatColor.WHITE.toString())) {
@@ -653,14 +647,14 @@ public class CosmicSpaceChestsAPI {
     public static void dropChest(Location l) {
         CosmicSpaceChestsPlugin.log.debug("(DE) Falling chest spawning near " + l.toString(), CosmicSpaceChestsPlugin.class);
         FallingBlock e = l.getWorld().spawnFallingBlock(l, Material.CHEST.getId(), (byte)0);
-        e.setMetadata("do_not_clear", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSpaceChestsPlugin.plugin, (Object)true));
+        e.setMetadata("do_not_clear", new FixedMetadataValue(CosmicSpaceChestsPlugin.plugin, true));
     }
 
     public static void dropChest(Location l, ItemRarity chestRarity) {
         CosmicSpaceChestsPlugin.log.debug("(DE) Falling chest spawning near " + l.toString(), CosmicSpaceChestsPlugin.class);
         FallingBlock e = l.getWorld().spawnFallingBlock(l, Material.CHEST.getId(), (byte)0);
-        e.setMetadata("do_not_clear", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSpaceChestsPlugin.plugin, (Object)true));
-        e.setMetadata("chestRarity", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSpaceChestsPlugin.plugin, (Object)chestRarity.name()));
+        e.setMetadata("do_not_clear", new FixedMetadataValue(CosmicSpaceChestsPlugin.plugin, true));
+        e.setMetadata("chestRarity", new FixedMetadataValue(CosmicSpaceChestsPlugin.plugin, chestRarity.name()));
     }
 
     public static boolean dropChestSpaceFlare(Location l, ItemRarity ir, int chests) {
@@ -672,7 +666,7 @@ public class CosmicSpaceChestsAPI {
         CosmicSpaceChestsPlugin.log.debug("(DE) Falling chest spawning near " + l.toString() + ", highest block: " + b.toString(), CosmicSpaceChestsPlugin.class);
         if (type == Material.YELLOW_FLOWER || type == Material.RED_ROSE || type == Material.DEAD_BUSH || type == Material.DOUBLE_PLANT || type == Material.STEP || type == Material.RED_MUSHROOM || type == Material.BROWN_MUSHROOM) {
             final Location bL = b.getLocation().clone();
-            Bukkit.getScheduler().runTaskLater((Plugin)CosmicSpaceChestsPlugin.plugin, new Runnable(){
+            Bukkit.getScheduler().runTaskLater(CosmicSpaceChestsPlugin.plugin, new Runnable(){
 
                 @Override
                 public void run() {
@@ -682,10 +676,10 @@ public class CosmicSpaceChestsAPI {
             b.setType(Material.AIR);
         }
         FallingBlock e = l.getWorld().spawnFallingBlock(l, Material.CHEST.getId(), (byte)0);
-        e.setMetadata("chestRarity", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSpaceChestsPlugin.plugin, (Object)ir.name()));
-        e.setMetadata("spaceFlare", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSpaceChestsPlugin.plugin, (Object)true));
-        e.setMetadata("spaceFlareChests", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSpaceChestsPlugin.plugin, (Object)chests));
-        e.setMetadata("do_not_clear", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSpaceChestsPlugin.plugin, (Object)true));
+        e.setMetadata("chestRarity", new FixedMetadataValue(CosmicSpaceChestsPlugin.plugin, ir.name()));
+        e.setMetadata("spaceFlare", new FixedMetadataValue(CosmicSpaceChestsPlugin.plugin, true));
+        e.setMetadata("spaceFlareChests", new FixedMetadataValue(CosmicSpaceChestsPlugin.plugin, chests));
+        e.setMetadata("do_not_clear", new FixedMetadataValue(CosmicSpaceChestsPlugin.plugin, true));
         return true;
     }
 }

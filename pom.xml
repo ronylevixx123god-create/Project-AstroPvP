@@ -31,6 +31,7 @@
         <module>Pets</module>
         <module>Lootboxes</module>
         <module>Disguises</module>
+        <module>Duels</module>
     </modules>
 
     <build>

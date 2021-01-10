@@ -1,0 +1,22 @@
+main: me.ifamasssxd.cosmicduel.CosmicDuel
+version: 1.0
+name: CosmicDuel
+softdepend: [Arkkit, NetworkManager]
+commands:
+  duel:
+    description: Main duel command.
+    aliases: [duels]
+  spectate:
+    description: Spectate a duel.
+  removeduelspawn:
+    description: Removes duel spawn.
+  setduelspawn:
+    description: Sets duel spawn.
+  setduelworld:
+    description: Sets the duel world.
+  viewdeathinventory:
+    description: View death inventory.
+  setrankedarena:
+    description: Rank arena.
+  resetelo:
+    description: Reset all online players elo

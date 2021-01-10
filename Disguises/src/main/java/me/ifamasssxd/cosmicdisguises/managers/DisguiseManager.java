@@ -43,13 +43,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
 
 import java.util.*;
 import java.util.regex.Pattern;
 
 public class DisguiseManager {
-    private Map<Integer, DisguiseType> disguises = new HashMap<Integer, DisguiseType>(){
+    private final Map<Integer, DisguiseType> disguises = new HashMap<Integer, DisguiseType>(){
         {
             this.put(1, DisguiseType.COW);
             this.put(2, DisguiseType.HORSE);
@@ -59,10 +58,10 @@ public class DisguiseManager {
             this.put(6, DisguiseType.SKELETON_HORSE);
         }
     };
-    private Map<UUID, Set<DisguiseType>> cachedAvailableTypes = new HashMap<UUID, Set<DisguiseType>>();
+    private final Map<UUID, Set<DisguiseType>> cachedAvailableTypes = new HashMap<UUID, Set<DisguiseType>>();
 
     public void onEnable(CosmicDisguises plugin) {
-        Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)plugin, this::clearBannedCombatDisguises, 20L, 20L);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, this::clearBannedCombatDisguises, 20L, 20L);
     }
 
     public void clearBannedCombatDisguises() {
@@ -72,17 +71,17 @@ public class DisguiseManager {
         DisguiseUtilities.getDisguises().forEach((id, disguises) -> {
             for (TargetedDisguise disguise : disguises) {
                 Player fasterLookup;
-                if (disguise.getType() != DisguiseType.SLIME && disguise.getType() != DisguiseType.MAGMA_CUBE && disguise.getType() != DisguiseType.GHAST || (fasterLookup = (Player)CosmicUtils.get().getAsyncPlayerMapUUID().get(id)) == null) continue;
+                if (disguise.getType() != DisguiseType.SLIME && disguise.getType() != DisguiseType.MAGMA_CUBE && disguise.getType() != DisguiseType.GHAST || (fasterLookup = CosmicUtils.get().getAsyncPlayerMapUUID().get(id)) == null) continue;
                 for (Entity ent : fasterLookup.getNearbyEntities(8.0, 8.0, 8.0)) {
-                    if (!(ent instanceof Player) || !CombatLog.inCombat((Player)((Player)ent))) continue;
+                    if (!(ent instanceof Player) || !CombatLog.inCombat((Player) ent)) continue;
                     list.add(fasterLookup);
                 }
             }
         });
         toRemove.forEach(player -> {
-            player.setMetadata("disguiseCooldown", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDisguises.get(), (Object)(System.currentTimeMillis() + 30000L)));
-            DisguiseAPI.undisguiseToAll((Entity)player);
-            player.sendMessage(String.valueOf(CC.RedB) + "(!) " + CC.Red + "You have been undisguised due to there being a nearby player in combat!");
+            player.setMetadata("disguiseCooldown", new FixedMetadataValue(CosmicDisguises.get(), System.currentTimeMillis() + 30000L));
+            DisguiseAPI.undisguiseToAll(player);
+            player.sendMessage(CC.RedB + "(!) " + CC.Red + "You have been undisguised due to there being a nearby player in combat!");
         });
         if (toRemove.size() > 0) {
             Bukkit.getLogger().info("[CosmicDisguises] Took " + (System.currentTimeMillis() - start) + "ms to remove " + toRemove.size() + " illegal disguises!");
@@ -102,7 +101,7 @@ public class DisguiseManager {
         if (secondsTillExpiration < 1000L) {
             return "1s";
         }
-        return TimeUtils.formatSeconds((long)(secondsTillExpiration / 1000L));
+        return TimeUtils.formatSeconds(secondsTillExpiration / 1000L);
     }
 
     public DisguiseType getDisguiseAvailable(Player player) {
@@ -128,7 +127,7 @@ public class DisguiseManager {
             if (available != null) {
                 set.add(available);
             }
-            List perms = (List)CacheManager.getCachedPlayerPermissions().get(uuid.toString());
+            List perms = CacheManager.getCachedPlayerPermissions().get(uuid.toString());
             for (DisguiseType type : DisguiseType.values()) {
                 String perm;
                 if (this.isDisabledDisguise(type) || !player.hasPermission(perm = "libsdisguises.disguise." + type.name().toLowerCase()) && (perms == null || !perms.contains(perm))) continue;
@@ -143,10 +142,10 @@ public class DisguiseManager {
         if (!(item != null && item.getType() == Material.BONE && item.hasItemMeta() && item.getItemMeta().hasDisplayName() && item.getItemMeta().hasLore())) {
             return null;
         }
-        if (item.getItemMeta().getDisplayName().startsWith(String.valueOf(CC.GreenB) + "Player Disguise ") && item.getItemMeta().getDisplayName().endsWith(String.valueOf(CC.Gray) + "(Right Click)")) {
-            String type = ChatColor.stripColor((String)item.getItemMeta().getDisplayName().split("Disguise")[1].split(Pattern.quote("(Right"))[0]).trim().replace("\"", "").toUpperCase().replace(" ", "_");
+        if (item.getItemMeta().getDisplayName().startsWith(CC.GreenB + "Player Disguise ") && item.getItemMeta().getDisplayName().endsWith(CC.Gray + "(Right Click)")) {
+            String type = ChatColor.stripColor(item.getItemMeta().getDisplayName().split("Disguise")[1].split(Pattern.quote("(Right"))[0]).trim().replace("\"", "").toUpperCase().replace(" ", "_");
             try {
-                return DisguiseType.valueOf((String)type);
+                return DisguiseType.valueOf(type);
             }
             catch (Exception e) {
                 Bukkit.getLogger().info("Unable to parse: " + item.getItemMeta().getDisplayName() + " into Disguise: " + type);
@@ -156,7 +155,7 @@ public class DisguiseManager {
     }
 
     public boolean isRedeemableDisguise(ItemStack item) {
-        return item != null && item.getType() == Material.BONE && item.hasItemMeta() && item.getItemMeta().hasDisplayName() && item.getItemMeta().hasLore() && item.getItemMeta().getDisplayName().startsWith(String.valueOf(CC.GreenB) + "Player Disguise ") && item.getItemMeta().getDisplayName().endsWith(String.valueOf(CC.Gray) + "(Right Click)") && item.getItemMeta().getLore().size() == 2;
+        return item != null && item.getType() == Material.BONE && item.hasItemMeta() && item.getItemMeta().hasDisplayName() && item.getItemMeta().hasLore() && item.getItemMeta().getDisplayName().startsWith(CC.GreenB + "Player Disguise ") && item.getItemMeta().getDisplayName().endsWith(CC.Gray + "(Right Click)") && item.getItemMeta().getLore().size() == 2;
     }
 
     public Set<DisguiseType> getAvailableDisguises(UUID uuid, List<String> permissions, boolean force) {
