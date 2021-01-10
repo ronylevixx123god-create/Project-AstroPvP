@@ -16,6 +16,7 @@
       <set>
         <option value="$PROJECT_DIR$/Arkkit/pom.xml" />
         <option value="$PROJECT_DIR$/MoneyNotes/pom.xml" />
+        <option value="$PROJECT_DIR$/Permissions/pom.xml" />
       </set>
     </option>
   </component>
