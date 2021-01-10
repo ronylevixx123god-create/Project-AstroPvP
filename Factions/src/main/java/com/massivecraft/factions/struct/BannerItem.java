@@ -58,7 +58,7 @@ public class BannerItem extends CosmicItem {
         if (freeReason != null) {
             builder.setBoolean("noSoulCost", Boolean.valueOf(true));
         }
-        ItemStack retr = new NBTWrapper(new ItemBuilder(BannerManager.bannerMaterial).name(CC.DarkPurpleB + "Faction Banner").lore("", CC.DarkPurpleB + "COST: " + CC.White + (freeReason != null ? CC.GreenB + "FREE (" + CC.Gray + freeReason + CC.GreenB + ")" : P.getP().getConfig().getInt("soulCost") + " souls"), CC.DarkPurpleB + "DURATION: " + CC.White + P.getP().getConfig().getInt("bannerCooldown") + "s", "", CC.Gray + "Place down to create an", CC.Gray + "inter-dimensional rift", CC.Gray + "that allows faction members", CC.Gray + "to travel to your location", CC.Gray + "by using the /f assist command.").build()).setString("cosmicType", "FACTION_BANNER").setNBTBase("cosmicData", (NBTBase)builder.get()).build();
+        ItemStack retr = new NBTWrapper(new ItemBuilder(BannerManager.bannerMaterial).name(CC.DarkPurpleB + "Faction Banner").lore("", CC.DarkPurpleB + "COST: " + CC.White + (freeReason != null ? CC.GreenB + "FREE (" + CC.Gray + freeReason + CC.GreenB + ")" : P.getP().getConfig().getInt("soulCost") + " souls"), CC.DarkPurpleB + "DURATION: " + CC.White + P.getP().getConfig().getInt("bannerCooldown") + "s", "", CC.Gray + "Place down to create an", CC.Gray + "inter-dimensional rift", CC.Gray + "that allows faction members", CC.Gray + "to travel to your location", CC.Gray + "by using the /f assist command.").build()).setString("cosmicType", "FACTION_BANNER").setNBTBase("conaxData", (NBTBase)builder.get()).build();
         if (white) {
             BannerMeta meta = (BannerMeta)retr.getItemMeta();
             meta.setBaseColor(DyeColor.WHITE);

@@ -150,9 +150,9 @@ implements Listener {
                             }
                         }
                     }
-                } else if (type == Material.CHEST && (wrapper = new NBTWrapper(item)).getString("cosmicType").equalsIgnoreCase("LUCKY_BOX") && wrapper.hasKey("cosmicData")) {
+                } else if (type == Material.CHEST && (wrapper = new NBTWrapper(item)).getString("cosmicType").equalsIgnoreCase("LUCKY_BOX") && wrapper.hasKey("conaxData")) {
                     event.setCancelled(true);
-                    int level = new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")).getInt("level");
+                    int level = new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")).getInt("level");
                     if (level <= 0) {
                         return;
                     }

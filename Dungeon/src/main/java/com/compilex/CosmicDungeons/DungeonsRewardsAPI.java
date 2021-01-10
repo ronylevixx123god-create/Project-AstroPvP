@@ -85,7 +85,7 @@ public class DungeonsRewardsAPI {
         if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
             retr = ItemID.assignItemID((InventoryClickEvent)null, (ItemStack)retr);
         }
-        return new NBTWrapper(retr).setString("cosmicType", "lootbag").setNBTBase("cosmicData", (NBTBase)new NBTTagCompoundBuilder().setString("bagType", d.getDungeonType().name()).get()).build();
+        return new NBTWrapper(retr).setString("cosmicType", "lootbag").setNBTBase("conaxData", (NBTBase)new NBTTagCompoundBuilder().setString("bagType", d.getDungeonType().name()).get()).build();
     }
 
     public static boolean isDungeonLootBag(ItemStack i) {

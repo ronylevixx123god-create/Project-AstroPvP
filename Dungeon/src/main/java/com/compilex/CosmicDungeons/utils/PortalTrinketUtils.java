@@ -26,13 +26,13 @@ public class PortalTrinketUtils {
             return false;
         }
         NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder data = wrapper.getCompoundOrCreate("cosmicData");
+        NBTTagCompoundBuilder data = wrapper.getCompoundOrCreate("conaxData");
         return data.getString("dungeonTrinket").equals(trinket);
     }
 
     public static boolean portalHasTrinket(ItemStack item) {
         NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder data = wrapper.getCompoundOrCreate("cosmicData");
+        NBTTagCompoundBuilder data = wrapper.getCompoundOrCreate("conaxData");
         return data.hasKey("dungeonTrinket");
     }
 
@@ -41,9 +41,9 @@ public class PortalTrinketUtils {
             return;
         }
         NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder data = wrapper.getCompoundOrCreate("cosmicData");
+        NBTTagCompoundBuilder data = wrapper.getCompoundOrCreate("conaxData");
         data.setString("dungeonTrinket", trinket);
-        wrapper.setNBTBase("cosmicData", (NBTBase)data.get());
+        wrapper.setNBTBase("conaxData", (NBTBase)data.get());
         item = wrapper.build();
         ItemMeta meta = item.getItemMeta();
         List lore = meta.getLore();

@@ -47,9 +47,9 @@ extends CosmicItem {
         }
         ItemStack baseMask = this.multiMask.createMask(true);
         NBTWrapper nbtWrapper = new NBTWrapper(baseMask);
-        NBTTagCompoundBuilder builder = new NBTTagCompoundBuilder(nbtWrapper.getNBTBase("cosmicData"));
+        NBTTagCompoundBuilder builder = new NBTTagCompoundBuilder(nbtWrapper.getNBTBase("conaxData"));
         builder.setString("multiMask", MultiMaskItem.listToString(masks));
-        baseMask = nbtWrapper.setNBTBase("cosmicData", (NBTBase)builder.get()).build();
+        baseMask = nbtWrapper.setNBTBase("conaxData", (NBTBase)builder.get()).build();
         ItemMeta im = baseMask.getItemMeta();
         String equippedMasks = "";
         for (MaskType mask : masks) {
@@ -72,7 +72,7 @@ extends CosmicItem {
         NBTTagCompoundBuilder builder;
         ArrayList<MaskType> masks = new ArrayList<MaskType>();
         NBTWrapper nbtWrapper = multiMaskNBT;
-        if (nbtWrapper != null && (builder = new NBTTagCompoundBuilder(nbtWrapper.getNBTBase("cosmicData"))) != null) {
+        if (nbtWrapper != null && (builder = new NBTTagCompoundBuilder(nbtWrapper.getNBTBase("conaxData"))) != null) {
             for (String maskName : builder.getString("multiMask").split(",")) {
                 masks.add(MaskType.valueOf(maskName));
             }
