@@ -1,6 +1,5 @@
 package org.arkhamnetwork.Arkkit.patches;
 
-import com.compilex.CompilexPermissions.PermissionsAPI;
 import com.cosmicpvp.CosmicRankQuests.utils.PlayerRankUtils;
 import com.cosmicpvp.cosmicutils.compat.ParamBuilder;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;

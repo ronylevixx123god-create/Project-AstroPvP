@@ -12,6 +12,7 @@
         <module name="Enchantments" />
         <module name="Attributes" />
         <module name="Bosses" />
+        <module name="Masks" />
         <module name="Explosive" />
         <module name="Sets" />
         <module name="Dungeon" />
@@ -24,7 +25,6 @@
         <module name="Factions" />
         <module name="Conquest" />
         <module name="Slotbot" />
-        <module name="Masks" />
         <module name="Disguises" />
         <module name="CustomItems" />
         <module name="KoTHs" />
@@ -41,6 +41,7 @@
       <module name="CrateBoxes" target="8" />
       <module name="Disguises (1)" target="8" />
       <module name="MoneyNotes" target="1.8" />
+      <module name="Permissions" target="8" />
       <module name="Pets (1)" target="8" />
       <module name="SpaceChests (1)" target="1.8" />
     </bytecodeTargetLevel>

@@ -28,7 +28,7 @@ public class CmdFocus extends FCommand
     @Override
     public void perform() {
         if (this.sender instanceof Player) {
-            final FPlayer pSender = (FPlayer)FPlayers.i.get((OfflinePlayer)(Player)this.sender);
+            final FPlayer pSender = FPlayers.i.get((Player)this.sender);
             if (this.myFaction != null) {
                 final FPlayer playerToFocus = this.argAsBestFPlayerMatch(0);
                 if (playerToFocus == null) {
@@ -80,14 +80,14 @@ public class CmdFocus extends FCommand
             //    TeamAPI.handleFactionUnfocusPlayer(removeFocus.getPlayer(), myFaction);
             //}
             if (command) {
-                myFaction.msg("", new Object[0]);
+                myFaction.msg("");
             }
-            myFaction.msg(ChatColor.RED + "" + ChatColor.BOLD + "/f focus: " + ChatColor.WHITE + ChatColor.BOLD + ChatColor.UNDERLINE + " " + playerToFocus.getTag() + " " + playerToFocus.getPlayer().getName(), new Object[0]);
+            myFaction.msg(ChatColor.RED + "" + ChatColor.BOLD + "/f focus: " + ChatColor.WHITE + ChatColor.BOLD + ChatColor.UNDERLINE + " " + playerToFocus.getTag() + " " + playerToFocus.getPlayer().getName());
             if (command) {
                 pSender.sendMessage(ChatColor.GRAY + "Use " + ChatColor.UNDERLINE + "/f unfocus" + ChatColor.GRAY + " to clear your faction target.");
             }
             if (command) {
-                myFaction.msg("", new Object[0]);
+                myFaction.msg("");
             }
             for (final FPlayer fplayer : FPlayers.i.getOnline()) {
                 if (myFaction.getRelationTo(fplayer) == Relation.ALLY) {

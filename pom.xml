@@ -33,12 +33,10 @@
         <module>Lootboxes</module>
         <module>Disguises</module>
         <module>Duels</module>
-<<<<<<< Updated upstream
         <module>Contest</module>
         <module>Conquest</module>
-=======
+        <module>Permissions</module>
         <module>Masks</module>
->>>>>>> Stashed changes
     </modules>
 
     <build>
