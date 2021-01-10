@@ -30,6 +30,9 @@
         <module>Kits</module>
         <module>Pets</module>
         <module>Dungeon</module>
+        <module>Lootboxes</module>
+        <module>Disguises</module>
+        <module>Duels</module>
     </modules>
 
     <build>
