@@ -191,6 +191,7 @@ public class AstroCore extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
 
 
+
         this.getCommand("filter").setExecutor(new CommandFilter());
         this.getCommand("wiki").setExecutor(new CommandWiki());
         this.getCommand("spawnmenu").setExecutor(new CommandSpawnMenu());
@@ -203,6 +204,8 @@ public class AstroCore extends JavaPlugin {
         this.getCommand("forcegiveall").setExecutor(new me.matthawkk.autogiveall.commands.CommandForceGiveAll());
         this.getCommand("nextgiveall").setExecutor(new me.matthawkk.autogiveall.commands.CommandNextGiveAll());
 
+        this.getCommand("giveenchantmentcrystal").setExecutor(new GiveEnchantmentCrystalCommand());
+
         this.getServer().getPluginManager().registerEvents(new CommandListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
         this.getServer().getPluginManager().registerEvents(new ItemListener(), this);
@@ -211,6 +214,7 @@ public class AstroCore extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new ChunkListener(), this);
         this.getServer().getPluginManager().registerEvents(new BlockFlowListener(), this);
         this.getServer().getPluginManager().registerEvents(new SpongeModifyListener(), this);
+        this.getServer().getPluginManager().registerEvents(new ApplyEnchantCrystalListener(), this);
 
         Bukkit.getServer().getPluginManager().registerEvents(new TitleInventoryListener(this.dataManager), this);
         Bukkit.getServer().getPluginManager().registerEvents(new PlayerJoinQuitListener(this.dataManager), this);
