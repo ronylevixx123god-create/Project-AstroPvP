@@ -49,8 +49,6 @@ import com.massivecraft.factions.listeners.menu.MenuListener;
 import com.massivecraft.factions.listeners.menu.fchest.FChestListener;
 import com.massivecraft.factions.manager.BannerManager;
 import com.massivecraft.factions.manager.BoardManager;
-import com.massivecraft.factions.quests.QuestUpdateTask;
-import com.massivecraft.factions.quests.managers.FactionQuestManager;
 import com.massivecraft.factions.struct.*;
 import com.massivecraft.factions.struct.managers.FChestManager;
 import com.massivecraft.factions.util.LazyLocation;
@@ -115,7 +113,6 @@ public class P extends MPlugin {
     public static boolean debug;
     private long startOfMap;
     private boolean vanillaPlanet = false;
-    private FactionQuestManager factionQuestManager;
     private boolean fpointsEnabled = false;
     private boolean fundEnabled;
 
@@ -221,9 +218,6 @@ public class P extends MPlugin {
 
         this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new BoosterTask(), 20L, 20L);
 
-        this.factionQuestManager = new FactionQuestManager();
-        this.factionQuestManager.loadData(this);
-        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new QuestUpdateTask(), 20L, 600L);
         this.fundEnabled = this.getServer().getPluginManager().isPluginEnabled("CosmicFund");
         this.fpointsEnabled = new File("plugins/CosmicFactionPoints.jar").exists();
 
@@ -301,8 +295,6 @@ public class P extends MPlugin {
         this.getCommand("givefacbooster").setExecutor(new CommandBooster());
         this.getCommand("booster").setExecutor(new CommandCheckBooster());
 
-        this.getCommand("fquest").setExecutor(new CommandFactionQuest());
-
         this.getCommand("fsetbanner").setExecutor(new CommandSetBanner());
         this.getCommand("fbanner").setExecutor(new CommandBanner());
         this.getCommand("frecall").setExecutor(new CommandRecall());
@@ -316,10 +308,6 @@ public class P extends MPlugin {
         this.getServer().getPluginManager().registerEvents(new InvalidDeathFix(), this);
         this.getServer().getPluginManager().registerEvents(new VIPCommandBlocker(), this);
         this.getServer().getPluginManager().registerEvents(new NetherMobSpawnerListener(), this);
-
-        this.getServer().getPluginManager().registerEvents(new FactionEventListener(), this);
-        this.getServer().getPluginManager().registerEvents(new QuestListener(), this);
-        this.getServer().getPluginManager().registerEvents(new QuestRerollItemListener(), this);
 
         this.getServer().getPluginManager().registerEvents(new BoosterListener(this.boosterManager), this);
         if (this.getServer().getPluginManager().isPluginEnabled("mcMMO")) {
@@ -424,7 +412,6 @@ public class P extends MPlugin {
         /*this.pointManager.onDisable(this);
         this.chunkManager.onDisable(this);*/
         this.boosterManager.saveActiveBoosters();
-        this.factionQuestManager.saveData();
         CommandToggleSmoke.saveToggles();
         if (this.AutoLeaveTask != null) {
             this.getServer().getScheduler().cancelTask(this.AutoLeaveTask);
@@ -458,10 +445,6 @@ public class P extends MPlugin {
         if (Conf.autoLeaveRoutineRunsEveryXMinutes > 0.0) {
             // empty if block
         }
-    }
-
-    public FactionQuestManager getFactionQuestManager() {
-        return this.factionQuestManager;
     }
 
     public boolean isFpointsEnabled() {

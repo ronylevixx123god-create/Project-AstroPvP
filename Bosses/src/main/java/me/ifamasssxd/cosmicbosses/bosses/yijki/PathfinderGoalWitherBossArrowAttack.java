@@ -42,15 +42,15 @@ extends PathfinderGoalBossArrowAttack {
         if (d0 <= (double)this.j && this.f >= 20) {
             this.a.getNavigation().h();
         } else {
-            this.a.getNavigation().a((Entity)this.c, this.e);
+            this.a.getNavigation().a(this.c, this.e);
         }
-        this.a.getControllerLook().a((Entity)this.c, 30.0f, 30.0f);
+        this.a.getControllerLook().a(this.c, 30.0f, 30.0f);
         if (--this.d == 0) {
             float f;
             if (d0 > (double)this.j || !flag) {
                 return;
             }
-            float f1 = f = MathHelper.sqrt((double)d0) / this.i;
+            float f1 = f = MathHelper.sqrt(d0) / this.i;
             if (f < 0.1f) {
                 f1 = 0.1f;
             }
@@ -68,7 +68,7 @@ extends PathfinderGoalBossArrowAttack {
                 ((EvilAbominationEntity)this.b).shootNearby(this.c);
             }
         } else if (this.d < 0) {
-            float f = MathHelper.sqrt((double)d0) / this.i;
+            float f = MathHelper.sqrt(d0) / this.i;
             this.d = 10;
         }
     }

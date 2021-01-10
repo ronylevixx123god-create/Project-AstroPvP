@@ -11,7 +11,6 @@
  */
 package com.massivecraft.factions.util;
 
-import me.ifamasssxd.cosmicbosses.utils.BossEggUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.Entity;
@@ -70,17 +69,6 @@ public class MiscUtil {
             ret.append(c);
         }
         return ret.toString().toLowerCase();
-    }
-
-    public static boolean isBossEgg(ItemStack item) {
-        if (item == null) {
-            return false;
-        }
-        try {
-            return BossEggUtils.getBossType(item) != null;
-        } catch (Exception exception) {
-            return false;
-        }
     }
 }
 
