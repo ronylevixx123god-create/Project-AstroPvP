@@ -109,8 +109,6 @@ public class ArmorSetCrystalTinkererListener implements Listener {
         }
     }
 
-    //TODO: BOWP .first???
-
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onInventoryClickShardsTogether(InventoryClickEvent event) {
         ItemStack clicked = event.getCurrentItem();

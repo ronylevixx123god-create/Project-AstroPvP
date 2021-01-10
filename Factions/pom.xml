@@ -20,12 +20,12 @@
     <build>
         <defaultGoal>clean install</defaultGoal>
         <finalName>Factions</finalName>
-        <sourceDirectory>${basedir}/src/astroCore/java</sourceDirectory>
+        <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
         <resources>
             <resource>
                 <targetPath>.</targetPath>
                 <filtering>true</filtering>
-                <directory>${basedir}/src/astroCore/resources/</directory>
+                <directory>${basedir}/src/main/resources/</directory>
                 <includes>
                     <include>*.yml</include>
                     <include>*.png</include>

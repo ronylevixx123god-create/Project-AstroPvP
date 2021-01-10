@@ -219,11 +219,11 @@ public class P extends MPlugin {
         this.startOfMap = this.getConfig().getLong("startOfMap");
         this.vanillaPlanet = this.getConfig().getBoolean("vanilla", false);
 
-        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, (Runnable)new BoosterTask(), 20L, 20L);
+        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new BoosterTask(), 20L, 20L);
 
         this.factionQuestManager = new FactionQuestManager();
         this.factionQuestManager.loadData(this);
-        this.getServer().getScheduler().scheduleSyncRepeatingTask((Plugin)this, (Runnable)new QuestUpdateTask(), 20L, 600L);
+        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new QuestUpdateTask(), 20L, 600L);
         this.fundEnabled = this.getServer().getPluginManager().isPluginEnabled("CosmicFund");
         this.fpointsEnabled = new File("plugins/CosmicFactionPoints.jar").exists();
 
@@ -301,11 +301,11 @@ public class P extends MPlugin {
         this.getCommand("givefacbooster").setExecutor(new CommandBooster());
         this.getCommand("booster").setExecutor(new CommandCheckBooster());
 
-        this.getCommand("fquest").setExecutor((CommandExecutor)new CommandFactionQuest());
+        this.getCommand("fquest").setExecutor(new CommandFactionQuest());
 
-        this.getCommand("fsetbanner").setExecutor((CommandExecutor)new CommandSetBanner());
-        this.getCommand("fbanner").setExecutor((CommandExecutor)new CommandBanner());
-        this.getCommand("frecall").setExecutor((CommandExecutor)new CommandRecall());
+        this.getCommand("fsetbanner").setExecutor(new CommandSetBanner());
+        this.getCommand("fbanner").setExecutor(new CommandBanner());
+        this.getCommand("frecall").setExecutor(new CommandRecall());
 
     }
 
@@ -317,18 +317,18 @@ public class P extends MPlugin {
         this.getServer().getPluginManager().registerEvents(new VIPCommandBlocker(), this);
         this.getServer().getPluginManager().registerEvents(new NetherMobSpawnerListener(), this);
 
-        this.getServer().getPluginManager().registerEvents((Listener)new FactionEventListener(), (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)new QuestListener(), (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)new QuestRerollItemListener(), (Plugin)this);
+        this.getServer().getPluginManager().registerEvents(new FactionEventListener(), this);
+        this.getServer().getPluginManager().registerEvents(new QuestListener(), this);
+        this.getServer().getPluginManager().registerEvents(new QuestRerollItemListener(), this);
 
-        this.getServer().getPluginManager().registerEvents((Listener)new BoosterListener(this.boosterManager), (Plugin)this);
+        this.getServer().getPluginManager().registerEvents(new BoosterListener(this.boosterManager), this);
         if (this.getServer().getPluginManager().isPluginEnabled("mcMMO")) {
-            this.getServer().getPluginManager().registerEvents(new mcMMOListener(), (Plugin)this);
+            this.getServer().getPluginManager().registerEvents(new mcMMOListener(), this);
         }
 
         this.bannerListener = new BannerListener();
-        this.getServer().getPluginManager().registerEvents((Listener)this.bannerListener, (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)new CommandListener(), (Plugin)this);
+        this.getServer().getPluginManager().registerEvents(this.bannerListener, this);
+        this.getServer().getPluginManager().registerEvents(new CommandListener(), this);
     }
 
     private void mcMMOTestUtil() {

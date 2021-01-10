@@ -124,8 +124,6 @@ public class AntiMKitCrystalItem extends CosmicItem implements InventoryInteract
         }
     }
 
-    // TODO: BOWP
-
     private ItemStack applyToItem(NBTWrapper wrapper, ItemStack item, Pair pair) {
         String str;
         NBTTagCompoundBuilder builder = wrapper.getCompoundOrCreate("cosmicData");

@@ -1,5 +1,6 @@
 package com.massivecraft.factions.util;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ReflectionUtils;
 import com.cosmicpvp.cosmicutils.utils.UserScoreboard;
 import com.massivecraft.factions.*;
@@ -37,7 +38,7 @@ public class ScoreboardManager implements BoardAdapter {
 
     @Override
     public String getTitle(Player player) {
-        return "test";
+        return CC.GreenB + "AstroPvP";
     }
 
     public List<String> mainBoard(Player player) {
@@ -46,7 +47,17 @@ public class ScoreboardManager implements BoardAdapter {
         board.add(" ");
         board.add(ChatColor.AQUA + ChatColor.BOLD.toString() + "Account");
         board.add(ChatColor.WHITE + player.getName());
-        board.add(ChatColor.GREEN + "Test");
+        board.add(" ");
+        board.add(ChatColor.GOLD + ChatColor.BOLD.toString() + "Balance");
+        board.add(ChatColor.WHITE.toString() + "$" + NumberUtils.formatMoney((long) Econ.econ.getBalance(player)));
+        board.add(" ");
+        board.add(ChatColor.LIGHT_PURPLE + ChatColor.BOLD.toString() + "XP");
+        board.add(ChatColor.WHITE.toString() + NumberUtils.formatMoney(getTotalExperience(player)));
+        board.add(" ");
+        board.add(ChatColor.RED + ChatColor.BOLD.toString() + "Ping");
+        board.add(ChatColor.WHITE.toString() + ((CraftPlayer) player).getHandle().ping + "ms");
+        board.add(" ");
+        board.add(ChatColor.WHITE.toString() + "astropvp.net");
 
         return board;
     }

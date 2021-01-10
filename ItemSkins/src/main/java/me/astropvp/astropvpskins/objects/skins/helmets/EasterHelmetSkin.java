@@ -1,0 +1,15 @@
+/*
+ * Decompiled with CFR 0.150.
+ */
+package me.astropvp.astropvpskins.objects.skins.helmets;
+
+import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.astropvpskins.objects.ItemSkin;
+
+public class EasterHelmetSkin
+extends ItemSkin {
+    public EasterHelmetSkin() {
+        super(SkinType.EASTER_HELMET);
+    }
+}
+
