@@ -22,6 +22,7 @@
         <module name="Lootboxes" />
         <module name="AuctionHouse" />
         <module name="Factions" />
+        <module name="Conquest" />
         <module name="Slotbot" />
         <module name="Disguises" />
         <module name="CustomItems" />

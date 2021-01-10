@@ -34,6 +34,7 @@
         <module>Disguises</module>
         <module>Duels</module>
         <module>Contest</module>
+        <module>Conquest</module>
     </modules>
 
     <build>

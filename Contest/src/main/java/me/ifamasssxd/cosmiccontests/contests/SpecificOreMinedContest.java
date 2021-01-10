@@ -90,7 +90,7 @@ implements Rerollable {
 
     @Override
     public void loadData(String data) {
-        this.ore = Material.getMaterial((String)data);
+        this.ore = Material.getMaterial(data);
     }
 
     @Override
