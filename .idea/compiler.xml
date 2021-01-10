@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="GUIShop" />
+        <module name="Lootboxes" />
         <module name="AuctionHouse" />
         <module name="Factions" />
         <module name="SpaceChests" />
@@ -16,9 +17,9 @@
         <module name="Attributes" />
         <module name="Bosses" />
         <module name="Slotbot" />
+        <module name="Disguises" />
         <module name="CustomItems" />
         <module name="KoTHs" />
-        <module name="CrateBoxes" />
         <module name="Pets" />
         <module name="Explosive" />
         <module name="Utils" />
@@ -32,6 +33,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="ArmorSets" target="1.8" />
+      <module name="CrateBoxes" target="8" />
       <module name="MoneyNotes" target="1.8" />
       <module name="SpaceChests (1)" target="1.8" />
     </bytecodeTargetLevel>
