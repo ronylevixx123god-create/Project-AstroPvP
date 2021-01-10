@@ -25,6 +25,7 @@
         <module name="Factions" />
         <module name="Conquest" />
         <module name="Slotbot" />
+        <module name="Masks" />
         <module name="Disguises" />
         <module name="CustomItems" />
         <module name="KoTHs" />

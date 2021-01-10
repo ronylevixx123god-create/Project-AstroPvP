@@ -36,6 +36,7 @@
         <module>Contest</module>
         <module>Conquest</module>
         <module>Permissions</module>
+        <module>Masks</module>
     </modules>
 
     <build>
