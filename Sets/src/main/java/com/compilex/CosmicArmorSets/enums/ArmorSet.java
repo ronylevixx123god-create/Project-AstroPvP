@@ -242,9 +242,8 @@ public enum ArmorSet {
         wrapper.setNBTBase("cosmicData", data.get());
         ItemStack item = wrapper.build();
         ItemMeta im = item.getItemMeta();
-        List lore = im.getLore();
+        List<String> lore = im.getLore();
         if (lore != null) {
-            // TODO: USING .startsWith wtf??!?
             lore.removeIf(s -> s.equals(CC.GoldB + "Armor Crystal ("));
             im.setLore(lore);
         }

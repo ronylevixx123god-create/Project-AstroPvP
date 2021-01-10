@@ -29,21 +29,16 @@ import com.compilex.CosmicDungeons.dungeons.libs.DungeonState;
 import com.compilex.CosmicDungeons.utils.LocationUtils;
 import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
 import com.google.common.collect.Lists;
+import net.astropvp.core.utils.TitleUtil;
+import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
+import org.bukkit.*;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
+import org.bukkit.metadata.FixedMetadataValue;
+
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.TimeZone;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.block.Block;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
 
 public class HolidayPortalTask
 implements Runnable {
@@ -101,21 +96,21 @@ implements Runnable {
                     return;
                 }
                 this.lastPortalSpawnedTick = MinecraftServerUtils.getCurrentServerTick();
-                Bukkit.broadcastMessage((String)"");
-                Bukkit.broadcastMessage((String)((Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "*** DUNGEON PORTAL ***"));
-                Bukkit.broadcastMessage((String)((Object)ChatColor.GOLD + "A dungeon portal to... " + dungeon.getDungeonName()));
-                Bukkit.broadcastMessage((String)((Object)ChatColor.GOLD + "will spawn in " + (Object)ChatColor.YELLOW + "5 minutes" + (Object)ChatColor.GOLD + " at: " + (Object)ChatColor.YELLOW + portalBlockA.getX() + "x, " + portalBlockA.getY() + "y, " + portalBlockA.getZ() + "z"));
-                Bukkit.broadcastMessage((String)"");
-                Bukkit.getScheduler().runTaskLater((Plugin)CosmicDungeonsPlugin.get_(), new Runnable(){
+                Bukkit.broadcastMessage("");
+                Bukkit.broadcastMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "*** DUNGEON PORTAL ***");
+                Bukkit.broadcastMessage(ChatColor.GOLD + "A dungeon portal to... " + dungeon.getDungeonName());
+                Bukkit.broadcastMessage(ChatColor.GOLD + "will spawn in " + ChatColor.YELLOW + "5 minutes" + ChatColor.GOLD + " at: " + ChatColor.YELLOW + portalBlockA.getX() + "x, " + portalBlockA.getY() + "y, " + portalBlockA.getZ() + "z");
+                Bukkit.broadcastMessage("");
+                Bukkit.getScheduler().runTaskLater(CosmicDungeonsPlugin.get_(), new Runnable(){
 
                     @Override
                     public void run() {
-                        Bukkit.broadcastMessage((String)"");
-                        Bukkit.broadcastMessage((String)((Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "*** DUNGEON PORTAL ***"));
-                        Bukkit.broadcastMessage((String)((Object)ChatColor.GOLD + "A dungeon portal to... " + dungeon.getDungeonName()));
-                        Bukkit.broadcastMessage((String)((Object)ChatColor.GOLD + "will spawn in " + (Object)ChatColor.YELLOW + "1 minute" + (Object)ChatColor.GOLD + " at: " + (Object)ChatColor.YELLOW + portalBlockA.getX() + "x, " + portalBlockA.getY() + "y, " + portalBlockA.getZ() + "z"));
-                        Bukkit.broadcastMessage((String)"");
-                        Bukkit.getScheduler().runTaskLater((Plugin)CosmicDungeonsPlugin.get_(), new Runnable(){
+                        Bukkit.broadcastMessage("");
+                        Bukkit.broadcastMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "*** DUNGEON PORTAL ***");
+                        Bukkit.broadcastMessage(ChatColor.GOLD + "A dungeon portal to... " + dungeon.getDungeonName());
+                        Bukkit.broadcastMessage(ChatColor.GOLD + "will spawn in " + ChatColor.YELLOW + "1 minute" + ChatColor.GOLD + " at: " + ChatColor.YELLOW + portalBlockA.getX() + "x, " + portalBlockA.getY() + "y, " + portalBlockA.getZ() + "z");
+                        Bukkit.broadcastMessage("");
+                        Bukkit.getScheduler().runTaskLater(CosmicDungeonsPlugin.get_(), new Runnable(){
 
                             @Override
                             public void run() {
@@ -129,10 +124,10 @@ implements Runnable {
                                     }
                                     dungeon.reset();
                                     for (Player pl : Bukkit.getServer().getOnlinePlayers()) {
-                                        pl.removeMetadata("lastDungeonDeath", (Plugin)CosmicDungeonsPlugin.get_());
+                                        pl.removeMetadata("lastDungeonDeath", CosmicDungeonsPlugin.get_());
                                     }
-                                    portalBlockA.setMetadata("dungeonPortalBlock", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get_(), (Object)dungeon.getDungeonID()));
-                                    portalBlockB.setMetadata("dungeonPortalBlock", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get_(), (Object)dungeon.getDungeonID()));
+                                    portalBlockA.setMetadata("dungeonPortalBlock", new FixedMetadataValue(CosmicDungeonsPlugin.get_(), dungeon.getDungeonID()));
+                                    portalBlockB.setMetadata("dungeonPortalBlock", new FixedMetadataValue(CosmicDungeonsPlugin.get_(), dungeon.getDungeonID()));
                                     portalBlockA.setTypeIdAndData(90, (byte)0, false);
                                     portalBlockB.setTypeIdAndData(90, (byte)0, false);
                                     CosmicDungeonsPlugin.get_().getDungeonPortalListener().portalBlocks.add(portalBlockA.getLocation());
@@ -140,15 +135,15 @@ implements Runnable {
                                     dungeon.setGlobalPortal(true);
                                     final Block dungeon_portalBlockA = dungeon.getSpawnLocation().getBlock();
                                     final Block dungeon_portalBlockB = dungeon.getSpawnLocation().clone().add(0.0, 1.0, 0.0).getBlock();
-                                    dungeon_portalBlockA.setMetadata("dungeonPortalBlock", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get_(), (Object)dungeon.getDungeonID()));
-                                    dungeon_portalBlockB.setMetadata("dungeonPortalBlock", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get_(), (Object)dungeon.getDungeonID()));
+                                    dungeon_portalBlockA.setMetadata("dungeonPortalBlock", new FixedMetadataValue(CosmicDungeonsPlugin.get_(), dungeon.getDungeonID()));
+                                    dungeon_portalBlockB.setMetadata("dungeonPortalBlock", new FixedMetadataValue(CosmicDungeonsPlugin.get_(), dungeon.getDungeonID()));
                                     dungeon_portalBlockA.setTypeIdAndData(90, (byte)0, false);
                                     dungeon_portalBlockB.setTypeIdAndData(90, (byte)0, false);
                                     CosmicDungeonsPlugin.get_().getDungeonPortalListener().portalBlocks.add(dungeon_portalBlockA.getLocation());
                                     CosmicDungeonsPlugin.get_().getDungeonPortalListener().portalBlocks.add(dungeon_portalBlockB.getLocation());
-                                    ParticleEffect.playEffect((ParticleEffect)ParticleEffect.WITCH_MAGIC, (Location)portalBlockA.getLocation(), (float)0.45f, (int)50);
-                                    ParticleEffect.playEffect((ParticleEffect)ParticleEffect.PORTAL, (Location)portalBlockA.getLocation(), (float)0.6f, (int)50);
-                                    ParticleEffect.playEffect((ParticleEffect)ParticleEffect.PORTAL, (Location)portalBlockB.getLocation(), (float)0.6f, (int)50);
+                                    ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, portalBlockA.getLocation(), 0.45f, 50);
+                                    ParticleEffect.playEffect(ParticleEffect.PORTAL, portalBlockA.getLocation(), 0.6f, 50);
+                                    ParticleEffect.playEffect(ParticleEffect.PORTAL, portalBlockB.getLocation(), 0.6f, 50);
                                     portalBlockA.getWorld().playSound(portalBlockA.getLocation(), Sound.AMBIENCE_THUNDER, 2.0f, 0.35f);
                                     dungeon.setDungeonStatus(DungeonState.LOADING);
                                     dungeon.setPortalLocation(portalBlockA.getLocation());
@@ -158,40 +153,43 @@ implements Runnable {
 //                                    if (dungeon.isAbandondedSpaceship()) {
 //                                        dungeon.setObjectiveHologram(HolographicDisplaysAPI.createHologram((Plugin)CosmicDungeonsPlugin.get_(), (Location)new Location(dungeon.getWorld(), -2.0, 82.0, 90.0), (String[])new String[]{(Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "LOCKED", (Object)ChatColor.GRAY + "The airlock will automatically", (Object)ChatColor.GRAY + "unlock once the dungeon portal closes."}));
 //                                    }
-                                    Bukkit.broadcastMessage((String)"");
-                                    Bukkit.broadcastMessage((String)((Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "*** DUNGEON PORTAL ***"));
-                                    Bukkit.broadcastMessage((String)((Object)ChatColor.YELLOW + "???" + (Object)ChatColor.GOLD + " has spawned a dungeon portal to "));
-                                    Bukkit.broadcastMessage((String)(dungeon.getDungeonName() + (Object)ChatColor.GOLD + " at: " + (Object)ChatColor.YELLOW + portalBlockA.getX() + "x, " + portalBlockA.getY() + "y, " + portalBlockA.getZ() + "z"));
-                                    Bukkit.broadcastMessage((String)((Object)ChatColor.GOLD + "The portal will close in " + (Object)ChatColor.UNDERLINE + "100 seconds" + (Object)ChatColor.GOLD + ", queue up fast!"));
-                                    Bukkit.broadcastMessage((String)"");
-                                    Bukkit.getScheduler().runTaskLater((Plugin)CosmicDungeonsPlugin.get_(), new Runnable(){
+                                    Bukkit.broadcastMessage("");
+                                    Bukkit.broadcastMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "*** DUNGEON PORTAL ***");
+                                    Bukkit.broadcastMessage(ChatColor.YELLOW + "???" + ChatColor.GOLD + " has spawned a dungeon portal to ");
+                                    Bukkit.broadcastMessage(dungeon.getDungeonName() + ChatColor.GOLD + " at: " + ChatColor.YELLOW + portalBlockA.getX() + "x, " + portalBlockA.getY() + "y, " + portalBlockA.getZ() + "z");
+                                    Bukkit.broadcastMessage(ChatColor.GOLD + "The portal will close in " + ChatColor.UNDERLINE + "100 seconds" + ChatColor.GOLD + ", queue up fast!");
+                                    Bukkit.broadcastMessage("");
+                                    Bukkit.getScheduler().runTaskLater(CosmicDungeonsPlugin.get_(), new Runnable(){
 
                                         @Override
                                         public void run() {
                                             dungeon.broadcastMessage("The dungeon portal will close in 75s...");
                                         }
                                     }, 300L);
-                                    Bukkit.getScheduler().runTaskLater((Plugin)CosmicDungeonsPlugin.get_(), new Runnable(){
+                                    Bukkit.getScheduler().runTaskLater(CosmicDungeonsPlugin.get_(), new Runnable(){
 
                                         @Override
                                         public void run() {
                                             dungeon.broadcastMessage("The dungeon portal will close in 60s...");
-//                                            // todo: titlemanager
-//                                            dungeon.broadcastTitle("Dungeon Portal", "The dungeon portal will close in 60s...", TitleManager.TitleColor.GOLD, TitleManager.TitleColor.YELLOW);
-                                            Bukkit.broadcastMessage((String)"");
-                                            Bukkit.broadcastMessage((String)((Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "*** DUNGEON PORTAL ***"));
-                                            Bukkit.broadcastMessage((String)((Object)ChatColor.YELLOW + "The dungeon portal to "));
-                                            Bukkit.broadcastMessage((String)(dungeon.getDungeonName() + (Object)ChatColor.GOLD + " at: " + (Object)ChatColor.YELLOW + portalBlockA.getX() + "x, " + portalBlockA.getY() + "y, " + portalBlockA.getZ() + "z will close in " + (Object)ChatColor.UNDERLINE + "60 seconds" + (Object)ChatColor.GOLD + ", hurry up!"));
-                                            Bukkit.broadcastMessage((String)"");
+
+                                            TitleUtil.sendTitleList(dungeon.getPlayers(), ChatColor.GOLD + "Dungeon Portal");
+                                            TitleUtil.sendSubTitleList(dungeon.getPlayers(), ChatColor.YELLOW + "The dungeon portal will close in 60s...");
+
+                                            Bukkit.broadcastMessage("");
+                                            Bukkit.broadcastMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "*** DUNGEON PORTAL ***");
+                                            Bukkit.broadcastMessage(ChatColor.YELLOW + "The dungeon portal to ");
+                                            Bukkit.broadcastMessage(dungeon.getDungeonName() + ChatColor.GOLD + " at: " + ChatColor.YELLOW + portalBlockA.getX() + "x, " + portalBlockA.getY() + "y, " + portalBlockA.getZ() + "z will close in " + ChatColor.UNDERLINE + "60 seconds" + ChatColor.GOLD + ", hurry up!");
+                                            Bukkit.broadcastMessage("");
                                         }
                                     }, 600L);
-                                    Bukkit.getScheduler().runTaskLater((Plugin)CosmicDungeonsPlugin.get_(), new Runnable(){
+                                    Bukkit.getScheduler().runTaskLater(CosmicDungeonsPlugin.get_(), new Runnable(){
 
                                         @Override
                                         public void run() {
                                             dungeon.broadcastMessage("The dungeon portal will close in 30s...");
-//                                            // todo: titlemanager
-//                                            dungeon.broadcastTitle("Dungeon Portal", "The dungeon portal will close in 30s...", TitleManager.TitleColor.GOLD, TitleManager.TitleColor.YELLOW);
+//
+                                            TitleUtil.sendTitleList(dungeon.getPlayers(), ChatColor.GOLD + "Dungeon Portal");
+                                            TitleUtil.sendSubTitleList(dungeon.getPlayers(), ChatColor.YELLOW + "The dungeon portal will close in 30s...");
                                         }
                                     }, 1200L);
                                     Bukkit.getScheduler().runTaskLater(CosmicDungeonsPlugin.get_(), new Runnable(){
@@ -201,62 +199,62 @@ implements Runnable {
                                             dungeon.broadcastMessage("The dungeon portal will close in 15s...");
                                         }
                                     }, 1500L);
-                                    Bukkit.getScheduler().runTaskLater((Plugin)CosmicDungeonsPlugin.get_(), new Runnable(){
+                                    Bukkit.getScheduler().runTaskLater(CosmicDungeonsPlugin.get_(), new Runnable(){
 
                                         @Override
                                         public void run() {
                                             dungeon.broadcastMessage("The dungeon portal will close in 10s...");
                                         }
                                     }, 1800L);
-                                    Bukkit.getScheduler().runTaskLater((Plugin)CosmicDungeonsPlugin.get_(), new Runnable(){
+                                    Bukkit.getScheduler().runTaskLater(CosmicDungeonsPlugin.get_(), new Runnable(){
 
                                         @Override
                                         public void run() {
                                             dungeon.broadcastMessage("The dungeon portal will close in 5s...");
 
-                                            // todo: titlemanager
-                                            //  dungeon.broadcastTitle("Dungeon Portal", "The dungeon portal will close in 5s...", TitleManager.TitleColor.GOLD, TitleManager.TitleColor.YELLOW);
+                                            TitleUtil.sendTitleList(dungeon.getPlayers(), ChatColor.GOLD + "Dungeon Portal");
+                                            TitleUtil.sendSubTitleList(dungeon.getPlayers(), ChatColor.YELLOW + "The dungeon portal will close in 5s...");
                                         }
                                     }, 1900L);
-                                    Bukkit.getScheduler().runTaskLater((Plugin)CosmicDungeonsPlugin.get_(), new Runnable(){
+                                    Bukkit.getScheduler().runTaskLater(CosmicDungeonsPlugin.get_(), new Runnable(){
 
                                         @Override
                                         public void run() {
                                             portalBlockA.removeMetadata("dungeonPortalBlock", CosmicDungeonsPlugin.get_());
                                             portalBlockB.removeMetadata("dungeonPortalBlock", CosmicDungeonsPlugin.get_());
                                             dungeon_portalBlockA.removeMetadata("dungeonPortalBlock", CosmicDungeonsPlugin.get_());
-                                            dungeon_portalBlockB.removeMetadata("dungeonPortalBlock", (Plugin)CosmicDungeonsPlugin.get_());
+                                            dungeon_portalBlockB.removeMetadata("dungeonPortalBlock", CosmicDungeonsPlugin.get_());
                                             portalBlockA.getLocation().getChunk().load();
                                             portalBlockA.setType(Material.AIR);
                                             portalBlockB.setType(Material.AIR);
                                             dungeon_portalBlockA.setType(Material.AIR);
                                             dungeon_portalBlockB.setType(Material.AIR);
-                                            CosmicDungeonsPlugin.get_().getDungeonPortalListener().portalBlocks.remove((Object)portalBlockA.getLocation());
-                                            CosmicDungeonsPlugin.get_().getDungeonPortalListener().portalBlocks.remove((Object)portalBlockB.getLocation());
-                                            CosmicDungeonsPlugin.get_().getDungeonPortalListener().portalBlocks.remove((Object)dungeon_portalBlockA.getLocation());
-                                            CosmicDungeonsPlugin.get_().getDungeonPortalListener().portalBlocks.remove((Object)dungeon_portalBlockB.getLocation());
+                                            CosmicDungeonsPlugin.get_().getDungeonPortalListener().portalBlocks.remove(portalBlockA.getLocation());
+                                            CosmicDungeonsPlugin.get_().getDungeonPortalListener().portalBlocks.remove(portalBlockB.getLocation());
+                                            CosmicDungeonsPlugin.get_().getDungeonPortalListener().portalBlocks.remove(dungeon_portalBlockA.getLocation());
+                                            CosmicDungeonsPlugin.get_().getDungeonPortalListener().portalBlocks.remove(dungeon_portalBlockB.getLocation());
                                             // todo: holos
                                             //                                            holo_a.delete();
 //                                            holo_b.delete();
                                             portalBlockA.getWorld().playSound(portalBlockA.getLocation(), Sound.AMBIENCE_THUNDER, 2.0f, 0.35f);
-                                            ParticleEffect.playEffect((ParticleEffect)ParticleEffect.WITCH_MAGIC, (Location)portalBlockA.getLocation(), (float)0.45f, (int)50);
-                                            ParticleEffect.playEffect((ParticleEffect)ParticleEffect.PORTAL, (Location)portalBlockA.getLocation(), (float)0.6f, (int)50);
-                                            ParticleEffect.playEffect((ParticleEffect)ParticleEffect.PORTAL, (Location)portalBlockB.getLocation(), (float)0.6f, (int)50);
+                                            ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, portalBlockA.getLocation(), 0.45f, 50);
+                                            ParticleEffect.playEffect(ParticleEffect.PORTAL, portalBlockA.getLocation(), 0.6f, 50);
+                                            ParticleEffect.playEffect(ParticleEffect.PORTAL, portalBlockB.getLocation(), 0.6f, 50);
                                             dungeon_portalBlockA.getWorld().playSound(portalBlockA.getLocation(), Sound.AMBIENCE_THUNDER, 2.0f, 0.35f);
-                                            ParticleEffect.playEffect((ParticleEffect)ParticleEffect.WITCH_MAGIC, (Location)dungeon_portalBlockA.getLocation(), (float)0.45f, (int)50);
-                                            ParticleEffect.playEffect((ParticleEffect)ParticleEffect.PORTAL, (Location)dungeon_portalBlockA.getLocation(), (float)0.6f, (int)50);
-                                            ParticleEffect.playEffect((ParticleEffect)ParticleEffect.PORTAL, (Location)dungeon_portalBlockB.getLocation(), (float)0.6f, (int)50);
-                                            Bukkit.broadcastMessage((String)"");
-                                            Bukkit.broadcastMessage((String)((Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "*** DUNGEON PORTAL ***"));
-                                            Bukkit.broadcastMessage((String)((Object)ChatColor.GOLD + "The portal has closed, " + (Object)ChatColor.UNDERLINE + dungeon.getPlayers().size() + (Object)ChatColor.GOLD + " player(s) made it into the"));
-                                            Bukkit.broadcastMessage((String)(dungeon.getDungeonName() + (Object)ChatColor.GOLD + " /dungeon!"));
-                                            Bukkit.broadcastMessage((String)"");
+                                            ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, dungeon_portalBlockA.getLocation(), 0.45f, 50);
+                                            ParticleEffect.playEffect(ParticleEffect.PORTAL, dungeon_portalBlockA.getLocation(), 0.6f, 50);
+                                            ParticleEffect.playEffect(ParticleEffect.PORTAL, dungeon_portalBlockB.getLocation(), 0.6f, 50);
+                                            Bukkit.broadcastMessage("");
+                                            Bukkit.broadcastMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "*** DUNGEON PORTAL ***");
+                                            Bukkit.broadcastMessage(ChatColor.GOLD + "The portal has closed, " + ChatColor.UNDERLINE + dungeon.getPlayers().size() + ChatColor.GOLD + " player(s) made it into the");
+                                            Bukkit.broadcastMessage(dungeon.getDungeonName() + ChatColor.GOLD + " /dungeon!");
+                                            Bukkit.broadcastMessage("");
                                             if (dungeon.getPlayers().size() > 0) {
                                                 dungeon.setDungeonStatus(DungeonState.IN_PROGRESS);
                                             } else {
                                                 dungeon.setDungeonStatus(DungeonState.EMPTY);
                                             }
-                                            dungeon.getPlayers().stream().filter(pl -> !pl.hasMetadata("NPC")).forEach(pl -> Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)("contests add " + pl.getName() + " dungeonsEntered 1")));
+                                            dungeon.getPlayers().stream().filter(pl -> !pl.hasMetadata("NPC")).forEach(pl -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "contests add " + pl.getName() + " dungeonsEntered 1"));
                                         }
                                     }, 2000L);
                                 }

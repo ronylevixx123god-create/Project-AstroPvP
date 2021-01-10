@@ -22,7 +22,6 @@ package com.cosmicpvp.cosmicutils.utils;
 
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
@@ -107,7 +106,7 @@ public class WorldUtil {
             Iterator i = RegionFileCache.a.entrySet().iterator();
             block5:
             while (i.hasNext()) {
-                //TODO: MIGHT BE CUCKED vvv
+                //TODO: [NOTE] MIGHT BE CUCKED vvv
                 Map.Entry<File, RegionFile> entry = (Map.Entry<File, RegionFile>) i.next();
                 for (File child = ((File) entry.getKey()).getAbsoluteFile(); child != null; child = child.getParentFile()) {
                     if (!child.equals(parentFolder)) continue;

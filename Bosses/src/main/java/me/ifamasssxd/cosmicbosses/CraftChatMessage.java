@@ -26,7 +26,7 @@ public class CraftChatMessage {
     public static Map<Character, EnumChatFormat> setupFormat() {
         ImmutableMap.Builder<Character, EnumChatFormat> builder = ImmutableMap.builder();
         for (EnumChatFormat format : EnumChatFormat.values()) {
-            // TODO: SPIGOT LOOKING FOR C WHICH IS STRING, NEEDS CHAR (couble be #z() but that is private)
+            // TODO: SPIGOT
             builder.put(Character.valueOf(Character.toLowerCase(format.c())), format);
         }
         return builder.build();

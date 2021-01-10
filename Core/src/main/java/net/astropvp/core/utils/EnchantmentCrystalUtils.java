@@ -2,6 +2,7 @@ package net.astropvp.core.utils;
 
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import net.astropvp.core.objects.EnchantmentCrystalType;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;

@@ -32,7 +32,6 @@ import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import javafx.util.Pair;
 import me.ifamasssxd.cosmicskycustoms.struct.CustomItemBuilder;
-import net.minecraft.server.v1_8_R3.NBTBase;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.ChatColor;
@@ -107,7 +106,7 @@ public enum AbilityArmorSet {
     public static ItemStack removeAntiMkitCrystalFromItem(NBTWrapper wrapper) {
         ItemStack item;
         ItemMeta im;
-        List lore;
+        List<String> lore;
         NBTTagCompoundBuilder data = wrapper.getCompound("cosmicData");
         if (data != null) {
             data.remove(ANTI_MKIT_ARMOR_KEY);
@@ -115,7 +114,6 @@ public enum AbilityArmorSet {
             wrapper.setNBTBase("cosmicData", data.get());
         }
         if ((lore = (im = (item = wrapper.build()).getItemMeta()).getLore()) != null) {
-            // TODO: .startsWith again ?!?!?
             lore.removeIf(s -> s.equals(CC.GoldB + "Anti M-Kit Crystal ("));
             im.setLore(lore);
         }

@@ -25,7 +25,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
@@ -52,7 +51,6 @@ public class CommandHeroicUpgrade
                 }
                 Double d = percent = args.length == 4 ? NumberUtils.parseDoubleOrNull(args[3]) : null;
                 if (percent == null) {
-                    // TODO: WHY IS THIS IGNORED?!>!?!?!?!
                     Double.valueOf((ThreadLocalRandom.current().nextInt(51) + 50));
                 }
 

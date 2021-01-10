@@ -1,10 +1,10 @@
 package net.astropvp.core.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import me.matthawkk.utils.EnchantmentCrystalUtils;
-import org.bukkit.enchantments.Enchantment;
+import net.astropvp.core.utils.EnchantmentCrystalUtils;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

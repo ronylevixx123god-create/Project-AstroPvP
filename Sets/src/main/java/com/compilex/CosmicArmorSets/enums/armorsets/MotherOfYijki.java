@@ -10,7 +10,6 @@ import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
-import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.Relation;
 import com.rit.sucy.EnchantmentAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
@@ -20,12 +19,10 @@ import org.arkhamnetwork.enchantments.enchantments.armor.Phoenix;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -130,9 +127,8 @@ public class MotherOfYijki
                     int damage = 16;
                     int heroLevel = UpgradeUtils.getUpgradeLevel(pNear, "HEROIC_ARMOR_SET");
                     damage = (int) ((double) damage * (heroLevel == 1 ? 0.95 : (heroLevel == 2 ? 0.9 : (heroLevel == 3 ? 0.85 : (heroLevel == 4 ? 0.75 : 1.0)))));
-                    // TODO: FIX NULL ERROR WHEN COMPILE
-                    //                    if (Phoenix.hasPhoenixEquipped(pNear) && Phoenix.procPhoenix(pNear, player, damage))
-//                        continue;
+                     //TODO: [TEST] FIX NULL ERROR WHEN COMPILE
+                    if (Phoenix.hasPhoenixEquipped(pNear) && Phoenix.procPhoenix(pNear, player, damage)) continue;
                     pNear.setHealth(Math.max(1.0, pNear.getHealth() - (double) damage));
                 }
             }

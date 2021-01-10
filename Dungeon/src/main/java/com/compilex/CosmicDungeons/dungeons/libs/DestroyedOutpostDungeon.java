@@ -33,35 +33,23 @@ import com.compilex.CosmicDungeons.CosmicDungeonsPlugin;
 import com.compilex.CosmicDungeons.DungeonsAPI;
 import com.compilex.CosmicDungeons.DungeonsRewardsAPI;
 import com.compilex.CosmicDungeons.dungeons.events.DestroyedOutpostEvents;
-import com.compilex.CosmicDungeons.dungeons.libs.Dungeon;
-import com.compilex.CosmicDungeons.dungeons.libs.DungeonPlayer;
-import com.compilex.CosmicDungeons.dungeons.libs.DungeonType;
 import com.compilex.CosmicDungeons.utils.WorldGuardUtils;
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.FactionUtils;
-import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
-import com.cosmicpvp.cosmicutils.utils.ItemUtils;
-import com.cosmicpvp.cosmicutils.utils.JSONMessage;
-import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
-import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
-import com.cosmicpvp.cosmicutils.utils.TimeUtils;
+import com.cosmicpvp.cosmicutils.utils.*;
 import com.massivecraft.factions.Faction;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.UUID;
 import me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost.MotherOfYijki;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import net.astropvp.core.utils.TitleUtil;
+import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
+
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.UUID;
 
 public class DestroyedOutpostDungeon
 extends Dungeon {
@@ -165,8 +153,10 @@ extends Dungeon {
         if (playerList.endsWith(", ")) {
             playerList = playerList.substring(0, playerList.length() - 2);
         }
-        // todo: titlemanager
-        //this.broadcastTitle("DUNGEON COMPLETE!", "+1 Dungeon Lootbag", TitleManager.TitleColor.GREEN, TitleManager.TitleColor.GRAY);
+
+        TitleUtil.sendTitleList(this.getPlayers(), CC.Green + "DUNGEON COMPLETE!");
+        TitleUtil.sendSubTitleList(this.getPlayers(), CC.Gray + "+1 Dungeon Lootbag");
+
         Bukkit.broadcastMessage("");
         Bukkit.broadcastMessage((ChatColor.GOLD + "" + ChatColor.BOLD + "*-*-* DUNGEON COMPLETE! *-*-*"));
         Bukkit.broadcastMessage((ChatColor.GOLD + "The " + this.getDungeonName() + (Object)ChatColor.GOLD + " has been cleared by: " + (Object)ChatColor.GRAY + playerList + (Object)ChatColor.GOLD + " in " + com.compilex.CosmicDungeons.utils.TimeUtils.formatDifference(this.getTimeSinceDungeonStart())));

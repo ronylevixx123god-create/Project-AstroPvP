@@ -3,7 +3,7 @@ version: ${project.version}
 main: net.astropvp.core.AstroCore
 authors: [ Tucker, Bryside ]
 description: Astro Core
-depend: [Vault, CosmicPvPUtils, Essentials]
+depend: [Vault, CosmicPvPUtils, Essentials, TitleManager]
 commands:
   bless:
     aliases: [ 'blessme' ]

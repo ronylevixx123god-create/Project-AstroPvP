@@ -65,47 +65,21 @@ import com.compilex.CosmicKOTH.utils.RewardUtils;
 import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
 import com.cosmicpvp.cosmicutils.CosmicUtils;
 import com.cosmicpvp.cosmicutils.struct.factions.points.FactionPointUtils;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.FactionUtils;
-import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
-import com.cosmicpvp.cosmicutils.utils.MaskUtils;
-import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
-import com.cosmicpvp.cosmicutils.utils.StringUtils;
-import com.cosmicpvp.cosmicutils.utils.UserScoreboard;
-import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
+import com.cosmicpvp.cosmicutils.utils.*;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
-import com.massivecraft.factions.iface.RelationParticipator;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
-
-import net.minecraft.server.v1_8_R3.*;
+import net.minecraft.server.v1_8_R3.BlockPosition;
+import net.minecraft.server.v1_8_R3.PacketPlayOutBlockBreakAnimation;
 import org.arkhamnetwork.Arkkit.patches.EquipmentLootboxes;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Effect;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
-import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -115,10 +89,12 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.util.Vector;
+
+import java.text.DecimalFormat;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public abstract class Outpost {
     private String prefix = "(Outpost)";
@@ -320,7 +296,7 @@ public abstract class Outpost {
         toRemove.forEach(id -> this.outpostScoreboard.remove(id));
     }
 
-    // TODO: Implement our scoreboard
+    // TODO: Implement our scoreboard [this is the board for outpost, we will need to make a return method like events in arenapvp]
     /*public void updateScoreboard(Player player, UUID uuid, boolean remove) {
         UserScoreboard scoreboard = (UserScoreboard)CosmicScoreboardPlugin.getPlugin().getPlaceholderManager().getStoredScoreboards().get(uuid);
         if (scoreboard != null) {

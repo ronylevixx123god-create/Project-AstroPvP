@@ -9,15 +9,14 @@
  */
 package com.compilex.CosmicDungeons.dungeons.libs;
 
-import com.compilex.CosmicDungeons.dungeons.libs.Dungeon;
-import com.compilex.CosmicDungeons.dungeons.libs.DungeonEndReason;
-import com.compilex.CosmicDungeons.dungeons.libs.DungeonState;
 import com.compilex.CosmicDungeons.utils.TimeUtils;
 import com.cosmicpvp.cosmicutils.utils.CC;
-import java.util.Arrays;
-import java.util.concurrent.CopyOnWriteArrayList;
+import net.astropvp.core.utils.TitleUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.Arrays;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class TimeRestrictionTask
 extends BukkitRunnable {
@@ -59,8 +58,7 @@ extends BukkitRunnable {
     public void setObjectiveName(String newObjective) {
         this.objectiveName = newObjective;
 
-        // todo: titlemanager
-        //   this.dungeon.broadcastTitle(this.getObjectiveString(newObjective), (Object)ChatColor.YELLOW + "Time Limit: " + (Object)ChatColor.GRAY + TimeUtils.formatDifference(this.expireTime - System.currentTimeMillis()), TitleManager.TitleColor.GOLD, TitleManager.TitleColor.GRAY);
+        TitleUtil.sendTitleList(dungeon.getPlayers(), CC.Yellow + "Time Limit: " + ChatColor.GRAY + TimeUtils.formatDifference(this.expireTime - System.currentTimeMillis()));
     }
 
     private String getObjectiveString(String newObjective) {
@@ -88,10 +86,9 @@ extends BukkitRunnable {
         long millisLeft = this.expireTime - System.currentTimeMillis();
         for (long l : this.notifcationThresholds) {
             if (millisLeft >= l || this.initialDifference <= l + 1000L) continue;
-            this.dungeon.broadcastMessage("You have " + (Object)ChatColor.UNDERLINE + TimeUtils.formatDifference(millisLeft) + (Object)ChatColor.WHITE + " left to complete objective:");
-            this.dungeon.broadcastMessage((Object)ChatColor.YELLOW + this.objectiveName + (Object)ChatColor.WHITE + " or you will fail the dungeon!");
-            // todo: titlemanager
-            //            this.dungeon.broadcastTitle(this.getObjectiveString(this.getObjectiveName()), "Time Left: " + (Object)ChatColor.GRAY + TimeUtils.formatDifference(millisLeft), TitleManager.TitleColor.GOLD, TitleManager.TitleColor.YELLOW);
+            this.dungeon.broadcastMessage("You have " + ChatColor.UNDERLINE + TimeUtils.formatDifference(millisLeft) + ChatColor.WHITE + " left to complete objective:");
+            this.dungeon.broadcastMessage(ChatColor.YELLOW + this.objectiveName + ChatColor.WHITE + " or you will fail the dungeon!");
+            TitleUtil.sendTitleList(this.dungeon.getPlayers(), CC.Yellow + "Time Left: " + ChatColor.GRAY + TimeUtils.formatDifference(millisLeft));
             this.notifcationThresholds.remove(l);
         }
     }

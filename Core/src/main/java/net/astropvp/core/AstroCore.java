@@ -16,6 +16,7 @@ import com.cosmicpvp.titles.sql.TitleDatabaseManager;
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.I18n;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import io.puharesource.mc.titlemanager.api.v2.TitleManagerAPI;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -63,6 +64,7 @@ import net.astropvp.core.listeners.*;
 import net.astropvp.core.tasks.LastManStandingCapTask;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -83,6 +85,7 @@ public class AstroCore extends JavaPlugin {
     public static AstroCore getInstance() {
         return instance;
     }
+    @Getter @Setter private static TitleManagerAPI titleManagerAPI;
 
     // Sponges
     private CommandHelp commandHelp;
@@ -118,6 +121,12 @@ public class AstroCore extends JavaPlugin {
         events();
         new LastManStandingCapTask().runTaskTimer(this, 20L, 20L);
         Bukkit.getScheduler().runTaskTimer(this, new AutoBroadcastTask(), 20L, 6000L);
+
+        if (!Bukkit.getPluginManager().isPluginEnabled("TitleManager")) {
+            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[Astro] " + ChatColor.RED + "TitleManager is not loaded.");
+        } else {
+            titleManagerAPI = (TitleManagerAPI) Bukkit.getServer().getPluginManager().getPlugin("TitleManager");
+        }
 
         this.commandHelp = new CommandHelp();
         if (commandHelp.isEnchantsEnabled()) {
