@@ -67,11 +67,12 @@ implements Listener {
         if (event.hasItem()) {
             ItemStack item = event.getItem();
             Player player = event.getPlayer();
+            // TODO: CAN BE NULL??
             if (this.manager.isBoosterItem(item)) {
                 event.setCancelled(true);
                 event.setUseInteractedBlock(Event.Result.DENY);
                 event.setUseItemInHand(Event.Result.DENY);
-                Faction faction = FactionUtils.getFaction((Player)player, (boolean)false);
+                Faction faction = FactionUtils.getFaction(player, (boolean)false);
                 if (faction == null || !FactionUtils.isNormal((Faction)faction)) {
                     player.sendMessage((Object)ChatColor.RED + "You must be in a faction to use a Faction Booster!");
                     return;

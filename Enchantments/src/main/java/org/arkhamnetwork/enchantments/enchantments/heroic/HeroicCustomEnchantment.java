@@ -27,7 +27,7 @@ public abstract class HeroicCustomEnchantment extends CustomEnchantment {
     public HeroicCustomEnchantment(final String name, final String nonHeroicName, final Material[] naturalItems, final int weight, final boolean useDefaultBase, final boolean copyAllDefaultStats) {
         super(name, naturalItems, weight);
         this.random = new Random();
-        Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater(Enchantments.getInstance(), () -> {
             this.heroicEnchantment = true;
             this.nonHeroicVersion = EnchantmentAPI.getEnchantment(nonHeroicName);
             if (copyAllDefaultStats || useDefaultBase) {
