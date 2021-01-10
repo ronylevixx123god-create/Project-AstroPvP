@@ -1,0 +1,184 @@
+package me.ifamasssxd.cosmicsky.inventorypets.struct.pets;
+
+import com.cosmicpvp.cosmicutils.utils.*;
+import com.google.common.collect.Lists;
+import com.massivecraft.factions.Faction;
+import com.massivecraft.factions.struct.Relation;
+import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
+import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
+import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
+import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
+import me.ifamasssxd.cosmicsky.inventorypets.managers.BlockModifier;
+import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
+import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
+import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
+import me.ifamasssxd.cosmicsky.inventorypets.struct.tasks.BleedTask;
+import org.bukkit.*;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+public class InventoryWorldDestroyerPet extends InventoryPet {
+
+    public InventoryPets getOwner() {
+        return InventoryPets.WORLD_DESTROYER;
+    }
+
+    public List<String> getPetDescription(int level) {
+        return Lists.newArrayList(CC.Gray + "A fragment of the legendary", CC.Gray + "World Destroyer, Yijki.", (new StringBuilder(String.valueOf(CC.Gray))).toString(), CC.WhiteB + "Ability", CC.Gray + "Summon the power of Yijki's", CC.Gray + "[" + CC.DarkPurple + "Dimensional Cage" + CC.Gray + "] ability (" + cageDuration(level) + "s)", (new StringBuilder(String.valueOf(CC.Gray))).toString(), CC.WhiteB + "Cooldown", CC.Gray + " " + TimeUtils.formatSeconds(getCooldown(level)));
+    }
+
+    private double cageDuration(int level) {
+        if (level == 1)
+            return 3.0D;
+        if (level == 2)
+            return 3.5D;
+        if (level == 3)
+            return 4.0D;
+        if (level == 4)
+            return 4.5D;
+        if (level == 5)
+            return 5.0D;
+        if (level == 6)
+            return 6.0D;
+        return 3.0D;
+    }
+
+    public int getCooldown(int level) {
+        return 300;
+    }
+
+    public int getExpForLevel(int level) {
+        return 1700 * level;
+    }
+
+    public int getMaxLevel() {
+        return 6;
+    }
+
+    public boolean onPetItemInteract(Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
+        long lastUse = petItem.getLastUsed();
+        long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown(petItem.getLevel()));
+        long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
+
+        if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
+            throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
+
+        if (player.hasMetadata("in_duel"))
+            return true;
+        if (player.hasMetadata("spectator"))
+            return true;
+        Faction faction = FactionUtils.getFaction(player);
+        Location locationClicked = player.getLocation();
+        Player target = null;
+
+        for (final Entity other : player.getNearbyEntities(10.0, 6.0, 10.0)) {
+            if (other instanceof Player) {
+                final Player nearPlayer = (Player) other;
+                if (!WorldGuardUtils.isPvPEnabled(nearPlayer.getLocation())) {
+                    continue;
+                }
+                if (!player.canSee(nearPlayer)) {
+                    continue;
+                }
+                if (nearPlayer.getGameMode() == GameMode.CREATIVE) {
+                    continue;
+                }
+                // todo: add new freeze here
+//                if (StaffPlus.get().freeze.isActive(nearPlayer.getName())) {
+//                    continue;
+//                }
+                final Faction nearFac = FactionUtils.getFaction(nearPlayer);
+                final Relation rel = nearFac.getRelationTo(faction);
+                if (rel.isAlly() || rel.isTruce()) {
+                    continue;
+                }
+                if (rel.isMember()) {
+                    continue;
+                }
+                final double distance = (event == null) ? 10.9 : 3.9;
+                if (player.getLocation().distance(other.getLocation()) < distance) {
+                    target = nearPlayer;
+                    break;
+                }
+            }
+        }
+
+        if (WorldGuardUtils.isPvPDisabled(locationClicked)) {
+            player.sendMessage(ChatColor.RED + "Combat is disabled in this region.");
+            return true;
+        }
+        if (player.hasMetadata("inDungeonParkour"))
+            throw new PrefixedPetException("You cannot use this pet while in the dungeon parkour.");
+        if (target == null || (event != null && target.getLocation().distance(player.getLocation()) > 4.0)) {
+            throw new PrefixedPetException("Could not find a valid target!");
+        }
+        petItem.setLastUsed(System.currentTimeMillis());
+
+
+        final Player p = target;
+        final Location location = p.getLocation();
+        final int minX = location.getBlockX() - 1;
+        final int maxX = location.getBlockX() + 2;
+        final int minY = location.getBlockY() - 1;
+        final int maxY = location.getBlockY() + 4;
+        final int minZ = location.getBlockZ() - 1;
+        final int maxZ = location.getBlockZ() + 2;
+        p.playSound(p.getLocation(), Sound.ANVIL_LAND, 1.0f, 1.4f);
+        Location loc = p.getLocation().clone();
+        p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100, 4));
+        BleedTask.bleedPlayer(p, 4);
+        for (int x = minX; x < maxX; ++x) {
+            for (int y = minY; y < maxY; ++y) {
+                for (int z = minZ; z < maxZ; ++z) {
+                    loc.setY(y);
+                    loc.setZ(z);
+                    loc.setX(x);
+                    loc = loc.getBlock().getLocation();
+                    if (this.blockModifier == null) {
+                        this.blockModifier = new BlockModifier();
+                    }
+                    if (!this.getBlockModifier().containsLocation(p.getUniqueId(), loc)) {
+                        final Block b = loc.getBlock();
+                        Material mat = Material.IRON_FENCE;
+                        if (b.getType() == Material.AIR) {
+                            if (y == minY || y == maxY - 1) {
+                                mat = Material.OBSIDIAN;
+                            }
+                            if (x == location.getBlockX() && z == location.getBlockZ() && y > minY && y < maxY - 1) {
+                                this.getBlockModifier().storeBlockToRemove(p.getUniqueId(), b.getLocation());
+
+                            } else {
+                                this.getBlockModifier().storeBlockToRemove(p.getUniqueId(), b.getLocation());
+                                b.setType(mat);
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+        Bukkit.getScheduler().runTaskLater(CosmicSkyInventoryPets.get(), () -> getBlockModifier().removeBlocks(p.getUniqueId(), true, true), (long) cageDuration(petItem.getLevel()) * 20);
+
+        petItem.addExperience(player, 100);
+
+        player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
+        player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
+        player.sendMessage(CC.GreenB + "+ " + CC.Green + NumberUtils.formatMoney(100.0D) + " Pet EXP " + CC.GreenB + "[" + CC.Gray + petItem.getExp() + "/" + petItem.getPetType().getInternalClass().getExpForLevel(petItem.getLevel() + 1) + CC.GreenB + "]");
+        petItem.setLastUsed(System.currentTimeMillis());
+
+        return true;
+    }
+
+
+    public boolean onTickInHotBar(Player player, int inventorySlot, InventoryPetItem item) {
+        return false;
+    }
+}
