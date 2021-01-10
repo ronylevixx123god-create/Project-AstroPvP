@@ -1,22 +1,20 @@
 package com.massivecraft.factions.util;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.ReflectionUtils;
-import com.cosmicpvp.cosmicutils.utils.UserScoreboard;
-import com.massivecraft.factions.*;
+import com.massivecraft.factions.FPlayer;
+import com.massivecraft.factions.FPlayers;
+import com.massivecraft.factions.Faction;
+import com.massivecraft.factions.P;
 import com.massivecraft.factions.board.BoardAdapter;
 import com.massivecraft.factions.integration.Econ;
 import com.massivecraft.factions.struct.Relation;
 import com.massivecraft.factions.zcore.util.NumberUtils;
 import com.massivecraft.factions.zcore.util.WebLinkUtils;
 import net.minecraft.server.v1_8_R3.*;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.DisplaySlot;
-import org.bukkit.scoreboard.Objective;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -25,6 +23,11 @@ import java.util.*;
 
 public class ScoreboardManager implements BoardAdapter {
 
+    public static String getDateSuffix() {
+        return format.format(new Date());
+    }
+
+    private static final DateFormat format = new SimpleDateFormat("MM/dd");
 
     // TODO: FINISH NEW SCOREBOARD API
     @Override
@@ -38,7 +41,7 @@ public class ScoreboardManager implements BoardAdapter {
 
     @Override
     public String getTitle(Player player) {
-        return CC.GreenB + "AstroPvP";
+        return CC.GreenB + "AstroPvP" + getDateSuffix();
     }
 
     public List<String> mainBoard(Player player) {
@@ -57,6 +60,7 @@ public class ScoreboardManager implements BoardAdapter {
         board.add(ChatColor.RED + ChatColor.BOLD.toString() + "Ping");
         board.add(ChatColor.WHITE.toString() + ((CraftPlayer) player).getHandle().ping + "ms");
         board.add(" ");
+        board.add(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Server");
         board.add(ChatColor.WHITE.toString() + "astropvp.net");
 
         return board;
@@ -71,18 +75,13 @@ public class ScoreboardManager implements BoardAdapter {
     public void onScoreboardCreate(Player player, org.bukkit.scoreboard.Scoreboard scoreboard) {
 
     }
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public static HashSet<UUID> playerObjectives = new HashSet<>();
 
-    private static final DateFormat format = new SimpleDateFormat("MM/dd");
-
     public static boolean nearby = true;
 
-    public static String getDateSuffix() {
-        return format.format(new Date());
-    }
+
 
     private static boolean newScoreboardManager = false;
 
