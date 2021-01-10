@@ -23,8 +23,6 @@ import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.compilex.CosmicDungeons.DungeonsAPI;
 import com.compilex.CosmicDungeons.DungeonsRewardsAPI;
 import com.google.common.collect.Lists;
-import java.util.ArrayList;
-import java.util.List;
 import me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits;
 import me.cosmicpvp.CosmicGlobalKits.struct.GlobalKit;
 import me.cosmicpvp.CosmicGlobalKits.utils.ItemUtils;
@@ -35,6 +33,9 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HeroicGrimReaper
 extends GlobalKit {

@@ -19,13 +19,14 @@
  */
 package me.ifamasssxd.cosmicevolutionkits.structure.ekits;
 
+
 import com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils;
 import com.google.common.collect.Lists;
 import com.rit.sucy.EnchantmentAPI;
 import me.ifamasssxd.cosmicconquest.CosmicConquestAPI;
 import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKit;
 import me.ifamasssxd.cosmicevolutionkits.utils.EnchantedItemBuilder;
-import me.ifamasssxd.cosmicevolutionkits.utils.ItemBuilder;
+import me.ifamasssxd.killtracker.utils.ItemBuilder;
 import org.arkhamnetwork.enchantments.EnchantmentBook;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -40,8 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Slayer
-extends EvolutionKit {
+public class Slayer extends EvolutionKit {
     @Override
     public List<ItemStack> getItems(Player player, int kitLevel) {
         ArrayList<ItemStack> items = Lists.newArrayList();

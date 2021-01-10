@@ -142,8 +142,10 @@ public class KitPlayer {
                 p.sendMessage(msg);
             }
         }
-        TitleManager.sendTitle(player, ChatColor.GREEN + ChatColor.BOLD.toString() + "Level " + level, TitleManager.TitleColor.GREEN);
-        TitleManager.sendSubTitle(player, parent.getKit().getItemName() + ChatColor.GREEN + " Level UP!", TitleManager.TitleColor.GREEN);
+        //TitleManager.sendTitle(player, ChatColor.GREEN + ChatColor.BOLD.toString() + "Level " + level, TitleManager.TitleColor.GREEN);
+        //TitleManager.sendSubTitle(player, parent.getKit().getItemName() + ChatColor.GREEN + " Level UP!", TitleManager.TitleColor.GREEN);
+        player.sendMessage(CC.GreenB + "Level " + level);
+        player.sendMessage(parent.getKit().getItemName() + ChatColor.GREEN + " Level UP!");
         new BukkitRunnable() {
             int counter = 0;
 
