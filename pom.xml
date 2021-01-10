@@ -26,6 +26,7 @@
         <module>CustomItems</module>
         <module>Explosive</module>
         <module>KoTHs</module>
+        <module>ItemSkins</module>
     </modules>
 
     <build>

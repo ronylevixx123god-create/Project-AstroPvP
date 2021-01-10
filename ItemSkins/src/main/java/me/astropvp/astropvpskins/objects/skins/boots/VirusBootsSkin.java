@@ -1,35 +1,37 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  org.arkhamnetwork.enchantments.libs.PlayerPotionEffects
- *  org.bukkit.entity.Player
- *  org.bukkit.potion.PotionEffectType
+/*    */ package me.astropvp.astropvpskins.objects.skins.boots;
+/*    */ 
+/*    */ import me.astropvp.astropvpskins.enums.SkinType;
+/*    */ import me.astropvp.astropvpskins.objects.ItemSkin;
+/*    */ import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
+/*    */ import org.bukkit.entity.Player;
+/*    */ import org.bukkit.potion.PotionEffectType;
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ public class VirusBootsSkin
+/*    */   extends ItemSkin
+/*    */ {
+/*    */   public VirusBootsSkin() {
+/* 19 */     super(SkinType.VIRUS_BOOTS);
+/*    */   }
+/*    */   
+/*    */   public void onEquip(Player player) {
+/* 23 */     PlayerPotionEffects.untrackPotionEffect(player, PotionEffectType.SLOW);
+/* 24 */     PlayerPotionEffects.untrackPotionEffect(player, PotionEffectType.SLOW_DIGGING);
+/*    */   }
+/*    */   
+/*    */   public void onUpdate(Player player) {
+/* 28 */     PlayerPotionEffects.untrackPotionEffect(player, PotionEffectType.SLOW);
+/* 29 */     PlayerPotionEffects.untrackPotionEffect(player, PotionEffectType.SLOW_DIGGING);
+/*    */   }
+/*    */ }
+
+
+/* Location:              C:\Users\bryan\Downloads\GalacticItemSkins.jar!\me\galacticpvp\galacticitemskins\objects\skins\boots\VirusBootsSkin.class
+ * Java compiler version: 8 (52.0)
+ * JD-Core Version:       1.1.3
  */
-package me.astropvp.astropvpskins.objects.skins.boots;
-
-import me.astropvp.astropvpskins.enums.SkinType;
-import me.astropvp.astropvpskins.objects.ItemSkin;
-import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
-import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffectType;
-
-public class VirusBootsSkin
-extends ItemSkin {
-    public VirusBootsSkin() {
-        super(SkinType.VIRUS_BOOTS);
-    }
-
-    @Override
-    public void onEquip(Player player) {
-        PlayerPotionEffects.untrackPotionEffect((Player)player, (PotionEffectType)PotionEffectType.SLOW);
-        PlayerPotionEffects.untrackPotionEffect((Player)player, (PotionEffectType)PotionEffectType.SLOW_DIGGING);
-    }
-
-    @Override
-    public void onUpdate(Player player) {
-        PlayerPotionEffects.untrackPotionEffect((Player)player, (PotionEffectType)PotionEffectType.SLOW);
-        PlayerPotionEffects.untrackPotionEffect((Player)player, (PotionEffectType)PotionEffectType.SLOW_DIGGING);
-    }
-}
-

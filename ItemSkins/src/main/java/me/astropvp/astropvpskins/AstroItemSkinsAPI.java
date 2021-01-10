@@ -1,26 +1,19 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
- *  org.arkhamnetwork.enchantments.util.ArmorSlot
- *  org.bukkit.Material
- *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
- */
 package me.astropvp.astropvpskins;
 
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+
 import java.util.Map;
-import me.astropvp.astropvpskins.enums.SkinType;
+
 import me.astropvp.astropvpskins.objects.skins.ItemSkinCacher;
+import me.astropvp.astropvpskins.enums.SkinType;
+
 import me.astropvp.astropvpskins.utils.Utils;
 import org.arkhamnetwork.enchantments.util.ArmorSlot;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
 
 public class AstroItemSkinsAPI {
     public static SkinType getSkinTypeFromNBT(ItemStack item) {
@@ -28,18 +21,22 @@ public class AstroItemSkinsAPI {
             return null;
         }
         NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder compoundBuilder = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
+        NBTTagCompoundBuilder compoundBuilder = wrapper.hasKey("cosmicData") ?
+                new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) :
+                new NBTTagCompoundBuilder();
         String l = compoundBuilder.getString("itemSkinType");
-        if (l == null) {
+        if (l == null)
             return null;
-        }
-        SkinType[] arrayOfSkinType = SkinType.values();
-        int i = arrayOfSkinType.length;
-        for (int b = 0; b < i; b = (int)((byte)(b + 1))) {
+        byte b;
+        int i;
+        SkinType[] arrayOfSkinType;
+        for (i = (arrayOfSkinType = SkinType.values()).length, b = 0; b < i; ) {
             SkinType type = arrayOfSkinType[b];
-            if (!l.contentEquals(type.name())) continue;
-            return type;
+            if (l.contentEquals(type.name()))
+                return type;
+            b++;
         }
+
         return null;
     }
 
@@ -49,7 +46,7 @@ public class AstroItemSkinsAPI {
             return false;
         }
         Map<ArmorSlot, SkinType> types = cacher.getSkinTypes();
-        return types.values().contains((Object)type);
+        return types.values().contains(type);
     }
 
     public static ItemStack addSkinToItem(ItemStack item, SkinType type) {
@@ -65,10 +62,13 @@ public class AstroItemSkinsAPI {
     }
 
     public static boolean isInInventory(Player player, SkinType type) {
-        for (int i = 0; i < player.getInventory().getSize(); ++i) {
+        for (int i = 0; i < player.getInventory().getSize(); i++) {
             ItemStack item = player.getInventory().getItem(i);
-            if (item == null || item.getType() == Material.AIR || type != AstroItemSkinsAPI.getSkinTypeFromNBT(item)) continue;
-            return true;
+            if (item != null && item.getType() != Material.AIR) {
+
+                if (type == getSkinTypeFromNBT(item))
+                    return true;
+            }
         }
         return false;
     }
@@ -78,7 +78,7 @@ public class AstroItemSkinsAPI {
         if (item == null || item.getType() == Material.AIR) {
             return false;
         }
-        return type == AstroItemSkinsAPI.getSkinTypeFromNBT(item);
+        return (type == getSkinTypeFromNBT(item));
     }
 }
 

@@ -4,6 +4,8 @@ import com.earth2me.essentials.Essentials;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantPlugin;
 import com.rit.sucy.EnchantmentAPI;
+import lombok.Getter;
+import lombok.Setter;
 import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
 import org.arkhamnetwork.enchantments.cmds.*;
 import org.arkhamnetwork.enchantments.enchantments.armor.*;
@@ -35,7 +37,7 @@ public class Enchantments extends EnchantPlugin {
     public static volatile ConcurrentHashMap<Player, Location> playerLocations;
     private static Enchantments instance;
     private static Essentials ess3;
-    private static Hex hex;
+    @Getter @Setter private static Hex hex;
     public boolean dungeonsEnabled = false;
     public boolean armorsetEnabled = false;
     private MasteryPermafrost permafrostEnchant;

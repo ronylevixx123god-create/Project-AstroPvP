@@ -11,6 +11,7 @@
         <module name="AuctionHouse" />
         <module name="Factions" />
         <module name="SpaceChests" />
+        <module name="ItemSkins" />
         <module name="Enchantments" />
         <module name="Attributes" />
         <module name="Bosses" />
