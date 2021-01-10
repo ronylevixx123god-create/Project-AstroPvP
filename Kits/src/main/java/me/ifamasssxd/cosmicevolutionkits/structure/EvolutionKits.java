@@ -73,7 +73,7 @@ public enum EvolutionKits {
         EvolutionKits.addLore(lore, level, 8, "Magic Soul Dust", "G-Kit Generator", "Yijki Boss Egg", "Godly Randomization Scroll", "Fat Bucket", "Stun Grenades");
         EvolutionKits.addLore(lore, level, 9, "Heroic Black Scroll", "Heroic Mystery /cc", "Equipment Lootbox", "EMP Pulse", "Phoenix Feather", "Yijki Staff", "Monster Soul Tracker");
         EvolutionKits.addLore(lore, level, 10, "Holy White Scroll", "Heroic Upgrade", "Random Mask Generator", "Weapon/Armor Enchant Orb (13 Slot)", "Omni /gkit Gem", "Random Lootbox");
-        ItemStack retr = new NBTWrapper(new ItemBuilder(Material.CHEST).name(CC.GoldB + "Lucky Box (" + CC.Yellow + "LVL " + level + CC.GoldB + ") " + CC.Gray + "(Right Click)").lore(lore).build()).setString("cosmicType", "LUCKY_BOX").setNBTBase("cosmicData", new com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder().setInt("level", Integer.valueOf(level)).get()).build();
+        ItemStack retr = new NBTWrapper(new ItemBuilder(Material.CHEST).name(CC.GoldB + "Lucky Box (" + CC.Yellow + "LVL " + level + CC.GoldB + ") " + CC.Gray + "(Right Click)").lore(lore).build()).setString("cosmicType", "LUCKY_BOX").setNBTBase("conaxData", new com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder().setInt("level", Integer.valueOf(level)).get()).build();
         return applyIID ? EnchantmentBook.applyTransmogScroll(retr) : retr;
     }
 
@@ -100,13 +100,13 @@ public enum EvolutionKits {
         if (applyIID && ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
             item = ItemID.assignItemID(null, item);
         }
-        return new NBTWrapper(item).setNBTBase("cosmicData", new NBTTagCompoundBuilder().setString("vkit", this.name()).get()).setString("cosmicType", "VKIT_LEVELUP").build();
+        return new NBTWrapper(item).setNBTBase("conaxData", new NBTTagCompoundBuilder().setString("vkit", this.name()).get()).setString("cosmicType", "VKIT_LEVELUP").build();
     }
 
     public static EvolutionKits getFromLevelUp(ItemStack item) {
         String vkitItem;
         NBTWrapper wrapper = new NBTWrapper(item);
-        if (wrapper.getString("cosmicType").equals("VKIT_LEVELUP") && (vkitItem = new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")).getString("vkit")) != null && !vkitItem.isEmpty()) {
+        if (wrapper.getString("cosmicType").equals("VKIT_LEVELUP") && (vkitItem = new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")).getString("vkit")) != null && !vkitItem.isEmpty()) {
             try {
                 return EvolutionKits.valueOf(vkitItem);
             }

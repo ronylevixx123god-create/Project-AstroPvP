@@ -16,7 +16,7 @@ public final class WorldUtils {
         }
 
         public final void scanBlocks(@NotNull Location start, int radius) {
-            Intrinsics.checkParameterIsNotNull((Object)start, (String)"start");
+            Intrinsics.checkParameterIsNotNull(start, (String)"start");
             int x = -radius;
             int var5 = radius;
             if (x <= radius) {

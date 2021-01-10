@@ -67,9 +67,9 @@ public abstract class Backpack {
         meta.setLore(lore);
         item.setItemMeta(meta);
         NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
+        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("conaxData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")) : new NBTTagCompoundBuilder();
         cosmicData.setString("backpackType", this.getType().getId());
-        wrapper.setNBTBase("cosmicData", (NBTBase)cosmicData.get());
+        wrapper.setNBTBase("conaxData", (NBTBase)cosmicData.get());
         wrapper.setString("random", UUID.randomUUID().toString());
         wrapper.setString("cosmicType", "backpack_skin");
         return wrapper.build();
@@ -82,9 +82,9 @@ public abstract class Backpack {
         meta.setLore(lore);
         item.setItemMeta(meta);
         NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
+        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("conaxData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")) : new NBTTagCompoundBuilder();
         cosmicData.setString("backpackType", this.getType().getId());
-        wrapper.setNBTBase("cosmicData", (NBTBase)cosmicData.get());
+        wrapper.setNBTBase("conaxData", (NBTBase)cosmicData.get());
         return wrapper.build();
     }
 }

@@ -65,7 +65,7 @@ implements InventoryInteractable {
         if (cursor.getAmount() > 1) {
             throw new PrefixedException("You cannot apply stacked Holy Water to an item.");
         }
-        NBTTagCompoundBuilder cosmicData = clickedWrapper.getCompoundOrCreate("cosmicData");
+        NBTTagCompoundBuilder cosmicData = clickedWrapper.getCompoundOrCreate("conaxData");
         if (cosmicData.hasKey("holyWater")) {
             throw new PrefixedException("Holy Water has already been applied to this item!");
         }
@@ -73,7 +73,7 @@ implements InventoryInteractable {
         int scrollsApplied = HolyWhiteScrollUtils.getHolyScrollsApplied(clickedWrapper);
         e.setCancelled(true);
         e.getWhoClicked().setItemOnCursor((ItemStack)null);
-        clickedWrapper.setNBTBase("cosmicData", (NBTBase)cosmicData.get());
+        clickedWrapper.setNBTBase("conaxData", (NBTBase)cosmicData.get());
         clicked = clickedWrapper.build();
         HolyWhiteScrollUtils.applyHolyWhitescroll(clicked, scrollsApplied, 4, false);
         e.setCurrentItem(clicked);

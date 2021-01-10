@@ -125,7 +125,7 @@ public class ArmorSetUpgradeListener
                 player.sendMessage(CC.Red + "(!) " + CC.Red + "You must apply this Upgrade in the Overworld!");
                 return;
             }
-            NBTTagCompoundBuilder builder = cursorWrapper.getCompound("cosmicData");
+            NBTTagCompoundBuilder builder = cursorWrapper.getCompound("conaxData");
             if (builder == null) {
                 return;
             }

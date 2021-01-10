@@ -178,7 +178,7 @@ public enum ArmorSet {
     }
 
     public static List<ArmorSet> getFromArmorBonusCrystal(NBTWrapper wrapper) {
-        NBTTagCompoundBuilder cosmicData = wrapper.getCompound("cosmicData");
+        NBTTagCompoundBuilder cosmicData = wrapper.getCompound("conaxData");
         if (cosmicData == null) {
             return null;
         }
@@ -213,7 +213,7 @@ public enum ArmorSet {
 
     public static ItemStack applyCrystalToItem(List<ArmorSet> set, ItemStack item) {
         NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder data = wrapper.getCompoundOrCreate("cosmicData");
+        NBTTagCompoundBuilder data = wrapper.getCompoundOrCreate("conaxData");
         NBTTagListBuilder nbtTagListBuilder = new NBTTagListBuilder();
         StringBuilder sb = new StringBuilder();
         set.forEach(s -> {
@@ -221,7 +221,7 @@ public enum ArmorSet {
             sb.append(s.getDisplayName()).append(CC.Gray).append(", ");
         });
         data.setNBTBase("crystalBonuses", nbtTagListBuilder.build());
-        wrapper.setNBTBase("cosmicData", data.get());
+        wrapper.setNBTBase("conaxData", data.get());
         item = wrapper.build();
         ItemMeta im = item.getItemMeta();
         List<String> lore = im.getLore() == null ? Lists.newArrayList() : im.getLore();
@@ -236,10 +236,10 @@ public enum ArmorSet {
     }
 
     public static ItemStack removeCrystalFromItem(NBTWrapper wrapper) {
-        NBTTagCompoundBuilder data = wrapper.getCompoundOrCreate("cosmicData");
+        NBTTagCompoundBuilder data = wrapper.getCompoundOrCreate("conaxData");
         data.remove("crystalBonus");
         data.remove("crystalBonuses");
-        wrapper.setNBTBase("cosmicData", data.get());
+        wrapper.setNBTBase("conaxData", data.get());
         ItemStack item = wrapper.build();
         ItemMeta im = item.getItemMeta();
         List<String> lore = im.getLore();

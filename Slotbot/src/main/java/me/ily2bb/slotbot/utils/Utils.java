@@ -63,9 +63,9 @@ public class Utils {
     public static ItemStack addSkin(final String line, final ItemStack item) {
         ItemStack finalItem = item;
         final NBTWrapper wrapper = new NBTWrapper(item);
-        final NBTTagCompoundBuilder compoundBuilder = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
+        final NBTTagCompoundBuilder compoundBuilder = wrapper.hasKey("conaxData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")) : new NBTTagCompoundBuilder();
         compoundBuilder.setString("itemSkinType", line);
-        finalItem = wrapper.setNBTBase("cosmicData", compoundBuilder.get()).build();
+        finalItem = wrapper.setNBTBase("conaxData", compoundBuilder.get()).build();
         return finalItem;
     }
 

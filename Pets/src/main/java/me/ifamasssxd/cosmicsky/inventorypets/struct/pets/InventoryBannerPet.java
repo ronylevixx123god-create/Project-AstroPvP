@@ -76,7 +76,7 @@ public class InventoryBannerPet extends InventoryPet {
 
                if (!skipped) {
                   cosmicData.setLong("lastExpGained", System.currentTimeMillis());
-                  petItem.getWrapper().setNBTBase("cosmicData", cosmicData.get());
+                  petItem.getWrapper().setNBTBase("conaxData", cosmicData.get());
                   petItem.addExperience(player, 500);
                   player.sendMessage(CC.GreenB + "+ " + CC.Green + NumberUtils.formatMoney(500.0D) + " Pet EXP " + CC.GreenB + "[" + CC.Gray + petItem.getExp() + "/" + petItem.getPetType().getInternalClass().getExpForLevel(petItem.getLevel() + 1) + CC.GreenB + "]");
                }
@@ -103,7 +103,7 @@ public class InventoryBannerPet extends InventoryPet {
          NBTTagCompoundBuilder newData = wrapper.getconaxData();
          if (oldData != null && newData != null && oldData.hasKey("lastExpGained")) {
             newData.setLong("lastExpGained", oldData.getLong("lastExpGained"));
-            wrapper.setNBTBase("cosmicData", newData.get());
+            wrapper.setNBTBase("conaxData", newData.get());
             CosmicSkyInventoryPets.get().getLogger().info("Saving last EXp gained!");
          }
       }

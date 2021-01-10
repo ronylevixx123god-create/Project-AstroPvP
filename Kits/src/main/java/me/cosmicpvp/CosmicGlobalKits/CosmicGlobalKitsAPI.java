@@ -85,7 +85,7 @@ public class CosmicGlobalKitsAPI {
         }
         lore.add("");
         lore.add(CC.Gray + "Right-click to unlock this Mastery Kit!");
-        ItemStack item = new NBTWrapper(new ItemBuilder(Material.INK_SACK, CC.LightPurpleB + "Mastery Kit " + CC.LightPurple + "(" + kits.getName() + CC.LightPurple + ")", new String[0]).lore((List)lore).data((short)DyeColor.CYAN.getDyeData()).build()).setString("cosmicType", "MASTERY_KIT").setNBTBase("cosmicData", (NBTBase)new NBTTagCompoundBuilder().setString("kit", kits.name()).get()).build();
+        ItemStack item = new NBTWrapper(new ItemBuilder(Material.INK_SACK, CC.LightPurpleB + "Mastery Kit " + CC.LightPurple + "(" + kits.getName() + CC.LightPurple + ")", new String[0]).lore((List)lore).data((short)DyeColor.CYAN.getDyeData()).build()).setString("cosmicType", "MASTERY_KIT").setNBTBase("conaxData", (NBTBase)new NBTTagCompoundBuilder().setString("kit", kits.name()).get()).build();
         if (addID && ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
             item = ItemID.assignItemID(null, (ItemStack)item);
         }

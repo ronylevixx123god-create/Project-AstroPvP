@@ -74,7 +74,7 @@ public enum AbilityArmorSet {
         if (wrapper == null) {
             return null;
         }
-        NBTTagCompoundBuilder cosmicData = wrapper.getCompound("cosmicData");
+        NBTTagCompoundBuilder cosmicData = wrapper.getCompound("conaxData");
         if (cosmicData != null) {
             HashSet<AbilityArmorSet> retr = null;
             String abilityArmorSetEquipped = cosmicData.getString(ANTI_MKIT_ARMOR_KEY);
@@ -108,10 +108,12 @@ public enum AbilityArmorSet {
         ItemMeta im;
         List<String> lore;
         NBTTagCompoundBuilder data = wrapper.getCompound("cosmicData");
+        List lore;
+        NBTTagCompoundBuilder data = wrapper.getCompound("conaxData");
         if (data != null) {
             data.remove(ANTI_MKIT_ARMOR_KEY);
             data.remove(ANTI_MKIT_LIST_ARMOR_KEY);
-            wrapper.setNBTBase("cosmicData", data.get());
+            wrapper.setNBTBase("conaxData", data.get());
         }
         if ((lore = (im = (item = wrapper.build()).getItemMeta()).getLore()) != null) {
             lore.removeIf(s -> s.equals(CC.GoldB + "Anti M-Kit Crystal ("));
@@ -127,7 +129,7 @@ public enum AbilityArmorSet {
 
     public static Pair<Set<AbilityArmorSet>, Integer> getFromAntiMkitCrystal(NBTWrapper wrapper) {
         NBTTagCompoundBuilder builder;
-        if (wrapper.getString("cosmicType").equals("ANTI_MKIT") && (builder = wrapper.getCompound("cosmicData")) != null) {
+        if (wrapper.getString("cosmicType").equals("ANTI_MKIT") && (builder = wrapper.getCompound("conaxData")) != null) {
             int success = builder.getInt("success");
             HashSet<AbilityArmorSet> applied = new HashSet<AbilityArmorSet>();
             if (builder.hasKey("mKit")) {
@@ -152,7 +154,7 @@ public enum AbilityArmorSet {
     public static AbilityArmorSet getSetFromMasteryShard(ItemStack masteryShard) {
         NBTTagCompoundBuilder builder;
         NBTWrapper cursorWrapper = new NBTWrapper(masteryShard);
-        if (cursorWrapper.getString("cosmicType").equals("MASTERY_SHARD") && (builder = cursorWrapper.getCompound("cosmicData")) != null && builder.hasKey("masteryShard")) {
+        if (cursorWrapper.getString("cosmicType").equals("MASTERY_SHARD") && (builder = cursorWrapper.getCompound("conaxData")) != null && builder.hasKey("masteryShard")) {
             return AbilityArmorSet.fromName(builder.getString("masteryShard"));
         }
         return null;
@@ -168,7 +170,7 @@ public enum AbilityArmorSet {
     }
 
     public ItemStack createMasteryShard(boolean applyIID) {
-        ItemStack item = new NBTWrapper(new ItemBuilder(this.masteryShardItem.getItemType(), CC.GoldB + "Mastery Shard " + CC.Gold + "(" + this.displayName + CC.Gold + ")", CC.Gray + "Apply to an enchantment book", String.valueOf(CC.Gray) + "to imbue it with the power to", String.valueOf(CC.Gray) + "affect " + this.displayName + CC.Gray + " Mastery Kit items.").data(this.masteryShardItem.getData()).build()).setString("cosmicType", "MASTERY_SHARD").setNBTBase("cosmicData", new NBTTagCompoundBuilder().setString("masteryShard", this.name()).get()).build();
+        ItemStack item = new NBTWrapper(new ItemBuilder(this.masteryShardItem.getItemType(), CC.GoldB + "Mastery Shard " + CC.Gold + "(" + this.displayName + CC.Gold + ")", CC.Gray + "Apply to an enchantment book", String.valueOf(CC.Gray) + "to imbue it with the power to", String.valueOf(CC.Gray) + "affect " + this.displayName + CC.Gray + " Mastery Kit items.").data(this.masteryShardItem.getData()).build()).setString("cosmicType", "MASTERY_SHARD").setNBTBase("conaxData", new NBTTagCompoundBuilder().setString("masteryShard", this.name()).get()).build();
         if (applyIID && ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
             item = ItemID.assignItemID(null, item);
         }
@@ -176,10 +178,10 @@ public enum AbilityArmorSet {
     }
 
     public NBTWrapper applyAbilityNBT(NBTWrapper wrapper) {
-        NBTTagCompoundBuilder builder = wrapper.getCompoundOrCreate("cosmicData");
+        NBTTagCompoundBuilder builder = wrapper.getCompoundOrCreate("conaxData");
         builder.setString("abilitySet", this.name());
         builder.setShort("noEnchants", (short) 1);
-        wrapper.setNBTBase("cosmicData", builder.get());
+        wrapper.setNBTBase("conaxData", builder.get());
         return wrapper;
     }
 
