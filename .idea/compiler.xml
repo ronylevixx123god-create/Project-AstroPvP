@@ -22,6 +22,7 @@
         <module name="Explosive" />
         <module name="Utils" />
         <module name="Sets" />
+        <module name="Dungeon" />
         <module name="Ark" />
         <module name="Backpacks" />
         <module name="Kits" />
@@ -32,6 +33,7 @@
     <bytecodeTargetLevel>
       <module name="ArmorSets" target="1.8" />
       <module name="MoneyNotes" target="1.8" />
+      <module name="Pets (1)" target="8" />
       <module name="SpaceChests (1)" target="1.8" />
     </bytecodeTargetLevel>
   </component>
