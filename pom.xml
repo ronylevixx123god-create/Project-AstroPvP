@@ -33,6 +33,7 @@
         <module>Lootboxes</module>
         <module>Disguises</module>
         <module>Duels</module>
+        <module>Contest</module>
     </modules>
 
     <build>

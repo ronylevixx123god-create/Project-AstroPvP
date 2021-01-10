@@ -7,30 +7,31 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="GUIShop" />
-        <module name="Lootboxes" />
-        <module name="AuctionHouse" />
-        <module name="Factions" />
         <module name="SpaceChests" />
         <module name="ItemSkins" />
         <module name="Enchantments" />
         <module name="Attributes" />
         <module name="Bosses" />
+        <module name="Explosive" />
+        <module name="Sets" />
+        <module name="Dungeon" />
+        <module name="Contest" />
+        <module name="Kits" />
+        <module name="Core" />
+        <module name="GUIShop" />
+        <module name="Lootboxes" />
+        <module name="AuctionHouse" />
+        <module name="Factions" />
         <module name="Slotbot" />
         <module name="Disguises" />
         <module name="CustomItems" />
         <module name="KoTHs" />
         <module name="Duels" />
         <module name="Pets" />
-        <module name="Explosive" />
         <module name="Utils" />
-        <module name="Sets" />
-        <module name="Dungeon" />
         <module name="Ark" />
         <module name="Backpacks" />
-        <module name="Kits" />
         <module name="Arkkit" />
-        <module name="Core" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
