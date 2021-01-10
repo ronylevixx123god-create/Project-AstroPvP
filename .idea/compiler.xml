@@ -23,6 +23,7 @@
         <module name="Sets" />
         <module name="Ark" />
         <module name="Backpacks" />
+        <module name="Kits" />
         <module name="Arkkit" />
         <module name="Core" />
       </profile>

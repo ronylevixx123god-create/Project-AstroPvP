@@ -27,6 +27,7 @@
         <module>Explosive</module>
         <module>KoTHs</module>
         <module>ItemSkins</module>
+        <module>Kits</module>
     </modules>
 
     <build>
