@@ -36,7 +36,7 @@ public class HeroicCannoner
 extends GlobalKit {
     @Override
     public List<ItemStack> getKitItems(Player player, GlobalKits kits, int kitLevel) {
-        ArrayList rewards = Lists.newArrayList();
+        ArrayList<ItemStack> rewards = Lists.newArrayList();
         ItemStack helmet = ItemUtils.buildItem(Material.DIAMOND_HELMET, (short)0, ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "Heroic Mining Helmet", ChatColor.GOLD.toString() + ChatColor.ITALIC.toString() + "An enhanced version of the famous,", ChatColor.GOLD.toString() + ChatColor.ITALIC.toString() + "mining helmet, your vision penetrates all.");
         HeroicCannoner.addEnchant(helmet, "Aquatic", HeroicCannoner.getMaxEnchantLevel("Aquatic"));
         HeroicCannoner.addEnchant(helmet, "Clarity", HeroicCannoner.getMaxEnchantLevel("Clarity"));
@@ -140,7 +140,7 @@ extends GlobalKit {
             }
             rewards.add(customCreeper);
         }
-        rewards.add(new ItemStack(Material.MONSTER_EGG, 3 + new Random().nextInt(kitLevel * 2 + 1), 50));
+        rewards.add(new ItemStack(Material.MONSTER_EGG, 3 + new Random().nextInt(kitLevel * 2 + 1), (short) 50));
         rewards.add(new ItemStack(Material.SPONGE, 5 + kitLevel * 2));
         rewards.add(new ItemStack(Material.DISPENSER, 16 + kitLevel * 16));
         if (Math.random() < (double)kitLevel * 0.2) {

@@ -40,6 +40,8 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
+
+import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKits;
@@ -114,7 +116,7 @@ implements Listener {
                 } else {
                     p.setItemInHand(null);
                 }
-                l = p.getTargetBlock(null, 6).getLocation().add(0.0, 1.0, 0.0);
+                l = p.getTargetBlock((HashSet<Byte>) null, 6).getLocation().add(0.0, 1.0, 0.0);
                 fallenHero = FallenHero.spawnFallenHero(gkit, l);
                 fallenHero.setMetadata("fallenHeroSummoner", (MetadataValue)new FixedMetadataValue((Plugin)CosmicGlobalKits.getPlugin(), (Object)p.getName()));
                 itemName = gkit.getItemName().replace(" Kit", "");
@@ -140,7 +142,7 @@ implements Listener {
                 } else {
                     p.setItemInHand(null);
                 }
-                l = p.getTargetBlock(null, 6).getLocation().add(0.0, 1.0, 0.0);
+                l = p.getTargetBlock((HashSet<Byte>) null, 6).getLocation().add(0.0, 1.0, 0.0);
                 fallenHero = FallenHero.spawnFallenHero(vkit, l);
                 fallenHero.setMetadata("fallenHeroSummoner", (MetadataValue)new FixedMetadataValue((Plugin)CosmicGlobalKits.getPlugin(), (Object)p.getName()));
                 itemName = vkit.getKit().getItemName();

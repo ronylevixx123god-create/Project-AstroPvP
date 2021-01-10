@@ -39,7 +39,7 @@ public class HeroicLoki
 extends GlobalKit {
     @Override
     public List<ItemStack> getKitItems(Player player, GlobalKits kits, int kitLevel) {
-        ArrayList rewards = Lists.newArrayList();
+        ArrayList<ItemStack> rewards = Lists.newArrayList();
         ItemStack helmet = this.setItemNameAndLore(kitLevel == 3 && Math.random() < 0.33 ? CosmicArmorSetsAPI.createHeroicPeice((HeroicArmorType)HeroicArmorType.HELMET) : new ItemStack(Material.DIAMOND_HELMET), ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "Crown of Shadows", ChatColor.GOLD.toString() + ChatColor.ITALIC.toString() + "A dark crown, embroidered with absolute", ChatColor.GOLD.toString() + ChatColor.ITALIC.toString() + "black onyx. Icy cold to the touch.");
         HeroicLoki.addRandomEnchantLevel(helmet, "Ghost");
         if (Math.random() < (double)kitLevel * 0.25) {

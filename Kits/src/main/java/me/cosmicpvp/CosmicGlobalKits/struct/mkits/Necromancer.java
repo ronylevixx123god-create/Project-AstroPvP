@@ -35,7 +35,7 @@ extends MasteryGlobalKit {
         ItemStack chestplate = AbilityArmorSet.NECROMANCER.getArmorSetInfo().getChestplate(player, false, false);
         ItemStack leggings = AbilityArmorSet.NECROMANCER.getArmorSetInfo().getLeggings(player, false, false);
         ItemStack boots = AbilityArmorSet.NECROMANCER.getArmorSetInfo().getBoots(player, false, false);
-        ArrayList armor = Lists.newArrayList((Object[])new ItemStack[]{helmet, chestplate, leggings, boots});
+        ArrayList<ItemStack> armor = Lists.newArrayList(helmet, chestplate, leggings, boots);
         EnchantmentAPI.getEnchantment((String)"Mortal Coil").addToItem(helmet, ThreadLocalRandom.current().nextInt(EnchantmentAPI.getEnchantment((String)"Mortal Coil").getMaxLevel()) + 1);
         EnchantmentAPI.getEnchantment((String)"Rot and Decay").addToItem(leggings, ThreadLocalRandom.current().nextInt(EnchantmentAPI.getEnchantment((String)"Rot and Decay").getMaxLevel()) + 1);
         ArrayList enchants = Lists.newArrayList((Object[])new String[]{"Soul Siphon", "Demonic Gateway"});

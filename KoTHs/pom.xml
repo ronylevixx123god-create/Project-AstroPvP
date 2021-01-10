@@ -313,7 +313,7 @@
             <artifactId>cosmicSkyItem</artifactId>
             <version>0.1</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/CosmicSkyCustomItems.jar</systemPath>
+            <systemPath>../Kits/lib/CosmicSkyCustomItems.jar</systemPath>
         </dependency>
     </dependencies>
 

@@ -33,7 +33,7 @@ public class HeroicCosmonaut
 extends GlobalKit {
     @Override
     public List<ItemStack> getKitItems(Player player, GlobalKits kits, int kitLevel) {
-        ArrayList rewards = Lists.newArrayList();
+        ArrayList<ItemStack> rewards = Lists.newArrayList();
         ArrayList<CustomEnchantment> enchants = new ArrayList<CustomEnchantment>();
         ItemStack helmet = this.setItemNameAndLore(CosmicArmorSetsAPI.createHeroicPeice((HeroicArmorType)HeroicArmorType.CHESTPLATE), ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + (player != null ? player.getName() : "???") + "'s Cosmonaut Spacesuit", ChatColor.GOLD.toString() + ChatColor.ITALIC.toString() + "Forged of the finest materials in all", ChatColor.GOLD.toString() + ChatColor.ITALIC.toString() + "the galaxy. A timeless, unique piece.");
         ItemStack legs = this.setItemNameAndLore(CosmicArmorSetsAPI.createHeroicPeice((HeroicArmorType)HeroicArmorType.LEGGINGS), ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + (player != null ? player.getName() : "???") + "'s Cosmonaut Pantaloons", ChatColor.GOLD.toString() + ChatColor.ITALIC.toString() + "Created out of the richest materials", ChatColor.GOLD.toString() + ChatColor.ITALIC.toString() + "in all the galaxy. So fabulous.");

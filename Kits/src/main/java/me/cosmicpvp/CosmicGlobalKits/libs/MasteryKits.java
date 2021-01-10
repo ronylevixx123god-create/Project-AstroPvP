@@ -29,19 +29,19 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 
 public enum MasteryKits {
-    GHOST(new GhostKit(), new MaterialData(Material.SUGAR), 3, Lists.newArrayList((Object[])new GlobalKits[]{GlobalKits.Spooky, GlobalKits.Butcher, GlobalKits.GrimReaper}), TimeUnit.DAYS.toMillis(7L), CC.DarkAquaB + "Ghost", Lists.newArrayList((Object[])new String[]{"", CC.Gray + "The armor of an eternal entity known", CC.Gray + "only as the Ghost. It will haunt you", CC.Gray + "until you meet your inevitable fate."})),
-    NECROMANCER(new Necromancer(), new MaterialData(Material.SKULL_ITEM, 1), 4, Lists.newArrayList((Object[])new GlobalKits[]{GlobalKits.DIABLO, GlobalKits.Voidwalker, GlobalKits.Warlock}), TimeUnit.DAYS.toMillis(7L), CC.DarkGreenB + "Necromancer", Lists.newArrayList((Object[])new String[]{"", CC.Gray + "The cursed robes of the universally feared", CC.Gray + "puppeteer of the undead, the Necromancer.", CC.Gray + "Death is no longer your enemy."})),
-    DEATH_KNIGHT(new DeathKnight(), new MaterialData(Material.EYE_OF_ENDER), 5, Lists.newArrayList((Object[])new GlobalKits[]{GlobalKits.GLADIATOR, GlobalKits.Loki, GlobalKits.TEMPLAR}), TimeUnit.DAYS.toMillis(7L), CC.BlueB + "Death Knight", Lists.newArrayList((Object[])new String[]{"", CC.Gray + "The cursed runeforged set of armor", CC.Gray + "created for the Death Knight,", CC.Gray + "a master in both melee combat", CC.Gray + "and the use of offensive dark", CC.Gray + "magic. How can you kill", CC.Gray + "what is already dead?"}));
+    GHOST(new GhostKit(), new MaterialData(Material.SUGAR), 3, Lists.newArrayList(GlobalKits.Spooky, GlobalKits.Butcher, GlobalKits.GrimReaper), TimeUnit.DAYS.toMillis(7L), CC.DarkAquaB + "Ghost", Lists.newArrayList("", CC.Gray + "The armor of an eternal entity known", CC.Gray + "only as the Ghost. It will haunt you", CC.Gray + "until you meet your inevitable fate.")),
+    NECROMANCER(new Necromancer(), new MaterialData(Material.SKULL_ITEM, (byte) 1), 4, Lists.newArrayList(GlobalKits.DIABLO, GlobalKits.Voidwalker, GlobalKits.Warlock), TimeUnit.DAYS.toMillis(7L), CC.DarkGreenB + "Necromancer", Lists.newArrayList("", CC.Gray + "The cursed robes of the universally feared", CC.Gray + "puppeteer of the undead, the Necromancer.", CC.Gray + "Death is no longer your enemy.")),
+    DEATH_KNIGHT(new DeathKnight(), new MaterialData(Material.EYE_OF_ENDER), 5, Lists.newArrayList(GlobalKits.GLADIATOR, GlobalKits.Loki, GlobalKits.TEMPLAR), TimeUnit.DAYS.toMillis(7L), CC.BlueB + "Death Knight", Lists.newArrayList("", CC.Gray + "The cursed runeforged set of armor", CC.Gray + "created for the Death Knight,", CC.Gray + "a master in both melee combat", CC.Gray + "and the use of offensive dark", CC.Gray + "magic. How can you kill", CC.Gray + "what is already dead?"));
 
-    private int slot;
-    private MasteryGlobalKit kit;
-    private List<GlobalKits> kitsRequired;
-    private long expiration;
-    private String name;
-    private List<String> description;
-    private MaterialData data;
+    private final int slot;
+    private final MasteryGlobalKit kit;
+    private final List<GlobalKits> kitsRequired;
+    private final long expiration;
+    private final String name;
+    private final List<String> description;
+    private final MaterialData data;
 
-    private MasteryKits(MasteryGlobalKit kit, MaterialData data, int slot, List<GlobalKits> required, long time, String name, List<String> lore) {
+    MasteryKits(MasteryGlobalKit kit, MaterialData data, int slot, List<GlobalKits> required, long time, String name, List<String> lore) {
         this.kitsRequired = required;
         this.kit = kit;
         this.slot = slot;
@@ -65,7 +65,7 @@ public enum MasteryKits {
 
     public void giveToPlayer(Player player) {
         for (ItemStack item : this.getKit().getMasteryItems(player, this, true)) {
-            PlayerUtil.giveOrDropProtectedItem((Player)player, (ItemStack)item, (int)-1, null, (String)(CC.RedB + "(!) " + CC.Red + "Mastery Kit Item dropped at your feet!"));
+            PlayerUtil.giveOrDropProtectedItem(player, item, -1, null, CC.RedB + "(!) " + CC.Red + "Mastery Kit Item dropped at your feet!");
         }
     }
 

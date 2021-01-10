@@ -57,7 +57,6 @@ extends Thread {
                 }
                 SQLManager.sql_query.remove(query);
             }
-            break;
         }
     }
 
