@@ -1,3 +1,13 @@
-store_url: buy.astropvp.net
-server_name: AstroPvP
-kitGemsEnabled: true
+name: CosmicMysteryChest
+version: 1.0-SNAPSHOT
+main: me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest
+depend: [CosmicPvPUtils, Arkkit]
+softdepend: [CosmicSkyCustomItems]
+loadbefore: [ShardMisc]
+commands:
+  mysterychest:
+    description: Mystery Chest command
+    aliases: [mc, lootbox, elootbox]
+  lbtoggle:
+    description: Lootbox Anmiation Toggle
+    aliases: [togglelb, lootboxtoggle, am]
