@@ -35,6 +35,7 @@
         <module>Duels</module>
         <module>Contest</module>
         <module>Conquest</module>
+        <module>Permissions</module>
     </modules>
 
     <build>

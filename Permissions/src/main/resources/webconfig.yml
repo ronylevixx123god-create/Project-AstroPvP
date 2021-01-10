@@ -1,0 +1,3359 @@
+servers:
+    lobby:
+        default:
+            default: true
+            permissions:
+            - -bukkit.command.plugins
+            - echopet.pet
+            - echopet.pet.remove
+            - echopet.pet.menu
+            - echopet.pet.hide
+            - echopet.pet.show
+            - echopet.pet.name
+            - echopet.pet.select
+            - echopet.pet.ride.*
+            - echopet.pet.hat.*
+            - echopet.pet.info
+            - echopet.pet.list
+            - echopet.pet.call
+            - arkham.pet
+            - essentials.spawn
+            - essentials.motd
+            - essentials.rules
+            - essentials.msg
+            - essentials.list
+            - BungeePortals.portal.*
+            - compassnav.use
+            - nametag.group.color
+            - compassnav.use.*
+            - bm.notify
+        thug:
+            prefix: '&8[&cThug&8]&c'
+        gangster:
+            prefix: '&2[&bGangster&2]&b'
+        dealer:
+            prefix: '&f[&eDealer&f]&e'
+        thief:
+            prefix: '&5[&aThief&5]&a'
+        mobster:
+            prefix: '&3[&5Mob&ester&3]&e'
+        crimelord:
+            prefix: '&6[&aCrime&2lord&6]&a'
+        kingpin:
+            prefix: '&1[&6Kingpin&1]&6'
+        originalgangster:
+            prefix: '&b[&c&lO&4&lG&b]&c'
+        helper:
+            prefix: '&3[&aHelper&3]&a'
+            permissions:
+            - essentials.joinfullserver
+            - bm.bminfo
+            - bm.tempmute
+            - bm.timelimit.mutes.helper
+            - bm.warn
+            - bm.unmute
+            - bm.kick
+            - simplechat.admin
+        enforcer:
+            prefix: '&9[&aEnforcer&9]&a'
+            permissions:
+            - essentials.joinfullserver
+            - bm.tempban
+            - bm.tempmute
+            - bm.timelimit.bans.enforcer
+            - bm.timelimit.mutes.enforcer
+            - bm.bminfo
+            - bm.tempmute
+            - bm.warn
+            - bm.unmute
+            - bm.kick
+            - simplechat.admin
+        moderator:
+            prefix: '&9[&eModerator&9]&e'
+            permissions:
+            - essentials.joinfullserver
+            - bm.ban
+            - bm.timelimit.bans.moderator
+            - bm.timelimit.mutes.moderator
+            - bm.tempban
+            - bm.tempmute
+            - bm.bminfo
+            - bm.tempmute
+            - bm.warn
+            - bm.unmute
+            - bm.kick
+            - simplechat.admin
+        admin:
+            prefix: '&4[&cAdmin&4]&c'
+            permissions:
+            - essentials.*
+            - simplechat.admin
+            - bm.*
+        owner:
+            prefix: '&1[&4NetworkOwner&1]&b'
+            permissions:
+            - essentials.*
+            - permissions.*
+            - '*'
+            - '*.*'
+    skywars:
+        default:
+            default: true
+            permissions:
+            - essentials.motd
+            - essentials.list
+            - bukkit.command.tps
+            - skywars.kit.farmer
+            - skywars.kit.archer
+            - skywars.kit.hunter
+            - essentials.spawn
+            - essentials.rules
+            - essentials.msg
+            - bm.notify
+        thug:
+            prefix: '&8[&cThug&8]&c'
+        gangster:
+            prefix: '&2[&bGangster&2]&b'
+        dealer:
+            prefix: '&f[&eDealer&f]&e'
+            permissions:
+            - skywars.kit.pyro
+            - skywars.kit.tank
+            - skywars.kit.rusher
+        thief:
+            prefix: '&5[&aThief&5]&a'
+            permissions:
+            - skywars.kit.pyro
+            - skywars.kit.tank
+            - skywars.kit.rusher
+        mobster:
+            prefix: '&3[&5Mob&ester&3]&e'
+            permissions:
+            - skywars.kit.pyro
+            - skywars.kit.tank
+            - skywars.kit.rusher
+            - skywars.kit.chemist
+            - skywars.kit.cookieslap
+            - skywars.kit.slayer
+        crimelord:
+            prefix: '&6[&aCrime&2lord&6]&a'
+            permissions:
+            - skywars.kit.pyro
+            - skywars.kit.tank
+            - skywars.kit.rusher
+            - skywars.kit.chemist
+            - skywars.kit.cookieslap
+            - skywars.kit.slayer
+        kingpin:
+            prefix: '&1[&6Kingpin&1]&6'
+            permissions:
+            - skywars.kit.pyro
+            - skywars.kit.tank
+            - skywars.kit.rusher
+            - skywars.kit.chemist
+            - skywars.kit.cookieslap
+            - skywars.kit.slayer
+        originalgangster:
+            prefix: '&b[&c&lO&4&lG&b]&c'
+            permissions:
+            - skywars.kit.pyro
+            - skywars.kit.tank
+            - skywars.kit.rusher
+            - skywars.kit.chemist
+            - skywars.kit.cookieslap
+            - skywars.kit.slayer
+        helper:
+            prefix: '&3[&aHelper&3]&a'
+            permissions:
+            - essentials.joinfullserver
+            - bm.bminfo
+            - bm.tempmute
+            - bm.timelimit.mutes.helper
+            - bm.warn
+            - bm.unmute
+            - bm.kick
+            - simplechat.admin
+        enforcer:
+            prefix: '&9[&aEnforcer&9]&a'
+            permissions:
+            - essentials.joinfullserver
+            - bm.tempban
+            - bm.tempmute
+            - bm.timelimit.bans.enforcer
+            - bm.timelimit.mutes.enforcer
+            - bm.bminfo
+            - bm.tempmute
+            - bm.warn
+            - bm.unmute
+            - bm.kick
+            - simplechat.admin
+        moderator:
+            prefix: '&9[&eModerator&9]&e'
+            permissions:
+            - essentials.joinfullserver
+            - bm.ban
+            - bm.timelimit.bans.moderator
+            - bm.timelimit.mutes.moderator
+            - bm.tempban
+            - bm.tempmute
+            - bm.bminfo
+            - bm.tempmute
+            - bm.warn
+            - bm.unmute
+            - bm.kick
+            - simplechat.admin
+        admin:
+            prefix: '&4[&cAdmin&4]&c'
+            permissions:
+            - essentials.*
+            - simplechat.admin
+            - bm.*
+        owner:
+            prefix: '&1[&4NetworkOwner&1]&b'
+            permissions:
+            - essentials.*
+            - permissions.*
+            - '*'
+            - '*.*'
+    kitpvp:
+        private:
+            default: true
+            permissions:
+            - essentials.ignore
+            - essentials.warp.1v1
+            - essentials.warp
+            - essentials.warps.1v1
+            - plotme.admin.tp
+            - -plotme.use.deny
+            - -shop.sell
+            - -shop.enchantments
+            - essentials.clearinventory
+            - MasterPromote.rank.buy.corporal
+            - MasterPromote.rank.list
+            - bukkit.command.tps
+            - essentials.kit
+            - essentials.kits.private
+            - essentials.spawn
+            - essentials.motd
+            - essentials.rules
+            - essentials.msg
+            - essentials.balance
+            - essentials.balancetop
+            - essentials.signs.use.*
+            - essentials.pay
+            - essentials.list
+            - bm.notify
+            - pvpsoup.use
+            - redeemMCMMO.credits
+            - redeemMCMMO.redeem
+            - portal.use
+            - portal.use.plots
+            - ChestShop.shop.*
+            - plotme.use
+            - plotme.use.add
+            - plotme.use.remove
+            - shop.tab.*
+            - shop.buy
+            - pvp.kdr.self
+            - pvp.kdr.orther
+        Corporal:
+            permissions:
+            - MasterPromote.rank.buy.specialist
+            - essentials.kits.corporal
+            prefix: '&f[&8Corporal&f]&2'
+        Specialist:
+            inheritance:
+            - Corporal
+            permissions:
+            - -essentials.kits.corporal
+            - essentials.kits.specialist
+            prefix: '&f[&8Speci&7alist&f]&2'
+        Sergeant:
+            inheritance:
+            - Specialist
+            permissions:
+            - -essentials.kits.specialist
+            - essentials.kits.sergeant
+            prefix: '&f[&9Sergeant&f]&2'
+        FirstSergeant:
+            inheritance:
+            - Sergeant
+            permissions:
+            - -essentials.kits.sergeant
+            - essentials.kits.firstsergeant
+            prefix: '&f[&8First&9Sergeant&f]&2'
+        SergeantMajor:
+            inheritance:
+            - FirstSergeant
+            permissions:
+            - -essentials.kits.firstsergeant
+            - essentials.kits.sergeantmajor
+            prefix: '&f[&9Serg&ceant&8Ma&7jor&f]&2'
+        Lieutenant:
+            inheritance:
+            - SergeantMajor
+            permissions:
+            - -essentials.kits.sergeantmajor
+            - essentials.kits.lieutenant
+            prefix: '&f[&aLieut&8enant&f]&2'
+        Captain:
+            inheritance:
+            - Lieutenant
+            permissions:
+            - -essentials.kits.lieutenant
+            - essentials.kits.captain
+            prefix: '&f[&bCaptain&f]&2'
+        Major:
+            inheritance:
+            - Captain
+            permissions:
+            - -essentials.kits.captain
+            - essentials.kits.major
+            prefix: '&f[&6Major&f]&2'
+        Colonel:
+            inheritance:
+            - Major
+            permissions:
+            - -essentials.kits.major
+            - essentials.kits.colonel
+            prefix: '&f[&aColo&bnel&f]&2'
+        General:
+            inheritance:
+            - Colonel
+            permissions:
+            - -essentials.kits.colonel
+            - essentials.kits.general
+            prefix: '&f[&4&lGeneral&f]&2'
+        thug:
+            prefix: '&8[&cThug&8]&c'
+        gangster:
+            prefix: '&2[&bGangster&2]&b'
+            permissions:
+            - essentials.joinfullserver
+            - essentials.kits.premium
+        dealer:
+            prefix: '&f[&eDealer&f]&e'
+            permissions:
+            - essentials.joinfullserver
+            - essentials.kits.gold
+        thief:
+            prefix: '&5[&aThief&5]&a'
+            permissions:
+            - essentials.joinfullserver
+            - essentials.kits.gold
+        mobster:
+            prefix: '&3[&5Mob&ester&3]&e'
+            permissions:
+            - essentials.joinfullserver
+            - essentials.kits.diamond
+        crimelord:
+            prefix: '&6[&aCrime&2lord&6]&a'
+            permissions:
+            - essentials.joinfullserver
+            - essentials.kits.tank
+        kingpin:
+            prefix: '&1[&6Kingpin&1]&6'
+            permissions:
+            - essentials.joinfullserver
+            - essentials.kits.tank
+        originalgangster:
+            prefix: '&b[&c&lO&4&lG&b]&c'
+            permissions:
+            - essentials.joinfullserver
+            - essentials.kits.tank
+        helper:
+            prefix: '&3[&aHelper&3]&a'
+            permissions:
+            - essentials.joinfullserver
+            - bm.bminfo
+            - bm.tempmute
+            - bm.timelimit.mutes.helper
+            - bm.warn
+            - bm.unmute
+            - bm.kick
+            - simplechat.admin
+        enforcer:
+            prefix: '&9[&aEnforcer&9]&a'
+            permissions:
+            - essentials.joinfullserver
+            - bm.tempban
+            - bm.tempmute
+            - bm.timelimit.bans.enforcer
+            - bm.timelimit.mutes.enforcer
+            - bm.bminfo
+            - bm.tempmute
+            - bm.warn
+            - bm.unmute
+            - bm.kick
+            - simplechat.admin
+        moderator:
+            prefix: '&9[&eModerator&9]&e'
+            permissions:
+            - essentials.joinfullserver
+            - bm.ban
+            - bm.timelimit.bans.moderator
+            - bm.timelimit.mutes.moderator
+            - bm.tempban
+            - bm.tempmute
+            - bm.bminfo
+            - bm.tempmute
+            - bm.warn
+            - bm.unmute
+            - bm.kick
+            - simplechat.admin
+        admin:
+            prefix: '&4[&cAdmin&4]&c'
+            permissions:
+            - essentials.*
+            - simplechat.admin
+            - bm.*
+        owner:
+            prefix: '&1[&4NetworkOwner&1]&b'
+            permissions:
+            - essentials.*
+            - permissions.*
+            - '*'
+            - '*.*'
+    creative:
+        default:
+            default: true
+            permissions:
+            - essentials.ban.notify
+            - essentials.tpa
+            - essentials.tpahere
+            - essentials.tpaccept
+            - essentials.tpdeny
+            - bm.notify
+            - essentials.mail.send
+            - essentials.mail
+            - essentials.warp.list
+            - essentials.warp
+            - plotme.use.add
+            - plotme.use.remove
+            - plotme.use
+            - essentials.spawn
+            - essentials.ignore
+            - essentials.spawn
+            - essentials.list
+            - essentials.msg
+            - essentials.motd
+            - essentials.rules
+            - marry.default
+            - echopet.pet
+            - echopet.pet.remove
+            - echopet.pet.menu
+            - echopet.pet.hide
+            - echopet.pet.show
+            - echopet.pet.name
+            - echopet.pet.select
+            - echopet.pet.ride.*
+            - echopet.pet.hat.*
+            - echopet.pet.info
+            - echopet.pet.list
+            - echopet.pet.call
+            - arkham.pet
+        thug:
+            prefix: '&8[&cThug&8]&c'
+            permissions:
+            - essentials.chat.url
+            - essentials.msg.url
+            - essentials.delhome
+            - essentials.clearinventory
+            - essentials.sethome
+            - essentials.sethome.multiple.supporter
+            - plotme.limit.3
+            - worldedit.region.set
+            - worldedit.clipboard.copy
+            - worldedit.clipboard.paste
+            - worldedit.clipboard.rotate
+            - worldedit.clipboard.flip
+            - worldedit.clipboard.cut
+            - worldedit.wand
+            - worldedit.generation.cylinder
+            - worldedit.generation.sphere
+            - worldedit.history.redo
+            - worldedit.history.undo
+            - worldedit.region.replace
+            - worldedit.selection.expand
+            - worldedit.brush.sphere
+            - worldedit.brush.cylinder
+            - worldedit.brush.smooth
+            - worldedit.brush.options.mask
+            - worldedit.selection.pos
+            - worldedit.selection.hpos
+            - worldedit.region.faces
+            - worldedit.tool.tree
+        gangster:
+            prefix: '&2[&bGangster&2]&b'
+            permissions:
+            - essentials.chat.url
+            - essentials.msg.url
+            - essentials.delhome
+            - essentials.clearinventory
+            - essentials.sethome
+            - essentials.sethome.multiple.supporter
+            - plotme.limit.3
+            - worldedit.region.set
+            - worldedit.clipboard.copy
+            - worldedit.clipboard.paste
+            - worldedit.clipboard.rotate
+            - worldedit.clipboard.flip
+            - worldedit.clipboard.cut
+            - worldedit.wand
+            - worldedit.generation.cylinder
+            - worldedit.generation.sphere
+            - worldedit.history.redo
+            - worldedit.history.undo
+            - worldedit.region.replace
+            - worldedit.selection.expand
+            - worldedit.brush.sphere
+            - worldedit.brush.cylinder
+            - worldedit.brush.smooth
+            - worldedit.brush.options.mask
+            - worldedit.selection.pos
+            - worldedit.selection.hpos
+            - worldedit.region.faces
+            - worldedit.tool.tree
+        dealer:
+            prefix: '&f[&eDealer&f]&e'
+            permissions:
+            - essentials.chat.url
+            - essentials.msg.url
+            - essentials.delhome
+            - essentials.clearinventory
+            - essentials.sethome
+            - essentials.sethome.multiple.elite
+            - plotme.limit.5
+            - worldedit.region.set
+            - worldedit.clipboard.copy
+            - worldedit.clipboard.paste
+            - worldedit.clipboard.rotate
+            - worldedit.clipboard.flip
+            - worldedit.clipboard.cut
+            - worldedit.wand
+            - worldedit.generation.cylinder
+            - worldedit.generation.sphere
+            - worldedit.history.redo
+            - worldedit.history.undo
+            - worldedit.region.replace
+            - worldedit.selection.expand
+            - worldedit.brush.sphere
+            - worldedit.brush.cylinder
+            - worldedit.brush.smooth
+            - worldedit.brush.options.mask
+            - worldedit.selection.pos
+            - worldedit.selection.hpos
+            - worldedit.region.faces
+            - worldedit.tool.tree
+            - worldedit.fixwater
+            - worldedit.fixlava
+            - worldedit.drain
+        thief:
+            prefix: '&5[&aThief&5]&a'
+            permissions:
+            - essentials.chat.url
+            - essentials.msg.url
+            - essentials.delhome
+            - essentials.clearinventory
+            - essentials.sethome
+            - essentials.sethome.multiple.extreme
+            - plotme.limit.8
+            - worldedit.region.set
+            - worldedit.clipboard.copy
+            - worldedit.clipboard.paste
+            - worldedit.clipboard.rotate
+            - worldedit.clipboard.flip
+            - worldedit.clipboard.cut
+            - worldedit.wand
+            - worldedit.generation.cylinder
+            - worldedit.generation.sphere
+            - worldedit.history.redo
+            - worldedit.history.undo
+            - worldedit.region.replace
+            - worldedit.region.walls
+            - worldedit.selection.expand
+            - worldedit.brush.sphere
+            - worldedit.brush.cylinder
+            - worldedit.brush.smooth
+            - worldedit.brush.options.mask
+            - worldedit.selection.pos
+            - worldedit.selection.hpos
+            - worldedit.region.faces
+            - worldedit.tool.tree
+            - worldedit.fixwater
+            - worldedit.fixlava
+            - worldedit.drain
+            - worldedit.biome.set
+            - worldedit.superpickaxe
+            - worldedit.superpickaxe.area
+            - worldedit.region.move
+            - worldedit.tool.lrbuild
+            - worldedit.fill
+        mobster:
+            prefix: '&3[&5Mob&ester&3]&e'
+            permissions:
+            - essentials.chat.url
+            - essentials.msg.url
+            - essentials.delhome
+            - essentials.clearinventory
+            - essentials.sethome
+            - essentials.sethome.multiple.extreme
+            - plotme.limit.8
+            - worldedit.region.set
+            - worldedit.clipboard.copy
+            - worldedit.clipboard.paste
+            - worldedit.clipboard.rotate
+            - worldedit.clipboard.flip
+            - worldedit.clipboard.cut
+            - worldedit.wand
+            - worldedit.generation.cylinder
+            - worldedit.generation.sphere
+            - worldedit.history.redo
+            - worldedit.history.undo
+            - worldedit.region.replace
+            - worldedit.region.walls
+            - worldedit.selection.expand
+            - worldedit.brush.sphere
+            - worldedit.brush.cylinder
+            - worldedit.brush.smooth
+            - worldedit.brush.options.mask
+            - worldedit.selection.pos
+            - worldedit.selection.hpos
+            - worldedit.region.faces
+            - worldedit.tool.tree
+            - worldedit.fixwater
+            - worldedit.fixlava
+            - worldedit.drain
+            - worldedit.biome.set
+            - worldedit.superpickaxe
+            - worldedit.superpickaxe.area
+            - worldedit.region.move
+            - worldedit.tool.lrbuild
+            - worldedit.fill
+        crimelord:
+            prefix: '&6[&aCrime&2lord&6]&a'
+            permissions:
+            - essentials.chat.url
+            - essentials.msg.url
+            - essentials.delhome
+            - essentials.clearinventory
+            - essentials.sethome
+            - essentials.sethome.multiple.extreme
+            - plotme.limit.8
+            - worldedit.region.set
+            - worldedit.clipboard.copy
+            - worldedit.clipboard.paste
+            - worldedit.clipboard.rotate
+            - worldedit.clipboard.flip
+            - worldedit.clipboard.cut
+            - worldedit.wand
+            - worldedit.generation.cylinder
+            - worldedit.generation.sphere
+            - worldedit.history.redo
+            - worldedit.history.undo
+            - worldedit.region.replace
+            - worldedit.region.walls
+            - worldedit.selection.expand
+            - worldedit.brush.sphere
+            - worldedit.brush.cylinder
+            - worldedit.brush.smooth
+            - worldedit.brush.options.mask
+            - worldedit.selection.pos
+            - worldedit.selection.hpos
+            - worldedit.region.faces
+            - worldedit.tool.tree
+            - worldedit.fixwater
+            - worldedit.fixlava
+            - worldedit.drain
+            - worldedit.biome.set
+            - worldedit.superpickaxe
+            - worldedit.superpickaxe.area
+            - worldedit.region.move
+            - worldedit.tool.lrbuild
+            - worldedit.fill
+        kingpin:
+            prefix: '&1[&6Kingpin&1]&6'
+            permissions:
+            - essentials.chat.url
+            - essentials.msg.url
+            - essentials.delhome
+            - essentials.clearinventory
+            - essentials.sethome
+            - essentials.sethome.multiple.extreme
+            - plotme.limit.8
+            - worldedit.region.set
+            - worldedit.clipboard.copy
+            - worldedit.clipboard.paste
+            - worldedit.clipboard.rotate
+            - worldedit.clipboard.flip
+            - worldedit.clipboard.cut
+            - worldedit.wand
+            - worldedit.generation.cylinder
+            - worldedit.generation.sphere
+            - worldedit.history.redo
+            - worldedit.history.undo
+            - worldedit.region.replace
+            - worldedit.region.walls
+            - worldedit.selection.expand
+            - worldedit.brush.sphere
+            - worldedit.brush.cylinder
+            - worldedit.brush.smooth
+            - worldedit.brush.options.mask
+            - worldedit.selection.pos
+            - worldedit.selection.hpos
+            - worldedit.region.faces
+            - worldedit.tool.tree
+            - worldedit.fixwater
+            - worldedit.fixlava
+            - worldedit.drain
+            - worldedit.biome.set
+            - worldedit.superpickaxe
+            - worldedit.superpickaxe.area
+            - worldedit.region.move
+            - worldedit.tool.lrbuild
+            - worldedit.fill
+        originalgangster:
+            prefix: '&b[&c&lO&4&lG&b]&c'
+            permissions:
+            - essentials.chat.url
+            - essentials.msg.url
+            - essentials.delhome
+            - essentials.clearinventory
+            - essentials.sethome
+            - essentials.sethome.multiple.extreme
+            - plotme.limit.8
+            - worldedit.region.set
+            - worldedit.clipboard.copy
+            - worldedit.clipboard.paste
+            - worldedit.clipboard.rotate
+            - worldedit.clipboard.flip
+            - worldedit.clipboard.cut
+            - worldedit.wand
+            - worldedit.generation.cylinder
+            - worldedit.generation.sphere
+            - worldedit.history.redo
+            - worldedit.history.undo
+            - worldedit.region.replace
+            - worldedit.region.walls
+            - worldedit.selection.expand
+            - worldedit.brush.sphere
+            - worldedit.brush.cylinder
+            - worldedit.brush.smooth
+            - worldedit.brush.options.mask
+            - worldedit.selection.pos
+            - worldedit.selection.hpos
+            - worldedit.region.faces
+            - worldedit.tool.tree
+            - worldedit.fixwater
+            - worldedit.fixlava
+            - worldedit.drain
+            - worldedit.biome.set
+            - worldedit.superpickaxe
+            - worldedit.superpickaxe.area
+            - worldedit.region.move
+            - worldedit.tool.lrbuild
+            - worldedit.fill
+        helper:
+            prefix: '&3[&aHelper&3]&a'
+            permissions:
+            - essentials.joinfullserver
+            - bm.bminfo
+            - bm.tempmute
+            - bm.timelimit.mutes.helper
+            - bm.warn
+            - bm.unmute
+            - bm.kick
+            - simplechat.admin
+        enforcer:
+            prefix: '&9[&aEnforcer&9]&a'
+            permissions:
+            - essentials.joinfullserver
+            - bm.tempban
+            - bm.tempmute
+            - bm.timelimit.bans.enforcer
+            - bm.timelimit.mutes.enforcer
+            - bm.bminfo
+            - bm.tempmute
+            - bm.warn
+            - bm.unmute
+            - bm.kick
+            - simplechat.admin
+        moderator:
+            prefix: '&9[&eModerator&9]&e'
+            permissions:
+            - essentials.joinfullserver
+            - bm.ban
+            - bm.timelimit.bans.moderator
+            - bm.timelimit.mutes.moderator
+            - bm.tempban
+            - bm.tempmute
+            - bm.bminfo
+            - bm.tempmute
+            - bm.warn
+            - bm.unmute
+            - bm.kick
+            - simplechat.admin
+        admin:
+            prefix: '&4[&cAdmin&4]&c'
+            permissions:
+            - essentials.*
+            - simplechat.admin
+            - bm.*
+        owner:
+            prefix: '&1[&4NetworkOwner&1]&b'
+            permissions:
+            - essentials.*
+            - permissions.*
+            - '*'
+            - '*.*'
+    skyblock:
+        default:
+            default: true
+            permissions:
+            - -mcmmo.ability.unarmed.berserk
+            - -mcmmo.commands.ptp
+            - ChestShop.shop.buy
+            - ChestShop.shop.sell
+            - essentials.motd
+            - marry.default
+            - essentials.realname
+            - silkspawners.place.*
+            - silkspawners.info
+            - auction.info
+            - auction.bid
+            - auction.start
+            - essentials.signs.break.trade
+            - essentials.signs.create.trade
+            - usb.island.*
+            - usb.biome.*
+            - usb.party.*
+            - essentials.ban.notify
+            - essentials.tpa
+            - essentials.tpaccept
+            - essentials.tpdeny
+            - essentials.kit
+            - essentials.signs.use.*
+            - essentials.ignore
+            - essentials.suicide
+            - essentials.kick.notify
+            - essentials.mail.send
+            - essentials.mail
+            - essentials.warp.list
+            - essentials.warp
+            - essentials.build.*
+            - essentials.spawn
+            - essentials.balancetop
+            - essentials.balance
+            - essentials.spawn
+            - essentials.list
+            - essentials.msg
+            - mcmmo.ability.taming.*
+            - mcmmo.ability.fishing.*
+            - mcmmo.ability.mining.*
+            - mcmmo.ability.woodcutting.*
+            - mcmmo.ability.repair.*
+            - mcmmo.ability.archery.*
+            - mcmmo.ability.herbalism.*
+            - mcmmo.ability.excavation.*
+            - mcmmo.ability.swords.*
+            - mcmmo.ability.axes.*
+            - mcmmo.ability.acrobatics.*
+            - mcmmo.ability.blastmining.*
+            - mcmmo.commands.inspect.offline
+            - skyblock.group.member
+        thug:
+            prefix: '&8[&cThug&8]&c'
+        gangster:
+            prefix: '&2[&bGangster&2]&b'
+            permissions:
+            - ColoredSigns.color
+            - ChestShop.shop.create.*
+            - marry.default
+            - essentials.nick
+            - essentials.nick.color
+            - essentials.nick.format
+            - essentials.nick.magic
+            - essentials.kits.spawner
+            - silkspawners.silkdrop.*
+            - essentials.spawner
+            - essentials.recipe
+            - essentials.hat
+            - essentials.clearinventory
+            - essentials.workbench
+            - essentials.enderchest
+            - essentials.chat.url
+            - essentials.msg.url
+            - essentials.keepxp
+            - essentials.kits.skysquire
+            - coloredtags.dark_aqua
+            - silkspawners.changetype.pig
+            - silkspawners.changetype.cow
+            - silkspawners.changetype.mushroomcow
+            - silkspawners.changetype.sheep
+            - silkspawners.changetype.wolf
+            - silkspawners.changetype.chicken
+            - silkspawners.changetype.ocelot
+            - silkspawners.changetype.horse
+            - silkspawners.changetype.skeleton
+            - silkspawners.changetype.zombie
+            - silkspawners.changetype.spider
+            - silkspawners.changetype.cavespider
+            - silkspawners.changetype.pigzombie
+            - silkspawners.changetype.enderman
+            - silkspawners.changetype.blaze
+            - silkspawners.changetype.magmacube
+            - silkspawners.changetype.witch
+        dealer:
+            prefix: '&f[&eDealer&f]&e'
+            permissions:
+            - ColoredSigns.color
+            - ChestShop.shop.create.*
+            - marry.default
+            - essentials.nick
+            - essentials.nick.color
+            - essentials.nick.format
+            - essentials.nick.magic
+            - essentials.kits.spawner
+            - silkspawners.silkdrop.*
+            - essentials.spawner
+            - essentials.recipe
+            - essentials.hat
+            - essentials.clearinventory
+            - essentials.workbench
+            - essentials.enderchest
+            - essentials.chat.url
+            - essentials.msg.url
+            - essentials.keepxp
+            - essentials.kits.skysquire
+            - coloredtags.dark_aqua
+            - silkspawners.changetype.pig
+            - silkspawners.changetype.cow
+            - silkspawners.changetype.mushroomcow
+            - silkspawners.changetype.sheep
+            - silkspawners.changetype.wolf
+            - silkspawners.changetype.chicken
+            - silkspawners.changetype.ocelot
+            - silkspawners.changetype.horse
+            - silkspawners.changetype.skeleton
+            - silkspawners.changetype.zombie
+            - silkspawners.changetype.spider
+            - silkspawners.changetype.cavespider
+            - silkspawners.changetype.pigzombie
+            - silkspawners.changetype.enderman
+            - silkspawners.changetype.blaze
+            - silkspawners.changetype.magmacube
+            - silkspawners.changetype.witch
+        thief:
+            prefix: '&5[&aThief&5]&a'
+            permissions:
+            - ColoredSigns.color
+            - ChestShop.shop.create.*
+            - marry.default
+            - essentials.nick
+            - essentials.nick.color
+            - essentials.nick.format
+            - essentials.nick.magic
+            - essentials.kits.spawner2
+            - silkspawners.silkdrop.*
+            - essentials.spawner
+            - essentials.recipe
+            - essentials.heal
+            - essentials.feed
+            - essentials.hat
+            - essentials.clearinventory
+            - essentials.workbench
+            - essentials.enderchest
+            - essentials.chat.url
+            - essentials.msg.url
+            - essentials.enderchest
+            - essentials.keepxp
+            - essentials.kits.skyknight
+            - coloredtags.dark_green
+            - silkspawners.changetype.pig
+            - silkspawners.changetype.cow
+            - silkspawners.changetype.mushroomcow
+            - silkspawners.changetype.sheep
+            - silkspawners.changetype.wolf
+            - silkspawners.changetype.chicken
+            - silkspawners.changetype.ocelot
+            - silkspawners.changetype.horse
+            - silkspawners.changetype.skeleton
+            - silkspawners.changetype.zombie
+            - silkspawners.changetype.spider
+            - silkspawners.changetype.cavespider
+            - silkspawners.changetype.pigzombie
+            - silkspawners.changetype.enderman
+            - silkspawners.changetype.blaze
+            - silkspawners.changetype.magmacube
+            - silkspawners.changetype.witch
+        mobster:
+            prefix: '&3[&5Mob&ester&3]&e'
+            permissions:
+            - ColoredSigns.color
+            - ChestShop.shop.create.*
+            - marry.default
+            - essentials.nick
+            - essentials.nick.color
+            - essentials.nick.format
+            - essentials.nick.magic
+            - essentials.kits.spawner3
+            - silkspawners.silkdrop.*
+            - essentials.spawner
+            - essentials.recipe
+            - essentials.heal
+            - essentials.feed
+            - essentials.jump
+            - essentials.repair
+            - essentials.repair.all
+            - essentials.hat
+            - essentials.clearinventory
+            - essentials.workbench
+            - essentials.enderchest
+            - essentials.chat.url
+            - essentials.msg.url
+            - essentials.enderchest
+            - essentials.keepxp
+            - essentials.kits.skycrusader
+            - coloredtags.gold
+            - silkspawners.changetype.pig
+            - silkspawners.changetype.cow
+            - silkspawners.changetype.mushroomcow
+            - silkspawners.changetype.sheep
+            - silkspawners.changetype.wolf
+            - silkspawners.changetype.chicken
+            - silkspawners.changetype.ocelot
+            - silkspawners.changetype.horse
+            - silkspawners.changetype.skeleton
+            - silkspawners.changetype.zombie
+            - silkspawners.changetype.spider
+            - silkspawners.changetype.cavespider
+            - silkspawners.changetype.pigzombie
+            - silkspawners.changetype.enderman
+            - silkspawners.changetype.blaze
+            - silkspawners.changetype.magmacube
+            - silkspawners.changetype.witch
+        crimelord:
+            prefix: '&6[&aCrime&2lord&6]&a'
+            permissions:
+            - ColoredSigns.color
+            - ChestShop.shop.create.*
+            - marry.default
+            - essentials.nick
+            - essentials.nick.color
+            - essentials.nick.format
+            - essentials.nick.magic
+            - essentials.kits.spawner4
+            - silkspawners.silkdrop.*
+            - essentials.spawner
+            - essentials.recipe
+            - essentials.heal
+            - essentials.feed
+            - essentials.jump
+            - essentials.repair
+            - essentials.repair.all
+            - essentials.repair.armor
+            - essentials.repair.enchanted
+            - essentials.fly
+            - essentials.god
+            - essentials.hat
+            - essentials.clearinventory
+            - essentials.workbench
+            - essentials.enderchest
+            - essentials.chat.url
+            - essentials.msg.url
+            - essentials.enderchest
+            - essentials.keepxp
+            - essentials.kits.skylord
+            - coloredtags.red
+            - silkspawners.changetype.pig
+            - silkspawners.changetype.cow
+            - silkspawners.changetype.mushroomcow
+            - silkspawners.changetype.sheep
+            - silkspawners.changetype.wolf
+            - silkspawners.changetype.chicken
+            - silkspawners.changetype.ocelot
+            - silkspawners.changetype.horse
+            - silkspawners.changetype.skeleton
+            - silkspawners.changetype.zombie
+            - silkspawners.changetype.spider
+            - silkspawners.changetype.cavespider
+            - silkspawners.changetype.pigzombie
+            - silkspawners.changetype.enderman
+            - silkspawners.changetype.blaze
+            - silkspawners.changetype.magmacube
+            - silkspawners.changetype.witch
+        kingpin:
+            prefix: '&1[&6Kingpin&1]&6'
+            permissions:
+            - ColoredSigns.color
+            - ChestShop.shop.create.*
+            - marry.default
+            - essentials.nick
+            - essentials.nick.color
+            - essentials.nick.format
+            - essentials.nick.magic
+            - essentials.kits.spawner4
+            - silkspawners.silkdrop.*
+            - essentials.spawner
+            - essentials.recipe
+            - essentials.heal
+            - essentials.feed
+            - essentials.jump
+            - essentials.repair
+            - essentials.repair.all
+            - essentials.repair.armor
+            - essentials.repair.enchanted
+            - essentials.fly
+            - essentials.god
+            - essentials.hat
+            - essentials.clearinventory
+            - essentials.workbench
+            - essentials.enderchest
+            - essentials.chat.url
+            - essentials.msg.url
+            - essentials.enderchest
+            - essentials.keepxp
+            - essentials.kits.skylord
+            - coloredtags.red
+            - silkspawners.changetype.pig
+            - silkspawners.changetype.cow
+            - silkspawners.changetype.mushroomcow
+            - silkspawners.changetype.sheep
+            - silkspawners.changetype.wolf
+            - silkspawners.changetype.chicken
+            - silkspawners.changetype.ocelot
+            - silkspawners.changetype.horse
+            - silkspawners.changetype.skeleton
+            - silkspawners.changetype.zombie
+            - silkspawners.changetype.spider
+            - silkspawners.changetype.cavespider
+            - silkspawners.changetype.pigzombie
+            - silkspawners.changetype.enderman
+            - silkspawners.changetype.blaze
+            - silkspawners.changetype.magmacube
+            - silkspawners.changetype.witch
+        originalgangster:
+            prefix: '&b[&c&lO&4&lG&b]&c'
+            permissions:
+            - ColoredSigns.color
+            - ChestShop.shop.create.*
+            - marry.default
+            - essentials.nick
+            - essentials.nick.color
+            - essentials.nick.format
+            - essentials.nick.magic
+            - essentials.kits.spawner4
+            - silkspawners.silkdrop.*
+            - essentials.spawner
+            - essentials.recipe
+            - essentials.heal
+            - essentials.feed
+            - essentials.jump
+            - essentials.repair
+            - essentials.repair.all
+            - essentials.repair.armor
+            - essentials.repair.enchanted
+            - essentials.fly
+            - essentials.god
+            - essentials.hat
+            - essentials.clearinventory
+            - essentials.workbench
+            - essentials.enderchest
+            - essentials.chat.url
+            - essentials.msg.url
+            - essentials.enderchest
+            - essentials.keepxp
+            - essentials.kits.skylord
+            - coloredtags.red
+            - silkspawners.changetype.pig
+            - silkspawners.changetype.cow
+            - silkspawners.changetype.mushroomcow
+            - silkspawners.changetype.sheep
+            - silkspawners.changetype.wolf
+            - silkspawners.changetype.chicken
+            - silkspawners.changetype.ocelot
+            - silkspawners.changetype.horse
+            - silkspawners.changetype.skeleton
+            - silkspawners.changetype.zombie
+            - silkspawners.changetype.spider
+            - silkspawners.changetype.cavespider
+            - silkspawners.changetype.pigzombie
+            - silkspawners.changetype.enderman
+            - silkspawners.changetype.blaze
+            - silkspawners.changetype.magmacube
+            - silkspawners.changetype.witch
+        helper:
+            prefix: '&3[&aHelper&3]&a'
+            permissions:
+            - essentials.joinfullserver
+            - bm.bminfo
+            - bm.tempmute
+            - bm.timelimit.mutes.helper
+            - bm.warn
+            - bm.unmute
+            - bm.kick
+            - simplechat.admin
+        enforcer:
+            prefix: '&9[&aEnforcer&9]&a'
+            permissions:
+            - essentials.joinfullserver
+            - bm.tempban
+            - bm.tempmute
+            - bm.timelimit.bans.enforcer
+            - bm.timelimit.mutes.enforcer
+            - bm.bminfo
+            - bm.tempmute
+            - bm.warn
+            - bm.unmute
+            - bm.kick
+            - simplechat.admin
+        moderator:
+            prefix: '&9[&eModerator&9]&e'
+            permissions:
+            - essentials.joinfullserver
+            - bm.ban
+            - bm.timelimit.bans.moderator
+            - bm.timelimit.mutes.moderator
+            - bm.tempban
+            - bm.tempmute
+            - bm.bminfo
+            - bm.tempmute
+            - bm.warn
+            - bm.unmute
+            - bm.kick
+            - simplechat.admin
+        admin:
+            prefix: '&4[&cAdmin&4]&c'
+            permissions:
+            - essentials.*
+            - simplechat.admin
+            - bm.*
+        owner:
+            prefix: '&1[&4NetworkOwner&1]&b'
+            permissions:
+            - essentials.*
+            - permissions.*
+            - '*'
+            - '*.*'
+    factions:
+        default:
+            default: true
+            permissions:
+            - essentials.warps.potionstaffs
+            - essentials.motd
+            - nametag.group.default
+            - marry.default
+            - essentials.warp.parkour
+            - essentials.warp.pvp
+            - essentials.warps.parkour
+            - essentials.warps.pvp
+            - essentials.warps.bar
+            - -mcmmo.ability.unarmed.berserk
+            - -mcmmo.commands.ptp
+            - bukkit.command.tps
+            - bm.notify
+            - essentials.realname
+            - essentials.msg.url
+            - essentials.chat.url
+            - essentials.seen
+            - essentials.ignore
+            - essentials.suicide
+            - essentials.ignore
+            - essentials.suicide
+            - essentials.kits.member
+            - essentials.kits.torches
+            - essentials.kit
+            - essentials.warp
+            - essentials.warp.list
+            - essentials.warps.spawn
+            - essentials.warps.shop
+            - essentials.signs.use.*
+            - essentials.rules
+            - essentials.spawn
+            - essentials.balance
+            - essentials.balancetop
+            - essentials.balance.others
+            - essentials.home
+            - essentials.sethome
+            - essentials.delhome
+            - essentials.msg
+            - essentials.pay
+            - essentials.ping
+            - essentials.tpa
+            - essentials.tpaccept
+            - essentials.tpdeny
+            - essentials.list
+            - mcmmo.ability.taming.*
+            - mcmmo.ability.fishing.*
+            - mcmmo.ability.mining.*
+            - mcmmo.ability.woodcutting.*
+            - mcmmo.ability.repair.*
+            - mcmmo.ability.archery.*
+            - mcmmo.ability.herbalism.*
+            - mcmmo.ability.excavation.*
+            - mcmmo.ability.swords.*
+            - mcmmo.ability.axes.*
+            - mcmmo.ability.acrobatics.*
+            - mcmmo.ability.blastmining.*
+            - mcmmo.commands.inspect.offline
+            - silkspawners.place.*
+            - silkspawners.info
+            - betterenderchest.user.craft
+            - betterenderchest.user.place
+            - betterenderchest.user.destroy
+            - betterenderchest.user.open.privatechest
+            - redeemMCMMO.rmhelp
+            - redeemMCMMO.redeem
+            - redeemMCMMO.credits
+            - enderpearl.use
+            - auction.bid
+            - auction.info
+            - auction.start
+            - lottery.buy
+            - lottery.info
+            - lottery.list
+            - pvpsoup.use
+            - factions.kit.fullplayer
+        thug:
+            prefix: '&8[&cThug&8]&c'
+            permissions:
+            - marry.default
+            - essentials.sethome.multiple.vip
+            - silkspawners.silkdrop.*
+            - betterenderchest.slots.upgrade1
+            - essentials.joinfullserver
+            - essentials.tpahere
+            - essentials.teleport.cooldown.bypass
+            - booscooldowns.nocooldown./tpa
+            - booscooldowns.nocooldown./tpa *
+            - essentials.back
+            - essentials.kits.vip
+            - crate.revoke.1
+        gangster:
+            prefix: '&2[&bGangster&2]&b'
+            permissions:
+            - marry.default
+            - essentials.sethome.multiple.knight
+            - silkspawners.silkdrop.*
+            - betterenderchest.slots.upgrade2
+            - essentials.joinfullserver
+            - essentials.tpahere
+            - essentials.teleport.cooldown.bypass
+            - essentials.feed
+            - booscooldowns.nocooldown./tpa
+            - booscooldowns.nocooldown./tpa *
+            - essentials.back
+            - essentials.kits.knight
+            - crate.revoke.1
+            - crate.revoke.2
+        dealer:
+            prefix: '&f[&eDealer&f]&e'
+            permissions:
+            - marry.default
+            - essentials.sethome.multiple.demigod
+            - silkspawners.silkdrop.*
+            - betterenderchest.slots.upgrade3
+            - essentials.joinfullserver
+            - essentials.tpahere
+            - essentials.teleport.cooldown.bypass
+            - essentials.feed
+            - essentials.ptime
+            - booscooldowns.nocooldown./tpa
+            - booscooldowns.nocooldown./tpa *
+            - essentials.hat
+            - essentials.back
+            - essentials.kits.demigod
+            - crate.revoke.1
+            - crate.revoke.2
+            - crate.revoke.3
+        thief:
+            prefix: '&5[&aThief&5]&a'
+            permissions:
+            - marry.default
+            - essentials.sethome.multiple.god
+            - silkspawners.silkdrop.*
+            - betterenderchest.slots.upgrade4
+            - essentials.joinfullserver
+            - essentials.tpahere
+            - essentials.teleport.cooldown.bypass
+            - essentials.feed
+            - mcmmo.perks.xp.double
+            - essentials.ptime
+            - booscooldowns.nocooldown./tpa
+            - booscooldowns.nocooldown./tpa *
+            - essentials.hat
+            - essentials.back
+            - essentials.kits.god
+            - crate.revoke.1
+            - crate.revoke.2
+            - crate.revoke.3
+            - crate.revoke.4
+        mobster:
+            prefix: '&3[&5Mob&ester&3]&e'
+            permissions:
+            - marry.default
+            - essentials.sethome.multiple.champion
+            - silkspawners.silkdrop.*
+            - betterenderchest.slots.upgrade5
+            - essentials.joinfullserver
+            - essentials.tpahere
+            - essentials.teleport.cooldown.bypass
+            - essentials.feed
+            - mcmmo.perks.xp.double
+            - essentials.ptime
+            - booscooldowns.nocooldown./tpa
+            - booscooldowns.nocooldown./tpa *
+            - essentials.hat
+            - essentials.back
+            - essentials.kits.champion
+            - crate.revoke.1
+            - crate.revoke.2
+            - crate.revoke.3
+            - crate.revoke.5
+        crimelord:
+            prefix: '&6[&aCrime&2lord&6]&a'
+            permissions:
+            - marry.default
+            - essentials.sethome.multiple.legend
+            - silkspawners.silkdrop.*
+            - betterenderchest.slots.upgrade6
+            - essentials.joinfullserver
+            - essentials.tpahere
+            - essentials.teleport.cooldown.bypass
+            - essentials.feed
+            - mcmmo.perks.xp.double
+            - essentials.ptime
+            - essentials.clearinventory
+            - booscooldowns.nocooldown./tpa
+            - booscooldowns.nocooldown./tpa *
+            - essentials.hat
+            - essentials.back
+            - essentials.kits.legend
+            - crate.revoke.1
+            - crate.revoke.2
+            - crate.revoke.3
+            - crate.revoke.4
+            - crate.revoke.5
+            - crate.revoke.6
+        kingpin:
+            prefix: '&1[&6Kingpin&1]&6'
+            permissions:
+            - marry.default
+            - essentials.sethome.multiple.titan
+            - silkspawners.silkdrop.*
+            - betterenderchest.slots.upgrade7
+            - essentials.joinfullserver
+            - essentials.tpahere
+            - essentials.teleport.cooldown.bypass
+            - essentials.feed
+            - mcmmo.perks.xp.double
+            - essentials.ptime
+            - essentials.clearinventory
+            - booscooldowns.nocooldown./tpa
+            - booscooldowns.nocooldown./tpa *
+            - essentials.hat
+            - essentials.back
+            - essentials.kits.titan
+            - crate.revoke.1
+            - crate.revoke.2
+            - crate.revoke.3
+            - crate.revoke.4
+            - crate.revoke.5
+            - crate.revoke.6
+            - crate.revoke.7
+        originalgangster:
+            prefix: '&b[&c&lO&4&lG&b]&c'
+            permissions:
+            - marry.default
+            - essentials.sethome.multiple.arkham
+            - silkspawners.silkdrop.*
+            - betterenderchest.slots.upgrade8
+            - essentials.joinfullserver
+            - essentials.tpahere
+            - essentials.teleport.cooldown.bypass
+            - essentials.feed
+            - mcmmo.perks.xp.triple
+            - essentials.ptime
+            - essentials.clearinventory
+            - booscooldowns.nocooldown./tpa
+            - booscooldowns.nocooldown./tpa *
+            - essentials.hat
+            - essentials.workbench
+            - essentials.back
+            - essentials.kits.arkham
+            - crate.revoke.1
+            - crate.revoke.2
+            - crate.revoke.3
+            - crate.revoke.4
+            - crate.revoke.5
+            - crate.revoke.6
+            - crate.revoke.7
+            - crate.revoke.8
+        helper:
+            prefix: '&3[&aHelper&3]&a'
+            permissions:
+            - essentials.joinfullserver
+            - bm.bminfo
+            - bm.tempmute
+            - bm.timelimit.mutes.helper
+            - bm.warn
+            - bm.unmute
+            - bm.kick
+            - simplechat.admin
+        enforcer:
+            prefix: '&9[&aEnforcer&9]&a'
+            permissions:
+            - essentials.joinfullserver
+            - bm.tempban
+            - bm.tempmute
+            - bm.timelimit.bans.enforcer
+            - bm.timelimit.mutes.enforcer
+            - bm.bminfo
+            - bm.tempmute
+            - bm.warn
+            - bm.unmute
+            - bm.kick
+            - simplechat.admin
+        moderator:
+            prefix: '&9[&eModerator&9]&e'
+            permissions:
+            - essentials.joinfullserver
+            - bm.ban
+            - bm.timelimit.bans.moderator
+            - bm.timelimit.mutes.moderator
+            - bm.tempban
+            - bm.tempmute
+            - bm.bminfo
+            - bm.tempmute
+            - bm.warn
+            - bm.unmute
+            - bm.kick
+            - simplechat.admin
+        admin:
+            prefix: '&4[&cAdmin&4]&c'
+            permissions:
+            - essentials.*
+            - simplechat.admin
+            - bm.*
+        owner:
+            prefix: '&1[&4NetworkOwner&1]&b'
+            permissions:
+            - essentials.*
+            - permissions.*
+            - '*'
+            - '*.*'
+    prisonwars:
+        Initiate:
+            default: true
+            permissions:
+            - essentials.warps.bar
+            - essentials.pay
+            - betterenderchest.user.open.privatechest
+            - essentials.warps.info
+            - betterenderchest.user.open
+            - betterenderchest.user.place
+            - lottery.buy
+            - auction.bid
+            - auction.start
+            - essentials.kits.tools
+            - -essentials.tpahere
+            - -essentials.me
+            - -essentials.helpop
+            - -essentials.enderchest
+            - -mcmmo.ability.axes
+            - -mcmmo.skills.unarmed
+            - -mcmmo.commands.ptp
+            - -bukkit.command.plugins
+            - -factions.perm
+            - -prison.mine.reset.broadcast
+            - -essentials.kits.freepick
+            - -essentials.kits.pickfree
+            - -essentials.pay
+            - -bukkit.command.kill
+            - ancientgates.use.tier1
+            - ancientgates.use.initiate
+            - bm.notify
+            - bukkit.command.tps
+            - essentials.afk.auto
+            - essentials.balance
+            - essentials.balancetop
+            - essentials.ban.notify
+            - essentials.delhome
+            - essentials.home
+            - essentials.kit
+            - essentials.msg
+            - essentials.mute.notify
+            - essentials.realname
+            - essentials.seen
+            - essentials.seen.banreason
+            - essentials.sethome
+            - essentials.signs.use.buy
+            - essentials.signs.use.disposal
+            - essentials.signs.use.enchant
+            - essentials.signs.use.free
+            - essentials.signs.use.kit
+            - essentials.signs.use.repair
+            - essentials.signs.use.sell
+            - essentials.spawn
+            - essentials.suicide
+            - essentials.tpa
+            - essentials.tpaccept
+            - essentials.tptoggle
+            - essentials.warp
+            - essentials.warp.list
+            - essentials.warps.initiate
+            - essentials.warps.shop
+            - MasterPromote.rank.list
+            - mcmmo.skills.acrobatics
+            - mcmmo.skills.archery
+            - mcmmo.skills.axe
+            - mcmmo.skills.excavation
+            - mcmmo.skills.herbalism
+            - mcmmo.skills.mining
+            - mcmmo.skills.swords
+            - mcmmo.skills.woodcutting
+            - pvpsoup.use
+            - redeemMCMMO.credits
+            - redeemMCMMO.redeem
+            - redeemMCMMO.rmhelp
+            - shop.buy
+            - silkspawners.info
+            - silkspawners.place.*
+            - silkspawners.silkdrop.*
+            - silkspawners.viewtype
+            prefix: '&3[&6Initiate&3]&6'
+        Novice:
+            default: false
+            permissions:
+            - essentials.warps.novice
+            prefix: '&3[&3Novice&3]'
+        Disciple:
+            inheritance:
+            - Novice
+            default: false
+            permissions:
+            - essentials.warps.disciple
+            prefix: '&3[&2Disciple&3]'
+        Veteran:
+            inheritance:
+            - Disciple
+            default: false
+            permissions:
+            - essentials.warps.veteran
+            prefix: '&3[&1Vete&2ran&3]'
+        Elite:
+            inheritance:
+            - Veteran
+            default: false
+            permissions:
+            - essentials.warps.elite
+            prefix: '&3[&aEli&bte&3]'
+        Expert:
+            inheritance:
+            - Elite
+            default: false
+            permissions:
+            - essentials.warps.Expert
+            prefix: '&3[&aEx&bpert&3]'
+        Colossus:
+            inheritance:
+            - Expert
+            default: false
+            permissions:
+            - essentials.warps.colossus
+            prefix: '&3[&1Colo&4ss&cus&3]'
+        Demonic:
+            inheritance:
+            - Colossus
+            default: false
+            permissions:
+            - essentials.warps.demonic
+            prefix: '&3[&4D&ce&4m&co&4n&ci&4c&3]'
+        Angelic:
+            inheritance:
+            - Demonic
+            default: false
+            permissions:
+            - essentials.warps.angelic
+            prefix: '&3[&aA&bn&ag&be&al&bi&ac&3]'
+        Anubis:
+            inheritance:
+            - Angelic
+            default: false
+            permissions:
+            - essentials.warps.anubis
+            prefix: '&3[&9An&cubis&3]'
+        God:
+            inheritance:
+            - Anubis
+            default: false
+            permissions:
+            - essentials.warps.god
+            prefix: '&3[&l&bGod&3]'
+        Ethereal:
+            inheritance:
+            - God
+            default: false
+            permissions:
+            - essentials.warps.ethereal
+            prefix: '&3[&3Eth&7ere&bal&3]'
+        Infinite:
+            inheritance:
+            - Ethereal
+            default: false
+            permissions:
+            - essentials.warps.infinite
+            prefix: '&3[&5Inf&4ini&3te&3]'
+        Immortal:
+            inheritance:
+            - Infinite
+            default: false
+            permissions:
+            - essentials.warps.immortal
+            prefix: '&3[&8Im&3mo&brt&9al&3]'
+        Primordial:
+            inheritance:
+            - Immortal
+            default: false
+            permissions:
+            - essentials.warps.primordial
+            prefix: '&3[&l&1P&4r&2i&3m&5o&7r&9d&ai&ca&bl&3]'
+        Acolyte:
+            inheritance:
+            - Primordial
+            default: false
+            permissions:
+            - essentials.warps.acolyte
+            prefix: '&3[&3A&bc&3o&bl&3y&bt&3e&r&3]'
+        Sage:
+            inheritance:
+            - Acolyte
+            default: false
+            permissions:
+            - essentials.warps.sage
+            prefix: '&3[&aS&7a&7g&ae&r&3]'
+        Scholar:
+            inheritance:
+            - Sage
+            default: false
+            permissions:
+            - essentials.warps.scholar
+            prefix: '&3[&bSch&3olar&r&3]'
+        Centurion:
+            inheritance:
+            - Scholar
+            default: false
+            permissions:
+            - essentials.warps.centurion
+            prefix: '&3[&eCen&6tur&eion&r&3]'
+        Senator:
+            inheritance:
+            - Centurion
+            default: false
+            permissions:
+            - essentials.warps.senator
+            prefix: '&3[&9Se&8nat&9or&r&3]'
+        Admiral:
+            inheritance:
+            - Senator
+            default: false
+            permissions:
+            - essentials.warps.admiral
+            prefix: '&3[&7A&fdmira&7l&r&3]'
+        Guardian:
+            inheritance:
+            - Admiral
+            default: false
+            permissions:
+            - essentials.warps.guardian
+            prefix: '&3[&6Guardian&r&3]'
+        Seer:
+            inheritance:
+            - Guardian
+            default: false
+            permissions:
+            - essentials.warps.seer
+            prefix: '&3[&1S&9ee&1r&r&3]'
+        Kin:
+            inheritance:
+            - Seer
+            default: false
+            permissions:
+            - essentials.warps.kin
+            prefix: '&3[&8K&fi&8n&r&3]'
+        Watcher:
+            inheritance:
+            - Kin
+            default: false
+            permissions:
+            - essentials.warps.watcher
+            prefix: '&3[&5W&da&5t&dc&5h&de&5r&r&3]'
+        Infidel:
+            inheritance:
+            - Watcher
+            default: false
+            permissions:
+            - essentials.warps.infidel
+            prefix: '&3[&4In&cfid&4el&r&3]'
+        Heretic:
+            inheritance:
+            - Infidel
+            default: false
+            permissions:
+            - essentials.warps.heretic
+            prefix: '&3[&6He&cret&6ic&r&3]'
+        Inquisitor:
+            inheritance:
+            - Heretic
+            default: false
+            permissions:
+            - essentials.warps.inquisitor
+            prefix: '&3[&1Inq&cuisi&1tor&r&3]'
+        Prophet:
+            inheritance:
+            - Inquisitor
+            default: false
+            permissions:
+            - essentials.warps.prophet
+            prefix: '&3[&bProphet&r&3]'
+        Oracle:
+            inheritance:
+            - Prophet
+            default: false
+            permissions:
+            - essentials.warps.oracle
+            prefix: '&3[&3O&9ra&3cle&r&3]'
+        Messiah:
+            inheritance:
+            - Oracle
+            default: false
+            permissions:
+            - essentials.warps.messiah
+            prefix: '&3[&2M&ae&2s&as&2i&aa&2h&r&3]'
+        Apostle:
+            inheritance:
+            - Messiah
+            prefix: '&f[&4Apo&bstle&f]'
+            permissions:
+            - essentials.warps.apostle
+        thug:
+            prefix: '&8[&cThug&8]&c'
+            permissions:
+            - essentials.warps.esquire
+            - essentials.signs.multiply.1.1
+            - essentials.sethome.multiple.esquire
+            - betterenderchest.slots.upgrade1
+            - essentials.kits.iron
+            - essentials.hat
+            - essentials.kits.Esquirepick
+            - color.WHITE
+        gangster:
+            prefix: '&2[&bGangster&2]&b'
+            permissions:
+            - essentials.warps.esquire
+            - essentials.warps.knight
+            - color.WHITE
+            - color.DARK_PURPLE
+            - essentials.signs.multiply.1.1
+            - essentials.sethome.multiple.knight
+            - betterenderchest.slots.upgrade2
+            - -essentials.kits.Esquirepick
+            - essentials.hat
+            - essentials.kits.diamond
+            - essentials.kits.Knightpick
+        dealer:
+            prefix: '&f[&eDealer&f]&e'
+            permissions:
+            - essentials.warps.champion
+            - essentials.warps.knight
+            - essentials.warps.esquire
+            - color.WHITE
+            - color.DARK_PURPLE
+            - color.BLUE
+            - essentials.signs.multiply.1.2
+            - essentials.sethome.multiple.champion
+            - betterenderchest.slots.upgrade3
+            - -essentials.kits.Knightpick
+            - essentials.hat
+            - essentials.nick
+            - essentials.nick.color
+            - essentials.kits.Champion
+            - essentials.kits.Championpick
+        thief:
+            prefix: '&5[&aThief&5]&a'
+            permissions:
+            - essentials.warps.esquire
+            - essentials.warps.knight
+            - essentials.warps.champion
+            - essentials.warps.crusader
+            - color.WHITE
+            - color.DARK_PURPLE
+            - color.BLUE
+            - color.GOLD
+            - essentials.nick.color
+            - essentials.signs.multiply.1.2
+            - essentials.sethome.multiple.crusader
+            - essentials.fly
+            - essentials.nick
+            - betterenderchest.slots.upgrade4
+            - -essentials.kits.Champion
+            - -essentials.kits.Championpick
+            - essentials.hat
+            - essentials.kits.Crusader
+            - essentials.kits.Crusaderpick
+            - mcmmo.perks.xp.50percentboost
+        mobster:
+            prefix: '&3[&5Mob&ester&3]&e'
+            permissions:
+            - essentials.warps.duke
+            - essentials.warps.crusader
+            - essentials.warps.champion
+            - essentials.warps.knight
+            - essentials.warps.esquire
+            - color.WHITE
+            - color.DARK_PURPLE
+            - color.BLUE
+            - color.GOLD
+            - color.YELLOW
+            - color.DARK_GRAY
+            - essentials.nick.color
+            - essentials.signs.multiply.1.3
+            - essentials.sethome.multiple.duke
+            - essentials.fly
+            - essentials.nick
+            - betterenderchest.slots.upgrade5
+            - -essentials.kits.Crusader
+            - -essentials.kits.Crusaderpick
+            - essentials.hat
+            - essentials.kits.Duke
+            - essentials.kits.Dukepick
+            - mcmmo.perks.xp.double
+        crimelord:
+            prefix: '&6[&aCrime&2lord&6]&a'
+            permissions:
+            - essentials.warps.baron
+            - essentials.warps.duke
+            - essentials.warps.crusder
+            - essentials.warps.champion
+            - essentials.warps.knight
+            - essentials.warps.esquire
+            - color.WHITE
+            - color.DARK_PURPLE
+            - color.BLUE
+            - color.GOLD
+            - color.YELLOW
+            - color.DARK_GRAY
+            - color.AQUA
+            - color.DARK_AQUA
+            - essentials.nick.color
+            - essentials.signs.multiply.1.3
+            - essentials.sethome.multiple.baron
+            - essentials.fly
+            - essentials.nick
+            - betterenderchest.slots.upgrade6
+            - -essentials.kits.Duke
+            - -essentials.kits.Dukepick
+            - essentials.hat
+            - essentials.kits.Baron
+            - essentials.kits.Baronpick
+            - essentials.feed
+        kingpin:
+            prefix: '&1[&6Kingpin&1]&6'
+            permissions:
+            - essentials.feed
+            - essentials.warps.emperor
+            - essentials.warps.baron
+            - essentials.warps.duke
+            - essentials.warps.crusader
+            - essentials.warps.champion
+            - essentials.warps.knight
+            - essentials.warps.esquire
+            - color.WHITE
+            - color.DARK_PURPLE
+            - color.BLUE
+            - color.GOLD
+            - color.YELLOW
+            - color.DARK_GRAY
+            - color.AQUA
+            - color.DARK_AQUA
+            - color.GREEN
+            - color.DARK_GREEN
+            - essentials.nick.color
+            - essentials.signs.multiply.1.4
+            - essentials.sethome.multiple.emperor
+            - essentials.fly
+            - essentials.nick
+            - betterenderchest.slots.upgrade7
+            - -essentials.kits.Baron
+            - -essentials.kits.Baronpick
+            - essentials.hat
+            - essentials.kits.Emperor
+            - essentials.kits.Emperorpick
+        originalgangster:
+            prefix: '&b[&c&lO&4&lG&b]&c'
+            permissions:
+            - essentials.warps.caesar
+            - essentials.warps.emperor
+            - essentials.warps.baron
+            - essentials.warps.duke
+            - essentials.warps.crusader
+            - essentials.warps.champion
+            - essentials.warps.knight
+            - essentials.warps.esquire
+            - essentials.feed
+            - color.WHITE
+            - color.DARK_PURPLE
+            - color.BLUE
+            - color.GOLD
+            - color.YELLOW
+            - color.DARK_GRAY
+            - color.AQUA
+            - color.DARK_AQUA
+            - color.GREEN
+            - color.DARK_GREEN
+            - color.DARK_RED
+            - color.RED
+            - color.DARK_BLUE
+            - color.LIGHT_PURPLE
+            - essentials.signs.multiply.1.5
+            - essentials.sethome.multiple.ceaser
+            - essentials.nick.format
+            - essentials.nick.color
+            - essentials.nick
+            - essentials.fly
+            - betterenderchest.slots.upgrade8
+            - -essentials.kits.Emperor
+            - -essentials.kits.Emperorpick
+            - essentials.hat
+            - essentials.kits.Ceaser
+            - essentials.kits.Ceaserpick
+            - mcmmo.perks.xp.triple
+        helper:
+            prefix: '&3[&aHelper&3]&a'
+            permissions:
+            - essentials.joinfullserver
+            - bm.bminfo
+            - bm.tempmute
+            - bm.timelimit.mutes.helper
+            - bm.warn
+            - bm.unmute
+            - bm.kick
+            - simplechat.admin
+        enforcer:
+            prefix: '&9[&aEnforcer&9]&a'
+            permissions:
+            - essentials.joinfullserver
+            - bm.tempban
+            - bm.tempmute
+            - bm.timelimit.bans.enforcer
+            - bm.timelimit.mutes.enforcer
+            - bm.bminfo
+            - bm.tempmute
+            - bm.warn
+            - bm.unmute
+            - bm.kick
+            - simplechat.admin
+        moderator:
+            prefix: '&9[&eModerator&9]&e'
+            permissions:
+            - essentials.joinfullserver
+            - bm.ban
+            - bm.timelimit.bans.moderator
+            - bm.timelimit.mutes.moderator
+            - bm.tempban
+            - bm.tempmute
+            - bm.bminfo
+            - bm.tempmute
+            - bm.warn
+            - bm.unmute
+            - bm.kick
+            - simplechat.admin
+        admin:
+            prefix: '&4[&cAdmin&4]&c'
+            permissions:
+            - essentials.*
+            - simplechat.admin
+            - bm.*
+        owner:
+            prefix: '&1[&4NetworkOwner&1]&b'
+            permissions:
+            - essentials.*
+            - permissions.*
+            - '*'
+            - '*.*'
+    prison1and3:
+        a:
+            default: true
+            permissions:
+            - silkspawners.place.*
+            - silkspawners.info
+            - redeemMCMMO.rmhelp
+            - redeemMCMMO.redeem
+            - redeemMCMMO.credits
+            - pvpsoup.use
+            - plotme.use.remove
+            - plotme.use.home
+            - plotme.use.auto
+            - plotme.use.add
+            - plotme.use
+            - plotme.use.claim
+            - plotme.use.info
+            - plotme.use.comment
+            - plotme.use.comments
+            - plotme.use.biome
+            - plotme.use.clear
+            - plotme.use.list
+            - plotme.use.buy
+            - plotme.use.sell
+            - plotme.use.auction
+            - plotme.use.bid
+            - plotme.use.dispose
+            - plotme.use.done
+            - plotme.use.deny
+            - plotme.use.undeny
+            - plotme.limit.1
+            - plotme.admin.tp
+            - lottery.buy
+            - essentials.motd
+            - essentials.list
+            - essentials.clearinventory
+            - essentials.warps.spawners
+            - essentials.warps.blocks
+            - essentials.warps.colors
+            - essentials.warps.shop
+            - essentials.warps.plots
+            - essentials.warps.spawn
+            - essentials.warps.bar
+            - essentials.warps.a
+            - essentials.warp.list
+            - essentials.warp
+            - essentials.tptoggle
+            - essentials.spawn
+            - essentials.signs.use.*
+            - essentials.sethome
+            - essentials.seen.banreason
+            - essentials.seen
+            - essentials.realname
+            - essentials.kits.starter
+            - essentials.kits.gigadrill
+            - essentials.kit
+            - essentials.ignore
+            - essentials.home
+            - essentials.delhome
+            - essentials.balancetop
+            - essentials.balance
+            - essentials.ping
+            - ChestShop.shop.*
+            - bukkit.command.tps
+            - bm.notify
+            - auction.info
+            - auction.bid
+            - mcmmo.ability.blastmining.*
+            - mcmmo.ability.acrobatics.*
+            - mcmmo.ability.acrobatics.all
+            - mcmmo.ability.acrobatics.dodge
+            - mcmmo.ability.acrobatics.gracefulroll
+            - mcmmo.ability.acrobatics.roll
+            - mcmmo.ability.axes.*
+            - mcmmo.ability.axes.all
+            - mcmmo.ability.axes.axemastery
+            - mcmmo.ability.axes.criticalhit
+            - mcmmo.ability.axes.greaterimpact
+            - mcmmo.ability.axes.armorimpact
+            - mcmmo.ability.axes.skullsplitter
+            - mcmmo.ability.swords.*
+            - mcmmo.ability.swords.all
+            - mcmmo.ability.swords.bleed
+            - mcmmo.ability.swords.counter
+            - mcmmo.ability.swords.serratedstrikes
+            - mcmmo.ability.excavation.*
+            - mcmmo.ability.excavation.all
+            - mcmmo.ability.excavation.gigadrillbreaker
+            - mcmmo.ability.excavation.treasurehunter
+            - mcmmo.ability.herbalism.*
+            - mcmmo.ability.herbalism.all
+            - mcmmo.ability.herbalism.doubledrops
+            - mcmmo.ability.herbalism.farmersdiet
+            - mcmmo.ability.herbalism.greenterra
+            - mcmmo.ability.herbalism.greenthumb.all
+            - mcmmo.ability.herbalism.greenthumb.blocks.all
+            - mcmmo.ability.herbalism.greenthumb.blocks.cobblestone
+            - mcmmo.ability.herbalism.greenthumb.blocks.cobblewall
+            - mcmmo.ability.herbalism.greenthumb.blocks.dirt
+            - mcmmo.ability.herbalism.greenthumb.blocks.smoothbrick
+            - mcmmo.ability.herbalism.greenthumb.plants.all
+            - mcmmo.ability.herbalism.greenthumb.plants.carrot
+            - mcmmo.ability.herbalism.greenthumb.plants.cocoa
+            - mcmmo.ability.herbalism.greenthumb.plants.crops
+            - mcmmo.ability.herbalism.greenthumb.plants.netherwarts
+            - mcmmo.ability.herbalism.greenthumb.plants.potato
+            - mcmmo.ability.herbalism.hylianluck
+            - mcmmo.ability.herbalism.shroomthumb
+            - mcmmo.ability.archery.*
+            - mcmmo.ability.archery.all
+            - mcmmo.ability.archery.skillshot
+            - mcmmo.ability.archery.daze
+            - mcmmo.ability.archery.retrieve
+            - mcmmo.ability.repair.*
+            - mcmmo.ability.repair.all
+            - mcmmo.ability.repair.arcaneforging
+            - mcmmo.ability.repair.armorrepair
+            - mcmmo.ability.repair.diamondrepair
+            - mcmmo.ability.repair.goldrepair
+            - mcmmo.ability.repair.ironrepair
+            - mcmmo.ability.repair.leatherrepair
+            - mcmmo.ability.repair.othermaterialrepair
+            - mcmmo.ability.repair.otherrepair
+            - mcmmo.ability.repair.repairbonus
+            - mcmmo.ability.repair.repairmastery
+            - mcmmo.ability.repair.salvage
+            - mcmmo.ability.repair.stonerepair
+            - mcmmo.ability.repair.stringrepair
+            - mcmmo.ability.repair.toolrepair
+            - mcmmo.ability.repair.woodrepair
+            - mcmmo.ability.woodcutting.*
+            - mcmmo.ability.woodcutting.all
+            - mcmmo.ability.woodcutting.doubledrops
+            - mcmmo.ability.woodcutting.leafblower
+            - mcmmo.ability.woodcutting.treefeller
+            - mcmmo.ability.mining.*
+            - mcmmo.ability.mining.all
+            - mcmmo.ability.mining.blastmining.all
+            - mcmmo.ability.mining.blastmining.biggerbombs
+            - mcmmo.ability.mining.blastmining.demolitionsexpertise
+            - mcmmo.ability.mining.blastmining.detonate
+            - mcmmo.ability.mining.doubledrops
+            - mcmmo.ability.mining.superbreaker
+            - mcmmo.ability.fishing.*
+            - mcmmo.ability.fishing.all
+            - mcmmo.ability.fishing.fishermansdiet
+            - mcmmo.ability.fishing.icefishing
+            - mcmmo.ability.fishing.magichunter
+            - mcmmo.ability.fishing.masterangler
+            - mcmmo.ability.fishing.shake
+            - mcmmo.ability.fishing.treasurehunter
+            - mcmmo.ability.fishing.vanillaxpboost
+            - mcmmo.ability.taming.*
+            - mcmmo.ability.taming.all
+            - mcmmo.ability.taming.beastlore
+            - mcmmo.ability.taming.callofthewild.all
+            - mcmmo.ability.taming.callofthewild.horse
+            - mcmmo.ability.taming.callofthewild.ocelot
+            - mcmmo.ability.taming.callofthewild.renamepets
+            - mcmmo.ability.taming.callofthewild.wolf
+            - mcmmo.ability.taming.environmentallyaware
+            - mcmmo.ability.taming.fastfood
+            - mcmmo.ability.taming.gore
+            - mcmmo.ability.taming.holyhound
+            - mcmmo.ability.taming.sharpenedclaws
+            - mcmmo.ability.taming.shockproof
+            - mcmmo.ability.taming.thickfur
+            - -essentials.pay
+            - -bukkit.command.plugins
+            - -mcmmo.ability.unarmed.*
+            - -mcmmo.ability.unarmed.all
+            - mcmmo.ability.unarmed.berserk
+            - mcmmo.ability.unarmed.blockcracker
+            - mcmmo.ability.unarmed.ironarm
+            - mcmmo.ability.unarmed.deflect
+            - mcmmo.ability.unarmed.disarm
+            - mcmmo.ability.unarmed.irongrip
+            - -mcmmo.commands.ptp
+            - essentials.warps.potion
+            - essentials.msg
+            - nametag.group.a
+            - marry.default
+            - marry.marry
+            - marry.chat
+            - marry.tp
+            - marry.home
+            - marry.sethome
+            - marry.gift
+            - marry.child
+            - marry.send
+            prefix: '&9[&dA&9]&d'
+            suffix: ''
+        b:
+            permissions:
+            - essentials.warps.b
+            prefix: '&9[&6B&9]&6'
+        c:
+            inheritance:
+            - b
+            permissions:
+            - essentials.warps.c
+            prefix: '&9[&cC&9]&c'
+        juvenile:
+            inheritance:
+            - c
+            permissions:
+            - essentials.warps.juvenile
+            prefix: '&3[&9Juvenile&3]&9'
+        inmate:
+            inheritance:
+            - juvenile
+            permissions:
+            - essentials.warps.inmate
+            prefix: '&1[&5Inmate&1]&5'
+        snitch:
+            inheritance:
+            - inmate
+            permissions:
+            - essentials.warps.snitch
+            prefix: '&2[&eSnitch&2]&e'
+        smuggler:
+            inheritance:
+            - snitch
+            permissions:
+            - essentials.warps.smuggler
+            prefix: '&7[&aSmuggler&7]&a'
+        survivalist:
+            inheritance:
+            - smuggler
+            permissions:
+            - essentials.warps.survivalist
+            prefix: '&b[&aSurvi&2valist&b]&a'
+        veteran:
+            inheritance:
+            - survivalist
+            permissions:
+            - essentials.warps.veteran
+            prefix: '&3[&bVeteran&3]&b'
+        elitist:
+            inheritance:
+            - veteran
+            permissions:
+            - essentials.warps.elitist
+            prefix: '&e[&dElitist&e]&d'
+        fallen:
+            inheritance:
+            - elitist
+            permissions:
+            - essentials.warps.fallen
+            prefix: '&8[&3Fal&blen&8]&3'
+        determined:
+            inheritance:
+            - fallen
+            permissions:
+            - essentials.warps.determined
+            prefix: '&5[&9Deter&amined&5]&9'
+        brawler:
+            inheritance:
+            - determined
+            permissions:
+            - essentials.warps.brawler
+            prefix: '&f[&dB&5r&da&5w&dl&5e&dr&f]&5'
+        escapeartist:
+            inheritance:
+            - brawler
+            permissions:
+            - essentials.warps.escapeartist
+            - auction.start
+            prefix: '&b[&4Escape&7Artist&b]&7'
+        ares:
+            inheritance:
+            - escapeartist
+            permissions:
+            - essentials.warps.ares
+            prefix: '&3[&bAres&3]&b'
+        champion:
+            inheritance:
+            - ares
+            permissions:
+            - essentials.warps.champion
+            prefix: '&e[&2Cham&9pion&e]&2'
+        olympian:
+            inheritance:
+            - champion
+            permissions:
+            - essentials.warps.olympian
+            prefix: '&6[&3O&al&3y&am&3p&ai&3a&an&6]&a'
+        volcanic:
+            inheritance:
+            - olympian
+            permissions:
+            - essentials.warps.volcanic
+            prefix: '&1[&4V&co&4l&cc&4a&cn&4i&cc&1]&6'
+        glacial:
+            inheritance:
+            - volcanic
+            permissions:
+            - essentials.warps.glacial
+            prefix: '&3[&bG&fl&ba&fc&bi&fa&bl&3]&b'
+        unicorns:
+            inheritance:
+            - glacial
+            permissions:
+            - essentials.warps.unicorns
+            prefix: '&f[&dU&5n&di&5c&do&5r&dn&5s&f]&d'
+        liger:
+            inheritance:
+            - unicorns
+            permissions:
+            - essentials.warps.liger
+            prefix: '&a[&6L&ei&6g&ee&6r&a]&e'
+        angelic:
+            inheritance:
+            - liger
+            permissions:
+            - essentials.warps.angelic
+            prefix: '&6[&7Ang&felic&6]&f'
+        titan:
+            inheritance:
+            - angelic
+            permissions:
+            - essentials.warps.titan
+            prefix: '&1&l[&b&lTitan&1&l]&5'
+        meow:
+            inheritance:
+            - titan
+            permissions:
+            - essentials.warps.meow
+            prefix: '&e&l[&d&lMeow&e&l]&d'
+        immortal:
+            inheritance:
+            - meow
+            permissions:
+            - essentials.warps.immortal
+            prefix: '&b&l[&4&lI&c&lm&4&lm&c&lo&4&lr&c&lt&4&la&c&ll&b&l]&e'
+        spartan:
+            inheritance:
+            - immortal
+            permissions:
+            - essentials.warps.spartan
+            prefix: '&8&l[&4&lSpartan&8&l]&3&l'
+        tyrannical:
+            inheritance:
+            - spartan
+            permissions:
+            - essentials.warps.tyrannical
+            prefix: '&5&l[&7&lT&b&lY&7&lR&b&lA&7&lN&b&lN&7&lI&b&lC&7&lA&b&lL&5&l]&9&l'
+        thug:
+            prefix: '&8[&cThug&8]&c'
+            permissions:
+            - color.WHITE
+            - silkspawners.silkdrop.*
+            - essentials.warps.thug
+            - essentials.joinfullserver
+            - essentials.hat
+            - auction.start
+            - essentials.sethome.multiple.thug
+            - essentials.kits.thugpick
+            - essentials.kits.thug
+            - essentials.signs.multiply.1.1
+        gangster:
+            prefix: '&2[&bGangster&2]&b'
+            permissions:
+            - color.DARK_PURPLE
+            - color.WHITE
+            - crate.revoke.1
+            - silkspawners.silkdrop.*
+            - essentials.warps.gangster
+            - essentials.nick.format
+            - essentials.nick.color
+            - essentials.nick
+            - essentials.joinfullserver
+            - essentials.hat
+            - auction.start
+            - essentials.sethome.multiple.gangster
+            - essentials.kits.gangsterpick
+            - essentials.kits.gangster
+            - essentials.warps.thug
+            - essentials.signs.multiply.1.2
+        dealer:
+            prefix: '&f[&eDealer&f]&e'
+            permissions:
+            - color.BLUE
+            - color.DARK_PURPLE
+            - color.WHITE
+            - crate.revoke.2
+            - crate.revoke.1
+            - silkspawners.silkdrop.*
+            - essentials.warps.dealer
+            - essentials.nick.format
+            - essentials.nick.color
+            - essentials.nick
+            - essentials.joinfullserver
+            - essentials.hat
+            - auction.start
+            - essentials.sethome.multiple.dealer
+            - essentials.kits.dealerpick
+            - essentials.kits.dealer
+            - backpack.18
+            - essentials.warps.thug
+            - essentials.warps.gangster
+            - essentials.signs.multiply.1.3
+        thief:
+            prefix: '&5[&aThief&5]&a'
+            permissions:
+            - color.GOLD
+            - color.BLUE
+            - color.DARK_PURPLE
+            - color.WHITE
+            - crate.revoke.3
+            - crate.revoke.2
+            - crate.revoke.1
+            - silkspawners.silkdrop.*
+            - essentials.warps.thief
+            - essentials.fly
+            - essentials.nick.format
+            - essentials.nick.color
+            - essentials.nick
+            - essentials.joinfullserver
+            - essentials.hat
+            - auction.start
+            - essentials.sethome.multiple.thief
+            - essentials.kits.thiefpick
+            - essentials.kits.thief
+            - backpack.27
+            - essentials.warps.thug
+            - essentials.warps.gangster
+            - essentials.warps.dealer
+            - essentials.signs.multiply.1.4
+        mobster:
+            prefix: '&3[&5Mob&ester&3]&e'
+            permissions:
+            - color.DARK_GRAY
+            - color.YELLOW
+            - color.GOLD
+            - color.BLUE
+            - color.DARK_PURPLE
+            - color.WHITE
+            - crate.revoke.4
+            - crate.revoke.3
+            - crate.revoke.2
+            - crate.revoke.1
+            - silkspawners.silkdrop.*
+            - essentials.warps.mobster
+            - essentials.fly
+            - essentials.nick.format
+            - essentials.nick.color
+            - essentials.nick
+            - essentials.joinfullserver
+            - essentials.hat
+            - auction.start
+            - essentials.sethome.multiple.mobster
+            - essentials.kits.mobsterpick
+            - essentials.kits.mobster
+            - backpack.36
+            - essentials.warps.thug
+            - essentials.warps.gangster
+            - essentials.warps.dealer
+            - essentials.warps.thief
+            - essentials.signs.multiply.1.5
+        crimelord:
+            prefix: '&6[&aCrime&2lord&6]&a'
+            permissions:
+            - color.DARK_AQUA
+            - color.AQUA
+            - color.DARK_GRAY
+            - color.YELLOW
+            - color.GOLD
+            - color.BLUE
+            - color.DARK_PURPLE
+            - color.WHITE
+            - crate.revoke.5
+            - crate.revoke.4
+            - crate.revoke.3
+            - crate.revoke.2
+            - crate.revoke.1
+            - silkspawners.silkdrop.*
+            - essentials.warps.crimelord
+            - essentials.fly
+            - essentials.feed
+            - essentials.enderchest
+            - essentials.nick.format
+            - essentials.nick.color
+            - essentials.nick
+            - essentials.joinfullserver
+            - essentials.hat
+            - auction.start
+            - essentials.sethome.multiple.crimelord
+            - essentials.kits.crimelordpick
+            - essentials.kits.crimelord
+            - backpack.45
+            - essentials.warps.thug
+            - essentials.warps.gangster
+            - essentials.warps.dealer
+            - essentials.warps.thief
+            - essentials.warps.mobster
+            - essentials.signs.multiply.1.6
+        kingpin:
+            prefix: '&1[&6Kingpin&1]&6'
+            permissions:
+            - color.DARK_GREEN
+            - color.GREEN
+            - color.DARK_AQUA
+            - color.AQUA
+            - color.DARK_GRAY
+            - color.YELLOW
+            - color.GOLD
+            - color.BLUE
+            - color.DARK_PURPLE
+            - color.WHITE
+            - crate.revoke.6
+            - crate.revoke.5
+            - crate.revoke.4
+            - crate.revoke.3
+            - crate.revoke.2
+            - crate.revoke.1
+            - silkspawners.silkdrop.*
+            - essentials.warps.kingpin
+            - essentials.fly
+            - essentials.feed
+            - essentials.enderchest
+            - essentials.nick.format
+            - essentials.nick.color
+            - essentials.nick
+            - essentials.joinfullserver
+            - essentials.hat
+            - auction.start
+            - essentials.sethome.multiple.kingpin
+            - essentials.kits.sword
+            - essentials.kits.kingpinpick
+            - essentials.kits.kingpin
+            - essentials.kits.axe
+            - backpack.54
+            - essentials.invsee
+        originalgangster:
+            prefix: '&b[&c&lO&4&lG&b]&c'
+            permissions:
+            - color.LIGHT_PURPLE
+            - color.DARK_BLUE
+            - color.RED
+            - color.DARK_RED
+            - color.DARK_GREEN
+            - color.GREEN
+            - color.DARK_AQUA
+            - color.AQUA
+            - color.DARK_GRAY
+            - color.YELLOW
+            - color.GOLD
+            - color.BLUE
+            - color.DARK_PURPLE
+            - color.WHITE
+            - crate.revoke.7
+            - crate.revoke.6
+            - crate.revoke.5
+            - crate.revoke.4
+            - crate.revoke.3
+            - crate.revoke.2
+            - crate.revoke.1
+            - silkspawners.silkdrop.*
+            - essentials.warps.og
+            - essentials.fly
+            - essentials.feed
+            - essentials.enderchest
+            - essentials.nick.format
+            - essentials.nick.color
+            - essentials.nick
+            - essentials.joinfullserver
+            - essentials.hat
+            - auction.start
+            - essentials.sethome.multiple.og
+            - essentials.signs.multiply.allow
+            - essentials.kits.ogpick
+            - essentials.kits.og
+            - essentials.kits.sword
+            - essentials.kits.axe
+            - essentials.warps.kingpin
+            - essentials.warps.crimelord
+            - essentials.warps.mobster
+            - essentials.warps.thief
+            - essentials.warps.dealer
+            - essentials.warps.gangster
+            - essentials.warps.thug
+            - essentials.invsee
+            - backpack.54
+            - essentials.signs.multiply.2.0
+        helper:
+            prefix: '&3[&aHelper&3]&a'
+            permissions:
+            - essentials.joinfullserver
+            - bm.bminfo
+            - bm.tempmute
+            - bm.timelimit.mutes.helper
+            - bm.warn
+            - bm.unmute
+            - bm.kick
+            - simplechat.admin
+        enforcer:
+            prefix: '&9[&aEnforcer&9]&a'
+            permissions:
+            - essentials.joinfullserver
+            - bm.tempban
+            - bm.tempmute
+            - bm.timelimit.bans.enforcer
+            - bm.timelimit.mutes.enforcer
+            - bm.bminfo
+            - bm.tempmute
+            - bm.warn
+            - bm.unmute
+            - bm.kick
+            - simplechat.admin
+        moderator:
+            prefix: '&9[&eModerator&9]&e'
+            permissions:
+            - essentials.joinfullserver
+            - bm.ban
+            - bm.timelimit.bans.moderator
+            - bm.timelimit.mutes.moderator
+            - bm.tempban
+            - bm.tempmute
+            - bm.bminfo
+            - bm.tempmute
+            - bm.warn
+            - bm.unmute
+            - bm.kick
+            - simplechat.admin
+        admin:
+            prefix: '&4[&cAdmin&4]&c'
+            permissions:
+            - essentials.*
+            - simplechat.admin
+            - bm.*
+        owner:
+            prefix: '&1[&4NetworkOwner&1]&b'
+            permissions:
+            - essentials.*
+            - permissions.*
+            - '*'
+            - '*.*'
+    prison2:
+        a:
+            default: true
+            permissions:
+            - silkspawners.place.*
+            - silkspawners.info
+            - redeemMCMMO.rmhelp
+            - redeemMCMMO.redeem
+            - redeemMCMMO.credits
+            - pvpsoup.use
+            - plotme.use.remove
+            - plotme.use.home
+            - plotme.use.auto
+            - plotme.use.add
+            - plotme.use
+            - plotme.use.claim
+            - plotme.use.info
+            - plotme.use.comment
+            - plotme.use.comments
+            - plotme.use.biome
+            - plotme.use.clear
+            - plotme.use.list
+            - plotme.use.buy
+            - plotme.use.sell
+            - plotme.use.auction
+            - plotme.use.bid
+            - plotme.use.dispose
+            - plotme.use.done
+            - plotme.use.deny
+            - plotme.use.undeny
+            - plotme.limit.1
+            - plotme.admin.tp
+            - lottery.buy
+            - essentials.motd
+            - essentials.list
+            - essentials.clearinventory
+            - essentials.warps.spawners
+            - essentials.warps.blocks
+            - essentials.warps.colors
+            - essentials.warps.shop
+            - essentials.warps.plots
+            - essentials.warps.spawn
+            - essentials.warps.bar
+            - essentials.warps.a
+            - essentials.warp.list
+            - essentials.warp
+            - essentials.tptoggle
+            - essentials.spawn
+            - essentials.signs.use.*
+            - essentials.sethome
+            - essentials.seen.banreason
+            - essentials.seen
+            - essentials.realname
+            - essentials.kits.starter
+            - essentials.kits.gigadrill
+            - essentials.kit
+            - essentials.ignore
+            - essentials.home
+            - essentials.delhome
+            - essentials.balancetop
+            - essentials.balance
+            - essentials.ping
+            - ChestShop.shop.*
+            - bukkit.command.tps
+            - bm.notify
+            - auction.info
+            - auction.bid
+            - mcmmo.ability.blastmining.*
+            - mcmmo.ability.acrobatics.*
+            - mcmmo.ability.acrobatics.all
+            - mcmmo.ability.acrobatics.dodge
+            - mcmmo.ability.acrobatics.gracefulroll
+            - mcmmo.ability.acrobatics.roll
+            - mcmmo.ability.axes.*
+            - mcmmo.ability.axes.all
+            - mcmmo.ability.axes.axemastery
+            - mcmmo.ability.axes.criticalhit
+            - mcmmo.ability.axes.greaterimpact
+            - mcmmo.ability.axes.armorimpact
+            - mcmmo.ability.axes.skullsplitter
+            - mcmmo.ability.swords.*
+            - mcmmo.ability.swords.all
+            - mcmmo.ability.swords.bleed
+            - mcmmo.ability.swords.counter
+            - mcmmo.ability.swords.serratedstrikes
+            - mcmmo.ability.excavation.*
+            - mcmmo.ability.excavation.all
+            - mcmmo.ability.excavation.gigadrillbreaker
+            - mcmmo.ability.excavation.treasurehunter
+            - mcmmo.ability.herbalism.*
+            - mcmmo.ability.herbalism.all
+            - mcmmo.ability.herbalism.doubledrops
+            - mcmmo.ability.herbalism.farmersdiet
+            - mcmmo.ability.herbalism.greenterra
+            - mcmmo.ability.herbalism.greenthumb.all
+            - mcmmo.ability.herbalism.greenthumb.blocks.all
+            - mcmmo.ability.herbalism.greenthumb.blocks.cobblestone
+            - mcmmo.ability.herbalism.greenthumb.blocks.cobblewall
+            - mcmmo.ability.herbalism.greenthumb.blocks.dirt
+            - mcmmo.ability.herbalism.greenthumb.blocks.smoothbrick
+            - mcmmo.ability.herbalism.greenthumb.plants.all
+            - mcmmo.ability.herbalism.greenthumb.plants.carrot
+            - mcmmo.ability.herbalism.greenthumb.plants.cocoa
+            - mcmmo.ability.herbalism.greenthumb.plants.crops
+            - mcmmo.ability.herbalism.greenthumb.plants.netherwarts
+            - mcmmo.ability.herbalism.greenthumb.plants.potato
+            - mcmmo.ability.herbalism.hylianluck
+            - mcmmo.ability.herbalism.shroomthumb
+            - mcmmo.ability.archery.*
+            - mcmmo.ability.archery.all
+            - mcmmo.ability.archery.skillshot
+            - mcmmo.ability.archery.daze
+            - mcmmo.ability.archery.retrieve
+            - mcmmo.ability.repair.*
+            - mcmmo.ability.repair.all
+            - mcmmo.ability.repair.arcaneforging
+            - mcmmo.ability.repair.armorrepair
+            - mcmmo.ability.repair.diamondrepair
+            - mcmmo.ability.repair.goldrepair
+            - mcmmo.ability.repair.ironrepair
+            - mcmmo.ability.repair.leatherrepair
+            - mcmmo.ability.repair.othermaterialrepair
+            - mcmmo.ability.repair.otherrepair
+            - mcmmo.ability.repair.repairbonus
+            - mcmmo.ability.repair.repairmastery
+            - mcmmo.ability.repair.salvage
+            - mcmmo.ability.repair.stonerepair
+            - mcmmo.ability.repair.stringrepair
+            - mcmmo.ability.repair.toolrepair
+            - mcmmo.ability.repair.woodrepair
+            - mcmmo.ability.woodcutting.*
+            - mcmmo.ability.woodcutting.all
+            - mcmmo.ability.woodcutting.doubledrops
+            - mcmmo.ability.woodcutting.leafblower
+            - mcmmo.ability.woodcutting.treefeller
+            - mcmmo.ability.mining.*
+            - mcmmo.ability.mining.all
+            - mcmmo.ability.mining.blastmining.all
+            - mcmmo.ability.mining.blastmining.biggerbombs
+            - mcmmo.ability.mining.blastmining.demolitionsexpertise
+            - mcmmo.ability.mining.blastmining.detonate
+            - mcmmo.ability.mining.doubledrops
+            - mcmmo.ability.mining.superbreaker
+            - mcmmo.ability.fishing.*
+            - mcmmo.ability.fishing.all
+            - mcmmo.ability.fishing.fishermansdiet
+            - mcmmo.ability.fishing.icefishing
+            - mcmmo.ability.fishing.magichunter
+            - mcmmo.ability.fishing.masterangler
+            - mcmmo.ability.fishing.shake
+            - mcmmo.ability.fishing.treasurehunter
+            - mcmmo.ability.fishing.vanillaxpboost
+            - mcmmo.ability.taming.*
+            - mcmmo.ability.taming.all
+            - mcmmo.ability.taming.beastlore
+            - mcmmo.ability.taming.callofthewild.all
+            - mcmmo.ability.taming.callofthewild.horse
+            - mcmmo.ability.taming.callofthewild.ocelot
+            - mcmmo.ability.taming.callofthewild.renamepets
+            - mcmmo.ability.taming.callofthewild.wolf
+            - mcmmo.ability.taming.environmentallyaware
+            - mcmmo.ability.taming.fastfood
+            - mcmmo.ability.taming.gore
+            - mcmmo.ability.taming.holyhound
+            - mcmmo.ability.taming.sharpenedclaws
+            - mcmmo.ability.taming.shockproof
+            - mcmmo.ability.taming.thickfur
+            - -essentials.pay
+            - -bukkit.command.plugins
+            - -mcmmo.ability.unarmed.*
+            - -mcmmo.ability.unarmed.all
+            - mcmmo.ability.unarmed.berserk
+            - mcmmo.ability.unarmed.blockcracker
+            - mcmmo.ability.unarmed.ironarm
+            - mcmmo.ability.unarmed.deflect
+            - mcmmo.ability.unarmed.disarm
+            - mcmmo.ability.unarmed.irongrip
+            - -mcmmo.commands.ptp
+            - essentials.warps.potion
+            - essentials.msg
+            - nametag.group.a
+            - marry.default
+            - marry.marry
+            - marry.chat
+            - marry.tp
+            - marry.home
+            - marry.sethome
+            - marry.gift
+            - marry.child
+            - marry.send
+            prefix: '&9[&dA&9]&d'
+            suffix: ''
+        b:
+            permissions:
+            - essentials.warps.b
+            prefix: '&9[&6B&9]&6'
+        c:
+            inheritance:
+            - b
+            permissions:
+            - essentials.warps.c
+            prefix: '&9[&cC&9]&c'
+        juvenile:
+            inheritance:
+            - c
+            permissions:
+            - essentials.warps.juvenile
+            prefix: '&3[&9Juvenile&3]&9'
+        inmate:
+            inheritance:
+            - juvenile
+            permissions:
+            - essentials.warps.inmate
+            prefix: '&1[&5Inmate&1]&5'
+        snitch:
+            inheritance:
+            - inmate
+            permissions:
+            - essentials.warps.snitch
+            prefix: '&2[&eSnitch&2]&e'
+        smuggler:
+            inheritance:
+            - snitch
+            permissions:
+            - essentials.warps.smuggler
+            prefix: '&7[&aSmuggler&7]&a'
+        survivalist:
+            inheritance:
+            - smuggler
+            permissions:
+            - essentials.warps.survivalist
+            prefix: '&b[&aSurvi&2valist&b]&a'
+        veteran:
+            inheritance:
+            - survivalist
+            permissions:
+            - essentials.warps.veteran
+            prefix: '&3[&bVeteran&3]&b'
+        elitist:
+            inheritance:
+            - veteran
+            permissions:
+            - essentials.warps.elitist
+            prefix: '&e[&dElitist&e]&d'
+        fallen:
+            inheritance:
+            - elitist
+            permissions:
+            - essentials.warps.fallen
+            prefix: '&8[&3Fal&blen&8]&3'
+        determined:
+            inheritance:
+            - fallen
+            permissions:
+            - essentials.warps.determined
+            prefix: '&5[&9Deter&amined&5]&9'
+        brawler:
+            inheritance:
+            - determined
+            permissions:
+            - essentials.warps.brawler
+            prefix: '&f[&dB&5r&da&5w&dl&5e&dr&f]&5'
+        escapeartist:
+            inheritance:
+            - brawler
+            permissions:
+            - essentials.warps.escapeartist
+            - auction.start
+            prefix: '&b[&4Escape&7Artist&b]&7'
+        ares:
+            inheritance:
+            - escapeartist
+            permissions:
+            - essentials.warps.ares
+            prefix: '&3[&bAres&3]&b'
+        champion:
+            inheritance:
+            - ares
+            permissions:
+            - essentials.warps.champion
+            prefix: '&e[&2Cham&9pion&e]&2'
+        olympian:
+            inheritance:
+            - champion
+            permissions:
+            - essentials.warps.olympian
+            prefix: '&6[&3O&al&3y&am&3p&ai&3a&an&6]&a'
+        volcanic:
+            inheritance:
+            - olympian
+            permissions:
+            - essentials.warps.volcanic
+            prefix: '&1[&4V&co&4l&cc&4a&cn&4i&cc&1]&6'
+        glacial:
+            inheritance:
+            - volcanic
+            permissions:
+            - essentials.warps.glacial
+            prefix: '&3[&bG&fl&ba&fc&bi&fa&bl&3]&b'
+        unicorns:
+            inheritance:
+            - glacial
+            permissions:
+            - essentials.warps.unicorns
+            prefix: '&f[&dU&5n&di&5c&do&5r&dn&5s&f]&d'
+        liger:
+            inheritance:
+            - unicorns
+            permissions:
+            - essentials.warps.liger
+            prefix: '&a[&6L&ei&6g&ee&6r&a]&e'
+        angelic:
+            inheritance:
+            - liger
+            permissions:
+            - essentials.warps.angelic
+            prefix: '&6[&7Ang&felic&6]&f'
+        titan:
+            inheritance:
+            - angelic
+            permissions:
+            - essentials.warps.titan
+            prefix: '&1&l[&b&lTitan&1&l]&5'
+        meow:
+            inheritance:
+            - titan
+            permissions:
+            - essentials.warps.meow
+            prefix: '&e&l[&d&lMeow&e&l]&d'
+        immortal:
+            inheritance:
+            - meow
+            permissions:
+            - essentials.warps.immortal
+            prefix: '&b&l[&4&lI&c&lm&4&lm&c&lo&4&lr&c&lt&4&la&c&ll&b&l]&e'
+        spartan:
+            inheritance:
+            - immortal
+            permissions:
+            - essentials.warps.spartan
+            prefix: '&8&l[&4&lSpartan&8&l]&3&l'
+        tyrannical:
+            inheritance:
+            - spartan
+            permissions:
+            - essentials.warps.tyrannical
+            prefix: '&5&l[&7&lT&b&lY&7&lR&b&lA&7&lN&b&lN&7&lI&b&lC&7&lA&b&lL&5&l]&9&l'
+        thug:
+            prefix: '&8[&cThug&8]&c'
+            permissions:
+            - color.WHITE
+            - silkspawners.silkdrop.*
+            - essentials.warps.thug
+            - essentials.joinfullserver
+            - essentials.hat
+            - auction.start
+            - essentials.sethome.multiple.thug
+            - essentials.kits.thugpick
+            - essentials.kits.thug
+            - essentials.signs.multiply.1.1
+        gangster:
+            prefix: '&2[&bGangster&2]&b'
+            permissions:
+            - color.DARK_PURPLE
+            - color.WHITE
+            - crate.revoke.1
+            - silkspawners.silkdrop.*
+            - essentials.warps.gangster
+            - essentials.nick.format
+            - essentials.nick.color
+            - essentials.nick
+            - essentials.joinfullserver
+            - essentials.hat
+            - auction.start
+            - essentials.sethome.multiple.gangster
+            - essentials.kits.gangsterpick
+            - essentials.kits.gangster
+            - essentials.warps.thug
+            - essentials.signs.multiply.1.2
+        dealer:
+            prefix: '&f[&eDealer&f]&e'
+            permissions:
+            - color.BLUE
+            - color.DARK_PURPLE
+            - color.WHITE
+            - crate.revoke.2
+            - crate.revoke.1
+            - silkspawners.silkdrop.*
+            - essentials.warps.dealer
+            - essentials.nick.format
+            - essentials.nick.color
+            - essentials.nick
+            - essentials.joinfullserver
+            - essentials.hat
+            - auction.start
+            - essentials.sethome.multiple.dealer
+            - essentials.kits.dealerpick
+            - essentials.kits.dealer
+            - backpack.18
+            - essentials.warps.thug
+            - essentials.warps.gangster
+            - essentials.signs.multiply.1.3
+        thief:
+            prefix: '&5[&aThief&5]&a'
+            permissions:
+            - color.GOLD
+            - color.BLUE
+            - color.DARK_PURPLE
+            - color.WHITE
+            - crate.revoke.3
+            - crate.revoke.2
+            - crate.revoke.1
+            - silkspawners.silkdrop.*
+            - essentials.warps.thief
+            - essentials.fly
+            - essentials.nick.format
+            - essentials.nick.color
+            - essentials.nick
+            - essentials.joinfullserver
+            - essentials.hat
+            - auction.start
+            - essentials.sethome.multiple.thief
+            - essentials.kits.thiefpick
+            - essentials.kits.thief
+            - backpack.27
+            - essentials.warps.thug
+            - essentials.warps.gangster
+            - essentials.warps.dealer
+            - essentials.signs.multiply.1.4
+        mobster:
+            prefix: '&3[&5Mob&ester&3]&e'
+            permissions:
+            - color.DARK_GRAY
+            - color.YELLOW
+            - color.GOLD
+            - color.BLUE
+            - color.DARK_PURPLE
+            - color.WHITE
+            - crate.revoke.4
+            - crate.revoke.3
+            - crate.revoke.2
+            - crate.revoke.1
+            - silkspawners.silkdrop.*
+            - essentials.warps.mobster
+            - essentials.fly
+            - essentials.nick.format
+            - essentials.nick.color
+            - essentials.nick
+            - essentials.joinfullserver
+            - essentials.hat
+            - auction.start
+            - essentials.sethome.multiple.mobster
+            - essentials.kits.mobsterpick
+            - essentials.kits.mobster
+            - backpack.36
+            - essentials.warps.thug
+            - essentials.warps.gangster
+            - essentials.warps.dealer
+            - essentials.warps.thief
+            - essentials.signs.multiply.1.5
+        crimelord:
+            prefix: '&6[&aCrime&2lord&6]&a'
+            permissions:
+            - color.DARK_AQUA
+            - color.AQUA
+            - color.DARK_GRAY
+            - color.YELLOW
+            - color.GOLD
+            - color.BLUE
+            - color.DARK_PURPLE
+            - color.WHITE
+            - crate.revoke.5
+            - crate.revoke.4
+            - crate.revoke.3
+            - crate.revoke.2
+            - crate.revoke.1
+            - silkspawners.silkdrop.*
+            - essentials.warps.crimelord
+            - essentials.fly
+            - essentials.feed
+            - essentials.enderchest
+            - essentials.nick.format
+            - essentials.nick.color
+            - essentials.nick
+            - essentials.joinfullserver
+            - essentials.hat
+            - auction.start
+            - essentials.sethome.multiple.crimelord
+            - essentials.kits.crimelordpick
+            - essentials.kits.crimelord
+            - backpack.45
+            - essentials.warps.thug
+            - essentials.warps.gangster
+            - essentials.warps.dealer
+            - essentials.warps.thief
+            - essentials.warps.mobster
+            - essentials.signs.multiply.1.6
+        kingpin:
+            prefix: '&1[&6Kingpin&1]&6'
+            permissions:
+            - color.DARK_GREEN
+            - color.GREEN
+            - color.DARK_AQUA
+            - color.AQUA
+            - color.DARK_GRAY
+            - color.YELLOW
+            - color.GOLD
+            - color.BLUE
+            - color.DARK_PURPLE
+            - color.WHITE
+            - crate.revoke.6
+            - crate.revoke.5
+            - crate.revoke.4
+            - crate.revoke.3
+            - crate.revoke.2
+            - crate.revoke.1
+            - silkspawners.silkdrop.*
+            - essentials.warps.kingpin
+            - essentials.fly
+            - essentials.feed
+            - essentials.enderchest
+            - essentials.nick.format
+            - essentials.nick.color
+            - essentials.nick
+            - essentials.joinfullserver
+            - essentials.hat
+            - auction.start
+            - essentials.sethome.multiple.kingpin
+            - essentials.kits.sword
+            - essentials.kits.kingpinpick
+            - essentials.kits.kingpin
+            - essentials.kits.axe
+            - backpack.54
+            - essentials.invsee
+        originalgangster:
+            prefix: '&b[&c&lO&4&lG&b]&c'
+            permissions:
+            - color.LIGHT_PURPLE
+            - color.DARK_BLUE
+            - color.RED
+            - color.DARK_RED
+            - color.DARK_GREEN
+            - color.GREEN
+            - color.DARK_AQUA
+            - color.AQUA
+            - color.DARK_GRAY
+            - color.YELLOW
+            - color.GOLD
+            - color.BLUE
+            - color.DARK_PURPLE
+            - color.WHITE
+            - crate.revoke.7
+            - crate.revoke.6
+            - crate.revoke.5
+            - crate.revoke.4
+            - crate.revoke.3
+            - crate.revoke.2
+            - crate.revoke.1
+            - silkspawners.silkdrop.*
+            - essentials.warps.og
+            - essentials.fly
+            - essentials.feed
+            - essentials.enderchest
+            - essentials.nick.format
+            - essentials.nick.color
+            - essentials.nick
+            - essentials.joinfullserver
+            - essentials.hat
+            - auction.start
+            - essentials.sethome.multiple.og
+            - essentials.signs.multiply.allow
+            - essentials.kits.ogpick
+            - essentials.kits.og
+            - essentials.kits.sword
+            - essentials.kits.axe
+            - essentials.warps.kingpin
+            - essentials.warps.crimelord
+            - essentials.warps.mobster
+            - essentials.warps.thief
+            - essentials.warps.dealer
+            - essentials.warps.gangster
+            - essentials.warps.thug
+            - essentials.invsee
+            - backpack.54
+            - essentials.signs.multiply.2.0
+        helper:
+            prefix: '&3[&aHelper&3]&a'
+            permissions:
+            - essentials.joinfullserver
+            - bm.bminfo
+            - bm.tempmute
+            - bm.timelimit.mutes.helper
+            - bm.warn
+            - bm.unmute
+            - bm.kick
+            - simplechat.admin
+        enforcer:
+            prefix: '&9[&aEnforcer&9]&a'
+            permissions:
+            - essentials.joinfullserver
+            - bm.tempban
+            - bm.tempmute
+            - bm.timelimit.bans.enforcer
+            - bm.timelimit.mutes.enforcer
+            - bm.bminfo
+            - bm.tempmute
+            - bm.warn
+            - bm.unmute
+            - bm.kick
+            - simplechat.admin
+        moderator:
+            prefix: '&9[&eModerator&9]&e'
+            permissions:
+            - essentials.joinfullserver
+            - bm.ban
+            - bm.timelimit.bans.moderator
+            - bm.timelimit.mutes.moderator
+            - bm.tempban
+            - bm.tempmute
+            - bm.bminfo
+            - bm.tempmute
+            - bm.warn
+            - bm.unmute
+            - bm.kick
+            - simplechat.admin
+        admin:
+            prefix: '&4[&cAdmin&4]&c'
+            permissions:
+            - essentials.*
+            - simplechat.admin
+            - bm.*
+        owner:
+            prefix: '&1[&4NetworkOwner&1]&b'
+            permissions:
+            - essentials.*
+            - permissions.*
+            - '*'
+            - '*.*'
