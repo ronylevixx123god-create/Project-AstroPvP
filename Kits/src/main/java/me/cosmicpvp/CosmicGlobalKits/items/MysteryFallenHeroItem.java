@@ -39,6 +39,7 @@ import com.google.common.collect.Lists;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKits;
@@ -67,9 +68,9 @@ import org.bukkit.plugin.Plugin;
 public class MysteryFallenHeroItem
 extends CosmicItem
 implements PlayerInteractable {
-    private final List<GlobalKits> commonKits = Lists.newArrayList((Object[])new GlobalKits[]{GlobalKits.HYPER, GlobalKits.DESTROYER, GlobalKits.GUARDIAN, GlobalKits.ARCANE, GlobalKits.TRICKSTER, GlobalKits.VIKING, GlobalKits.Tinkermaster, GlobalKits.Admiral, GlobalKits.Paladin});
-    private final List<GlobalKits> uncommonKits = Lists.newArrayList((Object[])new GlobalKits[]{GlobalKits.Spooky, GlobalKits.GLADIATOR, GlobalKits.TEMPLAR, GlobalKits.Party, GlobalKits.GrandMaster, GlobalKits.Independence, GlobalKits.Masterbuilder, GlobalKits.Butcher});
-    private final List<GlobalKits> rareKits = Lists.newArrayList((Object[])new GlobalKits[]{GlobalKits.Cosmonaut, GlobalKits.DIABLO, GlobalKits.Enchantment, GlobalKits.Voidwalker, GlobalKits.Warlock, GlobalKits.Loki, GlobalKits.Cannoner});
+    private final List<GlobalKits> commonKits = Lists.newArrayList(new GlobalKits[]{GlobalKits.HYPER, GlobalKits.DESTROYER, GlobalKits.GUARDIAN, GlobalKits.ARCANE, GlobalKits.TRICKSTER, GlobalKits.VIKING, GlobalKits.Tinkermaster, GlobalKits.Admiral, GlobalKits.Paladin});
+    private final List<GlobalKits> uncommonKits = Lists.newArrayList(new GlobalKits[]{GlobalKits.Spooky, GlobalKits.GLADIATOR, GlobalKits.TEMPLAR, GlobalKits.Party, GlobalKits.GrandMaster, GlobalKits.Independence, GlobalKits.Masterbuilder, GlobalKits.Butcher});
+    private final List<GlobalKits> rareKits = Lists.newArrayList(new GlobalKits[]{GlobalKits.Cosmonaut, GlobalKits.DIABLO, GlobalKits.Enchantment, GlobalKits.Voidwalker, GlobalKits.Warlock, GlobalKits.Loki, GlobalKits.Cannoner});
 
     public MysteryFallenHeroItem() {
         super("mystery_fallen_hero");
@@ -119,7 +120,7 @@ implements PlayerInteractable {
                 } else {
                     p.setItemInHand(null);
                 }
-                Location l = p.getTargetBlock(null, 6).getLocation().add(0.0, 1.0, 0.0);
+                Location l = p.getTargetBlock((HashSet<Byte>) null, 6).getLocation().add(0.0, 1.0, 0.0);
                 LivingEntity fallenHero = FallenHero.spawnFallenHero(gkit, l);
                 fallenHero.setMetadata("fallenHeroSummoner", (MetadataValue)new FixedMetadataValue((Plugin)CosmicGlobalKits.getPlugin(), (Object)p.getName()));
                 fallenHero.setMetadata("mysteryFallenHero", (MetadataValue)new FixedMetadataValue((Plugin)CosmicGlobalKits.getPlugin(), (Object)true));

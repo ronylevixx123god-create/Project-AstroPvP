@@ -31,13 +31,13 @@ import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.cosmicpvp.cosmicutils.utils.RandomFireworks;
-import com.cosmicpvp.cosmicutils.utils.TitleManager;
 import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKitsAPI;
 import me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits;
 import me.cosmicpvp.CosmicGlobalKits.libs.MasteryKits;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
@@ -116,8 +116,10 @@ implements Listener {
                 Bukkit.getLogger().info("[MKitUnlock] " + player.getName() + " (" + player.getUniqueId() + ") redeemed a " + kit.getName() + " kit item!");
                 RandomFireworks.getManager().launchRandomFirework(player.getLocation());
                 player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0f, 1.1f);
-                TitleManager.sendTitle((Player)player, (String)kit.getName(), (TitleManager.TitleColor)TitleManager.TitleColor.GOLD);
-                TitleManager.sendSubTitle((Player)player, (String)"Mastery Kit Unlock!", (TitleManager.TitleColor)TitleManager.TitleColor.GOLD);
+                //TitleManager.sendTitle((Player)player, (String)kit.getName(), (TitleManager.TitleColor)TitleManager.TitleColor.GOLD);
+                //TitleManager.sendSubTitle((Player)player, (String)"Mastery Kit Unlock!", (TitleManager.TitleColor)TitleManager.TitleColor.GOLD);
+                player.sendMessage(ChatColor.GOLD + ChatColor.BOLD.toString() + kit.getName());
+                player.sendMessage(ChatColor.YELLOW + "Mastery Kit Unlocked!");
                 player.updateInventory();
                 Bukkit.getPluginManager().callEvent((Event)new CustomCosmicPlayerEvent(player, "ITEM_USE", new Object[]{"MASTERY_KIT", kit.name()}));
             }

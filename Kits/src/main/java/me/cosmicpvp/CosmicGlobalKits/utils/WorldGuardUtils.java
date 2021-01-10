@@ -21,12 +21,13 @@ import com.sk89q.worldguard.bukkit.BukkitUtil;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import com.sk89q.worldguard.protection.flags.StateFlag;
-import java.lang.reflect.Method;
-import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.plugin.Plugin;
+
+import java.lang.reflect.Method;
+import java.util.List;
 
 public class WorldGuardUtils {
     private static WorldGuardPlugin wg = null;
@@ -43,7 +44,7 @@ public class WorldGuardUtils {
             Class<?> bukkitUtil = wg.getClass().getClassLoader().loadClass("com.sk89q.worldguard.bukkit.BukkitUtil");
             Method toVector = bukkitUtil.getMethod("toVector", Block.class);
             Vector blockVector = (Vector)toVector.invoke(null, new Object[]{l.getBlock()});
-            List regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs(blockVector);
+            List<String> regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs(blockVector);
             if (regionSet.size() < 1) {
                 return "";
             }
@@ -71,11 +72,11 @@ public class WorldGuardUtils {
 
     public static boolean isPvPDisabled(Location l) {
         try {
-            BlockVector blockVector = BukkitUtil.toVector((Block)l.getBlock());
-            List regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs((Vector)blockVector);
+            BlockVector blockVector = BukkitUtil.toVector(l.getBlock());
+            List<String> regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs(blockVector);
             if (regionSet.size() < 1) {
                 try {
-                    return (StateFlag.State)wg.getGlobalRegionManager().get(l.getWorld()).getRegion("__global__").getFlags().get((Object)DefaultFlag.PVP) == StateFlag.State.DENY;
+                    return wg.getGlobalRegionManager().get(l.getWorld()).getRegion("__global__").getFlags().get(DefaultFlag.PVP) == StateFlag.State.DENY;
                 }
                 catch (Exception err) {
                     if (err instanceof NullPointerException) {
@@ -88,8 +89,8 @@ public class WorldGuardUtils {
             boolean return_flag = false;
             int return_priority = -1;
             for (String region : regionSet) {
-                if (!wg.getGlobalRegionManager().get(l.getWorld()).getRegion(region).getFlags().containsKey((Object)DefaultFlag.PVP)) continue;
-                StateFlag.State pvp_flag = (StateFlag.State)wg.getGlobalRegionManager().get(l.getWorld()).getRegion(region).getFlags().get((Object)DefaultFlag.PVP);
+                if (!wg.getGlobalRegionManager().get(l.getWorld()).getRegion(region).getFlags().containsKey(DefaultFlag.PVP)) continue;
+                StateFlag.State pvp_flag = (StateFlag.State)wg.getGlobalRegionManager().get(l.getWorld()).getRegion(region).getFlags().get(DefaultFlag.PVP);
                 int region_priority = wg.getGlobalRegionManager().get(l.getWorld()).getRegion(region).getPriority();
                 if (return_priority == -1) {
                     return_flag = pvp_flag == StateFlag.State.DENY;
@@ -109,11 +110,11 @@ public class WorldGuardUtils {
 
     public static boolean isLavaFlowDisabled(Location l) {
         try {
-            BlockVector blockVector = BukkitUtil.toVector((Block)l.getBlock());
-            List regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs((Vector)blockVector);
+            BlockVector blockVector = BukkitUtil.toVector(l.getBlock());
+            List<String> regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs(blockVector);
             if (regionSet.size() < 1) {
                 try {
-                    return (StateFlag.State)wg.getGlobalRegionManager().get(l.getWorld()).getRegion("__global__").getFlags().get((Object)DefaultFlag.LAVA_FLOW) == StateFlag.State.DENY;
+                    return wg.getGlobalRegionManager().get(l.getWorld()).getRegion("__global__").getFlags().get(DefaultFlag.LAVA_FLOW) == StateFlag.State.DENY;
                 }
                 catch (Exception err) {
                     if (err instanceof NullPointerException) {
@@ -125,8 +126,8 @@ public class WorldGuardUtils {
             boolean return_flag = false;
             int return_priority = -1;
             for (String region : regionSet) {
-                if (!wg.getGlobalRegionManager().get(l.getWorld()).getRegion(region).getFlags().containsKey((Object)DefaultFlag.PVP)) continue;
-                StateFlag.State pvp_flag = (StateFlag.State)wg.getGlobalRegionManager().get(l.getWorld()).getRegion(region).getFlags().get((Object)DefaultFlag.PVP);
+                if (!wg.getGlobalRegionManager().get(l.getWorld()).getRegion(region).getFlags().containsKey(DefaultFlag.PVP)) continue;
+                StateFlag.State pvp_flag = (StateFlag.State)wg.getGlobalRegionManager().get(l.getWorld()).getRegion(region).getFlags().get(DefaultFlag.PVP);
                 int region_priority = wg.getGlobalRegionManager().get(l.getWorld()).getRegion(region).getPriority();
                 if (return_priority == -1) {
                     return_flag = pvp_flag == StateFlag.State.DENY;

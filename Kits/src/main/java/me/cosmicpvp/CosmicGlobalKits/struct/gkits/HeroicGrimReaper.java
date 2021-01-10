@@ -23,8 +23,6 @@ import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.compilex.CosmicDungeons.DungeonsAPI;
 import com.compilex.CosmicDungeons.DungeonsRewardsAPI;
 import com.google.common.collect.Lists;
-import java.util.ArrayList;
-import java.util.List;
 import me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits;
 import me.cosmicpvp.CosmicGlobalKits.struct.GlobalKit;
 import me.cosmicpvp.CosmicGlobalKits.utils.ItemUtils;
@@ -36,11 +34,14 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class HeroicGrimReaper
 extends GlobalKit {
     @Override
     public List<ItemStack> getKitItems(Player player, GlobalKits kits, int kitLevel) {
-        ArrayList rewards = Lists.newArrayList();
+        ArrayList<ItemStack> rewards = Lists.newArrayList();
         ItemStack helmet = ItemUtils.buildItem(Material.DIAMOND_HELMET, (short)0, ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "Hood of the Grim Reaper", ChatColor.GOLD.toString() + ChatColor.ITALIC.toString() + "Woven out of nether and ender cloth,", ChatColor.GOLD.toString() + ChatColor.ITALIC.toString() + "echoes of the dead can be heard from within.");
         HeroicGrimReaper.addRandomEnchantLevel(helmet, "Deathbringer");
         HeroicGrimReaper.addRandomEnchantLevel(helmet, "Sticky");

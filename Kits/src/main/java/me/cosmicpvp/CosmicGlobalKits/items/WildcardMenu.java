@@ -19,22 +19,18 @@ package me.cosmicpvp.CosmicGlobalKits.items;
 
 import com.cosmicpvp.cosmicutils.compat.ASound;
 import com.cosmicpvp.cosmicutils.gui.CosmicGUI;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.InventoryUtils;
-import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
-import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
-import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
-import java.util.Map;
+import com.cosmicpvp.cosmicutils.utils.*;
 import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKits;
 import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKitsAPI;
 import me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits;
 import me.cosmicpvp.CosmicGlobalKits.struct.GlobalKitData;
 import me.cosmicpvp.CosmicGlobalKits.struct.GlobalKitUser;
-import me.ifamasssxd.cosmicevolutionkits.CosmicEvolutionKits;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
+
+import java.util.Map;
 
 public class WildcardMenu
 extends CosmicGUI {
@@ -81,7 +77,7 @@ extends CosmicGUI {
             this.unlocked = true;
             PlayerUtil.giveOrDropProtectedItem((Player)this.player, (ItemStack)this.itemWrapper.build(), (int)-1);
             ASound.CHICKEN_EGG_POP.play(this.player, 3.0f, 1.1f);
-            Bukkit.getScheduler().runTaskLater((Plugin)CosmicEvolutionKits.get(), () -> {
+            Bukkit.getScheduler().runTaskLater((Plugin)CosmicGlobalKits.getPlugin(), () -> {
                 if (this.player.isValid()) {
                     this.player.updateInventory();
                 }

@@ -23,32 +23,26 @@
  */
 package me.cosmicpvp.CosmicGlobalKits.menu;
 
-import com.compilex.CosmicFund.CosmicFundAPI;
 import com.cosmicpvp.cosmicutils.gui.CosmicGUI;
 import com.cosmicpvp.cosmicutils.gui.InventoryItem;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.InventoryUtils;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
-import com.cosmicpvp.cosmicutils.utils.TitleManager;
 import com.google.common.collect.Lists;
-import java.util.ArrayList;
-import java.util.List;
 import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKits;
 import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKitsAPI;
 import me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits;
 import me.cosmicpvp.CosmicGlobalKits.libs.MasteryKits;
-import me.cosmicpvp.CosmicGlobalKits.menu.MKitPreviewMenu;
 import me.cosmicpvp.CosmicGlobalKits.struct.GlobalKitData;
 import me.cosmicpvp.CosmicGlobalKits.struct.GlobalKitUser;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.DyeColor;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MKitMenu
 extends CosmicGUI {
@@ -97,7 +91,7 @@ extends CosmicGUI {
                     this.player.sendMessage(CC.Gray + "Use a Mastery Kit Gem to unlock it!");
                     return;
                 }
-                if (Bukkit.getPluginManager().isPluginEnabled("CosmicFund") && !CosmicFundAPI.isMKitsEnabled() && !this.player.isOp()) {
+                if (Bukkit.getPluginManager().isPluginEnabled("CosmicFund") && !this.player.isOp()) {
                     this.player.sendMessage(ChatColor.RED.toString() + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "Your planet has not yet unlocked access to /mkit Mastery Kits!. To unlock, your planet needs to reach the " + (Object)ChatColor.UNDERLINE + "/fund" + (Object)ChatColor.RED + " goal.");
                     this.player.sendMessage((Object)ChatColor.GRAY + "* Until the goal is met, NO PLAYERS can redeem these kits.");
                     return;
@@ -109,8 +103,10 @@ extends CosmicGUI {
                     gkitData.handleUsed(this.player, kits);
                     this.player.playSound(this.player.getLocation(), Sound.LEVEL_UP, 1.0f, 0.9f);
                     kits.giveToPlayer(this.player);
-                    TitleManager.sendTitle((Player)this.player, (String)kits.getName(), (TitleManager.TitleColor)TitleManager.TitleColor.RED);
-                    TitleManager.sendSubTitle((Player)this.player, (String)(CC.GoldB + "Mastery Kit Claimed"), (TitleManager.TitleColor)TitleManager.TitleColor.GOLD);
+                    //TitleManager.sendTitle((Player)this.player, (String)kits.getName(), (TitleManager.TitleColor)TitleManager.TitleColor.RED);
+                    //TitleManager.sendSubTitle((Player)this.player, (String)(CC.GoldB + "Mastery Kit Claimed"), (TitleManager.TitleColor)TitleManager.TitleColor.GOLD);
+                    player.sendMessage(ChatColor.RED + kits.getName());
+                    player.sendMessage(CC.GoldB + "Mastery Kit Claimed!");
                     return;
                 }
                 this.player.sendMessage(CC.RedB + "(!) " + CC.Red + "You " + CC.RedU + "cannot" + CC.Red + " use that Mastery Kit for " + cdString + "!");

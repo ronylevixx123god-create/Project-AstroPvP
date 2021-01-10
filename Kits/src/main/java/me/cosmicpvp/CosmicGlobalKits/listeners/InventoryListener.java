@@ -20,7 +20,6 @@
  */
 package me.cosmicpvp.CosmicGlobalKits.listeners;
 
-import com.compilex.CosmicFund.CosmicFundAPI;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import java.util.List;
 import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKits;
@@ -76,18 +75,19 @@ implements Listener {
                         pl.closeInventory();
                     } else {
                         pl.closeInventory();
+                        Player finalPl = pl;
                         Bukkit.getScheduler().runTaskLater((Plugin)CosmicGlobalKits.getPlugin(), new Runnable(){
 
                             @Override
                             public void run() {
-                                pl.playSound(pl.getLocation(), Sound.BAT_TAKEOFF, 0.8f, 0.9f);
-                                pl.openInventory(InventoryListener.this.getKitPreview(gkit, pl));
+                                finalPl.playSound(finalPl.getLocation(), Sound.BAT_TAKEOFF, 0.8f, 0.9f);
+                                finalPl.openInventory(InventoryListener.this.getKitPreview(gkit, finalPl));
                             }
                         }, 1L);
                     }
                     return;
                 }
-                if (Bukkit.getPluginManager().isPluginEnabled("CosmicFund") && !CosmicFundAPI.isGkitsEnabled() && gkit != GlobalKits.Masterbuilder && !pl.isOp()) {
+                if (Bukkit.getPluginManager().isPluginEnabled("CosmicFund") && gkit != GlobalKits.Masterbuilder && !pl.isOp()) {
                     pl.sendMessage(ChatColor.RED.toString() + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "Your planet has not yet unlocked access to this type of /gkit. To unlock, your planet needs to reach the " + (Object)ChatColor.UNDERLINE + "/fund" + (Object)ChatColor.RED + " goal.");
                     pl.sendMessage((Object)ChatColor.GRAY + "* Until the goal is met, NO PLAYERS can redeem these kits.");
                     return;

@@ -21,8 +21,8 @@
  */
 package me.ifamasssxd.cosmictoggles.toggles;
 
-import com.conaxgames.factions.utils.cmds.CommandToggleSmoke;
 import com.massivecraft.factions.FPlayer;
+import me.cosmicpvp.CosmicFactionUtils.cmds.CommandToggleSmoke;
 import me.ifamasssxd.cosmicduel.CosmicDuel;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.ifamasssxd.itemfilter.Filter;

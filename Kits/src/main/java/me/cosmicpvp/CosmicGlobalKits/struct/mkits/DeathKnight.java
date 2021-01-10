@@ -35,7 +35,7 @@ extends MasteryGlobalKit {
         ItemStack chestplate = AbilityArmorSet.DEATH_KNIGHT.getArmorSetInfo().getChestplate(player, false, false);
         ItemStack leggings = AbilityArmorSet.DEATH_KNIGHT.getArmorSetInfo().getLeggings(player, false, false);
         ItemStack boots = AbilityArmorSet.DEATH_KNIGHT.getArmorSetInfo().getBoots(player, false, false);
-        ArrayList armor = Lists.newArrayList((Object[])new ItemStack[]{helmet, chestplate, leggings, boots});
+        ArrayList<ItemStack> armor = Lists.newArrayList(helmet, chestplate, leggings, boots);
         EnchantmentAPI.getEnchantment((String)"Chain Lifesteal").addToItem(helmet, ThreadLocalRandom.current().nextInt(EnchantmentAPI.getEnchantment((String)"Chain Lifesteal").getMaxLevel()) + 1);
         EnchantmentAPI.getEnchantment((String)"Tombstone").addToItem(leggings, ThreadLocalRandom.current().nextInt(EnchantmentAPI.getEnchantment((String)"Tombstone").getMaxLevel()) + 1);
         ArrayList enchants = Lists.newArrayList((Object[])new String[]{"Death Pact", "Permafrost"});

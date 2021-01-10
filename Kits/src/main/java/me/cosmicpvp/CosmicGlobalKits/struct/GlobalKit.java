@@ -37,7 +37,7 @@ public abstract class GlobalKit {
     }
 
     public ItemStack setItemNameAndLore(ItemStack item, String name, String ... lore) {
-        return this.setItemNameAndLore(item, name, Lists.newArrayList((Object[])lore));
+        return this.setItemNameAndLore(item, name, Lists.newArrayList(lore));
     }
 
     public static ItemStack addRandomEnchantLevel(ItemStack item, String enchant) {

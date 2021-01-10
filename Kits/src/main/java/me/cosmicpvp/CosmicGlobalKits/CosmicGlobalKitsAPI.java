@@ -43,19 +43,10 @@ import com.compilex.CosmicDungeons.DungeonsRewardsAPI;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
-import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
-import com.cosmicpvp.cosmicutils.utils.JSONMessage;
-import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKits;
 import me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits;
 import me.cosmicpvp.CosmicGlobalKits.libs.MasteryKits;
 import me.cosmicpvp.CosmicGlobalKits.struct.GlobalKit;
@@ -63,12 +54,8 @@ import me.cosmicpvp.CosmicGlobalKits.struct.GlobalKitData;
 import me.cosmicpvp.CosmicGlobalKits.struct.GlobalKitUser;
 import me.cosmicpvp.CosmicGlobalKits.utils.GlobalCooldowns;
 import me.cosmicpvp.CosmicGlobalKits.utils.ItemUtils;
-import net.minecraft.server.v1_7_R4.NBTBase;
-import org.arkhamnetwork.Arkkit.patches.Christmas;
-import org.arkhamnetwork.Arkkit.patches.Drinks;
-import org.arkhamnetwork.Arkkit.patches.Halloween;
-import org.arkhamnetwork.Arkkit.patches.ItemID;
-import org.arkhamnetwork.Arkkit.patches.NewYears;
+import net.minecraft.server.v1_8_R3.NBTBase;
+import org.arkhamnetwork.Arkkit.patches.*;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.arkhamnetwork.enchantments.EnchantmentBook;
 import org.arkhamnetwork.enchantments.EnchantmentOrb;
@@ -85,9 +72,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+
 public class CosmicGlobalKitsAPI {
     public static ItemStack createMasteryKitItem(MasteryKits kits, boolean addID) {
-        ArrayList lore = Lists.newArrayList((Object[])new String[]{"", CC.RedB + "NOTE: " + CC.Gray + "Once unlocked, you will lose", CC.Gray + "access to the required Global Kits", CC.Gray + "in exchange for access to this Mastery Kit!", "", CC.GoldB + "/gkit Requirements:"});
+        ArrayList<String> lore = Lists.newArrayList("", CC.RedB + "NOTE: " + CC.Gray + "Once unlocked, you will lose", CC.Gray + "access to the required Global Kits", CC.Gray + "in exchange for access to this Mastery Kit!", "", CC.GoldB + "/gkit Requirements:");
         for (GlobalKits required : kits.getKitsRequired()) {
             lore.add(CC.GoldB + " * " + CC.Gold + required.getItemName() + CC.GoldB + " Tier III");
         }
@@ -930,7 +922,7 @@ public class CosmicGlobalKitsAPI {
                 rewards.add(axe3);
             }
             if (gkit.getKitName().equals("masterbuilder")) {
-                double chance;
+                double chance = 0;
                 ItemStack pickaxe = ItemUtils.buildItem(Material.DIAMOND_PICKAXE, (short)0, ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "Heroic Pickaxe of Hephaestus", ChatColor.GOLD.toString() + ChatColor.ITALIC.toString() + "A legendary tool forged by", ChatColor.GOLD.toString() + ChatColor.ITALIC.toString() + "the cosmic god of builders.");
                 pickaxe.addUnsafeEnchantment(Enchantment.DURABILITY, 3);
                 pickaxe.addEnchantment(Enchantment.DIG_SPEED, 4 + new Random().nextInt(2));
@@ -1148,7 +1140,7 @@ public class CosmicGlobalKitsAPI {
                         rewards.add(itemStack);
                     }
                 } else {
-                    void var10_104;
+                    int var10_104 = 0;
                     boolean bl = false;
                     while (++var10_104 < 2 + new Random().nextInt(2)) {
                         rewards.add(RandomizationScroll.getRandomizationScroll((ItemRarity)CosmicSpaceChestsAPI.getItemRarity((int)(2 + new Random().nextInt(5)))));

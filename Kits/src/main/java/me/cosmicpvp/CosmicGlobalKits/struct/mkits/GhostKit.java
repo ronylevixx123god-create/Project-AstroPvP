@@ -37,7 +37,7 @@ extends MasteryGlobalKit {
         ItemStack boots = AbilityArmorSet.GHOST.getArmorSetInfo().getBoots(player, false, false);
         EnchantmentAPI.getEnchantment((String)"Mark of the Beast").addToItem(helmet, ThreadLocalRandom.current().nextInt(EnchantmentAPI.getEnchantment((String)"Mark of the Beast").getMaxLevel()) + 1);
         EnchantmentAPI.getEnchantment((String)"Horrify").addToItem(leggings, ThreadLocalRandom.current().nextInt(EnchantmentAPI.getEnchantment((String)"Horrify").getMaxLevel()) + 1);
-        ArrayList armor = Lists.newArrayList((Object[])new ItemStack[]{helmet, chestplate, leggings, boots});
+        ArrayList<ItemStack> armor = Lists.newArrayList(helmet, chestplate, leggings, boots);
         ArrayList enchants = Lists.newArrayList((Object[])new String[]{"Feign Death", "Poltergeist"});
         while (!enchants.isEmpty()) {
             String random = (String)enchants.get(ThreadLocalRandom.current().nextInt(enchants.size()));

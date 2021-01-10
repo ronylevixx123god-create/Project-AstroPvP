@@ -36,7 +36,7 @@ extends GlobalKit {
     @Override
     public List<ItemStack> getKitItems(Player player, GlobalKits kits, int kitLevel) {
         boolean phantomSycthe;
-        ArrayList rewards = Lists.newArrayList();
+        ArrayList<ItemStack> rewards = Lists.newArrayList();
         ItemStack helmet = ItemUtils.buildItem(Material.DIAMOND_HELMET, (short)0, ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "Crown of the Colosseum Champion", ChatColor.GOLD.toString() + ChatColor.ITALIC.toString() + "A golden crown embedded with bloodstones,", ChatColor.GOLD.toString() + ChatColor.ITALIC.toString() + "beware the monstrosity whom dawns this sigil.");
         helmet = CosmicArmorSetsAPI.convertItemToHeroic((ItemStack)helmet, (HeroicArmorType)HeroicArmorType.HELMET, (boolean)true);
         HeroicArenaChampion.addRandomEnchantLevel(helmet, "Guardians");
