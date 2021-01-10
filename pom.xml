@@ -35,7 +35,7 @@
         <module>Duels</module>
         <module>Contest</module>
         <module>Conquest</module>
-        <module>Permissions</module>
+        <module>CompilexPermissions</module>
         <module>Masks</module>
     </modules>
 

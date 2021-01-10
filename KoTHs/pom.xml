@@ -306,10 +306,10 @@
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>cosmicSkyItem</artifactId>
+            <artifactId>cSkyCustomItems</artifactId>
             <version>0.1</version>
             <scope>system</scope>
-            <systemPath>../Kits/lib/CosmicSkyCustomItems.jar</systemPath>
+            <systemPath>${project.basedir}/lib/CosmicSkyCustomItems (2).jar</systemPath>
         </dependency>
     </dependencies>
 

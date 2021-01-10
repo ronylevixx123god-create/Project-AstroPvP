@@ -23,10 +23,6 @@
             <id>dmulloy2-repo</id>
             <url>https://repo.dmulloy2.net/nexus/repository/public/</url>
         </repository>
-        <repository>
-            <id>pex-repo</id>
-            <url>https://repo.glaremasters.me/repository/permissionsex/</url>
-        </repository>
     </repositories>
 
     <dependencies>
@@ -59,11 +55,6 @@
             <artifactId>lombok</artifactId>
             <version>1.16.18</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>ca.stellardrift.permissionsex</groupId>
-            <artifactId>permissionsex-bukkit</artifactId> <!-- replace with -sponge or -bukkit depending on which platform you're using -->
-            <version>2.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>redis.clients</groupId>
@@ -164,6 +155,14 @@
             <artifactId>SpaceChests</artifactId>
             <version>0.1</version>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>GUIShopTemporary</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/GUIShop-0.1.jar</systemPath>
         </dependency>
 
         <!-- System Repos -->
@@ -278,6 +277,14 @@
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/SilkSpawners.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>PEXAPI</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/PermissionsEx-1.23.4 (1).jar</systemPath>
         </dependency>
     </dependencies>
 
