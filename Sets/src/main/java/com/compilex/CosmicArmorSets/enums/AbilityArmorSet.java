@@ -107,8 +107,6 @@ public enum AbilityArmorSet {
         ItemStack item;
         ItemMeta im;
         List<String> lore;
-        NBTTagCompoundBuilder data = wrapper.getCompound("cosmicData");
-        List lore;
         NBTTagCompoundBuilder data = wrapper.getCompound("conaxData");
         if (data != null) {
             data.remove(ANTI_MKIT_ARMOR_KEY);

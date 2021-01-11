@@ -91,10 +91,10 @@
         <!-- System Repos -->
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>enchant-api</artifactId>
+            <artifactId>EnchantmentsAPI</artifactId>
             <version>0.1</version>
             <scope>system</scope>
-            <systemPath>C:/Users/brend/Documents/GitHub/ProjectAstro/AuctionHouse/lib/EnchantmentsAPI.jar</systemPath>
+            <systemPath>${project.basedir}/lib/EnchantmentsAPI.jar</systemPath>
         </dependency>
     </dependencies>
 
