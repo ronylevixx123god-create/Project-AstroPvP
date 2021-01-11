@@ -66,10 +66,8 @@ import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -197,7 +195,9 @@ public class P extends MPlugin {
 
         P.getP().setBoardManager(new BoardManager(new ScoreboardManager()));
 
-        // TODO: THIS IS THE onEnable for all additions put into Factions.
+        /*
+         This is the requirements for all additions put into Factions. (vvv)
+        */
         this.mcMMOTestUtil();
         this.registerNewListeners();
         this.registerNewCommands();
@@ -221,9 +221,11 @@ public class P extends MPlugin {
         this.fundEnabled = this.getServer().getPluginManager().isPluginEnabled("CosmicFund");
         this.fpointsEnabled = new File("plugins/CosmicFactionPoints.jar").exists();
 
-           // TODO: THIS IS THE onEnable for all additions put into Factions.
+        /*
+         This is the requirements for all additions put into Factions. (^^^)
+        */
 
-       this.getBaseCommands().add(this.cmdBase);
+        this.getBaseCommands().add(this.cmdBase);
         EssentialsFeatures.setup();
         Econ.setup();
         this.getServer().getPluginManager().registerEvents(this.playerListener, this);
@@ -254,7 +256,6 @@ public class P extends MPlugin {
             //e.printStackTrace();
         }
         P.getP().setBoardManager(new BoardManager(new ScoreboardManager()));
-        this.log("boarD?????nigger");
 
         int minute = 1200;
 

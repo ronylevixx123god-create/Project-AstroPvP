@@ -16,10 +16,10 @@ import com.compilex.CosmicDungeons.dungeons.events.RegionEvent;
 import com.compilex.CosmicDungeons.dungeons.libs.Dungeon;
 import com.compilex.CosmicDungeons.utils.WorldUtils;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import kotlin.jvm.internal.Intrinsics;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.plugin.Plugin;
 
 public final class ParkourTowerRegionEvent
 extends RegionEvent {
@@ -39,8 +39,8 @@ extends RegionEvent {
         Intrinsics.checkExpressionValueIsNotNull((Object)this.dungeon.world, (String)"dungeon.world");
         Bukkit.getLogger().info("World: " + this.dungeon.world.getName() + " players: " + this.dungeon.world.getPlayers().size());
         WorldUtils.Companion.scanBlocks(new Location(this.dungeon.world, 286.0, 206.0, -11.0), 3);
-        // todo: holos
-        //this.dungeon.setObjectiveHologram(HolographicDisplaysAPI.createHologram((Plugin)CosmicDungeonsPlugin.get(), (Location)new Location(this.dungeon.world, 287.0, 208.0, -12.0), (String[])new String[]{CC.AquaB + "Parkour Start"}));
+        this.dungeon.setObjectiveHologram(HologramsAPI.createHologram(CosmicDungeonsPlugin.get(), (Location)new Location(this.dungeon.world, 287.0, 208.0, -12.0)));
+        this.dungeon.getObjectiveHologram().appendTextLine(CC.AquaB + "Parkour Start");
     }
 
     private static void $$$reportNull$$$0(int n) {

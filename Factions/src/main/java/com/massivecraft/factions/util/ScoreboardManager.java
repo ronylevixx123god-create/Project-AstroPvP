@@ -29,7 +29,6 @@ public class ScoreboardManager implements BoardAdapter {
 
     private static final DateFormat format = new SimpleDateFormat("MM/dd");
 
-    // TODO: FINISH NEW SCOREBOARD API
     @Override
     public List<String> getScoreboard(Player player, com.massivecraft.factions.board.Board board) {
         return this.mainBoard(player);

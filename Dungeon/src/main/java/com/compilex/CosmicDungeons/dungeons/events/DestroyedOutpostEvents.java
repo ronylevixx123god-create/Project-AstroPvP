@@ -92,8 +92,9 @@ import com.cosmicpvp.cosmicutils.nms.EntityUtils;
 import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
 import com.cosmicpvp.cosmicutils.utils.*;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.Lists;
-import com.google.common.collect.MapMaker;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
@@ -148,7 +149,7 @@ extends DungeonEvents {
     private ItemStack dimensionalMap;
     public boolean reversingPortalOrder = false;
     public boolean sentMapNotification;
-    private final Map<UUID, Long> cache = new MapMaker().expireAfterWrite(1L, TimeUnit.SECONDS).makeMap();
+    private final Cache<UUID, Long> cache = CacheBuilder.newBuilder().expireAfterWrite(1L, TimeUnit.SECONDS).build();
     private int lastExplosionPrimeTick;
 
     public List<Location> getPortalWorldLocations() {
@@ -443,7 +444,7 @@ extends DungeonEvents {
     @EventHandler(priority=EventPriority.LOWEST, ignoreCancelled=true)
     public void onPlayerVelocityChange(PlayerVelocityEvent event) {
         if (MinecraftServer.currentTick == this.lastExplosionPrimeTick && event.getPlayer().getWorld().getName().equals(this.dungeon.getWorldName())) {
-            if (this.cache.containsKey(event.getPlayer().getUniqueId())) {
+            if (this.cache.asMap().containsKey(event.getPlayer().getUniqueId())) {
                 event.setCancelled(true);
                 Bukkit.getLogger().info("Cancelling Velocity for " + event.getPlayer().getName() + " due to being knockedback within the alst 1");
             } else {

@@ -27,6 +27,8 @@ import com.compilex.CosmicDungeons.dungeons.libs.Dungeon;
 import com.compilex.CosmicDungeons.dungeons.libs.DungeonState;
 import com.compilex.CosmicDungeons.utils.LocationUtils;
 import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import com.google.common.collect.Lists;
 import net.astropvp.core.utils.TitleUtil;
 import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
@@ -34,6 +36,7 @@ import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.plugin.Plugin;
 
 import java.util.Calendar;
 import java.util.LinkedList;
@@ -146,12 +149,15 @@ implements Runnable {
                                     portalBlockA.getWorld().playSound(portalBlockA.getLocation(), Sound.AMBIENCE_THUNDER, 2.0f, 0.35f);
                                     dungeon.setDungeonStatus(DungeonState.LOADING);
                                     dungeon.setPortalLocation(portalBlockA.getLocation());
-                                // todo: holos
-                                    //                                    final Hologram holo_a = HolographicDisplaysAPI.createHologram((Plugin)CosmicDungeonsPlugin.get_(), (Location)portalBlockB.getLocation().add(0.5, 1.25, 0.5), (String[])new String[]{dungeon.getDungeonName()});
-//                                    final Hologram holo_b = HolographicDisplaysAPI.createHologram((Plugin)CosmicDungeonsPlugin.get_(), (Location)dungeon_portalBlockB.getLocation().add(0.5, 1.25, 0.5), (String[])new String[]{(Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "Exit Portal"});
-//                                    if (dungeon.isAbandondedSpaceship()) {
-//                                        dungeon.setObjectiveHologram(HolographicDisplaysAPI.createHologram((Plugin)CosmicDungeonsPlugin.get_(), (Location)new Location(dungeon.getWorld(), -2.0, 82.0, 90.0), (String[])new String[]{(Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "LOCKED", (Object)ChatColor.GRAY + "The airlock will automatically", (Object)ChatColor.GRAY + "unlock once the dungeon portal closes."}));
-//                                    }
+                                    final Hologram holo_a = HologramsAPI.createHologram(CosmicDungeonsPlugin.get_(), portalBlockB.getLocation().add(0.5, 1.25, 0.5));
+                                    holo_a.appendTextLine(dungeon.getDungeonName());
+                                    final Hologram holo_b = HologramsAPI.createHologram(CosmicDungeonsPlugin.get_(), dungeon_portalBlockB.getLocation().add(0.5, 1.25, 0.5));
+                                    holo_b.appendTextLine(ChatColor.RED + "" + ChatColor.BOLD + "Exit Portal");
+                                    if (dungeon.isAbandondedSpaceship()) {
+                                        dungeon.setObjectiveHologram(HologramsAPI.createHologram((Plugin)CosmicDungeonsPlugin.get_(), (Location)new Location(dungeon.getWorld(), -2.0, 82.0, 90.0)));
+                                        dungeon.getObjectiveHologram().appendTextLine(ChatColor.RED + "" + ChatColor.BOLD + "LOCKED! " + ChatColor.GRAY + "The airlock will automatically");
+                                        dungeon.getObjectiveHologram().appendTextLine(ChatColor.GRAY + "unlock once the dungeon portal closes.");
+                                    }
                                     Bukkit.broadcastMessage("");
                                     Bukkit.broadcastMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "*** DUNGEON PORTAL ***");
                                     Bukkit.broadcastMessage(ChatColor.YELLOW + "???" + ChatColor.GOLD + " has spawned a dungeon portal to ");
@@ -232,9 +238,8 @@ implements Runnable {
                                             CosmicDungeonsPlugin.get_().getDungeonPortalListener().portalBlocks.remove(portalBlockB.getLocation());
                                             CosmicDungeonsPlugin.get_().getDungeonPortalListener().portalBlocks.remove(dungeon_portalBlockA.getLocation());
                                             CosmicDungeonsPlugin.get_().getDungeonPortalListener().portalBlocks.remove(dungeon_portalBlockB.getLocation());
-                                            // todo: holos
-                                            //                                            holo_a.delete();
-//                                            holo_b.delete();
+                                            holo_a.delete();
+                                            holo_b.delete();
                                             portalBlockA.getWorld().playSound(portalBlockA.getLocation(), Sound.AMBIENCE_THUNDER, 2.0f, 0.35f);
                                             ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, portalBlockA.getLocation(), 0.45f, 50);
                                             ParticleEffect.playEffect(ParticleEffect.PORTAL, portalBlockA.getLocation(), 0.6f, 50);

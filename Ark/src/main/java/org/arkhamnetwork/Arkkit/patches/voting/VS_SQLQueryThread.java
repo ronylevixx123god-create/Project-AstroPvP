@@ -24,8 +24,7 @@ public class VS_SQLQueryThread
         while (true) {
             try {
                 Thread.sleep(250L);
-            } catch (InterruptedException interruptedException) {
-                // empty catch block
+            } catch (InterruptedException ignored) {
             }
             Iterator<String> iterator = VS_SQLManager.sql_query.iterator();
             while (true) {

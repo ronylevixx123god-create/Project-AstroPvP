@@ -247,8 +247,7 @@ final class WarzoneMoneyTask
                 if (warzoneControl == 3) {
                     payout = (int) ((double) payout * 2.0);
                 }
-            } catch (Exception exception) {
-                // empty catch block
+            } catch (Exception ignored) {
             }
         }
         if (minutes == 1) {

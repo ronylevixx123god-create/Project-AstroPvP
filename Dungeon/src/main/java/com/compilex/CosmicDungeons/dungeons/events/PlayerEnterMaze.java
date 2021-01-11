@@ -12,22 +12,22 @@
 package com.compilex.CosmicDungeons.dungeons.events;
 
 import com.compilex.CosmicDungeons.CosmicDungeonsPlugin;
-import com.compilex.CosmicDungeons.dungeons.events.RegionEvent;
 import com.compilex.CosmicDungeons.dungeons.libs.Dungeon;
 import com.compilex.CosmicDungeons.utils.Logger;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.plugin.Plugin;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 class PlayerEnterMaze
 extends RegionEvent {
     public Block mazeLever = null;
-    private List<Location> possibleMazeLeverLocations = new ArrayList<Location>();
+    private final List<Location> possibleMazeLeverLocations = new ArrayList<Location>();
 
     public PlayerEnterMaze(Dungeon d, String regionName) {
         super(d, regionName);
@@ -49,8 +49,8 @@ extends RegionEvent {
         this.mazeLever = this.getRandomMazeLever();
         this.mazeLever.setTypeIdAndData(Material.LEVER.getId(), (byte)5, false);
         Logger.debug("mazeLever: " + this.mazeLever);
-        // todo: holos
-        //this.dungeon.setObjectiveHologram(HolographicDisplaysAPI.createHologram((Plugin)CosmicDungeonsPlugin.get_(), (Location)new Location(this.dungeon.getWorld(), -74.0, 80.5, 172.5), (String[])new String[]{(Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "LOCKED", (Object)ChatColor.GRAY + "Find the lever!"}));
+        this.dungeon.setObjectiveHologram(HologramsAPI.createHologram(CosmicDungeonsPlugin.get_(), new Location(this.dungeon.getWorld(), -74.0, 80.5, 172.5)));
+        this.dungeon.getObjectiveHologram().appendTextLine(ChatColor.RED + "" + ChatColor.BOLD + "LOCKED! "+ ChatColor.GRAY + "Find the lever!");
     }
 
     private Block getRandomMazeLever() {
