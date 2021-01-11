@@ -31,7 +31,6 @@
  */
 package com.compilex.CosmicDungeons;
 
-import com.compilex.CosmicDungeons.DungeonsAPI;
 import com.compilex.CosmicDungeons.cmds.CommandAdminDungeon;
 import com.compilex.CosmicDungeons.cmds.CommandDungeon;
 import com.compilex.CosmicDungeons.cmds.CommandDungeonMaster;
@@ -82,7 +81,6 @@ import java.util.concurrent.TimeUnit;
 import fr.neatmonster.nocheatplus.checks.CheckType;
 import fr.neatmonster.nocheatplus.hooks.NCPHook;
 import fr.neatmonster.nocheatplus.hooks.NCPHookManager;
-import lilypad.client.connect.api.Connect;
 import lombok.SneakyThrows;
 import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
@@ -225,8 +223,7 @@ extends JavaPlugin {
                 this.availableDungeonKeysTracked.add(dungeonType);
             }
         }
-        this.serverName = ((Connect)this.getServer().getServicesManager().getRegistration(Connect.class).getProvider()).getSettings().getUsername();
-        Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)CosmicDungeonsPlugin.get(), () -> {
+        Bukkit.getScheduler().scheduleSyncDelayedTask(CosmicDungeonsPlugin.get(), () -> {
             for (FPlayer fplayer : FPlayers.i.get()) {
                 try {
                     UUID uuid = UUID.fromString(fplayer.getAccountId());
@@ -239,7 +236,7 @@ extends JavaPlugin {
             }
             Bukkit.getLogger().info("[CosmicDungeons] Registered " + this.factionsInsideOnEnable.size() + " players inside of factions!");
         }, 100L);
-        Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)CosmicDungeonsPlugin.get(), () -> {
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(CosmicDungeonsPlugin.get(), () -> {
             DungeonType.values();
             for (DungeonType type : DungeonType.values()) {
                 if (this.availableDungeonKeysTracked.contains((Object)type) || DungeonMasterKeyMenu.getResetString(type) != null) continue;

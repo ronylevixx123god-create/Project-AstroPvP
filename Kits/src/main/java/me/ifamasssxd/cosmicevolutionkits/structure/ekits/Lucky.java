@@ -50,7 +50,6 @@ import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.cosmicpvp.cosmicutils.itembuilder.BlackScrollBuilder;
 import com.cosmicpvp.cosmicutils.itembuilder.BoosterBuilder;
 import com.cosmicpvp.cosmicutils.itembuilder.BossEggBuilder;
-import com.cosmicpvp.cosmicutils.itembuilder.CosmicCrateBuilder;
 import com.cosmicpvp.cosmicutils.itembuilder.CustomItemBuilder;
 import com.cosmicpvp.cosmicutils.itembuilder.DungeonPortalIngredientBuilder;
 import com.cosmicpvp.cosmicutils.itembuilder.EnchantDustBuilder;

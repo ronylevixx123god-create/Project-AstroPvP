@@ -30,7 +30,6 @@ public final class CosmicUtils
     private Map<String, Location> playerLocations = new ConcurrentHashMap<String, Location>();
     private boolean arkkitEnabled = false;
     private boolean vanishNoPacketEnabled = false;
-    private boolean cosmicCrateEnabled = false;
     private boolean evolutionKitEnabled = false;
     private boolean hcfCrateEnabled = false;
     private boolean conquestsEnabled = false;
@@ -77,9 +76,6 @@ public final class CosmicUtils
         if (this.doesPluginExist("CosmicGlobalKits")) {
             this.globalKitsEnabled = true;
         }
-        if (this.doesPluginExist("CosmicRankQuests")) {
-            this.rankQuestsEnabled = true;
-        }
         for (Player player : PlayerUtil.getOnlinePlayers()) {
             this.playerLocations.put(player.getName(), player.getLocation());
             this.asyncPlayerMap.put(player.getName(), player);
@@ -98,7 +94,6 @@ public final class CosmicUtils
         this.armorsetEnabled = new File("plugins/CosmicArmorSets.jar").exists();
         this.outpostsEnabled = new File("plugins/CosmicOutposts.jar").exists();
         this.evolutionKitEnabled = new File("plugins/CosmicEvolutionKit.jar").exists();
-        this.cosmicCrateEnabled = new File("plugins/CosmicCrate.jar").exists();
         this.vanishNoPacketEnabled = new File("plugins/VanishNoPacket.jar").exists();
         this.hcfCrateEnabled = new File("plugins/CosmicHCFCrate.jar").exists();
         this.conquestsEnabled = new File("plugins/CosmicConquest.jar").exists();
@@ -160,10 +155,6 @@ public final class CosmicUtils
 
     public boolean isVanishNoPacketEnabled() {
         return this.vanishNoPacketEnabled;
-    }
-
-    public boolean isCosmicCrateEnabled() {
-        return this.cosmicCrateEnabled;
     }
 
     public boolean isEvolutionKitEnabled() {

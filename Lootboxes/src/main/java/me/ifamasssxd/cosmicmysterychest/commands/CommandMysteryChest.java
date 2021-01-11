@@ -31,6 +31,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class CommandMysteryChest
@@ -147,7 +148,7 @@ public class CommandMysteryChest
                     throw new MysteryChestSuccessException("Set Active Mystery Chest to '" + found2.getInternalName() + "', expiring in " + TimeUtils.formatFutureTime((long) expiration));
                 }
             }
-        } catch (MysteryChestException ex) {
+        } catch (MysteryChestException | IOException ex) {
             sender.sendMessage(CC.RedB + "(!) " + CC.Red + ex.getMessage());
             return true;
         }

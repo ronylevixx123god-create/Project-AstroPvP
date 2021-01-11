@@ -221,10 +221,10 @@ public class ConquestListener implements Listener {
                             double percentLeft = hitsLeft.getHits() * 1.0D / maxHits * 1.0D;
                             int breaks = (int)Math.min(10.0D, Math.floor(10.0D - percentLeft * 10.0D));
                             PacketPlayOutBlockBreakAnimation animation = new PacketPlayOutBlockBreakAnimation(0, block.getX(), block.getY(), block.getZ(), breaks);
-                            (((CraftPlayer)player).getHandle()).playerConnection.sendPacket((Packet)animation);
+                            (((CraftPlayer)player).getHandle()).playerConnection.sendPacket(animation);
                             for (Entity ent2 : player.getNearbyEntities(64.0D, 64.0D, 64.0D)) {
                                 if (ent2 instanceof Player)
-                                    (((CraftPlayer)ent2).getHandle()).playerConnection.sendPacket((Packet)animation);
+                                    (((CraftPlayer)ent2).getHandle()).playerConnection.sendPacket(animation);
                             }
                         }
                     } catch (Exception e2) {

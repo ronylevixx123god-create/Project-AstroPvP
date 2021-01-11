@@ -1,62 +1,9 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.compilex.CosmicArmorSets.CosmicArmorSetsAPI
- *  com.compilex.CosmicArmorSets.enums.ArmorSet
- *  com.compilex.CosmicArmorSets.enums.HeroicArmorType
- *  com.compilex.CosmicArmorSets.enums.HeroicWeaponType
- *  com.compilex.CosmicCrate.api.CCAPI
- *  com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity
- *  com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils
- *  com.cosmicpvp.cosmicutils.itembuilder.AbilityArmorSetItemBuilder
- *  com.cosmicpvp.cosmicutils.itembuilder.CustomItemBuilder
- *  com.cosmicpvp.cosmicutils.itembuilder.CustomItemBuilder$CustomItemType
- *  com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder
- *  com.cosmicpvp.cosmicutils.itembuilder.KitGemBuilder
- *  com.cosmicpvp.cosmicutils.struct.factions.points.FactionPointUtils
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.JSONMessage
- *  com.cosmicpvp.cosmicutils.utils.NBTTagCompoundBuilder
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
- *  com.cosmicpvp.cosmicutils.utils.PlayerUtil
- *  com.cosmicpvp.cosmicutils.utils.UpgradeUtils
- *  com.massivecraft.factions.Faction
- *  com.rit.sucy.CustomEnchantment
- *  com.rit.sucy.EnchantmentAPI
- *  me.ifamasssxd.cosmicconquest.CosmicConquestAPI
- *  me.ifamasssxd.cosmicdisguises.managers.CosmicDisguiseAPI
- *  me.ifamasssxd.killtracker.KillTrackerAPI
- *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
- *  org.arkhamnetwork.Arkkit.patches.EquipmentLootboxes
- *  org.arkhamnetwork.Arkkit.patches.ItemID
- *  org.arkhamnetwork.Arkkit.patches.ItemLinking
- *  org.arkhamnetwork.Arkkit.patches.LoreTag
- *  org.arkhamnetwork.Arkkit.plugins.ArkPlugins
- *  org.arkhamnetwork.enchantments.EnchantmentBook
- *  org.arkhamnetwork.enchantments.EnchantmentOrb
- *  org.arkhamnetwork.enchantments.RandomizationScroll
- *  org.arkhamnetwork.enchantments.libs.OrbType
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.Location
- *  org.bukkit.Material
- *  org.bukkit.Sound
- *  org.bukkit.entity.Player
- *  org.bukkit.event.Event$Result
- *  org.bukkit.event.EventHandler
- *  org.bukkit.event.Listener
- *  org.bukkit.event.block.Action
- *  org.bukkit.event.player.PlayerInteractEvent
- *  org.bukkit.inventory.ItemStack
- */
 package com.compilex.CosmicDungeons.listeners;
 
 import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
 import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.compilex.CosmicArmorSets.enums.HeroicArmorType;
 import com.compilex.CosmicArmorSets.enums.HeroicWeaponType;
-import com.compilex.CosmicCrate.api.CCAPI;
 import com.compilex.CosmicDungeons.CosmicDungeonsPlugin;
 import com.compilex.CosmicDungeons.DungeonsAPI;
 import com.compilex.CosmicDungeons.DungeonsRewardsAPI;
@@ -128,30 +75,30 @@ implements Listener {
                 bagType = foundType;
             }
             if (this.getEmptyInventorySlots(p) < 4 && !CosmicDungeonsPlugin.get().isDevplanet()) {
-                p.sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "You do not have enough empty inventory slots to open a Dungeon Lootbag.");
-                p.sendMessage((Object)ChatColor.RED + "REQ: " + (Object)ChatColor.GRAY + (bagType.equals((Object)DungeonType.ABANDONED_SHIP) ? 4 : 6) + " slots");
+                p.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "You do not have enough empty inventory slots to open a Dungeon Lootbag.");
+                p.sendMessage(ChatColor.RED + "REQ: " + ChatColor.GRAY + (bagType.equals(DungeonType.ABANDONED_SHIP) ? 4 : 6) + " slots");
                 return;
             }
             if (p.getItemInHand().getAmount() > 1) {
                 if (!CosmicDungeonsPlugin.get().isDevplanet()) {
-                    p.sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "You cannot open stacked Dungeon Lootbags.");
+                    p.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "You cannot open stacked Dungeon Lootbags.");
                     return;
                 }
-                p.sendMessage((Object)ChatColor.RED + "You cannot open stacked bags, but since this is devplanet its allowed..");
+                p.sendMessage(ChatColor.RED + "You cannot open stacked bags, but since this is devplanet its allowed..");
                 is.setAmount(is.getAmount() - 1);
             } else {
                 long itemID;
                 if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning() && (itemID = ItemID.getItemID((ItemStack)e.getItem())) != -1L) {
-                    ItemID.blacklistIID((long)itemID, (String)"dungeonLootbagOpen");
+                    ItemID.blacklistIID((long)itemID, "dungeonLootbagOpen");
                 }
                 p.setItemInHand((ItemStack)null);
             }
             List<ItemStack> loot = this.getCoolDungeonLoot(bagType);
             ItemStack heroicBonusItem = null;
             ItemStack heroicUpgradeBonusItem = null;
-            int level = UpgradeUtils.getUpgradeLevel((Player)p, (String)"HEROIC_DUNGEON_LOOTBAG");
+            int level = UpgradeUtils.getUpgradeLevel((Player)p, "HEROIC_DUNGEON_LOOTBAG");
             if (level > 0) {
-                double chance;
+                double chance = 0;
                 double d = level == 1 ? 0.05 : (level == 2 ? 0.08 : (level == 3 ? 0.15 : (chance = level == 4 ? 0.25 : 0.0)));
                 if (Math.random() <= chance) {
                     List<ItemStack> potentialLoot = this.getCoolDungeonLoot(bagType);
@@ -166,26 +113,26 @@ implements Listener {
                 heroicBonusItem = potentialLoot2.get(ThreadLocalRandom.current().nextInt(potentialLoot2.size()));
                 loot.add(heroicBonusItem);
             }
-            if ((pointNote = FactionPointUtils.getFactionPointsItem((Faction)null, (Player)null, (String)"lootbag", (Object)((Object)bagType))) != null) {
+            if ((pointNote = FactionPointUtils.getFactionPointsItem((Faction)null, (Player)null, "lootbag", (bagType))) != null) {
                 loot.add(pointNote);
             }
             if (loot.size() > 0) {
                 for (int ind = 0; ind < loot.size(); ++ind) {
                     ItemStack i = loot.get(ind);
                     String itemName = i.hasItemMeta() && i.getItemMeta().hasDisplayName() ? i.getItemMeta().getDisplayName() : i.getType().name().replace("_", " ");
-                    String colorlessName = ChatColor.stripColor((String)itemName).toLowerCase();
+                    String colorlessName = ChatColor.stripColor(itemName).toLowerCase();
                     if (colorlessName.contains("faction point") || colorlessName.contains("faction crystal") || colorlessName.contains("voucher") || colorlessName.contains("title") || colorlessName.contains("tag") || colorlessName.contains("transmog")) continue;
                     if (i.getType() == Material.ENCHANTED_BOOK) {
                         itemName = "Depth Strider Enchantment Book";
                     }
                     JSONMessage message = new JSONMessage("");
-                    message.addText((Player)null, (Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "(*) " + (Object)ChatColor.GOLD + p.getDisplayName() + (Object)ChatColor.GOLD + " received a(n) ", ChatColor.GOLD);
-                    message.addItem(i, itemName != null ? ItemLinking.formatColors((String)itemName).getText() : i.getType().name().replace("_", " ").toLowerCase(), ChatColor.GOLD);
-                    message.addText((Player)null, (Object)ChatColor.GOLD + " from a(n) " + bagType.getDungeonName() + " /dungeon Lootbag", ChatColor.GOLD);
-                    if (heroicUpgradeBonusItem != null && heroicUpgradeBonusItem.equals((Object)i)) {
+                    message.addText((Player)null, ChatColor.GOLD + "" + ChatColor.BOLD + "(*) " + ChatColor.GOLD + p.getDisplayName() + ChatColor.GOLD + " received a(n) ", ChatColor.GOLD);
+                    message.addItem(i, itemName != null ? ItemLinking.formatColors(itemName).getText() : i.getType().name().replace("_", " ").toLowerCase(), ChatColor.GOLD);
+                    message.addText((Player)null, ChatColor.GOLD + " from a(n) " + bagType.getDungeonName() + " /dungeon Lootbag", ChatColor.GOLD);
+                    if (heroicUpgradeBonusItem != null && heroicUpgradeBonusItem.equals(i)) {
                         message.addText((Player)null, " " + CC.Yellow + "(" + CC.YellowB + "SRC" + CC.Yellow + ": Lootbag Scavanger /f upgrade)", ChatColor.YELLOW);
                         heroicUpgradeBonusItem = null;
-                    } else if (heroicBonusItem != null && heroicBonusItem.equals((Object)i)) {
+                    } else if (heroicBonusItem != null && heroicBonusItem.equals(i)) {
                         message.addText((Player)null, " " + CC.Yellow + "(" + CC.YellowB + "SRC" + CC.Yellow + ":", ChatColor.YELLOW);
                         message.addHoverData(CC.Yellow + " Heroic Rank)", CC.YellowB + "Heroic Rank " + CC.Yellow + "(" + CC.YellowB + "Top Rank+" + CC.Yellow + ") " + CC.Gray + "can be\n" + CC.Gray + "obtained from various in game mechanics\n" + CC.Gray + "as well as unlocked at " + CC.GrayU + "buy.cosmicpvp.com" + CC.Gray + "!", "https://buy.cosmicpvp.com", ChatColor.YELLOW);
                         heroicBonusItem = null;
@@ -199,15 +146,15 @@ implements Listener {
             loot.addAll(this.getOtherDungeonLoot(bagType));
             boolean dropped = false;
             for (ItemStack j : loot) {
-                if (PlayerUtil.giveOrDropProtectedItem((Player)p, (ItemStack)j, (int)-1)) continue;
+                if (PlayerUtil.giveOrDropProtectedItem((Player)p, (ItemStack)j, -1)) continue;
                 dropped = true;
             }
             if (dropped) {
                 p.sendMessage(CC.RedB + "(!) " + CC.Red + "Your inventory was full and some Lootbag items have been dropped on the ground!");
             }
-            ParticleEffect.playEffect((ParticleEffect)ParticleEffect.CLOUD, (Location)p.getLocation().add(0.0, 1.0, 0.0), (float)0.6f, (int)50);
+            ParticleEffect.playEffect(ParticleEffect.CLOUD, (Location)p.getLocation().add(0.0, 1.0, 0.0), (float)0.6f, 50);
             p.playSound(p.getLocation(), Sound.CHEST_OPEN, 1.0f, 0.3f);
-            Bukkit.getLogger().info("[CosmicDungeons] Giving " + p.getName() + loot.size() + " items: " + Arrays.toString((Object[])loot.toArray((T[])new ItemStack[loot.size()])) + " from lootbag: " + bagType.name());
+            Bukkit.getLogger().info(new StringBuilder().append("[CosmicDungeons] Giving ").append(p.getName()).append(loot.size()).append(" items: ").append(Arrays.toString(loot.toArray(new Object[0]))).append(" from lootbag: ").append(bagType.name()).toString());
             p.updateInventory();
         }
     }
@@ -219,7 +166,7 @@ implements Listener {
     }
 
     public List<ItemStack> getCoolDungeonLoot(DungeonType dungeonType) {
-        boolean isDestroyed = dungeonType.equals((Object)DungeonType.DESTROYED_OUTPOST);
+        boolean isDestroyed = dungeonType.equals(DungeonType.DESTROYED_OUTPOST);
         ArrayList<ItemStack> loot = new ArrayList<ItemStack>();
         ThreadLocalRandom random = ThreadLocalRandom.current();
         if (Math.random() < 0.04) {
@@ -245,35 +192,32 @@ implements Listener {
             } else if (Math.random() <= 0.01 && ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin().isRunning()) {
                 loot.add(((EquipmentLootboxes)ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin()).createHeroicLootboxItem(true));
             }
-            if (Math.random() <= 0.02) {
-                loot.add(CCAPI.getGodlyCosmicCrate());
-            }
             if (Math.random() <= 0.1) {
-                loot.add(EnchantmentBook.getHeroicBlackscroll((boolean)true));
+                loot.add(EnchantmentBook.getHeroicBlackscroll(true));
             }
             if (Math.random() <= 0.33) {
-                loot.add(KillTrackerAPI.createSoulShard((int)(((Random)random).nextInt(5000) + 5001)));
+                loot.add(KillTrackerAPI.createSoulShard((((Random)random).nextInt(5000) + 5001)));
             }
             if (Math.random() <= 0.25) {
-                loot.add(CosmicConquestAPI.createHeroicToken((int)(2 + ((Random)random).nextInt(3))));
+                loot.add(CosmicConquestAPI.createHeroicToken((2 + ((Random)random).nextInt(3))));
             }
             if (Math.random() <= 0.1) {
-                loot.add(EnchantmentOrb.getEnchantmentOrb((int)(50 + ((Random)random).nextInt(51)), (int)13, (OrbType)(((Random)random).nextInt(10) <= 2 ? OrbType.ARMOR : OrbType.WEAPON)));
+                loot.add(EnchantmentOrb.getEnchantmentOrb((50 + ((Random)random).nextInt(51)), 13, ((Random)random).nextInt(10) <= 2 ? OrbType.ARMOR : OrbType.WEAPON));
             }
-            if (Math.random() <= 0.05 && (enchantment = EnchantmentAPI.getEnchantment((String)"Infinite Luck")) != null) {
-                loot.add(EnchantmentBook.getEnchantmentBook((CustomEnchantment)enchantment, (int)(1 + ((Random)random).nextInt(enchantment.getMaxLevel())), (int)(20 + ((Random)random).nextInt(40)), (int)(40 + ((Random)random).nextInt(40))));
-            }
-            if (Math.random() <= 0.05) {
-                loot.add(CosmicArmorSetsAPI.createHeroicWeapon((HeroicWeaponType)(((Random)random).nextBoolean() ? HeroicWeaponType.SWORD : HeroicWeaponType.AXE)));
+            if (Math.random() <= 0.05 && (enchantment = EnchantmentAPI.getEnchantment("Infinite Luck")) != null) {
+                loot.add(EnchantmentBook.getEnchantmentBook(enchantment, (1 + ((Random)random).nextInt(enchantment.getMaxLevel())), (20 + ((Random)random).nextInt(40)), (40 + ((Random)random).nextInt(40))));
             }
             if (Math.random() <= 0.05) {
-                loot.add(CosmicDisguiseAPI.createRedeemableDisguise((String)"CHICKEN"));
+                loot.add(CosmicArmorSetsAPI.createHeroicWeapon(((Random)random).nextBoolean() ? HeroicWeaponType.SWORD : HeroicWeaponType.AXE));
+            }
+            if (Math.random() <= 0.05) {
+                loot.add(CosmicDisguiseAPI.createRedeemableDisguise("CHICKEN"));
             }
             if (ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin().isRunning() && Math.random() <= 0.25) {
                 loot.add(((EquipmentLootboxes)ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin()).createHeroicGKitGenerator(true));
             }
             if (Math.random() <= 0.1) {
-                loot.add(CosmicArmorSetsAPI.createArmorSetUpgrade((ArmorSet)ArmorSet.values()[((Random)random).nextInt(ArmorSet.values().length)], (double)(50 + ((Random)random).nextInt(51))));
+                loot.add(CosmicArmorSetsAPI.createArmorSetUpgrade(ArmorSet.values()[((Random)random).nextInt(ArmorSet.values().length)], (double)(50 + ((Random)random).nextInt(51))));
             }
             if (Math.random() <= 0.01) {
                 this.addLoot((ItemBuilder)new KitGemBuilder(false, true, false, true), loot);
@@ -287,13 +231,13 @@ implements Listener {
         }
         if (Math.random() < 0.02 && !isDestroyed) {
             int x = new Random().nextInt(4);
-            loot.add(CosmicArmorSetsAPI.getArmorSet((ArmorSet)ArmorSet.MOTHER_OF_YIJKI)[x]);
+            loot.add(CosmicArmorSetsAPI.getArmorSet(ArmorSet.MOTHER_OF_YIJKI)[x]);
         } else if (Math.random() < 0.1) {
             int x = new Random().nextInt(4);
-            loot.add(CosmicArmorSetsAPI.getArmorSet((ArmorSet)ArmorSet.PHANTOM)[x]);
+            loot.add(CosmicArmorSetsAPI.getArmorSet(ArmorSet.PHANTOM)[x]);
         } else if (Math.random() < 0.02) {
             int x = new Random().nextInt(4);
-            loot.add(CosmicArmorSetsAPI.getArmorSet((ArmorSet)ArmorSet.valueOf((String)"SUPREME"))[x]);
+            loot.add(CosmicArmorSetsAPI.getArmorSet(ArmorSet.valueOf("SUPREME"))[x]);
         }
         if (Math.random() < 0.01) {
             loot.add(DungeonsAPI.get().getDungeon(0).getDungeonPortal());
@@ -309,43 +253,43 @@ implements Listener {
             double x2 = new Random().nextInt(5);
             if (isDestroyed) {
                 if (x2 == 0.0) {
-                    loot.add(ItemUtils.getTitleVoucher((String)"GodKiller"));
+                    loot.add(ItemUtils.getTitleVoucher("GodKiller"));
                 }
                 if (x2 == 1.0) {
-                    loot.add(ItemUtils.getTitleVoucher((String)"IAmReality"));
+                    loot.add(ItemUtils.getTitleVoucher("IAmReality"));
                 }
             } else {
                 if (x2 == 0.0) {
-                    loot.add(ItemUtils.getTitleVoucher((String)"#BetterThanYijki"));
+                    loot.add(ItemUtils.getTitleVoucher("#BetterThanYijki"));
                 }
                 if (x2 == 1.0) {
-                    loot.add(ItemUtils.getTitleVoucher((String)"ChampionOfTheCosmoverse"));
+                    loot.add(ItemUtils.getTitleVoucher("ChampionOfTheCosmoverse"));
                 }
             }
             if (x2 == 2.0) {
-                loot.add(ItemUtils.getTitleVoucher((String)"oof"));
+                loot.add(ItemUtils.getTitleVoucher("oof"));
             }
             if (x2 == 3.0) {
-                loot.add(ItemUtils.getTitleVoucher((String)"Yikes!"));
+                loot.add(ItemUtils.getTitleVoucher("Yikes!"));
             }
             if (x2 == 4.0) {
-                loot.add(ItemUtils.getTitleVoucher((String)"#WhatClient"));
+                loot.add(ItemUtils.getTitleVoucher("#WhatClient"));
             }
         }
-        if (dungeonType.equals((Object)DungeonType.ABANDONED_SHIP) && Math.random() <= 0.05) {
+        if (dungeonType.equals(DungeonType.ABANDONED_SHIP) && Math.random() <= 0.05) {
             loot.add(DungeonsAPI.get().getTeleportationCrystal().clone());
         }
         if (Math.random() <= 0.05) {
-            loot.add(CosmicConquestAPI.createHeroicToken((int)(ThreadLocalRandom.current().nextInt(4) + 1)));
+            loot.add(CosmicConquestAPI.createHeroicToken((ThreadLocalRandom.current().nextInt(4) + 1)));
         }
         if (Math.random() < 0.1) {
             loot.add(DungeonsRewardsAPI.getRandomHeroicEnchantment());
         }
         if (Math.random() < 0.15) {
-            loot.add(ItemUtils.getMysteryDust((ItemRarity)ItemRarity.SOUL, (int)(5 + ThreadLocalRandom.current().nextInt(6))));
+            loot.add(ItemUtils.getMysteryDust((ItemRarity)ItemRarity.SOUL, (5 + ThreadLocalRandom.current().nextInt(6))));
         }
         if (Math.random() < 0.15) {
-            loot.add(ItemUtils.getDepthStriderBook((int)(1 + ThreadLocalRandom.current().nextInt(3))));
+            loot.add(ItemUtils.getDepthStriderBook((1 + ThreadLocalRandom.current().nextInt(3))));
         }
         return loot;
     }
@@ -361,7 +305,7 @@ implements Listener {
     public List<ItemStack> getOtherDungeonLoot(DungeonType dungeonType) {
         int mcmmoCredits;
         int moneyToGive;
-        boolean isDestroyedOutpost = dungeonType.equals((Object)DungeonType.DESTROYED_OUTPOST);
+        boolean isDestroyedOutpost = dungeonType.equals(DungeonType.DESTROYED_OUTPOST);
         ArrayList<ItemStack> loot = new ArrayList<ItemStack>();
         if (Math.random() < 0.25) {
             loot.add(ItemUtils.getItemNametag());
@@ -388,8 +332,8 @@ implements Listener {
             moneyToGive = Math.min(10000000, 1000000 + 500000 * daysSinceAvailable);
             mcmmoCredits = Math.min(250, 100 + 10 * daysSinceAvailable);
         }
-        loot.add(ItemUtils.getMoneyNote((String)"Cosmic Dungeon", (int)moneyToGive));
-        loot.add(ItemUtils.getMCMMOVoucher((int)mcmmoCredits));
+        loot.add(ItemUtils.getMoneyNote("Cosmic Dungeon", moneyToGive));
+        loot.add(ItemUtils.getMCMMOVoucher(mcmmoCredits));
         return loot;
     }
 

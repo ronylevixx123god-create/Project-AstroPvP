@@ -207,7 +207,7 @@ implements Listener {
             c.setMetadata("creeperOwner", new FixedMetadataValue(CosmicCustomTNT.get(), e.getPlayer().getName()));
             if (ct == CreeperTypes.Stun || ct == CreeperTypes.Vile) {
                 ((CraftCreeper)c).getHandle().maxFuseTicks = 15;
-                ((CraftCreeper)c).getHandle().cd();
+                ((CraftCreeper)c).getHandle().co();
             }
             this.logPlacement(toSpawn.getBlock(), p.getName(), (byte)ct.ordinal());
             return c;
@@ -240,7 +240,7 @@ implements Listener {
     }
 
     @EventHandler(priority=EventPriority.LOW, ignoreCancelled=true)
-    public void onCustomCreeperExplode(EntityExplodeEvent e) {
+    public void onCustomCreeperExplode(EntityExplodeEvent e) throws NoSuchFieldException, IllegalAccessException {
         if (e.getEntity() == null || !e.getEntity().hasMetadata("customCreeperType")) {
             return;
         }

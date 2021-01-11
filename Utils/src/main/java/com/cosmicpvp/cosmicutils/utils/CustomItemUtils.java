@@ -1,12 +1,8 @@
 package com.cosmicpvp.cosmicutils.utils;
 
-import com.compilex.CosmicCrate.api.CCAPI;
-import com.compilex.CosmicCrate.libs.Version;
 import com.compilex.CosmicCustomCreepers.enums.CreeperTypes;
-import com.cosmicpvp.CosmicBossEggs.boss.type.Boss;
 import com.cosmicpvp.CosmicBossEggs.boss.type.Bosses;
 import com.cosmicpvp.CosmicBossEggs.util.MiscUtil;
-import com.cosmicpvp.CosmicRankQuests.utils.PlayerRankUtils;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.cosmicpvp.CosmicSpaceChests.listeners.EnvoySummonItemListener;
@@ -115,22 +111,6 @@ public class CustomItemUtils {
         return new CustomItemBuilder(CustomItemBuilder.CustomItemType.MYSTERY_MOBSPAWNER).build();
     }
 
-    public static ItemStack createCosmicCrate(String crateName, String username) {
-        if (!CosmicUtils.get().isCosmicCrateEnabled()) {
-            return null;
-        }
-        if (crateName.equalsIgnoreCase("superior")) {
-            return CCAPI.getGodlyCosmicCrate();
-        }
-        if (crateName.equalsIgnoreCase("mystery")) {
-            return CCAPI.getMysteryCrate();
-        }
-        if (crateName.equalsIgnoreCase("heroic")) {
-            return CCAPI.getHeroicMysteryCrate();
-        }
-        return CCAPI.getCosmicCrate((Version) Version.valueOf(crateName), username);
-    }
-
     public static ItemStack getXpBottle(int xpAmount, String enchanter) {
         return CustomItemUtils.buildItem(Material.EXP_BOTTLE, (short) 0, ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "Experience Bottle" + ChatColor.GRAY + " (Throw)", ChatColor.LIGHT_PURPLE + "Value " + ChatColor.WHITE + xpAmount + " XP", ChatColor.LIGHT_PURPLE + "Enchanter " + ChatColor.WHITE + enchanter);
     }
@@ -213,14 +193,6 @@ public class CustomItemUtils {
 
     public static ItemStack getMobSpawner(EntityType entityType) {
         return CustomItemUtils.buildItem(Material.MOB_SPAWNER, entityType.getTypeId(), ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + CustomItemUtils.getEntityName(entityType) + ChatColor.GOLD.toString() + " Spawner", (Object) ((Object) ChatColor.GRAY) + "Be careful where you place this!");
-    }
-
-    public static ItemStack getRankItem(ItemTier ir) {
-        return PlayerRankUtils.getRankItem((String) PlayerRankUtils.getRank((int) ir.getRarityId()));
-    }
-
-    public static ItemStack getRankItem(ItemRarity ir) {
-        return PlayerRankUtils.getRankItem((String) PlayerRankUtils.getRank((int) CustomItemUtils.getItemRarityID(ir)));
     }
 
     public static ItemStack getDepthStriderBook(int level) {

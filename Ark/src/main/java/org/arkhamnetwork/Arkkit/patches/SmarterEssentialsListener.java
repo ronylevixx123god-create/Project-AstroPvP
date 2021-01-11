@@ -1,6 +1,6 @@
 package org.arkhamnetwork.Arkkit.patches;
 
-import com.cosmicpvp.CosmicRankQuests.utils.PlayerRankUtils;
+import com.compilex.CompilexPermissions.PermissionsAPI;
 import com.cosmicpvp.cosmicutils.compat.ParamBuilder;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.earth2me.essentials.User;
@@ -160,10 +160,6 @@ final class SmarterEssentialsListener
                 this.listCommandCache.add(ChatColor.GRAY + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Trainee: " + ChatColor.AQUA + (int) traineePlayers + ChatColor.GRAY + " [" + (int) (traineePlayers / (double) Bukkit.getOnlinePlayers().size() * 100.0) + "%]");
                 for (int rankTier = 1; rankTier <= 6; ++rankTier) {
                     double playersInRankTier = this.getPlayersInRankTier(rankTier);
-                    String rank = PlayerRankUtils.getRank(rankTier);
-                    if (rank == null) continue;
-                    ChatColor rankColor = rankTier == 2 ? ChatColor.AQUA : (rankTier == 3 ? ChatColor.BLUE : PlayerRankUtils.getRankColor(String.valueOf(rankTier)));
-                    this.listCommandCache.add(rankColor + "" + ChatColor.BOLD + "* " + rankColor + WordUtils.capitalize(rank.replace("_plus", ChatColor.GOLD + "" + ChatColor.BOLD + "+" + ChatColor.YELLOW) + ": ") + ChatColor.AQUA + (int) playersInRankTier + ChatColor.GRAY + " [" + (int) (playersInRankTier / (double) Bukkit.getOnlinePlayers().size() * 100.0) + "%]");
                 }
             }
             this.listCommandCache.add("");

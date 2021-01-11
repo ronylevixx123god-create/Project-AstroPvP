@@ -140,7 +140,7 @@ implements Listener {
     public void onExplosivePrime(ExplosionPrimeEvent e) {
         if (e.getEntity() != null && e.getEntity() instanceof TNTPrimed) {
             EntityTNTPrimed tntPrimed = ((CraftTNTPrimed) e.getEntity()).getHandle();
-            ItemStack tntItem = tntPrimed.getTNTItemstack();
+            ItemStack tntItem = tntPrimed.getTNTItemStack();
             TNTTypes tntType = this.getTNTType(tntItem);
             if (tntType != null) {
                 e.getEntity().setMetadata("custom_tnt", new FixedMetadataValue(CosmicCustomTNT.get(), tntType.name()));

@@ -1,28 +1,8 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  com.compilex.CosmicDungeons.DungeonsAPI
- *  com.compilex.CosmicDungeons.DungeonsRewardsAPI
- *  com.cosmicpvp.CosmicRankQuests.CosmicRankQuestsAPI
- *  me.ifamasssxd.cosmicconquest.CosmicConquestAPI
- *  me.ifamasssxd.cosmicmasks.CosmicMasks
- *  me.ifamasssxd.cosmicmasks.MaskType
- *  org.arkhamnetwork.Arkkit.patches.EquipmentLootboxes
- *  org.arkhamnetwork.Arkkit.patches.EssentialsAddHomes
- *  org.arkhamnetwork.Arkkit.patches.ItemNametag
- *  org.arkhamnetwork.Arkkit.patches.LoreTag
- *  org.arkhamnetwork.Arkkit.patches.MysteryMobSpawners
- *  org.arkhamnetwork.Arkkit.patches.ShowcaseExpander
- *  org.arkhamnetwork.Arkkit.plugins.ArkPlugins
- *  org.arkhamnetwork.enchantments.EnchantmentBook
- */
 package com.cosmicpvp.cosmicutils.itembuilder;
 
 import com.compilex.CosmicArmorSets.enums.AbilityArmorSet;
 import com.compilex.CosmicDungeons.DungeonsAPI;
 import com.compilex.CosmicDungeons.DungeonsRewardsAPI;
-import com.cosmicpvp.CosmicRankQuests.CosmicRankQuestsAPI;
 import com.cosmicpvp.cosmicutils.CosmicUtils;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import me.ifamasssxd.cosmicconquest.CosmicConquestAPI;
@@ -87,9 +67,6 @@ public class CustomItemBuilder
             } else {
                 CosmicMasks masks;
                 Double version;
-                if (this.type == CustomItemType.RESET_KIT && CosmicUtils.get().isRankQuestsEnabled()) {
-                    return CosmicRankQuestsAPI.getResetToolKit();
-                }
                 if (this.type == CustomItemType.HOLY_WHITE_SCROLL && CosmicUtils.get().isDungeonsEnabled()) {
                     return DungeonsRewardsAPI.getHolyWhiteScroll();
                 }
