@@ -60,6 +60,8 @@ import com.compilex.CosmicDungeons.utils.Logger;
 import com.compilex.CosmicDungeons.utils.MonsterUtils;
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
 import com.cosmicpvp.cosmicutils.utils.*;
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.Faction;
 import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijki;
@@ -469,8 +471,10 @@ extends DungeonEvents {
             }
             this.dungeon.broadcastMessage("Teleportation matrix boot successful!");
             this.dungeon.broadcastMessage("You can now follow Yijki to whatever planet he teleported to. Take some time to resupply, there is no telling what awaits you in the next dungeon.");
-            // todo: holos
-            // this.dungeon.setObjectiveHologram(HolographicDisplaysAPI.createHologram((Plugin)CosmicDungeonsPlugin.get_(), (Location)teleportLever.getLocation().add(0.0, 2.0, 0.5), (String[])new String[]{(Object)ChatColor.GREEN + "" + (Object)ChatColor.BOLD + "CONGRATULATIONS!", (Object)ChatColor.GRAY + "You have cleared the dungeon!", (Object)ChatColor.GRAY + "Exit through the teleporter."}));
+            this.dungeon.setObjectiveHologram(HologramsAPI.createHologram(CosmicDungeonsPlugin.get_(), (Location)teleportLever.getLocation().add(0.0, 2.0, 0.5)));
+            this.dungeon.getObjectiveHologram().appendTextLine(ChatColor.GREEN + ChatColor.BOLD.toString() + "CONGRATULATIONS!");
+            this.dungeon.getObjectiveHologram().appendTextLine(ChatColor.GRAY + ChatColor.BOLD.toString() + "You have cleared the dungeon!");
+            this.dungeon.getObjectiveHologram().appendTextLine(ChatColor.RED + ChatColor.BOLD.toString() + "Exit through the portal.");
             ((PlayerEnterTeleportationRoom)this.regionEvents.get("teleportation_room")).teleportLever = null;
             Block dungeon_portalBlockA = this.dungeon.getWorld().getBlockAt(-255, 76, 190);
             Block dungeon_portalBlockB = this.dungeon.getWorld().getBlockAt(-255, 77, 190);
@@ -478,8 +482,8 @@ extends DungeonEvents {
             dungeon_portalBlockB.setMetadata("dungeonExitPortalBlock", new FixedMetadataValue(CosmicDungeonsPlugin.get_(), this.dungeon.getDungeonID()));
             dungeon_portalBlockA.setTypeIdAndData(90, (byte)0, false);
             dungeon_portalBlockB.setTypeIdAndData(90, (byte)0, false);
-            // todo: holos
-            //Hologram holo_a = HolographicDisplaysAPI.createHologram((Plugin)CosmicDungeonsPlugin.get_(), (Location)dungeon_portalBlockB.getLocation().add(0.5, 1.25, 0.5), (String[])new String[]{(Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "Exit"});
+            Hologram holo_a = HologramsAPI.createHologram(CosmicDungeonsPlugin.get_(), (Location)dungeon_portalBlockB.getLocation().add(0.5, 1.25, 0.5));
+            holo_a.appendTextLine(ChatColor.RED + ChatColor.BOLD.toString() + "Exit");
             this.dungeon.broadcastMessage("");
             this.dungeon.setPortalPlaceCooldown(System.currentTimeMillis() + 240000L);
             this.dungeon.broadcastMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "DUNGEON COMPLETE!");

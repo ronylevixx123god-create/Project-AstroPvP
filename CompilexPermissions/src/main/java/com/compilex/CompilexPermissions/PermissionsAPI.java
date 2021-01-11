@@ -22,10 +22,7 @@ import com.compilex.CompilexPermissions.utils.RankItems;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
 
 import java.util.UUID;
 
@@ -40,7 +37,7 @@ public class PermissionsAPI {
 
     public static void callPermissionChangeEvent(UUID uuid) {
         PermissionChangeEvent event = new PermissionChangeEvent(PermissionsAPI.getPermissionUser(uuid));
-        Bukkit.getPluginManager().callEvent((Event)event);
+        Bukkit.getPluginManager().callEvent(event);
         if (!event.isCancelled() && CompilexPermissions.syncPermissionChanges && CompilexPermissions.get().getPermissionSyncThread() != null) {
             CompilexPermissions.get().getPermissionSyncThread().uuid_to_reload.add(uuid.toString());
         }
@@ -48,7 +45,7 @@ public class PermissionsAPI {
 
     public static void callGroupAddEvent(UUID uuid, String group) {
         PermissionGroupAddEvent event = new PermissionGroupAddEvent(PermissionsAPI.getPermissionUser(uuid), group);
-        Bukkit.getPluginManager().callEvent((Event)event);
+        Bukkit.getPluginManager().callEvent(event);
         if (!event.isCancelled() && CompilexPermissions.syncPermissionChanges && CompilexPermissions.get().getPermissionSyncThread() != null) {
             CompilexPermissions.get().getPermissionSyncThread().uuid_to_reload.add(uuid.toString());
         }
@@ -88,20 +85,20 @@ public class PermissionsAPI {
             Bukkit.getLogger().info("[CompilexPermissions] Skipping reloadPlayer() for " + player.getName() + " due to UUID existing in lock table.");
             return;
         }
-        player.setMetadata("permissionReload", (MetadataValue)new FixedMetadataValue((Plugin)CompilexPermissions.get(), (Object)System.currentTimeMillis()));
+        player.setMetadata("permissionReload", new FixedMetadataValue(CompilexPermissions.get(), System.currentTimeMillis()));
         CompilexPermissions.get().getPermissionManager().handlePlayerLeave(player);
-        CompilexPermissions.get().getServer().getScheduler().runTaskAsynchronously((Plugin)CompilexPermissions.get(), new Runnable(){
+        CompilexPermissions.get().getServer().getScheduler().runTaskAsynchronously(CompilexPermissions.get(), new Runnable(){
 
             @Override
             public void run() {
                 CompilexPermissions.get().getPermissionManager().handlePlayerAsyncJoin(player.getUniqueId());
-                CompilexPermissions.get().getServer().getScheduler().runTask((Plugin)CompilexPermissions.get(), new Runnable(){
+                CompilexPermissions.get().getServer().getScheduler().runTask(CompilexPermissions.get(), new Runnable(){
 
                     @Override
                     public void run() {
                         CompilexPermissions.get().getPermissionManager().handlePlayerJoin(player);
-                        Bukkit.getPluginManager().callEvent((Event)new PermissionChangeEvent(PermissionsAPI.getPermissionUser(player.getUniqueId())));
-                        player.removeMetadata("permissionReload", (Plugin)CompilexPermissions.get());
+                        Bukkit.getPluginManager().callEvent(new PermissionChangeEvent(PermissionsAPI.getPermissionUser(player.getUniqueId())));
+                        player.removeMetadata("permissionReload", CompilexPermissions.get());
                     }
                 });
             }
@@ -121,13 +118,13 @@ public class PermissionsAPI {
             }
             UUID userUUID = null;
             try {
-                userUUID = Bukkit.getPlayer((String)userName) != null ? Bukkit.getPlayer((String)userName).getUniqueId() : Bukkit.getOfflinePlayer(userName).getUniqueId();
+                userUUID = Bukkit.getPlayer(userName) != null ? Bukkit.getPlayer(userName).getUniqueId() : Bukkit.getOfflinePlayer(userName).getUniqueId();
             }
             catch (Exception e) {
-                userUUID = Bukkit.getOfflinePlayer((String)userName).getUniqueId();
+                userUUID = Bukkit.getOfflinePlayer(userName).getUniqueId();
             }
             if (userUUID == null) {
-                userUUID = Bukkit.getOfflinePlayer((String)userName).getUniqueId();
+                userUUID = Bukkit.getOfflinePlayer(userName).getUniqueId();
             }
             if ((user = PermissionsAPI.getPermissionUser(userUUID)) != null && (cachedGroup = CompilexPermissions.get().getPermissionManager().getCachedLoadedGroups().get(groupName.toLowerCase())) != null) {
                 user.getGroupsEditable().add(cachedGroup);
@@ -142,7 +139,7 @@ public class PermissionsAPI {
             CacheManager.cacheNewPlayerGroup(userUUID.toString(), groupName);
             final UUID f_userUUID = userUUID;
             final String f_serverName = serverName;
-            Bukkit.getScheduler().runTaskAsynchronously((Plugin)CompilexPermissions.get(), new Runnable(){
+            Bukkit.getScheduler().runTaskAsynchronously(CompilexPermissions.get(), new Runnable(){
 
                 @Override
                 public void run() {
@@ -154,7 +151,7 @@ public class PermissionsAPI {
                     }
                 }
             });
-            Bukkit.getConsoleSender().sendMessage((Object)ChatColor.WHITE + "[ArkhamPermissions] " + (Object)ChatColor.AQUA + userName + " is now a member of the group " + groupName + " on server " + serverName + ".");
+            Bukkit.getConsoleSender().sendMessage(ChatColor.WHITE + "[ArkhamPermissions] " + ChatColor.AQUA + userName + " is now a member of the group " + groupName + " on server " + serverName + ".");
         }
         catch (Exception ex) {
             ex.printStackTrace();
@@ -170,13 +167,13 @@ public class PermissionsAPI {
             }
             UUID userUUID = null;
             try {
-                userUUID = Bukkit.getPlayer((String)userName) != null ? Bukkit.getPlayer((String)userName).getUniqueId() : Bukkit.getOfflinePlayer(userName).getUniqueId();
+                userUUID = Bukkit.getPlayer(userName) != null ? Bukkit.getPlayer(userName).getUniqueId() : Bukkit.getOfflinePlayer(userName).getUniqueId();
             }
             catch (Exception e) {
-                userUUID = Bukkit.getOfflinePlayer((String)userName).getUniqueId();
+                userUUID = Bukkit.getOfflinePlayer(userName).getUniqueId();
             }
             if (userUUID == null) {
-                userUUID = Bukkit.getOfflinePlayer((String)userName).getUniqueId();
+                userUUID = Bukkit.getOfflinePlayer(userName).getUniqueId();
             }
             if ((user = PermissionsAPI.getPermissionUser(userUUID)) != null && (cachedGroup = CompilexPermissions.get().getPermissionManager().getCachedLoadedGroups().get(groupName.toLowerCase())) != null) {
                 user.getGroupsEditable().remove(cachedGroup);
@@ -189,7 +186,7 @@ public class PermissionsAPI {
             CacheManager.uncachePlayerGroup(userUUID.toString(), groupName);
             final UUID f_userUUID = userUUID;
             final String f_serverName = serverName;
-            Bukkit.getScheduler().runTaskAsynchronously((Plugin)CompilexPermissions.get(), new Runnable(){
+            Bukkit.getScheduler().runTaskAsynchronously(CompilexPermissions.get(), new Runnable(){
 
                 @Override
                 public void run() {
@@ -201,7 +198,7 @@ public class PermissionsAPI {
                     }
                 }
             });
-            Bukkit.getConsoleSender().sendMessage((Object)ChatColor.WHITE + "[ArkhamPermissions] " + (Object)ChatColor.AQUA + userName + " is no longer a member of the group " + groupName + " on server " + serverName + ".");
+            Bukkit.getConsoleSender().sendMessage(ChatColor.WHITE + "[ArkhamPermissions] " + ChatColor.AQUA + userName + " is no longer a member of the group " + groupName + " on server " + serverName + ".");
         }
         catch (Exception ex) {
             ex.printStackTrace();

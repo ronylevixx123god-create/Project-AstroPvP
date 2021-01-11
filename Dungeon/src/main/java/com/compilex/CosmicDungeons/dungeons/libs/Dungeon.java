@@ -43,6 +43,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.ItemUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.massivecraft.factions.Faction;
 import org.apache.commons.lang.Validate;
 import org.arkhamnetwork.Arkkit.Arkkit;
@@ -76,7 +77,7 @@ public class Dungeon {
     private long dungeonStartTime;
     private boolean bossSlayerTrinket;
     private boolean heroicDungeon;
-    //private Hologram objectiveHologram;
+    private Hologram objectiveHologram;
     private String protectedFor;
     private boolean keyRequired = true;
     private boolean globalPortal = false;
@@ -152,9 +153,9 @@ public class Dungeon {
         return this.dungeonStartTime;
     }
 
-    //public Hologram getObjectiveHologram() {
-        //return this.objectiveHologram;
-    //}
+    public Hologram getObjectiveHologram() {
+        return this.objectiveHologram;
+    }
 
     public void setKeyRequired(boolean keyRequired) {
         this.keyRequired = keyRequired;
@@ -412,7 +413,7 @@ public class Dungeon {
             }
             DungeonsAPI.get().resetDungeonWorldIO(this);
             this.setPortalLocation(null);
-            //this.setObjectiveHologram(null);
+            this.setObjectiveHologram(null);
             this.world = Bukkit.getWorld((String)this.worldName);
             this.setProtectedFor("-1");
             this.setBossSlayerTrinket(false);
@@ -508,14 +509,14 @@ public class Dungeon {
         this.broadcastMessage((Object)ChatColor.GOLD + "Time Limit: " + (Object)ChatColor.GREEN + TimeUtils.formatDifference(deadline + 1000L - System.currentTimeMillis()));
     }
 
-    /*public void setObjectiveHologram(Hologram h) {
+    public void setObjectiveHologram(Hologram h) {
         if (this.objectiveHologram != null) {
             this.objectiveHologram.delete();
         }
         if (h != null) {
             this.objectiveHologram = h;
         }
-    }*/
+    }
 
     public boolean isAbandondedSpaceship() {
         return this.dungeonType == DungeonType.ABANDONED_SHIP;
