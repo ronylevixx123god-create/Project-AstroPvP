@@ -1,32 +1,10 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  com.compilex.CompilexPermissions.CompilexPermissions
- *  com.compilex.CompilexPermissions.PermissionsAPI
- *  com.compilex.CompilexPermissions.manager.CacheManager
- *  com.compilex.CompilexPermissions.structure.PermissionGroup
- *  com.compilex.CompilexPermissions.structure.PermissionUser
- *  com.earth2me.essentials.Essentials
- *  com.earth2me.essentials.User
- *  com.massivecraft.factions.FPlayer
- *  com.massivecraft.factions.FPlayers
- *  com.massivecraft.factions.iface.RelationParticipator
- *  com.massivecraft.factions.struct.Relation
- *  org.apache.commons.lang.StringUtils
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.Location
- *  org.bukkit.OfflinePlayer
- *  org.bukkit.command.Command
- *  org.bukkit.command.CommandSender
- *  org.bukkit.entity.Player
- *  org.bukkit.metadata.MetadataValue
- *  org.bukkit.plugin.Plugin
- */
 package org.arkhamnetwork.Arkkit.patches;
 
+import com.compilex.CompilexPermissions.CompilexPermissions;
+import com.compilex.CompilexPermissions.PermissionsAPI;
 import com.compilex.CompilexPermissions.manager.CacheManager;
+import com.compilex.CompilexPermissions.structure.PermissionGroup;
+import com.compilex.CompilexPermissions.structure.PermissionUser;
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
 import com.massivecraft.factions.FPlayer;
@@ -42,9 +20,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-import ru.tehkode.permissions.PermissionGroup;
-import ru.tehkode.permissions.PermissionUser;
-import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 import java.text.DecimalFormat;
 import java.util.*;
@@ -234,33 +209,29 @@ public class Near
 
         public String getRankPrefix(UUID uuid) {
             String prefix;
-            if (Bukkit.getPlayer(uuid) != null) {
-                PermissionUser user = PermissionsEx.getUser(Bukkit.getPlayer(uuid));
-                try {
-                    prefix = user.getPrefix(Bukkit.getPlayer(uuid).getWorld().getName());
-                    if (prefix == null) {
-                        List<String> groups;
-
-                        if (user != null) {
-                            prefix = user.getPrefix();
-                        } else if (CacheManager.getCachedPlayerGroups().containsKey(uuid.toString()) && (groups = CacheManager.getCachedPlayerGroups().get(uuid.toString())).size() > 0) {
-                            prefix = groups.get(0);
-                        }
+            try {
+                prefix = PermissionsAPI.getGlobalRank(uuid);
+                if (prefix == null) {
+                    List groups;
+                    PermissionUser localUser = PermissionsAPI.getPermissionUser(uuid);
+                    if (localUser != null) {
+                        prefix = localUser.getPrefix();
+                    } else if (CacheManager.getCachedPlayerGroups().containsKey(uuid.toString()) && (groups = CacheManager.getCachedPlayerGroups().get(uuid.toString())).size() > 0) {
+                        prefix = (String) groups.get(0);
                     }
-                    if (prefix != null && !prefix.contains("&")) {
-                        PermissionGroup group = CompilexPermissions.get().getPermissionManager().getCachedLoadedGroups().get(prefix.toLowerCase());
-                        prefix = group != null ? group.getPrefix() : StringUtils.capitaliseAllWords(prefix);
-                    }
-                } catch (NullPointerException npe) {
-                    npe.printStackTrace();
-                    return null;
                 }
-                if (prefix != null && !prefix.isEmpty()) {
-                    prefix = ChatColor.translateAlternateColorCodes('&', prefix).replace(ChatColor.ITALIC.toString(), "").replace(ChatColor.STRIKETHROUGH.toString(), "").replace(ChatColor.BOLD.toString(), "").replace(ChatColor.MAGIC.toString(), "").replace("<", "").replace(">", "");
+                if (prefix != null && !prefix.contains("&")) {
+                    PermissionGroup group = CompilexPermissions.get().getPermissionManager().getCachedLoadedGroups().get(prefix.toLowerCase());
+                    prefix = group != null ? group.getPrefix() : StringUtils.capitaliseAllWords(prefix);
                 }
-                return prefix;
+            } catch (NullPointerException npe) {
+                npe.printStackTrace();
+                return null;
             }
+            if (prefix != null && !prefix.isEmpty()) {
+                prefix = ChatColor.translateAlternateColorCodes('&', prefix).replace(ChatColor.ITALIC.toString(), "").replace(ChatColor.STRIKETHROUGH.toString(), "").replace(ChatColor.BOLD.toString(), "").replace(ChatColor.MAGIC.toString(), "").replace("<", "").replace(">", "");
+            }
+            return prefix;
         }
     }
 }
-

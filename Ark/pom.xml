@@ -159,6 +159,12 @@
 
         <dependency>
             <groupId>com.conaxgames</groupId>
+            <artifactId>CompilexPermissions</artifactId>
+            <version>0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.conaxgames</groupId>
             <artifactId>GUIShopTemporary</artifactId>
             <version>0.1</version>
             <scope>system</scope>
@@ -277,14 +283,6 @@
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/SilkSpawners.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>PEXAPI</artifactId>
-            <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/PermissionsEx-1.23.4 (1).jar</systemPath>
         </dependency>
     </dependencies>
 
