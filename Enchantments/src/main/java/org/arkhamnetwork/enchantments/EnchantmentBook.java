@@ -11,7 +11,6 @@ import com.google.common.base.CaseFormat;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import com.rit.sucy.service.ERomanNumeral;
-import net.minecraft.server.v1_8_R3.NBTBase;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.arkhamnetwork.enchantments.util.EnchantmentDescriptions;
@@ -22,8 +21,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -45,32 +42,32 @@ public class EnchantmentBook {
 
     public static ItemStack getEnchantmentBook(final CustomEnchantment ench, final int level) {
         final ItemStack is = ItemUtils.buildItem(Material.BOOK, (short) 0, TieredEnchantments.getTierColor(ench) + ChatColor.BOLD.toString() + ChatColor.UNDERLINE + ench.name() + " " + getRoman(level), ChatColor.GREEN.toString() + (new Random().nextInt(100) + 1) + "% Success Rate", ChatColor.RED.toString() + (new Random().nextInt(100) + 1) + "% Destroy Rate");
-        final List<String> lore = (List<String>) is.getItemMeta().getLore();
+        final List<String> lore = is.getItemMeta().getLore();
         final String desc = EnchantmentDescriptions.getDescription(ench);
         for (final String s : formatLore(desc)) {
             lore.add(s);
         }
         lore.add(ChatColor.GRAY.toString() + getEnchantmentType(ench.getNaturalMaterials()) + " Enchantment");
-        lore.add(String.valueOf("§6Max Level: §f" + ench.getMaxLevel()));
+        lore.add("§6Max Level: §f" + ench.getMaxLevel());
         lore.add(ChatColor.GRAY.toString() + "Drag n' Drop onto item to enchant.");
         final ItemMeta im = is.getItemMeta();
-        im.setLore((List) lore);
+        im.setLore(lore);
         is.setItemMeta(im);
         return is;
     }
 
     public static ItemStack getEnchantmentBook(final CustomEnchantment ench, final int level, final int success, final int failure) {
         final ItemStack is = ItemUtils.buildItem(Material.BOOK, (short) 0, TieredEnchantments.getTierColor(ench) + ChatColor.BOLD.toString() + ChatColor.UNDERLINE + ench.name() + " " + getRoman(level), ChatColor.GREEN.toString() + success + "% Success Rate", ChatColor.RED.toString() + failure + "% Destroy Rate");
-        final List<String> lore = (List<String>) is.getItemMeta().getLore();
+        final List<String> lore = is.getItemMeta().getLore();
         final String desc = EnchantmentDescriptions.getDescription(ench);
         for (final String s : formatLore(desc)) {
             lore.add(s);
         }
         lore.add(ChatColor.GRAY.toString() + getEnchantmentType(ench.getNaturalMaterials()) + " Enchantment");
-        lore.add(String.valueOf("§6Max Level: §f" + ench.getMaxLevel()));
+        lore.add("§6Max Level: §f" + ench.getMaxLevel());
         lore.add(ChatColor.GRAY.toString() + "Drag n' Drop onto item to enchant.");
         final ItemMeta im = is.getItemMeta();
-        im.setLore((List) lore);
+        im.setLore(lore);
         is.setItemMeta(im);
         return is;
     }
@@ -92,7 +89,7 @@ public class EnchantmentBook {
     public static ItemStack getHeroicBlackscroll(final int successRateMin, final int successRateMax, final boolean applyIID) {
         final int chosenMax = successRateMin + ThreadLocalRandom.current().nextInt(successRateMax - successRateMin + 1);
         final ItemStack is = ItemUtils.buildItem(Material.INK_SACK, (short) 0, CC.LightPurpleB + "Heroic Black Scroll", ChatColor.GRAY.toString() + "Removes a random enchantment", ChatColor.GRAY.toString() + "from an item and converts", ChatColor.GRAY.toString() + "it into a " + ChatColor.LIGHT_PURPLE + successRateMin + "%-" + chosenMax + "%" + ChatColor.GRAY + " success book.", CC.LightPurpleB + "(!)" + CC.LightPurple + " Chance to extract Heroic Enchantments");
-        return new NBTWrapper((applyIID && ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) ? ItemID.assignItemID((InventoryClickEvent) null, is) : is).setString("cosmicType", "heroicBlackscroll").setNBTBase("conaxData", (NBTBase) new NBTTagCompoundBuilder().setInt("min", Integer.valueOf(successRateMin)).setInt("max", Integer.valueOf(chosenMax)).get()).setGlowing().build();
+        return new NBTWrapper((applyIID && ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) ? ItemID.assignItemID(null, is) : is).setString("cosmicType", "heroicBlackscroll").setNBTBase("conaxData", new NBTTagCompoundBuilder().setInt("min", Integer.valueOf(successRateMin)).setInt("max", Integer.valueOf(chosenMax)).get()).setGlowing().build();
     }
 
     public static ItemStack getHeroicBlackscroll(final boolean applyIID) {
@@ -113,7 +110,7 @@ public class EnchantmentBook {
         }
         final int selectedMax = min + ran.nextInt(max - min + 1);
         final ItemStack is = ItemUtils.buildItem(Material.INK_SACK, (short) 0, CC.LightPurpleB + "Heroic Black Scroll", ChatColor.GRAY.toString() + "Removes a random enchantment", ChatColor.GRAY.toString() + "from an item and converts", ChatColor.GRAY.toString() + "it into a " + ChatColor.LIGHT_PURPLE + min + "%-" + selectedMax + "%" + ChatColor.GRAY + " success book.", CC.LightPurpleB + "(!)" + CC.LightPurple + " Chance to extract Heroic Enchantments");
-        return new NBTWrapper((applyIID && ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) ? ItemID.assignItemID((InventoryClickEvent) null, is) : is).setString("cosmicType", "heroicBlackscroll").setNBTBase("conaxData", new NBTTagCompoundBuilder().setInt("min", Integer.valueOf(min)).setInt("max", Integer.valueOf(selectedMax)).get()).setGlowing().build();
+        return new NBTWrapper((applyIID && ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) ? ItemID.assignItemID(null, is) : is).setString("cosmicType", "heroicBlackscroll").setNBTBase("conaxData", new NBTTagCompoundBuilder().setInt("min", Integer.valueOf(min)).setInt("max", Integer.valueOf(selectedMax)).get()).setGlowing().build();
     }
 
     public static ItemStack getTransmogScroll() {
@@ -190,9 +187,9 @@ public class EnchantmentBook {
             final int successRateAdd = getMagicDustSuccessIncrease(is_dust);
             final int successRate = getEnchantmentBookSuccessRate(is_book);
             final ItemMeta im = is_book.getItemMeta();
-            final List<String> lore = (List<String>) im.getLore();
+            final List<String> lore = im.getLore();
             lore.set(0, ChatColor.GREEN.toString() + Math.min(100, successRate + successRateAdd) + "% Success Rate");
-            im.setLore((List) lore);
+            im.setLore(lore);
             is_book.setItemMeta(im);
         }
         return is_book;
@@ -202,9 +199,9 @@ public class EnchantmentBook {
         if (!isEquipment(equipment) || equipment.getMaxStackSize() != 1) {
             return equipment;
         }
-        final List<String> lore = (List<String>) equipment.getItemMeta().getLore();
+        final List<String> lore = equipment.getItemMeta().getLore();
         final LinkedList<String> newLore = new LinkedList<String>();
-        final Map<CustomEnchantment, Integer> enchants = (Map<CustomEnchantment, Integer>) EnchantmentAPI.getEnchantments(equipment);
+        final Map<CustomEnchantment, Integer> enchants = EnchantmentAPI.getEnchantments(equipment);
         for (int i = 8; i > 0; --i) {
             for (final Map.Entry<CustomEnchantment, Integer> data : enchants.entrySet()) {
                 final CustomEnchantment ce = data.getKey();
@@ -232,7 +229,7 @@ public class EnchantmentBook {
         }
         itemName = itemName + " " + ChatColor.LIGHT_PURPLE + "[" + ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + ChatColor.UNDERLINE.toString() + enchants.size() + ChatColor.LIGHT_PURPLE + "]";
         final ItemMeta im = equipment.getItemMeta();
-        im.setLore((List) newLore);
+        im.setLore(newLore);
         im.setDisplayName(itemName);
         equipment.setItemMeta(im);
         return equipment;
@@ -242,15 +239,15 @@ public class EnchantmentBook {
         final ItemMeta im = is.getItemMeta();
         final List<String> lore = im.hasLore() ? im.getLore() : new ArrayList<String>();
         lore.add(ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "PROTECTED");
-        im.setLore((List) lore);
+        im.setLore(lore);
         is.setItemMeta(im);
     }
 
     public static void removeWhitescroll(final ItemStack is) {
         final ItemMeta im = is.getItemMeta();
-        final List<String> lore = (List<String>) im.getLore();
+        final List<String> lore = im.getLore();
         lore.remove(ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "PROTECTED");
-        im.setLore((List) lore);
+        im.setLore(lore);
         is.setItemMeta(im);
     }
 
@@ -403,7 +400,7 @@ public class EnchantmentBook {
         if (!isEnchantmentBook(ench_book)) {
             return 0;
         }
-        final int level = decode(ChatColor.stripColor(ench_book.getItemMeta().getDisplayName().substring(ench_book.getItemMeta().getDisplayName().lastIndexOf(" "), ench_book.getItemMeta().getDisplayName().length())));
+        final int level = decode(ChatColor.stripColor(ench_book.getItemMeta().getDisplayName().substring(ench_book.getItemMeta().getDisplayName().lastIndexOf(" "))));
         return level;
     }
 
@@ -458,8 +455,8 @@ public class EnchantmentBook {
                 pl.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "(!)" + ChatColor.GREEN + " Your white scroll would have been consumed (since your item was going to be destroyed), but because of your " + ChatColor.UNDERLINE + "Heroic Rank" + ChatColor.GRAY + " your white scroll is still active!");
                 return false;
             }
-            final CustomCosmicPlayerEvent event = new CustomCosmicPlayerEvent(pl, "WHITESCROLL_BREAK", new Object[]{item});
-            Bukkit.getPluginManager().callEvent((Event) event);
+            final CustomCosmicPlayerEvent event = new CustomCosmicPlayerEvent(pl, "WHITESCROLL_BREAK", item);
+            Bukkit.getPluginManager().callEvent(event);
             if (event.isCancelled()) {
                 return false;
             }
