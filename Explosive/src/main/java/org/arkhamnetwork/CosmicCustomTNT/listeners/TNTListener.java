@@ -46,34 +46,17 @@ import com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import de.dustplanet.util.SilkUtil;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 import net.coreprotect.CoreProtect;
 import net.coreprotect.CoreProtectAPI;
 import net.minecraft.server.v1_8_R3.EntityTNTPrimed;
 import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.arkhamnetwork.CosmicCustomTNT.CosmicCustomTNT;
 import org.arkhamnetwork.CosmicCustomTNT.enums.TNTTypes;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Effect;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
-import org.bukkit.craftbukkit.v1_8_R3.block.CraftBlock;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftTNTPrimed;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.TNTPrimed;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -84,10 +67,12 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.ExplosionPrimeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+
+import java.io.File;
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class TNTListener
 implements Listener {
@@ -248,7 +233,7 @@ implements Listener {
                                 e.blockList().remove(i);
                                 byte data = b.getData();
                                 int typeID = b.getType().getId();
-                                ItemStack is = ItemUtils.getMobSpawner(EntityType.fromId(su.getSpawnerEntityID(b)));
+                                ItemStack is = ItemUtils.getMobSpawner(EntityType.fromId((Integer.valueOf(su.getSpawnerEntityID(b)))));
                                 CreatureSpawner cs = (CreatureSpawner) b.getState();
                                 int spawnerCount = cs.getSpawnerCount();
                                 if (spawnerCount == 4 && !Board.getFactionAt(new FLocation(cs.getLocation())).isNormal()) {
@@ -279,7 +264,7 @@ implements Listener {
                             e.blockList().remove(i);
                             int id = b.getTypeId();
                             byte data = b.getData();
-                            ItemStack is = ItemUtils.getMobSpawner(EntityType.fromId(su.getSpawnerEntityID(b)));
+                            ItemStack is = ItemUtils.getMobSpawner(EntityType.fromId((Integer.valueOf(su.getSpawnerEntityID(b)))));
                             CreatureSpawner cs = (CreatureSpawner) b.getState();
                             int spawnerCount = cs.getSpawnerCount();
                             if (spawnerCount == 4 && !Board.getFactionAt(new FLocation(cs.getLocation())).isNormal()) {

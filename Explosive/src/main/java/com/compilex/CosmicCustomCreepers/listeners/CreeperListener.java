@@ -59,38 +59,23 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
-import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.struct.FactionPermission;
 import com.rit.sucy.EnchantmentAPI;
 import de.dustplanet.util.SilkUtil;
-import java.io.File;
-import java.util.*;
-
 import net.coreprotect.CoreProtect;
 import net.coreprotect.CoreProtectAPI;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.utils.WorldGuardUtils;
 import org.arkhamnetwork.CosmicCustomTNT.CosmicCustomTNT;
 import org.arkhamnetwork.enchantments.mastery.MasteryRotAndDecay;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.CreatureSpawner;
-import org.bukkit.craftbukkit.v1_8_R3.block.CraftBlock;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftCreeper;
-import org.bukkit.entity.Creeper;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.TNTPrimed;
+import org.bukkit.entity.*;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -103,10 +88,11 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+
+import java.io.File;
+import java.util.*;
 
 public class CreeperListener
 implements Listener {
@@ -266,7 +252,7 @@ implements Listener {
                     Bukkit.getLogger().info("[CosmicCustomCreeper] Lucky Creeper processing spawner at " + b.getX() + "x ," + b.getY() + "y ," + b.getZ() + "z: " + rand + " <= 0.60?");
                     if (!(rand <= 0.6)) continue;
                     e.blockList().remove(b);
-                    ItemStack is = ItemUtils.getMobSpawner(EntityType.fromId(su.getSpawnerEntityID(b)));
+                    ItemStack is = ItemUtils.getMobSpawner(EntityType.fromId(Integer.valueOf((su.getSpawnerEntityID(b)))));
                     CreatureSpawner cs = (CreatureSpawner) b.getState();
                     int spawnerCount = cs.getSpawnerCount();
                     if (spawnerCount == 4 && !Board.getFactionAt(new FLocation(cs.getLocation())).isNormal()) {
@@ -287,7 +273,7 @@ implements Listener {
                     Bukkit.getLogger().info("[CosmicCustomCreeper] Tactical Creeper processing spawner at " + b.getX() + "x ," + b.getY() + "y ," + b.getZ() + "z: " + rand + " <= 0.30?");
                     if (!(rand <= 0.3)) continue;
                     e.blockList().remove(b);
-                    ItemStack is = ItemUtils.getMobSpawner(EntityType.fromId(su.getSpawnerEntityID(b)));
+                    ItemStack is = ItemUtils.getMobSpawner(EntityType.fromId(Integer.valueOf((su.getSpawnerEntityID(b)))));
                     CreatureSpawner cs = (CreatureSpawner) b.getState();
                     int spawnerCount = cs.getSpawnerCount();
                     if (spawnerCount == 4 && !Board.getFactionAt(new FLocation(cs.getLocation())).isNormal()) {
@@ -309,7 +295,7 @@ implements Listener {
                     if (b.getType() != Material.MOB_SPAWNER) continue;
                     Bukkit.getLogger().info("[CosmicCustomCreeper] Raid Creeper processing spawner at " + b.getX() + "x ," + b.getY() + "y ," + b.getZ() + "z: ");
                     e.blockList().remove(b);
-                    ItemStack is = ItemUtils.getMobSpawner(EntityType.fromId(su.getSpawnerEntityID(b)));
+                    ItemStack is = ItemUtils.getMobSpawner(EntityType.fromId(Integer.valueOf((su.getSpawnerEntityID(b)))));
                     CreatureSpawner cs = (CreatureSpawner) b.getState();
                     int spawnerCount = cs.getSpawnerCount();
                     if (spawnerCount == 4 && !Board.getFactionAt(new FLocation(cs.getLocation())).isNormal()) {
