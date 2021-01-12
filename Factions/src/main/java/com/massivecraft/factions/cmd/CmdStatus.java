@@ -16,7 +16,6 @@ package com.massivecraft.factions.cmd;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.integration.Econ;
-import com.massivecraft.factions.util.AuthenticationUtils;
 import com.massivecraft.factions.util.MapUtils;
 import com.massivecraft.factions.util.TimeUtil;
 import org.bukkit.Bukkit;

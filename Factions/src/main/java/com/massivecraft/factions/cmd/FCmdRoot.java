@@ -7,7 +7,6 @@
 package com.massivecraft.factions.cmd;
 
 import com.massivecraft.factions.Conf;
-import com.massivecraft.factions.util.AuthenticationUtils;
 
 import java.util.Collections;
 
