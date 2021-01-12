@@ -23,6 +23,7 @@ import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.P;
 import com.massivecraft.factions.listeners.menu.ClickableItemStack;
 import com.massivecraft.factions.listeners.menu.GUIMenu;
+import com.massivecraft.factions.struct.FLogType;
 import com.massivecraft.factions.struct.Role;
 import com.massivecraft.factions.struct.RolePerm;
 import org.bukkit.DyeColor;

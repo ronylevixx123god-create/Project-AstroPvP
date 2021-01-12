@@ -15,6 +15,7 @@ import com.massivecraft.factions.listeners.menu.faccess.FAccessChunkList;
 import com.massivecraft.factions.listeners.menu.faccess.FAccessFactionMenu;
 import com.massivecraft.factions.listeners.menu.faccess.FAccessMainMenu;
 import com.massivecraft.factions.listeners.menu.faccess.FAccessPlayerMenu;
+import com.massivecraft.factions.struct.FLogType;
 import com.massivecraft.factions.struct.FactionPermissions;
 import com.massivecraft.factions.struct.PermissionManager;
 import com.massivecraft.factions.struct.Relation;

@@ -22,6 +22,7 @@ package com.massivecraft.factions.cmd;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.massivecraft.factions.*;
 import com.massivecraft.factions.event.FPlayerJoinEvent;
+import com.massivecraft.factions.struct.FLogType;
 import com.massivecraft.factions.struct.Permission;
 import me.ifamasssxd.factionupgrades.FactionUpgradeAPI;
 import me.ifamasssxd.factionupgrades.struct.FactionUpgrade;

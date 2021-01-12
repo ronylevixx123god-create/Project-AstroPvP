@@ -10,6 +10,7 @@ import com.massivecraft.factions.Conf;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.P;
 import com.massivecraft.factions.integration.Econ;
+import com.massivecraft.factions.struct.FLogType;
 import com.massivecraft.factions.struct.Permission;
 import com.massivecraft.factions.struct.RolePerm;
 import com.massivecraft.factions.util.MiscUtil;

@@ -111,7 +111,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.12</version>
+            <version>1.16.18</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -164,22 +164,6 @@
             <artifactId>Core</artifactId>
             <version>0.1</version>
         </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Conquest</artifactId>
-            <version>0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>KoTHs</artifactId>
-            <version>0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Explosive</artifactId>
-            <version>0.1</version>
-        </dependency>
-
 
         <!-- System Repos -->
         <dependency>
@@ -209,13 +193,6 @@
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/WorldGuard.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>mcmmo</artifactId>
-            <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/mcMMO.jar</systemPath>
         </dependency>
     </dependencies>
 

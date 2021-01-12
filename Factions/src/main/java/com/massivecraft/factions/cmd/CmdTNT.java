@@ -21,6 +21,7 @@ package com.massivecraft.factions.cmd;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.P;
+import com.massivecraft.factions.struct.FLogType;
 import com.massivecraft.factions.struct.RolePerm;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
