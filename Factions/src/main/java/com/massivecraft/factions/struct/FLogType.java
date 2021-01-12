@@ -26,7 +26,6 @@ public enum FLogType {
     ROLE_PERM_EDIT("/f role Edits", Material.WRITTEN_BOOK, "&e%s&7&e %s &e%s", 3),
     SPAWNER_EDIT("Spawner Edits", Material.MOB_SPAWNER, "&e%s&7 %s &e%s&7 %s", 4),
     RANK_EDIT("Rank Edits", Material.GOLD_HELMET, "&e%s&7 set &e%s&7 to %s", 3),
-    F_POINTS("/f point Edits", Material.BOOK, "&e%s&7 %s &e%s", 3),
     F_TNT("/f tnt Edits", Material.TNT, "&e%s&7 %s &e%s", 3);
 
 

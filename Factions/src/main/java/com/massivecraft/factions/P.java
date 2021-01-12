@@ -124,7 +124,6 @@ public class P extends MPlugin {
     @Getter @Setter private boolean includeBank = false;
     @Getter @Setter private boolean includeHoppers = true;
     @Getter @Setter public boolean upgradesEnabled = false;
-    @Getter @Setter public boolean factionPointsEnabled = false;
 
     @Getter @Setter private UpgradeManager upgradeManager;
 
@@ -261,7 +260,6 @@ public class P extends MPlugin {
         P.getP().setBoardManager(new BoardManager(new ScoreboardManager()));
 
         this.upgradesEnabled = Bukkit.getPluginManager().isPluginEnabled("FactionUpgrades");
-        this.factionPointsEnabled = new File("plugins/CosmicFactionPoints.jar").exists();
         this.topManager.loadTopFactions(null, 100);
         this.includeBank = this.getConfig().getBoolean("includeBank");
         this.gradualSpawnerValues = this.getConfig().getBoolean("gradualSpawnerValue");
@@ -354,17 +352,6 @@ public class P extends MPlugin {
                 }
             }, 200L);
         }
-    }
-
-    public static void debugCosmicFactionPoints(String debugString) {
-        if (!debug) {
-            return;
-        }
-        Bukkit.getLogger().info("[CosmicFactionPoints] " + debugString);
-    }
-
-    public static void logCosmicFactionPoints(String debugString) {
-        Bukkit.getLogger().info("[CosmicFactionPoints] " + debugString);
     }
 
    /* public PointManager getPointManager() {
