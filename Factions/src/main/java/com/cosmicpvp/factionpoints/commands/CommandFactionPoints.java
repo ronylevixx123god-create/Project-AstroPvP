@@ -54,7 +54,7 @@ implements CommandExecutor {
         if (args.length == 1 && args[0].equalsIgnoreCase("buy")) {
             Player player = (Player)sender;
             if (P.getP().getPointManager().getPointsBuyable()) {
-                FPlayer fplayer = (FPlayer)FPlayers.i.get((OfflinePlayer)player);
+                FPlayer fplayer = FPlayers.i.get((OfflinePlayer)player);
                 Faction current = fplayer.getFaction();
                 if (current == null || !current.isNormal()) {
                     player.sendMessage(CC.RedB + "(!) " + CC.Red + "You must be in a faction to purchase Faction Points!");

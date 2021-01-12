@@ -216,11 +216,6 @@ public class P extends MPlugin {
         this.boosterManager.loadActiveBoosters();this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new BoosterTask(), 20L, 20L);
 
         this.saveDefaultConfig();
-        // TODO: FINISH ADDING FACTION POINTS (CONVERT FROM .kt)
-        this.pointManager = new PointManager();
-        this.chunkManager = new CoreChunkManager();
-        this.pointManager.onEnable(this);
-        this.chunkManager.onEnable(this);
         this.startOfMap = this.getConfig().getLong("startOfMap");
         this.vanillaPlanet = this.getConfig().getBoolean("vanilla", false);
 
@@ -422,9 +417,6 @@ public class P extends MPlugin {
         for (Player pl : Bukkit.getOnlinePlayers()) {
             pl.removeMetadata("last_enderpearl_throw", this);
         }
-        // TODO: FINISH ADDING FACTION POINTS (CONVERT FROM .kt)
-        this.pointManager.onDisable(this);
-        this.chunkManager.onDisable(this);
         this.boosterManager.saveActiveBoosters();
         CommandToggleSmoke.saveToggles();
         if (this.AutoLeaveTask != null) {

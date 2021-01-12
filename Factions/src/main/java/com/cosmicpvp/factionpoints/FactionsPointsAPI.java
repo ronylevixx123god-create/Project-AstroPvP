@@ -52,11 +52,11 @@ public class FactionsPointsAPI {
 
     public static ItemStack createPointItem(double amount, boolean applyIID, Long manualExpiration) {
         long currentTime = System.currentTimeMillis();
-        NBTTagCompoundBuilder cosmicData = new NBTTagCompoundBuilder().setDouble("points", Double.valueOf(amount)).setLong("created", Long.valueOf(System.currentTimeMillis()));
+        NBTTagCompoundBuilder cosmicData = new NBTTagCompoundBuilder().setDouble("points", amount).setLong("created", System.currentTimeMillis());
         if (manualExpiration != null && manualExpiration > 0L) {
             cosmicData.setLong("expiration", manualExpiration);
         }
-        NBTWrapper wrapper = new NBTWrapper(new ItemBuilder(Material.PAPER, CC.GoldB + "Faction Points Note" + CC.Gray + " (Right Click)", new String[]{CC.Gold + "Value " + CC.White + NumberUtils.format((double)amount, (DecimalFormatType)DecimalFormatType.MONEY).replace(".00", ""), "", CC.Gray + "Click to apply faction points", CC.Gray + "to your factions /f top value!", "", CC.RedB + "Valid Until " + CC.RedU + TimeUtils.formatTimeToDate((long)(manualExpiration != null ? manualExpiration : currentTime + TimeUnit.HOURS.toMillis(24L)), (String)"MMM d'%s' hh:mmaa", (String)"CST").replace(" 0", " ") + " CST"}).build()).setString("cosmicType", "fPointNote").setNBTBase("cosmicData", (NBTBase)cosmicData.get());
+        NBTWrapper wrapper = new NBTWrapper(new ItemBuilder(Material.PAPER, CC.GoldB + "Faction Points Note" + CC.Gray + " (Right Click)", CC.Gold + "Value " + CC.White + NumberUtils.format((double)amount, (DecimalFormatType)DecimalFormatType.MONEY).replace(".00", ""), "", CC.Gray + "Click to apply faction points", CC.Gray + "to your factions /f top value!", "", CC.RedB + "Valid Until " + CC.RedU + TimeUtils.formatTimeToDate((long)(manualExpiration != null ? manualExpiration : currentTime + TimeUnit.HOURS.toMillis(24L)), (String)"MMM d'%s' hh:mmaa", (String)"CST").replace(" 0", " ") + " CST").build()).setString("cosmicType", "fPointNote").setNBTBase("cosmicData", (NBTBase)cosmicData.get());
         if (applyIID) {
             wrapper.assignIID();
         }

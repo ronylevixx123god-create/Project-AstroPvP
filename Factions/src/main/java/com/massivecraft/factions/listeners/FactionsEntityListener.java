@@ -392,7 +392,7 @@ public class FactionsEntityListener
         }
         if (damage > 0.0 && ownTerritory && Conf.territoryShieldFactor > 0.0) {
             ExpiringChunkData data;
-            if (P.p.factionPointsEnabled && ((data = CosmicFactionPoints.get().getChunkManager().getChunksToExpire().get(defenderFLoc)) == null || System.currentTimeMillis() - data.getTimeClaimed() < TimeUnit.HOURS.toMillis(24L))) {
+            if (P.p.factionPointsEnabled && ((data = P.getP().getChunkManager().getChunksToExpire().get(defenderFLoc)) == null || System.currentTimeMillis() - data.getTimeClaimed() < TimeUnit.HOURS.toMillis(24L))) {
                 return true;
             }
             double new_damage = damage * (1.0 - Conf.territoryShieldFactor);
