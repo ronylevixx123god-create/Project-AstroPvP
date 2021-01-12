@@ -10,7 +10,6 @@
 package com.cosmicpvp.cosmicutils.struct.factions.points;
 
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
-import com.cosmicpvp.factionpoints.CosmicFactionPoints;
 import com.cosmicpvp.factionpoints.FactionsPointsAPI;
 import com.cosmicpvp.factionpoints.menus.PointPurchaseMenu;
 import com.massivecraft.factions.Faction;

@@ -36,6 +36,12 @@ import com.conaxgames.factions.utils.cmds.CommandToggleSmoke;
 import com.conaxgames.factions.utils.flying.CosmicFlyingPlugin;
 import com.conaxgames.factions.utils.listeners.*;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.factionpoints.commands.CommandFactionPoints;
+import com.cosmicpvp.factionpoints.listeners.CoreChunkListener;
+import com.cosmicpvp.factionpoints.listeners.FactionListener;
+import com.cosmicpvp.factionpoints.listeners.FactionPointListener;
+import com.cosmicpvp.factionpoints.managers.CoreChunkManager;
+import com.cosmicpvp.factionpoints.managers.PointManager;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.massivecraft.factions.cmd.*;
@@ -66,8 +72,10 @@ import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -106,8 +114,8 @@ public class P extends MPlugin {
     private CosmicFlyingPlugin cosmicFlyingPlugin;
     public BoosterManager boosterManager;
     // TODO: FINISH FACTION POINTS
-    /*public PointManager pointManager;
-    private CoreChunkManager chunkManager; */
+    @Getter @Setter public PointManager pointManager;
+    @Getter @Setter private CoreChunkManager chunkManager;
     public static boolean debug;
     private long startOfMap;
     private boolean vanillaPlanet = false;
@@ -209,10 +217,10 @@ public class P extends MPlugin {
 
         this.saveDefaultConfig();
         // TODO: FINISH ADDING FACTION POINTS (CONVERT FROM .kt)
-       /* this.pointManager = new PointManager();
-        this.chunkManager = new CoreChunkManager(); */
-       /* this.pointManager.onEnable(this);
-        this.chunkManager.onEnable(this); */
+        this.pointManager = new PointManager();
+        this.chunkManager = new CoreChunkManager();
+        this.pointManager.onEnable(this);
+        this.chunkManager.onEnable(this);
         this.startOfMap = this.getConfig().getLong("startOfMap");
         this.vanillaPlanet = this.getConfig().getBoolean("vanilla", false);
 
@@ -300,6 +308,7 @@ public class P extends MPlugin {
         this.getCommand("fbanner").setExecutor(new CommandBanner());
         this.getCommand("frecall").setExecutor(new CommandRecall());
 
+        this.getCommand("factionpoints").setExecutor(new CommandFactionPoints());
     }
 
     private void registerNewListeners() {
@@ -318,6 +327,10 @@ public class P extends MPlugin {
         this.bannerListener = new BannerListener();
         this.getServer().getPluginManager().registerEvents(this.bannerListener, this);
         this.getServer().getPluginManager().registerEvents(new CommandListener(), this);
+
+        this.getServer().getPluginManager().registerEvents(new FactionPointListener(), this);
+        this.getServer().getPluginManager().registerEvents(new CoreChunkListener(), this);
+        this.getServer().getPluginManager().registerEvents(new FactionListener(), this);
     }
 
     private void mcMMOTestUtil() {
@@ -410,8 +423,8 @@ public class P extends MPlugin {
             pl.removeMetadata("last_enderpearl_throw", this);
         }
         // TODO: FINISH ADDING FACTION POINTS (CONVERT FROM .kt)
-        /*this.pointManager.onDisable(this);
-        this.chunkManager.onDisable(this);*/
+        this.pointManager.onDisable(this);
+        this.chunkManager.onDisable(this);
         this.boosterManager.saveActiveBoosters();
         CommandToggleSmoke.saveToggles();
         if (this.AutoLeaveTask != null) {

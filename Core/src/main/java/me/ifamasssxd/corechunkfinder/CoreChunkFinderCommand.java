@@ -20,7 +20,6 @@ package me.ifamasssxd.corechunkfinder;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
-import com.cosmicpvp.factionpoints.CosmicFactionPoints;
 import com.cosmicpvp.factionpoints.FactionsCoreChunkAPI;
 import com.cosmicpvp.factionpoints.struct.CoreChunkData;
 import com.cosmicpvp.factionpoints.struct.ExpiringChunkData;

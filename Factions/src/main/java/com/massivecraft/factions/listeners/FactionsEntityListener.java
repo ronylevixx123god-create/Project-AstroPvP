@@ -47,7 +47,6 @@
  */
 package com.massivecraft.factions.listeners;
 
-import com.cosmicpvp.factionpoints.CosmicFactionPoints;
 import com.cosmicpvp.factionpoints.struct.ExpiringChunkData;
 import com.massivecraft.factions.*;
 import com.massivecraft.factions.event.PowerLossEvent;
