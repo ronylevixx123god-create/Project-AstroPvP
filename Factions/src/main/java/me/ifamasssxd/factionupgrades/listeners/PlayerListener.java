@@ -1,0 +1,26 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  org.bukkit.event.EventHandler
+ *  org.bukkit.event.EventPriority
+ *  org.bukkit.event.Listener
+ *  org.bukkit.event.player.PlayerCommandPreprocessEvent
+ */
+package me.ifamasssxd.factionupgrades.listeners;
+
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+
+public class PlayerListener
+implements Listener {
+    @EventHandler(priority=EventPriority.LOWEST, ignoreCancelled=true)
+    public void onPlayerPreProcess(PlayerCommandPreprocessEvent event) {
+        if (event.getMessage().startsWith("/f upgrade") || event.getMessage().startsWith("/f upgrades")) {
+            event.setMessage(event.getMessage().replace("/f upgrades", "/fupgrade").replace("/f upgrade", "/fupgrade"));
+        }
+    }
+}
+

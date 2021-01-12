@@ -28,7 +28,6 @@ import com.massivecraft.factions.Factions;
 import com.massivecraft.factions.P;
 import com.massivecraft.factions.integration.Econ;
 import com.massivecraft.factions.struct.Role;
-import me.ifamasssxd.factionupgrades.FactionUpgrades;
 import me.ifamasssxd.factionupgrades.struct.FactionUpgradeInfo;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.libs.BlockValueLocation;

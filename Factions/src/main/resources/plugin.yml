@@ -16,6 +16,10 @@ commands:
   fquest:
     description: Faction quests command.
     aliases: [ fquests, factionquests, facquests ]
+  fupgrade:
+    description: F Upgrade commmand.
+  converttofactionpoints:
+    description: Convert faction points.
   ftop:
     description: Factions top command.
   recalcftop:
