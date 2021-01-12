@@ -63,7 +63,6 @@ import com.massivecraft.factions.struct.Relation;
 import com.wimbli.WorldBorder.BorderData;
 import com.wimbli.WorldBorder.WorldBorder;
 import java.util.List;
-
 import me.ifamasssxd.killtracker.KillTrackerAPI;
 import org.bukkit.DyeColor;
 import org.bukkit.Location;
