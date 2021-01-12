@@ -16,6 +16,13 @@ commands:
   fquest:
     description: Faction quests command.
     aliases: [ fquests, factionquests, facquests ]
+  ftop:
+    description: Factions top command.
+  recalcftop:
+    description: Recalculate the factions top manually.
+  editftop:
+    description: Edit ftop variables.
+    aliases: [editfactionstop]
   allowtp:
     description: Allow specified player to teleport to VIP bases
     usage: /<command>

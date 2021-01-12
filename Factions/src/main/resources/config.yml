@@ -77,3 +77,6 @@ pointsBuyable: true
 weekly-increase: 50
 last-week-reset: 1533931200000
 vanilla: false
+
+gradualSpawnerValue: false
+includeBank: false

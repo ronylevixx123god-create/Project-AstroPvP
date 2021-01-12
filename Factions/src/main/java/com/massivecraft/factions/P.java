@@ -62,14 +62,16 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
+import me.ifamasssxd.factionstop.commands.CommandEditFactionsTop;
+import me.ifamasssxd.factionstop.commands.CommandFactionsTop;
+import me.ifamasssxd.factionstop.commands.CommandRecalcFactionsTop;
+import me.ifamasssxd.factionstop.manager.TopManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -110,6 +112,13 @@ public class P extends MPlugin {
     private long startOfMap;
     private boolean vanillaPlanet = false;
     private boolean fundEnabled;
+
+    @Getter @Setter private final TopManager topManager = new TopManager();
+    @Getter @Setter private boolean gradualSpawnerValues = false;
+    @Getter @Setter private boolean includeBank = false;
+    @Getter @Setter private boolean includeHoppers = true;
+    @Getter @Setter public boolean upgradesEnabled = false;
+    @Getter @Setter public boolean factionPointsEnabled = false;
 
     @Getter @Setter
     private BannerManager bannerManager;
@@ -242,6 +251,17 @@ public class P extends MPlugin {
             //e.printStackTrace();
         }
         P.getP().setBoardManager(new BoardManager(new ScoreboardManager()));
+
+        this.upgradesEnabled = Bukkit.getPluginManager().isPluginEnabled("FactionUpgrades");
+        this.factionPointsEnabled = new File("plugins/CosmicFactionPoints.jar").exists();
+        this.topManager.loadTopFactions(null, 100);
+        this.includeBank = this.getConfig().getBoolean("includeBank");
+        this.gradualSpawnerValues = this.getConfig().getBoolean("gradualSpawnerValue");
+        this.includeHoppers = this.getConfig().getBoolean("includeHoppers", true);
+        this.getServer().getPluginManager().registerEvents(new me.ifamasssxd.factionstop.listeners.CommandListener(), this);
+        this.getCommand("recalcftop").setExecutor(new CommandRecalcFactionsTop());
+        this.getCommand("ftop").setExecutor(new CommandFactionsTop());
+        this.getCommand("editftop").setExecutor(new CommandEditFactionsTop());
 
         int minute = 1200;
 
