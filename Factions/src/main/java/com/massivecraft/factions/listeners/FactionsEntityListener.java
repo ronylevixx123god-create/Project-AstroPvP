@@ -1,53 +1,5 @@
-/*
- * Decompiled with CFR 0.145.
- *
- * Could not load the following classes:
- *  com.cosmicpvp.factionpoints.CosmicFactionPoints
- *  com.cosmicpvp.factionpoints.managers.CoreChunkManager
- *  com.cosmicpvp.factionpoints.struct.ExpiringChunkData
- *  org.bukkit.Bukkit
- *  org.bukkit.Location
- *  org.bukkit.OfflinePlayer
- *  org.bukkit.World
- *  org.bukkit.block.Block
- *  org.bukkit.entity.Creeper
- *  org.bukkit.entity.Enderman
- *  org.bukkit.entity.Entity
- *  org.bukkit.entity.EntityType
- *  org.bukkit.entity.Fireball
- *  org.bukkit.entity.Hanging
- *  org.bukkit.entity.LivingEntity
- *  org.bukkit.entity.Player
- *  org.bukkit.entity.Projectile
- *  org.bukkit.entity.TNTPrimed
- *  org.bukkit.entity.ThrownPotion
- *  org.bukkit.entity.Wither
- *  org.bukkit.entity.WitherSkull
- *  org.bukkit.entity.minecart.ExplosiveMinecart
- *  org.bukkit.event.Event
- *  org.bukkit.event.EventHandler
- *  org.bukkit.event.EventPriority
- *  org.bukkit.event.Listener
- *  org.bukkit.event.entity.EntityChangeBlockEvent
- *  org.bukkit.event.entity.EntityCombustByEntityEvent
- *  org.bukkit.event.entity.EntityDamageByEntityEvent
- *  org.bukkit.event.entity.EntityDamageEvent
- *  org.bukkit.event.entity.EntityDamageEvent$DamageCause
- *  org.bukkit.event.entity.EntityDeathEvent
- *  org.bukkit.event.entity.EntityExplodeEvent
- *  org.bukkit.event.entity.EntityTargetEvent
- *  org.bukkit.event.entity.PotionSplashEvent
- *  org.bukkit.event.hanging.HangingBreakByEntityEvent
- *  org.bukkit.event.hanging.HangingBreakEvent
- *  org.bukkit.event.hanging.HangingBreakEvent$RemoveCause
- *  org.bukkit.event.hanging.HangingPlaceEvent
- *  org.bukkit.potion.PotionEffect
- *  org.bukkit.potion.PotionEffectType
- *  org.bukkit.projectiles.ProjectileSource
- */
 package com.massivecraft.factions.listeners;
 
-import com.cosmicpvp.factionpoints.struct.ExpiringChunkData;
 import com.massivecraft.factions.*;
 import com.massivecraft.factions.event.PowerLossEvent;
 import com.massivecraft.factions.struct.Relation;
@@ -391,7 +343,6 @@ public class FactionsEntityListener
             return false;
         }
         if (damage > 0.0 && ownTerritory && Conf.territoryShieldFactor > 0.0) {
-            ExpiringChunkData data;
             double new_damage = damage * (1.0 - Conf.territoryShieldFactor);
             sub.setDamage(new_damage);
             if (notify) {

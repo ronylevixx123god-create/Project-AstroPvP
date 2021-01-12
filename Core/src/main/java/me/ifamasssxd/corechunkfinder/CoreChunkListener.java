@@ -1,7 +1,5 @@
 package me.ifamasssxd.corechunkfinder;
 
-import com.cosmicpvp.factionpoints.FactionsCoreChunkAPI;
-import com.cosmicpvp.factionpoints.struct.CoreChunkData;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.Faction;
@@ -29,24 +27,11 @@ public class CoreChunkListener implements Listener {
             AstroCore.getInstance().getLogger().info("TNT Exploded not inside a faction: " + this.getLocation(event.getLocation()));
             return;
         }
-        CoreChunkData coreChunk = FactionsCoreChunkAPI.getChunkData((Faction)inside);
-        if (coreChunk == null || coreChunk.getMasterChunk() == null) {
-            AstroCore.getInstance().getLogger().info("No Core Chunk found for: " + inside.getTag() + " at " + this.getLocation(event.getLocation()));
-            return;
-        }
         TNTPrimed primed = (TNTPrimed)event.getEntity();
         Block source = ((CraftTNTPrimed)primed).getHandle().sourceLoc.getBlock();
         Faction cameFrom = Board.getFactionAt((FLocation)new FLocation(source));
         if (cameFrom != null && cameFrom.equals((Object)inside)) {
             AstroCore.getInstance().getLogger().info("TNT from inside itself!");
-            return;
-        }
-        if (!coreChunk.getMasterChunk().equals((Object)location)) {
-            AstroCore.getInstance().getLogger().info("TNT didnt explode inside the CORE CHUNK: " + (Object)coreChunk.getMasterChunk());
-            return;
-        }
-        if (!coreChunk.canBeRaided()) {
-            AstroCore.getInstance().getLogger().info(inside.getTag() + " cannot be raided from TNT explosion at: " + this.getLocation(event.getLocation()) + " Came from: " + (Object)cameFrom);
             return;
         }
         if (cameFrom != null && cameFrom.isNormal()) {

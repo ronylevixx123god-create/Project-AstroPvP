@@ -91,7 +91,6 @@ public class P extends MPlugin {
     public final FactionChunkOwnershipCache ownershipCacheListener;
     private final FactionPermissionListener permissionListener;
     public boolean citizensEnabled = true;
-    public boolean factionPointsEnabled = false;
     public boolean outpostsEnabled = false;
     public String currentVersion = "1.1";
     public FCmdRoot cmdBase;
@@ -110,7 +109,6 @@ public class P extends MPlugin {
     public static boolean debug;
     private long startOfMap;
     private boolean vanillaPlanet = false;
-    private boolean fpointsEnabled = false;
     private boolean fundEnabled;
 
     @Getter @Setter
@@ -174,7 +172,6 @@ public class P extends MPlugin {
         if (!this.preEnable()) {
             return;
         }
-        this.factionPointsEnabled = new File("plugins/CosmicFactionPoints.jar").exists();
         this.loadSuccessful = false;
         this.flogManager = new FLogManager();
         Conf.load();
@@ -213,11 +210,6 @@ public class P extends MPlugin {
         this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new BoosterTask(), 20L, 20L);
 
         this.fundEnabled = this.getServer().getPluginManager().isPluginEnabled("CosmicFund");
-        this.fpointsEnabled = new File("plugins/CosmicFactionPoints.jar").exists();
-
-        /*
-         This is the requirements for all additions put into Factions. (^^^)
-        */
 
         this.getBaseCommands().add(this.cmdBase);
         EssentialsFeatures.setup();
@@ -437,10 +429,6 @@ public class P extends MPlugin {
         if (Conf.autoLeaveRoutineRunsEveryXMinutes > 0.0) {
             // empty if block
         }
-    }
-
-    public boolean isFpointsEnabled() {
-        return this.fpointsEnabled;
     }
 
     public boolean isFundEnabled() {

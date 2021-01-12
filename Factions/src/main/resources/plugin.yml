@@ -7,9 +7,6 @@ softdepend: [WorldGuard, CosmicAuthentication, Citizens, PermissionsEx, Permissi
              nChat, ChatManager, CAPI, AuthMe, AuthDB, CaptureThePoints, CombatTag, WorldEdit, WorldGuard, WorldBorder]
 depend: [Vault, Essentials]
 commands:
-  factionpoints:
-    description: Default commnand.
-    aliases: [fpoints, fpoint, factionpoint, fp]
   fbanner:
     description: Faction banner.
   frecall:
