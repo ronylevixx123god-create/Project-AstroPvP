@@ -80,12 +80,12 @@ implements CommandExecutor {
         FPlayer fplayer = FPlayers.i.get(pl.getUniqueId().toString());
         Faction current = fplayer.getFaction();
         int place = 0;
-        ArrayList topFactions = Lists.newArrayList(showWealth && P.getP().factionPointsEnabled ? manager.getWealthTopFactions().values() : manager.getTopFactions().values());
+        ArrayList topFactions = Lists.newArrayList(showWealth);
         for (int i = startPosition; i < startPosition + perPage && place < perPage && i < topFactions.size() && i <= 50; ++i) {
             TopFaction faction = (TopFaction)topFactions.get(i);
             JSONMessage message = new JSONMessage((Object)ChatColor.AQUA + ChatColor.BOLD.toString() + (++place + startPosition) + ". ");
             if (faction.getStoredFaction().getFaction() == null) continue;
-            String worth = P.getP().factionPointsEnabled && !showWealth ? (Object)ChatColor.LIGHT_PURPLE + ChatColor.BOLD.toString() + this.format.format(faction.getStoredFaction().getFactionPoints()) + (Object)ChatColor.LIGHT_PURPLE + " Faction Points" : ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD.toString() + "$" + this.format.format((long)faction.getStoredFaction().getTotalWorth());
+            String worth = !showWealth ? (Object)ChatColor.LIGHT_PURPLE + ChatColor.BOLD.toString() + ChatColor.LIGHT_PURPLE + " Faction Points" : ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD.toString() + "$" + this.format.format((long)faction.getStoredFaction().getTotalWorth());
             message.addRunCommand((Object)ChatColor.WHITE + (current != null && current.isNormal() ? faction.getStoredFaction().getFaction().getTag(current) : faction.getStoredFaction().getFaction().getTag()) + (Object)ChatColor.AQUA + " - " + worth, ChatColor.WHITE, "/f who " + faction.getStoredFaction().getFaction().getTag(), faction.getStoredFaction().getHoverData(current));
             message.sendToPlayer(pl);
         }

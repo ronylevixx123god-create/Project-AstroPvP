@@ -183,8 +183,8 @@ public class TopManager {
                     }
                     Bukkit.getLogger().info("Finished faction check in " + (System.currentTimeMillis() - start) + "ms");
                     System.out.println("Scanned " + chunksChecked + " Chunks in " + (System.currentTimeMillis() - firstStart) + "ms found " + TopManager.this.totalSpawnersFound + " spawners.");
-                    LinkedHashMap<String, StoredFaction> topSortedFactions = TopManager.this.sortByComparator(storedFactions, false, forceWealth && P.getP().factionPointsEnabled);
-                    boolean bl = wealth = forceWealth && P.getP().factionPointsEnabled;
+                    LinkedHashMap<String, StoredFaction> topSortedFactions = TopManager.this.sortByComparator(storedFactions, false, forceWealth);
+                    boolean bl = wealth = forceWealth;
                     if (!wealth) {
                         TopManager.this.fastFactions.clear();
                     }
@@ -208,17 +208,11 @@ public class TopManager {
                             System.out.println("Top Faction " + faction.getTag() + " is #" + place + ", found " + storedFaction.getMobSpawnerCount() + " Spawners worth " + storedFaction.getTotalSpawnerWorth() + " with top player balance: " + storedFaction.getTotalBalance() + " owner: " + storedFaction.getOwner());
                         }
                         if (place <= 3) {
-                            String previousPlace;
-                            String string = previousPlace = forceWealth ? TopManager.this.previousWealthFTops.get(place) : TopManager.this.previousFTops.get(place);
+                            String string = forceWealth ? TopManager.this.previousWealthFTops.get(place) : TopManager.this.previousFTops.get(place);
                             if (forceWealth) {
                                 TopManager.this.previousWealthFTops.put(place, faction.getId());
                             } else {
                                 TopManager.this.previousFTops.put(place, faction.getId());
-                            }
-                            if (previousPlace == null || !previousPlace.equals(faction.getId())) {
-                                String worthString = !P.getP().factionPointsEnabled || forceWealth ? "$" + format.format(storedFaction.getTotalWorth()) : storedFaction.getFactionPoints() + " Faction Points";
-                                int finalPlace = place;
-                                Bukkit.getScheduler().runTask(P.getP(), () -> Bukkit.broadcastMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + ChatColor.UNDERLINE.toString() + faction.getTag() + ChatColor.GREEN + " has taken " + ChatColor.GREEN + ChatColor.BOLD.toString() + "#" + finalPlace + ChatColor.GREEN + " in /f " + (P.getP().factionPointsEnabled && forceWealth ? "wealth" : "top") + " with " + worthString));
                             }
                         }
                         TopFaction fac2 = new TopFaction(storedFaction, place);
@@ -229,10 +223,6 @@ public class TopManager {
                         TopManager.this.topFactions.put(place++, fac2);
                         TopManager.this.fastFactions.put(storedFaction.getFactionID(), fac2);
                     }
-                    /*if (Bukkit.getPluginManager().isPluginEnabled("CosmicWebLink")) {
-                        CosmicWebLink cosmicWebLink = (CosmicWebLink)Bukkit.getPluginManager().getPlugin("CosmicWebLink");
-                        cosmicWebLink.getDataManager().updateData(DataTypeEnum.FACTIONS_TOP, new Object[]{TopManager.this.topFactions, TopManager.this.wealthTopFactions});
-                    }*/
                     topSortedFactions.clear();
                     TopManager.this.loadingData = false;
                     if (callback != null) {

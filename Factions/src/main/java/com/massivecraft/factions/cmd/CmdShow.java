@@ -1,7 +1,5 @@
 package com.massivecraft.factions.cmd;
 
-import com.cosmicpvp.factionpoints.FactionsCoreChunkAPI;
-import com.cosmicpvp.factionpoints.FactionsPointsAPI;
 import com.earth2me.essentials.User;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.*;
@@ -80,7 +78,7 @@ public class CmdShow extends FCommand {
                 (new BukkitRunnable() {
                     public void run() {
                         CmdShow.this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&4Land/Power/Maxpower: <p>&f%d/%d/%d %s"), coordCount, finalFaction1.getPowerRounded(), finalFaction1.getPowerMaxRounded(), boost);
-                        TopFaction tf = FactionsTop.get().getTopManager().getTopFaction(finalFaction1.getId());
+                        TopFaction tf = P.getP().getTopManager().getTopFaction(finalFaction1.getId());
                         if (tf != null) {
                             StoredFaction sf = tf.getStoredFaction();
                             CmdShow.this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&4Faction Wealth: <p>&f$%s"), CmdShow.this.df.format((long) sf.getTotalWorth()));
@@ -92,23 +90,6 @@ public class CmdShow extends FCommand {
                     }
                 }).runTask(P.getP());
                 String allyList;
-                if (P.p.factionPointsEnabled) {
-                    Long points = FactionsPointsAPI.getPoints(finalFaction);
-                    if (points == null) {
-                        points = 0L;
-                    }
-
-                    this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&4Faction Points: <p>&f%s"), this.df.format(points));
-                    allyList = FactionsCoreChunkAPI.getWhenRaidableString(finalFaction);
-                    if (allyList != null) {
-                        this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&4Raid Cooldown: <p>&f%s"), allyList);
-                    }
-
-                    if (myFaction != null && myFaction.equals(finalFaction)) {
-                        FLocation coreChunk = FactionsCoreChunkAPI.getCoreChunk(myFaction);
-                        this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&4Core Chunk: <p>&f%s"), coreChunk == null ? "N/A" : FLocation.chunkToBlock((int) coreChunk.getX()) + "x, " + FLocation.chunkToBlock((int) coreChunk.getZ()) + "z");
-                    }
-                }
 
                 if (Conf.bankEnabled) {
                     this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&4Bank Balance: <p>&f$%s"), this.df.format(econ));
