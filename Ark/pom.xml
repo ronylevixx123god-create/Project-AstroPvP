@@ -177,6 +177,11 @@
             <artifactId>CompilexPermissions</artifactId>
             <version>0.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>Conquest</artifactId>
+            <version>0.1</version>
+        </dependency>
 
         <dependency>
             <groupId>com.conaxgames</groupId>

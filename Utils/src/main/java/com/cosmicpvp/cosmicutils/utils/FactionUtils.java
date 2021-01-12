@@ -128,7 +128,7 @@ public class FactionUtils {
     }
 
     public static boolean isNormal(Faction faction) {
-        return faction != null && (Boolean) ReflectionUtils.callReflectionMethod((Object) faction, Faction.class, "isNormal", null) != false;
+        return faction != null && (Boolean) ReflectionUtils.callReflectionMethod((Object) faction, Faction.class, "isNormal", null);
     }
 
     public static boolean isWarZone(Faction faction) {

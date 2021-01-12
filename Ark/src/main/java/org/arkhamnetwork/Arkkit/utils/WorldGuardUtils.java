@@ -101,7 +101,7 @@ public class WorldGuardUtils {
             ApplicableRegionSet regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegions(l);
             if (regionSet.size() < 1)
                 try {
-                    return ((StateFlag.State)wg.getGlobalRegionManager().get(l.getWorld()).getRegion("__global__").getFlags().get(DefaultFlag.PVP) == StateFlag.State.DENY);
+                    return (wg.getGlobalRegionManager().get(l.getWorld()).getRegion("__global__").getFlags().get(DefaultFlag.PVP) == StateFlag.State.DENY);
                 } catch (Exception err) {
                     if (err instanceof NullPointerException)
                         return false;
