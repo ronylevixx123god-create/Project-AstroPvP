@@ -80,3 +80,5 @@ vanilla: false
 
 gradualSpawnerValue: false
 includeBank: false
+
+upgradeModifier: 1.0

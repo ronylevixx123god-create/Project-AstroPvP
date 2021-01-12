@@ -66,6 +66,12 @@ import me.ifamasssxd.factionstop.commands.CommandEditFactionsTop;
 import me.ifamasssxd.factionstop.commands.CommandFactionsTop;
 import me.ifamasssxd.factionstop.commands.CommandRecalcFactionsTop;
 import me.ifamasssxd.factionstop.manager.TopManager;
+import me.ifamasssxd.factionupgrades.commands.CommandConvertToFactionPoints;
+import me.ifamasssxd.factionupgrades.commands.CommandFUpgrade;
+import me.ifamasssxd.factionupgrades.listeners.FactionListener;
+import me.ifamasssxd.factionupgrades.listeners.PerkListener;
+import me.ifamasssxd.factionupgrades.listeners.PlayerListener;
+import me.ifamasssxd.factionupgrades.struct.UpgradeManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -118,6 +124,8 @@ public class P extends MPlugin {
     @Getter @Setter private boolean includeBank = false;
     @Getter @Setter private boolean includeHoppers = true;
     @Getter @Setter public boolean upgradesEnabled = false;
+
+    @Getter @Setter private UpgradeManager upgradeManager;
 
     @Getter @Setter
     private BannerManager bannerManager;
@@ -260,6 +268,14 @@ public class P extends MPlugin {
         this.getCommand("recalcftop").setExecutor(new CommandRecalcFactionsTop());
         this.getCommand("ftop").setExecutor(new CommandFactionsTop());
         this.getCommand("editftop").setExecutor(new CommandEditFactionsTop());
+
+        this.getCommand("fupgrade").setExecutor(new CommandFUpgrade());
+        this.getCommand("converttofactionpoints").setExecutor(new CommandConvertToFactionPoints());
+        this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
+        this.getServer().getPluginManager().registerEvents(new PerkListener(), this);
+        this.getServer().getPluginManager().registerEvents(new FactionListener(), this);
+        this.upgradeManager = new UpgradeManager();
+        this.upgradeManager.loadUpgrades();
 
         int minute = 1200;
 
@@ -419,7 +435,7 @@ public class P extends MPlugin {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        this.upgradeManager.saveUpgradeInfo();
     }
 
     public FileManager getFileManager() {
