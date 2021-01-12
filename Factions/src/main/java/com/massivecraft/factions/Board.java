@@ -256,9 +256,6 @@ public class Board {
         ArrayList<String> asciiCompass = AsciiCompass.getAsciiCompass(inDegrees, ChatColor.DARK_GREEN, P.p.txt.parse("<gray>"));
 
         String str = "(" + flocation.getCoordString() + ") " + factionLoc.getTag(faction);
-        if (P.p.factionPointsEnabled && (data = P.getP().getChunkManager().getChunksToExpire().get(flocation)) != null && data.getTimeClaimed() > 0L && (timeSinceClaimed = System.currentTimeMillis() - data.getTimeClaimed()) > 0L) {
-            str = timeSinceClaimed < TimeUnit.HOURS.toMillis(24L) ? str + " (claim " + TimeUtil.formatSeconds(timeSinceClaimed / 1000L) + " old)" : str + " (claim >1d old)";
-        }
         int spawnerCount = Board.getSpawnersInChunk(flocation);
         str = str + CC.Aqua + " [" + CC.White + spawnerCount + "x" + CC.Aqua + " spawners]";
         if (spawnerCount > 0 && player != null) {

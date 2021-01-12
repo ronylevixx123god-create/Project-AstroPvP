@@ -36,12 +36,6 @@ import com.conaxgames.factions.utils.cmds.CommandToggleSmoke;
 import com.conaxgames.factions.utils.flying.CosmicFlyingPlugin;
 import com.conaxgames.factions.utils.listeners.*;
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.factionpoints.commands.CommandFactionPoints;
-import com.cosmicpvp.factionpoints.listeners.CoreChunkListener;
-import com.cosmicpvp.factionpoints.listeners.FactionListener;
-import com.cosmicpvp.factionpoints.listeners.FactionPointListener;
-import com.cosmicpvp.factionpoints.managers.CoreChunkManager;
-import com.cosmicpvp.factionpoints.managers.PointManager;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.massivecraft.factions.cmd.*;
@@ -113,9 +107,6 @@ public class P extends MPlugin {
     private BoardManager boardManager;
     private CosmicFlyingPlugin cosmicFlyingPlugin;
     public BoosterManager boosterManager;
-    // TODO: FINISH FACTION POINTS
-    @Getter @Setter public PointManager pointManager;
-    @Getter @Setter private CoreChunkManager chunkManager;
     public static boolean debug;
     private long startOfMap;
     private boolean vanillaPlanet = false;
@@ -302,8 +293,6 @@ public class P extends MPlugin {
         this.getCommand("fsetbanner").setExecutor(new CommandSetBanner());
         this.getCommand("fbanner").setExecutor(new CommandBanner());
         this.getCommand("frecall").setExecutor(new CommandRecall());
-
-        this.getCommand("factionpoints").setExecutor(new CommandFactionPoints());
     }
 
     private void registerNewListeners() {
@@ -323,9 +312,6 @@ public class P extends MPlugin {
         this.getServer().getPluginManager().registerEvents(this.bannerListener, this);
         this.getServer().getPluginManager().registerEvents(new CommandListener(), this);
 
-        this.getServer().getPluginManager().registerEvents(new FactionPointListener(), this);
-        this.getServer().getPluginManager().registerEvents(new CoreChunkListener(), this);
-        this.getServer().getPluginManager().registerEvents(new FactionListener(), this);
     }
 
     private void mcMMOTestUtil() {
