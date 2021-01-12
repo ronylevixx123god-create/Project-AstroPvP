@@ -17,7 +17,6 @@ import com.massivecraft.factions.Conf;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.P;
-import com.massivecraft.factions.struct.FLogType;
 import com.massivecraft.factions.struct.Permission;
 import com.massivecraft.factions.zcore.util.TextUtil;
 import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatUtils;

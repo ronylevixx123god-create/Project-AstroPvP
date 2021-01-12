@@ -21,7 +21,6 @@ import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.P;
 import com.massivecraft.factions.event.FPlayerJoinEvent;
-import com.massivecraft.factions.struct.FLogType;
 import com.massivecraft.factions.struct.Permission;
 import com.massivecraft.factions.struct.Role;
 import org.bukkit.Bukkit;

@@ -24,7 +24,6 @@ import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.P;
 import com.massivecraft.factions.event.LandUnclaimAllEvent;
 import com.massivecraft.factions.integration.Econ;
-import com.massivecraft.factions.struct.FLogType;
 import com.massivecraft.factions.struct.FUnclaimAllConfirm;
 import com.massivecraft.factions.struct.Permission;
 import com.massivecraft.factions.struct.RolePerm;

@@ -19,7 +19,6 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.P;
-import com.massivecraft.factions.struct.FLogType;
 import com.massivecraft.factions.struct.Permission;
 import org.bukkit.Chunk;
 import org.bukkit.Location;

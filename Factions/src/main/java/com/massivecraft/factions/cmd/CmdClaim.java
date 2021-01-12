@@ -5,7 +5,6 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.*;
-import com.massivecraft.factions.struct.FLogType;
 import com.massivecraft.factions.struct.Permission;
 import com.massivecraft.factions.util.SpiralTask;
 import com.massivecraft.factions.zcore.util.WorldUtil;
