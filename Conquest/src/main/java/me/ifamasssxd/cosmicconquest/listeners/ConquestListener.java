@@ -7,9 +7,6 @@ import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.event.LandClaimEvent;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.cosmicbosses.struct.BossDespawnEvent;
 import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
@@ -17,18 +14,11 @@ import me.ifamasssxd.cosmicconquest.CosmicConquestAPI;
 import me.ifamasssxd.cosmicconquest.CosmicConquests;
 import me.ifamasssxd.cosmicconquest.struct.ChestData;
 import me.ifamasssxd.cosmicconquest.struct.ConquestManager;
+import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
-import net.minecraft.server.v1_8_R3.Packet;
 import net.minecraft.server.v1_8_R3.PacketPlayOutBlockBreakAnimation;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Chunk;
-import org.bukkit.Effect;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.command.CommandSender;
@@ -54,6 +44,10 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffectType;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 public class ConquestListener implements Listener {
     private long lastHit = 0L;
@@ -220,7 +214,7 @@ public class ConquestListener implements Listener {
                             int maxBreaks = 10;
                             double percentLeft = hitsLeft.getHits() * 1.0D / maxHits * 1.0D;
                             int breaks = (int)Math.min(10.0D, Math.floor(10.0D - percentLeft * 10.0D));
-                            PacketPlayOutBlockBreakAnimation animation = new PacketPlayOutBlockBreakAnimation(0, block.getX(), block.getY(), block.getZ(), breaks);
+                            PacketPlayOutBlockBreakAnimation animation = new PacketPlayOutBlockBreakAnimation(0, new BlockPosition(block.getX(), block.getY(), block.getZ()), breaks);
                             (((CraftPlayer)player).getHandle()).playerConnection.sendPacket(animation);
                             for (Entity ent2 : player.getNearbyEntities(64.0D, 64.0D, 64.0D)) {
                                 if (ent2 instanceof Player)
