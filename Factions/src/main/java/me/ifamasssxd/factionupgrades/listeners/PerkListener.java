@@ -150,7 +150,7 @@ implements Listener {
             naturalGrowthTier /= 3;
             if (Math.random() < (double)naturalGrowthTier && (nmsBlock = (Block) (cw = (CraftWorld)(b = e.getBlock()).getWorld()).getHandle().getType(new BlockPosition(b.getX(), b.getY(), b.getZ()))) instanceof BlockCrops) {
                 BlockCrops bc = (BlockCrops)nmsBlock;
-                bc.m();
+                bc.g();
             }
         }
     }
