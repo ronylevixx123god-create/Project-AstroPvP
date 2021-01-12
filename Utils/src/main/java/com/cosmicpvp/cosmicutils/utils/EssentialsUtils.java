@@ -45,7 +45,7 @@ public class EssentialsUtils {
         }
         if (ess != null) {
             User user = ess.getUser(player);
-            return EssentialsUtils.isVanished(user) || VanishUtils.isVanishNoPacketVanished(player) || user.isGodModeEnabled();
+            return EssentialsUtils.isVanished(user) || user.isGodModeEnabled();
         }
         return false;
     }

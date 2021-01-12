@@ -11,11 +11,11 @@ import com.compilex.CosmicDungeons.CosmicDungeonsPlugin;
 import com.compilex.CosmicDungeons.dungeons.events.AbandonedShipEvents;
 import com.compilex.CosmicDungeons.dungeons.events.DestroyedOutpostEvents;
 import com.compilex.CosmicDungeons.dungeons.events.DungeonEvents;
-import com.compilex.CosmicDungeons.dungeons.libs.Dungeon;
 import com.cosmicpvp.cosmicutils.struct.factions.points.FactionPointUtils;
+import org.bukkit.ChatColor;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.TimeUnit;
-import org.bukkit.ChatColor;
 
 public enum DungeonType {
     ABANDONED_SHIP("dungeon_yijki_a", "Abandoned Ship", null, 0, AbandonedShipEvents.class, 2500000.0, -1.0, ChatColor.DARK_PURPLE, TimeUnit.DAYS.toMillis(7L), null, 5000000L),

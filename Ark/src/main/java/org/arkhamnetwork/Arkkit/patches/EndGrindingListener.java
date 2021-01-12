@@ -50,7 +50,7 @@ import com.cosmicpvp.CosmicSpaceChests.generators.ArmorGenerator;
 import com.cosmicpvp.CosmicSpaceChests.generators.WeaponGenerator;
 import com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils;
 import com.cosmicpvp.cosmicutils.CosmicUtils;
-import com.cosmicpvp.cosmicutils.struct.factions.points.FactionPointUtils;
+import com.cosmicpvp.cosmicutils.struct.factions.points.FactionPointsUtils;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
 import me.ifamasssxd.cosmicconquest.CosmicConquestAPI;
@@ -171,7 +171,7 @@ final class EndGrindingListener
                 if (Math.random() < 0.001) {
                     e.getDrops().add(DungeonsAPI.get().getDimensionWeb());
                 }
-                if (Math.random() <= 0.01 && (item = FactionPointUtils.getFactionPointsItem(null, null, "end_custom", e)) != null) {
+                if (Math.random() <= 0.01 && (item = FactionPointsUtils.getFactionPointsItem(null, null, "end_custom", e)) != null) {
                     e.getDrops().add(item);
                 }
                 if (Math.random() < 0.001) {

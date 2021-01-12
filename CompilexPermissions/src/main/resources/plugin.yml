@@ -3,7 +3,6 @@ description: Compilex developed permissions system. Requires custom spigot, esse
 authors: [compilex]
 version: 1.0
 softdepend: [ArkhamPermissions]
-depend: [LilyPad-Connect]
 main: com.compilex.CompilexPermissions.CompilexPermissions
 commands:
   permissions:

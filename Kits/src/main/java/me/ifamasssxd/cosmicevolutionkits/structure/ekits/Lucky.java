@@ -124,7 +124,6 @@ extends EvolutionKit {
         this.addItem(5, (ItemBuilder)new DungeonPortalIngredientBuilder(DungeonPortalIngredientBuilder.PortalIngredient.COSMNOAUT_FUEL), 0.1);
         this.addItem(5, (ItemBuilder)new DungeonPortalIngredientBuilder(DungeonPortalIngredientBuilder.PortalIngredient.DIMENSIONAL_WEB), 0.1);
         this.addItem(5, (ItemBuilder)new DungeonPortalIngredientBuilder(DungeonPortalIngredientBuilder.PortalIngredient.INTERDIMENSIONAL_CORE), 0.1);
-        this.addItem(5, (ItemBuilder)new CosmicCrateBuilder("mystery", "Lucky Box"), 0.1);
         this.addItem(5, (ItemBuilder)new KitGemBuilder(null, false), 0.2);
         this.addItem(6, (ItemBuilder)new EnchantmentOrbBuilder(OrbType.ARMOR, 12, 70, 95), 0.2);
         this.addItem(6, (ItemBuilder)new BossEggBuilder("SKELETON_HORSE"), 0.2);
@@ -142,7 +141,6 @@ extends EvolutionKit {
         this.addItem(8, (ItemBuilder)new FatBucketBuilder(), 0.1);
         this.addItem(8, new ItemBuilder(CreeperTypes.getCCItem((CreeperTypes)CreeperTypes.Stun)).setAmount(4), 0.1);
         this.addItem(9, (ItemBuilder)new BlackScrollBuilder(true, 10, 25), 0.2);
-        this.addItem(9, (ItemBuilder)new CosmicCrateBuilder("heroic", "Lucky Box"), 0.075);
         this.addItem(9, (ItemBuilder)new CustomItemBuilder(CustomItemBuilder.CustomItemType.EQUIPMENT_LOOTBOX), 0.2);
         this.addItem(9, new ItemBuilder(ItemID.removeItemID((ItemStack)KillTrackerAPI.buildTracker((Tracker)Tracker.Monster))), 0.05);
         this.addItem(9, (ItemBuilder)new PhoenixFeatherBuilder(), 0.05);

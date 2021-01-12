@@ -2,7 +2,7 @@ package me.ifamasssxd.cosmiccontests.struct;
 
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
-import com.cosmicpvp.cosmicutils.struct.factions.points.FactionPointUtils;
+import com.cosmicpvp.cosmicutils.struct.factions.points.FactionPointsUtils;
 import com.google.common.collect.Lists;
 import java.io.File;
 import java.io.IOException;
@@ -86,7 +86,7 @@ public class PrizeManager {
             done.addAll(Lists.newArrayList(CosmicSpaceChestsAPI.getItems(ItemRarity.LEGENDARY, 8)));
             done.addAll(Lists.newArrayList(CosmicSpaceChestsAPI.getItems(ItemRarity.GOD, 1)));
         }
-        ItemStack pointItem = FactionPointUtils.getFactionPointsItem(null, null, "contest_prize", ranking);
+        ItemStack pointItem = FactionPointsUtils.getFactionPointsItem(null, null, "contest_prize", ranking);
         if (pointItem != null)
             done.add(pointItem);
         ArrayList prizes = Lists.newArrayList((Iterable)this.prizes.stream().filter(pri -> (pri.getRankingRequired() == ranking)).collect(Collectors.toList()));

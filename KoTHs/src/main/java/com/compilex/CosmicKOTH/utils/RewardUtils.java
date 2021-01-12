@@ -233,9 +233,6 @@ public class RewardUtils {
         if (Math.random() <= 0.01) {
             rewards.add(new me.ifamasssxd.cosmicskycustoms.struct.CustomItemBuilder("mystery_lootbox", new Object[0]).build());
         }
-        if (Math.random() <= 0.025) {
-            rewards.add(CustomItemUtils.createCosmicCrate((String)"superior", (String)"KOTH"));
-        }
         if (Math.random() <= 0.25 && (gem = new KitGemBuilder(false, true, true).build()) != null) {
             rewards.add(gem);
         }

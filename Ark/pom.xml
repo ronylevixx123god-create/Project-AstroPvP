@@ -166,7 +166,12 @@
             <version>0.1</version>
             <scope>provided</scope>
         </dependency>
-
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>Masks</artifactId>
+            <version>0.1</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>CompilexPermissions</artifactId>
@@ -175,10 +180,10 @@
 
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>GUIShopTemporary</artifactId>
+            <artifactId>Dungeons</artifactId>
             <version>0.1</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/GUIShop-0.1.jar</systemPath>
+            <systemPath>${project.basedir}/lib/CosmicDungeons.jar</systemPath>
         </dependency>
 
         <!-- System Repos -->

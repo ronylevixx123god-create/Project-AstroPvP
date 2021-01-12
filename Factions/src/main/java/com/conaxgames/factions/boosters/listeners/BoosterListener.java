@@ -66,51 +66,53 @@ implements Listener {
         if (event.hasItem()) {
             ItemStack item = event.getItem();
             Player player = event.getPlayer();
-            if (this.manager.isBoosterItem(item)) {
-                event.setCancelled(true);
-                event.setUseInteractedBlock(Event.Result.DENY);
-                event.setUseItemInHand(Event.Result.DENY);
-                Faction faction = FactionUtils.getFaction(player, false);
-                if (!FactionUtils.isNormal(faction)) {
-                    player.sendMessage(ChatColor.RED + "You must be in a faction to use a Faction Booster!");
-                    return;
-                }
-                FactionBoosters currentBoosters = this.manager.getFactionBooster(faction);
-                BoosterItemInfo info = this.manager.getBoosterItemInfo(item);
-                if (info != null) {
-                    if (player.getWorld().getName().startsWith("world_duels")) {
-                        player.sendMessage(ChatColor.RED + "You cannot use this item in the duel world.");
+            if (manager != null) {
+                if (this.manager.isBoosterItem(item)) {
+                    event.setCancelled(true);
+                    event.setUseInteractedBlock(Event.Result.DENY);
+                    event.setUseItemInHand(Event.Result.DENY);
+                    Faction faction = FactionUtils.getFaction(player, false);
+                    if (!FactionUtils.isNormal(faction)) {
+                        player.sendMessage(ChatColor.RED + "You must be in a faction to use a Faction Booster!");
                         return;
                     }
-                    if (currentBoosters != null && currentBoosters.isBoosterActive(info.getType())) {
-                        ActiveBooster booster = currentBoosters.get(info.getType());
-                        if (booster.getWhoApplied().equals(player.getName())) {
-                            if (booster.getMultiplier() >= 10.0) {
-                                player.sendMessage(ChatColor.RED + "You cannot apply more than a 10x multiplier.");
-                                return;
-                            }
-                            if (booster.getMultiplier() != info.getMultiplier()) {
-                                player.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You can only apply the same " + booster.getMultiplier() + "x multiplier while your booster is active.");
-                                return;
-                            }
-                            booster.setMaxSeconds(info.getDuration() + (booster.getMaxSeconds() - booster.getSecondsElapsed()));
-                            booster.setTimeApplied(System.currentTimeMillis());
-                            booster.setSecondsElapsed(0);
-                            this.activateBooster(faction, player, booster, item);
+                    FactionBoosters currentBoosters = this.manager.getFactionBooster(faction);
+                    BoosterItemInfo info = this.manager.getBoosterItemInfo(item);
+                    if (info != null) {
+                        if (player.getWorld().getName().startsWith("world_duels")) {
+                            player.sendMessage(ChatColor.RED + "You cannot use this item in the duel world.");
                             return;
                         }
-                        player.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "Your faction already has this booster activated by " + booster.getWhoApplied() + " for another " + booster.getFormattedTimeLeft() + "!");
-                        return;
+                        if (currentBoosters != null && currentBoosters.isBoosterActive(info.getType())) {
+                            ActiveBooster booster = currentBoosters.get(info.getType());
+                            if (booster.getWhoApplied().equals(player.getName())) {
+                                if (booster.getMultiplier() >= 10.0) {
+                                    player.sendMessage(ChatColor.RED + "You cannot apply more than a 10x multiplier.");
+                                    return;
+                                }
+                                if (booster.getMultiplier() != info.getMultiplier()) {
+                                    player.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You can only apply the same " + booster.getMultiplier() + "x multiplier while your booster is active.");
+                                    return;
+                                }
+                                booster.setMaxSeconds(info.getDuration() + (booster.getMaxSeconds() - booster.getSecondsElapsed()));
+                                booster.setTimeApplied(System.currentTimeMillis());
+                                booster.setSecondsElapsed(0);
+                                this.activateBooster(faction, player, booster, item);
+                                return;
+                            }
+                            player.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "Your faction already has this booster activated by " + booster.getWhoApplied() + " for another " + booster.getFormattedTimeLeft() + "!");
+                            return;
+                        }
+                        if (currentBoosters == null) {
+                            currentBoosters = new FactionBoosters();
+                            this.manager.getFactionBoosters().put(FactionUtils.getFactionId(faction), currentBoosters);
+                        }
+                        ActiveBooster newBooster = new ActiveBooster(player.getName(), info.getMultiplier(), System.currentTimeMillis(), 0, info.getDuration(), info.getType());
+                        currentBoosters.put(info.getType(), newBooster);
+                        this.activateBooster(faction, player, newBooster, item);
+                    } else {
+                        player.sendMessage(ChatColor.RED + "Invalid Booster detected.");
                     }
-                    if (currentBoosters == null) {
-                        currentBoosters = new FactionBoosters();
-                        this.manager.getFactionBoosters().put(FactionUtils.getFactionId(faction), currentBoosters);
-                    }
-                    ActiveBooster newBooster = new ActiveBooster(player.getName(), info.getMultiplier(), System.currentTimeMillis(), 0, info.getDuration(), info.getType());
-                    currentBoosters.put(info.getType(), newBooster);
-                    this.activateBooster(faction, player, newBooster, item);
-                } else {
-                    player.sendMessage(ChatColor.RED + "Invalid Booster detected.");
                 }
             }
         }

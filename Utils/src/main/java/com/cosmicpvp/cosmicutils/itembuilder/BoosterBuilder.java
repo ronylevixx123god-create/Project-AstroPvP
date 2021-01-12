@@ -1,14 +1,7 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  me.ifamasssxd.cosmicfactionboosters.CosmicFactionBoosters
- *  me.ifamasssxd.cosmicfactionboosters.enums.BoosterType
- */
 package com.cosmicpvp.cosmicutils.itembuilder;
 
-import me.ifamasssxd.cosmicfactionboosters.CosmicFactionBoosters;
-import me.ifamasssxd.cosmicfactionboosters.enums.BoosterType;
+import com.conaxgames.factions.boosters.enums.BoosterType;
+import com.massivecraft.factions.P;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -37,7 +30,7 @@ public class BoosterBuilder
             Bukkit.getLogger().info("Unable to find booster type from " + this.boosterType + " (" + this.duration + "s, " + this.multiplier + "x) ! Returning EXP by default!");
             type = BoosterType.EXP;
         }
-        return CosmicFactionBoosters.get().getBoosterManager().createBooster(type, this.duration, this.multiplier);
+        return P.getP().getBoosterManager().createBooster(type, this.duration, this.multiplier);
     }
 
     public String getBoosterType() {

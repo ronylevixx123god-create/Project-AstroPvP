@@ -115,6 +115,7 @@ public class P extends MPlugin {
     private BoardManager boardManager;
     @Getter @Setter private UpgradeManager upgradeManager;
     private CosmicFlyingPlugin cosmicFlyingPlugin;
+    @Getter @Setter
     public BoosterManager boosterManager;
     // TODO: FINISH FACTION POINTS
     /*public PointManager pointManager;

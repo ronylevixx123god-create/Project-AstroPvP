@@ -113,7 +113,7 @@ public class PlayerUtil {
     }
 
     public static void sendBossBar(Player player, String msg, float percentage) {
-        BarAPI.setMessage((Player) player, (String) msg, (float) percentage);
+        BarAPI.setMessage(player, (String) msg, (float) percentage);
     }
 
     public static void sendBossBar(Player player, String msg) {
