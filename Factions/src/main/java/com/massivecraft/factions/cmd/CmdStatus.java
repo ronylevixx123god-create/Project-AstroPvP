@@ -16,7 +16,6 @@ package com.massivecraft.factions.cmd;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.integration.Econ;
-import com.massivecraft.factions.util.AuthenticationUtils;
 import com.massivecraft.factions.util.MapUtils;
 import com.massivecraft.factions.util.TimeUtil;
 import org.bukkit.Bukkit;
@@ -67,11 +66,6 @@ public class CmdStatus
                         }
                         builder.append(ChatColor.GRAY).append("has ");
                         builder.append(ChatColor.YELLOW).append("$").append(this.format.format(Econ.econ.getBalance(Bukkit.getOfflinePlayer(String.valueOf(fplayer.getCachedUUID())))));
-                        if (AuthenticationUtils.isEnabled()) {
-                            boolean enabled = AuthenticationUtils.isEnabled(fplayer.getCachedUUID());
-                            builder.append(ChatColor.GRAY).append(" with");
-                            builder.append((enabled ? ChatColor.GREEN : ChatColor.RED)).append(" /2fa ").append(enabled ? "ON" : "OFF");
-                        }
                         this.sender.sendMessage(builder.toString());
                     }
                     this.sender.sendMessage("");

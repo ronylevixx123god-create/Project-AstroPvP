@@ -7,7 +7,6 @@
 package com.massivecraft.factions.cmd;
 
 import com.massivecraft.factions.Conf;
-import com.massivecraft.factions.util.AuthenticationUtils;
 
 import java.util.Collections;
 
@@ -186,7 +185,6 @@ public class FCmdRoot extends FCommand {
         this.addSubCommand(this.cmdTNT);
         this.addSubCommand(this.cmdInspect);
         this.addSubCommand(this.cmdGrace);
-        AuthenticationUtils.loadAuthenication();
     }
 
     @Override

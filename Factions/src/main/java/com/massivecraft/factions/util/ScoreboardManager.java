@@ -9,7 +9,6 @@ import com.massivecraft.factions.board.BoardAdapter;
 import com.massivecraft.factions.integration.Econ;
 import com.massivecraft.factions.struct.Relation;
 import com.massivecraft.factions.zcore.util.NumberUtils;
-import com.massivecraft.factions.zcore.util.WebLinkUtils;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -133,13 +132,6 @@ public class ScoreboardManager implements BoardAdapter {
                 online++;
         }
         return ChatColor.GREEN.toString() + online + ChatColor.GRAY + " / " + lists.size();
-    }
-
-    private static String getKDR(UUID uuid) {
-        int kills = WebLinkUtils.getString(uuid, "kills");
-        int deaths = WebLinkUtils.getString(uuid, "deaths");
-        double kdr = (deaths == 0) ? kills : (kills / deaths);
-        return newFormat.format(kdr) + ChatColor.GRAY + " [" + kills + ":" + deaths + "]";
     }
 
     private static final DecimalFormat decimalFormat = new DecimalFormat("#,###");

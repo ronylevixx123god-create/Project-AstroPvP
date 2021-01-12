@@ -62,6 +62,16 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
+import me.ifamasssxd.factionstop.commands.CommandEditFactionsTop;
+import me.ifamasssxd.factionstop.commands.CommandFactionsTop;
+import me.ifamasssxd.factionstop.commands.CommandRecalcFactionsTop;
+import me.ifamasssxd.factionstop.manager.TopManager;
+import me.ifamasssxd.factionupgrades.commands.CommandConvertToFactionPoints;
+import me.ifamasssxd.factionupgrades.commands.CommandFUpgrade;
+import me.ifamasssxd.factionupgrades.listeners.FactionListener;
+import me.ifamasssxd.factionupgrades.listeners.PerkListener;
+import me.ifamasssxd.factionupgrades.listeners.PlayerListener;
+import me.ifamasssxd.factionupgrades.struct.UpgradeManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -103,6 +113,7 @@ public class P extends MPlugin {
     public static WorldGuardPlugin wg = null;
     @Getter @Setter
     private BoardManager boardManager;
+    @Getter @Setter private UpgradeManager upgradeManager;
     private CosmicFlyingPlugin cosmicFlyingPlugin;
     public BoosterManager boosterManager;
     // TODO: FINISH FACTION POINTS
@@ -113,6 +124,12 @@ public class P extends MPlugin {
     private boolean vanillaPlanet = false;
     private boolean fpointsEnabled = false;
     private boolean fundEnabled;
+    @Getter @Setter private final TopManager topManager = new TopManager();
+    @Getter @Setter private boolean gradualSpawnerValues = false;
+    @Getter @Setter private boolean includeBank = false;
+    @Getter @Setter private boolean includeHoppers = true;
+    @Getter @Setter public boolean upgradesEnabled = false;
+
 
     @Getter @Setter
     private BannerManager bannerManager;
@@ -300,6 +317,25 @@ public class P extends MPlugin {
         this.getCommand("fbanner").setExecutor(new CommandBanner());
         this.getCommand("frecall").setExecutor(new CommandRecall());
 
+        this.getCommand("fupgrade").setExecutor(new CommandFUpgrade());
+        this.getCommand("converttofactionpoints").setExecutor(new CommandConvertToFactionPoints());
+        this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
+        this.getServer().getPluginManager().registerEvents(new PerkListener(), this);
+        this.getServer().getPluginManager().registerEvents(new FactionListener(), this);
+        this.upgradeManager = new UpgradeManager();
+        this.upgradeManager.loadUpgrades();
+
+        this.upgradesEnabled = Bukkit.getPluginManager().isPluginEnabled("FactionUpgrades");
+        this.factionPointsEnabled = new File("plugins/CosmicFactionPoints.jar").exists();
+        this.topManager.loadTopFactions(null, 100);
+        this.includeBank = this.getConfig().getBoolean("includeBank");
+        this.gradualSpawnerValues = this.getConfig().getBoolean("gradualSpawnerValue");
+        this.includeHoppers = this.getConfig().getBoolean("includeHoppers", true);
+        this.getServer().getPluginManager().registerEvents(new me.ifamasssxd.factionstop.listeners.CommandListener(), this);
+        this.getCommand("recalcftop").setExecutor(new CommandRecalcFactionsTop());
+        this.getCommand("ftop").setExecutor(new CommandFactionsTop());
+        this.getCommand("editftop").setExecutor(new CommandEditFactionsTop());
+
     }
 
     private void registerNewListeners() {
@@ -430,6 +466,7 @@ public class P extends MPlugin {
             e.printStackTrace();
         }
 
+        this.upgradeManager.saveUpgradeInfo();
     }
 
     public FileManager getFileManager() {

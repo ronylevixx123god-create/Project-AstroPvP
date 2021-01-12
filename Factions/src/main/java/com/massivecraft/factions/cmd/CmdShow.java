@@ -34,7 +34,6 @@ import com.massivecraft.factions.integration.EssentialsFeatures;
 import com.massivecraft.factions.struct.Permission;
 import com.massivecraft.factions.struct.Relation;
 import com.massivecraft.factions.struct.Role;
-import me.ifamasssxd.factionstop.FactionsTop;
 import me.ifamasssxd.factionstop.struct.StoredFaction;
 import me.ifamasssxd.factionstop.struct.TopFaction;
 import mkremins.fanciful.FancyMessage;
@@ -106,7 +105,7 @@ public class CmdShow extends FCommand {
                 (new BukkitRunnable() {
                     public void run() {
                         CmdShow.this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&4Land/Power/Maxpower: <p>&f%d/%d/%d %s"), coordCount, finalFaction1.getPowerRounded(), finalFaction1.getPowerMaxRounded(), boost);
-                        TopFaction tf = FactionsTop.get().getTopManager().getTopFaction(finalFaction1.getId());
+                        TopFaction tf = P.getP().getTopManager().getTopFaction(finalFaction1.getId());
                         if (tf != null) {
                             StoredFaction sf = tf.getStoredFaction();
                             CmdShow.this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&4Faction Wealth: <p>&f$%s"), CmdShow.this.df.format((long) sf.getTotalWorth()));
