@@ -62,16 +62,6 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
-import me.ifamasssxd.factionstop.commands.CommandEditFactionsTop;
-import me.ifamasssxd.factionstop.commands.CommandFactionsTop;
-import me.ifamasssxd.factionstop.commands.CommandRecalcFactionsTop;
-import me.ifamasssxd.factionstop.manager.TopManager;
-import me.ifamasssxd.factionupgrades.commands.CommandConvertToFactionPoints;
-import me.ifamasssxd.factionupgrades.commands.CommandFUpgrade;
-import me.ifamasssxd.factionupgrades.listeners.FactionListener;
-import me.ifamasssxd.factionupgrades.listeners.PerkListener;
-import me.ifamasssxd.factionupgrades.listeners.PlayerListener;
-import me.ifamasssxd.factionupgrades.struct.UpgradeManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -99,6 +89,7 @@ public class P extends MPlugin {
     public final FactionChunkOwnershipCache ownershipCacheListener;
     private final FactionPermissionListener permissionListener;
     public boolean citizensEnabled = true;
+    public boolean factionPointsEnabled = false;
     public boolean outpostsEnabled = false;
     public String currentVersion = "1.1";
     public FCmdRoot cmdBase;
@@ -114,19 +105,14 @@ public class P extends MPlugin {
     private BoardManager boardManager;
     private CosmicFlyingPlugin cosmicFlyingPlugin;
     public BoosterManager boosterManager;
+    // TODO: FINISH FACTION POINTS
+    /*public PointManager pointManager;
+    private CoreChunkManager chunkManager; */
     public static boolean debug;
     private long startOfMap;
     private boolean vanillaPlanet = false;
+    private boolean fpointsEnabled = false;
     private boolean fundEnabled;
-
-    @Getter @Setter private final TopManager topManager = new TopManager();
-    @Getter @Setter private boolean gradualSpawnerValues = false;
-    @Getter @Setter private boolean includeBank = false;
-    @Getter @Setter private boolean includeHoppers = true;
-    @Getter @Setter public boolean upgradesEnabled = false;
-    @Getter @Setter public boolean factionPointsEnabled = false;
-
-    @Getter @Setter private UpgradeManager upgradeManager;
 
     @Getter @Setter
     private BannerManager bannerManager;
@@ -189,6 +175,7 @@ public class P extends MPlugin {
         if (!this.preEnable()) {
             return;
         }
+        this.factionPointsEnabled = new File("plugins/CosmicFactionPoints.jar").exists();
         this.loadSuccessful = false;
         this.flogManager = new FLogManager();
         Conf.load();
@@ -221,12 +208,22 @@ public class P extends MPlugin {
         this.boosterManager.loadActiveBoosters();this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new BoosterTask(), 20L, 20L);
 
         this.saveDefaultConfig();
+        // TODO: FINISH ADDING FACTION POINTS (CONVERT FROM .kt)
+       /* this.pointManager = new PointManager();
+        this.chunkManager = new CoreChunkManager(); */
+       /* this.pointManager.onEnable(this);
+        this.chunkManager.onEnable(this); */
         this.startOfMap = this.getConfig().getLong("startOfMap");
         this.vanillaPlanet = this.getConfig().getBoolean("vanilla", false);
 
         this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new BoosterTask(), 20L, 20L);
 
         this.fundEnabled = this.getServer().getPluginManager().isPluginEnabled("CosmicFund");
+        this.fpointsEnabled = new File("plugins/CosmicFactionPoints.jar").exists();
+
+        /*
+         This is the requirements for all additions put into Factions. (^^^)
+        */
 
         this.getBaseCommands().add(this.cmdBase);
         EssentialsFeatures.setup();
@@ -259,25 +256,6 @@ public class P extends MPlugin {
             //e.printStackTrace();
         }
         P.getP().setBoardManager(new BoardManager(new ScoreboardManager()));
-
-        this.upgradesEnabled = Bukkit.getPluginManager().isPluginEnabled("FactionUpgrades");
-        this.factionPointsEnabled = new File("plugins/CosmicFactionPoints.jar").exists();
-        this.topManager.loadTopFactions(null, 100);
-        this.includeBank = this.getConfig().getBoolean("includeBank");
-        this.gradualSpawnerValues = this.getConfig().getBoolean("gradualSpawnerValue");
-        this.includeHoppers = this.getConfig().getBoolean("includeHoppers", true);
-        this.getServer().getPluginManager().registerEvents(new me.ifamasssxd.factionstop.listeners.CommandListener(), this);
-        this.getCommand("recalcftop").setExecutor(new CommandRecalcFactionsTop());
-        this.getCommand("ftop").setExecutor(new CommandFactionsTop());
-        this.getCommand("editftop").setExecutor(new CommandEditFactionsTop());
-
-        this.getCommand("fupgrade").setExecutor(new CommandFUpgrade());
-        this.getCommand("converttofactionpoints").setExecutor(new CommandConvertToFactionPoints());
-        this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
-        this.getServer().getPluginManager().registerEvents(new PerkListener(), this);
-        this.getServer().getPluginManager().registerEvents(new FactionListener(), this);
-        this.upgradeManager = new UpgradeManager();
-        this.upgradeManager.loadUpgrades();
 
         int minute = 1200;
 
@@ -321,6 +299,7 @@ public class P extends MPlugin {
         this.getCommand("fsetbanner").setExecutor(new CommandSetBanner());
         this.getCommand("fbanner").setExecutor(new CommandBanner());
         this.getCommand("frecall").setExecutor(new CommandRecall());
+
     }
 
     private void registerNewListeners() {
@@ -339,7 +318,6 @@ public class P extends MPlugin {
         this.bannerListener = new BannerListener();
         this.getServer().getPluginManager().registerEvents(this.bannerListener, this);
         this.getServer().getPluginManager().registerEvents(new CommandListener(), this);
-
     }
 
     private void mcMMOTestUtil() {
@@ -431,6 +409,9 @@ public class P extends MPlugin {
         for (Player pl : Bukkit.getOnlinePlayers()) {
             pl.removeMetadata("last_enderpearl_throw", this);
         }
+        // TODO: FINISH ADDING FACTION POINTS (CONVERT FROM .kt)
+        /*this.pointManager.onDisable(this);
+        this.chunkManager.onDisable(this);*/
         this.boosterManager.saveActiveBoosters();
         CommandToggleSmoke.saveToggles();
         if (this.AutoLeaveTask != null) {
@@ -448,7 +429,7 @@ public class P extends MPlugin {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        this.upgradeManager.saveUpgradeInfo();
+
     }
 
     public FileManager getFileManager() {
@@ -465,6 +446,10 @@ public class P extends MPlugin {
         if (Conf.autoLeaveRoutineRunsEveryXMinutes > 0.0) {
             // empty if block
         }
+    }
+
+    public boolean isFpointsEnabled() {
+        return this.fpointsEnabled;
     }
 
     public boolean isFundEnabled() {

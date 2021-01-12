@@ -1,3 +1,27 @@
+/*
+ * Decompiled with CFR 0.145.
+ *
+ * Could not load the following classes:
+ *  com.cosmicpvp.factionpoints.FactionsCoreChunkAPI
+ *  com.cosmicpvp.factionpoints.FactionsPointsAPI
+ *  com.earth2me.essentials.User
+ *  com.google.common.collect.Lists
+ *  me.ifamasssxd.factionstop.FactionsTop
+ *  me.ifamasssxd.factionstop.manager.TopManager
+ *  me.ifamasssxd.factionstop.struct.StoredFaction
+ *  me.ifamasssxd.factionstop.struct.TopFaction
+ *  net.milkbowl.vault.economy.Economy
+ *  org.bukkit.Bukkit
+ *  org.bukkit.ChatColor
+ *  org.bukkit.OfflinePlayer
+ *  org.bukkit.Server
+ *  org.bukkit.command.CommandSender
+ *  org.bukkit.entity.Player
+ *  org.bukkit.plugin.Plugin
+ *  org.bukkit.scheduler.BukkitRunnable
+ *  org.bukkit.scheduler.BukkitScheduler
+ *  org.bukkit.scheduler.BukkitTask
+ */
 package com.massivecraft.factions.cmd;
 
 import com.cosmicpvp.factionpoints.FactionsCoreChunkAPI;
@@ -10,9 +34,11 @@ import com.massivecraft.factions.integration.EssentialsFeatures;
 import com.massivecraft.factions.struct.Permission;
 import com.massivecraft.factions.struct.Relation;
 import com.massivecraft.factions.struct.Role;
+import me.ifamasssxd.factionstop.FactionsTop;
 import me.ifamasssxd.factionstop.struct.StoredFaction;
 import me.ifamasssxd.factionstop.struct.TopFaction;
 import mkremins.fanciful.FancyMessage;
+import net.milkbowl.vault.chat.Chat;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;

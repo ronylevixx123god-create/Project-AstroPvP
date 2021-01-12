@@ -1,9 +1,14 @@
 package com.massivecraft.factions;
 
+
 import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.factionpoints.CosmicFactionPoints;
+import com.cosmicpvp.factionpoints.FactionsCoreChunkAPI;
+import com.cosmicpvp.factionpoints.struct.ExpiringChunkData;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.Lists;
+import com.google.common.collect.MapMaker;
 import com.google.gson.reflect.TypeToken;
 import com.massivecraft.factions.struct.FactionPermissions;
 import com.massivecraft.factions.struct.Permission;
@@ -247,11 +252,15 @@ public class Board {
     public static ArrayList<FancyMessage> getMap(Faction faction, FLocation flocation, double inDegrees, double widthMultiplier, double heightMultiplier, Player player) {
         FPlayer fPlayer = FPlayers.i.get(player);
         long timeSinceClaimed;
+        ExpiringChunkData data;
         ArrayList<FancyMessage> ret = new ArrayList<>();
         Faction factionLoc = Board.getFactionAt(flocation);
         ArrayList<String> asciiCompass = AsciiCompass.getAsciiCompass(inDegrees, ChatColor.DARK_GREEN, P.p.txt.parse("<gray>"));
 
         String str = "(" + flocation.getCoordString() + ") " + factionLoc.getTag(faction);
+        if (P.p.factionPointsEnabled && (data = CosmicFactionPoints.get().getChunkManager().getChunksToExpire().get(flocation)) != null && data.getTimeClaimed() > 0L && (timeSinceClaimed = System.currentTimeMillis() - data.getTimeClaimed()) > 0L) {
+            str = timeSinceClaimed < TimeUnit.HOURS.toMillis(24L) ? str + " (claim " + TimeUtil.formatSeconds(timeSinceClaimed / 1000L) + " old)" : str + " (claim >1d old)";
+        }
         int spawnerCount = Board.getSpawnersInChunk(flocation);
         str = str + CC.Aqua + " [" + CC.White + spawnerCount + "x" + CC.Aqua + " spawners]";
         if (spawnerCount > 0 && player != null) {
@@ -311,6 +320,21 @@ public class Board {
                                 continue;
                             }
                         }
+                        char tag = fList.get(factionHere.getTag());
+                       // row.then(String.valueOf(tag)).color(factionHere.getColorTo(faction)).tooltip(oneLineToolTip(factionHere, fPlayer));
+                        //TRENT FIX HERE
+                        //if (P.p.factionPointsEnabled && FactionsCoreChunkAPI.isCoreChunk(flocationHere)){
+                        //    row.then("$").color(ChatColor.YELLOW).tooltip(faction.getTag() + "'s Core").color(ChatColor.YELLOW);
+                        //    Bukkit.broadcastMessage("IS CORE");
+                        //}else{
+                        //    row.then("!").color(factionHere.getColorTo(faction)).tooltip(oneLineToolTip(factionHere, fPlayer));
+                        //    Bukkit.broadcastMessage("IS NOT CORE");
+                        //}
+                        //row.then((P.p.factionPointsEnabled && FactionsCoreChunkAPI.isCoreChunk(flocationHere) ? ChatColor.YELLOW : factionHere.getColorTo(faction)) + "" + tag);
+
+
+                        row.then((P.p.factionPointsEnabled && FactionsCoreChunkAPI.isCoreChunk(flocationHere) ? ChatColor.YELLOW : factionHere.getColorTo(faction)) + "" + tag).tooltip(oneLineToolTip(factionHere, fPlayer));
+                    } else {
                         row.then("-").color(ChatColor.GRAY);
                     }
                 }
