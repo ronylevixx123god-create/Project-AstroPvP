@@ -1,5 +1,26 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.cosmicpvp.factionpoints.FactionsPointsAPI
+ *  com.google.common.collect.Lists
+ *  com.massivecraft.factions.FPlayer
+ *  com.massivecraft.factions.Faction
+ *  com.massivecraft.factions.Factions
+ *  com.massivecraft.factions.integration.Econ
+ *  com.massivecraft.factions.struct.Role
+ *  me.ifamasssxd.factionupgrades.FactionUpgrades
+ *  me.ifamasssxd.factionupgrades.struct.FactionUpgradeInfo
+ *  org.arkhamnetwork.Arkkit.Arkkit
+ *  org.arkhamnetwork.Arkkit.libs.BlockValueLocation
+ *  org.arkhamnetwork.Arkkit.libs.SpawnerLocation
+ *  org.arkhamnetwork.Arkkit.plugins.ArkPlugins
+ *  org.bukkit.ChatColor
+ *  org.bukkit.entity.EntityType
+ */
 package me.ifamasssxd.factionstop.struct;
 
+import com.cosmicpvp.factionpoints.FactionsPointsAPI;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.Faction;
@@ -30,6 +51,7 @@ implements Comparable<StoredFaction> {
     double totalBalance = 0.0;
     double containerWorth;
     double bankBalance;
+    double factionPoints;
     double highestPlayerBalance = 0.0;
     String highestPlayer = "None";
     String owner;
@@ -152,6 +174,10 @@ implements Comparable<StoredFaction> {
         if (P.getP().isIncludeBank()) {
             this.bankBalance = Econ.getFactionBalance(faction);
         }
+        if (P.getP().factionPointsEnabled) {
+            Long points = FactionsPointsAPI.getPoints(faction);
+            this.factionPoints = points == null ? 0.0 : (double)points.longValue();
+        }
     }
 
     public double getTotalWorth() {
@@ -170,6 +196,9 @@ implements Comparable<StoredFaction> {
         retr.add(key + ChatColor.BOLD.toString() + ChatColor.UNDERLINE.toString() + (otherFaction != null && otherFaction.isNormal() ? faction.getTag(otherFaction) : faction.getTag()));
         retr.add(value + "Leader: " + key + this.owner);
         retr.add("");
+        if (P.getP().factionPointsEnabled) {
+            retr.add(value + "Faction Points: " + key + this.format.format(this.factionPoints));
+        }
         retr.add(value + "Faction Wealth: " + key + ChatColor.BOLD.toString() + "$" + key + this.format.format(this.getTotalWorth()));
         retr.add(value + "Member Wealth: " + key + ChatColor.BOLD.toString() + "$" + key + this.format.format(this.totalBalance));
         if (this.useSpawnerFee) {
@@ -199,8 +228,9 @@ implements Comparable<StoredFaction> {
 
     public int compareTo(StoredFaction other, boolean forceWealth) {
         double otherWorth;
-        double totalWorth = this.getTotalWorth();
-        double d = otherWorth = other.getTotalWorth();
+        boolean pointsEnabled = P.getP().factionPointsEnabled && !forceWealth;
+        double totalWorth = pointsEnabled ? this.factionPoints : this.getTotalWorth();
+        double d = otherWorth = pointsEnabled ? other.factionPoints : other.getTotalWorth();
         if (otherWorth == totalWorth) {
             return 0;
         }
@@ -244,6 +274,10 @@ implements Comparable<StoredFaction> {
 
     public double getBankBalance() {
         return this.bankBalance;
+    }
+
+    public double getFactionPoints() {
+        return this.factionPoints;
     }
 
     public double getHighestPlayerBalance() {

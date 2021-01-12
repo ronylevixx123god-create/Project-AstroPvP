@@ -8,6 +8,7 @@
 package com.massivecraft.factions.cmd;
 
 import com.massivecraft.factions.Faction;
+import com.massivecraft.factions.struct.FAuditMenu;
 import org.bukkit.entity.Player;
 
 public class CmdAudit

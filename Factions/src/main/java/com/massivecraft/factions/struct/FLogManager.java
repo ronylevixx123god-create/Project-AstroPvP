@@ -14,16 +14,22 @@ import com.google.gson.reflect.TypeToken;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.Factions;
 import com.massivecraft.factions.P;
-
+import com.massivecraft.factions.struct.FLogType;
+import com.massivecraft.factions.struct.FactionLogs;
+import com.massivecraft.factions.struct.LogTimer;
 import java.io.File;
 import java.lang.reflect.Type;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
-
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 
 public class FLogManager {
     private Map<String, FactionLogs> factionLogMap = new ConcurrentHashMap<String, FactionLogs>();

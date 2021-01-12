@@ -112,6 +112,16 @@ public class CmdHelp
             pageLines.add("");
             this.helpPages.add(pageLines);
         }
+        if (Bukkit.getPluginManager().isPluginEnabled("CosmicFactionPoints")) {
+            pageLines = new ArrayList<>();
+            pageLines.add("");
+            pageLines.add(this.p.txt.parse("<i>Your faction's leaderboard position is determined by"));
+            pageLines.add(this.p.txt.parse("<i>Faction Points. To learn more, use the /fp command."));
+            pageLines.add("");
+            pageLines.add(ChatColor.AQUA + "/fp help " + ChatColor.GRAY + "Display information about Faction Points.");
+            pageLines.add("");
+            this.helpPages.add(pageLines);
+        }
         pageLines = new ArrayList<>();
         pageLines.add(this.p.cmdBase.cmdClaim.getUseageTemplate(true));
         pageLines.add(this.p.cmdBase.cmdClaimLine.getUseageTemplate(true));
