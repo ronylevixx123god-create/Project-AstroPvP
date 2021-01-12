@@ -10,19 +10,10 @@ import com.cosmicpvp.factionpoints.menus.PointPurchaseMenu;
 import com.cosmicpvp.factionpoints.struct.CoreChunkData;
 import com.cosmicpvp.factionpoints.struct.PointChangeLogs;
 import com.cosmicpvp.factionpoints.struct.PointData;
+import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.MapMaker;
 import com.google.gson.reflect.TypeToken;
 import com.massivecraft.factions.Faction;
-import java.io.File;
-import java.lang.reflect.Type;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
-import java.util.logging.Logger;
 import kotlin.Metadata;
 import kotlin.TypeCastException;
 import kotlin.jvm.internal.Intrinsics;
@@ -34,6 +25,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.io.File;
+import java.lang.reflect.Type;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
+import java.util.logging.Logger;
 
 @Metadata(mv = {1, 1, 11}, bv = {1, 0, 2}, k = 1, d1 = {"\000n\n\002\030\002\n\002\030\002\n\002\030\002\n\002\b\002\n\002\020\006\n\002\b\005\n\002\030\002\n\000\n\002\030\002\n\002\b\002\n\002\020%\n\002\020\016\n\002\020\t\n\002\b\005\n\002\030\002\n\002\b\003\n\002\030\002\n\002\b\007\n\002\020\013\n\002\b\n\n\002\020\002\n\002\b\002\n\002\030\002\n\002\b\005\n\002\030\002\n\002\b\002\n\002\020\b\n\002\b\020\030\0002\b\022\004\022\0020\0020\001B\005\006\002\020\003J\006\020.\032\0020/J\032\0200\032\004\030\0010\0342\006\0201\032\002022\b\b\002\0203\032\0020$J\027\0204\032\004\030\0010\0222\b\0201\032\004\030\00102\006\002\0205J(\0206\032\0020/2\006\0201\032\002022\b\0207\032\004\030\001082\006\0209\032\0020\0212\006\020:\032\0020;J\037\020<\032\004\030\0010\0222\b\0201\032\004\030\001022\006\020=\032\0020\005\006\002\020>J\037\020<\032\004\030\0010\0222\b\0201\032\004\030\001022\006\020=\032\0020\022\006\002\020?J)\020<\032\004\030\0010\0222\b\0201\032\004\030\001022\006\020=\032\0020\0222\b\b\002\020@\032\0020$\006\002\020AJ\020\020B\032\0020/2\006\020C\032\0020\002H\026J\020\020D\032\0020/2\006\020C\032\0020\002H\026J\020\020E\032\004\030\0010\0342\006\0201\032\0020\021J\016\020F\032\0020/2\006\020G\032\0020$J\026\020H\032\0020/2\006\0201\032\002022\006\020I\032\0020\005J\026\020H\032\0020/2\006\0201\032\002022\006\020I\032\0020\022J\006\020J\032\0020$R\032\020\004\032\0020\005X\016\006\016\n\000\032\004\b\006\020\007\"\004\b\b\020\tR\020\020\n\032\004\030\0010\013X\016\006\002\n\000R\026\020\f\032\n \016*\004\030\0010\r0\rX\004\006\002\n\000R&\020\017\032\016\022\004\022\0020\021\022\004\022\0020\0220\020X\016\006\016\n\000\032\004\b\023\020\024\"\004\b\025\020\026R&\020\027\032\016\022\004\022\0020\021\022\004\022\0020\0300\020X\016\006\016\n\000\032\004\b\031\020\024\"\004\b\032\020\026R\036\020\033\032\016\022\004\022\0020\021\022\004\022\0020\0340\0208\002@\002X\016\006\002\n\000R\020\020\035\032\004\030\0010\013X\016\006\002\n\000R\032\020\036\032\0020\022X\016\006\016\n\000\032\004\b\037\020 \"\004\b!\020\"R\016\020#\032\0020$X\016\006\002\n\000R\032\020%\032\0020$X\016\006\016\n\000\032\004\b&\020'\"\004\b(\020)R\026\020*\032\n \016*\004\030\0010\r0\rX\004\006\002\n\000R\032\020+\032\0020\005X\016\006\016\n\000\032\004\b,\020\007\"\004\b-\020\t\006K"}, d2 = {"Lcom/cosmicpvp/factionpoints/managers/PointManager;", "Lcom/cosmicpvp/cosmicutils/struct/managers/CosmicManager;", "Lcom/cosmicpvp/factionpoints/CosmicFactionPoints;", "()V", "currentWeeklyPercent", "", "getCurrentWeeklyPercent", "()D", "setCurrentWeeklyPercent", "(D)V", "factionLogFile", "Ljava/io/File;", "factionLogToken", "Ljava/lang/reflect/Type;", "kotlin.jvm.PlatformType", "factionNotifiedMap", "", "", "", "getFactionNotifiedMap", "()Ljava/util/Map;", "setFactionNotifiedMap", "(Ljava/util/Map;)V", "factionPointLogs", "Lcom/cosmicpvp/factionpoints/struct/PointChangeLogs;", "getFactionPointLogs", "setFactionPointLogs", "factionPoints", "Lcom/cosmicpvp/factionpoints/struct/PointData;", "factionPointsFile", "lastSetExpiration", "getLastSetExpiration", "()J", "setLastSetExpiration", "(J)V", "loadedData", "", "pointsBuyable", "getPointsBuyable", "()Z", "setPointsBuyable", "(Z)V", "token", "weeklyIncreasePercent", "getWeeklyIncreasePercent", "setWeeklyIncreasePercent", "doWeeklyReset", "", "getFactionPointData", "faction", "Lcom/massivecraft/factions/Faction;", "createIfNull", "getFactionPoints", "(Lcom/massivecraft/factions/Faction;)Ljava/lang/Long;", "logPointChange", "involved", "Lorg/bukkit/entity/Player;", "reason", "points", "", "modifyFactionPoints", "modification", "(Lcom/massivecraft/factions/Faction;D)Ljava/lang/Long;", "(Lcom/massivecraft/factions/Faction;J)Ljava/lang/Long;", "overrideAddition", "(Lcom/massivecraft/factions/Faction;JZ)Ljava/lang/Long;", "onDisable", "cosmicFactionPoints", "onEnable", "removeFactionPoints", "saveExpirationData", "changeIncrease", "setFactionPoints", "newPoints", "togglePointsBuyable", "cosmicfactionpoints"})
 public final class PointManager extends CosmicManager<CosmicFactionPoints> {
@@ -70,7 +71,7 @@ public final class PointManager extends CosmicManager<CosmicFactionPoints> {
         ConcurrentMap concurrentMap2 = new MapMaker().concurrencyLevel(16).makeMap();
         Intrinsics.checkExpressionValueIsNotNull(concurrentMap2, "MapMaker().concurrencyLevel(16).makeMap()");
         this.factionPointLogs = concurrentMap2;
-        ConcurrentMap concurrentMap3 = new MapMaker().concurrencyLevel(16).expireAfterWrite(60L, TimeUnit.MINUTES).makeMap();
+        ConcurrentMap concurrentMap3 = CacheBuilder.newBuilder().concurrencyLevel(16).expireAfterWrite(60L, TimeUnit.MINUTES).build().asMap();
         Intrinsics.checkExpressionValueIsNotNull(concurrentMap3, "MapMaker().concurrencyLe\u2026meUnit.MINUTES).makeMap()");
         this.factionNotifiedMap = concurrentMap3;
         this.token = new TypeToken<Map<String, ? extends PointData>>(){}.getType();

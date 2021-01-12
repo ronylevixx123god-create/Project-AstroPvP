@@ -505,7 +505,6 @@ public final class CoreChunkManager extends CosmicManager<CosmicFactionPoints>
 
     @Override
     public void onEnable(CosmicFactionPoints cosmicFactionPoints) {
-
     }
 
     @SneakyThrows
