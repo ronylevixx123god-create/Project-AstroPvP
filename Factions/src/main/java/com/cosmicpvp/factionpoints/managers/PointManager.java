@@ -314,8 +314,8 @@ public final class PointManager extends CosmicManager<CosmicFactionPoints> {
             this.lastSetExpiration = PointPurchaseMenu.getNextResetTime() - TimeUnit.HOURS.toMillis(24L);
             Bukkit.getLogger().info("Setting lastReset to current next reset since unable to find a previous reset time! New: " + this.lastSetExpiration);
         }
-        Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)cosmicFactionPoints, new Runnable(this){
-            final /* synthetic */ PointManager this$0 = null;
+        Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)cosmicFactionPoints, new Runnable(){
+            /* synthetic */ PointManager this$0;
 
             public final void run() {
                 long timePassed = System.currentTimeMillis() - this.this$0.getLastSetExpiration();
