@@ -526,7 +526,7 @@ public class FactionsPlayerListener
             if (clickedBlock.getLocation().getWorld().getName().startsWith("dungeon_")) {
                 return;
             }
-            if (WorldGuardUtils.isInRegionsContainsFast(clickedBlock.getLocation().clone().add(0.0, 1.0, 0.0), (List) Lists.newArrayList((Object[]) new String[]{"_blocks"}))) {
+            if (WorldGuardUtils.isInRegionsContainsFast(clickedBlock.getLocation().clone().add(0.0, 1.0, 0.0), Lists.newArrayList("_blocks"))) {
                 return;
             }
             if (!allowedToOpen) {
