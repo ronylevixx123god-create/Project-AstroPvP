@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.logging.Logger;
@@ -63,16 +64,19 @@ public final class PointManager extends CosmicManager<CosmicFactionPoints> {
     private long lastSetExpiration;
 
     public PointManager() {
-        Intrinsics.checkExpressionValueIsNotNull((new MapMaker()).concurrencyLevel(16).makeMap(), "MapMaker().concurrencyLevel(16).makeMap()");
-        this.factionPoints = (new MapMaker()).concurrencyLevel(16).makeMap();
-        Intrinsics.checkExpressionValueIsNotNull((new MapMaker()).concurrencyLevel(16).makeMap(), "MapMaker().concurrencyLevel(16).makeMap()");
-        this.factionPointLogs = (new MapMaker()).concurrencyLevel(16).makeMap();
-        Intrinsics.checkExpressionValueIsNotNull((new MapMaker()).concurrencyLevel(16).expireAfterWrite(60L, TimeUnit.MINUTES).makeMap(), "MapMaker().concurrencyLe);
-        this.factionNotifiedMap = (new MapMaker()).concurrencyLevel(16).expireAfterWrite(60L, TimeUnit.MINUTES).makeMap();
-        this.token = (new PointManager$token$1()).getType();
-        this.factionLogToken = (new PointManager$factionLogToken$1()).getType();
+        ConcurrentMap concurrentMap = new MapMaker().concurrencyLevel(16).makeMap();
+        Intrinsics.checkExpressionValueIsNotNull(concurrentMap, "MapMaker().concurrencyLevel(16).makeMap()");
+        this.factionPoints = concurrentMap;
+        ConcurrentMap concurrentMap2 = new MapMaker().concurrencyLevel(16).makeMap();
+        Intrinsics.checkExpressionValueIsNotNull(concurrentMap2, "MapMaker().concurrencyLevel(16).makeMap()");
+        this.factionPointLogs = concurrentMap2;
+        ConcurrentMap concurrentMap3 = new MapMaker().concurrencyLevel(16).expireAfterWrite(60L, TimeUnit.MINUTES).makeMap();
+        Intrinsics.checkExpressionValueIsNotNull(concurrentMap3, "MapMaker().concurrencyLe\u2026meUnit.MINUTES).makeMap()");
+        this.factionNotifiedMap = concurrentMap3;
+        this.token = new TypeToken<Map<String, ? extends PointData>>(){}.getType();
+        this.factionLogToken = new TypeToken<Map<String, ? extends PointChangeLogs>>(){}.getType();
         this.pointsBuyable = true;
-        this.weeklyIncreasePercent = 10.0D;
+        this.weeklyIncreasePercent = 10.0;
     }
 
     @Metadata(mv = {1, 1, 11}, bv = {1, 0, 2}, k = 3, d1 = {"\000\016\n\000\n\002\030\002\n\000\n\002\020\016\n\000\020\000\032\0020\0012\006\020\002\032\0020\003H\n\006\002\b\004"}, d2 = {"<anonymous>", "Lcom/cosmicpvp/factionpoints/struct/PointChangeLogs;", "it", "", "apply"})
