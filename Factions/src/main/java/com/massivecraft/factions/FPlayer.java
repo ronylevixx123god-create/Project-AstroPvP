@@ -602,7 +602,7 @@ public class FPlayer
         Faction factionHere = Board.getFactionAt(this.getLastStoodAt());
         String factionTag = factionHere.getTag(this);
         if (ChatColor.stripColor(factionTag).equals("WarZone")) {
-            if (WorldGuardUtils.isPvPDisabled(this.getPlayer().getLocation())) {
+            if (WorldGuardUtils.isPvPDisabled(getPlayer().getLocation())) {
                 return ChatColor.GREEN + " ~ " + ChatColor.GREEN + "SafeZone - PvP is " + ChatColor.UNDERLINE + "disabled" + ChatColor.GREEN + " here.";
             }
             return ChatColor.DARK_RED + " ~ " + ChatColor.DARK_RED + "WarZone - PvP is " + ChatColor.UNDERLINE + "enabled" + ChatColor.DARK_RED + " here.";

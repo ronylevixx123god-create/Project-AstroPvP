@@ -36,6 +36,10 @@ public class WorldGuardUtils {
         }
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(CosmicUtils.get(), WorldGuardUtils::updateAllPlayerRegions, 40L, 10L);
         Bukkit.getScheduler().scheduleSyncDelayedTask(CosmicUtils.get(), WorldGuardUtils::cacheAllRegions, 20L);
+        Bukkit.getLogger().info("[ConaxGames] Hooked into WorldGuard!");
+        Bukkit.getLogger().info("[ConaxGames] Hooked into WorldGuard!");
+        Bukkit.getLogger().info("[ConaxGames] Hooked into WorldGuard!");
+        Bukkit.getLogger().info("[ConaxGames] Hooked into WorldGuard!");
     }
 
     public static void cacheAllRegions() {
@@ -137,18 +141,22 @@ public class WorldGuardUtils {
     }
 
     public static Set<String> getRegionsIn(Location l) {
-        HashSet<String> retr = new HashSet<String>();
-        RegionManager regionMan = wg.getGlobalRegionManager().get(l.getWorld());
-        if (regionMan == null) {
-            return retr;
-        }
-        ApplicableRegionSet regionManager = regionMan.getApplicableRegions(l);
-        if (regionManager == null) {
-            return retr;
-        }
-        for (ProtectedRegion region : regionManager) {
-            retr.add(region.getId());
-        }
+        HashSet<String> retr = new HashSet<>();
+            //
+            // utils lol
+            //
+            RegionManager regionMan = wg.getRegionManager(l.getWorld());
+            if (regionMan == null) {
+                return retr;
+            }
+            ApplicableRegionSet regionManager = regionMan.getApplicableRegions(l);
+            if (regionManager == null) {
+                return retr;
+            }
+
+            for (ProtectedRegion region : regionManager) {
+                retr.add(region.getId());
+            }
         return retr;
     }
 
