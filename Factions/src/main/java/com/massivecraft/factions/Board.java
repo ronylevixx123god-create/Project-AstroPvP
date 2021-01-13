@@ -5,8 +5,8 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.factionpoints.CosmicFactionPoints;
 import com.cosmicpvp.factionpoints.FactionsCoreChunkAPI;
 import com.cosmicpvp.factionpoints.struct.ExpiringChunkData;
+import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.Lists;
-import com.google.common.collect.MapMaker;
 import com.google.gson.reflect.TypeToken;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.FactionPermissions;
@@ -15,19 +15,8 @@ import com.massivecraft.factions.struct.Relation;
 import com.massivecraft.factions.util.AsciiCompass;
 import com.massivecraft.factions.util.TimeUtil;
 import com.massivecraft.factions.zcore.util.DiscUtil;
-import com.sk89q.worldguard.internal.guava.cache.CacheBuilder;
 import com.wimbli.WorldBorder.BorderData;
 import com.wimbli.WorldBorder.WorldBorder;
-import java.io.File;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.TimeUnit;
 import mkremins.fanciful.FancyMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -37,6 +26,12 @@ import org.bukkit.block.CreatureSpawner;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+
+import java.io.File;
+import java.lang.reflect.Type;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
 public class Board {
     private static transient File file = new File(P.p.getDataFolder(), "board.json");
@@ -369,7 +364,7 @@ public class Board {
             spawnerTypeCounts.put(m.getSpawnerType(), spawnerTypeCounts.getOrDefault(m.getSpawnerType(), 0) + m.getSpawnerCount());
         hoverData.add(new FancyMessage(CC.Aqua + "Chunk: " + CC.White + fLocation.toRawString()));
         for (Map.Entry<EntityType, Integer> entry : spawnerTypeCounts.entrySet())
-            hoverData.add(new FancyMessage(CC.White + entry.getValue() + "x " + CC.Gray + ((EntityType)entry.getKey()).name().replace("_", " ")));
+            hoverData.add(new FancyMessage(CC.White + entry.getValue() + "x " + CC.Gray + entry.getKey().name().replace("_", " ")));
         return hoverData;
     }
 

@@ -1,26 +1,3 @@
-/*
- * Decompiled with CFR 0.145.
- *
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.factionpoints.FactionsCoreChunkAPI
- *  com.earth2me.essentials.User
- *  com.earth2me.essentials.utils.DateUtil
- *  com.google.common.collect.Lists
- *  org.arkhamnetwork.Arkkit.utils.WorldGuardUtils
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.Location
- *  org.bukkit.Server
- *  org.bukkit.World
- *  org.bukkit.command.CommandSender
- *  org.bukkit.entity.Player
- *  org.bukkit.event.Event
- *  org.bukkit.plugin.Plugin
- *  org.bukkit.plugin.PluginManager
- *  org.bukkit.scheduler.BukkitScheduler
- *  org.bukkit.scheduler.BukkitTask
- */
 package com.massivecraft.factions;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
@@ -663,7 +640,7 @@ public class FPlayer
             this.msg("<b>You cannot leave until your power is positive.");
             return;
         }
-        if (this.bukkitPlayer != null && this.bukkitPlayer.isOnline() && (((Relation) (rel = (factionAtLocation = Board.getFactionAt(new FLocation(this.bukkitPlayer.getLocation()))).getRelationTo(this))).isMember() || ((Relation) rel).isAlly())) {
+        if (this.bukkitPlayer != null && this.bukkitPlayer.isOnline() && (((Relation) (rel = Board.getFactionAt(new FLocation(this.bukkitPlayer.getLocation())).getRelationTo(this))).isMember() || ((Relation) rel).isAlly())) {
             if (((Relation) rel).isMember()) {
                 this.msg("<b>You cannot leave a faction while in a chunk owned by that faction.");
             } else {

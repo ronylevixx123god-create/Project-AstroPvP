@@ -1,27 +1,3 @@
-/*
- * Decompiled with CFR 0.145.
- *
- * Could not load the following classes:
- *  com.cosmicpvp.factionpoints.FactionsCoreChunkAPI
- *  com.cosmicpvp.factionpoints.FactionsPointsAPI
- *  com.earth2me.essentials.User
- *  com.google.common.collect.Lists
- *  me.ifamasssxd.factionstop.FactionsTop
- *  me.ifamasssxd.factionstop.manager.TopManager
- *  me.ifamasssxd.factionstop.struct.StoredFaction
- *  me.ifamasssxd.factionstop.struct.TopFaction
- *  net.milkbowl.vault.economy.Economy
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.OfflinePlayer
- *  org.bukkit.Server
- *  org.bukkit.command.CommandSender
- *  org.bukkit.entity.Player
- *  org.bukkit.plugin.Plugin
- *  org.bukkit.scheduler.BukkitRunnable
- *  org.bukkit.scheduler.BukkitScheduler
- *  org.bukkit.scheduler.BukkitTask
- */
 package com.massivecraft.factions.cmd;
 
 import com.cosmicpvp.factionpoints.FactionsCoreChunkAPI;
@@ -380,4 +356,3 @@ public class CmdShow extends FCommand {
         }
     }
 }
-
