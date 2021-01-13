@@ -1,23 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  com.compilex.CompilexPermissions.CompilexPermissions
- *  com.compilex.CompilexPermissions.structure.PermissionGroup
- *  com.harry5574.utils.hologram.Hologram
- *  me.rohan576.ArkhamChatColors.sql.DataManager
- *  me.rohan576.ArkhamTitleAPI.TitleAPI
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.Location
- *  org.bukkit.entity.Player
- *  org.bukkit.event.EventHandler
- *  org.bukkit.event.EventPriority
- *  org.bukkit.event.Listener
- *  org.bukkit.event.player.AsyncPlayerChatEvent
- *  org.bukkit.metadata.MetadataValue
- *  org.bukkit.plugin.Plugin
- */
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.compilex.CompilexPermissions.CompilexPermissions;
