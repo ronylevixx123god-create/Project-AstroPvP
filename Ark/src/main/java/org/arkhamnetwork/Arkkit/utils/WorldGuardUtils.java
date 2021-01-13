@@ -4,12 +4,9 @@ import com.sk89q.worldedit.BlockVector;
 import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.bukkit.BukkitUtil;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
-import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import com.sk89q.worldguard.protection.flags.Flag;
 import com.sk89q.worldguard.protection.flags.StateFlag;
-import com.sk89q.worldguard.protection.managers.RegionManager;
-import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -18,7 +15,7 @@ import org.bukkit.plugin.Plugin;
 
 import java.lang.reflect.Method;
 import java.util.List;
-import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class WorldGuardUtils {
     private static WorldGuardPlugin wg = null;
@@ -34,6 +31,12 @@ public class WorldGuardUtils {
             toVector = bukkitUtil.getMethod("toVector", Block.class);
         } catch (ClassNotFoundException|NoSuchMethodException|SecurityException e) {
             e.printStackTrace();
+        }
+        if (wg != null) {
+            Bukkit.getLogger().info("[ConaxGames Arkkit] Hooked into WorldGuard!");
+            Bukkit.getLogger().info("[ConaxGames Arkkit] Hooked into WorldGuard!");
+            Bukkit.getLogger().info("[ConaxGames Arkkit] Hooked into WorldGuard!");
+            Bukkit.getLogger().info("[ConaxGames Arkkit] Hooked into WorldGuard!");
         }
     }
 
@@ -106,48 +109,18 @@ public class WorldGuardUtils {
         // utils lol
         //
 
-        Bukkit.broadcastMessage("isPvPDisabled");
-        RegionManager regionMan = wg.getRegionManager(l.getWorld());
-        if (regionMan == null) {
-            Bukkit.broadcastMessage("regMan is null.");
-            return false;
-        }
-        ApplicableRegionSet regSet = regionMan.getApplicableRegions(l);
-        if (regSet == null) {
-            Bukkit.broadcastMessage("regSet is null.");
-            return false;
-        }
-
-        if (regSet.size() < 1) {
-            Bukkit.broadcastMessage("regSet < 1");
-            try {
-                return (Objects.requireNonNull(Objects.requireNonNull(wg.getGlobalRegionManager().get(l.getWorld())).getRegion("__global__")).getFlags().get(DefaultFlag.PVP) == StateFlag.State.DENY);
-            } catch (Exception err) {
-                if (err instanceof NullPointerException) {
-                    Bukkit.broadcastMessage("NPE");
-                    return false;
-                }
-                err.printStackTrace();
-            }
-
-            boolean return_flag = false;
-            int return_priority = -1;
-            for (ProtectedRegion region : regSet) {
-                if (region.getFlags().containsKey(DefaultFlag.PVP)) {
-                    StateFlag.State pvp_flag = (StateFlag.State) region.getFlags().get(DefaultFlag.PVP);
-                    int region_priority = region.getPriority();
-                    if (return_priority == -1) {
-                        return_flag = (pvp_flag == StateFlag.State.DENY);
-                        return_priority = region_priority;
-                        continue;
-                    }
-                    if (region_priority > return_priority) {
-                        return_flag = (pvp_flag == StateFlag.State.DENY);
-                        return_priority = region_priority;
+        if (l != null) {
+            if (wg != null) {
+                if (wg.getRegionManager(l.getWorld()) != null) {
+                    AtomicBoolean returnValue = new AtomicBoolean(false);
+                    if (wg.getRegionManager(l.getWorld()).getApplicableRegions(l).getRegions().size() != 0) {
+                        wg.getRegionManager(l.getWorld()).getApplicableRegions(l).getRegions().forEach(protectedRegion -> {
+                            returnValue.set(protectedRegion.getFlags().get(DefaultFlag.PVP) == StateFlag.State.DENY);
+                        });
+                        return returnValue.get();
                     }
                 }
             }
-            return return_flag;
         }
         return false;
     }
