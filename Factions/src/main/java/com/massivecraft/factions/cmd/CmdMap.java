@@ -1,9 +1,3 @@
-/*
- * Decompiled with CFR 0.145.
- *
- * Could not load the following classes:
- *  org.bukkit.entity.Player
- */
 package com.massivecraft.factions.cmd;
 
 import com.massivecraft.factions.Board;
@@ -11,8 +5,7 @@ import com.massivecraft.factions.Conf;
 import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.struct.Permission;
 
-public class CmdMap
-        extends FCommand {
+public class CmdMap extends FCommand {
     public CmdMap() {
         this.aliases.add("map");
         this.optionalArgs.put("on/off", "once");
@@ -24,30 +17,26 @@ public class CmdMap
         this.senderMustBeAdmin = false;
     }
 
-    @Override
     public void perform() {
-        if (this.argIsSet(0)) {
-            if (this.argAsBool(0, !this.fme.isMapAutoUpdating())) {
-                if (!this.payForCommand(Conf.econCostMap, "to show the map", "for showing the map")) {
+        if (argIsSet(0)) {
+            if (argAsBool(0, !this.fme.isMapAutoUpdating()).booleanValue()) {
+                if (!payForCommand(Conf.econCostMap, "to show the map", "for showing the map"))
                     return;
-                }
                 this.fme.setMapAutoUpdating(true);
-                this.msg("<i>Map auto update <green>ENABLED.");
-                this.showMap();
+                msg("<i>Map auto update <green>ENABLED.", new Object[0]);
+                showMap();
             } else {
                 this.fme.setMapAutoUpdating(false);
-                this.msg("<i>Map auto update <red>DISABLED.");
+                msg("<i>Map auto update <red>DISABLED.", new Object[0]);
             }
         } else {
-            if (!this.payForCommand(Conf.econCostMap, "to show the map", "for showing the map")) {
+            if (!payForCommand(Conf.econCostMap, "to show the map", "for showing the map"))
                 return;
-            }
-            this.showMap();
+            showMap();
         }
     }
 
     public void showMap() {
-        fme.sendFancyMessage(Board.getMap(this.myFaction, new FLocation(this.fme), this.fme.getPlayer()));
+        sendMessage(Board.getMap(this.myFaction, new FLocation(this.fme), this.fme.getPlayer()));
     }
 }
-

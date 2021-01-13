@@ -86,7 +86,6 @@ public class FCmdRoot extends FCommand {
     private CmdSendCoords sendCoords = new CmdSendCoords();
     private CmdMotd motdCmd = new CmdMotd();
     private CmdAudit auditCmd = new CmdAudit();
-    public CmdClaimAt cmdClaimAt = new CmdClaimAt();
     public  CmdClaimFill cmdClaimFill = new CmdClaimFill();
     public CmdInspect cmdInspect = new CmdInspect();
     public CmdGrace cmdGrace = new CmdGrace();
@@ -113,7 +112,6 @@ public class FCmdRoot extends FCommand {
         this.addSubCommand(this.cmdSetAllyWarp);
         this.addSubCommand(this.cmdBoom);
        // this.addSubCommand(this.cmdInvSee);
-        this.addSubCommand(this.cmdClaimAt);
         this.addSubCommand(this.cmdBypass);
         this.addSubCommand(this.cmdChat);
         //this.addSubCommand(this.cmdWild);
