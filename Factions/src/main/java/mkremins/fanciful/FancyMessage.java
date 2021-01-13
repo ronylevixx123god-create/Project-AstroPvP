@@ -329,7 +329,7 @@ public class FancyMessage implements JsonRepresentedObject, Cloneable, Iterable<
         return this;
     }
 
-    public FancyMessage formattedTooltip(boolean lines) {
+    public FancyMessage formattedTooltip(FancyMessage... lines) {
         if (lines.length < 1) {
             this.onHover(null, null);
             return this;
