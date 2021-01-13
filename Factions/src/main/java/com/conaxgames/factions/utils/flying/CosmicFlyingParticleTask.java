@@ -9,34 +9,34 @@
  */
 package com.conaxgames.factions.utils.flying;
 
-import java.util.HashSet;
-
-import com.conaxgames.factions.utils.libs.ParticleEffect;
 import com.massivecraft.factions.P;
+import de.inventivegames.particle.ParticleEffect;
+import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
+
+import java.util.HashSet;
 
 public class CosmicFlyingParticleTask
 implements Runnable {
+    @SneakyThrows
     @Override
     public void run() {
-        HashSet<Location> to_play = new HashSet<Location>();
+        HashSet<Player> to_play_player = new HashSet<Player>();
         for (Player pl : CosmicFlyingPlugin.get_().getAsyncPlayerMap().getPlayers().values()) {
             if (!pl.isFlying() || pl.isOp() || pl.hasPermission("essentials.fly.noparticles")) continue;
-            Location ploc = pl.getLocation().clone();
-            to_play.add(ploc);
+            to_play_player.add(pl);
         }
-        final Location[] locs = to_play.toArray(new Location[0]);
         Bukkit.getScheduler().runTaskAsynchronously(P.getP(), new Runnable(){
 
             @Override
             public void run() {
-                for (Location loc : locs) {
+                for (Player player : to_play_player) {
                     try {
-                        if (loc.getWorld().getName().equals("cosmic-pvparenas") || loc.getWorld().getName().equals("world_duels") || loc.getWorld().getName().equals("world_duels2")) continue;
-                        ParticleEffect.sendToLocation(ParticleEffect.CLOUD, loc.subtract(0.0, 0.5, 0.0), 0.0f, 0.0f, 0.0f, 0.005f, 5);
+                        if (player.getWorld().getName().equals("cosmic-pvparenas")
+                                || player.getWorld().getName().equals("world_duels")
+                                || player.getWorld().getName().equals("world_duels2")) continue;
+                        ParticleEffect.CLOUD.sendToPlayer(player, player.getLocation().subtract(0.0, 0.5, 0.0), 0.0f, 0.0f, 0.0f, 0.005f, 5);
                     }
                     catch (Exception err) {
                         err.printStackTrace();

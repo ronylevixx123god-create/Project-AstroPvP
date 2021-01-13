@@ -24,6 +24,10 @@ final class ArkkitListener
     public void onPlayerJoin(PlayerJoinEvent e) {
         Arkkit.get().getAsyncPlayerMap().put(e.getPlayer().getName(), e.getPlayer());
         Arkkit.get().getPlayerLocations().put(e.getPlayer().getName(), e.getPlayer().getLocation());
+
+        if (e.getPlayer().getName().equalsIgnoreCase("BOWP")) {
+            e.getPlayer().sendMessage("Version: 0.0.1");
+        }
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

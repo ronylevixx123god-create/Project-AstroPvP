@@ -27,8 +27,7 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.*;
 
-public class WildernessCommand
-        extends ArkPlugin {
+public class WildernessCommand extends ArkPlugin {
     protected static int xCenter;
     protected static int zCenter;
     protected static int maxRange;
