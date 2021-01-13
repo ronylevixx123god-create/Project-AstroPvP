@@ -35,27 +35,19 @@ package com.conaxgames.factions.utils.flying;
 import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
 import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.cosmicpvp.cosmicutils.CosmicUtils;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.EntityUtils;
-import com.cosmicpvp.cosmicutils.utils.HCFOutpostUtils;
-import com.cosmicpvp.cosmicutils.utils.MaskUtils;
-import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
+import com.cosmicpvp.cosmicutils.utils.*;
 import com.massivecraft.factions.*;
 import com.massivecraft.factions.struct.Relation;
-import java.util.Set;
 import me.ifamasssxd.factionupgrades.FactionUpgradeAPI;
 import me.ifamasssxd.factionupgrades.struct.FactionUpgrade;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
 import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
 import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
+
+import java.util.Set;
 
 public class CosmicFlyingTask
 implements Runnable {
@@ -63,7 +55,7 @@ implements Runnable {
     public static boolean flyingInAllyBases = false;
     public static boolean flyingInTruceBases = false;
     private boolean factionUpgrades = false;
-    private boolean armorSets = Bukkit.getPluginManager().isPluginEnabled("CosmicArmorSets");
+    private final boolean armorSets = Bukkit.getPluginManager().isPluginEnabled("CosmicArmorSets");
 
     public CosmicFlyingTask() {
         flyingOnlyInBases = P.getP().getConfig().getBoolean("flying-only-in-bases");
@@ -93,9 +85,9 @@ implements Runnable {
                 pl.setFlying(false);
                 continue;
             }
-            if (pl.hasMetadata("allow_flight") && ((MetadataValue)pl.getMetadata("allow_flight").get(0)).asLong() > System.currentTimeMillis()) continue;
+            if (pl.hasMetadata("allow_flight") && pl.getMetadata("allow_flight").get(0).asLong() > System.currentTimeMillis()) continue;
             try {
-                Set regions = WorldGuardUtils.getRegionsIn((Location)pl.getLocation());
+                Set<String> regions = WorldGuardUtils.getRegionsIn(pl.getPlayer().getLocation());
                 if (this.containsRegion(regions, "spawn_", false, true) || regions.contains("spawn")) {
                     pl.setAllowFlight(true);
                     pl.setFlySpeed(0.1f);
@@ -103,13 +95,13 @@ implements Runnable {
                 }
                 if (this.containsRegion(regions, "parkour", true, false)) continue;
                 if (!regions.contains("koth_middle") && this.hasPermission(pl)) {
-                    if (!CombatLog.inCombat((Player)pl)) {
+                    if (!CombatLog.inCombat(pl)) {
                         if (flyingOnlyInBases) {
-                            FPlayer fp = (FPlayer)FPlayers.i.get((OfflinePlayer)pl);
+                            FPlayer fp = FPlayers.i.get(pl);
                             if (flyingInAllyBases || flyingInTruceBases ? fp.getRelationToLocation().isAtLeast(flyingInTruceBases ? Relation.TRUCE : Relation.ALLY) : fp.getRelationToLocation().isMember()) {
                                 pl.setAllowFlight(true);
                                 pl.setFlySpeed(0.1f);
-                                pl.setMetadata("inClaim", (MetadataValue)new FixedMetadataValue(P.getP(), (Object)true));
+                                pl.setMetadata("inClaim", new FixedMetadataValue(P.getP(), true));
                                 continue;
                             }
                             pl.setAllowFlight(false);
@@ -157,7 +149,7 @@ implements Runnable {
         boolean has_permission = pl.hasPermission("essentials.fly");
         if (!has_permission && this.armorSets) {
             try {
-                if (CosmicArmorSetsAPI.getArmorSet((Player)pl) == ArmorSet.SUPREME) {
+                if (CosmicArmorSetsAPI.getArmorSet(pl) == ArmorSet.SUPREME) {
                     has_permission = true;
                 }
             }
@@ -165,20 +157,20 @@ implements Runnable {
                 // empty catch block
             }
         }
-        if (!has_permission && MaskUtils.hasMaskEquipped((Player)pl, (String)"REINDEER")) {
+        if (!has_permission && MaskUtils.hasMaskEquipped(pl, "REINDEER")) {
             has_permission = true;
         }
-        boolean inCombat = CombatLog.inCombat((Player)pl);
+        boolean inCombat = CombatLog.inCombat(pl);
         if (!has_permission && !inCombat && this.factionUpgrades) {
             Faction f = this.getFactionAtLocationCached(pl);
             if (f == null || !f.attached()) {
-                f = Board.getFactionAt((FLocation)new FLocation(pl.getLocation()));
-                pl.setMetadata("cachedFactionAtLocation", (MetadataValue)new FixedMetadataValue(P.getP(), (Object)f));
-                pl.setMetadata("cachedLastChunk", (MetadataValue)new FixedMetadataValue(P.getP(), (Object)pl.getLocation().getChunk()));
+                f = Board.getFactionAt(new FLocation(pl.getLocation()));
+                pl.setMetadata("cachedFactionAtLocation", new FixedMetadataValue(P.getP(), f));
+                pl.setMetadata("cachedLastChunk", new FixedMetadataValue(P.getP(), pl.getLocation().getChunk()));
             }
             if (f.isNormal()) {
-                Relation relationToLocation = ((FPlayer)FPlayers.i.get((OfflinePlayer)pl)).getRelationToLocation();
-                int flyPerkTier = FactionUpgradeAPI.getPerkLevel((Faction)f, (FactionUpgrade)FactionUpgrade.ENHANCED_FLIGHT);
+                Relation relationToLocation = FPlayers.i.get(pl).getRelationToLocation();
+                int flyPerkTier = FactionUpgradeAPI.getPerkLevel(f, FactionUpgrade.ENHANCED_FLIGHT);
                 if (flyPerkTier >= 1 && relationToLocation.isMember()) {
                     has_permission = true;
                 }
@@ -190,15 +182,15 @@ implements Runnable {
                 }
             }
         }
-        if (!has_permission && !inCombat && CosmicUtils.get().isCosmicGalaxy() && HCFOutpostUtils.doesControlOutpost((Player)pl, (String)"infernal")) {
+        if (!has_permission && !inCombat && CosmicUtils.get().isCosmicGalaxy() && HCFOutpostUtils.doesControlOutpost(pl, "infernal")) {
             has_permission = true;
         }
         return has_permission;
     }
 
     private Faction getFactionAtLocationCached(Player p) {
-        if (p.hasMetadata("cachedLastChunk") && ((Chunk)((MetadataValue)p.getMetadata("cachedLastChunk").get(0)).value()).equals((Object)p.getLocation().getChunk())) {
-            return p.hasMetadata("cachedFactionAtLocation") ? (Faction)((MetadataValue)p.getMetadata("cachedFactionAtLocation").get(0)).value() : null;
+        if (p.hasMetadata("cachedLastChunk") && p.getMetadata("cachedLastChunk").get(0).value().equals(p.getLocation().getChunk())) {
+            return p.hasMetadata("cachedFactionAtLocation") ? (Faction) p.getMetadata("cachedFactionAtLocation").get(0).value() : null;
         }
         return null;
     }
