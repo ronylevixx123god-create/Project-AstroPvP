@@ -5,11 +5,8 @@ import me.astropvp.events.ArmorListener;
 import me.astropvp.listeners.BackpackListener;
 import me.astropvp.listeners.PlayerDamageListener;
 import me.astropvp.listeners.PortablePicnicListener;
-import me.astropvp.objects.Backpack;
 import me.astropvp.tasks.PortablePicnicTask;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -20,7 +17,7 @@ public class AstroBackpacks extends JavaPlugin {
         plugin = this;
         registerListeners();
         registerCommands();
-        Bukkit.getScheduler().runTaskTimer((Plugin)this, new PortablePicnicTask(), 0L, 200L);
+        Bukkit.getScheduler().runTaskTimer(this, new PortablePicnicTask(), 0L, 200L);
     }
 
     @Override
@@ -40,6 +37,6 @@ public class AstroBackpacks extends JavaPlugin {
     }
 
     private void registerCommands() {
-        getCommand("givebackpack").setExecutor((CommandExecutor) new CommandGiveBackpack());
+        getCommand("givebackpack").setExecutor(new CommandGiveBackpack());
     }
 }

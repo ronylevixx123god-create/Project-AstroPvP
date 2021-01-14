@@ -45,7 +45,7 @@ public class AstroBackpacksAPI {
     public static ItemStack removeBackpack(ItemStack item, BackpackType type) {
         ItemMeta meta = item.getItemMeta();
         List<String> lore = meta.getLore();
-        lore = (List<String>)lore.stream().filter(s -> !ChatColor.stripColor(s).startsWith("BACKPACK SKIN:")).collect(Collectors.toList());
+        lore = lore.stream().filter(s -> !ChatColor.stripColor(s).startsWith("BACKPACK SKIN:")).collect(Collectors.toList());
         meta.setLore(lore);
         item.setItemMeta(meta);
         NBTWrapper wrapper = new NBTWrapper(item);

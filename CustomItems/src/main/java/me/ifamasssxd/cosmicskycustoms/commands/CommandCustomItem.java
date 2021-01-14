@@ -34,7 +34,7 @@ implements CommandExecutor {
         }
         if (args.length >= 3 && args[0].equalsIgnoreCase("give")) {
             ItemStack is;
-            Player pl = Bukkit.getPlayer((String)args[1]);
+            Player pl = Bukkit.getPlayer(args[1]);
             if (pl == null) {
                 commandSender.sendMessage(CC.RedB + "(!) " + CC.Red + "No player found for " + args[1]);
                 return true;
@@ -52,9 +52,9 @@ implements CommandExecutor {
                 }
                 is = item.createItem(null, data);
             } else {
-                is = item.createItem(null, new Object[0]);
+                is = item.createItem(null);
             }
-            PlayerUtil.giveOrDropProtectedItem((Player)pl, (ItemStack)is, (int)-1);
+            PlayerUtil.giveOrDropProtectedItem(pl, is, -1);
             commandSender.sendMessage(CC.Green + "Item given!");
             return true;
         }

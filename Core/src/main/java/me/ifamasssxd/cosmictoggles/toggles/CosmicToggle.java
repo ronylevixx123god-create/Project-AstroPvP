@@ -21,12 +21,11 @@
  */
 package me.ifamasssxd.cosmictoggles.toggles;
 
+import com.conaxgames.factions.utils.cmds.CommandToggleSmoke;
 import com.massivecraft.factions.FPlayer;
-import me.cosmicpvp.CosmicFactionUtils.cmds.CommandToggleSmoke;
 import me.ifamasssxd.cosmicduel.CosmicDuel;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.ifamasssxd.itemfilter.Filter;
-import me.ifamasssxd.itemfilter.ItemFilter;
 import me.recolance.auction.Auction;
 import net.astropvp.core.AstroCore;
 import org.arkhamnetwork.Arkkit.patches.ClearInventoryConfirm;
@@ -63,9 +62,10 @@ public enum CosmicToggle {
         if (this == FILTER) {
             return !ChatFilter.disabledFilteredPlayers.contains(player.getUniqueId());
         }
-        if (this == Mysteryanimation) {
-            return CosmicMysteryChest.get().getToggle().hasToggle(player);
-        }
+        // todo: fix import
+//        if (this == Mysteryanimation) {
+//            return CosmicMysteryChest.get().getToggle().hasToggle(player);
+//        }
         if (this == PAY) {
             return !AstroCore.getInstance().getPayToggles().hasToggle(player);
         }
@@ -76,7 +76,7 @@ public enum CosmicToggle {
             return !CommandToggleSmoke.toggled.contains(player.getUniqueId());
         }
         if (this == ITEM_FILTER) {
-            Filter filter = ItemFilter.get().getFilterManager().getItemFilters().get(player.getUniqueId());
+            Filter filter = AstroCore.getInstance().getFilterManager().getItemFilters().get(player.getUniqueId());
             return filter != null && filter.isEnabled();
         }
         if (this == DEATH_MESSAGES) {

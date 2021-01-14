@@ -20,6 +20,7 @@ package me.ifamasssxd.corechunkfinder;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import com.cosmicpvp.factionpoints.CosmicFactionPoints;
 import com.cosmicpvp.factionpoints.FactionsCoreChunkAPI;
 import com.cosmicpvp.factionpoints.struct.CoreChunkData;
 import com.cosmicpvp.factionpoints.struct.ExpiringChunkData;
@@ -102,7 +103,7 @@ implements CommandExecutor {
                 sender.sendMessage(CC.Red + "invalid epoch time given!");
                 return true;
             }
-            ExpiringChunkData data = (ExpiringChunkData) CosmicFactionPoints.get().getChunkManager().getChunksToExpire().get((Object)new FLocation((Player)sender));
+            ExpiringChunkData data = CosmicFactionPoints.get().getChunkManager().getChunksToExpire().get(new FLocation((Player)sender));
             if (data == null) {
                 sender.sendMessage(CC.Red + "No chunk data stored at your location!");
                 return true;

@@ -1,16 +1,3 @@
-/*
- * Decompiled with CFR 0.145.
- *
- * Could not load the following classes:
- *  com.sk89q.worldedit.BlockVector
- *  com.sk89q.worldguard.bukkit.WorldGuardPlugin
- *  com.sk89q.worldguard.protection.managers.RegionManager
- *  com.sk89q.worldguard.protection.regions.ProtectedRegion
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.World
- *  org.bukkit.command.CommandSender
- */
 package com.massivecraft.factions.zcore.util;
 
 import com.massivecraft.factions.Board;

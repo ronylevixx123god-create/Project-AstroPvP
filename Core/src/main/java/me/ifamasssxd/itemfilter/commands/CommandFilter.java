@@ -1,18 +1,8 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  org.bukkit.ChatColor
- *  org.bukkit.command.Command
- *  org.bukkit.command.CommandExecutor
- *  org.bukkit.command.CommandSender
- *  org.bukkit.entity.Player
- */
 package me.ifamasssxd.itemfilter.commands;
 
 import me.ifamasssxd.itemfilter.Filter;
 import me.ifamasssxd.itemfilter.FilterManager;
-import me.ifamasssxd.itemfilter.ItemFilter;
+import net.astropvp.core.AstroCore;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -27,7 +17,7 @@ implements CommandExecutor {
         }
         Player player = (Player)sender;
         if (args.length == 1) {
-            FilterManager manager = ItemFilter.get().getFilterManager();
+            FilterManager manager = AstroCore.getInstance().getFilterManager();
             if (args[0].equalsIgnoreCase("toggle")) {
                 Filter filter;
                 Filter filter2 = filter = manager.getItemFilters().containsKey(player.getUniqueId()) ? manager.getItemFilters().get(player.getUniqueId()) : new Filter();
@@ -37,12 +27,12 @@ implements CommandExecutor {
                 filter.setEnabled(!filter.isEnabled());
                 player.sendMessage((filter.isEnabled() ? ChatColor.GREEN : ChatColor.RED) + "(!) Item Filter " + (filter.isEnabled() ? ChatColor.GREEN + ChatColor.BOLD.toString() + "ENABLED" : ChatColor.RED + ChatColor.BOLD.toString() + "DISABLED"));
                 if (!filter.isEnabled()) {
-                    ItemFilter.get().getItemListener().alerted.remove(player.getUniqueId());
+                    AstroCore.getInstance().getItemListener().alerted.remove(player.getUniqueId());
                 }
                 return true;
             }
             if (args[0].equalsIgnoreCase("edit")) {
-                player.openInventory(ItemFilter.get().getFilterManager().getCategoryMenu(player));
+                player.openInventory(AstroCore.getInstance().getFilterManager().getCategoryMenu(player));
                 return true;
             }
         }

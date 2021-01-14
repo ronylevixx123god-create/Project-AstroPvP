@@ -41,6 +41,7 @@
       <module name="ArmorSets" target="1.8" />
       <module name="CrateBoxes" target="8" />
       <module name="Disguises (1)" target="8" />
+      <module name="ItemFilter" target="8" />
       <module name="MoneyNotes" target="1.8" />
       <module name="Permissions" target="8" />
       <module name="Pets (1)" target="8" />

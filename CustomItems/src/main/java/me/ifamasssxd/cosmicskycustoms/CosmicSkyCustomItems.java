@@ -25,8 +25,8 @@ extends JavaPlugin {
     public void onEnable() {
         instance = this;
         this.itemManager = new CustomItemManager(this);
-        this.getServer().getPluginManager().registerEvents((Listener)new CosmicItemListener(this), (Plugin)this);
-        this.getCommand("customitems").setExecutor((CommandExecutor)new CommandCustomItem());
+        this.getServer().getPluginManager().registerEvents(new CosmicItemListener(this), (Plugin)this);
+        this.getCommand("customitems").setExecutor(new CommandCustomItem());
         this.itemManager.onEnable(this);
     }
 
