@@ -13,7 +13,6 @@ import com.massivecraft.factions.struct.Role;
 import me.ifamasssxd.factionstop.struct.StoredFaction;
 import me.ifamasssxd.factionstop.struct.TopFaction;
 import mkremins.fanciful.FancyMessage;
-import net.milkbowl.vault.chat.Chat;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -61,7 +60,7 @@ public class CmdShow extends FCommand {
             Collection<FPlayer> recruits = finalFaction.getFPlayersWhereRole(Role.RECRUIT);
             if (finalFaction == Factions.i.getNone()) {
                 this.msg(this.p.txt.titleize(ChatColor.AQUA + "No Faction"));
-                this.msg(ChatColor.translateAlternateColorCodes('&', "<c>&4Description: <p>&f%s") , this.argAsString(0) + " is not currently in a faction.");
+                this.msg(ChatColor.translateAlternateColorCodes('&', "<c>&4Description: <p>&f%s") ,  "That player is not in a faction.");
             } else {
                 this.msg(this.p.txt.titleize(finalFaction.getTag(this.fme)));
                 this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&4Description: <p>&f%s"), finalFaction.getDescription());

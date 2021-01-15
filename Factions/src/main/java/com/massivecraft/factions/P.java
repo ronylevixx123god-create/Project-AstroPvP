@@ -199,6 +199,9 @@ public class P extends MPlugin {
         Conf.load();
         getConfig().options().copyDefaults(true);
         saveDefaultConfig();
+
+        P.getP().setBoardManager(new BoardManager(new ScoreboardManager()));
+
         FPlayers.i.loadFromDisc();
         Factions.i.loadFromDisc();
         FactionWrappers.loadFactionWrappers();
@@ -210,8 +213,6 @@ public class P extends MPlugin {
         getFileManager().setupFiles(); // load the files...
         getCommand("kills").setExecutor(new CmdKills());
         getCommand("deaths").setExecutor(new CmdDeaths());
-
-        P.getP().setBoardManager(new BoardManager(new ScoreboardManager()));
 
         /*
          This is the requirements for all additions put into Factions. (vvv)
@@ -243,6 +244,8 @@ public class P extends MPlugin {
          This is the requirements for all additions put into Factions. (^^^)
         */
 
+        this.bannerManager = new BannerManager();
+
         this.getBaseCommands().add(this.cmdBase);
         EssentialsFeatures.setup();
         Econ.setup();
@@ -273,7 +276,6 @@ public class P extends MPlugin {
         } catch (IOException e) {
             //e.printStackTrace();
         }
-        P.getP().setBoardManager(new BoardManager(new ScoreboardManager()));
 
         int minute = 1200;
 

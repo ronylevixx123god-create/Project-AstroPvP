@@ -22,7 +22,7 @@ import java.util.List;
 class FakeVanishTask
         implements Runnable {
     private final int RADIUS = 600;
-    private final List<String> namesToVanish = Lists.newArrayList("TBNRfrags", "Woofless", "Vikkstar123", "Lachlan", "BOWP", "Kipes", "Vikaiscool_");
+    private final List<String> namesToVanish = Lists.newArrayList("TBNRfrags", "Woofless");
     private final Essentials ess;
 
     public FakeVanishTask(Essentials ess) {

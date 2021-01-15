@@ -39,7 +39,15 @@ public class ScoreboardManager implements BoardAdapter {
 
     @Override
     public String getTitle(Player player) {
-        return CC.GreenB + "AstroPvP" + getDateSuffix();
+        FPlayer fplayer = FPlayers.i.get(player);
+        if (fplayer != null) {
+            if (fplayer.hasFaction()) {
+                return CC.GreenB + fplayer.getFaction().getTag() + CC.Gray + " [" + getDateSuffix() + "]";
+            } else {
+                return CC.GreenB + "AstroPvP " + CC.Gray + "[" + getDateSuffix() + "]";
+            }
+        }
+        return CC.GreenB + "AstroPvP " + CC.Gray + "[" + getDateSuffix() + "]";
     }
 
     public List<String> mainBoard(Player player) {

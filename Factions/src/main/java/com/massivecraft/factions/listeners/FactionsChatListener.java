@@ -55,6 +55,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerChatEvent;
 
 import java.io.File;
 import java.text.DecimalFormat;
@@ -223,7 +224,7 @@ public class FactionsChatListener implements Listener {
             priority = EventPriority.MONITOR,
             ignoreCancelled = true
     )
-    public void onPlayerChatMonitor(AsyncPlayerChatEvent event) {
+    public void onPlayerChatMonitor(PlayerChatEvent event) {
         FPlayer follower = FPlayers.i.get(event.getPlayer().getUniqueId().toString());
         double balance;
         User user;
@@ -363,7 +364,6 @@ public class FactionsChatListener implements Listener {
                 }
             }
         }
-
         Bukkit.getConsoleSender().sendMessage(String.format(event.getFormat(), event.getPlayer().getDisplayName(), event.getMessage()).replace("•", "-"));
     }
 

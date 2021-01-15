@@ -3,45 +3,20 @@ package com.massivecraft.factions.listeners;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.google.common.collect.Lists;
-import com.massivecraft.factions.Board;
-import com.massivecraft.factions.Conf;
-import com.massivecraft.factions.FLocation;
-import com.massivecraft.factions.FPlayer;
-import com.massivecraft.factions.FPlayers;
-import com.massivecraft.factions.Faction;
-import com.massivecraft.factions.FactionWrapper;
-import com.massivecraft.factions.FactionWrappers;
-import com.massivecraft.factions.Factions;
-import com.massivecraft.factions.P;
+import com.massivecraft.factions.*;
 import com.massivecraft.factions.cmd.CmdClaim;
 import com.massivecraft.factions.event.FPlayerLeaveEvent;
 import com.massivecraft.factions.event.PowerLossEvent;
-import com.massivecraft.factions.iface.RelationParticipator;
-import com.massivecraft.factions.struct.FLogType;
-import com.massivecraft.factions.struct.FactionPermission;
-import com.massivecraft.factions.struct.FactionPermissions;
-import com.massivecraft.factions.struct.Permission;
-import com.massivecraft.factions.struct.PermissionManager;
-import com.massivecraft.factions.struct.Relation;
-import com.massivecraft.factions.struct.Role;
-import com.massivecraft.factions.util.MiscUtil;
+import com.massivecraft.factions.struct.*;
 import com.massivecraft.factions.util.ScoreboardManager;
 import com.massivecraft.factions.util.TimeUtil;
 import com.massivecraft.factions.zcore.util.MojangUUIDFetcher;
 import com.massivecraft.factions.zcore.util.TextUtil;
-
-import java.util.*;
-
-import net.minecraft.server.v1_8_R3.Packet;
-import net.minecraft.server.v1_8_R3.PacketPlayOutBlockChange;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
-import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -49,28 +24,20 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.player.PlayerBucketEmptyEvent;
-import org.bukkit.event.player.PlayerBucketFillEvent;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerKickEvent;
-import org.bukkit.event.player.PlayerLoginEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
-import org.bukkit.plugin.Plugin;
+
+import java.util.*;
 
 public class FactionsPlayerListener implements Listener {
     public P p;
 
-    private HashMap<UUID, Long> showTimes;
+    private final HashMap<UUID, Long> showTimes;
 
     List<Material> containerBlocks;
 
-    private Map<String, InteractAttemptSpam> interactSpammers;
+    private final Map<String, InteractAttemptSpam> interactSpammers;
 
     public FactionsPlayerListener(P p) {
         this.showTimes = new HashMap<>();
@@ -82,7 +49,7 @@ public class FactionsPlayerListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onLeaveFaction(final FPlayerLeaveEvent event) {
-        Bukkit.getServer().getScheduler().runTaskLaterAsynchronously((Plugin)this.p, new Runnable() {
+        Bukkit.getServer().getScheduler().runTaskLaterAsynchronously(this.p, new Runnable() {
             public void run() {
                 if (event.getFPlayer() == null || event.getFPlayer().isOffline())
                     return;
@@ -96,7 +63,7 @@ public class FactionsPlayerListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onLoss(final PowerLossEvent event) {
-        Bukkit.getServer().getScheduler().runTaskLaterAsynchronously((Plugin)this.p, new Runnable() {
+        Bukkit.getServer().getScheduler().runTaskLaterAsynchronously(this.p, new Runnable() {
             public void run() {
                 if (event.getFPlayer() == null || event.getFPlayer().isOffline())
                     return;
@@ -107,7 +74,12 @@ public class FactionsPlayerListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        FPlayer fplayer = (FPlayer)FPlayers.i.get((OfflinePlayer)player);
+        FPlayer fplayer = FPlayers.i.get(player);
+
+        if (P.getP().getBoardManager() != null) {
+            P.getP().getBoardManager().getPlayerBoards().put(player.getUniqueId(), new com.massivecraft.factions.board.Board(player, P.getP().getBoardManager().getAdapter()));
+        }
+
         if (fplayer == null)
             return;
         fplayer.setLastLoginTime(System.currentTimeMillis());
@@ -116,16 +88,13 @@ public class FactionsPlayerListener implements Listener {
         if (fac == null || !fac.isNormal())
             return;
 
-        if (P.getP().getBoardManager() != null) {
-            P.getP().getBoardManager().getPlayerBoards().put(player.getUniqueId(), new com.massivecraft.factions.board.Board(player, P.getP().getBoardManager().getAdapter()));
-        }
         String message = ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW.toString() + ChatColor.BOLD + player.getName() + ChatColor.YELLOW + " has logged in.";
         for (FPlayer member : fac.getFPlayers()) {
             if (member.equals(fplayer))
                 continue;
             member.sendMessage(message);
         }
-        Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)P.p, () -> fac.sendMOTD(fplayer, false), 80L);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(P.p, () -> fac.sendMOTD(fplayer, false), 80L);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -133,7 +102,7 @@ public class FactionsPlayerListener implements Listener {
         if (!event.getPlayer().isOnline())
             return;
         Player player = event.getPlayer();
-        FPlayer fplayer = (FPlayer)FPlayers.i.get((OfflinePlayer)player);
+        FPlayer fplayer = FPlayers.i.get(player);
         if (fplayer == null)
             return;
         Faction fac = fplayer.getFaction();
@@ -175,7 +144,7 @@ public class FactionsPlayerListener implements Listener {
         if (event.getFrom().getBlockX() >> 4 == event.getTo().getBlockX() >> 4 && event.getFrom().getBlockZ() >> 4 == event.getTo().getBlockZ() >> 4 && event.getFrom().getWorld() == event.getTo().getWorld())
             return;
         Player player = event.getPlayer();
-        FPlayer me = (FPlayer)FPlayers.i.get((OfflinePlayer)player);
+        FPlayer me = FPlayers.i.get(player);
         FLocation from = me.getLastStoodAt();
         FLocation to = new FLocation(event.getTo());
         if (from.equals(to))
@@ -185,7 +154,7 @@ public class FactionsPlayerListener implements Listener {
         Faction factionTo = Board.getFactionAt(to);
         boolean changedFaction = !me.lastFactionMessage.equals(me.getFactionHereMessage());
         if (me.isMapAutoUpdating()) {
-            if (!this.showTimes.containsKey(player.getUniqueId()) || (Long) this.showTimes.get(player.getUniqueId()) <= System.currentTimeMillis()) {
+            if (!this.showTimes.containsKey(player.getUniqueId()) || this.showTimes.get(player.getUniqueId()) <= System.currentTimeMillis()) {
                 me.sendMessage(Board.getMap(me.getFaction(), to, player));
                 this.showTimes.put(player.getUniqueId(), System.currentTimeMillis() + 4000L);
             }
@@ -214,14 +183,14 @@ public class FactionsPlayerListener implements Listener {
                 Bukkit.getLogger().info("[Factions] Skipping auto-claim for chunk at " + event.getTo() + " due to chunkCoordsPendingClaim.");
             }
         } else if (me.isAutoSafeClaimEnabled()) {
-            if (!Permission.MANAGE_SAFE_ZONE.has((CommandSender)player)) {
+            if (!Permission.MANAGE_SAFE_ZONE.has(player)) {
                 me.setIsAutoSafeClaimEnabled(false);
             } else if (!Board.getFactionAt(to).isSafeZone()) {
                 Board.setFactionAt(Factions.i.getSafeZone(), to);
                 me.msg("<i>This land is now a safe zone.");
             }
         } else if (me.isAutoWarClaimEnabled()) {
-            if (!Permission.MANAGE_WAR_ZONE.has((CommandSender)player)) {
+            if (!Permission.MANAGE_WAR_ZONE.has(player)) {
                 me.setIsAutoWarClaimEnabled(false);
             } else if (!Board.getFactionAt(to).isWarZone()) {
                 Board.setFactionAt(Factions.i.getWarZone(), to);
@@ -256,7 +225,7 @@ public class FactionsPlayerListener implements Listener {
         Faction interactedFaction = Board.getFactionAt(location);
         if (Conf.playersWhoBypassAllProtection.contains(player.getName()))
             return;
-        FPlayer me = (FPlayer)FPlayers.i.get((OfflinePlayer)player);
+        FPlayer me = FPlayers.i.get(player);
         if (me.isAdminBypassing())
             return;
         FactionWrapper wrapper = FactionWrappers.get(interactedFaction);
@@ -280,7 +249,7 @@ public class FactionsPlayerListener implements Listener {
             }
         }
         boolean isOverridableitem = (handData != null && (FactionPermission.isConsumable(handData.getItemType()) || handData.getItemType() == Material.BOW));
-        Relation rel = interactedFaction.getRelationTo((RelationParticipator)me);
+        Relation rel = interactedFaction.getRelationTo(me);
         FactionPermissions perms = PermissionManager.get().getPermissions(interactedFaction);
         Set<FactionPermission> playerOrFactionPermissions = perms.getPermissions(interactedFaction, location, me.getFaction(), me, "interact");
         boolean doAnyEntitiesHaveChunkAccess = perms.hasChunkSpecificPerms(location);
@@ -330,7 +299,7 @@ public class FactionsPlayerListener implements Listener {
             }
             return;
         }
-        if (interactedFaction.getRelationTo((RelationParticipator)me) == Relation.MEMBER && me.getRole() == Role.RECRUIT) {
+        if (interactedFaction.getRelationTo(me) == Relation.MEMBER && me.getRole() == Role.RECRUIT) {
             if (isOverridableitem) {
                 event.setUseItemInHand(Event.Result.ALLOW);
                 event.setUseInteractedBlock(Event.Result.DENY);
@@ -376,14 +345,14 @@ public class FactionsPlayerListener implements Listener {
             return;
         }
         if (interactedFaction.isSafeZone()) {
-            if (!Conf.safeZoneDenyUseage || Permission.MANAGE_SAFE_ZONE.has((CommandSender)player))
+            if (!Conf.safeZoneDenyUseage || Permission.MANAGE_SAFE_ZONE.has(player))
                 return;
             me.msg("<b>You can't use <h>%s<b> in a safe zone.", TextUtil.getMaterialName(blockClickedType));
             event.setCancelled(true);
             return;
         }
         if (interactedFaction.isWarZone()) {
-            if (!Conf.warZoneDenyUseage || Permission.MANAGE_WAR_ZONE.has((CommandSender)player))
+            if (!Conf.warZoneDenyUseage || Permission.MANAGE_WAR_ZONE.has(player))
                 return;
             Material type;
             if (handData != null && ((type = handData.getItemType()) == Material.WATER_BUCKET || type == Material.LAVA_BUCKET || type == Material.BUCKET || (type == Material.MONSTER_EGG && handData
@@ -447,7 +416,7 @@ public class FactionsPlayerListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerRespawn(PlayerRespawnEvent event) {
-        FPlayer me = (FPlayer)FPlayers.i.get((OfflinePlayer)event.getPlayer());
+        FPlayer me = FPlayers.i.get(event.getPlayer());
         me.getPower();
         Location home = me.getFaction().getHome();
         if (Conf.homesEnabled && Conf.homesTeleportToOnDeath && home != null && (Conf.homesRespawnFromNoPowerLossWorlds ||
@@ -514,7 +483,7 @@ public class FactionsPlayerListener implements Listener {
         }
         if (me.hasFaction() && !me.isAdminBypassing() && !Conf.permanentFactionMemberDenyCommands.isEmpty() && me.getFaction().isPermanent() && isCommandInList(fullCmd, shortCmd, Conf.permanentFactionMemberDenyCommands
                 .iterator())) {
-            me.msg("<b>You can't use the command \"" + fullCmd + "\" because you are in a permanent faction.", new Object[0]);
+            me.msg("<b>You can't use the command \"" + fullCmd + "\" because you are in a permanent faction.");
             return true;
         }
         if (!me.isInOthersTerritory())
@@ -524,22 +493,22 @@ public class FactionsPlayerListener implements Listener {
             return false;
         if (rel.isNeutral() && !Conf.territoryNeutralDenyCommands.isEmpty() && !me.isAdminBypassing() && isCommandInList(fullCmd, shortCmd, Conf.territoryNeutralDenyCommands
                 .iterator())) {
-            me.msg("<b>You can't use the command \"" + fullCmd + "\" in neutral territory.", new Object[0]);
+            me.msg("<b>You can't use the command \"" + fullCmd + "\" in neutral territory.");
             return true;
         }
         if (rel.isEnemy() && !Conf.territoryEnemyDenyCommands.isEmpty() && !me.isAdminBypassing() && isCommandInList(fullCmd, shortCmd, Conf.territoryEnemyDenyCommands
                 .iterator())) {
-            me.msg("<b>You can't use the command \"" + fullCmd + "\" in enemy territory.", new Object[0]);
+            me.msg("<b>You can't use the command \"" + fullCmd + "\" in enemy territory.");
             return true;
         }
         if (rel.isTruce() && !Conf.territoryTruceDenyCommands.isEmpty() && !me.isAdminBypassing() && isCommandInList(fullCmd, shortCmd, Conf.territoryTruceDenyCommands
                 .iterator())) {
-            me.msg("<b>You can't use the command \"" + fullCmd + "\" in truce territory.", new Object[0]);
+            me.msg("<b>You can't use the command \"" + fullCmd + "\" in truce territory.");
             return true;
         }
         if (rel.isAlly() && !Conf.territoryAllyDenyCommands.isEmpty() && !me.isAdminBypassing() && isCommandInList(fullCmd, shortCmd, Conf.territoryAllyDenyCommands
                 .iterator())) {
-            me.msg("<b>You can't use the command \"" + fullCmd + "\" in ally territory.", new Object[0]);
+            me.msg("<b>You can't use the command \"" + fullCmd + "\" in ally territory.");
             return true;
         }
         return false;

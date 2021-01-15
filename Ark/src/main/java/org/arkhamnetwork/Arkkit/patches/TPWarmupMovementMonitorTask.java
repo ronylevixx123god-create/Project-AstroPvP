@@ -11,7 +11,7 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
+import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -23,6 +23,7 @@ final class TPWarmupMovementMonitorTask
     TPWarmupMovementMonitorTask() {
     }
 
+    @SneakyThrows
     public void run() {
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (!p.hasMetadata("queuedTeleport")) continue;
@@ -32,10 +33,12 @@ final class TPWarmupMovementMonitorTask
                 p.sendMessage(ChatColor.DARK_RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.DARK_RED + "Pending teleport request cancelled due to movement.");
                 continue;
             }
-            ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, p.getLocation().add(0.0, 1.0, 0.0), 0.5f, 55);
+            de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayer(p, p.getLocation(),0, 1, 0, 0.5f, 55);
+            //ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, p.getLocation().add(0.0, 1.0, 0.0), 0.5f, 55);
             if (!p.hasMetadata("bannerTp")) continue;
             Location bannerLocation = (Location) p.getMetadata("bannerTp").get(0).value();
-            ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, bannerLocation, 0.5f, 55);
+            //ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, bannerLocation, 0.5f, 55);
+            de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayer(p, p.getLocation(),0, 1, 0, 0.5f, 55);
         }
     }
 }

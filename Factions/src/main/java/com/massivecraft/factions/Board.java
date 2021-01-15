@@ -31,6 +31,7 @@ import java.io.File;
 import java.lang.reflect.Type;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 
 public class Board {
@@ -329,12 +330,12 @@ public class Board {
         return ret;
     }
 
-    private static CacheBuilder<Object, Object> expiringSpawnerCountMap = CacheBuilder.newBuilder().expireAfterWrite(1L, TimeUnit.MINUTES);
+    private static ConcurrentMap<Object, Object> expiringSpawnerCountMap = CacheBuilder.newBuilder().expireAfterWrite(1L, TimeUnit.MINUTES).build().asMap();
 
-    private static CacheBuilder<Object, Object> expiringChunkSpawnerHoverData = CacheBuilder.newBuilder().expireAfterWrite(1L, TimeUnit.MINUTES);
+    private static ConcurrentMap<Object, Object> expiringChunkSpawnerHoverData = CacheBuilder.newBuilder().expireAfterWrite(1L, TimeUnit.MINUTES).build().asMap();
 
     private static int getSpawnersInChunk(FLocation fLocation) {
-        MobSpawnerData[] data = (MobSpawnerData[]) expiringSpawnerCountMap.build().asMap().get(fLocation.toString());
+        MobSpawnerData[] data = (MobSpawnerData[]) expiringSpawnerCountMap.get(fLocation.toString());
         if (data != null)
             return getSpawnerCount(data);
         List<MobSpawnerData> listData = Lists.newArrayList();
@@ -343,8 +344,8 @@ public class Board {
                 listData.add(new MobSpawnerData((CreatureSpawner)spawner));
         }
         MobSpawnerData[] array = listData.toArray(new MobSpawnerData[listData.size()]);
-        expiringSpawnerCountMap.build().asMap().put(fLocation.toString(), array);
-        expiringChunkSpawnerHoverData.build().asMap().put(fLocation.toString(), Board.getChunkSpawnerHoverData(fLocation));
+        expiringSpawnerCountMap.put(fLocation.toString(), array);
+        expiringChunkSpawnerHoverData.put(fLocation.toString(), Board.getChunkSpawnerHoverData(fLocation));
         return getSpawnerCount(array);
     }
 
@@ -356,11 +357,11 @@ public class Board {
     }
 
     private static List<FancyMessage> getChunkSpawnerHoverData(FLocation fLocation) {
-        List<FancyMessage> hoverData = (List<FancyMessage>) expiringChunkSpawnerHoverData.build().asMap().getOrDefault(fLocation.toString(), new ArrayList<>());
+        List<FancyMessage> hoverData = (List<FancyMessage>) expiringChunkSpawnerHoverData.getOrDefault(fLocation.toString(), new ArrayList<>());
         if (hoverData.size() > 0)
             return hoverData;
         HashMap<EntityType, Integer> spawnerTypeCounts = new HashMap<>();
-        for (MobSpawnerData m : (MobSpawnerData[]) expiringSpawnerCountMap.build().asMap().get(fLocation.toString()))
+        for (MobSpawnerData m : (MobSpawnerData[]) expiringSpawnerCountMap.get(fLocation.toString()))
             spawnerTypeCounts.put(m.getSpawnerType(), spawnerTypeCounts.getOrDefault(m.getSpawnerType(), 0) + m.getSpawnerCount());
         hoverData.add(new FancyMessage(CC.Aqua + "Chunk: " + CC.White + fLocation.toRawString()));
         for (Map.Entry<EntityType, Integer> entry : spawnerTypeCounts.entrySet())

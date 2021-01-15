@@ -91,7 +91,7 @@ public class TopManager {
         } else {
             this.lastUpdate = System.currentTimeMillis();
         }
-        final HashMap spawners = new HashMap();
+        final HashMap<String, List<String>> spawners = new HashMap();
         final HashMap containers = new HashMap();
         final HashMap<String, StoredFaction> storedFactions = new HashMap();
         System.out.println("Loading spawners..");
@@ -112,18 +112,14 @@ public class TopManager {
                     int chunksChecked = 0;
                     if (ArkPlugins.SPAWNER_FEE.getArkPlugin().isRunning()) {
                         int spawnersChecked = 0;
-                        for (Map.Entry spawner : SpawnerFee.playerSpawners.entrySet()) {
-                            List<Object> var12_17 = null;
+                        for (Map.Entry<String, SpawnerLocation> spawner : SpawnerFee.playerSpawners.entrySet()) {
                             ++spawnersChecked;
-                            if (((SpawnerLocation)spawner.getValue()).getSpawnerType() == EntityType.UNKNOWN) continue;
-                            String chunkCoords = ((SpawnerLocation)spawner.getValue()).getWorldName() + ":" + ((SpawnerLocation)spawner.getValue()).getChunkX() + "," + ((SpawnerLocation)spawner.getValue()).getChunkZ();
-                            List list = (List)spawners.get(chunkCoords);
-                            if (list == null) {
-                                ArrayList arrayList = Lists.newArrayList();
+                            if (spawner.getValue().getSpawnerType() == EntityType.UNKNOWN) {
+                                String chunkCoords = spawner.getValue().getWorldName() + ":" + spawner.getValue().getChunkX() + "," + spawner.getValue().getChunkZ();
+                                List<String> list = spawners.get(chunkCoords);
+                                TopManager.this.totalSpawnersFound++;
+                                spawners.put(chunkCoords, list);
                             }
-                            var12_17.add(spawner.getValue());
-                            TopManager.this.totalSpawnersFound++;
-                            spawners.put(chunkCoords, var12_17);
                         }
                         System.out.println("Loaded " + spawnersChecked + " spawners in " + spawners.size() + " chunks.");
                         AtomicInteger index = new AtomicInteger(0);
