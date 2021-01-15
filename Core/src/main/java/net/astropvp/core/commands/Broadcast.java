@@ -1,5 +1,6 @@
 package net.astropvp.core.commands;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import net.astropvp.core.AstroCore;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -9,44 +10,27 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.List;
-
 public class Broadcast implements CommandExecutor {
-    private AstroCore astroCore;
-
-    private List<String> broadcastCommands;
-
-    public Broadcast(AstroCore astroCore) {
-        this.astroCore = astroCore;
-        this.broadcastCommands = astroCore.getConfig().getStringList("broadcast.commands");
-    }
-
-    public StringBuilder generateMessage(String[] message) {
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < message.length; i++) {
-            builder.append(ChatColor.translateAlternateColorCodes('&', message[i]));
-            if (i < message.length - 1)
-                builder.append(" ");
-        }
-        return builder;
-    }
 
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
-        boolean followThrough = true;
-        if (!this.astroCore.getConfig().getBoolean("broadcast.enabled"))
-            followThrough = false;
         if (!commandSender.isOp()) {
+            commandSender.sendMessage(CC.Red + "No Permission.");
             return false;
         }
-        if (args.length == 0)
-            followThrough = false;
-        if (followThrough)
-            for (String broadcast : this.astroCore.getConfig().getStringList("broadcast.message")) {
-                String message = generateMessage(args).toString();
-                Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', broadcast.replace("%broadcast%", message)));
-                for (Player player : Bukkit.getOnlinePlayers())
-                    player.playSound(player.getLocation(), Sound.HORSE_SADDLE, 1.0F, 1.0F);
-            }
+        if (!AstroCore.getInstance().getConfig().getBoolean("broadcast.enabled")) {
+            commandSender.sendMessage(CC.Red + "Broadcast command has been disabled within the configuration.");
+            return false;
+        }
+        StringBuilder text = new StringBuilder("");
+        for (String arg : args) {
+            text.append(arg).append(" ");
+        }
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            player.playSound(player.getLocation(), Sound.HORSE_SADDLE, 1.0F, 1.0F);
+        }
+        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&c "));
+        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&a&lAstro&e&lPvP &8| " + text.toString()));
+        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&c "));
         return false;
     }
 }

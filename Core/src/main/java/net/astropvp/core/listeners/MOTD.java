@@ -1,5 +1,6 @@
 package net.astropvp.core.listeners;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import net.astropvp.core.AstroCore;
 import net.astropvp.core.utils.ChatManager;
 import org.bukkit.Bukkit;
@@ -16,15 +17,15 @@ public class MOTD implements Listener {
         Bukkit.getScheduler().runTaskLater(AstroCore.getInstance(), () -> {
             Player player = e.getPlayer();
             for (int i = 0; i < 120; i++) {
-                player.sendMessage("§c ");
+                player.sendMessage(CC.translate("&c "));
             }
-            player.sendMessage(ChatManager.translate("&a&lASTRO&e&lPVP &f- &7Factions"));
-            player.sendMessage("§c ");
-            player.sendMessage(ChatManager.translate("&aDiscord: &f&ndiscord.astropvp.net"));
-            player.sendMessage(ChatManager.translate("&aStore: &f&nbuy.astropvp.net"));
-            player.sendMessage("");
-            player.sendMessage("§eRecommended Version: §f§nAstro Client (1.8.8)");
-            player.sendMessage("§c ");
+            player.sendMessage(ChatManager.translate(CC.translate("&a&lASTRO&e&lPVP &f- &7Factions")));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(ChatManager.translate(CC.translate("&aDiscord: &f&ndiscord.astropvp.net")));
+            player.sendMessage(ChatManager.translate(CC.translate("&aStore: &f&nbuy.astropvp.net")));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&eRecommended Version: &f&nAstro Client (1.8.8)"));
+            player.sendMessage(CC.translate("&c "));
             player.playSound(player.getLocation(), Sound.GHAST_MOAN, 5, 5);
         }, 15L);
     }

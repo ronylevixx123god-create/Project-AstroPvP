@@ -7,11 +7,12 @@
  */
 package me.matthawkk.autobroadcast.tasks;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.google.common.collect.Lists;
-import java.util.List;
-
 import me.matthawkk.autobroadcast.struct.BroadcastMessages;
 import org.bukkit.Bukkit;
+
+import java.util.List;
 
 public class AutoBroadcastTask
 implements Runnable {
@@ -27,7 +28,7 @@ implements Runnable {
 
     @Override
     public void run() {
-        Bukkit.broadcastMessage(this.messagesList.get(this.i));
+        Bukkit.broadcastMessage(CC.translate(this.messagesList.get(this.i)));
         this.i = this.i == this.messagesList.size() - 1 ? 0 : ++this.i;
     }
 }

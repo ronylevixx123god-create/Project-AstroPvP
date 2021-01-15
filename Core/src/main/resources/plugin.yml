@@ -2,27 +2,27 @@ name: AstroCore
 version: ${project.version}
 main: net.astropvp.core.AstroCore
 authors: [ Tucker, Bryside ]
-description: Astro Core
+description: AstroCore
 depend: [Vault, CosmicPvPUtils, Essentials, TitleManager]
 commands:
   bless:
-    aliases: [ 'blessme' ]
+    aliases: ['blessme']
   heal:
-    aliases: [ 'healme' ]
+    aliases: ['healme']
   discord:
-    aliases: [ 'discord' ]
+    aliases: ['discord']
   pots:
-    aliases: [ 'pot' ]
+    aliases: ['pot']
   broadcast:
-    aliases: [ 'bc' ]
+    aliases: ['bc']
   invsee:
-    aliases: [ 'inventorysee' ]
+    aliases: ['inventorysee']
   givechunkbuster:
-    aliases: [ 'givecb' ]
+    aliases: ['givecb']
   trash:
-    aliases: [ 'bin' ]
+    aliases: ['bin']
   lastmanstanding:
-    aliases: [ 'lms' ]
+    aliases: ['lms']
   dupe:
     description: /dupe
   givetracker:
@@ -76,3 +76,5 @@ commands:
     aliases: [settings, options]
   givebackpack:
     description: givebackpack.
+  giveenchantmentcrystal:
+    description: giveenchantmentcrystal

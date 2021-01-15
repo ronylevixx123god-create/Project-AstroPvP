@@ -19,7 +19,7 @@ public class CommandDupe implements CommandExecutor {
         Player player = (Player) sender;
         ItemStack item = player.getItemInHand();
         if (item == null || !item.hasItemMeta() || !item.getItemMeta().hasDisplayName() || !item.getItemMeta().hasLore()) {
-            sender.sendMessage("§cYou cannot dupe this item!");
+            sender.sendMessage(CC.Red + "You cannot dupe this item!");
             return false;
         }
         ItemMeta itemMeta = item.getItemMeta();
@@ -35,11 +35,11 @@ public class CommandDupe implements CommandExecutor {
             display = display.substring(display.indexOf(" ") + 1);
         }
         if ((!display.startsWith("Enchantment Book") && !isOpened) || color.contains(CC.DarkRed)) {
-            sender.sendMessage("§cYou cannot dupe this item.");
+            sender.sendMessage(CC.Red + "You cannot dupe this item.");
             return false;
         }
         item.setAmount(64);
-        player.sendMessage("§aYou have successfully duplicated your item.");
+        player.sendMessage(CC.Green + "You have successfully duplicated your item.");
         return false;
     }
 }

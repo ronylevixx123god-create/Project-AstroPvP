@@ -15,20 +15,20 @@ package me.matthawkk.autogiveall.struct;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.google.common.collect.Lists;
-import java.net.InetSocketAddress;
-import java.util.ArrayList;
-import java.util.HashMap;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
-import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.net.InetSocketAddress;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class GiveAllManager {
     private static HashMap<Player, Integer> lootboxes = new HashMap();
     private static long nextGiveAll = 1800L;
-    private static final ItemStack giveAllItem = ((MysteryChest)CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("MysteryLootbox")).createClaimableItem(false);
+    private static final ItemStack giveAllItem = (CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("MysteryLootbox")).createClaimableItem(false);
 
     public static long getNextGiveAll() {
         return nextGiveAll;

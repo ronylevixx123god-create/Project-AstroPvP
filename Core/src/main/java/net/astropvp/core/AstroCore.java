@@ -58,6 +58,7 @@ import me.ifamasssxd.killtracker.listeners.ItemListener;
 import me.ifamasssxd.killtracker.listeners.PlayerListener;
 import me.ifamasssxd.killtracker.listeners.SoulGemListener;
 import me.matthawkk.autobroadcast.tasks.AutoBroadcastTask;
+import me.matthawkk.autogiveall.struct.GiveAllManager;
 import me.matthawkk.autogiveall.tasks.AutoGiveAllTask;
 import net.astropvp.core.commands.*;
 import net.astropvp.core.listeners.*;
@@ -68,7 +69,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -112,12 +112,15 @@ public class AstroCore extends JavaPlugin {
     // Cosmic Toggles
     @Getter private TogglesManager toggleManager = new TogglesManager();
 
+    @Getter private GiveAllManager giveAllManager;
+
     @SneakyThrows
     public void onEnable() {
         instance = this;
+        getConfig().options().copyDefaults(true);
         saveDefaultConfig();
+        saveConfig();
         setupEconomy();
-        commands();
         events();
         new LastManStandingCapTask().runTaskTimer(this, 20L, 20L);
         Bukkit.getScheduler().runTaskTimer(this, new AutoBroadcastTask(), 20L, 6000L);
@@ -147,6 +150,7 @@ public class AstroCore extends JavaPlugin {
         }
         CosmicSpongesAPI.debug = false;
 
+
         this.ess = (Essentials)Bukkit.getPluginManager().getPlugin("Essentials");
         this.payToggles = new PayToggle("toggles.yml");
 
@@ -171,7 +175,6 @@ public class AstroCore extends JavaPlugin {
         this.getCommand("setheroicbossspawn").setExecutor(new CommandSetHeroicBossSpawn());
 
         this.getCommand("corechunkfinder").setExecutor(new CoreChunkFinderCommand());
-        this.getServer().getPluginManager().registerEvents((Listener)this, this);
 
         this.getCommand("coinflip").setExecutor(new CommandCoinFlip());
         this.getServer().getPluginManager().registerEvents(new InventoryListener(), this);
@@ -215,6 +218,19 @@ public class AstroCore extends JavaPlugin {
 
         this.getCommand("giveenchantmentcrystal").setExecutor(new GiveEnchantmentCrystalCommand());
 
+        this.getCommand("bless").setExecutor(new Bless());
+        this.getCommand("dupe").setExecutor(new CommandDupe());
+        this.getCommand("heal").setExecutor(new HealCommand());
+        this.getCommand("discord").setExecutor(new DiscordCommand());
+        this.getCommand("pots").setExecutor(new PotionsCommand(this));
+        this.getCommand("broadcast").setExecutor(new Broadcast());
+        this.getCommand("invsee").setExecutor(new Invsee());
+        this.getCommand("givechunkbuster").setExecutor(new ChunkBuster(this));
+        this.getCommand("trash").setExecutor(new TrashCommand());
+        this.getCommand("lastmanstanding").setExecutor(new LastManStandingCommand());
+        this.getCommand("togglepay").setExecutor(new CommandTogglePay());
+
+
         this.getServer().getPluginManager().registerEvents(new CommandListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
         this.getServer().getPluginManager().registerEvents(new ItemListener(), this);
@@ -230,6 +246,14 @@ public class AstroCore extends JavaPlugin {
         Bukkit.getServer().getPluginManager().registerEvents(new PermissionListener(this.dataManager), this);
 
         this.getServer().getPluginManager().registerEvents(new EnvoyListener(), this);
+
+        Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
+        Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
+        Bukkit.getConsoleSender().sendMessage(" ");
+        Bukkit.getConsoleSender().sendMessage(" ASTRO CORE DEBUG: PLUGIN SHOULD BE LOADED NOW :)");
+        Bukkit.getConsoleSender().sendMessage(" ");
+        Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
+        Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
     }
 
     @SneakyThrows
@@ -272,19 +296,6 @@ public class AstroCore extends JavaPlugin {
     }
 
 
-    public void commands() {
-        getCommand("bless").setExecutor(new Bless());
-        getCommand("dupe").setExecutor(new CommandDupe());
-        getCommand("heal").setExecutor(new HealCommand());
-        getCommand("discord").setExecutor(new DiscordCommand());
-        getCommand("pots").setExecutor(new PotionsCommand(this));
-        getCommand("broadcast").setExecutor(new Broadcast(this));
-        getCommand("invsee").setExecutor(new Invsee());
-        getCommand("givechunkbuster").setExecutor(new ChunkBuster(this));
-        getCommand("trash").setExecutor(new TrashCommand());
-        getCommand("lastmanstanding").setExecutor(new LastManStandingCommand());
-        getCommand("togglepay").setExecutor(new CommandTogglePay());
-    }
 
     public void events() {
         PluginManager pm = getServer().getPluginManager();
