@@ -1,5 +1,6 @@
 package com.compilex.CosmicKOTH.utils;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.bukkit.BukkitUtil;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
@@ -24,17 +25,32 @@ public class WorldGuardUtils
         WorldGuardUtils.wg = getWorldGuard();
     }
 
-    public static ProtectedRegion getRegionFromName(final String worldName, final String regionName) {
+    /*public static ProtectedRegion getRegionFromName(final String worldName, final String regionName) {
         if (WorldGuardUtils.wg == null) {
             hook();
         }
-        final World world = Bukkit.getWorld(worldName);
-        final RegionManager regionManager = WorldGuardUtils.wg.getRegionManager(world);
+        World world = Bukkit.getWorld(worldName);
+        RegionManager regionManager = wg.getGlobalRegionManager().get(world);
         if (regionManager != null) {
-            final ProtectedRegion region = regionManager.getRegion(regionName);
-            if (region != null) {
-                return region;
-            }
+            return regionManager.getRegion(regionName);
+        }
+        return null;
+    }*/
+
+    public static ProtectedRegion getRegionFromName(final String worldName, final String regionName) {
+        if (!Bukkit.getPluginManager().isPluginEnabled("WorldGuard")) {
+            hook();
+        }
+        World world = Bukkit.getWorld(worldName);
+        if (world == null) {
+            Bukkit.getConsoleSender().sendMessage(CC.Red + "[CosmicKOTH] ***** getRegionFromName (world) was null *****");
+            return null;
+        }
+        RegionManager rg = WorldGuardUtils.wg.getRegionManager(world);
+        if (rg != null) {
+            return rg.getRegion(regionName);
+        } else {
+            Bukkit.getConsoleSender().sendMessage(CC.Red + "[CosmicKOTH] ***** getRegionFromName (region manager) was null *****");
         }
         return null;
     }

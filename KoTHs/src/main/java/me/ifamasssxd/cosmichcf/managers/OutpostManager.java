@@ -41,39 +41,18 @@ package me.ifamasssxd.cosmichcf.managers;
 
 import com.compilex.CosmicKOTH.CosmicKOTHPlugin;
 import com.cosmicpvp.cosmicutils.CosmicUtils;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
-import com.cosmicpvp.cosmicutils.utils.FactionUtils;
-import com.cosmicpvp.cosmicutils.utils.LocationUtils;
-import com.cosmicpvp.cosmicutils.utils.NumberUtils;
-import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
-import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
+import com.cosmicpvp.cosmicutils.utils.*;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.P;
 import com.massivecraft.factions.integration.Econ;
 import com.massivecraft.factions.struct.FLogType;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TimeZone;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
-
 import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
 import me.ifamasssxd.cosmichcf.struct.HCFOutpost;
 import me.ifamasssxd.cosmichcf.struct.Outpost;
 import me.ifamasssxd.cosmichcf.struct.OutpostType;
 import org.apache.commons.lang.StringUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -84,11 +63,13 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class OutpostManager {
     int firstHour = 10;
@@ -491,7 +472,7 @@ public class OutpostManager {
                 }
             }.runTaskTimer(CosmicKOTHPlugin.get_(), 600L, 20L);
         }
-        Bukkit.getLogger().info("[CosmicHCFOutposts] Starting with spawn-type: " + spawnType + " isCosmicGalaxy: " + CosmicUtils.get().isCosmicGalaxy());
+        Bukkit.getLogger().info("[CosmicHCFOutposts] Starting with spawn-type: " + spawnType);
     }
 
     private Set<Player> getPlayersInside(Map<Player, Set<String>> regions, String region) {
