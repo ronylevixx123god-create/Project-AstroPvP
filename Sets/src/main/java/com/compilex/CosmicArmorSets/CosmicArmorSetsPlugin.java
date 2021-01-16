@@ -1,16 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems
- *  me.ifamasssxd.cosmicskycustoms.struct.CosmicItem
- *  org.bukkit.Bukkit
- *  org.bukkit.command.CommandExecutor
- *  org.bukkit.entity.Player
- *  org.bukkit.event.Listener
- *  org.bukkit.plugin.Plugin
- *  org.bukkit.plugin.java.JavaPlugin
- */
 package com.compilex.CosmicArmorSets;
 
 import com.compilex.CosmicArmorSets.cmds.CommandArmorSet;
