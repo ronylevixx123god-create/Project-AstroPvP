@@ -78,7 +78,7 @@ public class WorldGuardUtils {
             }
             LinkedList<Map.Entry<String, Integer>> retr = (regionsInside != null) ? new LinkedList<>(regionsInside.entrySet()) : null;
             if (retr != null)
-                retr.sort(Comparator.comparing(Map.Entry::getValue));
+                retr.sort(Map.Entry.comparingByValue());
             LinkedList<String> sorted = (retr != null) ? new LinkedList<>() : null;
             if (sorted != null && sorted != null) {
                 retr.forEach(ent -> sorted.add(ent.getKey()));

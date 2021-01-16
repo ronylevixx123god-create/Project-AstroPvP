@@ -1,7 +1,7 @@
 name: CosmicSpaceChests
 main: com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsPlugin
 version: 1.0
-softdepend: [Factions,EnchantmentAPI,Enchantments,WorldGuard,WorldEdit,Lily-Connect,CompilexPermissions,CosmicRankQuests]
+softdepend: [Factions,EnchantmentAPI,Enchantments,WorldGuard,WorldEdit,CompilexPermissions]
 commands:
   fdp:
     description: Root command.

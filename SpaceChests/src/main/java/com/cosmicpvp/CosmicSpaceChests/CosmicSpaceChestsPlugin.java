@@ -1,18 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.sk89q.worldguard.bukkit.WorldGuardPlugin
- *  lilypad.client.connect.api.Connect
- *  org.bukkit.Bukkit
- *  org.bukkit.Location
- *  org.bukkit.Material
- *  org.bukkit.block.Chest
- *  org.bukkit.command.CommandExecutor
- *  org.bukkit.event.Listener
- *  org.bukkit.plugin.Plugin
- *  org.bukkit.plugin.java.JavaPlugin
- */
 package com.cosmicpvp.CosmicSpaceChests;
 
 import com.cosmicpvp.CosmicSpaceChests.cmds.CommandFDP;
@@ -36,7 +21,6 @@ import com.cosmicpvp.CosmicSpaceChests.tasks.holiday.Christmas2018Task;
 import com.cosmicpvp.CosmicSpaceChests.tasks.holiday.Halloween2018Task;
 import com.cosmicpvp.CosmicSpaceChests.utils.ChestMap;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
-import lilypad.client.connect.api.Connect;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -51,7 +35,6 @@ extends JavaPlugin {
     public static Logger log = new Logger();
     public static ChestMap chest_locations = new ChestMap();
     public static WorldGuardPlugin wg = null;
-    public static Connect lilyConnect = null;
     public static String serverName = "";
     public static CosmicSpaceChestsPlugin plugin = null;
     public static boolean worldEventsEnabled = false;
@@ -63,25 +46,12 @@ extends JavaPlugin {
         plugin = this;
         this.saveDefaultConfig();
         wg = this.getWorldGuard();
-        if (Bukkit.getPluginManager().isPluginEnabled("LilyPad-Connect")) {
-            lilyConnect = Bukkit.getServer().getServicesManager().getRegistration(Connect.class).getProvider();
-            serverName = lilyConnect.getSettings().getUsername();
-            if (serverName.equals("forgottenplanet")) {
-                serverName = "ancientplanet";
-            }
-        } else {
-            serverName = "";
-        }
         RankItems.findDonorRanks();
-        Bukkit.getScheduler().runTaskLater(this, new Runnable(){
-
-            @Override
-            public void run() {
-                LootGenerator.generateLootTables();
-                CosmicSpaceChestsPlugin.this.registerListeners();
-                CosmicSpaceChestsPlugin.this.registerTasks();
-                CosmicSpaceChestsPlugin.this.registerCommands();
-            }
+        Bukkit.getScheduler().runTaskLater(this, () -> {
+            LootGenerator.generateLootTables();
+            CosmicSpaceChestsPlugin.this.registerListeners();
+            CosmicSpaceChestsPlugin.this.registerTasks();
+            CosmicSpaceChestsPlugin.this.registerCommands();
         }, 40L);
         this.registerHolidayListeners();
         this.registerHolidayTasks();

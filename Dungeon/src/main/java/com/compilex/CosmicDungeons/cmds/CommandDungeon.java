@@ -40,12 +40,12 @@ implements CommandExecutor {
             String dungeon = args[2];
             Dungeon d = DungeonsAPI.get().getDungeonByWorldName(dungeon);
             if (d == null) {
-                sender.sendMessage((Object)ChatColor.RED + "Dungeon '" + dungeon + "' could not be found.");
-                sender.sendMessage((Object)ChatColor.GRAY + "valid: " + DungeonsAPI.get().getDungeons());
+                sender.sendMessage(ChatColor.RED + "Dungeon '" + dungeon + "' could not be found.");
+                sender.sendMessage(ChatColor.GRAY + "valid: " + DungeonsAPI.get().getDungeons());
                 return true;
             }
-            Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)("pex user " + pName + " add " + d.getPermissionNode()));
-            sender.sendMessage((Object)ChatColor.YELLOW + "* Added permission node " + d.getPermissionNode() + " to " + pName + "!");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + pName + " add " + d.getPermissionNode());
+            sender.sendMessage(ChatColor.YELLOW + "* Added permission node " + d.getPermissionNode() + " to " + pName + "!");
         }
         return true;
     }

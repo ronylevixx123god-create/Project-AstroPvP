@@ -14,7 +14,6 @@ import com.cosmicpvp.cosmicutils.itembuilder.AbilityArmorSetItemBuilder;
 import com.cosmicpvp.cosmicutils.itembuilder.CustomItemBuilder;
 import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.itembuilder.KitGemBuilder;
-import com.cosmicpvp.cosmicutils.struct.factions.points.FactionPointUtils;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.JSONMessage;
 import com.cosmicpvp.cosmicutils.utils.NBTTagCompoundBuilder;
@@ -113,9 +112,10 @@ implements Listener {
                 heroicBonusItem = potentialLoot2.get(ThreadLocalRandom.current().nextInt(potentialLoot2.size()));
                 loot.add(heroicBonusItem);
             }
-            if ((pointNote = FactionPointUtils.getFactionPointsItem((Faction)null, (Player)null, "lootbag", (bagType))) != null) {
-                loot.add(pointNote);
-            }
+            // todo: faction points
+//            if ((pointNote = FactionPointUtils.getFactionPointsItem((Faction)null, (Player)null, "lootbag", (bagType))) != null) {
+//                loot.add(pointNote);
+//            }
             if (loot.size() > 0) {
                 for (int ind = 0; ind < loot.size(); ++ind) {
                     ItemStack i = loot.get(ind);
@@ -210,9 +210,10 @@ implements Listener {
             if (Math.random() <= 0.05) {
                 loot.add(CosmicArmorSetsAPI.createHeroicWeapon(((Random)random).nextBoolean() ? HeroicWeaponType.SWORD : HeroicWeaponType.AXE));
             }
-            if (Math.random() <= 0.05) {
-                loot.add(CosmicDisguiseAPI.createRedeemableDisguise("CHICKEN"));
-            }
+            // todo: some disguise shit on compile
+//            if (Math.random() <= 0.05) {
+//                loot.add(CosmicDisguiseAPI.createRedeemableDisguise("CHICKEN"));
+//            }
             if (ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin().isRunning() && Math.random() <= 0.25) {
                 loot.add(((EquipmentLootboxes)ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin()).createHeroicGKitGenerator(true));
             }

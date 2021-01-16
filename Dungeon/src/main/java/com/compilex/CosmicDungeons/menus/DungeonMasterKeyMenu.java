@@ -26,7 +26,6 @@ import com.compilex.CosmicDungeons.dungeons.libs.DungeonType;
 import com.compilex.CosmicDungeons.items.DungeonKeyItem;
 import com.cosmicpvp.cosmicutils.gui.CosmicGUI;
 import com.cosmicpvp.cosmicutils.gui.InventoryItem;
-import com.cosmicpvp.cosmicutils.struct.factions.points.FactionPointUtils;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
@@ -55,7 +54,8 @@ extends CosmicGUI {
 
     public static String getResetString(DungeonType type) {
         boolean notAvailable;
-        long timeSinceStart = FactionPointUtils.getStartOfTheMapEpoch();
+       // long timeSinceStart = FactionPointUtils.getStartOfTheMapEpoch();
+        long timeSinceStart = 1;
         long timeIsUnlocked = timeSinceStart + type.getDungeonStartOffset();
         boolean bl = notAvailable = timeIsUnlocked > System.currentTimeMillis() && timeSinceStart > 0L;
         if (notAvailable) {
