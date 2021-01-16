@@ -1,16 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.server.v1_7_R4.Entity
- *  net.minecraft.server.v1_7_R4.EntityInsentient
- *  net.minecraft.server.v1_7_R4.EntityLiving
- *  net.minecraft.server.v1_7_R4.IRangedEntity
- *  net.minecraft.server.v1_7_R4.MathHelper
- *  net.minecraft.server.v1_7_R4.PathfinderGoalArrowAttack
- *  org.bukkit.craftbukkit.v1_7_R4.event.CraftEventFactory
- *  org.bukkit.event.entity.EntityTargetEvent$TargetReason
- */
 package me.ifamasssxd.cosmicbosses.bosses.skeletonhorse;
 
 import net.minecraft.server.v1_8_R3.Entity;
@@ -76,7 +63,7 @@ extends PathfinderGoalArrowAttack {
         boolean flag = this.a.getEntitySenses().canSee((Entity)this.c);
         this.f = flag ? ++this.f : 0;
         if (d0 <= (double)this.j && this.f >= 20) {
-            this.a.getNavigation().h();
+            this.a.getNavigation().a();
         } else {
             this.a.getNavigation().a((Entity)this.c, this.e);
         }

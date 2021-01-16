@@ -70,7 +70,7 @@ implements IRangedEntity {
     private String lastTargetName = "";
 
     protected void c() {
-        super.c();
+        super.h();
         this.datawatcher.a(17, 0);
         this.datawatcher.a(18, 0);
         this.datawatcher.a(19, 0);
@@ -112,12 +112,12 @@ implements IRangedEntity {
         this.a(0.9f, 4.0f);
         this.fireProof = true;
         this.getNavigation().e(true);
-        this.goalSelector.a(0, (PathfinderGoal)new PathfinderGoalFloat((EntityInsentient)this));
-        this.goalSelector.a(6, (PathfinderGoal)new PathfinderGoalLookAtPlayer((EntityInsentient)this, EntityHuman.class, 8.0f));
-        this.goalSelector.a(7, (PathfinderGoal)new PathfinderGoalRandomLookaround((EntityInsentient)this));
-        this.targetSelector.a(1, (PathfinderGoal)new PathfinderGoalHurtByTarget((EntityCreature)this, false));
-        this.targetSelector.a(2, (PathfinderGoal)new PathfinderGoalNearestAttackableTarget((EntityCreature)this, EntityHuman.class, 0, false, false, this.bw));
-        this.b = 50;
+        this.goalSelector.a(0, new PathfinderGoalFloat(this));
+        this.goalSelector.a(6, new PathfinderGoalLookAtPlayer(this, EntityHuman.class, 8.0f));
+        this.goalSelector.a(7, new PathfinderGoalRandomLookaround(this));
+        this.targetSelector.a(1, new PathfinderGoalHurtByTarget(this, false));
+        this.targetSelector.a(2, new PathfinderGoalNearestAttackableTarget((EntityCreature)this, EntityHuman.class, 0, false, false, this.bw));
+        this.b_ = 50;
         this.as = EnumEntitySize.SIZE_6;
     }
 
@@ -153,7 +153,7 @@ implements IRangedEntity {
         }
         double motionMultiplier = 0.6f;
         this.motY *= motionMultiplier;
-        if (!this.world.isStatic && this.t(0) > 0 && (entity = this.world.getEntity(this.t(0))) != null) {
+        if (!this.world.isClientSide && this.t(0) > 0 && (entity = this.world.getEntity(this.t(0))) != null) {
             double height = 7.0;
             if (this.boss != null) {
                 double d = height = this.boss.getPhase() == Phase.TWO ? 7.0 : 3.0;
@@ -260,7 +260,7 @@ implements IRangedEntity {
         } else {
             int target;
             int witherTargetId;
-            super.bn();
+            super.doTick();
             for (witherTargetId = 1; witherTargetId < 3; ++witherTargetId) {
                 if (this.ticksLived < this.nextShot[witherTargetId - 1]) continue;
                 this.nextShot[witherTargetId - 1] = this.ticksLived + 10 + this.random.nextInt(10);
@@ -456,8 +456,8 @@ implements IRangedEntity {
     protected void aD() {
         super.aD();
         this.getAttributeInstance(GenericAttributes.maxHealth).setValue(300.0);
-        this.getAttributeInstance(GenericAttributes.d).setValue((double)0.6f);
-        this.getAttributeInstance(GenericAttributes.b).setValue(40.0);
+        this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue((double)0.6f);
+        this.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(40.0);
     }
 
     public int ca() {

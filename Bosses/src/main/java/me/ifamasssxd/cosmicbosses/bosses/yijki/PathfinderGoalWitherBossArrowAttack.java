@@ -40,7 +40,7 @@ extends PathfinderGoalBossArrowAttack {
         boolean flag = this.a.getEntitySenses().canSee((Entity)this.c);
         this.f = flag ? ++this.f : 0;
         if (d0 <= (double)this.j && this.f >= 20) {
-            this.a.getNavigation().h();
+            this.a.getNavigation().b();
         } else {
             this.a.getNavigation().a(this.c, this.e);
         }
