@@ -36,16 +36,15 @@ import com.cosmicpvp.CosmicSpaceChests.tasks.holiday.Christmas2018Task;
 import com.cosmicpvp.CosmicSpaceChests.tasks.holiday.Halloween2018Task;
 import com.cosmicpvp.CosmicSpaceChests.utils.ChestMap;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
-import java.io.File;
 import lilypad.client.connect.api.Connect;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
 
 public class CosmicSpaceChestsPlugin
 extends JavaPlugin {
@@ -65,7 +64,7 @@ extends JavaPlugin {
         this.saveDefaultConfig();
         wg = this.getWorldGuard();
         if (Bukkit.getPluginManager().isPluginEnabled("LilyPad-Connect")) {
-            lilyConnect = (Connect)Bukkit.getServer().getServicesManager().getRegistration(Connect.class).getProvider();
+            lilyConnect = Bukkit.getServer().getServicesManager().getRegistration(Connect.class).getProvider();
             serverName = lilyConnect.getSettings().getUsername();
             if (serverName.equals("forgottenplanet")) {
                 serverName = "ancientplanet";
@@ -74,7 +73,7 @@ extends JavaPlugin {
             serverName = "";
         }
         RankItems.findDonorRanks();
-        Bukkit.getScheduler().runTaskLater((Plugin)this, new Runnable(){
+        Bukkit.getScheduler().runTaskLater(this, new Runnable(){
 
             @Override
             public void run() {
@@ -94,35 +93,35 @@ extends JavaPlugin {
     }
 
     private void registerListeners() {
-        this.getServer().getPluginManager().registerEvents((Listener)new PlayerInteractChestListener(this), (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)new ChestLootSelectorListener(), (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)new EnvoySummonItemListener(), (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)new TitleItemListener(), (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)new RankItemListener(), (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)new KitItemListener(), (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)new EvolutionKitItemListener(), (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)new SpaceFlareListener(), (Plugin)this);
+        this.getServer().getPluginManager().registerEvents(new PlayerInteractChestListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new ChestLootSelectorListener(), this);
+        this.getServer().getPluginManager().registerEvents(new EnvoySummonItemListener(), this);
+        this.getServer().getPluginManager().registerEvents(new TitleItemListener(), this);
+        this.getServer().getPluginManager().registerEvents(new RankItemListener(), this);
+        this.getServer().getPluginManager().registerEvents(new KitItemListener(), this);
+        this.getServer().getPluginManager().registerEvents(new EvolutionKitItemListener(), this);
+        this.getServer().getPluginManager().registerEvents(new SpaceFlareListener(), this);
     }
 
     private void registerCommands() {
-        this.getCommand("fdp").setExecutor((CommandExecutor)new CommandFDP());
-        this.getCommand("givedp").setExecutor((CommandExecutor)new CommandGiveDp());
-        this.getCommand("flare").setExecutor((CommandExecutor)new CommandFlare());
+        this.getCommand("fdp").setExecutor(new CommandFDP());
+        this.getCommand("givedp").setExecutor(new CommandGiveDp());
+        this.getCommand("flare").setExecutor(new CommandFlare());
     }
 
     private void registerTasks() {
         if (this.getConfig().getBoolean("cosmic_envoy.enabled")) {
-            this.getServer().getScheduler().runTaskTimer((Plugin)this, (Runnable)new CosmicEnvoyTask(this), (long)this.getConfig().getInt("cosmic_envoy.min_delay") * 1200L, (long)this.getConfig().getInt("cosmic_envoy.min_delay") * 1200L);
+            this.getServer().getScheduler().runTaskTimer(this, new CosmicEnvoyTask(this), (long)this.getConfig().getInt("cosmic_envoy.min_delay") * 1200L, (long)this.getConfig().getInt("cosmic_envoy.min_delay") * 1200L);
             if (this.getServer().getPluginManager().isPluginEnabled("Arkkit")) {
-                this.getServer().getScheduler().runTaskTimer((Plugin)this, (Runnable)new CosmicEnvoyPingerTask(this), 300L, 300L);
+                this.getServer().getScheduler().runTaskTimer(this, new CosmicEnvoyPingerTask(this), 300L, 300L);
             } else {
-                log.error("Failed to launch DropPackagePingerTask() due to no ChunkGC plugin detected.", ((Object)((Object)this)).getClass());
+                log.error("Failed to launch DropPackagePingerTask() due to no ChunkGC plugin detected.", ((Object) this).getClass());
             }
-            this.getServer().getScheduler().runTaskTimerAsynchronously((Plugin)this, (Runnable)new CosmicEnvoyChestPrunerTask(this), 300L, 300L);
+            this.getServer().getScheduler().runTaskTimerAsynchronously(this, new CosmicEnvoyChestPrunerTask(this), 300L, 300L);
             hologramTask = new HologramUpdateTask();
-            hologramTask.runTaskTimer((Plugin)this, 200L, 200L);
+            hologramTask.runTaskTimer(this, 200L, 200L);
         } else {
-            log.debug("Cosmic Envoys are DISABLED!", ((Object)((Object)this)).getClass());
+            log.debug("Cosmic Envoys are DISABLED!", ((Object) this).getClass());
         }
     }
 
@@ -154,7 +153,7 @@ extends JavaPlugin {
 
     private void registerHolidayTasks() {
         if (!this.getServer().getPluginManager().isPluginEnabled("Arkkit")) {
-            log.error("Failed to launch DropPackagePingerTask() due to no ChunkGC plugin detected.", ((Object)((Object)this)).getClass());
+            log.error("Failed to launch DropPackagePingerTask() due to no ChunkGC plugin detected.", ((Object) this).getClass());
         }
     }
 

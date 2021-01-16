@@ -9,13 +9,13 @@
  */
 package com.cosmicpvp.titles.cmds;
 
-import java.util.UUID;
-
 import net.astropvp.core.AstroCore;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+
+import java.util.UUID;
 
 public class CommandTitleSet
 implements CommandExecutor {
@@ -27,12 +27,12 @@ implements CommandExecutor {
             sender.sendMessage("Incorrect usage. Correct usage: /titleset <player> <title>");
             return true;
         }
-        if (Bukkit.getPlayer((String)args[1]) == null) {
+        if (Bukkit.getPlayer(args[0]) == null) {
             sender.sendMessage("Player must be online in order to perform this command on them.");
             return true;
         }
-        UUID uuid = Bukkit.getPlayer((String)args[1]).getUniqueId();
-        String t = args[3];
+        UUID uuid = Bukkit.getPlayer(args[0]).getUniqueId();
+        String t = args[1];
         AstroCore.getInstance().getDataManager().setEquippedTitle(uuid, t);
         return true;
     }
