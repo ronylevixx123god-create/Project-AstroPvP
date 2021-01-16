@@ -77,10 +77,7 @@ public class CosmicGlobalKits extends JavaPlugin {
 
         this.kitManager = new EvolutionKitManager();
         this.kitManager.startInventoryUpdater();
-        if (this.serverName.equalsIgnoreCase("ancientplanet")) {
-            this.serverName = "forgottenplanet";
-        }
-        this.sqlDatabase = new Database("sqlconfig.yml");
+        this.sqlDatabase = new Database("sqlconfig_evokits.yml");
         if (!this.sqlDatabase.isConnected()) {
             Bukkit.getLogger().severe("Unable to connect to sql database! Please ensure the sql credentials are correct");
             Bukkit.getPluginManager().disablePlugin(this);
