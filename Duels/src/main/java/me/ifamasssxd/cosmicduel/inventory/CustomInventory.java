@@ -103,7 +103,7 @@ public abstract class CustomInventory {
     public CustomInventoryItem insertItem(int slot, CustomInventoryItem item, boolean update) {
         CustomInventoryItem ts = this.inventoryItems.put(slot, item);
         if (update) {
-            this.inventoryChest.setItem(slot, (ItemStack)item);
+            this.inventoryChest.setItem(slot, item);
         }
         return ts;
     }

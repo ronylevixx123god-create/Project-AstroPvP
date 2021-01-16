@@ -187,7 +187,7 @@
             <artifactId>disguiseLib</artifactId>
             <version>0.1</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/LibsDisguises (1).jar</systemPath>
+            <systemPath>${project.basedir}/lib/LibsDisguises_8.6.7.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>

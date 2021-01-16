@@ -109,7 +109,7 @@ implements CommandExecutor {
                 }
                 Player player = pl = given != null ? Bukkit.getPlayer((UUID)given) : Bukkit.getPlayer((String)name);
                 if (pl == null && given == null) {
-                    sender.sendMessage((Object)ChatColor.RED + "That is not a valid online player!");
+                    sender.sendMessage(ChatColor.RED + "That is not a valid online player!");
                     return true;
                 }
                 ContestUser user = ContestUser.getUser(given != null ? given : pl.getUniqueId());

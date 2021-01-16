@@ -1,7 +1,7 @@
 main: me.ifamasssxd.cosmicduel.CosmicDuel
 version: 1.0
 name: CosmicDuel
-softdepend: [Arkkit, NetworkManager]
+softdepend: [Arkkit]
 commands:
   duel:
     description: Main duel command.

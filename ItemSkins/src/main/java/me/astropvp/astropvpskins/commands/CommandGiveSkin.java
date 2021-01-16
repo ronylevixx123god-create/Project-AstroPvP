@@ -22,7 +22,7 @@
 /* 22 */     if (args.length < 3) {
 /* 23 */       sender.sendMessage("/giveskin <type of skin> <amount> <player>"); byte b; int i; SkinType[] arrayOfSkinType;
 /* 24 */       for (i = (arrayOfSkinType = SkinType.values()).length, b = 0; b < i; ) { SkinType skinType1 = arrayOfSkinType[b];
-/* 25 */         sender.sendMessage(String.valueOf(skinType1.name()) + CC.WhiteB + " - " + skinType1.getDisplayName()); b++; }
+/* 25 */         sender.sendMessage(skinType1.name() + CC.WhiteB + " - " + skinType1.getDisplayName()); b++; }
 /*    */       
 /* 27 */       return false;
 /*    */     } 
@@ -41,9 +41,3 @@
 /* 41 */     return false;
 /*    */   }
 /*    */ }
-
-
-/* Location:              C:\Users\bryan\Downloads\GalacticItemSkins.jar!\me\galacticpvp\galacticitemskins\commands\CommandGiveSkin.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

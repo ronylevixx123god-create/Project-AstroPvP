@@ -1,23 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.gmail.nossr50.api.PartyAPI
- *  com.google.common.collect.Lists
- *  me.ifamasssxd.factionupgrades.utils.ItemBuilder
- *  me.vaqxine.NetworkManager.NetworkManager
- *  org.apache.commons.lang.StringUtils
- *  org.arkhamnetwork.Arkkit.commands.CommandArkReboot
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.Material
- *  org.bukkit.Sound
- *  org.bukkit.entity.Player
- *  org.bukkit.inventory.Inventory
- *  org.bukkit.inventory.InventoryHolder
- *  org.bukkit.plugin.Plugin
- */
 package me.ifamasssxd.cosmicduel;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
@@ -57,7 +37,6 @@ public class DuelAPI {
     public static List<DuelInvite> invite_timer = new ArrayList<DuelInvite>();
     private static final ConcurrentHashMap<Arena, LinkedList<NewDuel>> duel_queue = new ConcurrentHashMap();
     private static final String red = ChatColor.RED + ChatColor.BOLD.toString() + "(!) ";
-    private static Boolean networkManager = null;
     private static Boolean arkkit = null;
     private static final QueueManager queueManager = CosmicDuel.get().getQueueManager();
 
@@ -98,13 +77,10 @@ public class DuelAPI {
     }
 
     public static boolean isRebooting() {
-        if (networkManager == null) {
-            networkManager = Bukkit.getPluginManager().isPluginEnabled("NetworkManager");
-        }
         if (arkkit == null) {
             arkkit = Bukkit.getPluginManager().isPluginEnabled("Arkkit");
         }
-        return arkkit != false && CommandArkReboot.restart_task_exists || networkManager != false;
+        return arkkit != false && CommandArkReboot.restart_task_exists;
     }
 
     public static void sendSettings(Player p, String p_name) {
