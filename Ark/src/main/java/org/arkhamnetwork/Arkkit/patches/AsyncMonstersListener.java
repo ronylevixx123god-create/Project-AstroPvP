@@ -22,7 +22,6 @@ import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 final class AsyncMonstersListener
@@ -35,11 +34,10 @@ final class AsyncMonstersListener
             this.put(Material.EMERALD, Material.EMERALD_BLOCK);
         }
     };
-    public Set<Entity> deadEntitySet = (Set<Entity>) CacheBuilder.newBuilder()
+    public CacheBuilder<Object, Object> deadEntitySet = CacheBuilder.newBuilder()
             .expireAfterWrite(25L, TimeUnit.SECONDS)
             .concurrencyLevel(16)
-            .weakKeys()
-            .build();
+            .weakKeys();
     AsyncMonsters instance;
     private boolean stackIG = true;
     //public Set<Entity> deadEntitySet = Collections.newSetFromMap(CacheBuilder.newBuilder().expireAfterWrite(25L, TimeUnit.SECONDS).concurrencyLevel(16).weakKeys().build());
@@ -111,7 +109,7 @@ final class AsyncMonstersListener
             }
             for (Entity e2 : e1.getNearbyEntities(xz_scan, y_scan, xz_scan)) {
                 ItemStack boot;
-                if (e1.getType() != e2.getType() || !e2.hasMetadata("fromMobSpawner") || this.deadEntitySet.contains(e2) || (boot = ((LivingEntity) e2).getEquipment().getBoots()) != null && boot.getType() != Material.AIR || e2.getVehicle() != null)
+                if (e1.getType() != e2.getType() || !e2.hasMetadata("fromMobSpawner") || this.deadEntitySet.build().asMap().containsKey(e2) || (boot = ((LivingEntity) e2).getEquipment().getBoots()) != null && boot.getType() != Material.AIR || e2.getVehicle() != null)
                     continue;
                 if ((e1 instanceof Creeper || e1 instanceof Enderman) && e2.isOnGround()) {
                     e2.setLastDamageCause(new EntityDamageEvent(e2, EntityDamageEvent.DamageCause.FALL, 999999));
@@ -131,10 +129,10 @@ final class AsyncMonstersListener
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onEntityDeathHIGHEST(EntityDeathEvent e) {
-        if (this.deadEntitySet.contains(e.getEntity())) {
+        if (this.deadEntitySet.build().asMap().containsKey(e.getEntity())) {
             return;
         }
-        this.deadEntitySet.add(e.getEntity());
+        this.deadEntitySet.build().asMap().put(e.getEntity(), e.getEntity());
         if (e.getEntity().getWorld().getName().equals("dungeon_destroyed_outpost")) {
             return;
         }
