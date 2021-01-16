@@ -89,7 +89,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class EquipmentLootboxes
         extends ArkPlugin {
     private final ItemStack lootboxItem = new ItemBuilder(Material.CHEST, CC.GoldB + "Equipment Lootbox " + CC.Gray + "(Right Click)", "", CC.GrayU + "Right-click" + CC.Gray + " to receive a random", CC.Gray + "item from one of these armor sets!", "", CC.GoldB + "Available Armor Sets", CC.GoldB + " * " + CC.RedB + "Phantom Armor Set", CC.GoldB + " * " + CC.AquaB + "Yeti Armor Set", CC.GoldB + " * " + CC.WhiteB + "Mother Of Yijki Armor Set", CC.GoldB + " * " + CC.GreenB + "Ranger Armor Set", CC.GoldB + " * " + CC.DarkRedB + "Supreme Armor Set", CC.GoldB + " * " + CC.DarkPurpleB + "Dimensional Traveler Armor Set").build();
-    private final ItemStack heroicLootboxItem = new NBTWrapper(new ItemBuilder(Material.CHEST, CC.GoldB + "Heroic Equipment Lootbox " + CC.Gray + "(Right Click)", "", CC.GrayU + "Right-click" + CC.Gray + " to receive a random", CC.Gray + "heroic armor piece from", CC.Gray + "one of these armor sets!", "", CC.GoldB + "Available Armor Sets", CC.GoldB + " * " + CC.RedB + "Phantom Armor Set", CC.GoldB + " * " + CC.AquaB + "Yeti Armor Set", CC.GoldB + " * " + CC.WhiteB + "Mother Of Yijki Armor Set", CC.GoldB + " * " + CC.GreenB + "Ranger Armor Set", CC.GoldB + " * " + CC.DarkRedB + "Supreme Armor Set", CC.GoldB + " * " + CC.DarkPurpleB + "Dimensional Traveler Armor Set").build()).setString("cosmicType", "heroicLootbox").build();
+    private final ItemStack heroicLootboxItem = new NBTWrapper(new ItemBuilder(Material.CHEST, CC.GoldB + "Heroic Equipment Lootbox " + CC.Gray + "(Right Click)", "", CC.GrayU + "Right-click" + CC.Gray + " to receive a random", CC.Gray + "heroic armor piece from", CC.Gray + "one of these armor sets!", "", CC.GoldB + "Available Armor Sets", CC.GoldB + " * " + CC.RedB + "Phantom Armor Set", CC.GoldB + " * " + CC.AquaB + "Yeti Armor Set", CC.GoldB + " * " + CC.WhiteB + "Mother Of Yijki Armor Set", CC.GoldB + " * " + CC.GreenB + "Ranger Armor Set", CC.GoldB + " * " + CC.DarkRedB + "Supreme Armor Set", CC.GoldB + " * " + CC.DarkPurpleB + "Dimensional Traveler Armor Set").build()).setString("conaxData", "heroicLootbox").build();
 
     public EquipmentLootboxes(Plugin p) {
         super(p);
@@ -108,7 +108,7 @@ public class EquipmentLootboxes
         if (applyIID && ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
             retr = ItemID.assignItemID(null, retr);
         }
-        return new NBTWrapper(retr).setString("cosmicType", "GKIT_GENERATOR").build();
+        return new NBTWrapper(retr).setString("conaxData", "GKIT_GENERATOR").build();
     }
 
     public ItemStack createMKitGenerator(boolean applyIID) {
@@ -116,7 +116,7 @@ public class EquipmentLootboxes
         if (applyIID && ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
             retr = ItemID.assignItemID(null, retr);
         }
-        return new NBTWrapper(retr).setString("cosmicType", "MKIT_GENERATOR").build();
+        return new NBTWrapper(retr).setString("conaxData", "MKIT_GENERATOR").build();
     }
 
     @Override
@@ -316,8 +316,8 @@ public class EquipmentLootboxes
                 boolean gkitGenerator = false;
                 boolean heroicLootbox = false;
                 boolean mkitGenerator = false;
-                gkitGenerator = item.getType() == Material.CHEST && isWrapper.getString("cosmicType").equals("GKIT_GENERATOR");
-                if (gkitGenerator || (heroicLootbox = isWrapper.getString("cosmicType").equals("heroicLootbox")) || (mkitGenerator = isWrapper.getString("cosmicType").equals("MKIT_GENERATOR")) || item.getItemMeta().getDisplayName().equals(EquipmentLootboxes.this.lootboxItem.getItemMeta().getDisplayName()) && ItemUtils.isLoreSameWithoutIID(EquipmentLootboxes.this.lootboxItem.getItemMeta().getLore(), item.getItemMeta().getLore())) {
+                gkitGenerator = item.getType() == Material.CHEST && isWrapper.getString("conaxData").equals("GKIT_GENERATOR");
+                if (gkitGenerator || (heroicLootbox = isWrapper.getString("conaxData").equals("heroicLootbox")) || (mkitGenerator = isWrapper.getString("conaxData").equals("MKIT_GENERATOR")) || item.getItemMeta().getDisplayName().equals(EquipmentLootboxes.this.lootboxItem.getItemMeta().getDisplayName()) && ItemUtils.isLoreSameWithoutIID(EquipmentLootboxes.this.lootboxItem.getItemMeta().getLore(), item.getItemMeta().getLore())) {
                     event.setCancelled(true);
                     event.setUseItemInHand(Event.Result.DENY);
                     if (player.getWorld().getName().startsWith("world_duels")) {
@@ -360,7 +360,7 @@ public class EquipmentLootboxes
                             if (type != null) {
                                 retr.setType(type.getMaterial());
                                 NBTWrapper wrapper = new NBTWrapper(retr);
-                                wrapper.setString("cosmicType", "HEROIC_ARMOR");
+                                wrapper.setString("conaxData", "HEROIC_ARMOR");
                                 wrapper.setNBTBase("conaxData", new NBTTagCompoundBuilder().setInt("durability", Integer.valueOf(type.getDurability())).setInt("maxDurability", Integer.valueOf(type.getDurability())).setInt("armorModifier", Integer.valueOf(type.getArmorModifier())).get());
                                 retr = wrapper.build();
                                 LeatherArmorMeta im = (LeatherArmorMeta) retr.getItemMeta();

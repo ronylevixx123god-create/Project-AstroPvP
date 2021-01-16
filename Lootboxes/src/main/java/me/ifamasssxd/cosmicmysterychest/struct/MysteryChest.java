@@ -104,7 +104,7 @@ public class MysteryChest {
     public ItemStack createClaimableItem(boolean iid, Long expiration) {
         ItemStack hand = this.handDisplay.clone();
         ItemMeta im = hand.getItemMeta();
-        List lore = im.getLore();
+        List<String> lore = im.getLore();
         if (lore == null) {
             lore = Lists.newArrayList();
         }

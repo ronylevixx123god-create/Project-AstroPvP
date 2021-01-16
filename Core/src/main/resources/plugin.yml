@@ -13,8 +13,6 @@ commands:
     aliases: ['discord']
   pots:
     aliases: ['pot']
-  broadcast:
-    aliases: ['bc']
   invsee:
     aliases: ['inventorysee']
   givechunkbuster:

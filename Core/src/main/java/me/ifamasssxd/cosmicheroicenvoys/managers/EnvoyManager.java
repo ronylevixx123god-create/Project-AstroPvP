@@ -100,14 +100,14 @@ public class EnvoyManager {
         this.task = new BukkitRunnable(){
 
             public void run() {
-                if (EnvoyManager.this.spawnTimer == 300 || EnvoyManager.this.spawnTimer == 60 && EnvoyManager.this.getBossLocation() == null) {
-                    Bukkit.getLogger().info("********************************************************************");
-                    Bukkit.getLogger().info("No valid heroic envoy boss location was found.");
-                    Bukkit.getLogger().info("(You are being told this because the timer is on 5 or 1 minute remaining.)");
-                    Bukkit.getLogger().info("********************************************************************");
-                    return;
-                }
                 if (EnvoyManager.this.spawnTimer <= 0) {
+                    if (EnvoyManager.this.getBossLocation() == null) {
+                        Bukkit.getConsoleSender().sendMessage("****************************************");
+                        Bukkit.getConsoleSender().sendMessage("Heroic Envoy Boss location was null.");
+                        Bukkit.getConsoleSender().sendMessage("The boss task has not ran.");
+                        Bukkit.getConsoleSender().sendMessage("****************************************");
+                        return;
+                    }
                     this.cancel();
                     if (EnvoyManager.this.bossUUID != null && MiscUtils.getEntity(EnvoyManager.this.bossUUID, EnvoyManager.this.bossLocation.getWorld()) != null) {
                         EnvoyManager.this.startEnvoyTimer();

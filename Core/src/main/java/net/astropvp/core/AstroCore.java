@@ -68,12 +68,16 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.World;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandMap;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.lang.reflect.Field;
+import java.util.Collections;
 import java.util.HashMap;
 
 @Getter @Setter
@@ -81,6 +85,7 @@ public class AstroCore extends JavaPlugin {
 
     private static AstroCore instance;
     private static Economy econ = null;
+    private static Field bukkitCommand;
     private final String consolePrefix = "[AstroCore]";
     public static AstroCore getInstance() {
         return instance;
@@ -179,6 +184,7 @@ public class AstroCore extends JavaPlugin {
         this.getCommand("coinflip").setExecutor(new CommandCoinFlip());
         this.getServer().getPluginManager().registerEvents(new InventoryListener(), this);
         this.getServer().getPluginManager().registerEvents(new me.ifamasssxd.cosmiccoinflip.listeners.PlayerListener(), this);
+
         this.coinFlipManager = new CoinFlipManager();
         this.coinFlipManager.loadCoinFlips();
         this.coinFlipManager.loadToggles();
@@ -202,8 +208,6 @@ public class AstroCore extends JavaPlugin {
         this.getCommand("toggles").setExecutor(new CommandToggles());
         this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
 
-
-
         this.getCommand("filter").setExecutor(new CommandFilter());
         this.getCommand("wiki").setExecutor(new CommandWiki());
         this.getCommand("spawnmenu").setExecutor(new CommandSpawnMenu());
@@ -223,13 +227,14 @@ public class AstroCore extends JavaPlugin {
         this.getCommand("heal").setExecutor(new HealCommand());
         this.getCommand("discord").setExecutor(new DiscordCommand());
         this.getCommand("pots").setExecutor(new PotionsCommand(this));
-        this.getCommand("broadcast").setExecutor(new Broadcast());
+
         this.getCommand("invsee").setExecutor(new Invsee());
         this.getCommand("givechunkbuster").setExecutor(new ChunkBuster(this));
         this.getCommand("trash").setExecutor(new TrashCommand());
         this.getCommand("lastmanstanding").setExecutor(new LastManStandingCommand());
         this.getCommand("togglepay").setExecutor(new CommandTogglePay());
 
+        Collections.singletonList(new Broadcast()).forEach(this:: registerCommand);
 
         this.getServer().getPluginManager().registerEvents(new CommandListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
@@ -371,6 +376,24 @@ public class AstroCore extends JavaPlugin {
 
     public File getSpongeDirectory() {
         return this.spongeDirectory;
+    }
+
+    private void registerCommand(Command cmd) {
+        this.registerCommand(cmd, this.getName());
+    }
+
+    public void registerCommand(Command cmd, String fallback) {
+        try {
+            if (bukkitCommand == null) {
+                bukkitCommand = Bukkit.getServer().getClass().getDeclaredField("commandMap");
+                bukkitCommand.setAccessible(true);
+            }
+            CommandMap commandMap = (CommandMap) bukkitCommand.get(Bukkit.getServer());
+            commandMap.register(cmd.getName(), fallback, cmd);
+        } catch(Exception e){
+            e.printStackTrace();
+
+        }
     }
 
 }

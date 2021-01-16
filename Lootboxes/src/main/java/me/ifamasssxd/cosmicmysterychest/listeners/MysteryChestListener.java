@@ -37,7 +37,6 @@ import me.ifamasssxd.cosmicmysterychest.guis.MysteryChestGUI;
 import me.ifamasssxd.cosmicmysterychest.guis.MysteryChestItemViewerGUI;
 import me.ifamasssxd.cosmicmysterychest.struct.GlobalMysteryChest;
 import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
-import me.ifamasssxd.cosmicmysterychest.utils.TimeUtil;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.Bukkit;
@@ -102,8 +101,19 @@ public class MysteryChestListener
             if (item == null || item.getType() == Material.AIR) {
                 return;
             }
+
+            NBTTagCompoundBuilder builder = null;
             NBTWrapper wrapper = new NBTWrapper(item);
-            NBTTagCompoundBuilder builder = wrapper.getCompound("conaxData");
+            try {
+                builder = wrapper.getCompound("conaxData");
+            } catch (NullPointerException ignored) {
+            }
+            if (builder == null) {
+                try {
+                    builder = wrapper.getCompound("cosmicData");
+                } catch (NullPointerException ignored) {
+                }
+            }
             if (builder != null && builder.hasKey("mysteryChest")) {
                 event.setCancelled(true);
                 Player player = event.getPlayer();
@@ -138,7 +148,7 @@ public class MysteryChestListener
                         }
                     }
                     NBTWrapper nbtWrapper = new NBTWrapper(item);
-                    long expiration = 0L;
+                    /*long expiration = 0L;
                     NBTTagCompoundBuilder data = nbtWrapper.getconaxData();
                     expiration = data.getLong("expiration");
                     if (expiration > 0L && expiration < System.currentTimeMillis()) {
@@ -148,12 +158,12 @@ public class MysteryChestListener
                         player.sendMessage(CC.Gray + "It has been discarded as it is no longer valid!");
                         player.sendMessage("");
                         return;
-                    }
+                    }*/
                     player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0f, 3.0f);
                     if (CosmicMysteryChest.get().getShardAnimations().hasToggle(player)) {
-                        new MysteryChestGUI(player, chest, expiration).skipGUI(CosmicMysteryChest.get());
+                        new MysteryChestGUI(player, chest, 0L).skipGUI(CosmicMysteryChest.get());
                     } else {
-                        new MysteryChestGUI(player, chest, expiration).openGUI(CosmicMysteryChest.get());
+                        new MysteryChestGUI(player, chest, 0L).openGUI(CosmicMysteryChest.get());
                     }
                 } catch (MysteryChestException exception) {
                     player.sendMessage(CC.RedB + CC.Red + exception.getMessage());
