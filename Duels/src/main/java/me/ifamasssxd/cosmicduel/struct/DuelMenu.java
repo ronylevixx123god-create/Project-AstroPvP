@@ -39,8 +39,8 @@ extends CustomInventory {
             if (!DuelMenu.checkCanQueue(pl, player)) {
                 return;
             }
-            player.sendMessage((Object)ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.GREEN + "You have been placed in the " + (Object)ChatColor.GREEN + ChatColor.BOLD.toString() + "RANKED" + (Object)ChatColor.GREEN + " duel queue!");
-            player.sendMessage((Object)ChatColor.GREEN + "Use " + (Object)ChatColor.GREEN + ChatColor.UNDERLINE.toString() + "/duel leave" + (Object)ChatColor.GREEN + " to leave the queue.");
+            player.sendMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.GREEN + "You have been placed in the " + (Object)ChatColor.GREEN + ChatColor.BOLD.toString() + "RANKED" + (Object)ChatColor.GREEN + " duel queue!");
+            player.sendMessage(ChatColor.GREEN + "Use " + (Object)ChatColor.GREEN + ChatColor.UNDERLINE.toString() + "/duel leave" + (Object)ChatColor.GREEN + " to leave the queue.");
             player.sendMessage((Object)ChatColor.GRAY + "Searching for an opponent...");
             CosmicDuel.get().getQueueManager().getRankedQueue().addPlayerToQueue(player);
             player.closeInventory();
@@ -56,8 +56,8 @@ extends CustomInventory {
 
     public static boolean checkCanQueue(DuelPlayer pl, Player player) {
         if (pl.getCustomGodSet() == null) {
-            player.sendMessage((Object)ChatColor.RED + "You cannot enter a Ranked Duel Match until you create a custom God Set!");
-            player.sendMessage((Object)ChatColor.GRAY + "Use " + (Object)ChatColor.GRAY + ChatColor.UNDERLINE.toString() + "/duel godset" + (Object)ChatColor.GRAY + " to create your God Set.");
+            player.sendMessage(ChatColor.RED + "You cannot enter a Ranked Duel Match until you create a custom God Set!");
+            player.sendMessage(ChatColor.GRAY + "Use " + (Object)ChatColor.GRAY + ChatColor.UNDERLINE.toString() + "/duel godset" + (Object)ChatColor.GRAY + " to create your God Set.");
             return false;
         }
         if (DuelAPI.hasDuel(player)) {

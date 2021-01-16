@@ -13,6 +13,6 @@ public class Nimble extends CustomEnchantment {
         this.max = 5;
         this.base = 15.0;
         this.interval = 6.0;
-        Bukkit.getPluginManager().registerEvents((Listener) new NimbleListener(), (Plugin) Enchantments.getInstance());
+        Bukkit.getPluginManager().registerEvents(new NimbleListener(), Enchantments.getInstance());
     }
 }

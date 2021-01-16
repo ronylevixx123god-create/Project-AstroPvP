@@ -1,5 +1,6 @@
 package com.massivecraft.factions.util;
 
+import com.compilex.CompilexPermissions.CompilexPermissions;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
@@ -10,6 +11,7 @@ import com.massivecraft.factions.integration.Econ;
 import com.massivecraft.factions.struct.Relation;
 import com.massivecraft.factions.zcore.util.NumberUtils;
 import net.minecraft.server.v1_8_R3.*;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
@@ -79,7 +81,6 @@ public class ScoreboardManager implements BoardAdapter {
 
     @Override
     public void onScoreboardCreate(Player player, org.bukkit.scoreboard.Scoreboard scoreboard) {
-
     }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

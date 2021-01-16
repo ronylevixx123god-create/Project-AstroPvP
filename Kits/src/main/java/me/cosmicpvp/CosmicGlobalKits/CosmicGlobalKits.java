@@ -1,17 +1,4 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  lilypad.client.connect.api.Connect
- *  me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems
- *  me.ifamasssxd.cosmicskycustoms.struct.CosmicItem
- *  org.bukkit.Bukkit
- *  org.bukkit.command.CommandExecutor
- *  org.bukkit.event.Listener
- *  org.bukkit.plugin.Plugin
- *  org.bukkit.plugin.java.JavaPlugin
- */
-package me.cosmicpvp.CosmicGlobalKits;
+ package me.cosmicpvp.CosmicGlobalKits;
 
 import lombok.Getter;
 import lombok.Setter;

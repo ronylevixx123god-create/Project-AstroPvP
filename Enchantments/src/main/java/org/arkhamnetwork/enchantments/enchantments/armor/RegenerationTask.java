@@ -27,7 +27,7 @@ final class RegenerationTask extends BukkitRunnable {
         if (p.getHealth() == p.getMaxHealth() || p.isDead()) {
             return;
         }
-        GeneralUtil.healPlayer((LivingEntity) p, amount);
+        GeneralUtil.healPlayer(p, amount);
         ParticleEffect.playEffect(ParticleEffect.SPELL, this.p.getEyeLocation().add(0.0, 0.5, 0.0), 0.04f, 15);
     }
 }
