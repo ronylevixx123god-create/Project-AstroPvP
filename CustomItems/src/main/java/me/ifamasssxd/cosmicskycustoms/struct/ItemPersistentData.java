@@ -8,10 +8,10 @@
 package me.ifamasssxd.cosmicskycustoms.struct;
 
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import org.bukkit.inventory.ItemStack;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import me.ifamasssxd.cosmicskycustoms.struct.CosmicPersistentItem;
-import org.bukkit.inventory.ItemStack;
 
 public class ItemPersistentData {
     private Constructor<CosmicPersistentItem> constructor;
@@ -29,7 +29,7 @@ public class ItemPersistentData {
     }
 
     public CosmicPersistentItem createInstance(ItemStack itemStack, NBTWrapper wrapper) throws IllegalAccessException, InvocationTargetException, InstantiationException {
-        return this.constructor.newInstance(new Object[]{itemStack, wrapper, this.internalName});
+        return this.constructor.newInstance(itemStack, wrapper, this.internalName);
     }
 
     public CosmicPersistentItem createSampleInstance() throws IllegalAccessException, InvocationTargetException, InstantiationException {

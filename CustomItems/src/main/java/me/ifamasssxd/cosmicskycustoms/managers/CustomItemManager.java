@@ -7,17 +7,18 @@
 package me.ifamasssxd.cosmicskycustoms.managers;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.Map;
 import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicItems;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicPersistentItem;
 import me.ifamasssxd.cosmicskycustoms.struct.ItemPersistentData;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.Map;
+
 public class CustomItemManager {
-    private Map<String, CosmicItem> customRegisteredItems = new HashMap<String, CosmicItem>();
+    private Map<String, CosmicItem> customRegisteredItems = new HashMap<>();
     private CosmicSkyCustomItems plugin;
 
     public CustomItemManager(CosmicSkyCustomItems plugin) {
@@ -39,11 +40,17 @@ public class CustomItemManager {
         this.plugin.log(CC.GreenB + "Registering CustomItem: " + instance + " Class: " + instance.getClass().getName());
     }
 
-    public <T extends CosmicPersistentItem> T registerPersistentItem(String name, Class<T> clazz) throws NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
-        this.plugin.log(CC.GreenB + "Registering PersistenCustomItem name: " + name + " Class: " + clazz.getSimpleName());
+    public CosmicPersistentItem registerPersistentItem(String name, Class clazz) throws NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
+        if (name != null) {
+            this.plugin.log(CC.GreenB + "Registering PersistentCustomItem name: " + name + " Class: " + clazz.getSimpleName());
+        }
+        // up to this point is fine.
+        this.plugin.log("getting sample version111() ************************** BOWPEY");
         ItemPersistentData data = CosmicPersistentItem.registerPersistentItem(name, clazz);
+        this.plugin.log("getting sample version222() ************************** BOWPEY");
         this.customRegisteredItems.put(data.getInternalName(), data.getSampleVersion());
-        return (T)data.getSampleVersion();
+        this.plugin.log("getting sample version333() ************************** BOWPEY");
+        return data.getSampleVersion();
     }
 
     public void onDisable(CosmicSkyCustomItems plugin) {

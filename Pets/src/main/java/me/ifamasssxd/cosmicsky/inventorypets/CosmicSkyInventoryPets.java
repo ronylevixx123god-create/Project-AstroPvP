@@ -11,7 +11,6 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.tasks.BleedTask;
 import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
-import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -32,15 +31,19 @@ public final class CosmicSkyInventoryPets extends JavaPlugin implements Listener
       (this.petManager = new InventoryPetManager(this)).onEnable(this);
 
       try {
-         this.petItem = (InventoryPetItem)CosmicSkyCustomItems.get().getItemManager().registerPersistentItem("inventory_pet", InventoryPetItem.class);
+         if (CosmicSkyCustomItems.get() != null && CosmicSkyCustomItems.get().getItemManager() != null) {
+            this.petItem = CosmicSkyCustomItems.get().getItemManager().registerPersistentItem("inventory_pet", InventoryPetItem.class);
+         }
          this.mysteryPetBoxItem = new MysteryPetBoxItem();
          this.rareCandyItem = new RareCandyItem();
          this.petLeashItem = new PetLeashItem();
-         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(this.mysteryPetBoxItem);
-         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(this.rareCandyItem);
-         CosmicSkyCustomItems.get().getItemManager().registerCustomItem((CosmicItem)this.petLeashItem);
-      } catch (InvocationTargetException | InstantiationException | NoSuchMethodException | IllegalAccessException var6) {
-         var6.printStackTrace();
+         if (CosmicSkyCustomItems.get() != null) {
+            CosmicSkyCustomItems.get().getItemManager().registerCustomItem(this.mysteryPetBoxItem);
+            CosmicSkyCustomItems.get().getItemManager().registerCustomItem(this.rareCandyItem);
+            CosmicSkyCustomItems.get().getItemManager().registerCustomItem(this.petLeashItem);
+         }
+      } catch (InvocationTargetException | InstantiationException | NoSuchMethodException | IllegalAccessException illegalAccess) {
+         illegalAccess.printStackTrace();
       }
 
       this.registerListeners();
