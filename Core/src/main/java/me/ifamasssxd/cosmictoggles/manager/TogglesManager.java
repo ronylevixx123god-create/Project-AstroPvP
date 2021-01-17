@@ -16,23 +16,18 @@
 package me.ifamasssxd.cosmictoggles.manager;
 
 import com.google.common.collect.Lists;
+import net.astropvp.core.AstroCore;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+import org.bukkit.metadata.FixedMetadataValue;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
-import net.astropvp.core.AstroCore;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
-import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.scoreboard.DisplaySlot;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Scoreboard;
 
 public class TogglesManager {
     private File toggleFile;
@@ -55,16 +50,6 @@ public class TogglesManager {
 
     public void clearScoreboard(Player player) {
         player.setMetadata("toggle_scoreboard", new FixedMetadataValue(AstroCore.getInstance(), ""));
-        if (player.getScoreboard() != null) {
-            Scoreboard sb = player.getScoreboard();
-            if (sb.getObjective("Factions") != null) {
-                sb.getObjective("Factions").unregister();
-            } else {
-                Objective obj = sb.registerNewObjective("FactionsRemove", "dummy");
-                obj.setDisplaySlot(DisplaySlot.SIDEBAR);
-                obj.unregister();
-            }
-        }
     }
 
     public void saveToggles() {

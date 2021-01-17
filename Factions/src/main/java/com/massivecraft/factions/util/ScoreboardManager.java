@@ -1,6 +1,5 @@
 package com.massivecraft.factions.util;
 
-import com.compilex.CompilexPermissions.CompilexPermissions;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
@@ -10,8 +9,8 @@ import com.massivecraft.factions.board.BoardAdapter;
 import com.massivecraft.factions.integration.Econ;
 import com.massivecraft.factions.struct.Relation;
 import com.massivecraft.factions.zcore.util.NumberUtils;
+import net.astropvp.core.AstroCore;
 import net.minecraft.server.v1_8_R3.*;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
@@ -32,6 +31,9 @@ public class ScoreboardManager implements BoardAdapter {
 
     @Override
     public List<String> getScoreboard(Player player, com.massivecraft.factions.board.Board board) {
+        if (AstroCore.getInstance().getToggleManager().getScoreboardToggles().contains(player.getUniqueId())) {
+            return null;
+        }
         return this.mainBoard(player);
     }
 

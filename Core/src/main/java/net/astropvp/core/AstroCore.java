@@ -254,16 +254,21 @@ public class AstroCore extends JavaPlugin {
 
         Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
         Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
+        Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
+        Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
+        Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
         Bukkit.getConsoleSender().sendMessage(" ");
-        Bukkit.getConsoleSender().sendMessage(" ASTRO CORE DEBUG: PLUGIN SHOULD BE LOADED NOW :)");
+        Bukkit.getConsoleSender().sendMessage(" ASTRO CORE DEBUG: PLUGIN SHOULD BE LOADED NOW");
         Bukkit.getConsoleSender().sendMessage(" ");
+        Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
+        Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
+        Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
         Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
         Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
     }
 
     @SneakyThrows
     public void onDisable() {
-        instance = null;
         this.payToggles.saveToggles();
         this.jackpotManager.saveFileData();
         this.dataManager.saveAllEquippedTitlesToSQL();
@@ -298,9 +303,9 @@ public class AstroCore extends JavaPlugin {
         this.coinFlipManager.saveToggles();
 
         this.toggleManager.saveToggles();
+
+        instance = null;
     }
-
-
 
     public void events() {
         PluginManager pm = getServer().getPluginManager();

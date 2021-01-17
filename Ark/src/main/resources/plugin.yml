@@ -2,7 +2,7 @@ name: Arkkit
 main: org.arkhamnetwork.Arkkit.Arkkit
 version: 1.0
 depend: [ WorldGuard ]
-softdepend: [ Citizens, mcMMO, CosmicPvPUtils, CosmicArmorSets, CosmicSkyCustomItems ]
+softdepend: [ Citizens, mcMMO, CosmicPvPUtils, CosmicArmorSets, CosmicSkyCustomItems, AstroCore ]
 commands:
   arkhamreload:
     description: Reload ArkhamNetworkAI Configuration.

@@ -30,7 +30,7 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.compilex.CosmicCustomCreepers.enums.CreeperTypes;
-import com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils;
+import com.compilex.CosmicCustomCreepers.utils.ItemUtils;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import de.dustplanet.silkspawners.SilkSpawners;
@@ -54,6 +54,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 
 import java.util.Random;
+
+import static org.arkhamnetwork.Arkkit.patches.NoWaterProtSpawners.su;
 
 final class NoWaterProtSpawnersListener
         implements Listener {
@@ -144,12 +146,9 @@ final class NoWaterProtSpawnersListener
                                 spawnCount = 1;
                             }
                             while (spawnCount-- > 0) {
-
-                                EntityType entityType = EntityType.fromName(NoWaterProtSpawners.su.getSpawnerEntityID(b));
-                                if (entityType != null) {
-                                    b.getWorld().dropItemNaturally(b.getLocation(),
-                                            ItemUtils.getMobSpawner(entityType));
-                                }
+                                String entityID = su.getSpawnerEntityID(b);
+                                int id = Integer.parseInt(entityID);
+                                b.getWorld().dropItemNaturally(b.getLocation(), ItemUtils.getMobSpawner(EntityType.fromId(id)));
                             }
                         }
                         if (ArkPlugins.SPAWNER_FEE.getArkPlugin().isRunning()) {
