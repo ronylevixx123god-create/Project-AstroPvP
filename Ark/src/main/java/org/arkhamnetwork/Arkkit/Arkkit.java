@@ -3,7 +3,6 @@ package org.arkhamnetwork.Arkkit;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
-import org.apache.commons.io.FileUtils;
 import org.arkhamnetwork.Arkkit.commands.*;
 import org.arkhamnetwork.Arkkit.patches.AntiCrash;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
@@ -15,7 +14,6 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.util.FileUtil;
 
 import java.io.File;
 import java.util.HashMap;
@@ -176,15 +174,7 @@ public class Arkkit
                 err.printStackTrace();
             }
         }
-        if (new File("plugins/AstroCore.jar").exists()) {
-            if (Bukkit.getPluginManager().isPluginEnabled("AstroCore")) {
-                Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("AstroCore"));
-            }
-            new File("plugins/AstroCore.jar").delete();
-            this.getConfig().set("patches." + ArkPlugins.GIVE_ALL.getConfigName(), true);
-            this.registerPatch(ArkPlugins.GIVE_ALL.getArkPlugin());
-
-        }
+        // removed astrocore file deleter and giveall patch (ASTROCORE)
         this.saveConfig();
     }
 

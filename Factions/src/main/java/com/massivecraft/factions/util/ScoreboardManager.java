@@ -33,8 +33,9 @@ public class ScoreboardManager implements BoardAdapter {
     public List<String> getScoreboard(Player player, com.massivecraft.factions.board.Board board) {
         if (AstroCore.getInstance().getToggleManager().getScoreboardToggles().contains(player.getUniqueId())) {
             return null;
+        } else {
+            return this.mainBoard(player);
         }
-        return this.mainBoard(player);
     }
 
     @Override

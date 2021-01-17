@@ -24,16 +24,14 @@ implements CommandExecutor {
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player player = (Player)sender;
-        if (player.hasMetadata("toggle_scoreboard") && player.getMetadata("toggle_scoreboard").size() > 0) {
-            player.removeMetadata("toggle_scoreboard", AstroCore.getInstance());
+        if (AstroCore.getInstance().getToggleManager().getScoreboardToggles().contains(player.getUniqueId())) {
+
             AstroCore.getInstance().getToggleManager().getScoreboardToggles().remove(player.getUniqueId());
             player.sendMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + ChatColor.GREEN + "Faction scoreboard toggled " + ChatColor.GREEN + ChatColor.BOLD.toString() + ChatColor.UNDERLINE.toString() + "ON");
         } else {
-            if (!AstroCore.getInstance().getToggleManager().getScoreboardToggles().contains(player.getUniqueId())) {
-                AstroCore.getInstance().getToggleManager().getScoreboardToggles().add(player.getUniqueId());
-            }
+
+            AstroCore.getInstance().getToggleManager().getScoreboardToggles().add(player.getUniqueId());
             player.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "Faction scoreboard toggled " + ChatColor.RED + ChatColor.BOLD.toString() + ChatColor.UNDERLINE.toString() + "OFF");
-            AstroCore.getInstance().getToggleManager().clearScoreboard(player);
         }
         return false;
     }

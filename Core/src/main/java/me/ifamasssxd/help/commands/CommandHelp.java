@@ -13,16 +13,16 @@ package me.ifamasssxd.help.commands;
 
 import com.cosmicpvp.cosmicutils.CosmicUtils;
 import com.google.common.collect.Lists;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 import me.ifamasssxd.help.HelpItem;
 import me.ifamasssxd.help.json.JSONMessage;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CommandHelp {
     private List<HelpItem> helpList = new ArrayList<HelpItem>();
@@ -139,9 +139,9 @@ public class CommandHelp {
                 this.helpList.add(new HelpItem("Envoys", "/envoy"));
             }
             this.helpList.add(new HelpItem("KOTH", "/koth"));
-            if (CosmicUtils.get().isArkkitEnabled() && ArkPlugins.END_GRINDING.getArkPlugin().isRunning()) {
+            /*if (CosmicUtils.get().isArkkitEnabled() && ArkPlugins.END_GRINDING.getArkPlugin().isRunning()) {
                 this.helpList.add(new HelpItem("Ender", "/help end"));
-            }
+            }*/
             this.helpList.add(new HelpItem("Wild PvP", "/wildpvp"));
             if (CosmicUtils.get().isArkkitEnabled() && ArkPlugins.WARZONE_MONEY.getArkPlugin().isRunning()) {
                 this.helpList.add(new HelpItem("LMS", "/lms"));
