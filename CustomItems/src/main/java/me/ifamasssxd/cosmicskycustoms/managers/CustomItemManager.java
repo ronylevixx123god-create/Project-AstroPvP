@@ -45,12 +45,13 @@ public class CustomItemManager {
             this.plugin.log(CC.GreenB + "Registering PersistentCustomItem name: " + name + " Class: " + clazz.getSimpleName());
         }
         // up to this point is fine.
-        this.plugin.log("getting sample version111() ************************** BOWPEY");
-        ItemPersistentData data = CosmicPersistentItem.registerPersistentItem(name, clazz);
-        this.plugin.log("getting sample version222() ************************** BOWPEY");
-        this.customRegisteredItems.put(data.getInternalName(), data.getSampleVersion());
-        this.plugin.log("getting sample version333() ************************** BOWPEY");
-        return data.getSampleVersion();
+        if (clazz != null) {
+            ItemPersistentData data = CosmicPersistentItem.registerPersistentItem(name, clazz);
+            this.customRegisteredItems.put(data.getInternalName(), data.getSampleVersion());
+            this.plugin.log(CC.GreenB + "***** NULL");
+            return data.getSampleVersion();
+        }
+        return null;
     }
 
     public void onDisable(CosmicSkyCustomItems plugin) {

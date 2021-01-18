@@ -1,7 +1,7 @@
 version: 1.0
 name: CosmicConquests
 main: me.ifamasssxd.cosmicconquest.CosmicConquests
-softdepend: [Factions, CosmicDungeons]
+softdepend: [Factions, CosmicDungeons, CosmicSpaceChests]
 commands:
   conquests:
     description: Conquest command.

@@ -8,6 +8,7 @@
 package me.ifamasssxd.cosmicskycustoms.struct;
 
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 
 import java.lang.reflect.Constructor;
@@ -32,8 +33,14 @@ public class ItemPersistentData {
         return this.constructor.newInstance(itemStack, wrapper, this.internalName);
     }
 
-    public CosmicPersistentItem createSampleInstance() throws IllegalAccessException, InvocationTargetException, InstantiationException {
-        return this.simpleConstructor.newInstance(this.internalName);
+    public CosmicPersistentItem createSampleInstance() {
+        Bukkit.getConsoleSender().sendMessage("createdSampleInstance ************");
+        try {
+            return this.simpleConstructor.newInstance(this.internalName);
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NullPointerException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public ItemPersistentData(Constructor<CosmicPersistentItem> constructor, Constructor<CosmicPersistentItem> simpleConstructor, Class<? extends CosmicPersistentItem> persistentItem, CosmicPersistentItem sampleVersion, String internalName) {
