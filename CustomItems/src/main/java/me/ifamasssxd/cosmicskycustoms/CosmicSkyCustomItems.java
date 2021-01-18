@@ -12,9 +12,6 @@ package me.ifamasssxd.cosmicskycustoms;
 import me.ifamasssxd.cosmicskycustoms.commands.CommandCustomItem;
 import me.ifamasssxd.cosmicskycustoms.listeners.CosmicItemListener;
 import me.ifamasssxd.cosmicskycustoms.managers.CustomItemManager;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.event.Listener;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class CosmicSkyCustomItems
@@ -25,7 +22,7 @@ extends JavaPlugin {
     public void onEnable() {
         instance = this;
         this.itemManager = new CustomItemManager(this);
-        this.getServer().getPluginManager().registerEvents(new CosmicItemListener(this), (Plugin)this);
+        this.getServer().getPluginManager().registerEvents(new CosmicItemListener(this), this);
         this.getCommand("customitems").setExecutor(new CommandCustomItem());
         this.itemManager.onEnable(this);
     }

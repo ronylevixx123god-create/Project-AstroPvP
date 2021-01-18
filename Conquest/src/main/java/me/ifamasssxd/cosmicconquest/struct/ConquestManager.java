@@ -20,9 +20,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
@@ -31,22 +29,22 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class ConquestManager
 {
-    private int xCenter;
-    private int zCenter;
-    private int maxRange;
-    private int minRange;
-    private List<Material> disabledBlocks;
+    private final int xCenter;
+    private final int zCenter;
+    private final int maxRange;
+    private final int minRange;
+    private final List<Material> disabledBlocks;
     private HashSet<String> claimedChunkCoords;
     private ConquerData lastConquer;
-    private Set<Entity> bosses;
-    private volatile Map<Location, ChestData> conquestChests;
-    private volatile Map<Location, List<ItemStack>> loot;
+    private final Set<Entity> bosses;
+    private final Map<Location, ChestData> conquestChests;
+    private final Map<Location, List<ItemStack>> loot;
     private Location nextSpawnLocation;
     private ItemStack chickenHead;
     private int minCrystals;
     private int maxCrystals;
-    private Map<Location, List<FLocation>> warzoned;
-    private Set<FLocation> touched;
+    private final Map<Location, List<FLocation>> warzoned;
+    private final Set<FLocation> touched;
     private Location lastLocation;
     private double totalTime;
     private int totalAmount;
@@ -56,7 +54,7 @@ public class ConquestManager
         this.zCenter = 0;
         this.maxRange = 10000;
         this.minRange = 200;
-        this.disabledBlocks = (List<Material>)Lists.newArrayList(new Material[] { Material.BEDROCK });
+        this.disabledBlocks = Lists.newArrayList(new Material[] { Material.BEDROCK });
         this.lastConquer = new ConquerData(System.currentTimeMillis(), null, null);
         this.bosses = new HashSet<Entity>();
         this.conquestChests = new ConcurrentHashMap<Location, ChestData>();
@@ -85,7 +83,7 @@ public class ConquestManager
         else {
             this.startTask(this.getTaskDelay());
         }
-        Bukkit.getScheduler().scheduleAsyncRepeatingTask((Plugin)CosmicConquests.get(), () -> this.conquestChests.keySet().forEach(loc -> {
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(CosmicConquests.get(), () -> this.conquestChests.keySet().forEach(loc -> {
             try {
                 ParticleEffect.sendToLocation(ParticleEffect.PORTAL, loc.clone().add(0.5, 0.0, 0.5), 0.85f, 0.5f, 0.85f, 0.1f, 30);
                 ParticleEffect.sendToLocation(ParticleEffect.CLOUD, loc.clone().add(0.5, 0.0, 0.5), 0.85f, 0.5f, 0.85f, 0.1f, 30);
@@ -107,10 +105,10 @@ public class ConquestManager
                     }
                     block.setType(Material.CHEST);
                     final Chest chest = (Chest)block.getState();
-                    chest.getInventory().addItem(new ItemStack[] { new ItemStack(Material.DIRT) });
+                    chest.getInventory().addItem(new ItemStack(Material.DIRT));
                 }
             }
-        }.runTaskTimer((Plugin)CosmicConquests.get(), 20L, 100L);
+        }.runTaskTimer(CosmicConquests.get(), 20L, 100L);
         this.nextSpawnLocation = this.getRandomWildernessLocation(Bukkit.getWorlds().get(0), 10000);
         if (this.nextSpawnLocation != null) {
             this.claimNearbyWarzone(this.nextSpawnLocation);
@@ -118,7 +116,7 @@ public class ConquestManager
         this.chickenHead = new ItemStack(Material.SKULL_ITEM, 1, (short)3);
         final SkullMeta im = (SkullMeta)this.chickenHead.getItemMeta();
         im.setOwner("MHF_Chicken");
-        this.chickenHead.setItemMeta((ItemMeta)im);
+        this.chickenHead.setItemMeta(im);
     }
     
     public void unclaimWarzone(final Location center) {
@@ -203,8 +201,8 @@ public class ConquestManager
     public void setMinMaxCrystals(final int min, final int max) {
         this.minCrystals = min;
         this.maxCrystals = max;
-        CosmicConquests.get().getConfig().set("minCrystals", (Object)min);
-        CosmicConquests.get().getConfig().set("maxCrystals", (Object)max);
+        CosmicConquests.get().getConfig().set("minCrystals", min);
+        CosmicConquests.get().getConfig().set("maxCrystals", max);
         CosmicConquests.get().saveConfig();
     }
     
@@ -227,7 +225,7 @@ public class ConquestManager
         Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', ChatColor.WHITE + ChatColor.BOLD.toString() + "(!) &7Conquest Chests contain " + ChatColor.AQUA + "faction crystals" + ChatColor.GRAY + " and other extremely rare and powerful loot. But BEWARE! They are defended by " + ChatColor.WHITE + ChatColor.UNDERLINE.toString() + "dangerous space demons."));
         Bukkit.broadcastMessage("");
         this.populateChests(wildernessLocation);
-        CosmicConquests.get().getConfig().set("unclaimed", (Object)true);
+        CosmicConquests.get().getConfig().set("unclaimed", true);
         CosmicConquests.get().saveConfig();
         this.lastLocation = wildernessLocation.clone();
         this.lastConquer = new ConquerData(System.currentTimeMillis(), this.lastLocation, null);
@@ -263,7 +261,7 @@ public class ConquestManager
                     Bukkit.broadcastMessage("");
                 }
                 else if (ticksLeft > 1 && ticksLeft % 300 == 0 && !ConquestManager.this.conquestChests.isEmpty()) {
-                    final Optional<Location> loc = (Optional<Location>)ConquestManager.this.conquestChests.keySet().stream().findFirst();
+                    final Optional<Location> loc = ConquestManager.this.conquestChests.keySet().stream().findFirst();
                     if (loc != null && loc.isPresent()) {
                         Bukkit.broadcastMessage("");
                         Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&f&l** &e&lASTRO CONQUEST &f&l**"));
@@ -273,8 +271,8 @@ public class ConquestManager
                     }
                 }
             }
-        }.runTaskTimer((Plugin)CosmicConquests.get(), 20L, 20L);
-        CosmicConquests.get().getConfig().set("average", (Object)(this.totalTime / this.totalAmount));
+        }.runTaskTimer(CosmicConquests.get(), 20L, 20L);
+        CosmicConquests.get().getConfig().set("average", this.totalTime / this.totalAmount);
         CosmicConquests.get().saveConfig();
     }
     
@@ -301,7 +299,7 @@ public class ConquestManager
                     if (!this.disabledBlocks.contains(block.getType())) {
                         if (!this.disabledBlocks.contains(block.getLocation().add(0.0, 1.0, 0.0).getBlock().getType())) {
                             System.out.println("Returning chunk: " + x + " Y: " + y + " Z: " + z + " in " + counter + " attempts in " + (System.currentTimeMillis() - start) + " ms");
-                            return new Location(world, (double)x, (double)y, (double)z);
+                            return new Location(world, x, y, z);
                         }
                     }
                 }
@@ -339,15 +337,18 @@ public class ConquestManager
             location.getChunk().load();
         }
         location.getBlock().setType(Material.CHEST);
-        final List<ItemStack> loot = (List<ItemStack>)Lists.newArrayList(CosmicSpaceChestsAPI.getItems(ItemRarity.LEGENDARY, 8));
+        final List<ItemStack> loot = Lists.newArrayList(CosmicSpaceChestsAPI.getItems(ItemRarity.LEGENDARY, 8));
         loot.add(CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("ConquestLootbox").createClaimableItem(false));
-        final Chest chest = (Chest)location.getBlock().getState();
-        chest.getInventory().addItem(new ItemStack[] { new ItemStack(Material.DIRT) });
-        chest.update();
-        this.claimNearbyWarzone(location.getBlock().getLocation());
-        final Location loc = chest.getBlock().getLocation();
-        CosmicConquests.get().getManager().getConquestChests().put(loc, new ChestData(ConquestListener.maxHits, this.getBossSpawnList()));
-        CosmicConquests.get().getManager().getLoot().put(loc, loot);
+        final Chest chest = (Chest) location.getBlock().getState();
+        if (chest != null) {
+            chest.getInventory().addItem(new ItemStack(Material.DIRT));
+            chest.update();
+            this.claimNearbyWarzone(location.getBlock().getLocation());
+            final Location loc = chest.getBlock().getLocation();
+            CosmicConquests.get().getManager().getConquestChests().put(loc, new ChestData(ConquestListener.maxHits, this.getBossSpawnList()));
+            CosmicConquests.get().getManager().getLoot().put(loc, loot);
+            Bukkit.broadcastMessage("should be populated...");
+        }
     }
     
     private List<BossType> getBossSpawnList() {
@@ -366,7 +367,7 @@ public class ConquestManager
         final ItemStack book = new ItemStack(Material.ENCHANTED_BOOK, 1);
         final EnchantmentStorageMeta ebm = (EnchantmentStorageMeta)book.getItemMeta();
         ebm.addStoredEnchant(Enchantment.DEPTH_STRIDER, 1 + ThreadLocalRandom.current().nextInt(3), true);
-        book.setItemMeta((ItemMeta)ebm);
+        book.setItemMeta(ebm);
         return book;
     }
     

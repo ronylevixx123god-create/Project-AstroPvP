@@ -54,34 +54,20 @@ import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsPlugin;
 import com.cosmicpvp.CosmicSpaceChests.generators.ItemGenerator;
 import com.cosmicpvp.CosmicSpaceChests.generators.LegendaryGenerator;
-import com.cosmicpvp.CosmicSpaceChests.libs.EvolutionKitItems;
-import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
-import com.cosmicpvp.CosmicSpaceChests.libs.KitItems;
 import com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils;
 import com.gmail.nossr50.datatypes.skills.SkillType;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 import me.cosmicpvp.CosmicGlobalKits.libs.FallenHero;
 import me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits;
 import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
 import me.ifamasssxd.cosmicconquest.CosmicConquestAPI;
-import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKit;
 import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKits;
 import me.ifamasssxd.cosmicfactionboosters.CosmicFactionBoosters;
 import me.ifamasssxd.cosmicfactionboosters.enums.BoosterType;
 import me.ifamasssxd.killtracker.KillTrackerAPI;
 import me.ifamasssxd.killtracker.listeners.Tracker;
-import org.arkhamnetwork.Arkkit.patches.EssentialsAddHomes;
-import org.arkhamnetwork.Arkkit.patches.Halloween;
-import org.arkhamnetwork.Arkkit.patches.MysteryMobSpawners;
-import org.arkhamnetwork.Arkkit.patches.NewYears;
-import org.arkhamnetwork.Arkkit.patches.ShowcaseExpander;
+import org.arkhamnetwork.Arkkit.patches.*;
 import org.arkhamnetwork.CosmicCustomTNT.enums.TNTTypes;
 import org.arkhamnetwork.enchantments.EnchantmentBook;
 import org.arkhamnetwork.enchantments.EnchantmentOrb;
@@ -94,6 +80,9 @@ import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class LootGenerator {
     private static HashMap<ItemStack, Double> commonExtras;
@@ -125,9 +114,9 @@ public class LootGenerator {
         commonExtras.put(ItemUtils.getTitleVoucher("Trollolol"), 0.0025);
         commonExtras.put(ItemUtils.getTitleVoucher("Noob"), 1.0E-5);
         commonExtras.put(ItemUtils.getTitleVoucher("#poor"), 1.0E-5);
-        commonExtras.put(ItemUtils.setAmount(EnchantmentBook.getSecretDust((ItemRarity)ItemRarity.SIMPLE, (int)50), 5), 0.02);
+        commonExtras.put(ItemUtils.setAmount(EnchantmentBook.getSecretDust(ItemRarity.SIMPLE, 50), 5), 0.02);
         commonExtras.put(ItemUtils.setAmount(NewYears.getExplosiveCake(), 10), 0.02);
-        commonExtras.put(ItemUtils.setAmount(RandomizationScroll.getRandomizationScroll((ItemRarity)ItemRarity.SIMPLE), 1), 0.02);
+        commonExtras.put(ItemUtils.setAmount(RandomizationScroll.getRandomizationScroll(ItemRarity.SIMPLE), 1), 0.02);
         uncommonExtras = new HashMap();
         uncommonExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Lethal), 32), 0.05);
         uncommonExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Tactical), 32), 0.05);
@@ -148,11 +137,11 @@ public class LootGenerator {
         uncommonExtras.put(ItemUtils.getTitleVoucher("RIP"), 0.005);
         uncommonExtras.put(ItemUtils.getTitleVoucher("Getmed"), 0.005);
         uncommonExtras.put(new ItemStack(Material.HOPPER, 1), 0.01);
-        uncommonExtras.put(KillTrackerAPI.buildTracker((Tracker)Tracker.Simple), 0.025);
-        uncommonExtras.put(KillTrackerAPI.buildTracker((Tracker)Tracker.Unique), 0.01);
+        uncommonExtras.put(KillTrackerAPI.buildTracker(Tracker.Simple), 0.025);
+        uncommonExtras.put(KillTrackerAPI.buildTracker(Tracker.Unique), 0.01);
         uncommonExtras.put(ItemUtils.setAmount(NewYears.getCosmicCracker(), 8), 0.02);
-        uncommonExtras.put(ItemUtils.setAmount(EnchantmentBook.getSecretDust((ItemRarity)ItemRarity.UNIQUE, (int)50), 5), 0.02);
-        uncommonExtras.put(ItemUtils.setAmount(RandomizationScroll.getRandomizationScroll((ItemRarity)ItemRarity.UNIQUE), 1), 0.01);
+        uncommonExtras.put(ItemUtils.setAmount(EnchantmentBook.getSecretDust(ItemRarity.UNIQUE, 50), 5), 0.02);
+        uncommonExtras.put(ItemUtils.setAmount(RandomizationScroll.getRandomizationScroll(ItemRarity.UNIQUE), 1), 0.01);
         rareExtras = new HashMap();
         rareExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Huge), 32), 0.04);
         rareExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Lethal), 64), 0.05);
@@ -182,18 +171,18 @@ public class LootGenerator {
         rareExtras.put(ItemUtils.getTitleVoucher("OneShot"), 0.01);
         rareExtras.put(ItemUtils.getTitleVoucher("Staysalty"), 0.005);
         rareExtras.put(ItemUtils.getTitleVoucher("Schmoked"), 0.01);
-        rareExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Spooky), 0.0025);
-        rareExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.TRICKSTER), 0.0025);
-        rareExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.HYPER), 0.0025);
+        rareExtras.put(FallenHero.getFallenHeroItem(GlobalKits.Spooky), 0.0025);
+        rareExtras.put(FallenHero.getFallenHeroItem(GlobalKits.TRICKSTER), 0.0025);
+        rareExtras.put(FallenHero.getFallenHeroItem(GlobalKits.HYPER), 0.0025);
         rareExtras.put(KitItems.getKitItem(GlobalKits.Spooky), 5.0E-4);
         rareExtras.put(KitItems.getKitItem(GlobalKits.TRICKSTER), 5.0E-4);
         rareExtras.put(KitItems.getKitItem(GlobalKits.HYPER), 5.0E-4);
-        rareExtras.put(new ItemStack(Material.getMaterial((int)383), 1, (short) 50), 0.01);
+        rareExtras.put(new ItemStack(Material.getMaterial(383), 1, (short) 50), 0.01);
         rareExtras.put(new ItemStack(Material.HOPPER, 5), 0.01);
-        rareExtras.put(KillTrackerAPI.buildTracker((Tracker)Tracker.Elite), 0.01);
+        rareExtras.put(KillTrackerAPI.buildTracker(Tracker.Elite), 0.01);
         rareExtras.put(ItemUtils.setAmount(Halloween.getHalloweenCandy(), 50), 0.02);
-        rareExtras.put(ItemUtils.setAmount(EnchantmentBook.getSecretDust((ItemRarity)ItemRarity.ELITE, (int)50), 5), 0.02);
-        rareExtras.put(ItemUtils.setAmount(RandomizationScroll.getRandomizationScroll((ItemRarity)ItemRarity.ELITE), 1), 0.01);
+        rareExtras.put(ItemUtils.setAmount(EnchantmentBook.getSecretDust(ItemRarity.ELITE, 50), 5), 0.02);
+        rareExtras.put(ItemUtils.setAmount(RandomizationScroll.getRandomizationScroll(ItemRarity.ELITE), 1), 0.01);
         ultraRareExtras = new HashMap();
         ultraRareExtras.put(ItemUtils.getNewBossEgg(BossType.BROOD_MOTHER), 0.0025);
         ultraRareExtras.put(ItemUtils.getNewBossEgg(BossType.KING_SLIME), 5.0E-4);
@@ -227,15 +216,15 @@ public class LootGenerator {
         ultraRareExtras.put(ItemUtils.getTitleVoucher("1v1me"), 0.001);
         ultraRareExtras.put(ItemUtils.getTitleVoucher("Vapenation"), 0.01);
         ultraRareExtras.put(ItemUtils.getMysterySoulEnchantmentBook(), 0.0025);
-        ultraRareExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.DIABLO), 0.0025);
-        ultraRareExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.ARCANE), 0.0025);
-        ultraRareExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Tinkermaster), 0.0025);
-        ultraRareExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Voidwalker), 0.0025);
-        ultraRareExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.GrandMaster), 0.0025);
-        ultraRareExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Masterbuilder), 0.0025);
-        ultraRareExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Party), 0.0025);
-        ultraRareExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.VALENTINE), 0.0025);
-        ultraRareExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.DESTROYER), 0.0025);
+        ultraRareExtras.put(FallenHero.getFallenHeroItem(GlobalKits.DIABLO), 0.0025);
+        ultraRareExtras.put(FallenHero.getFallenHeroItem(GlobalKits.ARCANE), 0.0025);
+        ultraRareExtras.put(FallenHero.getFallenHeroItem(GlobalKits.Tinkermaster), 0.0025);
+        ultraRareExtras.put(FallenHero.getFallenHeroItem(GlobalKits.Voidwalker), 0.0025);
+        ultraRareExtras.put(FallenHero.getFallenHeroItem(GlobalKits.GrandMaster), 0.0025);
+        ultraRareExtras.put(FallenHero.getFallenHeroItem(GlobalKits.Masterbuilder), 0.0025);
+        ultraRareExtras.put(FallenHero.getFallenHeroItem(GlobalKits.Party), 0.0025);
+        ultraRareExtras.put(FallenHero.getFallenHeroItem(GlobalKits.VALENTINE), 0.0025);
+        ultraRareExtras.put(FallenHero.getFallenHeroItem(GlobalKits.DESTROYER), 0.0025);
         ultraRareExtras.put(KitItems.getKitItem(GlobalKits.DIABLO), 5.0E-4);
         ultraRareExtras.put(KitItems.getKitItem(GlobalKits.ARCANE), 5.0E-4);
         ultraRareExtras.put(KitItems.getKitItem(GlobalKits.Tinkermaster), 5.0E-4);
@@ -245,18 +234,18 @@ public class LootGenerator {
         ultraRareExtras.put(KitItems.getKitItem(GlobalKits.Party), 5.0E-4);
         ultraRareExtras.put(KitItems.getKitItem(GlobalKits.VALENTINE), 5.0E-4);
         ultraRareExtras.put(KitItems.getKitItem(GlobalKits.DESTROYER), 5.0E-4);
-        ultraRareExtras.put(new ItemStack(Material.getMaterial((int)383), 2, (short) 50), 0.01);
+        ultraRareExtras.put(new ItemStack(Material.getMaterial(383), 2, (short) 50), 0.01);
         ultraRareExtras.put(new ItemStack(Material.HOPPER, 16), 0.01);
         ultraRareExtras.put(ItemUtils.setAmount(ItemUtils.getCustomCreeperEgg(CreeperTypes.Tactical), 1), 0.01);
         ultraRareExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Lucky), 4), 0.01);
         ultraRareExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Mimic), 64), 0.02);
         ultraRareExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Hex), 64), 0.02);
-        ultraRareExtras.put(KillTrackerAPI.buildTracker((Tracker)Tracker.Ultimate), 0.01);
+        ultraRareExtras.put(KillTrackerAPI.buildTracker(Tracker.Ultimate), 0.01);
         ultraRareExtras.put(MysteryMobSpawners.getMysteryMobSpawner(), 0.01);
         ultraRareExtras.put(CosmicFactionBoosters.get().getBoosterManager().createBooster(BoosterType.EXP, 600, 1.5), 0.01);
         ultraRareExtras.put(CosmicFactionBoosters.get().getBoosterManager().createBooster(BoosterType.MCMMO, 600, 1.5), 0.02);
-        ultraRareExtras.put(ItemUtils.setAmount(EnchantmentBook.getSecretDust((ItemRarity)ItemRarity.ULTIMATE, (int)50), 5), 0.02);
-        ultraRareExtras.put(ItemUtils.setAmount(RandomizationScroll.getRandomizationScroll((ItemRarity)ItemRarity.ULTIMATE), 2), 0.01);
+        ultraRareExtras.put(ItemUtils.setAmount(EnchantmentBook.getSecretDust(ItemRarity.ULTIMATE, 50), 5), 0.02);
+        ultraRareExtras.put(ItemUtils.setAmount(RandomizationScroll.getRandomizationScroll(ItemRarity.ULTIMATE), 2), 0.01);
         ultraRareExtras.put(ShowcaseExpander.getShowcaseExpanderItem(), 0.01);
         ultraRareExtras.put(EssentialsAddHomes.getAddHomeItem(), 0.005);
         legendaryExtras = new HashMap();
@@ -293,15 +282,15 @@ public class LootGenerator {
         legendaryExtras.put(ItemUtils.getTitleVoucher("GetRekt"), 0.01);
         legendaryExtras.put(ItemUtils.getTitleVoucher("weewoo"), 0.01);
         legendaryExtras.put(ItemUtils.getTitleVoucher("Shiva-d"), 0.01);
-        legendaryExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Enchantment), 0.0035);
-        legendaryExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Butcher), 0.0035);
-        legendaryExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Paladin), 0.0035);
-        legendaryExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.GUARDIAN), 0.0035);
-        legendaryExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Warlock), 0.0035);
-        legendaryExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Cannoner), 0.0035);
-        legendaryExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.TEMPLAR), 0.0035);
-        legendaryExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Cosmonaut), 0.0035);
-        legendaryExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Voidwalker), 0.0035);
+        legendaryExtras.put(FallenHero.getFallenHeroItem(GlobalKits.Enchantment), 0.0035);
+        legendaryExtras.put(FallenHero.getFallenHeroItem(GlobalKits.Butcher), 0.0035);
+        legendaryExtras.put(FallenHero.getFallenHeroItem(GlobalKits.Paladin), 0.0035);
+        legendaryExtras.put(FallenHero.getFallenHeroItem(GlobalKits.GUARDIAN), 0.0035);
+        legendaryExtras.put(FallenHero.getFallenHeroItem(GlobalKits.Warlock), 0.0035);
+        legendaryExtras.put(FallenHero.getFallenHeroItem(GlobalKits.Cannoner), 0.0035);
+        legendaryExtras.put(FallenHero.getFallenHeroItem(GlobalKits.TEMPLAR), 0.0035);
+        legendaryExtras.put(FallenHero.getFallenHeroItem(GlobalKits.Cosmonaut), 0.0035);
+        legendaryExtras.put(FallenHero.getFallenHeroItem(GlobalKits.Voidwalker), 0.0035);
         legendaryExtras.put(KitItems.getKitItem(GlobalKits.Enchantment), 0.001);
         legendaryExtras.put(KitItems.getKitItem(GlobalKits.Butcher), 0.001);
         legendaryExtras.put(KitItems.getKitItem(GlobalKits.Paladin), 0.001);
@@ -311,8 +300,8 @@ public class LootGenerator {
         legendaryExtras.put(KitItems.getKitItem(GlobalKits.TEMPLAR), 0.001);
         legendaryExtras.put(KitItems.getKitItem(GlobalKits.Cosmonaut), 0.001);
         legendaryExtras.put(KitItems.getKitItem(GlobalKits.Voidwalker), 0.001);
-        legendaryExtras.put(KillTrackerAPI.buildTracker((Tracker)Tracker.Legendary), 0.015);
-        legendaryExtras.put(new ItemStack(Material.getMaterial((int)383), 16, (short) 50), 0.02);
+        legendaryExtras.put(KillTrackerAPI.buildTracker(Tracker.Legendary), 0.015);
+        legendaryExtras.put(new ItemStack(Material.getMaterial(383), 16, (short) 50), 0.02);
         legendaryExtras.put(new ItemStack(Material.HOPPER, 64), 0.02);
         legendaryExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Lucky), 16), 0.03);
         legendaryExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Silent), 32), 0.03);
@@ -321,19 +310,19 @@ public class LootGenerator {
         legendaryExtras.put(ItemUtils.setAmount(ItemUtils.getCustomCreeperEgg(CreeperTypes.Lucky), 2), 0.015);
         legendaryExtras.put(CosmicFactionBoosters.get().getBoosterManager().createBooster(BoosterType.EXP, 900, 2.0), 0.02);
         legendaryExtras.put(CosmicFactionBoosters.get().getBoosterManager().createBooster(BoosterType.MCMMO, 900, 2.0), 0.04);
-        legendaryExtras.put(ItemUtils.setAmount(EnchantmentBook.getSecretDust((ItemRarity)ItemRarity.LEGENDARY, (int)50), 5), 0.02);
-        legendaryExtras.put(ItemUtils.setAmount(RandomizationScroll.getRandomizationScroll((ItemRarity)ItemRarity.LEGENDARY), 2), 0.01);
-        legendaryExtras.put(FallenHero.getFallenHeroItem((EvolutionKit)EvolutionKits.PHOENIX.getKit()), 0.0025);
-        legendaryExtras.put(FallenHero.getFallenHeroItem((EvolutionKit)EvolutionKits.TROLL.getKit()), 0.0025);
-        legendaryExtras.put(FallenHero.getFallenHeroItem((EvolutionKit)EvolutionKits.OGRE.getKit()), 0.0025);
-        legendaryExtras.put(EnchantmentOrb.getEnchantmentOrb((int)75, (int)10, (OrbType)OrbType.WEAPON), 0.0025);
-        legendaryExtras.put(EnchantmentOrb.getEnchantmentOrb((int)75, (int)10, (OrbType)OrbType.ARMOR), 0.005);
+        legendaryExtras.put(ItemUtils.setAmount(EnchantmentBook.getSecretDust(ItemRarity.LEGENDARY, 50), 5), 0.02);
+        legendaryExtras.put(ItemUtils.setAmount(RandomizationScroll.getRandomizationScroll(ItemRarity.LEGENDARY), 2), 0.01);
+        legendaryExtras.put(FallenHero.getFallenHeroItem(EvolutionKits.PHOENIX.getKit()), 0.0025);
+        legendaryExtras.put(FallenHero.getFallenHeroItem(EvolutionKits.TROLL.getKit()), 0.0025);
+        legendaryExtras.put(FallenHero.getFallenHeroItem(EvolutionKits.OGRE.getKit()), 0.0025);
+        legendaryExtras.put(EnchantmentOrb.getEnchantmentOrb(75, 10, OrbType.WEAPON), 0.0025);
+        legendaryExtras.put(EnchantmentOrb.getEnchantmentOrb(75, 10, OrbType.ARMOR), 0.005);
         legendaryExtras.put(ItemUtils.getDepthStriderBook(1), 0.01);
         legendaryExtras.put(ItemUtils.getDepthStriderBook(2), 0.005);
         legendaryExtras.put(ItemUtils.getDepthStriderBook(3), 0.0025);
         legendaryExtras.put(ItemUtils.setAmount(ShowcaseExpander.getShowcaseExpanderItem(), 2), 0.01);
         legendaryExtras.put(ItemUtils.setAmount(EssentialsAddHomes.getAddHomeItem(), 3), 0.005);
-        legendaryExtras.put(CosmicConquestAPI.createFactionToken((int)20), 0.01);
+        legendaryExtras.put(CosmicConquestAPI.createFactionToken(20), 0.01);
         godExtras = new HashMap();
         godExtras.put(ItemUtils.getNewBossEgg(BossType.PLAGUE_BLOATER), 0.005);
         godExtras.put(ItemUtils.getNewBossEgg(BossType.DEMONIC_WITHER), 2.5E-4);
@@ -365,14 +354,14 @@ public class LootGenerator {
         godExtras.put(ItemUtils.getTitleVoucher("#BANNED"), 0.01);
         godExtras.put(ItemUtils.getTitleVoucher("Epic"), 0.01);
         godExtras.put(ItemUtils.getTitleVoucher("#GetSplit"), 0.01);
-        godExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Enchantment), 0.0075);
-        godExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Independence), 0.0075);
-        godExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Loki), 0.0075);
-        godExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Butcher), 0.0075);
-        godExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Warlock), 0.0075);
-        godExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Paladin), 0.0075);
-        godExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Admiral), 0.0075);
-        godExtras.put(FallenHero.getFallenHeroItem((GlobalKits)GlobalKits.Duelist), 0.0075);
+        godExtras.put(FallenHero.getFallenHeroItem(GlobalKits.Enchantment), 0.0075);
+        godExtras.put(FallenHero.getFallenHeroItem(GlobalKits.Independence), 0.0075);
+        godExtras.put(FallenHero.getFallenHeroItem(GlobalKits.Loki), 0.0075);
+        godExtras.put(FallenHero.getFallenHeroItem(GlobalKits.Butcher), 0.0075);
+        godExtras.put(FallenHero.getFallenHeroItem(GlobalKits.Warlock), 0.0075);
+        godExtras.put(FallenHero.getFallenHeroItem(GlobalKits.Paladin), 0.0075);
+        godExtras.put(FallenHero.getFallenHeroItem(GlobalKits.Admiral), 0.0075);
+        godExtras.put(FallenHero.getFallenHeroItem(GlobalKits.Duelist), 0.0075);
         godExtras.put(KitItems.getKitItem(GlobalKits.Enchantment), 0.0025);
         godExtras.put(KitItems.getKitItem(GlobalKits.Independence), 0.0025);
         godExtras.put(KitItems.getKitItem(GlobalKits.Loki), 0.0025);
@@ -381,8 +370,8 @@ public class LootGenerator {
         godExtras.put(KitItems.getKitItem(GlobalKits.Paladin), 0.0025);
         godExtras.put(KitItems.getKitItem(GlobalKits.Admiral), 0.0025);
         godExtras.put(KitItems.getKitItem(GlobalKits.Duelist), 0.0025);
-        godExtras.put(KillTrackerAPI.buildTracker((Tracker)Tracker.Legendary), 0.015);
-        godExtras.put(new ItemStack(Material.getMaterial((int)383), 48, (short) 50), 0.02);
+        godExtras.put(KillTrackerAPI.buildTracker(Tracker.Legendary), 0.015);
+        godExtras.put(new ItemStack(Material.getMaterial(383), 48, (short) 50), 0.02);
         godExtras.put(new ItemStack(Material.HOPPER, 64), 0.02);
         godExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Lucky), 32), 0.03);
         godExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Silent), 64), 0.03);
@@ -392,42 +381,42 @@ public class LootGenerator {
         godExtras.put(ItemUtils.setAmount(ItemUtils.getCustomCreeperEgg(CreeperTypes.Lucky), 5), 0.015);
         godExtras.put(CosmicFactionBoosters.get().getBoosterManager().createBooster(BoosterType.EXP, 900, 5.0), 0.03);
         godExtras.put(CosmicFactionBoosters.get().getBoosterManager().createBooster(BoosterType.MCMMO, 900, 5.0), 0.05);
-        godExtras.put(ItemUtils.setAmount(EnchantmentBook.getSecretDust((ItemRarity)ItemRarity.SOUL, (int)50), 5), 0.02);
-        godExtras.put(ItemUtils.setAmount(RandomizationScroll.getRandomizationScroll((ItemRarity)ItemRarity.GOD), 2), 0.01);
+        godExtras.put(ItemUtils.setAmount(EnchantmentBook.getSecretDust(ItemRarity.SOUL, 50), 5), 0.02);
+        godExtras.put(ItemUtils.setAmount(RandomizationScroll.getRandomizationScroll(ItemRarity.GOD), 2), 0.01);
         godExtras.put(ItemUtils.setAmount(HeroicRankCrystalAPI.getHeroicRankCrystalItem(), 1), 0.001);
         godExtras.put(EvolutionKitItems.getKitItem(EvolutionKits.PHOENIX), 0.0015);
         godExtras.put(EvolutionKitItems.getKitItem(EvolutionKits.TROLL), 0.0015);
         godExtras.put(EvolutionKitItems.getKitItem(EvolutionKits.OGRE), 0.0015);
-        godExtras.put(EnchantmentOrb.getEnchantmentOrb((int)100, (int)10, (OrbType)OrbType.WEAPON), 0.0025);
-        godExtras.put(EnchantmentOrb.getEnchantmentOrb((int)100, (int)10, (OrbType)OrbType.ARMOR), 0.005);
-        godExtras.put(EnchantmentOrb.getEnchantmentOrb((int)75, (int)11, (OrbType)OrbType.WEAPON), 1.0E-4);
-        godExtras.put(EnchantmentOrb.getEnchantmentOrb((int)75, (int)11, (OrbType)OrbType.ARMOR), 2.0E-4);
+        godExtras.put(EnchantmentOrb.getEnchantmentOrb(100, 10, OrbType.WEAPON), 0.0025);
+        godExtras.put(EnchantmentOrb.getEnchantmentOrb(100, 10, OrbType.ARMOR), 0.005);
+        godExtras.put(EnchantmentOrb.getEnchantmentOrb(75, 11, OrbType.WEAPON), 1.0E-4);
+        godExtras.put(EnchantmentOrb.getEnchantmentOrb(75, 11, OrbType.ARMOR), 2.0E-4);
         godExtras.put(CCAPI.getMysteryCrate(), 2.0E-4);
         godExtras.put(ItemUtils.getDepthStriderBook(2), 0.02);
         godExtras.put(ItemUtils.getDepthStriderBook(3), 0.01);
         godExtras.put(ItemUtils.setAmount(ShowcaseExpander.getShowcaseExpanderItem(), 2), 0.01);
         godExtras.put(ItemUtils.setAmount(EssentialsAddHomes.getAddHomeItem(), 5), 0.005);
-        godExtras.put(CosmicConquestAPI.createFactionToken((int)50), 0.01);
-        godExtras.put(CosmicArmorSetsAPI.getArmorSet((ArmorSet)ArmorSet.PHANTOM)[0], 0.0015);
-        godExtras.put(CosmicArmorSetsAPI.getArmorSet((ArmorSet)ArmorSet.PHANTOM)[1], 0.0015);
-        godExtras.put(CosmicArmorSetsAPI.getArmorSet((ArmorSet)ArmorSet.PHANTOM)[2], 0.0015);
-        godExtras.put(CosmicArmorSetsAPI.getArmorSet((ArmorSet)ArmorSet.PHANTOM)[3], 0.0015);
-        godExtras.put(CosmicConquestAPI.createHeroicToken((int)(2 + ThreadLocalRandom.current().nextInt(6))), 0.0015);
+        godExtras.put(CosmicConquestAPI.createFactionToken(50), 0.01);
+        godExtras.put(CosmicArmorSetsAPI.getArmorSet(ArmorSet.PHANTOM)[0], 0.0015);
+        godExtras.put(CosmicArmorSetsAPI.getArmorSet(ArmorSet.PHANTOM)[1], 0.0015);
+        godExtras.put(CosmicArmorSetsAPI.getArmorSet(ArmorSet.PHANTOM)[2], 0.0015);
+        godExtras.put(CosmicArmorSetsAPI.getArmorSet(ArmorSet.PHANTOM)[3], 0.0015);
+        godExtras.put(CosmicConquestAPI.createHeroicToken(2 + ThreadLocalRandom.current().nextInt(6)), 0.0015);
         if (moneyNotes) {
             Bukkit.getLogger().info("Registering money notes instead of rank items..");
-            commonExtras.put(ItemUtils.getMoneyNoteNoIID("Cosmic Chest", PlayerRankUtils.getSpaceCash((int)1)), 1.5E-5);
-            uncommonExtras.put(ItemUtils.getMoneyNoteNoIID("Cosmic Chest", PlayerRankUtils.getSpaceCash((int)2)), 1.25E-4);
-            rareExtras.put(ItemUtils.getMoneyNoteNoIID("Cosmic Chest", PlayerRankUtils.getSpaceCash((int)3)), 1.25E-4);
-            ultraRareExtras.put(ItemUtils.getMoneyNoteNoIID("Cosmic Chest", PlayerRankUtils.getSpaceCash((int)4)), 1.25E-4);
-            legendaryExtras.put(ItemUtils.getMoneyNoteNoIID("Cosmic Chest", PlayerRankUtils.getSpaceCash((int)5)), 2.5E-4);
-            godExtras.put(ItemUtils.getMoneyNoteNoIID("Cosmic Chest", PlayerRankUtils.getSpaceCash((int)5)), 0.001);
+            commonExtras.put(ItemUtils.getMoneyNoteNoIID("Cosmic Chest", PlayerRankUtils.getSpaceCash(1)), 1.5E-5);
+            uncommonExtras.put(ItemUtils.getMoneyNoteNoIID("Cosmic Chest", PlayerRankUtils.getSpaceCash(2)), 1.25E-4);
+            rareExtras.put(ItemUtils.getMoneyNoteNoIID("Cosmic Chest", PlayerRankUtils.getSpaceCash(3)), 1.25E-4);
+            ultraRareExtras.put(ItemUtils.getMoneyNoteNoIID("Cosmic Chest", PlayerRankUtils.getSpaceCash(4)), 1.25E-4);
+            legendaryExtras.put(ItemUtils.getMoneyNoteNoIID("Cosmic Chest", PlayerRankUtils.getSpaceCash(5)), 2.5E-4);
+            godExtras.put(ItemUtils.getMoneyNoteNoIID("Cosmic Chest", PlayerRankUtils.getSpaceCash(5)), 0.001);
         } else if (rankItems) {
-            commonExtras.put(CosmicRankQuestsAPI.getRankQuestItem((int)1), 1.5E-5);
-            uncommonExtras.put(CosmicRankQuestsAPI.getRankQuestItem((int)2), 1.25E-4);
-            rareExtras.put(CosmicRankQuestsAPI.getRankQuestItem((int)3), 1.25E-4);
-            ultraRareExtras.put(CosmicRankQuestsAPI.getRankQuestItem((int)4), 1.25E-4);
-            legendaryExtras.put(CosmicRankQuestsAPI.getRankQuestItem((int)5), 2.5E-4);
-            godExtras.put(CosmicRankQuestsAPI.getRankQuestItem((int)5), 0.001);
+            commonExtras.put(CosmicRankQuestsAPI.getRankQuestItem(1), 1.5E-5);
+            uncommonExtras.put(CosmicRankQuestsAPI.getRankQuestItem(2), 1.25E-4);
+            rareExtras.put(CosmicRankQuestsAPI.getRankQuestItem(3), 1.25E-4);
+            ultraRareExtras.put(CosmicRankQuestsAPI.getRankQuestItem(4), 1.25E-4);
+            legendaryExtras.put(CosmicRankQuestsAPI.getRankQuestItem(5), 2.5E-4);
+            godExtras.put(CosmicRankQuestsAPI.getRankQuestItem(5), 0.001);
         }
         if (Bukkit.getPluginManager().isPluginEnabled("CosmicFactionQuests") && (item = ItemUtils.getFactionQuestReroll(false)) != null) {
             legendaryExtras.put(ItemUtils.setAmount(item.clone(), 1), 0.005);
@@ -451,7 +440,7 @@ public class LootGenerator {
                 Collections.shuffle(possibleCommonExtras);
             }
             for (ItemStack item : possibleCommonExtras) {
-                double chance = commonExtras.get((Object)item);
+                double chance = commonExtras.get(item);
                 if (!(Math.random() * LootGenerator.getSlotRarityModifier(slotRarity) <= chance)) continue;
                 is = item.clone();
                 break;
@@ -476,7 +465,7 @@ public class LootGenerator {
                 Collections.shuffle(possibleUncommonExtras);
             }
             for (ItemStack item : possibleUncommonExtras) {
-                double chance = uncommonExtras.get((Object)item);
+                double chance = uncommonExtras.get(item);
                 if (!(Math.random() * LootGenerator.getSlotRarityModifier(slotRarity) <= chance)) continue;
                 is = item.clone();
                 break;
@@ -505,13 +494,13 @@ public class LootGenerator {
                 Collections.shuffle(possibleRareExtras);
             }
             for (ItemStack item : possibleRareExtras) {
-                double chance = rareExtras.get((Object)item);
+                double chance = rareExtras.get(item);
                 if (!(Math.random() * LootGenerator.getSlotRarityModifier(slotRarity) <= chance)) continue;
                 is = item.clone();
                 break;
             }
         }
-        if (is == null && EnchantmentAPI.getEnchantments((ItemStack)(is = ItemGenerator.generate(chestRarity, slotRarity))).size() < 5) {
+        if (is == null && EnchantmentAPI.getEnchantments(is = ItemGenerator.generate(chestRarity, slotRarity)).size() < 5) {
             int attempts = 0;
             for (int id = 0; id < 2 && attempts++ <= 100; ++id) {
                 CustomEnchantment ce = CosmicSpaceChestsAPI.getRandomCustomEnchant(is.getType());
@@ -540,13 +529,13 @@ public class LootGenerator {
                 Collections.shuffle(possibleUltraRareExtras);
             }
             for (ItemStack item : possibleUltraRareExtras) {
-                double chance = ultraRareExtras.get((Object)item);
+                double chance = ultraRareExtras.get(item);
                 if (!(Math.random() * LootGenerator.getSlotRarityModifier(slotRarity) <= chance)) continue;
                 is = item.clone();
                 break;
             }
         }
-        if (is == null && EnchantmentAPI.getEnchantments((ItemStack)(is = ItemGenerator.generate(chestRarity, slotRarity))).size() < 5) {
+        if (is == null && EnchantmentAPI.getEnchantments(is = ItemGenerator.generate(chestRarity, slotRarity)).size() < 5) {
             int x = new Random().nextInt(2) + 3;
             if (slotRarity_ID > 3) {
                 ++x;
@@ -586,7 +575,7 @@ public class LootGenerator {
                 Collections.shuffle(possibleLegendaryExtras);
             }
             for (ItemStack item : possibleLegendaryExtras) {
-                double d = chance = legendaryExtras.containsKey((Object)item) ? legendaryExtras.get((Object)item) : 0.0;
+                double d = chance = legendaryExtras.containsKey(item) ? legendaryExtras.get(item) : 0.0;
                 if (!(Math.random() * LootGenerator.getSlotRarityModifier(slotRarity) <= chance)) continue;
                 is = item.clone();
                 break;
@@ -595,19 +584,21 @@ public class LootGenerator {
         if (is == null) {
             if (new Random().nextInt(10 - slotRarity_ID) != 0 || slotRarity_ID < 3) {
                 is = LootGenerator.convertToGoldName(ItemGenerator.generate(ItemRarity.ULTIMATE, ItemRarity.LEGENDARY));
-                if (is.getType() == Material.DIAMOND_HOE || is.getType() == Material.DIAMOND_SPADE) {
-                    for (ItemStack item : possibleLegendaryExtras) {
-                        double d = chance = legendaryExtras.containsKey((Object)item) ? legendaryExtras.get((Object)item) : 0.0;
-                        if (!(Math.random() * LootGenerator.getSlotRarityModifier(slotRarity) <= chance)) continue;
-                        is = item.clone();
-                        return is;
+                if (is != null) {
+                    if (is.getType() == Material.DIAMOND_HOE || is.getType() == Material.DIAMOND_SPADE) {
+                        for (ItemStack item : possibleLegendaryExtras) {
+                            double d = chance = legendaryExtras.containsKey(item) ? legendaryExtras.get(item) : 0.0;
+                            if (!(Math.random() * LootGenerator.getSlotRarityModifier(slotRarity) <= chance)) continue;
+                            is = item.clone();
+                            return is;
+                        }
+                        return possibleLegendaryExtras.get(new Random().nextInt(possibleLegendaryExtras.size()));
                     }
-                    return possibleLegendaryExtras.get(new Random().nextInt(possibleLegendaryExtras.size()));
                 }
             } else {
                 is = LegendaryGenerator.getRandomLegendary();
             }
-            if (EnchantmentAPI.getEnchantments((ItemStack)is).size() < 5) {
+            if (EnchantmentAPI.getEnchantments(is).size() < 5) {
                 int x = new Random().nextInt(2) + 5;
                 int attempts = 0;
                 for (int id = 0; id < x && attempts++ <= 100; ++id) {
@@ -642,7 +633,7 @@ public class LootGenerator {
                 Collections.shuffle(possibleGodExtras);
             }
             for (ItemStack item : possibleGodExtras) {
-                double chance = godExtras.get((Object)item);
+                double chance = godExtras.get(item);
                 if (!(Math.random() * LootGenerator.getSlotRarityModifier(slotRarity) <= chance)) continue;
                 is = item.clone();
                 break;
@@ -691,7 +682,7 @@ public class LootGenerator {
     }
 
     private static boolean canBeEnchanted(ItemStack i) {
-        return i != null && (GeneralUtil.isArmor((ItemStack)i) || GeneralUtil.isTool((ItemStack)i) || GeneralUtil.isWeapon((ItemStack)i));
+        return i != null && (GeneralUtil.isArmor(i) || GeneralUtil.isTool(i) || GeneralUtil.isWeapon(i));
     }
 }
 

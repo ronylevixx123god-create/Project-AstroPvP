@@ -31,9 +31,7 @@ public final class CosmicSkyInventoryPets extends JavaPlugin implements Listener
       (this.petManager = new InventoryPetManager(this)).onEnable(this);
 
       try {
-         if (CosmicSkyCustomItems.get() != null && CosmicSkyCustomItems.get().getItemManager() != null) {
-            this.petItem = CosmicSkyCustomItems.get().getItemManager().registerPersistentItem("inventory_pet", InventoryPetItem.class);
-         }
+         this.petItem = (InventoryPetItem) CosmicSkyCustomItems.get().getItemManager().registerPersistentItem("inventory_pet", InventoryPetItem.class);
          this.mysteryPetBoxItem = new MysteryPetBoxItem();
          this.rareCandyItem = new RareCandyItem();
          this.petLeashItem = new PetLeashItem();
@@ -42,7 +40,7 @@ public final class CosmicSkyInventoryPets extends JavaPlugin implements Listener
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem(this.rareCandyItem);
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem(this.petLeashItem);
          }
-      } catch (InvocationTargetException | InstantiationException | NoSuchMethodException | IllegalAccessException illegalAccess) {
+      } catch (InstantiationException | NoSuchMethodException | IllegalAccessException | InvocationTargetException illegalAccess) {
          illegalAccess.printStackTrace();
       }
 
