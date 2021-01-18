@@ -50,11 +50,7 @@
  */
 package me.ifamasssxd.cosmicbosses.dungeonboss;
 
-import java.util.List;
-import java.util.Random;
 import me.ifamasssxd.cosmicbosses.bosses.yijki.PathfinderGoalWitherBossArrowAttack;
-import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijki;
-import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijkiEntity;
 import me.ifamasssxd.cosmicbosses.dungeonboss.abilities.UnstoppableForce;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
 import net.citizensnpcs.nms.v1_8_R3.entity.EntityHumanNPC;
@@ -70,6 +66,9 @@ import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.ExplosionPrimeEvent;
 import org.bukkit.util.Vector;
+
+import java.util.List;
+import java.util.Random;
 
 public class DungeonYijkiImage
 extends EntityMonster

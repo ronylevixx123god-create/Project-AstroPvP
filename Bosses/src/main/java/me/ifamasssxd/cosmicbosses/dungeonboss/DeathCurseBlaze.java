@@ -1,16 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.server.v1_8_R3.Entity
- *  net.minecraft.server.v1_8_R3.EntityBlaze
- *  net.minecraft.server.v1_8_R3.EntityHuman
- *  net.minecraft.server.v1_8_R3.EntityLiving
- *  net.minecraft.server.v1_8_R3.EntitySmallFireball
- *  net.minecraft.server.v1_8_R3.Item
- *  net.minecraft.server.v1_8_R3.MathHelper
- *  net.minecraft.server.v1_8_R3.World
- */
 package me.ifamasssxd.cosmicbosses.dungeonboss;
 
 import net.minecraft.server.v1_8_R3.Entity;
@@ -36,7 +23,7 @@ extends EntityBlaze {
             this.n(var1);
         } else if (var2 < 30.0f) {
             double var3 = var1.locX - this.locX;
-            double var5 = var1.boundingBox.b + (double)(var1.length / 2.0f) - (this.locY + (double)(this.length / 2.0f));
+            double var5 = var1.getBoundingBox().b + (double)(var1.length / 2.0f) - (this.locY + (double)(this.length / 2.0f));
             double var7 = var1.locZ - this.locZ;
             if (this.attackTicks == 0) {
                 ++this.br;

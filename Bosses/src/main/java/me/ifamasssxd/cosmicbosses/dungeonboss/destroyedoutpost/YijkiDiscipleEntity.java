@@ -82,16 +82,16 @@ extends EntitySkeleton {
 
     public YijkiDiscipleEntity(World world) {
         super(world);
-        ReflectionUtils.setObject(EntitySkeleton.class, (Object)this, (Object)new PathfinderGoalBossArrowAttack((IRangedEntity)this, 1.0, 20, 60, 15.0f), "bp");
-        ReflectionUtils.setObject(EntitySkeleton.class, (Object)this, (Object)new PathfinderGoalBossMeleeAttack((EntityCreature)this, EntityHuman.class, 1.2, false), "bq");
-        List list = (List)ReflectionUtils.getObject(PathfinderGoalSelector.class, (Object)this.goalSelector, "b");
+        ReflectionUtils.setObject(EntitySkeleton.class, this, new PathfinderGoalBossArrowAttack(this, 1.0, 20, 60, 15.0f), "bp");
+        ReflectionUtils.setObject(EntitySkeleton.class, this, new PathfinderGoalBossMeleeAttack(this, EntityHuman.class, 1.2, false), "bq");
+        List list = (List)ReflectionUtils.getObject(PathfinderGoalSelector.class, this.goalSelector, "b");
         list.clear();
-        this.goalSelector.a(1, new PathfinderGoalFloat((EntityInsentient)this));
-        this.goalSelector.a(2, new PathfinderGoalMeleeAttack((EntityCreature)this, EntityHuman.class, 1.0, false));
-        this.goalSelector.a(3, new PathfinderGoalLookAtPlayer((EntityInsentient)this, EntityHuman.class, 8.0f));
-        this.goalSelector.a(4, new PathfinderGoalRandomLookaround((EntityInsentient)this));
-        this.targetSelector.a(1, new PathfinderGoalHurtByTarget((EntityCreature)this, false));
-        this.targetSelector.a(2, new PathfinderGoalNearestAttackableTarget((EntityCreature)this, EntityHuman.class, 0, true));
+        this.goalSelector.a(1, new PathfinderGoalFloat(this));
+        this.goalSelector.a(2, new PathfinderGoalMeleeAttack(this, EntityHuman.class, 1.0, false));
+        this.goalSelector.a(3, new PathfinderGoalLookAtPlayer(this, EntityHuman.class, 8.0f));
+        this.goalSelector.a(4, new PathfinderGoalRandomLookaround(this));
+        this.targetSelector.a(1, new PathfinderGoalHurtByTarget(this, false));
+        this.targetSelector.a(2, new PathfinderGoalNearestAttackableTarget(this, EntityHuman.class, 0, true));
         if (world != null && !world.isClientSide) {
             this.n();
         }
@@ -108,7 +108,7 @@ extends EntitySkeleton {
     protected void bq() {
         this.world.methodProfiler.a("ai");
         if (this.bo > 0 && --this.bo == 0) {
-            AttributeInstance attributeinstance = this.getAttributeInstance(GenericAttributes.d);
+            AttributeInstance attributeinstance = this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED);
             attributeinstance.b(i);
         }
         this.bM() = this.bP();
@@ -152,7 +152,7 @@ extends EntitySkeleton {
         } else if (!this.bn && (this.pathEntity == null && this.random.nextInt(180) == 0 || this.random.nextInt(120) == 0 || this.bo > 0) && this.aU < 100) {
             this.bQ();
         }
-        int i = MathHelper.floor((double)(this.getBoundingBox().b + 0.5));
+        int i = MathHelper.floor(this.getBoundingBox().b + 0.5);
         boolean flag = this.M();
         boolean flag1 = this.P();
         this.pitch = 0.0f;
@@ -225,9 +225,9 @@ extends EntitySkeleton {
 
     public void a(EntityLiving entityliving, float f) {
         EntityCombustEvent event;
-        EntityArrow entityarrow = new EntityArrow(this.world, (EntityLiving)this, entityliving, 1.6f, (float)(14 - this.world.difficulty.a() * 4));
-        int i = EnchantmentManager.getEnchantmentLevel((int)Enchantment.ARROW_DAMAGE.id, (ItemStack)this.be());
-        int j = EnchantmentManager.getEnchantmentLevel((int)Enchantment.ARROW_KNOCKBACK.id, (ItemStack)this.be());
+        EntityArrow entityarrow = new EntityArrow(this.world, (EntityLiving)this, entityliving, 1.6f, (float)(14 - this.world.getDifficulty().a() * 4));
+        int i = EnchantmentManager.getEnchantmentLevel(Enchantment.ARROW_DAMAGE.id, bA());
+        int j = EnchantmentManager.getEnchantmentLevel(Enchantment.ARROW_KNOCKBACK.id, bA());
         entityarrow.b(2.0);
         if (i > 0) {
             entityarrow.b(entityarrow.e() + (double)i * 0.5 + 0.5);
@@ -235,21 +235,21 @@ extends EntitySkeleton {
         if (j > 0) {
             entityarrow.setKnockbackStrength(j);
         }
-        if (EnchantmentManager.getEnchantmentLevel((int)Enchantment.ARROW_FIRE.id, (ItemStack)this.be()) > 0 || this.getSkeletonType() == 1) {
+        if (EnchantmentManager.getEnchantmentLevel((int)Enchantment.ARROW_FIRE.id, (ItemStack)this.bA()) > 0 || this.getSkeletonType() == 1) {
             event = new EntityCombustEvent((org.bukkit.entity.Entity)entityarrow.getBukkitEntity(), 100);
             this.world.getServer().getPluginManager().callEvent((Event)event);
             if (!event.isCancelled()) {
                 entityarrow.setOnFire(event.getDuration());
             }
         }
-        if ((event = CraftEventFactory.callEntityShootBowEvent((EntityLiving)this, (ItemStack)this.be(), (EntityArrow)entityarrow, (float)0.8f)).isCancelled()) {
+        if ((event = CraftEventFactory.callEntityShootBowEvent((EntityLiving)this, (ItemStack)this.bA(), (EntityArrow)entityarrow, (float)0.8f)).isCancelled()) {
             event.getProjectile().remove();
             return;
         }
         if (event.getProjectile() == entityarrow.getBukkitEntity()) {
             this.world.addEntity((Entity)entityarrow);
         }
-        this.makeSound("random.bow", 1.0f, 1.0f / (this.aI().nextFloat() * 0.4f + 0.8f));
+        this.makeSound("random.bow", 1.0f, 1.0f / (this.bc().nextFloat() * 0.4f + 0.8f));
     }
 }
 
