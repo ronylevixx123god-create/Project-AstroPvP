@@ -403,9 +403,9 @@ implements IRangedEntity {
             if (this.bv > 0) {
                 --this.bv;
                 if (this.bv == 0 && this.world.getGameRules().getBoolean("mobGriefing")) {
-                    int locY = MathHelper.floor((double)this.locY);
-                    target = MathHelper.floor((double)this.locX);
-                    int j1 = MathHelper.floor((double)this.locZ);
+                    int locY = MathHelper.floor(this.locY);
+                    target = MathHelper.floor(this.locX);
+                    int j1 = MathHelper.floor(this.locZ);
                     boolean flag = false;
                     for (int k1 = -1; k1 <= 1; ++k1) {
                         for (int l1 = -1; l1 <= 1; ++l1) {

@@ -1,9 +1,9 @@
 package me.ifamasssxd.cosmicbosses.struct;
 
-import javax.annotation.Nullable;
-import me.ifamasssxd.cosmicbosses.struct.BossPathPoint;
 import net.minecraft.server.v1_8_R3.Entity;
 import net.minecraft.server.v1_8_R3.Vec3D;
+
+import javax.annotation.Nullable;
 
 public class BossPath {
     private final BossPathPoint[] points;
