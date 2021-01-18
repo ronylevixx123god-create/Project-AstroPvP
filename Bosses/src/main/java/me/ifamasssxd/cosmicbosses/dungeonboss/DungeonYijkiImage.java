@@ -57,39 +57,8 @@ import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijki;
 import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijkiEntity;
 import me.ifamasssxd.cosmicbosses.dungeonboss.abilities.UnstoppableForce;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
-import net.citizensnpcs.npc.entity.EntityHumanNPC;
-import net.minecraft.server.v1_8_R3.Block;
-import net.minecraft.server.v1_8_R3.Blocks;
-import net.minecraft.server.v1_8_R3.DamageSource;
-import net.minecraft.server.v1_8_R3.Entity;
-import net.minecraft.server.v1_8_R3.EntityCreature;
-import net.minecraft.server.v1_8_R3.EntityHuman;
-import net.minecraft.server.v1_8_R3.EntityInsentient;
-import net.minecraft.server.v1_8_R3.EntityLiving;
-import net.minecraft.server.v1_8_R3.EntityMonster;
-import net.minecraft.server.v1_8_R3.EntityPlayer;
-import net.minecraft.server.v1_8_R3.EntityWitherSkull;
-import net.minecraft.server.v1_8_R3.EnumDifficulty;
-import net.minecraft.server.v1_8_R3.EnumEntitySize;
-import net.minecraft.server.v1_8_R3.EnumMonsterType;
-import net.minecraft.server.v1_8_R3.GenericAttributes;
-import net.minecraft.server.v1_8_R3.IEntitySelector;
-import net.minecraft.server.v1_8_R3.IRangedEntity;
-import net.minecraft.server.v1_8_R3.Material;
-import net.minecraft.server.v1_8_R3.MathHelper;
-import net.minecraft.server.v1_8_R3.MobEffect;
-import net.minecraft.server.v1_8_R3.MovingObjectPosition;
-import net.minecraft.server.v1_8_R3.NBTTagCompound;
-import net.minecraft.server.v1_8_R3.Packet;
-import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
-import net.minecraft.server.v1_8_R3.PathfinderGoal;
-import net.minecraft.server.v1_8_R3.PathfinderGoalFloat;
-import net.minecraft.server.v1_8_R3.PathfinderGoalHurtByTarget;
-import net.minecraft.server.v1_8_R3.PathfinderGoalLookAtPlayer;
-import net.minecraft.server.v1_8_R3.PathfinderGoalNearestAttackableTarget;
-import net.minecraft.server.v1_8_R3.PathfinderGoalRandomLookaround;
-import net.minecraft.server.v1_8_R3.World;
-import net.minecraft.server.v1_8_R3.WorldServer;
+import net.citizensnpcs.nms.v1_8_R3.entity.EntityHumanNPC;
+import net.minecraft.server.v1_8_R3.*;
 import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -121,11 +90,11 @@ implements IRangedEntity {
     private String lastTargetName = "";
 
     protected void c() {
-        super.c();
-        this.datawatcher.a(17, (Object)new Integer(0));
-        this.datawatcher.a(18, (Object)new Integer(0));
-        this.datawatcher.a(19, (Object)new Integer(0));
-        this.datawatcher.a(20, (Object)new Integer(0));
+        super.h();
+        this.datawatcher.a(17, (Object) 0);
+        this.datawatcher.a(18, (Object) 0);
+        this.datawatcher.a(19, (Object) 0);
+        this.datawatcher.a(20, (Object) 0);
     }
 
     public void b(NBTTagCompound nbttagcompound) {
@@ -166,14 +135,14 @@ implements IRangedEntity {
         this.a(0.9f, 4.0f);
         this.fireProof = true;
         this.getNavigation().e(true);
-        this.goalSelector.a(0, (PathfinderGoal)new PathfinderGoalFloat((EntityInsentient)this));
-        this.goalSelector.a(6, (PathfinderGoal)new PathfinderGoalLookAtPlayer((EntityInsentient)this, EntityHuman.class, 8.0f));
-        this.goalSelector.a(7, (PathfinderGoal)new PathfinderGoalRandomLookaround((EntityInsentient)this));
-        this.targetSelector.a(1, (PathfinderGoal)new PathfinderGoalHurtByTarget((EntityCreature)this, false));
-        this.targetSelector.a(2, (PathfinderGoal)new PathfinderGoalNearestAttackableTarget((EntityCreature)this, EntityHuman.class, 0, false, false, this.bw));
+        this.goalSelector.a(0, new PathfinderGoalFloat(this));
+        this.goalSelector.a(6, new PathfinderGoalLookAtPlayer(this, EntityHuman.class, 8.0f));
+        this.goalSelector.a(7, new PathfinderGoalRandomLookaround(this));
+        this.targetSelector.a(1, new PathfinderGoalHurtByTarget(this, false));
+        this.targetSelector.a(2, new PathfinderGoalNearestAttackableTarget(this, EntityHuman.class, 0, false, false, this.bw));
         this.arrowAttack = new PathfinderGoalWitherBossArrowAttack(this, 1.0, 20, 20, 20.0f);
-        this.goalSelector.a(2, (PathfinderGoal)this.arrowAttack);
-        this.b = 50;
+        this.goalSelector.a(2, this.arrowAttack);
+        this.b_ = 50;
         this.as = EnumEntitySize.SIZE_6;
     }
 
@@ -234,7 +203,7 @@ implements IRangedEntity {
         if (this.direction == null && this.ticksLived >= 139) {
             Entity target = this.target;
             if (target == null) {
-                target = this.world.findNearbyVulnerablePlayer((Entity)this, 32.0);
+                target = this.world.findNearbyPlayerWhoAffectsSpawning(this, 32.0);
             }
             if (target == null) {
                 target = ((DungeonYijki)this.boss).getBossEntity().target;
@@ -252,7 +221,7 @@ implements IRangedEntity {
         }
         double motionMultiplier = 0.6f;
         if (this.isCharging()) {
-            List ents = this.world.getEntities((Entity)this, this.boundingBox.grow(0.75, 1.0, 0.75), ent -> ent instanceof EntityHuman && !(ent instanceof EntityHumanNPC));
+            List ents = this.world.getEntities((Entity)this, this.getBoundingBox().grow(0.75, 1.0, 0.75), ent -> ent instanceof EntityHuman && !(ent instanceof EntityHumanNPC));
             for (Entity inBox : ents) {
                 this.collide(inBox);
                 Bukkit.getLogger().info("Forcing collide with " + inBox.getName() + " for Yijki Image.");
@@ -275,13 +244,13 @@ implements IRangedEntity {
             if (this.ticksLived % 20 == 0) {
                 UnstoppableForce.drawParticleLineInDirection((LivingEntity)this.getBukkitEntity());
             }
-        } else if (!this.world.isStatic && this.t(0) > 0 && (entity = this.world.getEntity(this.t(0))) != null) {
+        } else if (!this.world.isClientSide && this.t(0) > 0 && (entity = this.world.getEntities(this.t(0))) != null) {
             this.moveTowardsLocation(entity.locX, entity.locY, entity.locZ, motionMultiplier);
         }
         if (this.motX * this.motX + this.motZ * this.motZ > (double)0.05f) {
             this.yaw = (float)Math.atan2(this.motZ, this.motX) * 57.295776f - 90.0f;
         }
-        super.e();
+        super.m();
         for (i = 0; i < 2; ++i) {
             this.bs[i] = this.bq[i];
             this.br[i] = this.bp[i];
@@ -290,7 +259,7 @@ implements IRangedEntity {
             int j2 = this.t(i + 1);
             Entity entity1 = null;
             if (j2 > 0) {
-                entity1 = this.world.getEntity(j2);
+                entity1 = this.world.getEntities(j2);
             }
             if (entity1 != null && entity1 instanceof EntityHuman) {
                 double distanceZ = this.u(i + 1);
@@ -314,14 +283,14 @@ implements IRangedEntity {
             double d9 = this.v(j);
             double d10 = this.w(j);
             if (!this.isInvisible()) {
-                this.world.addParticle("smoke", d8 + this.random.nextGaussian() * (double)0.3f, d9 + this.random.nextGaussian() * (double)0.3f, d10 + this.random.nextGaussian() * (double)0.3f, 0.0, 0.0, 0.0);
+                this.world.addParticle(EnumParticle.valueOf("smoke"), d8 + this.random.nextGaussian() * (double)0.3f, d9 + this.random.nextGaussian() * (double)0.3f, d10 + this.random.nextGaussian() * (double)0.3f, 0.0, 0.0, 0.0);
             }
             if (!flag || this.world.random.nextInt(4) != 0) continue;
-            this.world.addParticle("mobSpell", d8 + this.random.nextGaussian() * (double)0.3f, d9 + this.random.nextGaussian() * (double)0.3f, d10 + this.random.nextGaussian() * (double)0.3f, (double)0.7f, (double)0.7f, 0.5);
+            this.world.addParticle(EnumParticle.valueOf("mobSpell"), d8 + this.random.nextGaussian() * (double)0.3f, d9 + this.random.nextGaussian() * (double)0.3f, d10 + this.random.nextGaussian() * (double)0.3f, (double)0.7f, (double)0.7f, 0.5);
         }
         if (this.ca() > 0) {
             for (j = 0; j < 3; ++j) {
-                this.world.addParticle("mobSpell", this.locX + this.random.nextGaussian() * 1.0, this.locY + (double)(this.random.nextFloat() * 3.3f), this.locZ + this.random.nextGaussian() * 1.0, (double)0.7f, (double)0.7f, (double)0.9f);
+                this.world.addParticle(EnumParticle.valueOf("mobSpell"), this.locX + this.random.nextGaussian() * 1.0, this.locY + (double)(this.random.nextFloat() * 3.3f), this.locZ + this.random.nextGaussian() * 1.0, (double)0.7f, (double)0.7f, (double)0.9f);
             }
         }
     }
@@ -366,10 +335,10 @@ implements IRangedEntity {
                         double deltaLength = Math.sqrt(distanceSquared);
                         double relativeX = player.locX + deltaX / deltaLength * (double)viewDistance;
                         double relativeZ = player.locZ + deltaZ / deltaLength * (double)viewDistance;
-                        player.playerConnection.sendPacket((Packet)new PacketPlayOutWorldEvent(1013, (int)relativeX, (int)this.locY, (int)relativeZ, 0, true));
+                        player.playerConnection.sendPacket(new PacketPlayOutWorldEvent(1013, (int)relativeX, (int)this.locY, (int)relativeZ, 0, true));
                         continue;
                     }
-                    player.playerConnection.sendPacket((Packet)new PacketPlayOutWorldEvent(1013, (int)this.locX, (int)this.locY, (int)this.locZ, 0, true));
+                    player.playerConnection.sendPacket(new PacketPlayOutWorldEvent(1013, (int)this.locX, (int)this.locY, (int)this.locZ, 0, true));
                 }
             }
             this.s(invulnerableTicks);
@@ -382,7 +351,7 @@ implements IRangedEntity {
             for (int targetID = 1; targetID < 3; ++targetID) {
                 if (this.ticksLived < this.nextShot[targetID - 1]) continue;
                 this.nextShot[targetID - 1] = this.ticksLived + 10 + this.random.nextInt(10);
-                if (this.world.difficulty == EnumDifficulty.NORMAL || this.world.difficulty == EnumDifficulty.HARD) {
+                if (this.world.getDifficulty() == EnumDifficulty.NORMAL || this.world.getDifficulty() == EnumDifficulty.HARD) {
                     int targetId = targetID - 1;
                     int value = this.shootTimer[targetId];
                     this.shootTimer[targetId] = value + 1;
@@ -408,7 +377,7 @@ implements IRangedEntity {
                     this.b(targetID, 0);
                     continue;
                 }
-                List list = this.world.a(EntityHuman.class, this.boundingBox.grow(50.0, 8.0, 50.0), this.bw);
+                List list = this.world.a(EntityHuman.class, this.getBoundingBox().grow(50.0, 8.0, 50.0), this.bw);
                 int targetsFound = 0;
                 for (int i1 = 0; i1 < 10 && !list.isEmpty(); ++i1) {
                     EntityLiving entityliving = (EntityLiving)list.get(this.random.nextInt(list.size()));
@@ -445,15 +414,15 @@ implements IRangedEntity {
                                 int k2 = locY + i2;
                                 int l2 = j1 + l1;
                                 Block block = this.world.getType(j2, k2, l2);
-                                if (block.getMaterial() == Material.AIR || block == Blocks.BEDROCK || block == Blocks.ENDER_PORTAL || block == Blocks.ENDER_PORTAL_FRAME || block == Blocks.COMMAND || CraftEventFactory.callEntityChangeBlockEvent((Entity)this, (int)j2, (int)k2, (int)l2, (Block)Blocks.AIR, (int)0).isCancelled()) continue;
+                                if (block.getMaterial() == Material.AIR || block == Blocks.BEDROCK || block == Blocks.END_PORTAL || block == Blocks.END_PORTAL_FRAME || block == Blocks.COMMAND_BLOCK || CraftEventFactory.callEntityChangeBlockEvent(this, j2, k2, l2, Blocks.AIR, 0).isCancelled()) continue;
                                 flag = this.world.setAir(j2, k2, l2, true) || flag;
                             }
                         }
                     }
-                    if (flag) {
+                    if (flag)
                         this.world.a((EntityHuman)null, 1012, (int)this.locX, (int)this.locY, (int)this.locZ, 0);
-                    }
                 }
+            }
             }
             if (this.ticksLived % 120 == 0) {
                 this.heal(1.0f, EntityRegainHealthEvent.RegainReason.REGEN);
@@ -518,7 +487,7 @@ implements IRangedEntity {
         double d6 = spawnX - x;
         double d7 = spawnY - y;
         double d8 = spawnZ - z;
-        EntityWitherSkull entitywitherskull = new EntityWitherSkull(this.world, (EntityLiving)this, d6, d7, d8){
+        EntityWitherSkull entitywitherskull = new EntityWitherSkull(this.world, this, d6, d7, d8){
 
             protected void a(MovingObjectPosition movingobjectposition) {
                 Entity colliding = movingobjectposition.entity;

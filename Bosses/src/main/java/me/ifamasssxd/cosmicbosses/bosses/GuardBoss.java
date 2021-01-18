@@ -1,17 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.ParticleEffect
- *  me.ifamasssxd.factionupgrades.FactionUpgradeAPI
- *  me.ifamasssxd.factionupgrades.struct.FactionUpgrade
- *  org.bukkit.Location
- *  org.bukkit.entity.Creature
- *  org.bukkit.entity.LivingEntity
- *  org.bukkit.entity.Player
- *  org.bukkit.entity.Projectile
- *  org.bukkit.event.entity.EntityDamageByEntityEvent
- */
 package me.ifamasssxd.cosmicbosses.bosses;
 
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;

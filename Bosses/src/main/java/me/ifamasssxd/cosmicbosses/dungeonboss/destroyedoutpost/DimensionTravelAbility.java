@@ -1,53 +1,34 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.WorldGuardUtils
- *  kotlin.Metadata
- *  kotlin.TypeCastException
- *  kotlin.jvm.internal.Intrinsics
- *  org.arkhamnetwork.Arkkit.utils.LocationUtils
- *  org.bukkit.Location
- *  org.bukkit.Sound
- *  org.bukkit.World
- *  org.bukkit.entity.LivingEntity
- *  org.bukkit.entity.Player
- *  org.bukkit.event.Event
- *  org.jetbrains.annotations.NotNull
- *  org.jetbrains.annotations.Nullable
- */
 package me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
-import java.util.Iterator;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import kotlin.Metadata;
 import kotlin.TypeCastException;
 import kotlin.jvm.internal.Intrinsics;
 import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonAbility;
-import me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost.MotherOfYijki;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.cosmicbosses.utils.BossUtils;
 import org.arkhamnetwork.Arkkit.utils.LocationUtils;
 import org.bukkit.Location;
 import org.bukkit.Sound;
-import org.bukkit.World;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-@Metadata(mv={1, 1, 11}, bv={1, 0, 2}, k=1, d1={"\u0000<\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0002\b\b\n\u0002\u0010\u000e\n\u0000\n\u0002\u0010\t\n\u0000\n\u0002\u0010\u0002\n\u0002\b\u0003\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0010\u000b\n\u0000\u0018\u00002\u00020\u0001B\r\u0012\u0006\u0010\u0002\u001a\u00020\u0003\u00a2\u0006\u0002\u0010\u0004J\b\u0010\u000e\u001a\u00020\u000fH\u0016J\b\u0010\u0010\u001a\u00020\u0011H\u0016J\b\u0010\u0012\u001a\u00020\u0013H\u0016J\b\u0010\u0014\u001a\u00020\u0013H\u0016J\u0012\u0010\u0015\u001a\u00020\u00132\b\u0010\u0016\u001a\u0004\u0018\u00010\u0017H\u0016J\b\u0010\u0018\u001a\u00020\u0013H\u0016J\b\u0010\u0019\u001a\u00020\u001aH\u0016R\u001c\u0010\u0005\u001a\u0004\u0018\u00010\u0006X\u0086\u000e\u00a2\u0006\u000e\n\u0000\u001a\u0004\b\u0007\u0010\b\"\u0004\b\t\u0010\nR\u001c\u0010\u000b\u001a\u0004\u0018\u00010\u0006X\u0086\u000e\u00a2\u0006\u000e\n\u0000\u001a\u0004\b\f\u0010\b\"\u0004\b\r\u0010\n\u00a8\u0006\u001b"}, d2={"Lme/ifamasssxd/cosmicbosses/dungeonboss/destroyedoutpost/DimensionTravelAbility;", "Lme/ifamasssxd/cosmicbosses/dungeonboss/DungeonAbility;", "boss", "Lme/ifamasssxd/cosmicbosses/struct/Boss;", "(Lme/ifamasssxd/cosmicbosses/struct/Boss;)V", "iceCaveTeleport", "Lorg/bukkit/Location;", "getIceCaveTeleport", "()Lorg/bukkit/Location;", "setIceCaveTeleport", "(Lorg/bukkit/Location;)V", "lavaCaveTelport", "getLavaCaveTelport", "setLavaCaveTelport", "getAbilityName", "", "getCooldown", "", "onAbilityDisable", "", "onAbilityEnable", "onAbilityEvent", "event", "Lorg/bukkit/event/Event;", "onTick", "shouldStopTicking", "", "CosmicBosses"})
-public final class DimensionTravelAbility
-extends DungeonAbility {
+@Metadata(mv = {1, 1, 11}, bv = {1, 0, 2}, k = 1, d1 = {"\000<\n\002\030\002\n\002\030\002\n\000\n\002\030\002\n\002\b\002\n\002\030\002\n\002\b\b\n\002\020\016\n\000\n\002\020\t\n\000\n\002\020\002\n\002\b\003\n\002\030\002\n\002\b\002\n\002\020\013\n\000\030\0002\0020\001B\r\022\006\020\002\032\0020\003\006\002\020\004J\b\020\016\032\0020\017H\026J\b\020\020\032\0020\021H\026J\b\020\022\032\0020\023H\026J\b\020\024\032\0020\023H\026J\022\020\025\032\0020\0232\b\020\026\032\004\030\0010\027H\026J\b\020\030\032\0020\023H\026J\b\020\031\032\0020\032H\026R\034\020\005\032\004\030\0010\006X\016\006\016\n\000\032\004\b\007\020\b\"\004\b\t\020\nR\034\020\013\032\004\030\0010\006X\016\006\016\n\000\032\004\b\f\020\b\"\004\b\r\020\n\006\033"}, d2 = {"Lme/ifamasssxd/cosmicbosses/dungeonboss/destroyedoutpost/DimensionTravelAbility;", "Lme/ifamasssxd/cosmicbosses/dungeonboss/DungeonAbility;", "boss", "Lme/ifamasssxd/cosmicbosses/struct/Boss;", "(Lme/ifamasssxd/cosmicbosses/struct/Boss;)V", "iceCaveTeleport", "Lorg/bukkit/Location;", "getIceCaveTeleport", "()Lorg/bukkit/Location;", "setIceCaveTeleport", "(Lorg/bukkit/Location;)V", "lavaCaveTelport", "getLavaCaveTelport", "setLavaCaveTelport", "getAbilityName", "", "getCooldown", "", "onAbilityDisable", "", "onAbilityEnable", "onAbilityEvent", "event", "Lorg/bukkit/event/Event;", "onTick", "shouldStopTicking", "", "CosmicBosses"})
+public final class DimensionTravelAbility extends DungeonAbility {
     @Nullable
     private Location iceCaveTeleport;
+
     @Nullable
     private Location lavaCaveTelport;
+
+    public DimensionTravelAbility(@NotNull Boss boss) {
+        super(boss);
+    }
 
     @Nullable
     public final Location getIceCaveTeleport() {
@@ -67,68 +48,44 @@ extends DungeonAbility {
         this.lavaCaveTelport = location;
     }
 
-    @Override
-    public void onTick() {
-    }
+    public void onTick() {}
 
-    @Override
     public long getCooldown() {
         return TimeUnit.SECONDS.toMillis(15L);
     }
 
-    @Override
     public boolean shouldStopTicking() {
         return true;
     }
 
-    @Override
     public void onAbilityEnable() {
-        LivingEntity livingEntity = this.boss.entity;
-        Intrinsics.checkExpressionValueIsNotNull((Object)livingEntity, (String)"boss.entity");
-        this.iceCaveTeleport = new Location(livingEntity.getWorld(), 770.0, 105.0, -671.0);
-        LivingEntity livingEntity2 = this.boss.entity;
-        Intrinsics.checkExpressionValueIsNotNull((Object)livingEntity2, (String)"boss.entity");
-        this.lavaCaveTelport = new Location(livingEntity2.getWorld(), -480.0, 75.0, -762.0);
+        Intrinsics.checkExpressionValueIsNotNull(this.boss.entity, "boss.entity");
+        this.iceCaveTeleport = new Location(this.boss.entity.getWorld(), 770.0D, 105.0D, -671.0D);
+        Intrinsics.checkExpressionValueIsNotNull(this.boss.entity, "boss.entity");
+        this.lavaCaveTelport = new Location(this.boss.entity.getWorld(), -480.0D, 75.0D, -762.0D);
         Location caveSelected = ThreadLocalRandom.current().nextBoolean() ? this.iceCaveTeleport : this.lavaCaveTelport;
-        LivingEntity livingEntity3 = this.boss.entity;
-        Intrinsics.checkExpressionValueIsNotNull((Object)livingEntity3, (String)"boss.entity");
-        World world = livingEntity3.getWorld();
-        Intrinsics.checkExpressionValueIsNotNull((Object)world, (String)"boss.entity.world");
-        Iterator iterator = world.getPlayers().iterator();
-        while (iterator.hasNext()) {
-            Player pl;
-            Player player = pl = (Player)iterator.next();
-            Intrinsics.checkExpressionValueIsNotNull((Object)player, (String)"pl");
-            if (!WorldGuardUtils.isInRegionsFast((Location)player.getLocation(), (String[])new String[]{"yijki_realm"})) continue;
-            BossUtils.teleportPlayer(pl, caveSelected);
-            pl.playSound(pl.getLocation(), Sound.WITHER_SHOOT, 3.0f, 1.1f);
-            System.out.println("[CosmicBosses] Teleporting " + pl.getName() + " to " + LocationUtils.convertLocationToString((Location)caveSelected) + " from travel ability!");
+        Intrinsics.checkExpressionValueIsNotNull(this.boss.entity, "boss.entity");
+        Intrinsics.checkExpressionValueIsNotNull(this.boss.entity.getWorld(), "boss.entity.world");
+        for (Player pl : this.boss.entity.getWorld().getPlayers()) {
+            Intrinsics.checkExpressionValueIsNotNull(pl, "pl");
+            if (WorldGuardUtils.isInRegionsFast(pl.getLocation(), new String[] { "yijki_realm" })) {
+                BossUtils.teleportPlayer(pl, caveSelected);
+                pl.playSound(pl.getLocation(), Sound.WITHER_SHOOT, 3.0F, 1.1F);
+                System.out.println("[CosmicBosses] Teleporting " + pl.getName() + " to " + LocationUtils.convertLocationToString(caveSelected) + " from travel ability!");
+            }
         }
         this.boss.sendMessage(CC.White + "I am the source of all destructive powers in this universe. There is no end to how many environments I can end you in.");
-        Boss boss = this.boss;
-        if (boss == null) {
+        if (this.boss == null)
             throw new TypeCastException("null cannot be cast to non-null type me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost.MotherOfYijki");
-        }
-        ((MotherOfYijki)boss).teleportBossInstance(caveSelected, true);
+        ((MotherOfYijki)this.boss).teleportBossInstance(caveSelected, true);
     }
 
-    @Override
-    public void onAbilityDisable() {
-    }
+    public void onAbilityDisable() {}
 
-    @Override
-    public void onAbilityEvent(@Nullable Event event) {
-    }
+    public void onAbilityEvent(@Nullable Event event) {}
 
-    @Override
     @NotNull
     public String getAbilityName() {
         return "Dimensional Transport";
     }
-
-    public DimensionTravelAbility(@NotNull Boss boss) {
-        Intrinsics.checkParameterIsNotNull((Object)boss, (String)"boss");
-        super(boss);
-    }
 }
-

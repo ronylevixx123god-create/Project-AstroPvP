@@ -1,11 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  javax.annotation.Nullable
- *  net.minecraft.server.v1_7_R4.Entity
- *  net.minecraft.server.v1_7_R4.Vec3D
- */
 package me.ifamasssxd.cosmicbosses.struct;
 
 import javax.annotation.Nullable;

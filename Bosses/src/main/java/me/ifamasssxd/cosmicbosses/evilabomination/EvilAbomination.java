@@ -180,11 +180,11 @@ implements GuardBoss {
         this.setChestplate(new CustomItem(new ItemStack(Material.DIAMOND_CHESTPLATE)).setUnbreakable(true).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1).build());
         this.setLeggings(new CustomItem(new ItemStack(Material.DIAMOND_LEGGINGS)).setUnbreakable(true).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 5).addEnchant(Enchantment.THORNS, 1).build());
         this.setBoots(new CustomItem(new ItemStack(Material.DIAMOND_BOOTS)).setUnbreakable(true).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2).build());
-        ((CraftLivingEntity)skeleton).getHandle().getAttributeInstance(GenericAttributes.d).setValue((double)0.43f);
+        ((CraftLivingEntity)skeleton).getHandle().getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue((double)0.43f);
         Horse horse = (Horse)this.spawnMinion(EntityType.HORSE, skeleton.getLocation());
         this.horseEntity = new WeakReference<>(horse);
         EntityHorse entHorse = ((CraftHorse)horse).getHandle();
-        entHorse.getAttributeInstance(GenericAttributes.d).setValue(entHorse.getAttributeInstance(GenericAttributes.d).getValue() * (double)1.19f);
+        entHorse.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(entHorse.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).getValue() * (double)1.19f);
         horse.setMetadata("horse", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), (Object)""));
         horse.setMaxHealth((double)this.getMaxHealth());
         horse.setCustomName(CC.DarkGreenB + "Abomination");
@@ -427,10 +427,10 @@ implements GuardBoss {
             entity.getEquipment().setLeggingsDropChance(0.0f);
         }
         entity.setCustomName(CC.DarkGreen + "Plagued Minion");
-        entity.setMetadata("minion", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), (Object)this.getEntity().getUniqueId()));
+        entity.setMetadata("minion", (MetadataValue)new FixedMetadataValue(CosmicBosses.getInstance(), (Object)this.getEntity().getUniqueId()));
         entity.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 4), true);
         EntityInsentient ent = (EntityInsentient)((CraftLivingEntity)entity).getHandle();
-        ent.getAttributeInstance(GenericAttributes.d).setValue((double)0.42f);
+        ent.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.42f);
         AttributeInstance instance = ent.getAttributeInstance((IAttribute)ReflectionUtils.getObject(EntityZombie.class, null, "bp"));
         if (instance != null) {
             instance.setValue(0.0);
@@ -456,7 +456,7 @@ implements GuardBoss {
 
     @Override
     public List<BossMessage> getGeneralMessages() {
-        return Lists.newArrayList((Object[])new BossMessage[]{new BossMessage("Disease. Rot. Death. These are the pillars I exist by, and these are the pillars you will die animTime.", false, -1), new BossMessage("Feel the decay of the plague consume you!", false, 0), new BossMessage("You cannot escape my blight, this place was doomed long before you set foot here!", false, 0)});
+        return Lists.newArrayList(new BossMessage("Disease. Rot. Death. These are the pillars I exist by, and these are the pillars you will die animTime.", false, -1), new BossMessage("Feel the decay of the plague consume you!", false, 0), new BossMessage("You cannot escape my blight, this place was doomed long before you set foot here!", false, 0));
     }
 }
 

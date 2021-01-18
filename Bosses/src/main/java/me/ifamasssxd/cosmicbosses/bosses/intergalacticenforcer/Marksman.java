@@ -111,10 +111,10 @@ implements GuardBoss {
     public LivingEntity setupBoss(LivingEntity e) {
         LivingEntity entity = super.setupBoss(e);
         EntityCreature creature = ((CraftCreature)entity).getHandle();
-        creature.getAttributeInstance(GenericAttributes.b).setValue(16.0);
-        creature.getAttributeInstance(GenericAttributes.d).setValue((double)0.4f);
+        creature.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(16.0);
+        creature.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue((double)0.4f);
         creature.getAttributeInstance(GenericAttributes.c).setValue((double)0.65f);
-        creature.getAttributeInstance(GenericAttributes.e).setValue(2.0);
+        creature.getAttributeInstance(GenericAttributes.ATTACK_DAMAGE).setValue(2.0);
         Skeleton skeleton = (Skeleton)entity;
         skeleton.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 2));
         return entity;
@@ -133,7 +133,7 @@ implements GuardBoss {
         goalSelector.a(6, new PathfinderGoalLookAtPlayer(entity, EntityHuman.class, 8.0f));
         goalSelector.a(6, new PathfinderGoalRandomLookaround(entity));
         targetSelector.a(1, new PathfinderGoalHurtByTarget(entity, false));
-        targetSelector.a(2, new PathfinderGoalNearestAttackableTarget(entity, EntityHuman.class, 0, true));
+        targetSelector.a(2, new PathfinderGoalNearestAttackableTarget(entity, EntityHuman.class, true));
         skeleton.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 2));
         this.setHelmet(new CustomItem(new ItemStack(Material.GOLD_HELMET)).setUnbreakable(true).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 10).addEnchant(Enchantment.PROTECTION_FIRE, 5).build());
         this.setChestplate(new CustomItem(new ItemStack(Material.GOLD_CHESTPLATE)).setUnbreakable(true).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 10).build());
@@ -143,7 +143,7 @@ implements GuardBoss {
         skeleton.getEquipment().setItemInHandDropChance(0.0f);
         BossMessage start = this.getStartingMessage();
         if (start != null) {
-            this.sendMessage((Object)ChatColor.ITALIC + start.getMessage());
+            this.sendMessage(ChatColor.ITALIC + start.getMessage());
         }
     }
 

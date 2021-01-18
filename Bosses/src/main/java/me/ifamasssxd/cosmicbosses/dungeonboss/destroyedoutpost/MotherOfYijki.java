@@ -39,9 +39,6 @@ import me.ifamasssxd.cosmicbosses.dungeonboss.abilities.ChainReaction;
 import me.ifamasssxd.cosmicbosses.dungeonboss.abilities.EndOfWorld;
 import me.ifamasssxd.cosmicbosses.dungeonboss.abilities.TemporalRift;
 import me.ifamasssxd.cosmicbosses.dungeonboss.abilities.UnstoppableForce;
-import me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost.DimensionTravelAbility;
-import me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost.MinionsAbility;
-import me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost.MotherOfYijkiEntity;
 import me.ifamasssxd.cosmicbosses.entities.CustomEntity;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.cosmicbosses.struct.BossMessage;
@@ -72,14 +69,12 @@ extends DungeonYijki {
     public boolean inDifferentDimension = false;
     private Location originalSpawn;
     private double healthBeforeTeleporting = this.getMaxHealth();
-    private MinionsAbility minionsAbility;
     private double lastDimensionalShiftHealth = 100.0;
     private boolean inMainWorld;
 
     public MotherOfYijki(Location location, BossType bossType) {
         super(location, bossType);
         this.originalSpawn = location;
-        this.minionsAbility = new MinionsAbility(this);
         this.lastSpawnedMinions = System.currentTimeMillis() - 5000L;
         this.inMainWorld = location.getWorld().equals(Bukkit.getWorlds().get(0));
     }
@@ -98,9 +93,6 @@ extends DungeonYijki {
         this.teleportBossInstance(this.originalSpawn, false);
         if (this.getEntity().getHealth() < this.healthBeforeTeleporting) {
             this.getEntity().setHealth(this.healthBeforeTeleporting);
-        }
-        if (this.minionsAbility != null) {
-            this.minionsAbility.clearEntities();
         }
     }
 
@@ -200,10 +192,8 @@ extends DungeonYijki {
         if (this.loops % this.getSeconds(1) == 0) {
             this.updateScoreboard();
         }
-        if (!(System.currentTimeMillis() - this.lastSpawnedMinions < 100000L || this.minionsAbility.getEntities().size() >= 5 || this.inDifferentDimension || this.lastDimensionalShift != 0L && System.currentTimeMillis() - this.lastDimensionalShift < TimeUnit.SECONDS.toMillis(90L))) {
+        if (!(System.currentTimeMillis() - this.lastSpawnedMinions < 100000L || this.inDifferentDimension || this.lastDimensionalShift != 0L && System.currentTimeMillis() - this.lastDimensionalShift < TimeUnit.SECONDS.toMillis(90L))) {
             this.getEntity().getWorld().getPlayers().forEach(pl -> this.sendMessage((Player)pl, "Go my children! Siphon from the life force of these pitiful creatures for your mother - heal me!"));
-            this.lastSpawnedMinions = System.currentTimeMillis();
-            this.minionsAbility.onAbility();
         }
     }
 

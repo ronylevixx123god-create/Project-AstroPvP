@@ -86,19 +86,19 @@ extends EntitySkeleton {
         ReflectionUtils.setObject(EntitySkeleton.class, (Object)this, (Object)new PathfinderGoalBossMeleeAttack((EntityCreature)this, EntityHuman.class, 1.2, false), "bq");
         List list = (List)ReflectionUtils.getObject(PathfinderGoalSelector.class, (Object)this.goalSelector, "b");
         list.clear();
-        this.goalSelector.a(1, (PathfinderGoal)new PathfinderGoalFloat((EntityInsentient)this));
-        this.goalSelector.a(2, (PathfinderGoal)new PathfinderGoalMeleeAttack((EntityCreature)this, EntityHuman.class, 1.0, false));
-        this.goalSelector.a(3, (PathfinderGoal)new PathfinderGoalLookAtPlayer((EntityInsentient)this, EntityHuman.class, 8.0f));
-        this.goalSelector.a(4, (PathfinderGoal)new PathfinderGoalRandomLookaround((EntityInsentient)this));
-        this.targetSelector.a(1, (PathfinderGoal)new PathfinderGoalHurtByTarget((EntityCreature)this, false));
-        this.targetSelector.a(2, (PathfinderGoal)new PathfinderGoalNearestAttackableTarget((EntityCreature)this, EntityHuman.class, 0, true));
-        if (world != null && !world.isStatic) {
-            this.bZ();
+        this.goalSelector.a(1, new PathfinderGoalFloat((EntityInsentient)this));
+        this.goalSelector.a(2, new PathfinderGoalMeleeAttack((EntityCreature)this, EntityHuman.class, 1.0, false));
+        this.goalSelector.a(3, new PathfinderGoalLookAtPlayer((EntityInsentient)this, EntityHuman.class, 8.0f));
+        this.goalSelector.a(4, new PathfinderGoalRandomLookaround((EntityInsentient)this));
+        this.targetSelector.a(1, new PathfinderGoalHurtByTarget((EntityCreature)this, false));
+        this.targetSelector.a(2, new PathfinderGoalNearestAttackableTarget((EntityCreature)this, EntityHuman.class, 0, true));
+        if (world != null && !world.isClientSide) {
+            this.n();
         }
     }
 
     protected Entity findTarget() {
-        EntityHuman human = this.world.findNearbyVulnerablePlayer((Entity)this, 16.0);
+        EntityHuman human = this.world.findNearbyPlayerWhoAffectsSpawning(this, 16.0);
         if (human != null && !human.getBukkitEntity().hasMetadata("NPC")) {
             return human;
         }
@@ -111,7 +111,7 @@ extends EntitySkeleton {
             AttributeInstance attributeinstance = this.getAttributeInstance(GenericAttributes.d);
             attributeinstance.b(i);
         }
-        this.bn = this.bP();
+        this.bM() = this.bP();
         float f11 = 16.0f;
         if (this.target == null) {
             System.out.println("Target null!");
@@ -152,7 +152,7 @@ extends EntitySkeleton {
         } else if (!this.bn && (this.pathEntity == null && this.random.nextInt(180) == 0 || this.random.nextInt(120) == 0 || this.bo > 0) && this.aU < 100) {
             this.bQ();
         }
-        int i = MathHelper.floor((double)(this.boundingBox.b + 0.5));
+        int i = MathHelper.floor((double)(this.getBoundingBox().b + 0.5));
         boolean flag = this.M();
         boolean flag1 = this.P();
         this.pitch = 0.0f;

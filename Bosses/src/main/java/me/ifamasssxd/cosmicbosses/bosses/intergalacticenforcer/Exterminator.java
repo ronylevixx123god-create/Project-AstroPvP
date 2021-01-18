@@ -84,10 +84,10 @@ implements GuardBoss {
     public LivingEntity setupBoss(LivingEntity e) {
         LivingEntity entity = super.setupBoss(e);
         EntityCreature creature = ((CraftCreature)entity).getHandle();
-        creature.getAttributeInstance(GenericAttributes.b).setValue(16.0);
-        creature.getAttributeInstance(GenericAttributes.d).setValue(1.5);
+        creature.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(16.0);
+        creature.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(1.5);
         creature.getAttributeInstance(GenericAttributes.c).setValue(0.75);
-        creature.getAttributeInstance(GenericAttributes.e).setValue(2.0);
+        creature.getAttributeInstance(GenericAttributes.ATTACK_DAMAGE).setValue(2.0);
         PigZombie zombie = (PigZombie)entity;
         zombie.setBaby(true);
         zombie.setAngry(true);

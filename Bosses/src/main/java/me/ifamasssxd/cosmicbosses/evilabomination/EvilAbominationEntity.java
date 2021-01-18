@@ -1,34 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.server.v1_8_R3.Entity
- *  net.minecraft.server.v1_8_R3.EntityCreature
- *  net.minecraft.server.v1_8_R3.EntityHuman
- *  net.minecraft.server.v1_8_R3.EntityInsentient
- *  net.minecraft.server.v1_8_R3.EntityLiving
- *  net.minecraft.server.v1_8_R3.EntityPlayer
- *  net.minecraft.server.v1_8_R3.EntityWitherSkull
- *  net.minecraft.server.v1_8_R3.EntityZombie
- *  net.minecraft.server.v1_8_R3.IRangedEntity
- *  net.minecraft.server.v1_8_R3.MathHelper
- *  net.minecraft.server.v1_8_R3.MovingObjectPosition
- *  net.minecraft.server.v1_8_R3.PathfinderGoal
- *  net.minecraft.server.v1_8_R3.PathfinderGoalFloat
- *  net.minecraft.server.v1_8_R3.PathfinderGoalHurtByTarget
- *  net.minecraft.server.v1_8_R3.PathfinderGoalLookAtPlayer
- *  net.minecraft.server.v1_8_R3.PathfinderGoalNearestAttackableTarget
- *  net.minecraft.server.v1_8_R3.PathfinderGoalRandomLookaround
- *  net.minecraft.server.v1_8_R3.PathfinderGoalSelector
- *  net.minecraft.server.v1_8_R3.World
- *  org.bukkit.GameMode
- *  org.bukkit.Location
- *  org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity
- *  org.bukkit.entity.Entity
- *  org.bukkit.entity.LivingEntity
- *  org.bukkit.entity.Player
- *  org.bukkit.util.Vector
- */
 package me.ifamasssxd.cosmicbosses.evilabomination;
 
 import java.util.List;
@@ -75,22 +44,22 @@ implements IRangedEntity {
 
     public EvilAbominationEntity(World world) {
         super(world);
-        List list = (List)ReflectionUtils.getObject(PathfinderGoalSelector.class, (Object)this.goalSelector, "b");
+        List list = (List)ReflectionUtils.getObject(PathfinderGoalSelector.class, this.goalSelector, "b");
         list.clear();
         this.goalSelector.a(0, (PathfinderGoal)new PathfinderGoalWitherBossArrowAttack(this, 1.0, 10, 25, 23.0f));
-        this.goalSelector.a(0, (PathfinderGoal)new PathfinderGoalBossMeleeAttack((EntityCreature)this, EntityHuman.class, 1.2, false));
-        this.goalSelector.a(1, (PathfinderGoal)new PathfinderGoalFloat((EntityInsentient)this));
-        this.goalSelector.a(3, (PathfinderGoal)new PathfinderGoalLookAtPlayer((EntityInsentient)this, EntityHuman.class, 8.0f));
-        this.goalSelector.a(4, (PathfinderGoal)new PathfinderGoalRandomLookaround((EntityInsentient)this));
-        this.targetSelector.a(1, (PathfinderGoal)new PathfinderGoalHurtByTarget((EntityCreature)this, false));
-        this.targetSelector.a(2, (PathfinderGoal)new PathfinderGoalNearestAttackableTarget((EntityCreature)this, EntityHuman.class, 0, true));
-        if (world != null && !world.isStatic) {
-            this.bZ();
+        this.goalSelector.a(0, new PathfinderGoalBossMeleeAttack(this, EntityHuman.class, 1.2, false));
+        this.goalSelector.a(1, new PathfinderGoalFloat(this));
+        this.goalSelector.a(3, new PathfinderGoalLookAtPlayer(this, EntityHuman.class, 8.0f));
+        this.goalSelector.a(4, new PathfinderGoalRandomLookaround(this));
+        this.targetSelector.a(1, new PathfinderGoalHurtByTarget(this, false));
+        this.targetSelector.a(2, new PathfinderGoalNearestAttackableTarget((EntityCreature)this, EntityHuman.class, 0, true));
+        if (world != null && !world.isClientSide) {
+            this.cn();
         }
     }
 
     protected Entity findTarget() {
-        EntityHuman human = this.world.findNearbyVulnerablePlayer((Entity)this, 16.0);
+        EntityHuman human = this.world.findNearbyPlayerWhoAffectsSpawning(this, 16.0);
         if (human != null && !human.getBukkitEntity().hasMetadata("NPC")) {
             return human;
         }
@@ -153,7 +122,7 @@ implements IRangedEntity {
         entitywitherskull.locX = spawnLoc.getX();
         entitywitherskull.locZ = spawnLoc.getZ();
         this.world.addEntity((Entity)entitywitherskull);
-        this.makeSound("random.bow", 1.0f, 1.0f / (this.aI().nextFloat() * 0.4f + 0.8f));
+        this.makeSound("random.bow", 1.0f, 1.0f / (this.bc().nextFloat() * 0.4f + 0.8f));
     }
 }
 

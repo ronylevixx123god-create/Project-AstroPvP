@@ -52,7 +52,7 @@ implements Listener {
             if (boss == null) {
                 return;
             }
-            boss.onMinionUpdate(event.getEntity(), (Event)event);
+            boss.onMinionUpdate(event.getEntity(), event);
         }
     }
 
@@ -63,7 +63,7 @@ implements Listener {
             if (boss == null) {
                 return;
             }
-            boss.onMinionUpdate(event.getEntity(), (Event)event);
+            boss.onMinionUpdate(event.getEntity(), event);
             if (event.isCancelled()) {
                 event.setTarget(null);
             }
@@ -74,7 +74,7 @@ implements Listener {
     public void onEntityChangeBlockEvent(EntityChangeBlockEvent event) {
         Boss boss;
         if (event.getEntity().hasMetadata("minion") && (boss = BossUtils.getBossFromMinion(event.getEntity())) != null) {
-            boss.onMinionUpdate(event.getEntity(), (Event)event);
+            boss.onMinionUpdate(event.getEntity(), event);
         }
     }
 

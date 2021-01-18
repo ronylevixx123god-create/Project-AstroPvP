@@ -39,7 +39,7 @@ extends PathfinderGoalMeleeAttack {
     private double k;
 
     public PathfinderGoalBossMeleeAttack(EntityCreature entitycreature, Class<?> oclass, double d0, boolean flag) {
-        super(entitycreature, oclass, d0, flag);
+        super(entitycreature, (Class<? extends Entity>) oclass, d0, flag);
         this.b = entitycreature;
     }
 
@@ -87,23 +87,22 @@ extends PathfinderGoalMeleeAttack {
             this.i = entityliving.locX;
             this.j = entityliving.getBoundingBox().b;
             this.k = entityliving.locZ;
-            this.h = 4 + this.b.aI().nextInt(7);
+            this.h = 4 + this.b.bc().nextInt(7);
             if (distance > 1024.0) {
                 this.h += 10;
             } else if (distance > 256.0) {
                 this.h += 5;
             }
-            if (!this.b.getNavigation().a((Entity)entityliving, this.d)) {
+            if (!this.b.getNavigation().a(entityliving, this.d)) {
                 this.h += 15;
             }
         }
         this.c = Math.max(this.c - 1, 0);
         if (distance <= d1 && this.c <= 20) {
             this.c = 20;
-            if (this.b.be() != null) {
-                this.b.ba();
-            }
-            this.b.n((Entity)entityliving);
+            if (this.b.bA() != null)
+                this.b.bw();
+            this.b.n(entityliving);
         }
     }
 }

@@ -38,7 +38,6 @@ implements IRangedEntity {
         this.setHealth(this.getMaxHealth());
         this.a(0.9f, 4.0f);
         this.fireProof = true;
-        this.getNavigation().e(true);
         this.as = EnumEntitySize.SIZE_6;
         this.direction = target.toVector().subtract(spawn.toVector());
         if (this.direction.length() != 0.0) {
@@ -67,7 +66,7 @@ implements IRangedEntity {
             this.motY += this.direction.getY() * (gravityMultiplier / 2.0);
         }
         this.motY *= gravityMultiplier;
-        super.e();
+        super.m();
         if (this.motX * this.motX + this.motZ * this.motZ > (double)0.05f) {
             this.yaw = (float)Math.atan2(this.motZ, this.motX) * 57.295776f - 90.0f;
         }

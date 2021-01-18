@@ -109,7 +109,7 @@ implements GuardBoss {
 
     @Override
     public String getCustomName() {
-        return (Object)ChatColor.YELLOW + ChatColor.BOLD.toString() + "Cosmic Enforcer";
+        return ChatColor.YELLOW + ChatColor.BOLD.toString() + "Cosmic Enforcer";
     }
 
     @Override
@@ -121,10 +121,10 @@ implements GuardBoss {
     public LivingEntity setupBoss(LivingEntity e) {
         LivingEntity entity = super.setupBoss(e);
         EntityCreature creature = ((CraftCreature)entity).getHandle();
-        creature.getAttributeInstance(GenericAttributes.b).setValue(24.0);
-        creature.getAttributeInstance(GenericAttributes.d).setValue((double)0.55f);
+        creature.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(24.0);
+        creature.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue((double)0.55f);
         creature.getAttributeInstance(GenericAttributes.c).setValue((double)0.85f);
-        creature.getAttributeInstance(GenericAttributes.e).setValue(3.0);
+        creature.getAttributeInstance(GenericAttributes.ATTACK_DAMAGE).setValue(3.0);
         Zombie zombie = this.getPigZombie();
         zombie.setBaby(false);
         zombie.setVillager(false);
@@ -136,16 +136,16 @@ implements GuardBoss {
         LivingEntity ent = this.spawnBoss();
         EntityCreature insent = ((CraftCreature)ent).getHandle();
         EntityCreature creature = ((CraftCreature)ent).getHandle();
-        BossUtils.clearGoalSelectors((EntityInsentient)insent);
-        PathfinderGoalSelector targetSelector = BossUtils.getSelector((EntityInsentient)insent, "targetSelector");
-        PathfinderGoalSelector goalSelector = BossUtils.getSelector((EntityInsentient)insent, "goalSelector");
-        goalSelector.a(0, (PathfinderGoal)new PathfinderGoalFloat((EntityInsentient)insent));
-        goalSelector.a(2, (PathfinderGoal)new PathfinderGoalMeleeAttack(creature, EntityHuman.class, 1.2, false));
-        goalSelector.a(5, (PathfinderGoal)new PathfinderGoalMoveTowardsRestriction(creature, 1.3));
-        goalSelector.a(8, (PathfinderGoal)new PathfinderGoalLookAtPlayer((EntityInsentient)insent, EntityHuman.class, 8.0f));
-        goalSelector.a(8, (PathfinderGoal)new PathfinderGoalRandomLookaround((EntityInsentient)insent));
-        targetSelector.a(1, (PathfinderGoal)new PathfinderGoalHurtByTarget(creature, true));
-        targetSelector.a(2, (PathfinderGoal)new PathfinderGoalNearestAttackableTarget(creature, EntityHuman.class, 0, true));
+        BossUtils.clearGoalSelectors(insent);
+        PathfinderGoalSelector targetSelector = BossUtils.getSelector(insent, "targetSelector");
+        PathfinderGoalSelector goalSelector = BossUtils.getSelector(insent, "goalSelector");
+        goalSelector.a(0, new PathfinderGoalFloat(insent));
+        goalSelector.a(2, new PathfinderGoalMeleeAttack(creature, EntityHuman.class, 1.2, false));
+        goalSelector.a(5, new PathfinderGoalMoveTowardsRestriction(creature, 1.3));
+        goalSelector.a(8, new PathfinderGoalLookAtPlayer(insent, EntityHuman.class, 8.0f));
+        goalSelector.a(8, new PathfinderGoalRandomLookaround(insent));
+        targetSelector.a(1, new PathfinderGoalHurtByTarget(creature, true));
+        targetSelector.a(2, new PathfinderGoalNearestAttackableTarget(creature, EntityHuman.class, 0, true));
         this.setHelmet(new CustomItem(new ItemStack(Material.DIAMOND_HELMET)).setUnbreakable(true).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2).addEnchant(Enchantment.PROTECTION_FIRE, 5).build());
         this.setChestplate(new CustomItem(new ItemStack(Material.DIAMOND_CHESTPLATE)).setUnbreakable(true).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1).build());
         this.setLeggings(new CustomItem(new ItemStack(Material.DIAMOND_LEGGINGS)).setUnbreakable(true).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1).addEnchant(Enchantment.THORNS, 1).build());
