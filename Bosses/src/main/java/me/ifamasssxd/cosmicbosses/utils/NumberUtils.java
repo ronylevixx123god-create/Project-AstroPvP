@@ -1,15 +1,16 @@
-/*
- * Decompiled with CFR 0.150.
- */
 package me.ifamasssxd.cosmicbosses.utils;
 
-import java.text.DecimalFormat;
+import java.text.*;
 
-public class NumberUtils {
-    static DecimalFormat format = new DecimalFormat("#,##0");
-
-    public static String addCommas(int number) {
-        return format.format(number);
+public class NumberUtils
+{
+    static DecimalFormat format;
+    
+    public static String addCommas(final int number) {
+        return NumberUtils.format.format(number);
+    }
+    
+    static {
+        NumberUtils.format = new DecimalFormat("#,##0");
     }
 }
-

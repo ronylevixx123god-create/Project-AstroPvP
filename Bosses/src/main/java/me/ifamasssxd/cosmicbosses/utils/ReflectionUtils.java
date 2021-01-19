@@ -1,14 +1,12 @@
-/*
- * Decompiled with CFR 0.150.
- */
 package me.ifamasssxd.cosmicbosses.utils;
 
-import java.lang.reflect.Field;
+import java.lang.reflect.*;
 
-public class ReflectionUtils {
-    public static void setNull(Object object, String fieldName) {
+public class ReflectionUtils
+{
+    public static void setNull(final Object object, final String fieldName) {
         try {
-            Field f = object.getClass().getDeclaredField(fieldName);
+            final Field f = object.getClass().getDeclaredField(fieldName);
             f.setAccessible(true);
             System.out.println("Value Before: " + f.get(object));
             f.set(object, null);
@@ -18,10 +16,10 @@ public class ReflectionUtils {
             e.printStackTrace();
         }
     }
-
-    public static void setObject(Class<?> clazz, Object instance, Object objectToSet, String fieldName) {
+    
+    public static void setObject(final Class<?> clazz, final Object instance, final Object objectToSet, final String fieldName) {
         try {
-            Field f = clazz.getDeclaredField(fieldName);
+            final Field f = clazz.getDeclaredField(fieldName);
             f.setAccessible(true);
             f.set(instance, objectToSet);
         }
@@ -29,10 +27,10 @@ public class ReflectionUtils {
             e.printStackTrace();
         }
     }
-
-    public static Object getObject(Class<?> clazz, Object instance, String fieldName) {
+    
+    public static Object getObject(final Class<?> clazz, final Object instance, final String fieldName) {
         try {
-            Field f = clazz.getDeclaredField(fieldName);
+            final Field f = clazz.getDeclaredField(fieldName);
             f.setAccessible(true);
             return f.get(instance);
         }
@@ -41,10 +39,10 @@ public class ReflectionUtils {
             return null;
         }
     }
-
-    public static Object getObject(Class<?> clazz, String fieldName) {
+    
+    public static Object getObject(final Class<?> clazz, final String fieldName) {
         try {
-            Field f = clazz.getDeclaredField(fieldName);
+            final Field f = clazz.getDeclaredField(fieldName);
             f.setAccessible(true);
             return f.get(null);
         }
@@ -54,4 +52,3 @@ public class ReflectionUtils {
         }
     }
 }
-

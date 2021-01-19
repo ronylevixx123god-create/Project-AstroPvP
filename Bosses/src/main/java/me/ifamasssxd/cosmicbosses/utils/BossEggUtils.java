@@ -1,50 +1,39 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.google.common.collect.Lists
- *  org.bukkit.ChatColor
- *  org.bukkit.Material
- *  org.bukkit.inventory.ItemStack
- */
 package me.ifamasssxd.cosmicbosses.utils;
 
-import com.google.common.collect.Lists;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import me.ifamasssxd.cosmicbosses.struct.Boss;
-import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
-import me.ifamasssxd.cosmicbosses.utils.ItemBuilder;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
+import me.ifamasssxd.cosmicbosses.struct.enums.*;
+import me.ifamasssxd.cosmicbosses.struct.*;
+import org.bukkit.inventory.*;
+import com.google.common.collect.*;
+import org.bukkit.*;
+import java.util.*;
 
-public class BossEggUtils {
-    private static HashMap<BossType, Boss> deadInstances = new HashMap();
-
-    public static ItemStack getBossEgg(BossType type) {
-        Boss boss = deadInstances.containsKey((Object)type) ? deadInstances.get((Object)type) : type.createInstance(null);
-        deadInstances.put(type, boss);
-        for (BossType bossType : BossType.values()) {
-            if (!boss.getClass().isAssignableFrom(bossType.getBossClass())) continue;
-            ArrayList lore = Lists.newArrayList();
-            lore.add((Object)ChatColor.GRAY + "This monster egg contains a");
-            lore.add((Object)ChatColor.RED + ChatColor.UNDERLINE.toString() + "dangerous" + (Object)ChatColor.GRAY + " warzone boss");
-            lore.add("");
-            lore.add(boss.getColor(true) + "LORE");
-            lore.addAll(BossEggUtils.formatLore(type.getLore(), ChatColor.GRAY.toString() + (Object)ChatColor.ITALIC));
-            lore.add("");
-            lore.add(boss.getColor(true) + "DIFFICULTY");
-            lore.add(boss.getColor(false) + boss.getDifficulty().getName());
-            ItemStack is = ItemBuilder.buildItem(Material.MONSTER_EGG, bossType.getEggData(), bossType.getEggName(), lore);
-            return is;
+public class BossEggUtils
+{
+    private static HashMap<BossType, Boss> deadInstances;
+    
+    public static ItemStack getBossEgg(final BossType type) {
+        final Boss boss = BossEggUtils.deadInstances.containsKey(type) ? BossEggUtils.deadInstances.get(type) : type.createInstance(null);
+        BossEggUtils.deadInstances.put(type, boss);
+        for (final BossType bossType : BossType.values()) {
+            if (boss.getClass().isAssignableFrom(bossType.getBossClass())) {
+                final List<String> lore = Lists.newArrayList();
+                lore.add(ChatColor.GRAY + "This monster egg contains a");
+                lore.add(ChatColor.RED + ChatColor.UNDERLINE.toString() + "dangerous" + ChatColor.GRAY + " warzone boss");
+                lore.add("");
+                lore.add(boss.getColor(true) + "LORE");
+                lore.addAll(formatLore(type.getLore(), ChatColor.GRAY.toString() + ChatColor.ITALIC));
+                lore.add("");
+                lore.add(boss.getColor(true) + "DIFFICULTY");
+                lore.add(boss.getColor(false) + boss.getDifficulty().getName());
+                final ItemStack is = ItemBuilder.buildItem(Material.MONSTER_EGG, bossType.getEggData(), bossType.getEggName(), lore);
+                return is;
+            }
         }
         return null;
     }
-
-    public static List<String> formatLore(String s, String color) {
-        ArrayList<String> lore_l = new ArrayList<String>();
+    
+    public static List<String> formatLore(final String s, final String color) {
+        final List<String> lore_l = new ArrayList<String>();
         if (s == null) {
             return lore_l;
         }
@@ -54,47 +43,52 @@ public class BossEggUtils {
         }
         if (s.contains(" ")) {
             String line = color;
-            for (String word : s.split(" ")) {
+            for (final String word : s.split(" ")) {
                 if (line.length() - 1 + word.length() <= 38) {
                     line = line + word + " ";
-                    continue;
                 }
-                if (line.endsWith(" ")) {
-                    line = line.substring(0, line.length() - 1);
+                else {
+                    if (line.endsWith(" ")) {
+                        line = line.substring(0, line.length() - 1);
+                    }
+                    lore_l.add(line);
+                    line = color + word + " ";
                 }
-                lore_l.add(line);
-                line = color + word + " ";
             }
-            if (ChatColor.stripColor((String)line).length() > 0) {
+            if (ChatColor.stripColor(line).length() > 0) {
                 lore_l.add(line);
             }
-        } else {
-            lore_l.add(s);
             return lore_l;
         }
+        lore_l.add(s);
         return lore_l;
     }
-
-    public static Boss getBossInstance(BossType boss) {
+    
+    public static Boss getBossInstance(final BossType boss) {
         Boss retr = null;
-        if (deadInstances.containsKey((Object)boss)) {
-            retr = deadInstances.get((Object)boss);
-        } else {
+        if (BossEggUtils.deadInstances.containsKey(boss)) {
+            retr = BossEggUtils.deadInstances.get(boss);
+        }
+        else {
             retr = boss.createInstance(null);
-            deadInstances.put(boss, retr);
+            BossEggUtils.deadInstances.put(boss, retr);
         }
         return retr;
     }
-
-    public static BossType getBossType(ItemStack is) {
+    
+    public static BossType getBossType(final ItemStack is) {
         if (is == null || !is.hasItemMeta() || !is.getItemMeta().hasDisplayName()) {
             return null;
         }
-        for (BossType bossType : BossType.values()) {
-            if (bossType.getEggData() != is.getDurability() || !is.getItemMeta().getDisplayName().equals(bossType.getEggName())) continue;
-            return bossType;
+        for (final BossType bossType : BossType.values()) {
+            if (bossType.getEggData() == is.getDurability() && is.getItemMeta().getDisplayName().equals(bossType.getEggName())) {
+                return bossType;
+            }
         }
         return null;
     }
+    
+    static {
+        BossEggUtils.deadInstances = new HashMap<BossType, Boss>();
+    }
 }
-

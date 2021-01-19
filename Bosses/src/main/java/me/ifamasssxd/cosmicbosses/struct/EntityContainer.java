@@ -1,17 +1,11 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  org.bukkit.entity.Entity
- */
 package me.ifamasssxd.cosmicbosses.struct;
 
-import java.util.Set;
-import org.bukkit.entity.Entity;
+import java.util.*;
+import org.bukkit.entity.*;
 
-public interface EntityContainer {
-    public Set<Entity> getEntities();
-
-    public void clearEntities();
+public interface EntityContainer
+{
+    Set<Entity> getEntities();
+    
+    void clearEntities();
 }
-

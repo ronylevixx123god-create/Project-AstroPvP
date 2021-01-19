@@ -1,205 +1,188 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.server.v1_8_R3.BiomeBase
- *  net.minecraft.server.v1_8_R3.BiomeMeta
- *  net.minecraft.server.v1_8_R3.Entity
- *  net.minecraft.server.v1_8_R3.EntityBlaze
- *  net.minecraft.server.v1_8_R3.EntityCaveSpider
- *  net.minecraft.server.v1_8_R3.EntityEnderDragon
- *  net.minecraft.server.v1_8_R3.EntityEnderman
- *  net.minecraft.server.v1_8_R3.EntityGhast
- *  net.minecraft.server.v1_8_R3.EntityInsentient
- *  net.minecraft.server.v1_8_R3.EntitySkeleton
- *  net.minecraft.server.v1_8_R3.EntitySnowman
- *  net.minecraft.server.v1_8_R3.EntitySpider
- *  net.minecraft.server.v1_8_R3.EntityTypes
- *  net.minecraft.server.v1_8_R3.EntityWither
- *  net.minecraft.server.v1_8_R3.EntityZombie
- *  org.bukkit.entity.EntityType
- */
 package me.ifamasssxd.cosmicbosses.entities;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import me.ifamasssxd.cosmicbosses.bosses.yijki.WitherBoss;
-import me.ifamasssxd.cosmicbosses.dungeonboss.DeathCurseBlaze;
-import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijkiEntity;
-import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijkiImage;
-import me.ifamasssxd.cosmicbosses.dungeonboss.YijkiRunnerEntity;
-import me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost.MotherOfYijkiEntity;
-import me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost.YijkiDiscipleEntity;
-import me.ifamasssxd.cosmicbosses.evilabomination.EvilAbominationEntity;
-import net.minecraft.server.v1_8_R3.BiomeBase;
+import me.ifamasssxd.cosmicbosses.dungeonboss.planetnul.CorruptCosmonaut;
+import me.ifamasssxd.cosmicbosses.dungeonboss.planetnul.CorruptCosmonautEntity;
 import net.minecraft.server.v1_8_R3.Entity;
-import net.minecraft.server.v1_8_R3.EntityBlaze;
-import net.minecraft.server.v1_8_R3.EntityInsentient;
-import net.minecraft.server.v1_8_R3.EntitySkeleton;
-import net.minecraft.server.v1_8_R3.EntityTypes;
-import net.minecraft.server.v1_8_R3.EntityWither;
-import net.minecraft.server.v1_8_R3.EntityZombie;
-import org.bukkit.entity.EntityType;
+import org.bukkit.entity.*;
+import java.util.*;
+import java.lang.reflect.*;
+import me.ifamasssxd.cosmicbosses.bosses.yijki.*;
+import me.ifamasssxd.cosmicbosses.evilabomination.*;
+import me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost.*;
+import me.ifamasssxd.cosmicbosses.dungeonboss.*;
+import net.minecraft.server.v1_8_R3.*;
+import me.ifamasssxd.cosmicbosses.bosses.dragon.*;
+import me.ifamasssxd.cosmicbosses.bosses.xmasbattlefield.*;
 
-public enum CustomEntity {
-    SKELETON_BOSS("SkeletonBoss", 51, EntityType.SKELETON, EntitySkeleton.class, SkeletonBoss.class),
-    WITHER("Wither", 64, EntityType.WITHER, EntityWither.class, WitherBoss.class),
-    ABOMINATION_ZOMBIE("ZombieAbomination", EntityType.ZOMBIE.getTypeId(), EntityType.ZOMBIE, EntityZombie.class, EvilAbominationEntity.class),
-    DUNGEON_YIJKI("DungeonYijki", EntityType.WITHER.getTypeId(), EntityType.WITHER, EntityWither.class, DungeonYijkiEntity.class),
-    DUNGEON_MOTHER_OF_YIJKI("MotherOfYijki", EntityType.WITHER.getTypeId(), EntityType.WITHER, EntityWither.class, MotherOfYijkiEntity.class),
-    DUNGEON_HEALING_BLAZE("DungeonBlaze", EntityType.BLAZE.getTypeId(), EntityType.BLAZE, EntityBlaze.class, HealingBlazeEntity.class),
-    DUNGEON_YIJKI_IMAGE("DungeonImage", EntityType.WITHER.getTypeId(), EntityType.WITHER, EntityWither.class, DungeonYijkiImage.class),
-    DUNGEON_DISCIPEL("DungeonDisciple", EntityType.SKELETON.getTypeId(), EntityType.SKELETON, EntitySkeleton.class, YijkiDiscipleEntity.class),
-    DUNGEON_BLAZE("DeathCurseBlaze", EntityType.BLAZE.getTypeId(), EntityType.BLAZE, EntityBlaze.class, DeathCurseBlaze.class),
-    DUNGEON_YIJKI_RUNNER("DungeonYijkiRunner", EntityType.WITHER.getTypeId(), EntityType.WITHER, EntityWither.class, YijkiRunnerEntity.class);
-
+public enum CustomEntity
+{
+    GHAST("GhastMinion", 56, EntityType.GHAST, (Class<? extends Entity>)EntityGhast.class, (Class<? extends EntityInsentient>)GhastMinion.class),
+    SPIDER("SpiderBoss", 52, EntityType.SPIDER, (Class<? extends Entity>)EntitySpider.class, (Class<? extends EntityInsentient>)SpiderBoss.class), 
+    CAVE_SPIDER("Cave Spider", 59, EntityType.CAVE_SPIDER, (Class<? extends Entity>)EntityCaveSpider.class, (Class<? extends EntityInsentient>)CaveSpiderMinion.class), 
+    SKELETON_BOSS("SkeletonBoss", 51, EntityType.SKELETON, (Class<? extends Entity>)EntitySkeleton.class, (Class<? extends EntityInsentient>)SkeletonBoss.class), 
+    WITHER("Wither", 64, EntityType.WITHER, (Class<? extends Entity>)EntityWither.class, (Class<? extends EntityInsentient>)WitherBoss.class), 
+    ABOMINATION_ZOMBIE("ZombieAbomination", (int)EntityType.ZOMBIE.getTypeId(), EntityType.ZOMBIE, (Class<? extends Entity>)EntityZombie.class, (Class<? extends EntityInsentient>)EvilAbominationEntity.class), 
+    ENDERMAN("Endermans", (int)EntityType.ENDERMAN.getTypeId(), EntityType.ENDERMAN, (Class<? extends Entity>)EntityEnderman.class, (Class<? extends EntityInsentient>)SoulReaperEnderman.class), 
+    SNOWMAN("HolidaySpirit", (int)EntityType.SNOWMAN.getTypeId(), EntityType.SNOWMAN, (Class<? extends Entity>)EntitySnowman.class, (Class<? extends EntityInsentient>)HolidaySpiritEntity.class), 
+    DUNGEON_YIJKI("DungeonYijki", (int)EntityType.WITHER.getTypeId(), EntityType.WITHER, (Class<? extends Entity>)EntityWither.class, (Class<? extends EntityInsentient>)DungeonYijkiEntity.class), 
+    DUNGEON_MOTHER_OF_YIJKI("MotherOfYijki", (int)EntityType.WITHER.getTypeId(), EntityType.WITHER, (Class<? extends Entity>)EntityWither.class, (Class<? extends EntityInsentient>)MotherOfYijkiEntity.class), 
+    CORRUPT_COSMONAUT("CorruptCosmonaut", (int)EntityType.SKELETON.getTypeId(), EntityType.SKELETON, (Class<? extends Entity>)EntitySkeleton.class, (Class<? extends EntityInsentient>)CorruptCosmonautEntity.class),
+    DUNGEON_HEALING_BLAZE("DungeonBlaze", (int)EntityType.BLAZE.getTypeId(), EntityType.BLAZE, (Class<? extends Entity>)EntityBlaze.class, (Class<? extends EntityInsentient>)HealingBlazeEntity.class),
+    DUNGEON_YIJKI_IMAGE("DungeonImage", (int)EntityType.WITHER.getTypeId(), EntityType.WITHER, (Class<? extends Entity>)EntityWither.class, (Class<? extends EntityInsentient>)DungeonYijkiImage.class), 
+    DUNGEON_DISCIPEL("DungeonDisciple", (int)EntityType.SKELETON.getTypeId(), EntityType.SKELETON, (Class<? extends Entity>)EntitySkeleton.class, (Class<? extends EntityInsentient>)YijkiDiscipleEntity.class), 
+    DUNGEON_BLAZE("DeathCurseBlaze", (int)EntityType.BLAZE.getTypeId(), EntityType.BLAZE, (Class<? extends Entity>)EntityBlaze.class, (Class<? extends EntityInsentient>)DeathCurseBlaze.class), 
+    DUNGEON_YIJKI_RUNNER("DungeonYijkiRunner", (int)EntityType.WITHER.getTypeId(), EntityType.WITHER, (Class<? extends Entity>)EntityWither.class, (Class<? extends EntityInsentient>)YijkiRunnerEntity.class), 
+    ENDER_DRAGON("EndDragon", (int)EntityType.ENDER_DRAGON.getTypeId(), EntityType.ENDER_DRAGON, (Class<? extends Entity>)EntityEnderDragon.class, (Class<? extends EntityInsentient>)EndDragonEntity.class),
+    BATTLEFIELD_SNOW("ChristmasSpirit", (int)EntityType.SNOWMAN.getTypeId(), EntityType.SNOWMAN, (Class<? extends Entity>)EntitySnowman.class, (Class<? extends EntityInsentient>)BattlefieldSnowmanEntity.class);
+    
     private String name;
     private int id;
     private EntityType entityType;
     private Class<? extends Entity> nmsClass;
     private Class<? extends EntityInsentient> customClass;
-
-    CustomEntity(String name, int id, EntityType entityType, Class<? extends Entity> nmsClass, Class<? extends EntityInsentient> customClass) {
+    
+    private CustomEntity(final String name, final int id, final EntityType entityType, final Class<? extends Entity> nmsClass, final Class<? extends EntityInsentient> customClass) {
         this.name = name;
         this.id = id;
         this.entityType = entityType;
         this.nmsClass = nmsClass;
         this.customClass = customClass;
     }
-
+    
     public String getName() {
         return this.name;
     }
-
+    
     public int getID() {
         return this.id;
     }
-
+    
     public EntityType getEntityType() {
         return this.entityType;
     }
-
+    
     public Class<? extends Entity> getNMSClass() {
         return this.nmsClass;
     }
-
+    
     public Class<? extends EntityInsentient> getCustomClass() {
         return this.customClass;
     }
-
+    
     public static void registerEntities() {
-        for (CustomEntity entity : CustomEntity.values()) {
-            CustomEntity.a(entity.getCustomClass(), entity.getName(), entity.getID());
+        for (final CustomEntity entity : values()) {
+            if (entity != CustomEntity.ENDERMAN) {
+                a(entity.getCustomClass(), entity.getName(), entity.getID());
+            }
         }
     }
-
+    
     public void registerEntity() {
-        CustomEntity.a(this.getCustomClass(), this.getName(), this.getID());
+        a(this.getCustomClass(), this.getName(), this.getID());
     }
-
+    
     public void unregisterEntity() {
         try {
-            ((Map)CustomEntity.getPrivateStatic(EntityTypes.class, "d")).remove(this.getCustomClass());
+            ((Map)getPrivateStatic(EntityTypes.class, "d")).remove(this.getCustomClass());
         }
         catch (Exception e) {
             e.printStackTrace();
         }
         try {
-            ((Map)CustomEntity.getPrivateStatic(EntityTypes.class, "f")).remove(this.getCustomClass());
+            ((Map)getPrivateStatic(EntityTypes.class, "f")).remove(this.getCustomClass());
         }
         catch (Exception e) {
             e.printStackTrace();
         }
-        CustomEntity.a(this.getNMSClass(), this.getName(), this.getID());
+        a(this.getNMSClass(), this.getName(), this.getID());
     }
-
+    
     public static void unregisterEntities() {
+        for (final CustomEntity entity : values()) {
+            try {
+                ((Map)getPrivateStatic(EntityTypes.class, "d")).remove(entity.getCustomClass());
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            try {
+                ((Map)getPrivateStatic(EntityTypes.class, "f")).remove(entity.getCustomClass());
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        for (final CustomEntity entity : values()) {
+            try {
+                a(entity.getNMSClass(), entity.getName(), entity.getID());
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         BiomeBase[] biomes;
-        for (CustomEntity entity : CustomEntity.values()) {
-            try {
-                ((Map)CustomEntity.getPrivateStatic(EntityTypes.class, "d")).remove(entity.getCustomClass());
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
-            try {
-                ((Map)CustomEntity.getPrivateStatic(EntityTypes.class, "f")).remove(entity.getCustomClass());
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        for (CustomEntity entity : CustomEntity.values()) {
-            try {
-                CustomEntity.a(entity.getNMSClass(), entity.getName(), entity.getID());
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
         try {
-            biomes = (BiomeBase[])CustomEntity.getPrivateStatic(BiomeBase.class, "biomes");
+            biomes = (BiomeBase[])getPrivateStatic(BiomeBase.class, "biomes");
         }
         catch (Exception exc) {
             return;
         }
-        for (BiomeBase biomeBase : biomes) {
-            if (biomeBase == null) break;
-            for (String field : new String[]{"as", "at", "au", "av"}) {
+        for (final BiomeBase biomeBase : biomes) {
+            if (biomeBase == null) {
+                break;
+            }
+            /*for (final String field : new String[] { "as", "at", "au", "av" }) {
                 try {
-                    Field list = BiomeBase.class.getDeclaredField(field);
+                    final Field list = BiomeBase.class.getDeclaredField(field);
                     list.setAccessible(true);
-                    List mobList = (List)list.get((Object)biomeBase);
-                    for (BiomeMeta meta : mobList) {
-                        for (CustomEntity entity : CustomEntity.values()) {
-                            if (!entity.getCustomClass().equals(meta.b)) continue;
-                            meta.b = entity.getNMSClass();
+                    final List<BiomeBase.BiomeMeta> mobList = (List<BiomeBase.BiomeMeta>)list.get(biomeBase);
+                    for (final BiomeBase.BiomeMeta meta : mobList) {
+                        for (final CustomEntity entity2 : values()) {
+                            if (entity2.getCustomClass().equals(meta.b)) {
+                                meta.b = entity2.getNMSClass();
+                            }
                         }
                     }
                 }
-                catch (Exception e) {
-                    e.printStackTrace();
+                catch (Exception e2) {
+                    e2.printStackTrace();
                 }
-            }
+            }*/
         }
     }
-
-    private static Object getPrivateStatic(Class clazz, String f) throws Exception {
-        Field field = clazz.getDeclaredField(f);
+    
+    private static Object getPrivateStatic(final Class clazz, final String f) throws Exception {
+        final Field field = clazz.getDeclaredField(f);
         field.setAccessible(true);
         return field.get(null);
     }
-
+    
     @Deprecated
-    private static void a(Class clazz, String name, int id) {
+    private static void a(final Class clazz, final String name, final int id) {
         try {
-            ((Map)CustomEntity.getPrivateStatic(EntityTypes.class, "c")).put(name, clazz);
-            ((Map)CustomEntity.getPrivateStatic(EntityTypes.class, "d")).put(clazz, name);
-            ((Map)CustomEntity.getPrivateStatic(EntityTypes.class, "e")).put(id, clazz);
-            ((Map)CustomEntity.getPrivateStatic(EntityTypes.class, "f")).put(clazz, id);
-            ((Map)CustomEntity.getPrivateStatic(EntityTypes.class, "g")).put(name, id);
+            ((Map)getPrivateStatic(EntityTypes.class, "c")).put(name, clazz);
+            ((Map)getPrivateStatic(EntityTypes.class, "d")).put(clazz, name);
+            ((Map)getPrivateStatic(EntityTypes.class, "e")).put(id, clazz);
+            ((Map)getPrivateStatic(EntityTypes.class, "f")).put(clazz, id);
+            ((Map)getPrivateStatic(EntityTypes.class, "g")).put(name, id);
         }
-        catch (Exception exception) {
-            // empty catch block
-        }
+        catch (Exception ex) {}
     }
-
-    public static void registerEntityNEW(String name, int id, Class<? extends EntityInsentient> customClass) {
+    
+    public static void registerEntityNEW(final String name, final int id, final Class<? extends EntityInsentient> customClass) {
         try {
-            ArrayList<Map> dataMaps = new ArrayList<Map>();
-            for (Field f : EntityTypes.class.getDeclaredFields()) {
-                if (!f.getType().getSimpleName().equals(Map.class.getSimpleName())) continue;
-                f.setAccessible(true);
-                dataMaps.add((Map)f.get(null));
+            final List<Map<?, ?>> dataMaps = new ArrayList<Map<?, ?>>();
+            for (final Field f : EntityTypes.class.getDeclaredFields()) {
+                if (f.getType().getSimpleName().equals(Map.class.getSimpleName())) {
+                    f.setAccessible(true);
+                    dataMaps.add((Map<?, ?>)f.get(null));
+                }
             }
-            if (((Map)dataMaps.get(2)).containsKey(id)) {
-                ((Map)dataMaps.get(0)).remove(name);
-                ((Map)dataMaps.get(2)).remove(id);
+            if (dataMaps.get(2).containsKey(id)) {
+                dataMaps.get(0).remove(name);
+                dataMaps.get(2).remove(id);
             }
-            Method method = EntityTypes.class.getDeclaredMethod("a", Class.class, String.class, Integer.TYPE);
+            final Method method = EntityTypes.class.getDeclaredMethod("a", Class.class, String.class, Integer.TYPE);
             method.setAccessible(true);
             method.invoke(null, customClass, name, id);
         }
@@ -208,4 +191,3 @@ public enum CustomEntity {
         }
     }
 }
-

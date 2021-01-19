@@ -1,70 +1,57 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  org.bukkit.Material
- *  org.bukkit.craftbukkit.v1_7_R4.entity.CraftEntity
- *  org.bukkit.enchantments.Enchantment
- *  org.bukkit.entity.EntityType
- *  org.bukkit.entity.Skeleton
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.metadata.FixedMetadataValue
- *  org.bukkit.metadata.MetadataValue
- *  org.bukkit.plugin.Plugin
- *  org.bukkit.potion.PotionEffect
- *  org.bukkit.potion.PotionEffectType
- */
 package me.ifamasssxd.cosmicbosses.bosses.skeletonhorse;
 
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
-import me.ifamasssxd.cosmicbosses.CosmicBosses;
-import me.ifamasssxd.cosmicbosses.bosses.skeletonhorse.UndeadAssassin;
-import me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost.YijkiDisciple;
-import me.ifamasssxd.cosmicbosses.struct.Boss;
-import me.ifamasssxd.cosmicbosses.struct.BossAbility;
-import me.ifamasssxd.cosmicbosses.utils.CustomItem;
+import java.util.*;
+import me.ifamasssxd.cosmicbosses.struct.*;
+import net.minecraft.server.v1_8_R3.Entity;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_8_R3.entity.*;
+import me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost.*;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Skeleton;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
+import org.bukkit.potion.*;
+import org.bukkit.entity.*;
+import org.bukkit.*;
+import org.bukkit.inventory.*;
+import me.ifamasssxd.cosmicbosses.utils.*;
+import org.bukkit.enchantments.*;
+import me.ifamasssxd.cosmicbosses.*;
+import org.bukkit.plugin.*;
+import org.bukkit.metadata.*;
+import net.minecraft.server.v1_8_R3.*;
+import java.util.concurrent.*;
 
-public class Summoning
-extends BossAbility {
-    Random random = new Random();
-
-    public Summoning(Boss boss) {
+public class Summoning extends BossAbility
+{
+    Random random;
+    
+    public Summoning(final Boss boss) {
         super(boss);
+        this.random = new Random();
     }
-
+    
     @Override
     public void onAbility() {
         if (this.getBoss() instanceof UndeadAssassin) {
-            UndeadAssassin boss = (UndeadAssassin)this.getBoss();
+            final UndeadAssassin boss = (UndeadAssassin)this.getBoss();
             if (boss.invincible) {
                 return;
             }
             boss.invincible = true;
-            ((CraftEntity)this.getBoss().getEntity()).getHandle().motY += 0.5;
-        } else if (this.getBoss() instanceof YijkiDisciple) {
-            YijkiDisciple disk = (YijkiDisciple)this.getBoss();
+            final Entity handle = ((CraftEntity)this.getBoss().getEntity()).getHandle();
+            handle.motY += 0.5;
+        }
+        else if (this.getBoss() instanceof YijkiDisciple) {
+            final YijkiDisciple disk = (YijkiDisciple)this.getBoss();
             if (disk.invincible) {
                 return;
             }
             disk.invincible = true;
-            ((CraftEntity)this.getBoss().getEntity()).getHandle().motY += 0.5;
+            final Entity handle2 = ((CraftEntity)this.getBoss().getEntity()).getHandle();
+            handle2.motY += 0.5;
         }
         this.boss.getEntity().addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1));
-        int amount = this.random.nextInt(3) + 2;
-        for (int i = 0; i < amount && this.boss.getMinions().size() <= 7; ++i) {
-            Skeleton skeleton = (Skeleton)this.boss.spawnMinion(EntityType.SKELETON, this.boss.getEntity().getLocation());
+        for (int amount = this.random.nextInt(3) + 2, i = 0; i < amount && this.boss.getMinions().size() <= 7; ++i) {
+            final Skeleton skeleton = (Skeleton)this.boss.spawnMinion(EntityType.SKELETON, this.boss.getEntity().getLocation());
             skeleton.setMaxHealth(50.0);
             skeleton.setHealth(skeleton.getMaxHealth());
             skeleton.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1));
@@ -80,15 +67,14 @@ extends BossAbility {
         }
         this.activateCooldown();
     }
-
+    
     @Override
     public long getCooldown() {
         return TimeUnit.SECONDS.toMillis(40L);
     }
-
+    
     @Override
     public String getAbilityName() {
         return "Summoning";
     }
 }
-

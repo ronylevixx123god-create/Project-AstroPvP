@@ -1,28 +1,22 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  org.bukkit.Material
- */
 package me.ifamasssxd.cosmicbosses.struct;
 
-import org.bukkit.Material;
+import org.bukkit.*;
 
-public class NewBlockData {
+public class NewBlockData
+{
     Material material;
     byte data;
-
-    public NewBlockData(Material material, byte data) {
+    
+    public NewBlockData(final Material material, final byte data) {
         this.material = material;
         this.data = data;
     }
-
+    
     public Material getMaterial() {
         return this.material;
     }
-
+    
     public byte getData() {
         return this.data;
     }
 }
-

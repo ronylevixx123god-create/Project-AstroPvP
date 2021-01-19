@@ -1,20 +1,6 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  org.apache.commons.lang.StringUtils
- *  org.bukkit.ChatColor
- *  org.bukkit.Material
- *  org.bukkit.enchantments.Enchantment
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
- *  org.bukkit.inventory.meta.SkullMeta
- */
 package me.ifamasssxd.cosmicbosses.utils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -23,79 +9,85 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
-public class ItemBuilder {
-    public static ItemStack buildItem(Material m, short data, String name, String ... lore) {
-        return ItemBuilder.buildItem(m, 1, data, name, lore);
-    }
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-    public static ItemStack createSkull(String owner, String name, String ... lore) {
-        ItemStack is = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
-        SkullMeta sm = (SkullMeta)is.getItemMeta();
+public class ItemBuilder
+{
+    public static ItemStack buildItem(final Material m, final short data, final String name, final String... lore) {
+        return buildItem(m, 1, data, name, lore);
+    }
+    
+    public static ItemStack createSkull(final String owner, final String name, final String... lore) {
+        final ItemStack is = new ItemStack(Material.SKULL_ITEM, 1, (short)3);
+        final SkullMeta sm = (SkullMeta)is.getItemMeta();
         sm.setOwner(owner);
         sm.setDisplayName(name);
-        sm.setLore(new ArrayList<String>(Arrays.asList(lore)));
+        sm.setLore((List)new ArrayList(Arrays.asList(lore)));
         is.setItemMeta((ItemMeta)sm);
         return is;
     }
-
-    public static ItemStack buildItem(Material m, short data, String name, List<String> lore) {
-        return ItemBuilder.buildItem(m, 1, data, name, lore.toArray(new String[lore.size()]));
+    
+    public static ItemStack buildItem(final Material m, final short data, final String name, final List<String> lore) {
+        return buildItem(m, 1, data, name, (String[])lore.toArray(new String[lore.size()]));
     }
-
-    public static ItemStack buildItem(Material m, int amount, short data, String name, String ... lore) {
-        ItemStack is = new ItemStack(m, amount, data);
-        ItemMeta im = is.getItemMeta();
+    
+    public static ItemStack buildItem(final Material m, final int amount, final short data, final String name, final String... lore) {
+        final ItemStack is = new ItemStack(m, amount, data);
+        final ItemMeta im = is.getItemMeta();
         if (name != null) {
             im.setDisplayName(name);
         }
         if (lore != null) {
-            ArrayList<String> lores = new ArrayList<String>();
-            for (String s : lore) {
-                if (s == null) continue;
-                if (s.contains("//")) {
-                    lores.addAll(ItemBuilder.getLore(s));
-                    continue;
+            final List<String> lores = new ArrayList<String>();
+            for (final String s : lore) {
+                if (s != null) {
+                    if (s.contains("//")) {
+                        lores.addAll(getLore(s));
+                    }
+                    else {
+                        lores.add(s);
+                    }
                 }
-                lores.add(s);
             }
-            im.setLore(lores);
+            im.setLore((List)lores);
         }
         is.setItemMeta(im);
         return is;
     }
-
-    public static ItemStack buildItem(Material m, int amount, short data, String name, List<String> lore) {
-        ItemStack is = new ItemStack(m, amount, data);
-        ItemMeta im = is.getItemMeta();
+    
+    public static ItemStack buildItem(final Material m, final int amount, final short data, final String name, final List<String> lore) {
+        final ItemStack is = new ItemStack(m, amount, data);
+        final ItemMeta im = is.getItemMeta();
         if (name != null) {
             im.setDisplayName(name);
         }
         if (lore != null) {
-            im.setLore(lore);
+            im.setLore((List)lore);
         }
         is.setItemMeta(im);
         return is;
     }
-
-    private static List<String> getLore(String s) {
-        ArrayList<String> lore = new ArrayList<String>();
-        String color = ChatColor.translateAlternateColorCodes((char)'\u00a7', (String)s.trim().substring(0, 2));
-        for (String st : StringUtils.split((String)s, (String)"//")) {
+    
+    private static List<String> getLore(final String s) {
+        final List<String> lore = new ArrayList<String>();
+        final String color = ChatColor.translateAlternateColorCodes('§', s.trim().substring(0, 2));
+        for (final String st : StringUtils.split(s, "//")) {
             lore.add(color + st);
         }
         return lore;
     }
-
-    public static ItemStack buildItem(Material m, String name, String ... lore) {
-        return ItemBuilder.buildItem(m, (short)0, name, lore);
+    
+    public static ItemStack buildItem(final Material m, final String name, final String... lore) {
+        return buildItem(m, (short)0, name, lore);
     }
-
-    public static ItemStack buildArmor(Material material, Enchantment ... enchants) {
-        ItemStack is = new ItemStack(material, 1);
-        for (Enchantment enchant : enchants) {
+    
+    public static ItemStack buildArmor(final Material material, final Enchantment... enchants) {
+        final ItemStack is = new ItemStack(material, 1);
+        for (final Enchantment enchant : enchants) {
             is.addUnsafeEnchantment(enchant, enchant.getMaxLevel());
         }
         return is;
     }
 }
-
