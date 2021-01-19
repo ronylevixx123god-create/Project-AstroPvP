@@ -9,7 +9,7 @@ public class CaveSpiderMinion extends EntityCaveSpider
     }
     
     protected Entity findTarget() {
-        final EntityHuman human = this.world.findNearbyVulnerablePlayer((Entity)this, 16.0);
+        final EntityHuman human = this.world.findNearbyPlayer(this, 16.0);
         this.setGoalTarget((EntityLiving)human);
         return human;
     }
