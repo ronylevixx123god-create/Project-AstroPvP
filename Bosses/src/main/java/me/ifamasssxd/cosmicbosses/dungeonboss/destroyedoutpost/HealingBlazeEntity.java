@@ -99,7 +99,7 @@ public class HealingBlazeEntity extends EntityBlaze
                 }
             }
             this.yaw = (float)(Math.atan2(var5, var3) * 180.0 / 3.1415927410125732) - 90.0f;
-            this.bm = true;
+            this.bX = true;
         }
     }
     

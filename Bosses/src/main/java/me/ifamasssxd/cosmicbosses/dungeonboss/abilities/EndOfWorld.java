@@ -2,10 +2,11 @@ package me.ifamasssxd.cosmicbosses.dungeonboss.abilities;
 
 import me.ifamasssxd.cosmicbosses.struct.*;
 import java.util.concurrent.*;
+
+import net.citizensnpcs.nms.v1_8_R3.entity.EntityHumanNPC;
 import org.arkhamnetwork.Arkkit.libs.*;
 import me.ifamasssxd.cosmicbosses.dungeonboss.*;
 import org.bukkit.entity.*;
-import net.citizensnpcs.npc.entity.*;
 import me.ifamasssxd.cosmicbosses.utils.*;
 import java.util.*;
 import org.bukkit.*;

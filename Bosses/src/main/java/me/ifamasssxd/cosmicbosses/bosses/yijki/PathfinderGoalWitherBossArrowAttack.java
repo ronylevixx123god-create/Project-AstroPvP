@@ -26,7 +26,7 @@ public class PathfinderGoalWitherBossArrowAttack extends PathfinderGoalBossArrow
     @Override
     public void e() {
         final double d0 = this.a.e(this.c.locX, this.c.getBoundingBox().b, this.c.locZ);
-        final boolean flag = this.a.getEntitySenses().a((Entity)this.c);
+        final boolean flag = this.a.getEntitySenses().a(this.c);
         if (flag) {
             ++this.f;
         }

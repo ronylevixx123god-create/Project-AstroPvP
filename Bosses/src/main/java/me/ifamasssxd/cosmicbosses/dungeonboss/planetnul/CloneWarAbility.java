@@ -4,7 +4,6 @@ import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonAbility;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.cosmicbosses.utils.CustomItem;
-import me.quantiom.itemskin.ItemSkinManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;

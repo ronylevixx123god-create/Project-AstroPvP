@@ -2,6 +2,7 @@ package me.ifamasssxd.cosmicbosses.entities;
 
 import me.ifamasssxd.cosmicbosses.bosses.holidayspirit.*;
 import me.ifamasssxd.cosmicbosses.bosses.*;
+import net.citizensnpcs.nms.v1_8_R3.entity.EntityHumanNPC;
 import net.minecraft.server.v1_8_R3.Material;
 import net.minecraft.server.v1_8_R3.World;
 import org.bukkit.craftbukkit.v1_8_R3.entity.*;
@@ -9,7 +10,6 @@ import me.ifamasssxd.cosmicbosses.*;
 import org.bukkit.*;
 import me.ifamasssxd.cosmicbosses.struct.blockmanager.*;
 import net.minecraft.server.v1_8_R3.*;
-import net.citizensnpcs.npc.entity.*;
 
 public class HolidaySpiritEntity extends EntityHolidayGolem
 {

@@ -140,7 +140,8 @@ public class Marksman extends Boss implements GuardBoss
     
     @Override
     public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) {
-        if (ItemSkinUtils.hasItemSkin(player, "SPRING_2020_AMULET")) return;
+        // todo: add hasitemskin to astroskins
+        //if (ItemSkinUtils.hasItemSkin(player, "SPRING_2020_AMULET")) return;
         int percentDamage = ThreadLocalRandom.current().nextInt(15) + 10;
         if (this.random.nextInt(100) < 30) {
             percentDamage += 5;

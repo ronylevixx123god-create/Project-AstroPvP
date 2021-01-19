@@ -25,7 +25,7 @@ public class SpiderBoss extends EntitySpider
             this.setGoalTarget(null);
             return null;
         }
-        final EntityHuman human = this.world.findNearbyVulnerablePlayer((Entity)this, 32.0);
+        final EntityHuman human = this.world.findNearbyPlayer(this, 32.0);
         System.out.println("Setting target");
         this.setGoalTarget((EntityLiving)human);
         return this.getGoalTarget();

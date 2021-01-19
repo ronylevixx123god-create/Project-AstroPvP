@@ -25,7 +25,7 @@ public class PhaseManager
             if (!this.dragon.world.isClientSide) {
                 this.dragon.phase = this.phase;
             }
-            PhaseManager.LOGGER.debug("Dragon is now in phase {} on the {}", new Object[] { phaseIn, this.dragon.world.isClientSide ? "client" : "server" });
+            PhaseManager.LOGGER.debug("Dragon is now in phase {} on the {}", phaseIn, this.dragon.world.isClientSide ? "client" : "server");
             this.phase.initPhase();
         }
     }

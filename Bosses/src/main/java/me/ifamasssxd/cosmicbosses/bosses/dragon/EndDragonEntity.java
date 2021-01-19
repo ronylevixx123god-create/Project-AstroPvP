@@ -84,7 +84,7 @@ public class EndDragonEntity extends EntityEnderDragon
         this.ak = true;
         this.fightManager = new DragonFightManager(world);
         this.phaseManager = new PhaseManager(this);
-        this.homeLocation = new Location((org.bukkit.World)this.world.getWorld(), 62.0, 39.0, 69.0);
+        this.homeLocation = new Location(this.world.getWorld(), 62.0, 39.0, 69.0);
     }
     
     public PhaseManager getPhaseManager() {

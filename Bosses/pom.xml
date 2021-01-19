@@ -43,6 +43,11 @@
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
+            <artifactId>ItemSkins</artifactId>
+            <version>0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
             <artifactId>arkkit</artifactId>
             <version>0.1</version>
             <scope>system</scope>

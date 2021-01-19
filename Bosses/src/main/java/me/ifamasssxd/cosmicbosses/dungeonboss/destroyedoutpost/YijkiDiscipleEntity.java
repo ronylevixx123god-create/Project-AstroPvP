@@ -33,7 +33,7 @@ public class YijkiDiscipleEntity extends EntitySkeleton
     }
     
     protected Entity findTarget() {
-        final EntityHuman human = this.world.findNearbyVulnerablePlayer((Entity)this, 16.0);
+        final EntityHuman human = this.world.findNearbyPlayer((Entity)this, 16.0);
         if (human != null && !human.getBukkitEntity().hasMetadata("NPC")) {
             return (Entity)human;
         }

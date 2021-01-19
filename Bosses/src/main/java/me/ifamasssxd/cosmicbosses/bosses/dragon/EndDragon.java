@@ -21,10 +21,6 @@ import com.google.common.collect.*;
 import me.ifamasssxd.cosmicbosses.struct.*;
 import com.cosmicpvp.cosmicutils.nms.*;
 import com.cosmicpvp.cosmicutils.*;
-import org.bukkit.inventory.*;
-import com.compilex.CosmicFund.*;
-import com.cosmicpvp.cosmicutils.struct.factions.points.*;
-import me.ifamasssxd.cosmicconquest.*;
 import com.cosmicpvp.cosmicutils.struct.*;
 import com.cosmicpvp.cosmicutils.itembuilder.*;
 import me.ifamasssxd.cosmicbosses.utils.*;
@@ -228,14 +224,6 @@ public class EndDragon extends Boss implements GlobalBoss
                 }
                 final Location loc = event.getEntity().getLocation();
                 final List<ItemStack> toGive = items.subList(0, Math.min(items.size(), toGiveAmount));
-                if (event != null && Bukkit.getPluginManager().isPluginEnabled("CosmicFund") && CosmicFundAPI.isBonusDragonLoot()) {
-                    Bukkit.getLogger().info("[CosmicBosses] bonusFundLoot -> FALSE");
-                    CosmicFundAPI.setBonusDragonLoot(false);
-                    toGive.add(FactionPointUtils.getPointItem(150.0, true));
-                    toGive.add(new ItemStack(Material.MOB_SPAWNER, 10, (short)60));
-                    toGive.add(CosmicConquestAPI.createFactionToken(100));
-                    toGive.add(CosmicConquestAPI.createHeroicToken(10));
-                }
                 if (this.random.nextDouble() <= 0.33) {
                     final ItemStack armorsetItem = new ArmorSetItemBuilder("DRAGON_SLAYER", EquipmentType.getRandomArmor(), true).build();
                     if (armorsetItem != null) {

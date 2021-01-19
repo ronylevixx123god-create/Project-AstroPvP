@@ -1,14 +1,12 @@
 package me.ifamasssxd.cosmicbosses.bosses;
 
-import java.util.concurrent.*;
-
-import net.minecraft.server.v1_8_R3.Entity;
+import net.minecraft.server.v1_8_R3.EntityGolem;
+import net.minecraft.server.v1_8_R3.EntityLiving;
 import net.minecraft.server.v1_8_R3.World;
-import org.bukkit.entity.*;
-import org.bukkit.craftbukkit.v1_8_R3.entity.*;
-import net.minecraft.server.v1_8_R3.*;
-import org.bukkit.*;
-import java.util.*;
+
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class EntityHolidayGolem extends EntityGolem implements MultiProjectileShooter
 {
