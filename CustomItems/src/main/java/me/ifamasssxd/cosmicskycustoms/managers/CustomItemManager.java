@@ -48,7 +48,7 @@ public class CustomItemManager {
         if (clazz != null) {
             ItemPersistentData data = CosmicPersistentItem.registerPersistentItem(name, clazz);
             this.customRegisteredItems.put(data.getInternalName(), data.getSampleVersion());
-            this.plugin.log(CC.GreenB + "***** NULL");
+            this.plugin.log("***** NULL");
             return data.getSampleVersion();
         }
         return null;
