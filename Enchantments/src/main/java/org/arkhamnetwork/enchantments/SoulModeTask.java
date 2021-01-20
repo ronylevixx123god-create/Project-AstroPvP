@@ -1,9 +1,9 @@
 package org.arkhamnetwork.enchantments;
 
 import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
 import com.rit.sucy.EnchantmentAPI;
+import lombok.SneakyThrows;
 import me.ifamasssxd.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.enchantments.cmds.CommandEnchDust;
 import org.bukkit.Bukkit;
@@ -23,6 +23,7 @@ public class SoulModeTask implements Runnable {
         this.cosmicOutposts = Bukkit.getPluginManager().isPluginEnabled("CosmicOutposts");
     }
 
+    @SneakyThrows
     public void run() {
         if (!CommandEnchDust.soulEnabled)
             return;
@@ -49,12 +50,14 @@ public class SoulModeTask implements Runnable {
                         KillTrackerAPI.removeSoulsFromGems(p, cost);
                         p.setMetadata("lastSoulRemoveEvent", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), System.currentTimeMillis()));
                         if (!p.hasMetadata("spectator"))
-                            ParticleEffect.playEffect(ParticleEffect.SPELL, p.getLocation().add(0.0D, 1.0D, 0.0D), 0.5F, 65);
+                            //ParticleEffect.playEffect(ParticleEffect.SPELL, p.getLocation().add(0.0D, 1.0D, 0.0D), 0.5F, 65);
+                            de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayer(p.getPlayer(),p.getLocation(), 0,1, 0,0.f,65);
                         p.playSound(p.getLocation(), Sound.EAT, 0.4F, 0.2F);
                         if (KillTrackerAPI.getAllSouls(p) % 100 == 0)
                             p.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "** SOULS: " + ChatColor.UNDERLINE + KillTrackerAPI.getAllSouls(p) + ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + " **");
                     } else if (!p.hasMetadata("spectator")) {
-                        ParticleEffect.playEffect(ParticleEffect.ENCHANTMENT_TABLE, p.getLocation().add(0.0D, 1.0D, 0.0D), 1.5F, 80);
+                        //ParticleEffect.playEffect(ParticleEffect.ENCHANTMENT_TABLE, p.getLocation().add(0.0D, 1.0D, 0.0D), 1.5F, 80);
+                        de.inventivegames.particle.ParticleEffect.ENCHANTMENT_TABLE.sendToPlayer(p.getPlayer(),p.getLocation(), 0,1, 0,1.5f,65);
                     }
                 }
             }

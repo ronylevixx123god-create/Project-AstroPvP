@@ -1,14 +1,18 @@
 package me.ifamasssxd.cosmicbosses.bosses.skeletonhorse;
 
-import java.util.*;
-import org.bukkit.scheduler.*;
-import me.ifamasssxd.cosmicbosses.struct.*;
-import org.arkhamnetwork.Arkkit.libs.*;
-import me.ifamasssxd.cosmicbosses.*;
-import org.bukkit.plugin.*;
-import org.bukkit.metadata.*;
-import org.bukkit.*;
-import java.util.concurrent.*;
+import me.ifamasssxd.cosmicbosses.CosmicBosses;
+import me.ifamasssxd.cosmicbosses.struct.Boss;
+import me.ifamasssxd.cosmicbosses.struct.BossAbility;
+import me.ifamasssxd.cosmicbosses.struct.Phase;
+import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
+import org.bukkit.Sound;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class EmpoweredArrow extends BossAbility
 {
@@ -36,6 +40,8 @@ public class EmpoweredArrow extends BossAbility
                     if (EmpoweredArrow.this.getBoss().getEntity().hasMetadata("empower_arrow")) {
                         ParticleEffect.playEffect(ParticleEffect.LAVA, EmpoweredArrow.this.getBoss().getEntity().getLocation(), 0.6f, 50);
                         ParticleEffect.playEffect(ParticleEffect.PORTAL, EmpoweredArrow.this.getBoss().getEntity().getLocation(), 0.6f, 10);
+
+
                         return;
                     }
                     if (EmpoweredArrow.this.isEmpowered) {

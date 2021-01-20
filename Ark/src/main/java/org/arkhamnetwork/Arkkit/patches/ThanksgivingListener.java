@@ -21,7 +21,6 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.cosmicutils.itembuilder.MaskBuilder;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.arkhamnetwork.Arkkit.utils.ItemUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -62,7 +61,7 @@ final class ThanksgivingListener
     }
 
     @EventHandler
-    public void onPlayerEatTurkey(PlayerInteractEvent e) {
+    public void onPlayerEatTurkey(PlayerInteractEvent e) throws Exception {
         if (e.hasItem() && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && e.getItem().isSimilar(this.getThanksgivingTurkey())) {
             e.setCancelled(true);
             e.setUseItemInHand(Event.Result.DENY);
@@ -80,7 +79,7 @@ final class ThanksgivingListener
             this.healHP(e.getPlayer(), 16);
             this.healFood(e.getPlayer(), 20);
             e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.EAT, 0.7f, 0.9f);
-            ParticleEffect.playEffect(ParticleEffect.SPELL, e.getPlayer().getLocation().add(0.0, 1.0, 0.0), 0.33f, 35);
+            de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayer(e.getPlayer(),e.getPlayer().getLocation(), 0,1, 0,0.33f,35);
         }
     }
 

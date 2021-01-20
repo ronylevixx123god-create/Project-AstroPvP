@@ -10,7 +10,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
 import org.arkhamnetwork.Arkkit.utils.WorldGuardUtils;
 import org.bukkit.Location;
@@ -25,7 +24,7 @@ final class PortalRegionListener
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onPlayerMove(PlayerMoveEvent e) {
+    public void onPlayerMove(PlayerMoveEvent e) throws Exception {
         Location to = e.getTo();
         Location from = e.getFrom();
         if (to.getBlockX() == from.getBlockX() && to.getBlockZ() == to.getBlockZ()) {
@@ -38,7 +37,9 @@ final class PortalRegionListener
         if (regionName.startsWith("portal_")) {
             String warpDestination = regionName.split("_")[1];
             e.getPlayer().chat("/warp " + warpDestination);
-            ParticleEffect.playEffect(ParticleEffect.RED_DUST, e.getPlayer().getLocation().add(0.0, 1.0, 0.0), 0.8f, 25);
+            //ParticleEffect.playEffect(ParticleEffect.RED_DUST, e.getPlayer().getLocation().add(0.0, 1.0, 0.0), 0.8f, 25);
+            de.inventivegames.particle.ParticleEffect.RED_DUST.sendToPlayer(e.getPlayer(),e.getPlayer().getLocation(), 0,1,0,0.8f,25);
+
         }
     }
 }

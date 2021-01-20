@@ -4,7 +4,6 @@ import com.bryside.astroattributes.DragonRunesPlugin;
 import com.bryside.astroattributes.objects.Rune;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.google.common.collect.Maps;
-import org.arkhamnetwork.enchantments.util.ParticleEffect;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -64,11 +63,11 @@ public class AtlasRune extends Rune implements Listener {
     }
 
     @Override
-    public void procDamageEvent(final EntityDamageByEntityEvent e, final int level, final Player damager) {
+    public void procDamageEvent(final EntityDamageByEntityEvent e, final int level, final Player damager) throws Exception {
 
         if (atlases.containsKey(damager)) {
             double amt = 1 + (atlases.get(damager) / 100);
-            ParticleEffect.playEffect(ParticleEffect.LARGE_EXPLODE, e.getEntity().getLocation().add(0, 1f, 0), 1.0f, 3);
+            de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayer((Player) e.getEntity(),e.getEntity().getLocation(), 0,1, 0,1.0f,4);
 
             atlases.remove(damager, atlases.get(damager));
             e.setDamage((e.getDamage(EntityDamageEvent.DamageModifier.BASE)) * amt);

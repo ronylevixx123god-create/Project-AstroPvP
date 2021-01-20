@@ -25,9 +25,9 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -48,7 +48,7 @@ final class StackableSpawnerListener
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onPlayerStackSpawner(PlayerInteractEvent e) {
+    public void onPlayerStackSpawner(PlayerInteractEvent e) throws Exception {
         if (e.hasItem() && e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getItem().getType() == Material.MOB_SPAWNER && e.getClickedBlock().getType() == Material.MOB_SPAWNER) {
             EntityType placedSpawnerType;
             Block placedSpawner = e.getClickedBlock();
@@ -85,7 +85,7 @@ final class StackableSpawnerListener
                 }
                 SpawnerFee.updateMobSpawnerData(e.getClickedBlock());
                 p.playSound(p.getLocation(), Sound.ORB_PICKUP, 1.0f, 1.0f);
-                ParticleEffect.playEffect(ParticleEffect.SPELL, placedSpawner.getLocation().add(0.5, 1.0, 0.5), 0.75f, 30);
+                de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(),placedSpawner.getLocation(), 0.5f,1, 0.5f,0.8f,30);
             }
         }
     }

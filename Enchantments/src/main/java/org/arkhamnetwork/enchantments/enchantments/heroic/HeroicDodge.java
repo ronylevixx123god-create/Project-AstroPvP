@@ -1,9 +1,10 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
+import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
 import org.arkhamnetwork.enchantments.libs.SpecificCustomEnchantment;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
@@ -18,6 +19,7 @@ public class HeroicDodge extends HeroicCustomEnchantment {
         super("Ethereal Dodge", "Dodge", GeneralUtil.boots, 2);
     }
 
+    @SneakyThrows
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         if (e instanceof EntityDamageByEntityEvent) {
             double chance = 0.05 * level;
@@ -29,7 +31,8 @@ public class HeroicDodge extends HeroicCustomEnchantment {
                 e.setCancelled(true);
                 e.setDamage(0.0);
                 ((Player) player).sendMessage(ChatColor.LIGHT_PURPLE + "*DODGE*");
-                ParticleEffect.playEffect(ParticleEffect.CLOUD, player.getLocation().add(0.0, 1.0, 0.0), 0.2f, 10);
+                //ParticleEffect.playEffect(ParticleEffect.CLOUD, player.getLocation().add(0.0, 1.0, 0.0), 0.2f, 10);
+                de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(),player.getLocation(), 0,1, 0,0.2f,10);
                 player.getWorld().playSound(player.getLocation(), Sound.BAT_TAKEOFF, 1.0f, 0.75f);
                 final double chanceForSpeed = 5 + (level - 1) * 2;
                 if (Math.random() < chanceForSpeed * 0.01) {

@@ -1,7 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.rit.sucy.CustomEnchantment;
+import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.enchantments.axes.Corrupt;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.ChatColor;
@@ -20,6 +20,7 @@ public class Inversion extends CustomEnchantment {
         this.interval = 4.0;
     }
 
+    @SneakyThrows
     public void applyDefenseEffect(final LivingEntity entityHit, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         final float procChance = (float) (0.05 * level);
         if (Math.random() <= procChance) {
@@ -34,7 +35,8 @@ public class Inversion extends CustomEnchantment {
                 GeneralUtil.healPlayer((LivingEntity) playerHit, heal);
                 e.setDamage(0.0);
                 e.setCancelled(true);
-                ParticleEffect.playEffect(ParticleEffect.SPELL, playerHit.getLocation().add(0.0, 1.0, 0.0), 0.45f, 20);
+                //ParticleEffect.playEffect(ParticleEffect.SPELL, playerHit.getLocation().add(0.0, 1.0, 0.0), 0.45f, 20);
+                de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayer(playerHit,playerHit.getLocation(), 0,1, 0,1.0f,4);
                 playerHit.playSound(playerHit.getLocation(), Sound.PISTON_EXTEND, 0.8f, 2.0f);
             }
         }

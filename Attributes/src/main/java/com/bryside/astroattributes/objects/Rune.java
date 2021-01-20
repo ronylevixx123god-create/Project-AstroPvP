@@ -30,6 +30,6 @@ public abstract class Rune {
         return 1500 + level * 500;
     }
 
-    public void procDamageEvent(EntityDamageByEntityEvent e, int level, Player damager) {
+    public void procDamageEvent(EntityDamageByEntityEvent e, int level, Player damager) throws Exception {
     }
 }
