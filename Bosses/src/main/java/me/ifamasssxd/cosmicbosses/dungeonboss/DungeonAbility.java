@@ -13,7 +13,7 @@ public abstract class DungeonAbility extends BossAbility
         this.boss = boss;
     }
     
-    public abstract void onTick();
+    public abstract void onTick() throws Exception;
     
     public void initAbility() {
         this.initTime = System.currentTimeMillis();
@@ -36,7 +36,7 @@ public abstract class DungeonAbility extends BossAbility
     
     public abstract void onAbilityEnable();
     
-    public abstract void onAbilityDisable();
+    public abstract void onAbilityDisable() throws Exception;
     
     public abstract void onAbilityEvent(final Event p0);
 }

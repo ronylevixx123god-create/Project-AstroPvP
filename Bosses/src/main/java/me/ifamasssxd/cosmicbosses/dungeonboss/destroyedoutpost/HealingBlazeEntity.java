@@ -1,18 +1,16 @@
 package me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost;
 
-import net.minecraft.server.v1_8_R3.Item;
-import net.minecraft.server.v1_8_R3.World;
-import org.arkhamnetwork.Arkkit.libs.*;
-import org.bukkit.*;
-import me.ifamasssxd.cosmicbosses.*;
-import org.bukkit.entity.Entity;
-import org.bukkit.plugin.*;
-import org.bukkit.util.*;
-import org.bukkit.entity.*;
-import org.bukkit.event.entity.*;
-import org.bukkit.event.*;
-import org.bukkit.craftbukkit.v1_8_R3.event.*;
+import lombok.SneakyThrows;
+import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import net.minecraft.server.v1_8_R3.*;
+import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
+import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.v1_8_R3.event.CraftEventFactory;
+import org.bukkit.entity.Entity;
+import org.bukkit.event.Event;
+import org.bukkit.event.entity.EntityCombustByEntityEvent;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.util.Vector;
 
 public class HealingBlazeEntity extends EntityBlaze
 {
@@ -30,6 +28,7 @@ public class HealingBlazeEntity extends EntityBlaze
         this.getAttributeInstance(GenericAttributes.c).setValue(1.0);
     }
     
+    @SneakyThrows
     public void m() {
         if (this.parent == null || !this.parent.isBossSpawned()) {
             if (this.parent != null) {
@@ -42,7 +41,7 @@ public class HealingBlazeEntity extends EntityBlaze
         if (this.ticksLived < 140) {
             final boolean beenSecond = this.ticksLived % 20 == 0;
             if (beenSecond || this.ticksLived % 3 == 0) {
-                ParticleEffect.sendToLocation(ParticleEffect.CLOUD, this.getBukkitEntity().getLocation(), 0.24f, 0.24f, 0.24f, 0.1f, beenSecond ? 20 : 3);
+                de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), this.getBukkitEntity().getLocation(),0.24f, 0.24f, 0.24f, 0.1f,beenSecond ? 20 : 3);
             }
             return;
         }

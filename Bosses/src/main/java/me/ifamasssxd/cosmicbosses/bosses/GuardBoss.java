@@ -48,7 +48,7 @@ public interface GuardBoss
         event.setCancelled(true);
     }
     
-    default int checkOutsideTicks(final Boss boss, final int currentTicks, final Location chest) {
+    default int checkOutsideTicks(final Boss boss, final int currentTicks, final Location chest) throws Exception {
         final Creature creature = (Creature)boss.getEntity();
         if (creature.getTarget() == null || (creature.getTarget().getWorld() == chest.getWorld() && (creature.getTarget().getLocation().distanceSquared(chest) <= 200.0 || creature.getLocation().distanceSquared(chest) <= 150.0))) {
             return 0;
@@ -66,10 +66,11 @@ public interface GuardBoss
         return (this instanceof Enforcer) ? 70 : 35;
     }
     
-    default void teleportToChest(final Boss boss, final Location chestLocation) {
+    default void teleportToChest(final Boss boss, final Location chestLocation) throws Exception {
         boss.getEntity().teleport(chestLocation.clone().add(0.0, 1.0, 0.0));
         if (boss instanceof EvilAbomination) {
             ParticleEffect.sendToLocation(ParticleEffect.CLOUD, boss.getEntity().getLocation(), 0.5f, 0.5f, 0.5f, 0.01f, 5);
+            de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(),boss.getEntity().getLocation(),0.5f, 0.5f, 0.5f, 0.01f,6);
         }
     }
 }

@@ -1,16 +1,21 @@
 package me.ifamasssxd.cosmicbosses.dungeonboss.abilities;
 
-import me.ifamasssxd.cosmicbosses.struct.*;
-import org.arkhamnetwork.Arkkit.libs.*;
-import me.ifamasssxd.cosmicbosses.dungeonboss.*;
-import java.util.*;
-import org.bukkit.entity.*;
-import org.bukkit.util.*;
-import java.util.concurrent.*;
-import org.bukkit.*;
-import org.bukkit.event.*;
-import org.bukkit.block.*;
+import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonAbility;
+import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijki;
+import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijkiEntity;
+import me.ifamasssxd.cosmicbosses.struct.Boss;
+import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Sound;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.util.BlockIterator;
 import org.bukkit.util.Vector;
+
+import java.util.concurrent.TimeUnit;
 
 public class UnstoppableForce extends DungeonAbility
 {
@@ -26,7 +31,7 @@ public class UnstoppableForce extends DungeonAbility
     }
     
     @Override
-    public void onTick() {
+    public void onTick() throws Exception {
         ++this.ticks;
         final long time = System.currentTimeMillis() - this.initTime;
         if (time >= 5000L && this.direction == null) {
@@ -51,7 +56,7 @@ public class UnstoppableForce extends DungeonAbility
                 }
             }
             if (this.ticks % 4 == 0) {
-                ParticleEffect.sendToLocation(ParticleEffect.WITCH_MAGIC, this.getBoss().getEntity().getLocation(), 1.0f, 1.0f, 1.0f, 0.1f, 20);
+                de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(),this.getBoss().getEntity().getLocation(),1f, 1f, 1f, 0.1f,20);
             }
             if (this.ticks % 3 == 0) {
                 drawParticleLineInDirection(this.getBoss().getEntity());
@@ -62,7 +67,13 @@ public class UnstoppableForce extends DungeonAbility
     public static void drawParticleLineInDirection(final LivingEntity entity) {
         try {
             final BlockIterator iterator = new BlockIterator(entity, 8);
-            iterator.forEachRemaining(bl -> ParticleEffect.sendToLocation(ParticleEffect.MAGIC_CRIT, bl.getLocation().add(0.5, 0.5, 0.5), 0.0f, 0.0f, 0.0f, 0.01f, 3));
+            iterator.forEachRemaining(bl -> {
+                try {
+                    de.inventivegames.particle.ParticleEffect.MAGIC_CRIT.sendToPlayers(Bukkit.getOnlinePlayers(),bl.getLocation(),1f, 1f, 1f, 0.1f,20);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
         }
         catch (Exception ex) {}
     }

@@ -1,16 +1,23 @@
 package me.ifamasssxd.cosmicbosses.bosses.plaguebloater;
 
-import me.ifamasssxd.cosmicbosses.struct.*;
-import org.bukkit.scheduler.*;
-import org.arkhamnetwork.Arkkit.libs.*;
-import java.util.*;
-import me.ifamasssxd.cosmicbosses.*;
-import org.bukkit.plugin.*;
-import me.ifamasssxd.cosmicbosses.utils.*;
+import lombok.SneakyThrows;
+import me.ifamasssxd.cosmicbosses.CosmicBosses;
+import me.ifamasssxd.cosmicbosses.struct.Boss;
+import me.ifamasssxd.cosmicbosses.struct.BossAbility;
+import me.ifamasssxd.cosmicbosses.struct.EntityContainer;
+import me.ifamasssxd.cosmicbosses.utils.BossUtils;
 import org.bukkit.*;
-import org.bukkit.entity.*;
-import org.bukkit.metadata.*;
-import java.util.concurrent.*;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.TNTPrimed;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class PlagueBomb extends BossAbility implements EntityContainer
 {
@@ -24,6 +31,7 @@ public class PlagueBomb extends BossAbility implements EntityContainer
         new BukkitRunnable() {
             int loops = 0;
             
+            @SneakyThrows
             public void run() {
                 if (PlagueBomb.this.getBoss() == null || !PlagueBomb.this.getBoss().isBossSpawned()) {
                     this.cancel();
@@ -42,7 +50,8 @@ public class PlagueBomb extends BossAbility implements EntityContainer
                     else {
                         final Location location = primed.getLocation();
                         if (PlagueBomb.this.random.nextInt(10) <= 2) {
-                            ParticleEffect.sendToLocation(ParticleEffect.LARGE_SMOKE, location, 3.0f, 3.0f, 3.0f, 0.05f, 30);
+                            //ParticleEffect.sendToLocation(ParticleEffect.LARGE_SMOKE, location, 3.0f, 3.0f, 3.0f, 0.05f, 30);
+                            de.inventivegames.particle.ParticleEffect.LARGE_SMOKE.sendToPlayers(Bukkit.getOnlinePlayers(),location,3f, 3f, 3f, 0.05f,30);
                         }
                         if (this.loops % 20 != 0) {
                             continue;

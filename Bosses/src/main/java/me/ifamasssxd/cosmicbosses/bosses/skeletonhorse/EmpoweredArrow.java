@@ -1,10 +1,12 @@
 package me.ifamasssxd.cosmicbosses.bosses.skeletonhorse;
 
+import lombok.SneakyThrows;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.cosmicbosses.struct.BossAbility;
 import me.ifamasssxd.cosmicbosses.struct.Phase;
 import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
+import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
@@ -31,6 +33,7 @@ public class EmpoweredArrow extends BossAbility
             new BukkitRunnable() {
                 int counter = 140;
                 
+                @SneakyThrows
                 public void run() {
                     --this.counter;
                     if (EmpoweredArrow.this.getBoss() == null || EmpoweredArrow.this.getBoss().getEntity().isDead() || EmpoweredArrow.this.getBoss().getPhase() == Phase.TWO) {
@@ -38,9 +41,8 @@ public class EmpoweredArrow extends BossAbility
                         return;
                     }
                     if (EmpoweredArrow.this.getBoss().getEntity().hasMetadata("empower_arrow")) {
-                        ParticleEffect.playEffect(ParticleEffect.LAVA, EmpoweredArrow.this.getBoss().getEntity().getLocation(), 0.6f, 50);
-                        ParticleEffect.playEffect(ParticleEffect.PORTAL, EmpoweredArrow.this.getBoss().getEntity().getLocation(), 0.6f, 10);
-
+                        de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), EmpoweredArrow.this.getBoss().getEntity().getLocation(),0,0,0, 0.6f,50);
+                        de.inventivegames.particle.ParticleEffect.PORTAL.sendToPlayers(Bukkit.getOnlinePlayers(), EmpoweredArrow.this.getBoss().getEntity().getLocation(),0,0,0, 0.6f,10);
 
                         return;
                     }
@@ -55,7 +57,7 @@ public class EmpoweredArrow extends BossAbility
                         EmpoweredArrow.this.isEmpowered = true;
                     }
                     else {
-                        ParticleEffect.playEffect(ParticleEffect.PORTAL, EmpoweredArrow.this.getBoss().getEntity().getLocation(), 0.6f, 50);
+                        de.inventivegames.particle.ParticleEffect.PORTAL.sendToPlayers(Bukkit.getOnlinePlayers(), EmpoweredArrow.this.getBoss().getEntity().getLocation(),0,0,0, 0.6f,50);
                     }
                 }
             }.runTaskTimer((Plugin)CosmicBosses.getInstance(), 20L, 1L);

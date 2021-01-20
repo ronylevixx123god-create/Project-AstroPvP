@@ -1,16 +1,17 @@
 package me.ifamasssxd.cosmicbosses.dungeonboss.abilities;
 
-import me.ifamasssxd.cosmicbosses.struct.*;
-import java.util.concurrent.*;
-
+import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonAbility;
+import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijki;
+import me.ifamasssxd.cosmicbosses.struct.Boss;
+import me.ifamasssxd.cosmicbosses.utils.BossUtils;
 import net.citizensnpcs.nms.v1_8_R3.entity.EntityHumanNPC;
-import org.arkhamnetwork.Arkkit.libs.*;
-import me.ifamasssxd.cosmicbosses.dungeonboss.*;
-import org.bukkit.entity.*;
-import me.ifamasssxd.cosmicbosses.utils.*;
-import java.util.*;
-import org.bukkit.*;
-import org.bukkit.event.*;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+
+import java.util.concurrent.TimeUnit;
 
 public class EndOfWorld extends DungeonAbility
 {
@@ -28,11 +29,12 @@ public class EndOfWorld extends DungeonAbility
     }
     
     @Override
-    public void onTick() {
+    public void onTick() throws Exception {
         ++this.ticks;
         if (this.ticks % 20 == 0 && !this.executed) {
             ++this.secondsCounted;
-            ParticleEffect.sendToLocation(ParticleEffect.LAVA, this.getBoss().getEntity().getLocation(), 1.0f, 1.0f, 1.0f, 0.1f, 20);
+            de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(),this.getBoss().getEntity().getLocation(),1f, 1f, 1f, 0.1f,20);
+
             this.boss.getEntity().getWorld().getPlayers().forEach(pl -> pl.playSound(pl.getLocation(), Sound.NOTE_PLING, 1.0f, 1.1f));
             if (this.secondsCounted >= this.COUNTDOWN_TIME) {
                 this.executed = true;

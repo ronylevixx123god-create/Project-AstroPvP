@@ -1,13 +1,20 @@
 package me.ifamasssxd.cosmicbosses.dungeonboss.abilities;
 
-import me.ifamasssxd.cosmicbosses.dungeonboss.*;
-import me.ifamasssxd.cosmicbosses.struct.*;
-import java.util.*;
-import java.util.concurrent.*;
-import org.bukkit.entity.*;
-import org.bukkit.*;
-import org.arkhamnetwork.Arkkit.libs.*;
-import org.bukkit.event.*;
+import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonAbility;
+import me.ifamasssxd.cosmicbosses.struct.Boss;
+import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Sound;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+
+import java.util.Collections;
+import java.util.Set;
+import java.util.WeakHashMap;
+import java.util.concurrent.TimeUnit;
 
 public class AfterImage extends DungeonAbility
 {
@@ -66,10 +73,10 @@ public class AfterImage extends DungeonAbility
     }
     
     @Override
-    public void onAbilityDisable() {
+    public void onAbilityDisable() throws Exception {
         for (final Entity ent : this.boss.getMinions()) {
             if (ent != null && !ent.isDead()) {
-                ParticleEffect.sendToLocation(ParticleEffect.CLOUD, ent.getLocation().add(0.0, 1.0, 0.0), 1.0f, 1.0f, 1.0f, 0.1f, 30);
+                de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(),ent.getLocation().add(0.0, 1.0, 0.0),0f, 0f, 0f, 0.1f,30);
             }
         }
         this.boss.removeMinions();
