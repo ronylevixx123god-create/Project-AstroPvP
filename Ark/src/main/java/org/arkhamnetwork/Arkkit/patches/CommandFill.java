@@ -27,9 +27,9 @@ package org.arkhamnetwork.Arkkit.patches;
 import com.massivecraft.factions.*;
 import com.massivecraft.factions.struct.Relation;
 import com.massivecraft.factions.struct.RolePerm;
+import lombok.SneakyThrows;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -50,6 +50,7 @@ final class CommandFill
         super(command, usage, description, aliases);
     }
 
+    @SneakyThrows
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         int maxPerDispenser;
@@ -166,7 +167,8 @@ final class CommandFill
                     break;
                 }
             }
-            ParticleEffect.playEffect(ParticleEffect.SPELL, dp.getLocation(), 0.6f, 12);
+            //ParticleEffect.playEffect(ParticleEffect.SPELL, dp.getLocation(), 0.6f, 12);
+            de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayer(p, dp.getLocation(), 0,0,0,0.6f,12);
             ++dispenserCount;
         }
         p.updateInventory();

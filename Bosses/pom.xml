@@ -15,7 +15,7 @@
 
     <build>
         <defaultGoal>clean install</defaultGoal>
-        <finalName>Factions</finalName>
+        <finalName>CosmicBosses</finalName>
         <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
         <resources>
             <resource>

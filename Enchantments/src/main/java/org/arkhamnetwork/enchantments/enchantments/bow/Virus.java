@@ -1,7 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.bow;
 
 import com.rit.sucy.CustomEnchantment;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
+import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -24,6 +24,7 @@ public class Virus extends CustomEnchantment {
         Bukkit.getPluginManager().registerEvents((Listener) new VirusListener(), (Plugin) Enchantments.getInstance());
     }
 
+    @SneakyThrows
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
         playerHit.setMetadata("virusEnchantmentLevel", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) level));
         playerHit.setMetadata("virusEnchantmentExpire", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) (System.currentTimeMillis() + level * 1500)));
@@ -31,9 +32,9 @@ public class Virus extends CustomEnchantment {
         final double chance = 0.15 * level;
         if (random < chance) {
             playerHit.removePotionEffect(PotionEffectType.REGENERATION);
-            ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, playerHit.getLocation().add(0.0, 1.0, 0.0), 0.4f, 25);
             if (playerHit instanceof Player) {
                 ((Player) playerHit).playSound(playerHit.getLocation(), Sound.ENDERMAN_TELEPORT, 0.6f, 2.0f);
+                de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayer((Player) playerHit, player.getLocation().add(0.0, 1.0, 0.0),0,0,0, 0.4f, 20);
             }
         }
     }

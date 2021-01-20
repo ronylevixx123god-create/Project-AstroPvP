@@ -10,8 +10,9 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
+import de.inventivegames.particle.ParticleEffect;
+import lombok.SneakyThrows;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.enchantments.util.ParticleEffect;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -27,6 +28,7 @@ final class HalloweenRainbowTask
         this.endTime = System.currentTimeMillis() + (long) (1000 * (sugarLevel + 5));
     }
 
+    @SneakyThrows
     public void run() {
         if (this.endTime < System.currentTimeMillis()) {
             HalloweenListener.setSugarLevel(this.player, 0);
@@ -37,7 +39,8 @@ final class HalloweenRainbowTask
         if (this.player.hasMetadata("spectator")) {
             return;
         }
-        ParticleEffect.playEffect(ParticleEffect.RED_DUST, this.player.getLocation().add(0.0, 1.0, 0.0), 0.8f, this.sugarLevel * 5);
+        //ParticleEffect.playEffect(ParticleEffect.RED_DUST, this.player.getLocation().add(0.0, 1.0, 0.0), 0.8f, this.sugarLevel * 5);
+        ParticleEffect.RED_DUST.sendToPlayer(this.player, this.player.getLocation(), 0, 1, 0, 0.8f, this.sugarLevel * 5);
     }
 }
 

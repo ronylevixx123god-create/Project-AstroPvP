@@ -23,7 +23,6 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -89,15 +88,15 @@ final class DrinkListener
     }
 
     @EventHandler
-    public void onPotionSplash(PotionSplashEvent e) {
+    public void onPotionSplash(PotionSplashEvent e) throws Exception {
         if (Drinks.isSplashDrink(e.getPotion().getItem())) {
             e.setCancelled(true);
-            ParticleEffect.playEffect(ParticleEffect.LARGE_EXPLODE, e.getEntity().getLocation().add(0.0, 1.0, 0.0), 0.8f, 6);
             for (LivingEntity ent : e.getAffectedEntities()) {
                 if (!(ent instanceof Player)) continue;
                 Player p = (Player) ent;
                 DrinkListener.applySpaceDrink(p, true);
-                ParticleEffect.playEffect(ParticleEffect.MAGIC_CRIT, p.getLocation().add(0.0, 1.0, 0.0), 1.15f, 16);
+                //ParticleEffect.playEffect(ParticleEffect.MAGIC_CRIT, p.getLocation().add(0.0, 1.0, 0.0), 1.15f, 16);
+                de.inventivegames.particle.ParticleEffect.MAGIC_CRIT.sendToPlayer(p, p.getLocation().add(0.0, 1.0, 0.0),0,0,0, 1.15f, 16);
             }
         }
     }

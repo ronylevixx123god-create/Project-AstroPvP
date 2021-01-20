@@ -29,7 +29,6 @@ package org.arkhamnetwork.Arkkit.patches;
 import com.cosmicpvp.cosmicutils.itembuilder.MaskBuilder;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.libs.ArkPluginListener;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -90,7 +89,7 @@ final class ChristmasListener
     }
 
     @EventHandler
-    public void onPlayerUseChristmasCandy(PlayerInteractEvent e) {
+    public void onPlayerUseChristmasCandy(PlayerInteractEvent e) throws Exception {
         if (e.hasItem() && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && Christmas.isChristmasCandy(e.getItem())) {
             e.setCancelled(true);
             e.setUseItemInHand(Event.Result.DENY);
@@ -117,7 +116,9 @@ final class ChristmasListener
             ChristmasListener.setSugarLevel(p, christmasSugarLevel);
             this.updateSugarTask(p, christmasSugarLevel);
             if (p.hasMetadata("spectator")) {
-                ParticleEffect.playEffect(ParticleEffect.SPELL, p.getLocation().add(0.0, 1.0, 0.0), 0.4f, christmasSugarLevel * 5);
+                //ParticleEffect.playEffect(ParticleEffect.SPELL, p.getLocation().add(0.0, 1.0, 0.0), 0.4f, christmasSugarLevel * 5);
+                de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayer(p,p.getLocation().add(0.0, 1.0, 0.0),0,0,0,0.4f, christmasSugarLevel * 5);
+
             }
             p.sendMessage(ChatColor.YELLOW + "You eat a piece of christmas candy... YUM! [" + christmasSugarLevel + "x]");
             p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, duration, Math.min(1, christmasSugarLevel / 2)));

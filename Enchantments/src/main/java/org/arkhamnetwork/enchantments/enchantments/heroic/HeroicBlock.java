@@ -2,7 +2,8 @@ package org.arkhamnetwork.enchantments.enchantments.heroic;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
+import de.inventivegames.particle.ParticleEffect;
+import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
@@ -18,6 +19,7 @@ public class HeroicBlock extends HeroicCustomEnchantment {
         this.interval = 4.0D;
     }
 
+    @SneakyThrows
     public void applyDefenseEffect(LivingEntity damaged, LivingEntity attacker, int level, EntityDamageEvent e) {
         if (damaged instanceof Player) {
             if (damaged.hasMetadata("neutralized"))
@@ -35,12 +37,12 @@ public class HeroicBlock extends HeroicCustomEnchantment {
                 double reflectChance = 0.08D * level + (player.isBlocking() ? 0.05D : 0.0D);
                 if (Math.random() < reflectChance && attacker instanceof Player) {
                     player.sendMessage(CC.GreenB + "* BLOCKED §7[" + NumberUtils.formatSeconds(finalDamage) + "]§&§l *");
-                    ParticleEffect.playEffect(ParticleEffect.CRIT, player.getLocation().add(0.0D, 1.0D, 0.0D), 0.75F, 25);
+                    de.inventivegames.particle.ParticleEffect.CRIT.sendToPlayer(player,player.getLocation().add(0.0D, 1.0D, 0.0D),0,0,0, 0.75F, 25);
                     if (damageToReflect > 0.0D) {
                         Player attacking = (Player) attacker;
                         attacking.damage(damageToReflect);
                         player.getWorld().playSound(player.getLocation(), Sound.ZOMBIE_METAL, 10.0F, 2.0F);
-                        ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, attacking.getLocation().add(0.0D, 1.0D, 0.0D), 0.75F, 25);
+                        ParticleEffect.WITCH_MAGIC.sendToPlayer(attacking,attacking.getLocation().add(0.0D, 1.0D, 0.0D),0,0,0, 0.75F, 25);
                         attacking.sendMessage(CC.RedB + "* " + player.getName() + " REFLECTIVE BLOCK [" + CC.Gray + (int) (reduceDamage * 100.0D) + "% DMG" + CC.RedB + "]");
                     }
                 }

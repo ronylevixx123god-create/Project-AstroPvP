@@ -24,7 +24,6 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.arkhamnetwork.Arkkit.utils.ItemUtils;
 import org.arkhamnetwork.Arkkit.utils.WorldGuardUtils;
@@ -108,7 +107,7 @@ final class MysteryMobSpawnersListener
     }
 
     @EventHandler
-    public void onPlayerRedeemMysterySpawner(PlayerInteractEvent e) {
+    public void onPlayerRedeemMysterySpawner(PlayerInteractEvent e) throws Exception {
         if (e.hasItem() && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && MysteryMobSpawners.isMysteryMobSpawner(e.getItem())) {
             e.setCancelled(true);
             e.setUseInteractedBlock(Event.Result.DENY);
@@ -127,7 +126,8 @@ final class MysteryMobSpawnersListener
             ItemStack i = MysteryMobSpawnersListener.getMobSpawnerFromMystery();
             e.getPlayer().getInventory().addItem(i);
             e.getPlayer().updateInventory();
-            ParticleEffect.playEffect(ParticleEffect.SPELL, e.getPlayer().getLocation().add(0.0, 1.0, 0.0), 0.6f, 50);
+            //ParticleEffect.playEffect(ParticleEffect.SPELL, e.getPlayer().getLocation().add(0.0, 1.0, 0.0), 0.6f, 50);
+            de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayer(e.getPlayer(), e.getPlayer().getLocation(), 0, 1, 0, 0.6f, 50);
             e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.ITEM_PICKUP, 1.0f, 0.6f);
             if (i.getDurability() == 56) {
                 Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&b&l(!) &b&n" + e.getPlayer().getName() + "&b has just recieved a &d&lGhast Spawner&b from a Mystery Mob Spawner!"));

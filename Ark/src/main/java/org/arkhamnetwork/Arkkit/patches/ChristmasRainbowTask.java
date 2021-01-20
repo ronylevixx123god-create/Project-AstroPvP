@@ -7,7 +7,7 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
+import lombok.SneakyThrows;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -23,13 +23,16 @@ final class ChristmasRainbowTask
         this.endTime = System.currentTimeMillis() + (long) (1000 * (christmasSugarLevel + 5));
     }
 
+    @SneakyThrows
     public void run() {
         if (this.endTime < System.currentTimeMillis()) {
             ChristmasListener.setSugarLevel(this.player, 0);
             this.cancel();
             return;
         }
-        ParticleEffect.playEffect(ParticleEffect.RED_DUST, this.player.getLocation().add(0.0, 1.0, 0.0), 0.8f, this.christmasSugarLevel * 5);
+        //ParticleEffect.playEffect(ParticleEffect.RED_DUST, this.player.getLocation().add(0.0, 1.0, 0.0), 0.8f, this.christmasSugarLevel * 5);
+        de.inventivegames.particle.ParticleEffect.RED_DUST.sendToPlayer(this.player,this.player.getLocation().add(0.0, 1.0, 0.0),0,0,0,0.8f, this.christmasSugarLevel * 5);
+
     }
 }
 

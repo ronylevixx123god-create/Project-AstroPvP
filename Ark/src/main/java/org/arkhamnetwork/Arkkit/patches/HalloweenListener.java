@@ -31,7 +31,6 @@ package org.arkhamnetwork.Arkkit.patches;
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
-import org.arkhamnetwork.enchantments.util.ParticleEffect;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -70,7 +69,7 @@ final class HalloweenListener
     }
 
     @EventHandler
-    public void onPlayerUseHalloweenCandy(PlayerInteractEvent e) {
+    public void onPlayerUseHalloweenCandy(PlayerInteractEvent e) throws Exception {
         if (e.hasItem() && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && Halloween.isHalloweenCandy(e.getItem())) {
             e.setCancelled(true);
             e.setUseItemInHand(Event.Result.DENY);
@@ -101,7 +100,8 @@ final class HalloweenListener
             HalloweenListener.setSugarLevel(p, sugarLevel);
             this.updateSugarTask(p, sugarLevel);
             if (!p.hasMetadata("spectator")) {
-                ParticleEffect.playEffect(ParticleEffect.SPELL, p.getLocation().add(0.0, 1.0, 0.0), 0.4f, sugarLevel * 5);
+                //ParticleEffect.playEffect(ParticleEffect.SPELL, p.getLocation().add(0.0, 1.0, 0.0), 0.4f, sugarLevel * 5);
+                de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayer(p, p.getLocation(), 0, 0, 0, 0.4f, sugarLevel * 5);
             }
             p.sendMessage(ChatColor.YELLOW + "You eat a piece of space candy... YUM! [" + sugarLevel + "x]");
             p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, duration, Math.min(1, sugarLevel / 2)));

@@ -1,8 +1,8 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
 import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.rit.sucy.CustomEnchantment;
+import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
@@ -32,6 +32,7 @@ public class Dominate extends CustomEnchantment {
         Bukkit.getServer().getPluginManager().registerEvents((Listener) new DominateEffectListener(), (Plugin) Enchantments.getInstance());
     }
 
+    @SneakyThrows
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
         final double procChance = 0.04 * level;
         if (Math.random() < procChance) {
@@ -43,7 +44,8 @@ public class Dominate extends CustomEnchantment {
             }
             playerHit.setMetadata(Dominate.dominateEffectExpire_metadata, (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) (MinecraftServerUtils.getCurrentServerTick() + level * 2 * 20)));
             playerHit.setMetadata(Dominate.dominateEffectLevel_metadata, (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) level));
-            ParticleEffect.playEffect(ParticleEffect.ENCHANTMENT_TABLE, playerHit.getLocation().add(0.0, 1.0, 0.0), 0.8f, 32);
+            //ParticleEffect.playEffect(ParticleEffect.ENCHANTMENT_TABLE, playerHit.getLocation().add(0.0, 1.0, 0.0), 0.8f, 32);
+            de.inventivegames.particle.ParticleEffect.ENCHANTMENT_TABLE.sendToPlayer((Player) playerHit, playerHit.getLocation(), 0, 1, 0, 0.8f, 32);
         }
     }
 }

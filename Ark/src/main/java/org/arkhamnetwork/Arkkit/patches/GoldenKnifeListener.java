@@ -13,10 +13,10 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -29,14 +29,15 @@ final class GoldenKnifeListener
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
+    public void onEntityDamageByEntity(EntityDamageByEntityEvent e) throws Exception {
         LivingEntity le;
         if (e.getDamager() instanceof LivingEntity && GoldenKnife.isGoldenKnife((le = (LivingEntity) e.getDamager()).getEquipment().getItemInHand())) {
             le.getEquipment().setItemInHand(null);
             le.getWorld().playSound(le.getLocation(), Sound.ITEM_BREAK, 1.0f, 1.0f);
             le.getWorld().playSound(le.getLocation(), Sound.ENDERMAN_SCREAM, 1.2f, 0.1f);
             ((LivingEntity) e.getEntity()).setHealth(0.0);
-            ParticleEffect.playEffect(ParticleEffect.FIREWORKS_SPARK, e.getEntity().getLocation(), 0.4f, 50);
+            //ParticleEffect.playEffect(ParticleEffect.FIREWORKS_SPARK, e.getEntity().getLocation(), 0.4f, 50);
+            de.inventivegames.particle.ParticleEffect.PORTAL.sendToPlayer((Player) e.getEntity(), e.getEntity().getLocation(), 0, 0, 0, 0.7f, 16);
         }
     }
 

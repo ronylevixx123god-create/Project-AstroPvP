@@ -22,11 +22,12 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
+import lombok.SneakyThrows;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.arkhamnetwork.Arkkit.patches.chunkgc.ChunkGCTask;
 import org.arkhamnetwork.Arkkit.utils.LocationUtils;
 import org.arkhamnetwork.Arkkit.utils.WorldGuardUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -46,6 +47,7 @@ final class EndGrindingMobSpawnTask
     EndGrindingMobSpawnTask() {
     }
 
+    @SneakyThrows
     public void run() {
         ++this.tick;
         if (EndGrinding.fundEnabled && !EndGrinding.hcf) {
@@ -81,7 +83,7 @@ final class EndGrindingMobSpawnTask
         }
     }
 
-    private Entity spawnEndCreeper(Location l) {
+    private Entity spawnEndCreeper(Location l) throws Exception {
         l = LocationUtils.getNearbyLocation(l, 2, 10).add(0.0, 2.0, 0.0);
         int creeperCount = 0;
         for (Entity ent : l.getChunk().getEntities()) {
@@ -98,11 +100,12 @@ final class EndGrindingMobSpawnTask
         c.setMaxHealth(c.getMaxHealth() * 5.0);
         c.setHealth(c.getMaxHealth());
         c.setMetadata("endMonsterType", new FixedMetadataValue(Arkkit.get(), EndMonsterType.CREEPER.toString()));
-        ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, l.add(0.0, 0.5, 0.0), 0.7f, 16);
+        //ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, l.add(0.0, 0.5, 0.0), 0.7f, 16);
+        de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), l.add(0.0, 0.5, 0.0),0,0,0,0.7f,16);
         return c;
     }
 
-    private Entity spawnEndCustom(Location l) {
+    private Entity spawnEndCustom(Location l) throws Exception {
         l = LocationUtils.getNearbyLocation(l, 2, 10).add(0.0, 2.0, 0.0);
         int monsterCount = 0;
         for (Entity ent : l.getChunk().getEntities()) {
@@ -134,7 +137,7 @@ final class EndGrindingMobSpawnTask
             s.getEquipment().setItemInHand(new ItemStack(Material.DIAMOND_SWORD));
         }
         s.setCustomNameVisible(true);
-        ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, l.add(0.0, 0.5, 0.0), 0.7f, 16);
+        de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), l.add(0.0, 0.5, 0.0),0,0,0,0.7f,16);
         return s;
     }
 }

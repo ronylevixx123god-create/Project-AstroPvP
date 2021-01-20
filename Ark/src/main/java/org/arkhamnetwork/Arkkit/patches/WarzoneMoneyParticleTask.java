@@ -6,7 +6,7 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
+import lombok.SneakyThrows;
 import org.bukkit.scheduler.BukkitRunnable;
 
 final class WarzoneMoneyParticleTask
@@ -14,9 +14,11 @@ final class WarzoneMoneyParticleTask
     WarzoneMoneyParticleTask() {
     }
 
+    @SneakyThrows
     public void run() {
         if (WarzoneMoneyLMSTask.pLMS != null) {
-            ParticleEffect.playEffect(ParticleEffect.RED_DUST, WarzoneMoneyLMSTask.pLMS.getEyeLocation().add(0.0, 0.5, 0.0), 0.7f, 16);
+            //ParticleEffect.playEffect(ParticleEffect.RED_DUST, WarzoneMoneyLMSTask.pLMS.getEyeLocation().add(0.0, 0.5, 0.0), 0.7f, 16);
+            de.inventivegames.particle.ParticleEffect.RED_DUST.sendToPlayer(WarzoneMoneyLMSTask.pLMS, WarzoneMoneyLMSTask.pLMS.getEyeLocation().add(0.0, 0.5, 0.0), 0, 0, 0, 0.6f, 16);
         }
     }
 }

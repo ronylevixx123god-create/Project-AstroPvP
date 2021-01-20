@@ -19,6 +19,7 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.arkhamnetwork.Arkkit.utils.RandomFireworks;
+import org.bukkit.Bukkit;
 import org.bukkit.FireworkEffect;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -38,7 +39,7 @@ final class NewYearsListener
     }
 
     @EventHandler
-    public void onPlayerUseExplosiveCake(PlayerInteractEvent e) {
+    public void onPlayerUseExplosiveCake(PlayerInteractEvent e) throws Exception {
         if (e.hasItem() && NewYears.isExplosiveCake(e.getItem()) && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
             e.setUseItemInHand(Event.Result.DENY);
             e.setUseInteractedBlock(Event.Result.DENY);
@@ -52,9 +53,10 @@ final class NewYearsListener
             }
             e.getPlayer().updateInventory();
             Location l = e.getPlayer().getLocation().add(0.0, 1.0, 0.0);
-            ParticleEffect.playEffect(ParticleEffect.SPELL, l, 0.1f, 50);
-            ParticleEffect.playEffect(ParticleEffect.FIREWORKS_SPARK, l, 0.33f, 40);
-            ParticleEffect.playEffect(ParticleEffect.LARGE_EXPLODE, l, 0.2f, 5);
+            de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), e.getPlayer().getLocation(), 0, 1, 0, 0.1f, 50);
+            de.inventivegames.particle.ParticleEffect.FIREWORKS_SPARK.sendToPlayers(Bukkit.getOnlinePlayers(), e.getPlayer().getLocation(), 0, 1, 0, 0.33f, 40);
+            de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), e.getPlayer().getLocation(), 0, 1, 0, 0.2f, 5);
+
             l.getWorld().playSound(l, Sound.EXPLODE, 0.8f, 0.5f);
             l.getWorld().playSound(l, Sound.EAT, 1.0f, 0.77f);
         }

@@ -19,8 +19,8 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.arkhamnetwork.Arkkit.utils.WorldGuardUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Creeper;
@@ -38,7 +38,7 @@ final class NoExplosionPhysicsListener
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onEntityExplode(EntityExplodeEvent e) {
+    public void onEntityExplode(EntityExplodeEvent e) throws Exception {
         if (e.getEntity() instanceof Creeper && WorldGuardUtils.getRegionName(e.getEntity().getLocation()).contains("warzone") && Board.getFactionAt(new FLocation(e.getEntity().getLocation())).isWarZone()) {
             Creeper c = (Creeper) e.getEntity();
             int radius = c.isPowered() ? 6 : 3;
@@ -49,7 +49,8 @@ final class NoExplosionPhysicsListener
                 ((LivingEntity) ent).damage(damage, c);
             }
             c.getWorld().playSound(c.getLocation(), Sound.EXPLODE, 1.0f, 1.0f);
-            ParticleEffect.playEffect(ParticleEffect.EXPLODE, c.getLocation().add(0.0, 1.0, 0.0), 1.0f, 6);
+            //ParticleEffect.playEffect(ParticleEffect.EXPLODE, c.getLocation().add(0.0, 1.0, 0.0), 1.0f, 6);
+            de.inventivegames.particle.ParticleEffect.EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(),c.getLocation(), 0,1,0,1f,6);
             c.remove();
         }
     }

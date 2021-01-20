@@ -1,8 +1,8 @@
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
+import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
@@ -32,6 +32,7 @@ public class Corrupt extends CustomEnchantment {
         return e.getMetadata("corruptEnchantLevel").get(0).asInt();
     }
 
+    @SneakyThrows
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
         if (!(playerHit instanceof Player)) {
             return;
@@ -41,7 +42,8 @@ public class Corrupt extends CustomEnchantment {
         if (random < chance && (!playerHit.hasMetadata("corruptEnchantExpire") || playerHit.getMetadata("corruptEnchantExpire").get(0).asLong() < System.currentTimeMillis())) {
             playerHit.setMetadata("corruptEnchantExpire", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) (System.currentTimeMillis() + level * 2 * 1000)));
             playerHit.setMetadata("corruptEnchantLevel", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) level));
-            ParticleEffect.playEffect(ParticleEffect.PORTAL, playerHit.getEyeLocation(), 0.6f, 20);
+            //ParticleEffect.playEffect(ParticleEffect.PORTAL, playerHit.getEyeLocation(), 0.6f, 20);
+            de.inventivegames.particle.ParticleEffect.PORTAL.sendToPlayer((Player) playerHit, playerHit.getEyeLocation(), 0, 0, 0, 0.7f, 16);
             if (EnchantmentAPI.itemHasEnchantment(((Player) playerHit).getItemInHand(), "Inversion")) {
                 return;
             }
