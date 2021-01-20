@@ -1,8 +1,5 @@
 package me.ifamasssxd.cosmicbosses.dungeonboss.planetnul;
 
-import com.boydti.fawe.FaweAPI;
-import com.boydti.fawe.object.visitor.FastIterator;
-import com.boydti.fawe.util.EditSessionBuilder;
 import com.compilex.CosmicDungeons.DungeonsAPI;
 import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
@@ -30,9 +27,6 @@ import me.ifamasssxd.cosmicbosses.struct.enums.DamageType;
 import me.ifamasssxd.cosmicbosses.struct.enums.Difficulty;
 import me.ifamasssxd.cosmicbosses.utils.BossUtils;
 import me.ifamasssxd.cosmicbosses.utils.WorldGuardUtils;
-import me.ifamasssxd.factionupgrades.FactionUpgradeAPI;
-import me.ifamasssxd.factionupgrades.struct.FactionUpgrade;
-import me.quantiom.itemskin.ItemSkinManager;
 import net.minecraft.server.v1_8_R3.Entity;
 import net.minecraft.server.v1_8_R3.EntityInsentient;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -136,7 +130,8 @@ public class CorruptCosmonaut extends Boss implements DungeonBoss
         e.setMetadata("boss", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), (Object)""));
         e.setMaxHealth((double)this.getMaxHealth());
         e.setHealth(e.getMaxHealth());
-        e.getEquipment().setHelmet(ItemSkinManager.getItemSkinByID("CORRUPT_HELMET").applySkin(new ItemStack(Material.DIAMOND_HELMET)));
+        //todo: look into this method
+        //e.getEquipment().setHelmet(ItemSkinManager.getItemSkinByID("CORRUPT_HELMET").applySkin(new ItemStack(Material.DIAMOND_HELMET)));
 
         ItemStack fillerSword = new ItemStack(Material.DIAMOND_SWORD);
         fillerSword.addUnsafeEnchantment(Enchantment.DURABILITY, 100);
@@ -144,7 +139,8 @@ public class CorruptCosmonaut extends Boss implements DungeonBoss
         fillerSword.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 1);
         e.getEquipment().setItemInHandDropChance(0.0f);
 
-        fillerSword = ItemSkinManager.getItemSkinByID("CORRUPT_SWORD").applySkin(fillerSword);
+        // todo: look into this method
+        //fillerSword = ItemSkinManager.getItemSkinByID("CORRUPT_SWORD").applySkin(fillerSword);
 
         e.getEquipment().setItemInHand(fillerSword);
         e.setRemoveWhenFarAway(false);
@@ -341,7 +337,7 @@ public class CorruptCosmonaut extends Boss implements DungeonBoss
             Player target = (Player)t;
 
             final Location l1 = this.getLocation().add(0.0, 1.0, 0.0);
-            final Location l2 = this.getEntity().getTargetBlock((HashSet)null, 4).getLocation().add(0.0, 1.0, 0.0).setDirection(target.getLocation().getDirection());
+            final Location l2 = this.getEntity().getTargetBlock((HashSet<Byte>) null, 4).getLocation().add(0.0, 1.0, 0.0).setDirection(target.getLocation().getDirection());
 
             if (l2.getBlock().getType() == Material.AIR && l2.getBlock().getLocation().subtract(0.0, 1.0, 0.0).getBlock().getType() == Material.AIR) {
                 if (Math.random() < 0.5) {
@@ -543,7 +539,8 @@ public class CorruptCosmonaut extends Boss implements DungeonBoss
         fillerSword.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 1);
         skeleton.getEquipment().setItemInHandDropChance(0.0f);
 
-        fillerSword = ItemSkinManager.getItemSkinByID("CORRUPT_SWORD").applySkin(fillerSword);
+        // todo: look into this method
+       // fillerSword = ItemSkinManager.getItemSkinByID("CORRUPT_SWORD").applySkin(fillerSword);
 
         skeleton.getEquipment().setItemInHand(fillerSword);
         skeleton.setRemoveWhenFarAway(false);
@@ -554,7 +551,8 @@ public class CorruptCosmonaut extends Boss implements DungeonBoss
         skeleton.setMetadata("no_drops", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), (Object)""));
         skeleton.setMetadata("cosmonaut_minion", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), (Object)""));
 
-        skeleton.getEquipment().setHelmet(ItemSkinManager.getItemSkinByID("CORRUPT_HELMET").applySkin(new ItemStack(Material.DIAMOND_HELMET)));
+        // todo: look into this method
+       // skeleton.getEquipment().setHelmet(ItemSkinManager.getItemSkinByID("CORRUPT_HELMET").applySkin(new ItemStack(Material.DIAMOND_HELMET)));
         skeleton.getEquipment().setChestplate(null);
         skeleton.getEquipment().setLeggings(null);
         skeleton.getEquipment().setBoots(null);

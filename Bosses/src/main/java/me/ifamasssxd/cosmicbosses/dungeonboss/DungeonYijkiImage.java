@@ -3,11 +3,11 @@ package me.ifamasssxd.cosmicbosses.dungeonboss;
 import com.google.common.base.Predicate;
 import me.ifamasssxd.cosmicbosses.bosses.yijki.*;
 import me.ifamasssxd.cosmicbosses.struct.*;
+import net.citizensnpcs.nms.v1_8_R3.entity.EntityHumanNPC;
 import net.minecraft.server.v1_8_R3.Entity;
 import net.minecraft.server.v1_8_R3.Material;
 import net.minecraft.server.v1_8_R3.World;
 import org.bukkit.util.*;
-import net.citizensnpcs.npc.entity.*;
 import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_8_R3.entity.*;
 import org.arkhamnetwork.Arkkit.libs.*;
@@ -39,10 +39,10 @@ public class DungeonYijkiImage extends EntityMonster implements IRangedEntity
 
     protected void h() {
         super.h();
-        this.datawatcher.a(17, (Object)new Integer(0));
-        this.datawatcher.a(18, (Object)new Integer(0));
-        this.datawatcher.a(19, (Object)new Integer(0));
-        this.datawatcher.a(20, (Object)new Integer(0));
+        this.datawatcher.a(17, (Object) 0);
+        this.datawatcher.a(18, (Object) 0);
+        this.datawatcher.a(19, (Object) 0);
+        this.datawatcher.a(20, (Object) 0);
     }
 
     public void b(final NBTTagCompound nbttagcompound) {
@@ -161,7 +161,7 @@ public class DungeonYijkiImage extends EntityMonster implements IRangedEntity
         if (this.direction == null && this.ticksLived >= 139) {
             Entity target = this.getGoalTarget();
             if (target == null) {
-                target = (Entity)this.world.findNearbyVulnerablePlayer((Entity)this, 32.0);
+                target = (Entity)this.world.findNearbyPlayer(this, 32.0);
             }
             if (target == null) {
                 target = ((DungeonYijki)this.boss).getBossEntity().getGoalTarget();

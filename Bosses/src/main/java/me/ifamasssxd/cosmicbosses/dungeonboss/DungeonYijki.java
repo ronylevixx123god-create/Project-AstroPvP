@@ -2,8 +2,6 @@ package me.ifamasssxd.cosmicbosses.dungeonboss;
 
 import java.util.*;
 
-import com.compilex.CosmicDungeons.DungeonsAPI;
-import com.compilex.CosmicDungeons.struct.DungeonDebuff;
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.google.common.collect.*;
@@ -51,7 +49,7 @@ public class DungeonYijki extends Boss implements DungeonBoss
         this.bossPhase = BossPhase.PHASE_2;
         this.abilityActivateTime = System.currentTimeMillis();
         this.spawnLocations = Lists.newArrayList();
-        this.phases = Lists.newArrayList(new Phase[] { Phase.ONE, Phase.TWO, Phase.THREE, Phase.FOUR, Phase.FIVE, Phase.SIX });
+        this.phases = Lists.newArrayList(Phase.ONE, Phase.TWO, Phase.THREE, Phase.FOUR, Phase.FIVE, Phase.SIX);
         this.modifier = new BlockModifier();
         this.spawnLocations.add(location);
     }

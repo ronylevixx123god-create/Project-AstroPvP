@@ -4,7 +4,6 @@ import com.compilex.CosmicDungeons.CosmicDungeonsPlugin;
 import com.cosmicpvp.cosmicutils.CosmicUtils;
 import com.earth2me.essentials.*;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
-import me.vaqxine.NetworkManager.NetworkManager;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -34,7 +33,6 @@ import com.sk89q.worldguard.protection.regions.*;
 import org.bukkit.util.*;
 import java.util.*;
 import org.arkhamnetwork.Arkkit.commands.*;
-import me.vaqxine.NetworkManager.*;
 import org.bukkit.util.Vector;
 
 public class BossUtils
@@ -436,7 +434,7 @@ public class BossUtils
     }
     
     public static boolean isRebooting() {
-        return (Bukkit.getPluginManager().isPluginEnabled("Arkkit") && CommandArkReboot.restart_task_exists) || (Bukkit.getPluginManager().isPluginEnabled("NetworkManager") && NetworkManager.plugin.rebooting);
+        return (Bukkit.getPluginManager().isPluginEnabled("Arkkit") && CommandArkReboot.restart_task_exists) || (Bukkit.getPluginManager().isPluginEnabled("NetworkManager"));
     }
     
     public static void dealPercentHealthDamage(final Player p, final double percentage, final int maxDamage, final int minDamage) {

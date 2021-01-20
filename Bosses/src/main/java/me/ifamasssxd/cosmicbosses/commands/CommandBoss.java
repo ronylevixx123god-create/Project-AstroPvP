@@ -18,7 +18,7 @@ import org.bukkit.block.*;
 public class CommandBoss implements CommandExecutor
 {
     public static ItemStack getDimensionalCore() {
-        return new NBTWrapper(new ItemBuilder(Material.BEACON, CC.LightPurpleB + "Interdimensional Core", new String[] { CC.Gray + "A strange crystal emanating a powerful", CC.Gray + "ominous aura. You sense you will need other", CC.Gray + "components for this object to be useful", CC.Gray + "to you in your /dungeon runs." }).build()).setString("cosmicType", "dimensionalCore").build();
+        return new NBTWrapper(new ItemBuilder(Material.BEACON, CC.LightPurpleB + "Interdimensional Core", CC.Gray + "A strange crystal emanating a powerful", CC.Gray + "ominous aura. You sense you will need other", CC.Gray + "components for this object to be useful", CC.Gray + "to you in your /dungeon runs.").build()).setString("cosmicType", "dimensionalCore").build();
     }
     
     public boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
@@ -27,7 +27,7 @@ public class CommandBoss implements CommandExecutor
         }
         Player p = (sender instanceof Player) ? (Player)sender : null;
         if (args.length == 1 && args[0].equalsIgnoreCase("core")) {
-            p.getInventory().addItem(new ItemStack[] { getDimensionalCore() });
+            p.getInventory().addItem(getDimensionalCore());
             return true;
         }
         if (args.length != 2 && args.length != 3) {
@@ -117,7 +117,7 @@ public class CommandBoss implements CommandExecutor
         if (args[0].equalsIgnoreCase("spawn") && sender instanceof Player) {
             final HashSet<Byte> map = null;
             try {
-                final Block target = p.getTargetBlock((HashSet)map, 6);
+                final Block target = p.getTargetBlock((HashSet<Byte>) map, 6);
                 if (target == null) {
                     p.sendMessage(ChatColor.RED + "Invalid loc");
                     return true;

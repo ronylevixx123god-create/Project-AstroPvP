@@ -10,7 +10,7 @@ import me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost.MotherOfYijki;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.cosmicbosses.struct.NewBlockData;
 import me.ifamasssxd.cosmicbosses.utils.BossUtils;
-import net.citizensnpcs.npc.entity.EntityHumanNPC;
+import net.citizensnpcs.nms.v1_8_R3.entity.EntityHumanNPC;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.*;
 import org.bukkit.Material;

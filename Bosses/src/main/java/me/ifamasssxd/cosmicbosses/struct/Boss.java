@@ -3,7 +3,6 @@ package me.ifamasssxd.cosmicbosses.struct;
 import java.util.concurrent.*;
 
 import com.compilex.CosmicDungeons.DungeonsAPI;
-import com.compilex.CosmicDungeons.struct.DungeonDebuff;
 import com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.ifamasssxd.cosmicbosses.dungeonboss.planetnul.CorruptCosmonaut;
@@ -31,7 +30,6 @@ import me.ifamasssxd.cosmicbosses.bosses.soulreaper.*;
 import me.ifamasssxd.cosmicbosses.bosses.holidayspirit.*;
 import me.ifamasssxd.cosmicbosses.bosses.xmasbattlefield.*;
 import me.ifamasssxd.cosmicbosses.evilabomination.*;
-import io.apice.clientcomms.*;
 import me.ifamasssxd.cosmicbosses.bosses.dragon.*;
 import com.google.common.collect.*;
 import org.bukkit.*;
@@ -161,10 +159,10 @@ public abstract class Boss extends Equipable implements Healable
         if (!loc.getWorld().getName().equals("world_private") && !loc.getWorld().getName().startsWith("cosmic-station") && loc.getY() < loc.getWorld().getHighestBlockYAt(loc)) {
             event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 3.0);
         }
-
-        if (DungeonsAPI.hasDungeonDebuff(player, DungeonDebuff.BOSSES_DEAL_MORE_DAMAGE)) {
-            event.setDamage(event.getDamage() * 2.5D);
-        }
+//        todo: method doesnt exist
+//        if (DungeonsAPI.hasDungeonDebuff(player, DungeonDebuff.BOSSES_DEAL_MORE_DAMAGE)) {
+//            event.setDamage(event.getDamage() * 2.5D);
+//        }
     }
     
     public void onDamageTaken(final EntityDamageByEntityEvent event, final Entity damager) {
@@ -175,10 +173,11 @@ public abstract class Boss extends Equipable implements Healable
             if (((Projectile)event.getDamager()).getShooter() instanceof Player) {
                 Player p = (Player)((Projectile)event.getDamager()).getShooter();
 
-                if (DungeonsAPI.hasDungeonDebuff(p, DungeonDebuff.NO_BOW_DAMAGE_TO_BOSSES)) {
-                    p.sendMessage(CC.translate("&c&l(!) &cYou cannot use bows to damage bosses in this heroic dungeon!"));
-                    event.setCancelled(true);
-                }
+//                todo: method doesnt exist
+//                if (DungeonsAPI.hasDungeonDebuff(p, DungeonDebuff.NO_BOW_DAMAGE_TO_BOSSES)) {
+//                    p.sendMessage(CC.translate("&c&l(!) &cYou cannot use bows to damage bosses in this heroic dungeon!"));
+//                    event.setCancelled(true);
+//                }
             }
             return;
         }
@@ -193,19 +192,21 @@ public abstract class Boss extends Equipable implements Healable
                 mult = ((level == 1) ? 1.25 : ((level == 2) ? 1.5 : ((level == 3) ? 1.75 : ((level == 4) ? 2.0 : 1.0))));
             }
 
-            if (DungeonsAPI.get().getPlayerDungeonData((Player)damager).getCurrentDungeon() != null && DungeonsAPI.get().getPlayerDungeonData((Player)damager).getCurrentDungeon().getBossSlayerTrinket()) {
-                mult += 0.5;
-            }
+//            todo: method doesnt exist
+//            if (DungeonsAPI.get().getPlayerDungeonData((Player)damager).getCurrentDungeon() != null && DungeonsAPI.get().getPlayerDungeonData((Player)damager).getCurrentDungeon().getBossSlayerTrinket()) {
+//                mult += 0.5;
+//            }
 
             event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * mult);
         }
         if (event.getDamager() instanceof Player) {
-            if (DungeonsAPI.hasDungeonDebuff((Player)event.getDamager(), DungeonDebuff.BOSSES_TAKE_LESS_DAMAGE)) {
-                event.setDamage(event.getDamage() * 0.25);
-            }
-            if (DungeonsAPI.hasDungeonDebuff((Player)event.getDamager(), DungeonDebuff.DEAL_30HP_MAX_PER_HIT)) {
-                if (event.getDamage() > 30) event.setDamage(30);
-            }
+        // tooo: look into this method
+            //            if (DungeonsAPI.isDungeonType((Player)event.getDamager(), DungeonDebuff.BOSSES_TAKE_LESS_DAMAGE)) {
+//                event.setDamage(event.getDamage() * 0.25);
+//            }
+//            if (DungeonsAPI.isDungeonType((Player)event.getDamager(), DungeonDebuff.DEAL_30HP_MAX_PER_HIT)) {
+//                if (event.getDamage() > 30) event.setDamage(30);
+//            }
         }
         if (this instanceof GuardBoss) {
             ((GuardBoss)this).onDamage(this, event);
@@ -340,14 +341,15 @@ public abstract class Boss extends Equipable implements Healable
         String msg;
         if (this.naturallySpawned) {
             msg = this.getColor(true) + "(!) " + this.getColor(false) + "A " + this.getColor(true) + ChatColor.UNDERLINE.toString() + this.getCustomName() + this.getColor(false) + " Boss has been summoned to the /spawn WarZone, at " + this.getColor(true) + this.location.getBlockX() + "x, " + this.location.getBlockY() + "y, " + this.location.getBlockZ() + "z " + this.getColor(false) + "defend DecimateMC!";
-            try {
-                for (final Player p : Bukkit.getServer().getOnlinePlayers()) {
-                    ClientCommsAPI.sendEvent(p, "Previous Warzone Boss", EventType.COUNT_UP, System.currentTimeMillis(), 0L);
-                }
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
+//          todo: method doesnt exist
+            //            try {
+//                for (final Player p : Bukkit.getServer().getOnlinePlayers()) {
+//                    ClientCommsAPI.sendEvent(p, "Previous Warzone Boss", EventType.COUNT_UP, System.currentTimeMillis(), 0L);
+//                }
+//            }
+//            catch (Exception e) {
+//                e.printStackTrace();
+//            }
         }
         else {
             msg = this.getColor(true) + "(!) " + this.getColor(false) + "A " + this.getColor(true) + ChatColor.UNDERLINE.toString() + this.getCustomName() + this.getColor(false) + " Boss has been summoned nearby, defend DecimateMC!";
