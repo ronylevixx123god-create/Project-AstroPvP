@@ -1,10 +1,15 @@
 package me.ifamasssxd.cosmicbosses.bosses.dragon.phases;
 
-import me.ifamasssxd.cosmicbosses.bosses.dragon.*;
-import javax.annotation.*;
-import me.ifamasssxd.cosmicbosses.struct.*;
-import org.bukkit.*;
-import net.minecraft.server.v1_8_R3.*;
+import me.ifamasssxd.cosmicbosses.bosses.dragon.EndDragonEntity;
+import me.ifamasssxd.cosmicbosses.struct.BossPath;
+import me.ifamasssxd.cosmicbosses.struct.BossPathPoint;
+import net.minecraft.server.v1_8_R3.EntityHuman;
+import net.minecraft.server.v1_8_R3.MathHelper;
+import net.minecraft.server.v1_8_R3.Vec3D;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+
+import javax.annotation.Nullable;
 
 public class PhaseLandingApproach extends PhaseBase
 {
@@ -27,7 +32,7 @@ public class PhaseLandingApproach extends PhaseBase
     }
     
     @Override
-    public void doLocalUpdate() {
+    public void doLocalUpdate() throws NoSuchFieldException {
         double d1 = this.dragon.locX - this.targetLocation.a;
         double d2 = this.dragon.locY - this.targetLocation.b;
         double d3 = this.dragon.locZ - this.targetLocation.c;
@@ -45,7 +50,7 @@ public class PhaseLandingApproach extends PhaseBase
         return this.targetLocation;
     }
     
-    private void findNewTarget() {
+    private void findNewTarget() throws NoSuchFieldException {
         if (this.currentPath == null || this.currentPath.isFinished()) {
             final int i = this.dragon.initPathPoints();
             final Location blockloc = this.dragon.homeLocation;

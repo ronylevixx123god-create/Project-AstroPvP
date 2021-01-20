@@ -21,7 +21,7 @@ public abstract class PhaseBase implements IPhase
     }
     
     @Override
-    public void doLocalUpdate() {
+    public void doLocalUpdate() throws NoSuchFieldException {
     }
     
     @Override

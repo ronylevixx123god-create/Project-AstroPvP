@@ -1,24 +1,23 @@
 package me.ifamasssxd.cosmicbosses.dungeonboss;
 
 import com.google.common.base.Predicate;
-import me.ifamasssxd.cosmicbosses.bosses.yijki.*;
-import me.ifamasssxd.cosmicbosses.struct.*;
+import me.ifamasssxd.cosmicbosses.bosses.yijki.PathfinderGoalWitherBossArrowAttack;
+import me.ifamasssxd.cosmicbosses.dungeonboss.abilities.UnstoppableForce;
+import me.ifamasssxd.cosmicbosses.struct.Boss;
 import net.citizensnpcs.nms.v1_8_R3.entity.EntityHumanNPC;
-import net.minecraft.server.v1_8_R3.Entity;
-import net.minecraft.server.v1_8_R3.Material;
-import net.minecraft.server.v1_8_R3.World;
-import org.bukkit.util.*;
-import org.bukkit.*;
-import org.bukkit.craftbukkit.v1_8_R3.entity.*;
-import org.arkhamnetwork.Arkkit.libs.*;
-import org.bukkit.entity.*;
-import me.ifamasssxd.cosmicbosses.dungeonboss.abilities.*;
-import java.util.*;
-import org.bukkit.event.*;
-import org.bukkit.event.entity.*;
-import org.bukkit.craftbukkit.v1_8_R3.event.*;
 import net.minecraft.server.v1_8_R3.*;
+import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
+import org.bukkit.Bukkit;
+import org.bukkit.Sound;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_8_R3.event.CraftEventFactory;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.event.Event;
+import org.bukkit.event.entity.EntityRegainHealthEvent;
+import org.bukkit.event.entity.ExplosionPrimeEvent;
 import org.bukkit.util.Vector;
+
+import java.util.List;
 
 public class DungeonYijkiImage extends EntityMonster implements IRangedEntity
 {
@@ -290,9 +289,9 @@ public class DungeonYijkiImage extends EntityMonster implements IRangedEntity
                 final ExplosionPrimeEvent event = new ExplosionPrimeEvent((org.bukkit.entity.Entity)this.getBukkitEntity(), 7.0f, false);
                 this.world.getServer().getPluginManager().callEvent((Event)event);
                 if (!event.isCancelled()) {
-                    this.world.createExplosion((Entity)this, this.locX, this.locY + this.getHeadHeight(), this.locZ, event.getRadius(), event.getFire(), this.world.getGameRules().getBoolean("mobGriefing"), 1);
+                    this.world.createExplosion((Entity)this, this.locX, this.locY + this.getHeadHeight(), this.locZ, event.getRadius(), event.getFire(), this.world.getGameRules().getBoolean("mobGriefing"));
                 }
-                this.world.createExplosion((Entity)this, this.locX, this.locY + this.getHeadHeight(), this.locZ, 7.0f, false, this.world.getGameRules().getBoolean("mobGriefing"), 1);
+                this.world.createExplosion((Entity)this, this.locX, this.locY + this.getHeadHeight(), this.locZ, 7.0f, false, this.world.getGameRules().getBoolean("mobGriefing"));
                 final int viewDistance = ((WorldServer)this.world).getServer().getViewDistance() * 16;
                 for (Object player2 : this.world.players) {
                     EntityPlayer player = (EntityPlayer)player2;

@@ -1,25 +1,39 @@
 package me.ifamasssxd.cosmicbosses;
 
-import org.bukkit.plugin.java.*;
-import me.ifamasssxd.cosmicbosses.struct.blockmanager.*;
-import org.bukkit.entity.*;
-import me.ifamasssxd.cosmicbosses.entities.*;
-import me.ifamasssxd.cosmicbosses.utils.*;
-import me.ifamasssxd.factionupgrades.struct.*;
-import java.util.*;
-import org.bukkit.event.*;
-import org.bukkit.plugin.*;
+import com.google.common.collect.Lists;
+import lombok.SneakyThrows;
+import me.ifamasssxd.cosmicbosses.bosses.GuardBoss;
+import me.ifamasssxd.cosmicbosses.bosses.dragon.EndDragon;
+import me.ifamasssxd.cosmicbosses.commands.CommandBoss;
+import me.ifamasssxd.cosmicbosses.commands.CommandBossRewards;
+import me.ifamasssxd.cosmicbosses.commands.CommandSpawnBoss;
+import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijki;
+import me.ifamasssxd.cosmicbosses.entities.CustomEntity;
 import me.ifamasssxd.cosmicbosses.listeners.*;
-import org.bukkit.command.*;
-import me.ifamasssxd.cosmicbosses.commands.*;
-import me.ifamasssxd.cosmicbosses.tasks.*;
-import com.google.common.collect.*;
-import org.bukkit.*;
-import me.ifamasssxd.cosmicbosses.bosses.*;
-import me.ifamasssxd.cosmicbosses.dungeonboss.*;
-import me.ifamasssxd.cosmicbosses.struct.*;
-import me.ifamasssxd.cosmicbosses.bosses.dragon.*;
-import org.bukkit.event.entity.*;
+import me.ifamasssxd.cosmicbosses.struct.Boss;
+import me.ifamasssxd.cosmicbosses.struct.MiniBoss;
+import me.ifamasssxd.cosmicbosses.struct.RewardInventory;
+import me.ifamasssxd.cosmicbosses.struct.blockmanager.BlockChangeManager;
+import me.ifamasssxd.cosmicbosses.tasks.BleedTask;
+import me.ifamasssxd.cosmicbosses.tasks.BossSpawnTask;
+import me.ifamasssxd.cosmicbosses.tasks.BossTickTask;
+import me.ifamasssxd.cosmicbosses.tasks.BossUpdateTask;
+import me.ifamasssxd.cosmicbosses.utils.MapUtils;
+import me.ifamasssxd.cosmicbosses.utils.ScoreboardUtils;
+import me.ifamasssxd.cosmicbosses.utils.StringUtils;
+import me.ifamasssxd.cosmicbosses.utils.WorldGuardUtils;
+import me.ifamasssxd.factionupgrades.struct.FactionUpgrade;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.HashMap;
+import java.util.List;
 
 public class CosmicBosses extends JavaPlugin
 {
@@ -45,6 +59,7 @@ public class CosmicBosses extends JavaPlugin
         return CosmicBosses.instance;
     }
     
+    @SneakyThrows
     public void onEnable() {
         (CosmicBosses.instance = this).saveDefaultConfig();
         CosmicBosses.mcMMOEnabled = Bukkit.getPluginManager().isPluginEnabled("mcMMO");

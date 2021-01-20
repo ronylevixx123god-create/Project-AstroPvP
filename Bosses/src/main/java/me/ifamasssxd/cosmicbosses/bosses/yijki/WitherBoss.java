@@ -1,14 +1,16 @@
 package me.ifamasssxd.cosmicbosses.bosses.yijki;
 
-import com.google.common.base.Predicates;
 import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijkiEntity;
-import me.ifamasssxd.cosmicbosses.utils.*;
-import me.ifamasssxd.cosmicbosses.struct.*;
-import org.bukkit.event.*;
-import org.bukkit.event.entity.*;
-import org.bukkit.craftbukkit.v1_8_R3.event.*;
-import java.util.*;
+import me.ifamasssxd.cosmicbosses.struct.Boss;
+import me.ifamasssxd.cosmicbosses.struct.Phase;
+import me.ifamasssxd.cosmicbosses.utils.ReflectionUtils;
 import net.minecraft.server.v1_8_R3.*;
+import org.bukkit.craftbukkit.v1_8_R3.event.CraftEventFactory;
+import org.bukkit.event.Event;
+import org.bukkit.event.entity.EntityRegainHealthEvent;
+import org.bukkit.event.entity.ExplosionPrimeEvent;
+
+import java.util.List;
 
 public class WitherBoss extends EntityMonster implements IRangedEntity
 {
@@ -197,9 +199,9 @@ public class WitherBoss extends EntityMonster implements IRangedEntity
                 final ExplosionPrimeEvent event = new ExplosionPrimeEvent((org.bukkit.entity.Entity)this.getBukkitEntity(), 7.0f, false);
                 this.world.getServer().getPluginManager().callEvent((Event)event);
                 if (!event.isCancelled()) {
-                    this.world.createExplosion((Entity)this, this.locX, this.locY + this.getHeadHeight(), this.locZ, event.getRadius(), event.getFire(), this.world.getGameRules().getBoolean("mobGriefing"), 1);
+                    this.world.createExplosion((Entity)this, this.locX, this.locY + this.getHeadHeight(), this.locZ, event.getRadius(), event.getFire(), this.world.getGameRules().getBoolean("mobGriefing"));
                 }
-                this.world.createExplosion((Entity)this, this.locX, this.locY + this.getHeadHeight(), this.locZ, 7.0f, false, this.world.getGameRules().getBoolean("mobGriefing"), 1);
+                this.world.createExplosion((Entity)this, this.locX, this.locY + this.getHeadHeight(), this.locZ, 7.0f, false, this.world.getGameRules().getBoolean("mobGriefing"));
                 final int viewDistance = ((WorldServer)this.world).getServer().getViewDistance() * 16;
                 for (final EntityHuman player : (List<EntityHuman>)this.world.players) {
                     if (!(player instanceof EntityPlayer)) continue;

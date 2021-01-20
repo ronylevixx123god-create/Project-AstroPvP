@@ -1,8 +1,9 @@
 package me.ifamasssxd.cosmicbosses.struct;
 
-import net.minecraft.server.v1_8_R3.*;
-import java.lang.reflect.*;
-import com.cosmicpvp.cosmicutils.utils.*;
+import com.cosmicpvp.cosmicutils.utils.ReflectionUtils;
+import net.minecraft.server.v1_8_R3.PathPoint;
+
+import java.lang.reflect.Field;
 
 public class BossPathPoint extends PathPoint
 {
@@ -13,7 +14,7 @@ public class BossPathPoint extends PathPoint
     private final Field h;
     private BossPathPoint previous;
     
-    public BossPathPoint(final int i, final int i1, final int i2) {
+    public BossPathPoint(final int i, final int i1, final int i2) throws NoSuchFieldException {
         super(i, i1, i2);
         final Class<?> superClass = this.getClass().getSuperclass();
         this.d = ReflectionUtils.getField((Class)superClass, "d");

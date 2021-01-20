@@ -1,22 +1,22 @@
 package me.ifamasssxd.cosmicbosses.bosses;
 
+import com.google.common.cache.CacheBuilder;
 import net.minecraft.server.v1_8_R3.EntityGolem;
 import net.minecraft.server.v1_8_R3.EntityLiving;
 import net.minecraft.server.v1_8_R3.World;
 
-import java.util.Map;
-import java.util.UUID;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 
 public class EntityHolidayGolem extends EntityGolem implements MultiProjectileShooter
 {
-    public Map<UUID, Long> recentlySplitPlayer;
+    public ConcurrentMap<Object, Object> recentlySplitPlayer;
     private float newF;
     private float newJ;
     
     public EntityHolidayGolem(final World world) {
         super(world);
-        this.recentlySplitPlayer = new MapMaker().expireAfterWrite(3L, TimeUnit.SECONDS).makeMap();
+        this.recentlySplitPlayer = CacheBuilder.newBuilder().expireAfterWrite(3L, TimeUnit.SECONDS).build().asMap();
         this.newF = 10.0f;
         this.newJ = this.newF * this.newF;
     }

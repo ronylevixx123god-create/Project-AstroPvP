@@ -1,17 +1,18 @@
 package me.ifamasssxd.cosmicbosses.struct;
 
-import java.io.*;
-import java.lang.reflect.*;
-
+import com.cosmicpvp.cosmicutils.utils.ItemSerialization;
+import com.cosmicpvp.cosmicutils.utils.JSONUtils;
 import com.sk89q.worldedit.internal.gson.reflect.TypeToken;
-import org.bukkit.inventory.*;
-import org.bukkit.plugin.java.*;
-import org.bukkit.*;
-import com.cosmicpvp.cosmicutils.utils.*;
-import org.bukkit.entity.*;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.*;
-import java.util.concurrent.*;
-import com.google.gson.reflect.*;
+import java.util.concurrent.TimeUnit;
 
 public class RewardInventory
 {
@@ -22,7 +23,7 @@ public class RewardInventory
     private long expirationTime;
     private UUID uuid;
     
-    public static void loadBossRewards(final JavaPlugin plugin) {
+    public static void loadBossRewards(final JavaPlugin plugin) throws IOException {
         RewardInventory.bossRewardsFile = JSONUtils.getOrCreateFile(plugin.getDataFolder(), "pendingPlayerBossRewards.json");
         final Map<UUID, RewardInventorySave> maps = (Map<UUID, RewardInventorySave>)JSONUtils.fromJson(RewardInventory.bossRewardsFile, RewardInventory.token);
         if (maps != null) {

@@ -8,7 +8,7 @@ public interface IPhase
 {
     boolean getIsStationary();
     
-    void doLocalUpdate();
+    void doLocalUpdate() throws NoSuchFieldException;
     
     void onCrystalDestroyed(final EntityEnderCrystal p0, final Location p1, final DamageSource p2, final EntityPlayer p3);
     

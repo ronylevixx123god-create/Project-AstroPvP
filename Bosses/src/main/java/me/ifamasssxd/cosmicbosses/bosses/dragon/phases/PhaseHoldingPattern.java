@@ -1,10 +1,11 @@
 package me.ifamasssxd.cosmicbosses.bosses.dragon.phases;
 
-import me.ifamasssxd.cosmicbosses.bosses.dragon.*;
-import javax.annotation.*;
-import me.ifamasssxd.cosmicbosses.struct.*;
-import org.bukkit.*;
+import me.ifamasssxd.cosmicbosses.bosses.dragon.EndDragonEntity;
+import me.ifamasssxd.cosmicbosses.struct.BossPath;
 import net.minecraft.server.v1_8_R3.*;
+import org.bukkit.Location;
+
+import javax.annotation.Nullable;
 
 public class PhaseHoldingPattern extends PhaseBase
 {
@@ -22,7 +23,7 @@ public class PhaseHoldingPattern extends PhaseBase
     }
     
     @Override
-    public void doLocalUpdate() {
+    public void doLocalUpdate() throws NoSuchFieldException {
         double d1 = this.dragon.locX - this.targetLocation.a;
         double d2 = this.dragon.locY - this.targetLocation.b;
         double d3 = this.dragon.locZ - this.targetLocation.c;
@@ -46,7 +47,7 @@ public class PhaseHoldingPattern extends PhaseBase
         return this.targetLocation;
     }
     
-    private void findNewTarget() {
+    private void findNewTarget() throws NoSuchFieldException {
         if (this.currentPath != null && this.currentPath.isFinished()) {
             final Location blockpos = this.dragon.homeLocation;
             final int i = (this.dragon.getFightManager() == null) ? 2 : (this.dragon.getFightManager().getNumAliveCrystals() + 2);

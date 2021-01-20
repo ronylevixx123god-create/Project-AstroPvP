@@ -17,7 +17,7 @@ public class PhaseTakeoff extends PhaseBase
     }
     
     @Override
-    public void doLocalUpdate() {
+    public void doLocalUpdate() throws NoSuchFieldException {
         if (!this.firstTick && this.currentPath != null) {
             final Location blockpos = this.dragon.homeLocation;
             final double d0 = this.dragon.distanceSqToCenter(blockpos.getX(), blockpos.getY(), blockpos.getZ());
@@ -38,7 +38,7 @@ public class PhaseTakeoff extends PhaseBase
         this.targetLocation = null;
     }
     
-    private void findNewTarget() {
+    private void findNewTarget() throws NoSuchFieldException {
         final int i = this.dragon.initPathPoints();
         final Vec3D vec3d = this.dragon.getHeadLookVec(1.0f);
         Bukkit.getLogger().info("Vec3d HeadLook: " + vec3d.a + ", b" + vec3d.b + " z: " + vec3d.c);

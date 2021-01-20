@@ -1,29 +1,34 @@
 package me.ifamasssxd.cosmicbosses.bosses.dragon;
 
-import me.ifamasssxd.cosmicbosses.*;
-import net.minecraft.server.v1_8_R3.Entity;
-import net.minecraft.server.v1_8_R3.Material;
-import net.minecraft.server.v1_8_R3.World;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
-import org.bukkit.plugin.*;
-import org.bukkit.metadata.*;
-import org.bukkit.util.*;
-import org.bukkit.craftbukkit.v1_8_R3.event.*;
-import org.bukkit.event.*;
-import org.bukkit.craftbukkit.v1_8_R3.*;
-import me.ifamasssxd.cosmicbosses.bosses.dragon.phases.*;
-import org.bukkit.craftbukkit.v1_8_R3.util.*;
-import org.bukkit.entity.*;
-import java.util.*;
-import org.bukkit.*;
-import org.bukkit.event.entity.*;
-import org.bukkit.block.*;
-import me.ifamasssxd.cosmicbosses.utils.*;
+import me.ifamasssxd.cosmicbosses.CosmicBosses;
+import me.ifamasssxd.cosmicbosses.bosses.dragon.phases.IPhase;
+import me.ifamasssxd.cosmicbosses.bosses.dragon.phases.PhaseList;
+import me.ifamasssxd.cosmicbosses.struct.BossPath;
+import me.ifamasssxd.cosmicbosses.struct.BossPathHeap;
+import me.ifamasssxd.cosmicbosses.struct.BossPathPoint;
+import me.ifamasssxd.cosmicbosses.utils.BossUtils;
 import net.minecraft.server.v1_8_R3.*;
-import javax.annotation.*;
-import me.ifamasssxd.cosmicbosses.struct.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.PortalType;
+import org.bukkit.block.BlockState;
+import org.bukkit.craftbukkit.v1_8_R3.event.CraftEventFactory;
+import org.bukkit.craftbukkit.v1_8_R3.util.BlockStateListPopulator;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.EntityCreatePortalEvent;
+import org.bukkit.event.entity.EntityRegainHealthEvent;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
+
+import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 public class EndDragonEntity extends EntityEnderDragon
 {
@@ -56,7 +61,7 @@ public class EndDragonEntity extends EntityEnderDragon
         super(world);
         this.ringEffects = new double[64][3];
         this.bo = -1;
-        this.explosionSource = new Explosion((World)null, (Entity)this, Double.NaN, Double.NaN, Double.NaN, Float.NaN, false, false, 1);
+        this.explosionSource = new Explosion((World)null, (Entity)this, Double.NaN, Double.NaN, Double.NaN, Float.NaN, false, false);
         this.random = new Random();
         this.bossPathPoints = new BossPathPoint[24];
         this.neighbors = new int[24];
@@ -68,7 +73,7 @@ public class EndDragonEntity extends EntityEnderDragon
         super(world);
         this.ringEffects = new double[64][3];
         this.bo = -1;
-        this.explosionSource = new Explosion((World)null, (Entity)this, Double.NaN, Double.NaN, Double.NaN, Float.NaN, false, false, 1);
+        this.explosionSource = new Explosion((World)null, (Entity)this, Double.NaN, Double.NaN, Double.NaN, Float.NaN, false, false);
         this.random = new Random();
         this.bossPathPoints = new BossPathPoint[24];
         this.neighbors = new int[24];
@@ -763,7 +768,7 @@ public class EndDragonEntity extends EntityEnderDragon
         return d0 * d0 + d2 * d2 + d3 * d3;
     }
     
-    public int initPathPoints() {
+    public int initPathPoints() throws NoSuchFieldException {
         if (this.bossPathPoints[0] == null) {
             final int x = this.homeLocation.getBlockX();
             final int z = this.homeLocation.getBlockZ();
