@@ -1,12 +1,13 @@
 package me.ifamasssxd.cosmicbosses.dungeonboss;
 
 import com.google.common.base.Predicate;
+import de.inventivegames.particle.ParticleEffect;
+import lombok.SneakyThrows;
 import me.ifamasssxd.cosmicbosses.bosses.yijki.PathfinderGoalWitherBossArrowAttack;
 import me.ifamasssxd.cosmicbosses.dungeonboss.abilities.UnstoppableForce;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
 import net.citizensnpcs.nms.v1_8_R3.entity.EntityHumanNPC;
 import net.minecraft.server.v1_8_R3.*;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
@@ -151,6 +152,7 @@ public class DungeonYijkiImage extends EntityMonster implements IRangedEntity
         return target != null && target.equals((Object)entityliving);
     }
     
+    @SneakyThrows
     public void m() {
         if (this.boss.getEntity() == null || this.boss.getEntity().isDead()) {
             this.boss.removeMinion((org.bukkit.entity.Entity)this.getBukkitEntity());
@@ -189,7 +191,7 @@ public class DungeonYijkiImage extends EntityMonster implements IRangedEntity
             this.motX += this.direction.getX() * motionMultiplier;
             this.motZ += this.direction.getZ() * motionMultiplier;
             if (this.ticksLived % 2 == 0) {
-                ParticleEffect.sendToLocation(ParticleEffect.WITCH_MAGIC, this.getBukkitEntity().getLocation(), 0.01f, 0.01f, 0.01f, 0.1f, 20);
+                de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), this.getBukkitEntity().getLocation(), 0f, 0f, 0f, 0.09f, 25);
             }
             this.levelWithTarget(motionMultiplier);
         }
@@ -200,7 +202,7 @@ public class DungeonYijkiImage extends EntityMonster implements IRangedEntity
                 this.getBukkitEntity().getWorld().playSound(this.getBukkitEntity().getLocation(), Sound.NOTE_PLING, 15.0f, 1.1f);
             }
             if (this.ticksLived % 10 == 0) {
-                ParticleEffect.sendToLocation(ParticleEffect.PORTAL, this.getBukkitEntity().getLocation(), 1.0f, 1.0f, 1.0f, 0.1f, 20);
+                ParticleEffect.PORTAL.sendToPlayers(Bukkit.getOnlinePlayers(), this.getBukkitEntity().getLocation(), 0f, 0f, 0f, 0.09f, 25);
             }
             if (this.ticksLived % 20 == 0) {
                 UnstoppableForce.drawParticleLineInDirection((LivingEntity)this.getBukkitEntity());

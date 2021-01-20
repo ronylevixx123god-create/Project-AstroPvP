@@ -1,31 +1,39 @@
 package me.ifamasssxd.cosmicbosses.bosses.skeletonhorse;
 
-import com.cosmicpvp.CosmicSpaceChests.libs.*;
-import com.cosmicpvp.CosmicSpaceChests.*;
-import me.ifamasssxd.cosmicbosses.entities.*;
-import me.ifamasssxd.cosmicbosses.*;
+import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
+import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
+import com.google.common.collect.Lists;
+import me.ifamasssxd.cosmicbosses.CosmicBosses;
+import me.ifamasssxd.cosmicbosses.entities.CustomEntity;
+import me.ifamasssxd.cosmicbosses.struct.Boss;
+import me.ifamasssxd.cosmicbosses.struct.BossMessage;
+import me.ifamasssxd.cosmicbosses.struct.Phase;
+import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
+import me.ifamasssxd.cosmicbosses.struct.enums.DamageType;
 import me.ifamasssxd.cosmicbosses.struct.enums.Difficulty;
-import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Entity;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.*;
-import org.bukkit.metadata.*;
-import org.bukkit.enchantments.*;
-import org.bukkit.potion.*;
-import org.bukkit.inventory.*;
-import me.ifamasssxd.cosmicbosses.utils.*;
-import org.arkhamnetwork.Arkkit.libs.*;
-import me.ifamasssxd.cosmicbosses.struct.*;
-import org.bukkit.craftbukkit.v1_8_R3.entity.*;
-import net.minecraft.server.v1_8_R3.*;
-import org.bukkit.entity.*;
-import org.bukkit.event.*;
-import org.bukkit.event.entity.*;
+import me.ifamasssxd.cosmicbosses.utils.BossUtils;
+import me.ifamasssxd.cosmicbosses.utils.CustomItem;
+import me.ifamasssxd.cosmicbosses.utils.ItemBuilder;
+import net.minecraft.server.v1_8_R3.EntityInsentient;
 import org.bukkit.*;
-import me.ifamasssxd.cosmicbosses.struct.enums.*;
-import java.util.*;
-import com.google.common.collect.*;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftHorse;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftSkeleton;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.*;
+import org.bukkit.event.Event;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+
+import java.util.Iterator;
+import java.util.List;
 
 public class UndeadAssassin extends Boss
 {
@@ -117,12 +125,12 @@ public class UndeadAssassin extends Boss
     }
     
     @Override
-    public void onUpdate() {
+    public void onUpdate() throws Exception {
         ++this.loops;
         final LivingEntity entity = this.getEntity();
         if (this.invincible && this.random.nextInt(10) <= 2) {
-            ParticleEffect.sendToLocation(ParticleEffect.LAVA, entity.getLocation(), 1.0f, 1.0f, 1.0f, 0.05f, 50);
-            ParticleEffect.sendToLocation(ParticleEffect.PORTAL, entity.getLocation(), 1.0f, 1.0f, 1.0f, 0.1f, 30);
+            de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), entity.getLocation(), 1f, 1f, 1f, 0.09f, 50);
+            de.inventivegames.particle.ParticleEffect.PORTAL.sendToPlayers(Bukkit.getOnlinePlayers(), entity.getLocation(), 1f, 1f, 1f, 0.09f, 30);
         }
         if (this.loops % 12 == 0) {
             if (!this.invincible && this.getAntiFarm().checkStuck()) {
@@ -216,7 +224,7 @@ public class UndeadAssassin extends Boss
     }
     
     @Override
-    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) {
+    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) throws Exception {
         if (this.getPhase() == Phase.TWO) {
             event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 3.0);
             player.setFireTicks(600);
@@ -236,8 +244,8 @@ public class UndeadAssassin extends Boss
                 BossUtils.dealPercentMaxHealthDamage(player, 40.0, 10);
             }
             if (this.random.nextInt(10) == 0) {
-                ParticleEffect.sendToLocation(ParticleEffect.LARGE_SMOKE, arrow.getLocation(), 3.0f, 3.0f, 3.0f, 0.1f, 50);
-                ParticleEffect.sendToLocation(ParticleEffect.FLAME, arrow.getLocation(), 3.0f, 3.0f, 3.0f, 0.1f, 15);
+                de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), arrow.getLocation(), 1f, 1f, 1f, 0.09f, 50);
+                de.inventivegames.particle.ParticleEffect.PORTAL.sendToPlayers(Bukkit.getOnlinePlayers(), arrow.getLocation(), 1f, 1f, 1f, 0.09f, 30);
             }
             for (final Entity ent : player.getNearbyEntities(4.0, 4.0, 4.0)) {
                 if (ent instanceof Player) {
@@ -257,7 +265,7 @@ public class UndeadAssassin extends Boss
     }
     
     @Override
-    public void onDamageTaken(final EntityDamageByEntityEvent event, final Entity damager) {
+    public void onDamageTaken(final EntityDamageByEntityEvent event, final Entity damager) throws Exception {
         if (event.getDamager() instanceof Projectile) {
             event.setCancelled(true);
             return;
@@ -271,7 +279,7 @@ public class UndeadAssassin extends Boss
             }
             this.getEntity().getWorld().playSound(this.getEntity().getLocation(), Sound.WITHER_IDLE, 3.0f, 1.8f);
             if (this.random.nextInt(10) <= 4) {
-                ParticleEffect.sendToLocation(ParticleEffect.EXPLODE, this.getEntity().getLocation(), 0.5f, 0.3f, 0.3f, 0.1f, 30);
+                de.inventivegames.particle.ParticleEffect.EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), entity.getLocation(), 1f, 1f, 1f, 0.09f, 30);
             }
             return;
         }
@@ -300,7 +308,7 @@ public class UndeadAssassin extends Boss
                 if (this.random.nextInt(3) > 1) {
                     this.sendMessage(ChatColor.ITALIC + "Don't blink, you might die.");
                 }
-                ParticleEffect.sendToLocation(ParticleEffect.PORTAL, this.getEntity().getLocation(), 1.0f, 1.0f, 1.0f, 0.7f, 20);
+                de.inventivegames.particle.ParticleEffect.PORTAL.sendToPlayers(Bukkit.getOnlinePlayers(), entity.getLocation(), 1f, 1f, 1f, 0.09f, 30);
             }
         }
         super.onDamageTaken(event, damager);
@@ -321,7 +329,7 @@ public class UndeadAssassin extends Boss
     }
     
     @Override
-    public void onMinionUpdate(final Entity minion, final Event e) {
+    public void onMinionUpdate(final Entity minion, final Event e) throws Exception {
         if (minion.hasMetadata("horse")) {
             if (e instanceof EntityDeathEvent) {
                 this.getEntity().leaveVehicle();
@@ -395,7 +403,7 @@ public class UndeadAssassin extends Boss
     }
     
     @Override
-    public void onDeath(final EntityDeathEvent event) {
+    public void onDeath(final EntityDeathEvent event) throws Exception {
         super.onDeath(event);
         if (event != null) {
             this.sendMessage(ChatColor.ITALIC + "You should not have come here... you will never leave alive!");

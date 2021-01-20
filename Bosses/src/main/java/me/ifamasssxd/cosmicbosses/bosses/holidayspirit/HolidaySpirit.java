@@ -1,44 +1,44 @@
 package me.ifamasssxd.cosmicbosses.bosses.holidayspirit;
 
-import com.google.common.collect.*;
-import com.cosmicpvp.CosmicSpaceChests.libs.*;
-import com.cosmicpvp.CosmicSpaceChests.*;
+import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
+import com.compilex.CosmicArmorSets.enums.ArmorSet;
+import com.compilex.CosmicCrate.api.CCAPI;
+import com.compilex.CosmicCrate.libs.Version;
+import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
+import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
+import com.google.common.collect.Lists;
+import me.ifamasssxd.cosmicbosses.CosmicBosses;
+import me.ifamasssxd.cosmicbosses.entities.HolidaySpiritEntity;
+import me.ifamasssxd.cosmicbosses.struct.Boss;
+import me.ifamasssxd.cosmicbosses.struct.BossMessage;
+import me.ifamasssxd.cosmicbosses.struct.Phase;
+import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
+import me.ifamasssxd.cosmicbosses.struct.enums.DamageType;
 import me.ifamasssxd.cosmicbosses.struct.enums.Difficulty;
+import me.ifamasssxd.cosmicbosses.utils.BossUtils;
 import net.minecraft.server.v1_8_R3.Entity;
 import net.minecraft.server.v1_8_R3.World;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_8_R3.*;
-import me.ifamasssxd.cosmicbosses.entities.*;
-import net.minecraft.server.v1_8_R3.*;
-import me.ifamasssxd.cosmicbosses.*;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Item;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.*;
-import me.ifamasssxd.cosmicbosses.utils.*;
-import java.util.*;
-import org.bukkit.block.*;
-import org.bukkit.inventory.*;
-import org.bukkit.enchantments.*;
-import org.bukkit.event.*;
-import java.util.concurrent.*;
-import org.arkhamnetwork.Arkkit.libs.*;
-import org.bukkit.util.*;
-import org.bukkit.event.entity.*;
-import org.bukkit.plugin.*;
-import org.bukkit.metadata.*;
-import org.arkhamnetwork.Arkkit.patches.*;
-import com.compilex.CosmicArmorSets.enums.*;
-import com.compilex.CosmicArmorSets.*;
+import org.arkhamnetwork.Arkkit.patches.Halloween;
+import org.arkhamnetwork.Arkkit.patches.NewYears;
 import org.bukkit.*;
-import com.compilex.CosmicCrate.libs.*;
-import com.compilex.CosmicCrate.api.*;
-import org.bukkit.inventory.meta.*;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
-import me.ifamasssxd.cosmicbosses.struct.enums.*;
-import me.ifamasssxd.cosmicbosses.struct.*;
+import org.bukkit.event.Event;
+import org.bukkit.event.entity.*;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
+
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class HolidaySpirit extends Boss
 {
@@ -165,7 +165,7 @@ public class HolidaySpirit extends Boss
     }
     
     @Override
-    public void onMinionUpdate(final org.bukkit.entity.Entity minion, final Event e) {
+    public void onMinionUpdate(final org.bukkit.entity.Entity minion, final Event e) throws Exception {
         if (e instanceof EntityDamageByEntityEvent) {
             final EntityDamageByEntityEvent event = (EntityDamageByEntityEvent)e;
             if (event.getDamager() instanceof Player) {
@@ -219,12 +219,14 @@ public class HolidaySpirit extends Boss
     }
     
     @Override
-    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) {
+    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) throws Exception {
         if (event.getDamager() instanceof Snowball) {
             event.setDamage((double)(7 + this.random.nextInt(2)));
             if (this.random.nextBoolean()) {
                 player.getWorld().playSound(player.getLocation(), Sound.EXPLODE, 1.0f, 1.1f);
-                ParticleEffect.sendToLocation(ParticleEffect.LARGE_EXPLODE, player.getLocation().clone(), 1.0f, 1.0f, 1.0f, 0.01f, 5);
+                //ParticleEffect.sendToLocation(ParticleEffect.LARGE_EXPLODE, player.getLocation().clone(), 1.0f, 1.0f, 1.0f, 0.01f, 5);
+                de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), entity.getLocation(), 1f, 1f, 1f, 0.01f, 5);
+
             }
             if (!event.isCancelled()) {
                 for (final org.bukkit.entity.Entity ent : player.getNearbyEntities(5.0, 3.0, 5.0)) {
@@ -245,7 +247,9 @@ public class HolidaySpirit extends Boss
         else if (event.getDamager() instanceof WitherSkull) {
             if (this.random.nextBoolean()) {
                 player.getWorld().playSound(player.getLocation(), Sound.EXPLODE, 1.0f, 0.9f);
-                ParticleEffect.sendToLocation(ParticleEffect.LARGE_EXPLODE, player.getLocation().clone(), 1.0f, 1.0f, 1.0f, 0.01f, 5);
+                //ParticleEffect.sendToLocation(ParticleEffect.LARGE_EXPLODE, player.getLocation().clone(), 1.0f, 1.0f, 1.0f, 0.01f, 5);
+                de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayer(player, player.getLocation().clone(), 1f, 1f, 1f, 0.01f, 5);
+
             }
             for (final org.bukkit.entity.Entity ent : event.getDamager().getNearbyEntities(10.0, 10.0, 10.0)) {
                 if (ent instanceof Player) {
@@ -272,10 +276,12 @@ public class HolidaySpirit extends Boss
     }
     
     @Override
-    public void onDeath(final EntityDeathEvent event) {
+    public void onDeath(final EntityDeathEvent event) throws Exception {
         if (event != null) {
             this.sendMessage(ChatColor.GOLD + "You may have defeated me, but you will never be rid of holiday spirit.", Sound.ENDERDRAGON_DEATH, 1.3f);
-            ParticleEffect.sendToLocation(ParticleEffect.HUGE_EXPLOSION, event.getEntity().getLocation(), 5.0f, 5.0f, 5.0f, 0.01f, 100);
+            //ParticleEffect.sendToLocation(ParticleEffect.HUGE_EXPLOSION, event.getEntity().getLocation(), 5.0f, 5.0f, 5.0f, 0.01f, 100);
+            de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), event.getEntity().getLocation(), 1f, 1f, 1f, 0.01f, 5);
+
             event.getEntity().getWorld().playSound(event.getEntity().getLocation(), Sound.EXPLODE, 10.0f, 1.0f);
             event.getEntity().getNearbyEntities(100.0, 50.0, 100.0).stream().filter(ent -> ent instanceof Player).forEach(ent -> {
                 Player player = (Player)ent;

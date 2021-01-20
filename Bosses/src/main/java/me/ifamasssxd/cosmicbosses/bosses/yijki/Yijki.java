@@ -3,6 +3,7 @@ package me.ifamasssxd.cosmicbosses.bosses.yijki;
 import com.google.common.collect.*;
 import com.cosmicpvp.CosmicSpaceChests.libs.*;
 import com.cosmicpvp.CosmicSpaceChests.*;
+import de.inventivegames.particle.ParticleEffect;
 import me.ifamasssxd.cosmicbosses.entities.*;
 import me.ifamasssxd.cosmicbosses.*;
 import me.ifamasssxd.cosmicbosses.struct.enums.Difficulty;
@@ -97,7 +98,7 @@ public class Yijki extends Boss implements GlobalBoss
     }
     
     @Override
-    public void onUpdate() {
+    public void onUpdate() throws Exception {
         ++this.loops;
         if (this.loops % 5 == 0 && this.getAntiFarm().checkStuck()) {
             this.getAntiFarm().unstickBoss();
@@ -169,7 +170,7 @@ public class Yijki extends Boss implements GlobalBoss
                     ent.removeMetadata("berserk", (Plugin)CosmicBosses.getInstance());
                     return;
                 }
-                ParticleEffect.sendToLocation(ParticleEffect.LARGE_SMOKE, ent.getLocation(), 1.0f, 1.0f, 1.0f, 0.1f, 10);
+                ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), ent.getLocation(), 1f, 1f, 1f, 0.09f, 14);
             }
         }
         if (this.loops % this.getSeconds(4) == 0) {
@@ -353,7 +354,7 @@ public class Yijki extends Boss implements GlobalBoss
     }
     
     @Override
-    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) {
+    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) throws Exception {
         if (BossUtils.canAffectPlayer(player, true)) {
             final double maxHealth = this.getMaxHealth();
             final int bossMissingHealth = (int)(this.getMaxHealth() / this.getEntity().getHealth());
@@ -380,7 +381,7 @@ public class Yijki extends Boss implements GlobalBoss
     }
     
     @Override
-    public void onDamageTaken(final EntityDamageByEntityEvent event, final Entity damager) {
+    public void onDamageTaken(final EntityDamageByEntityEvent event, final Entity damager) throws Exception {
         if (damager instanceof Player || damager instanceof Arrow) {
             final Player p = (damager instanceof Arrow) ? (Player)((Arrow)damager).getShooter() : ((Player)damager);
             WitherPhase phase = null;
@@ -439,7 +440,7 @@ public class Yijki extends Boss implements GlobalBoss
     }
     
     @Override
-    public void onDeath(final EntityDeathEvent event) {
+    public void onDeath(final EntityDeathEvent event) throws Exception {
         super.onDeath(event);
         if (event != null) {
             this.sendMessage(ChatColor.ITALIC + "I-Impossible...", Sound.ENDERDRAGON_GROWL, 0.8f);

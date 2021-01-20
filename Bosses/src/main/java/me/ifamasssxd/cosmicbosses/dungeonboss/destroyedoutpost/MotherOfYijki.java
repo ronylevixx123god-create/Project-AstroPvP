@@ -196,7 +196,11 @@ public class MotherOfYijki extends DungeonYijki
             Bukkit.getLogger().info("Activating Dimension Rift due to health difference: " + newHealthPercent + " from: " + this.lastDimensionalShiftHealth);
             this.lastDimensionalShiftHealth = newHealthPercent;
             Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)CosmicBosses.getInstance(), () -> {
-                this.clearAbilities();
+                try {
+                    this.clearAbilities();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 this.activateAbility(DimensionTravelAbility.class);
             }, 1L);
         }
@@ -224,7 +228,7 @@ public class MotherOfYijki extends DungeonYijki
     }
     
     @Override
-    public void onDamageTaken(final EntityDamageByEntityEvent event, final org.bukkit.entity.Entity damager) {
+    public void onDamageTaken(final EntityDamageByEntityEvent event, final org.bukkit.entity.Entity damager) throws Exception {
         if (this.inDifferentDimension) {
             event.setCancelled(true);
             if (damager instanceof Player) {
@@ -246,7 +250,7 @@ public class MotherOfYijki extends DungeonYijki
     }
     
     @Override
-    public void onMinionUpdate(final Entity minion, final Event e) {
+    public void onMinionUpdate(final Entity minion, final Event e) throws Exception {
         super.onMinionUpdate(minion, e);
         if (minion instanceof Blaze && e instanceof EntityDamageByEntityEvent) {
             final EntityDamageByEntityEvent event = (EntityDamageByEntityEvent)e;
@@ -259,7 +263,7 @@ public class MotherOfYijki extends DungeonYijki
                 }
             }
             else if (event.getEntity().equals(minion) && event.getDamager() instanceof Player) {
-                ParticleEffect.sendToLocation(ParticleEffect.LARGE_EXPLODE, event.getEntity().getLocation(), 1.0f, 1.0f, 1.0f, 0.01f, 15);
+                de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), event.getEntity().getLocation(), 3f, 3f, 3f, 0.09f, 15);
                 for (final Entity ent : event.getEntity().getNearbyEntities(8.0, 8.0, 8.0)) {
                     if (ent instanceof Player) {
                         BossUtils.pushAwayPlayer(minion, (Player)ent, 0.6000000238418579);
@@ -270,7 +274,7 @@ public class MotherOfYijki extends DungeonYijki
     }
     
     @Override
-    public void onDeath(final EntityDeathEvent event) {
+    public void onDeath(final EntityDeathEvent event) throws Exception {
         super.onDeath(event);
         if (event != null && event.getEntity() != null) {
             event.getEntity().getWorld().playSound(event.getEntity().getLocation(), Sound.ENDERDRAGON_DEATH, 10.0f, 1.1f);

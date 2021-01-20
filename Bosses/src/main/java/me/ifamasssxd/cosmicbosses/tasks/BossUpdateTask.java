@@ -1,14 +1,16 @@
 package me.ifamasssxd.cosmicbosses.tasks;
 
-import me.ifamasssxd.cosmicbosses.struct.enums.*;
-import org.bukkit.*;
-import me.ifamasssxd.cosmicbosses.struct.*;
-import org.bukkit.entity.*;
-import org.bukkit.event.*;
-import java.util.*;
+import lombok.SneakyThrows;
+import me.ifamasssxd.cosmicbosses.struct.Boss;
+import me.ifamasssxd.cosmicbosses.struct.BossDespawnEvent;
+import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Entity;
+import org.bukkit.event.Event;
 
 public class BossUpdateTask implements Runnable
 {
+    @SneakyThrows
     @Override
     public void run() {
         for (final Boss boss : Boss.bosses.values()) {

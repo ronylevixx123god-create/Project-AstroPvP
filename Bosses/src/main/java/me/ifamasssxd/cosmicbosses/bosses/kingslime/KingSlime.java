@@ -1,27 +1,35 @@
 package me.ifamasssxd.cosmicbosses.bosses.kingslime;
 
-import com.cosmicpvp.CosmicSpaceChests.libs.*;
-import com.cosmicpvp.CosmicSpaceChests.*;
-import me.ifamasssxd.cosmicbosses.*;
+import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
+import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
+import com.google.common.collect.Lists;
+import me.ifamasssxd.cosmicbosses.CosmicBosses;
+import me.ifamasssxd.cosmicbosses.struct.BlockModifier;
+import me.ifamasssxd.cosmicbosses.struct.Boss;
+import me.ifamasssxd.cosmicbosses.struct.BossMessage;
+import me.ifamasssxd.cosmicbosses.struct.Phase;
+import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
+import me.ifamasssxd.cosmicbosses.struct.enums.DamageType;
 import me.ifamasssxd.cosmicbosses.struct.enums.Difficulty;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.entity.Entity;
-import org.bukkit.plugin.*;
-import org.bukkit.metadata.*;
-import me.ifamasssxd.cosmicbosses.struct.*;
-import org.bukkit.block.*;
-import org.arkhamnetwork.Arkkit.libs.*;
-import org.bukkit.craftbukkit.v1_8_R3.entity.*;
-import org.bukkit.event.*;
-import org.bukkit.event.entity.*;
-import com.google.common.collect.*;
-import org.bukkit.entity.*;
-import me.ifamasssxd.cosmicbosses.utils.*;
-import java.util.*;
-import net.minecraft.server.v1_8_R3.*;
+import me.ifamasssxd.cosmicbosses.utils.BossUtils;
+import me.ifamasssxd.cosmicbosses.utils.ReflectionUtils;
+import net.minecraft.server.v1_8_R3.EntityInsentient;
+import net.minecraft.server.v1_8_R3.EntitySlime;
+import net.minecraft.server.v1_8_R3.PathfinderGoalSelector;
 import org.bukkit.*;
-import me.ifamasssxd.cosmicbosses.struct.enums.*;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftSlime;
+import org.bukkit.entity.*;
+import org.bukkit.event.Event;
+import org.bukkit.event.entity.*;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
+
+import java.util.Iterator;
+import java.util.List;
 
 public class KingSlime extends Boss
 {
@@ -86,7 +94,7 @@ public class KingSlime extends Boss
     }
     
     @Override
-    public void onUpdate() {
+    public void onUpdate() throws Exception {
         ++this.loops;
         if (this.loops % 80 == 0) {
             this.onPhaseChange((this.getPhase() == Phase.ONE) ? Phase.TWO : ((this.getPhase() == Phase.TWO) ? Phase.ONE : Phase.ONE));
@@ -155,7 +163,7 @@ public class KingSlime extends Boss
         super.onUpdate();
     }
     
-    private void updateMinionPath() {
+    private void updateMinionPath() throws Exception {
         final Iterator<Entity> iter = this.getMinions().iterator();
         while (iter.hasNext()) {
             final LivingEntity e = (LivingEntity)iter.next();
@@ -170,7 +178,8 @@ public class KingSlime extends Boss
                     if (this.random.nextInt(10) != 0) {
                         continue;
                     }
-                    ParticleEffect.sendToLocation(ParticleEffect.LARGE_SMOKE, e.getLocation(), 0.5f, 0.5f, 0.5f, 0.01f, 5);
+                    de.inventivegames.particle.ParticleEffect.LARGE_SMOKE.sendToPlayers(Bukkit.getOnlinePlayers(), e.getLocation(), 1f, 1f, 1f, 0.01f, 5);
+
                 }
                 else {
                     final Location loc = this.getEntity().getLocation();
@@ -181,7 +190,8 @@ public class KingSlime extends Boss
                         this.onHeal(heal);
                         this.getEntity().getWorld().playSound(loc, Sound.SLIME_ATTACK, 15.0f, 0.8f);
                         if (this.random.nextInt(10) == 0) {
-                            ParticleEffect.sendToLocation(ParticleEffect.SLIME, e.getLocation(), 0.5f, 0.5f, 0.5f, 0.01f, 20);
+                            //ParticleEffect.sendToLocation(ParticleEffect.SLIME, e.getLocation(), 0.5f, 0.5f, 0.5f, 0.01f, 20);
+                            de.inventivegames.particle.ParticleEffect.SLIME.sendToPlayers(Bukkit.getOnlinePlayers(), e.getLocation(), 1f, 1f, 1f, 0.01f, 20);
                         }
                         e.remove();
                         iter.remove();
@@ -217,7 +227,7 @@ public class KingSlime extends Boss
     }
     
     @Override
-    public void onMinionUpdate(final Entity minion, final Event e) {
+    public void onMinionUpdate(final Entity minion, final Event e) throws Exception {
         if (e instanceof EntityDamageByEntityEvent) {
             final EntityDamageByEntityEvent event = (EntityDamageByEntityEvent)e;
             if (event.getDamager().equals(minion) && event.getEntity() instanceof Player) {
@@ -231,7 +241,8 @@ public class KingSlime extends Boss
             }
         }
         else if (e instanceof EntityDeathEvent) {
-            ParticleEffect.sendToLocation(ParticleEffect.EXPLODE, minion.getLocation(), 0.5f, 0.5f, 0.5f, 0.01f, 10);
+            de.inventivegames.particle.ParticleEffect.EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), minion.getLocation(), 1f, 1f, 1f, 0.01f, 20);
+
             minion.getWorld().playSound(minion.getLocation(), Sound.EXPLODE, 4.0f, 1.0f);
             for (final Entity ent : minion.getNearbyEntities(5.0, 5.0, 5.0)) {
                 if (ent instanceof Player) {
@@ -261,7 +272,7 @@ public class KingSlime extends Boss
     }
     
     @Override
-    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) {
+    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) throws Exception {
         if (!event.isCancelled()) {
             if (!BossUtils.canAffectPlayer(player, false)) {
                 return;
@@ -368,7 +379,7 @@ public class KingSlime extends Boss
     }
     
     @Override
-    public void onDeath(final EntityDeathEvent event) {
+    public void onDeath(final EntityDeathEvent event) throws Exception {
         super.onDeath(event);
         if (event != null) {
             this.sendMessage(ChatColor.ITALIC + "You... have defeated me.");

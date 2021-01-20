@@ -1,13 +1,18 @@
 package me.ifamasssxd.cosmicbosses.struct;
 
-import me.ifamasssxd.cosmicbosses.utils.*;
-import me.ifamasssxd.cosmicbosses.*;
-import me.ifamasssxd.cosmicbosses.bosses.*;
-import org.bukkit.event.entity.*;
-import me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost.*;
-import org.bukkit.*;
-import java.util.*;
-import org.bukkit.entity.*;
+import me.ifamasssxd.cosmicbosses.CosmicBosses;
+import me.ifamasssxd.cosmicbosses.bosses.GuardBoss;
+import me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost.MotherOfYijki;
+import me.ifamasssxd.cosmicbosses.utils.BossUtils;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Sound;
+import org.bukkit.entity.Creature;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+
+import java.util.List;
 
 public class AntiFarm
 {
@@ -27,7 +32,7 @@ public class AntiFarm
         return this.stuckTicks >= 20;
     }
     
-    public boolean checkStuck() {
+    public boolean checkStuck() throws Exception {
         if (this.lastLocation != null && this.lastLocation.getWorld() == this.getBoss().getEntity().getWorld()) {
             final double distance = this.lastLocation.distanceSquared(this.getBoss().getEntity().getLocation());
             if (distance <= 10.0) {

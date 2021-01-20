@@ -1,25 +1,35 @@
 package me.ifamasssxd.cosmicbosses.bosses.plaguebloater;
 
-import com.cosmicpvp.CosmicSpaceChests.libs.*;
-import com.cosmicpvp.CosmicSpaceChests.*;
+import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
+import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
+import com.google.common.collect.Lists;
+import me.ifamasssxd.cosmicbosses.CosmicBosses;
+import me.ifamasssxd.cosmicbosses.struct.Boss;
+import me.ifamasssxd.cosmicbosses.struct.BossMessage;
+import me.ifamasssxd.cosmicbosses.struct.Phase;
+import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
+import me.ifamasssxd.cosmicbosses.struct.enums.DamageType;
 import me.ifamasssxd.cosmicbosses.struct.enums.Difficulty;
-import org.bukkit.potion.*;
-import org.bukkit.inventory.*;
-import org.bukkit.enchantments.*;
-import com.google.common.collect.*;
+import me.ifamasssxd.cosmicbosses.tasks.BleedTask;
+import me.ifamasssxd.cosmicbosses.utils.BossUtils;
+import me.ifamasssxd.cosmicbosses.utils.CustomItem;
+import me.ifamasssxd.cosmicbosses.utils.ItemBuilder;
 import org.bukkit.*;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
-import me.ifamasssxd.cosmicbosses.*;
-import org.bukkit.plugin.*;
-import org.bukkit.metadata.*;
-import me.ifamasssxd.cosmicbosses.utils.*;
-import org.bukkit.event.*;
-import org.arkhamnetwork.Arkkit.libs.*;
-import me.ifamasssxd.cosmicbosses.tasks.*;
-import me.ifamasssxd.cosmicbosses.struct.*;
-import org.bukkit.event.entity.*;
-import me.ifamasssxd.cosmicbosses.struct.enums.*;
-import java.util.*;
+import org.bukkit.event.Event;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+
+import java.util.Iterator;
+import java.util.List;
 
 public class PlagueBloater extends Boss
 {
@@ -73,7 +83,7 @@ public class PlagueBloater extends Boss
     }
     
     @Override
-    public void onUpdate() {
+    public void onUpdate() throws Exception {
         ++this.loops;
         if (this.loops % 24 == 0 && this.getAntiFarm().checkStuck()) {
             this.getAntiFarm().unstickBoss();
@@ -128,7 +138,7 @@ public class PlagueBloater extends Boss
     }
     
     @Override
-    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) {
+    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) throws Exception {
         if (this.random.nextInt(10) <= 3) {
             player.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 60, 1), false);
         }
@@ -153,7 +163,7 @@ public class PlagueBloater extends Boss
     }
     
     @Override
-    public void onDamageTaken(final EntityDamageByEntityEvent event, final Entity damager) {
+    public void onDamageTaken(final EntityDamageByEntityEvent event, final Entity damager) throws Exception {
         if (event.getDamager() instanceof Projectile) {
             event.setCancelled(true);
             if (damager instanceof Player) {
@@ -191,7 +201,7 @@ public class PlagueBloater extends Boss
     }
     
     @Override
-    public void onMinionUpdate(final Entity minion, final Event e) {
+    public void onMinionUpdate(final Entity minion, final Event e) throws Exception {
         if (e instanceof EntityDamageByEntityEvent) {
             final EntityDamageByEntityEvent event = (EntityDamageByEntityEvent)e;
             if (minion.hasMetadata("plague_ads") && event.getEntity() instanceof Player) {
@@ -205,8 +215,9 @@ public class PlagueBloater extends Boss
         super.onMinionUpdate(minion, e);
     }
     
-    public void onTNTExplode(final Entity ent) {
-        ParticleEffect.sendToLocation(ParticleEffect.LARGE_SMOKE, ent.getLocation(), 3.0f, 3.0f, 3.0f, 0.09f, 30);
+    public void onTNTExplode(final Entity ent) throws Exception {
+        de.inventivegames.particle.ParticleEffect.LARGE_SMOKE.sendToPlayers(Bukkit.getOnlinePlayers(), ent.getLocation(), 1f, 1f, 1f, 0.09f, 20);
+
         ent.getWorld().playSound(ent.getLocation(), Sound.EXPLODE, 4.0f, 1.0f);
         for (final Entity e : ent.getNearbyEntities(10.0, 10.0, 10.0)) {
             if (e instanceof Player) {
@@ -235,7 +246,7 @@ public class PlagueBloater extends Boss
     }
     
     @Override
-    public void onDeath(final EntityDeathEvent event) {
+    public void onDeath(final EntityDeathEvent event) throws Exception {
         super.onDeath(event);
         this.sendMessage(ChatColor.ITALIC + "Arggh.. I suppose this planets time has not yet come... I will.. return.", Sound.WITHER_DEATH, 1.5f);
     }

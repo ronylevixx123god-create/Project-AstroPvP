@@ -2,6 +2,8 @@ package me.ifamasssxd.cosmicbosses.dungeonboss;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
+import de.inventivegames.particle.ParticleEffect;
+import lombok.SneakyThrows;
 import me.ifamasssxd.cosmicbosses.dungeonboss.abilities.UnstoppableForce;
 import me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost.MotherOfYijki;
 import me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost.MotherOfYijkiEntity;
@@ -9,7 +11,6 @@ import me.ifamasssxd.cosmicbosses.struct.Phase;
 import me.ifamasssxd.cosmicbosses.utils.BossUtils;
 import me.ifamasssxd.cosmicbosses.utils.WorldGuardUtils;
 import net.minecraft.server.v1_8_R3.*;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -147,6 +148,7 @@ public class DungeonYijkiEntity extends EntityMonster implements IRangedEntity
         super.setGoalTarget(entityliving);
     }
     
+    @SneakyThrows
     public void m() {
         if (this.boss != null) {
             if (this.boss.getActiveAbility() != null) {
@@ -183,7 +185,7 @@ public class DungeonYijkiEntity extends EntityMonster implements IRangedEntity
                 this.motX += dir.getX();
                 this.motZ += dir.getZ();
                 if (this.ticksLived % 2 == 0) {
-                    ParticleEffect.sendToLocation(ParticleEffect.WITCH_MAGIC, this.getBukkitEntity().getLocation(), 0.01f, 0.01f, 0.01f, 0.1f, 20);
+                    ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), this.getBukkitEntity().getLocation(), 0f, 0f, 0f, 0.09f, 25);
                 }
             }
             if (this.getGoalTarget() != null) {

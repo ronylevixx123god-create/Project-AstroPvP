@@ -1,16 +1,23 @@
 package me.ifamasssxd.cosmicbosses.bosses.dragon;
 
-import me.ifamasssxd.cosmicbosses.struct.*;
-import org.bukkit.craftbukkit.v1_8_R3.*;
-import org.arkhamnetwork.Arkkit.libs.*;
-import org.bukkit.event.entity.*;
-import org.bukkit.*;
-import org.bukkit.entity.*;
-import me.ifamasssxd.cosmicbosses.*;
-import org.bukkit.plugin.*;
-import org.bukkit.metadata.*;
-import net.minecraft.server.v1_8_R3.*;
-import java.util.concurrent.*;
+import lombok.SneakyThrows;
+import me.ifamasssxd.cosmicbosses.CosmicBosses;
+import me.ifamasssxd.cosmicbosses.struct.BossAbility;
+import net.minecraft.server.v1_8_R3.EntityTNTPrimed;
+import net.minecraft.server.v1_8_R3.WorldServer;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Sound;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.TNTPrimed;
+import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
+
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 
 public class DragonTNTBomb extends BossAbility<EndDragon>
 {
@@ -28,6 +35,7 @@ public class DragonTNTBomb extends BossAbility<EndDragon>
         final Location spawnLoc = ((EndDragon)this.boss).getEntity().getLocation().subtract(0.0, 1.0, 0.0);
         for (int i = 0; i < tntToSpawn && ((EndDragon)this.boss).getMinions(EntityType.PRIMED_TNT).size() < 30; ++i) {
             final EntityTNTPrimed tntPrimed = new EntityTNTPrimed(new Location(server.getWorld(), spawnLoc.getX() + ThreadLocalRandom.current().nextGaussian() * (i * 2), spawnLoc.getY(), spawnLoc.getZ() + ThreadLocalRandom.current().nextGaussian() * (i * 2)), ((CraftWorld)server.getWorld()).getHandle(), spawnLoc.getX() + ThreadLocalRandom.current().nextGaussian() * (i * 2), spawnLoc.getY(), spawnLoc.getZ() + ThreadLocalRandom.current().nextGaussian() * (i * 2), ((EndDragon)this.boss).getNMSEntity()) {
+                @SneakyThrows
                 public void h() {
                     final boolean onGround = this.onGround;
                     super.h();
@@ -35,7 +43,8 @@ public class DragonTNTBomb extends BossAbility<EndDragon>
                         this.fuseTicks = 0;
                     }
                     else if (this.ticksLived % 3 == 0) {
-                        ParticleEffect.sendToLocation(ParticleEffect.LARGE_SMOKE, new Location((org.bukkit.World)this.world.getWorld(), this.locX + this.random.nextGaussian() * 0.30000001192092896, this.locY + this.random.nextGaussian() * 0.30000001192092896, this.locZ + this.random.nextGaussian() * 0.30000001192092896), (float)this.random.nextGaussian(), (float)this.random.nextGaussian(), (float)this.random.nextGaussian(), 0.01f, 5);
+                        //ParticleEffect.sendToLocation(ParticleEffect.LARGE_SMOKE, new Location((org.bukkit.World)this.world.getWorld(), this.locX + this.random.nextGaussian() * 0.30000001192092896, this.locY + this.random.nextGaussian() * 0.30000001192092896, this.locZ + this.random.nextGaussian() * 0.30000001192092896), (float)this.random.nextGaussian(), (float)this.random.nextGaussian(), (float)this.random.nextGaussian(), 0.01f, 5);
+                        de.inventivegames.particle.ParticleEffect.LARGE_SMOKE.sendToPlayers(Bukkit.getOnlinePlayers(), new Location((org.bukkit.World)this.world.getWorld(), this.locX + this.random.nextGaussian() * 0.30000001192092896, this.locY + this.random.nextGaussian() * 0.30000001192092896, this.locZ + this.random.nextGaussian() * 0.30000001192092896), (float)this.random.nextGaussian(), (float)this.random.nextGaussian(), (float)this.random.nextGaussian(), 0.1f, 5);
                     }
                 }
             };

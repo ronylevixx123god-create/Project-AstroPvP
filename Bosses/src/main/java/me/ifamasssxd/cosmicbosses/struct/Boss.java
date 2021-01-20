@@ -1,51 +1,56 @@
 package me.ifamasssxd.cosmicbosses.struct;
 
-import java.util.concurrent.*;
-
-import com.compilex.CosmicDungeons.DungeonsAPI;
+import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
+import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils;
+import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
+import com.cosmicpvp.cosmicutils.struct.factions.points.FactionPointUtils;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
+import com.google.common.collect.Lists;
+import me.ifamasssxd.cosmicbosses.CosmicBosses;
+import me.ifamasssxd.cosmicbosses.bosses.GuardBoss;
+import me.ifamasssxd.cosmicbosses.bosses.dragon.EndDragon;
+import me.ifamasssxd.cosmicbosses.bosses.holidayspirit.HolidaySpirit;
+import me.ifamasssxd.cosmicbosses.bosses.plaguebloater.PlagueBloater;
+import me.ifamasssxd.cosmicbosses.bosses.soulreaper.SoulReaper;
+import me.ifamasssxd.cosmicbosses.bosses.xmasbattlefield.BattlefieldSnowman;
+import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijki;
 import me.ifamasssxd.cosmicbosses.dungeonboss.planetnul.CorruptCosmonaut;
+import me.ifamasssxd.cosmicbosses.evilabomination.EvilAbomination;
+import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
+import me.ifamasssxd.cosmicbosses.struct.enums.DamageType;
 import me.ifamasssxd.cosmicbosses.struct.enums.Difficulty;
-import me.ifamasssxd.cosmicbosses.utils.NumberUtils;
-import me.ifamasssxd.cosmicbosses.utils.StringUtils;
-import org.bukkit.entity.Entity;
-import org.bukkit.inventory.*;
-import java.text.*;
-import me.ifamasssxd.cosmicbosses.*;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.*;
-import org.bukkit.metadata.*;
-import org.bukkit.potion.*;
-import org.bukkit.entity.*;
-import me.ifamasssxd.factionupgrades.struct.*;
-import me.ifamasssxd.factionupgrades.*;
-import me.ifamasssxd.cosmicbosses.bosses.*;
-import org.bukkit.event.entity.*;
-import me.ifamasssxd.cosmicbosses.bosses.plaguebloater.*;
-import me.ifamasssxd.cosmicbosses.dungeonboss.*;
-import com.cosmicpvp.CosmicSpaceChests.libs.*;
-import com.cosmicpvp.CosmicSpaceChests.*;
-import me.ifamasssxd.cosmicbosses.bosses.soulreaper.*;
-import me.ifamasssxd.cosmicbosses.bosses.holidayspirit.*;
-import me.ifamasssxd.cosmicbosses.bosses.xmasbattlefield.*;
-import me.ifamasssxd.cosmicbosses.evilabomination.*;
-import me.ifamasssxd.cosmicbosses.bosses.dragon.*;
-import com.google.common.collect.*;
-import org.bukkit.*;
-import org.bukkit.event.*;
-import me.ifamasssxd.cosmicbosses.struct.enums.*;
-import java.util.stream.*;
-import org.bukkit.craftbukkit.v1_8_R3.entity.*;
-import net.minecraft.server.v1_8_R3.*;
-import com.cosmicpvp.CosmicSpaceChests.utils.*;
-import org.bukkit.command.*;
-import com.cosmicpvp.cosmicutils.customevents.*;
-import com.cosmicpvp.cosmicutils.utils.*;
-import com.cosmicpvp.cosmicutils.struct.factions.points.*;
-import org.bukkit.scheduler.*;
-import java.util.*;
+import me.ifamasssxd.cosmicbosses.struct.enums.Equipable;
 import me.ifamasssxd.cosmicbosses.utils.*;
+import me.ifamasssxd.factionupgrades.FactionUpgradeAPI;
+import me.ifamasssxd.factionupgrades.struct.FactionUpgrade;
+import net.minecraft.server.v1_8_R3.EntityInsentient;
+import net.minecraft.server.v1_8_R3.PathfinderGoal;
+import net.minecraft.server.v1_8_R3.PathfinderGoalFloat;
+import net.minecraft.server.v1_8_R3.PathfinderGoalRandomLookaround;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Sound;
+import org.bukkit.command.CommandSender;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftLivingEntity;
+import org.bukkit.entity.*;
+import org.bukkit.event.Event;
+import org.bukkit.event.entity.*;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.text.DecimalFormat;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 public abstract class Boss extends Equipable implements Healable
 {
@@ -130,7 +135,7 @@ public abstract class Boss extends Equipable implements Healable
 
     public void onTick() {}
 
-    public void onUpdate() {
+    public void onUpdate() throws Exception {
         final LivingEntity li = this.getEntity();
         if (li.hasPotionEffect(PotionEffectType.SLOW)) {
             li.removePotionEffect(PotionEffectType.SLOW);
@@ -154,7 +159,7 @@ public abstract class Boss extends Equipable implements Healable
     
     public abstract void cleanup();
     
-    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) {
+    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) throws Exception {
         final Location loc = this.getEntity().getLocation();
         if (!loc.getWorld().getName().equals("world_private") && !loc.getWorld().getName().startsWith("cosmic-station") && loc.getY() < loc.getWorld().getHighestBlockYAt(loc)) {
             event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 3.0);
@@ -165,7 +170,7 @@ public abstract class Boss extends Equipable implements Healable
 //        }
     }
     
-    public void onDamageTaken(final EntityDamageByEntityEvent event, final Entity damager) {
+    public void onDamageTaken(final EntityDamageByEntityEvent event, final Entity damager) throws Exception {
         if (event.isCancelled()) {
             return;
         }
@@ -240,7 +245,7 @@ public abstract class Boss extends Equipable implements Healable
     
     public abstract void onPhaseChange(final Phase p0);
     
-    public void onDeath(final EntityDeathEvent event) {
+    public void onDeath(final EntityDeathEvent event) throws Exception {
         if (this.dead) {
             return;
         }
@@ -383,7 +388,7 @@ public abstract class Boss extends Equipable implements Healable
         Bukkit.getLogger().info("Spawning boss " + this.getCustomName() + " at " + this.getLocation().toString() + "!");
     }
     
-    public abstract void onMiscUpdate(final Event p0);
+    public abstract void onMiscUpdate(final Event p0) throws Exception;
     
     public abstract DamageType getDamageType();
     
@@ -419,7 +424,7 @@ public abstract class Boss extends Equipable implements Healable
         return msg.get(this.random.nextInt(msg.size()));
     }
     
-    public boolean checkStuck() {
+    public boolean checkStuck() throws Exception {
         return this.getAntiFarm().checkStuck();
     }
     
@@ -827,7 +832,7 @@ public abstract class Boss extends Equipable implements Healable
         return totalDamage;
     }
     
-    public void onMinionUpdate(final Entity minion, final Event e) {
+    public void onMinionUpdate(final Entity minion, final Event e) throws Exception {
     }
     
     public String getColor(final boolean includeBold) {

@@ -1,42 +1,45 @@
 package me.ifamasssxd.cosmicbosses.bosses.dragon;
 
-import com.cosmicpvp.CosmicSpaceChests.libs.*;
-import com.cosmicpvp.CosmicSpaceChests.*;
-import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
+import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
+import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
+import com.cosmicpvp.cosmicutils.CosmicUtils;
+import com.cosmicpvp.cosmicutils.itembuilder.ArmorSetItemBuilder;
+import com.cosmicpvp.cosmicutils.itembuilder.HeroicUpgradeBuilder;
+import com.cosmicpvp.cosmicutils.itembuilder.MaskBuilder;
+import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
+import com.cosmicpvp.cosmicutils.struct.EquipmentType;
+import com.cosmicpvp.cosmicutils.utils.*;
+import com.google.common.collect.Lists;
+import me.ifamasssxd.cosmicbosses.CosmicBosses;
+import me.ifamasssxd.cosmicbosses.bosses.dragon.phases.PhaseList;
+import me.ifamasssxd.cosmicbosses.struct.*;
+import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
+import me.ifamasssxd.cosmicbosses.struct.enums.DamageType;
 import me.ifamasssxd.cosmicbosses.struct.enums.Difficulty;
+import me.ifamasssxd.cosmicbosses.utils.BossUtils;
 import me.ifamasssxd.cosmicbosses.utils.StringUtils;
+import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKits;
+import me.ifamasssxd.cosmicevolutionkits.structure.ekits.Lucky;
 import net.minecraft.server.v1_8_R3.Entity;
 import net.minecraft.server.v1_8_R3.World;
-import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_8_R3.*;
-import me.ifamasssxd.cosmicbosses.bosses.dragon.phases.*;
-import me.ifamasssxd.cosmicbosses.*;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.*;
-import org.bukkit.metadata.*;
-import net.minecraft.server.v1_8_R3.*;
-import org.spigotmc.*;
-import com.google.common.collect.*;
-import me.ifamasssxd.cosmicbosses.struct.*;
-import com.cosmicpvp.cosmicutils.nms.*;
-import com.cosmicpvp.cosmicutils.*;
-import com.cosmicpvp.cosmicutils.struct.*;
-import com.cosmicpvp.cosmicutils.itembuilder.*;
-import me.ifamasssxd.cosmicbosses.utils.*;
-import org.bukkit.scheduler.*;
-import me.ifamasssxd.cosmicevolutionkits.structure.ekits.*;
-import me.ifamasssxd.cosmicevolutionkits.structure.*;
-import org.bukkit.event.*;
+import net.minecraft.server.v1_8_R3.WorldServer;
 import org.bukkit.*;
-import org.bukkit.event.entity.*;
-import java.util.concurrent.*;
-import org.bukkit.potion.*;
-import com.cosmicpvp.cosmicutils.utils.*;
-import org.bukkit.enchantments.*;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
-import me.ifamasssxd.cosmicbosses.struct.enums.*;
-import java.util.*;
+import org.bukkit.event.Event;
+import org.bukkit.event.entity.*;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.spigotmc.SpigotWorldConfig;
+
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class EndDragon extends Boss implements GlobalBoss
 {
@@ -128,7 +131,7 @@ public class EndDragon extends Boss implements GlobalBoss
     }
     
     @Override
-    public void onUpdate() {
+    public void onUpdate() throws Exception {
         ++this.loops;
         super.onUpdate();
         final long timeSinceChange = System.currentTimeMillis() - this.lastPhaseChange;
@@ -282,7 +285,7 @@ public class EndDragon extends Boss implements GlobalBoss
     }
     
     @Override
-    public void onMinionUpdate(final org.bukkit.entity.Entity minion, final Event e) {
+    public void onMinionUpdate(final org.bukkit.entity.Entity minion, final Event e) throws Exception {
         if (e instanceof EntityDamageByEntityEvent) {
             final EntityDamageByEntityEvent event = (EntityDamageByEntityEvent)e;
             if (!event.getDamager().equals(minion)) {
@@ -311,7 +314,8 @@ public class EndDragon extends Boss implements GlobalBoss
                         return;
                     }
                     entity.playEffect(EntityEffect.HURT);
-                    ParticleEffect.sendToLocation(ParticleEffect.LARGE_SMOKE, entity.getLocation(), 1.0f, 1.0f, 1.0f, 0.01f, 15);
+                    //ParticleEffect.sendToLocation(ParticleEffect.LARGE_SMOKE, entity.getLocation(), 1.0f, 1.0f, 1.0f, 0.01f, 15);
+                    de.inventivegames.particle.ParticleEffect.LARGE_SMOKE.sendToPlayers(Bukkit.getOnlinePlayers(), entity.getLocation(), 1f, 1f, 1f, 0.01f, 15);
                     Bukkit.getLogger().info("[EnderDragon] Damaging " + entity.getHealth() + " by " + percent + " new health: " + entity.getHealth());
                 }
             }
@@ -333,7 +337,7 @@ public class EndDragon extends Boss implements GlobalBoss
     }
     
     @Override
-    public void onMiscUpdate(final Event event) {
+    public void onMiscUpdate(final Event event) throws Exception {
         if (event instanceof ProjectileHitEvent) {
             final ProjectileHitEvent hitEvent = (ProjectileHitEvent)event;
             final org.bukkit.entity.Entity projectile = (org.bukkit.entity.Entity)hitEvent.getEntity();
@@ -342,7 +346,9 @@ public class EndDragon extends Boss implements GlobalBoss
                 this.spawnFireballMinion(loc.clone().add(this.random.nextGaussian() / 2.0, this.random.nextDouble() / 2.0, this.random.nextGaussian() / 2.0), true);
             }
             loc.getWorld().playSound(loc, Sound.EXPLODE, 4.0f, 1.1f);
-            ParticleEffect.sendToLocation(ParticleEffect.HUGE_EXPLOSION, loc.add(0.0, 1.0, 0.0), 2.0f, 2.0f, 2.0f, 0.01f, 10);
+            //ParticleEffect.sendToLocation(ParticleEffect.HUGE_EXPLOSION, loc.add(0.0, 1.0, 0.0), 2.0f, 2.0f, 2.0f, 0.01f, 10);
+            de.inventivegames.particle.ParticleEffect.HUGE_EXPLOSION.sendToPlayers(Bukkit.getOnlinePlayers(), entity.getLocation(), 1f, 1f, 1f, 0.01f, 15);
+
             hitEvent.getEntity().getNearbyEntities(10.0, 10.0, 10.0).stream().filter(en -> en instanceof Player).map(e -> e).forEach(pl -> {
                 if (!pl.isDead() && BossUtils.dealPercentMaxHealthDamage((Player)pl, 10.0, 10, true, true)) {
                     BossUtils.pushAwayPlayer((Player)pl, loc, 1.6);

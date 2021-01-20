@@ -1,41 +1,45 @@
 package me.ifamasssxd.cosmicbosses.bosses.xmasbattlefield;
 
+import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
+import com.compilex.CosmicArmorSets.enums.ArmorSet;
+import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
+import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
-import me.ifamasssxd.cosmicbosses.bosses.holidayspirit.*;
+import com.google.common.collect.Lists;
+import de.inventivegames.particle.ParticleEffect;
+import me.ifamasssxd.cosmicbosses.CosmicBosses;
+import me.ifamasssxd.cosmicbosses.bosses.holidayspirit.Freeze;
+import me.ifamasssxd.cosmicbosses.struct.Boss;
+import me.ifamasssxd.cosmicbosses.struct.BossMessage;
+import me.ifamasssxd.cosmicbosses.struct.Phase;
+import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
+import me.ifamasssxd.cosmicbosses.struct.enums.DamageType;
 import me.ifamasssxd.cosmicbosses.struct.enums.Difficulty;
+import me.ifamasssxd.cosmicbosses.utils.BossUtils;
 import net.minecraft.server.v1_8_R3.Entity;
 import net.minecraft.server.v1_8_R3.World;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Item;
-import com.google.common.collect.*;
-import com.cosmicpvp.CosmicSpaceChests.libs.*;
-import com.cosmicpvp.CosmicSpaceChests.*;
-import org.bukkit.craftbukkit.v1_8_R3.*;
-import me.ifamasssxd.cosmicbosses.*;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.*;
-import me.ifamasssxd.cosmicbosses.utils.*;
-import java.util.*;
-import org.bukkit.block.*;
-import org.bukkit.plugin.*;
-import org.bukkit.metadata.*;
-import com.cosmicpvp.cosmicutils.utils.*;
-import org.bukkit.event.*;
-import java.util.concurrent.*;
-
+import org.arkhamnetwork.Arkkit.patches.Halloween;
+import org.arkhamnetwork.Arkkit.patches.NewYears;
 import org.bukkit.*;
-import org.bukkit.event.entity.*;
-import org.arkhamnetwork.Arkkit.patches.*;
-import com.compilex.CosmicArmorSets.enums.*;
-import com.compilex.CosmicArmorSets.*;
-import org.bukkit.inventory.meta.*;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
-import me.ifamasssxd.cosmicbosses.struct.enums.*;
-import me.ifamasssxd.cosmicbosses.struct.*;
+import org.bukkit.event.Event;
+import org.bukkit.event.entity.*;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
+
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class BattlefieldSnowman extends Boss
 {
@@ -183,7 +187,7 @@ public class BattlefieldSnowman extends Boss
     }
     
     @Override
-    public void onMinionUpdate(final org.bukkit.entity.Entity minion, final Event e) {
+    public void onMinionUpdate(final org.bukkit.entity.Entity minion, final Event e) throws Exception {
         if (e instanceof EntityDamageByEntityEvent) {
             final EntityDamageByEntityEvent event = (EntityDamageByEntityEvent)e;
             if (event.getDamager() instanceof Player) {
@@ -202,8 +206,9 @@ public class BattlefieldSnowman extends Boss
                         }
                         return;
                     });
-                    ParticleEffect.sendToLocation(ParticleEffect.FIREWORKS_SPARK, minion.getLocation(), 0.75f, 0.75f, 0.75f, 0.01f, 30);
-                    ParticleEffect.sendToLocation(ParticleEffect.EXPLODE, minion.getLocation(), 1.0f, 1.0f, 1.0f, 0.01f, 10);
+                    de.inventivegames.particle.ParticleEffect.PORTAL.sendToPlayers(Bukkit.getOnlinePlayers(), minion.getLocation(), 1f, 1f, 1f, 0.09f, 30);
+                    de.inventivegames.particle.ParticleEffect.EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), minion.getLocation(), 1f, 1f, 1f, 0.09f, 30);
+
                     minion.getWorld().playSound(minion.getLocation(), Sound.GHAST_SCREAM2, 1.0f, 1.9f);
                     minion.getWorld().playSound(minion.getLocation(), Sound.EXPLODE, 3.0f, 2.0f);
                     minion.playEffect(EntityEffect.DEATH);
@@ -254,12 +259,14 @@ public class BattlefieldSnowman extends Boss
     }
     
     @Override
-    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) {
+    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) throws Exception {
         if (event.getDamager() instanceof Snowball) {
             event.setDamage((double)(7 + this.random.nextInt(2)));
             if (this.random.nextBoolean()) {
                 player.getWorld().playSound(player.getLocation(), Sound.EXPLODE, 1.0f, 1.1f);
-                ParticleEffect.sendToLocation(ParticleEffect.LARGE_EXPLODE, player.getLocation().clone(), 1.0f, 1.0f, 1.0f, 0.01f, 5);
+                //ParticleEffect.sendToLocation(ParticleEffect.LARGE_EXPLODE, player.getLocation().clone(), 1.0f, 1.0f, 1.0f, 0.01f, 5);
+                de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 1f, 1f, 1f, 0.09f, 30);
+
             }
             if (!event.isCancelled()) {
                 for (final org.bukkit.entity.Entity ent : player.getNearbyEntities(5.0, 3.0, 5.0)) {
@@ -280,7 +287,8 @@ public class BattlefieldSnowman extends Boss
         else if (event.getDamager() instanceof WitherSkull) {
             if (this.random.nextBoolean()) {
                 player.getWorld().playSound(player.getLocation(), Sound.EXPLODE, 1.0f, 0.9f);
-                ParticleEffect.sendToLocation(ParticleEffect.LARGE_EXPLODE, player.getLocation().clone(), 1.0f, 1.0f, 1.0f, 0.01f, 5);
+                de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 1f, 1f, 1f, 0.09f, 30);
+
             }
             this.shootSkullsNearby(event.getEntity(), 10.0);
         }
@@ -336,10 +344,11 @@ public class BattlefieldSnowman extends Boss
     }
     
     @Override
-    public void onDeath(final EntityDeathEvent event) {
+    public void onDeath(final EntityDeathEvent event) throws Exception {
         if (event != null) {
             this.sendMessage(ChatColor.GOLD + "You may have defeated me, but you will never be rid of holiday spirit.", Sound.ENDERDRAGON_DEATH, 1.3f);
-            ParticleEffect.sendToLocation(ParticleEffect.HUGE_EXPLOSION, event.getEntity().getLocation(), 5.0f, 5.0f, 5.0f, 0.01f, 100);
+            ParticleEffect.HUGE_EXPLOSION.sendToPlayers(Bukkit.getOnlinePlayers(), event.getEntity().getLocation(), 1f, 1f, 1f, 0.09f, 100);
+
             event.getEntity().getWorld().playSound(event.getEntity().getLocation(), Sound.EXPLODE, 10.0f, 1.0f);
             event.getEntity().getNearbyEntities(100.0, 50.0, 100.0).stream().filter(ent -> ent instanceof Player).forEach(ent -> {
                 Player player = (Player)ent;
@@ -391,7 +400,7 @@ public class BattlefieldSnowman extends Boss
     }
     
     @Override
-    public void onDamageTaken(final EntityDamageByEntityEvent event, final org.bukkit.entity.Entity damager) {
+    public void onDamageTaken(final EntityDamageByEntityEvent event, final org.bukkit.entity.Entity damager) throws Exception {
         if (event.getDamager() instanceof Projectile && damager instanceof Player) {
             event.setCancelled(true);
             return;

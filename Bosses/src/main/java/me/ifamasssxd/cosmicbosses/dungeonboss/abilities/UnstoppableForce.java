@@ -1,10 +1,10 @@
 package me.ifamasssxd.cosmicbosses.dungeonboss.abilities;
 
+import lombok.SneakyThrows;
 import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonAbility;
 import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijki;
 import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijkiEntity;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -99,6 +99,7 @@ public class UnstoppableForce extends DungeonAbility
         this.boss.sendMessage("I cannot be stopped!");
     }
     
+    @SneakyThrows
     @Override
     public void onAbilityDisable() {
         if (this.boss.getEntity() != null) {
@@ -107,7 +108,8 @@ public class UnstoppableForce extends DungeonAbility
             ((DungeonYijki)this.boss).getBossEntity().getNavigation().n();
             Bukkit.getLogger().info("Teleporting Yijki back to " + this.boss.getLocation());
         }
-        ParticleEffect.sendToLocation(ParticleEffect.WITCH_MAGIC, this.boss.getEntity().getLocation(), 1.0f, 1.0f, 1.0f, 0.1f, 50);
+        de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), this.boss.getEntity().getLocation(), 3f, 3f, 3f, 0.09f, 15);
+
     }
     
     @Override

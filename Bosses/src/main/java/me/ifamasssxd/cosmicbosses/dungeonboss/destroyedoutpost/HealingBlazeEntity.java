@@ -1,9 +1,9 @@
 package me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost;
 
+import de.inventivegames.particle.ParticleEffect;
 import lombok.SneakyThrows;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import net.minecraft.server.v1_8_R3.*;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_8_R3.event.CraftEventFactory;
 import org.bukkit.entity.Entity;
@@ -111,10 +111,11 @@ public class HealingBlazeEntity extends EntityBlaze
                 this.dirZ = d2 / d3 * 0.1;
             }
             
+            @SneakyThrows
             public void h() {
                 super.h();
                 if (this.isAlive() && !collides) {
-                    ParticleEffect.sendToLocation(ParticleEffect.HAPPY_VILLAGER, this.getBukkitEntity().getLocation(), 0.0f, 0.0f, 0.0f, 0.01f, 1);
+                    ParticleEffect.HAPPY_VILLAGER.sendToPlayers(Bukkit.getOnlinePlayers(), this.getBukkitEntity().getLocation(), 3f, 3f, 3f, 0.09f, 15);
                 }
             }
             

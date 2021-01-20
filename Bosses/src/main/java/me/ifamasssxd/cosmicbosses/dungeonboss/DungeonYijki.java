@@ -1,35 +1,35 @@
 package me.ifamasssxd.cosmicbosses.dungeonboss;
 
-import java.util.*;
-
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
-import com.google.common.collect.*;
-import java.util.concurrent.*;
-
-import me.ifamasssxd.cosmicbosses.struct.enums.Difficulty;
-import net.minecraft.server.v1_8_R3.World;
-import org.bukkit.entity.Entity;
-import org.bukkit.potion.*;
-import org.bukkit.event.*;
-import org.arkhamnetwork.Arkkit.libs.*;
-import com.cosmicpvp.cosmicutils.utils.*;
-import me.ifamasssxd.cosmicbosses.bosses.yijki.*;
-import org.bukkit.craftbukkit.v1_8_R3.*;
-import net.minecraft.server.v1_8_R3.*;
-import me.ifamasssxd.cosmicbosses.*;
-import org.bukkit.plugin.*;
-import org.bukkit.metadata.*;
-import me.ifamasssxd.cosmicbosses.entities.*;
-import me.ifamasssxd.cosmicbosses.utils.*;
-import me.ifamasssxd.cosmicbosses.struct.*;
-import org.bukkit.event.entity.*;
-import org.bukkit.entity.*;
-import org.bukkit.*;
-import java.lang.reflect.*;
-import java.util.stream.*;
-import me.ifamasssxd.cosmicbosses.struct.enums.*;
+import com.google.common.collect.Lists;
+import de.inventivegames.particle.ParticleEffect;
+import me.ifamasssxd.cosmicbosses.CosmicBosses;
+import me.ifamasssxd.cosmicbosses.bosses.yijki.Yijki;
 import me.ifamasssxd.cosmicbosses.dungeonboss.abilities.*;
+import me.ifamasssxd.cosmicbosses.entities.CustomEntity;
+import me.ifamasssxd.cosmicbosses.struct.*;
+import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
+import me.ifamasssxd.cosmicbosses.struct.enums.DamageType;
+import me.ifamasssxd.cosmicbosses.struct.enums.Difficulty;
+import me.ifamasssxd.cosmicbosses.utils.BossUtils;
+import net.minecraft.server.v1_8_R3.World;
+import org.bukkit.*;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.entity.*;
+import org.bukkit.event.Event;
+import org.bukkit.event.entity.*;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 public class DungeonYijki extends Boss implements DungeonBoss
 {
@@ -109,7 +109,7 @@ public class DungeonYijki extends Boss implements DungeonBoss
         this.getEntity().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 36000, 1, true));
     }
     
-    public void clearAbilities() {
+    public void clearAbilities() throws Exception {
         if (this.activeAbility != null) {
             this.activeAbility.onAbilityDisable();
             this.activeAbility = null;
@@ -117,7 +117,7 @@ public class DungeonYijki extends Boss implements DungeonBoss
     }
     
     @Override
-    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) {
+    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) throws Exception {
         if (this.bossPhase != null && event.getEntity() instanceof Projectile) {
             event.setDamage((double)this.bossPhase.getProjectileDamage());
         }
@@ -141,15 +141,15 @@ public class DungeonYijki extends Boss implements DungeonBoss
     }
     
     @Override
-    public void onDeath(final EntityDeathEvent event) {
+    public void onDeath(final EntityDeathEvent event) throws Exception {
         super.onDeath(event);
         if (event != null && event.getEntity() != null) {
-            ParticleEffect.sendToLocation(ParticleEffect.LARGE_SMOKE, event.getEntity().getLocation(), 1.5f, 1.5f, 1.5f, 0.01f, 30);
+            ParticleEffect.LARGE_SMOKE.sendToPlayers(Bukkit.getOnlinePlayers(), event.getEntity().getLocation(), 3f, 3f, 3f, 0.09f, 15);
         }
     }
     
     @Override
-    public void onDamageTaken(final EntityDamageByEntityEvent event, final Entity damager) {
+    public void onDamageTaken(final EntityDamageByEntityEvent event, final Entity damager) throws Exception {
         if (!(damager instanceof Player) && !(damager instanceof Arrow)) {
             event.setCancelled(true);
             return;
@@ -408,7 +408,7 @@ public class DungeonYijki extends Boss implements DungeonBoss
     }
     
     @Override
-    public void onMinionUpdate(final Entity minion, final Event e) {
+    public void onMinionUpdate(final Entity minion, final Event e) throws Exception {
         if (this.activeAbility != null) {
             this.activeAbility.onAbilityEvent(e);
         }

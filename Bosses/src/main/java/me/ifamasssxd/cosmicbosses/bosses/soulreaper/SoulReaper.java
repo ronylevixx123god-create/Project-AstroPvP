@@ -1,37 +1,47 @@
 package me.ifamasssxd.cosmicbosses.bosses.soulreaper;
 
-import com.cosmicpvp.CosmicSpaceChests.libs.*;
-import com.cosmicpvp.CosmicSpaceChests.*;
+import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
+import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
+import com.google.common.collect.Lists;
+import me.ifamasssxd.cosmicbosses.CosmicBosses;
+import me.ifamasssxd.cosmicbosses.entities.CustomEntity;
+import me.ifamasssxd.cosmicbosses.entities.SoulReaperEnderman;
+import me.ifamasssxd.cosmicbosses.struct.Boss;
+import me.ifamasssxd.cosmicbosses.struct.BossMessage;
+import me.ifamasssxd.cosmicbosses.struct.Phase;
+import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
+import me.ifamasssxd.cosmicbosses.struct.enums.DamageType;
 import me.ifamasssxd.cosmicbosses.struct.enums.Difficulty;
+import me.ifamasssxd.cosmicbosses.utils.BossUtils;
+import me.ifamasssxd.cosmicbosses.utils.ItemBuilder;
+import me.ifamasssxd.killtracker.KillTrackerAPI;
 import net.minecraft.server.v1_8_R3.Entity;
 import net.minecraft.server.v1_8_R3.World;
-import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_8_R3.*;
-import me.ifamasssxd.cosmicbosses.entities.*;
-import net.minecraft.server.v1_8_R3.*;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.*;
-import org.bukkit.enchantments.*;
-import org.bukkit.inventory.*;
+import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
+import org.arkhamnetwork.enchantments.EnchantmentBook;
 import org.bukkit.*;
-import org.arkhamnetwork.enchantments.*;
-import me.ifamasssxd.killtracker.*;
-import me.ifamasssxd.cosmicbosses.utils.*;
-import me.ifamasssxd.cosmicbosses.*;
-import org.bukkit.plugin.*;
-import org.bukkit.metadata.*;
-import java.util.concurrent.*;
-import java.util.concurrent.atomic.*;
-import org.arkhamnetwork.Arkkit.libs.*;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftCreature;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEnderman;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
+import org.bukkit.event.Event;
 import org.bukkit.event.entity.*;
-import org.bukkit.craftbukkit.v1_8_R3.entity.*;
-import org.bukkit.event.*;
-import org.bukkit.entity.*;
-import me.ifamasssxd.cosmicbosses.struct.enums.*;
-import java.util.*;
-import me.ifamasssxd.cosmicbosses.struct.*;
-import com.google.common.collect.*;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class SoulReaper extends Boss
 {
@@ -89,7 +99,7 @@ public class SoulReaper extends Boss
     }
     
     @Override
-    public void onDeath(final EntityDeathEvent event) {
+    public void onDeath(final EntityDeathEvent event) throws Exception {
         super.onDeath(event);
         if (event != null) {
             this.sendMessage(ChatColor.LIGHT_PURPLE + "You can never truly defeat me, I am the reaper of souls, and I shall return.", Sound.ENDERDRAGON_DEATH, 1.3f);
@@ -134,7 +144,7 @@ public class SoulReaper extends Boss
     }
     
     @Override
-    public void onUpdate() {
+    public void onUpdate() throws Exception {
         ++this.loops;
         if (this.loops % 20 == 0 && this.getMinions().size() < 3 && this.lastCloneSpawn < System.currentTimeMillis()) {
             final LivingEntity ent = (LivingEntity)this.spawnMinion(EntityType.ENDERMAN, BossUtils.getRandomLocationNearby(this.entity.getLocation(), 3, 1));
@@ -208,7 +218,7 @@ public class SoulReaper extends Boss
     }
     
     @Override
-    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) {
+    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) throws Exception {
         final AtomicBoolean performedAOE = new AtomicBoolean(false);
         if (this.random.nextInt(100) <= 30) {
             player.setVelocity(player.getLocation().getDirection().multiply(-1).setY(0.7));
@@ -227,7 +237,11 @@ public class SoulReaper extends Boss
                 ((Player)entity).damage(0.0);
                 affected.incrementAndGet();
                 player.setVelocity(player.getVelocity().multiply(-1).setY(1));
-                ParticleEffect.sendToLocation(ParticleEffect.PORTAL, ((org.bukkit.entity.Entity)entity).getLocation().clone(), 0.5f, 0.5f, 0.5f, 1.0f, 10);
+                try {
+                    de.inventivegames.particle.ParticleEffect.PORTAL.sendToPlayers(Bukkit.getOnlinePlayers(), entity.getLocation(), 1f, 1f, 1f, 0.09f, 30);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 performedAOE.set(true);
                 return;
             }
@@ -253,11 +267,12 @@ public class SoulReaper extends Boss
     }
     
     @Override
-    public void onMinionUpdate(final org.bukkit.entity.Entity minion, final Event e) {
+    public void onMinionUpdate(final org.bukkit.entity.Entity minion, final Event e) throws Exception {
         super.onMinionUpdate(minion, e);
         if (e instanceof EntityDeathEvent) {
             if (minion.hasMetadata("explode_death")) {
-                ParticleEffect.sendToLocation(ParticleEffect.LARGE_EXPLODE, minion.getLocation(), 1.0f, 1.0f, 1.0f, 0.01f, 15);
+                de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), minion.getLocation(), 1f, 1f, 1f, 0.01f, 15);
+
                 minion.getWorld().playSound(minion.getLocation(), Sound.EXPLODE, 1.0f, 1.0f);
                 for (final org.bukkit.entity.Entity ent : minion.getNearbyEntities(10.0, 10.0, 10.0)) {
                     if (ent instanceof Player) {

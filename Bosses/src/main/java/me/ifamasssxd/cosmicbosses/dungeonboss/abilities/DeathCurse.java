@@ -1,20 +1,26 @@
 package me.ifamasssxd.cosmicbosses.dungeonboss.abilities;
 
-import me.ifamasssxd.cosmicbosses.dungeonboss.*;
-import me.ifamasssxd.cosmicbosses.struct.*;
-import org.bukkit.World;
-import org.bukkit.entity.*;
-import com.google.common.collect.*;
-import com.cosmicpvp.cosmicutils.utils.*;
-import java.util.concurrent.*;
-import org.bukkit.craftbukkit.v1_8_R3.*;
+import com.google.common.collect.Lists;
+import me.ifamasssxd.cosmicbosses.dungeonboss.DeathCurseBlaze;
+import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonAbility;
+import me.ifamasssxd.cosmicbosses.struct.Boss;
+import net.minecraft.server.v1_8_R3.GenericAttributes;
+import net.minecraft.server.v1_8_R3.WorldServer;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Sound;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftMonster;
 import org.bukkit.entity.Entity;
-import org.bukkit.event.entity.*;
-import org.bukkit.craftbukkit.v1_8_R3.entity.*;
-import java.util.*;
-import org.bukkit.*;
-import net.minecraft.server.v1_8_R3.*;
-import org.bukkit.event.*;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.entity.CreatureSpawnEvent;
+
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 
 public class DeathCurse extends DungeonAbility
 {
@@ -29,7 +35,7 @@ public class DeathCurse extends DungeonAbility
     }
     
     @Override
-    public void onTick() {
+    public void onTick() throws Exception {
         ++this.ticks;
         if (this.spawnTime != 0L && System.currentTimeMillis() - this.spawnTime >= 15000L && this.player != null && this.player.getWorld().getName().equals(this.blaze.world.getWorld().getName()) && this.blaze.getBukkitEntity().getLocation().distanceSquared(this.player.getLocation()) <= 10000.0 && !this.player.isDead()) {
             this.player.setHealth(0.0);
@@ -41,7 +47,8 @@ public class DeathCurse extends DungeonAbility
             Bukkit.getLogger().info("Killing " + this.player.getName() + " because Death Curse wasnt killed!");
         }
         if (this.ticks % 5 == 0 && this.blaze != null && this.blaze.isAlive()) {
-            ParticleEffect.sendToLocation(ParticleEffect.LAVA, this.blaze.getBukkitEntity().getLocation(), 1.0f, 1.0f, 1.0f, 0.1f, 10);
+            //ParticleEffect.sendToLocation(ParticleEffect.LAVA, this.blaze.getBukkitEntity().getLocation(), 1.0f, 1.0f, 1.0f, 0.1f, 10);
+            de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), this.blaze.getBukkitEntity().getLocation(), 1f, 1f, 1f, 0.1f, 10);
         }
         if (this.ticks % 20 == 0 && this.blaze != null && this.blaze.isAlive() && this.player != null && this.player.isValid()) {
             this.blaze.getBukkitEntity().getWorld().playSound(this.blaze.getBukkitEntity().getLocation(), Sound.NOTE_PLING, 10.0f, 1.1f);

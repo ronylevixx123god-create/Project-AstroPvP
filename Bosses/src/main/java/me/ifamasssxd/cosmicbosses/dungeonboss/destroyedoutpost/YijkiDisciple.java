@@ -1,30 +1,40 @@
 package me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost;
 
-import me.ifamasssxd.cosmicbosses.bosses.skeletonhorse.*;
-import me.ifamasssxd.cosmicbosses.entities.*;
-import me.ifamasssxd.cosmicbosses.*;
+import com.google.common.collect.Lists;
+import de.inventivegames.particle.ParticleEffect;
+import me.ifamasssxd.cosmicbosses.CosmicBosses;
+import me.ifamasssxd.cosmicbosses.bosses.skeletonhorse.EmpoweredArrow;
+import me.ifamasssxd.cosmicbosses.bosses.skeletonhorse.Summoning;
+import me.ifamasssxd.cosmicbosses.entities.CustomEntity;
+import me.ifamasssxd.cosmicbosses.struct.Boss;
+import me.ifamasssxd.cosmicbosses.struct.BossMessage;
+import me.ifamasssxd.cosmicbosses.struct.MiniBoss;
+import me.ifamasssxd.cosmicbosses.struct.Phase;
+import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
+import me.ifamasssxd.cosmicbosses.struct.enums.DamageType;
 import me.ifamasssxd.cosmicbosses.struct.enums.Difficulty;
-import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Entity;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.*;
-import org.bukkit.metadata.*;
-import org.bukkit.potion.*;
-import org.bukkit.inventory.*;
-import org.bukkit.enchantments.*;
-import me.ifamasssxd.cosmicbosses.struct.*;
-import org.arkhamnetwork.Arkkit.libs.*;
-import org.bukkit.craftbukkit.v1_8_R3.entity.*;
-import net.minecraft.server.v1_8_R3.*;
+import me.ifamasssxd.cosmicbosses.utils.BossUtils;
+import me.ifamasssxd.cosmicbosses.utils.CustomItem;
+import me.ifamasssxd.cosmicbosses.utils.ItemBuilder;
+import net.minecraft.server.v1_8_R3.EntityInsentient;
 import org.bukkit.*;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftSkeleton;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
-import org.bukkit.event.*;
-import org.bukkit.event.entity.*;
-import me.ifamasssxd.cosmicbosses.utils.*;
-import me.ifamasssxd.cosmicbosses.struct.enums.*;
-import java.util.*;
-import com.google.common.collect.*;
+import org.bukkit.event.Event;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+
+import java.util.Iterator;
+import java.util.List;
 
 public class YijkiDisciple extends Boss implements MiniBoss
 {
@@ -102,12 +112,15 @@ public class YijkiDisciple extends Boss implements MiniBoss
     }
     
     @Override
-    public void onUpdate() {
+    public void onUpdate() throws Exception {
         ++this.loops;
         final LivingEntity entity = this.getEntity();
         if (this.invincible && this.random.nextInt(10) <= 2) {
-            ParticleEffect.sendToLocation(ParticleEffect.LAVA, entity.getLocation(), 1.0f, 1.0f, 1.0f, 0.05f, 50);
-            ParticleEffect.sendToLocation(ParticleEffect.PORTAL, entity.getLocation(), 1.0f, 1.0f, 1.0f, 0.1f, 30);
+            //ParticleEffect.sendToLocation(ParticleEffect.LAVA, entity.getLocation(), 1.0f, 1.0f, 1.0f, 0.05f, 50);
+            //ParticleEffect.sendToLocation(ParticleEffect.PORTAL, entity.getLocation(), 1.0f, 1.0f, 1.0f, 0.1f, 30);
+
+            de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayer((Player) entity, entity.getLocation(), 1f, 1f, 1f, 0.05f, 50);
+            de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayer((Player) entity, entity.getLocation(), 1f, 1f, 1f, 0.1f, 30);
         }
         if (this.loops % 2 == 0) {
             final Creature boss = (Creature)this.getEntity();
@@ -176,7 +189,7 @@ public class YijkiDisciple extends Boss implements MiniBoss
     }
     
     @Override
-    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) {
+    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) throws Exception {
         if (this.getPhase() == Phase.TWO) {
             event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 3.0);
             player.setFireTicks(600);
@@ -196,8 +209,8 @@ public class YijkiDisciple extends Boss implements MiniBoss
                 BossUtils.dealPercentMaxHealthDamage(player, 40.0, 10);
             }
             if (this.random.nextInt(10) == 0) {
-                ParticleEffect.sendToLocation(ParticleEffect.LARGE_SMOKE, arrow.getLocation(), 3.0f, 3.0f, 3.0f, 0.1f, 50);
-                ParticleEffect.sendToLocation(ParticleEffect.FLAME, arrow.getLocation(), 3.0f, 3.0f, 3.0f, 0.1f, 15);
+                de.inventivegames.particle.ParticleEffect.LARGE_SMOKE.sendToPlayers(Bukkit.getOnlinePlayers(), arrow.getLocation(), 3f, 3f, 3f, 0.09f, 50);
+                de.inventivegames.particle.ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(), arrow.getLocation(), 3f, 3f, 3f, 0.09f, 15);
             }
             for (final Entity ent : player.getNearbyEntities(4.0, 4.0, 4.0)) {
                 if (ent instanceof Player) {
@@ -217,7 +230,7 @@ public class YijkiDisciple extends Boss implements MiniBoss
     }
     
     @Override
-    public void onDamageTaken(final EntityDamageByEntityEvent event, final Entity damager) {
+    public void onDamageTaken(final EntityDamageByEntityEvent event, final Entity damager) throws Exception {
         if (event.getDamager() instanceof Projectile) {
             event.setCancelled(true);
             return;
@@ -230,7 +243,7 @@ public class YijkiDisciple extends Boss implements MiniBoss
             }
             this.getEntity().getWorld().playSound(this.getEntity().getLocation(), Sound.WITHER_IDLE, 3.0f, 1.8f);
             if (this.random.nextInt(10) <= 4) {
-                ParticleEffect.sendToLocation(ParticleEffect.EXPLODE, this.getEntity().getLocation(), 0.5f, 0.3f, 0.3f, 0.1f, 30);
+                de.inventivegames.particle.ParticleEffect.EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), event.getEntity().getLocation(), 3f, 3f, 3f, 0.09f, 15);
             }
             return;
         }
@@ -256,7 +269,7 @@ public class YijkiDisciple extends Boss implements MiniBoss
             else if (this.getPhase() == Phase.TWO && this.random.nextInt(10) <= 4) {
                 this.getEntity().teleport(BossUtils.getRandomLocationNearby(damager.getLocation(), 2, 1, 1));
                 this.getEntity().getWorld().playSound(this.getEntity().getLocation(), Sound.ZOMBIE_DEATH, 10.0f, 1.4f);
-                ParticleEffect.sendToLocation(ParticleEffect.PORTAL, this.getEntity().getLocation(), 1.0f, 1.0f, 1.0f, 0.7f, 20);
+                ParticleEffect.PORTAL.sendToPlayers(Bukkit.getOnlinePlayers(), this.getEntity().getLocation(), 0f, 0f, 0f, 0.09f, 25);
             }
         }
         super.onDamageTaken(event, damager);
@@ -277,7 +290,7 @@ public class YijkiDisciple extends Boss implements MiniBoss
     }
     
     @Override
-    public void onMinionUpdate(final Entity minion, final Event e) {
+    public void onMinionUpdate(final Entity minion, final Event e) throws Exception {
         if (minion.hasMetadata("horse")) {
             if (e instanceof EntityDeathEvent) {
                 this.getEntity().leaveVehicle();
@@ -347,7 +360,7 @@ public class YijkiDisciple extends Boss implements MiniBoss
     }
     
     @Override
-    public void onDeath(final EntityDeathEvent event) {
+    public void onDeath(final EntityDeathEvent event) throws Exception {
         super.onDeath(event);
         if (event != null) {
             this.sendMessage(ChatColor.ITALIC + "You should not have come here... you will never leave alive!");
