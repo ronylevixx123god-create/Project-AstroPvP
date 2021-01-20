@@ -3,15 +3,9 @@ package me.ifamasssxd.cosmicbosses.dungeonboss.planetnul;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonAbility;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
-import org.arkhamnetwork.enchantments.Enchantments;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.plugin.Plugin;
 
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -64,14 +58,14 @@ public class BloodMagicAbility extends DungeonAbility {
         }
 
         int damageDone = totalDamageAfter - this.totalDamageBefore;
-        int finalDamage = (int)(Math.min((int) (damageDone * 0.15), 18) * (((CorruptCosmonaut)this.boss).hasFloorBroke() ? 1 : 1.1));
+        int finalDamage = (int) (Math.min((int) (damageDone * 0.15), 18) * (((CorruptCosmonaut) this.boss).hasFloorBroke() ? 1 : 1.1));
 
-        for (Player player : this.getBoss().getNearbyEntities(150.0, EntityType.PLAYER).stream().map(e -> (Player)e).collect(Collectors.toList())) {
+        for (Player player : this.getBoss().getNearbyEntities(150.0, EntityType.PLAYER).stream().map(e -> (Player) e).collect(Collectors.toList())) {
             this.boss.sendMessage(player, CC.translate("&5&lBlood Magic! &c&l[-" + finalDamage + "HP]"));
             player.setHealth(Math.max(player.getHealth() - finalDamage, 0));
         }
 
-        ((CorruptCosmonaut)this.boss).doTrickster();
+        ((CorruptCosmonaut) this.boss).doTrickster();
     }
 
     @Override

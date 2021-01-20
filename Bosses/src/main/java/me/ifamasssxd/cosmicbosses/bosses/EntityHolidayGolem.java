@@ -8,12 +8,11 @@ import net.minecraft.server.v1_8_R3.World;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 
-public class EntityHolidayGolem extends EntityGolem implements MultiProjectileShooter
-{
+public class EntityHolidayGolem extends EntityGolem implements MultiProjectileShooter {
     public ConcurrentMap<Object, Object> recentlySplitPlayer;
     private float newF;
     private float newJ;
-    
+
     public EntityHolidayGolem(final World world) {
         super(world);
         this.recentlySplitPlayer = CacheBuilder.newBuilder().expireAfterWrite(3L, TimeUnit.SECONDS).build().asMap();

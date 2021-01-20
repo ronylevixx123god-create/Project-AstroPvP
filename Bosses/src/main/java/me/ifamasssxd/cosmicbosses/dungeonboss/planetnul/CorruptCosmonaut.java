@@ -1,27 +1,21 @@
 package me.ifamasssxd.cosmicbosses.dungeonboss.planetnul;
 
-import com.compilex.CosmicDungeons.DungeonsAPI;
-import com.cosmicpvp.cosmicutils.utils.*;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.Tuple;
 import com.google.common.collect.Lists;
 import com.sk89q.worldedit.BlockVector;
-import com.sk89q.worldedit.BlockWorldVector;
-import com.sk89q.worldedit.EditSession;
-import com.sk89q.worldedit.MaxChangedBlocksException;
-import com.sk89q.worldedit.blocks.BaseBlock;
-import com.sk89q.worldedit.bukkit.BukkitUtil;
 import com.sk89q.worldedit.bukkit.BukkitWorld;
-import com.sk89q.worldedit.patterns.BlockChance;
-import com.sk89q.worldedit.patterns.RandomFillPattern;
-import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldedit.regions.Polygonal2DRegion;
-import com.sk89q.worldedit.regions.Region;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
-import me.ifamasssxd.cosmicbosses.bosses.soulreaper.SoulReaper;
-import me.ifamasssxd.cosmicbosses.dungeonboss.*;
-import me.ifamasssxd.cosmicbosses.dungeonboss.abilities.*;
+import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonAbility;
+import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonBoss;
+import me.ifamasssxd.cosmicbosses.dungeonboss.abilities.EndOfWorld;
 import me.ifamasssxd.cosmicbosses.entities.CustomEntity;
-import me.ifamasssxd.cosmicbosses.struct.*;
+import me.ifamasssxd.cosmicbosses.struct.BlockModifier;
+import me.ifamasssxd.cosmicbosses.struct.Boss;
+import me.ifamasssxd.cosmicbosses.struct.BossMessage;
+import me.ifamasssxd.cosmicbosses.struct.Phase;
 import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
 import me.ifamasssxd.cosmicbosses.struct.enums.DamageType;
 import me.ifamasssxd.cosmicbosses.struct.enums.Difficulty;
@@ -47,15 +41,13 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class CorruptCosmonaut extends Boss implements DungeonBoss
-{
+public class CorruptCosmonaut extends Boss implements DungeonBoss {
     protected Phase lastPhase;
     protected long lastPhaseSwitch;
     private boolean hasFloorBroke;
@@ -90,8 +82,8 @@ public class CorruptCosmonaut extends Boss implements DungeonBoss
 
     public void setBossPhase(final BossPhase phase) {
         this.bossPhase = phase;
-        this.getEntity().setMaxHealth((double)phase.getMaxHealth());
-        this.getEntity().setHealth((double)phase.getMaxHealth());
+        this.getEntity().setMaxHealth((double) phase.getMaxHealth());
+        this.getEntity().setHealth((double) phase.getMaxHealth());
         this.getEntity().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 36000, 1, true));
     }
 
@@ -110,13 +102,12 @@ public class CorruptCosmonaut extends Boss implements DungeonBoss
         try {
             final Constructor constr = abilityFound.getDeclaredConstructor(Boss.class);
             final Object object = constr.newInstance(this);
-            (this.activeAbility = (DungeonAbility)object).onAbilityEnable();
+            (this.activeAbility = (DungeonAbility) object).onAbilityEnable();
             this.lastPhaseClass = this.activeAbility.getClass();
             this.abilityActivateTime = System.currentTimeMillis();
             Bukkit.getLogger().info("Activating ability: " + this.activeAbility.getClass().getName());
             this.updateScoreboard();
-        }
-        catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException ex2) {
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException ex2) {
             ex2.printStackTrace();
         }
     }
@@ -125,10 +116,10 @@ public class CorruptCosmonaut extends Boss implements DungeonBoss
     public LivingEntity spawnBoss() {
         final CorruptCosmonautEntity boss = (CorruptCosmonautEntity) BossUtils.createCustomEntity(CustomEntity.CORRUPT_COSMONAUT, this, this.location);
         (this.bossEntity = boss).setBoss(this);
-        final LivingEntity e = (LivingEntity)boss.getBukkitEntity();
-        e.setMetadata("do_not_clear", (MetadataValue)new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object)""));
-        e.setMetadata("boss", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), (Object)""));
-        e.setMaxHealth((double)this.getMaxHealth());
+        final LivingEntity e = (LivingEntity) boss.getBukkitEntity();
+        e.setMetadata("do_not_clear", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
+        e.setMetadata("boss", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
+        e.setMaxHealth((double) this.getMaxHealth());
         e.setHealth(e.getMaxHealth());
         //todo: look into this method
         //e.getEquipment().setHelmet(ItemSkinManager.getItemSkinByID("CORRUPT_HELMET").applySkin(new ItemStack(Material.DIAMOND_HELMET)));
@@ -149,7 +140,7 @@ public class CorruptCosmonaut extends Boss implements DungeonBoss
 
         e.setMetadata("corrupt_boss", new FixedMetadataValue(CosmicBosses.get(), true));
 
-        ((Skeleton)e).setSkeletonType(Skeleton.SkeletonType.WITHER);
+        ((Skeleton) e).setSkeletonType(Skeleton.SkeletonType.WITHER);
         e.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1));
 
         this.setEnt(e);
@@ -217,7 +208,7 @@ public class CorruptCosmonaut extends Boss implements DungeonBoss
     }
 
     @Override
-    public void onDeath(final EntityDeathEvent event) {
+    public void onDeath(final EntityDeathEvent event) throws Exception {
         if (!this.hasFloorBroke) {
             this.breakFloor();
         }
@@ -226,7 +217,7 @@ public class CorruptCosmonaut extends Boss implements DungeonBoss
     }
 
     @Override
-    public void onUpdate() {
+    public void onUpdate() throws Exception {
         ++this.loops;
 
         if (this.getEntity().getLocation().getY() < 113 && !this.hasFloorBroke) {
@@ -291,13 +282,13 @@ public class CorruptCosmonaut extends Boss implements DungeonBoss
         }
 
         if (this.loops % 10 == 0) {
-            final Creature boss = (Creature)this.getEntity();
+            final Creature boss = (Creature) this.getEntity();
 
             if (boss.getTarget() != null && boss.getTarget().getWorld().getName().equals(boss.getLocation().getWorld().getName())) {
                 boss.setTarget(null);
             }
 
-            boss.getNearbyEntities(6.0, 6.0, 6.0).stream().filter(e -> e instanceof Player).map(e -> (Player)e).forEach(p -> {
+            boss.getNearbyEntities(6.0, 6.0, 6.0).stream().filter(e -> e instanceof Player).map(e -> (Player) e).forEach(p -> {
                 p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 20 * 10, 0));
                 p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 20 * 3, 0));
             });
@@ -313,18 +304,17 @@ public class CorruptCosmonaut extends Boss implements DungeonBoss
             }
 
             if (!boss.isInsideVehicle() && boss.getTarget() != null && boss.getTarget().isValid() && boss.getTarget() instanceof Player && boss.getTarget().getWorld().equals(this.getEntity().getWorld())) {
-                this.lastTarget = (org.bukkit.entity.Entity)boss.getTarget();
+                this.lastTarget = (org.bukkit.entity.Entity) boss.getTarget();
                 final double distance = this.lastTarget.getLocation().distanceSquared(this.getEntity().getLocation());
                 if (this.lastTarget.isValid() && distance <= 200.0 && distance > 60.0) {
-                    final EntityInsentient insent = (EntityInsentient)((CraftSkeleton)this.getEntity()).getHandle();
-                    final net.minecraft.server.v1_8_R3.Entity ent2 = ((CraftEntity)this.lastTarget).getHandle();
+                    final EntityInsentient insent = (EntityInsentient) ((CraftSkeleton) this.getEntity()).getHandle();
+                    final net.minecraft.server.v1_8_R3.Entity ent2 = ((CraftEntity) this.lastTarget).getHandle();
                     insent.getNavigation().a(ent2, 2.0);
                 }
-            }
-            else if (this.lastTarget != null) {
+            } else if (this.lastTarget != null) {
                 final double distance = this.getLocation().distanceSquared(this.getEntity().getLocation());
                 if (this.lastTarget.getWorld().equals(this.getEntity().getWorld()) && !this.lastTarget.isDead() && this.getDamageTracker().containsKey(this.lastTarget.getUniqueId()) && distance <= 200.0) {
-                    boss.setTarget((LivingEntity)this.lastTarget);
+                    boss.setTarget((LivingEntity) this.lastTarget);
                 }
             }
         }
@@ -334,7 +324,7 @@ public class CorruptCosmonaut extends Boss implements DungeonBoss
 
     public void doTrickster() {
         this.getEntity().getNearbyEntities(14.0, 14.0, 14.0).stream().filter(e -> e instanceof Player).findFirst().ifPresent(t -> {
-            Player target = (Player)t;
+            Player target = (Player) t;
 
             final Location l1 = this.getLocation().add(0.0, 1.0, 0.0);
             final Location l2 = this.getEntity().getTargetBlock((HashSet<Byte>) null, 4).getLocation().add(0.0, 1.0, 0.0).setDirection(target.getLocation().getDirection());
@@ -364,12 +354,13 @@ public class CorruptCosmonaut extends Boss implements DungeonBoss
     @Override
     public void onMinionUpdate(org.bukkit.entity.Entity minion, Event e) {
         if (minion instanceof Skeleton && e instanceof EntityDamageByEntityEvent) {
-            EntityDamageByEntityEvent event = (EntityDamageByEntityEvent)e;
+            EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) e;
 
             if (event.getEntity() instanceof Player || event.getDamager() instanceof Player) {
 
                 event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 3.0);
-                if (event.getEntity() instanceof Player) BossUtils.dealPercentMaxHealthDamage((Player) event.getEntity(), 15.0, 10);
+                if (event.getEntity() instanceof Player)
+                    BossUtils.dealPercentMaxHealthDamage((Player) event.getEntity(), 15.0, 10);
 
                 if (this.getMinions().size() < 39 && this.duplicateMinions()) {
                     this.spawnMinion(EntityType.SKELETON, minion.getLocation());
@@ -411,7 +402,7 @@ public class CorruptCosmonaut extends Boss implements DungeonBoss
         return activeAbility;
     }
 
-    public void clearAbilities() {
+    public void clearAbilities() throws Exception {
         if (this.activeAbility != null) {
             this.activeAbility.onAbilityDisable();
             this.activeAbility = null;
@@ -424,7 +415,8 @@ public class CorruptCosmonaut extends Boss implements DungeonBoss
         this.sendMessage("Hahaha, not bad for a group of filthy Cosmonauts! I wonder though, can you handle the HEAT?!");
 
         World bukkitWorld = Bukkit.getWorld("dungeon_planet_nul");
-        com.sk89q.worldedit.world.World weWorld = new BukkitWorld(bukkitWorld);;
+        com.sk89q.worldedit.world.World weWorld = new BukkitWorld(bukkitWorld);
+        ;
         ProtectedRegion wgRegion = WorldGuardUtils.getWorldGuard().getGlobalRegionManager().get(bukkitWorld).getRegion("boss_blocks_remove");
         Polygonal2DRegion weRegion = new Polygonal2DRegion(weWorld, wgRegion.getPoints(), wgRegion.getMinimumPoint().getBlockY(), wgRegion.getMaximumPoint().getBlockY());
 
@@ -447,7 +439,7 @@ public class CorruptCosmonaut extends Boss implements DungeonBoss
     }
 
     @Override
-    public void onDamageTaken(EntityDamageByEntityEvent event, org.bukkit.entity.Entity damager) {
+    public void onDamageTaken(EntityDamageByEntityEvent event, org.bukkit.entity.Entity damager) throws Exception {
         if (event.getDamager() instanceof Player) {// && CosmicBosses.getInstance().isFactionUpgradesEnabled()) {
             /*final int heroicLevel = UpgradeUtils.getUpgradeLevel((Player)event.getDamager(), "HEROIC_BOSS_MASTERY");
             double mult = 1.0;
@@ -471,7 +463,8 @@ public class CorruptCosmonaut extends Boss implements DungeonBoss
             event.setDamage(event.getFinalDamage() * 0.2);//Math.min(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * (0.03), 3 + new Random().nextInt(5)));
 
             if (this.hasFloorBroke()) {
-                if (!event.getDamager().isOnGround() && !event.getDamager().hasMetadata("no_knockback")) GeneralUtil.pushAwayEntity(this.getEntity(), event.getDamager(), 1.7000000476837158);
+                if (!event.getDamager().isOnGround() && !event.getDamager().hasMetadata("no_knockback"))
+                    GeneralUtil.pushAwayEntity(this.getEntity(), event.getDamager(), 1.7000000476837158);
             }
 
             this.lastHitTime = System.currentTimeMillis();
@@ -481,7 +474,7 @@ public class CorruptCosmonaut extends Boss implements DungeonBoss
     }
 
     @Override
-    public void onAttackPlayer(EntityDamageByEntityEvent event, Player player) {
+    public void onAttackPlayer(EntityDamageByEntityEvent event, Player player) throws Exception {
         if (event.isCancelled()) return;
 
         if (event.getCause() == EntityDamageEvent.DamageCause.PROJECTILE && event.getDamager() instanceof Arrow) {
@@ -525,7 +518,7 @@ public class CorruptCosmonaut extends Boss implements DungeonBoss
     public org.bukkit.entity.Entity spawnMinion(EntityType type, Location l) {
         if (type != EntityType.SKELETON) return super.spawnMinion(type, l);
 
-        Skeleton skeleton = (Skeleton)super.spawnMinion(type, l);
+        Skeleton skeleton = (Skeleton) super.spawnMinion(type, l);
         skeleton.setMaxHealth(125);
         skeleton.setHealth(skeleton.getMaxHealth());
         skeleton.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1));
@@ -540,19 +533,19 @@ public class CorruptCosmonaut extends Boss implements DungeonBoss
         skeleton.getEquipment().setItemInHandDropChance(0.0f);
 
         // todo: look into this method
-       // fillerSword = ItemSkinManager.getItemSkinByID("CORRUPT_SWORD").applySkin(fillerSword);
+        // fillerSword = ItemSkinManager.getItemSkinByID("CORRUPT_SWORD").applySkin(fillerSword);
 
         skeleton.getEquipment().setItemInHand(fillerSword);
         skeleton.setRemoveWhenFarAway(false);
         skeleton.setCustomName(ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "The Corrupt Cosmonaut");
         skeleton.setCustomNameVisible(true);
 
-        skeleton.setMetadata("do_not_clear", (MetadataValue)new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object)""));
-        skeleton.setMetadata("no_drops", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), (Object)""));
-        skeleton.setMetadata("cosmonaut_minion", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), (Object)""));
+        skeleton.setMetadata("do_not_clear", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
+        skeleton.setMetadata("no_drops", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
+        skeleton.setMetadata("cosmonaut_minion", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
 
         // todo: look into this method
-       // skeleton.getEquipment().setHelmet(ItemSkinManager.getItemSkinByID("CORRUPT_HELMET").applySkin(new ItemStack(Material.DIAMOND_HELMET)));
+        // skeleton.getEquipment().setHelmet(ItemSkinManager.getItemSkinByID("CORRUPT_HELMET").applySkin(new ItemStack(Material.DIAMOND_HELMET)));
         skeleton.getEquipment().setChestplate(null);
         skeleton.getEquipment().setLeggings(null);
         skeleton.getEquipment().setBoots(null);
@@ -560,8 +553,7 @@ public class CorruptCosmonaut extends Boss implements DungeonBoss
         return skeleton;
     }
 
-    public enum BossPhase
-    {
+    public enum BossPhase {
         PHASE_1(2000, 6, 0.25f, 15.0f, Lists.newArrayList(SoulReaperAbility.class, CloneWarAbility.class, SilencerAbility.class, ArmorMagnetAbility.class, BloodMagicAbility.class, RobotSummonerAbility.class, ComboBreakerAbility.class));
         //PHASE_1(2000, 6, 0.25f, 15.0f, Lists.newArrayList(SilencerAbility.class, RobotSummonerAbility.class));
 
@@ -572,7 +564,7 @@ public class CorruptCosmonaut extends Boss implements DungeonBoss
         private List<Class<? extends DungeonAbility>> abilityClasses;
 
         public List<Class<? extends DungeonAbility>> getAbilityClasses() {
-            return (List<Class<? extends DungeonAbility>>)Lists.newArrayList((Iterable)this.abilityClasses);
+            return (List<Class<? extends DungeonAbility>>) Lists.newArrayList((Iterable) this.abilityClasses);
         }
 
         BossPhase(final int maxHealth, final int projectileDamage, final float damageReduction, final float fireRateMultiplier, final List<Class<? extends DungeonAbility>> abilityClasses) {

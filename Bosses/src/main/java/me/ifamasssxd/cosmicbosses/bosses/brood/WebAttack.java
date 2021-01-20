@@ -1,29 +1,36 @@
 package me.ifamasssxd.cosmicbosses.bosses.brood;
 
-import me.ifamasssxd.cosmicbosses.struct.*;
-import org.bukkit.entity.*;
-import me.ifamasssxd.cosmicbosses.utils.*;
-import org.bukkit.scheduler.*;
-import me.ifamasssxd.cosmicbosses.*;
-import org.bukkit.plugin.*;
-import java.util.*;
-import org.bukkit.*;
-import org.bukkit.block.*;
-import java.util.concurrent.*;
+import me.ifamasssxd.cosmicbosses.CosmicBosses;
+import me.ifamasssxd.cosmicbosses.struct.BlockModifier;
+import me.ifamasssxd.cosmicbosses.struct.Boss;
+import me.ifamasssxd.cosmicbosses.struct.BossAbility;
+import me.ifamasssxd.cosmicbosses.utils.BossUtils;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
-public class WebAttack extends BossAbility
-{
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
+
+public class WebAttack extends BossAbility {
     Random random;
-    
+
     public WebAttack(final Boss boss, final BlockModifier modifier) {
         super(boss, modifier);
         this.random = new Random();
     }
-    
+
     @Override
     public void onAbility() {
         for (final Entity ent : this.getBoss().getNearbyEntities(20.0, EntityType.PLAYER)) {
-            final Player pl = (Player)ent;
+            final Player pl = (Player) ent;
             if (BossUtils.canAffectPlayer(pl, false)) {
                 this.getBoss().sendMessage(pl, ChatColor.ITALIC + "Feel the despair wash over you, for you have fallen into my trap.");
                 final Location playerLoc = pl.getLocation();
@@ -37,9 +44,9 @@ public class WebAttack extends BossAbility
                 for (int x = minX; x < maxX; ++x) {
                     for (int y = minY; y < maxY; ++y) {
                         for (int z = minZ; z < maxZ; ++z) {
-                            location.setX((double)x);
-                            location.setY((double)y);
-                            location.setZ((double)z);
+                            location.setX((double) x);
+                            location.setY((double) y);
+                            location.setZ((double) z);
                             if (!this.getBlockModifier().containsLocation(this, location)) {
                                 if (this.random.nextInt(100) >= 40) {
                                     final Block b = location.getBlock();
@@ -62,15 +69,15 @@ public class WebAttack extends BossAbility
                     WebAttack.this.getBlockModifier().removeBlocks(instance, true, true);
                 }
             }
-        }.runTaskLater((Plugin)CosmicBosses.getInstance(), 100L);
+        }.runTaskLater((Plugin) CosmicBosses.getInstance(), 100L);
         this.activateCooldown();
     }
-    
+
     @Override
     public long getCooldown() {
         return TimeUnit.SECONDS.toMillis(15L);
     }
-    
+
     @Override
     public String getAbilityName() {
         return "Web Attack";

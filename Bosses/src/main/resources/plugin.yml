@@ -1,7 +1,7 @@
 name: CosmicBosses
 version: 0.1
 main: me.ifamasssxd.cosmicbosses.CosmicBosses
-softdepend: [Vault, mcMMO, Essentials, Factions, FactionUpgrades]
+softdepend: [ Vault, mcMMO, Essentials, Factions, FactionUpgrades ]
 author: quantiom
 commands:
   spawnboss:
@@ -10,4 +10,4 @@ commands:
     description: All purpose boss command.
   bossrewards:
     description: Boss rewards command.
-    aliases: [collect]
+    aliases: [ collect ]

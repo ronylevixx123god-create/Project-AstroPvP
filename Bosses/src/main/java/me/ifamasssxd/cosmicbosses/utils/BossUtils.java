@@ -1,51 +1,50 @@
 package me.ifamasssxd.cosmicbosses.utils;
 
-import com.compilex.CosmicDungeons.CosmicDungeonsPlugin;
-import com.cosmicpvp.cosmicutils.CosmicUtils;
-import com.earth2me.essentials.*;
+import com.cosmicpvp.cosmicutils.compat.ParamBuilder;
+import com.earth2me.essentials.Essentials;
+import com.earth2me.essentials.User;
+import com.massivecraft.factions.Board;
+import com.massivecraft.factions.FLocation;
+import com.sk89q.worldguard.protection.managers.RegionManager;
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
-import org.arkhamnetwork.enchantments.Enchantments;
+import me.ifamasssxd.cosmicbosses.bosses.yijki.WitherBoss;
+import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijki;
+import me.ifamasssxd.cosmicbosses.dungeonboss.YijkiRunnerEntity;
+import me.ifamasssxd.cosmicbosses.entities.CustomEntity;
+import me.ifamasssxd.cosmicbosses.struct.Boss;
+import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
+import me.ifamasssxd.cosmicbosses.struct.enums.ChunkCoords;
+import net.minecraft.server.v1_8_R3.*;
+import org.arkhamnetwork.Arkkit.commands.CommandArkReboot;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.block.*;
 import org.bukkit.*;
-import com.massivecraft.factions.*;
-import me.ifamasssxd.cosmicbosses.struct.enums.*;
 import org.bukkit.block.Block;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.*;
-import org.bukkit.metadata.*;
-import org.bukkit.event.player.*;
-import org.bukkit.craftbukkit.v1_8_R3.*;
-import me.ifamasssxd.cosmicbosses.dungeonboss.*;
-import org.bukkit.event.entity.*;
-import me.ifamasssxd.cosmicbosses.struct.*;
-import me.ifamasssxd.cosmicbosses.entities.*;
-import me.ifamasssxd.cosmicbosses.bosses.yijki.*;
-import net.minecraft.server.v1_8_R3.*;
-import com.cosmicpvp.cosmicutils.compat.*;
-import org.bukkit.inventory.*;
-import org.bukkit.entity.*;
-import com.sk89q.worldguard.protection.managers.*;
-import com.sk89q.worldguard.protection.regions.*;
-import org.bukkit.util.*;
-import java.util.*;
-import org.arkhamnetwork.Arkkit.commands.*;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
-public class BossUtils
-{
+import java.util.*;
+
+public class BossUtils {
     private static Essentials ess;
     static boolean factions;
     private static HashMap<ChunkCoords, Boolean> warzone;
     private static Random rand;
-    
+
     public BossUtils() {
         BossUtils.factions = Bukkit.getPluginManager().isPluginEnabled("Factions");
     }
-    
+
     public static boolean isInGodMode(final Player player) {
         if (player.getGameMode() == GameMode.CREATIVE) {
             return true;
@@ -56,7 +55,7 @@ public class BossUtils
         }
         return false;
     }
-    
+
     public static int getHighestBlockYAt(final Location location, final boolean needSolid) {
         for (int i = 255; i > 0; --i) {
             final Block block = location.getWorld().getBlockAt(location.getBlockX(), i, location.getBlockZ());
@@ -67,7 +66,7 @@ public class BossUtils
         }
         return location.getWorld().getHighestBlockYAt(location.getBlockX(), location.getBlockZ());
     }
-    
+
     public static int getHighestBlockYAt(final World world, final int x, final int z, final boolean needSolid) {
         for (int i = 255; i > 0; --i) {
             final Block block = world.getBlockAt(x, i, z);
@@ -78,14 +77,14 @@ public class BossUtils
         }
         return world.getHighestBlockYAt(x, z);
     }
-    
+
     public static boolean canAffectPlayer(final Player pl, final boolean checkBattlefield) {
         return canAffectPlayer(pl, checkBattlefield, false);
     }
-    
+
     public static boolean canAffectPlayer(final Player pl, final boolean checkBattlefield, final boolean checkEnd) {
         if (BossUtils.ess == null) {
-            BossUtils.ess = (Essentials)Bukkit.getPluginManager().getPlugin("Essentials");
+            BossUtils.ess = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
         }
         if (pl.hasMetadata("NPC")) {
             return false;
@@ -110,54 +109,52 @@ public class BossUtils
         }
         return false;
     }
-    
+
     public static Entity spawnDungeonBoss(final Location location, final int phase) {
-        final DungeonYijki boss = (DungeonYijki)BossType.DUNGEON_YIJKI.createInstance(location);
+        final DungeonYijki boss = (DungeonYijki) BossType.DUNGEON_YIJKI.createInstance(location);
         boss.onBossSpawn();
         try {
             boss.setBossPhase(DungeonYijki.BossPhase.values()[phase - 1]);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Bukkit.getLogger().info("Invalid Dungeon Yijki Phase: " + phase + "! " + DungeonYijki.BossPhase.values().length);
         }
-        return (Entity)boss.getEntity();
+        return (Entity) boss.getEntity();
     }
-    
+
     public static void teleportPlayer(final Player p, final Location location) {
         //p.setMetadata("bypassCombatTeleport", (MetadataValue)new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object)location));
         p.setMetadata("bossTeleport", new FixedMetadataValue(CosmicBosses.getInstance(), location));
         //p.teleport(location, PlayerTeleportEvent.TeleportCause.PLUGIN);
         Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin) CosmicBosses.get(), () -> p.teleport(location, PlayerTeleportEvent.TeleportCause.UNKNOWN), 1L);
     }
-    
+
     public static Entity spawnDungeonBoss(final Location location, final int phase, final BossType type) {
-        final DungeonYijki boss = (DungeonYijki)type.createInstance(location);
+        final DungeonYijki boss = (DungeonYijki) type.createInstance(location);
         boss.onBossSpawn();
         try {
             boss.setBossPhase(DungeonYijki.BossPhase.values()[phase - 1]);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Bukkit.getLogger().info("Invalid Dungeon Yijki Phase: " + phase + "! " + DungeonYijki.BossPhase.values().length);
         }
-        return (Entity)boss.getEntity();
+        return (Entity) boss.getEntity();
     }
-    
+
     public static Entity createDungeonGhost(final Location spawn, final Location target, final int aliveDuration) {
-        final CraftWorld craft = (CraftWorld)spawn.getWorld();
-        final YijkiRunnerEntity entity = new YijkiRunnerEntity((net.minecraft.server.v1_8_R3.World)craft.getHandle(), spawn, target, aliveDuration);
+        final CraftWorld craft = (CraftWorld) spawn.getWorld();
+        final YijkiRunnerEntity entity = new YijkiRunnerEntity((net.minecraft.server.v1_8_R3.World) craft.getHandle(), spawn, target, aliveDuration);
         entity.setPosition(spawn.getX(), spawn.getY(), spawn.getZ());
-        craft.getHandle().addEntity((net.minecraft.server.v1_8_R3.Entity)entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
-        return (Entity)entity.getBukkitEntity();
+        craft.getHandle().addEntity((net.minecraft.server.v1_8_R3.Entity) entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
+        return (Entity) entity.getBukkitEntity();
     }
-    
+
     public static void spawnBoss(final String[] args) {
         final String bossName = args[0];
         final World world = Bukkit.getWorld(args[1]);
-        final Location loc = new Location(world, (double)Integer.parseInt(args[2]), (double)Integer.parseInt(args[3]), (double)Integer.parseInt(args[4]));
+        final Location loc = new Location(world, (double) Integer.parseInt(args[2]), (double) Integer.parseInt(args[3]), (double) Integer.parseInt(args[4]));
         if (!loc.getChunk().isLoaded()) {
             loc.getChunk().load();
         }
-        final Location spawn = new Location(world, (double)Integer.parseInt(args[5]), (double)Integer.parseInt(args[6]), (double)Integer.parseInt(args[7]));
+        final Location spawn = new Location(world, (double) Integer.parseInt(args[5]), (double) Integer.parseInt(args[6]), (double) Integer.parseInt(args[7]));
         if (!spawn.getChunk().isLoaded()) {
             spawn.getChunk().load();
         }
@@ -171,7 +168,7 @@ public class BossUtils
         newBoss.getEntity().teleport(loc);
         newBoss.getEntity().setHealth(health);
     }
-    
+
     public static boolean isWarzone(final Location loc) {
         if (loc.getWorld().getName().toLowerCase().startsWith("dungeon")) {
             return true;
@@ -194,80 +191,78 @@ public class BossUtils
         }
         return false;
     }
-    
+
     public static net.minecraft.server.v1_8_R3.Entity createCustomEntity(final CustomEntity type, final Boss boss, final Location location) {
-        final CraftWorld world = (CraftWorld)location.getWorld();
+        final CraftWorld world = (CraftWorld) location.getWorld();
         try {
-            final net.minecraft.server.v1_8_R3.Entity entity = (net.minecraft.server.v1_8_R3.Entity)type.getCustomClass().getDeclaredConstructor(net.minecraft.server.v1_8_R3.World.class).newInstance(world.getHandle());
+            final net.minecraft.server.v1_8_R3.Entity entity = (net.minecraft.server.v1_8_R3.Entity) type.getCustomClass().getDeclaredConstructor(net.minecraft.server.v1_8_R3.World.class).newInstance(world.getHandle());
             entity.setPosition(location.getX(), location.getY(), location.getZ());
             world.getHandle().addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
             if (entity instanceof WitherBoss) {
-                ((WitherBoss)entity).setBoss(boss);
+                ((WitherBoss) entity).setBoss(boss);
             }
             return entity;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
-    
+
     public static Entity createCustomEntity(final CustomEntity type, final Location location) {
-        final CraftWorld world = (CraftWorld)location.getWorld();
+        final CraftWorld world = (CraftWorld) location.getWorld();
         try {
-            final net.minecraft.server.v1_8_R3.Entity entity = (net.minecraft.server.v1_8_R3.Entity)type.getCustomClass().getDeclaredConstructor(net.minecraft.server.v1_8_R3.World.class).newInstance(world.getHandle());
+            final net.minecraft.server.v1_8_R3.Entity entity = (net.minecraft.server.v1_8_R3.Entity) type.getCustomClass().getDeclaredConstructor(net.minecraft.server.v1_8_R3.World.class).newInstance(world.getHandle());
             entity.setPosition(location.getX(), location.getY(), location.getZ());
             world.getHandle().addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
-            return (Entity)entity.getBukkitEntity();
-        }
-        catch (Exception e) {
+            return (Entity) entity.getBukkitEntity();
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
-    
+
     public static PathfinderGoalSelector getSelector(final EntityInsentient ent, final String select) {
         final Object goalSelector = ReflectionUtils.getObject(EntityInsentient.class, ent, select);
-        return (PathfinderGoalSelector)goalSelector;
+        return (PathfinderGoalSelector) goalSelector;
     }
-    
+
     public static void addSelector(final EntityInsentient insent, final int index, final PathfinderGoal goal) {
         final Object goalSelector = ReflectionUtils.getObject(EntityInsentient.class, insent, "goalSelector");
         if (goalSelector != null) {
-            com.cosmicpvp.cosmicutils.utils.ReflectionUtils.callReflectionMethod(goalSelector, "a", new ParamBuilder((Class)Integer.TYPE, (Object)index).add((Class)PathfinderGoal.class, (Object)goal));
+            com.cosmicpvp.cosmicutils.utils.ReflectionUtils.callReflectionMethod(goalSelector, "a", new ParamBuilder((Class) Integer.TYPE, (Object) index).add((Class) PathfinderGoal.class, (Object) goal));
         }
     }
-    
+
     public static void addTargetSelector(final EntityInsentient insent, final int index, final PathfinderGoal goal) {
         final Object goalSelector = ReflectionUtils.getObject(EntityInsentient.class, insent, "targetSelector");
         if (goalSelector != null) {
-            com.cosmicpvp.cosmicutils.utils.ReflectionUtils.callReflectionMethod(goalSelector, "a", new ParamBuilder((Class)Integer.TYPE, (Object)index).add((Class)PathfinderGoal.class, (Object)goal));
+            com.cosmicpvp.cosmicutils.utils.ReflectionUtils.callReflectionMethod(goalSelector, "a", new ParamBuilder((Class) Integer.TYPE, (Object) index).add((Class) PathfinderGoal.class, (Object) goal));
         }
     }
-    
+
     public static void clearGoalSelectors(final EntityInsentient ent) {
         final Object goalSelector = ReflectionUtils.getObject(EntityInsentient.class, ent, "goalSelector");
-        final List<?> c = (List<?>)ReflectionUtils.getObject(PathfinderGoalSelector.class, goalSelector, "c");
+        final List<?> c = (List<?>) ReflectionUtils.getObject(PathfinderGoalSelector.class, goalSelector, "c");
         c.clear();
-        final List<?> b = (List<?>)ReflectionUtils.getObject(PathfinderGoalSelector.class, goalSelector, "b");
+        final List<?> b = (List<?>) ReflectionUtils.getObject(PathfinderGoalSelector.class, goalSelector, "b");
         b.clear();
         final Object targetSelector = ReflectionUtils.getObject(EntityInsentient.class, ent, "targetSelector");
-        final List<?> targC = (List<?>)ReflectionUtils.getObject(PathfinderGoalSelector.class, targetSelector, "c");
+        final List<?> targC = (List<?>) ReflectionUtils.getObject(PathfinderGoalSelector.class, targetSelector, "c");
         targC.clear();
-        final List<?> targB = (List<?>)ReflectionUtils.getObject(PathfinderGoalSelector.class, targetSelector, "b");
+        final List<?> targB = (List<?>) ReflectionUtils.getObject(PathfinderGoalSelector.class, targetSelector, "b");
         targB.clear();
     }
-    
+
     public static void dropWhitelistedItem(final Player p, final ItemStack is) {
         final Item item = p.getWorld().dropItem(p.getLocation(), is);
-        item.setMetadata("whitelisted_item", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), (Object)p.getName()));
-        item.setMetadata("do_not_clear", (MetadataValue)new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object)""));
+        item.setMetadata("whitelisted_item", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) p.getName()));
+        item.setMetadata("do_not_clear", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
     }
-    
+
     public static Location getRandomLocationNearby(final Location l, final int maxDist, final int yBoost) {
         return getRandomLocationNearby(l, maxDist, 2, yBoost);
     }
-    
+
     public static Location getRandomRegionLocation(final String regionName) {
         final RegionManager regionMan = WorldGuardUtils.getWorldGuard().getGlobalRegionManager().get(Bukkit.getWorld("world"));
 
@@ -288,20 +283,20 @@ public class BossUtils
         final int x = minX + r.nextInt(maxX + 1 - minX);
         final int z = minZ + r.nextInt(maxZ + 1 - minZ);
         final int y = Bukkit.getWorld("world").getHighestBlockYAt(x, z);
-        return new Location(Bukkit.getWorld("world"), (double)x, (double)y, (double)z);
+        return new Location(Bukkit.getWorld("world"), (double) x, (double) y, (double) z);
     }
-    
+
     public static Location getRandomLocationNearby(final Location l, final int maxDist, final int minDistance, final int yBoost) {
         final Location retrLoc = l.clone();
-        retrLoc.add((double)((BossUtils.rand.nextBoolean() ? 1 : -1) * (BossUtils.rand.nextInt(maxDist - minDistance) + minDistance)), 0.0, (double)((BossUtils.rand.nextBoolean() ? 1 : -1) * (BossUtils.rand.nextInt(maxDist - minDistance) + minDistance)));
-        retrLoc.add(0.5, (double)yBoost, 0.5);
+        retrLoc.add((double) ((BossUtils.rand.nextBoolean() ? 1 : -1) * (BossUtils.rand.nextInt(maxDist - minDistance) + minDistance)), 0.0, (double) ((BossUtils.rand.nextBoolean() ? 1 : -1) * (BossUtils.rand.nextInt(maxDist - minDistance) + minDistance)));
+        retrLoc.add(0.5, (double) yBoost, 0.5);
         return retrLoc;
     }
-    
+
     public static Location getRandomLocationNearby(final Location l, final int maxDist, final int minDistance, final int yBoost, final boolean highestY) {
         final Location retrLoc = l.clone();
-        retrLoc.add((double)((BossUtils.rand.nextBoolean() ? 1 : -1) * (BossUtils.rand.nextInt(maxDist - minDistance) + minDistance)), 0.0, (double)((BossUtils.rand.nextBoolean() ? 1 : -1) * (BossUtils.rand.nextInt(maxDist - minDistance) + minDistance)));
-        retrLoc.add(0.5, (double)yBoost, 0.5);
+        retrLoc.add((double) ((BossUtils.rand.nextBoolean() ? 1 : -1) * (BossUtils.rand.nextInt(maxDist - minDistance) + minDistance)), 0.0, (double) ((BossUtils.rand.nextBoolean() ? 1 : -1) * (BossUtils.rand.nextInt(maxDist - minDistance) + minDistance)));
+        retrLoc.add(0.5, (double) yBoost, 0.5);
         if (highestY && retrLoc.getBlock().getType() == Material.AIR) {
             while (retrLoc.getBlock().getType() == Material.AIR && retrLoc.getY() > 0.0) {
                 retrLoc.setY(retrLoc.getY() - 1.0);
@@ -344,7 +339,7 @@ public class BossUtils
         }
         return entityhuman;
     }
-    
+
     public static void pushAwayPlayer(final Entity entity, final Player p, final double speed) {
         final Vector unitVector = p.getLocation().toVector().subtract(entity.getLocation().toVector());
         if (unitVector.length() != 0.0) {
@@ -352,7 +347,7 @@ public class BossUtils
         }
         p.setVelocity(unitVector.multiply(speed));
     }
-    
+
     public static void pushAwayPlayer(final Player p, final Location toPushFrom, final double speed) {
         final Vector unitVector = p.getLocation().toVector().subtract(toPushFrom.toVector());
         if (unitVector.length() != 0.0) {
@@ -360,7 +355,7 @@ public class BossUtils
         }
         p.setVelocity(unitVector.multiply(speed));
     }
-    
+
     public static List<Boss> getAllBossesFromType(final Class<? extends Boss> clazz) {
         final List<Boss> bosses = new ArrayList<Boss>();
         for (final Boss boss : Boss.bosses.values()) {
@@ -370,10 +365,10 @@ public class BossUtils
         }
         return bosses;
     }
-    
+
     public static Boss getBossFromMinion(final Entity e) {
         if (e.getMetadata("minion").size() > 0) {
-            final UUID uuid = (UUID)e.getMetadata("minion").get(0).value();
+            final UUID uuid = (UUID) e.getMetadata("minion").get(0).value();
             if (uuid != null) {
                 final Boss boss = Boss.bosses.get(uuid);
                 if (boss != null) {
@@ -390,11 +385,11 @@ public class BossUtils
         }
         return null;
     }
-    
+
     public static boolean dealPercentMaxHealthDamage(final Player p, final double percentage, final int maxDamage, final boolean check) {
         return dealPercentMaxHealthDamage(p, percentage, maxDamage, check, false);
     }
-    
+
     public static boolean dealPercentMaxHealthDamage(final Player p, final double percentage, final int maxDamage, final boolean check, final boolean checkEnd) {
         if (p.isDead() || p.getHealth() <= 0.0 || (check && !canAffectPlayer(p, true, checkEnd)) || p.getGameMode() == GameMode.CREATIVE) {
             return false;
@@ -405,17 +400,16 @@ public class BossUtils
         }
         if (p.getHealth() - damage <= 0.0) {
             p.setHealth(0.0);
-        }
-        else {
+        } else {
             p.setHealth(p.getHealth() - damage);
         }
         return true;
     }
-    
+
     public static boolean dealPercentMaxHealthDamage(final Player p, final double percentage, final int maxDamage) {
         return dealPercentMaxHealthDamage(p, percentage, maxDamage, true);
     }
-    
+
     public static boolean dealPercentHealthDamage(final Player p, final double percentage, final int maxDamage) {
         if (p.isDead() || !canAffectPlayer(p, true)) {
             return false;
@@ -426,17 +420,16 @@ public class BossUtils
         }
         if (p.getHealth() - damage <= 0.0) {
             p.setHealth(0.0);
-        }
-        else {
+        } else {
             p.setHealth(p.getHealth() - damage);
         }
         return true;
     }
-    
+
     public static boolean isRebooting() {
         return (Bukkit.getPluginManager().isPluginEnabled("Arkkit") && CommandArkReboot.restart_task_exists) || (Bukkit.getPluginManager().isPluginEnabled("NetworkManager"));
     }
-    
+
     public static void dealPercentHealthDamage(final Player p, final double percentage, final int maxDamage, final int minDamage) {
         double damage = p.getHealth() * (percentage * 0.01);
 
@@ -451,12 +444,11 @@ public class BossUtils
         }
         if (p.getHealth() - damage <= 0.0) {
             p.setHealth(0.0);
-        }
-        else {
+        } else {
             p.setHealth(p.getHealth() - damage);
         }
     }
-    
+
     static {
         BossUtils.factions = true;
         BossUtils.warzone = new HashMap<ChunkCoords, Boolean>();

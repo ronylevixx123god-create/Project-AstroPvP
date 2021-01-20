@@ -1,20 +1,26 @@
 package me.ifamasssxd.cosmicbosses.commands;
 
-import org.bukkit.command.*;
-import org.bukkit.entity.*;
-import me.ifamasssxd.cosmicbosses.struct.*;
-import org.bukkit.inventory.*;
-import com.cosmicpvp.cosmicutils.utils.*;
-import org.bukkit.*;
-import java.util.*;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
+import me.ifamasssxd.cosmicbosses.struct.RewardInventory;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
-public class CommandBossRewards implements CommandExecutor
-{
+import java.util.List;
+
+public class CommandBossRewards implements CommandExecutor {
     public boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
         if (!(sender instanceof Player)) {
             return true;
         }
-        final Player player = (Player)sender;
+        final Player player = (Player) sender;
         final RewardInventory rewardInventory = RewardInventory.getRewardInventory(player);
         if (rewardInventory == null) {
             player.sendMessage(ChatColor.RED + "You do not have items in your claim.");
@@ -45,7 +51,7 @@ public class CommandBossRewards implements CommandExecutor
             return true;
         }
         for (final ItemStack is : rewardInventory.getItems()) {
-            player.getInventory().addItem(new ItemStack[] { is });
+            player.getInventory().addItem(new ItemStack[]{is});
         }
         RewardInventory.removeRewardInventory(player);
         player.updateInventory();
@@ -53,7 +59,7 @@ public class CommandBossRewards implements CommandExecutor
         player.sendMessage(CC.GreenB + "(!) " + CC.Green + "Rewards added to your inventory!");
         return false;
     }
-    
+
     private int getEmptySpace(final Player pl) {
         int space = 0;
         for (final ItemStack is : pl.getInventory()) {

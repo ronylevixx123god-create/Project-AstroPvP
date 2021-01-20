@@ -1,16 +1,19 @@
 package me.ifamasssxd.cosmicbosses.utils;
 
-import me.ifamasssxd.cosmicbosses.struct.enums.*;
-import me.ifamasssxd.cosmicbosses.struct.*;
-import org.bukkit.inventory.*;
-import com.google.common.collect.*;
-import org.bukkit.*;
-import java.util.*;
+import com.google.common.collect.Lists;
+import me.ifamasssxd.cosmicbosses.struct.Boss;
+import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
-public class BossEggUtils
-{
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+public class BossEggUtils {
     private static HashMap<BossType, Boss> deadInstances;
-    
+
     public static ItemStack getBossEgg(final BossType type) {
         final Boss boss = BossEggUtils.deadInstances.containsKey(type) ? BossEggUtils.deadInstances.get(type) : type.createInstance(null);
         BossEggUtils.deadInstances.put(type, boss);
@@ -31,7 +34,7 @@ public class BossEggUtils
         }
         return null;
     }
-    
+
     public static List<String> formatLore(final String s, final String color) {
         final List<String> lore_l = new ArrayList<String>();
         if (s == null) {
@@ -46,8 +49,7 @@ public class BossEggUtils
             for (final String word : s.split(" ")) {
                 if (line.length() - 1 + word.length() <= 38) {
                     line = line + word + " ";
-                }
-                else {
+                } else {
                     if (line.endsWith(" ")) {
                         line = line.substring(0, line.length() - 1);
                     }
@@ -63,19 +65,18 @@ public class BossEggUtils
         lore_l.add(s);
         return lore_l;
     }
-    
+
     public static Boss getBossInstance(final BossType boss) {
         Boss retr = null;
         if (BossEggUtils.deadInstances.containsKey(boss)) {
             retr = BossEggUtils.deadInstances.get(boss);
-        }
-        else {
+        } else {
             retr = boss.createInstance(null);
             BossEggUtils.deadInstances.put(boss, retr);
         }
         return retr;
     }
-    
+
     public static BossType getBossType(final ItemStack is) {
         if (is == null || !is.hasItemMeta() || !is.getItemMeta().hasDisplayName()) {
             return null;
@@ -87,7 +88,7 @@ public class BossEggUtils
         }
         return null;
     }
-    
+
     static {
         BossEggUtils.deadInstances = new HashMap<BossType, Boss>();
     }

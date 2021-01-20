@@ -1,72 +1,75 @@
 package me.ifamasssxd.cosmicbosses.listeners;
 
-import me.ifamasssxd.cosmicbosses.utils.*;
-import me.ifamasssxd.cosmicbosses.struct.*;
-import me.ifamasssxd.cosmicbosses.*;
-import org.bukkit.plugin.*;
-import org.bukkit.metadata.*;
-import org.bukkit.entity.*;
-import org.bukkit.event.*;
+import me.ifamasssxd.cosmicbosses.CosmicBosses;
+import me.ifamasssxd.cosmicbosses.struct.Boss;
+import me.ifamasssxd.cosmicbosses.utils.BossUtils;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
+import org.bukkit.event.Event;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.bukkit.event.entity.*;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
 
-public class MinionListener implements Listener
-{
+public class MinionListener implements Listener {
     @EventHandler
-    public void onEntityTarget(final EntityTargetEvent event) {
+    public void onEntityTarget(final EntityTargetEvent event) throws Exception {
         if (event.getEntity().hasMetadata("minion")) {
             final Boss boss = BossUtils.getBossFromMinion(event.getEntity());
             if (boss == null) {
                 return;
             }
-            boss.onMinionUpdate(event.getEntity(), (Event)event);
+            boss.onMinionUpdate(event.getEntity(), (Event) event);
         }
     }
-    
+
     @EventHandler
-    public void onEntityTarget(final EntityTargetLivingEntityEvent event) {
+    public void onEntityTarget(final EntityTargetLivingEntityEvent event) throws Exception {
         if (event.getEntity().hasMetadata("minion")) {
             final Boss boss = BossUtils.getBossFromMinion(event.getEntity());
             if (boss == null) {
                 return;
             }
-            boss.onMinionUpdate(event.getEntity(), (Event)event);
+            boss.onMinionUpdate(event.getEntity(), (Event) event);
             if (event.isCancelled()) {
-                event.setTarget((Entity)null);
+                event.setTarget((Entity) null);
             }
         }
     }
-    
+
     @EventHandler
-    public void onEntityChangeBlockEvent(final EntityChangeBlockEvent event) {
+    public void onEntityChangeBlockEvent(final EntityChangeBlockEvent event) throws Exception {
         if (event.getEntity().hasMetadata("minion")) {
             final Boss boss = BossUtils.getBossFromMinion(event.getEntity());
             if (boss != null) {
-                boss.onMinionUpdate(event.getEntity(), (Event)event);
+                boss.onMinionUpdate(event.getEntity(), (Event) event);
             }
         }
     }
-    
+
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onEntityDamageByMinion(final EntityDamageByEntityEvent e) {
+    public void onEntityDamageByMinion(final EntityDamageByEntityEvent e) throws Exception {
         if (e.getDamager().hasMetadata("minion")) {
             final Boss boss = BossUtils.getBossFromMinion(e.getDamager());
             if (boss == null) {
                 return;
             }
-            boss.onMinionUpdate(e.getDamager(), (Event)e);
-        }
-        else if (e.getEntity().hasMetadata("minion") || e.getEntity().hasMetadata("do_not_clear")) {
+            boss.onMinionUpdate(e.getDamager(), (Event) e);
+        } else if (e.getEntity().hasMetadata("minion") || e.getEntity().hasMetadata("do_not_clear")) {
             if (CosmicBosses.isMcMMOEnabled()) {
-                e.getEntity().setMetadata("mcMMO: Spawned Entity", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), (Object)""));
-                if (e.getDamager() instanceof Player || (e.getDamager() instanceof Projectile && ((Projectile)e.getDamager()).getShooter() instanceof Player)) {
+                e.getEntity().setMetadata("mcMMO: Spawned Entity", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
+                if (e.getDamager() instanceof Player || (e.getDamager() instanceof Projectile && ((Projectile) e.getDamager()).getShooter() instanceof Player)) {
                     Player player;
                     if (e.getDamager() instanceof Projectile) {
-                        player = (Player)((Projectile)e.getDamager()).getShooter();
+                        player = (Player) ((Projectile) e.getDamager()).getShooter();
+                    } else {
+                        player = (Player) e.getDamager();
                     }
-                    else {
-                        player = (Player)e.getDamager();
-                    }
-                    player.setMetadata("no_exp_gain", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), (Object)""));
+                    player.setMetadata("no_exp_gain", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
                 }
             }
             if (e.getEntity().hasMetadata("minion")) {
@@ -74,23 +77,22 @@ public class MinionListener implements Listener
                 if (boss == null) {
                     return;
                 }
-                boss.onMinionUpdate(e.getEntity(), (Event)e);
+                boss.onMinionUpdate(e.getEntity(), (Event) e);
             }
-        }
-        else if (e.getDamager() instanceof Projectile) {
-            final Projectile proj = (Projectile)e.getDamager();
+        } else if (e.getDamager() instanceof Projectile) {
+            final Projectile proj = (Projectile) e.getDamager();
             if (proj.getShooter() != null && proj.getShooter() instanceof Entity) {
-                final Entity shooter = (Entity)proj.getShooter();
+                final Entity shooter = (Entity) proj.getShooter();
                 if (shooter.hasMetadata("minion")) {
                     final Boss boss2 = BossUtils.getBossFromMinion(shooter);
                     if (boss2 != null) {
-                        boss2.onMinionUpdate(shooter, (Event)e);
+                        boss2.onMinionUpdate(shooter, (Event) e);
                     }
                 }
             }
         }
     }
-    
+
     @EventHandler
     public void onSlimeSplit(final SlimeSplitEvent e) {
         if (e.getEntity().hasMetadata("no_slime_split")) {
@@ -98,28 +100,28 @@ public class MinionListener implements Listener
             e.setCount(0);
         }
     }
-    
+
     @EventHandler
     public void onEntityCombust(final EntityCombustEvent event) {
         if (event.getEntity().hasMetadata("minion")) {
             event.setCancelled(true);
         }
     }
-    
+
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onMinionDeath(final EntityDeathEvent e) {
+    public void onMinionDeath(final EntityDeathEvent e) throws Exception {
         if (e.getEntity().hasMetadata("minion") || e.getEntity().hasMetadata("no_drops")) {
             e.getDrops().clear();
             e.setDroppedExp(0);
-            final Boss boss = BossUtils.getBossFromMinion((Entity)e.getEntity());
+            final Boss boss = BossUtils.getBossFromMinion((Entity) e.getEntity());
             if (boss == null) {
                 return;
             }
-            boss.onMinionUpdate((Entity)e.getEntity(), (Event)e);
-            boss.removeMinion((Entity)e.getEntity());
+            boss.onMinionUpdate((Entity) e.getEntity(), (Event) e);
+            boss.removeMinion((Entity) e.getEntity());
         }
     }
-    
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onMinionDeathMonitor(final EntityDeathEvent e) {
         if (e.getEntity().hasMetadata("minion") || e.getEntity().hasMetadata("no_drops")) {

@@ -4,7 +4,6 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonAbility;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
 import net.minecraft.server.v1_8_R3.EntityLiving;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftCreeper;
@@ -41,7 +40,7 @@ public class RobotSummonerAbility extends DungeonAbility {
                     int offX = -9 + new Random().nextInt(18);
                     int offZ = -9 + new Random().nextInt(18);
 
-                    Location newSpawnLocation = new Location(spawnLocation.getWorld(), spawnLocation.getX() + offX, ((CorruptCosmonaut)this.boss).hasFloorBroke() ? 88 : 116, spawnLocation.getZ() + offZ);
+                    Location newSpawnLocation = new Location(spawnLocation.getWorld(), spawnLocation.getX() + offX, ((CorruptCosmonaut) this.boss).hasFloorBroke() ? 88 : 116, spawnLocation.getZ() + offZ);
 
                     if (newSpawnLocation.getBlock().getType() == Material.AIR && newSpawnLocation.clone().add(0, -1, 0).getBlock().getType() != Material.AIR) {
                         spawnLocation = newSpawnLocation;
@@ -57,9 +56,9 @@ public class RobotSummonerAbility extends DungeonAbility {
 
         this.boss.getMinions().stream().filter(ent -> !ent.isDead()).forEach(minion -> {
             if (minion.getType() == EntityType.CREEPER) {
-                Creeper creeper = (Creeper)minion;
+                Creeper creeper = (Creeper) minion;
 
-                ((CraftCreeper)creeper).getHandle().setGoalTarget((EntityLiving)((CraftEntity)boss.getEntity()).getHandle());
+                ((CraftCreeper) creeper).getHandle().setGoalTarget((EntityLiving) ((CraftEntity) boss.getEntity()).getHandle());
                 creeper.getLocation().setPitch(-55);
                 creeper.setTarget(boss.getEntity());
             } else if (minion.getType() == EntityType.PIG_ZOMBIE) {
@@ -70,7 +69,7 @@ public class RobotSummonerAbility extends DungeonAbility {
                         pigZombie.setTarget(((Creature) boss.getEntity()).getTarget());
                     } else {
                         pigZombie.getNearbyEntities(15.0, 15.0, 15.0).stream().filter(ent -> ent.getType() == EntityType.PLAYER).findAny().ifPresent(ent -> {
-                            pigZombie.setTarget((LivingEntity)ent);
+                            pigZombie.setTarget((LivingEntity) ent);
                         });
                     }
                 }
@@ -106,7 +105,7 @@ public class RobotSummonerAbility extends DungeonAbility {
                 int offX = -9 + new Random().nextInt(18);
                 int offZ = -9 + new Random().nextInt(18);
 
-                Location newSpawnLocation = new Location(spawnLocation.getWorld(), spawnLocation.getX() + offX, ((CorruptCosmonaut)this.boss).hasFloorBroke() ? 88 : 116, spawnLocation.getZ() + offZ);
+                Location newSpawnLocation = new Location(spawnLocation.getWorld(), spawnLocation.getX() + offX, ((CorruptCosmonaut) this.boss).hasFloorBroke() ? 88 : 116, spawnLocation.getZ() + offZ);
 
                 if (newSpawnLocation.getBlock().getType() == Material.AIR && newSpawnLocation.clone().add(0, -1, 0).getBlock().getType() != Material.AIR) {
                     spawnLocation = newSpawnLocation;
@@ -123,7 +122,7 @@ public class RobotSummonerAbility extends DungeonAbility {
         this.tickCount = 0;
         this.hasSpawnedCreepers = false;
         this.boss.removeMinions();
-        ((CorruptCosmonaut)this.boss).doTrickster();
+        ((CorruptCosmonaut) this.boss).doTrickster();
     }
 
     @Override
@@ -132,12 +131,12 @@ public class RobotSummonerAbility extends DungeonAbility {
     }
 
     private void spawnPigZombie(Location location) {
-        PigZombie pigZombie = (PigZombie)this.boss.spawnMinion(EntityType.PIG_ZOMBIE, location);
+        PigZombie pigZombie = (PigZombie) this.boss.spawnMinion(EntityType.PIG_ZOMBIE, location);
         pigZombie.setCustomNameVisible(true);
         pigZombie.setCustomName(CC.translate("&6&lRogue Warrior"));
         pigZombie.setMaxHealth(120);
         pigZombie.setHealth(120);
-        pigZombie.setTarget(((Creature)this.boss.getEntity()).getTarget());
+        pigZombie.setTarget(((Creature) this.boss.getEntity()).getTarget());
 
         ItemStack diamondSword = new ItemStack(Material.DIAMOND_SWORD);
         diamondSword.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 5);
@@ -161,7 +160,7 @@ public class RobotSummonerAbility extends DungeonAbility {
     }
 
     private void spawnCreeper(Location location) {
-        Creeper creeper = (Creeper)this.boss.spawnMinion(EntityType.CREEPER, location);
+        Creeper creeper = (Creeper) this.boss.spawnMinion(EntityType.CREEPER, location);
         creeper.setPowered(true);
         creeper.setTarget(this.boss.getEntity());
         creeper.getLocation().setPitch(-25);

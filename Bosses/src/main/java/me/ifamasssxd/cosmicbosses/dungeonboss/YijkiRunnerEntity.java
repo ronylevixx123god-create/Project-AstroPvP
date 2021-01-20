@@ -1,16 +1,15 @@
 package me.ifamasssxd.cosmicbosses.dungeonboss;
 
-import net.minecraft.server.v1_8_R3.World;
-import org.bukkit.util.*;
-import org.bukkit.*;
 import net.minecraft.server.v1_8_R3.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.util.Vector;
 
-public class YijkiRunnerEntity extends EntityMonster implements IRangedEntity
-{
+public class YijkiRunnerEntity extends EntityMonster implements IRangedEntity {
     private Location targetLocation;
     private int aliveTime;
     private Vector direction;
-    
+
     public YijkiRunnerEntity(final World world, final Location spawn, final Location target, final int aliveTime) {
         super(world);
         this.targetLocation = target;
@@ -18,7 +17,7 @@ public class YijkiRunnerEntity extends EntityMonster implements IRangedEntity
         this.setHealth(this.getMaxHealth());
         this.a(0.9f, 4.0f);
         this.fireProof = true;
-        ((Navigation)this.getNavigation()).e(true);
+        ((Navigation) this.getNavigation()).e(true);
         //this.as = EnumEntitySize.SIZE_6;
         this.direction = target.toVector().subtract(spawn.toVector());
         if (this.direction.length() != 0.0) {
@@ -26,11 +25,11 @@ public class YijkiRunnerEntity extends EntityMonster implements IRangedEntity
         }
         Bukkit.getLogger().info("Yijki Runner direction set to " + this.direction + " to " + target);
     }
-    
+
     public boolean damageEntity(final DamageSource damagesource, final float f) {
         return false;
     }
-    
+
     public void m() {
         if (this.getHealth() != this.getMaxHealth()) {
             this.setHealth(this.getMaxHealth());
@@ -49,10 +48,10 @@ public class YijkiRunnerEntity extends EntityMonster implements IRangedEntity
         this.motY *= gravityMultiplier;
         super.m();
         if (this.motX * this.motX + this.motZ * this.motZ > 0.05000000074505806) {
-            this.yaw = (float)Math.atan2(this.motZ, this.motX) * 57.295776f - 90.0f;
+            this.yaw = (float) Math.atan2(this.motZ, this.motX) * 57.295776f - 90.0f;
         }
     }
-    
+
     public void a(final EntityLiving entityLiving, final float v) {
     }
 }

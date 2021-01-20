@@ -1,95 +1,98 @@
 package me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost;
 
 import com.avaje.ebean.validation.NotNull;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
+import kotlin.Metadata;
+import kotlin.TypeCastException;
+import kotlin.collections.CollectionsKt;
+import kotlin.jvm.internal.Intrinsics;
+import me.ifamasssxd.cosmicbosses.CosmicBosses;
+import me.ifamasssxd.cosmicbosses.struct.Boss;
+import me.ifamasssxd.cosmicbosses.struct.BossAbility;
+import me.ifamasssxd.cosmicbosses.struct.EntityContainer;
 import net.minecraft.server.v1_8_R3.World;
+import net.minecraft.server.v1_8_R3.WorldServer;
 import org.arkhamnetwork.Arkkit.utils.LocationUtils;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
-import org.jetbrains.annotations.*;
-import kotlin.jvm.internal.*;
-import java.util.concurrent.*;
-import kotlin.*;
-import org.bukkit.craftbukkit.v1_8_R3.*;
-import org.bukkit.event.entity.*;
-import org.bukkit.entity.*;
-import org.bukkit.plugin.*;
-import me.ifamasssxd.cosmicbosses.*;
-import org.bukkit.metadata.*;
-import org.bukkit.*;
-import com.cosmicpvp.cosmicutils.utils.*;
-import org.bukkit.enchantments.*;
-import net.minecraft.server.v1_8_R3.*;
-import me.ifamasssxd.cosmicbosses.struct.*;
-import org.bukkit.craftbukkit.v1_8_R3.entity.*;
-import org.bukkit.inventory.*;
-import java.util.*;
-import kotlin.collections.*;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.inventory.EntityEquipment;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
 
-@Metadata(mv = { 1, 1, 11 }, bv = { 1, 0, 2 }, k = 1, d1 = { "\u0000H\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0003\n\u0002\u0010#\n\u0002\u0018\u0002\n\u0002\b\u0005\n\u0002\u0010 \n\u0002\u0018\u0002\n\u0002\b\u0005\n\u0002\u0010\u0002\n\u0000\n\u0002\u0010\u000e\n\u0000\n\u0002\u0010\t\n\u0002\b\u0002\n\u0002\u0010\u000b\n\u0002\b\u0004\u0018\u00002\b\u0012\u0004\u0012\u00020\u00020\u00012\u00020\u0003B\r\u0012\u0006\u0010\u0004\u001a\u00020\u0002§\u0006\u0002\u0010\u0005J\b\u0010\u0014\u001a\u00020\u0015H\u0016J\b\u0010\u0016\u001a\u00020\u0017H\u0016J\b\u0010\u0018\u001a\u00020\u0019H\u0016J\u000e\u0010\u001a\u001a\b\u0012\u0004\u0012\u00020\b0\u0007H\u0016J\u0006\u0010\u001b\u001a\u00020\u001cJ\b\u0010\u001d\u001a\u00020\u0015H\u0016J\u0010\u0010\u001e\u001a\u00020\u00152\u0006\u0010\u001f\u001a\u00020\u000fH\u0002R \u0010\u0006\u001a\b\u0012\u0004\u0012\u00020\b0\u0007X\u0086\u000e§\u0006\u000e\n\u0000\u001a\u0004\b\t\u0010\n\"\u0004\b\u000b\u0010\fR \u0010\r\u001a\b\u0012\u0004\u0012\u00020\u000f0\u000eX\u0086\u000e§\u0006\u000e\n\u0000\u001a\u0004\b\u0010\u0010\u0011\"\u0004\b\u0012\u0010\u0013§\u0006 " }, d2 = { "Lme/ifamasssxd/cosmicbosses/dungeonboss/destroyedoutpost/MinionsAbility;", "Lme/ifamasssxd/cosmicbosses/struct/BossAbility;", "Lme/ifamasssxd/cosmicbosses/dungeonboss/destroyedoutpost/MotherOfYijki;", "Lme/ifamasssxd/cosmicbosses/struct/EntityContainer;", "boss", "(Lme/ifamasssxd/cosmicbosses/dungeonboss/destroyedoutpost/MotherOfYijki;)V", "entitySet", "", "Lorg/bukkit/entity/Entity;", "getEntitySet", "()Ljava/util/Set;", "setEntitySet", "(Ljava/util/Set;)V", "locationLists", "", "Lorg/bukkit/Location;", "getLocationLists", "()Ljava/util/List;", "setLocationLists", "(Ljava/util/List;)V", "clearEntities", "", "getAbilityName", "", "getCooldown", "", "getEntities", "hasBlazesAlive", "", "onAbility", "spawnBlaze", "location", "CosmicBosses" })
-public final class MinionsAbility extends BossAbility<MotherOfYijki> implements EntityContainer
-{
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
+
+@Metadata(mv = {1, 1, 11}, bv = {1, 0, 2}, k = 1, d1 = {"\u0000H\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0003\n\u0002\u0010#\n\u0002\u0018\u0002\n\u0002\b\u0005\n\u0002\u0010 \n\u0002\u0018\u0002\n\u0002\b\u0005\n\u0002\u0010\u0002\n\u0000\n\u0002\u0010\u000e\n\u0000\n\u0002\u0010\t\n\u0002\b\u0002\n\u0002\u0010\u000b\n\u0002\b\u0004\u0018\u00002\b\u0012\u0004\u0012\u00020\u00020\u00012\u00020\u0003B\r\u0012\u0006\u0010\u0004\u001a\u00020\u0002§\u0006\u0002\u0010\u0005J\b\u0010\u0014\u001a\u00020\u0015H\u0016J\b\u0010\u0016\u001a\u00020\u0017H\u0016J\b\u0010\u0018\u001a\u00020\u0019H\u0016J\u000e\u0010\u001a\u001a\b\u0012\u0004\u0012\u00020\b0\u0007H\u0016J\u0006\u0010\u001b\u001a\u00020\u001cJ\b\u0010\u001d\u001a\u00020\u0015H\u0016J\u0010\u0010\u001e\u001a\u00020\u00152\u0006\u0010\u001f\u001a\u00020\u000fH\u0002R \u0010\u0006\u001a\b\u0012\u0004\u0012\u00020\b0\u0007X\u0086\u000e§\u0006\u000e\n\u0000\u001a\u0004\b\t\u0010\n\"\u0004\b\u000b\u0010\fR \u0010\r\u001a\b\u0012\u0004\u0012\u00020\u000f0\u000eX\u0086\u000e§\u0006\u000e\n\u0000\u001a\u0004\b\u0010\u0010\u0011\"\u0004\b\u0012\u0010\u0013§\u0006 "}, d2 = {"Lme/ifamasssxd/cosmicbosses/dungeonboss/destroyedoutpost/MinionsAbility;", "Lme/ifamasssxd/cosmicbosses/struct/BossAbility;", "Lme/ifamasssxd/cosmicbosses/dungeonboss/destroyedoutpost/MotherOfYijki;", "Lme/ifamasssxd/cosmicbosses/struct/EntityContainer;", "boss", "(Lme/ifamasssxd/cosmicbosses/dungeonboss/destroyedoutpost/MotherOfYijki;)V", "entitySet", "", "Lorg/bukkit/entity/Entity;", "getEntitySet", "()Ljava/util/Set;", "setEntitySet", "(Ljava/util/Set;)V", "locationLists", "", "Lorg/bukkit/Location;", "getLocationLists", "()Ljava/util/List;", "setLocationLists", "(Ljava/util/List;)V", "clearEntities", "", "getAbilityName", "", "getCooldown", "", "getEntities", "hasBlazesAlive", "", "onAbility", "spawnBlaze", "location", "CosmicBosses"})
+public final class MinionsAbility extends BossAbility<MotherOfYijki> implements EntityContainer {
     @NotNull
     private Set<Entity> entitySet;
     @NotNull
     private List<? extends Location> locationLists;
-    
+
     @NotNull
     public final Set<Entity> getEntitySet() {
         return this.entitySet;
     }
-    
+
     public final void setEntitySet(final Set<Entity> f) {
-        Intrinsics.checkParameterIsNotNull((Object)f, "<set-?>");
+        Intrinsics.checkParameterIsNotNull((Object) f, "<set-?>");
         this.entitySet = f;
     }
-    
+
     @NotNull
     public final List<Location> getLocationLists() {
-        return (List<Location>)this.locationLists;
+        return (List<Location>) this.locationLists;
     }
-    
+
     public final void setLocationLists(final List<? extends Location> f) {
-        Intrinsics.checkParameterIsNotNull((Object)f, "<set-?>");
+        Intrinsics.checkParameterIsNotNull((Object) f, "<set-?>");
         this.locationLists = f;
     }
-    
+
     @Override
     public void clearEntities() {
         final Iterable $receiver$iv = this.getEntities();
         for (final Object element$iv : $receiver$iv) {
-            final Entity ent = (Entity)element$iv;
+            final Entity ent = (Entity) element$iv;
             ent.remove();
         }
         this.getEntities().clear();
     }
-    
+
     @NotNull
     @Override
     public Set<Entity> getEntities() {
         return this.entitySet;
     }
-    
+
     @Override
     public long getCooldown() {
         return TimeUnit.SECONDS.toMillis(100L);
     }
-    
+
     @NotNull
     @Override
     public String getAbilityName() {
         return "Siphon";
     }
-    
+
     public final boolean hasBlazesAlive() {
         final Iterable $receiver$iv = this.entitySet;
         boolean b;
-        if ($receiver$iv instanceof Collection && ((Collection)$receiver$iv).isEmpty()) {
+        if ($receiver$iv instanceof Collection && ((Collection) $receiver$iv).isEmpty()) {
             b = false;
-        }
-        else {
+        } else {
             for (final Object element$iv : $receiver$iv) {
-                final Entity it = (Entity)element$iv;
+                final Entity it = (Entity) element$iv;
                 if (!it.isDead()) {
                     b = true;
                     return b;
@@ -99,7 +102,7 @@ public final class MinionsAbility extends BossAbility<MotherOfYijki> implements 
         }
         return b;
     }
-    
+
     @Override
     public void onAbility() {
         if (this.boss == null) return;
@@ -248,60 +251,60 @@ public final class MinionsAbility extends BossAbility<MotherOfYijki> implements 
         //     at java.lang.Thread.run(Unknown Source)
         //
     }
-    
+
     private final void spawnBlaze(final Location location) {
         final org.bukkit.World world2 = location.getWorld();
         if (world2 == null) {
             throw new TypeCastException("null cannot be cast to non-null type org.bukkit.craftbukkit.v1_8_R3.CraftWorld");
         }
-        final WorldServer world = ((CraftWorld)world2).getHandle();
+        final WorldServer world = ((CraftWorld) world2).getHandle();
         final Boss boss = this.boss;
         if (boss == null) {
             throw new TypeCastException("null cannot be cast to non-null type me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost.MotherOfYijki");
         }
-        final HealingBlazeEntity healingEntity = new HealingBlazeEntity((MotherOfYijki)boss, (World)world);
+        final HealingBlazeEntity healingEntity = new HealingBlazeEntity((MotherOfYijki) boss, (World) world);
         healingEntity.setPosition(location.getX(), location.getY(), location.getZ());
-        world.addEntity((net.minecraft.server.v1_8_R3.Entity)healingEntity, CreatureSpawnEvent.SpawnReason.CUSTOM);
+        world.addEntity((net.minecraft.server.v1_8_R3.Entity) healingEntity, CreatureSpawnEvent.SpawnReason.CUSTOM);
         final CraftEntity bukkitEntity = healingEntity.getBukkitEntity();
         if (bukkitEntity == null) {
             throw new TypeCastException("null cannot be cast to non-null type org.bukkit.entity.LivingEntity");
         }
-        final LivingEntity livingEntity = (LivingEntity)bukkitEntity;
+        final LivingEntity livingEntity = (LivingEntity) bukkitEntity;
         livingEntity.setHealth(livingEntity.getMaxHealth());
         livingEntity.setCustomName(CC.AquaB + "Mothers Fallen Angel");
         livingEntity.setCustomNameVisible(true);
         final LivingEntity livingEntity2 = livingEntity;
         final String s = "minion";
-        final Plugin plugin = (Plugin)CosmicBosses.get();
-        final LivingEntity entity = ((MotherOfYijki)this.boss).entity;
-        Intrinsics.checkExpressionValueIsNotNull((Object)entity, "boss.entity");
-        livingEntity2.setMetadata(s, (MetadataValue)new FixedMetadataValue(plugin, (Object)entity.getUniqueId()));
+        final Plugin plugin = (Plugin) CosmicBosses.get();
+        final LivingEntity entity = ((MotherOfYijki) this.boss).entity;
+        Intrinsics.checkExpressionValueIsNotNull((Object) entity, "boss.entity");
+        livingEntity2.setMetadata(s, (MetadataValue) new FixedMetadataValue(plugin, (Object) entity.getUniqueId()));
         final EntityEquipment equipment2;
         final EntityEquipment equipment = equipment2 = livingEntity.getEquipment();
-        Intrinsics.checkExpressionValueIsNotNull((Object)equipment2, "equipment");
+        Intrinsics.checkExpressionValueIsNotNull((Object) equipment2, "equipment");
         equipment2.setChestplate(new ItemBuilder(Material.DIAMOND_CHESTPLATE).enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 5).enchant(Enchantment.THORNS, 2).build());
         equipment.setChestplateDropChance(0.0f);
-        this.getEntities().add((Entity)livingEntity);
+        this.getEntities().add((Entity) livingEntity);
     }
-    
+
     public MinionsAbility(final MotherOfYijki boss) {
         super(boss);
-        Intrinsics.checkParameterIsNotNull((Object)boss, "boss");
+        Intrinsics.checkParameterIsNotNull((Object) boss, "boss");
         final Set<Entity> setFromMap = Collections.newSetFromMap(new WeakHashMap<Entity, Boolean>());
-        Intrinsics.checkExpressionValueIsNotNull((Object)setFromMap, "Collections.newSetFromMap(WeakHashMap())");
+        Intrinsics.checkExpressionValueIsNotNull((Object) setFromMap, "Collections.newSetFromMap(WeakHashMap())");
         this.entitySet = setFromMap;
         final Location[] array = new Location[3];
         final int n = 0;
         final Location location = boss.location;
-        Intrinsics.checkExpressionValueIsNotNull((Object)location, "boss.location");
+        Intrinsics.checkExpressionValueIsNotNull((Object) location, "boss.location");
         array[n] = new Location(location.getWorld(), -100.0, 82.0, -656.0);
         final int n2 = 1;
         final Location location2 = boss.location;
-        Intrinsics.checkExpressionValueIsNotNull((Object)location2, "boss.location");
+        Intrinsics.checkExpressionValueIsNotNull((Object) location2, "boss.location");
         array[n2] = new Location(location2.getWorld(), -94.0, 82.0, -628.0);
         final int n3 = 2;
         final Location location3 = boss.location;
-        Intrinsics.checkExpressionValueIsNotNull((Object)location3, "boss.location");
+        Intrinsics.checkExpressionValueIsNotNull((Object) location3, "boss.location");
         array[n3] = new Location(location3.getWorld(), -66.0, 82.0, -663.0);
         this.locationLists = CollectionsKt.listOf(array);
     }

@@ -30,8 +30,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class EndDragonEntity extends EntityEnderDragon
-{
+public class EndDragonEntity extends EntityEnderDragon {
     public EndDragon bossInstance;
     public double[][] ringEffects;
     public int bo;
@@ -56,24 +55,24 @@ public class EndDragonEntity extends EntityEnderDragon
     private final int[] neighbors;
     private BossPathHeap pathQueue;
     private int sittingDamageReceived;
-    
+
     public EndDragonEntity(final World world) {
         super(world);
         this.ringEffects = new double[64][3];
         this.bo = -1;
-        this.explosionSource = new Explosion((World)null, (Entity)this, Double.NaN, Double.NaN, Double.NaN, Float.NaN, false, false);
+        this.explosionSource = new Explosion((World) null, (Entity) this, Double.NaN, Double.NaN, Double.NaN, Float.NaN, false, false);
         this.random = new Random();
         this.bossPathPoints = new BossPathPoint[24];
         this.neighbors = new int[24];
         this.pathQueue = new BossPathHeap();
         this.dead = true;
     }
-    
+
     public EndDragonEntity(final World world, final EndDragon boss) {
         super(world);
         this.ringEffects = new double[64][3];
         this.bo = -1;
-        this.explosionSource = new Explosion((World)null, (Entity)this, Double.NaN, Double.NaN, Double.NaN, Float.NaN, false, false);
+        this.explosionSource = new Explosion((World) null, (Entity) this, Double.NaN, Double.NaN, Double.NaN, Float.NaN, false, false);
         this.random = new Random();
         this.bossPathPoints = new BossPathPoint[24];
         this.neighbors = new int[24];
@@ -91,11 +90,11 @@ public class EndDragonEntity extends EntityEnderDragon
         this.phaseManager = new PhaseManager(this);
         this.homeLocation = new Location(this.world.getWorld(), 62.0, 39.0, 69.0);
     }
-    
+
     public PhaseManager getPhaseManager() {
         return this.phaseManager;
     }
-    
+
     public DragonFightManager getFightManager() {
         return this.fightManager;
     }
@@ -108,7 +107,7 @@ public class EndDragonEntity extends EntityEnderDragon
     protected void h() {
         super.h();
     }
-    
+
     public double[] b(final int i, float f) {
         if (this.getHealth() <= 0.0f) {
             f = 0.0f;
@@ -126,39 +125,39 @@ public class EndDragonEntity extends EntityEnderDragon
         adouble[2] = this.ringEffects[j][2] + (this.ringEffects[k][2] - this.ringEffects[j][2]) * f;
         return adouble;
     }
-    
+
     public void g(final double d0, final double d1, final double d2) {
         super.g(d0, d1, d2);
     }
-    
+
     public void shootTNT() {
         final Vec3D vec3d = this.getHeadLookVec(1.0f).a();
         vec3d.b(-0.7853982f);
-        final int toSpawn = (int)Math.min(1.0, Math.ceil(this.getHealth() / this.getMaxHealth() * 3.0f));
+        final int toSpawn = (int) Math.min(1.0, Math.ceil(this.getHealth() / this.getMaxHealth() * 3.0f));
         final double d0 = this.head.locX;
         final double d2 = this.head.locY - this.head.getHeadHeight() / 2.0f - 2.5;
         final double d3 = this.head.locZ;
         for (int i = 0; i < toSpawn; ++i) {
-            final EntityTNTPrimed primed = new EntityTNTPrimed(new org.bukkit.Location(this.world.getWorld(), d0 + this.random.nextGaussian() / 3.0 * i, d2 + this.random.nextGaussian() / 2.0, d3 + this.random.nextGaussian() / 3.0 * i), this.world, d0 + this.random.nextGaussian() / 3.0 * i, d2 + this.random.nextGaussian() / 2.0, d3 + this.random.nextGaussian() / 3.0 * i, (EntityLiving)this);
+            final EntityTNTPrimed primed = new EntityTNTPrimed(new org.bukkit.Location(this.world.getWorld(), d0 + this.random.nextGaussian() / 3.0 * i, d2 + this.random.nextGaussian() / 2.0, d3 + this.random.nextGaussian() / 3.0 * i), this.world, d0 + this.random.nextGaussian() / 3.0 * i, d2 + this.random.nextGaussian() / 2.0, d3 + this.random.nextGaussian() / 3.0 * i, (EntityLiving) this);
             primed.fuseTicks = 20 + this.random.nextInt(6);
-            primed.getBukkitEntity().setMetadata("dragon_bomb", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.get(), (Object)""));
-            primed.getBukkitEntity().setMetadata("mouth_bomb", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.get(), (Object)this.getUniqueID()));
-            primed.getBukkitEntity().setMetadata("minion", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.get(), (Object)this.getUniqueID()));
-            this.world.addEntity((Entity)primed, CreatureSpawnEvent.SpawnReason.CUSTOM);
-            final float offX = (float)(-vec3d.a * 0.07999999821186066 * i);
-            final float offY = (float)(-vec3d.b * 0.6000000238418579);
-            final float offZ = (float)(-vec3d.c * 0.07999999821186066 * i);
+            primed.getBukkitEntity().setMetadata("dragon_bomb", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.get(), (Object) ""));
+            primed.getBukkitEntity().setMetadata("mouth_bomb", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.get(), (Object) this.getUniqueID()));
+            primed.getBukkitEntity().setMetadata("minion", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.get(), (Object) this.getUniqueID()));
+            this.world.addEntity((Entity) primed, CreatureSpawnEvent.SpawnReason.CUSTOM);
+            final float offX = (float) (-vec3d.a * 0.07999999821186066 * i);
+            final float offY = (float) (-vec3d.b * 0.6000000238418579);
+            final float offZ = (float) (-vec3d.c * 0.07999999821186066 * i);
             primed.getBukkitEntity().setVelocity(new Vector(offX, offY, offZ));
-            this.world.a((EntityHuman)null, 1009, new BlockPosition((int)this.head.locX, (int)this.head.locY, (int)this.head.locZ), 0);
+            this.world.a((EntityHuman) null, 1009, new BlockPosition((int) this.head.locX, (int) this.head.locY, (int) this.head.locZ), 0);
         }
     }
-    
+
     public boolean shootFireball() {
         if (this.target != null && this.head.isAlive() && this.target.world == this.world) {
             final Vec3D vec3d1 = new Vec3D(this.target.locX - this.locX, 0.0, this.target.locZ - this.locZ).a();
             final Vec3D vec3d2 = new Vec3D(Math.sin(this.yaw * 0.017453292f), 0.0, -Math.cos(this.yaw * 0.017453292f)).a();
-            final float f1 = (float)vec3d2.b(vec3d1);
-            float f2 = (float)(Math.acos(f1) * 57.29577951308232);
+            final float f1 = (float) vec3d2.b(vec3d1);
+            float f2 = (float) (Math.acos(f1) * 57.29577951308232);
             f2 += 0.5f;
             final double d14 = 1.0;
             final Vec3D vec3d3 = BossUtils.oldJ(this, 1.0f);
@@ -175,7 +174,7 @@ public class EndDragonEntity extends EntityEnderDragon
                     }
                     super.a(movingobjectposition);
                 }
-                
+
                 public boolean damageEntity(final DamageSource damagesource, final float f) {
                     return damagesource.getEntity() == null && super.damageEntity(damagesource, f);
                 }
@@ -183,24 +182,24 @@ public class EndDragonEntity extends EntityEnderDragon
             fireball.setPositionRotation(d15, d16, d17, 0.0f, 0.0f);
             fireball.yield = 0;
             fireball.isIncendiary = false;
-            this.world.addEntity((Entity)fireball, CreatureSpawnEvent.SpawnReason.CUSTOM);
+            this.world.addEntity((Entity) fireball, CreatureSpawnEvent.SpawnReason.CUSTOM);
             return true;
         }
         return false;
     }
-    
+
     public float setRandomYawVelocity(final float val) {
         return this.bb = val;
     }
-    
+
     public float getRandomYawVelocity() {
         return this.bb;
     }
-    
+
     private void log(final String msg) {
         Bukkit.getLogger().info("[EndDragonEntity] " + msg);
     }
-    
+
     public void e() {
         if (this.world.players.isEmpty()) {
             return;
@@ -226,7 +225,7 @@ public class EndDragonEntity extends EntityEnderDragon
             } else {
                 n();
                 float f = 0.2F / (MathHelper.sqrt(this.motX * this.motX + this.motZ * this.motZ) * 10.0F + 1.0F);
-                f *= (float)Math.pow(2.0D, this.motY);
+                f *= (float) Math.pow(2.0D, this.motY);
                 if (this.bx) {
                     this.bv += f * 0.5F;
                 } else {
@@ -251,8 +250,8 @@ public class EndDragonEntity extends EntityEnderDragon
                             double d0 = this.locY + (this.be - this.locY) / this.bc;
                             double d1 = this.locZ + (this.bf - this.locZ) / this.bc;
                             double d2 = MathHelper.g(this.bg - this.yaw);
-                            this.yaw = (float)(this.yaw + d2 / this.bc);
-                            this.pitch = (float)(this.pitch + (this.bh - this.pitch) / this.bc);
+                            this.yaw = (float) (this.yaw + d2 / this.bc);
+                            this.pitch = (float) (this.pitch + (this.bh - this.pitch) / this.bc);
                             this.bc--;
                             setPosition(d3, d0, d1);
                             setYawPitch(this.yaw, this.pitch);
@@ -292,7 +291,7 @@ public class EndDragonEntity extends EntityEnderDragon
                         Vec3D vec3d = (new Vec3D(this.a - this.locX, this.b - this.locY, this.c - this.locZ)).a();
                         double d4 = -MathHelper.cos(this.yaw * 3.1415927F / 180.0F);
                         Vec3D vec3d1 = (new Vec3D(MathHelper.sin(this.yaw * 3.1415927F / 180.0F), this.motY, d4)).a();
-                        float f4 = ((float)vec3d1.b(vec3d) + 0.5F) / 1.5F;
+                        float f4 = ((float) vec3d1.b(vec3d) + 0.5F) / 1.5F;
                         if (f4 < 0.0F)
                             f4 = 0.0F;
                         this.bb *= 0.8F;
@@ -300,9 +299,9 @@ public class EndDragonEntity extends EntityEnderDragon
                         double d10 = Math.sqrt(this.motX * this.motX + this.motZ * this.motZ) * 1.0D + 1.0D;
                         if (d10 > 40.0D)
                             d10 = 40.0D;
-                        this.bb = (float)(this.bb + d9 * 0.699999988079071D / d10 / f5);
+                        this.bb = (float) (this.bb + d9 * 0.699999988079071D / d10 / f5);
                         this.yaw += this.bb * 0.1F;
-                        float f6 = (float)(2.0D / (d10 + 1.0D));
+                        float f6 = (float) (2.0D / (d10 + 1.0D));
                         float f7 = 0.06F;
                         a(0.0F, -1.0F, f7 * (f4 * f6 + 1.0F - f6));
                         if (this.bx) {
@@ -311,7 +310,7 @@ public class EndDragonEntity extends EntityEnderDragon
                             move(this.motX, this.motY, this.motZ);
                         }
                         Vec3D vec3d2 = (new Vec3D(this.motX, this.motY, this.motZ)).a();
-                        float f8 = ((float)vec3d2.b(vec3d1) + 1.0F) / 2.0F;
+                        float f8 = ((float) vec3d2.b(vec3d1) + 1.0F) / 2.0F;
                         f8 = 0.8F + 0.15F * f8;
                         this.motX *= f8;
                         this.motZ *= f8;
@@ -328,7 +327,7 @@ public class EndDragonEntity extends EntityEnderDragon
                     this.bs.width = 4.0F;
                     this.bt.length = 3.0F;
                     this.bt.width = 4.0F;
-                    float f1 = (float)(b(5, 1.0F)[1] - b(10, 1.0F)[1]) * 10.0F / 180.0F * 3.1415927F;
+                    float f1 = (float) (b(5, 1.0F)[1] - b(10, 1.0F)[1]) * 10.0F / 180.0F * 3.1415927F;
                     float f2 = MathHelper.cos(f1);
                     float f9 = -MathHelper.sin(f1);
                     float f10 = this.yaw * 3.1415927F / 180.0F;
@@ -372,25 +371,23 @@ public class EndDragonEntity extends EntityEnderDragon
                         this.bx = b(this.bn.getBoundingBox()) | b(this.bo.getBoundingBox());*/
                 }
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
     private float getHeadYOffset(final float p_184662_1_) {
         double d0;
         if (this.phaseManager.getCurrentPhase().getIsStationary()) {
             d0 = -1.0;
-        }
-        else {
+        } else {
             final double[] adouble = this.b(5, 1.0f);
             final double[] adouble2 = this.b(0, 1.0f);
             d0 = adouble[1] - adouble2[1];
         }
-        return (float)d0;
+        return (float) d0;
     }
-    
+
     public Vec3D getHeadLookVec(final float p_184665_1_) {
         final IPhase iphase = this.phaseManager.getCurrentPhase();
         final PhaseList<? extends IPhase> phaselist = iphase.getType();
@@ -402,12 +399,10 @@ public class EndDragonEntity extends EntityEnderDragon
                 this.pitch = -45.0f;
                 vec3d = BossUtils.oldJ(this, p_184665_1_);
                 this.pitch = f4;
-            }
-            else {
+            } else {
                 vec3d = BossUtils.oldJ(this, p_184665_1_);
             }
-        }
-        else {
+        } else {
             final Location blockpos = this.homeLocation;
             final float f6 = Math.max(MathHelper.sqrt(this.distanceSqToCenter(blockpos.getX(), blockpos.getY(), blockpos.getZ())) / 4.0f, 1.0f);
             final float f7 = 6.0f / f6;
@@ -419,28 +414,27 @@ public class EndDragonEntity extends EntityEnderDragon
         }
         return vec3d;
     }
-    
+
     private void n() {
         if (this.bC != null) {
             if (this.bC.dead) {
                 if (!this.world.isClientSide) {
-                    CraftEventFactory.entityDamage = (Entity)this.bC;
-                    this.a(this.head, DamageSource.explosion((Explosion)null), 10.0f);
+                    CraftEventFactory.entityDamage = (Entity) this.bC;
+                    this.a(this.head, DamageSource.explosion((Explosion) null), 10.0f);
                     CraftEventFactory.entityDamage = null;
                 }
                 this.bC = null;
-            }
-            else if (this.ticksLived % 10 == 0 && this.getHealth() < this.getMaxHealth()) {
-                final EntityRegainHealthEvent event = new EntityRegainHealthEvent((org.bukkit.entity.Entity)this.getBukkitEntity(), 1.0, EntityRegainHealthEvent.RegainReason.ENDER_CRYSTAL);
-                this.world.getServer().getPluginManager().callEvent((Event)event);
+            } else if (this.ticksLived % 10 == 0 && this.getHealth() < this.getMaxHealth()) {
+                final EntityRegainHealthEvent event = new EntityRegainHealthEvent((org.bukkit.entity.Entity) this.getBukkitEntity(), 1.0, EntityRegainHealthEvent.RegainReason.ENDER_CRYSTAL);
+                this.world.getServer().getPluginManager().callEvent((Event) event);
                 if (!event.isCancelled()) {
-                    this.setHealth((float)(this.getHealth() + event.getAmount()));
+                    this.setHealth((float) (this.getHealth() + event.getAmount()));
                 }
             }
         }
         if (this.random.nextInt(10) == 0) {
             final float f = 32.0f;
-            final List list = this.world.a((Class)EntityEnderCrystal.class, this.getBoundingBox().grow((double)f, (double)f, (double)f));
+            final List list = this.world.a((Class) EntityEnderCrystal.class, this.getBoundingBox().grow((double) f, (double) f, (double) f));
             EntityEnderCrystal entityendercrystal = null;
             double d0 = Double.MAX_VALUE;
             /*for (EntityEnderCrystal entityendercrystal2 : (List<EntityEnderCrystal>)list) {
@@ -453,46 +447,45 @@ public class EndDragonEntity extends EntityEnderDragon
             this.bC = entityendercrystal;*/
         }
     }
-    
+
     private void a(final List list) {
         final double d0 = (this.body.getBoundingBox().a + this.body.getBoundingBox().d) / 2.0;
         final double d2 = (this.body.getBoundingBox().c + this.body.getBoundingBox().f) / 2.0;
-        for (Entity entity : (List<Entity>)list) {
+        for (Entity entity : (List<Entity>) list) {
             if (entity instanceof EntityLiving) {
                 final double d3 = entity.locX - d0;
                 final double d4 = entity.locZ - d2;
                 final double d5 = d3 * d3 + d4 * d4;
                 final Vector vect = new Vector(d3 / d5 * 4.0 * 0.3, 0.20000000298023224, d4 / d5 * 4.0 * 0.3);
                 if (entity instanceof EntityHuman) {
-                    final Player player = (Player)entity.getBukkitEntity();
+                    final Player player = (Player) entity.getBukkitEntity();
                     vect.multiply(1.6);
                     player.setVelocity(vect);
                     //entity.al = true;
-                }
-                else {
+                } else {
                     entity.g(vect.getX(), vect.getY(), vect.getZ());
                 }
             }
         }
     }
-    
+
     private void b(final List list) {
         for (int i = 0; i < list.size(); ++i) {
-            final Entity entity = (Entity)list.get(i);
+            final Entity entity = (Entity) list.get(i);
             if (entity instanceof EntityLiving) {
-                entity.damageEntity(DamageSource.mobAttack((EntityLiving)this), 30.0f);
+                entity.damageEntity(DamageSource.mobAttack((EntityLiving) this), 30.0f);
             }
         }
     }
-    
+
     private float b(final double d0) {
-        return (float)MathHelper.g(d0);
+        return (float) MathHelper.g(d0);
     }
-    
+
     public void moveRelative(float strafe, float up, float forward, final float friction) {
         float f = strafe * strafe + up * up + forward * forward;
         if (f >= 1.0E-4f) {
-            f = MathHelper.sqrt((double)f);
+            f = MathHelper.sqrt((double) f);
             if (f < 1.0f) {
                 f = 1.0f;
             }
@@ -570,7 +563,7 @@ public class EndDragonEntity extends EntityEnderDragon
         }
         return flag;
     }*/
-    
+
     public boolean a(final EntityComplexPart entitycomplexpart, final DamageSource damagesource, float f) {
         if (entitycomplexpart != this.head) {
             f /= 3.0f;
@@ -582,7 +575,7 @@ public class EndDragonEntity extends EntityEnderDragon
         this.damageEntity(damagesource, f);
         return true;
     }
-    
+
     public boolean damageEntity(final DamageSource damagesource, final float f) {
         if (damagesource == DamageSource.STUCK || damagesource == DamageSource.CACTUS) {
             return false;
@@ -596,28 +589,27 @@ public class EndDragonEntity extends EntityEnderDragon
             final float health = this.getHealth();
             retr = super.damageEntity(damagesource, f);
             if (this.phaseManager.getCurrentPhase().getIsStationary()) {
-                this.sittingDamageReceived += (int)(health - this.getHealth());
+                this.sittingDamageReceived += (int) (health - this.getHealth());
                 if (this.sittingDamageReceived > 0.1f * this.getMaxHealth()) {
                     this.sittingDamageReceived = 0;
                     this.phaseManager.setPhase(PhaseList.TAKEOFF);
-                    final EntityLiving nearbyPlayer = (EntityLiving)BossUtils.findNearbyVulnerablePlayer(this.world,this, 100.0);
+                    final EntityLiving nearbyPlayer = (EntityLiving) BossUtils.findNearbyVulnerablePlayer(this.world, this, 100.0);
                     if (nearbyPlayer != null) {
                         this.getPhaseManager().setPhase(PhaseList.CHARGING_PLAYER);
                         this.getPhaseManager().getPhase(PhaseList.CHARGING_PLAYER).setTarget(new Vec3D(nearbyPlayer.locX, nearbyPlayer.locY, nearbyPlayer.locZ));
                     }
                 }
             }
-        }
-        else {
+        } else {
             retr = super.damageEntity(damagesource, f);
         }
         return retr;
     }
-    
+
     public boolean dealDamage(final DamageSource damagesource, final float f) {
         return this.damageEntity(damagesource, f);
     }
-    
+
     protected void aF() {
         if (!this.dead) {
             ++this.bB;
@@ -633,12 +625,12 @@ public class EndDragonEntity extends EntityEnderDragon
                     while (i > 0) {
                         final int j = EntityExperienceOrb.getOrbValue(i);
                         i -= j;
-                        this.world.addEntity((Entity)new EntityExperienceOrb(this.world, this.locX, this.locY, this.locZ, j));
+                        this.world.addEntity((Entity) new EntityExperienceOrb(this.world, this.locX, this.locY, this.locZ, j));
                     }
                 }
                 if (this.bB == 1) {
-                    final int viewDistance = ((WorldServer)this.world).getServer().getViewDistance() * 16;
-                    for (final EntityHuman player : (List<EntityHuman>)this.world.players) {
+                    final int viewDistance = ((WorldServer) this.world).getServer().getViewDistance() * 16;
+                    for (final EntityHuman player : (List<EntityHuman>) this.world.players) {
                         final double deltaX = this.locX - player.locX;
                         final double deltaZ = this.locZ - player.locZ;
                         final double distanceSquared = deltaX * deltaX + deltaZ * deltaZ;
@@ -647,10 +639,9 @@ public class EndDragonEntity extends EntityEnderDragon
                                 final double deltaLength = Math.sqrt(distanceSquared);
                                 final double relativeX = player.locX + deltaX / deltaLength * viewDistance;
                                 final double relativeZ = player.locZ + deltaZ / deltaLength * viewDistance;
-                                ((EntityPlayer)player).playerConnection.sendPacket((Packet)new PacketPlayOutWorldEvent(1018, new BlockPosition((int)relativeX, (int)this.locY, (int)relativeZ), 0, true));
-                            }
-                            else {
-                                ((EntityPlayer)player).playerConnection.sendPacket((Packet)new PacketPlayOutWorldEvent(1018, new BlockPosition((int)this.locX, (int)this.locY, (int)this.locZ), 0, true));
+                                ((EntityPlayer) player).playerConnection.sendPacket((Packet) new PacketPlayOutWorldEvent(1018, new BlockPosition((int) relativeX, (int) this.locY, (int) relativeZ), 0, true));
+                            } else {
+                                ((EntityPlayer) player).playerConnection.sendPacket((Packet) new PacketPlayOutWorldEvent(1018, new BlockPosition((int) this.locX, (int) this.locY, (int) this.locZ), 0, true));
                             }
                         }
                     }
@@ -665,18 +656,18 @@ public class EndDragonEntity extends EntityEnderDragon
                 while (i > 0) {
                     final int j = EntityExperienceOrb.getOrbValue(i);
                     i -= j;
-                    this.world.addEntity((Entity)new EntityExperienceOrb(this.world, this.locX, this.locY, this.locZ, j));
+                    this.world.addEntity((Entity) new EntityExperienceOrb(this.world, this.locX, this.locY, this.locZ, j));
                 }
                 this.die();
             }
         }
     }
-    
+
     private void b(final int i, final int j) {
         final byte b0 = 64;
         //BlockEnderPortal.a = true;
         final byte b2 = 4;
-        final BlockStateListPopulator world = new BlockStateListPopulator((org.bukkit.World)this.world.getWorld());
+        final BlockStateListPopulator world = new BlockStateListPopulator((org.bukkit.World) this.world.getWorld());
         for (int k = b0 - 1; k <= b0 + 32; ++k) {
             for (int l = i - b2; l <= i + b2; ++l) {
                 for (int i2 = j - b2; i2 <= j + b2; ++i2) {
@@ -688,14 +679,11 @@ public class EndDragonEntity extends EntityEnderDragon
                             if (d3 <= (b2 - 1 - 0.5) * (b2 - 1 - 0.5)) {
                                 world.setTypeUpdate(l, k, i2, Blocks.BEDROCK);
                             }
-                        }
-                        else if (k > b0) {
+                        } else if (k > b0) {
                             world.setTypeUpdate(l, k, i2, Blocks.AIR);
-                        }
-                        else if (d3 > (b2 - 1 - 0.5) * (b2 - 1 - 0.5)) {
+                        } else if (d3 > (b2 - 1 - 0.5) * (b2 - 1 - 0.5)) {
                             world.setTypeUpdate(l, k, i2, Blocks.BEDROCK);
-                        }
-                        else {
+                        } else {
                             world.setTypeUpdate(l, k, i2, Blocks.END_PORTAL);
                         }
                     }
@@ -711,19 +699,18 @@ public class EndDragonEntity extends EntityEnderDragon
         world.setTypeAndData(i, b0 + 2, j + 1, Blocks.TORCH, 3, 0);
         world.setType(i, b0 + 3, j, Blocks.BEDROCK);
         world.setType(i, b0 + 4, j, Blocks.DRAGON_EGG);
-        final EntityCreatePortalEvent event = new EntityCreatePortalEvent((LivingEntity)this.getBukkitEntity(), (List)Collections.unmodifiableList((List<?>)world.getList()), PortalType.ENDER);
-        this.world.getServer().getPluginManager().callEvent((Event)event);
+        final EntityCreatePortalEvent event = new EntityCreatePortalEvent((LivingEntity) this.getBukkitEntity(), (List) Collections.unmodifiableList((List<?>) world.getList()), PortalType.ENDER);
+        this.world.getServer().getPluginManager().callEvent((Event) event);
         if (!event.isCancelled()) {
             for (final BlockState state : event.getBlocks()) {
                 state.update(true);
             }
-        }
-        else {
+        } else {
             for (final BlockState state : event.getBlocks()) {
                 final PacketPlayOutBlockChange packet = new PacketPlayOutBlockChange(this.world, new BlockPosition(state.getX(), state.getY(), state.getZ()));
-                for (EntityHuman entity : (List<EntityHuman>)this.world.players) {
+                for (EntityHuman entity : (List<EntityHuman>) this.world.players) {
                     if (entity instanceof EntityPlayer) {
-                        ((EntityPlayer)entity).playerConnection.sendPacket((Packet)packet);
+                        ((EntityPlayer) entity).playerConnection.sendPacket((Packet) packet);
                     }
                 }
             }
@@ -731,10 +718,11 @@ public class EndDragonEntity extends EntityEnderDragon
         //BlockEnderPortal.a = false;
     }
 
-    protected void D() {}
+    protected void D() {
+    }
 
     public Entity[] aB() {
-        return (Entity[])this.children;
+        return (Entity[]) this.children;
     }
 
     public boolean ad() {
@@ -760,14 +748,14 @@ public class EndDragonEntity extends EntityEnderDragon
     public int getExpReward() {
         return 12000;
     }
-    
+
     public double distanceSqToCenter(final double xIn, final double yIn, final double zIn) {
         final double d0 = this.locX + 0.5 - xIn;
         final double d2 = this.locY + 0.5 - yIn;
         final double d3 = this.locZ + 0.5 - zIn;
         return d0 * d0 + d2 * d2 + d3 * d3;
     }
-    
+
     public int initPathPoints() throws NoSuchFieldException {
         if (this.bossPathPoints[0] == null) {
             final int x = this.homeLocation.getBlockX();
@@ -777,23 +765,21 @@ public class EndDragonEntity extends EntityEnderDragon
                 int circleX;
                 int circleZ;
                 if (i < 12) {
-                    circleX = (int)(40.0f * MathHelper.cos(2.0f * (-3.1415927f + 0.2617994f * i)));
-                    circleZ = (int)(40.0f * MathHelper.sin(2.0f * (-3.1415927f + 0.2617994f * i)));
-                }
-                else if (i < 20) {
+                    circleX = (int) (40.0f * MathHelper.cos(2.0f * (-3.1415927f + 0.2617994f * i)));
+                    circleZ = (int) (40.0f * MathHelper.sin(2.0f * (-3.1415927f + 0.2617994f * i)));
+                } else if (i < 20) {
                     final int lvt_3_1_ = i - 12;
-                    circleX = (int)(30.0f * MathHelper.cos(2.0f * (-3.1415927f + 0.3926991f * lvt_3_1_)));
-                    circleZ = (int)(30.0f * MathHelper.sin(2.0f * (-3.1415927f + 0.3926991f * lvt_3_1_)));
+                    circleX = (int) (30.0f * MathHelper.cos(2.0f * (-3.1415927f + 0.3926991f * lvt_3_1_)));
+                    circleZ = (int) (30.0f * MathHelper.sin(2.0f * (-3.1415927f + 0.3926991f * lvt_3_1_)));
                     j += 10;
-                }
-                else {
+                } else {
                     final int k1 = i - 20;
-                    circleX = (int)(20.0f * MathHelper.cos(2.0f * (-3.1415927f + 0.7853982f * k1)));
-                    circleZ = (int)(20.0f * MathHelper.sin(2.0f * (-3.1415927f + 0.7853982f * k1)));
+                    circleX = (int) (20.0f * MathHelper.cos(2.0f * (-3.1415927f + 0.7853982f * k1)));
+                    circleZ = (int) (20.0f * MathHelper.sin(2.0f * (-3.1415927f + 0.7853982f * k1)));
                 }
                 circleX += x;
                 circleZ += z;
-                final int j2 = Math.max(40, BossUtils.getHighestBlockYAt((org.bukkit.World)this.world.getWorld(), circleX, circleZ, false) + j);
+                final int j2 = Math.max(40, BossUtils.getHighestBlockYAt((org.bukkit.World) this.world.getWorld(), circleX, circleZ, false) + j);
                 this.bossPathPoints[i] = new BossPathPoint(circleX, j2, circleZ);
             }
             this.neighbors[0] = 6146;
@@ -823,7 +809,7 @@ public class EndDragonEntity extends EntityEnderDragon
         }
         return this.getNearestPpIdx(this.locX, this.locY, this.locZ);
     }
-    
+
     public int getNearestPpIdx(final double x, final double y, final double z) {
         float f = 10000.0f;
         int i = 0;
@@ -843,7 +829,7 @@ public class EndDragonEntity extends EntityEnderDragon
         }
         return i;
     }
-    
+
     public BossPath findPath(final int startIdx, final int finishIdx, @Nullable final BossPathPoint andThen) {
         for (int i = 0; i < 24; ++i) {
             final BossPathPoint pathpoint = this.bossPathPoints[i];
@@ -868,7 +854,7 @@ public class EndDragonEntity extends EntityEnderDragon
         }
         while (!this.pathQueue.isPathEmpty()) {
             final BossPathPoint pathpoint5 = this.pathQueue.dequeue();
-            if (pathpoint5.equals((Object)pathpoint3)) {
+            if (pathpoint5.equals((Object) pathpoint3)) {
                 if (andThen != null) {
                     andThen.setPrevious(pathpoint3);
                     pathpoint3 = andThen;
@@ -897,8 +883,7 @@ public class EndDragonEntity extends EntityEnderDragon
                             pathpoint6.setDistanceToNext(pathpoint6.distanceTo(pathpoint3));
                             if (pathpoint6.isAssigned()) {
                                 this.pathQueue.changeDistance(pathpoint6, pathpoint6.getTotalPathPointDistance() + pathpoint6.getDistanceToNext());
-                            }
-                            else {
+                            } else {
                                 pathpoint6.setDistanceToTarget(pathpoint6.getTotalPathPointDistance() + pathpoint6.getDistanceToNext());
                                 this.pathQueue.addPoint(pathpoint6);
                             }
@@ -916,7 +901,7 @@ public class EndDragonEntity extends EntityEnderDragon
         }
         return this.makePath(pathpoint2, pathpoint4);
     }
-    
+
     private BossPath makePath(final BossPathPoint start, final BossPathPoint finish) {
         int i = 1;
         for (BossPathPoint pathpoint = finish; pathpoint.getPrevious() != null; pathpoint = pathpoint.getPrevious()) {
@@ -933,7 +918,7 @@ public class EndDragonEntity extends EntityEnderDragon
         }
         return new BossPath(apathpoint);
     }
-    
+
     public Location getHomeLocation() {
         return this.homeLocation;
     }

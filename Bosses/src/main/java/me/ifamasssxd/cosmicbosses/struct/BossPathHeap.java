@@ -1,14 +1,13 @@
 package me.ifamasssxd.cosmicbosses.struct;
 
-public class BossPathHeap
-{
+public class BossPathHeap {
     private BossPathPoint[] pathPoints;
     private int count;
-    
+
     public BossPathHeap() {
         this.pathPoints = new BossPathPoint[128];
     }
-    
+
     public BossPathPoint addPoint(final BossPathPoint point) {
         if (point.getIndex() >= 0) {
             throw new IllegalStateException("OW KNOWS!");
@@ -22,11 +21,11 @@ public class BossPathHeap
         this.sortBack(this.count++);
         return point;
     }
-    
+
     public void clearPath() {
         this.count = 0;
     }
-    
+
     public BossPathPoint dequeue() {
         final BossPathPoint pathpoint = this.pathPoints[0];
         final BossPathPoint[] pathPoints = this.pathPoints;
@@ -42,18 +41,17 @@ public class BossPathHeap
         pathpoint.setIndex(-1);
         return pathpoint;
     }
-    
+
     public void changeDistance(final BossPathPoint point, final float distance) {
         final float f = point.getDistanceToTarget();
         point.setDistanceToTarget(distance);
         if (distance < f) {
             this.sortBack(point.getIndex());
-        }
-        else {
+        } else {
             this.sortForward(point.getIndex());
         }
     }
-    
+
     private void sortBack(int index) {
         final BossPathPoint pathpoint = this.pathPoints[index];
         final float f = pathpoint.getDistanceToTarget();
@@ -68,7 +66,7 @@ public class BossPathHeap
         }
         (this.pathPoints[index] = pathpoint).setIndex(index);
     }
-    
+
     private void sortForward(int index) {
         final BossPathPoint pathpoint = this.pathPoints[index];
         final float f = pathpoint.getDistanceToTarget();
@@ -85,8 +83,7 @@ public class BossPathHeap
             if (j >= this.count) {
                 pathpoint3 = null;
                 f3 = Float.POSITIVE_INFINITY;
-            }
-            else {
+            } else {
                 pathpoint3 = this.pathPoints[j];
                 f3 = pathpoint3.getDistanceToTarget();
             }
@@ -96,8 +93,7 @@ public class BossPathHeap
                 }
                 (this.pathPoints[index] = pathpoint2).setIndex(index);
                 index = i;
-            }
-            else {
+            } else {
                 if (f3 >= f) {
                     break;
                 }
@@ -107,7 +103,7 @@ public class BossPathHeap
         }
         (this.pathPoints[index] = pathpoint).setIndex(index);
     }
-    
+
     public boolean isPathEmpty() {
         return this.count == 0;
     }

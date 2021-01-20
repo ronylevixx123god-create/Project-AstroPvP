@@ -8,16 +8,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Event;
 
-public class BossUpdateTask implements Runnable
-{
+public class BossUpdateTask implements Runnable {
     @SneakyThrows
     @Override
     public void run() {
         for (final Boss boss : Boss.bosses.values()) {
             if (boss.isBossSpawned()) {
                 boss.onUpdate();
-            }
-            else {
+            } else {
                 if (boss.getEntity() != null && boss.getEntity().isValid()) {
                     continue;
                 }
@@ -25,7 +23,7 @@ public class BossUpdateTask implements Runnable
                     boss.cleanup();
                 }
                 if (boss.getEntity() != null && !boss.getEntity().hasMetadata("killed")) {
-                    Bukkit.getPluginManager().callEvent((Event)new BossDespawnEvent((Entity)boss.getEntity(), boss));
+                    Bukkit.getPluginManager().callEvent((Event) new BossDespawnEvent((Entity) boss.getEntity(), boss));
                     boss.getEntity().remove();
                 }
                 Boss.bosses.remove(boss.getUuid());

@@ -2,7 +2,6 @@ package me.ifamasssxd.cosmicbosses.dungeonboss.abilities;
 
 import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonAbility;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -16,16 +15,15 @@ import java.util.Set;
 import java.util.WeakHashMap;
 import java.util.concurrent.TimeUnit;
 
-public class AfterImage extends DungeonAbility
-{
+public class AfterImage extends DungeonAbility {
     private Set<Entity> imagesAlive;
     private long start;
-    
+
     public AfterImage(final Boss boss) {
         super(boss);
         this.imagesAlive = Collections.newSetFromMap(new WeakHashMap<Entity, Boolean>());
     }
-    
+
     @Override
     public void onTick() {
         if (this.start != -1L && System.currentTimeMillis() - this.start >= 3000L) {
@@ -35,27 +33,27 @@ public class AfterImage extends DungeonAbility
             }
         }
     }
-    
+
     @Override
     public long getCooldown() {
         return TimeUnit.SECONDS.toMillis(8L);
     }
-    
+
     public long getSoftCooldown() {
         return TimeUnit.SECONDS.toMillis(10L);
     }
-    
+
     @Override
     public String getAbilityName() {
         return "After Image";
     }
-    
+
     @Override
     public boolean shouldStopTicking() {
         final long timeSinceStarted = System.currentTimeMillis() - this.initTime;
         return (!this.isAnyImagesAlive() && timeSinceStarted >= this.getCooldown()) || timeSinceStarted >= this.getSoftCooldown();
     }
-    
+
     @Override
     public void onAbilityEnable() {
         this.imagesAlive.stream().filter(ent -> !ent.isDead()).forEach(Entity::remove);
@@ -67,22 +65,22 @@ public class AfterImage extends DungeonAbility
         }
         this.boss.sendMessage(ChatColor.RED + "Lets make this more interesting!", Sound.WITHER_SPAWN, 1.0f);
     }
-    
+
     public boolean isAnyImagesAlive() {
         return this.imagesAlive.stream().anyMatch(ent -> !ent.isDead());
     }
-    
+
     @Override
     public void onAbilityDisable() throws Exception {
         for (final Entity ent : this.boss.getMinions()) {
             if (ent != null && !ent.isDead()) {
-                de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(),ent.getLocation().add(0.0, 1.0, 0.0),0f, 0f, 0f, 0.1f,30);
+                de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), ent.getLocation().add(0.0, 1.0, 0.0), 0f, 0f, 0f, 0.1f, 30);
             }
         }
         this.boss.removeMinions();
         this.imagesAlive.clear();
     }
-    
+
     @Override
     public void onAbilityEvent(final Event event) {
     }

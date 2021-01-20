@@ -1,26 +1,29 @@
 package me.ifamasssxd.cosmicbosses.bosses.holidayspirit;
 
-import me.ifamasssxd.cosmicbosses.struct.*;
-import org.bukkit.entity.*;
-import me.ifamasssxd.cosmicbosses.utils.*;
-import org.bukkit.potion.*;
-import org.bukkit.scheduler.*;
-import me.ifamasssxd.cosmicbosses.*;
-import org.bukkit.plugin.*;
-import java.util.*;
-import org.bukkit.*;
-import java.util.concurrent.*;
+import me.ifamasssxd.cosmicbosses.CosmicBosses;
+import me.ifamasssxd.cosmicbosses.struct.Boss;
+import me.ifamasssxd.cosmicbosses.struct.BossAbility;
+import me.ifamasssxd.cosmicbosses.utils.BossUtils;
+import org.bukkit.Location;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
-public class Freeze extends BossAbility
-{
+import java.util.concurrent.TimeUnit;
+
+public class Freeze extends BossAbility {
     public Freeze(final Boss boss) {
         super(boss);
     }
-    
+
     @Override
     public void onAbility() {
         for (final Entity ent : this.getBoss().getNearbyEntities(20.0, EntityType.PLAYER)) {
-            final Player player = (Player)ent;
+            final Player player = (Player) ent;
             final float walkSpeed = player.getWalkSpeed();
             final Location nearby = BossUtils.getRandomLocationNearby(player.getLocation(), 3, 1);
             this.getBoss().spawnMinion(EntityType.PIG_ZOMBIE, nearby);
@@ -49,16 +52,16 @@ public class Freeze extends BossAbility
                         player.addPotionEffect(found, true);
                     }
                 }
-            }.runTaskLater((Plugin)CosmicBosses.getInstance(), 100L);
+            }.runTaskLater((Plugin) CosmicBosses.getInstance(), 100L);
         }
         this.activateCooldown();
     }
-    
+
     @Override
     public long getCooldown() {
         return TimeUnit.SECONDS.toMillis(30L);
     }
-    
+
     @Override
     public String getAbilityName() {
         return "Freeze";

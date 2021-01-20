@@ -17,7 +17,6 @@ import me.ifamasssxd.cosmicbosses.utils.ItemBuilder;
 import me.ifamasssxd.killtracker.KillTrackerAPI;
 import net.minecraft.server.v1_8_R3.Entity;
 import net.minecraft.server.v1_8_R3.World;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.arkhamnetwork.enchantments.EnchantmentBook;
 import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
@@ -43,11 +42,10 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class SoulReaper extends Boss
-{
+public class SoulReaper extends Boss {
     Random random;
     private long lastCloneSpawn;
-    
+
     public SoulReaper(final Location location, final BossType bossType) {
         super(location, bossType);
         this.random = new Random();
@@ -58,25 +56,25 @@ public class SoulReaper extends Boss
         this.getLootPool().add(CosmicSpaceChestsAPI.getDropPackageChest(ItemRarity.ULTIMATE));
         this.getLootPool().add(CosmicSpaceChestsAPI.getDropPackageChest(ItemRarity.ULTIMATE));
     }
-    
+
     @Override
     public EntityType getEntityType() {
         return EntityType.ENDERMAN;
     }
-    
+
     @Override
     public void onBossSpawn() {
         super.onBossSpawn();
     }
-    
+
     @Override
     public LivingEntity spawnBoss() {
-        final CraftWorld world = (CraftWorld)this.location.getWorld();
+        final CraftWorld world = (CraftWorld) this.location.getWorld();
         CustomEntity.ENDERMAN.registerEntity();
-        final SoulReaperEnderman ender = new SoulReaperEnderman((World)world.getHandle());
+        final SoulReaperEnderman ender = new SoulReaperEnderman((World) world.getHandle());
         ender.setPosition(this.location.getX(), this.location.getY(), this.location.getZ());
-        world.getHandle().addEntity((Entity)ender, CreatureSpawnEvent.SpawnReason.CUSTOM);
-        final LivingEntity ent = (LivingEntity)ender.getBukkitEntity();
+        world.getHandle().addEntity((Entity) ender, CreatureSpawnEvent.SpawnReason.CUSTOM);
+        final LivingEntity ent = (LivingEntity) ender.getBukkitEntity();
         ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 3));
         this.setupBoss(ent);
         this.setHelmet(ItemBuilder.buildArmor(Material.DIAMOND_HELMET, Enchantment.PROTECTION_ENVIRONMENTAL));
@@ -91,13 +89,13 @@ public class SoulReaper extends Boss
         this.getEntity().getEquipment().setItemInHand(weapon);
         return ent;
     }
-    
+
     @Override
     public LivingEntity setupBoss(final LivingEntity e) {
         final LivingEntity ent = super.setupBoss(e);
         return ent;
     }
-    
+
     @Override
     public void onDeath(final EntityDeathEvent event) throws Exception {
         super.onDeath(event);
@@ -112,45 +110,45 @@ public class SoulReaper extends Boss
             }
         }
     }
-    
+
     @Override
     public String getCustomName() {
         return ChatColor.LIGHT_PURPLE + ChatColor.BOLD.toString() + this.getName();
     }
-    
+
     @Override
     public String getName() {
         return "Soul Reaper";
     }
-    
+
     @Override
     public void cleanup() {
         this.clearMinions();
     }
-    
+
     private void clearMinions() {
         for (final org.bukkit.entity.Entity m : this.getMinions()) {
             m.remove();
         }
     }
-    
+
     @Override
     public String getTitle() {
         return "Reaper";
     }
-    
+
     public CraftEnderman getEnderman() {
-        return (CraftEnderman)this.entity;
+        return (CraftEnderman) this.entity;
     }
-    
+
     @Override
     public void onUpdate() throws Exception {
         ++this.loops;
         if (this.loops % 20 == 0 && this.getMinions().size() < 3 && this.lastCloneSpawn < System.currentTimeMillis()) {
-            final LivingEntity ent = (LivingEntity)this.spawnMinion(EntityType.ENDERMAN, BossUtils.getRandomLocationNearby(this.entity.getLocation(), 3, 1));
+            final LivingEntity ent = (LivingEntity) this.spawnMinion(EntityType.ENDERMAN, BossUtils.getRandomLocationNearby(this.entity.getLocation(), 3, 1));
             this.sendMessage(ChatColor.LIGHT_PURPLE + "Rise my children of the ender, devour them!");
             if (this.random.nextBoolean()) {
-                ent.setMetadata("explode_death", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), (Object)""));
+                ent.setMetadata("explode_death", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
             }
             this.lastCloneSpawn = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(5L);
         }
@@ -164,8 +162,7 @@ public class SoulReaper extends Boss
                     }
                     if (this.loops % 120 == 0) {
                         ender.shooting = true;
-                    }
-                    else {
+                    } else {
                         ender.shooting = false;
                     }
                 }
@@ -176,22 +173,22 @@ public class SoulReaper extends Boss
         }
         super.onUpdate();
     }
-    
+
     @Override
     public org.bukkit.entity.Entity spawnMinion(final EntityType type, final Location l) {
-        final CraftWorld world = (CraftWorld)l.getWorld();
-        final SoulReaperEnderman clone = new SoulReaperEnderman((World)world.getHandle(), true);
+        final CraftWorld world = (CraftWorld) l.getWorld();
+        final SoulReaperEnderman clone = new SoulReaperEnderman((World) world.getHandle(), true);
         clone.setPosition(l.getX(), l.getY(), l.getZ());
-        world.getHandle().addEntity((Entity)clone, CreatureSpawnEvent.SpawnReason.CUSTOM);
-        final LivingEntity entity = (LivingEntity)clone.getBukkitEntity();
+        world.getHandle().addEntity((Entity) clone, CreatureSpawnEvent.SpawnReason.CUSTOM);
+        final LivingEntity entity = (LivingEntity) clone.getBukkitEntity();
         entity.setMaxHealth(200.0);
         entity.setHealth(200.0);
-        final org.bukkit.entity.Entity ent = (org.bukkit.entity.Entity)clone.getBukkitEntity();
-        ent.setMetadata("minion", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), (Object)this.getEntity().getUniqueId()));
-        ent.setMetadata("do_not_clear", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), (Object)""));
+        final org.bukkit.entity.Entity ent = (org.bukkit.entity.Entity) clone.getBukkitEntity();
+        ent.setMetadata("minion", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) this.getEntity().getUniqueId()));
+        ent.setMetadata("do_not_clear", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
         this.getMinions().add(ent);
         if (ent instanceof LivingEntity) {
-            final LivingEntity li = (LivingEntity)ent;
+            final LivingEntity li = (LivingEntity) ent;
             li.setCustomName(this.getCustomName());
             li.setCustomNameVisible(true);
             if (li.getEquipment() != null) {
@@ -204,19 +201,19 @@ public class SoulReaper extends Boss
         }
         return ent;
     }
-    
+
     @Override
     public void onPhaseChange(final Phase newPhase) {
     }
-    
+
     @Override
-    public void onDamageTaken(final EntityDamageEvent event) {
+    public void onDamageTaken(final EntityDamageEvent event) throws Exception {
         if (event.getCause() == EntityDamageEvent.DamageCause.DROWNING) {
             event.setCancelled(true);
         }
         super.onDamageTaken(event);
     }
-    
+
     @Override
     public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) throws Exception {
         final AtomicBoolean performedAOE = new AtomicBoolean(false);
@@ -228,13 +225,12 @@ public class SoulReaper extends Boss
         }
         final AtomicInteger affected = new AtomicInteger(0);
         final AtomicBoolean atomicBoolean;
-        player.getNearbyEntities(1.0, 2.0, 1.0).stream().filter(entity -> entity != event.getEntity()).filter(entity -> entity instanceof Player && BossUtils.canAffectPlayer((Player)entity, true)).forEach(entity -> {
+        player.getNearbyEntities(1.0, 2.0, 1.0).stream().filter(entity -> entity != event.getEntity()).filter(entity -> entity instanceof Player && BossUtils.canAffectPlayer((Player) entity, true)).forEach(entity -> {
             if (affected.get() >= 10) {
                 return;
-            }
-            else {
+            } else {
                 BossUtils.dealPercentHealthDamage(player, 10.0, 5);
-                ((Player)entity).damage(0.0);
+                ((Player) entity).damage(0.0);
                 affected.incrementAndGet();
                 player.setVelocity(player.getVelocity().multiply(-1).setY(1));
                 try {
@@ -251,21 +247,21 @@ public class SoulReaper extends Boss
         }
         super.onAttackPlayer(event, player);
     }
-    
+
     @Override
     public void onEntityTeleport(final EntityTeleportEvent event, final org.bukkit.entity.Entity boss) {
     }
-    
+
     public SoulReaperEnderman getSoulReaperEnderman(final org.bukkit.entity.Entity entity) {
         if (entity instanceof CraftCreature) {
-            final CraftCreature creature = (CraftCreature)entity;
+            final CraftCreature creature = (CraftCreature) entity;
             if (creature.getHandle() instanceof SoulReaperEnderman) {
-                return (SoulReaperEnderman)creature.getHandle();
+                return (SoulReaperEnderman) creature.getHandle();
             }
         }
         return null;
     }
-    
+
     @Override
     public void onMinionUpdate(final org.bukkit.entity.Entity minion, final Event e) throws Exception {
         super.onMinionUpdate(minion, e);
@@ -276,7 +272,7 @@ public class SoulReaper extends Boss
                 minion.getWorld().playSound(minion.getLocation(), Sound.EXPLODE, 1.0f, 1.0f);
                 for (final org.bukkit.entity.Entity ent : minion.getNearbyEntities(10.0, 10.0, 10.0)) {
                     if (ent instanceof Player) {
-                        final Player player = (Player)ent;
+                        final Player player = (Player) ent;
                         if (!BossUtils.canAffectPlayer(player, true)) {
                             continue;
                         }
@@ -284,52 +280,48 @@ public class SoulReaper extends Boss
                     }
                 }
             }
-        }
-        else if (e instanceof EntityDamageByEntityEvent) {
-            final EntityDamageByEntityEvent event = (EntityDamageByEntityEvent)e;
+        } else if (e instanceof EntityDamageByEntityEvent) {
+            final EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) e;
             if (event.getDamager() instanceof Projectile) {
                 if (event.getEntity().getType() != EntityType.PLAYER) {
                     event.setCancelled(true);
-                }
-                else {
+                } else {
                     final double dmg = 30.0;
                     final double missingHealth = this.getEntity().getHealth() / this.getMaxHealth();
                     final double missing = 1.0 - missingHealth;
                     event.setDamage(dmg * Math.min(2.0, 1.0 + missing));
                 }
-            }
-            else if (event.getDamager().equals(minion)) {
+            } else if (event.getDamager().equals(minion)) {
                 if (!(event.getEntity() instanceof Player)) {
                     event.setCancelled(true);
                 }
-            }
-            else if (event.getEntity().hasMetadata("minion") && event.getDamager().getType() != EntityType.PLAYER) {
+            } else if (event.getEntity().hasMetadata("minion") && event.getDamager().getType() != EntityType.PLAYER) {
                 event.setCancelled(true);
             }
         }
     }
-    
+
     @Override
     public void onMiscUpdate(final Event event) {
     }
-    
+
     @Override
     public DamageType getDamageType() {
         return DamageType.POISON;
     }
-    
+
     @Override
     public Difficulty getDifficulty() {
         return Difficulty.OUTPOST;
     }
-    
+
     @Override
     public int getMaxHealth() {
         return 1500;
     }
-    
+
     @Override
     public List<BossMessage> getGeneralMessages() {
-        return (List<BossMessage>)Lists.newArrayList(new BossMessage[] { new BossMessage(ChatColor.LIGHT_PURPLE + "Your soul is mine now [NAME]!", false, 0) });
+        return (List<BossMessage>) Lists.newArrayList(new BossMessage[]{new BossMessage(ChatColor.LIGHT_PURPLE + "Your soul is mine now [NAME]!", false, 0)});
     }
 }

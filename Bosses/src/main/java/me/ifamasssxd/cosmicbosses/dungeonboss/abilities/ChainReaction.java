@@ -11,9 +11,11 @@ import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.cosmicbosses.struct.NewBlockData;
 import me.ifamasssxd.cosmicbosses.utils.BossUtils;
 import net.citizensnpcs.nms.v1_8_R3.entity.EntityHumanNPC;
-import net.minecraft.server.v1_8_R3.*;
+import net.minecraft.server.v1_8_R3.Block;
+import net.minecraft.server.v1_8_R3.Entity;
+import net.minecraft.server.v1_8_R3.EntityFallingBlock;
+import net.minecraft.server.v1_8_R3.EntityHuman;
 import org.bukkit.*;
-import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.FallingBlock;
@@ -31,63 +33,61 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
-public class ChainReaction extends DungeonAbility
-{
+public class ChainReaction extends DungeonAbility {
     private int shotsFired;
     private int landed;
-    
+
     public ChainReaction(final Boss boss) {
         super(boss);
         this.shotsFired = 0;
         this.landed = 0;
     }
-    
+
     @Override
     public void onTick() {
     }
-    
+
     @Override
     public long getCooldown() {
         return TimeUnit.SECONDS.toMillis(5L);
     }
-    
+
     @Override
     public String getAbilityName() {
         return "Chain Reaction";
     }
-    
+
     @Override
     public boolean shouldStopTicking() {
         final long initTimeDistance = System.currentTimeMillis() - this.initTime;
         return initTimeDistance >= this.getCooldown() && this.shotsFired >= 3 && (this.landed >= 3 || initTimeDistance >= this.getCooldown() + 5000L);
     }
-    
+
     @Override
     public void onAbilityEnable() {
         this.initAbility();
         this.boss.sendMessage("Let it rain the world around you!");
     }
-    
+
     @Override
     public void onAbilityDisable() {
     }
-    
+
     @Override
     public void onAbilityEvent(final Event event) {
         if (event instanceof ProjectileLaunchEvent) {
-            final ProjectileLaunchEvent e = (ProjectileLaunchEvent)event;
+            final ProjectileLaunchEvent e = (ProjectileLaunchEvent) event;
             if (this.shotsFired >= 5) {
                 return;
             }
             Bukkit.getLogger().info("(Dungeon Yijki) Tracking Projectile fired for chainReaction..");
-            e.getEntity().setMetadata("chainReaction", (MetadataValue)new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object)""));
+            e.getEntity().setMetadata("chainReaction", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
             if (e.getEntity() instanceof WitherSkull) {
-                ((WitherSkull)e.getEntity()).setCharged(true);
+                ((WitherSkull) e.getEntity()).setCharged(true);
             }
             ++this.shotsFired;
-        }
-        else if (event instanceof ProjectileHitEvent) {
-            final ProjectileHitEvent e2 = (ProjectileHitEvent)event;
+        } else if (event instanceof ProjectileHitEvent) {
+            final ProjectileHitEvent e2 = (ProjectileHitEvent) event;
             if (e2.getEntity().hasMetadata("chainReaction")) {
                 ++this.landed;
                 if (e2.getEntity().getLocation().getY() > 2.0) {
@@ -102,7 +102,7 @@ public class ChainReaction extends DungeonAbility
                     for (int x = -radius; x < radius; ++x) {
                         for (int z = -radius; z < radius; ++z) {
                             for (int y = -depth; y < depth; ++y) {
-                                final org.bukkit.block.Block toExplode = entLocation.clone().add((double)x, (double)y, (double)z).getBlock();
+                                final org.bukkit.block.Block toExplode = entLocation.clone().add((double) x, (double) y, (double) z).getBlock();
                                 if (toExplode.getY() > 1) {
                                     if (toExplode.getType() != Material.BEDROCK) {
                                         if (toExplode.getType() != Material.AIR) {
@@ -113,12 +113,12 @@ public class ChainReaction extends DungeonAbility
                                                         if (BossUtils.isWarzone(toExplode.getLocation())) {
                                                             final NewBlockData data = this.boss.getModifier().removeBlockAndStore(this, toExplode.getLocation());
                                                             final Location spawn = toExplode.getLocation().add(0.5, 1.1, 0.5);
-                                                            final EntityFallingBlock block = new EntityFallingBlock(spawn, ((CraftWorld)toExplode.getWorld()).getHandle(), spawn.getX(), spawn.getY(), spawn.getZ(), Block.getById(data.getMaterial().getId()).getBlockData()) {
+                                                            final EntityFallingBlock block = new EntityFallingBlock(spawn, ((CraftWorld) toExplode.getWorld()).getHandle(), spawn.getX(), spawn.getY(), spawn.getZ(), Block.getById(data.getMaterial().getId()).getBlockData()) {
                                                                 public void h() {
                                                                     if (this.ticksLived >= 8) {
                                                                         try {
                                                                             Predicate<Entity> pred = entity -> entity instanceof EntityHuman && !(entity instanceof EntityHumanNPC);
-                                                                            final List<Entity> arraylist = (List<Entity>)this.world.getEntities((Entity)this, this.getBoundingBox());
+                                                                            final List<Entity> arraylist = (List<Entity>) this.world.getEntities((Entity) this, this.getBoundingBox());
                                                                             int killed = 0;
                                                                             for (final Entity ent : arraylist) {
                                                                                 if (ent instanceof EntityHuman && !(ent instanceof EntityHumanNPC)) {
@@ -148,8 +148,7 @@ public class ChainReaction extends DungeonAbility
                                                                                 Bukkit.getLogger().info("Damaging " + killed + " players damage from falling block!");
                                                                                 return;
                                                                             }
-                                                                        }
-                                                                        catch (Exception e) {
+                                                                        } catch (Exception e) {
                                                                             e.printStackTrace();
                                                                         }
                                                                     }
@@ -157,10 +156,10 @@ public class ChainReaction extends DungeonAbility
                                                                 }
                                                             };
                                                             block.ticksLived = 1;
-                                                            ((CraftWorld)toExplode.getWorld()).getHandle().addEntity((Entity)block, CreatureSpawnEvent.SpawnReason.CUSTOM);
-                                                            final FallingBlock fallingBlock = (FallingBlock)block.getBukkitEntity();
+                                                            ((CraftWorld) toExplode.getWorld()).getHandle().addEntity((Entity) block, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                                                            final FallingBlock fallingBlock = (FallingBlock) block.getBukkitEntity();
                                                             fallingBlock.setVelocity(new Vector((ThreadLocalRandom.current().nextBoolean() ? -1 : 1) * Math.random(), 0.8 + Math.random(), (ThreadLocalRandom.current().nextBoolean() ? -1 : 1) * Math.random()));
-                                                            fallingBlock.setMetadata("chainReactionBlock", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), (Object)this.boss.getUuid()));
+                                                            fallingBlock.setMetadata("chainReactionBlock", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) this.boss.getUuid()));
                                                             fallingBlock.setDropItem(false);
                                                             ++exploded;
                                                         }
@@ -176,13 +175,11 @@ public class ChainReaction extends DungeonAbility
                     Bukkit.getLogger().info("(Dungeon Yijki) Exploded " + exploded + " blocks.");
                 }
             }
-        }
-        else if (event instanceof EntityChangeBlockEvent) {
-            final EntityChangeBlockEvent changeBlockEvent = (EntityChangeBlockEvent)event;
+        } else if (event instanceof EntityChangeBlockEvent) {
+            final EntityChangeBlockEvent changeBlockEvent = (EntityChangeBlockEvent) event;
             changeBlockEvent.setCancelled(true);
-        }
-        else if (event instanceof EntityDamageByEntityEvent) {
-            final EntityDamageByEntityEvent damageEvent = (EntityDamageByEntityEvent)event;
+        } else if (event instanceof EntityDamageByEntityEvent) {
+            final EntityDamageByEntityEvent damageEvent = (EntityDamageByEntityEvent) event;
             if (damageEvent.getDamager().hasMetadata("chainReactionBlock")) {
                 damageEvent.setDamage(300.0);
                 Bukkit.getLogger().info("Setting damage to: " + damageEvent.getDamage(EntityDamageEvent.DamageModifier.BASE));

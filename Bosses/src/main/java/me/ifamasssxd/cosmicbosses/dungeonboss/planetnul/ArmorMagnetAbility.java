@@ -8,10 +8,8 @@ import me.ifamasssxd.cosmicbosses.struct.Boss;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -35,7 +33,7 @@ public class ArmorMagnetAbility extends DungeonAbility {
         this.replacedBlocks = new HashMap<>();
     }
 
-    public void moveToward(Entity entity, Location to, double speed){
+    public void moveToward(Entity entity, Location to, double speed) {
         Location loc = entity.getLocation();
         double x = loc.getX() - to.getX();
         double y = loc.getY() - to.getY();
@@ -53,7 +51,8 @@ public class ArmorMagnetAbility extends DungeonAbility {
                 p.playSound(p.getLocation(), Sound.ENDERDRAGON_GROWL, 1, 1);
             }
 
-            if (!p.hasMetadata("no_knockback")) moveToward(p, new Location(p.getWorld(), 782, ((CorruptCosmonaut)this.boss).hasFloorBroke() ? 87 : 115, 729), 0.325);
+            if (!p.hasMetadata("no_knockback"))
+                moveToward(p, new Location(p.getWorld(), 782, ((CorruptCosmonaut) this.boss).hasFloorBroke() ? 87 : 115, 729), 0.325);
         });
     }
 
@@ -76,36 +75,36 @@ public class ArmorMagnetAbility extends DungeonAbility {
     public void onAbilityEnable() {
         this.initAbility();
 
-        int yLevel = ((CorruptCosmonaut)this.boss).hasFloorBroke() ? 87 : 115;
+        int yLevel = ((CorruptCosmonaut) this.boss).hasFloorBroke() ? 87 : 115;
 
         for (int i = 0; i < 7; i++) {
             Location replaceLocation = new Location(this.boss.getLocation().getWorld(), 785, yLevel, 732 - i);
-            this.replacedBlocks.put(replaceLocation, new Tuple<>(new Tuple<>(35, i % 2 == 0 ? (byte)14 : (byte)11), new Tuple<>(replaceLocation.getBlock().getTypeId(), replaceLocation.getBlock().getData())));
+            this.replacedBlocks.put(replaceLocation, new Tuple<>(new Tuple<>(35, i % 2 == 0 ? (byte) 14 : (byte) 11), new Tuple<>(replaceLocation.getBlock().getTypeId(), replaceLocation.getBlock().getData())));
         }
 
         for (int i = 0; i < 7; i++) {
             Location replaceLocation = new Location(this.boss.getLocation().getWorld(), 785 - i, yLevel, 726);
-            this.replacedBlocks.put(replaceLocation, new Tuple<>(new Tuple<>(35, i % 2 == 0 ? (byte)14 : (byte)11), new Tuple<>(replaceLocation.getBlock().getTypeId(), replaceLocation.getBlock().getData())));
+            this.replacedBlocks.put(replaceLocation, new Tuple<>(new Tuple<>(35, i % 2 == 0 ? (byte) 14 : (byte) 11), new Tuple<>(replaceLocation.getBlock().getTypeId(), replaceLocation.getBlock().getData())));
         }
 
         for (int i = 0; i < 7; i++) {
             Location replaceLocation = new Location(this.boss.getLocation().getWorld(), 779, yLevel, 726 + i);
-            this.replacedBlocks.put(replaceLocation, new Tuple<>(new Tuple<>(35, i % 2 == 0 ? (byte)14 : (byte)11), new Tuple<>(replaceLocation.getBlock().getTypeId(), replaceLocation.getBlock().getData())));
+            this.replacedBlocks.put(replaceLocation, new Tuple<>(new Tuple<>(35, i % 2 == 0 ? (byte) 14 : (byte) 11), new Tuple<>(replaceLocation.getBlock().getTypeId(), replaceLocation.getBlock().getData())));
         }
 
         for (int i = 0; i < 7; i++) {
             Location replaceLocation = new Location(this.boss.getLocation().getWorld(), 779 + i, yLevel, 732);
-            this.replacedBlocks.put(replaceLocation, new Tuple<>(new Tuple<>(35, i % 2 == 0 ? (byte)14 : (byte)11), new Tuple<>(replaceLocation.getBlock().getTypeId(), replaceLocation.getBlock().getData())));
+            this.replacedBlocks.put(replaceLocation, new Tuple<>(new Tuple<>(35, i % 2 == 0 ? (byte) 14 : (byte) 11), new Tuple<>(replaceLocation.getBlock().getTypeId(), replaceLocation.getBlock().getData())));
         }
 
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 Location blockLocation = new Location(this.boss.getLocation().getWorld(), 780 + j, yLevel, 727 + i);
                 blockLocation.getBlock().setMetadata("armorMagnetPortal", new FixedMetadataValue(CosmicBosses.get(), true));
-                this.replacedBlocks.put(blockLocation, new Tuple<>(new Tuple<>(Material.ENDER_PORTAL.getId(), (byte)0), new Tuple<>(blockLocation.getBlock().getTypeId(), blockLocation.getBlock().getData())));
+                this.replacedBlocks.put(blockLocation, new Tuple<>(new Tuple<>(Material.ENDER_PORTAL.getId(), (byte) 0), new Tuple<>(blockLocation.getBlock().getTypeId(), blockLocation.getBlock().getData())));
 
                 Location blockUnderLocation = blockLocation.clone().add(0, -1, 0);
-                this.replacedBlocks.put(blockUnderLocation, new Tuple<>(new Tuple<>(Material.BEDROCK.getId(), (byte)0), new Tuple<>(blockUnderLocation.getBlock().getTypeId(), blockUnderLocation.getBlock().getData())));
+                this.replacedBlocks.put(blockUnderLocation, new Tuple<>(new Tuple<>(Material.BEDROCK.getId(), (byte) 0), new Tuple<>(blockUnderLocation.getBlock().getTypeId(), blockUnderLocation.getBlock().getData())));
             }
         }
 
@@ -114,8 +113,8 @@ public class ArmorMagnetAbility extends DungeonAbility {
         });
 
         boss.getNearbyEntities(300.0, EntityType.PLAYER).forEach(p -> {
-            boss.sendMessage((Player)p, CC.translate("&5&lYou call that protection? Pitful!"));
-            this.playersToPull.add((Player)p);
+            boss.sendMessage((Player) p, CC.translate("&5&lYou call that protection? Pitful!"));
+            this.playersToPull.add((Player) p);
         });
     }
 
@@ -130,7 +129,7 @@ public class ArmorMagnetAbility extends DungeonAbility {
 
         this.tickCount = 0;
 
-        ((CorruptCosmonaut)this.boss).doTrickster();
+        ((CorruptCosmonaut) this.boss).doTrickster();
     }
 
     @Override

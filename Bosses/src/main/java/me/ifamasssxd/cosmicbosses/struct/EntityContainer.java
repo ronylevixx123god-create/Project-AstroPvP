@@ -1,11 +1,11 @@
 package me.ifamasssxd.cosmicbosses.struct;
 
-import java.util.*;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Entity;
 
-public interface EntityContainer
-{
+import java.util.Set;
+
+public interface EntityContainer {
     Set<Entity> getEntities();
-    
+
     void clearEntities();
 }

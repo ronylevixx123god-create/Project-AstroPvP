@@ -13,33 +13,32 @@ import org.bukkit.event.Event;
 
 import java.util.concurrent.TimeUnit;
 
-public class EndOfWorld extends DungeonAbility
-{
+public class EndOfWorld extends DungeonAbility {
     private final int COUNTDOWN_TIME;
     private int secondsCounted;
     int ticks;
     private boolean executed;
-    
+
     public EndOfWorld(final Boss boss) {
         super(boss);
-        this.COUNTDOWN_TIME = (int)TimeUnit.MINUTES.toSeconds(3L);
+        this.COUNTDOWN_TIME = (int) TimeUnit.MINUTES.toSeconds(3L);
         this.secondsCounted = 0;
         this.ticks = 0;
         this.executed = false;
     }
-    
+
     @Override
     public void onTick() throws Exception {
         ++this.ticks;
         if (this.ticks % 20 == 0 && !this.executed) {
             ++this.secondsCounted;
-            de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(),this.getBoss().getEntity().getLocation(),1f, 1f, 1f, 0.1f,20);
+            de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), this.getBoss().getEntity().getLocation(), 1f, 1f, 1f, 0.1f, 20);
 
             this.boss.getEntity().getWorld().getPlayers().forEach(pl -> pl.playSound(pl.getLocation(), Sound.NOTE_PLING, 1.0f, 1.1f));
             if (this.secondsCounted >= this.COUNTDOWN_TIME) {
                 this.executed = true;
                 Bukkit.getLogger().info("Killing everyone due to End Of World time running out.");
-                for (final Player player : ((DungeonYijki)this.boss).getWorldPlayers()) {
+                for (final Player player : ((DungeonYijki) this.boss).getWorldPlayers()) {
                     if (!(player instanceof EntityHumanNPC.PlayerNPC) && !BossUtils.isInGodMode(player) && player.getHealth() > 0.0) {
                         player.setHealth(0.0);
                         Bukkit.getLogger().info("Killing " + player.getName());
@@ -48,43 +47,43 @@ public class EndOfWorld extends DungeonAbility
             }
         }
     }
-    
+
     @Override
     public long getCooldown() {
         return TimeUnit.SECONDS.toMillis(300L);
     }
-    
+
     @Override
     public boolean shouldStopTicking() {
         return this.executed;
     }
-    
+
     @Override
     public void onAbilityEnable() {
         this.initAbility();
-        final DungeonYijki boss = (DungeonYijki)this.boss;
+        final DungeonYijki boss = (DungeonYijki) this.boss;
         for (final Player pl : boss.getWorldPlayers()) {
             pl.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "End of The World >> " + ChatColor.RED + "This reality does not exist with out me. I will not die in a place of my own creation. I am deleting this dimension. All your lives will end shortly, along with this world.");
         }
     }
-    
+
     @Override
     public void onAbilityDisable() {
     }
-    
+
     @Override
     public void onAbilityEvent(final Event event) {
     }
-    
+
     @Override
     public String getAbilityName() {
         return "End of World";
     }
-    
+
     public int getCOUNTDOWN_TIME() {
         return this.COUNTDOWN_TIME;
     }
-    
+
     public int getSecondsCounted() {
         return this.secondsCounted;
     }

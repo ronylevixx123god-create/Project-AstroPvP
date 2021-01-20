@@ -1,19 +1,12 @@
 package me.ifamasssxd.cosmicbosses.dungeonboss.planetnul;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonAbility;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.killtracker.KillTrackerAPI;
-import org.arkhamnetwork.enchantments.Enchantments;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.plugin.Plugin;
 
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -48,7 +41,7 @@ public class SoulReaperAbility extends DungeonAbility {
         this.initAbility();
         this.boss.sendMessage(CC.translate("&5&lBehold, the powers of a true Soul Reaper!"));
 
-        for (Player player : this.getBoss().getNearbyEntities(250.0, EntityType.PLAYER).stream().map(e -> (Player)e).collect(Collectors.toList())) {
+        for (Player player : this.getBoss().getNearbyEntities(250.0, EntityType.PLAYER).stream().map(e -> (Player) e).collect(Collectors.toList())) {
             if (KillTrackerAPI.hasSoulAmount(player, 100)) {
                 KillTrackerAPI.removeSoulsFromGems(player, 100);
                 this.boss.sendMessage(player, CC.translate("&5&lYour souls belong to ME! [&c&l-100 Souls&5&l]"));
@@ -61,7 +54,7 @@ public class SoulReaperAbility extends DungeonAbility {
 
     @Override
     public void onAbilityDisable() {
-        ((CorruptCosmonaut)this.boss).doTrickster();
+        ((CorruptCosmonaut) this.boss).doTrickster();
     }
 
     @Override

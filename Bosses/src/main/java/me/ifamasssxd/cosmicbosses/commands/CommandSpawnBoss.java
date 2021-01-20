@@ -1,15 +1,17 @@
 package me.ifamasssxd.cosmicbosses.commands;
 
-import java.util.*;
-import org.bukkit.command.*;
-import org.bukkit.entity.*;
-import org.bukkit.*;
-import me.ifamasssxd.cosmicbosses.struct.enums.*;
+import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
+import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
-public class CommandSpawnBoss implements CommandExecutor
-{
+import java.util.HashSet;
+
+public class CommandSpawnBoss implements CommandExecutor {
     HashSet<Byte> empty;
-    
+
     public boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
         if (!sender.isOp()) {
             return true;
@@ -21,7 +23,7 @@ public class CommandSpawnBoss implements CommandExecutor
             sender.sendMessage(ChatColor.RED + "Invalid usage: /spawnboss <bossName>");
             return true;
         }
-        final Player p = (Player)sender;
+        final Player p = (Player) sender;
         final String bossName = args[0];
         final BossType type = BossType.getBossType(bossName);
         if (type == null) {

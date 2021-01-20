@@ -1,23 +1,15 @@
 package me.ifamasssxd.cosmicbosses.dungeonboss.planetnul;
 
-import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonAbility;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
-import me.ifamasssxd.cosmicbosses.utils.CustomItem;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.*;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Skeleton;
 import org.bukkit.event.Event;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class CloneWarAbility extends DungeonAbility {
@@ -28,9 +20,9 @@ public class CloneWarAbility extends DungeonAbility {
     @Override
     public void onTick() {
         this.boss.getMinions().forEach(minion -> {
-            Skeleton skeleton = (Skeleton)minion;
+            Skeleton skeleton = (Skeleton) minion;
             if (skeleton.getTarget() == null || !(skeleton.getTarget() instanceof Player)) {
-                skeleton.getNearbyEntities(10.0, 10.0, 10.0).stream().filter(en -> en instanceof Player).findAny().ifPresent(e -> skeleton.setTarget((LivingEntity)e));
+                skeleton.getNearbyEntities(10.0, 10.0, 10.0).stream().filter(en -> en instanceof Player).findAny().ifPresent(e -> skeleton.setTarget((LivingEntity) e));
             }
         });
     }
@@ -56,7 +48,7 @@ public class CloneWarAbility extends DungeonAbility {
     public void onAbilityEnable() {
         this.initAbility();
 
-        ((CorruptCosmonaut)this.boss).setDuplicateMinions(true);
+        ((CorruptCosmonaut) this.boss).setDuplicateMinions(true);
 
         this.attemptSpawn(this.boss.getEntity().getLocation().clone().add(0, 0, 4));
         this.attemptSpawn(this.boss.getEntity().getLocation().clone().add(4, 0, 0));
@@ -74,8 +66,8 @@ public class CloneWarAbility extends DungeonAbility {
     @Override
     public void onAbilityDisable() {
         this.boss.removeMinions();
-        ((CorruptCosmonaut)this.boss).setDuplicateMinions(false);
-        ((CorruptCosmonaut)this.boss).doTrickster();
+        ((CorruptCosmonaut) this.boss).setDuplicateMinions(false);
+        ((CorruptCosmonaut) this.boss).doTrickster();
     }
 
     @Override

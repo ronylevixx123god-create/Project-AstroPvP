@@ -1,11 +1,11 @@
 package me.ifamasssxd.cosmicbosses.bosses.dragon.phases;
 
-import me.ifamasssxd.cosmicbosses.bosses.dragon.*;
-import java.lang.reflect.*;
-import java.util.*;
+import me.ifamasssxd.cosmicbosses.bosses.dragon.EndDragonEntity;
 
-public class PhaseList<T extends IPhase>
-{
+import java.lang.reflect.Constructor;
+import java.util.Arrays;
+
+public class PhaseList<T extends IPhase> {
     private static PhaseList<?>[] phases;
     public static final PhaseList<PhaseHoldingPattern> HOLDING_PATTERN;
     public static final PhaseList<PhaseLandingApproach> LANDING_APPROACH;
@@ -20,52 +20,51 @@ public class PhaseList<T extends IPhase>
     private final Class<? extends IPhase> clazz;
     private final int id;
     private final String name;
-    
+
     private PhaseList(final int idIn, final Class<? extends IPhase> clazzIn, final String nameIn) {
         this.id = idIn;
         this.clazz = clazzIn;
         this.name = nameIn;
     }
-    
+
     public IPhase createPhase(final EndDragonEntity dragon) {
         try {
             final Constructor<? extends IPhase> constructor = this.getConstructor();
-            return (IPhase)constructor.newInstance(dragon);
-        }
-        catch (Exception exception) {
+            return (IPhase) constructor.newInstance(dragon);
+        } catch (Exception exception) {
             throw new Error(exception);
         }
     }
-    
+
     protected Constructor<? extends IPhase> getConstructor() throws NoSuchMethodException {
         return this.clazz.getConstructor(EndDragonEntity.class);
     }
-    
+
     public int getId() {
         return this.id;
     }
-    
+
     @Override
     public String toString() {
         return this.name + " (#" + this.id + ")";
     }
-    
+
     public static PhaseList<?> getById(final int idIn) {
         return (idIn >= 0 && idIn < PhaseList.phases.length) ? PhaseList.phases[idIn] : PhaseList.HOLDING_PATTERN;
     }
-    
+
     public static int getTotalPhases() {
         return PhaseList.phases.length;
     }
-    
+
     private static <T extends IPhase> PhaseList<T> create(final Class<T> phaseIn, final String nameIn) {
         final PhaseList<T> phaselist = new PhaseList<T>(PhaseList.phases.length, phaseIn, nameIn);
         PhaseList.phases = Arrays.copyOf(PhaseList.phases, PhaseList.phases.length + 1);
-        return (PhaseList<T>)(PhaseList.phases[phaselist.getId()] = phaselist);
+        return (PhaseList<T>) (PhaseList.phases[phaselist.getId()] = phaselist);
     }
-    
+
     static {
-        PhaseList.phases = (PhaseList<?>[])new PhaseList[0];
+        PhaseList.phases = (PhaseList<?>[]) new PhaseList[0];
         HOLDING_PATTERN = create(PhaseHoldingPattern.class, "HoldingPattern");
         LANDING_APPROACH = create(PhaseLandingApproach.class, "LandingApproach");
         LANDING = create(PhaseLanding.class, "Landing");

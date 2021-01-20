@@ -8,7 +8,10 @@ import com.cosmicpvp.cosmicutils.itembuilder.HeroicUpgradeBuilder;
 import com.cosmicpvp.cosmicutils.itembuilder.MaskBuilder;
 import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
 import com.cosmicpvp.cosmicutils.struct.EquipmentType;
-import com.cosmicpvp.cosmicutils.utils.*;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
+import com.cosmicpvp.cosmicutils.utils.ItemUtils;
+import com.cosmicpvp.cosmicutils.utils.JSONMessage;
 import com.google.common.collect.Lists;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import me.ifamasssxd.cosmicbosses.bosses.dragon.phases.PhaseList;
@@ -41,8 +44,7 @@ import org.spigotmc.SpigotWorldConfig;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class EndDragon extends Boss implements GlobalBoss
-{
+public class EndDragon extends Boss implements GlobalBoss {
     private EndDragonEntity dragon;
     private int endSpawnActivation;
     private int endViewDistance;
@@ -50,7 +52,7 @@ public class EndDragon extends Boss implements GlobalBoss
     private DragonFireball fireball;
     private DragonPhase dragonPhase;
     private long lastPhaseChange;
-    
+
     public EndDragon(final Location location, final BossType bossType) {
         super(location, bossType);
         this.bomb = new DragonTNTBomb(this);
@@ -64,51 +66,51 @@ public class EndDragon extends Boss implements GlobalBoss
         this.getLootPool().add(CosmicSpaceChestsAPI.getDropPackageChest(ItemRarity.GOD));
         this.getLootPool().add(CosmicSpaceChestsAPI.getDropPackageChest(ItemRarity.GOD));
     }
-    
+
     @Override
     public EntityType getEntityType() {
         return EntityType.ENDER_DRAGON;
     }
-    
+
     @Override
     public String getCustomName() {
         return CC.DarkRedB + "Timeless Dragon";
     }
-    
+
     @Override
     public String getName() {
         return "Timeless Dragon";
     }
-    
+
     @Override
     public void cleanup() {
         if (this.endSpawnActivation != 0) {
-            ((CraftWorld)this.location.getWorld()).getHandle().spigotConfig.monsterActivationRange = this.endSpawnActivation;
+            ((CraftWorld) this.location.getWorld()).getHandle().spigotConfig.monsterActivationRange = this.endSpawnActivation;
         }
         if (this.endViewDistance != 0) {
-            ((CraftWorld)this.location.getWorld()).getHandle().spigotConfig.viewDistance = this.endViewDistance;
+            ((CraftWorld) this.location.getWorld()).getHandle().spigotConfig.viewDistance = this.endViewDistance;
         }
         this.removeMinions();
         this.clearScoreboard();
     }
-    
+
     @Override
     public String getTitle() {
         return null;
     }
-    
+
     @Override
     public LivingEntity spawnBoss() {
-        final WorldServer server = ((CraftWorld)this.location.getWorld()).getHandle();
-        (this.dragon = new EndDragonEntity((World)server, this)).setPosition(this.location.getX(), this.location.getY(), this.location.getZ());
+        final WorldServer server = ((CraftWorld) this.location.getWorld()).getHandle();
+        (this.dragon = new EndDragonEntity((World) server, this)).setPosition(this.location.getX(), this.location.getY(), this.location.getZ());
         this.dragon.getPhaseManager().setPhase(PhaseList.HOLDING_PATTERN);
-        (this.dragon.homeLocation = this.location.clone()).setY((double)(BossUtils.getHighestBlockYAt(this.dragon.homeLocation, true) + 3));
-        server.addEntity((Entity)this.dragon, CreatureSpawnEvent.SpawnReason.CUSTOM);
-        final LivingEntity e = (LivingEntity)this.dragon.getBukkitEntity();
+        (this.dragon.homeLocation = this.location.clone()).setY((double) (BossUtils.getHighestBlockYAt(this.dragon.homeLocation, true) + 3));
+        server.addEntity((Entity) this.dragon, CreatureSpawnEvent.SpawnReason.CUSTOM);
+        final LivingEntity e = (LivingEntity) this.dragon.getBukkitEntity();
         this.uuid = e.getUniqueId();
-        e.setMetadata("do_not_clear", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), (Object)""));
-        e.setMetadata("boss", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), (Object)""));
-        e.setMaxHealth((double)this.getMaxHealth());
+        e.setMetadata("do_not_clear", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
+        e.setMetadata("boss", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
+        e.setMaxHealth((double) this.getMaxHealth());
         e.setHealth(e.getMaxHealth());
         this.setEnt(e);
         e.setRemoveWhenFarAway(false);
@@ -129,7 +131,7 @@ public class EndDragon extends Boss implements GlobalBoss
         spigotConfig2.monsterActivationRange *= 3;
         return e;
     }
-    
+
     @Override
     public void onUpdate() throws Exception {
         ++this.loops;
@@ -143,7 +145,7 @@ public class EndDragon extends Boss implements GlobalBoss
             Bukkit.getLogger().info("EnderDragon Entity is not alive!");
             return;
         }
-        if (entity.world.getChunkIfLoaded((int)Math.floor(entity.locX), (int)Math.floor(entity.locZ)) == null) {
+        if (entity.world.getChunkIfLoaded((int) Math.floor(entity.locX), (int) Math.floor(entity.locZ)) == null) {
             return;
         }
         if (this.bomb.canUse()) {
@@ -157,18 +159,18 @@ public class EndDragon extends Boss implements GlobalBoss
             this.updateScoreboard();
         }
     }
-    
+
     @Override
-    public void onDamageTaken(final EntityDamageByEntityEvent event, final org.bukkit.entity.Entity damager) {
+    public void onDamageTaken(final EntityDamageByEntityEvent event, final org.bukkit.entity.Entity damager) throws Exception {
         if (!(damager instanceof Player)) {
             event.setCancelled(true);
             return;
         }
         super.onDamageTaken(event, damager);
     }
-    
+
     @Override
-    public void onDamageTaken(final EntityDamageEvent event) {
+    public void onDamageTaken(final EntityDamageEvent event) throws Exception {
         if (event.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION || event.getCause() == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION) {
             event.setCancelled(true);
             return;
@@ -176,18 +178,18 @@ public class EndDragon extends Boss implements GlobalBoss
         event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) / 3.0);
         super.onDamageTaken(event);
     }
-    
+
     public EndDragonEntity getNMSEntity() {
         return this.dragon;
     }
-    
+
     @Override
     public List<org.bukkit.entity.Entity> getMinions() {
         final List<org.bukkit.entity.Entity> minions = super.getMinions();
         minions.removeIf(ent -> !ent.isValid());
         return minions;
     }
-    
+
     public List<org.bukkit.entity.Entity> getMinions(final EntityType type) {
         final List<org.bukkit.entity.Entity> found = Lists.newArrayList();
         final List<org.bukkit.entity.Entity> minions = super.getMinions();
@@ -199,15 +201,15 @@ public class EndDragon extends Boss implements GlobalBoss
         }
         return found;
     }
-    
+
     protected Phase getNewPhase() {
         final List<DragonPhase> available = Lists.newArrayList(DragonPhase.values());
         available.remove(this.dragonPhase);
         return Phase.getPhase(available.get(this.random.nextInt(available.size())).getPhase());
     }
-    
+
     @Override
-    public void onDeath(final EntityDeathEvent event) {
+    public void onDeath(final EntityDeathEvent event) throws Exception {
         super.onDeath(event);
         if (event != null && Math.random() <= 0.1) {
             final ItemStack mask = new MaskBuilder("DRAGON_MASK").build();
@@ -262,18 +264,18 @@ public class EndDragon extends Boss implements GlobalBoss
                         event.getEntity().getWorld().dropItemNaturally(toSpawn, item);
                         event.getEntity().getWorld().playSound(toSpawn, Sound.CHICKEN_EGG_POP, 10.0f, 1.4f);
                     }
-                }.runTaskTimer((Plugin)CosmicBosses.get(), 20L, 5L);
+                }.runTaskTimer((Plugin) CosmicBosses.get(), 20L, 5L);
             }
         }
     }
-    
+
     private List<ItemStack> addLuckyBoxItems(final List<ItemStack> items) {
-        final List<ItemStack> found = (List<ItemStack>)((Lucky)EvolutionKits.LUCKY.getKit()).getLuckyBoxItems(6 + this.random.nextInt(5), 5000.0);
+        final List<ItemStack> found = (List<ItemStack>) ((Lucky) EvolutionKits.LUCKY.getKit()).getLuckyBoxItems(6 + this.random.nextInt(5), 5000.0);
         found.remove(0);
         items.addAll(found);
         return items;
     }
-    
+
     @Override
     public void onPhaseChange(final Phase newPhase) {
         final DragonPhase newDragonPhase = DragonPhase.getDragonPhase(newPhase.getPhase());
@@ -283,11 +285,11 @@ public class EndDragon extends Boss implements GlobalBoss
         this.lastPhaseChange = System.currentTimeMillis();
         this.dragonPhase = newDragonPhase;
     }
-    
+
     @Override
     public void onMinionUpdate(final org.bukkit.entity.Entity minion, final Event e) throws Exception {
         if (e instanceof EntityDamageByEntityEvent) {
-            final EntityDamageByEntityEvent event = (EntityDamageByEntityEvent)e;
+            final EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) e;
             if (!event.getDamager().equals(minion)) {
                 return;
             }
@@ -295,22 +297,21 @@ public class EndDragon extends Boss implements GlobalBoss
                 event.setCancelled(true);
                 return;
             }
-            final LivingEntity entity = (LivingEntity)event.getEntity();
+            final LivingEntity entity = (LivingEntity) event.getEntity();
             if (minion instanceof TNTPrimed) {
                 double percent = 0.0;
                 if (minion.hasMetadata("mouth_bomb")) {
                     percent = 15.0;
-                }
-                else if (minion.hasMetadata("dragon_bomb")) {
+                } else if (minion.hasMetadata("dragon_bomb")) {
                     percent = 30.0;
                 }
-                final Player player = (Player)entity;
+                final Player player = (Player) entity;
                 event.setDamage(0.0);
                 if (percent > 0.0 && BossUtils.dealPercentMaxHealthDamage(player, percent, 20, true, true)) {
                     if (entity.isDead()) {
                         event.setCancelled(true);
                         event.setDamage(0.0);
-                        Bukkit.getLogger().info("[EndDragon] Cancelling TNT damage for " + ((Player)event.getEntity()).getName() + " because they are dead!");
+                        Bukkit.getLogger().info("[EndDragon] Cancelling TNT damage for " + ((Player) event.getEntity()).getName() + " because they are dead!");
                         return;
                     }
                     entity.playEffect(EntityEffect.HURT);
@@ -318,29 +319,27 @@ public class EndDragon extends Boss implements GlobalBoss
                     de.inventivegames.particle.ParticleEffect.LARGE_SMOKE.sendToPlayers(Bukkit.getOnlinePlayers(), entity.getLocation(), 1f, 1f, 1f, 0.01f, 15);
                     Bukkit.getLogger().info("[EnderDragon] Damaging " + entity.getHealth() + " by " + percent + " new health: " + entity.getHealth());
                 }
-            }
-            else if (minion instanceof Blaze || minion instanceof Skeleton) {
+            } else if (minion instanceof Blaze || minion instanceof Skeleton) {
                 event.setDamage(0.01);
-                if (!event.getEntity().isDead() && BossUtils.dealPercentMaxHealthDamage((Player)event.getEntity(), 10.0, 10, true, true)) {
+                if (!event.getEntity().isDead() && BossUtils.dealPercentMaxHealthDamage((Player) event.getEntity(), 10.0, 10, true, true)) {
                     if (!event.getEntity().isDead()) {
                         event.getEntity().playEffect(EntityEffect.HURT);
-                    }
-                    else {
+                    } else {
                         event.setCancelled(true);
                         event.setDamage(0.0);
-                        Bukkit.getLogger().info("Cancelling damage for " + ((Player)event.getEntity()).getName());
+                        Bukkit.getLogger().info("Cancelling damage for " + ((Player) event.getEntity()).getName());
                     }
                 }
             }
         }
         super.onMinionUpdate(minion, e);
     }
-    
+
     @Override
     public void onMiscUpdate(final Event event) throws Exception {
         if (event instanceof ProjectileHitEvent) {
-            final ProjectileHitEvent hitEvent = (ProjectileHitEvent)event;
-            final org.bukkit.entity.Entity projectile = (org.bukkit.entity.Entity)hitEvent.getEntity();
+            final ProjectileHitEvent hitEvent = (ProjectileHitEvent) event;
+            final org.bukkit.entity.Entity projectile = (org.bukkit.entity.Entity) hitEvent.getEntity();
             final Location loc = projectile.getLocation();
             for (int toSpawn = 1 + ThreadLocalRandom.current().nextInt(3), i = 0; i < toSpawn; ++i) {
                 this.spawnFireballMinion(loc.clone().add(this.random.nextGaussian() / 2.0, this.random.nextDouble() / 2.0, this.random.nextGaussian() / 2.0), true);
@@ -350,8 +349,8 @@ public class EndDragon extends Boss implements GlobalBoss
             de.inventivegames.particle.ParticleEffect.HUGE_EXPLOSION.sendToPlayers(Bukkit.getOnlinePlayers(), entity.getLocation(), 1f, 1f, 1f, 0.01f, 15);
 
             hitEvent.getEntity().getNearbyEntities(10.0, 10.0, 10.0).stream().filter(en -> en instanceof Player).map(e -> e).forEach(pl -> {
-                if (!pl.isDead() && BossUtils.dealPercentMaxHealthDamage((Player)pl, 10.0, 10, true, true)) {
-                    BossUtils.pushAwayPlayer((Player)pl, loc, 1.6);
+                if (!pl.isDead() && BossUtils.dealPercentMaxHealthDamage((Player) pl, 10.0, 10, true, true)) {
+                    BossUtils.pushAwayPlayer((Player) pl, loc, 1.6);
                     pl.playEffect(EntityEffect.HURT);
                 }
                 return;
@@ -359,7 +358,7 @@ public class EndDragon extends Boss implements GlobalBoss
             projectile.remove();
         }
     }
-    
+
     private org.bukkit.entity.Entity spawnFireballMinion(final Location location, final boolean despawnOlds) {
         final EntityType toSpawn = this.random.nextBoolean() ? EntityType.SKELETON : EntityType.BLAZE;
         final List<org.bukkit.entity.Entity> minions = this.getMinions(toSpawn);
@@ -376,69 +375,68 @@ public class EndDragon extends Boss implements GlobalBoss
         if (minionSize >= 15) {
             return null;
         }
-        final LivingEntity ent2 = (LivingEntity)this.getEntity().getWorld().spawnEntity(location, toSpawn);
+        final LivingEntity ent2 = (LivingEntity) this.getEntity().getWorld().spawnEntity(location, toSpawn);
         if (ent2 instanceof Skeleton) {
-            ((Skeleton)ent2).setSkeletonType(Skeleton.SkeletonType.WITHER);
+            ((Skeleton) ent2).setSkeletonType(Skeleton.SkeletonType.WITHER);
         }
         ent2.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 2));
         ent2.setMaxHealth(ent2.getMaxHealth() * 5.0);
         ent2.setHealth(ent2.getMaxHealth());
         ent2.setCustomName(CC.LightPurpleB + "A Wandering Soul");
         ent2.setCustomNameVisible(true);
-        ent2.setMetadata("no_drops", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.get(), (Object)this.getUuid()));
-        ent2.setMetadata("minion", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.get(), (Object)this.getUuid()));
+        ent2.setMetadata("no_drops", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.get(), (Object) this.getUuid()));
+        ent2.setMetadata("minion", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.get(), (Object) this.getUuid()));
         ent2.getEquipment().setItemInHandDropChance(0.0f);
         ent2.getEquipment().setHelmetDropChance(0.0f);
         ent2.getEquipment().setChestplateDropChance(0.0f);
         ent2.getEquipment().setLeggingsDropChance(0.0f);
         ent2.getEquipment().setBootsDropChance(0.0f);
         ent2.getEquipment().setItemInHand(new ItemBuilder(Material.DIAMOND_SWORD).enchant(Enchantment.DURABILITY, 3).enchant(Enchantment.DAMAGE_ALL, 5).build());
-        this.getMinions().add((org.bukkit.entity.Entity)ent2);
-        return (org.bukkit.entity.Entity)ent2;
+        this.getMinions().add((org.bukkit.entity.Entity) ent2);
+        return (org.bukkit.entity.Entity) ent2;
     }
-    
+
     @Override
-    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) {
+    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) throws Exception {
         if (event.getDamager() instanceof LargeFireball) {
             this.spawnFireballMinion(event.getDamager().getLocation().add(0.0, 1.0, 0.0), false);
         }
         super.onAttackPlayer(event, player);
     }
-    
+
     @Override
     public DamageType getDamageType() {
         return DamageType.FIRE;
     }
-    
+
     @Override
     public Difficulty getDifficulty() {
         return Difficulty.END;
     }
-    
+
     @Override
     public int getMaxHealth() {
         return 2000;
     }
-    
+
     @Override
     public void sendMessage(final String msg) {
         super.sendMessage(msg);
     }
-    
+
     @Override
     public int getMessageRadius() {
         return 48;
     }
-    
+
     @Override
     public List<BossMessage> getGeneralMessages() {
-        return (List<BossMessage>)Lists.newArrayList(new BossMessage[] { new BossMessage("You dare to enter my realm and disturb my slumber?", false, -1), new BossMessage("I will burn your world to ash!", false, 0), new BossMessage("Greater warriors than you have fallen before me.", false, 0) });
+        return (List<BossMessage>) Lists.newArrayList(new BossMessage[]{new BossMessage("You dare to enter my realm and disturb my slumber?", false, -1), new BossMessage("I will burn your world to ash!", false, 0), new BossMessage("Greater warriors than you have fallen before me.", false, 0)});
     }
-    
-    enum PathStyle
-    {
-        NORMAL, 
-        DIVE_BOMB_ABOVE, 
+
+    enum PathStyle {
+        NORMAL,
+        DIVE_BOMB_ABOVE,
         DIVE_BOMB_BELOW;
     }
 }

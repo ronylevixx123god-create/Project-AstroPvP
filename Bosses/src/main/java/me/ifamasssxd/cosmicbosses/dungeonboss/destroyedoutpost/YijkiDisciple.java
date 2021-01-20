@@ -36,8 +36,7 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.Iterator;
 import java.util.List;
 
-public class YijkiDisciple extends Boss implements MiniBoss
-{
+public class YijkiDisciple extends Boss implements MiniBoss {
     EmpoweredArrow empoweredArrow;
     Summoning summoning;
     public boolean invincible;
@@ -46,7 +45,7 @@ public class YijkiDisciple extends Boss implements MiniBoss
     long timeSinceInvincible;
     Entity lastTarget;
     int storedHealth;
-    
+
     public YijkiDisciple(final Location location, final BossType bossType) {
         super(location, bossType);
         this.empoweredArrow = new EmpoweredArrow(this);
@@ -57,24 +56,24 @@ public class YijkiDisciple extends Boss implements MiniBoss
         this.timeSinceInvincible = System.currentTimeMillis();
         this.storedHealth = this.getMaxHealth();
     }
-    
+
     @Override
     public String getTitle() {
         return null;
     }
-    
+
     @Override
     public EntityType getEntityType() {
         return EntityType.SKELETON;
     }
-    
+
     @Override
     public LivingEntity spawnBoss() {
-        final LivingEntity e = (LivingEntity)BossUtils.createCustomEntity(CustomEntity.DUNGEON_DISCIPEL, this.location);
+        final LivingEntity e = (LivingEntity) BossUtils.createCustomEntity(CustomEntity.DUNGEON_DISCIPEL, this.location);
         this.uuid = e.getUniqueId();
-        e.setMetadata("do_not_clear", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), (Object)""));
-        e.setMetadata("boss", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), (Object)""));
-        e.setMaxHealth((double)this.getMaxHealth());
+        e.setMetadata("do_not_clear", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
+        e.setMetadata("boss", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
+        e.setMaxHealth((double) this.getMaxHealth());
         e.setHealth(e.getMaxHealth());
         this.setEnt(e);
         e.setCustomName(this.getDifficulty().getColor() + ChatColor.BOLD.toString() + this.getCustomName());
@@ -88,7 +87,7 @@ public class YijkiDisciple extends Boss implements MiniBoss
         }
         return e;
     }
-    
+
     @Override
     public void onBossSpawn() {
         final LivingEntity skeleton = this.spawnBoss();
@@ -100,17 +99,17 @@ public class YijkiDisciple extends Boss implements MiniBoss
         this.onPhaseChange(Phase.TWO);
         this.alert();
     }
-    
+
     @Override
     public String getCustomName() {
         return "Disciple of Yijki";
     }
-    
+
     @Override
     public String getName() {
         return "Disciple of Yijki";
     }
-    
+
     @Override
     public void onUpdate() throws Exception {
         ++this.loops;
@@ -123,7 +122,7 @@ public class YijkiDisciple extends Boss implements MiniBoss
             de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayer((Player) entity, entity.getLocation(), 1f, 1f, 1f, 0.1f, 30);
         }
         if (this.loops % 2 == 0) {
-            final Creature boss = (Creature)this.getEntity();
+            final Creature boss = (Creature) this.getEntity();
             if (boss != null && boss.getTarget() != null && boss.getTarget() instanceof Player && boss.getTarget().getLocation().getWorld().equals(boss.getWorld()) && boss.getTarget().getLocation().distanceSquared(boss.getLocation()) >= 100.0 && boss.getTarget().getWorld().getName().equals(boss.getWorld().getName())) {
                 boss.teleport(boss.getTarget().getLocation());
             }
@@ -137,12 +136,12 @@ public class YijkiDisciple extends Boss implements MiniBoss
             }
         }
         if (this.loops % 4 == 0 && this.invincible && entity.getHealth() < this.storedHealth) {
-            entity.setHealth((double)this.storedHealth);
+            entity.setHealth((double) this.storedHealth);
         }
         if (!this.invincible && this.getPhase() == Phase.TWO && this.summoning.canUse() && (this.hits >= 10 || System.currentTimeMillis() - this.timeSinceInvincible >= this.summoning.getCooldown() * 0.45)) {
             this.hits = 0;
             this.timeSinceInvincible = System.currentTimeMillis();
-            this.storedHealth = (int)entity.getHealth();
+            this.storedHealth = (int) entity.getHealth();
             this.summoning.onAbility();
         }
         if (this.getPhase() == Phase.ONE && this.empoweredArrow.canUse()) {
@@ -153,8 +152,7 @@ public class YijkiDisciple extends Boss implements MiniBoss
             final Entity e = ent.next();
             if (e == null || !e.isValid()) {
                 ent.remove();
-            }
-            else {
+            } else {
                 if (e.getLocation().distanceSquared(this.getEntity().getLocation()) < 1200.0) {
                     continue;
                 }
@@ -168,26 +166,25 @@ public class YijkiDisciple extends Boss implements MiniBoss
             this.updateScoreboard();
         }
         if (!this.invincible && this.loops % 2 * 20 == 0) {
-            final Creature boss = (Creature)this.getEntity();
+            final Creature boss = (Creature) this.getEntity();
             if (!boss.isInsideVehicle() && boss.getTarget() != null && boss.getTarget().isValid() && boss.getTarget() instanceof Player && boss.getTarget().getWorld().equals(this.getEntity().getWorld())) {
-                this.lastTarget = (Entity)boss.getTarget();
+                this.lastTarget = (Entity) boss.getTarget();
                 final double distance = this.lastTarget.getLocation().distanceSquared(this.getEntity().getLocation());
                 if (this.lastTarget.isValid() && distance <= 200.0 && distance > 60.0) {
-                    final EntityInsentient insent = (EntityInsentient)((CraftSkeleton)this.getEntity()).getHandle();
-                    final net.minecraft.server.v1_8_R3.Entity ent2 = ((CraftEntity)this.lastTarget).getHandle();
+                    final EntityInsentient insent = (EntityInsentient) ((CraftSkeleton) this.getEntity()).getHandle();
+                    final net.minecraft.server.v1_8_R3.Entity ent2 = ((CraftEntity) this.lastTarget).getHandle();
                     insent.getNavigation().a(ent2, 2.0);
                 }
-            }
-            else if (this.lastTarget != null) {
+            } else if (this.lastTarget != null) {
                 final double distance = this.getLocation().distanceSquared(this.getEntity().getLocation());
                 if (this.lastTarget.getWorld().equals(this.getEntity().getWorld()) && !this.lastTarget.isDead() && this.getDamageTracker().containsKey(this.lastTarget.getUniqueId()) && distance <= 200.0) {
-                    boss.setTarget((LivingEntity)this.lastTarget);
+                    boss.setTarget((LivingEntity) this.lastTarget);
                 }
             }
         }
         super.onUpdate();
     }
-    
+
     @Override
     public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) throws Exception {
         if (this.getPhase() == Phase.TWO) {
@@ -199,7 +196,7 @@ public class YijkiDisciple extends Boss implements MiniBoss
         }
         if (event.getDamager().hasMetadata("boss_empowered_arrow")) {
             final Entity arrow = event.getDamager();
-            event.getDamager().removeMetadata("boss_empowered_arrow", (Plugin)CosmicBosses.getInstance());
+            event.getDamager().removeMetadata("boss_empowered_arrow", (Plugin) CosmicBosses.getInstance());
             arrow.getWorld().playSound(arrow.getLocation(), Sound.EXPLODE, 10.0f, 1.1f);
             if (arrow.getPassenger() != null) {
                 arrow.getPassenger().remove();
@@ -214,7 +211,7 @@ public class YijkiDisciple extends Boss implements MiniBoss
             }
             for (final Entity ent : player.getNearbyEntities(4.0, 4.0, 4.0)) {
                 if (ent instanceof Player) {
-                    final Player pl = (Player)ent;
+                    final Player pl = (Player) ent;
                     if (!BossUtils.canAffectPlayer(pl, true)) {
                         continue;
                     }
@@ -222,13 +219,12 @@ public class YijkiDisciple extends Boss implements MiniBoss
                     pl.setFireTicks(100);
                 }
             }
-        }
-        else if (event.getDamager() instanceof Arrow) {
+        } else if (event.getDamager() instanceof Arrow) {
             event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 5.0);
         }
         super.onAttackPlayer(event, player);
     }
-    
+
     @Override
     public void onDamageTaken(final EntityDamageByEntityEvent event, final Entity damager) throws Exception {
         if (event.getDamager() instanceof Projectile) {
@@ -238,8 +234,8 @@ public class YijkiDisciple extends Boss implements MiniBoss
         if (this.invincible) {
             event.setCancelled(true);
             if (damager instanceof Player) {
-                final Player pl = (Player)damager;
-                BossUtils.pushAwayPlayer((Entity)this.getEntity(), pl, 2.299999952316284);
+                final Player pl = (Player) damager;
+                BossUtils.pushAwayPlayer((Entity) this.getEntity(), pl, 2.299999952316284);
             }
             this.getEntity().getWorld().playSound(this.getEntity().getLocation(), Sound.WITHER_IDLE, 3.0f, 1.8f);
             if (this.random.nextInt(10) <= 4) {
@@ -249,24 +245,22 @@ public class YijkiDisciple extends Boss implements MiniBoss
         }
         if (System.currentTimeMillis() - this.lastHit <= 500L) {
             ++this.hits;
-        }
-        else {
+        } else {
             this.hits = 1;
         }
         this.lastHit = System.currentTimeMillis();
         if (damager instanceof Player && event.getDamager() instanceof Player) {
-            final Player pl = (Player)damager;
+            final Player pl = (Player) damager;
             if (this.random.nextInt(100) <= 10) {
                 if (BossUtils.canAffectPlayer(pl, true)) {
                     pl.setFireTicks(30);
-                    BossUtils.pushAwayPlayer((Entity)this.getEntity(), pl, 10.0);
+                    BossUtils.pushAwayPlayer((Entity) this.getEntity(), pl, 10.0);
                     if (this.random.nextInt(3) == 0) {
                         pl.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 140, 3));
                     }
                     this.getEntity().getWorld().playSound(this.getEntity().getLocation(), Sound.WITHER_SHOOT, 4.0f, 0.8f);
                 }
-            }
-            else if (this.getPhase() == Phase.TWO && this.random.nextInt(10) <= 4) {
+            } else if (this.getPhase() == Phase.TWO && this.random.nextInt(10) <= 4) {
                 this.getEntity().teleport(BossUtils.getRandomLocationNearby(damager.getLocation(), 2, 1, 1));
                 this.getEntity().getWorld().playSound(this.getEntity().getLocation(), Sound.ZOMBIE_DEATH, 10.0f, 1.4f);
                 ParticleEffect.PORTAL.sendToPlayers(Bukkit.getOnlinePlayers(), this.getEntity().getLocation(), 0f, 0f, 0f, 0.09f, 25);
@@ -274,9 +268,9 @@ public class YijkiDisciple extends Boss implements MiniBoss
         }
         super.onDamageTaken(event, damager);
     }
-    
+
     @Override
-    public void onDamageTaken(final EntityDamageEvent event) {
+    public void onDamageTaken(final EntityDamageEvent event) throws Exception {
         if (event.getCause() == EntityDamageEvent.DamageCause.SUFFOCATION) {
             event.setCancelled(true);
             if (this.getAntiFarm().checkStuck()) {
@@ -288,7 +282,7 @@ public class YijkiDisciple extends Boss implements MiniBoss
         }
         super.onDamageTaken(event);
     }
-    
+
     @Override
     public void onMinionUpdate(final Entity minion, final Event e) throws Exception {
         if (minion.hasMetadata("horse")) {
@@ -296,49 +290,45 @@ public class YijkiDisciple extends Boss implements MiniBoss
                 this.getEntity().leaveVehicle();
                 this.getMinions().remove(minion);
                 this.onPhaseChange(Phase.TWO);
-            }
-            else if (e instanceof EntityDamageByEntityEvent) {
-                final EntityDamageByEntityEvent event = (EntityDamageByEntityEvent)e;
+            } else if (e instanceof EntityDamageByEntityEvent) {
+                final EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) e;
                 if (event.getDamager() instanceof Player) {
                     this.onDamageTaken(event, event.getDamager());
                 }
-            }
-            else if (e instanceof EntityDamageEvent) {
-                final EntityDamageEvent event2 = (EntityDamageEvent)e;
+            } else if (e instanceof EntityDamageEvent) {
+                final EntityDamageEvent event2 = (EntityDamageEvent) e;
                 this.onDamageTaken(event2);
             }
-        }
-        else if (e instanceof EntityDeathEvent) {
+        } else if (e instanceof EntityDeathEvent) {
             this.getMinions().remove(minion);
             if (this.invincible && this.getMinions().size() == 0) {
                 this.removeInvincibility();
             }
-        }
-        else if (e instanceof EntityDamageEvent) {
-            final EntityDamageEvent event2 = (EntityDamageEvent)e;
+        } else if (e instanceof EntityDamageEvent) {
+            final EntityDamageEvent event2 = (EntityDamageEvent) e;
             if (event2.getCause() == EntityDamageEvent.DamageCause.FIRE || event2.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK || event2.getCause() == EntityDamageEvent.DamageCause.LAVA) {
                 event2.setCancelled(true);
                 event2.getEntity().setFireTicks(0);
             }
         }
     }
-    
+
     @Override
     public void removeMinion(final Entity ent) {
     }
-    
+
     public void removeInvincibility() {
         this.invincible = false;
         this.timeSinceInvincible = System.currentTimeMillis();
         this.summoning.activateCooldown();
         this.getEntity().removePotionEffect(PotionEffectType.INVISIBILITY);
     }
-    
+
     @Override
     public void onPhaseChange(final Phase newPhase) {
         this.setPhase(newPhase);
         if (newPhase == Phase.TWO) {
-            this.getEntity().removeMetadata("empower_arrow", (Plugin)CosmicBosses.getInstance());
+            this.getEntity().removeMetadata("empower_arrow", (Plugin) CosmicBosses.getInstance());
             this.getEntity().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 2));
             this.setHelmet(ItemBuilder.buildArmor(Material.DIAMOND_HELMET, Enchantment.PROTECTION_ENVIRONMENTAL));
             this.setChestplate(ItemBuilder.buildArmor(Material.DIAMOND_CHESTPLATE, Enchantment.THORNS));
@@ -352,13 +342,13 @@ public class YijkiDisciple extends Boss implements MiniBoss
             this.getEntity().getEquipment().setItemInHand(weapon);
         }
     }
-    
+
     @Override
     public void cleanup() {
         this.removeMinions();
         this.clearScoreboard();
     }
-    
+
     @Override
     public void onDeath(final EntityDeathEvent event) throws Exception {
         super.onDeath(event);
@@ -366,28 +356,28 @@ public class YijkiDisciple extends Boss implements MiniBoss
             this.sendMessage(ChatColor.ITALIC + "You should not have come here... you will never leave alive!");
         }
     }
-    
+
     @Override
     public DamageType getDamageType() {
         return DamageType.FIRE;
     }
-    
+
     @Override
     public Difficulty getDifficulty() {
         return Difficulty.LEGENDARY;
     }
-    
+
     @Override
     public int getMaxHealth() {
         return 1000;
     }
-    
+
     @Override
     public void onMiscUpdate(final Event event) {
     }
-    
+
     @Override
     public List<BossMessage> getGeneralMessages() {
-        return (List<BossMessage>)Lists.newArrayList(new BossMessage[] { new BossMessage("Die, heretic.", false, -1) });
+        return (List<BossMessage>) Lists.newArrayList(new BossMessage[]{new BossMessage("Die, heretic.", false, -1)});
     }
 }

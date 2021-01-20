@@ -1,31 +1,37 @@
 package me.ifamasssxd.cosmicbosses.bosses.kingslime;
 
-import org.bukkit.entity.*;
-import me.ifamasssxd.cosmicbosses.utils.*;
-import me.ifamasssxd.cosmicbosses.struct.*;
-import org.bukkit.scheduler.*;
-import me.ifamasssxd.cosmicbosses.*;
-import org.bukkit.plugin.*;
-import java.util.*;
-import org.bukkit.*;
-import org.bukkit.block.*;
-import java.util.concurrent.*;
+import me.ifamasssxd.cosmicbosses.CosmicBosses;
+import me.ifamasssxd.cosmicbosses.struct.BlockModifier;
+import me.ifamasssxd.cosmicbosses.struct.Boss;
+import me.ifamasssxd.cosmicbosses.struct.BossAbility;
+import me.ifamasssxd.cosmicbosses.struct.Phase;
+import me.ifamasssxd.cosmicbosses.utils.BossUtils;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
-public class WaterTrap extends BossAbility
-{
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
+
+public class WaterTrap extends BossAbility {
     Random random;
     int maxPackets;
-    
+
     public WaterTrap(final Boss boss, final BlockModifier modifier) {
         super(boss, modifier);
         this.random = new Random();
         this.maxPackets = 0;
     }
-    
+
     @Override
     public void onAbility() {
         for (final Entity e : this.getBoss().getNearbyEntities(20.0, EntityType.PLAYER)) {
-            final Player p = (Player)e;
+            final Player p = (Player) e;
             if (!BossUtils.canAffectPlayer(p, false)) {
                 continue;
             }
@@ -39,27 +45,24 @@ public class WaterTrap extends BossAbility
             for (int x = minX; x < maxX; ++x) {
                 for (int y = minY; y < maxY; ++y) {
                     for (int z = minZ; z < maxZ; ++z) {
-                        location.setX((double)x);
-                        location.setY((double)y);
-                        location.setZ((double)z);
+                        location.setX((double) x);
+                        location.setY((double) y);
+                        location.setZ((double) z);
                         final Block block = location.getBlock();
                         if (!this.getBlockModifier().containsLocation(this, block.getLocation())) {
                             if (block.getType() == Material.AIR) {
                                 if (x == p.getLocation().getBlockX() && z == p.getLocation().getBlockZ() && y < maxY - 1 && y > minY) {
                                     if (this.getBoss().getPhase() == Phase.TWO) {
                                         block.setType(Material.LAVA);
-                                    }
-                                    else {
+                                    } else {
                                         block.setType(Material.WATER);
                                     }
-                                }
-                                else {
+                                } else {
                                     block.setType(Material.STAINED_GLASS);
                                     if (this.getBoss().getPhase() == Phase.TWO) {
-                                        block.setData((byte)14);
-                                    }
-                                    else {
-                                        block.setData((byte)5);
+                                        block.setData((byte) 14);
+                                    } else {
+                                        block.setData((byte) 5);
                                     }
                                 }
                                 this.getBlockModifier().storeBlockToRemove(this, block.getLocation());
@@ -81,15 +84,15 @@ public class WaterTrap extends BossAbility
                     WaterTrap.this.getBlockModifier().removeBlocks(instance, true, true);
                 }
             }
-        }.runTaskLater((Plugin)CosmicBosses.getInstance(), 100L);
+        }.runTaskLater((Plugin) CosmicBosses.getInstance(), 100L);
         this.activateCooldown();
     }
-    
+
     @Override
     public String getAbilityName() {
         return "Water Trap";
     }
-    
+
     @Override
     public long getCooldown() {
         return TimeUnit.SECONDS.toMillis(20L);

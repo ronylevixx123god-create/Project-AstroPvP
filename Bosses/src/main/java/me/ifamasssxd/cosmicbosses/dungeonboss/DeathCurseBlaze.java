@@ -2,15 +2,14 @@ package me.ifamasssxd.cosmicbosses.dungeonboss;
 
 import net.minecraft.server.v1_8_R3.*;
 
-public class DeathCurseBlaze extends EntityBlaze
-{
+public class DeathCurseBlaze extends EntityBlaze {
     private int br;
-    
+
     public DeathCurseBlaze(final World world) {
         super(world);
         this.goalSelector.a(4, new DeathCurseBlaze.PathfinderGoalBlazeFireball(this));
     }
-    
+
     protected Item getLoot() {
         return null;
     }
@@ -51,7 +50,7 @@ public class DeathCurseBlaze extends EntityBlaze
                 this.a.getControllerMove().a(var1.locX, var1.locY, var1.locZ, 1.0D);
             } else if (var2 < 256.0D) {
                 double var4 = var1.locX - this.a.locX;
-                double var6 = var1.getBoundingBox().b + (double)(var1.length / 2.0F) - (this.a.locY + (double)(this.a.length / 2.0F));
+                double var6 = var1.getBoundingBox().b + (double) (var1.length / 2.0F) - (this.a.locY + (double) (this.a.length / 2.0F));
                 double var8 = var1.locZ - this.a.locZ;
                 if (this.c <= 0) {
                     ++this.b;
@@ -68,10 +67,10 @@ public class DeathCurseBlaze extends EntityBlaze
 
                     if (this.b > 1) {
                         float var10 = MathHelper.c(MathHelper.sqrt(var2)) * 0.5F;
-                        this.a.world.a((EntityHuman)null, 1009, new BlockPosition((int)this.a.locX, (int)this.a.locY, (int)this.a.locZ), 0);
+                        this.a.world.a((EntityHuman) null, 1009, new BlockPosition((int) this.a.locX, (int) this.a.locY, (int) this.a.locZ), 0);
 
-                        for(int var11 = 0; var11 < 1; ++var11) {
-                            EntitySmallFireball var12 = new EntitySmallFireball(this.a.world, this.a, var4 + this.a.bc().nextGaussian() * (double)var10, var6, var8 + this.a.bc().nextGaussian() * (double)var10) {
+                        for (int var11 = 0; var11 < 1; ++var11) {
+                            EntitySmallFireball var12 = new EntitySmallFireball(this.a.world, this.a, var4 + this.a.bc().nextGaussian() * (double) var10, var6, var8 + this.a.bc().nextGaussian() * (double) var10) {
                                 public void setDirection(final double d0, final double d1, final double d2) {
                                     final double d3 = MathHelper.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
                                     this.dirX = d0 / d3 * 0.1;
@@ -79,7 +78,7 @@ public class DeathCurseBlaze extends EntityBlaze
                                     this.dirZ = d2 / d3 * 0.1;
                                 }
                             };
-                            var12.locY = this.a.locY + (double)(this.a.length / 2.0F) + 0.5D;
+                            var12.locY = this.a.locY + (double) (this.a.length / 2.0F) + 0.5D;
                             this.a.world.addEntity(var12);
                         }
                     }

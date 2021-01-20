@@ -1,24 +1,11 @@
 package me.ifamasssxd.cosmicbosses.entities;
 
-import java.util.*;
-
-import net.minecraft.server.v1_8_R3.Material;
-import net.minecraft.server.v1_8_R3.World;
-import org.spigotmc.*;
-import org.bukkit.craftbukkit.v1_8_R3.event.*;
-import me.ifamasssxd.cosmicbosses.utils.*;
-import org.bukkit.craftbukkit.v1_8_R3.entity.*;
-import org.bukkit.craftbukkit.v1_8_R3.*;
-import org.bukkit.*;
-import org.bukkit.event.entity.*;
-import org.bukkit.event.*;
 import net.minecraft.server.v1_8_R3.*;
-import me.ifamasssxd.cosmicbosses.*;
-import org.bukkit.plugin.*;
-import org.bukkit.metadata.*;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 
-public class SoulReaperEnderman extends EntityMonster
-{
+import java.util.UUID;
+
+public class SoulReaperEnderman extends EntityMonster {
     private static final UUID bp;
     private static final AttributeModifier bq;
     private int teleportTick;
@@ -31,7 +18,7 @@ public class SoulReaperEnderman extends EntityMonster
     private double flagTimer;
     private float newF;
     private float newJ;
-    
+
     public SoulReaperEnderman(final World world, final boolean teleportBehind) {
         super(world);
         this.teleportBehind = false;
@@ -44,7 +31,7 @@ public class SoulReaperEnderman extends EntityMonster
         this.teleportBehind = teleportBehind;
         //this.W = 1.0f;
     }
-    
+
     public SoulReaperEnderman(final World world) {
         super(world);
         this.teleportBehind = false;
@@ -100,7 +87,7 @@ public class SoulReaperEnderman extends EntityMonster
         return null;
     }
     */
-    
+
     private boolean f(final EntityHuman entityhuman) {
         /*final ItemStack itemstack = entityhuman.inventory.armor[3];
         if (itemstack != null && itemstack.getItem() == Item.getItemOf(Blocks.PUMPKIN)) {
@@ -114,7 +101,7 @@ public class SoulReaperEnderman extends EntityMonster
         return d2 > 1.0 - 0.025 / d0 && entityhuman.hasLineOfSight((Entity)this);*/
         return false;
     }
-    
+
     public void e() {
         /*if (!(this.target instanceof EntityHuman)) {
             this.target = null;
@@ -181,18 +168,18 @@ public class SoulReaperEnderman extends EntityMonster
         }
         super.e();*/
     }
-    
+
     public CraftEntity getBukkitEntity() {
         return super.getBukkitEntity();
     }
-    
+
     protected boolean bZ() {
         final double d0 = this.locX + (this.random.nextDouble() - 0.5) * 3.0;
         final double d2 = this.locY + (this.random.nextInt(64) - 1);
         final double d3 = this.locZ + (this.random.nextDouble() - 0.5) * 3.0;
         return this.k(d0, d2, d3);
     }
-    
+
     protected boolean c(final Entity entity) {
         /*final CraftWorld wrld = this.world.getWorld();
         if (this.teleportBehind) {
@@ -239,7 +226,7 @@ public class SoulReaperEnderman extends EntityMonster
         return this.k(d4, d5, d6);*/
         return false;
     }
-    
+
     protected boolean k(final double d0, final double d1, final double d2) {
         /*final double d3 = this.locX;
         final double d4 = this.locY;
@@ -311,26 +298,26 @@ public class SoulReaperEnderman extends EntityMonster
     protected Item getLoot() {
         return Items.END_PEARL;
     }*/
-    
+
     protected void dropDeathLoot(final boolean flag, final int i) {
     }
-    
+
     public void setCarried(final Block block) {
         //this.datawatcher.watch(16, (Object)new ProtocolData.ByteShort((short)Block.getId(block)));
     }
-    
+
     public Block getCarried() {
-        return Block.getById((int)this.datawatcher.getShort(16));
+        return Block.getById((int) this.datawatcher.getShort(16));
     }
-    
+
     public void setCarriedData(final int i) {
-        this.datawatcher.watch(17, (Object)(byte)(i & 0xFF));
+        this.datawatcher.watch(17, (Object) (byte) (i & 0xFF));
     }
-    
+
     public int getCarriedData() {
         return this.datawatcher.getByte(17);
     }
-    
+
     public boolean damageEntity(final DamageSource damagesource, final float f) {
         /*if (this.isInvulnerable()) {
             return false;
@@ -353,19 +340,19 @@ public class SoulReaperEnderman extends EntityMonster
         return happens;*/
         return true;
     }
-    
+
     public boolean cd() {
         return this.datawatcher.getByte(18) > 0;
     }
-    
+
     public void a(final boolean flag) {
-        this.datawatcher.watch(18, (Object)(byte)(flag ? 1 : 0));
+        this.datawatcher.watch(18, (Object) (byte) (flag ? 1 : 0));
     }
-    
+
     public void die() {
         super.die();
     }
-    
+
     public void shootTick() {
         /*if (!this.shooting) {
             return;
@@ -408,7 +395,7 @@ public class SoulReaperEnderman extends EntityMonster
             this.d = this.random.nextInt(5) + 5;
         }*/
     }
-    
+
     private void shootEnderpearl(final EntityLiving entityLiving, final float v) {
         /*final EntityEnderPearl entitysnowball = new EntityEnderPearl(this.world, (EntityLiving)this);
         final double d0 = entityLiving.locX - this.locX;
@@ -420,7 +407,7 @@ public class SoulReaperEnderman extends EntityMonster
         this.makeSound("random.bow", 1.0f, 1.0f / (this.aI().nextFloat() * 0.4f + 0.8f));
         this.world.addEntity((Entity)entitysnowball);*/
     }
-    
+
     static {
         bp = UUID.fromString("020E0DFB-87AE-4653-9556-831010E291A0");
         bq = new AttributeModifier(SoulReaperEnderman.bp, "Attacking speed boost", 6.199999809265137, 0).a(false);

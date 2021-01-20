@@ -42,7 +42,7 @@ public class ComboBreakerAbility extends DungeonAbility {
 
     @Override
     public void onAbilityDisable() {
-        ((CorruptCosmonaut)this.boss).doTrickster();
+        ((CorruptCosmonaut) this.boss).doTrickster();
     }
 
     @Override

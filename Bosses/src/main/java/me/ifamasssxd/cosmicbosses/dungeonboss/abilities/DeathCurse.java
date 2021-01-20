@@ -22,18 +22,17 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
-public class DeathCurse extends DungeonAbility
-{
+public class DeathCurse extends DungeonAbility {
     private Player player;
     private DeathCurseBlaze blaze;
     int ticks;
     private long spawnTime;
-    
+
     public DeathCurse(final Boss boss) {
         super(boss);
         this.ticks = 0;
     }
-    
+
     @Override
     public void onTick() throws Exception {
         ++this.ticks;
@@ -41,7 +40,7 @@ public class DeathCurse extends DungeonAbility
             this.player.setHealth(0.0);
             this.boss.sendMessage("Such a waste of life you are [NAME]!");
             if (this.blaze != null) {
-                this.boss.removeMinion((Entity)this.blaze.getBukkitEntity());
+                this.boss.removeMinion((Entity) this.blaze.getBukkitEntity());
                 this.blaze.die();
             }
             Bukkit.getLogger().info("Killing " + this.player.getName() + " because Death Curse wasnt killed!");
@@ -54,17 +53,17 @@ public class DeathCurse extends DungeonAbility
             this.blaze.getBukkitEntity().getWorld().playSound(this.blaze.getBukkitEntity().getLocation(), Sound.NOTE_PLING, 10.0f, 1.1f);
         }
     }
-    
+
     @Override
     public long getCooldown() {
         return 0L;
     }
-    
+
     @Override
     public boolean shouldStopTicking() {
         return this.blaze == null || this.blaze.dead || System.currentTimeMillis() - this.spawnTime >= TimeUnit.SECONDS.toMillis(17L);
     }
-    
+
     @Override
     public void onAbilityEnable() {
         this.initAbility();
@@ -76,27 +75,26 @@ public class DeathCurse extends DungeonAbility
         }
         if (nearbyPlayers.size() > 0) {
             final Entity ent2 = nearbyPlayers.get(ThreadLocalRandom.current().nextInt(nearbyPlayers.size()));
-            this.player = (Player)ent2;
+            this.player = (Player) ent2;
             Bukkit.getLogger().info("Spawning Death Curse on " + this.player.getName());
             final Random r = ThreadLocalRandom.current();
-            final Location spawnLoc = this.player.getLocation().clone().add((double)(r.nextInt(2) * (r.nextBoolean() ? -1 : 1)), 1.0, (double)(r.nextInt(2) * (r.nextBoolean() ? -1 : 1)));
+            final Location spawnLoc = this.player.getLocation().clone().add((double) (r.nextInt(2) * (r.nextBoolean() ? -1 : 1)), 1.0, (double) (r.nextInt(2) * (r.nextBoolean() ? -1 : 1)));
             this.spawnTime = System.currentTimeMillis();
-            final WorldServer world = ((CraftWorld)this.player.getWorld()).getHandle();
+            final WorldServer world = ((CraftWorld) this.player.getWorld()).getHandle();
             (this.blaze = new DeathCurseBlaze(world)).setPosition(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ());
-            world.addEntity((net.minecraft.server.v1_8_R3.Entity)this.blaze, CreatureSpawnEvent.SpawnReason.CUSTOM);
+            world.addEntity((net.minecraft.server.v1_8_R3.Entity) this.blaze, CreatureSpawnEvent.SpawnReason.CUSTOM);
             this.blaze.setCustomName(ChatColor.LIGHT_PURPLE + ChatColor.BOLD.toString() + "Death Curse");
             this.blaze.setCustomNameVisible(true);
             this.blaze.getAttributeInstance(GenericAttributes.c).setValue(1.0);
-            final CraftMonster living = (CraftMonster)this.blaze.getBukkitEntity();
+            final CraftMonster living = (CraftMonster) this.blaze.getBukkitEntity();
             living.setMaxHealth(10.0);
             living.setHealth(10.0);
             this.boss.sendMessage("I tire of these games. You, [NAME], your life will end in 15 seconds. Goodbye!", Sound.BLAZE_BREATH, 0.9f);
-        }
-        else {
+        } else {
             Bukkit.getLogger().info("No target found!");
         }
     }
-    
+
     @Override
     public void onAbilityDisable() {
         if (this.blaze != null && this.blaze.isAlive()) {
@@ -104,11 +102,11 @@ public class DeathCurse extends DungeonAbility
             this.blaze = null;
         }
     }
-    
+
     @Override
     public void onAbilityEvent(final Event event) {
     }
-    
+
     @Override
     public String getAbilityName() {
         return "Death Curse";

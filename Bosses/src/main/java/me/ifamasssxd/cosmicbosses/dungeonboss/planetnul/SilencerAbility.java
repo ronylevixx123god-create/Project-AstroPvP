@@ -1,21 +1,16 @@
 package me.ifamasssxd.cosmicbosses.dungeonboss.planetnul;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonAbility;
-import me.ifamasssxd.cosmicbosses.struct.BlockModifier;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
-import me.ifamasssxd.cosmicbosses.struct.BossAbility;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
 import java.util.concurrent.TimeUnit;
@@ -52,7 +47,7 @@ public class SilencerAbility extends DungeonAbility {
 
         long durationTicks = 7L * 20L;
 
-        for (Player player : this.getBoss().getNearbyEntities(250.0, EntityType.PLAYER).stream().map(e -> (Player)e).collect(Collectors.toList())) {
+        for (Player player : this.getBoss().getNearbyEntities(250.0, EntityType.PLAYER).stream().map(e -> (Player) e).collect(Collectors.toList())) {
             this.boss.sendMessage(player, CC.translate("&5&lSilence, all of you!"));
             player.setMetadata("noDefenseProcs", new FixedMetadataValue(Enchantments.getInstance(), true));
             player.playSound(player.getLocation(), Sound.WITHER_HURT, 1.0f, 0.25f);
@@ -61,7 +56,7 @@ public class SilencerAbility extends DungeonAbility {
             Bukkit.getScheduler().runTaskLater(Enchantments.getInstance(), new Runnable() {
                 @Override
                 public void run() {
-                    player.removeMetadata("noDefenseProcs", (Plugin)Enchantments.getInstance());
+                    player.removeMetadata("noDefenseProcs", (Plugin) Enchantments.getInstance());
                 }
             }, durationTicks);
         }
@@ -69,7 +64,7 @@ public class SilencerAbility extends DungeonAbility {
 
     @Override
     public void onAbilityDisable() {
-        ((CorruptCosmonaut)this.boss).doTrickster();
+        ((CorruptCosmonaut) this.boss).doTrickster();
     }
 
     @Override

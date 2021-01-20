@@ -1,36 +1,40 @@
 package me.ifamasssxd.cosmicbosses.struct.blockmanager;
 
-import com.google.common.collect.*;
-import me.ifamasssxd.cosmicbosses.*;
-import org.bukkit.plugin.*;
-import java.util.function.*;
-import org.bukkit.*;
-import org.bukkit.block.*;
-import me.ifamasssxd.cosmicbosses.utils.*;
-import java.util.*;
-import java.util.concurrent.*;
-import org.bukkit.metadata.*;
-import org.bukkit.util.*;
-import org.bukkit.entity.*;
+import com.google.common.collect.Lists;
+import me.ifamasssxd.cosmicbosses.CosmicBosses;
+import me.ifamasssxd.cosmicbosses.utils.WorldGuardUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.entity.FallingBlock;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
-public class BlockChangeManager
-{
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
+
+public class BlockChangeManager {
     private ConcurrentHashMap<Location, StoredBlock> storedBlocks;
     public List<Material> validBreakables;
     private List<BlockFace> faces;
     private List<Material> flowers;
     Random random;
-    
+
     public BlockChangeManager() {
         this.storedBlocks = new ConcurrentHashMap<Location, StoredBlock>();
-        this.validBreakables = (List<Material>)Lists.newArrayList(new Material[] { Material.STONE, Material.GRASS, Material.COAL_BLOCK, Material.DIRT, Material.STAINED_CLAY, Material.ICE, Material.IRON_BLOCK, Material.DIAMOND_BLOCK, Material.LOG, Material.LEAVES, Material.COBBLESTONE, Material.SMOOTH_BRICK, Material.CACTUS, Material.SANDSTONE, Material.SAND });
-        this.faces = (List<BlockFace>)Lists.newArrayList(new BlockFace[] { BlockFace.EAST, BlockFace.SOUTH, BlockFace.NORTH, BlockFace.WEST, BlockFace.UP, BlockFace.DOWN });
-        this.flowers = (List<Material>)Lists.newArrayList(new Material[] { Material.LONG_GRASS, Material.BROWN_MUSHROOM, Material.RED_ROSE, Material.RED_MUSHROOM, Material.YELLOW_FLOWER, Material.CACTUS, Material.SUGAR_CANE_BLOCK });
+        this.validBreakables = (List<Material>) Lists.newArrayList(new Material[]{Material.STONE, Material.GRASS, Material.COAL_BLOCK, Material.DIRT, Material.STAINED_CLAY, Material.ICE, Material.IRON_BLOCK, Material.DIAMOND_BLOCK, Material.LOG, Material.LEAVES, Material.COBBLESTONE, Material.SMOOTH_BRICK, Material.CACTUS, Material.SANDSTONE, Material.SAND});
+        this.faces = (List<BlockFace>) Lists.newArrayList(new BlockFace[]{BlockFace.EAST, BlockFace.SOUTH, BlockFace.NORTH, BlockFace.WEST, BlockFace.UP, BlockFace.DOWN});
+        this.flowers = (List<Material>) Lists.newArrayList(new Material[]{Material.LONG_GRASS, Material.BROWN_MUSHROOM, Material.RED_ROSE, Material.RED_MUSHROOM, Material.YELLOW_FLOWER, Material.CACTUS, Material.SUGAR_CANE_BLOCK});
         this.random = new Random();
-        Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)CosmicBosses.getInstance(), this::checkStoredBlocks, 20L, 20L);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin) CosmicBosses.getInstance(), this::checkStoredBlocks, 20L, 20L);
     }
-    
+
     private void checkStoredBlocks() {
         for (final Map.Entry<Location, StoredBlock> entry : this.storedBlocks.entrySet()) {
             final StoredBlock stored = entry.getValue();
@@ -39,15 +43,15 @@ public class BlockChangeManager
             }
         }
     }
-    
+
     public void restoreAllBlocks() {
         this.storedBlocks.keySet().forEach(this::restoreBlock);
     }
-    
+
     public void restoreAllBlocks(final int bossId) {
         this.storedBlocks.entrySet().stream().filter(entry -> entry.getValue().getBossId() == bossId).forEach(entry -> this.restoreBlock(entry.getKey()));
     }
-    
+
     public void createCustomExplosion(final Location location, final int radius, final int yRadius, final int bossId) {
         final int currentX = location.getBlockX();
         final int currentY = location.getBlockY();
@@ -76,7 +80,7 @@ public class BlockChangeManager
                 }
             }
         }
-    Label_0262:
+        Label_0262:
         for (final Block block2 : blocks) {
             for (final BlockFace face : this.faces) {
                 final Block nextTo = block2.getRelative(face);
@@ -94,32 +98,32 @@ public class BlockChangeManager
         }
         System.out.println("Created explosion took " + (System.currentTimeMillis() - start) + "ms");
     }
-    
+
     public void destroyBlock(final Block block, final int bossId, final int seconds, final boolean throwBlock) {
         if (block.getType() != Material.AIR) {
             final StoredBlock storedBlock = new StoredBlock(bossId, block.getType(), block.getData(), System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(seconds));
             this.storedBlocks.put(block.getLocation(), storedBlock);
-            block.setTypeIdAndData(0, (byte)0, false);
+            block.setTypeIdAndData(0, (byte) 0, false);
             if (throwBlock && this.random.nextInt(10) > 1) {
                 final FallingBlock fallingBlock = block.getWorld().spawnFallingBlock(block.getLocation(), storedBlock.getMaterial(), storedBlock.getBlockData());
                 fallingBlock.setDropItem(false);
-                fallingBlock.setMetadata("boss_block", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), (Object)""));
+                fallingBlock.setMetadata("boss_block", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
                 final Vector velocity = new Vector(this.random.nextBoolean() ? (-this.random.nextDouble()) : this.random.nextDouble(), 1.0 + this.random.nextDouble(), this.random.nextBoolean() ? (-this.random.nextDouble()) : this.random.nextDouble()).normalize();
                 fallingBlock.setVelocity(velocity);
             }
         }
     }
-    
+
     public void replaceBlock(final Block block, final int bossId, final int seconds, final Material replace, final byte data) {
         final StoredBlock storedBlock = new StoredBlock(bossId, block.getType(), block.getData(), (seconds == -1) ? -1L : (System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(seconds)));
         this.storedBlocks.put(block.getLocation(), storedBlock);
         block.setTypeIdAndData(replace.getId(), data, false);
     }
-    
+
     public void restoreBlock(final Location location, final StoredBlock block) {
         location.getBlock().setTypeIdAndData(block.getMaterial().getId(), block.getBlockData(), false);
     }
-    
+
     public void restoreBlock(final Location location) {
         final StoredBlock block = this.storedBlocks.remove(location);
         if (block == null) {
@@ -127,7 +131,7 @@ public class BlockChangeManager
         }
         location.getBlock().setTypeIdAndData(block.getMaterial().getId(), block.getBlockData(), false);
     }
-    
+
     public ConcurrentHashMap<Location, StoredBlock> getStoredBlocks() {
         return this.storedBlocks;
     }

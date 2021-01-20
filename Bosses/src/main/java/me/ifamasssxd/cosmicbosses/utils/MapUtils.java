@@ -2,8 +2,7 @@ package me.ifamasssxd.cosmicbosses.utils;
 
 import java.util.*;
 
-public class MapUtils
-{
+public class MapUtils {
     public static LinkedHashMap<UUID, Integer> sortByComparator(final HashMap<UUID, Integer> unsortMap, final boolean order, final int amount) {
         if (unsortMap == null) {
             return null;

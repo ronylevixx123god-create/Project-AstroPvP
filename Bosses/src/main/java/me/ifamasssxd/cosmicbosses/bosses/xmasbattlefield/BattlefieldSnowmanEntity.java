@@ -1,34 +1,27 @@
 package me.ifamasssxd.cosmicbosses.bosses.xmasbattlefield;
 
-import me.ifamasssxd.cosmicbosses.bosses.holidayspirit.*;
-import me.ifamasssxd.cosmicbosses.bosses.*;
+import me.ifamasssxd.cosmicbosses.bosses.EntityHolidayGolem;
+import me.ifamasssxd.cosmicbosses.bosses.holidayspirit.PathfinderGoalArrowAttackSnowman;
 import net.citizensnpcs.nms.v1_8_R3.entity.EntityHumanNPC;
-import net.minecraft.server.v1_8_R3.Material;
-import net.minecraft.server.v1_8_R3.World;
-import org.bukkit.craftbukkit.v1_8_R3.entity.*;
-import me.ifamasssxd.cosmicbosses.*;
-import org.bukkit.*;
-import me.ifamasssxd.cosmicbosses.struct.blockmanager.*;
 import net.minecraft.server.v1_8_R3.*;
 
-public class BattlefieldSnowmanEntity extends EntityHolidayGolem
-{
+public class BattlefieldSnowmanEntity extends EntityHolidayGolem {
     private BattlefieldSnowman boss;
-    
+
     public BattlefieldSnowmanEntity(final World world) {
         this(world, null);
         this.dead = true;
     }
-    
+
     public BattlefieldSnowmanEntity(final World world, final BattlefieldSnowman spiritBoss) {
         super(world);
         this.a(0.4f, 1.8f);
         //this.getNavigation().a(true);
         this.boss = spiritBoss;
-        this.goalSelector.a(1, (PathfinderGoal)new PathfinderGoalArrowAttackSnowman(this, 1.25, 20, 10.0f));
-        this.goalSelector.a(1, (PathfinderGoal)new PathfinderGoalLookAtPlayer((EntityInsentient)this, (Class)EntityHuman.class, 6.0f));
-        this.goalSelector.a(4, (PathfinderGoal)new PathfinderGoalRandomLookaround((EntityInsentient)this));
-        this.targetSelector.a(1, (PathfinderGoal)new PathfinderGoalNearestAttackableTarget((EntityCreature)this, (Class)EntityHuman.class, 0, true, false, entity -> entity instanceof EntityHuman && !(entity instanceof EntityHumanNPC)));
+        this.goalSelector.a(1, (PathfinderGoal) new PathfinderGoalArrowAttackSnowman(this, 1.25, 20, 10.0f));
+        this.goalSelector.a(1, (PathfinderGoal) new PathfinderGoalLookAtPlayer((EntityInsentient) this, (Class) EntityHuman.class, 6.0f));
+        this.goalSelector.a(4, (PathfinderGoal) new PathfinderGoalRandomLookaround((EntityInsentient) this));
+        this.targetSelector.a(1, (PathfinderGoal) new PathfinderGoalNearestAttackableTarget((EntityCreature) this, (Class) EntityHuman.class, 0, true, false, entity -> entity instanceof EntityHuman && !(entity instanceof EntityHumanNPC)));
     }
     
     /*public boolean bk() {

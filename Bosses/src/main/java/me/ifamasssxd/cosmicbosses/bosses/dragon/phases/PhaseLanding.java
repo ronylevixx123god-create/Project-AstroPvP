@@ -1,18 +1,20 @@
 package me.ifamasssxd.cosmicbosses.bosses.dragon.phases;
 
+import me.ifamasssxd.cosmicbosses.bosses.dragon.EndDragonEntity;
 import me.ifamasssxd.cosmicbosses.utils.BossUtils;
-import net.minecraft.server.v1_8_R3.*;
-import me.ifamasssxd.cosmicbosses.bosses.dragon.*;
-import javax.annotation.*;
+import net.minecraft.server.v1_8_R3.EnumParticle;
+import net.minecraft.server.v1_8_R3.MathHelper;
+import net.minecraft.server.v1_8_R3.Vec3D;
 
-public class PhaseLanding extends PhaseBase
-{
+import javax.annotation.Nullable;
+
+public class PhaseLanding extends PhaseBase {
     private Vec3D targetLocation;
-    
+
     public PhaseLanding(final EndDragonEntity dragonIn) {
         super(dragonIn);
     }
-    
+
     @Override
     public void doClientRenderEffects() {
         final Vec3D vec3d = BossUtils.oldJ(this.dragon, 1.0f).a();
@@ -28,7 +30,7 @@ public class PhaseLanding extends PhaseBase
             vec3d.b(0.19634955f);
         }
     }
-    
+
     @Override
     public void doLocalUpdate() {
         if (this.targetLocation == null) {
@@ -45,30 +47,30 @@ public class PhaseLanding extends PhaseBase
             this.dragon.getPhaseManager().setPhase(PhaseList.SITTING_SCANNING);
         }
     }
-    
+
     @Override
     public float getMaxRiseOrFall() {
         return 1.5f;
     }
-    
+
     @Override
     public float getYawFactor() {
-        final float f = (float)(Math.sqrt(this.dragon.motX * this.dragon.motX + this.dragon.motZ * this.dragon.motZ) + 1.0);
+        final float f = (float) (Math.sqrt(this.dragon.motX * this.dragon.motX + this.dragon.motZ * this.dragon.motZ) + 1.0);
         final float f2 = Math.min(f, 40.0f);
         return f2 / f;
     }
-    
+
     @Override
     public void initPhase() {
         this.targetLocation = null;
     }
-    
+
     @Nullable
     @Override
     public Vec3D getTargetLocation() {
         return this.targetLocation;
     }
-    
+
     @Override
     public PhaseList<PhaseLanding> getType() {
         return PhaseList.LANDING;

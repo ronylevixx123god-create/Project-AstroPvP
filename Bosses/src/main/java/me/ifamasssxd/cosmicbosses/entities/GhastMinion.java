@@ -1,23 +1,16 @@
 package me.ifamasssxd.cosmicbosses.entities;
 
-import me.ifamasssxd.cosmicbosses.bosses.plaguebloater.PlagueBloater;
 import me.ifamasssxd.cosmicbosses.bosses.plaguebloater.PlagueCarriers;
-import me.ifamasssxd.cosmicbosses.struct.Boss;
-import net.minecraft.server.v1_8_R3.*;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
-import org.bukkit.entity.LargeFireball;
-import org.bukkit.event.Event;
-import org.bukkit.event.entity.EntityTargetEvent;
+import net.minecraft.server.v1_8_R3.Entity;
+import net.minecraft.server.v1_8_R3.EntityGhast;
+import net.minecraft.server.v1_8_R3.World;
 
-import java.util.UUID;
-
-public class GhastMinion extends EntityGhast
-{
+public class GhastMinion extends EntityGhast {
     private Entity target;
     private int br;
     private int explosionPower;
     private PlagueCarriers carrier;
-    
+
     public GhastMinion(final World world) {
         super(world);
         this.explosionPower = 1;

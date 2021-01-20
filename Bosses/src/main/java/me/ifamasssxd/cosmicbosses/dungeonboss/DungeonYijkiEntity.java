@@ -24,8 +24,7 @@ import org.bukkit.util.Vector;
 
 import java.util.List;
 
-public class DungeonYijkiEntity extends EntityMonster implements IRangedEntity
-{
+public class DungeonYijkiEntity extends EntityMonster implements IRangedEntity {
     private DungeonYijki boss;
     private float[] a = new float[2];
     private float[] b = new float[2];
@@ -40,27 +39,27 @@ public class DungeonYijkiEntity extends EntityMonster implements IRangedEntity
 
     public static final Predicate<Entity> bq = new Predicate() {
         public boolean a(Entity entity) {
-            return (entity instanceof EntityLiving && ((EntityLiving)entity).getMonsterType() != EnumMonsterType.UNDEAD);
+            return (entity instanceof EntityLiving && ((EntityLiving) entity).getMonsterType() != EnumMonsterType.UNDEAD);
         }
 
         public boolean apply(Object object) {
-            return a((Entity)object);
+            return a((Entity) object);
         }
     };
 
     protected void h() {
         super.h();
-        this.datawatcher.a(17, (Object)new Integer(0));
-        this.datawatcher.a(18, (Object)new Integer(0));
-        this.datawatcher.a(19, (Object)new Integer(0));
-        this.datawatcher.a(20, (Object)new Integer(0));
+        this.datawatcher.a(17, (Object) new Integer(0));
+        this.datawatcher.a(18, (Object) new Integer(0));
+        this.datawatcher.a(19, (Object) new Integer(0));
+        this.datawatcher.a(20, (Object) new Integer(0));
     }
-    
+
     public void b(final NBTTagCompound nbttagcompound) {
         super.b(nbttagcompound);
         nbttagcompound.setInt("Invul", this.cl());
     }
-    
+
     public void a(final NBTTagCompound nbttagcompound) {
         super.a(nbttagcompound);
         this.r(nbttagcompound.getInt("Invul"));
@@ -77,7 +76,7 @@ public class DungeonYijkiEntity extends EntityMonster implements IRangedEntity
     protected String bp() {
         return "mob.wither.death";
     }
-    
+
     public DungeonYijkiEntity(final World world) {
         super(world);
 
@@ -85,11 +84,11 @@ public class DungeonYijkiEntity extends EntityMonster implements IRangedEntity
 
         Predicate<Entity> entSelectorPredicate = new Predicate() {
             public boolean a(Entity entity) {
-                return (entity instanceof EntityHuman && instance instanceof MotherOfYijkiEntity) || WorldGuardUtils.isInRegionsFast(new Location((org.bukkit.World)entity.world.getWorld(), entity.locX, entity.locY, entity.locZ), "hanger", "bridge");
+                return (entity instanceof EntityHuman && instance instanceof MotherOfYijkiEntity) || WorldGuardUtils.isInRegionsFast(new Location((org.bukkit.World) entity.world.getWorld(), entity.locX, entity.locY, entity.locZ), "hanger", "bridge");
             }
 
             public boolean apply(Object object) {
-                return a((Entity)object);
+                return a((Entity) object);
             }
         };
 
@@ -101,32 +100,32 @@ public class DungeonYijkiEntity extends EntityMonster implements IRangedEntity
         this.setHealth(this.getMaxHealth());
         this.a(0.9f, 4.0f);
         this.fireProof = true;
-        ((Navigation)getNavigation()).d(true);
-        this.goalSelector.a(0, (PathfinderGoal)new PathfinderGoalFloat((EntityInsentient)this));
-        this.goalSelector.a(6, (PathfinderGoal)new PathfinderGoalLookAtPlayer((EntityInsentient)this, (Class)EntityHuman.class, 8.0f));
-        this.goalSelector.a(7, (PathfinderGoal)new PathfinderGoalRandomLookaround((EntityInsentient)this));
-        this.targetSelector.a(1, (PathfinderGoal)new PathfinderGoalHurtByTarget((EntityCreature)this, false));
-        this.targetSelector.a(2, (PathfinderGoal)new PathfinderGoalNearestAttackableTarget((EntityCreature)this, (Class)EntityHuman.class, 0, false, false, entSelectorPredicate));
+        ((Navigation) getNavigation()).d(true);
+        this.goalSelector.a(0, (PathfinderGoal) new PathfinderGoalFloat((EntityInsentient) this));
+        this.goalSelector.a(6, (PathfinderGoal) new PathfinderGoalLookAtPlayer((EntityInsentient) this, (Class) EntityHuman.class, 8.0f));
+        this.goalSelector.a(7, (PathfinderGoal) new PathfinderGoalRandomLookaround((EntityInsentient) this));
+        this.targetSelector.a(1, (PathfinderGoal) new PathfinderGoalHurtByTarget((EntityCreature) this, false));
+        this.targetSelector.a(2, (PathfinderGoal) new PathfinderGoalNearestAttackableTarget((EntityCreature) this, (Class) EntityHuman.class, 0, false, false, entSelectorPredicate));
         this.b_ = 50;
     }
-    
+
     public void setBoss(final DungeonYijki boss) {
         if (boss != null) {
             this.boss = boss;
-        }
-        else {
+        } else {
             --this.failedTimes;
         }
         if (boss != null) {
             final boolean isMOY = boss instanceof MotherOfYijki;
-            this.goalSelector.a(2, (PathfinderGoal)new PathfinderGoalDungeonWitherBossAttack(boss, (IRangedEntity)this, 1.0, isMOY ? 25 : 40, isMOY ? 50 : 70, isMOY ? 30.0f : 20.0f));
+            this.goalSelector.a(2, (PathfinderGoal) new PathfinderGoalDungeonWitherBossAttack(boss, (IRangedEntity) this, 1.0, isMOY ? 25 : 40, isMOY ? 50 : 70, isMOY ? 30.0f : 20.0f));
         }
     }
-    
+
     public void collide(final Entity entity) {
-        if (this.boss != null && this.boss.getActiveAbility() instanceof UnstoppableForce && entity instanceof EntityHuman && ((UnstoppableForce)this.boss.getActiveAbility()).shouldCharge() && entity.isAlive() && !BossUtils.isInGodMode((Player)entity.getBukkitEntity())) {
+        if (this.boss != null && this.boss.getActiveAbility() instanceof UnstoppableForce && entity instanceof EntityHuman && ((UnstoppableForce) this.boss.getActiveAbility()).shouldCharge() && entity.isAlive() && !BossUtils.isInGodMode((Player) entity.getBukkitEntity())) {
             if (Math.abs(this.boss.getLocation().getBlockY() - entity.getBukkitEntity().getLocation().getBlockY()) < 4) {
-                if (WorldGuardUtils.getRegionName(entity.getBukkitEntity().getLocation()).equals("start_pearlok") || WorldGuardUtils.getRegionName(entity.getBukkitEntity().getLocation()).equals("bridge_start")) return; // in safe room
+                if (WorldGuardUtils.getRegionName(entity.getBukkitEntity().getLocation()).equals("start_pearlok") || WorldGuardUtils.getRegionName(entity.getBukkitEntity().getLocation()).equals("bridge_start"))
+                    return; // in safe room
                 ((EntityHuman) entity).lastDamager = (EntityLiving) this;
                 ((EntityHuman) entity).setHealth(0.0f);
                 Bukkit.getLogger().info("Killing " + entity.getName() + " with unstoppable force!");
@@ -135,11 +134,11 @@ public class DungeonYijkiEntity extends EntityMonster implements IRangedEntity
         }
         super.collide(entity);
     }
-    
+
     public void die() {
         super.die();
     }
-    
+
     public void setGoalTarget(final EntityLiving entityliving) {
         if (this.getGoalTarget() != null && entityliving == null) {
             this.boss.location = this.boss.getRandomSpawnLocation();
@@ -147,19 +146,17 @@ public class DungeonYijkiEntity extends EntityMonster implements IRangedEntity
         }
         super.setGoalTarget(entityliving);
     }
-    
+
     @SneakyThrows
     public void m() {
         if (this.boss != null) {
             if (this.boss.getActiveAbility() != null) {
                 if (this.boss.getActiveAbility().shouldStopTicking()) {
                     this.boss.clearAbilities();
-                }
-                else {
+                } else {
                     this.boss.getActiveAbility().onTick();
                 }
-            }
-            else {
+            } else {
                 final long lastAbilityTime = this.boss.getAbilityActivateTime();
                 if (this.boss.getActiveAbility() == null && lastAbilityTime >= 8000L) {
                     this.boss.findNewAbility();
@@ -172,7 +169,7 @@ public class DungeonYijkiEntity extends EntityMonster implements IRangedEntity
         }
         final double motionMultiplier = 0.6000000238418579;
         if (this.boss != null && this.boss.getActiveAbility() instanceof UnstoppableForce) {
-            final UnstoppableForce force = (UnstoppableForce)this.boss.getActiveAbility();
+            final UnstoppableForce force = (UnstoppableForce) this.boss.getActiveAbility();
             final Vector dir = force.getDirection();
             if (force.shouldCharge()) {
                 List<EntityLiving> ents = this.world.a(EntityLiving.class, getBoundingBox().grow(1.0D, 1.0D, 1.0D));
@@ -194,8 +191,7 @@ public class DungeonYijkiEntity extends EntityMonster implements IRangedEntity
                     this.motY = 0.0;
                 }
             }
-        }
-        else {
+        } else {
             this.motY *= motionMultiplier;
             if (this.s(0) > 0) {
                 final Entity entity = this.world.a(this.s(0));
@@ -210,8 +206,7 @@ public class DungeonYijkiEntity extends EntityMonster implements IRangedEntity
                     }
                     this.moveTowardsLocation(entity.locX, entity.locY, entity.locZ, motionMultiplier);
                 }
-            }
-            else if (this.boss != null) {
+            } else if (this.boss != null) {
                 final Location spawn = this.boss.getLocation();
                 if (this.f(spawn.getX(), spawn.getY(), spawn.getZ()) > 10.0) {
                     this.moveTowardsLocation(spawn.getX(), spawn.getY(), spawn.getZ(), motionMultiplier);
@@ -219,7 +214,7 @@ public class DungeonYijkiEntity extends EntityMonster implements IRangedEntity
             }
         }
         if (this.motX * this.motX + this.motZ * this.motZ > 0.05000000074505806) {
-            this.yaw = (float)Math.atan2(this.motZ, this.motX) * 57.295776f - 90.0f;
+            this.yaw = (float) Math.atan2(this.motZ, this.motX) * 57.295776f - 90.0f;
         }
         super.m();
         for (int i = 0; i < 2; ++i) {
@@ -240,12 +235,11 @@ public class DungeonYijkiEntity extends EntityMonster implements IRangedEntity
                 double d5 = entity2.locY + entity2.getHeadHeight() - d1;
                 double d6 = entity2.locZ - d2;
                 double d7 = MathHelper.sqrt(d4 * d4 + d6 * d6);
-                float f = (float)(MathHelper.b(d6, d4) * 180.0D / 3.1415927410125732D) - 90.0F;
-                float f2 = (float)-(MathHelper.b(d5, d7) * 180.0D / 3.1415927410125732D);
+                float f = (float) (MathHelper.b(d6, d4) * 180.0D / 3.1415927410125732D) - 90.0F;
+                float f2 = (float) -(MathHelper.b(d5, d7) * 180.0D / 3.1415927410125732D);
                 this.a[i] = this.b(this.a[i], f2, 40.0f);
                 this.b[i] = this.b(this.b[i], f, 10.0f);
-            }
-            else {
+            } else {
                 this.b[i] = this.b(this.b[i], this.aM, 10.0f);
             }
         }
@@ -262,14 +256,13 @@ public class DungeonYijkiEntity extends EntityMonster implements IRangedEntity
             for (j = 0; j < 3; j++)
                 this.world.addParticle(EnumParticle.SPELL_MOB, this.locX + this.random.nextGaussian() * 1.0D, this.locY + (this.random.nextFloat() * 3.3F), this.locZ + this.random.nextGaussian() * 1.0D, 0.699999988079071D, 0.699999988079071D, 0.8999999761581421D, new int[0]);
     }
-    
+
     private void moveTowardsLocation(final double x, final double y, final double z, final double motionMultiplier) {
         double height = 7.0;
         if (this.boss != null) {
             if (this.boss.getActiveAbility() instanceof UnstoppableForce) {
                 height = 0.0;
-            }
-            else {
+            } else {
                 height = ((this.boss.getPhase() == Phase.TWO) ? 7.0 : 3.0);
             }
         }
@@ -294,20 +287,20 @@ public class DungeonYijkiEntity extends EntityMonster implements IRangedEntity
             this.motZ += (distanceZ / distanceSqrRoot * 0.7 - this.motZ) * (motionMultiplier * speedMultiplier);
         }
     }
-    
+
     protected void E() {
         if (this.cl() > 0) {
             final int witherTargetId = this.cl() - 1;
             if (witherTargetId <= 0) {
-                final ExplosionPrimeEvent event = new ExplosionPrimeEvent((org.bukkit.entity.Entity)this.getBukkitEntity(), 7.0f, false);
-                this.world.getServer().getPluginManager().callEvent((Event)event);
+                final ExplosionPrimeEvent event = new ExplosionPrimeEvent((org.bukkit.entity.Entity) this.getBukkitEntity(), 7.0f, false);
+                this.world.getServer().getPluginManager().callEvent((Event) event);
                 if (!event.isCancelled()) {
-                    this.world.createExplosion((Entity)this, this.locX, this.locY + this.getHeadHeight(), this.locZ, event.getRadius(), event.getFire(), this.world.getGameRules().getBoolean("mobGriefing"));
+                    this.world.createExplosion((Entity) this, this.locX, this.locY + this.getHeadHeight(), this.locZ, event.getRadius(), event.getFire(), this.world.getGameRules().getBoolean("mobGriefing"));
                 }
-                this.world.createExplosion((Entity)this, this.locX, this.locY + this.getHeadHeight(), this.locZ, 7.0f, false, this.world.getGameRules().getBoolean("mobGriefing"));
-                final int viewDistance = ((WorldServer)this.world).getServer().getViewDistance() * 16;
+                this.world.createExplosion((Entity) this, this.locX, this.locY + this.getHeadHeight(), this.locZ, 7.0f, false, this.world.getGameRules().getBoolean("mobGriefing"));
+                final int viewDistance = ((WorldServer) this.world).getServer().getViewDistance() * 16;
                 for (Object playerp : this.world.players) {
-                    EntityPlayer player = (EntityPlayer)playerp;
+                    EntityPlayer player = (EntityPlayer) playerp;
                     final double deltaX = this.locX - player.locX;
                     final double deltaZ = this.locZ - player.locZ;
                     final double distanceSquared = deltaX * deltaX + deltaZ * deltaZ;
@@ -318,10 +311,9 @@ public class DungeonYijkiEntity extends EntityMonster implements IRangedEntity
                         final double deltaLength = Math.sqrt(distanceSquared);
                         final double relativeX = player.locX + deltaX / deltaLength * viewDistance;
                         final double relativeZ = player.locZ + deltaZ / deltaLength * viewDistance;
-                        player.playerConnection.sendPacket(new PacketPlayOutWorldEvent(1013, new BlockPosition((int)relativeX, (int)this.locY, (int)relativeZ), 0, true));
-                    }
-                    else {
-                        player.playerConnection.sendPacket(new PacketPlayOutWorldEvent(1013, new BlockPosition((int)this.locX, (int)this.locY, (int)this.locZ), 0, true));
+                        player.playerConnection.sendPacket(new PacketPlayOutWorldEvent(1013, new BlockPosition((int) relativeX, (int) this.locY, (int) relativeZ), 0, true));
+                    } else {
+                        player.playerConnection.sendPacket(new PacketPlayOutWorldEvent(1013, new BlockPosition((int) this.locX, (int) this.locY, (int) this.locZ), 0, true));
                     }
                 }
             }
@@ -329,8 +321,7 @@ public class DungeonYijkiEntity extends EntityMonster implements IRangedEntity
             if (this.ticksLived % 10 == 0) {
                 this.heal(10.0f, EntityRegainHealthEvent.RegainReason.WITHER_SPAWN);
             }
-        }
-        else {
+        } else {
             super.E();
             for (int witherTargetId = 1; witherTargetId < 3; ++witherTargetId) {
                 if (this.ticksLived >= this.nextShot[witherTargetId - 1]) {
@@ -353,21 +344,19 @@ public class DungeonYijkiEntity extends EntityMonster implements IRangedEntity
                     if (target > 0) {
                         final Entity entity = this.world.a(target);
                         if (entity instanceof EntityHuman && entity.isAlive() && this.h(entity) <= 900.0) {
-                            this.a(witherTargetId + 1, (EntityLiving)entity);
+                            this.a(witherTargetId + 1, (EntityLiving) entity);
                             this.nextShot[witherTargetId - 1] = this.ticksLived + 5 + this.random.nextInt(20);
                             this.shootTimer[witherTargetId - 1] = 0;
-                        }
-                        else {
+                        } else {
                             this.b(witherTargetId, 0);
                         }
-                    }
-                    else {
+                    } else {
                         List<EntityLiving> list = this.world.a(EntityLiving.class, getBoundingBox().grow(20.0D, 8.0D, 20.0D), Predicates.and(bq, IEntitySelector.d));
                         for (int i1 = 0; i1 < 10 && !list.isEmpty(); i1++) {
                             EntityLiving entityliving = list.get(this.random.nextInt(list.size()));
                             if (entityliving != this && entityliving.isAlive() && hasLineOfSight(entityliving)) {
                                 if (entityliving instanceof EntityHuman) {
-                                    if (!((EntityHuman)entityliving).abilities.isInvulnerable)
+                                    if (!((EntityHuman) entityliving).abilities.isInvulnerable)
                                         b(witherTargetId, entityliving.getId());
                                     break;
                                 }
@@ -381,8 +370,7 @@ public class DungeonYijkiEntity extends EntityMonster implements IRangedEntity
             }
             if (this.getGoalTarget() != null && this.getGoalTarget() instanceof EntityHuman && this.getGoalTarget().isAlive()) {
                 this.b(0, this.getGoalTarget().getId());
-            }
-            else {
+            } else {
                 this.b(0, 0);
             }
             if (this.bv > 0) {
@@ -400,7 +388,7 @@ public class DungeonYijkiEntity extends EntityMonster implements IRangedEntity
                                 final int l2 = j1 + l1;
                                 final Block block = this.world.getType(new BlockPosition(j2, k2, l2)).getBlock();
                                 if (block.getMaterial() != Material.AIR && block != Blocks.BEDROCK && block != Blocks.END_PORTAL && block != Blocks.END_PORTAL_FRAME && block != Blocks.COMMAND_BLOCK) {
-                                    if (!CraftEventFactory.callEntityChangeBlockEvent((Entity)this, j2, k2, l2, Blocks.AIR, 0).isCancelled()) {
+                                    if (!CraftEventFactory.callEntityChangeBlockEvent((Entity) this, j2, k2, l2, Blocks.AIR, 0).isCancelled()) {
                                         flag = (this.world.setAir(new BlockPosition(j2, k2, l2), true) || flag);
                                     }
                                 }
@@ -408,7 +396,7 @@ public class DungeonYijkiEntity extends EntityMonster implements IRangedEntity
                         }
                     }
                     if (flag) {
-                        this.world.a((EntityHuman)null, 1012, new BlockPosition(this), 0);
+                        this.world.a((EntityHuman) null, 1012, new BlockPosition(this), 0);
                     }
                 }
             }
@@ -417,15 +405,15 @@ public class DungeonYijkiEntity extends EntityMonster implements IRangedEntity
             }
         }
     }
-    
+
     public void bZ() {
         this.r(220);
         this.setHealth(this.getMaxHealth() / 3.0f);
     }
-    
+
     public void as() {
     }
-    
+
     public int aV() {
         return 4;
     }
@@ -449,7 +437,7 @@ public class DungeonYijkiEntity extends EntityMonster implements IRangedEntity
         float f1 = MathHelper.sin(f);
         return this.locZ + f1 * 1.3D;
     }
-    
+
     private float b(final float f, final float f1, final float f2) {
         float f3 = MathHelper.g(f1 - f);
         if (f3 > f2) {
@@ -460,13 +448,13 @@ public class DungeonYijkiEntity extends EntityMonster implements IRangedEntity
         }
         return f + f3;
     }
-    
+
     private void a(final int i, final EntityLiving entityliving) {
         this.a(i, entityliving.locX, entityliving.locY + entityliving.getHeadHeight() * 0.5, entityliving.locZ, i == 0 && this.random.nextFloat() < 0.001f);
     }
 
     private void a(int entityID, double spawnX, double spawnY, double spawnZ, boolean flag) {
-        this.world.a((EntityHuman)null, 1014, new BlockPosition(this), 0);
+        this.world.a((EntityHuman) null, 1014, new BlockPosition(this), 0);
         double x = t(entityID);
         double y = u(entityID);
         double z = v(entityID);
@@ -474,7 +462,7 @@ public class DungeonYijkiEntity extends EntityMonster implements IRangedEntity
         double d7 = spawnY - y;
         double d8 = spawnZ - z;
         final boolean fromMOY = this instanceof me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost.MotherOfYijkiEntity;
-        EntityWitherSkull entitywitherskull = new EntityWitherSkull(this.world, (EntityLiving)this, d6 * 1.2D, d7, d8 * 1.2D) {
+        EntityWitherSkull entitywitherskull = new EntityWitherSkull(this.world, (EntityLiving) this, d6 * 1.2D, d7, d8 * 1.2D) {
             protected void a(MovingObjectPosition movingobjectposition) {
                 Entity colliding = movingobjectposition.entity;
                 if (colliding != null && !(colliding instanceof EntityHuman))
@@ -498,14 +486,14 @@ public class DungeonYijkiEntity extends EntityMonster implements IRangedEntity
         entitywitherskull.locX = x;
         entitywitherskull.locZ = z;
         ProjectileLaunchEvent event = new ProjectileLaunchEvent(entitywitherskull.getBukkitEntity());
-        Bukkit.getPluginManager().callEvent((Event)event);
-        this.world.addEntity((Entity)entitywitherskull);
+        Bukkit.getPluginManager().callEvent((Event) event);
+        this.world.addEntity((Entity) entitywitherskull);
     }
-    
+
     public void a(final EntityLiving entityliving, final float f) {
         this.a(0, entityliving);
     }
-    
+
     public boolean damageEntity(final DamageSource damagesource, final float f) {
         if (this.isInvulnerable(damagesource)) {
             return false;
@@ -517,7 +505,7 @@ public class DungeonYijkiEntity extends EntityMonster implements IRangedEntity
             return false;
         }
         final Entity entity = damagesource.getEntity();
-        if ((entity != null && !(entity instanceof EntityHuman) && entity instanceof EntityLiving && ((EntityLiving)entity).getMonsterType() == this.getMonsterType()) || entity instanceof EntityWitherSkull) {
+        if ((entity != null && !(entity instanceof EntityHuman) && entity instanceof EntityLiving && ((EntityLiving) entity).getMonsterType() == this.getMonsterType()) || entity instanceof EntityWitherSkull) {
             return false;
         }
         if (this.bv <= 0) {
@@ -530,17 +518,17 @@ public class DungeonYijkiEntity extends EntityMonster implements IRangedEntity
         }
         return super.damageEntity(damagesource, f);
     }
-    
+
     protected void dropDeathLoot(final boolean flag, final int i) {
     }
-    
+
     protected void D() {
         this.ticksFarFromPlayer = 0;
     }
-    
+
     protected void b(final float f) {
     }
-    
+
     public void addEffect(final MobEffect mobeffect) {
     }
 

@@ -1,21 +1,22 @@
 package me.ifamasssxd.cosmicbosses.bosses.dragon.phases;
 
-import net.minecraft.server.v1_8_R3.*;
-import me.ifamasssxd.cosmicbosses.bosses.dragon.*;
-import org.bukkit.*;
-import me.ifamasssxd.cosmicbosses.struct.*;
-import javax.annotation.*;
+import me.ifamasssxd.cosmicbosses.bosses.dragon.EndDragonEntity;
+import me.ifamasssxd.cosmicbosses.struct.BossPath;
+import net.minecraft.server.v1_8_R3.Vec3D;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 
-public class PhaseTakeoff extends PhaseBase
-{
+import javax.annotation.Nullable;
+
+public class PhaseTakeoff extends PhaseBase {
     private boolean firstTick;
     private BossPath currentPath;
     private Vec3D targetLocation;
-    
+
     public PhaseTakeoff(final EndDragonEntity dragonIn) {
         super(dragonIn);
     }
-    
+
     @Override
     public void doLocalUpdate() throws NoSuchFieldException {
         if (!this.firstTick && this.currentPath != null) {
@@ -24,20 +25,19 @@ public class PhaseTakeoff extends PhaseBase
             if (d0 > 100.0) {
                 this.dragon.getPhaseManager().setPhase(PhaseList.HOLDING_PATTERN);
             }
-        }
-        else {
+        } else {
             this.firstTick = false;
             this.findNewTarget();
         }
     }
-    
+
     @Override
     public void initPhase() {
         this.firstTick = true;
         this.currentPath = null;
         this.targetLocation = null;
     }
-    
+
     private void findNewTarget() throws NoSuchFieldException {
         final int i = this.dragon.initPathPoints();
         final Vec3D vec3d = this.dragon.getHeadLookVec(1.0f);
@@ -48,8 +48,7 @@ public class PhaseTakeoff extends PhaseBase
             if (j < 0) {
                 j += 12;
             }
-        }
-        else {
+        } else {
             j -= 12;
             j &= 0x7;
             j += 12;
@@ -60,7 +59,7 @@ public class PhaseTakeoff extends PhaseBase
             this.navigateToNextPathNode();
         }
     }
-    
+
     private void navigateToNextPathNode() {
         final Vec3D vec3d = this.currentPath.getCurrentPos();
         this.currentPath.incrementPathIndex();
@@ -70,13 +69,13 @@ public class PhaseTakeoff extends PhaseBase
         } while (d0 < vec3d.b);
         this.targetLocation = new Vec3D(vec3d.a, d0, vec3d.c);
     }
-    
+
     @Nullable
     @Override
     public Vec3D getTargetLocation() {
         return this.targetLocation;
     }
-    
+
     @Override
     public PhaseList<PhaseTakeoff> getType() {
         return PhaseList.TAKEOFF;

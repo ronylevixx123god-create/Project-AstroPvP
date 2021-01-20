@@ -1,22 +1,28 @@
 package me.ifamasssxd.cosmicbosses.listeners;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
-import org.bukkit.event.player.*;
-import me.ifamasssxd.cosmicbosses.*;
-import me.ifamasssxd.cosmicbosses.utils.*;
-import me.ifamasssxd.cosmicbosses.struct.*;
-import com.cosmicpvp.cosmicutils.utils.*;
-import org.bukkit.inventory.*;
-import org.bukkit.plugin.*;
-import org.bukkit.metadata.*;
-import org.bukkit.entity.*;
-import me.ifamasssxd.cosmicbosses.struct.enums.*;
-import org.bukkit.block.*;
-import org.bukkit.*;
-import org.bukkit.event.*;
+import me.ifamasssxd.cosmicbosses.CosmicBosses;
+import me.ifamasssxd.cosmicbosses.struct.Boss;
+import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
+import me.ifamasssxd.cosmicbosses.utils.BossEggUtils;
+import me.ifamasssxd.cosmicbosses.utils.BossUtils;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
 
-public class EggListener implements Listener
-{
+public class EggListener implements Listener {
     @EventHandler(priority = EventPriority.LOW)
     public void onInteractPLayer(final PlayerInteractEvent e) {
         if (e.hasItem()) {
@@ -50,18 +56,16 @@ public class EggListener implements Listener
                     final Location spawnLoc = block.getLocation().add(0.5, 1.0, 0.5);
                     if (is.getAmount() > 1) {
                         is.setAmount(is.getAmount() - 1);
-                    }
-                    else {
-                        p.setItemInHand((ItemStack)null);
+                    } else {
+                        p.setItemInHand((ItemStack) null);
                     }
                     p.updateInventory();
                     final Boss boss = type.createInstance(spawnLoc);
                     boss.onBossSpawn();
                     if (boss.getEntity() != null) {
-                        boss.getEntity().setMetadata("playerSpawnedBoss", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), (Object)""));
+                        boss.getEntity().setMetadata("playerSpawnedBoss", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
                     }
-                }
-                else {
+                } else {
                     p.sendMessage(ChatColor.RED + "You cannot spawn this boss here.");
                 }
             }

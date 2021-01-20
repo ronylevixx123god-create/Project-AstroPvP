@@ -1,23 +1,15 @@
 package me.ifamasssxd.cosmicbosses.evilabomination;
 
-import me.ifamasssxd.cosmicbosses.utils.*;
-import me.ifamasssxd.cosmicbosses.bosses.yijki.*;
-import me.ifamasssxd.cosmicbosses.bosses.skeletonhorse.*;
-import me.ifamasssxd.cosmicbosses.struct.*;
-import net.minecraft.server.v1_8_R3.Entity;
-import net.minecraft.server.v1_8_R3.World;
-import org.bukkit.craftbukkit.v1_8_R3.entity.*;
-import java.util.*;
-import org.bukkit.entity.*;
+import me.ifamasssxd.cosmicbosses.bosses.skeletonhorse.PathfinderGoalBossMeleeAttack;
+import me.ifamasssxd.cosmicbosses.bosses.yijki.PathfinderGoalWitherBossArrowAttack;
+import me.ifamasssxd.cosmicbosses.utils.ReflectionUtils;
 import net.minecraft.server.v1_8_R3.*;
-import org.bukkit.*;
-import org.bukkit.util.*;
-import org.bukkit.util.Vector;
 
-public class EvilAbominationEntity extends EntityZombie implements IRangedEntity
-{
+import java.util.List;
+
+public class EvilAbominationEntity extends EntityZombie implements IRangedEntity {
     private EvilAbomination boss;
-    
+
     public EvilAbominationEntity(final EvilAbomination boss, final World world) {
         super(world);
         this.boss = boss;
@@ -27,18 +19,18 @@ public class EvilAbominationEntity extends EntityZombie implements IRangedEntity
     public void a(EntityLiving entityLiving, float v) {
 
     }
-    
+
     public EvilAbominationEntity(final World world) {
         super(world);
-        final List<?> list = (List<?>)ReflectionUtils.getObject(PathfinderGoalSelector.class, this.goalSelector, "b");
+        final List<?> list = (List<?>) ReflectionUtils.getObject(PathfinderGoalSelector.class, this.goalSelector, "b");
         list.clear();
-        this.goalSelector.a(0, (PathfinderGoal)new PathfinderGoalWitherBossArrowAttack((IRangedEntity)this, 1.0, 10, 25, 23.0f));
-        this.goalSelector.a(0, (PathfinderGoal)new PathfinderGoalBossMeleeAttack((EntityCreature)this, EntityHuman.class, 1.2, false));
-        this.goalSelector.a(1, (PathfinderGoal)new PathfinderGoalFloat((EntityInsentient)this));
-        this.goalSelector.a(3, (PathfinderGoal)new PathfinderGoalLookAtPlayer((EntityInsentient)this, (Class)EntityHuman.class, 8.0f));
-        this.goalSelector.a(4, (PathfinderGoal)new PathfinderGoalRandomLookaround((EntityInsentient)this));
-        this.targetSelector.a(1, (PathfinderGoal)new PathfinderGoalHurtByTarget((EntityCreature)this, false));
-        this.targetSelector.a(2, (PathfinderGoal)new PathfinderGoalNearestAttackableTarget((EntityCreature)this, (Class)EntityHuman.class, false, true));
+        this.goalSelector.a(0, (PathfinderGoal) new PathfinderGoalWitherBossArrowAttack((IRangedEntity) this, 1.0, 10, 25, 23.0f));
+        this.goalSelector.a(0, (PathfinderGoal) new PathfinderGoalBossMeleeAttack((EntityCreature) this, EntityHuman.class, 1.2, false));
+        this.goalSelector.a(1, (PathfinderGoal) new PathfinderGoalFloat((EntityInsentient) this));
+        this.goalSelector.a(3, (PathfinderGoal) new PathfinderGoalLookAtPlayer((EntityInsentient) this, (Class) EntityHuman.class, 8.0f));
+        this.goalSelector.a(4, (PathfinderGoal) new PathfinderGoalRandomLookaround((EntityInsentient) this));
+        this.targetSelector.a(1, (PathfinderGoal) new PathfinderGoalHurtByTarget((EntityCreature) this, false));
+        this.targetSelector.a(2, (PathfinderGoal) new PathfinderGoalNearestAttackableTarget((EntityCreature) this, (Class) EntityHuman.class, false, true));
         /*if (world != null && !world.isClientSide) {
             this.bZ();
         }*/

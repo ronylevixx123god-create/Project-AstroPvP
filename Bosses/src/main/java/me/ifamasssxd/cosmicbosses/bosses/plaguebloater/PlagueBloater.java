@@ -31,11 +31,10 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.Iterator;
 import java.util.List;
 
-public class PlagueBloater extends Boss
-{
+public class PlagueBloater extends Boss {
     private final PlagueBomb plagueBomb;
     private final PlagueCarriers plagueCarrier;
-    
+
     public PlagueBloater(final Location location, final BossType bossType) {
         super(location, bossType);
         this.plagueBomb = new PlagueBomb(this);
@@ -46,20 +45,20 @@ public class PlagueBloater extends Boss
         this.getLootPool().add(CosmicSpaceChestsAPI.getDropPackageChest(ItemRarity.LEGENDARY));
         this.getLootPool().add(CosmicSpaceChestsAPI.getDropPackageChest(ItemRarity.LEGENDARY));
     }
-    
+
     @Override
     public String getTitle() {
         return "Plague";
     }
-    
+
     @Override
     public EntityType getEntityType() {
         return EntityType.GIANT;
     }
-    
+
     @Override
     public void onBossSpawn() {
-        final Giant ent = (Giant)this.spawnBoss();
+        final Giant ent = (Giant) this.spawnBoss();
         ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1));
         this.setHelmet(new CustomItem(new ItemStack(Material.DIAMOND_HELMET)).setUnbreakable(true).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2).addEnchant(Enchantment.PROTECTION_FIRE, 5).build());
         this.setChestplate(new CustomItem(new ItemStack(Material.DIAMOND_CHESTPLATE)).setUnbreakable(true).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1).build());
@@ -71,17 +70,17 @@ public class PlagueBloater extends Boss
         }
         this.alert();
     }
-    
+
     @Override
     public String getCustomName() {
         return "Plague Bloater";
     }
-    
+
     @Override
     public String getName() {
         return "Plague Bloater";
     }
-    
+
     @Override
     public void onUpdate() throws Exception {
         ++this.loops;
@@ -90,8 +89,7 @@ public class PlagueBloater extends Boss
         }
         if (this.random.nextBoolean() && this.plagueBomb.canUse() && this.loops >= 20) {
             this.plagueBomb.onAbility();
-        }
-        else if (this.random.nextBoolean() && this.plagueCarrier.canUse() && this.loops >= 4) {
+        } else if (this.random.nextBoolean() && this.plagueCarrier.canUse() && this.loops >= 4) {
             this.plagueCarrier.onAbility();
         }
         if (this.loops % 5 == 0) {
@@ -100,19 +98,17 @@ public class PlagueBloater extends Boss
                 final Entity e = ent.next();
                 if (e == null || !e.isValid()) {
                     ent.remove();
-                }
-                else {
+                } else {
                     if (e.getLocation().distanceSquared(this.getEntity().getLocation()) < 1200.0) {
                         continue;
                     }
                     e.teleport(this.getEntity().getLocation().clone().add(0.0, 5.0, 0.0));
                 }
             }
-            for (Entity ent2 : (List<Entity>)Lists.newArrayList((Iterable)this.plagueCarrier.getEntities())) {
+            for (Entity ent2 : (List<Entity>) Lists.newArrayList((Iterable) this.plagueCarrier.getEntities())) {
                 if (ent2 == null || ent2.isDead()) {
                     this.plagueCarrier.getEntities().remove(ent2);
-                }
-                else {
+                } else {
                     if (ent2.getLocation().distanceSquared(this.getEntity().getLocation()) < 1500.0) {
                         continue;
                     }
@@ -128,7 +124,7 @@ public class PlagueBloater extends Boss
         }
         super.onUpdate();
     }
-    
+
     @Override
     public void cleanup() {
         this.plagueBomb.clearEntities();
@@ -136,7 +132,7 @@ public class PlagueBloater extends Boss
         this.removeMinions();
         this.clearScoreboard();
     }
-    
+
     @Override
     public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) throws Exception {
         if (this.random.nextInt(10) <= 3) {
@@ -147,9 +143,9 @@ public class PlagueBloater extends Boss
         }
         super.onAttackPlayer(event, player);
     }
-    
+
     @Override
-    public void onDamageTaken(final EntityDamageEvent event) {
+    public void onDamageTaken(final EntityDamageEvent event) throws Exception {
         if (event.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION) {
             event.setCancelled(true);
         }
@@ -161,13 +157,13 @@ public class PlagueBloater extends Boss
         }
         super.onDamageTaken(event);
     }
-    
+
     @Override
     public void onDamageTaken(final EntityDamageByEntityEvent event, final Entity damager) throws Exception {
         if (event.getDamager() instanceof Projectile) {
             event.setCancelled(true);
             if (damager instanceof Player) {
-                final Player pl = (Player)damager;
+                final Player pl = (Player) damager;
                 pl.playSound(pl.getLocation(), Sound.ITEM_BREAK, 1.0f, 1.4f);
                 this.sendMessage(pl, ChatColor.ITALIC + "Your projectiles cannot harm me. I am but an omen of your doom.");
             }
@@ -177,16 +173,15 @@ public class PlagueBloater extends Boss
             event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) / 1.5);
         }
         if (this.random.nextBoolean() && this.getMinions().size() < 14) {
-            final Zombie minion = (Zombie)this.spawnMinion(EntityType.ZOMBIE, BossUtils.getRandomLocationNearby(this.getEntity().getLocation(), 10, 5, 2));
-            minion.setMetadata("plague_ads", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), (Object)""));
+            final Zombie minion = (Zombie) this.spawnMinion(EntityType.ZOMBIE, BossUtils.getRandomLocationNearby(this.getEntity().getLocation(), 10, 5, 2));
+            minion.setMetadata("plague_ads", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
             minion.setMaxHealth(20.0);
             minion.setBaby(false);
             minion.setCanPickupItems(false);
             minion.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 600, 2), true);
             minion.getEquipment().setItemInHand(ItemBuilder.buildArmor(Material.DIAMOND_SWORD, Enchantment.DAMAGE_ALL, Enchantment.FIRE_ASPECT));
-        }
-        else if (this.getMinions().size() < 14) {
-            final Zombie minion = (Zombie)this.spawnMinion(EntityType.ZOMBIE, BossUtils.getRandomLocationNearby(this.getEntity().getLocation(), 10, 5, 2));
+        } else if (this.getMinions().size() < 14) {
+            final Zombie minion = (Zombie) this.spawnMinion(EntityType.ZOMBIE, BossUtils.getRandomLocationNearby(this.getEntity().getLocation(), 10, 5, 2));
             minion.setMaxHealth(10.0);
             minion.setBaby(true);
             minion.setCanPickupItems(false);
@@ -199,29 +194,28 @@ public class PlagueBloater extends Boss
         }
         super.onDamageTaken(event, damager);
     }
-    
+
     @Override
     public void onMinionUpdate(final Entity minion, final Event e) throws Exception {
         if (e instanceof EntityDamageByEntityEvent) {
-            final EntityDamageByEntityEvent event = (EntityDamageByEntityEvent)e;
+            final EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) e;
             if (minion.hasMetadata("plague_ads") && event.getEntity() instanceof Player) {
-                final Player pl = (Player)event.getEntity();
+                final Player pl = (Player) event.getEntity();
                 BossUtils.dealPercentMaxHealthDamage(pl, 20.0, 30);
             }
-        }
-        else if (e instanceof EntityDamageEvent && ((EntityDamageEvent)e).getCause() == EntityDamageEvent.DamageCause.FALL) {
-            ((EntityDamageEvent)e).setCancelled(true);
+        } else if (e instanceof EntityDamageEvent && ((EntityDamageEvent) e).getCause() == EntityDamageEvent.DamageCause.FALL) {
+            ((EntityDamageEvent) e).setCancelled(true);
         }
         super.onMinionUpdate(minion, e);
     }
-    
+
     public void onTNTExplode(final Entity ent) throws Exception {
         de.inventivegames.particle.ParticleEffect.LARGE_SMOKE.sendToPlayers(Bukkit.getOnlinePlayers(), ent.getLocation(), 1f, 1f, 1f, 0.09f, 20);
 
         ent.getWorld().playSound(ent.getLocation(), Sound.EXPLODE, 4.0f, 1.0f);
         for (final Entity e : ent.getNearbyEntities(10.0, 10.0, 10.0)) {
             if (e instanceof Player) {
-                final Player pl = (Player)e;
+                final Player pl = (Player) e;
                 if (!BossUtils.canAffectPlayer(pl, true)) {
                     continue;
                 }
@@ -240,45 +234,45 @@ public class PlagueBloater extends Boss
             }
         }
     }
-    
+
     @Override
     public void onPhaseChange(final Phase newPhase) {
     }
-    
+
     @Override
     public void onDeath(final EntityDeathEvent event) throws Exception {
         super.onDeath(event);
         this.sendMessage(ChatColor.ITALIC + "Arggh.. I suppose this planets time has not yet come... I will.. return.", Sound.WITHER_DEATH, 1.5f);
     }
-    
+
     @Override
     public DamageType getDamageType() {
         return DamageType.POISON;
     }
-    
+
     @Override
     public Difficulty getDifficulty() {
         return Difficulty.LEGIT;
     }
-    
+
     @Override
     public int getMaxHealth() {
         return 2500;
     }
-    
+
     @Override
     public void onMiscUpdate(final Event event) {
     }
-    
+
     @Override
     public List<BossMessage> getGeneralMessages() {
-        return (List<BossMessage>)Lists.newArrayList(new BossMessage[] { new BossMessage("If you had not committed great offenses, the galaxy would not have sent a curse as vile as me upon you.", false, 0), new BossMessage("I. AM. DEATH", false, 0), new BossMessage("Come, breathe in my black fog and see your body crumble", false, 0), new BossMessage("You cannot kill a plague.", false, 0) });
+        return (List<BossMessage>) Lists.newArrayList(new BossMessage[]{new BossMessage("If you had not committed great offenses, the galaxy would not have sent a curse as vile as me upon you.", false, 0), new BossMessage("I. AM. DEATH", false, 0), new BossMessage("Come, breathe in my black fog and see your body crumble", false, 0), new BossMessage("You cannot kill a plague.", false, 0)});
     }
-    
+
     public PlagueBomb getPlagueBomb() {
         return this.plagueBomb;
     }
-    
+
     public PlagueCarriers getPlagueCarrier() {
         return this.plagueCarrier;
     }

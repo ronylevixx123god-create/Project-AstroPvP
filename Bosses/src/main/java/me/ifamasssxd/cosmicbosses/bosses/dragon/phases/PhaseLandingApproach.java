@@ -11,26 +11,25 @@ import org.bukkit.Location;
 
 import javax.annotation.Nullable;
 
-public class PhaseLandingApproach extends PhaseBase
-{
+public class PhaseLandingApproach extends PhaseBase {
     private BossPath currentPath;
     private Vec3D targetLocation;
-    
+
     public PhaseLandingApproach(final EndDragonEntity dragonIn) {
         super(dragonIn);
     }
-    
+
     @Override
     public PhaseList<PhaseLandingApproach> getType() {
         return PhaseList.LANDING_APPROACH;
     }
-    
+
     @Override
     public void initPhase() {
         this.currentPath = null;
         this.targetLocation = null;
     }
-    
+
     @Override
     public void doLocalUpdate() throws NoSuchFieldException {
         double d1 = this.dragon.locX - this.targetLocation.a;
@@ -43,13 +42,13 @@ public class PhaseLandingApproach extends PhaseBase
             this.findNewTarget();
         }
     }
-    
+
     @Nullable
     @Override
     public Vec3D getTargetLocation() {
         return this.targetLocation;
     }
-    
+
     private void findNewTarget() throws NoSuchFieldException {
         if (this.currentPath == null || this.currentPath.isFinished()) {
             final int i = this.dragon.initPathPoints();
@@ -60,8 +59,7 @@ public class PhaseLandingApproach extends PhaseBase
                 final Vec3D vec3d = new Vec3D(entityplayer.locX, 0.0, entityplayer.locZ).a();
                 j = this.dragon.getNearestPpIdx(entityplayer.locX, 105.0, entityplayer.locZ);
                 Bukkit.getLogger().info("Searching for player landing path: " + entityplayer.locX + " , z: " + entityplayer.locZ);
-            }
-            else {
+            } else {
                 j = this.dragon.getNearestPpIdx(this.dragon.getHomeLocation().getX(), blockloc.getY(), 0.0 + this.dragon.getHomeLocation().getZ());
             }
             final BossPathPoint pathpoint = new BossPathPoint(blockloc.getBlockX(), blockloc.getBlockY(), blockloc.getBlockZ());
@@ -75,7 +73,7 @@ public class PhaseLandingApproach extends PhaseBase
             this.dragon.getPhaseManager().setPhase(PhaseList.LANDING);
         }
     }
-    
+
     private void navigateToNextPathNode() {
         if (this.currentPath != null && !this.currentPath.isFinished()) {
             final Vec3D vec3d = this.currentPath.getCurrentPos();

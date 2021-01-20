@@ -1,37 +1,50 @@
 package me.ifamasssxd.cosmicbosses.bosses.brood;
 
-import com.cosmicpvp.CosmicSpaceChests.libs.*;
-import com.cosmicpvp.CosmicSpaceChests.*;
+import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
+import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
+import com.google.common.collect.Lists;
+import me.ifamasssxd.cosmicbosses.CosmicBosses;
+import me.ifamasssxd.cosmicbosses.entities.SpiderBoss;
+import me.ifamasssxd.cosmicbosses.struct.BlockModifier;
+import me.ifamasssxd.cosmicbosses.struct.Boss;
+import me.ifamasssxd.cosmicbosses.struct.BossMessage;
+import me.ifamasssxd.cosmicbosses.struct.Phase;
+import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
+import me.ifamasssxd.cosmicbosses.struct.enums.DamageType;
 import me.ifamasssxd.cosmicbosses.struct.enums.Difficulty;
+import me.ifamasssxd.cosmicbosses.utils.BossUtils;
 import net.minecraft.server.v1_8_R3.Entity;
+import net.minecraft.server.v1_8_R3.EntityInsentient;
+import net.minecraft.server.v1_8_R3.MathHelper;
 import net.minecraft.server.v1_8_R3.World;
-import org.bukkit.craftbukkit.v1_8_R3.*;
-import me.ifamasssxd.cosmicbosses.entities.*;
-import me.ifamasssxd.cosmicbosses.*;
-import org.bukkit.plugin.*;
-import org.bukkit.metadata.*;
-import org.bukkit.potion.*;
-import org.bukkit.util.*;
-import me.ifamasssxd.cosmicbosses.utils.*;
-import org.bukkit.*;
-import org.bukkit.scheduler.*;
-import org.bukkit.event.*;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Sound;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftSpider;
 import org.bukkit.entity.*;
-import org.bukkit.craftbukkit.v1_8_R3.entity.*;
-import net.minecraft.server.v1_8_R3.*;
-import me.ifamasssxd.cosmicbosses.struct.*;
-import org.bukkit.event.entity.*;
-import me.ifamasssxd.cosmicbosses.struct.enums.*;
-import java.util.*;
-import com.google.common.collect.*;
+import org.bukkit.event.Event;
+import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-public class BroodMother extends Boss
-{
+import java.util.Iterator;
+import java.util.List;
+
+public class BroodMother extends Boss {
     WebAttack attack;
     SpiderSpawn spawn;
     int walkFails;
-    
+
     public BroodMother(final Location location, final BossType bossType) {
         super(location, bossType);
         this.spawn = new SpiderSpawn(this);
@@ -44,17 +57,17 @@ public class BroodMother extends Boss
         this.getLootPool().add(CosmicSpaceChestsAPI.getDropPackageChest(ItemRarity.ULTIMATE));
         this.getLootPool().add(CosmicSpaceChestsAPI.getDropPackageChest(ItemRarity.ULTIMATE));
     }
-    
+
     @Override
     public String getTitle() {
         return "Brood";
     }
-    
+
     @Override
     public EntityType getEntityType() {
         return EntityType.SPIDER;
     }
-    
+
     @Override
     public void onBossSpawn() {
         super.onBossSpawn();
@@ -63,18 +76,18 @@ public class BroodMother extends Boss
             this.sendMessage(ChatColor.ITALIC + start.getMessage());
         }
     }
-    
+
     @Override
     public LivingEntity spawnBoss() {
-        final CraftWorld world = (CraftWorld)this.location.getWorld();
-        final SpiderBoss boss = new SpiderBoss((World)world.getHandle());
+        final CraftWorld world = (CraftWorld) this.location.getWorld();
+        final SpiderBoss boss = new SpiderBoss((World) world.getHandle());
         boss.setPosition(this.location.getX(), this.location.getY(), this.location.getZ());
-        world.getHandle().addEntity((Entity)boss, CreatureSpawnEvent.SpawnReason.CUSTOM);
-        final LivingEntity e = (LivingEntity)boss.getBukkitEntity();
+        world.getHandle().addEntity((Entity) boss, CreatureSpawnEvent.SpawnReason.CUSTOM);
+        final LivingEntity e = (LivingEntity) boss.getBukkitEntity();
         this.uuid = e.getUniqueId();
-        e.setMetadata("do_not_clear", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), (Object)""));
-        e.setMetadata("boss", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), (Object)""));
-        e.setMaxHealth((double)this.getMaxHealth());
+        e.setMetadata("do_not_clear", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
+        e.setMetadata("boss", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
+        e.setMaxHealth((double) this.getMaxHealth());
         e.setHealth(e.getMaxHealth());
         this.setEnt(e);
         e.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 3));
@@ -84,24 +97,23 @@ public class BroodMother extends Boss
         BroodMother.bosses.put(e.getUniqueId(), this);
         return e;
     }
-    
+
     @Override
     public String getCustomName() {
         return "Brood Mother";
     }
-    
+
     @Override
     public String getName() {
         return "Brood Mother";
     }
-    
+
     @Override
-    public void onUpdate() {
+    public void onUpdate() throws Exception {
         ++this.loops;
         if (this.attack.canUse() && this.random.nextBoolean() && this.loops >= 20) {
             this.attack.onAbility();
-        }
-        else if (this.spawn.canUse() && this.random.nextInt(10) <= 7) {
+        } else if (this.spawn.canUse() && this.random.nextInt(10) <= 7) {
             this.spawn.onAbility();
         }
         if (this.getAntiFarm().checkStuck()) {
@@ -115,18 +127,16 @@ public class BroodMother extends Boss
             final org.bukkit.entity.Entity e = ent.next();
             if (e == null || !e.isValid()) {
                 ent.remove();
-            }
-            else if (e.getTicksLived() >= 140 && this.getMinions().size() > 7 && this.random.nextInt(100) < 25) {
+            } else if (e.getTicksLived() >= 140 && this.getMinions().size() > 7 && this.random.nextInt(100) < 25) {
                 e.setVelocity(e.getVelocity().add(new Vector(0, 5, 0)));
                 final org.bukkit.entity.Entity entity;
-                Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)CosmicBosses.getInstance(), () -> {
+                Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin) CosmicBosses.getInstance(), () -> {
                     if (e != null && e.isValid()) {
                         e.remove();
                     }
                     return;
                 }, 1L);
-            }
-            else {
+            } else {
                 if (e.getLocation().distanceSquared(this.getEntity().getLocation()) >= 750.0) {
                     e.teleport(this.getEntity().getLocation().clone());
                 }
@@ -138,16 +148,16 @@ public class BroodMother extends Boss
         }
         super.onUpdate();
     }
-    
+
     @Override
     public void cleanup() {
         this.getModifier().removeAllBlocks(true);
         this.removeMinions();
         this.clearScoreboard();
     }
-    
+
     @Override
-    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) {
+    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) throws Exception {
         if (event.isCancelled()) {
             return;
         }
@@ -175,45 +185,43 @@ public class BroodMother extends Boss
                     }
                     player.setWalkSpeed(speed);
                 }
-            }.runTaskLater((Plugin)CosmicBosses.getInstance(), 60L);
+            }.runTaskLater((Plugin) CosmicBosses.getInstance(), 60L);
         }
         if (canAffect) {
             BossUtils.dealPercentHealthDamage(player, 5.0, 4, 5);
         }
         super.onAttackPlayer(event, player);
     }
-    
+
     @Override
     public void onMinionUpdate(final org.bukkit.entity.Entity minion, final Event e) {
         if (e instanceof EntityDamageByEntityEvent) {
-            final EntityDamageByEntityEvent event = (EntityDamageByEntityEvent)e;
+            final EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) e;
             if (event.getEntity().hasMetadata("minion")) {
-                Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)CosmicBosses.getInstance(), () -> minion.setVelocity(new Vector()));
+                Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin) CosmicBosses.getInstance(), () -> minion.setVelocity(new Vector()));
             }
             if (event.getEntity() instanceof Player) {
-                final Player pl = (Player)event.getEntity();
+                final Player pl = (Player) event.getEntity();
                 if (!event.isCancelled() && event.getFinalDamage() < pl.getHealth()) {
                     pl.playSound(pl.getLocation(), Sound.ZOMBIE_METAL, 1.0f, 1.4f);
                     BossUtils.dealPercentMaxHealthDamage(pl, 5.0, 8);
                     pl.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100, 4));
                 }
-            }
-            else if (event.getEntity().hasMetadata("minion") && event.getDamager() instanceof Projectile) {
+            } else if (event.getEntity().hasMetadata("minion") && event.getDamager() instanceof Projectile) {
                 event.setCancelled(true);
                 minion.getWorld().playSound(minion.getLocation(), Sound.ITEM_BREAK, 4.0f, 1.4f);
             }
-        }
-        else if (e instanceof EntityDamageEvent) {
-            final EntityDamageEvent event2 = (EntityDamageEvent)e;
+        } else if (e instanceof EntityDamageEvent) {
+            final EntityDamageEvent event2 = (EntityDamageEvent) e;
             if (event2.getCause() == EntityDamageEvent.DamageCause.FIRE || event2.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK || event2.getCause() == EntityDamageEvent.DamageCause.LAVA) {
                 event2.setCancelled(true);
             }
         }
     }
-    
+
     private void spiderJump(final org.bukkit.entity.Entity ent, final float strength) {
-        final Spider spider = (Spider)ent;
-        final org.bukkit.entity.Entity target = (org.bukkit.entity.Entity)spider.getTarget();
+        final Spider spider = (Spider) ent;
+        final org.bukkit.entity.Entity target = (org.bukkit.entity.Entity) spider.getTarget();
         final Location spiderLoc = spider.getLocation();
         if (target != null && strength > 2.0f && strength < 6.0f && this.random.nextInt(10) == 0 && spider.isOnGround()) {
             final Location targetLoc = target.getLocation();
@@ -231,23 +239,22 @@ public class BroodMother extends Boss
             System.out.println("Leaping");
         }
     }
-    
+
     @Override
-    public void onDamageTaken(final EntityDamageByEntityEvent event, final org.bukkit.entity.Entity damager) {
+    public void onDamageTaken(final EntityDamageByEntityEvent event, final org.bukkit.entity.Entity damager) throws Exception {
         if (!event.isCancelled()) {
-            final Creature ent = (Creature)this.getEntity();
+            final Creature ent = (Creature) this.getEntity();
             event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) / 2.0);
             if (damager instanceof Player) {
-                final Player pl = (Player)damager;
+                final Player pl = (Player) damager;
                 final double distance = (ent.getTarget() != null) ? ent.getTarget().getLocation().distanceSquared(ent.getLocation()) : -1.0;
                 if (ent.getTarget() == null || distance > 100.0) {
-                    ent.setTarget((LivingEntity)pl);
-                    final EntityInsentient spider = (EntityInsentient)((CraftSpider)this.getEntity()).getHandle();
+                    ent.setTarget((LivingEntity) pl);
+                    final EntityInsentient spider = (EntityInsentient) ((CraftSpider) this.getEntity()).getHandle();
                     final boolean walked = spider.getNavigation().a(pl.getLocation().getX(), pl.getLocation().getY(), pl.getLocation().getZ(), 1.4);
                     if (walked) {
                         this.walkFails = 0;
-                    }
-                    else {
+                    } else {
                         ++this.walkFails;
                     }
                     if (this.walkFails >= 5) {
@@ -260,9 +267,9 @@ public class BroodMother extends Boss
         }
         super.onDamageTaken(event, damager);
     }
-    
+
     @Override
-    public void onDamageTaken(final EntityDamageEvent event) {
+    public void onDamageTaken(final EntityDamageEvent event) throws Exception {
         if (event.getCause() == EntityDamageEvent.DamageCause.SUFFOCATION) {
             event.setCancelled(true);
             if (this.getAntiFarm().checkStuck()) {
@@ -271,20 +278,20 @@ public class BroodMother extends Boss
         }
         super.onDamageTaken(event);
     }
-    
+
     @Override
     public void onPhaseChange(final Phase newPhase) {
     }
-    
+
     @Override
-    public void onDeath(final EntityDeathEvent event) {
+    public void onDeath(final EntityDeathEvent event) throws Exception {
         super.onDeath(event);
         if (event != null) {
             this.sendMessage(ChatColor.ITALIC + "HOW IS THIS POSSIBLE? The Brood Mother, ME, defeated by infidels such as yourselves?!", Sound.SPIDER_DEATH, 0.7f);
             if (event.getEntity() != null) {
                 for (final org.bukkit.entity.Entity near : event.getEntity().getNearbyEntities(20.0, 20.0, 20.0)) {
                     if (near instanceof Player) {
-                        final Player player = (Player)near;
+                        final Player player = (Player) near;
                         if (!player.hasPotionEffect(PotionEffectType.BLINDNESS)) {
                             continue;
                         }
@@ -294,28 +301,28 @@ public class BroodMother extends Boss
             }
         }
     }
-    
+
     @Override
     public DamageType getDamageType() {
         return DamageType.POISON;
     }
-    
+
     @Override
     public Difficulty getDifficulty() {
         return Difficulty.ULTIMATE;
     }
-    
+
     @Override
     public int getMaxHealth() {
         return 2000;
     }
-    
+
     @Override
     public void onMiscUpdate(final Event event) {
     }
-    
+
     @Override
     public List<BossMessage> getGeneralMessages() {
-        return (List<BossMessage>)Lists.newArrayList(new BossMessage[] { new BossMessage("Have you ever wondered why you're afraid of spiders?", false, -1), new BossMessage("One bite, and you'll be mine.", false, 0), new BossMessage("My babies.. they hunger for Cosmonauts!", true, 0) });
+        return (List<BossMessage>) Lists.newArrayList(new BossMessage[]{new BossMessage("Have you ever wondered why you're afraid of spiders?", false, -1), new BossMessage("One bite, and you'll be mine.", false, 0), new BossMessage("My babies.. they hunger for Cosmonauts!", true, 0)});
     }
 }

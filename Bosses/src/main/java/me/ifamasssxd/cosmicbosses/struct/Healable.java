@@ -1,6 +1,5 @@
 package me.ifamasssxd.cosmicbosses.struct;
 
-public interface Healable
-{
+public interface Healable {
     void onHeal(final int p0);
 }

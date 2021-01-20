@@ -1,16 +1,19 @@
 package me.ifamasssxd.cosmicbosses.utils;
 
-import java.util.*;
-import org.bukkit.*;
-import org.bukkit.entity.*;
-import org.bukkit.inventory.meta.*;
+import org.bukkit.Color;
+import org.bukkit.FireworkEffect;
+import org.bukkit.Location;
+import org.bukkit.entity.Firework;
+import org.bukkit.inventory.meta.FireworkMeta;
 
-public class RandomFireworks
-{
+import java.util.ArrayList;
+import java.util.Random;
+
+public class RandomFireworks {
     private static RandomFireworks fireWorks;
     public static ArrayList<Color> colors;
     public static ArrayList<FireworkEffect.Type> types;
-    
+
     public static RandomFireworks getManager() {
         if (RandomFireworks.colors == null || RandomFireworks.colors.size() == 0) {
             addColors();
@@ -20,7 +23,7 @@ public class RandomFireworks
         }
         return RandomFireworks.fireWorks;
     }
-    
+
     public static void addColors() {
         (RandomFireworks.colors = new ArrayList<Color>()).add(Color.WHITE);
         RandomFireworks.colors.add(Color.PURPLE);
@@ -40,7 +43,7 @@ public class RandomFireworks
         RandomFireworks.colors.add(Color.NAVY);
         RandomFireworks.colors.add(Color.BLACK);
     }
-    
+
     public static void addTypes() {
         RandomFireworks.types.add(FireworkEffect.Type.BURST);
         RandomFireworks.types.add(FireworkEffect.Type.BALL);
@@ -48,29 +51,29 @@ public class RandomFireworks
         RandomFireworks.types.add(FireworkEffect.Type.CREEPER);
         RandomFireworks.types.add(FireworkEffect.Type.STAR);
     }
-    
+
     public FireworkEffect.Type getRandomType() {
         final int size = RandomFireworks.types.size();
         final Random ran = new Random();
         final FireworkEffect.Type theType = RandomFireworks.types.get(ran.nextInt(size));
         return theType;
     }
-    
+
     public Color getRandomColor() {
         final int size = RandomFireworks.colors.size();
         final Random ran = new Random();
         final Color color = RandomFireworks.colors.get(ran.nextInt(size));
         return color;
     }
-    
+
     public void launchRandomFirework(final Location loc) {
-        final Firework fw = (Firework)loc.getWorld().spawn(loc, (Class)Firework.class);
+        final Firework fw = (Firework) loc.getWorld().spawn(loc, (Class) Firework.class);
         final FireworkMeta fm = fw.getFireworkMeta();
         fm.setPower(1);
-        fm.addEffects(new FireworkEffect[] { FireworkEffect.builder().with(this.getRandomType()).withColor(this.getRandomColor()).build() });
+        fm.addEffects(new FireworkEffect[]{FireworkEffect.builder().with(this.getRandomType()).withColor(this.getRandomColor()).build()});
         fw.setFireworkMeta(fm);
     }
-    
+
     static {
         RandomFireworks.fireWorks = new RandomFireworks();
         RandomFireworks.colors = new ArrayList<Color>();

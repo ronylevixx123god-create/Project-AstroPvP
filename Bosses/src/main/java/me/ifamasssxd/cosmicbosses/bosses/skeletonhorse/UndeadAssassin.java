@@ -35,8 +35,7 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.Iterator;
 import java.util.List;
 
-public class UndeadAssassin extends Boss
-{
+public class UndeadAssassin extends Boss {
     Horse horse;
     EmpoweredArrow empoweredArrow;
     Summoning summoning;
@@ -46,7 +45,7 @@ public class UndeadAssassin extends Boss
     long timeSinceInvincible;
     Entity lastTarget;
     int storedHealth;
-    
+
     public UndeadAssassin(final Location location, final BossType bossType) {
         super(location, bossType);
         this.empoweredArrow = new EmpoweredArrow(this);
@@ -62,24 +61,24 @@ public class UndeadAssassin extends Boss
         this.getLootPool().add(CosmicSpaceChestsAPI.getDropPackageChest(ItemRarity.ULTIMATE));
         this.getLootPool().add(CosmicSpaceChestsAPI.getDropPackageChest(ItemRarity.ULTIMATE));
     }
-    
+
     @Override
     public String getTitle() {
         return "Assassin";
     }
-    
+
     @Override
     public EntityType getEntityType() {
         return EntityType.SKELETON;
     }
-    
+
     @Override
     public LivingEntity spawnBoss() {
-        final LivingEntity e = (LivingEntity)BossUtils.createCustomEntity(CustomEntity.SKELETON_BOSS, this.location);
+        final LivingEntity e = (LivingEntity) BossUtils.createCustomEntity(CustomEntity.SKELETON_BOSS, this.location);
         this.uuid = e.getUniqueId();
-        e.setMetadata("do_not_clear", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), (Object)""));
-        e.setMetadata("boss", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), (Object)""));
-        e.setMaxHealth((double)this.getMaxHealth());
+        e.setMetadata("do_not_clear", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
+        e.setMetadata("boss", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
+        e.setMaxHealth((double) this.getMaxHealth());
         e.setHealth(e.getMaxHealth());
         this.setEnt(e);
         e.setCustomName(this.getDifficulty().getColor() + ChatColor.BOLD.toString() + this.getCustomName());
@@ -93,7 +92,7 @@ public class UndeadAssassin extends Boss
         }
         return e;
     }
-    
+
     @Override
     public void onBossSpawn() {
         final LivingEntity skeleton = this.spawnBoss();
@@ -103,8 +102,8 @@ public class UndeadAssassin extends Boss
         this.setChestplate(new CustomItem(new ItemStack(Material.IRON_CHESTPLATE)).setUnbreakable(true).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1).build());
         this.setLeggings(new CustomItem(new ItemStack(Material.IRON_LEGGINGS)).setUnbreakable(true).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 3).addEnchant(Enchantment.THORNS, 1).build());
         this.setBoots(new CustomItem(new ItemStack(Material.IRON_BOOTS)).setUnbreakable(true).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2).build());
-        (this.horse = (Horse)this.spawnMinion(EntityType.HORSE, skeleton.getLocation())).setMetadata("horse", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), (Object)""));
-        this.horse.setMaxHealth((double)this.getMaxHealth());
+        (this.horse = (Horse) this.spawnMinion(EntityType.HORSE, skeleton.getLocation())).setMetadata("horse", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
+        this.horse.setMaxHealth((double) this.getMaxHealth());
         this.horse.setHealth(this.horse.getMaxHealth());
         this.horse.setAdult();
         this.horse.setVariant(Horse.Variant.SKELETON_HORSE);
@@ -113,17 +112,17 @@ public class UndeadAssassin extends Boss
         this.horse.setPassenger(skeleton);
         this.alert();
     }
-    
+
     @Override
     public String getCustomName() {
         return "Undead Assassin";
     }
-    
+
     @Override
     public String getName() {
         return "Undead Assassin";
     }
-    
+
     @Override
     public void onUpdate() throws Exception {
         ++this.loops;
@@ -141,12 +140,12 @@ public class UndeadAssassin extends Boss
             }
         }
         if (this.loops % 4 == 0 && this.invincible && entity.getHealth() < this.storedHealth) {
-            entity.setHealth((double)this.storedHealth);
+            entity.setHealth((double) this.storedHealth);
         }
         if (!this.invincible && this.getPhase() == Phase.TWO && this.summoning.canUse() && (this.hits >= 10 || System.currentTimeMillis() - this.timeSinceInvincible >= this.summoning.getCooldown() * 0.45)) {
             this.hits = 0;
             this.timeSinceInvincible = System.currentTimeMillis();
-            this.storedHealth = (int)entity.getHealth();
+            this.storedHealth = (int) entity.getHealth();
             this.sendMessage(ChatColor.ITALIC + "Rise my minions!");
             this.sendMessage(ChatColor.ITALIC + "Have you not figured it out? I. AM. ALREADY. DEAD. Now come, join me in the underworld.");
             this.sendMessage(ChatColor.WHITE + "You must defeat the minions to damage the boss!");
@@ -158,28 +157,25 @@ public class UndeadAssassin extends Boss
         if (this.horse != null && this.horse.isValid()) {
             if (this.getEntity().getHealth() < this.getEntity().getMaxHealth() * 0.75) {
                 this.horse.damage(2.147483647E9);
-            }
-            else {
+            } else {
                 if (this.horse.getPassenger() == null) {
                     this.horse.setPassenger(this.getEntity());
                 }
-                final Creature boss = (Creature)this.getEntity();
+                final Creature boss = (Creature) this.getEntity();
                 if (boss.getTarget() != null && boss.getTarget().getWorld() == boss.getWorld()) {
                     final double distanceSquared = this.horse.getLocation().distanceSquared(boss.getTarget().getLocation());
                     if (distanceSquared > 100.0) {
-                        final EntityInsentient insent = (EntityInsentient)((CraftHorse)this.horse).getHandle();
+                        final EntityInsentient insent = (EntityInsentient) ((CraftHorse) this.horse).getHandle();
                         final Location targetLoc = boss.getTarget().getLocation();
                         insent.getNavigation().a(targetLoc.getX(), targetLoc.getY(), targetLoc.getZ(), 2.0);
-                    }
-                    else if (distanceSquared < 5.0) {
-                        final EntityInsentient insent = (EntityInsentient)((CraftHorse)this.horse).getHandle();
+                    } else if (distanceSquared < 5.0) {
+                        final EntityInsentient insent = (EntityInsentient) ((CraftHorse) this.horse).getHandle();
                         final Location targetLoc = BossUtils.getRandomLocationNearby(boss.getTarget().getLocation(), 7, 4, 0);
                         insent.getNavigation().a(targetLoc.getX(), targetLoc.getY(), targetLoc.getZ(), 2.1);
                     }
                 }
             }
-        }
-        else if ((this.horse == null || this.horse.isDead()) && this.getPhase() != Phase.TWO) {
+        } else if ((this.horse == null || this.horse.isDead()) && this.getPhase() != Phase.TWO) {
             this.onPhaseChange(Phase.TWO);
             this.horse = null;
         }
@@ -188,8 +184,7 @@ public class UndeadAssassin extends Boss
             final Entity e = ent.next();
             if (e == null || !e.isValid()) {
                 ent.remove();
-            }
-            else {
+            } else {
                 if (e.getLocation().distanceSquared(this.getEntity().getLocation()) < 1200.0) {
                     continue;
                 }
@@ -203,26 +198,25 @@ public class UndeadAssassin extends Boss
             this.updateScoreboard();
         }
         if (!this.invincible && this.loops % 2 * 20 == 0) {
-            final Creature boss = (Creature)this.getEntity();
+            final Creature boss = (Creature) this.getEntity();
             if (!boss.isInsideVehicle() && boss.getTarget() != null && boss.getTarget().isValid() && boss.getTarget() instanceof Player && boss.getTarget().getWorld().equals(this.getEntity().getWorld())) {
-                this.lastTarget = (Entity)boss.getTarget();
+                this.lastTarget = (Entity) boss.getTarget();
                 final double distance = this.lastTarget.getLocation().distanceSquared(this.getEntity().getLocation());
                 if (this.lastTarget.isValid() && distance <= 200.0 && distance > 60.0) {
-                    final EntityInsentient insent = (EntityInsentient)((CraftSkeleton)this.getEntity()).getHandle();
-                    final net.minecraft.server.v1_8_R3.Entity ent2 = ((CraftEntity)this.lastTarget).getHandle();
+                    final EntityInsentient insent = (EntityInsentient) ((CraftSkeleton) this.getEntity()).getHandle();
+                    final net.minecraft.server.v1_8_R3.Entity ent2 = ((CraftEntity) this.lastTarget).getHandle();
                     insent.getNavigation().a(ent2, 2.0);
                 }
-            }
-            else if (this.lastTarget != null) {
+            } else if (this.lastTarget != null) {
                 final double distance = this.getLocation().distanceSquared(this.getEntity().getLocation());
                 if (this.lastTarget.getWorld().equals(this.getEntity().getWorld()) && !this.lastTarget.isDead() && this.getDamageTracker().containsKey(this.lastTarget.getUniqueId()) && distance <= 200.0) {
-                    boss.setTarget((LivingEntity)this.lastTarget);
+                    boss.setTarget((LivingEntity) this.lastTarget);
                 }
             }
         }
         super.onUpdate();
     }
-    
+
     @Override
     public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) throws Exception {
         if (this.getPhase() == Phase.TWO) {
@@ -234,7 +228,7 @@ public class UndeadAssassin extends Boss
         }
         if (event.getDamager().hasMetadata("boss_empowered_arrow")) {
             final Entity arrow = event.getDamager();
-            event.getDamager().removeMetadata("boss_empowered_arrow", (Plugin)CosmicBosses.getInstance());
+            event.getDamager().removeMetadata("boss_empowered_arrow", (Plugin) CosmicBosses.getInstance());
             arrow.getWorld().playSound(arrow.getLocation(), Sound.EXPLODE, 10.0f, 1.1f);
             if (arrow.getPassenger() != null) {
                 arrow.getPassenger().remove();
@@ -249,7 +243,7 @@ public class UndeadAssassin extends Boss
             }
             for (final Entity ent : player.getNearbyEntities(4.0, 4.0, 4.0)) {
                 if (ent instanceof Player) {
-                    final Player pl = (Player)ent;
+                    final Player pl = (Player) ent;
                     if (!BossUtils.canAffectPlayer(pl, true)) {
                         continue;
                     }
@@ -257,13 +251,12 @@ public class UndeadAssassin extends Boss
                     pl.setFireTicks(100);
                 }
             }
-        }
-        else if (event.getDamager() instanceof Arrow) {
+        } else if (event.getDamager() instanceof Arrow) {
             event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 5.0);
         }
         super.onAttackPlayer(event, player);
     }
-    
+
     @Override
     public void onDamageTaken(final EntityDamageByEntityEvent event, final Entity damager) throws Exception {
         if (event.getDamager() instanceof Projectile) {
@@ -273,8 +266,8 @@ public class UndeadAssassin extends Boss
         if (this.invincible) {
             event.setCancelled(true);
             if (damager instanceof Player) {
-                final Player pl = (Player)damager;
-                BossUtils.pushAwayPlayer((Entity)this.getEntity(), pl, 2.299999952316284);
+                final Player pl = (Player) damager;
+                BossUtils.pushAwayPlayer((Entity) this.getEntity(), pl, 2.299999952316284);
                 this.sendMessage(ChatColor.WHITE + "You cannot kill what is already dead.");
             }
             this.getEntity().getWorld().playSound(this.getEntity().getLocation(), Sound.WITHER_IDLE, 3.0f, 1.8f);
@@ -285,24 +278,22 @@ public class UndeadAssassin extends Boss
         }
         if (System.currentTimeMillis() - this.lastHit <= 500L) {
             ++this.hits;
-        }
-        else {
+        } else {
             this.hits = 1;
         }
         this.lastHit = System.currentTimeMillis();
         if (damager instanceof Player && event.getDamager() instanceof Player) {
-            final Player pl = (Player)damager;
+            final Player pl = (Player) damager;
             if (this.random.nextInt(100) <= 10) {
                 if (BossUtils.canAffectPlayer(pl, true)) {
                     pl.setFireTicks(30);
-                    BossUtils.pushAwayPlayer((Entity)this.getEntity(), pl, 10.0);
+                    BossUtils.pushAwayPlayer((Entity) this.getEntity(), pl, 10.0);
                     if (this.random.nextInt(3) == 0) {
                         pl.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 140, 3));
                     }
                     this.getEntity().getWorld().playSound(this.getEntity().getLocation(), Sound.WITHER_SHOOT, 4.0f, 0.8f);
                 }
-            }
-            else if (this.getPhase() == Phase.TWO && this.random.nextInt(10) <= 4) {
+            } else if (this.getPhase() == Phase.TWO && this.random.nextInt(10) <= 4) {
                 this.getEntity().teleport(BossUtils.getRandomLocationNearby(damager.getLocation(), 2, 1, 1));
                 this.getEntity().getWorld().playSound(this.getEntity().getLocation(), Sound.PIG_DEATH, 10.0f, 1.4f);
                 if (this.random.nextInt(3) > 1) {
@@ -313,9 +304,9 @@ public class UndeadAssassin extends Boss
         }
         super.onDamageTaken(event, damager);
     }
-    
+
     @Override
-    public void onDamageTaken(final EntityDamageEvent event) {
+    public void onDamageTaken(final EntityDamageEvent event) throws Exception {
         if (event.getCause() == EntityDamageEvent.DamageCause.SUFFOCATION) {
             event.setCancelled(true);
             if (this.getAntiFarm().checkStuck()) {
@@ -327,7 +318,7 @@ public class UndeadAssassin extends Boss
         }
         super.onDamageTaken(event);
     }
-    
+
     @Override
     public void onMinionUpdate(final Entity minion, final Event e) throws Exception {
         if (minion.hasMetadata("horse")) {
@@ -335,49 +326,45 @@ public class UndeadAssassin extends Boss
                 this.getEntity().leaveVehicle();
                 this.getMinions().remove(minion);
                 this.onPhaseChange(Phase.TWO);
-            }
-            else if (e instanceof EntityDamageByEntityEvent) {
-                final EntityDamageByEntityEvent event = (EntityDamageByEntityEvent)e;
+            } else if (e instanceof EntityDamageByEntityEvent) {
+                final EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) e;
                 if (event.getDamager() instanceof Player) {
                     this.onDamageTaken(event, event.getDamager());
                 }
-            }
-            else if (e instanceof EntityDamageEvent) {
-                final EntityDamageEvent event2 = (EntityDamageEvent)e;
+            } else if (e instanceof EntityDamageEvent) {
+                final EntityDamageEvent event2 = (EntityDamageEvent) e;
                 this.onDamageTaken(event2);
             }
-        }
-        else if (e instanceof EntityDeathEvent) {
+        } else if (e instanceof EntityDeathEvent) {
             this.getMinions().remove(minion);
             if (this.invincible && this.getMinions().size() == 0) {
                 this.removeInvincibility();
             }
-        }
-        else if (e instanceof EntityDamageEvent) {
-            final EntityDamageEvent event2 = (EntityDamageEvent)e;
+        } else if (e instanceof EntityDamageEvent) {
+            final EntityDamageEvent event2 = (EntityDamageEvent) e;
             if (event2.getCause() == EntityDamageEvent.DamageCause.FIRE || event2.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK || event2.getCause() == EntityDamageEvent.DamageCause.LAVA) {
                 event2.setCancelled(true);
                 event2.getEntity().setFireTicks(0);
             }
         }
     }
-    
+
     @Override
     public void removeMinion(final Entity ent) {
     }
-    
+
     public void removeInvincibility() {
         this.invincible = false;
         this.timeSinceInvincible = System.currentTimeMillis();
         this.summoning.activateCooldown();
         this.getEntity().removePotionEffect(PotionEffectType.INVISIBILITY);
     }
-    
+
     @Override
     public void onPhaseChange(final Phase newPhase) {
         this.setPhase(newPhase);
         if (newPhase == Phase.TWO) {
-            this.getEntity().removeMetadata("empower_arrow", (Plugin)CosmicBosses.getInstance());
+            this.getEntity().removeMetadata("empower_arrow", (Plugin) CosmicBosses.getInstance());
             this.getEntity().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 2));
             this.setHelmet(ItemBuilder.buildArmor(Material.DIAMOND_HELMET, Enchantment.PROTECTION_ENVIRONMENTAL));
             this.setChestplate(ItemBuilder.buildArmor(Material.DIAMOND_CHESTPLATE, Enchantment.THORNS));
@@ -391,17 +378,17 @@ public class UndeadAssassin extends Boss
             this.getEntity().getEquipment().setItemInHand(weapon);
             final Location loc = this.getEntity().getLocation();
             loc.getWorld().playSound(loc, Sound.WITHER_SPAWN, 10.0f, 1.3f);
-            Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)CosmicBosses.getInstance(), () -> loc.getWorld().playSound(loc, Sound.ENDERMAN_SCREAM, 10.0f, 1.8f), 40L);
+            Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin) CosmicBosses.getInstance(), () -> loc.getWorld().playSound(loc, Sound.ENDERMAN_SCREAM, 10.0f, 1.8f), 40L);
             this.sendMessage(ChatColor.ITALIC + "So you killed my pet? Well guess what, now I'm going to KILL ALL OF YOU!", Sound.GHAST_MOAN, 1.3f);
         }
     }
-    
+
     @Override
     public void cleanup() {
         this.removeMinions();
         this.clearScoreboard();
     }
-    
+
     @Override
     public void onDeath(final EntityDeathEvent event) throws Exception {
         super.onDeath(event);
@@ -409,26 +396,26 @@ public class UndeadAssassin extends Boss
             this.sendMessage(ChatColor.ITALIC + "You should not have come here... you will never leave alive!");
         }
     }
-    
+
     @Override
     public DamageType getDamageType() {
         return DamageType.FIRE;
     }
-    
+
     @Override
     public Difficulty getDifficulty() {
         return Difficulty.LEGENDARY;
     }
-    
+
     @Override
     public int getMaxHealth() {
         return 2000;
     }
-    
+
     @Override
     public void onMiscUpdate(final Event event) {
     }
-    
+
     @Override
     public List<BossMessage> getGeneralMessages() {
         return Lists.newArrayList();

@@ -1,5 +1,4 @@
 package me.ifamasssxd.cosmicbosses.struct;
 
-public interface GlobalBoss
-{
+public interface GlobalBoss {
 }

@@ -41,19 +41,18 @@ import org.bukkit.util.Vector;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class BattlefieldSnowman extends Boss
-{
+public class BattlefieldSnowman extends Boss {
     Freeze freezeAbility;
     public BattlefieldSnowmanEntity nmsEntity;
     private ElfSpawn elfSpawn;
     private ItemStack skull;
     private int hitCounter;
     List<String> msg;
-    
+
     public BattlefieldSnowman(final Location location, final BossType bossType) {
         super(location, bossType);
         this.hitCounter = 0;
-        this.msg = (List<String>)Lists.newArrayList(new String[] { "Feel the spirit of the holidays consume you!", "This is so much FUN! Are you having fun [NAME]?!", "You're in for a real treat!", "Happy Halloween! Thankful Thanksgiving! Merry Christmas! Buhahaha!" });
+        this.msg = (List<String>) Lists.newArrayList(new String[]{"Feel the spirit of the holidays consume you!", "This is so much FUN! Are you having fun [NAME]?!", "You're in for a real treat!", "Happy Halloween! Thankful Thanksgiving! Merry Christmas! Buhahaha!"});
         (this.freezeAbility = new Freeze(this)).activateCooldown();
         (this.elfSpawn = new ElfSpawn(this)).activateCooldown();
         this.getLootPool().add(CosmicSpaceChestsAPI.getDropPackageChest(ItemRarity.LEGENDARY));
@@ -62,43 +61,43 @@ public class BattlefieldSnowman extends Boss
         this.getLootPool().add(CosmicSpaceChestsAPI.getDropPackageChest(ItemRarity.ULTIMATE));
         this.getLootPool().add(CosmicSpaceChestsAPI.getDropPackageChest(ItemRarity.ULTIMATE));
     }
-    
+
     @Override
     public EntityType getEntityType() {
         return EntityType.SNOWMAN;
     }
-    
+
     @Override
     public String getCustomName() {
         return ChatColor.GOLD + ChatColor.BOLD.toString() + this.getName();
     }
-    
+
     public LivingEntity getTarget() {
-        final Creature creature = (Creature)this.getEntity();
+        final Creature creature = (Creature) this.getEntity();
         return creature.getTarget();
     }
-    
+
     @Override
     public LivingEntity spawnBoss() {
-        final CraftWorld world = (CraftWorld)this.location.getWorld();
-        (this.nmsEntity = new BattlefieldSnowmanEntity((World)world.getHandle(), this)).setPosition(this.location.getX(), this.location.getY(), this.location.getZ());
-        world.getHandle().addEntity((Entity)this.nmsEntity, CreatureSpawnEvent.SpawnReason.CUSTOM);
-        final LivingEntity ent = (LivingEntity)this.nmsEntity.getBukkitEntity();
+        final CraftWorld world = (CraftWorld) this.location.getWorld();
+        (this.nmsEntity = new BattlefieldSnowmanEntity((World) world.getHandle(), this)).setPosition(this.location.getX(), this.location.getY(), this.location.getZ());
+        world.getHandle().addEntity((Entity) this.nmsEntity, CreatureSpawnEvent.SpawnReason.CUSTOM);
+        final LivingEntity ent = (LivingEntity) this.nmsEntity.getBukkitEntity();
         this.setupBoss(ent);
         return ent;
     }
-    
+
     @Override
     public String getName() {
         return "Evil Holiday Spirit";
     }
-    
+
     @Override
     public void cleanup() {
         CosmicBosses.getInstance().getBlockChangeManager().restoreAllBlocks(this.getEntity().getEntityId());
         this.removeMinions();
     }
-    
+
     @Override
     public void onUpdate() {
         if (this.nmsEntity == null || this.nmsEntity.dead) {
@@ -111,7 +110,7 @@ public class BattlefieldSnowman extends Boss
             this.freezeAbility.onAbility();
             this.sendMessage(ChatColor.GOLD + "You look like you need to CHILL out!");
             for (final org.bukkit.entity.Entity enti : this.getNearbyEntities(20.0, EntityType.PLAYER)) {
-                final Player player = (Player)enti;
+                final Player player = (Player) enti;
                 player.playSound(player.getLocation(), Sound.ZOMBIE_REMEDY, 10.0f, 0.8f);
             }
         }
@@ -123,7 +122,7 @@ public class BattlefieldSnowman extends Boss
             final String msg = this.getRandomMessage();
             for (final org.bukkit.entity.Entity et : this.getEntity().getNearbyEntities(32.0, 32.0, 32.0)) {
                 if (et instanceof Player) {
-                    final Player player2 = (Player)et;
+                    final Player player2 = (Player) et;
                     this.sendMessage(player2, ChatColor.GOLD + msg);
                 }
             }
@@ -132,8 +131,7 @@ public class BattlefieldSnowman extends Boss
         final Block current = loc.getBlock();
         if (current.getType() == Material.SNOW && under.getType() == Material.ICE) {
             ent.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20, 2), true);
-        }
-        else {
+        } else {
             ent.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
         }
         for (final org.bukkit.entity.Entity minion : this.getMinions()) {
@@ -146,34 +144,33 @@ public class BattlefieldSnowman extends Boss
             this.updateScoreboard();
         }
     }
-    
+
     @Override
     public String getTitle() {
         return "Spirit";
     }
-    
+
     @Override
     public void onPhaseChange(final Phase newPhase) {
     }
-    
+
     @Override
     public org.bukkit.entity.Entity spawnMinion(final EntityType type, final Location l) {
         final org.bukkit.entity.Entity entity = super.spawnMinion(type, l);
-        final LivingEntity livingEntity = (LivingEntity)entity;
+        final LivingEntity livingEntity = (LivingEntity) entity;
         if (livingEntity instanceof Zombie) {
-            ((Zombie)livingEntity).setBaby(true);
+            ((Zombie) livingEntity).setBaby(true);
         }
         livingEntity.setCustomNameVisible(true);
         if (type == EntityType.ZOMBIE) {
-            ((Zombie)livingEntity).setVillager(false);
+            ((Zombie) livingEntity).setVillager(false);
             livingEntity.setCustomName(CC.RedB + "Exploding Elf");
-            livingEntity.setMetadata("exploding", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.get(), (Object)""));
+            livingEntity.setMetadata("exploding", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.get(), (Object) ""));
             if (this.skull == null) {
-                this.skull = new ItemBuilder(Material.SKULL_ITEM).data((short)3).setSkullOwner("MysteryMerchant").build();
+                this.skull = new ItemBuilder(Material.SKULL_ITEM).data((short) 3).setSkullOwner("MysteryMerchant").build();
             }
             livingEntity.getEquipment().setHelmet(this.skull.clone());
-        }
-        else {
+        } else {
             livingEntity.setCustomName(CC.GreenB + "Holiday Ghoul");
         }
         livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1));
@@ -185,24 +182,23 @@ public class BattlefieldSnowman extends Boss
         livingEntity.setHealth(65.0);
         return entity;
     }
-    
+
     @Override
     public void onMinionUpdate(final org.bukkit.entity.Entity minion, final Event e) throws Exception {
         if (e instanceof EntityDamageByEntityEvent) {
-            final EntityDamageByEntityEvent event = (EntityDamageByEntityEvent)e;
+            final EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) e;
             if (event.getDamager() instanceof Player) {
-                final Player damager = (Player)event.getDamager();
+                final Player damager = (Player) event.getDamager();
                 if (ThreadLocalRandom.current().nextBoolean()) {
-                    damager.damage(((EntityDamageByEntityEvent)e).getFinalDamage());
+                    damager.damage(((EntityDamageByEntityEvent) e).getFinalDamage());
                     damager.playSound(damager.getLocation(), Sound.ZOMBIE_WOODBREAK, 0.2f, 2.0f);
                 }
-            }
-            else if (event.getDamager().equals(minion) && event.getEntity() instanceof Player) {
+            } else if (event.getDamager().equals(minion) && event.getEntity() instanceof Player) {
                 if (event.getDamager().hasMetadata("exploding")) {
                     minion.getNearbyEntities(6.0, 6.0, 6.0).stream().filter(ent -> ent instanceof Player).map(ent -> ent).forEach(pl -> {
-                        if (BossUtils.dealPercentHealthDamage((Player)pl, 20.0, 10) && !pl.isDead()) {
+                        if (BossUtils.dealPercentHealthDamage((Player) pl, 20.0, 10) && !pl.isDead()) {
                             pl.playEffect(EntityEffect.HURT);
-                            BossUtils.pushAwayPlayer(minion, (Player)pl, 1.399999976158142);
+                            BossUtils.pushAwayPlayer(minion, (Player) pl, 1.399999976158142);
                         }
                         return;
                     });
@@ -216,7 +212,7 @@ public class BattlefieldSnowman extends Boss
                     this.removeMinion(minion);
                     return;
                 }
-                final Player player = (Player)event.getEntity();
+                final Player player = (Player) event.getEntity();
                 if (ThreadLocalRandom.current().nextInt(10) <= 4) {
                     final ItemStack handItem = player.getItemInHand();
                     final int inHandSlot = player.getInventory().getHeldItemSlot();
@@ -225,43 +221,39 @@ public class BattlefieldSnowman extends Boss
                         return;
                     }
                     int slotToSwap;
-                    for (slotToSwap = ThreadLocalRandom.current().nextInt(9); slotToSwap == inHandSlot; slotToSwap = ThreadLocalRandom.current().nextInt(9)) {}
+                    for (slotToSwap = ThreadLocalRandom.current().nextInt(9); slotToSwap == inHandSlot; slotToSwap = ThreadLocalRandom.current().nextInt(9)) {
+                    }
                     final ItemStack itemInNewSlot = player.getInventory().getItem(slotToSwap);
                     if (itemInNewSlot != null && itemInNewSlot.getType() != Material.AIR) {
                         player.setItemInHand(itemInNewSlot);
-                    }
-                    else {
-                        player.setItemInHand((ItemStack)null);
+                    } else {
+                        player.setItemInHand((ItemStack) null);
                     }
                     player.getInventory().setItem(slotToSwap, handItem);
                     player.updateInventory();
                     player.playSound(player.getLocation(), Sound.GHAST_SCREAM2, 1.0f, 1.9f);
                     player.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "Holiday Ghoul >> " + ChatColor.RED + "You wanna see a trick?");
                 }
-            }
-            else if (!(event.getDamager() instanceof Player)) {
+            } else if (!(event.getDamager() instanceof Player)) {
                 event.setCancelled(true);
             }
-        }
-        else if (e instanceof EntityDamageEvent) {
-            final EntityDamageEvent event2 = (EntityDamageEvent)e;
+        } else if (e instanceof EntityDamageEvent) {
+            final EntityDamageEvent event2 = (EntityDamageEvent) e;
             if (event2.getCause().name().startsWith("FIRE") || event2.getCause() == EntityDamageEvent.DamageCause.LAVA) {
                 event2.setCancelled(true);
-            }
-            else if (event2.getCause() == EntityDamageEvent.DamageCause.FALL) {
+            } else if (event2.getCause() == EntityDamageEvent.DamageCause.FALL) {
                 event2.setCancelled(true);
             }
-        }
-        else if (e instanceof EntityChangeBlockEvent) {
-            ((EntityChangeBlockEvent)e).setCancelled(true);
+        } else if (e instanceof EntityChangeBlockEvent) {
+            ((EntityChangeBlockEvent) e).setCancelled(true);
         }
         super.onMinionUpdate(minion, e);
     }
-    
+
     @Override
     public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) throws Exception {
         if (event.getDamager() instanceof Snowball) {
-            event.setDamage((double)(7 + this.random.nextInt(2)));
+            event.setDamage((double) (7 + this.random.nextInt(2)));
             if (this.random.nextBoolean()) {
                 player.getWorld().playSound(player.getLocation(), Sound.EXPLODE, 1.0f, 1.1f);
                 //ParticleEffect.sendToLocation(ParticleEffect.LARGE_EXPLODE, player.getLocation().clone(), 1.0f, 1.0f, 1.0f, 0.01f, 5);
@@ -271,7 +263,7 @@ public class BattlefieldSnowman extends Boss
             if (!event.isCancelled()) {
                 for (final org.bukkit.entity.Entity ent : player.getNearbyEntities(5.0, 3.0, 5.0)) {
                     if (ent instanceof Player) {
-                        final Player other = (Player)ent;
+                        final Player other = (Player) ent;
                         if (!BossUtils.canAffectPlayer(other, true)) {
                             continue;
                         }
@@ -283,8 +275,7 @@ public class BattlefieldSnowman extends Boss
                     this.spawnMinion(EntityType.PIG_ZOMBIE, event.getDamager().getLocation().clone().add(0.0, 1.0, 0.0));
                 }
             }
-        }
-        else if (event.getDamager() instanceof WitherSkull) {
+        } else if (event.getDamager() instanceof WitherSkull) {
             if (this.random.nextBoolean()) {
                 player.getWorld().playSound(player.getLocation(), Sound.EXPLODE, 1.0f, 0.9f);
                 de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 1f, 1f, 1f, 0.09f, 30);
@@ -294,14 +285,14 @@ public class BattlefieldSnowman extends Boss
         }
         super.onAttackPlayer(event, player);
     }
-    
+
     public void shootSkullsNearby(final org.bukkit.entity.Entity near, final double dist) {
         if (this.nmsEntity == null) {
             return;
         }
         for (final org.bukkit.entity.Entity ent : near.getNearbyEntities(dist, dist, dist)) {
             if (ent instanceof Player) {
-                final Player other = (Player)ent;
+                final Player other = (Player) ent;
                 if (!BossUtils.canAffectPlayer(other, true)) {
                     continue;
                 }
@@ -319,8 +310,7 @@ public class BattlefieldSnowman extends Boss
                         kb.setY(1.5);
                     }
                     other.setVelocity(kb);
-                }
-                else {
+                } else {
                     if (other.getLocation().distanceSquared(near.getLocation()) > 64.0) {
                         continue;
                     }
@@ -329,20 +319,20 @@ public class BattlefieldSnowman extends Boss
                         if (spawned >= 2) {
                             break;
                         }
-                        if (!(nearby instanceof Player) || !BossUtils.canAffectPlayer((Player)nearby, true) || this.nmsEntity.recentlySplitPlayer.containsKey(nearby.getUniqueId())) {
+                        if (!(nearby instanceof Player) || !BossUtils.canAffectPlayer((Player) nearby, true) || this.nmsEntity.recentlySplitPlayer.containsKey(nearby.getUniqueId())) {
                             continue;
                         }
                         ++spawned;
                         this.nmsEntity.recentlySplitPlayer.put(nearby.getUniqueId(), System.currentTimeMillis());
                         final Location nearLoc = nearby.getLocation();
                         //this.nmsEntity.shootAtTarget((EntityLiving)((CraftEntity)other).getHandle(), nearLoc.getX(), nearLoc.getY(), nearLoc.getZ(), true);
-                        Bukkit.getLogger().info("[BattleSnowman] Splitting Skull towards " + ((Player)nearby).getName() + " from other: " + other.getName());
+                        Bukkit.getLogger().info("[BattleSnowman] Splitting Skull towards " + ((Player) nearby).getName() + " from other: " + other.getName());
                     }
                 }
             }
         }
     }
-    
+
     @Override
     public void onDeath(final EntityDeathEvent event) throws Exception {
         if (event != null) {
@@ -351,7 +341,7 @@ public class BattlefieldSnowman extends Boss
 
             event.getEntity().getWorld().playSound(event.getEntity().getLocation(), Sound.EXPLODE, 10.0f, 1.0f);
             event.getEntity().getNearbyEntities(100.0, 50.0, 100.0).stream().filter(ent -> ent instanceof Player).forEach(ent -> {
-                Player player = (Player)ent;
+                Player player = (Player) ent;
                 if (BossUtils.canAffectPlayer(player, true)) {
                     player.setVelocity(player.getVelocity().add(new Vector(0, 3, 0)));
                 }
@@ -364,7 +354,7 @@ public class BattlefieldSnowman extends Boss
                 final ItemStack candy = Halloween.getHalloweenCandy().clone();
                 candy.setAmount(inStack);
                 final Item item = location.getWorld().dropItemNaturally(location, this.addUniqueLore(candy));
-                item.setMetadata("removeDurability", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), (Object)""));
+                item.setMetadata("removeDurability", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
             }
             for (int cakes = 50 + this.random.nextInt(51), j = 0; j < cakes; ++j) {
                 final int inStack2 = this.random.nextInt(6) + 10;
@@ -372,7 +362,7 @@ public class BattlefieldSnowman extends Boss
                 final ItemStack cake = (this.random.nextDouble() <= 0.8) ? NewYears.getExplosiveCake().clone() : NewYears.getCosmicCracker().clone();
                 cake.setAmount(inStack2);
                 final Item item2 = location.getWorld().dropItemNaturally(location, this.addUniqueLore(cake));
-                item2.setMetadata("removeDurability", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), (Object)""));
+                item2.setMetadata("removeDurability", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
             }
             if (ThreadLocalRandom.current().nextInt(100) == 0) {
                 location.getWorld().dropItemNaturally(location, CosmicArmorSetsAPI.getArmorSet(ArmorSet.PHANTOM)[ThreadLocalRandom.current().nextInt(4)]);
@@ -381,32 +371,32 @@ public class BattlefieldSnowman extends Boss
         }
         super.onDeath(event);
     }
-    
+
     private ItemStack addUniqueLore(final ItemStack item) {
         final ItemMeta im = item.getItemMeta();
-        final List<String> lore = (List<String>)(im.hasLore() ? im.getLore() : Lists.newArrayList());
+        final List<String> lore = (List<String>) (im.hasLore() ? im.getLore() : Lists.newArrayList());
         lore.add(this.random.nextInt(1000000) + "");
-        im.setLore((List)lore);
+        im.setLore((List) lore);
         item.setItemMeta(im);
         return item;
     }
-    
+
     @Override
-    public void onDamageTaken(final EntityDamageEvent event) {
+    public void onDamageTaken(final EntityDamageEvent event) throws Exception {
         if (event.getCause().name().startsWith("FIRE") || event.getCause() == EntityDamageEvent.DamageCause.DROWNING || event.getCause() == EntityDamageEvent.DamageCause.FALL) {
             event.setCancelled(true);
         }
         super.onDamageTaken(event);
     }
-    
+
     @Override
     public void onDamageTaken(final EntityDamageByEntityEvent event, final org.bukkit.entity.Entity damager) throws Exception {
         if (event.getDamager() instanceof Projectile && damager instanceof Player) {
             event.setCancelled(true);
             return;
         }
-        if (damager instanceof Player && !((Player)damager).isOp()) {
-            final Player player = (Player)damager;
+        if (damager instanceof Player && !((Player) damager).isOp()) {
+            final Player player = (Player) damager;
             ++this.hitCounter;
             if (this.hitCounter >= 4) {
                 this.hitCounter = 0;
@@ -417,37 +407,37 @@ public class BattlefieldSnowman extends Boss
             final double percentageMissing = healthMissing / this.getMaxHealth() * 100.0;
             final double mult = percentageMissing / 15.0;
             percentToReflect = Math.min(90.0, percentToReflect * mult);
-            player.damage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * (percentToReflect * 0.01), (org.bukkit.entity.Entity)this.getEntity());
+            player.damage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * (percentToReflect * 0.01), (org.bukkit.entity.Entity) this.getEntity());
         }
         event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) / 3.0);
         super.onDamageTaken(event, damager);
     }
-    
+
     @Override
     public void onMiscUpdate(final Event event) {
     }
-    
+
     @Override
     public DamageType getDamageType() {
         return DamageType.FIRE;
     }
-    
+
     @Override
     public Difficulty getDifficulty() {
         return Difficulty.LEGENDARY_PLUS;
     }
-    
+
     @Override
     public int getMaxHealth() {
         return 2000;
     }
-    
+
     public String getRandomMessage() {
         return this.msg.get(this.random.nextInt(this.msg.size()));
     }
-    
+
     @Override
     public List<BossMessage> getGeneralMessages() {
-        return (List<BossMessage>)Lists.newArrayList(new BossMessage[] { new BossMessage("I've brought you something good to eat!", false, -1) });
+        return (List<BossMessage>) Lists.newArrayList(new BossMessage[]{new BossMessage("I've brought you something good to eat!", false, -1)});
     }
 }
