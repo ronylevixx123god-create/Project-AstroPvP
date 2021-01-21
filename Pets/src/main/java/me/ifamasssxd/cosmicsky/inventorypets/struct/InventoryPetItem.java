@@ -5,7 +5,10 @@ import com.cosmicpvp.cosmicutils.exceptions.PrefixedException;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
-import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicPersistentItem;
@@ -15,10 +18,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.metadata.FixedMetadataValue;
-
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class InventoryPetItem extends CosmicPersistentItem implements PlayerInteractable {
     private InventoryPets petType;
@@ -47,7 +46,7 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
 
     public void loadNBT() {
         if (this.wrapper != null) {
-            NBTTagCompoundBuilder builder = this.wrapper.getCompound("conaxData");
+            NBTTagCompoundBuilder builder = this.wrapper.getCompound("cosmicData");
             if (builder != null && builder.hasKey("petType")) {
                 this.petType = InventoryPets.fromName(builder.getString("petType"));
                 this.level = builder.getInt("level");
@@ -65,7 +64,7 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
     }
 
     public ItemStack build() {
-        return this.createItem(null, this.petType, this.level, this.exp, this.lastUsed, this.lastRareCandyUsed, this.leashed);
+        return this.createItem((Player) null, this.petType, this.level, this.exp, this.lastUsed, this.lastRareCandyUsed, this.leashed);
     }
 
     public void addExperience(Player player, int exp) {
@@ -91,24 +90,24 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
 
     public ItemStack createItem(Player player, Object... objects) {
         if (objects != null && objects.length >= 1) {
-            InventoryPets pet = (InventoryPets) (objects[0] instanceof InventoryPets ? objects[0] : InventoryPets.fromName(objects[0].toString()));
-            Number level = (Number) (objects.length > 1 ? (objects[1] instanceof Number ? objects[1] : NumberUtils.parseNumberOrNull(objects[1].toString())) : null);
+            InventoryPets pet = (InventoryPets) ((InventoryPets) (objects[0] instanceof InventoryPets ? objects[0] : InventoryPets.fromName(objects[0].toString())));
+            Number level = (Number) ((Number) (objects.length > 1 ? (objects[1] instanceof Number ? objects[1] : NumberUtils.parseNumberOrNull(objects[1].toString())) : null));
             if (level == null) {
                 level = 1;
             }
 
-            Number exp = (Number) (objects.length > 2 ? (objects[2] instanceof Number ? objects[2] : NumberUtils.parseNumberOrNull(objects[2].toString())) : null);
-            if (exp == null || exp.intValue() < 0) {
+            Number exp = (Number) ((Number) (objects.length > 2 ? (objects[2] instanceof Number ? objects[2] : NumberUtils.parseNumberOrNull(objects[2].toString())) : null));
+            if (exp == null || ((Number) exp).intValue() < 0) {
                 exp = 0;
             }
 
-            Number lastUsed = (Number) (objects.length > 3 ? (objects[3] instanceof Number ? objects[3] : NumberUtils.parseNumberOrNull(objects[3].toString())) : null);
-            if (lastUsed == null || lastUsed.longValue() < 0L) {
+            Number lastUsed = (Number) ((Number) (objects.length > 3 ? (objects[3] instanceof Number ? objects[3] : NumberUtils.parseNumberOrNull(objects[3].toString())) : null));
+            if (lastUsed == null || ((Number) lastUsed).longValue() < 0L) {
                 lastUsed = 0;
             }
 
-            Number lastRareCandyUsed = (Number) (objects.length > 4 ? (objects[4] instanceof Number ? objects[4] : NumberUtils.parseNumberOrNull(objects[4].toString())) : null);
-            if (lastRareCandyUsed == null || lastRareCandyUsed.longValue() < 0L) {
+            Number lastRareCandyUsed = (Number) ((Number) (objects.length > 4 ? (objects[4] instanceof Number ? objects[4] : NumberUtils.parseNumberOrNull(objects[4].toString())) : null));
+            if (lastRareCandyUsed == null || ((Number) lastRareCandyUsed).longValue() < 0L) {
                 lastRareCandyUsed = 0;
             }
             boolean leashed = false;
@@ -127,12 +126,12 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
             lore.add(CC.Gray + " " + level);
             lore.add("");
             lore.add(cb + "EXP");
-            lore.addAll(this.getExpLore(pet, exp.longValue(), level.intValue()));
+            lore.addAll(this.getExpLore(pet, ((Number) exp).longValue(), ((Number) level).intValue()));
             if (this.leashed) {
                 lore.add("");
                 lore.add(ChatColor.GOLD + ChatColor.BOLD.toString() + "* LEASHED *");
             }
-            return pet.getInternalClass().onItemCreate(this.applyItemData((new ItemBuilder(Material.SKULL_ITEM, pet.getItemName() + CC.Gray + " [LVL " + level.intValue() + "]")).data((short) 3).lore(lore).build()).setNBTBase("conaxData", (new NBTTagCompoundBuilder()).setInt("level", level.intValue()).setInt("exp", exp.intValue()).setString("petType", pet.name()).setLong("lastUsed", lastUsed.longValue()).setLong("lastRareCandyUsed", lastRareCandyUsed.longValue()).setBoolean("leashed", leashed).get()).setNBTBase("SkullOwner", pet.getBuilder().get()), this).assignIID().build();
+            return pet.getInternalClass().onItemCreate(this.applyItemData((new ItemBuilder(Material.SKULL_ITEM, pet.getItemName() + CC.Gray + " [LVL " + ((Number) level).intValue() + "]", new String[0])).data((short) 3).lore(lore).build()).setNBTBase("cosmicData", (new NBTTagCompoundBuilder()).setInt("level", ((Number) level).intValue()).setInt("exp", ((Number) exp).intValue()).setString("petType", pet.name()).setLong("lastUsed", ((Number) lastUsed).longValue()).setLong("lastRareCandyUsed", ((Number) lastRareCandyUsed).longValue()).setBoolean("leashed", leashed).get()).setNBTBase("SkullOwner", pet.getBuilder().get()), this).assignIID().build();
         } else {
             return null;
         }
@@ -157,7 +156,7 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
         }
 
         retr.add(builder.toString());
-        retr.add(CC.Gray + " (" + NumberUtils.formatMoney((double) exp) + "/" + NumberUtils.formatMoney(required) + ")");
+        retr.add(CC.Gray + " (" + NumberUtils.formatMoney((double) exp) + "/" + NumberUtils.formatMoney((double) required) + ")");
         return retr;
     }
 
@@ -178,7 +177,9 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
                 }
             }
             if (player.hasMetadata("hazmatBoots")) {
-                player.setMetadata("hazmatTime", new FixedMetadataValue(AstroItemSkinsPlugin.getInstance(), TimeUnit.SECONDS.toMillis(12)));
+//         p.setMetadata("hazmatTime", new FixedMetadataValue(AstroItemSkinsPlugin.getInstance(), TimeUnit.SECONDS.toMillis(12)));
+
+                //
                 long lastUse = player.getMetadata("hazmatBoots").get(0).asLong();
                 long delay = TimeUnit.SECONDS.toMillis(12);
                 long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);

@@ -1,16 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.exceptions.CosmicException
- *  com.cosmicpvp.cosmicutils.itembuilder.CosmicItemBuilder
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
- *  org.bukkit.Material
- *  org.bukkit.entity.Player
- *  org.bukkit.event.player.PlayerInteractEvent
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.material.MaterialData
- */
 package me.ifamasssxd.cosmicskycustoms.struct;
 
 import com.cosmicpvp.cosmicutils.exceptions.CosmicException;

@@ -1,33 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.compilex.CosmicCustomCreepers.enums.CreeperTypes
- *  com.cosmicpvp.CosmicBossEggs.boss.type.Boss
- *  com.cosmicpvp.CosmicBossEggs.boss.type.Bosses
- *  com.cosmicpvp.CosmicBossEggs.util.MiscUtil
- *  com.gmail.nossr50.datatypes.skills.SkillType
- *  com.rit.sucy.CustomEnchantment
- *  com.rit.sucy.EnchantmentAPI
- *  me.ifamasssxd.cosmicbosses.struct.enums.BossType
- *  me.ifamasssxd.cosmicbosses.utils.BossEggUtils
- *  me.ifamasssxd.cosmicfactionquests.CosmicFactionQuests
- *  org.arkhamnetwork.Arkkit.patches.ItemNametag
- *  org.arkhamnetwork.Arkkit.patches.McmmoCredits
- *  org.arkhamnetwork.CosmicCustomTNT.enums.TNTTypes
- *  org.arkhamnetwork.CosmicMoneyNotes.ArkhamMoneyNotesAPI
- *  org.arkhamnetwork.enchantments.EnchantmentBook
- *  org.arkhamnetwork.enchantments.util.TieredEnchantments
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.Material
- *  org.bukkit.enchantments.Enchantment
- *  org.bukkit.entity.EntityType
- *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.EnchantmentStorageMeta
- *  org.bukkit.inventory.meta.ItemMeta
- */
 package com.cosmicpvp.CosmicSpaceChests.utils;
 
 import com.compilex.CosmicCustomCreepers.enums.CreeperTypes;
@@ -47,10 +17,10 @@ import java.util.Random;
 import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
 import me.ifamasssxd.cosmicbosses.utils.BossEggUtils;
 import me.ifamasssxd.cosmicfactionquests.CosmicFactionQuests;
+import me.ifamasssxd.cosmicguishop.ArkhamMoneyNotesAPI;
 import org.arkhamnetwork.Arkkit.patches.ItemNametag;
 import org.arkhamnetwork.Arkkit.patches.McmmoCredits;
 import org.arkhamnetwork.CosmicCustomTNT.enums.TNTTypes;
-import org.arkhamnetwork.CosmicMoneyNotes.ArkhamMoneyNotesAPI;
 import org.arkhamnetwork.enchantments.EnchantmentBook;
 import org.arkhamnetwork.enchantments.util.TieredEnchantments;
 import org.bukkit.Bukkit;

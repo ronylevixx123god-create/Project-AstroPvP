@@ -30,13 +30,13 @@ public class MysteryPetBoxItem extends CosmicItem implements PlayerInteractable 
 
    public MysteryPetBoxItem() {
       super("mystery_pet_box");
-      this.common_inventoryPets = Lists.newArrayList(InventoryPets.LAVA.name(), InventoryPets.WATER.name(), InventoryPets.XP_BOOSTER.name(), InventoryPets.ANTI_TELEBLOCK.name(), InventoryPets.BANNER.name());
-      this.rare_inventoryPets = Lists.newArrayList(InventoryPets.ALCHEMIST.name(), InventoryPets.FEIGN_DEATH.name(), InventoryPets.ENCHANTER.name(), InventoryPets.GAIA.name(), InventoryPets.BLACKSCROLL.name(), InventoryPets.TESLA.name(), InventoryPets.EVOLUTION.name());
+      this.common_inventoryPets = Lists.newArrayList(new String[]{InventoryPets.LAVA.name(), InventoryPets.WATER.name(), InventoryPets.XP_BOOSTER.name(), InventoryPets.ANTI_TELEBLOCK.name(), InventoryPets.BANNER.name()});
+      this.rare_inventoryPets = Lists.newArrayList(new String[]{InventoryPets.ALCHEMIST.name(), InventoryPets.FEIGN_DEATH.name(), InventoryPets.ENCHANTER.name(), InventoryPets.GAIA.name(), InventoryPets.BLACKSCROLL.name(), InventoryPets.TESLA.name(), InventoryPets.EVOLUTION.name()});
    }
 
    public ItemStack createItem(Player player, Object... objects) {
       String displayName = CC.GoldB + "Mystery Pet Box " + CC.Gray + "(Right Click)";
-      List lore = Lists.newArrayList(CC.Gray + "A mysterious, magical box", CC.Gray + "that contains one of the", CC.Gray + "following inventory pets:");
+      List lore = Lists.newArrayList(new String[]{CC.Gray + "A mysterious, magical box", CC.Gray + "that contains one of the", CC.Gray + "following inventory pets:"});
       InventoryPets[] var5 = InventoryPets.values();
       InventoryPets[] array = var5;
       int length = var5.length;
@@ -70,7 +70,7 @@ public class MysteryPetBoxItem extends CosmicItem implements PlayerInteractable 
          }
 
          InventoryPets pet = InventoryPets.valueOf(Math.random() < 0.2D ? (String)this.rare_inventoryPets.get(ThreadLocalRandom.current().nextInt(this.rare_inventoryPets.size())) : (String)this.common_inventoryPets.get(ThreadLocalRandom.current().nextInt(this.common_inventoryPets.size())));
-         ItemStack is = (new CustomItemBuilder("inventory_pet", pet.name())).build();
+         ItemStack is = (new CustomItemBuilder("inventory_pet", new Object[]{pet.name()})).build();
          PlayerUtil.giveOrDropProtectedItem(player, is, -1);
          player.sendMessage(CC.GoldB + "(!) " + CC.Gold + "You have received a " + ItemUtils.getDisplayName(is) + CC.Gold + " from your Mystery Pet Box!");
          player.updateInventory();

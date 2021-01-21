@@ -3,7 +3,6 @@ package me.ifamasssxd.cosmicsky.inventorypets.struct.tasks;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import java.util.Iterator;
 import java.util.Map.Entry;
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import org.bukkit.entity.LivingEntity;
@@ -39,7 +38,7 @@ public class BleedTask implements Runnable {
                   }
                }
             } else {
-               bleedingEntities.remove(Objects.requireNonNull(entry.getKey()));
+               bleedingEntities.remove(entry.getKey());
             }
          }
 

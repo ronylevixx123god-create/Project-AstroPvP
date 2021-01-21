@@ -31,7 +31,7 @@ public class InventoryArcaneCreeperPet extends InventoryPet {
    }
 
    public List getPetDescription(int level) {
-      return Lists.newArrayList(CC.Gray + "A creeper imbued with extremely,", CC.Gray + "powerful, unstable arcane magic.", CC.WhiteB, CC.WhiteB + "Ability", CC.Gray + "Spawn an " + CC.Aqua + "Arcane Creeper", CC.Gray + "A speciality creeper that banishes all", CC.Gray + "Enchantment Tables in a 3x3 radius.", CC.WhiteB, CC.WhiteB + "Cooldown", CC.Gray + (10 - (level - 1)) + " Minutes");
+      return Lists.newArrayList(new String[]{CC.Gray + "A creeper imbued with extremely,", CC.Gray + "powerful, unstable arcane magic.", CC.WhiteB, CC.WhiteB + "Ability", CC.Gray + "Spawn an " + CC.Aqua + "Arcane Creeper", CC.Gray + "A speciality creeper that banishes all", CC.Gray + "Enchantment Tables in a 3x3 radius.", CC.WhiteB, CC.WhiteB + "Cooldown", CC.Gray + (10 - (level - 1)) + " Minutes"});
    }
 
    public int getExpForLevel(int level) {

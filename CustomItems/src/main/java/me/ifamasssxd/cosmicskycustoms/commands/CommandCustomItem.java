@@ -1,20 +1,8 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.PlayerUtil
- *  org.bukkit.Bukkit
- *  org.bukkit.command.Command
- *  org.bukkit.command.CommandExecutor
- *  org.bukkit.command.CommandSender
- *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
- */
 package me.ifamasssxd.cosmicskycustoms.commands;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
+import java.util.Arrays;
 import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicItems;
@@ -25,16 +13,15 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Arrays;
-
-public class CommandCustomItem implements CommandExecutor {
+public class CommandCustomItem
+implements CommandExecutor {
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
         if (!commandSender.isOp()) {
             return true;
         }
         if (args.length >= 3 && args[0].equalsIgnoreCase("give")) {
             ItemStack is;
-            Player pl = Bukkit.getPlayer(args[1]);
+            Player pl = Bukkit.getPlayer((String)args[1]);
             if (pl == null) {
                 commandSender.sendMessage(CC.RedB + "(!) " + CC.Red + "No player found for " + args[1]);
                 return true;
@@ -52,9 +39,9 @@ public class CommandCustomItem implements CommandExecutor {
                 }
                 is = item.createItem(null, data);
             } else {
-                is = item.createItem(null);
+                is = item.createItem(null, new Object[0]);
             }
-            PlayerUtil.giveOrDropProtectedItem(pl, is, -1);
+            PlayerUtil.giveOrDropProtectedItem((Player)pl, (ItemStack)is, (int)-1);
             commandSender.sendMessage(CC.Green + "Item given!");
             return true;
         }

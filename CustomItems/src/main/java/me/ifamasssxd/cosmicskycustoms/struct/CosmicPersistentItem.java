@@ -1,20 +1,13 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
- *  org.bukkit.inventory.ItemStack
- */
 package me.ifamasssxd.cosmicskycustoms.struct;
 
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
-import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
-import org.bukkit.Bukkit;
-import org.bukkit.inventory.ItemStack;
-
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
+import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
+import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
+import me.ifamasssxd.cosmicskycustoms.struct.ItemPersistentData;
+import org.bukkit.inventory.ItemStack;
 
 public abstract class CosmicPersistentItem
 extends CosmicItem {
@@ -70,7 +63,6 @@ extends CosmicItem {
     public static ItemPersistentData registerPersistentItem(String name, Class<? extends CosmicPersistentItem> clazz) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         ItemPersistentData data = new ItemPersistentData(name, clazz);
         registeredItems.put(name, data);
-        Bukkit.getConsoleSender().sendMessage("itempersistentdata registeredItems");
         return data;
     }
 

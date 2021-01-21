@@ -32,13 +32,15 @@ public class    InventoryYijkiControllerPet extends InventoryPet {
     }
 
     public List<String> getPetDescription(int level) {
-        return Lists.newArrayList(CC.Gray + "A powerful demonic entity capable",
-                CC.Gray + "of forcing any nearby /dungeon Yijki",
-                CC.Gray + "to switch to a different combat state.", String.valueOf(CC.Gray),
-                CC.WhiteB + "Ability",
-                CC.Gray + "Randomizes the current ability + weakness",
-                CC.Gray + "of any Yijki Boss in your dungeon.", String.valueOf(CC.Gray), CC.WhiteB + "Cooldown",
-                CC.Gray + " " + TimeUtils.formatSeconds(getCooldown(level)));
+        return Lists.newArrayList(String.valueOf(CC.Gray) + "A powerful demonic entity capable",
+                String.valueOf(CC.Gray) + "of forcing any nearby /dungeon Yijki",
+                String.valueOf(CC.Gray) + "to switch to a different combat state.", (new StringBuilder(
+                String.valueOf(CC.Gray))).toString(),
+                String.valueOf(CC.WhiteB) + "Ability",
+                String.valueOf(CC.Gray) + "Randomizes the current ability + weakness",
+                String.valueOf(CC.Gray) + "of any Yijki Boss in your dungeon.", (new StringBuilder(
+                String.valueOf(CC.Gray))).toString(), String.valueOf(CC.WhiteB) + "Cooldown",
+                String.valueOf(CC.Gray) + " " + TimeUtils.formatSeconds(getCooldown(level)));
     }
 
     public int getCooldown(int level) {

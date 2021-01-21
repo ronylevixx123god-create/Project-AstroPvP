@@ -1,18 +1,10 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
- *  org.bukkit.inventory.ItemStack
- */
 package me.ifamasssxd.cosmicskycustoms.struct;
 
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
-import org.bukkit.Bukkit;
-import org.bukkit.inventory.ItemStack;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import me.ifamasssxd.cosmicskycustoms.struct.CosmicPersistentItem;
+import org.bukkit.inventory.ItemStack;
 
 public class ItemPersistentData {
     private Constructor<CosmicPersistentItem> constructor;
@@ -26,26 +18,17 @@ public class ItemPersistentData {
         this.sampleVersion = this.createSampleInstance();
     }
 
-    public ItemPersistentData(Constructor<? extends CosmicPersistentItem> constructor, Constructor<? extends CosmicPersistentItem> constructor1, Class<? extends CosmicPersistentItem> clazz, Object sampleVersion, String internal) {
-    }
-
     public CosmicPersistentItem createInstance(ItemStack itemStack, NBTWrapper wrapper) throws IllegalAccessException, InvocationTargetException, InstantiationException {
-        return this.constructor.newInstance(itemStack, wrapper, this.internalName);
+        return this.constructor.newInstance(new Object[]{itemStack, wrapper, this.internalName});
     }
 
-    public CosmicPersistentItem createSampleInstance() {
-        Bukkit.getConsoleSender().sendMessage("createdSampleInstance ************");
-        try {
-            return this.simpleConstructor.newInstance(this.internalName);
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NullPointerException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public CosmicPersistentItem createSampleInstance() throws IllegalAccessException, InvocationTargetException, InstantiationException {
+        return this.simpleConstructor.newInstance(this.internalName);
     }
 
-    public ItemPersistentData(Constructor<CosmicPersistentItem> constructor, Constructor<CosmicPersistentItem> simpleConstructor, Class<? extends CosmicPersistentItem> persistentItem, CosmicPersistentItem sampleVersion, String internalName) {
-        this.constructor = constructor;
-        this.simpleConstructor = simpleConstructor;
+    public ItemPersistentData(Constructor<? extends CosmicPersistentItem> constructor, Constructor<? extends CosmicPersistentItem> simpleConstructor, Class<? extends CosmicPersistentItem> persistentItem, CosmicPersistentItem sampleVersion, String internalName) {
+        this.constructor = (Constructor<CosmicPersistentItem>) constructor;
+        this.simpleConstructor = (Constructor<CosmicPersistentItem>) simpleConstructor;
         this.persistentItem = persistentItem;
         this.sampleVersion = sampleVersion;
         this.internalName = internalName;

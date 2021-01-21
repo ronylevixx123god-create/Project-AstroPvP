@@ -202,8 +202,4 @@
             <systemPath>${project.basedir}/lib/CosmicBosses.jar</systemPath>
         </dependency>
     </dependencies>
-
-    <!-- Enchantments, CustomItems -->
-    <!-- Enchantments, CustomItems -->
-    <!-- Enchantments, CustomItems -->
 </project>

@@ -1,13 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
- *  org.bukkit.entity.Player
- *  org.bukkit.event.Event
- *  org.bukkit.event.HandlerList
- *  org.bukkit.inventory.ItemStack
- */
 package me.ifamasssxd.cosmicskycustoms.events;
 
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;

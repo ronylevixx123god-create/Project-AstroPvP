@@ -1,21 +1,19 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
- */
 package me.ifamasssxd.cosmicskycustoms.struct;
 
 import java.util.Arrays;
+
+import lombok.Getter;
 import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
+import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public enum CosmicItems {;
+@Getter
+public enum CosmicItems {
+    ;
 
-    private String internalName;
-    private CosmicItem item;
+    private final String internalName;
+    private final CosmicItem item;
 
     private CosmicItems(CosmicItem item) {
         this.internalName = item.getInternalName();
@@ -42,12 +40,4 @@ public enum CosmicItems {;
         return Arrays.stream(CosmicItems.values()).filter(f -> f.getInternalName().equalsIgnoreCase(internalName)).findFirst().map(CosmicItems::getItem).orElse(CosmicSkyCustomItems.get().getItemManager().getCustomItem(internalName));
     }
 
-    public String getInternalName() {
-        return this.internalName;
-    }
-
-    public CosmicItem getItem() {
-        return this.item;
-    }
 }
-

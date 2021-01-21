@@ -15,6 +15,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
+import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -82,7 +83,7 @@ public class InventoryWitcherPet extends InventoryPet {
                 if (!player.canSee(nearPlayer)) {
                     continue;
                 }
-                // TODO: ADD NEW FREEZE HERE
+//                todo: new staffmethod
 //                if (StaffPlus.get().freeze.isActive(nearPlayer.getName())) {
 //                    continue;
 //                }
@@ -141,7 +142,7 @@ public class InventoryWitcherPet extends InventoryPet {
         }
         if (!skipped) {
             cosmicData.setLong("lastExpGained", System.currentTimeMillis());
-            petItem.getWrapper().setNBTBase("conaxData", cosmicData.get());
+            petItem.getWrapper().setNBTBase("cosmicData", cosmicData.get());
             petItem.addExperience(player, xp);
             player.sendMessage(CC.GreenB + "+ " + CC.Green + NumberUtils.formatMoney(xp) + " Pet EXP " + CC.GreenB + "[" + CC.Gray + petItem.getExp() + "/" + petItem.getPetType().getInternalClass().getExpForLevel(petItem.getLevel() + 1) + CC.GreenB + "]");
         }
@@ -161,7 +162,7 @@ public class InventoryWitcherPet extends InventoryPet {
             final NBTTagCompoundBuilder newData = wrapper.getconaxData();
             if (oldData != null && newData != null && oldData.hasKey("lastExpGained")) {
                 newData.setLong("lastExpGained", oldData.getLong("lastExpGained"));
-                wrapper.setNBTBase("conaxData", newData.get());
+                wrapper.setNBTBase("cosmicData", newData.get());
                 CosmicSkyInventoryPets.get().getLogger().info("Saving last EXp gained!");
             }
         }

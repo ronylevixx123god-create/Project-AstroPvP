@@ -78,6 +78,12 @@
             <version>0.1</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+                <artifactId>GUIShop</artifactId>
+            <version>0.1</version>
+            <scope>provided</scope>
+        </dependency>
 
 
         <!-- System Repos -->

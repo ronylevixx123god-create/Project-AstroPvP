@@ -91,7 +91,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
                 if (nearPlayer.getGameMode() == GameMode.CREATIVE) {
                     continue;
                 }
-                // todo: add new freeze here
+//                todo: new staffmethod
 //                if (StaffPlus.get().freeze.isActive(nearPlayer.getName())) {
 //                    continue;
 //                }

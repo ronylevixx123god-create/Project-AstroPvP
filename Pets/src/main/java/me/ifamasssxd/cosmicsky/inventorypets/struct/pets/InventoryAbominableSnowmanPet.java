@@ -1,12 +1,23 @@
 package me.ifamasssxd.cosmicsky.inventorypets.struct.pets;
 
-import com.cosmicpvp.cosmicutils.utils.*;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.EssentialsUtils;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import com.cosmicpvp.cosmicutils.utils.NumberUtils;
+import com.cosmicpvp.cosmicutils.utils.TimeUtils;
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
+import com.cosmicpvp.cosmicutils.utils.WorldUtil;
+import com.earth2me.essentials.Essentials;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.Relation;
+import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
@@ -15,6 +26,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.libraryaddict.disguise.DisguiseAPI;
+import me.libraryaddict.disguise.disguisetypes.Disguise;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MobDisguise;
 import org.bukkit.ChatColor;
@@ -32,9 +44,6 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 public class InventoryAbominableSnowmanPet extends InventoryPet {
    int petLevel = 0;
 
@@ -43,7 +52,7 @@ public class InventoryAbominableSnowmanPet extends InventoryPet {
    }
 
    public List<String> getPetDescription(int level) {
-      return Lists.newArrayList(new String[] { String.valueOf(CC.Gray) + "An enormous, monstrous spirit", String.valueOf(CC.Gray) + "well trained in illusionist magic.", (new StringBuilder(String.valueOf(CC.Gray))).toString(), String.valueOf(CC.WhiteB) + "Ability", "[" + CC.DarkRed + "Polymorph" + CC.White + "] " + CC.Gray + "target player, transforming", String.valueOf(CC.Gray) + "them into harmless, immoble snowman for: " + freezeDuration(this.petLevel) + "s", String.valueOf(CC.Gray) + "Any dammage dealt to them will break the spell", (new StringBuilder(String.valueOf(CC.Gray))).toString(), String.valueOf(CC.WhiteB) + "Cooldown", String.valueOf(CC.Gray) + " " + TimeUtils.formatSeconds(getCooldown(level)) });
+      return Lists.newArrayList(CC.Gray + "An enormous, monstrous spirit", String.valueOf(CC.Gray) + "well trained in illusionist magic.", (new StringBuilder(String.valueOf(CC.Gray))).toString(), String.valueOf(CC.WhiteB) + "Ability", "[" + CC.DarkRed + "Polymorph" + CC.White + "] " + CC.Gray + "target player, transforming", String.valueOf(CC.Gray) + "them into harmless, immoble snowman for: " + freezeDuration(this.petLevel) + "s", String.valueOf(CC.Gray) + "Any dammage dealt to them will break the spell", (new StringBuilder(String.valueOf(CC.Gray))).toString(), String.valueOf(CC.WhiteB) + "Cooldown", String.valueOf(CC.Gray) + " " + TimeUtils.formatSeconds(getCooldown(level)));
    }
 
    public int getCooldown(int level) {

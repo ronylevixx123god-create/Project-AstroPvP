@@ -1,13 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.itembuilder.CosmicItemBuilder
- *  com.google.common.collect.Lists
- *  org.bukkit.Bukkit
- *  org.bukkit.Material
- *  org.bukkit.inventory.ItemStack
- */
 package me.ifamasssxd.cosmicskycustoms.struct;
 
 import com.cosmicpvp.cosmicutils.itembuilder.CosmicItemBuilder;

@@ -8,8 +8,6 @@ import com.google.common.collect.Lists;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.struct.Relation;
-
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -20,6 +18,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -35,7 +34,7 @@ public class InventorySmitePet extends InventoryPet {
    }
 
    public List getPetDescription(int level) {
-      return Lists.newArrayList(CC.Gray + "An electrified skeleton totem", CC.Gray + "that contains powerful elemental", CC.Gray + "forces of nature.", "", CC.WhiteB + "Ability", CC.Gray + "Casts a powerful " + CC.White + "/smite", CC.Gray + "at the target entity. If affecting a player,", CC.Gray + "they will also be " + CC.Underline + "frozen in place for " + this.getFreezeTimeInSeconds(level) + "s", "", CC.WhiteB + "Cooldown", CC.Gray + "2 Minutes");
+      return Lists.newArrayList(new String[]{CC.Gray + "An electrified skeleton totem", CC.Gray + "that contains powerful elemental", CC.Gray + "forces of nature.", "", CC.WhiteB + "Ability", CC.Gray + "Casts a powerful " + CC.White + "/smite", CC.Gray + "at the target entity. If affecting a player,", CC.Gray + "they will also be " + CC.Underline + "frozen in place for " + this.getFreezeTimeInSeconds(level) + "s", "", CC.WhiteB + "Cooldown", CC.Gray + "2 Minutes"});
    }
 
    public int getExpForLevel(int level) {
@@ -101,7 +100,7 @@ public class InventorySmitePet extends InventoryPet {
 
    public LivingEntity getTargetEntityFromBlock(Player player, int maxRangeInBlocks) {
       FPlayer fp = (FPlayer)FPlayers.i.get(player);
-      Block b = player.getTargetBlock((HashSet<Byte>) null, maxRangeInBlocks);
+      Block b = player.getTargetBlock((Set<Material>) null, maxRangeInBlocks);
       double targetDistance = 4.0D;
       LivingEntity target = null;
       Iterator var8 = player.getNearbyEntities((double)maxRangeInBlocks, (double)maxRangeInBlocks, (double)maxRangeInBlocks).iterator();

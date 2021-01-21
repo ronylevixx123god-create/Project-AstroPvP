@@ -31,7 +31,7 @@ public class InventoryBannerPet extends InventoryPet {
    }
 
    public List getPetDescription(int level) {
-      return Lists.newArrayList(CC.Gray + "A rallying entity that", CC.Gray + "has the magical power to", CC.Gray + "summon /f banners at its", CC.Gray + "owner's location at will.", "", CC.WhiteB + "Ability", CC.Gray + "Spawn, Place /f banner", CC.Gray + "at current location.", CC.Gray + "(no soul cost)", "", CC.WhiteB + "Cooldown", CC.Gray + " " + TimeUtils.formatSeconds((long)this.getCooldown(level)));
+      return Lists.newArrayList(new String[]{CC.Gray + "A rallying entity that", CC.Gray + "has the magical power to", CC.Gray + "summon /f banners at its", CC.Gray + "owner's location at will.", "", CC.WhiteB + "Ability", CC.Gray + "Spawn, Place /f banner", CC.Gray + "at current location.", CC.Gray + "(no soul cost)", "", CC.WhiteB + "Cooldown", CC.Gray + " " + TimeUtils.formatSeconds((long)this.getCooldown(level))});
    }
 
    public int getCooldown(int level) {
@@ -55,7 +55,7 @@ public class InventoryBannerPet extends InventoryPet {
          if (faction == null) {
             throw new PrefixedPetException("You must be in a faction to use this pet!");
          } else {
-            ItemStack banner = (new CustomItemBuilder("FACTION_BANNER", faction, player, false, "Banner Pet")).build();
+            ItemStack banner = (new CustomItemBuilder("FACTION_BANNER", new Object[]{faction, player, false, "Banner Pet"})).build();
             if (banner == null) {
                player.sendMessage(CC.Red + "No banner found!");
                return false;
@@ -76,7 +76,7 @@ public class InventoryBannerPet extends InventoryPet {
 
                if (!skipped) {
                   cosmicData.setLong("lastExpGained", System.currentTimeMillis());
-                  petItem.getWrapper().setNBTBase("conaxData", cosmicData.get());
+                  petItem.getWrapper().setNBTBase("cosmicData", cosmicData.get());
                   petItem.addExperience(player, 500);
                   player.sendMessage(CC.GreenB + "+ " + CC.Green + NumberUtils.formatMoney(500.0D) + " Pet EXP " + CC.GreenB + "[" + CC.Gray + petItem.getExp() + "/" + petItem.getPetType().getInternalClass().getExpForLevel(petItem.getLevel() + 1) + CC.GreenB + "]");
                }
@@ -98,12 +98,11 @@ public class InventoryBannerPet extends InventoryPet {
 
    public NBTWrapper onItemCreate(NBTWrapper wrapper, InventoryPetItem instance) {
       if (instance.getWrapper() != null) {
-
          NBTTagCompoundBuilder oldData = instance.getWrapper().getconaxData();
          NBTTagCompoundBuilder newData = wrapper.getconaxData();
          if (oldData != null && newData != null && oldData.hasKey("lastExpGained")) {
             newData.setLong("lastExpGained", oldData.getLong("lastExpGained"));
-            wrapper.setNBTBase("conaxData", newData.get());
+            wrapper.setNBTBase("cosmicData", newData.get());
             CosmicSkyInventoryPets.get().getLogger().info("Saving last EXp gained!");
          }
       }
