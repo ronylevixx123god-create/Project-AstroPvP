@@ -28,7 +28,6 @@ import com.cosmicpvp.CosmicSpaceChests.libs.LootGenerator;
 import com.cosmicpvp.CosmicSpaceChests.utils.CustomEnchants;
 import com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils;
 import com.cosmicpvp.CosmicSpaceChests.utils.LocationUtils;
-import com.cosmicpvp.cosmicutils.struct.factions.points.FactionPointUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.rit.sucy.CustomEnchantment;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
@@ -463,9 +462,11 @@ public class CosmicSpaceChestsAPI {
             if (is == null) continue;
             li.add(is);
         }
-        if ((ir == ItemRarity.LEGENDARY || ir == ItemRarity.GOD) && Math.random() <= 0.05 && (factionPoints = FactionPointUtils.getFactionPointsItem(null, null, "space_chest", ir)) != null) {
-            li.add(factionPoints);
-        }
+//        todo: method removed
+//        if ((ir == ItemRarity.LEGENDARY || ir == ItemRarity.GOD) && Math.random() <= 0.05 && (factionPoints = FactionPointUtils.getFactionPointsItem(null, null, "space_chest", ir)) != null) {
+//            li.add(factionPoints);
+//        }
+
         return li;
     }
 

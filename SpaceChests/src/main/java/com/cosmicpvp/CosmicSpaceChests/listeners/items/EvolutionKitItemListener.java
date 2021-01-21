@@ -1,28 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
- *  com.cosmicpvp.cosmicutils.utils.RandomFireworks
- *  me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKits
- *  me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKits
- *  org.arkhamnetwork.Arkkit.patches.ItemID
- *  org.arkhamnetwork.Arkkit.plugins.ArkPlugins
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.Material
- *  org.bukkit.Sound
- *  org.bukkit.command.CommandSender
- *  org.bukkit.entity.Player
- *  org.bukkit.event.Event
- *  org.bukkit.event.Event$Result
- *  org.bukkit.event.EventHandler
- *  org.bukkit.event.EventPriority
- *  org.bukkit.event.Listener
- *  org.bukkit.event.block.Action
- *  org.bukkit.event.player.PlayerInteractEvent
- *  org.bukkit.inventory.ItemStack
- */
 package com.cosmicpvp.CosmicSpaceChests.listeners.items;
 
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsPlugin;
@@ -31,7 +6,6 @@ import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
 import com.cosmicpvp.cosmicutils.utils.RandomFireworks;
 import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKits;
 import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKits;
-import me.ifamasssxd.cosmicevolutionkits.utils.TitleManager;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.Bukkit;
@@ -89,8 +63,9 @@ implements Listener {
                 p.updateInventory();
                 p.playSound(p.getLocation(), Sound.LEVEL_UP, 1.0f, 0.72f);
                 RandomFireworks.getManager().launchRandomFirework(p.getLocation());
-                TitleManager.sendTitle(p, vkit.getKit().getItemName(), TitleManager.TitleColor.AQUA);
-                TitleManager.sendSubTitle(p, ChatColor.GREEN + "Evolution Kit Unlocked", TitleManager.TitleColor.GREEN);
+//              TODO: bowp
+                //                TitleManager.sendTitle(p, vkit.getKit().getItemName(), TitleManager.TitleColor.AQUA);
+//                TitleManager.sendSubTitle(p, ChatColor.GREEN + "Evolution Kit Unlocked", TitleManager.TitleColor.GREEN);
                 Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(p, "VKIT_UNLOCK", new Object[]{vkit}));
             }
             catch (Exception err) {

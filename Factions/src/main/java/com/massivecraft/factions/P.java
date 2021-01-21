@@ -113,10 +113,10 @@ public class P extends MPlugin {
     public static WorldGuardPlugin wg = null;
     @Getter @Setter
     private BoardManager boardManager;
-    @Getter @Setter private UpgradeManager upgradeManager;
-    private CosmicFlyingPlugin cosmicFlyingPlugin;
     @Getter @Setter
     public BoosterManager boosterManager;
+    @Getter @Setter private UpgradeManager upgradeManager;
+    private CosmicFlyingPlugin cosmicFlyingPlugin;
     // TODO: FINISH FACTION POINTS
     /*public PointManager pointManager;
     private CoreChunkManager chunkManager; */

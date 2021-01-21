@@ -20,7 +20,6 @@
  */
 package com.cosmicpvp.CosmicSpaceChests.tasks.holiday;
 
-import com.cosmicpvp.CosmicBossEggs.boss.type.Bosses;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsPlugin;
 import com.cosmicpvp.CosmicSpaceChests.utils.MiscUtil;
 import com.cosmicpvp.cosmicutils.utils.CC;
@@ -99,8 +98,9 @@ implements Runnable {
             boss.getEntity().setMetadata("pumpkinHarvest", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSpaceChestsPlugin.plugin, (Object)System.currentTimeMillis()));
             lastBossSpawned = boss.getUuid();
         }
-        Bosses.HEADLESS_KING.b.spawnBoss(Halloween2018Task.getNearbyLocation(spawn, 5, 0));
-        Bosses.HEADLESS_KING.b.spawnBoss(Halloween2018Task.getNearbyLocation(spawn, 5, 0));
+        // todo: old method
+//        Bosses.HEADLESS_KING.b.spawnBoss(Halloween2018Task.getNearbyLocation(spawn, 5, 0));
+//        Bosses.HEADLESS_KING.b.spawnBoss(Halloween2018Task.getNearbyLocation(spawn, 5, 0));
     }
 
     public static void spawnCosmicPumpkin(String summoner) {

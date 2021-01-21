@@ -1,22 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  me.ifamasssxd.cosmicbosses.struct.Boss
- *  me.ifamasssxd.cosmicbosses.struct.enums.BossType
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.Location
- *  org.bukkit.Material
- *  org.bukkit.Sound
- *  org.bukkit.World
- *  org.bukkit.entity.LivingEntity
- *  org.bukkit.entity.Player
- *  org.bukkit.metadata.FixedMetadataValue
- *  org.bukkit.metadata.MetadataValue
- *  org.bukkit.plugin.Plugin
- */
 package com.cosmicpvp.CosmicSpaceChests.tasks.holiday;
 
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsPlugin;

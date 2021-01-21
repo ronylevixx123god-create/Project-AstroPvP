@@ -1,18 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.FactionUtils
- *  com.google.common.collect.Lists
- *  com.massivecraft.factions.Faction
- *  org.bukkit.ChatColor
- *  org.bukkit.Material
- *  org.bukkit.configuration.file.FileConfiguration
- *  org.bukkit.configuration.file.YamlConfiguration
- *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
- */
 package com.conaxgames.factions.boosters.struct;
 
 

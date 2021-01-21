@@ -1,9 +1,6 @@
 package com.cosmicpvp.CosmicSpaceChests.utils;
 
 import com.compilex.CosmicCustomCreepers.enums.CreeperTypes;
-import com.cosmicpvp.CosmicBossEggs.boss.type.Boss;
-import com.cosmicpvp.CosmicBossEggs.boss.type.Bosses;
-import com.cosmicpvp.CosmicBossEggs.util.MiscUtil;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.cosmicpvp.CosmicSpaceChests.libs.RankItems;
@@ -12,11 +9,8 @@ import com.cosmicpvp.CosmicSpaceChests.listeners.EnvoySummonItemListener;
 import com.gmail.nossr50.datatypes.skills.SkillType;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
-import java.util.Arrays;
-import java.util.Random;
 import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
 import me.ifamasssxd.cosmicbosses.utils.BossEggUtils;
-import me.ifamasssxd.cosmicfactionquests.CosmicFactionQuests;
 import me.ifamasssxd.cosmicguishop.ArkhamMoneyNotesAPI;
 import org.arkhamnetwork.Arkkit.patches.ItemNametag;
 import org.arkhamnetwork.Arkkit.patches.McmmoCredits;
@@ -33,6 +27,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Arrays;
+import java.util.Random;
+
 public class ItemUtils {
     public static ItemStack buildItem(Material m, short metaData, String name, String ... description) {
         ItemStack is = new ItemStack(m, 1, metaData);
@@ -47,15 +44,6 @@ public class ItemUtils {
         return is;
     }
 
-    public static ItemStack getFactionQuestReroll(boolean apply) {
-        try {
-            return CosmicFactionQuests.get().getFactionQuestManager().createQuestRerolltem(apply);
-        }
-        catch (Exception exception) {
-            return null;
-        }
-    }
-
     public static ItemStack getXpBottle(int xpAmount, String enchanter) {
         return ItemUtils.buildItem(Material.EXP_BOTTLE, (short)0, ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "Experience Bottle" + (Object)ChatColor.GRAY + " (Throw)", (Object)ChatColor.LIGHT_PURPLE + "Value " + (Object)ChatColor.WHITE + xpAmount + " XP", (Object)ChatColor.LIGHT_PURPLE + "Enchanter " + (Object)ChatColor.WHITE + enchanter);
     }
@@ -66,10 +54,6 @@ public class ItemUtils {
 
     public static ItemStack getMoneyNoteNoIID(String string, int i) {
         return ArkhamMoneyNotesAPI.getMoneyNoteNoIID((String)string, (long)i);
-    }
-
-    public static ItemStack getBossEgg(Bosses b) {
-        return MiscUtil.getBossEgg((Boss)b.b);
     }
 
     public static ItemStack getEnchantmentBook(CustomEnchantment ce) {
