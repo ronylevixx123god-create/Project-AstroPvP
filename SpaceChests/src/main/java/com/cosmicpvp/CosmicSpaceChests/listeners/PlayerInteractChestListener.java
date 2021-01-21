@@ -1,63 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
- *  com.massivecraft.factions.Board
- *  com.massivecraft.factions.FLocation
- *  net.minecraft.server.v1_8_R3.MinecraftServer
- *  net.minecraft.server.v1_8_R3.Packet
- *  net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent
- *  org.arkhamnetwork.Arkkit.Arkkit
- *  org.arkhamnetwork.enchantments.util.ParticleEffect
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.Color
- *  org.bukkit.FireworkEffect
- *  org.bukkit.FireworkEffect$Type
- *  org.bukkit.Location
- *  org.bukkit.Material
- *  org.bukkit.Sound
- *  org.bukkit.block.Block
- *  org.bukkit.block.Chest
- *  org.bukkit.command.CommandSender
- *  org.bukkit.craftbukkit.v1_8_R3.CraftServer
- *  org.bukkit.craftbukkit.v1_8_R3.CraftWorld
- *  org.bukkit.entity.Entity
- *  org.bukkit.entity.EntityType
- *  org.bukkit.entity.FallingBlock
- *  org.bukkit.entity.Fireball
- *  org.bukkit.entity.Firework
- *  org.bukkit.entity.Ghast
- *  org.bukkit.entity.IronGolem
- *  org.bukkit.entity.LivingEntity
- *  org.bukkit.entity.PigZombie
- *  org.bukkit.entity.Player
- *  org.bukkit.entity.Skeleton
- *  org.bukkit.entity.Skeleton$SkeletonType
- *  org.bukkit.event.Event
- *  org.bukkit.event.Event$Result
- *  org.bukkit.event.EventHandler
- *  org.bukkit.event.EventPriority
- *  org.bukkit.event.Listener
- *  org.bukkit.event.block.Action
- *  org.bukkit.event.entity.EntityChangeBlockEvent
- *  org.bukkit.event.entity.EntityDeathEvent
- *  org.bukkit.event.entity.ExplosionPrimeEvent
- *  org.bukkit.event.inventory.InventoryCloseEvent
- *  org.bukkit.event.inventory.InventoryOpenEvent
- *  org.bukkit.event.player.PlayerInteractEvent
- *  org.bukkit.event.player.PlayerJoinEvent
- *  org.bukkit.inventory.Inventory
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.FireworkMeta
- *  org.bukkit.metadata.FixedMetadataValue
- *  org.bukkit.metadata.MetadataValue
- *  org.bukkit.plugin.Plugin
- *  org.bukkit.potion.PotionEffect
- *  org.bukkit.potion.PotionEffectType
- *  org.bukkit.util.BlockIterator
- */
 package com.cosmicpvp.CosmicSpaceChests.listeners;
 
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
@@ -583,7 +523,8 @@ implements Listener {
         le.getEquipment().setBoots(new ItemStack(new Random().nextBoolean() ? Material.IRON_BOOTS : Material.DIAMOND_BOOTS));
         le.setCanPickupItems(false);
         le.setMetadata("envoyMonster", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSpaceChestsPlugin.plugin, (Object)true));
-        ParticleEffect.playEffect((ParticleEffect)ParticleEffect.FLAME, (Location)le.getLocation().add(0.0, 1.0, 0.0), (float)0.15f, (int)25);
+        // todo: effect method
+        //ParticleEffect.playEffect((ParticleEffect)ParticleEffect.FLAME, (Location)le.getLocation().add(0.0, 1.0, 0.0), (float)0.15f, (int)25);
     }
 }
 

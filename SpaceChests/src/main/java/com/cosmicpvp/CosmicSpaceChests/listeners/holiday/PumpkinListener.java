@@ -1,51 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
- *  net.minecraft.server.v1_8_R3.Packet
- *  net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent
- *  org.arkhamnetwork.Arkkit.patches.Halloween
- *  org.arkhamnetwork.enchantments.util.ParticleEffect
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.Color
- *  org.bukkit.FireworkEffect
- *  org.bukkit.FireworkEffect$Type
- *  org.bukkit.Location
- *  org.bukkit.Material
- *  org.bukkit.Sound
- *  org.bukkit.block.Block
- *  org.bukkit.craftbukkit.v1_8_R3.CraftServer
- *  org.bukkit.craftbukkit.v1_8_R3.CraftWorld
- *  org.bukkit.entity.Blaze
- *  org.bukkit.entity.EntityType
- *  org.bukkit.entity.FallingBlock
- *  org.bukkit.entity.Fireball
- *  org.bukkit.entity.Firework
- *  org.bukkit.entity.Ghast
- *  org.bukkit.entity.PigZombie
- *  org.bukkit.entity.Player
- *  org.bukkit.entity.Skeleton
- *  org.bukkit.entity.Skeleton$SkeletonType
- *  org.bukkit.event.Event
- *  org.bukkit.event.Event$Result
- *  org.bukkit.event.EventHandler
- *  org.bukkit.event.EventPriority
- *  org.bukkit.event.Listener
- *  org.bukkit.event.block.Action
- *  org.bukkit.event.entity.EntityChangeBlockEvent
- *  org.bukkit.event.entity.EntityDeathEvent
- *  org.bukkit.event.entity.ExplosionPrimeEvent
- *  org.bukkit.event.player.PlayerInteractEvent
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.FireworkMeta
- *  org.bukkit.metadata.FixedMetadataValue
- *  org.bukkit.metadata.MetadataValue
- *  org.bukkit.plugin.Plugin
- *  org.bukkit.potion.PotionEffect
- *  org.bukkit.potion.PotionEffectType
- */
 package com.cosmicpvp.CosmicSpaceChests.listeners.holiday;
 
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
@@ -278,7 +230,8 @@ implements Listener {
         le.getEquipment().setBoots(new ItemStack(new Random().nextBoolean() ? Material.IRON_BOOTS : Material.DIAMOND_BOOTS));
         le.setCanPickupItems(false);
         le.setMetadata("halloweenMonster", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSpaceChestsPlugin.plugin, (Object)true));
-        ParticleEffect.playEffect((ParticleEffect)ParticleEffect.FLAME, (Location)le.getLocation().add(0.0, 1.0, 0.0), (float)0.15f, (int)25);
+        // todo: part method
+        //ParticleEffect.playEffect((ParticleEffect)ParticleEffect.FLAME, (Location)le.getLocation().add(0.0, 1.0, 0.0), (float)0.15f, (int)25);
     }
 
     private ItemRarity getRandomItemRarity() {
