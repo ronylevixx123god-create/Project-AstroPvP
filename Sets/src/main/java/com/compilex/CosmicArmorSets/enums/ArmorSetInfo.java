@@ -27,7 +27,6 @@ public abstract class ArmorSetInfo {
             return false;
         }
         double newHealth = player.getHealth() - toSubtract;
-        // TODO: [TEST] FIX NULL ERROR WHEN COMPILE
         if (newHealth <= 0.0 && Phoenix.hasPhoenixEquipped(player) && Phoenix.procPhoenix(player, damager, toSubtract)) {
             Bukkit.getLogger().info("[ArmorSets] Not killing " + player.getName() + " due to Phoenix proc!");
             return false;

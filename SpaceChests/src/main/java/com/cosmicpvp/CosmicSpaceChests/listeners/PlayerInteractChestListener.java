@@ -4,44 +4,22 @@ import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsPlugin;
 import com.cosmicpvp.CosmicSpaceChests.libs.ChestLootSelector;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
-import com.cosmicpvp.CosmicSpaceChests.listeners.SpaceFlareListener;
 import com.cosmicpvp.CosmicSpaceChests.utils.MiscUtil;
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
 import net.minecraft.server.v1_8_R3.Packet;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.enchantments.util.ParticleEffect;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Color;
-import org.bukkit.FireworkEffect;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.FallingBlock;
-import org.bukkit.entity.Fireball;
-import org.bukkit.entity.Firework;
-import org.bukkit.entity.Ghast;
-import org.bukkit.entity.IronGolem;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.PigZombie;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Skeleton;
+import org.bukkit.entity.*;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -63,6 +41,10 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.BlockIterator;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class PlayerInteractChestListener
 implements Listener {
@@ -183,7 +165,7 @@ implements Listener {
     }
 
     @EventHandler(priority=EventPriority.LOWEST, ignoreCancelled=false)
-    public void onPlayerInteract(PlayerInteractEvent e) {
+    public void onPlayerInteract(PlayerInteractEvent e) throws Exception {
         Block b;
         if (e.hasBlock() && e.getAction() == Action.LEFT_CLICK_BLOCK && (b = e.getClickedBlock()).getType() == Material.CHEST) {
             Chest c;
@@ -302,7 +284,7 @@ implements Listener {
     }
 
     @EventHandler(priority=EventPriority.MONITOR)
-    public void onInventoryClose(InventoryCloseEvent e) {
+    public void onInventoryClose(InventoryCloseEvent e) throws Exception {
         Chest c;
         Block b;
         if (!(e.getInventory().getHolder() instanceof Chest)) {
@@ -470,7 +452,7 @@ implements Listener {
         return x;
     }
 
-    private void spawnEnvoyMonster(Location l, EntityType et) {
+    private void spawnEnvoyMonster(Location l, EntityType et) throws Exception {
         if (l.getWorld().getName().equals("world_duels") || l.getWorld().getName().equals("world_duels2")) {
             return;
         }
@@ -523,8 +505,7 @@ implements Listener {
         le.getEquipment().setBoots(new ItemStack(new Random().nextBoolean() ? Material.IRON_BOOTS : Material.DIAMOND_BOOTS));
         le.setCanPickupItems(false);
         le.setMetadata("envoyMonster", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSpaceChestsPlugin.plugin, (Object)true));
-        // todo: effect method
-        //ParticleEffect.playEffect((ParticleEffect)ParticleEffect.FLAME, (Location)le.getLocation().add(0.0, 1.0, 0.0), (float)0.15f, (int)25);
+        de.inventivegames.particle.ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(), le.getLocation().add(0.0, 1.0, 0.0),0f,0f,0f, (float)0.15f, (int)25);
     }
 }
 

@@ -106,7 +106,6 @@ public class WorldUtil {
             Iterator i = RegionFileCache.a.entrySet().iterator();
             block5:
             while (i.hasNext()) {
-                //TODO: [NOTE] MIGHT BE CUCKED vvv
                 Map.Entry<File, RegionFile> entry = (Map.Entry<File, RegionFile>) i.next();
                 for (File child = entry.getKey().getAbsoluteFile(); child != null; child = child.getParentFile()) {
                     if (!child.equals(parentFolder)) continue;
@@ -119,7 +118,6 @@ public class WorldUtil {
                     continue block5;
                 }
             }
-            // ** MonitorExit[var3_3] (shouldn't be in output)
             return;
         }
     }

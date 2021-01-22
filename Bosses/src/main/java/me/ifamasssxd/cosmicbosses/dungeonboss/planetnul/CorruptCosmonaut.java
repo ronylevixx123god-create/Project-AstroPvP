@@ -121,7 +121,7 @@ public class CorruptCosmonaut extends Boss implements DungeonBoss {
         e.setMetadata("boss", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
         e.setMaxHealth((double) this.getMaxHealth());
         e.setHealth(e.getMaxHealth());
-        //todo: look into this method
+        // todo: look into this method
         //e.getEquipment().setHelmet(ItemSkinManager.getItemSkinByID("CORRUPT_HELMET").applySkin(new ItemStack(Material.DIAMOND_HELMET)));
 
         ItemStack fillerSword = new ItemStack(Material.DIAMOND_SWORD);

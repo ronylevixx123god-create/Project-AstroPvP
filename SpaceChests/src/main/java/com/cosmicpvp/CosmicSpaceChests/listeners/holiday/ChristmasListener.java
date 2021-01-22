@@ -4,35 +4,18 @@ import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsPlugin;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.cosmicpvp.CosmicSpaceChests.tasks.holiday.Christmas2018Task;
-import java.util.Random;
-
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.Packet;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
 import org.arkhamnetwork.Arkkit.patches.Christmas;
 import org.arkhamnetwork.Arkkit.patches.Drinks;
-import org.arkhamnetwork.enchantments.util.ParticleEffect;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Color;
-import org.bukkit.FireworkEffect;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Chest;
 import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.FallingBlock;
-import org.bukkit.entity.Fireball;
-import org.bukkit.entity.Firework;
-import org.bukkit.entity.Ghast;
-import org.bukkit.entity.IronGolem;
-import org.bukkit.entity.PigZombie;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Skeleton;
+import org.bukkit.entity.*;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -49,6 +32,8 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+
+import java.util.Random;
 
 public class ChristmasListener
 implements Listener {
@@ -82,7 +67,7 @@ implements Listener {
     }
 
     @EventHandler
-    public void onEntityBlockChange(EntityChangeBlockEvent e) {
+    public void onEntityBlockChange(EntityChangeBlockEvent e) throws Exception {
         if (e.getEntity() instanceof FallingBlock && ((FallingBlock)e.getEntity()).getMaterial() == Material.CHEST && e.getEntity().getLocation().getWorld().getName().equals("world_arena")) {
             byte newData;
             ItemStack[] items;
@@ -142,7 +127,7 @@ implements Listener {
     }
 
     @EventHandler(priority=EventPriority.LOWEST, ignoreCancelled=false)
-    public void onPlayerInteract(PlayerInteractEvent e) {
+    public void onPlayerInteract(PlayerInteractEvent e) throws Exception {
         Block b;
         if (e.hasBlock() && e.getAction() == Action.LEFT_CLICK_BLOCK && (b = e.getClickedBlock()).getType() == Material.CHEST && b.getWorld().getName().equals("world_arena") && CosmicSpaceChestsPlugin.chest_locations.containsKey((Object)b.getLocation())) {
             Player pl = e.getPlayer();
@@ -199,7 +184,7 @@ implements Listener {
         }
     }
 
-    private void spawnChristmasMonster(Location l, EntityType et) {
+    private void spawnChristmasMonster(Location l, EntityType et) throws Exception {
         PigZombie le = null;
         if (et == EntityType.PIG_ZOMBIE) {
             PigZombie b = (PigZombie)l.getWorld().spawnEntity(l, EntityType.PIG_ZOMBIE);
@@ -249,8 +234,8 @@ implements Listener {
         le.getEquipment().setBoots(new ItemStack(new Random().nextBoolean() ? Material.IRON_BOOTS : Material.DIAMOND_BOOTS));
         le.setCanPickupItems(false);
         le.setMetadata("christmasMonster", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSpaceChestsPlugin.plugin, (Object)true));
-        // todo: particle method
-        //ParticleEffect.playEffect((ParticleEffect)ParticleEffect.FLAME, (Location)le.getLocation().add(0.0, 1.0, 0.0), (float)0.15f, (int)25);
+        de.inventivegames.particle.ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(), le.getLocation().add(0.0, 1.0, 0.0),0f,0f,0f, (float)0.15f, (int)25);
+
     }
 
     private ItemRarity getRandomItemRarity() {

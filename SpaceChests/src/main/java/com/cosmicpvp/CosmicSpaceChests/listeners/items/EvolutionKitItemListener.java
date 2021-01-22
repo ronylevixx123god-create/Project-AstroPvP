@@ -6,6 +6,7 @@ import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
 import com.cosmicpvp.cosmicutils.utils.RandomFireworks;
 import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKits;
 import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKits;
+import net.astropvp.core.AstroCore;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.Bukkit;
@@ -63,9 +64,8 @@ implements Listener {
                 p.updateInventory();
                 p.playSound(p.getLocation(), Sound.LEVEL_UP, 1.0f, 0.72f);
                 RandomFireworks.getManager().launchRandomFirework(p.getLocation());
-//              TODO: bowp
-                //                TitleManager.sendTitle(p, vkit.getKit().getItemName(), TitleManager.TitleColor.AQUA);
-//                TitleManager.sendSubTitle(p, ChatColor.GREEN + "Evolution Kit Unlocked", TitleManager.TitleColor.GREEN);
+                AstroCore.getTitleManagerAPI().sendTitle(p, ChatColor.AQUA + vkit.getKit().getItemName());
+                AstroCore.getTitleManagerAPI().sendSubtitle(p, ChatColor.GREEN + "Evolution Kit Unlocked");
                 Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(p, "VKIT_UNLOCK", new Object[]{vkit}));
             }
             catch (Exception err) {
