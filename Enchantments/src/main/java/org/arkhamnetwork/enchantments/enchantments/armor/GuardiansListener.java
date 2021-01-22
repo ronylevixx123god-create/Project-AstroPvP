@@ -13,7 +13,7 @@ import org.bukkit.event.entity.EntityTargetEvent;
 
 final class GuardiansListener implements Listener {
     @EventHandler
-    public void onEntityDamage(final EntityDamageByEntityEvent e) {
+    public void onEntityDamage(final EntityDamageByEntityEvent e) throws Exception {
         if (e.getEntity() instanceof Player && e.getDamager().hasMetadata("guardianSummoner")) {
             final Player p = (Player) e.getEntity();
             final String summoner = e.getDamager().getMetadata("guardianSummoner").get(0).asString();
@@ -42,8 +42,8 @@ final class GuardiansListener implements Listener {
                     final int bloodCurseLevel = pSummoner2.getMetadata("bloodLink").get(0).asInt();
                     if (Math.random() < bloodCurseLevel * 0.05 && pSummoner2.getHealth() < pSummoner2.getMaxHealth() && !pSummoner2.isDead()) {
                         GeneralUtil.healPlayer((LivingEntity) pSummoner2, (bloodCurseLevel == 5) ? 2 : 1);
-                        ParticleEffect.playEffect(ParticleEffect.HEART, pSummoner2.getEyeLocation(), 0.2f, 1);
-                        ParticleEffect.playEffect(ParticleEffect.HEART, e.getEntity().getLocation().add(0.0, 3.0, 0.0).getBlock().getLocation(), 0.2f, 1);
+                        de.inventivegames.particle.ParticleEffect.HEART.sendToPlayer(pSummoner2, pSummoner2.getLocation(), 0,1,0,0.2f,2);
+                        de.inventivegames.particle.ParticleEffect.HEART.sendToPlayer(pSummoner2, e.getEntity().getLocation(), 0,3,0,0.2f,1);
                     }
                 }
                 ((IronGolem) e.getEntity()).setTarget((LivingEntity) p2);

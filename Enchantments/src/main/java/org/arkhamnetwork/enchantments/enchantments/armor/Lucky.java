@@ -2,6 +2,7 @@ package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.rit.sucy.CustomEnchantment;
+import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.util.ArmorUtil;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.entity.LivingEntity;
@@ -18,6 +19,7 @@ public class Lucky extends CustomEnchantment {
         this.interval = 10.0;
     }
 
+    @SneakyThrows
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         if (player instanceof Player && new Random().nextInt(400) <= level) {
             final Player p = (Player) player;
@@ -26,7 +28,7 @@ public class Lucky extends CustomEnchantment {
             if (player.getHealth() - dmg <= 0.0) {
                 e.setCancelled(true);
                 e.setDamage(0.0);
-                ParticleEffect.playEffect(ParticleEffect.CLOUD, p.getLocation(), 0.3f, 30);
+                de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayer(p, p.getLocation(), 0,0,0,0.3f,30);
             }
         }
     }

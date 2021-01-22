@@ -5,6 +5,7 @@ import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.Relation;
+import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.ArmorUtil;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -29,6 +30,7 @@ public class HeroicPlagueCarrier extends HeroicCustomEnchantment {
         this.interval = 20.0D;
     }
 
+    @SneakyThrows
     public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
         if (player.hasMetadata("neutralized"))
             return;
@@ -54,7 +56,7 @@ public class HeroicPlagueCarrier extends HeroicCustomEnchantment {
                         victims.add((LivingEntity) ent);
                     }
                 }
-                ParticleEffect.playEffect(ParticleEffect.CLOUD, p.getLocation().add(0.0D, 1.0D, 0.0D), 1.0F, 75);
+                de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayer(p, p.getLocation(), 0,1,0,1f,75);
                 p.getWorld().playSound(p.getLocation(), Sound.CREEPER_HISS, 2.0F, 0.75F);
                 for (LivingEntity victim : victims) {
                     if (victim instanceof Player) {

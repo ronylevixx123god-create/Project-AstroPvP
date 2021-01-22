@@ -50,11 +50,7 @@ package com.compilex.CosmicKOTH.tasks;
 import com.compilex.CosmicArmorSets.enums.AbilityArmorSet;
 import com.compilex.CosmicKOTH.CosmicKOTHPlugin;
 import com.compilex.CosmicKOTH.struct.KothWorldType;
-import com.compilex.CosmicKOTH.utils.KothItemUtils;
-import com.compilex.CosmicKOTH.utils.LocationUtils;
-import com.compilex.CosmicKOTH.utils.MonsterUtils;
-import com.compilex.CosmicKOTH.utils.RewardUtils;
-import com.compilex.CosmicKOTH.utils.ScoreboardUtils;
+import com.compilex.CosmicKOTH.utils.*;
 import com.cosmicpvp.cosmicutils.itembuilder.CustomTitleBuilder;
 import com.cosmicpvp.cosmicutils.itembuilder.MaskBuilder;
 import com.cosmicpvp.cosmicutils.struct.factions.points.FactionPointUtils;
@@ -65,7 +61,20 @@ import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
-import com.massivecraft.factions.Faction;
+import lombok.SneakyThrows;
+import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
+import net.minecraft.server.v1_8_R3.EntityFireworks;
+import org.arkhamnetwork.Arkkit.patches.CombatLog;
+import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
+import org.arkhamnetwork.Arkkit.utils.RandomFireworks;
+import org.arkhamnetwork.Arkkit.utils.WorldGuardUtils;
+import org.bukkit.*;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftFirework;
+import org.bukkit.entity.*;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.FireworkMeta;
+import org.bukkit.metadata.FixedMetadataValue;
+
 import java.io.File;
 import java.lang.reflect.Field;
 import java.nio.file.Files;
@@ -76,35 +85,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
-import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
-import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
-import net.minecraft.server.v1_8_R3.EntityFireworks;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
-import org.arkhamnetwork.Arkkit.patches.CombatLog;
-import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
-import org.arkhamnetwork.Arkkit.utils.RandomFireworks;
-import org.arkhamnetwork.Arkkit.utils.WorldGuardUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Color;
-import org.bukkit.FireworkEffect;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.Sound;
-import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftFirework;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Firework;
-import org.bukkit.entity.Item;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.FireworkMeta;
-import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
 
 public class KothEventTask
 implements Runnable {
@@ -151,6 +131,7 @@ implements Runnable {
         });
     }
 
+    @SneakyThrows
     @Override
     public void run() {
         if (!this.capped) {
@@ -198,7 +179,7 @@ implements Runnable {
         }
     }
 
-    private void playerCapHandler() {
+    private void playerCapHandler() throws Exception {
         if (this.playerCapping != null && this.playerCapping.isValid() && !this.playerCapping.isDead()) {
             Player playerCapping = this.playerCapping;
             this.getClass();
@@ -208,7 +189,7 @@ implements Runnable {
                 this.getClass();
                 if (!regionName.equals("koth_center")) {
                     this.kothBroadcast(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + ChatColor.BOLD + this.getNameOfFlagCapper() + ChatColor.RED + " is no longer capping KOTH!");
-                    ParticleEffect.playEffect(ParticleEffect.MAGIC_CRIT, this.playerCapping.getLocation(), 0.6f, 30);
+                    de.inventivegames.particle.ParticleEffect.MAGIC_CRIT.sendToPlayers(Bukkit.getOnlinePlayers(),this.playerCapping.getLocation(), 0,1,0,0.6f,30);
                     this.playerCapping.playSound(this.playerCapping.getLocation(), Sound.ANVIL_BREAK, 1.0f, 0.7f);
                     this.playerCapping = null;
                     return;

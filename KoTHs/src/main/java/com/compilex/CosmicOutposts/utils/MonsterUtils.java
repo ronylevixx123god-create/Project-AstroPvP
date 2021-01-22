@@ -23,34 +23,28 @@
  */
 package com.compilex.CosmicOutposts.utils;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-
 import com.compilex.CosmicKOTH.CosmicKOTHPlugin;
 import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Ghast;
-import org.bukkit.entity.IronGolem;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.PigZombie;
-import org.bukkit.entity.Skeleton;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 public class MonsterUtils {
     public static HashMap<ItemStack, Double> potionDrops;
     public static HashMap<ItemStack, Double> bookDrops;
 
-    public static LivingEntity spawnSoulDemon(Location l) {
+    public static LivingEntity spawnSoulDemon(Location l) throws Exception {
         EntityType et = null;
         double rand = Math.random();
         if (rand <= 0.1) {
@@ -112,7 +106,7 @@ public class MonsterUtils {
         le.getEquipment().setBoots(new ItemStack(new Random().nextBoolean() ? Material.IRON_BOOTS : Material.DIAMOND_BOOTS));
         le.setCanPickupItems(false);
         le.setMetadata("soulDemon", new FixedMetadataValue(CosmicKOTHPlugin.get_(), true));
-        ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, le.getLocation().add(0.0, 1.0, 0.0), 0.15f, 25);
+        de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), le.getLocation(), 0,0,0,0.15f,25);
         return le;
     }
 

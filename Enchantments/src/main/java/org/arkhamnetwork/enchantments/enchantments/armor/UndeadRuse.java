@@ -2,6 +2,7 @@ package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.rit.sucy.CustomEnchantment;
+import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
@@ -30,6 +31,7 @@ public class UndeadRuse extends CustomEnchantment {
         Bukkit.getPluginManager().registerEvents(new UndeadRuseListener(), (Plugin) Enchantments.getInstance());
     }
 
+    @SneakyThrows
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         if (e instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent) e).getDamager() instanceof Player) {
             double chance = 0.01 * level;
@@ -61,12 +63,13 @@ public class UndeadRuse extends CustomEnchantment {
                 if (attacker instanceof Player) {
                     final Player pAttacker = (Player) attacker;
                     pAttacker.hidePlayer(p);
-                    ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, p.getLocation(), 0.75f, 35);
+                    de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayer(p, p.getLocation(), 0,0,0,0.75f,35);
                     Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
+                        @SneakyThrows
                         @Override
                         public void run() {
                             pAttacker.showPlayer(p);
-                            ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, p.getLocation(), 0.75f, 35);
+                            de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayer(p, p.getLocation(), 0,0,0,0.75f,35);
                         }
                     }, zombie_count * 20L + 20L);
                 }

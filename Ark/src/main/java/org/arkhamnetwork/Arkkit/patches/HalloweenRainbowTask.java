@@ -39,7 +39,6 @@ final class HalloweenRainbowTask
         if (this.player.hasMetadata("spectator")) {
             return;
         }
-        //ParticleEffect.playEffect(ParticleEffect.RED_DUST, this.player.getLocation().add(0.0, 1.0, 0.0), 0.8f, this.sugarLevel * 5);
         ParticleEffect.RED_DUST.sendToPlayer(this.player, this.player.getLocation(), 0, 1, 0, 0.8f, this.sugarLevel * 5);
     }
 }

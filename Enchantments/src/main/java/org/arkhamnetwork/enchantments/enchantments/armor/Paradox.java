@@ -5,6 +5,7 @@ import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
 import com.earth2me.essentials.Essentials;
 import com.rit.sucy.CustomEnchantment;
+import lombok.SneakyThrows;
 import me.ifamasssxd.factionupgrades.FactionUpgradeAPI;
 import me.ifamasssxd.factionupgrades.struct.FactionUpgrade;
 import me.ifamasssxd.killtracker.KillTrackerAPI;
@@ -38,6 +39,7 @@ public class Paradox extends CustomEnchantment {
         this.factionUpgrades = Bukkit.getPluginManager().isPluginEnabled("FactionUpgrades");
     }
 
+    @SneakyThrows
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         if (!CommandEnchDust.soulEnabled) {
             return;
@@ -98,7 +100,8 @@ public class Paradox extends CustomEnchantment {
                 if (highImpactPlayers > 0) {
                     KillTrackerAPI.removeSoulsFromGems(p, cost);
                     for (final Player pEnt2 : affectedPlayers) {
-                        ParticleEffect.playEffect(ParticleEffect.HAPPY_VILLAGER, pEnt2.getLocation().add(0.0, 1.0, 0.0), 0.7f, 20);
+                        de.inventivegames.particle.ParticleEffect.HAPPY_VILLAGER.sendToPlayers(Bukkit.getOnlinePlayers(), pEnt2.getLocation(), 0,0,0,0.64f,20);
+
                         GeneralUtil.healPlayer((LivingEntity) pEnt2, amountToHeal);
                         pEnt2.playSound(pEnt2.getLocation(), Sound.EAT, 1.0f, 2.0f);
                         pEnt2.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "** PARADOX [" + p.getName() + "] (+" + amountToHeal + "HP) **");

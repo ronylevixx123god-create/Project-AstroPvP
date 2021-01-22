@@ -1,6 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
+import lombok.SneakyThrows;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -15,13 +16,14 @@ final class NatureWrathTask extends BukkitRunnable {
         this.enchantLevel = level;
     }
 
+    @SneakyThrows
     public void run() {
         if (this.victim != null && !this.victim.isDead()) {
             this.victim.getWorld().strikeLightningEffect(this.victim.getLocation());
             this.victim.damage(this.enchantLevel);
             this.victim.playSound(this.victim.getLocation(), Sound.GHAST_SCREAM2, 2.0f, 2.0f);
             this.victim.sendMessage(ChatColor.DARK_GREEN.toString() + ChatColor.BOLD.toString() + "** NATURE'S WRATH **");
-            ParticleEffect.playEffect(ParticleEffect.SPELL, this.victim.getLocation().add(0.0, 1.0, 0.0), 0.4f, 35);
+            de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), this.victim.getLocation(), 0,1,0,0.4f,35);
         }
     }
 }

@@ -1,9 +1,9 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.google.common.collect.Lists;
 import com.google.common.collect.MapMaker;
 import com.rit.sucy.CustomEnchantment;
+import de.inventivegames.particle.ParticleEffect;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.enchantments.swords.Blind;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -16,7 +16,6 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.Iterator;
 import java.util.Map;
 
 public class Clarity extends CustomEnchantment {
@@ -32,13 +31,15 @@ public class Clarity extends CustomEnchantment {
             if (!(!player.isValid())) {
                 if (!player.hasMetadata(Blind.RECENTLY_BLINDED_METADATA) || ((MetadataValue) player.getMetadata(Blind.RECENTLY_BLINDED_METADATA).get(0)).asLong() <= System.currentTimeMillis()) {
                     Lists.newArrayList((Iterable) player.getActivePotionEffects()).iterator();
-                    Iterator<PotionEffect> iterator = player.getActivePotionEffects().iterator();
-                    while (iterator.hasNext()) {
-                        PotionEffect pe = iterator.next();
+                    for (PotionEffect pe : player.getActivePotionEffects()) {
                         if (pe.getType().getName().equals("BLINDNESS") && pe.getAmplifier() <= maxBlindLevelToRemove) {
                             player.removePotionEffect(PotionEffectType.BLINDNESS);
                             player.playSound(player.getLocation(), Sound.FIZZ, 1.0f, 0.6f);
-                            ParticleEffect.playEffect(ParticleEffect.SPELL, player.getEyeLocation(), 0.6f, 20);
+                            try {
+                                ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 0, 1, 0, 0.6f, 20);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 }

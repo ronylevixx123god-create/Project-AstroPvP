@@ -2,7 +2,6 @@ package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
 import com.compilex.CosmicOutposts.outpost.enums.OutpostTier;
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
 import com.rit.sucy.EnchantmentAPI;
 import me.ifamasssxd.factionupgrades.FactionUpgradeAPI;
@@ -11,6 +10,7 @@ import me.ifamasssxd.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.ArmorSlot;
 import org.arkhamnetwork.enchantments.util.ArmorUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
@@ -27,7 +27,7 @@ import org.bukkit.plugin.Plugin;
 
 final class ImmortalListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onEntityDamage(final EntityDamageEvent e) {
+    public void onEntityDamage(final EntityDamageEvent e) throws Exception {
         if (e.getEntity() instanceof Player) {
             final Player p = (Player) e.getEntity();
             if (CosmicOutpostsAPI.getOutpostTierOfWorld((LivingEntity) p) == OutpostTier.COSMONAUT) {
@@ -89,7 +89,8 @@ final class ImmortalListener implements Listener {
                         }
                         return;
                     } else if (!p.hasMetadata("outOfSoulsMessage") || p.getMetadata("outOfSoulsMessage").get(0).asLong() < System.currentTimeMillis()) {
-                        ParticleEffect.playEffect(ParticleEffect.LAVA, p.getEyeLocation(), 0.4f, 20);
+                        de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(),p.getEyeLocation(), 0,1,0,0.55f,20);
+
                         p.playSound(p.getLocation(), Sound.ITEM_BREAK, 0.7f, 0.4f);
                         p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "** OUT OF SOULS **");
                         p.setMetadata("outOfSoulsMessage", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) (System.currentTimeMillis() + 15000L)));

@@ -1,8 +1,9 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.rit.sucy.CustomEnchantment;
+import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.potion.PotionEffect;
@@ -16,13 +17,14 @@ public class Voodoo extends CustomEnchantment {
         this.interval = 6.0;
     }
 
+    @SneakyThrows
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         final int time = (int) (1.5 * level);
         final double random = Math.random();
         final double chance = 0.04 * level;
         if (random < chance && e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK && attacker != null) {
             attacker.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, time * 20 + 25, (int) ((level >= 4) ? 1 : 0)));
-            ParticleEffect.playEffect(ParticleEffect.MOB_SPELL, attacker.getEyeLocation().add(0.0, 0.5, 0.0), 0.04f, 15);
+            de.inventivegames.particle.ParticleEffect.MOB_SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), attacker.getEyeLocation(), 0,0.5f,0,0.4f,15);
         }
     }
 }

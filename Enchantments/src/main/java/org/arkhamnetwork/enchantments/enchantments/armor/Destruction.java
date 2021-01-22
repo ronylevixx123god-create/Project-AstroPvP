@@ -1,6 +1,5 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.earth2me.essentials.Essentials;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
@@ -86,29 +85,39 @@ public class Destruction extends CustomEnchantment {
                                             if (fp.getFaction().getRelationTo((RelationParticipator) fplayer.getFaction()).isAtMost(Relation.NEUTRAL) && !WorldGuardUtils.isPvPDisabled(p.getLocation())) {
                                                 if (p.getHealth() > 0.0 && !p.isDead()) {
                                                     p.damage((val$level == 5) ? 2.0 : 1.0);
-                                                    ParticleEffect.playEffect(ParticleEffect.LAVA, p.getLocation().add(0.0, 1.0, 0.0), 0.5f, 20);
+                                                    try {
+                                                        de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(),p.getLocation(), 0,1,0,0.5f,20);
+                                                    } catch (Exception e) {
+                                                        e.printStackTrace();
+                                                    }
                                                 }
                                                 if (val$level >= 1 && Math.random() <= 0.15) {
                                                     PotionEffect potionEffect = new PotionEffect(PotionEffectType.SLOW, val$level * 20, (int) ((val$level > 2) ? 1 : 0));
                                                     ((Player) pl).addPotionEffect(potionEffect);
-                                                    ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, p.getLocation().add(0.0, 1.0, 0.0), 0.5f, 10);
+                                                    try {
+                                                        de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(),p.getLocation(), 0,1,0,0.5f,10);
+                                                    } catch (Exception e) {
+                                                        e.printStackTrace();
+                                                    }
                                                 }
                                                 if (val$level >= 2 && Math.random() <= 0.1) {
                                                     p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, val$level * 20 * 2, val$level + 1));
-                                                    ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, p.getLocation().add(0.0, 1.0, 0.0), 0.5f, 20);
+                                                    try {
+                                                        de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(),p.getLocation(), 0,1,0,0.5f,10);
+                                                    } catch (Exception e) {
+                                                        e.printStackTrace();
+                                                    }
                                                 }
                                                 if (val$level >= 3 && Math.random() <= 0.085) {
                                                     p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, val$level * 20 * 2, 1));
-                                                    ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, p.getLocation().add(0.0, 1.0, 0.0), 0.5f, 30);
-                                                } else {
-                                                    continue;
+                                                    try {
+                                                        de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(),p.getLocation(), 0,1,0,0.5f,10);
+                                                    } catch (Exception e) {
+                                                        e.printStackTrace();
+                                                    }
                                                 }
-                                            } else {
-                                                continue;
                                             }
                                         }
-                                    } else {
-                                        continue;
                                     }
                                 }
                             }

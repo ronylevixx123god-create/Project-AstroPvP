@@ -2,6 +2,7 @@ package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.rit.sucy.CustomEnchantment;
+import lombok.SneakyThrows;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
 import net.minecraft.server.v1_8_R3.EntityTracker;
 import net.minecraft.server.v1_8_R3.EntityTrackerEntry;
@@ -60,12 +61,13 @@ public class EnderWalker extends CustomEnchantment {
     public void applyUnequipEffect(final Player player, final int level) {
     }
 
+    @SneakyThrows
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         if (e.getCause() == EntityDamageEvent.DamageCause.WITHER || e.getCause() == EntityDamageEvent.DamageCause.POISON) {
             e.setCancelled(true);
             final boolean heal = Math.random() <= level * 0.15;
             if (heal && GeneralUtil.healPlayer(player, e.getDamage(EntityDamageEvent.DamageModifier.BASE))) {
-                ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, player.getLocation().add(0.0, 1.0, 0.0), 0.8f, 40);
+                de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayer((Player) player, player.getLocation(), 0,1,0,0.75f,35);
             }
             e.setDamage(0.0);
             Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
@@ -76,7 +78,7 @@ public class EnderWalker extends CustomEnchantment {
                     }
                 }
             }, 2L);
-            ParticleEffect.playEffect(ParticleEffect.PORTAL, player.getLocation().add(0.0, 1.0, 0.0), 0.8f, 70);
+            de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayer((Player) player, player.getLocation(), 0,1,0,0.75f,70);
         }
     }
 

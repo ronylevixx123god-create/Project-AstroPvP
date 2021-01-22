@@ -1,10 +1,11 @@
 package org.arkhamnetwork.enchantments.enchantments.tools;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.massivecraft.factions.*;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
+import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
@@ -21,6 +22,7 @@ public class DetonateLegacy extends CustomEnchantment {
         this.interval = 10.0;
     }
 
+    @SneakyThrows
     public void applyToolEffect(final Player player, final Block block, final int enchantLevel, final BlockEvent event) {
         if (event instanceof BlockBreakEvent) {
             final BlockBreakEvent bbe = (BlockBreakEvent) event;
@@ -34,7 +36,7 @@ public class DetonateLegacy extends CustomEnchantment {
         }
     }
 
-    private void newExplode(final Player pl, final Block brokenBlock, final int level) {
+    private void newExplode(final Player pl, final Block brokenBlock, final int level) throws Exception {
         final boolean aboveUs = brokenBlock.getLocation().getY() > pl.getEyeLocation().getY();
         final boolean underUs = brokenBlock.getLocation().getY() < pl.getLocation().getY();
         final boolean vertical = aboveUs || underUs;
@@ -69,7 +71,8 @@ public class DetonateLegacy extends CustomEnchantment {
                                 }
                             }
                             if (!f.isWarZone()) {
-                                ParticleEffect.playEffect(ParticleEffect.LARGE_EXPLODE, blockExploding.getLocation().add(0.0, 0.5, 0.0), 0.025f, 1);
+                                de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(),blockExploding.getLocation(), 0,1,0,0.035f,1);
+
                                 if (hasAntiSmelt) {
                                     if (m == Material.IRON_ORE) {
                                         continue;
@@ -102,7 +105,7 @@ public class DetonateLegacy extends CustomEnchantment {
         }
     }
 
-    private void explode(final Player pl, final Block b, final int level) {
+    private void explode(final Player pl, final Block b, final int level) throws Exception {
         int max_blocks_to_explode = level;
         final boolean hasAntiSmelt = EnchantmentAPI.itemHasEnchantment(pl.getItemInHand(), "Anti Smelt");
         final boolean telepathy = EnchantmentAPI.itemHasEnchantment(pl.getItemInHand(), "Telepathy");
@@ -130,7 +133,8 @@ public class DetonateLegacy extends CustomEnchantment {
                                     }
                                 }
                                 if (!f.isWarZone()) {
-                                    ParticleEffect.playEffect(ParticleEffect.LARGE_EXPLODE, bl.getLocation().add(0.0, 0.5, 0.0), 0.025f, 1);
+                                    de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), bl.getLocation(), 0,0,0,0.015f,1);
+
                                     if (hasAntiSmelt) {
                                         if (m == Material.IRON_ORE) {
                                             continue;

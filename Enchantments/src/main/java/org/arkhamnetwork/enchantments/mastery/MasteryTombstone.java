@@ -92,16 +92,24 @@ public class MasteryTombstone extends MasteryCustomEnchantment {
                     near.sendMessage(CC.RedB + "* SILENCE BLOCKED [" + CC.Gray + damaged.getName() + CC.RedB + "] *");
                 } else {
                     near.setMetadata("noDefenseProcs", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) true));
-                    ParticleEffect.playEffect(ParticleEffect.ENCHANTMENT_TABLE, near.getEyeLocation(), 0.4f, 20);
-                    ParticleEffect.playEffect(ParticleEffect.PORTAL, near.getEyeLocation(), 0.4f, 20);
+                    de.inventivegames.particle.ParticleEffect.ENCHANTMENT_TABLE.sendToPlayers(Bukkit.getOnlinePlayers(), near.getEyeLocation(), 0,0,0,0.4f,20);
+                    de.inventivegames.particle.ParticleEffect.PORTAL.sendToPlayers(Bukkit.getOnlinePlayers(), near.getEyeLocation(), 0,0,0,0.4f,20);
                 }
                 ++affected;
                 near.sendMessage(CC.DarkPurpleB + "* TOMBSTONE (" + CC.Gray + damaged.getName() + " " + ChatColor.GRAY + "[" + silenceDuration / 20L + "s]" + CC.DarkPurpleB + ") *");
                 final Player player2 = (Player) user;
                 Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), () -> {
                     player2.removeMetadata("noDefenseProcs", (Plugin) Enchantments.getInstance());
-                    ParticleEffect.playEffect(ParticleEffect.ENCHANTMENT_TABLE, player2.getEyeLocation(), 0.4f, 20);
-                    ParticleEffect.playEffect(ParticleEffect.PORTAL, player2.getEyeLocation(), 0.4f, 30);
+                    try {
+                        de.inventivegames.particle.ParticleEffect.ENCHANTMENT_TABLE.sendToPlayers(Bukkit.getOnlinePlayers(), near.getEyeLocation(), 0,0,0,0.4f,20);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        de.inventivegames.particle.ParticleEffect.PORTAL.sendToPlayers(Bukkit.getOnlinePlayers(), near.getEyeLocation(), 0,0,0,0.4f,20);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     return;
                 }, silenceDuration);
                 final Location loc = near.getLocation();

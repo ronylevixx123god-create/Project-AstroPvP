@@ -18,7 +18,6 @@ import com.cosmicpvp.cosmicutils.gui.InventoryItem;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.InventoryUtils;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -52,7 +51,12 @@ class CandyGramClaimGUI
                     this.player.getInventory().addItem(gram.getItemStack());
                     this.player.updateInventory();
                     this.player.playSound(this.player.getLocation(), Sound.LEVEL_UP, 0.4f, 1.4f);
-                    ParticleEffect.sendToLocation(ParticleEffect.HEART, this.player.getLocation().add(0.0, 1.0, 0.0), 1.0f, 1.0f, 1.0f, 0.1f, 20);
+                    //ParticleEffect.sendToLocation(ParticleEffect.HEART, this.player.getLocation().add(0.0, 1.0, 0.0), 1.0f, 1.0f, 1.0f, 0.1f, 20);
+                    try {
+                        de.inventivegames.particle.ParticleEffect.HEART.sendToPlayer(this.player, this.player.getLocation(), 0,1,0,0.1f,20);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     if (grams.isEmpty()) {
                         plugin.pendingGrams.remove(this.player.getUniqueId());
                     }

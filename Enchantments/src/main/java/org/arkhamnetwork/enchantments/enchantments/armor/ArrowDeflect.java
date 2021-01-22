@@ -1,9 +1,10 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.rit.sucy.CustomEnchantment;
+import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -22,6 +23,7 @@ public class ArrowDeflect extends CustomEnchantment {
         this.interval = 5.0;
     }
 
+    @SneakyThrows
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         if (e instanceof EntityDamageByEntityEvent) {
             final EntityDamageByEntityEvent edbee = (EntityDamageByEntityEvent) e;
@@ -38,7 +40,7 @@ public class ArrowDeflect extends CustomEnchantment {
                     final long minDelayMilliseconds = level * 500;
                     final long last = player.getMetadata("lastArrowDamageEvent").get(0).asLong();
                     if (System.currentTimeMillis() - last <= minDelayMilliseconds) {
-                        ParticleEffect.playEffect(ParticleEffect.SPELL, player.getLocation().add(0.0, 1.0, 0.0), 0.6f, 20);
+                        de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 0,0,0,0.64f,20);
                         ((Player) player).playSound(player.getLocation(), Sound.ITEM_BREAK, 0.7f, 0.2f);
                         e.setCancelled(true);
                         e.setDamage(0.0);

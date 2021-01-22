@@ -22,13 +22,10 @@ package com.compilex.CosmicKOTH.listeners;
 
 import com.compilex.CosmicKOTH.CosmicKOTHPlugin;
 import com.compilex.CosmicKOTH.utils.RewardUtils;
-import java.util.List;
 import org.apache.commons.lang.StringUtils;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.arkhamnetwork.Arkkit.patches.ItemLinking;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -39,10 +36,12 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
+
 public class KothLootBagListener
 implements Listener {
     @EventHandler
-    public void onPlayerOpenLootBag(PlayerInteractEvent e) {
+    public void onPlayerOpenLootBag(PlayerInteractEvent e) throws Exception {
         if (e.hasItem() && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && RewardUtils.isKOTHLootbag(e.getItem())) {
             Player p = e.getPlayer();
             e.setCancelled(true);
@@ -85,8 +84,9 @@ implements Listener {
             }
             Bukkit.broadcastMessage((String)"");
             p.updateInventory();
-            ParticleEffect.playEffect((ParticleEffect)ParticleEffect.HAPPY_VILLAGER, (Location)p.getLocation().add(0.0, 1.0, 0.0), (float)0.7f, (int)30);
-            ParticleEffect.playEffect((ParticleEffect)ParticleEffect.FIREWORKS_SPARK, (Location)p.getLocation().add(0.0, 1.0, 0.0), (float)0.8f, (int)50);
+            de.inventivegames.particle.ParticleEffect.HAPPY_VILLAGER.sendToPlayers(Bukkit.getOnlinePlayers(),p.getLocation(), 0,1,0,0.75f,30);
+            de.inventivegames.particle.ParticleEffect.FIREWORKS_SPARK.sendToPlayers(Bukkit.getOnlinePlayers(),p.getLocation(), 0,1,0,0.75f,30);
+
             p.playSound(p.getLocation(), Sound.CHEST_OPEN, 1.0f, 2.0f);
             p.playSound(p.getLocation(), Sound.LEVEL_UP, 1.0f, 1.2f);
         }

@@ -1,9 +1,9 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
 import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.rit.sucy.CustomEnchantment;
+import lombok.SneakyThrows;
 import me.ifamasssxd.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.cmds.CommandEnchDust;
@@ -32,6 +32,7 @@ public class DivineImmolation extends CustomEnchantment {
         Bukkit.getPluginManager().registerEvents(new DivineImmolationListener(), (Plugin) Enchantments.getInstance());
     }
 
+    @SneakyThrows
     public void applyEffect(LivingEntity player, LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
         if (!CommandEnchDust.soulEnabled)
             return;
@@ -70,8 +71,8 @@ public class DivineImmolation extends CustomEnchantment {
                         continue;
                     LivingEntity le = (LivingEntity) ent;
                     le.damage(damage);
-                    ParticleEffect.playEffect(ParticleEffect.FLAME, le.getEyeLocation(), 0.15F, 30);
-                    ParticleEffect.playEffect(ParticleEffect.LAVA, le.getEyeLocation(), 0.5F, 20);
+                    de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(),le.getEyeLocation(), 0,0,0,0.3f,20);
+                    de.inventivegames.particle.ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(),le.getEyeLocation(), 0,0,0,0.3f,20);
                     le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, (int) (damage * 10.0D), 1));
                     if (le instanceof Player) {
                         ((Player) le).playSound(le.getLocation(), Sound.FIREWORK_BLAST, 1.0F, 0.3F);
