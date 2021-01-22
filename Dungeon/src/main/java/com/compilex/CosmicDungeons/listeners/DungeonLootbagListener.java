@@ -18,6 +18,7 @@ import com.cosmicpvp.cosmicutils.utils.*;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import me.ifamasssxd.cosmicconquest.CosmicConquestAPI;
+import me.ifamasssxd.cosmicdisguises.managers.CosmicDisguiseAPI;
 import me.ifamasssxd.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.arkhamnetwork.Arkkit.patches.EquipmentLootboxes;
@@ -196,10 +197,9 @@ implements Listener {
             if (Math.random() <= 0.05) {
                 loot.add(CosmicArmorSetsAPI.createHeroicWeapon(((Random)random).nextBoolean() ? HeroicWeaponType.SWORD : HeroicWeaponType.AXE));
             }
-            // todo: some disguise shit on compile
-//            if (Math.random() <= 0.05) {
-//                loot.add(CosmicDisguiseAPI.createRedeemableDisguise("CHICKEN"));
-//            }
+            if (Math.random() <= 0.05) {
+                loot.add(CosmicDisguiseAPI.createRedeemableDisguise("CHICKEN"));
+            }
             if (ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin().isRunning() && Math.random() <= 0.25) {
                 loot.add(((EquipmentLootboxes)ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin()).createHeroicGKitGenerator(true));
             }

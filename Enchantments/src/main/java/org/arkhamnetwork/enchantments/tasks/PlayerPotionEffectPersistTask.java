@@ -35,10 +35,6 @@ public class PlayerPotionEffectPersistTask implements Runnable {
                 if (p.hasMetadata("lastDuelEnd") && MinecraftServerUtils.getCurrentServerTick() < p.getMetadata("lastDuelEnd").get(0).asLong() + 80L) {
                     continue;
                 }
-                // TODO: ADD STAff FREEZE HERE
-                /*if (this.statusPlusEnabled && StaffPlus.get().freeze.isActive(p.getName())) {
-                    continue;
-                }*/
                 final boolean worldChange = p.hasMetadata("lastWorldChange") && System.currentTimeMillis() - p.getMetadata("lastWorldChange").get(0).asLong() < 2500L;
                 final boolean recentDeath = p.hasMetadata("lastPlayerDeath") && System.currentTimeMillis() - p.getMetadata("lastPlayerDeath").get(0).asLong() < 1000L;
                 if (worldChange || recentDeath) {

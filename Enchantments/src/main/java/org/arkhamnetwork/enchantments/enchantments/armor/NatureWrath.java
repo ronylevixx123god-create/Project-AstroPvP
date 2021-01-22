@@ -137,10 +137,6 @@ public class NatureWrath extends CustomEnchantment {
                 if (GeneralUtil.isAtleastTruce(playerWhoProced, pEnt) || pEnt.hasMetadata("natureWrathTask") || pEnt.getGameMode() != GameMode.SURVIVAL || this.ess.getUser(pEnt).isGodModeEnabled()) {
                     continue;
                 }
-                // TODO: ADD STAFF FREEZE
-                /*if (StaffPlus.get().mode.isActive(pEnt.getName())) {
-                    continue;
-                }*/
                 final CustomEnchantProcOnEntityEvent event = new CustomEnchantProcOnEntityEvent(playerWhoProced, pEnt, e, this, level);
                 boolean freeze = true;
                 if (!event.callEvent()) {
