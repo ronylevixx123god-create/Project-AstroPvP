@@ -30,6 +30,7 @@
  */
 package com.massivecraft.factions.listeners;
 
+import com.compilex.CompilexPermissions.CompilexPermissions;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.earth2me.essentials.User;
 import com.earth2me.essentials.utils.DateUtil;
@@ -47,6 +48,7 @@ import org.arkhamnetwork.Arkkit.libs.SeasonalWin;
 import org.arkhamnetwork.Arkkit.patches.SeasonalPrefixes;
 import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatUtils;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
+import org.arkhamnetwork.permissions.ArkhamPermissions;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -88,11 +90,25 @@ public class FactionsChatListener implements Listener {
             String msg = event.getMessage();
             FPlayer me = FPlayers.i.get(talkingPlayer.getUniqueId().toString());
             ChatMode chat = me.getChatMode();
+            String FORMAT = "&8[[TITLE]&8] [PREFIX][NAME]&f: [COLOR][MESSAGE]";
+
+            String title = "TEMPTITLE";
+            String pg = "";
+            if (new File("plugins/CompilexPermissions.jar").exists()) {
+                pg = CompilexPermissions.get().getPermissionManager().getUser(talkingPlayer.getUniqueId()).getPrefix();
+            } else if (new File("plugins/ArkhamPermissions.jar").exists()) {
+                pg = ArkhamPermissions.getInstance().getPermissionManager().getUser(talkingPlayer.getUniqueId()).getPrefix();
+            }
+            ChatColor cc = ChatColor.WHITE;
+            msg = ChatColor.translateAlternateColorCodes('&', FORMAT.replace("[PREFIX]", pg).replace("[TITLE]", title == null ? "" : (CharSequence) title).replace("[NAME]", talkingPlayer.getName()).replace("[COLOR]", cc == null ? "" : cc.toString())).trim();
+            msg = msg.replace(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_GRAY + "]", "");
+            msg = msg.replace(ChatColor.DARK_GRAY + "[" + ChatColor.RED + "P" + ChatColor.DARK_GRAY + "]", "");
+            msg = msg.replaceAll("  ", " ");
+
             if (chat != ChatMode.PUBLIC && this.p.handleCommand(talkingPlayer, msg, false, true)) {
                 if (Conf.logPlayerCommands) {
                     Bukkit.getLogger().log(Level.INFO, "[PLAYER_COMMAND] " + talkingPlayer.getName() + ": " + msg);
                 }
-
                 event.setCancelled(true);
             } else {
                 String upper = msg.toUpperCase();
@@ -112,9 +128,10 @@ public class FactionsChatListener implements Listener {
                             talkingPlayer.sendMessage(String.format(Conf.factionChatFormat, nameAndTitle, playerName, ChatUtils.getFilteredMessage(msg, talkingPlayer, true)));
                         } else {
 
+                            String finalMsg2 = msg;
                             myFaction.getFPlayersWhereOnline(true).forEach(fpl -> {
                                 if (fpl.isCachedAsOnline()) {
-                                    fpl.getPlayer().sendMessage(String.format(Conf.factionChatFormat, nameAndTitle, playerName, ChatUtils.getFilteredMessage(msg, fpl.getPlayer(), true)));
+                                    fpl.getPlayer().sendMessage(String.format(Conf.factionChatFormat, nameAndTitle, playerName, ChatUtils.getFilteredMessage(finalMsg2, fpl.getPlayer(), true)));
                                 }
                             });
                         }
@@ -171,8 +188,9 @@ public class FactionsChatListener implements Listener {
                             if (silentMuted) {
                                 talkingPlayer.sendMessage(String.format(Conf.allianceChatFormat, ChatColor.stripColor(me.getNameAndTagAsync()), ChatUtils.getFilteredMessage(msg, talkingPlayer, true)));
                             } else {
+                                String finalMsg1 = msg;
                                 myFaction.getFPlayersWhereOnline(true).forEach(fpl -> {
-                                    fpl.getPlayer().sendMessage(String.format(Conf.allianceChatFormat, ChatColor.stripColor(me.getNameAndTagAsync()), ChatUtils.getFilteredMessage(msg, fpl.getPlayer(), true)));
+                                    fpl.getPlayer().sendMessage(String.format(Conf.allianceChatFormat, ChatColor.stripColor(me.getNameAndTagAsync()), ChatUtils.getFilteredMessage(finalMsg1, fpl.getPlayer(), true)));
                                 });
                             }
 
@@ -196,8 +214,9 @@ public class FactionsChatListener implements Listener {
                             if (silentMuted) {
                                 talkingPlayer.sendMessage(msg);
                             } else {
+                                String finalMsg = msg;
                                 myFaction.getFPlayersWhereOnline(true).forEach(fpl -> {
-                                    fpl.getPlayer().sendMessage(String.format(Conf.truceChatFormat, ChatColor.stripColor(me.getNameAndTagAsync()), ChatUtils.getFilteredMessage(msg, fpl.getPlayer(), true)));
+                                    fpl.getPlayer().sendMessage(String.format(Conf.truceChatFormat, ChatColor.stripColor(me.getNameAndTagAsync()), ChatUtils.getFilteredMessage(finalMsg, fpl.getPlayer(), true)));
                                 });
                                 var10 = FPlayers.i.getOnline().iterator();
 
