@@ -43,7 +43,6 @@ import com.compilex.CosmicDungeons.DungeonsRewardsAPI;
 import com.compilex.CosmicDungeons.utils.WorldGuardUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import me.ifamasssxd.killtracker.KillTrackerAPI;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.arkhamnetwork.Arkkit.patches.EnderpearlCooldown;
 import org.arkhamnetwork.enchantments.enchantments.armor.Phoenix;
 import org.arkhamnetwork.enchantments.util.ArmorUtil;
@@ -229,7 +228,7 @@ implements Listener {
     }
 
     @EventHandler(priority=EventPriority.LOW)
-    public void onPlayerUseYijkiStaff(PlayerInteractEvent e) {
+    public void onPlayerUseYijkiStaff(PlayerInteractEvent e) throws Exception {
         if (e.hasItem() && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && this.isYijkiStaff(e.getItem())) {
             e.setCancelled(true);
             e.setUseItemInHand(Event.Result.DENY);

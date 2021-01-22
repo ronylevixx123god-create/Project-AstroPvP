@@ -42,17 +42,7 @@ import com.compilex.CosmicDungeons.dungeons.libs.DungeonType;
 import com.compilex.CosmicDungeons.items.HolyWaterItem;
 import com.compilex.CosmicDungeons.items.HolyWhitescrollItem;
 import com.compilex.CosmicDungeons.items.PortalProtectionTrinketItem;
-import com.compilex.CosmicDungeons.listeners.DungeonChallengeChestListener;
-import com.compilex.CosmicDungeons.listeners.DungeonInOutListener;
-import com.compilex.CosmicDungeons.listeners.DungeonLootbagListener;
-import com.compilex.CosmicDungeons.listeners.DungeonMasterNPCListener;
-import com.compilex.CosmicDungeons.listeners.DungeonMenuListener;
-import com.compilex.CosmicDungeons.listeners.DungeonPlayerDeathListener;
-import com.compilex.CosmicDungeons.listeners.DungeonPlayerMoveListener;
-import com.compilex.CosmicDungeons.listeners.DungeonPortalCraftListener;
-import com.compilex.CosmicDungeons.listeners.DungeonPortalListener;
-import com.compilex.CosmicDungeons.listeners.DungeonSanityListener;
-import com.compilex.CosmicDungeons.listeners.PlayerJoinQuitListener;
+import com.compilex.CosmicDungeons.listeners.*;
 import com.compilex.CosmicDungeons.listeners.items.HolyWhiteScrollCombatLoggerListener;
 import com.compilex.CosmicDungeons.listeners.items.HolyWhiteScrollListener;
 import com.compilex.CosmicDungeons.listeners.items.SoulItemListener;
@@ -69,32 +59,25 @@ import com.google.common.collect.Lists;
 import com.google.gson.reflect.TypeToken;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
-import java.io.File;
-import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
-
 import fr.neatmonster.nocheatplus.checks.CheckType;
-import fr.neatmonster.nocheatplus.hooks.NCPHook;
 import fr.neatmonster.nocheatplus.hooks.NCPHookManager;
 import lombok.SneakyThrows;
 import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
-import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
+import java.lang.reflect.Type;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class CosmicDungeonsPlugin
 extends JavaPlugin {
