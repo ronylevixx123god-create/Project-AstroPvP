@@ -6,6 +6,7 @@ import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.Relation;
 import com.rit.sucy.CustomEnchantment;
+import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.ArmorUtil;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -32,6 +33,7 @@ public class SmokeBomb extends CustomEnchantment {
         this.interval = 10.0;
     }
 
+    @SneakyThrows
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         if (player instanceof Player) {
             final Player p = (Player) player;
@@ -56,7 +58,8 @@ public class SmokeBomb extends CustomEnchantment {
                         victims.add((LivingEntity) ent);
                     }
                 }
-                ParticleEffect.playEffect(ParticleEffect.CLOUD, p.getLocation().add(0.0, 1.0, 0.0), 1.0f, 75);
+                de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation(), 0f,1f,0f,1f,70);
+
                 p.getWorld().playSound(p.getLocation(), Sound.FIREWORK_TWINKLE2, 2.0f, 0.75f);
                 for (final LivingEntity victim : victims) {
                     if (victim instanceof Player) {

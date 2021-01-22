@@ -1,8 +1,8 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
+import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.bukkit.entity.LivingEntity;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -19,15 +19,17 @@ final class RegenerationTask extends BukkitRunnable {
         this.healValue = healAmount;
     }
 
+    @SneakyThrows
     public void run() {
         this.healPlayer(this.p, this.healValue);
     }
 
-    private void healPlayer(final Player p, final double amount) {
+    private void healPlayer(final Player p, final double amount) throws Exception {
         if (p.getHealth() == p.getMaxHealth() || p.isDead()) {
             return;
         }
         GeneralUtil.healPlayer(p, amount);
-        ParticleEffect.playEffect(ParticleEffect.SPELL, this.p.getEyeLocation().add(0.0, 0.5, 0.0), 0.04f, 15);
+        de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), this.p.getEyeLocation(), 0f, 1f,0f, 0.4f, 14);
+
     }
 }

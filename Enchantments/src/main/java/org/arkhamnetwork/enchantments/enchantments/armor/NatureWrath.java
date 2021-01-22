@@ -2,11 +2,11 @@ package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.earth2me.essentials.Essentials;
 import com.rit.sucy.CustomEnchantment;
+import lombok.SneakyThrows;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.factionupgrades.FactionUpgradeAPI;
@@ -54,6 +54,7 @@ public class NatureWrath extends CustomEnchantment {
         Bukkit.getPluginManager().registerEvents((Listener) new NatureWrathListener(), (Plugin) Enchantments.getInstance());
     }
 
+    @SneakyThrows
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         if (!CommandEnchDust.soulEnabled) {
             return;
@@ -103,14 +104,15 @@ public class NatureWrath extends CustomEnchantment {
                 p.sendMessage("");
                 this.procNaturesWrath(p, attacker, level, e, 1.0);
             } else {
-                ParticleEffect.playEffect(ParticleEffect.LAVA, p.getEyeLocation(), 0.4f, 20);
+                de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 0,1,0,0.4f,20);
+
                 p.playSound(p.getLocation(), Sound.ITEM_BREAK, 0.7f, 0.4f);
                 p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "** OUT OF SOULS **");
             }
         }
     }
 
-    public int procNaturesWrath(final Player playerWhoProced, final LivingEntity affected, final int level, final EntityDamageEvent e, final double durationModifier) {
+    public int procNaturesWrath(final Player playerWhoProced, final LivingEntity affected, final int level, final EntityDamageEvent e, final double durationModifier) throws Exception {
         final int radius = 8 + level * 5;
         final List<String> affectedPlayers = new ArrayList<String>();
         final boolean KOTH = playerWhoProced.getWorld().getName().equals("world_koth");
@@ -126,8 +128,8 @@ public class NatureWrath extends CustomEnchantment {
             }
             if (ent instanceof LivingEntity && !(ent instanceof Player) && !ent.hasMetadata("do_not_clear")) {
                 ent.getWorld().strikeLightningEffect(ent.getLocation());
-                ParticleEffect.playEffect(ParticleEffect.LARGE_EXPLODE, ent.getLocation().add(0.0, 1.0, 0.0), 0.6f, 10);
-                ParticleEffect.playEffect(ParticleEffect.SPELL, ent.getLocation().add(0.0, 1.0, 0.0), 0.4f, 35);
+                de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), ent.getLocation(), 0f, 1f,0f, 0.6f, 10);
+                de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), ent.getLocation(), 0f, 1f,0f, 0.6f, 30);
                 ent.remove();
             } else {
                 if (!(ent instanceof Player)) {

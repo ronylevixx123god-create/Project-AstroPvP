@@ -140,6 +140,7 @@ implements Listener {
                 p.sendMessage(CC.RedB + "(!) " + CC.Red + "Your inventory was full and some Lootbag items have been dropped on the ground!");
             }
             ParticleEffect.playEffect(ParticleEffect.CLOUD, (Location)p.getLocation().add(0.0, 1.0, 0.0), (float)0.6f, 50);
+
             p.playSound(p.getLocation(), Sound.CHEST_OPEN, 1.0f, 0.3f);
             Bukkit.getLogger().info(new StringBuilder().append("[CosmicDungeons] Giving ").append(p.getName()).append(loot.size()).append(" items: ").append(Arrays.toString(loot.toArray(new Object[0]))).append(" from lootbag: ").append(bagType.name()).toString());
             p.updateInventory();

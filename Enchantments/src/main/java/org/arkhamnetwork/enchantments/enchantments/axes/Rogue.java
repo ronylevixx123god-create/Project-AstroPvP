@@ -2,10 +2,12 @@ package org.arkhamnetwork.enchantments.enchantments.axes;
 
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
+import lombok.SneakyThrows;
 import me.ifamasssxd.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.enchantments.cmds.CommandEnchDust;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.arkhamnetwork.enchantments.util.ParticleEffect;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -26,6 +28,7 @@ public class Rogue extends CustomEnchantment {
         this.interval = 10.0;
     }
 
+    @SneakyThrows
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
         if (!CommandEnchDust.soulEnabled) {
             return;
@@ -48,7 +51,8 @@ public class Rogue extends CustomEnchantment {
                 return;
             }
             e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (multi * 0.85));
-            ParticleEffect.playEffect(ParticleEffect.CRIT, player.getLocation().add(0.0, 1.0, 0.0), 0.4f, 12);
+            de.inventivegames.particle.ParticleEffect.CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 0,1,0,0.4f,12);
+
             ((Player) player).sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&l** ROGUE &7[" + new DecimalFormat("##.##").format(multi) + "x] &c&l-" + soulCost + " SOULS **"));
             KillTrackerAPI.removeSoulsFromGems(p, soulCost);
             if (playerHit instanceof Player) {

@@ -27,19 +27,12 @@ package com.compilex.CosmicDungeons.utils;
 
 import com.compilex.CosmicDungeons.CosmicDungeonsPlugin;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Ghast;
-import org.bukkit.entity.IronGolem;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.PigZombie;
-import org.bukkit.entity.Skeleton;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -47,6 +40,9 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class MonsterUtils {
     public static LivingEntity spawnOutpostPirate(Location location) {
@@ -75,6 +71,7 @@ public class MonsterUtils {
         ent.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0));
         ent.setMetadata("destroyedSpacePirate", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get_(), (Object)true));
         ParticleEffect.playEffect((ParticleEffect)ParticleEffect.WITCH_MAGIC, (Location)ent.getLocation().add(0.0, 1.0, 0.0), (float)0.15f, (int)25);
+
         return ent;
     }
 

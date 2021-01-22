@@ -64,6 +64,7 @@ import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.struct.FactionPermission;
 import com.rit.sucy.EnchantmentAPI;
 import de.dustplanet.util.SilkUtil;
+import lombok.SneakyThrows;
 import net.coreprotect.CoreProtect;
 import net.coreprotect.CoreProtectAPI;
 import org.arkhamnetwork.Arkkit.Arkkit;
@@ -225,6 +226,7 @@ implements Listener {
         }
     }
 
+    @SneakyThrows
     @EventHandler(priority=EventPriority.LOW, ignoreCancelled=true)
     public void onCustomCreeperExplode(EntityExplodeEvent e) throws NoSuchFieldException, IllegalAccessException {
         if (e.getEntity() == null || !e.getEntity().hasMetadata("customCreeperType")) {
@@ -264,7 +266,7 @@ implements Listener {
                     while (spawnerCount-- > 0) {
                         b.getWorld().dropItem(b.getLocation(), is);
                     }
-                    ParticleEffect.playEffect(ParticleEffect.INSTANT_SPELL, b.getLocation(), 0.6f, 20);
+                    de.inventivegames.particle.ParticleEffect.INSTANT_SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), b.getLocation(), 0f,0.5f,0f,0.6f,20);
                 }
             } else if (egg_type == CreeperTypes.Tactical) {
                 for (Block b : e.blockList()) {
@@ -285,7 +287,7 @@ implements Listener {
                     while (spawnerCount-- > 0) {
                         b.getWorld().dropItem(b.getLocation(), is);
                     }
-                    ParticleEffect.playEffect(ParticleEffect.INSTANT_SPELL, b.getLocation(), 0.6f, 20);
+                    de.inventivegames.particle.ParticleEffect.INSTANT_SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), b.getLocation(), 0f,0.5f,0f,0.6f,20);
                 }
                 e.setCancelled(true);
                 e.setYield(0.0f);
@@ -307,7 +309,7 @@ implements Listener {
                     while (spawnerCount-- > 0) {
                         b.getWorld().dropItem(b.getLocation(), is);
                     }
-                    ParticleEffect.playEffect(ParticleEffect.INSTANT_SPELL, b.getLocation(), 0.6f, 20);
+                    de.inventivegames.particle.ParticleEffect.INSTANT_SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), b.getLocation(), 0f,0.5f,0f,0.6f,20);
                 }
                 e.setCancelled(true);
                 e.setYield(0.0f);

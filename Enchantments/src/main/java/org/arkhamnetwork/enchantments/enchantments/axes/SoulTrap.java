@@ -4,6 +4,7 @@ import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
+import lombok.SneakyThrows;
 import me.ifamasssxd.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.cmds.CommandEnchDust;
@@ -27,6 +28,7 @@ public class SoulTrap extends CustomEnchantment {
         this.interval = 10.0;
     }
 
+    @SneakyThrows
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
         if (!CommandEnchDust.soulEnabled) {
             return;
@@ -75,8 +77,9 @@ public class SoulTrap extends CustomEnchantment {
                 KillTrackerAPI.toggleGodMode(pHit);
             }
             pHit.playSound(pHit.getLocation(), Sound.ENDERMAN_SCREAM, 1.0f, 0.3f);
-            ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, pHit.getLocation().add(0.0, 1.0, 0.0), 0.7f, 60);
-            ParticleEffect.playEffect(ParticleEffect.SPELL, pHit.getLocation().add(0.0, 1.0, 0.0), 0.4f, 25);
+            de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), pHit.getLocation(), 0f,0.5f,0f,0.4f,25);
+            de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), pHit.getLocation(), 0f,0.5f,0f,0.4f,25);
+
         }
     }
 }

@@ -110,7 +110,7 @@ public class MonsterUtils {
         return le;
     }
 
-    public static LivingEntity spawnMonster(Location l) {
+    public static LivingEntity spawnMonster(Location l) throws Exception {
         EntityType et = null;
         double rand = Math.random();
         if (rand <= 0.7) {
@@ -140,7 +140,8 @@ public class MonsterUtils {
         le.getEquipment().setBoots(new ItemStack(new Random().nextBoolean() ? Material.IRON_BOOTS : Material.DIAMOND_BOOTS));
         le.setCanPickupItems(false);
         le.setMetadata("vanillaOutpostMonster", new FixedMetadataValue(CosmicKOTHPlugin.get_(), true));
-        ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, le.getLocation().add(0.0, 1.0, 0.0), 0.15f, 25);
+        de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), le.getLocation(), 0,1,0,0.15f,25);
+
         return le;
     }
 

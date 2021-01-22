@@ -1,10 +1,11 @@
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import com.rit.sucy.CustomEnchantment;
+import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -40,6 +41,7 @@ public class Bleed extends CustomEnchantment {
         }
     }
 
+    @SneakyThrows
     public void applyEffect(final LivingEntity user, final LivingEntity target, final int enchantLevel, final EntityDamageByEntityEvent event) {
         if (!event.isCancelled() && event.getDamage(EntityDamageEvent.DamageModifier.BASE) > 0.0 && user instanceof Player) {
             final double bleedChance = 0.08 * enchantLevel + 0.4;
@@ -53,7 +55,7 @@ public class Bleed extends CustomEnchantment {
         return 20;
     }
 
-    private void addBleedStack(final LivingEntity leDamager, final LivingEntity le) {
+    private void addBleedStack(final LivingEntity leDamager, final LivingEntity le) throws Exception {
         le.setMetadata("bleedStack", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) (getBleedStack(le) + 1)));
         final int bleedStack = getBleedStack(le) / 2;
         if (le instanceof Player) {
@@ -76,7 +78,8 @@ public class Bleed extends CustomEnchantment {
                 }
                 final double amountToHeal = Math.max(2.0, bleedStack * 0.05 * bloodLustLevel);
                 GeneralUtil.healPlayer((LivingEntity) pEnt, amountToHeal);
-                ParticleEffect.playEffect(ParticleEffect.DRIP_LAVA, pEnt.getLocation(), 0.075f, 10);
+                de.inventivegames.particle.ParticleEffect.DRIP_LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), pEnt.getLocation(), 0f,1f,0f,0.075f,10);
+
                 pEnt.playSound(pEnt.getLocation(), Sound.EAT, 0.4f, 0.6f);
             }
         } else {

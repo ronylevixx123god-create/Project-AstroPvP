@@ -38,6 +38,10 @@
             <id>everything</id>
             <url>http://repo.citizensnpcs.co/</url>
         </repository>
+        <repository>
+            <id>inventive-repo</id>
+            <url>https://repo.inventivetalent.org/content/groups/public/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -248,6 +252,11 @@
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/Citizens.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>org.inventivetalent</groupId>
+            <artifactId>particleapi</artifactId>
+            <version>2.1.1</version>
         </dependency>
     </dependencies>
 

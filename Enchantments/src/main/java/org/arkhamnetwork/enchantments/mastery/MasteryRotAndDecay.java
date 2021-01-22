@@ -118,8 +118,7 @@ public class MasteryRotAndDecay extends MasteryCustomEnchantment {
                     Player pSummoner = Bukkit.getPlayer(summoner);
                     if (pSummoner == null || !summoner.equalsIgnoreCase(damaged.getName()) || GeneralUtil.isAlly(damaged, pSummoner)) {
                         ent.remove();
-                        ParticleEffect.sendToLocation(ParticleEffect.LARGE_SMOKE, ent.getLocation().add(0.0D, 1.0D, 0.0D), 0.3F, 0.3F, 0.3F, 0.01F, 10);
-                        ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, ent.getLocation().add(0.0D, 1.0D, 0.0D), 0.7F, 12);
+                        de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), ent.getLocation(), 0f,0.5f,0f,0.7f,10);
                         cleanedUp++;
                     }
                 }

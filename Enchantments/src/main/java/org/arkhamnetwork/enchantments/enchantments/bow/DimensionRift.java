@@ -6,6 +6,7 @@ import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import com.rit.sucy.CustomEnchantment;
+import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -39,6 +40,7 @@ public class DimensionRift extends CustomEnchantment {
         this.interval = 4.0;
     }
 
+    @SneakyThrows
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
         if (Math.random() > level * 0.05) {
             return;
@@ -68,14 +70,16 @@ public class DimensionRift extends CustomEnchantment {
                 if ((m.isBlock() || m == Material.AIR) && !(l.getBlock().getState() instanceof Chest) && m != Material.SOUL_SAND && m != Material.WEB && m != Material.BEDROCK && m != Material.ENDER_PORTAL && m != Material.PORTAL) {
                     blocks.put(l.clone(), m);
                     l.getBlock().setType(Material.SOUL_SAND);
-                    ParticleEffect.playEffect(ParticleEffect.PORTAL, l.clone().add(0.0, 1.0, 0.0), 0.7f, 10);
+                    de.inventivegames.particle.ParticleEffect.DRIP_LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), l.getBlock().getLocation(), 0f,1f,0f,0.75f,10);
+
                     if (Math.random() < level * 0.1) {
                         final Location lAbove = l.getBlock().getLocation().add(0.0, 1.0, 0.0);
                         final Material mAbove = lAbove.getBlock().getType();
                         if ((mAbove.isBlock() || mAbove == Material.AIR) && !(lAbove.getBlock().getState() instanceof Chest) && mAbove != Material.SOUL_SAND && mAbove != Material.WEB && mAbove != Material.BEDROCK && mAbove != Material.ENDER_PORTAL && mAbove != Material.PORTAL) {
                             blocks.put(lAbove.clone(), mAbove);
                             lAbove.getBlock().setType(Material.WEB);
-                            ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, lAbove.clone().add(0.0, 0.5, 0.0), 0.7f, 10);
+                            de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), lAbove.clone(), 0f,0.5f,0f,0.7f,10);
+
                         }
                     }
                 }
@@ -110,7 +114,10 @@ public class DimensionRift extends CustomEnchantment {
         }, (long) (level * 15 + 40 + 1));
     }
 
+    @SneakyThrows
     public void applyProjectileEffect(final LivingEntity player, final int level, final ProjectileLaunchEvent e) {
         ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, e.getEntity().getLocation(), 0.7f, 16);
+        de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), e.getEntity().getLocation(), 0f,0.5f,0f,0.7f,16);
+
     }
 }
