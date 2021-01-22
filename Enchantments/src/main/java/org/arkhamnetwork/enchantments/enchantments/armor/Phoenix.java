@@ -105,8 +105,9 @@ public class Phoenix extends CustomEnchantment {
                     }
                 }
                 Location loc = player.getLocation();
-                ParticleEffect.sendToLocation(ParticleEffect.FLAME, loc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.75F, 80);
-                ParticleEffect.sendToLocation(ParticleEffect.LAVA, loc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.7F, 20);
+                de.inventivegames.particle.ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(),  loc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.75F, 80);
+                de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(),  loc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.75F, 80);
+
                 return true;
             }
             if (!player.hasMetadata("outOfSoulsMessage") || ((MetadataValue) player.getMetadata("outOfSoulsMessage").get(0)).asLong() < System.currentTimeMillis()) {

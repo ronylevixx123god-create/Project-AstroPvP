@@ -33,7 +33,7 @@ public class EnchantmentOrbListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onEnchantmentOrbApply(final InventoryClickEvent e) {
+    public void onEnchantmentOrbApply(final InventoryClickEvent e) throws Exception {
         if (!e.getInventory().getTitle().equals("container.crafting")) {
             return;
         }
@@ -87,13 +87,15 @@ public class EnchantmentOrbListener implements Listener {
                     pl.playSound(pl.getLocation(), Sound.LEVEL_UP, 1.0f, 0.75f);
                     pl.playEffect(EntityEffect.WOLF_HEARTS);
                     final Location l = pl.getLocation();
-                    ParticleEffect.sendToLocation(ParticleEffect.SPELL, l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
-                    ParticleEffect.sendToLocation(ParticleEffect.MAGIC_CRIT, l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.65f, 30);
+                    de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(),  l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
+                    de.inventivegames.particle.ParticleEffect.MAGIC_CRIT.sendToPlayers(Bukkit.getOnlinePlayers(),  l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.65f, 30);
+
                 } else {
                     pl.playSound(pl.getLocation(), Sound.LAVA_POP, 1.0f, 0.75f);
                     pl.playEffect(EntityEffect.WOLF_HEARTS);
                     final Location l = pl.getLocation();
-                    ParticleEffect.sendToLocation(ParticleEffect.LAVA, l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.35f, 20);
+                    de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(),  l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.35f, 20);
+
                 }
                 pl.updateInventory();
                 Bukkit.getPluginManager().callEvent((Event) new CustomCosmicPlayerEvent(pl, "ENCHANT_ORB", new Object[]{success, to_enchant}));

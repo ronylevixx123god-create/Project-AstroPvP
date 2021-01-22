@@ -47,7 +47,7 @@ public abstract class InventoryPet {
 
    public abstract int getCooldown(int var1);
 
-   public abstract boolean onPetItemInteract(Player var1, ItemStack var2, InventoryPetItem var3, PlayerInteractEvent var4) throws PetException;
+   public abstract boolean onPetItemInteract(Player var1, ItemStack var2, InventoryPetItem var3, PlayerInteractEvent var4) throws Exception;
 
    public abstract boolean onTickInHotBar(Player var1, int var2, InventoryPetItem var3);
 }

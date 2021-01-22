@@ -1,6 +1,5 @@
 package org.arkhamnetwork.enchantments.enchantments.bow;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.arkhamnetwork.enchantments.util.WorldGuardUtils;
 import org.bukkit.Bukkit;
@@ -21,7 +20,7 @@ final class InfernalListener implements Listener {
     }
 
     @EventHandler
-    public void onProjectileHit(final ProjectileHitEvent e) {
+    public void onProjectileHit(final ProjectileHitEvent e) throws Exception {
         if (e.getEntity().hasMetadata(Infernal.infernalEncahntmentMetadata)) {
             final Location loc = e.getEntity().getLocation();
             if (WorldGuardUtils.isPvPDisabled(loc)) {
@@ -49,7 +48,7 @@ final class InfernalListener implements Listener {
                     ent.setFireTicks(radius * 20);
                 }
             }
-            ParticleEffect.sendToLocation(ParticleEffect.FLAME, loc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 20);
+            de.inventivegames.particle.ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(), loc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.20f, 10);
         }
     }
 

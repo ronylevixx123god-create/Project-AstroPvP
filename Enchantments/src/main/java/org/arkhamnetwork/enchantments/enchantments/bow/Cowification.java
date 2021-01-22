@@ -2,6 +2,7 @@ package org.arkhamnetwork.enchantments.enchantments.bow;
 
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
+import lombok.SneakyThrows;
 import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.Bukkit;
@@ -34,6 +35,7 @@ public class Cowification extends CustomEnchantment {
         Bukkit.getPluginManager().registerEvents((Listener) new CowificationListener(), (Plugin) Enchantments.getInstance());
     }
 
+    @SneakyThrows
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
         if (Math.random() < 0.1 * level) {
             playerHit.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 20 * level, 1));
@@ -41,7 +43,8 @@ public class Cowification extends CustomEnchantment {
                 ((Player) playerHit).playSound(playerHit.getLocation(), Sound.COW_IDLE, 1.0f, 0.75f);
             }
         }
-        ParticleEffect.sendToLocation(ParticleEffect.LARGE_EXPLODE, playerHit.getEyeLocation(), 0.0f, 0.0f, 0.0f, 0.25f, 1);
+        de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), playerHit.getEyeLocation(), 0.0f, 0.0f, 0.0f, 0.25f, 1);
+
     }
 
     public void applyProjectileEffect(final LivingEntity player, final int level, final ProjectileLaunchEvent e) {

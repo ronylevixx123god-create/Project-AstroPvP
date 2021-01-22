@@ -89,7 +89,7 @@ public class HeroicTeleportation extends HeroicCustomEnchantment {
         }
 
         @EventHandler
-        public void onPlayerDamageByArrow(final EntityDamageByEntityEvent event) {
+        public void onPlayerDamageByArrow(final EntityDamageByEntityEvent event) throws Exception {
             if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player && ((Arrow) event.getDamager()).getShooter() instanceof Player) {
                 final List<MetadataValue> meta = (List<MetadataValue>) event.getDamager().getMetadata("bi_teleport_arrow");
                 if (meta == null || meta.isEmpty()) {
@@ -108,8 +108,8 @@ public class HeroicTeleportation extends HeroicCustomEnchantment {
                         return;
                     }
                     if (Math.random() <= chanceToProc) {
-                        ParticleEffect.sendToLocation(ParticleEffect.WITCH_MAGIC, playerHit.getEyeLocation(), (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 35);
-                        ParticleEffect.sendToLocation(ParticleEffect.FLAME, playerHit.getEyeLocation(), (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.1f, 10);
+                        de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), playerHit.getEyeLocation(), (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 10);
+                        de.inventivegames.particle.ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(), playerHit.getEyeLocation(), (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.1f, 10);
                         ((HeroicTeleportation) this.customEnchant).grapplePlayer(playerHit, shooter, level);
                         event.setCancelled(true);
                         event.setDamage(0.0);
@@ -141,8 +141,8 @@ public class HeroicTeleportation extends HeroicCustomEnchantment {
                     shooter.removeMetadata("ignore_combat_tag", (Plugin) Enchantments.getInstance());
                     shooter.playSound(shooter.getLocation(), Sound.ORB_PICKUP, 0.75f, 0.341f);
                     final Location loc = playerHit.getLocation().add(0.0, 0.5, 0.0);
-                    ParticleEffect.sendToLocation(ParticleEffect.WITCH_MAGIC, loc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 35);
-                    ParticleEffect.sendToLocation(ParticleEffect.FLAME, loc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.1f, 10);
+                    de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), playerHit.getEyeLocation(), (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 10);
+                    de.inventivegames.particle.ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(), playerHit.getEyeLocation(), (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.1f, 10);
                 }
             }
         }

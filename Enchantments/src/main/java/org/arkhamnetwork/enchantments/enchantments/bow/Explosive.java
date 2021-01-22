@@ -1,7 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.bow;
 
 import com.rit.sucy.CustomEnchantment;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
+import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -32,12 +32,13 @@ public class Explosive extends CustomEnchantment {
         Bukkit.getPluginManager().registerEvents((Listener) new ExplosiveListener(), (Plugin) Enchantments.getInstance());
     }
 
+    @SneakyThrows
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
         if (!(playerHit instanceof Player)) {
             return;
         }
         playerHit.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 20 * level, 1));
-        ParticleEffect.sendToLocation(ParticleEffect.LARGE_EXPLODE, playerHit.getEyeLocation(), 0.0f, 0.0f, 0.0f, 0.25f, 1);
+        de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), playerHit.getLocation(),0.0f, 0.0f, 0.0f, 0.25f, 1);
     }
 
     public void applyProjectileEffect(final LivingEntity player, final int level, final ProjectileLaunchEvent e) {

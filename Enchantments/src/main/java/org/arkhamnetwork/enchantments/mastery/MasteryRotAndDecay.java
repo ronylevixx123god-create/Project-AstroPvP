@@ -12,7 +12,6 @@ import lombok.SneakyThrows;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
 import net.minecraft.server.v1_8_R3.EntityTrackerEntry;
 import net.minecraft.server.v1_8_R3.WorldServer;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.MasteryCustomEnchantment;
 import org.arkhamnetwork.enchantments.events.CustomEnchantProcOnEntityEvent;
@@ -256,7 +255,7 @@ public class MasteryRotAndDecay extends MasteryCustomEnchantment {
         }
 
         @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-        public void onEntityDamage(EntityDamageByEntityEvent event) {
+        public void onEntityDamage(EntityDamageByEntityEvent event) throws Exception {
             if (event.getEntity() instanceof Player && event.getDamager() instanceof Zombie &&
                     event.getDamager().hasMetadata("rotAndDecay")) {
                 String who = ((MetadataValue) event.getDamager().getMetadata("rotAndDecay").get(0)).asString();
@@ -264,7 +263,8 @@ public class MasteryRotAndDecay extends MasteryCustomEnchantment {
                 event.setCancelled(true);
                 event.setDamage(0.0D);
                 event.getDamager().remove();
-                ParticleEffect.sendToLocation(ParticleEffect.LARGE_SMOKE, event.getDamager().getLocation().add(0.0D, 0.75D, 0.0D), 0.5F, 0.5F, 0.5F, 0.01F, 20);
+                de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), event.getDamager().getLocation().add(0.0D, 0.75D, 0.0D), 0.5F, 0.5F, 0.5F, 0.01F, 20);
+
                 if (CosmicArmorSetsAPI.getArmorSet(damagedPlayer) == ArmorSet.MOTHER_OF_YIJKI) {
                     ItemStack handItem = damagedPlayer.getItemInHand();
                     if (handItem != null) {

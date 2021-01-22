@@ -290,18 +290,19 @@ public class MasteryDemonicGateway extends MasteryCustomEnchantment {
         }
 
         @EventHandler
-        public void onEntityExplodePrime(final ExplosionPrimeEvent event) {
+        public void onEntityExplodePrime(final ExplosionPrimeEvent event) throws Exception {
             if (event.getEntity().hasMetadata("crystalSkull") || event.getEntity().hasMetadata("demonicGateway")) {
                 event.setCancelled(true);
-                ParticleEffect.sendToLocation(ParticleEffect.LARGE_EXPLODE, event.getEntity().getLocation(), 0.5f, 0.5f, 0.5f, 0.1f, 10);
+                de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), event.getEntity().getLocation(), 0.5f, 0.5f, 0.5f, 0.1f, 10);
+
             }
         }
 
         @EventHandler
-        public void onEntityExplode(final EntityExplodeEvent event) {
+        public void onEntityExplode(final EntityExplodeEvent event) throws Exception {
             if (event.getEntity().hasMetadata("crystalSkull") || event.getEntity().hasMetadata("demonicGateway")) {
                 event.setCancelled(true);
-                ParticleEffect.sendToLocation(ParticleEffect.LARGE_EXPLODE, event.getEntity().getLocation(), 0.5f, 0.5f, 0.5f, 0.1f, 10);
+                de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), event.getEntity().getLocation(), 0.5f, 0.5f, 0.5f, 0.1f, 10);
             }
         }
 

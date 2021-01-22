@@ -33,21 +33,22 @@ final class ValentinesDayListener
     boolean is_hub = Bukkit.getPluginManager().isPluginEnabled("CosmicHub");
 
     @EventHandler
-    public void onPlayerToggleSneak(PlayerToggleSneakEvent e) {
+    public void onPlayerToggleSneak(PlayerToggleSneakEvent e) throws Exception {
         if (e.getPlayer().hasMetadata("sneak_love") && System.currentTimeMillis() - e.getPlayer().getMetadata("sneak_love").get(0).asLong() <= 2500L) {
             return;
         }
         e.getPlayer().setMetadata("sneak_love", new FixedMetadataValue(Arkkit.get(), System.currentTimeMillis()));
         Player pl = e.getPlayer();
-        ParticleEffect.sendToLocation(ParticleEffect.HEART, pl.getLocation().add(0.0, 1.75, 0.0), 0.0f, 0.0f, 0.0f, 0.001f, 3);
+        de.inventivegames.particle.ParticleEffect.HEART.sendToPlayers(Bukkit.getOnlinePlayers(), pl.getLocation().add(0.0, 1.75, 0.0), 0.0f, 0.0f, 0.0f, 0.001f, 3);
+
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onPlayerJoin(PlayerJoinEvent e) {
+    public void onPlayerJoin(PlayerJoinEvent e) throws Exception {
         if (this.is_hub) {
             Player pl = e.getPlayer();
             Random r = new Random();
-            ParticleEffect.sendToLocation(ParticleEffect.HEART, pl.getLocation().add(0.0, 2.0, 0.0), (float) (r.nextBoolean() ? Math.random() : -Math.random()), (float) (r.nextBoolean() ? Math.random() : -Math.random()), (float) (r.nextBoolean() ? Math.random() : -Math.random()), 0.0025f, 8);
+            de.inventivegames.particle.ParticleEffect.HEART.sendToPlayers(Bukkit.getOnlinePlayers(),  pl.getLocation().add(0.0, 2.0, 0.0), (float) (r.nextBoolean() ? Math.random() : -Math.random()), (float) (r.nextBoolean() ? Math.random() : -Math.random()), (float) (r.nextBoolean() ? Math.random() : -Math.random()), 0.0025f, 8);
         }
     }
 }

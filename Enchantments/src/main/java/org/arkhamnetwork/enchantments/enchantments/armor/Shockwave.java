@@ -6,9 +6,11 @@ import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.Relation;
 import com.rit.sucy.CustomEnchantment;
+import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.arkhamnetwork.enchantments.util.WorldGuardUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
@@ -26,6 +28,7 @@ public class Shockwave extends CustomEnchantment {
         this.interval = 5.0;
     }
 
+    @SneakyThrows
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         if (GeneralUtil.isKOTHWorld(player.getWorld())) {
             return;
@@ -54,11 +57,12 @@ public class Shockwave extends CustomEnchantment {
                         GeneralUtil.pushAwayEntity(player, ent, 1.7000000476837158);
                     }
                     final Location l = ent.getLocation();
-                    ParticleEffect.sendToLocation(ParticleEffect.ENCHANTMENT_TABLE, l, (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, 0.73f, 100);
+                    de.inventivegames.particle.ParticleEffect.ENCHANTMENT_TABLE.sendToPlayers(Bukkit.getOnlinePlayers(), l, (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, 0.73f, 100);
+
                 }
             }
             player.getWorld().playSound(player.getLocation(), Sound.FIREWORK_LAUNCH, 1.0f, 0.1f);
-            ParticleEffect.sendToLocation(ParticleEffect.ENCHANTMENT_TABLE, player.getEyeLocation(), (float) Math.random() * 3.0f, (float) Math.random() * 3.0f, (float) Math.random() * 3.0f, 0.73f, 100);
+            de.inventivegames.particle.ParticleEffect.ENCHANTMENT_TABLE.sendToPlayers(Bukkit.getOnlinePlayers(), player.getEyeLocation(), (float) Math.random() * 3.0f, (float) Math.random() * 3.0f, (float) Math.random() * 3.0f, 0.73f, 100);
         }
     }
 

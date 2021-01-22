@@ -1,6 +1,5 @@
 package org.arkhamnetwork.enchantments.enchantments.bow;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.arkhamnetwork.enchantments.util.WorldGuardUtils;
 import org.bukkit.Bukkit;
@@ -23,7 +22,7 @@ final class ExplosiveListener implements Listener {
     }
 
     @EventHandler
-    public void onProjectileHit(final ProjectileHitEvent e) {
+    public void onProjectileHit(final ProjectileHitEvent e) throws Exception {
         if (e.getEntity().hasMetadata(Explosive.explosiveEncahntmentMetadata)) {
             final Location loc = e.getEntity().getLocation();
             if (e.getEntity().getPassenger() != null) {
@@ -51,13 +50,11 @@ final class ExplosiveListener implements Listener {
                             continue;
                         }
                     }
-                    if (!(ent instanceof LivingEntity)) {
-                        continue;
-                    }
                     ((LivingEntity) ent).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 20 * level, 1));
                 }
             }
-            ParticleEffect.sendToLocation(ParticleEffect.LARGE_EXPLODE, loc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 8);
+            de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(),  loc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 8);
+
         }
     }
 

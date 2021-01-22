@@ -3,6 +3,7 @@ package org.arkhamnetwork.enchantments.enchantments.armor;
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.gmail.nossr50.mcMMO;
 import com.rit.sucy.CustomEnchantment;
+import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
@@ -104,6 +105,7 @@ public class Guardians extends CustomEnchantment {
         return null;
     }
 
+    @SneakyThrows
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         if (e instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent) e).getDamager() instanceof Player) {
             if (player.hasMetadata("guardianEvent") && System.currentTimeMillis() < player.getMetadata("guardianEvent").get(0).asLong()) {
@@ -128,7 +130,8 @@ public class Guardians extends CustomEnchantment {
                 }
                 final Player p = (Player) player;
                 final Location spawnLoc = player.getLocation().add(0.0, 2.0, 0.0);
-                ParticleEffect.sendToLocation(ParticleEffect.SPELL, spawnLoc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.64f, 45);
+                de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), spawnLoc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.64f, 45);
+
                 while (guardian_count > 0) {
                     --guardian_count;
                     if (spawnLoc.getChunk().getEntities().length < 100) {

@@ -48,10 +48,7 @@ import org.arkhamnetwork.Arkkit.patches.EnderpearlCooldown;
 import org.arkhamnetwork.enchantments.enchantments.armor.Phoenix;
 import org.arkhamnetwork.enchantments.util.ArmorUtil;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.EnderPearl;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -186,7 +183,7 @@ implements Listener {
     }
 
     @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
-    public void onPlayerDamaged(EntityDamageEvent e) {
+    public void onPlayerDamaged(EntityDamageEvent e) throws Exception {
         if (e.getEntity() instanceof Player) {
             Player p = (Player)e.getEntity();
             double dmg = e.getDamage(EntityDamageEvent.DamageModifier.BASE);
@@ -219,8 +216,9 @@ implements Listener {
                         ((Player)ent).playSound(p.getLocation(), Sound.ENDERDRAGON_GROWL, 1.0f, 1.25f);
                     }
                     Location loc = p.getLocation();
-                    ParticleEffect.sendToLocation((ParticleEffect)ParticleEffect.FLAME, (Location)loc, (float)((float)Math.random()), (float)((float)Math.random()), (float)((float)Math.random()), (float)0.75f, (int)80);
-                    ParticleEffect.sendToLocation((ParticleEffect)ParticleEffect.LAVA, (Location)loc, (float)((float)Math.random()), (float)((float)Math.random()), (float)((float)Math.random()), (float)0.7f, (int)20);
+                    de.inventivegames.particle.ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(), (Location)loc, (float)((float)Math.random()), (float)((float)Math.random()), (float)((float)Math.random()), (float)0.7f, (int)20);
+                    de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), (Location)loc, (float)((float)Math.random()), (float)((float)Math.random()), (float)((float)Math.random()), (float)0.7f, (int)20);
+
                 }
             }
         }

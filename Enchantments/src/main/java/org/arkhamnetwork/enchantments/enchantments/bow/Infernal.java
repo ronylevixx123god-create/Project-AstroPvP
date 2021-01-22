@@ -1,6 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.bow;
 
 import com.rit.sucy.CustomEnchantment;
+import lombok.SneakyThrows;
 import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.Bukkit;
@@ -32,9 +33,11 @@ public class Infernal extends CustomEnchantment {
         Bukkit.getPluginManager().registerEvents((Listener) new InfernalListener(), (Plugin) Enchantments.getInstance());
     }
 
+    @SneakyThrows
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
         playerHit.setFireTicks(level * 20);
-        ParticleEffect.sendToLocation(ParticleEffect.FLAME, playerHit.getEyeLocation(), (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.25f, 10);
+        de.inventivegames.particle.ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(), playerHit.getEyeLocation(), (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.25f, 10);
+
     }
 
     public void applyProjectileEffect(final LivingEntity player, final int level, final ProjectileLaunchEvent e) {

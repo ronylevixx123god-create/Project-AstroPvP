@@ -2,6 +2,7 @@ package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.rit.sucy.CustomEnchantment;
+import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.ArmorUtil;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -47,6 +48,7 @@ public class EnderShift extends CustomEnchantment {
         return EnderShift.ender_shifters.contains(pl.getUniqueId().toString());
     }
 
+    @SneakyThrows
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         if (player instanceof Player) {
             double dmg = e.getDamage(EntityDamageEvent.DamageModifier.BASE);
@@ -67,12 +69,14 @@ public class EnderShift extends CustomEnchantment {
                 final String uuid = player.getUniqueId().toString();
                 EnderShift.ender_shifters.add(uuid);
                 final Location loc = pl.getLocation();
-                ParticleEffect.sendToLocation(ParticleEffect.WITCH_MAGIC, loc, (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, 1.25f, 100);
+                de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(),  loc, (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, 1.25f, 100);
+
                 Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
+                    @SneakyThrows
                     @Override
                     public void run() {
                         if (Bukkit.getPlayer(String.valueOf(UUID.fromString(uuid))) != null) {
-                            ParticleEffect.sendToLocation(ParticleEffect.WITCH_MAGIC, Bukkit.getPlayer(String.valueOf(UUID.fromString(uuid))).getLocation(), (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, 1.25f, 100);
+                            de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), Bukkit.getPlayer(String.valueOf(UUID.fromString(uuid))).getLocation(), (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, 1.25f, 100);
                         }
                         EnderShift.ender_shifters.remove(uuid);
                     }

@@ -43,7 +43,7 @@ public class EnchantmentBookListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onInventoryClick(final InventoryClickEvent e) {
+    public void onInventoryClick(final InventoryClickEvent e) throws Exception {
         if (!e.getInventory().getTitle().equals("container.crafting")) {
             return;
         }
@@ -153,15 +153,17 @@ public class EnchantmentBookListener implements Listener {
                     pl.playSound(pl.getLocation(), Sound.LEVEL_UP, 1.0f, 0.75f);
                     pl.playEffect(EntityEffect.WOLF_HEARTS);
                     final Location l = pl.getLocation();
-                    ParticleEffect.sendToLocation(ParticleEffect.SPELL, l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
-                    ParticleEffect.sendToLocation(ParticleEffect.MAGIC_CRIT, l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.65f, 30);
+                    de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
+                    de.inventivegames.particle.ParticleEffect.MAGIC_CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
+
                     Bukkit.getPluginManager().callEvent((Event) new CustomCosmicPlayerEvent(pl, "APPLY_ENCHANT", new Object[]{ench_book, EnchantmentBook.getEnchantmentBookSuccessRate(ench_book)}));
                 } else {
                     pl.playSound(pl.getLocation(), Sound.LAVA_POP, 1.0f, 0.75f);
                     pl.playEffect(EntityEffect.WOLF_HEARTS);
                     final Location l = pl.getLocation();
                     try {
-                        ParticleEffect.sendToLocation(ParticleEffect.LAVA, l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.35f, 20);
+                        de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.35f, 20);
+
                     } catch (Exception e2) {
                         e2.printStackTrace();
                     }
@@ -201,8 +203,9 @@ public class EnchantmentBookListener implements Listener {
                 pl.playEffect(EntityEffect.WOLF_HEARTS);
                 final Location l = pl.getLocation();
                 try {
-                    ParticleEffect.sendToLocation(ParticleEffect.SPELL, l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
-                    ParticleEffect.sendToLocation(ParticleEffect.MAGIC_CRIT, l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.65f, 30);
+                    de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
+                    de.inventivegames.particle.ParticleEffect.MAGIC_CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.65f, 30);
+
                 } catch (Exception e2) {
                     e2.printStackTrace();
                 }
@@ -253,8 +256,9 @@ public class EnchantmentBookListener implements Listener {
                 pl.playSound(pl.getLocation(), Sound.ORB_PICKUP, 1.0f, 0.75f);
                 final Location l = pl.getLocation();
                 try {
-                    ParticleEffect.sendToLocation(ParticleEffect.WITCH_MAGIC, l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
-                    ParticleEffect.sendToLocation(ParticleEffect.LAVA, l.add(0.0, 0.75, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.68f, 10);
+                    de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
+                    de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), l.add(0.0, 0.75, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.68f, 10);
+
                 } catch (Exception e2) {
                     e2.printStackTrace();
                 }
@@ -364,8 +368,8 @@ public class EnchantmentBookListener implements Listener {
                 pl.playSound(pl.getLocation(), Sound.LEVEL_UP, 1.0f, 0.75f);
                 pl.playEffect(EntityEffect.WOLF_HEARTS);
                 final Location l = pl.getLocation();
-                ParticleEffect.sendToLocation(ParticleEffect.WITCH_MAGIC, l.add(0.0, 1.0, 0.0), random.nextFloat(), random.nextFloat(), random.nextFloat(), 0.8f, 85);
-                ParticleEffect.sendToLocation(ParticleEffect.MAGIC_CRIT, l.add(0.0, 1.0, 0.0), random.nextFloat(), random.nextFloat(), random.nextFloat(), 0.65f, 30);
+                de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(),i.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
+                de.inventivegames.particle.ParticleEffect.MAGIC_CRIT.sendToPlayers(Bukkit.getOnlinePlayers(),i.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.65f, 30);
                 pl.updateInventory();
             }
         }
@@ -432,8 +436,9 @@ public class EnchantmentBookListener implements Listener {
                 pl.playEffect(EntityEffect.WOLF_HEARTS);
                 final Location l = pl.getLocation();
                 try {
-                    ParticleEffect.sendToLocation(ParticleEffect.SPELL, l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
-                    ParticleEffect.sendToLocation(ParticleEffect.MAGIC_CRIT, l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.65f, 30);
+                    de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
+                    de.inventivegames.particle.ParticleEffect.MAGIC_CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.65f, 30);
+
                 } catch (Exception e2) {
                     e2.printStackTrace();
                 }
@@ -459,7 +464,8 @@ public class EnchantmentBookListener implements Listener {
                 pl.playSound(pl.getLocation(), Sound.LAVA_POP, 1.0f, 0.96f);
                 final Location l = pl.getLocation();
                 try {
-                    ParticleEffect.sendToLocation(ParticleEffect.LAVA, l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.35f, 20);
+                    de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(),l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.35f, 20);
+
                 } catch (Exception e2) {
                     e2.printStackTrace();
                 }
@@ -477,8 +483,9 @@ public class EnchantmentBookListener implements Listener {
                 }
                 final Location i = pl.getLocation();
                 try {
-                    ParticleEffect.sendToLocation(ParticleEffect.SPELL, i.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
-                    ParticleEffect.sendToLocation(ParticleEffect.MAGIC_CRIT, i.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.65f, 30);
+                    de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(),i.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
+                    de.inventivegames.particle.ParticleEffect.MAGIC_CRIT.sendToPlayers(Bukkit.getOnlinePlayers(),i.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.65f, 30);
+
                 } catch (Exception e3) {
                     e3.printStackTrace();
                 }
@@ -525,8 +532,8 @@ public class EnchantmentBookListener implements Listener {
                 pl.playEffect(EntityEffect.WOLF_HEARTS);
                 final Location l = pl.getLocation();
                 try {
-                    ParticleEffect.sendToLocation(ParticleEffect.SPELL, l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
-                    ParticleEffect.sendToLocation(ParticleEffect.WITCH_MAGIC, l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.65f, 30);
+                    de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(),i.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
+                    de.inventivegames.particle.ParticleEffect.MAGIC_CRIT.sendToPlayers(Bukkit.getOnlinePlayers(),i.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.65f, 30);
                 } catch (Exception e2) {
                     e2.printStackTrace();
                 }

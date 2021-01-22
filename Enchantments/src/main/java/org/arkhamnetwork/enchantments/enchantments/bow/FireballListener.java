@@ -32,7 +32,7 @@ final class FireballListener implements Listener {
     }
 
     @EventHandler
-    public void onProjectileHit(final ProjectileHitEvent e) {
+    public void onProjectileHit(final ProjectileHitEvent e) throws Exception {
         if (e.getEntity().hasMetadata(Hellfire.hellfireEncahntmentMetadata)) {
             final Location loc = e.getEntity().getLocation();
             if (e.getEntity().getPassenger() != null) {
@@ -94,10 +94,11 @@ final class FireballListener implements Listener {
                     }, 1L);
                 }
                 final Location eloc = ent.getLocation().add(0.0, 1.0, 0.0);
-                ParticleEffect.sendToLocation(ParticleEffect.LAVA, eloc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 16);
+                de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(),eloc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 16);
+
             }
-            ParticleEffect.sendToLocation(ParticleEffect.LARGE_EXPLODE, loc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 8);
-            ParticleEffect.sendToLocation(ParticleEffect.FLAME, loc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.25f, 45);
+            de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(),loc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 8);
+            de.inventivegames.particle.ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(),loc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.25f, 45);
             e.getEntity().remove();
         }
     }

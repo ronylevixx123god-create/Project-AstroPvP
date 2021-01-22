@@ -1,9 +1,10 @@
 package org.arkhamnetwork.enchantments.enchantments.bow;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.rit.sucy.CustomEnchantment;
+import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.util.ArmorSlot;
 import org.arkhamnetwork.enchantments.util.ArmorUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
@@ -18,6 +19,7 @@ public class EagleEye extends CustomEnchantment {
         this.interval = 5.0;
     }
 
+    @SneakyThrows
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
         if (Math.random() < 0.05 * level + 0.2) {
             if (e.isCancelled()) {
@@ -49,7 +51,8 @@ public class EagleEye extends CustomEnchantment {
             ArmorUtil.modifyPlayerArmor(pTarget, ArmorSlot.CHESTPLATE, -1);
             ArmorUtil.modifyPlayerArmor(pTarget, ArmorSlot.LEGGINGS, -1);
             ArmorUtil.modifyPlayerArmor(pTarget, ArmorSlot.BOOTS, -1);
-            ParticleEffect.sendToLocation(ParticleEffect.MAGIC_CRIT, playerHit.getLocation(), (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.45f, 30);
+            de.inventivegames.particle.ParticleEffect.MAGIC_CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), playerHit.getLocation(), (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.45f, 30);
+
             ((Player) player).playSound(playerHit.getLocation(), Sound.ANVIL_BREAK, 0.3f, 0.8f);
         }
     }

@@ -1,6 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
+import de.inventivegames.particle.ParticleEffect;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
@@ -14,14 +15,15 @@ import org.bukkit.potion.PotionEffectType;
 
 final class PlagueCarrierListener implements Listener {
     @EventHandler
-    public void onEntityExplode(final EntityExplodeEvent e) {
+    public void onEntityExplode(final EntityExplodeEvent e) throws Exception {
         if (e.getEntity() != null && e.getEntity().hasMetadata("plagueCarrier")) {
             e.setCancelled(true);
             e.setYield(0.0f);
             final int level = e.getEntity().getMetadata("plagueCarrier").get(0).asInt();
             final Location loc = e.getLocation();
             loc.getWorld().playSound(loc, Sound.EXPLODE, 1.0f, 1.0f);
-            ParticleEffect.sendToLocation(ParticleEffect.LARGE_EXPLODE, loc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 3);
+            ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(),  loc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 3);
+
             for (final Entity ent : e.getEntity().getNearbyEntities(5.0, 4.0, 5.0)) {
                 if (ent instanceof LivingEntity) {
                     final LivingEntity le = (LivingEntity) ent;

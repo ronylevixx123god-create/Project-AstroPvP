@@ -1,12 +1,14 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.Relation;
 import com.rit.sucy.CustomEnchantment;
+import de.inventivegames.particle.ParticleEffect;
+import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
@@ -22,19 +24,21 @@ public class Epicness extends CustomEnchantment {
         this.interval = 10.0;
     }
 
+    @SneakyThrows
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
         final double random = Math.random();
         final double chance = 0.5;
         if (random < chance) {
             if (level == 1) {
                 this.playSoundToEnemies(Sound.CHICKEN_HURT, 1.0f, 0.85f, playerHit);
-                ParticleEffect.sendToLocation(ParticleEffect.CLOUD, playerHit.getEyeLocation(), (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.25f, 20);
+                de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(),playerHit.getEyeLocation(), (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.25f, 20);
+
             } else if (level == 2) {
                 this.playSoundToEnemies(Sound.MAGMACUBE_WALK2, 1.2f, 0.8f, playerHit);
-                ParticleEffect.sendToLocation(ParticleEffect.SLIME, playerHit.getEyeLocation(), (float) Math.random(), (float) Math.random(), (float) Math.random(), 1.0f, 20);
+                de.inventivegames.particle.ParticleEffect.SLIME.sendToPlayers(Bukkit.getOnlinePlayers(),playerHit.getEyeLocation(), (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.25f, 20);
             } else if (level == 3) {
                 this.playSoundToEnemies(Sound.GHAST_SCREAM, 1.0f, 1.25f, playerHit);
-                ParticleEffect.sendToLocation(ParticleEffect.WITCH_MAGIC, playerHit.getEyeLocation(), (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.95f, 15);
+                ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(),playerHit.getEyeLocation(), (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.25f, 20);
             }
         }
     }

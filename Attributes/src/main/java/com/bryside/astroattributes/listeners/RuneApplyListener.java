@@ -73,7 +73,7 @@ public class RuneApplyListener implements Listener {
             priority = EventPriority.MONITOR,
             ignoreCancelled = true
     )
-    public void apply(RuneApplyEvent e) {
+    public void apply(RuneApplyEvent e) throws Exception {
         Player player = e.getPlayer();
         int success = e.getSuccess();
         int level = e.getLevel();
@@ -97,7 +97,7 @@ public class RuneApplyListener implements Listener {
             player.sendMessage(CC.DarkRedB + "Level: " + CC.Red + level);
             player.sendMessage(CC.DarkRedB + "Success Rate: " + CC.Red + success + "%");
             player.playSound(player.getLocation(), Sound.LAVA_POP, 1.0F, 0.75F);
-            ParticleEffect.sendToLocation(ParticleEffect.LAVA, l.add(0.0D, 1.0D, 0.0D), (new Random()).nextFloat(), (new Random()).nextFloat(), (new Random()).nextFloat(), 0.35F, 20);
+            de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), l.add(0.0D, 1.0D, 0.0D), (new Random()).nextFloat(), (new Random()).nextFloat(), (new Random()).nextFloat(), 0.35F, 20);
         } else {
             type.apply(item, type, level);
             player.sendMessage("");
@@ -107,8 +107,9 @@ public class RuneApplyListener implements Listener {
             player.sendMessage(CC.DarkGreenB + "Level: " + CC.Green + level);
             player.sendMessage(CC.DarkGreenB + "Success Rate: " + CC.Green + success + "%");
             player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0F, 0.75F);
-            ParticleEffect.sendToLocation(ParticleEffect.SPELL, l.add(0.0D, 1.0D, 0.0D), (new Random()).nextFloat(), (new Random()).nextFloat(), (new Random()).nextFloat(), 0.8F, 85);
-            ParticleEffect.sendToLocation(ParticleEffect.MAGIC_CRIT, l.add(0.0D, 1.0D, 0.0D), (new Random()).nextFloat(), (new Random()).nextFloat(), (new Random()).nextFloat(), 0.65F, 30);
+            de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), l.add(0.0D, 1.0D, 0.0D), (new Random()).nextFloat(), (new Random()).nextFloat(), (new Random()).nextFloat(), 0.8F, 85);
+            de.inventivegames.particle.ParticleEffect.MAGIC_CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), l.add(0.0D, 1.0D, 0.0D), (new Random()).nextFloat(), (new Random()).nextFloat(), (new Random()).nextFloat(), 0.8F, 35);
+
         }
     }
 }

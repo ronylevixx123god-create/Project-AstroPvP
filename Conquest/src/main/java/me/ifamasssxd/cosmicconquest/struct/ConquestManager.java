@@ -18,7 +18,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -86,9 +85,10 @@ public class ConquestManager
         }
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(CosmicConquests.get(), () -> this.conquestChests.keySet().forEach(loc -> {
             try {
-                ParticleEffect.sendToLocation(ParticleEffect.PORTAL, loc.clone().add(0.5, 0.0, 0.5), 0.85f, 0.5f, 0.85f, 0.1f, 30);
-                ParticleEffect.sendToLocation(ParticleEffect.CLOUD, loc.clone().add(0.5, 0.0, 0.5), 0.85f, 0.5f, 0.85f, 0.1f, 30);
-                ParticleEffect.sendToLocation(ParticleEffect.HAPPY_VILLAGER, loc.clone().add(0.5, 0.0, 0.5), 0.85f, 0.5f, 0.85f, 0.1f, 30);
+                de.inventivegames.particle.ParticleEffect.PORTAL.sendToPlayers(Bukkit.getOnlinePlayers(), loc.clone().add(0.5, 0.0, 0.5), 0.85f, 0.5f, 0.85f, 0.1f, 30);
+                de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), loc.clone().add(0.5, 0.0, 0.5), 0.85f, 0.5f, 0.85f, 0.1f, 30);
+                de.inventivegames.particle.ParticleEffect.HAPPY_VILLAGER.sendToPlayers(Bukkit.getOnlinePlayers(), loc.clone().add(0.5, 0.0, 0.5), 0.85f, 0.5f, 0.85f, 0.1f, 30);
+
             }
             catch (Exception e) {
                 e.printStackTrace();

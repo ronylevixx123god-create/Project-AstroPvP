@@ -1,7 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.rit.sucy.CustomEnchantment;
+import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.listeners.VanillaDamageListener;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -23,6 +23,7 @@ public class DoubleStrike extends CustomEnchantment {
         this.interval = 10.0D;
     }
 
+    @SneakyThrows
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
         double random = Math.random();
         double chance = 0.02D * level;
@@ -41,7 +42,9 @@ public class DoubleStrike extends CustomEnchantment {
                     }
                 }
             }, 2L);
-            ParticleEffect.sendToLocation(ParticleEffect.RED_DUST, playerHit.getLocation(), (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5F, 20);
+
+            de.inventivegames.particle.ParticleEffect.RED_DUST.sendToPlayers(Bukkit.getOnlinePlayers(),playerHit.getLocation(), (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5F, 20);
+
         }
     }
 }

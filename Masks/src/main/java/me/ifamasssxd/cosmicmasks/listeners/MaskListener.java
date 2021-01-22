@@ -39,7 +39,6 @@ package me.ifamasssxd.cosmicmasks.listeners;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.google.common.collect.Lists;
 import me.ifamasssxd.cosmicmasks.CosmicMasks;
 import me.ifamasssxd.cosmicmasks.MaskType;
@@ -128,7 +127,7 @@ public class MaskListener implements Listener {
     }
 
     @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
-    public void onPlayerDamageOther(EntityDamageByEntityEvent event) {
+    public void onPlayerDamageOther(EntityDamageByEntityEvent event) throws Exception {
         if (event.getDamager() instanceof Player) {
             Player player = (Player)event.getDamager();
             MaskType equipped = MaskType.fromPlayer(player);
@@ -147,7 +146,8 @@ public class MaskListener implements Listener {
             if (Math.random() <= 0.02 && found == MaskType.TURKEY) {
                 event.setCancelled(true);
                 ((Player)event.getEntity()).sendMessage(CC.YellowB + "* DODGED [" + CC.Gray + "Turkey Mask" + CC.YellowB + "]");
-                ParticleEffect.sendToLocation((ParticleEffect)ParticleEffect.CLOUD, (Location)event.getEntity().getLocation().add(0.0, 0.5, 0.0), (float)0.2f, (float)0.2f, (float)0.2f, (float)0.1f, (int)10);
+                de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(),event.getEntity().getLocation().add(0.0, 0.5, 0.0), (float)0.2f, (float)0.2f, (float)0.2f, (float)0.1f, (int)10);
+
             } else if (found == MaskType.MONOPOLY || found == MaskType.PARTY_HAT) {
                 event.setDamage(event.getDamage() * 0.95);
             }

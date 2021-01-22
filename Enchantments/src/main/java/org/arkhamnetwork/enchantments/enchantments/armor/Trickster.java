@@ -2,7 +2,9 @@ package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.rit.sucy.CustomEnchantment;
+import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -21,6 +23,7 @@ public class Trickster extends CustomEnchantment {
         this.interval = 5.0;
     }
 
+    @SneakyThrows
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         final double random = Math.random();
         final double chance = 0.0125 * level;
@@ -33,8 +36,9 @@ public class Trickster extends CustomEnchantment {
             if (l2.getBlock().getType() == Material.AIR && l2.getBlock().getLocation().subtract(0.0, 1.0, 0.0).getBlock().getType() == Material.AIR) {
                 player.teleport(l2, PlayerTeleportEvent.TeleportCause.PLUGIN);
                 player.getWorld().playSound(l1, Sound.PORTAL_TRIGGER, 0.8f, 1.4f);
-                ParticleEffect.sendToLocation(ParticleEffect.CLOUD, l1, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 20);
-                ParticleEffect.sendToLocation(ParticleEffect.WITCH_MAGIC, l2, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 20);
+                de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), l1, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 20);
+                de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), l2, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 20);
+
             }
         }
     }

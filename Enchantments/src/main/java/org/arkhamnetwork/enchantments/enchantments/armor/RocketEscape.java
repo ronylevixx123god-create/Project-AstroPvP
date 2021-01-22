@@ -1,9 +1,9 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.massivecraft.factions.P;
 import com.rit.sucy.CustomEnchantment;
+import lombok.SneakyThrows;
 import me.astropvp.AstroBackpacksAPI;
 import me.astropvp.objects.BackpackType;
 import org.arkhamnetwork.enchantments.Enchantments;
@@ -44,6 +44,7 @@ public class RocketEscape extends CustomEnchantment {
         return RocketEscape.rocket_escapists.contains(pl.getUniqueId());
     }
 
+    @SneakyThrows
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         if (player instanceof Player) {
             double dmg = e.getFinalDamage();
@@ -88,12 +89,14 @@ public class RocketEscape extends CustomEnchantment {
                 final UUID uuid = player.getUniqueId();
                 RocketEscape.rocket_escapists.add(uuid);
                 final Location loc = pl.getLocation();
-                ParticleEffect.sendToLocation(ParticleEffect.CLOUD, loc, (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, 1.25f, 69);
+                de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), loc, (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, 1.25f, 69);
+
                 Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
+                    @SneakyThrows
                     @Override
                     public void run() {
                         if (Bukkit.getPlayer(String.valueOf(uuid)) != null) {
-                            ParticleEffect.sendToLocation(ParticleEffect.CLOUD, Bukkit.getPlayer(String.valueOf(uuid)).getLocation(), (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, 1.25f, 69);
+                            de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), Bukkit.getPlayer(String.valueOf(uuid)).getLocation(), (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, 1.25f, 69);
                         }
                         RocketEscape.rocket_escapists.remove(uuid);
                     }

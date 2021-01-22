@@ -42,7 +42,8 @@ public class UndeadRuse extends CustomEnchantment {
                 int zombie_count = (int) (Math.random() / 2.0 * level) + 1;
                 final Player p = (Player) player;
                 final Location spawnLoc = p.getTargetBlock((HashSet<Byte>) null, 5).getLocation().add(0.0, 1.0, 0.0);
-                ParticleEffect.sendToLocation(ParticleEffect.WITCH_MAGIC, spawnLoc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 20);
+                de.inventivegames.particle.ParticleEffect.HEART.sendToPlayers(Bukkit.getOnlinePlayers(), spawnLoc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 20);
+
                 while (zombie_count > 0) {
                     --zombie_count;
                     if (spawnLoc.getChunk().getEntities().length < 50) {

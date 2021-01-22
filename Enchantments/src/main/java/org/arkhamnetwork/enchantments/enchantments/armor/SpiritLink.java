@@ -2,7 +2,9 @@ package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.rit.sucy.CustomEnchantment;
+import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -17,6 +19,7 @@ public class SpiritLink extends CustomEnchantment {
         this.interval = 5.0;
     }
 
+    @SneakyThrows
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         final double chance = level * 0.1;
         if (e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK && Math.random() < chance) {
@@ -30,10 +33,12 @@ public class SpiritLink extends CustomEnchantment {
                         continue;
                     }
                     GeneralUtil.healPlayer((LivingEntity) playerNear, healAmount);
-                    ParticleEffect.sendToLocation(ParticleEffect.HEART, playerNear.getEyeLocation().add(0.0, 0.35, 0.0), 0.0f, (float) Math.random(), 0.0f, 0.05f, 1);
+                    de.inventivegames.particle.ParticleEffect.HEART.sendToPlayers(Bukkit.getOnlinePlayers(), playerNear.getEyeLocation().add(0.0, 0.35, 0.0), 0.0f, (float) Math.random(), 0.0f, 0.05f, 1);
+
                 }
             }
-            ParticleEffect.sendToLocation(ParticleEffect.HEART, player.getLocation().add(0.0, 0.5, 0.0), (float) Math.random() / 2.0f, (float) Math.random() / 2.0f, (float) Math.random() / 2.0f, 0.05f, 3);
+            de.inventivegames.particle.ParticleEffect.HEART.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation().add(0.0, 0.5, 0.0), (float) Math.random() / 2.0f, (float) Math.random() / 2.0f, (float) Math.random() / 2.0f, 0.05f, 3);
+
             player.getWorld().playSound(player.getLocation(), Sound.ORB_PICKUP, 1.0f, 0.35f);
         }
     }

@@ -1,6 +1,5 @@
 package org.arkhamnetwork.enchantments.enchantments.bow;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.arkhamnetwork.enchantments.util.WorldGuardUtils;
 import org.bukkit.Bukkit;
@@ -38,7 +37,7 @@ final class CowificationListener implements Listener {
     }
 
     @EventHandler
-    public void onProjectileHit(final ProjectileHitEvent e) {
+    public void onProjectileHit(final ProjectileHitEvent e) throws Exception {
         if (e.getEntity().hasMetadata(Cowification.cowificationEncahntmentMetadata)) {
             final Location loc = e.getEntity().getLocation();
             if (e.getEntity().getPassenger() != null) {
@@ -67,7 +66,7 @@ final class CowificationListener implements Listener {
                     ((LivingEntity) ent).addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 25 * level, 1));
                 }
             }
-            ParticleEffect.sendToLocation(ParticleEffect.LARGE_EXPLODE, loc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 8);
+            de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), loc, 0.0f, 0.0f, 0.0f, 0.25f, 1);
         }
     }
 

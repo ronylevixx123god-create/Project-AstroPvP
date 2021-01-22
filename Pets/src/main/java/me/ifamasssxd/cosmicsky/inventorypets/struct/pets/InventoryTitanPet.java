@@ -1,29 +1,20 @@
 package me.ifamasssxd.cosmicsky.inventorypets.struct.pets;
 
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.EssentialsUtils;
-import com.cosmicpvp.cosmicutils.utils.FactionUtils;
-import com.cosmicpvp.cosmicutils.utils.NumberUtils;
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
-import com.cosmicpvp.cosmicutils.utils.TimeUtils;
-import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
+import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.struct.Relation;
 import com.rit.sucy.EnchantmentAPI;
-import java.util.Iterator;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
-import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -34,6 +25,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class InventoryTitanPet extends InventoryPet {
    public int petLevel = 0;
@@ -68,7 +63,7 @@ public class InventoryTitanPet extends InventoryPet {
       }
    }
 
-   public boolean onPetItemInteract(Player player, ItemStack itemStack, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
+   public boolean onPetItemInteract(Player player, ItemStack itemStack, InventoryPetItem petItem, PlayerInteractEvent event) throws Exception {
       long lastUse = petItem.getLastUsed();
       long delay = TimeUnit.SECONDS.toMillis((long)this.getCooldown(petItem.getLevel()));
       long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
@@ -102,7 +97,7 @@ public class InventoryTitanPet extends InventoryPet {
       }
    }
 
-   private void applyShockwaveDefence(Player player) {
+   private void applyShockwaveDefence(Player player) throws Exception {
       Iterator var2 = player.getNearbyEntities(3.0D, 3.0D, 3.0D).iterator();
 
       while(true) {
@@ -136,7 +131,7 @@ public class InventoryTitanPet extends InventoryPet {
                   player.sendMessage("" + ChatColor.DARK_RED + ChatColor.BOLD + "* TITAN UNBREAKABLE: (" + ChatColor.GRAY + p.getName() + ChatColor.DARK_RED + ")");
                   GeneralUtil.pushAwayEntity(player, ent, 1.7000000476837158D);
                   Location l = ent.getLocation();
-                  ParticleEffect.sendToLocation(ParticleEffect.ENCHANTMENT_TABLE, l, (float)Math.random() * 2.0F, (float)Math.random() * 2.0F, (float)Math.random() * 2.0F, 0.73F, 100);
+                  de.inventivegames.particle.ParticleEffect.ENCHANTMENT_TABLE.sendToPlayers(Bukkit.getOnlinePlayers(), l, (float)Math.random() * 2.0F, (float)Math.random() * 2.0F, (float)Math.random() * 2.0F, 0.73F, 100);
                }
             }
          }
@@ -155,7 +150,7 @@ public class InventoryTitanPet extends InventoryPet {
 
    }
 
-   private void startTenSecondAbilities(final Player player) {
+   private void startTenSecondAbilities(final Player player) throws Exception {
       player.removePotionEffect(PotionEffectType.SLOW);
       player.setWalkSpeed(0.2F);
       this.applyShockwaveDefence(player);

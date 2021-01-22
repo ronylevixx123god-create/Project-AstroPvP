@@ -9,6 +9,7 @@ import com.massivecraft.factions.Factions;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.Relation;
 import com.rit.sucy.CustomEnchantment;
+import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
@@ -26,7 +27,6 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -58,10 +58,12 @@ public class Spirits extends CustomEnchantment {
                         int radius = 8 + level;
                         int toHeal = ((level <= 5) ? 2 : ((level <= 8) ? 4 : 5));
                         int toHeal2 = toHeal / 2;
-                        ParticleEffect.sendToLocation(ParticleEffect.HEART, ent.getLocation().clone().add(0.0, 1.0, 0.0), 0.5f, 0.5f, 0.5f, 0.01f, 20);
-                        Iterator<Entity> iterator = ent.getNearbyEntities((double) radius, (double) radius, (double) radius).iterator();
-                        while (iterator.hasNext()) {
-                            Entity nearby = iterator.next();
+                        try {
+                            de.inventivegames.particle.ParticleEffect.HEART.sendToPlayers(Bukkit.getOnlinePlayers(), ent.getLocation().clone().add(0.0, 1.0, 0.0), 0.5f, 0.5f, 0.5f, 0.01f, 20);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        for (Entity nearby : ent.getNearbyEntities((double) radius, (double) radius, (double) radius)) {
                             if (healed >= maxHeal) {
                                 break;
                             } else if (nearby instanceof Player) {
@@ -83,19 +85,14 @@ public class Spirits extends CustomEnchantment {
                                             player.setMetadata("heal_cd", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) (System.currentTimeMillis() + required / 20.0 * 1000.0)));
                                             player.playSound(player.getLocation(), Sound.ORB_PICKUP, 0.3f, 1.4f);
                                             try {
-                                                ParticleEffect.sendToLocation(ParticleEffect.HEART, player.getLocation().clone().add(0.0, 1.0, 0.0), 0.75f, 0.75f, 0.75f, 0.01f, 15);
+                                                de.inventivegames.particle.ParticleEffect.HEART.sendToPlayers(Bukkit.getOnlinePlayers(),player.getLocation().clone().add(0.0, 1.0, 0.0), 0.75f, 0.75f, 0.75f, 0.01f, 15);
+
                                             } catch (Exception e) {
                                                 e.printStackTrace();
                                             }
                                         }
-                                    } else {
-                                        continue;
                                     }
-                                } else {
-                                    continue;
                                 }
-                            } else {
-                                continue;
                             }
                         }
                     }
@@ -108,6 +105,7 @@ public class Spirits extends CustomEnchantment {
         }), 20L, 1L);
     }
 
+    @SneakyThrows
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         if (e instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent) e).getDamager() instanceof Player) {
             if (player.hasMetadata("acenstoralEvent") && System.currentTimeMillis() < player.getMetadata("acenstoralEvent").get(0).asLong()) {
@@ -122,8 +120,8 @@ public class Spirits extends CustomEnchantment {
                 int acenstoral_count = level / 10 + 1;
                 final Player p = (Player) player;
                 final Location spawnLoc = player.getLocation().add(0.0, 1.0, 0.0);
-                ParticleEffect.sendToLocation(ParticleEffect.SPELL, spawnLoc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.64f, 45);
-                ParticleEffect.sendToLocation(ParticleEffect.FLAME, spawnLoc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.154f, 35);
+                de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), spawnLoc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.64f, 45);
+                de.inventivegames.particle.ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(), spawnLoc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.64f, 45);
                 final FPlayer fp = FPlayers.i.get(player.getUniqueId().toString());
                 final String facName = fp.hasFaction() ? fp.getFaction().getId() : "";
                 while (acenstoral_count > 0) {

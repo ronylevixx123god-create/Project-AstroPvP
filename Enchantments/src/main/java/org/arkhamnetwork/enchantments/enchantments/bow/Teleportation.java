@@ -1,6 +1,5 @@
 package org.arkhamnetwork.enchantments.enchantments.bow;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
@@ -31,7 +30,7 @@ public class Teleportation extends CustomEnchantment {
 
     private static class TeleportationEvents implements Listener {
         @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = false)
-        public void onArrowHit(final EntityDamageByEntityEvent e) {
+        public void onArrowHit(final EntityDamageByEntityEvent e) throws Exception {
             if (e.getDamager() instanceof Projectile && e.getDamager().hasMetadata("teleportation_level")) {
                 Player player = null;
                 Player playerHit = null;
@@ -83,19 +82,21 @@ public class Teleportation extends CustomEnchantment {
                         player.playSound(player.getLocation(), Sound.ORB_PICKUP, 0.75f, 0.341f);
                     }
                     final Location loc = playerHit.getLocation().add(0.0, 0.5, 0.0);
-                    ParticleEffect.sendToLocation(ParticleEffect.WITCH_MAGIC, loc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 35);
+                    de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), loc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 35);
+
                 }
             }
         }
 
         @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-        public void onPlayerShootBow(final EntityShootBowEvent e) {
+        public void onPlayerShootBow(final EntityShootBowEvent e) throws Exception {
             if (e.getEntity() instanceof Player) {
                 final Player p = (Player) e.getEntity();
                 if (e.getBow() != null && EListener.getValidEnchantments(e.getBow(), p).containsKey((Object) EnchantmentAPI.getEnchantment("Teleportation"))) {
                     final Location loc = e.getProjectile().getLocation();
                     e.getProjectile().setMetadata("teleportation_level", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), EnchantmentAPI.getEnchantments(e.getBow()).get(EnchantmentAPI.getEnchantment("Teleportation"))));
-                    ParticleEffect.sendToLocation(ParticleEffect.WITCH_MAGIC, loc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 35);
+                    de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), loc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 35);
+
                 }
             }
         }
