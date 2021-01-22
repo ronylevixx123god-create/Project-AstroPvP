@@ -244,9 +244,6 @@ public class Detonate extends CustomEnchantment {
                 chunksection = chunkSection;
             }
             chunksection.setType(b.getX() & 0xF, b.getY() & 0xF, b.getZ() & 0xF, (IBlockData) Blocks.BEDROCK);
-
-            // TODO: LOOK INTO SETDATA
-            // chunksection.setData(b.getX() & 0xF, b.getY() & 0xF, b.getZ() & 0xF, (int) data);
         } catch (Exception e) {
             e.printStackTrace();
         }

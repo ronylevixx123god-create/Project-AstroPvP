@@ -462,10 +462,6 @@ public class CosmicSpaceChestsAPI {
             if (is == null) continue;
             li.add(is);
         }
-//        todo: method removed
-//        if ((ir == ItemRarity.LEGENDARY || ir == ItemRarity.GOD) && Math.random() <= 0.05 && (factionPoints = FactionPointUtils.getFactionPointsItem(null, null, "space_chest", ir)) != null) {
-//            li.add(factionPoints);
-//        }
 
         return li;
     }

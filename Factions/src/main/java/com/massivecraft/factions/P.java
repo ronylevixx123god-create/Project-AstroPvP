@@ -117,9 +117,6 @@ public class P extends MPlugin {
     public BoosterManager boosterManager;
     @Getter @Setter private UpgradeManager upgradeManager;
     private CosmicFlyingPlugin cosmicFlyingPlugin;
-    // TODO: FINISH FACTION POINTS
-    /*public PointManager pointManager;
-    private CoreChunkManager chunkManager; */
     public static boolean debug;
     private long startOfMap;
     private boolean vanillaPlanet = false;

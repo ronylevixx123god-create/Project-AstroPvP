@@ -336,15 +336,6 @@ public abstract class Boss extends Equipable implements Healable {
         String msg;
         if (this.naturallySpawned) {
             msg = this.getColor(true) + "(!) " + this.getColor(false) + "A " + this.getColor(true) + ChatColor.UNDERLINE.toString() + this.getCustomName() + this.getColor(false) + " Boss has been summoned to the /spawn WarZone, at " + this.getColor(true) + this.location.getBlockX() + "x, " + this.location.getBlockY() + "y, " + this.location.getBlockZ() + "z " + this.getColor(false) + "defend DecimateMC!";
-//          todo: method doesnt exist
-            //            try {
-//                for (final Player p : Bukkit.getServer().getOnlinePlayers()) {
-//                    ClientCommsAPI.sendEvent(p, "Previous Warzone Boss", EventType.COUNT_UP, System.currentTimeMillis(), 0L);
-//                }
-//            }
-//            catch (Exception e) {
-//                e.printStackTrace();
-//            }
         } else {
             msg = this.getColor(true) + "(!) " + this.getColor(false) + "A " + this.getColor(true) + ChatColor.UNDERLINE.toString() + this.getCustomName() + this.getColor(false) + " Boss has been summoned nearby, defend DecimateMC!";
         }

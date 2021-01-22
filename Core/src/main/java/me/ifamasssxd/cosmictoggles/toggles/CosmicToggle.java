@@ -62,10 +62,9 @@ public enum CosmicToggle {
         if (this == FILTER) {
             return !ChatFilter.disabledFilteredPlayers.contains(player.getUniqueId());
         }
-        // todo: fix import
-//        if (this == Mysteryanimation) {
-//            return CosmicMysteryChest.get().getToggle().hasToggle(player);
-//        }
+        if (this == Mysteryanimation) {
+            return CosmicMysteryChest.get().getToggle().hasToggle(player);
+        }
         if (this == PAY) {
             return !AstroCore.getInstance().getPayToggles().hasToggle(player);
         }

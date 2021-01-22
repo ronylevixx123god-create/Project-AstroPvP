@@ -56,8 +56,7 @@ public class InventoryFeignDeathPet extends InventoryPet {
             if (!inCombat) {
                xpGain = 1;
             }
-            // todo: method doesnt cast
-            //MasteryFeignDeath.vanishPlayer(player, petItem.getLevel());
+            MasteryFeignDeath.vanishPlayer(player, petItem.getLevel());
             petItem.addExperience(player, xpGain);
             petItem.setLastUsed(System.currentTimeMillis());
             player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);

@@ -102,10 +102,6 @@ implements Listener {
                 heroicBonusItem = potentialLoot2.get(ThreadLocalRandom.current().nextInt(potentialLoot2.size()));
                 loot.add(heroicBonusItem);
             }
-            // todo: faction points
-//            if ((pointNote = FactionPointUtils.getFactionPointsItem((Faction)null, (Player)null, "lootbag", (bagType))) != null) {
-//                loot.add(pointNote);
-//            }
             if (loot.size() > 0) {
                 for (int ind = 0; ind < loot.size(); ++ind) {
                     ItemStack i = loot.get(ind);
