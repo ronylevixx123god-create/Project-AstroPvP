@@ -27,7 +27,7 @@ package com.compilex.CosmicDungeons.utils;
 
 import com.compilex.CosmicDungeons.CosmicDungeonsPlugin;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -45,7 +45,7 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class MonsterUtils {
-    public static LivingEntity spawnOutpostPirate(Location location) {
+    public static LivingEntity spawnOutpostPirate(Location location) throws Exception {
         ThreadLocalRandom random = ThreadLocalRandom.current();
         LivingEntity ent = (LivingEntity)location.getWorld().spawnEntity(location, EntityType.SKELETON);
         if (((Random)random).nextInt(10) <= 8) {
@@ -70,12 +70,12 @@ public class MonsterUtils {
         ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1));
         ent.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0));
         ent.setMetadata("destroyedSpacePirate", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get_(), (Object)true));
-        ParticleEffect.playEffect((ParticleEffect)ParticleEffect.WITCH_MAGIC, (Location)ent.getLocation().add(0.0, 1.0, 0.0), (float)0.15f, (int)25);
+        de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), ent.getLocation(), 0f, 0.0f, 0f, 0.15f, 25);
 
         return ent;
     }
 
-    public static LivingEntity spawnSpacePirate(Location l) {
+    public static LivingEntity spawnSpacePirate(Location l) throws Exception {
         Ghast ghast = null;
         EntityType et = null;
         double rand = Math.random();
@@ -135,7 +135,8 @@ public class MonsterUtils {
         ghast.getEquipment().setBoots(new ItemStack(Material.DIAMOND_BOOTS));
         ghast.setCanPickupItems(false);
         ghast.setMetadata("spacePirate", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get_(), (Object)true));
-        ParticleEffect.playEffect((ParticleEffect)ParticleEffect.WITCH_MAGIC, (Location)ghast.getLocation().add(0.0, 1.0, 0.0), (float)0.15f, (int)25);
+        de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), ghast.getLocation(), 0f, 0.0f, 0f, 0.15f, 25);
+
         return ghast;
     }
 }

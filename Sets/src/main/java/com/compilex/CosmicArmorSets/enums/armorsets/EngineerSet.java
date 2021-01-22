@@ -13,6 +13,7 @@ import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.struct.Relation;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
+import lombok.SneakyThrows;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import net.minecraft.server.v1_8_R3.World;
 import net.minecraft.server.v1_8_R3.*;
@@ -140,6 +141,7 @@ public class EngineerSet extends ArmorSetInfo implements Listener, WeaponedArmor
             boolean damagedPlayed = false;
 
 
+            @SneakyThrows
             public void die() {
                 /* 296 */
                 if (isAlive() && this.damagedPlayed) {
@@ -147,7 +149,8 @@ public class EngineerSet extends ArmorSetInfo implements Listener, WeaponedArmor
                     this.world.getWorld().playEffect(getBukkitEntity().getLocation(), Effect.STEP_SOUND, mat.getId());
 
                 }
-                ParticleEffect.playEffect(ParticleEffect.CLOUD, this.getBukkitEntity().getLocation(), 0.6f, 5);
+                de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), this.getBukkitEntity().getLocation(), 0f, 0.5f, 0f, 0.6f, 5);
+
                 this.bukkitEntity.getLocation().getWorld().playSound(this.bukkitEntity.getLocation(), Sound.ZOMBIE_WOOD, 1.2F, 0.9f);
 
                 super.die();

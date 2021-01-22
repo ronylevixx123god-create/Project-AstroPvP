@@ -160,7 +160,11 @@ public class MasteryDemonicGateway extends MasteryCustomEnchantment {
                     }
                 }.runTaskTimer((Plugin) Enchantments.getInstance(), 30L, 3L);
                 Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin) Enchantments.getInstance(), () -> spawnedCrystals.forEach(crystalEntity -> {
-                    ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, crystalEntity.getLocation(), 0.75f, 16);
+                    try {
+                        de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), crystalEntity.getLocation(), 0f,0.5f,0f,0.7f,16);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     crystalEntity.remove();
                 }), (long) (spawnDuration * 20.0));
             }

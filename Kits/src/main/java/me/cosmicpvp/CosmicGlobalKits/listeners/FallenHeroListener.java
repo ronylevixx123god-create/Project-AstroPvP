@@ -40,10 +40,6 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKits;
 import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKitsAPI;
 import me.cosmicpvp.CosmicGlobalKits.libs.FallenHero;
@@ -51,11 +47,7 @@ import me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits;
 import me.cosmicpvp.CosmicGlobalKits.utils.WorldGuardUtils;
 import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKits;
 import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Sound;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
@@ -72,10 +64,14 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+
 public class FallenHeroListener
 implements Listener {
     @EventHandler
-    public void onPlayerInteract(PlayerInteractEvent e) {
+    public void onPlayerInteract(PlayerInteractEvent e) throws Exception {
         if (e.hasItem() && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && FallenHero.isFallenHeroItem(e.getItem())) {
             Player pNear;
             String itemName;
@@ -131,8 +127,8 @@ implements Listener {
                     pNear.sendMessage((Object)ChatColor.GRAY + "Locate and slay the Fallen Hero to steal its loot for yourself!");
                 }
                 p.playSound(p.getLocation(), Sound.WITHER_SPAWN, 1.0f, 1.2f);
-                ParticleEffect.playEffect((ParticleEffect)ParticleEffect.SPELL, (Location)fallenHero.getLocation(), (float)0.8f, (int)35);
-                ParticleEffect.playEffect((ParticleEffect)ParticleEffect.FIREWORKS_SPARK, (Location)fallenHero.getLocation(), (float)0.5f, (int)50);
+                de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), fallenHero.getLocation(), 0f, 0.5f, 0f, 0.8f, 35);
+                de.inventivegames.particle.ParticleEffect.FIREWORKS_SPARK.sendToPlayers(Bukkit.getOnlinePlayers(), fallenHero.getLocation(), 0f, 0.5f, 0f, 0.8f, 50);
             }
             if (vkit != null) {
                 i = e.getItem();
@@ -157,8 +153,9 @@ implements Listener {
                     pNear.sendMessage((Object)ChatColor.GRAY + "Locate and slay the Fallen Hero to steal its loot for yourself!");
                 }
                 p.playSound(p.getLocation(), Sound.ZOMBIE_PIG_ANGRY, 1.0f, 1.2f);
-                ParticleEffect.playEffect((ParticleEffect)ParticleEffect.WITCH_MAGIC, (Location)fallenHero.getLocation(), (float)0.8f, (int)35);
-                ParticleEffect.playEffect((ParticleEffect)ParticleEffect.LAVA, (Location)fallenHero.getLocation(), (float)0.5f, (int)50);
+                de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), fallenHero.getLocation(), 0f, 0.0f, 0f, 0.8f, 35);
+                de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), fallenHero.getLocation(), 0f, 0.0f, 0f, 0.8f, 35);
+
             }
         }
     }

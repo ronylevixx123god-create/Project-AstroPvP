@@ -14,7 +14,6 @@ import com.massivecraft.factions.struct.Relation;
 import com.rit.sucy.EnchantmentAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.arkhamnetwork.enchantments.enchantments.armor.Phoenix;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
@@ -64,7 +63,7 @@ public class MotherOfYijki
     }
 
     @Override
-    public boolean onPlayerDamaged(Player damaged, EntityDamageByEntityEvent event) {
+    public boolean onPlayerDamaged(Player damaged, EntityDamageByEntityEvent event) throws Exception {
         Material type;
         if (this.isBlockedOutpostWorld(event.getDamager())) {
             return false;
@@ -84,15 +83,15 @@ public class MotherOfYijki
         return true;
     }
 
-    public void activateYijki(Location center, Player player) {
+    public void activateYijki(Location center, Player player) throws Exception {
         ArrayList<Location> procLocations = new ArrayList<Location>();
         ArrayList<Player> nearbyPlayers = new ArrayList<Player>();
         FPlayer fp = FPlayers.i.get(player);
         for (int i = 0; i < 16; ++i) {
             Location l = LocationUtils.getNearbyLocation(center, 8, 2, 0);
             l.getWorld().playSound(l, Sound.WITHER_SPAWN, 1.0f, 0.4f);
-            ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, l, 0.7f, 32);
-            ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, l.clone().add(0.0, 1.0, 0.0), 0.7f, 32);
+            de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), l.clone(), 0f, 1f, 0f, 0.7f, 32);
+            de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), l.clone(), 0f, 0f, 0f, 0.7f, 32);
             procLocations.add(l);
         }
         for (Entity nearbyEnt : player.getNearbyEntities(32.0, 64.0, 32.0)) {
@@ -113,8 +112,14 @@ public class MotherOfYijki
             for (Location l : procLocations) {
                 l.getWorld().strikeLightningEffect(l);
                 l.getWorld().playSound(l, Sound.WITHER_DEATH, 1.0f, 0.4f);
-                ParticleEffect.playEffect(ParticleEffect.LARGE_EXPLODE, l, 0.7f, 4);
-                ParticleEffect.playEffect(ParticleEffect.LARGE_EXPLODE, l.clone().add(0.0, 1.0, 0.0), 0.7f, 4);
+                try {
+                    de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), l, 0f, 0.0f, 0f, 1.2f, 20);
+                    de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), l, 0f, 1.0f, 0f, 1.2f, 20);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
                 for (Player pNear : nearbyPlayers) {
                     FPlayer fpNear;
                     if (!(pNear.getLocation().distanceSquared(l) <= 2.0) || (fpNear = FPlayers.i.get(pNear)).getRelationTo(fp).isAtLeast(Relation.TRUCE) || CosmicArmorSetsAPI.hasInfiniteLuck(pNear, 4, player) || !WorldGuardUtils.isPvPEnabled(pNear.getLocation()))
@@ -155,7 +160,7 @@ public class MotherOfYijki
     }
 
     @Override
-    public boolean onPlayerDamagedBonus(Player damaged, int multiplier, EntityDamageByEntityEvent event) {
+    public boolean onPlayerDamagedBonus(Player damaged, int multiplier, EntityDamageByEntityEvent event) throws Exception {
         if (this.isBlockedOutpostWorld(damaged)) {
             return false;
         }

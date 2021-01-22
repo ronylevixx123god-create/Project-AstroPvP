@@ -57,12 +57,12 @@ public class Phoenix extends CustomEnchantment {
         return phoenixEquipped.containsKey(player.getUniqueId());
     }
 
-    public static boolean procPhoenix(Player player, LivingEntity damager, double dmg) throws NoSuchFieldException, IllegalAccessException {
+    public static boolean procPhoenix(Player player, LivingEntity damager, double dmg) throws Exception {
         Integer level = phoenixEquipped.get(player.getUniqueId());
         return (level != null && procPhoenix(player, damager, level.intValue(), dmg));
     }
 
-    public static boolean procPhoenix(Player player, LivingEntity damager, int level, double dmg) throws NoSuchFieldException, IllegalAccessException {
+    public static boolean procPhoenix(Player player, LivingEntity damager, int level, double dmg) throws Exception {
         if (player.getHealth() <= 0.0D)
             return false;
         if (player.hasMetadata("witchered"))
@@ -110,7 +110,8 @@ public class Phoenix extends CustomEnchantment {
                 return true;
             }
             if (!player.hasMetadata("outOfSoulsMessage") || ((MetadataValue) player.getMetadata("outOfSoulsMessage").get(0)).asLong() < System.currentTimeMillis()) {
-                ParticleEffect.playEffect(ParticleEffect.LAVA, player.getEyeLocation(), 0.4F, 20);
+                de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(),player.getEyeLocation(), 0f,0.5f,0f,0.4f,20);
+
                 player.playSound(player.getLocation(), Sound.ITEM_BREAK, 0.7F, 0.4F);
                 player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "** OUT OF SOULS **");
                 player.setMetadata("outOfSoulsMessage", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), Long.valueOf(System.currentTimeMillis() + 15000L)));

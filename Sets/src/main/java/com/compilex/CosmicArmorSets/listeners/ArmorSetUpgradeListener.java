@@ -37,10 +37,11 @@ import com.compilex.CosmicArmorSets.enums.HeroicArmorType;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.*;
 import org.apache.commons.lang.StringUtils;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -101,7 +102,7 @@ public class ArmorSetUpgradeListener
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onInventoryClick(InventoryClickEvent event) {
+    public void onInventoryClick(InventoryClickEvent event) throws Exception {
         if (event.getClick() != ClickType.LEFT && event.getClick() != ClickType.RIGHT) {
             return;
         }
@@ -172,7 +173,7 @@ public class ArmorSetUpgradeListener
                 }
                 if (chance >= (double) (ThreadLocalRandom.current().nextInt(100) + 1)) {
                     Bukkit.getLogger().info("Upgrading " + player.getName() + "'s " + clicked + " item to heroic version!");
-                    ParticleEffect.playEffect(ParticleEffect.HAPPY_VILLAGER, player.getLocation().add(0.0, 0.4, 0.0), 0.1f, 30);
+                    de.inventivegames.particle.ParticleEffect.HAPPY_VILLAGER.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 0f, 0.5f, 0f, 0.1f, 30);
                     player.getWorld().playSound(player.getLocation(), Sound.VILLAGER_YES, 1.4f, 0.9f);
                     player.getWorld().playSound(player.getLocation(), Sound.LEVEL_UP, 1.4f, 0.9f);
                     ItemStack retItem = CosmicArmorSetsAPI.convertItemToHeroic(clicked, type, true);
@@ -214,7 +215,7 @@ public class ArmorSetUpgradeListener
                 } else {
                     player.sendMessage(CC.RedB + "(!) " + CC.Red + "You failed to apply your " + ItemUtils.getDisplayName(cursor) + CC.Red + "!");
                     player.playSound(player.getLocation(), Sound.LAVA_POP, 1.0f, 0.9f);
-                    ParticleEffect.playEffect(ParticleEffect.LAVA, player.getLocation().add(0.0, 0.4, 0.0), 0.1f, 30);
+                    de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 0f, 0.5f, 0f, 0.1f, 30);
                     CosmicArmorSetsPlugin.get_().getLogger().info(player.getName() + " failed to apply Heroic Armor Upgrade!");
                 }
             }

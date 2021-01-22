@@ -75,11 +75,11 @@ public abstract class ArmorSetInfo {
 
     public abstract List<String> getEquipDescription();
 
-    public abstract boolean onPlayerDamaged(Player var1, EntityDamageByEntityEvent var2);
+    public abstract boolean onPlayerDamaged(Player var1, EntityDamageByEntityEvent var2) throws Exception;
 
     public abstract boolean onPlayerAttacked(Player var1, EntityDamageByEntityEvent var2);
 
-    public abstract boolean onPlayerDamagedBonus(Player var1, int var2, EntityDamageByEntityEvent var3);
+    public abstract boolean onPlayerDamagedBonus(Player var1, int var2, EntityDamageByEntityEvent var3) throws Exception;
 
     public abstract boolean onPlayerAttackedBonus(Player var1, int var2, EntityDamageByEntityEvent var3);
 

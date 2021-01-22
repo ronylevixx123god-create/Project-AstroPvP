@@ -10,7 +10,6 @@ import org.arkhamnetwork.enchantments.EnchantmentBook;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.ExpUtils;
 import org.arkhamnetwork.enchantments.util.ItemUtils;
-import org.arkhamnetwork.enchantments.util.ParticleEffect;
 import org.arkhamnetwork.enchantments.util.TieredEnchantments;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -46,7 +45,7 @@ public class CosmicAlchemistListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onCosmicAlchemistInventoryClick(final InventoryClickEvent e) {
+    public void onCosmicAlchemistInventoryClick(final InventoryClickEvent e) throws Exception {
         if (e.getInventory().getTitle().equals("Cosmic Alchemist")) {
             e.setCancelled(true);
             e.setResult(Event.Result.DENY);
@@ -138,7 +137,8 @@ public class CosmicAlchemistListener implements Listener {
                 p.getInventory().addItem(new ItemStack[]{newItem});
                 p.closeInventory();
                 p.playSound(p.getLocation(), Sound.VILLAGER_YES, 1.0f, 0.3f);
-                ParticleEffect.playEffect(ParticleEffect.HAPPY_VILLAGER, p.getLocation().add(0.0, 1.0, 0.0), 0.55f, 16);
+                de.inventivegames.particle.ParticleEffect.HAPPY_VILLAGER.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation(), 0f,0.5f,0f,0.55f,16);
+
                 Bukkit.dispatchCommand((CommandSender) Bukkit.getConsoleSender(), "contest add " + p.getName() + " alchemistExch 1");
                 Bukkit.getPluginManager().callEvent((Event) new CustomCosmicPlayerEvent(p, "ALCHEMIST_TRADE", new Object[]{items, Lists.newArrayList((Object[]) new ItemStack[]{newItem})}));
             }

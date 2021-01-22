@@ -20,7 +20,6 @@ import com.rit.sucy.EnchantmentAPI;
 import me.ifamasssxd.cosmicconquest.CosmicConquestAPI;
 import me.ifamasssxd.cosmicdisguises.managers.CosmicDisguiseAPI;
 import me.ifamasssxd.killtracker.KillTrackerAPI;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.arkhamnetwork.Arkkit.patches.EquipmentLootboxes;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.patches.ItemLinking;
@@ -30,7 +29,10 @@ import org.arkhamnetwork.enchantments.EnchantmentBook;
 import org.arkhamnetwork.enchantments.EnchantmentOrb;
 import org.arkhamnetwork.enchantments.RandomizationScroll;
 import org.arkhamnetwork.enchantments.libs.OrbType;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -48,7 +50,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class DungeonLootbagListener
 implements Listener {
     @EventHandler
-    public void onPlayerOpenDungeonLootbag(PlayerInteractEvent e) {
+    public void onPlayerOpenDungeonLootbag(PlayerInteractEvent e) throws Exception {
         if (e.hasItem() && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && DungeonsRewardsAPI.isDungeonLootBag(e.getItem())) {
             ItemStack pointNote;
             DungeonType foundType;
@@ -139,7 +141,8 @@ implements Listener {
             if (dropped) {
                 p.sendMessage(CC.RedB + "(!) " + CC.Red + "Your inventory was full and some Lootbag items have been dropped on the ground!");
             }
-            ParticleEffect.playEffect(ParticleEffect.CLOUD, (Location)p.getLocation().add(0.0, 1.0, 0.0), (float)0.6f, 50);
+            de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(),p.getLocation(), 0f,1f,0f,0.6f,50);
+
 
             p.playSound(p.getLocation(), Sound.CHEST_OPEN, 1.0f, 0.3f);
             Bukkit.getLogger().info(new StringBuilder().append("[CosmicDungeons] Giving ").append(p.getName()).append(loot.size()).append(" items: ").append(Arrays.toString(loot.toArray(new Object[0]))).append(" from lootbag: ").append(bagType.name()).toString());

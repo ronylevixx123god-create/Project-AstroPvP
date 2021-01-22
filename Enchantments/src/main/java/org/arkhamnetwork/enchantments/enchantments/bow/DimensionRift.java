@@ -116,7 +116,6 @@ public class DimensionRift extends CustomEnchantment {
 
     @SneakyThrows
     public void applyProjectileEffect(final LivingEntity player, final int level, final ProjectileLaunchEvent e) {
-        ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, e.getEntity().getLocation(), 0.7f, 16);
         de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), e.getEntity().getLocation(), 0f,0.5f,0f,0.7f,16);
 
     }

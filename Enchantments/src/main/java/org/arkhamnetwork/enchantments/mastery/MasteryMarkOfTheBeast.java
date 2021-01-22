@@ -2,7 +2,6 @@ package org.arkhamnetwork.enchantments.mastery;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.MasteryCustomEnchantment;
@@ -74,7 +73,7 @@ public class MasteryMarkOfTheBeast extends MasteryCustomEnchantment {
         }
     }
 
-    public void applyDefenseEffectIgnoreAntiMkit(final LivingEntity damagedPlayer, final LivingEntity attackerEnt, final int enchantLevel, final EntityDamageEvent event) {
+    public void applyDefenseEffectIgnoreAntiMkit(final LivingEntity damagedPlayer, final LivingEntity attackerEnt, final int enchantLevel, final EntityDamageEvent event) throws Exception {
         if (!(damagedPlayer instanceof Player) || !(attackerEnt instanceof Player)) {
             return;
         }
@@ -88,7 +87,8 @@ public class MasteryMarkOfTheBeast extends MasteryCustomEnchantment {
             final UUID uuid = attacker.getUniqueId();
             if (!markedPlayers.containsKey(uuid)) {
                 this.markedPlayers.put(uuid, (long) (System.currentTimeMillis() + seconds * 1000.0));
-                ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, damaged.getEyeLocation(), 0.6f, 20);
+                de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), damaged.getEyeLocation(), 0f,0.5f,0f,0.6f,20);
+
                 for (final Entity entity : attacker.getNearbyEntities((double) (20 + enchantLevel * 2), (double) (20 + enchantLevel * 2), (double) (20 + enchantLevel * 2))) {
                     if (entity instanceof Player) {
                         ((Player) entity).sendMessage(CC.YellowB + "* MARK OF THE BEAST [" + CC.Gray + attacker.getName() + ": " + NumberUtils.formatSeconds(seconds) + "s" + CC.YellowB + "] *");

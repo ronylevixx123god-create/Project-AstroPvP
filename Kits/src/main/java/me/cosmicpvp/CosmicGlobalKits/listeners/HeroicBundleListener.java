@@ -25,18 +25,13 @@ package me.cosmicpvp.CosmicGlobalKits.listeners;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
 import com.google.common.collect.Lists;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 import me.cosmicpvp.CosmicGlobalKits.libs.FallenHero;
 import me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits;
 import me.cosmicpvp.CosmicGlobalKits.libs.MasteryKits;
 import me.cosmicpvp.CosmicGlobalKits.utils.ItemUtils;
 import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKits;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -48,10 +43,15 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+
 public class HeroicBundleListener
 implements Listener {
     @EventHandler(priority=EventPriority.LOWEST)
-    public void onPlayerUseHeroicBundle(PlayerInteractEvent e) {
+    public void onPlayerUseHeroicBundle(PlayerInteractEvent e) throws Exception {
         if (e.hasItem() && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
             boolean vkitBundle = false;
             boolean ghostBundle = false;
@@ -101,7 +101,8 @@ implements Listener {
                     }
                 }
                 p.updateInventory();
-                ParticleEffect.playEffect((ParticleEffect)ParticleEffect.SPELL, (Location)p.getEyeLocation(), (float)0.7f, (int)50);
+                de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), p.getEyeLocation(), 0f, 0.0f, 0f, 0.7f, 50);
+
                 p.playSound(p.getLocation(), Sound.CHEST_OPEN, 1.0f, 2.0f);
             }
         }

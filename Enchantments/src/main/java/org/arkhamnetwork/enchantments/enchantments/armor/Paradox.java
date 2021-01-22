@@ -114,7 +114,8 @@ public class Paradox extends CustomEnchantment {
                     p.playSound(p.getLocation(), Sound.LEVEL_UP, 1.0f, 0.65f);
                 }
             } else {
-                ParticleEffect.playEffect(ParticleEffect.LAVA, p.getEyeLocation(), 0.4f, 20);
+                de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), p.getEyeLocation(), 0f, 0.5f, 0f, 0.3f, 30);
+
                 p.playSound(p.getLocation(), Sound.ITEM_BREAK, 0.7f, 0.4f);
                 p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "** OUT OF SOULS **");
             }

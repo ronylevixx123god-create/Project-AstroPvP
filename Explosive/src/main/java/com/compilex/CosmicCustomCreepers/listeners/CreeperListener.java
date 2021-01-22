@@ -328,7 +328,8 @@ implements Listener {
                     p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, stunTicks, 128));
                     p.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "* STUN CREEPER [" + ChatColor.GRAY + "3s" + ChatColor.RED + ChatColor.BOLD + "] *");
                     p.setMetadata("stunCreeperCooldown", new FixedMetadataValue(Arkkit.get(), System.currentTimeMillis() + 30000L));
-                    ParticleEffect.playEffect(ParticleEffect.CRIT, p.getEyeLocation().subtract(0.0, 0.5, 0.0), 1.2f, 30);
+                    de.inventivegames.particle.ParticleEffect.CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), p.getEyeLocation(), 0f,0.5f,0f,1.2f,30);
+
                     Bukkit.getScheduler().runTaskLater(CosmicCustomTNT.get(), new Runnable(){
 
                         @Override
@@ -337,7 +338,8 @@ implements Listener {
                         }
                     }, stunTicks);
                 }
-                ParticleEffect.playEffect(ParticleEffect.LARGE_EXPLODE, e.getEntity().getLocation().add(0.0, 1.0, 0.0), 1.2f, 30);
+                de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(),e.getEntity().getLocation(), 0f,1f,0f,1.2f,30);
+
                 e.getEntity().getWorld().playSound(e.getEntity().getLocation(), Sound.EXPLODE, 1.0f, 1.0f);
                 e.getEntity().remove();
                 e.setCancelled(true);
@@ -350,7 +352,7 @@ implements Listener {
                         int duration = 5;
                         int radius = 4;
                         ((MasteryRotAndDecay)EnchantmentAPI.getEnchantment("Rot and Decay")).applyRotAndDecayEffect(p, e.getEntity().getLocation().getBlock(), radius, duration, null);
-                        ParticleEffect.playEffect(ParticleEffect.LARGE_EXPLODE, e.getEntity().getLocation().add(0.0, 1.0, 0.0), 1.2f, 30);
+                        de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(),e.getEntity().getLocation(), 0f,1f,0f,1.2f,30);
                         e.getEntity().getWorld().playSound(e.getEntity().getLocation(), Sound.EXPLODE, 1.0f, 1.0f);
                         e.getEntity().remove();
                         e.setCancelled(true);

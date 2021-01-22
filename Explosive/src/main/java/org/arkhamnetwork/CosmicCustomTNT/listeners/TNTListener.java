@@ -46,6 +46,7 @@ import com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import de.dustplanet.util.SilkUtil;
+import lombok.SneakyThrows;
 import net.coreprotect.CoreProtect;
 import net.coreprotect.CoreProtectAPI;
 import net.minecraft.server.v1_8_R3.EntityTNTPrimed;
@@ -161,7 +162,7 @@ implements Listener {
     }
 
     @EventHandler(priority=EventPriority.LOW, ignoreCancelled=true)
-    public void onTNTExplode(EntityExplodeEvent e) {
+    public void onTNTExplode(EntityExplodeEvent e) throws Exception {
         block18: {
             TNTTypes tnt_type;
             TNTPrimed tnt;
@@ -251,7 +252,8 @@ implements Listener {
                                 while (spawnerCount-- > 0) {
                                     b.getWorld().dropItem(b.getLocation(), is);
                                 }
-                                ParticleEffect.playEffect(ParticleEffect.INSTANT_SPELL, b.getLocation(), 0.6f, 20);
+                                de.inventivegames.particle.ParticleEffect.INSTANT_SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), b.getLocation(), 0f, 1f, 0f, 0.6f, 20);
+
                             }
                             break block18;
                         }
@@ -282,7 +284,8 @@ implements Listener {
                             while (spawnerCount-- > 0) {
                                 b.getWorld().dropItem(b.getLocation(), is);
                             }
-                            ParticleEffect.playEffect(ParticleEffect.INSTANT_SPELL, b.getLocation(), 0.6f, 20);
+                            de.inventivegames.particle.ParticleEffect.INSTANT_SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), b.getLocation(), 0f, 0.5f, 0f, 0.5f, 20);
+
                         }
                         e.setCancelled(true);
                         e.setYield(0.0f);
@@ -293,26 +296,30 @@ implements Listener {
                     final Location l = tnt.getLocation();
                     Bukkit.getScheduler().runTaskLater(CosmicCustomTNT.get(), new Runnable(){
 
+                        @SneakyThrows
                         @Override
                         public void run() {
                             TNTListener.this.spawnFastExplosion(l);
-                            ParticleEffect.playEffect(ParticleEffect.LARGE_EXPLODE, l, 1.2f, 30);
+                            de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), l, 0f, 0.0f, 0f, 1.2f, 30);
+
                         }
                     }, 100L);
                     Bukkit.getScheduler().runTaskLater(CosmicCustomTNT.get(), new Runnable(){
 
+                        @SneakyThrows
                         @Override
                         public void run() {
                             TNTListener.this.spawnFastExplosion(l);
-                            ParticleEffect.playEffect(ParticleEffect.LARGE_EXPLODE, l, 1.2f, 30);
+                            de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), l, 0f, 0.0f, 0f, 1.2f, 30);
                         }
                     }, 200L);
                     Bukkit.getScheduler().runTaskLater(CosmicCustomTNT.get(), new Runnable(){
 
+                        @SneakyThrows
                         @Override
                         public void run() {
                             TNTListener.this.spawnFastExplosion(l);
-                            ParticleEffect.playEffect(ParticleEffect.LARGE_EXPLODE, l, 1.2f, 30);
+                            de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), l, 0f, 0.0f, 0f, 1.2f, 30);
                         }
                     }, 300L);
                     break block18;
@@ -322,7 +329,8 @@ implements Listener {
                 for (Block b : blockList) {
                     if (b.getType() == Material.AIR || b.getType() == Material.MOB_SPAWNER) continue;
                     b.setMetadata("hexBlocks", new FixedMetadataValue(CosmicCustomTNT.get(), System.currentTimeMillis()));
-                    ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, b.getLocation(), 1.2f, 20);
+                    de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), b.getLocation(), 0f, 0.0f, 0f, 1.2f, 20);
+
                     Bukkit.getScheduler().runTaskLater(CosmicCustomTNT.get(), new Runnable(){
 
                         @Override

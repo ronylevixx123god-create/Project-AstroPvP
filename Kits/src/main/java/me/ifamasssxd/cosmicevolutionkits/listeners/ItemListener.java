@@ -31,17 +31,13 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
-import java.text.DecimalFormat;
-import java.util.List;
 import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKits;
 import me.ifamasssxd.cosmicevolutionkits.structure.KitPlayer;
 import me.ifamasssxd.cosmicevolutionkits.structure.ekits.Lucky;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -52,12 +48,15 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.text.DecimalFormat;
+import java.util.List;
+
 public class ItemListener
 implements Listener {
     private DecimalFormat df = new DecimalFormat("#,###");
 
     @EventHandler
-    public void onPlayerInteract(PlayerInteractEvent event) {
+    public void onPlayerInteract(PlayerInteractEvent event) throws Exception {
         Player player = event.getPlayer();
         if (!event.hasItem()) {
             return;
@@ -186,8 +185,8 @@ implements Listener {
                     items.forEach(is -> PlayerUtil.giveOrDropProtectedItem((Player)player, (ItemStack)is, (int)-1));
                     player.updateInventory();
                     player.getWorld().playSound(player.getLocation(), Sound.LEVEL_UP, 10.0f, 0.8f);
-                    ParticleEffect.playEffect((ParticleEffect)ParticleEffect.SPELL, (Location)player.getEyeLocation().subtract(0.0, 0.5, 0.0), (float)0.1f, (int)50);
-                    ParticleEffect.playEffect((ParticleEffect)ParticleEffect.FIREWORKS_SPARK, (Location)player.getEyeLocation().subtract(0.0, 0.5, 0.0), (float)0.33f, (int)40);
+                    de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 0f, 0.0f, 0f, 0.1f, 35);
+                    de.inventivegames.particle.ParticleEffect.MAGIC_CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 0f, 0.0f, 0f, 0.33f, 35);
                     player.sendMessage((Object)ChatColor.YELLOW + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.YELLOW + "The " + (Object)ChatColor.GOLD + "Lucky Box (LVL " + level + ")" + (Object)ChatColor.YELLOW + " contains " + (Object)ChatColor.GOLD + (items.size() - 1) + " item(s)" + (Object)ChatColor.YELLOW + " and " + (Object)ChatColor.GOLD + "$" + this.df.format(cash) + "!");
                     return;
                 }

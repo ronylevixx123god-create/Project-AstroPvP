@@ -2,12 +2,12 @@ package org.arkhamnetwork.enchantments.enchantments.tools;
 
 import com.cosmicpvp.cosmicutils.utils.CoreProtectUtils;
 import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.massivecraft.factions.*;
 import com.massivecraft.factions.struct.FactionPermission;
 import com.massivecraft.factions.struct.LogTimer;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
+import lombok.SneakyThrows;
 import me.ifamasssxd.cosmicguishop.CosmicGUIShop;
 import net.minecraft.server.v1_8_R3.Blocks;
 import net.minecraft.server.v1_8_R3.ChunkSection;
@@ -60,6 +60,7 @@ public class Detonate extends CustomEnchantment {
         Detonate.loggedBlockFaces.put(p.getUniqueId(), b);
     }
 
+    @SneakyThrows
     public void applyToolEffect(final Player player, final Block block, final int enchantLevel, final BlockEvent event) {
         if (event instanceof BlockBreakEvent) {
             final BlockBreakEvent bbe = (BlockBreakEvent) event;
@@ -77,7 +78,7 @@ public class Detonate extends CustomEnchantment {
         return Detonate.loggedBlockFaces.containsKey(p.getUniqueId()) ? Detonate.loggedBlockFaces.get(p.getUniqueId()) : null;
     }
 
-    private void explode(final Player pl, final Block b, final int level) {
+    private void explode(final Player pl, final Block b, final int level) throws Exception {
         final ItemStack pickaxeItem = pl.getItemInHand();
         final boolean hasAutoSmelt = EnchantmentAPI.itemHasEnchantment(pl.getItemInHand(), "Auto Smelt");
         final boolean hasFuse = EnchantmentAPI.itemHasEnchantment(pl.getItemInHand(), "Fuse");
@@ -145,7 +146,8 @@ public class Detonate extends CustomEnchantment {
                         spawnerType = ((CreatureSpawner) state).getSpawnedType();
                     }
                 }
-                ParticleEffect.playEffect(ParticleEffect.LARGE_EXPLODE, bl.getLocation().add(0.0, 0.5, 0.0), 0.025f, 1);
+                de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(),bl.getLocation(), 0f,1f,0f,0.025f,1);
+
                 if (bl.getDrops(pl.getItemInHand()).size() > 0) {
                     ItemStack loot = null;
                     try {

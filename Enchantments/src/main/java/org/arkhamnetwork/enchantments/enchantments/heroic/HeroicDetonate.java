@@ -81,7 +81,7 @@ public class HeroicDetonate extends CustomEnchantment {
         return HeroicDetonate.loggedBlockFaces.containsKey(p.getUniqueId()) ? HeroicDetonate.loggedBlockFaces.get(p.getUniqueId()) : null;
     }
 
-    private void explode(final Player pl, final Block b, final int level) {
+    private void explode(final Player pl, final Block b, final int level) throws Exception {
         final ItemStack pickaxeItem = pl.getItemInHand();
         final boolean hasAutoSmelt = EnchantmentAPI.itemHasEnchantment(pl.getItemInHand(), "Auto Smelt");
         final boolean hasFuse = EnchantmentAPI.itemHasEnchantment(pl.getItemInHand(), "Fuse");
@@ -157,7 +157,8 @@ public class HeroicDetonate extends CustomEnchantment {
                         spawnerType = ((CreatureSpawner) state).getSpawnedType();
                     }
                 }
-                ParticleEffect.playEffect(ParticleEffect.LARGE_EXPLODE, bl.getLocation().add(0.0, 0.5, 0.0), 0.025f, 1);
+                de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), bl.getLocation(), 0f,0.5f,0f,0.025f,1);
+
                 if (bl.getDrops(pl.getItemInHand()).size() > 0) {
                     ItemStack loot = null;
                     try {

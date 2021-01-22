@@ -38,22 +38,14 @@ import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
+import lombok.SneakyThrows;
 import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKits;
 import me.cosmicpvp.CosmicGlobalKits.libs.FallenHero;
 import me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits;
 import me.cosmicpvp.CosmicGlobalKits.utils.WorldGuardUtils;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
 import me.ifamasssxd.cosmicskycustoms.struct.PlayerInteractable;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -64,6 +56,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
 
 public class MysteryFallenHeroItem
 extends CosmicItem
@@ -82,6 +79,7 @@ implements PlayerInteractable {
         return this.applyItemData(new ItemBuilder(Material.BONE, displayName, new String[0]).lore((List)lore).build()).assignIID().build();
     }
 
+    @SneakyThrows
     public void onPlayerInteractable(Player player, ItemStack itemStack, NBTWrapper nbtWrapper, PlayerInteractEvent playerInteractEvent) throws CosmicException {
         if (playerInteractEvent.getAction() == Action.RIGHT_CLICK_BLOCK || playerInteractEvent.getAction() == Action.RIGHT_CLICK_AIR) {
             playerInteractEvent.setCancelled(true);
@@ -136,8 +134,9 @@ implements PlayerInteractable {
                     pNear.sendMessage((Object)ChatColor.GRAY + "Locate and slay the Fallen Hero to steal its loot for yourself!");
                 }
                 p.playSound(p.getLocation(), Sound.WITHER_SPAWN, 1.0f, 1.2f);
-                ParticleEffect.playEffect((ParticleEffect)ParticleEffect.SPELL, (Location)fallenHero.getLocation(), (float)0.8f, (int)35);
-                ParticleEffect.playEffect((ParticleEffect)ParticleEffect.FIREWORKS_SPARK, (Location)fallenHero.getLocation(), (float)0.5f, (int)50);
+                de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), fallenHero.getLocation(), 0f, 1f, 0f, 0.6f, 35);
+                de.inventivegames.particle.ParticleEffect.FIREWORKS_SPARK.sendToPlayers(Bukkit.getOnlinePlayers(), fallenHero.getLocation(), 0f, 1f, 0f, 0.5f, 50);
+
             }
         }
     }

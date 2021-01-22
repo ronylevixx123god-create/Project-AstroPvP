@@ -1,11 +1,11 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.Relation;
 import com.rit.sucy.CustomEnchantment;
+import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.ArmorUtil;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -30,6 +30,7 @@ public class PlagueCarrier extends CustomEnchantment {
         Enchantments.getInstance().getServer().getPluginManager().registerEvents((Listener) new PlagueCarrierListener(), (Plugin) Enchantments.getInstance());
     }
 
+    @SneakyThrows
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         if (player instanceof Player) {
             final Player p = (Player) player;
@@ -55,7 +56,8 @@ public class PlagueCarrier extends CustomEnchantment {
                         victims.add((LivingEntity) ent);
                     }
                 }
-                ParticleEffect.playEffect(ParticleEffect.CLOUD, p.getLocation().add(0.0, 1.0, 0.0), 1.0f, 75);
+                de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(),player.getEyeLocation(), 0f,1f,0f,1f,75);
+
                 p.getWorld().playSound(p.getLocation(), Sound.CREEPER_HISS, 2.0f, 0.75f);
                 for (final LivingEntity victim : victims) {
                     if (victim instanceof Player) {
@@ -75,7 +77,7 @@ public class PlagueCarrier extends CustomEnchantment {
         }
     }
 
-    private void spawnPlagueCreeper(final Location l, final int level) {
+    private void spawnPlagueCreeper(final Location l, final int level) throws Exception {
         final Creeper c = (Creeper) l.getWorld().spawnEntity(l, EntityType.CREEPER);
         c.setMetadata("plagueCarrier", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) level));
         c.setCustomName(ChatColor.LIGHT_PURPLE + "Plague Carrier");
@@ -83,7 +85,8 @@ public class PlagueCarrier extends CustomEnchantment {
         c.setMetadata("no_loot", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) true));
         c.setCustomNameVisible(true);
         c.setPowered(true);
-        ParticleEffect.playEffect(ParticleEffect.CLOUD, c.getLocation().add(0.0, 1.0, 0.0), 0.5f, 20);
+        de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), c.getLocation(), 0f, 0.5f, 0f, 0.5f, 20);
+
     }
 
     private Location getNearbyLocation(final Location l, final int radius, final int y_boost) {
