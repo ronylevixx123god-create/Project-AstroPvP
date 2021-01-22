@@ -1,17 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.struct.factions.points.FactionPointUtils
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.JSONMessage
- *  com.google.common.collect.Lists
- *  org.bukkit.ChatColor
- *  org.bukkit.DyeColor
- *  org.bukkit.Material
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.material.MaterialData
- */
 package me.ifamasssxd.factionupgrades.struct;
 
 import com.cosmicpvp.cosmicutils.utils.CC;

@@ -25,8 +25,8 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import net.minecraft.server.v1_8_R3.EntityCreature;
-import net.minecraft.server.v1_8_R3.EntityInsentient;
+import me.ifamasssxd.cosmicbosses.utils.BossUtils;
+import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -60,11 +60,11 @@ final class ThanksgivingTask
         EntityInsentient insentient = (EntityInsentient) ((CraftLivingEntity) c).getHandle();
         EntityCreature creature = (EntityCreature) insentient;
         // TODO: FIX WHEN BOSSES IS DONE
-     /*   BossUtils.clearGoalSelectors((EntityInsentient)insentient);
-        BossUtils.addSelector((EntityInsentient)insentient, (int)0, (PathfinderGoal)new PathfinderGoalFloat(insentient));
-        BossUtils.addSelector((EntityInsentient)insentient, (int)1, (PathfinderGoal)new PathfinderGoalPanic(creature, 1.4));
-        BossUtils.addSelector((EntityInsentient)insentient, (int)5, (PathfinderGoal)new PathfinderGoalLookAtPlayer(insentient, EntityHuman.class, 6.0f));
-        BossUtils.addSelector((EntityInsentient)insentient, (int)6, (PathfinderGoal)new PathfinderGoalRandomStroll(creature, 1.0)); */
+//        BossUtils.clearGoalSelectors((EntityInsentient)insentient);
+//        BossUtils.addSelector((EntityInsentient)insentient, (int)0, (PathfinderGoal)new PathfinderGoalFloat(insentient));
+//        BossUtils.addSelector((EntityInsentient)insentient, (int)1, (PathfinderGoal)new PathfinderGoalPanic(creature, 1.4));
+//        BossUtils.addSelector((EntityInsentient)insentient, (int)5, (PathfinderGoal)new PathfinderGoalLookAtPlayer(insentient, EntityHuman.class, 6.0f));
+//        BossUtils.addSelector((EntityInsentient)insentient, (int)6, (PathfinderGoal)new PathfinderGoalRandomStroll(creature, 1.0));
         l.getWorld().playSound(l, Sound.CHICKEN_IDLE, 2.0f, 0.25f);
     }
 

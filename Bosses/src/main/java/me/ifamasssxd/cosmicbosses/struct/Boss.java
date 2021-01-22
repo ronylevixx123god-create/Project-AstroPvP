@@ -4,7 +4,6 @@ import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils;
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
-import com.cosmicpvp.cosmicutils.struct.factions.points.FactionPointUtils;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
@@ -177,9 +176,8 @@ public abstract class Boss extends Equipable implements Healable {
         if (event.getCause() == EntityDamageEvent.DamageCause.PROJECTILE && event.getDamager() instanceof Arrow) {
             if (((Projectile) event.getDamager()).getShooter() instanceof Player) {
                 Player p = (Player) ((Projectile) event.getDamager()).getShooter();
-
-//                todo: method doesnt exist
-//                if (DungeonsAPI.hasDungeonDebuff(p, DungeonDebuff.NO_BOW_DAMAGE_TO_BOSSES)) {
+//                todo: wtf is this method
+//                if (DungeonsAPI.isDungeonType(p, DungeonDebuff.NO_BOW_DAMAGE_TO_BOSSES)) {
 //                    p.sendMessage(CC.translate("&c&l(!) &cYou cannot use bows to damage bosses in this heroic dungeon!"));
 //                    event.setCancelled(true);
 //                }
@@ -601,9 +599,6 @@ public abstract class Boss extends Equipable implements Healable {
         }
         int placement = 1;
         for (final Player player : topDamage) {
-            if (placement++ == 1) {
-                FactionPointUtils.giveFactionPoints(FactionUtils.getFaction(player), player, "boss_death", (Object) new Object[]{this.getName(), this.getEntity()});
-            }
             boolean noRoom = false;
             if (title != null && this.random.nextInt(100) == 0 && !this.addItem(player, title)) {
                 noRoom = true;

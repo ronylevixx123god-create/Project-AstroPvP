@@ -264,7 +264,7 @@ public final class MinionsAbility extends BossAbility<MotherOfYijki> implements 
         }
         final HealingBlazeEntity healingEntity = new HealingBlazeEntity((MotherOfYijki) boss, (World) world);
         healingEntity.setPosition(location.getX(), location.getY(), location.getZ());
-        world.addEntity((net.minecraft.server.v1_8_R3.Entity) healingEntity, CreatureSpawnEvent.SpawnReason.CUSTOM);
+        world.addEntity(healingEntity, CreatureSpawnEvent.SpawnReason.CUSTOM);
         final CraftEntity bukkitEntity = healingEntity.getBukkitEntity();
         if (bukkitEntity == null) {
             throw new TypeCastException("null cannot be cast to non-null type org.bukkit.entity.LivingEntity");
