@@ -74,10 +74,6 @@ final class FireballListener implements Listener {
                     if (u.isGodModeEnabled() || u.isVanished()) {
                         continue;
                     }
-                    // TODO: ADD STAFF FREEZE
-                    /*if (StaffPlus.get().freeze.isActive(pEnt.getName())) {
-                        continue;
-                    }*/
                 }
                 if (WorldGuardUtils.isPvPDisabled(ent.getLocation())) {
                     continue;

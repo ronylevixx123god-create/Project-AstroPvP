@@ -3,6 +3,7 @@ package com.cosmicpvp.CosmicSpaceChests.libs;
 import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
 import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.compilex.CosmicCustomCreepers.enums.CreeperTypes;
+import com.cosmicpvp.CosmicRankQuests.HeroicRankCrystalAPI;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsPlugin;
 import com.cosmicpvp.CosmicSpaceChests.generators.ItemGenerator;
@@ -16,6 +17,8 @@ import me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits;
 import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
 import me.ifamasssxd.cosmicconquest.CosmicConquestAPI;
 import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKits;
+import me.ifamasssxd.cosmicfactionboosters.CosmicFactionBoosters;
+import me.ifamasssxd.cosmicfactionboosters.enums.BoosterType;
 import me.ifamasssxd.killtracker.KillTrackerAPI;
 import me.ifamasssxd.killtracker.listeners.Tracker;
 import org.arkhamnetwork.Arkkit.patches.*;
@@ -193,9 +196,8 @@ public class LootGenerator {
         ultraRareExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Hex), 64), 0.02);
         ultraRareExtras.put(KillTrackerAPI.buildTracker(Tracker.Ultimate), 0.01);
         ultraRareExtras.put(MysteryMobSpawners.getMysteryMobSpawner(), 0.01);
-        // todo: fix this method
-        //        ultraRareExtras.put(CosmicFactionBoosters.get().getBoosterManager().createBooster(BoosterType.EXP, 600, 1.5), 0.01);
-//        ultraRareExtras.put(CosmicFactionBoosters.get().getBoosterManager().createBooster(BoosterType.MCMMO, 600, 1.5), 0.02);
+        ultraRareExtras.put(CosmicFactionBoosters.get().getBoosterManager().createBooster(BoosterType.EXP, 600, 1.5), 0.01);
+        ultraRareExtras.put(CosmicFactionBoosters.get().getBoosterManager().createBooster(BoosterType.MCMMO, 600, 1.5), 0.02);
         ultraRareExtras.put(ItemUtils.setAmount(EnchantmentBook.getSecretDust(ItemRarity.ULTIMATE, 50), 5), 0.02);
         ultraRareExtras.put(ItemUtils.setAmount(RandomizationScroll.getRandomizationScroll(ItemRarity.ULTIMATE), 2), 0.01);
         ultraRareExtras.put(ShowcaseExpander.getShowcaseExpanderItem(), 0.01);
@@ -260,9 +262,8 @@ public class LootGenerator {
         legendaryExtras.put(ItemUtils.setAmount(ItemUtils.getCustomCreeperEgg(CreeperTypes.Tactical), 8), 0.03);
         legendaryExtras.put(ItemUtils.setAmount(ItemUtils.getCustomCreeperEgg(CreeperTypes.Huge), 4), 0.015);
         legendaryExtras.put(ItemUtils.setAmount(ItemUtils.getCustomCreeperEgg(CreeperTypes.Lucky), 2), 0.015);
-        // todo: fix this method
-//        legendaryExtras.put(CosmicFactionBoosters.get().getBoosterManager().createBooster(BoosterType.EXP, 900, 2.0), 0.02);
-//        legendaryExtras.put(CosmicFactionBoosters.get().getBoosterManager().createBooster(BoosterType.MCMMO, 900, 2.0), 0.04);
+        legendaryExtras.put(CosmicFactionBoosters.get().getBoosterManager().createBooster(BoosterType.EXP, 900, 2.0), 0.02);
+        legendaryExtras.put(CosmicFactionBoosters.get().getBoosterManager().createBooster(BoosterType.MCMMO, 900, 2.0), 0.04);
         legendaryExtras.put(ItemUtils.setAmount(EnchantmentBook.getSecretDust(ItemRarity.LEGENDARY, 50), 5), 0.02);
         legendaryExtras.put(ItemUtils.setAmount(RandomizationScroll.getRandomizationScroll(ItemRarity.LEGENDARY), 2), 0.01);
         legendaryExtras.put(FallenHero.getFallenHeroItem(EvolutionKits.PHOENIX.getKit()), 0.0025);
@@ -332,13 +333,11 @@ public class LootGenerator {
         godExtras.put(ItemUtils.setAmount(ItemUtils.getCustomCreeperEgg(CreeperTypes.Tactical), 10), 0.03);
         godExtras.put(ItemUtils.setAmount(ItemUtils.getCustomCreeperEgg(CreeperTypes.Huge), 8), 0.015);
         godExtras.put(ItemUtils.setAmount(ItemUtils.getCustomCreeperEgg(CreeperTypes.Lucky), 5), 0.015);
-        // todo: fix this method
-//        godExtras.put(CosmicFactionBoosters.get().getBoosterManager().createBooster(BoosterType.EXP, 900, 5.0), 0.03);
-//        godExtras.put(CosmicFactionBoosters.get().getBoosterManager().createBooster(BoosterType.MCMMO, 900, 5.0), 0.05);
+        godExtras.put(CosmicFactionBoosters.get().getBoosterManager().createBooster(BoosterType.EXP, 900, 5.0), 0.03);
+        godExtras.put(CosmicFactionBoosters.get().getBoosterManager().createBooster(BoosterType.MCMMO, 900, 5.0), 0.05);
         godExtras.put(ItemUtils.setAmount(EnchantmentBook.getSecretDust(ItemRarity.SOUL, 50), 5), 0.02);
         godExtras.put(ItemUtils.setAmount(RandomizationScroll.getRandomizationScroll(ItemRarity.GOD), 2), 0.01);
-       // todo: removed method
-        // godExtras.put(ItemUtils.setAmount(HeroicRankCrystalAPI.getHeroicRankCrystalItem(), 1), 0.001);
+        godExtras.put(ItemUtils.setAmount(HeroicRankCrystalAPI.getHeroicRankCrystalItem(), 1), 0.001);
         godExtras.put(EvolutionKitItems.getKitItem(EvolutionKits.PHOENIX), 0.0015);
         godExtras.put(EvolutionKitItems.getKitItem(EvolutionKits.TROLL), 0.0015);
         godExtras.put(EvolutionKitItems.getKitItem(EvolutionKits.OGRE), 0.0015);
@@ -346,8 +345,6 @@ public class LootGenerator {
         godExtras.put(EnchantmentOrb.getEnchantmentOrb(100, 10, OrbType.ARMOR), 0.005);
         godExtras.put(EnchantmentOrb.getEnchantmentOrb(75, 11, OrbType.WEAPON), 1.0E-4);
         godExtras.put(EnchantmentOrb.getEnchantmentOrb(75, 11, OrbType.ARMOR), 2.0E-4);
-        // todo: dont use this plugin
-//        godExtras.put(CCAPI.getMysteryCrate(), 2.0E-4);
         godExtras.put(ItemUtils.getDepthStriderBook(2), 0.02);
         godExtras.put(ItemUtils.getDepthStriderBook(3), 0.01);
         godExtras.put(ItemUtils.setAmount(ShowcaseExpander.getShowcaseExpanderItem(), 2), 0.01);
@@ -358,27 +355,6 @@ public class LootGenerator {
         godExtras.put(CosmicArmorSetsAPI.getArmorSet(ArmorSet.PHANTOM)[2], 0.0015);
         godExtras.put(CosmicArmorSetsAPI.getArmorSet(ArmorSet.PHANTOM)[3], 0.0015);
         godExtras.put(CosmicConquestAPI.createHeroicToken(2 + ThreadLocalRandom.current().nextInt(6)), 0.0015);
-//        todo: method doesn't exist anymore
-//        if (moneyNotes) {
-//            Bukkit.getLogger().info("Registering money notes instead of rank items..");
-//            commonExtras.put(ItemUtils.getMoneyNoteNoIID("Cosmic Chest", PlayerRankUtils.getSpaceCash(1)), 1.5E-5);
-//            uncommonExtras.put(ItemUtils.getMoneyNoteNoIID("Cosmic Chest", PlayerRankUtils.getSpaceCash(2)), 1.25E-4);
-//            rareExtras.put(ItemUtils.getMoneyNoteNoIID("Cosmic Chest", PlayerRankUtils.getSpaceCash(3)), 1.25E-4);
-//            ultraRareExtras.put(ItemUtils.getMoneyNoteNoIID("Cosmic Chest", PlayerRankUtils.getSpaceCash(4)), 1.25E-4);
-//            legendaryExtras.put(ItemUtils.getMoneyNoteNoIID("Cosmic Chest", PlayerRankUtils.getSpaceCash(5)), 2.5E-4);
-//            godExtras.put(ItemUtils.getMoneyNoteNoIID("Cosmic Chest", PlayerRankUtils.getSpaceCash(5)), 0.001);
-//        } else if (rankItems) {
-//            commonExtras.put(CosmicRankQuestsAPI.getRankQuestItem(1), 1.5E-5);
-//            uncommonExtras.put(CosmicRankQuestsAPI.getRankQuestItem(2), 1.25E-4);
-//            rareExtras.put(CosmicRankQuestsAPI.getRankQuestItem(3), 1.25E-4);
-//            ultraRareExtras.put(CosmicRankQuestsAPI.getRankQuestItem(4), 1.25E-4);
-//            legendaryExtras.put(CosmicRankQuestsAPI.getRankQuestItem(5), 2.5E-4);
-//            godExtras.put(CosmicRankQuestsAPI.getRankQuestItem(5), 0.001);
-//        }
-//        if (Bukkit.getPluginManager().isPluginEnabled("CosmicFactionQuests") && (item = ItemUtils.getFactionQuestReroll(false)) != null) {
-//            legendaryExtras.put(ItemUtils.setAmount(item.clone(), 1), 0.005);
-//            godExtras.put(ItemUtils.setAmount(item.clone(), ThreadLocalRandom.current().nextInt(2) + 1), 0.008);
-//        }
         possibleCommonExtras = new ArrayList<ItemStack>(commonExtras.keySet());
         possibleUncommonExtras = new ArrayList<ItemStack>(uncommonExtras.keySet());
         possibleRareExtras = new ArrayList<ItemStack>(rareExtras.keySet());

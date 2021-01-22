@@ -52,12 +52,6 @@ implements Listener {
                 e.getPlayer().sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You cannot redeem this item while in a duel.");
                 return;
             }
-//            todo: removed plugin
-//            if (!CosmicRankQuestsPlugin.rankNotesEnabled) {
-//                e.getPlayer().sendMessage(ChatColor.RED.toString() + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "Rank Notes redemption is currently disabled on this planet.");
-//                e.getPlayer().sendMessage((Object)ChatColor.GRAY + "This is likely due to an economy exploit that admins are investigating.");
-//                return;
-//            }
             Player p = e.getPlayer();
             e.setCancelled(true);
             e.setUseItemInHand(Event.Result.DENY);

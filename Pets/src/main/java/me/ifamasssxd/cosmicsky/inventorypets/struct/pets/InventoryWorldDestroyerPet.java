@@ -91,10 +91,6 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
                 if (nearPlayer.getGameMode() == GameMode.CREATIVE) {
                     continue;
                 }
-//                todo: new staffmethod
-//                if (StaffPlus.get().freeze.isActive(nearPlayer.getName())) {
-//                    continue;
-//                }
                 final Faction nearFac = FactionUtils.getFaction(nearPlayer);
                 final Relation rel = nearFac.getRelationTo(faction);
                 if (rel.isAlly() || rel.isTruce()) {

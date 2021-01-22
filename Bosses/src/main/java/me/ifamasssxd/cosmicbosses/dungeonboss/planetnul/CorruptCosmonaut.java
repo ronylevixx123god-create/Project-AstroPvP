@@ -439,7 +439,7 @@ public class CorruptCosmonaut extends Boss implements DungeonBoss {
     }
 
     @Override
-    public void onDamageTaken(EntityDamageByEntityEvent event, org.bukkit.entity.Entity damager) throws Exception {
+    public void onDamageTaken(EntityDamageByEntityEvent event, org.bukkit.entity.Entity damager) {
         if (event.getDamager() instanceof Player) {// && CosmicBosses.getInstance().isFactionUpgradesEnabled()) {
             /*final int heroicLevel = UpgradeUtils.getUpgradeLevel((Player)event.getDamager(), "HEROIC_BOSS_MASTERY");
             double mult = 1.0;

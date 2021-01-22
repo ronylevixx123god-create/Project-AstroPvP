@@ -114,15 +114,6 @@ public class InventoryBansheePet extends InventoryPet {
             if (other instanceof Player) {
                 final Player nearPlayer = (Player) other;
                 final Faction nearFac = FactionUtils.getFaction(nearPlayer);
-
-//                todo: new staffmode
-//                if (StaffPlus.get().vanish.isActive(nearPlayer.getName())) {
-//                    continue;
-//                }
-//
-//                if (StaffPlus.get().freeze.isActive(nearPlayer.getName())) {
-//                    continue;
-//                }
                 if (CosmicArmorSetsAPI.getArmorSet(nearPlayer) == ArmorSet.KOTH) {
                     continue;
                 }

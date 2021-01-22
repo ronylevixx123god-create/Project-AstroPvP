@@ -1,10 +1,10 @@
 package me.ifamasssxd.cosmicbosses.struct;
 
+import com.compilex.CosmicDungeons.DungeonsAPI;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils;
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
-import com.cosmicpvp.cosmicutils.struct.factions.points.FactionPointUtils;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
@@ -164,57 +164,26 @@ public abstract class Boss extends Equipable implements Healable {
         if (!loc.getWorld().getName().equals("world_private") && !loc.getWorld().getName().startsWith("cosmic-station") && loc.getY() < loc.getWorld().getHighestBlockYAt(loc)) {
             event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 3.0);
         }
-//        todo: method doesnt exist
-//        if (DungeonsAPI.hasDungeonDebuff(player, DungeonDebuff.BOSSES_DEAL_MORE_DAMAGE)) {
-//            event.setDamage(event.getDamage() * 2.5D);
-//        }
     }
 
-    public void onDamageTaken(final EntityDamageByEntityEvent event, final Entity damager) throws Exception {
-        if (event.isCancelled()) {
+    public void onDamageTaken(EntityDamageByEntityEvent event, Entity damager) {
+        if (event.isCancelled())
             return;
-        }
-        if (event.getCause() == EntityDamageEvent.DamageCause.PROJECTILE && event.getDamager() instanceof Arrow) {
-            if (((Projectile) event.getDamager()).getShooter() instanceof Player) {
-                Player p = (Player) ((Projectile) event.getDamager()).getShooter();
-
-//                todo: method doesnt exist
-//                if (DungeonsAPI.hasDungeonDebuff(p, DungeonDebuff.NO_BOW_DAMAGE_TO_BOSSES)) {
-//                    p.sendMessage(CC.translate("&c&l(!) &cYou cannot use bows to damage bosses in this heroic dungeon!"));
-//                    event.setCancelled(true);
-//                }
-            }
-            return;
-        }
-        if (event.getDamager() instanceof Player && CosmicBosses.getInstance().isFactionUpgradesEnabled()) {
-            final int heroicLevel = UpgradeUtils.getUpgradeLevel((Player) event.getDamager(), "HEROIC_BOSS_MASTERY");
-            double mult = 1.0;
+        if (event.getDamager() instanceof Player &&
+                CosmicBosses.getInstance().isFactionUpgradesEnabled()) {
+            double mult;
+            int heroicLevel = UpgradeUtils.getUpgradeLevel((Player)event.getDamager(), "HEROIC_BOSS_MASTERY");
             if (heroicLevel > 0) {
-                mult = ((heroicLevel == 1) ? 2.05 : ((heroicLevel == 2) ? 2.15 : ((heroicLevel == 3) ? 2.25 : 1.0)));
+                mult = (heroicLevel == 1) ? 2.05D : ((heroicLevel == 2) ? 2.15D : ((heroicLevel == 3) ? 2.25D : 1.0D));
             } else {
-                final int level = FactionUpgradeAPI.getPerkLevel((Player) event.getDamager(), FactionUpgrade.BOSS_MASTERY);
-                mult = ((level == 1) ? 1.25 : ((level == 2) ? 1.5 : ((level == 3) ? 1.75 : ((level == 4) ? 2.0 : 1.0))));
+                int level = FactionUpgradeAPI.getPerkLevel((Player)event.getDamager(), FactionUpgrade.BOSS_MASTERY);
+                mult = (level == 1) ? 1.25D : ((level == 2) ? 1.5D : ((level == 3) ? 1.75D : ((level == 4) ? 2.0D : 1.0D)));
             }
-
-//            todo: method doesnt exist
-//            if (DungeonsAPI.get().getPlayerDungeonData((Player)damager).getCurrentDungeon() != null && DungeonsAPI.get().getPlayerDungeonData((Player)damager).getCurrentDungeon().getBossSlayerTrinket()) {
-//                mult += 0.5;
-//            }
-
-            event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * mult);
+            if (mult > 1.0D)
+                event.setDamage(event.getDamage() * mult);
         }
-        if (event.getDamager() instanceof Player) {
-            // tooo: look into this method
-            //            if (DungeonsAPI.isDungeonType((Player)event.getDamager(), DungeonDebuff.BOSSES_TAKE_LESS_DAMAGE)) {
-//                event.setDamage(event.getDamage() * 0.25);
-//            }
-//            if (DungeonsAPI.isDungeonType((Player)event.getDamager(), DungeonDebuff.DEAL_30HP_MAX_PER_HIT)) {
-//                if (event.getDamage() > 30) event.setDamage(30);
-//            }
-        }
-        if (this instanceof GuardBoss) {
-            ((GuardBoss) this).onDamage(this, event);
-        }
+        if (this instanceof GuardBoss)
+            ((GuardBoss)this).onDamage(this, event);
     }
 
     public void onDamageTaken(final EntityDamageEvent event) throws Exception {
@@ -338,15 +307,6 @@ public abstract class Boss extends Equipable implements Healable {
         String msg;
         if (this.naturallySpawned) {
             msg = this.getColor(true) + "(!) " + this.getColor(false) + "A " + this.getColor(true) + ChatColor.UNDERLINE.toString() + this.getCustomName() + this.getColor(false) + " Boss has been summoned to the /spawn WarZone, at " + this.getColor(true) + this.location.getBlockX() + "x, " + this.location.getBlockY() + "y, " + this.location.getBlockZ() + "z " + this.getColor(false) + "defend DecimateMC!";
-//          todo: method doesnt exist
-            //            try {
-//                for (final Player p : Bukkit.getServer().getOnlinePlayers()) {
-//                    ClientCommsAPI.sendEvent(p, "Previous Warzone Boss", EventType.COUNT_UP, System.currentTimeMillis(), 0L);
-//                }
-//            }
-//            catch (Exception e) {
-//                e.printStackTrace();
-//            }
         } else {
             msg = this.getColor(true) + "(!) " + this.getColor(false) + "A " + this.getColor(true) + ChatColor.UNDERLINE.toString() + this.getCustomName() + this.getColor(false) + " Boss has been summoned nearby, defend DecimateMC!";
         }
@@ -601,9 +561,6 @@ public abstract class Boss extends Equipable implements Healable {
         }
         int placement = 1;
         for (final Player player : topDamage) {
-            if (placement++ == 1) {
-                FactionPointUtils.giveFactionPoints(FactionUtils.getFaction(player), player, "boss_death", (Object) new Object[]{this.getName(), this.getEntity()});
-            }
             boolean noRoom = false;
             if (title != null && this.random.nextInt(100) == 0 && !this.addItem(player, title)) {
                 noRoom = true;

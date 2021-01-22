@@ -136,7 +136,7 @@ public class Marksman extends Boss implements GuardBoss {
     }
 
     @Override
-    public void onDamageTaken(final EntityDamageByEntityEvent event, final Entity damager) throws Exception {
+    public void onDamageTaken(final EntityDamageByEntityEvent event, final Entity damager) {
         if (damager instanceof Projectile) {
             event.setCancelled(true);
             this.getEntity().getWorld().playSound(this.getEntity().getLocation(), Sound.ZOMBIE_INFECT, 1.5f, 2.0f);
@@ -147,18 +147,14 @@ public class Marksman extends Boss implements GuardBoss {
     }
 
     @Override
-    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) throws Exception {
-        // todo: add hasitemskin to astroskins
-        //if (ItemSkinUtils.hasItemSkin(player, "SPRING_2020_AMULET")) return;
+    public void onAttackPlayer(EntityDamageByEntityEvent event, Player player) throws Exception {
         int percentDamage = ThreadLocalRandom.current().nextInt(15) + 10;
-        if (this.random.nextInt(100) < 30) {
+        if (this.random.nextInt(100) < 30)
             percentDamage += 5;
-        }
         BossUtils.dealPercentMaxHealthDamage(player, percentDamage, 25, false);
-        player.playSound(player.getLocation(), Sound.ZOMBIE_WOODBREAK, 3.0f, 1.3f);
-        if (player.isSprinting() && this.random.nextInt(100) < 20) {
+        player.playSound(player.getLocation(), Sound.ZOMBIE_WOODBREAK, 3.0F, 1.3F);
+        if (player.isSprinting() && this.random.nextInt(100) < 20)
             player.setSprinting(false);
-        }
         super.onAttackPlayer(event, player);
     }
 

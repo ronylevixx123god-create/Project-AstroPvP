@@ -2,8 +2,6 @@ package me.ifamasssxd.cosmicbosses.bosses.holidayspirit;
 
 import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
 import com.compilex.CosmicArmorSets.enums.ArmorSet;
-import com.compilex.CosmicCrate.api.CCAPI;
-import com.compilex.CosmicCrate.libs.Version;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.google.common.collect.Lists;
@@ -304,7 +302,6 @@ public class HolidaySpirit extends Boss {
                 Bukkit.getLogger().info("Dropping Phantom Piece at " + location);
             }
             if (ThreadLocalRandom.current().nextInt(100) == 0) {
-                location.getWorld().dropItemNaturally(location, CCAPI.getCosmicCrate(Version.HALLOWEEN_2017, "Pumpkin Harvest Boss"));
                 Bukkit.getLogger().info("Dropping Halloween 2017 CC at " + location);
             }
         }

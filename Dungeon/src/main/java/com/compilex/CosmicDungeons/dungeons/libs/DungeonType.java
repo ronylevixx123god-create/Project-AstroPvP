@@ -106,8 +106,6 @@ public enum DungeonType {
 
     public int getDaysSinceDungeonWasAvailable() {
         return (int)Math.floor(TimeUnit.MILLISECONDS.toDays(1));
-        // TODO: faction points
-        //return (int)Math.floor(TimeUnit.MILLISECONDS.toDays(FactionPointUtils.getTimeSinceStartOfMapWithOffset((long)this.dungeonStartOffset)));
     }
 
     public double calculatePortalCost() {

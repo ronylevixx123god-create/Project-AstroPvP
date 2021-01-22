@@ -83,10 +83,6 @@ public class InventoryWitcherPet extends InventoryPet {
                 if (!player.canSee(nearPlayer)) {
                     continue;
                 }
-//                todo: new staffmethod
-//                if (StaffPlus.get().freeze.isActive(nearPlayer.getName())) {
-//                    continue;
-//                }
                 if (CosmicArmorSetsAPI.getArmorSet(player) == ArmorSet.KOTH) {
                     continue;
                 }
