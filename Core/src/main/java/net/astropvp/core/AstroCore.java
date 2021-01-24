@@ -7,6 +7,7 @@ import com.cosmicpvp.CosmicSponges.listeners.ChunkListener;
 import com.cosmicpvp.CosmicSponges.listeners.SpongeModifyListener;
 import com.cosmicpvp.titles.cmds.CommandTitle;
 import com.cosmicpvp.titles.cmds.CommandTitleSet;
+import com.cosmicpvp.titles.listeners.ChatListener;
 import com.cosmicpvp.titles.listeners.PermissionListener;
 import com.cosmicpvp.titles.listeners.PlayerJoinQuitListener;
 import com.cosmicpvp.titles.listeners.TitleInventoryListener;
@@ -198,6 +199,7 @@ public class AstroCore extends JavaPlugin {
 
         this.toggleManager.loadToggles();
 
+        this.getServer().getPluginManager().registerEvents(new ChatListener(), this);
         this.getServer().getPluginManager().registerEvents(new BackpackListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerDamageListener(), this);
         this.getServer().getPluginManager().registerEvents(new PortablePicnicListener(), this);

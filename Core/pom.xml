@@ -13,6 +13,11 @@
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
 
+    <build>
+        <defaultGoal>clean install</defaultGoal>
+        <finalName>AstroCore</finalName>
+    </build>
+
     <repositories>
         <repository>
             <id>ess-repo</id>
@@ -172,6 +177,13 @@
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/CosmicBosses.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>mystchest</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/CosmicMysteryChest.jar</systemPath>
         </dependency>
     </dependencies>
 

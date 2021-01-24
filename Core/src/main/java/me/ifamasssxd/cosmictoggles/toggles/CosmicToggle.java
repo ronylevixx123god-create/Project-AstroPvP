@@ -24,7 +24,6 @@ package me.ifamasssxd.cosmictoggles.toggles;
 import com.conaxgames.factions.utils.cmds.CommandToggleSmoke;
 import com.massivecraft.factions.FPlayer;
 import me.ifamasssxd.cosmicduel.CosmicDuel;
-import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.ifamasssxd.itemfilter.Filter;
 import me.recolance.auction.Auction;
 import net.astropvp.core.AstroCore;
@@ -63,7 +62,7 @@ public enum CosmicToggle {
             return !ChatFilter.disabledFilteredPlayers.contains(player.getUniqueId());
         }
         if (this == Mysteryanimation) {
-            return CosmicMysteryChest.get().getToggle().hasToggle(player);
+            //return CosmicMysteryChest.get().getToggle().hasToggle(player);
         }
         if (this == PAY) {
             return !AstroCore.getInstance().getPayToggles().hasToggle(player);

@@ -30,8 +30,8 @@
  */
 package com.massivecraft.factions.listeners;
 
-import com.compilex.CompilexPermissions.CompilexPermissions;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.titles.PlayerTitleAPI;
 import com.earth2me.essentials.User;
 import com.earth2me.essentials.utils.DateUtil;
 import com.google.common.collect.Lists;
@@ -48,7 +48,6 @@ import org.arkhamnetwork.Arkkit.libs.SeasonalWin;
 import org.arkhamnetwork.Arkkit.patches.SeasonalPrefixes;
 import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatUtils;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
-import org.arkhamnetwork.permissions.ArkhamPermissions;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -90,20 +89,10 @@ public class FactionsChatListener implements Listener {
             String msg = event.getMessage();
             FPlayer me = FPlayers.i.get(talkingPlayer.getUniqueId().toString());
             ChatMode chat = me.getChatMode();
-            String FORMAT = "&8[[TITLE]&8] [PREFIX][NAME]&f: [COLOR][MESSAGE]";
 
-            String title = "TEMPTITLE";
-            String pg = "";
-            if (new File("plugins/CompilexPermissions.jar").exists()) {
-                pg = CompilexPermissions.get().getPermissionManager().getUser(talkingPlayer.getUniqueId()).getPrefix();
-            } else if (new File("plugins/ArkhamPermissions.jar").exists()) {
-                pg = ArkhamPermissions.getInstance().getPermissionManager().getUser(talkingPlayer.getUniqueId()).getPrefix();
-            }
-            ChatColor cc = ChatColor.WHITE;
-            msg = ChatColor.translateAlternateColorCodes('&', FORMAT.replace("[PREFIX]", pg).replace("[TITLE]", title == null ? "" : (CharSequence) title).replace("[NAME]", talkingPlayer.getName()).replace("[COLOR]", cc == null ? "" : cc.toString())).trim();
-            msg = msg.replace(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_GRAY + "]", "");
-            msg = msg.replace(ChatColor.DARK_GRAY + "[" + ChatColor.RED + "P" + ChatColor.DARK_GRAY + "]", "");
-            msg = msg.replaceAll("  ", " ");
+            // new chat
+            String title = (PlayerTitleAPI.getEquippedTitle(talkingPlayer.getUniqueId() == null ? "" : PlayerTitleAPI.getEquippedTitle(talkingPlayer.getUniqueId())));
+            // new chat
 
             if (chat != ChatMode.PUBLIC && this.p.handleCommand(talkingPlayer, msg, false, true)) {
                 if (Conf.logPlayerCommands) {

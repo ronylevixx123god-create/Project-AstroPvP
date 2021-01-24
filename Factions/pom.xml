@@ -119,6 +119,12 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>CompilexPermissions</artifactId>
+            <version>0.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>com.google.zxing</groupId>
             <artifactId>core</artifactId>
             <version>3.2.1</version>
