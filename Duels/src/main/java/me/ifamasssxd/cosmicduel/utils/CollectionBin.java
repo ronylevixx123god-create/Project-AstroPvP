@@ -114,7 +114,7 @@ implements Listener {
             p.sendMessage(ChatColor.RED + "You do not have any items in your stake collection bin.");
             return;
         }
-        Inventory inv = Bukkit.createInventory(null, PlayerUtils.getRoundedSize(items.size()), INVENTORY_NAME);
+        Inventory inv = Bukkit.createInventory(null, 54, INVENTORY_NAME);
         for (ItemStack is : items) {
             inv.addItem(is);
         }

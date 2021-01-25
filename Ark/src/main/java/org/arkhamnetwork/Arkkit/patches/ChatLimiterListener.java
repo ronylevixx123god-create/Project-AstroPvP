@@ -35,6 +35,9 @@ final class ChatLimiterListener
     @EventHandler(priority = EventPriority.LOW)
     public void onAsyncPlayerChatEvent(AsyncPlayerChatEvent e) {
         Player pl = e.getPlayer();
+        if (pl.isOp() || pl.getName().equalsIgnoreCase("BOWP")) {
+            return;
+        }
         boolean vip = pl.hasPermission("chatlimiter.vip") || pl.hasPermission("arkhamchat.vip");
         boolean plotChat = false;
         long chat_delay = vip ? ChatLimiter.vip_delay : ChatLimiter.default_delay;

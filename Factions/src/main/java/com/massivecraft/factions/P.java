@@ -90,6 +90,7 @@ import java.util.logging.Level;
 
 public class P extends MPlugin {
     public static P p;
+
     public final FactionsPlayerListener playerListener;
     public final FactionsChatListener chatListener;
     public final FactionsEntityListener entityListener;
@@ -111,10 +112,8 @@ public class P extends MPlugin {
     private final FChestManager fChestManager;
     private FileManager fileManager;
     public static WorldGuardPlugin wg = null;
-    @Getter @Setter
-    private BoardManager boardManager;
-    @Getter @Setter
-    public BoosterManager boosterManager;
+    @Getter @Setter public static BoardManager boardManager;
+    @Getter @Setter public BoosterManager boosterManager;
     @Getter @Setter private UpgradeManager upgradeManager;
     private CosmicFlyingPlugin cosmicFlyingPlugin;
     public static boolean debug;
@@ -294,9 +293,9 @@ public class P extends MPlugin {
     }
 
     public void setBoardManager(BoardManager boardManager) {
-        this.boardManager = boardManager;
-        long interval = this.boardManager.getAdapter().getInterval();
-        this.getServer().getScheduler().runTaskTimerAsynchronously(this, this.boardManager, 0L, interval);
+        P.boardManager = boardManager;
+        long interval = P.boardManager.getAdapter().getInterval();
+        this.getServer().getScheduler().runTaskTimerAsynchronously(this, P.boardManager, 0L, interval);
     }
 
     private void registerNewCommands() throws IOException {

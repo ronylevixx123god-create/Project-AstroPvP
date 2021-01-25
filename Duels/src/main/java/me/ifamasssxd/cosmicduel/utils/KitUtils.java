@@ -93,7 +93,7 @@ public class KitUtils {
     }
 
     public static void openCustomKits(Player player, Kit kit) {
-        Inventory inventory = Bukkit.createInventory((InventoryHolder)null, (int)9, (String)"Custom Kits");
+        Inventory inventory = Bukkit.createInventory((InventoryHolder)null, 54, (String)"Custom Kits");
         DuelPlayer duelPlayer = DuelPlayer.getDuelPlayer(player);
         List<CustomKit> customKits = duelPlayer.getCustomKits(kit);
         if (customKits == null || customKits.size() < 3) {
@@ -115,7 +115,7 @@ public class KitUtils {
     }
 
     public static void openCustomGKit(Player player, GlobalKits kit) {
-        Inventory inventory = Bukkit.createInventory((InventoryHolder)null, (int)9, (String)"Custom Kits");
+        Inventory inventory = Bukkit.createInventory((InventoryHolder)null, 54, (String)"Custom Kits");
         DuelPlayer duelPlayer = DuelPlayer.getDuelPlayer(player);
         List<CustomGKit> customKits = duelPlayer.getCustomGkits(kit);
         if (customKits == null || customKits.size() < 3) {
@@ -145,7 +145,7 @@ public class KitUtils {
     }
 
     public static void openCustomKitEditor(Player player, CustomKit kit) {
-        Inventory inventory = Bukkit.createInventory((InventoryHolder)null, (int)9, (String)"Customize Your Kit");
+        Inventory inventory = Bukkit.createInventory((InventoryHolder)null, 54, (String)"Customize Your Kit");
         DuelPlayer duelPlayer = DuelPlayer.getDuelPlayer(player);
         ArrayList<ItemStack> toGive = Lists.newArrayList();
         toGive.addAll(edittableItems);
@@ -173,7 +173,7 @@ public class KitUtils {
     }
 
     public static void openCustomGKitEditor(Player player, CustomGKit globalKits) {
-        Inventory inventory = Bukkit.createInventory((InventoryHolder)null, (int)9, (String)"Customize Your Kit");
+        Inventory inventory = Bukkit.createInventory((InventoryHolder)null, 54, (String)"Customize Your Kit");
         DuelPlayer duelPlayer = DuelPlayer.getDuelPlayer(player);
         ArrayList<ItemStack> items = Lists.newArrayList();
         items.addAll(edittableItems);

@@ -53,7 +53,7 @@ extends CustomInventory {
     private HashMap<String, Integer> closeAttempts = new HashMap();
 
     public GlobalQueuePopInventory(final NewDuel duel) {
-        super("Accept Duel Queue", 1);
+        super("Accept Duel Queue", 5);
         this.duel = duel;
         this.setCallback(new CustomInventoryCallback(){
 

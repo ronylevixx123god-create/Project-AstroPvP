@@ -28,7 +28,7 @@ import org.bukkit.plugin.Plugin;
 public class DuelMenu
 extends CustomInventory {
     public DuelMenu(Player player) {
-        super("Duel Type", 1);
+        super("Duel Type", 5);
         DuelPlayer pl = DuelPlayer.getDuelPlayer(player);
         RankedTopManager manager = CosmicDuel.get().getTopManager();
         String ranking = manager.getEasyAccessMap().containsKey(player.getUniqueId()) ? "#" + manager.getEasyAccessMap().get(player.getUniqueId()).getPosition() : "N/A";

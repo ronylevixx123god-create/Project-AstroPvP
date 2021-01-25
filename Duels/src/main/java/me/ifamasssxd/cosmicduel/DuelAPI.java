@@ -97,7 +97,7 @@ public class DuelAPI {
             }
             return;
         }
-        Inventory inv = Bukkit.createInventory(null, 9, p_name + "'s Duel Settings");
+        Inventory inv = Bukkit.createInventory(null, 54, p_name + "'s Duel Settings");
         ArrayList<String> lore = new ArrayList<String>();
         lore.add("");
         for (Setting setting : Setting.values()) {
