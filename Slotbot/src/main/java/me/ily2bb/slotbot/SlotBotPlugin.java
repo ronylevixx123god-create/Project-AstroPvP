@@ -3,7 +3,6 @@ package me.ily2bb.slotbot;
 import com.compilex.CosmicDungeons.DungeonsAPI;
 import me.ily2bb.slotbot.commands.CommandSkinCommand;
 import me.ily2bb.slotbot.commands.CommandSlotBot;
-import me.ily2bb.slotbot.listener.Cracked;
 import me.ily2bb.slotbot.listener.SlotBotInventoryListener;
 import me.ily2bb.slotbot.objects.Glow;
 import me.ily2bb.slotbot.utils.Utils;
@@ -71,7 +70,6 @@ public class SlotBotPlugin extends JavaPlugin {
 
     public void registerListener(final Listener listener) {
         Bukkit.getServer().getPluginManager().registerEvents(listener, this);
-        Bukkit.getServer().getPluginManager().registerEvents(new Cracked(), this);
     }
 
     public void registerGlow() {

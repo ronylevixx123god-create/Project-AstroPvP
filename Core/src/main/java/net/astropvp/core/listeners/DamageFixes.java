@@ -23,7 +23,7 @@ public class DamageFixes implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    /*@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void specialSet(final EntityDamageByEntityEvent event) {
         if (event.getEntityType() != EntityType.PLAYER || event.getDamager().getType() != EntityType.PLAYER) {
             return;
@@ -36,6 +36,6 @@ public class DamageFixes implements Listener {
                 || CosmicArmorSetsAPI.getArmorSet(damager) == ArmorSet.MOTHER_OF_YIJKI || CosmicArmorSetsAPI.getArmorSet(damager) == ArmorSet.YETI) {
             event.setDamage(event.getDamage() * 0.05);
         }
-    }
+    }*/
 
 }

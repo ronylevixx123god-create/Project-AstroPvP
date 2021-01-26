@@ -183,4 +183,24 @@ public class ServerFixes implements Listener {
             e.setCancelled(true);
     }
 
+    /*@EventHandler(priority = EventPriority.HIGHEST)
+    public void damageModi(EntityDamageByEntityEvent e) {
+        if (!(e.getEntity() instanceof Player) || !(e.getDamager() instanceof Player)) {
+            return;
+        }
+        if (e.getDamager() instanceof Player) {
+            Player p = (Player) e.getDamager();
+            if (p.getItemInHand().getType() == Material.STONE_SWORD || p.getItemInHand().getType() == Material.WOOD_SWORD || p.getItemInHand().getType() == Material.IRON_SWORD) {
+                e.setDamage(-100);
+            }
+        }
+    }*/
+
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void cancelCreeperDMG(EntityDamageByEntityEvent event) {
+        if (event.getEntity() instanceof Player && event.getDamager().getType() == EntityType.CREEPER)
+            event.setCancelled(true);
+    }
+
 }

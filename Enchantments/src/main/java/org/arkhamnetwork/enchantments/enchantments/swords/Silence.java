@@ -38,7 +38,7 @@ public class Silence extends CustomEnchantment {
         if (EnchantmentAPI.getEnchantments(user.getEquipment().getItemInHand()).containsKey(EnchantmentAPI.getEnchantment("Solitude"))) {
             solitudeLevel = EnchantmentAPI.getEnchantments(user.getEquipment().getItemInHand()).get(EnchantmentAPI.getEnchantment("Solitude"));
         }
-        final double chance = (enchantLevel + solitudeLevel) * 0.09;
+        final double chance = (enchantLevel + solitudeLevel) * 0.029;
         if (Math.random() < chance && target instanceof Player) {
             final Player pTarget = (Player) target;
             if (!new CustomEnchantProcOnEntityEvent(user, (LivingEntity) pTarget, (Event) event, this, enchantLevel).callEvent()) {

@@ -1,5 +1,6 @@
 package net.astropvp.core.listeners;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
 import org.bukkit.ChatColor;
@@ -34,7 +35,7 @@ public class CombatLogBlock implements Listener {
     public void stopPvP(PlayerCommandPreprocessEvent event) {
         if (FactionUtils.isWarZone(event.getPlayer().getLocation()) && event.getMessage().toLowerCase().startsWith("/pvp") || FactionUtils.isWarZone(event.getPlayer().getLocation()) && event.getMessage().toLowerCase().startsWith("/wildpvp")) {
             event.setCancelled(true);
-            event.getPlayer().sendMessage("§cYou cannot set a pvp here!");
+            event.getPlayer().sendMessage(CC.translate("&c&l(!)&c You must be in &2Wildrness&c to create a queue."));
         }
     }
 }

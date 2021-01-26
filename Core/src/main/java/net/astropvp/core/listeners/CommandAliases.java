@@ -28,9 +28,6 @@ public class CommandAliases implements Listener {
         if (cmd.equals("/f unclaim all")) {
             e.setMessage("/f unclaimall");
         }
-        if ((cmd.equals("/tps") || cmd.equals("/ping") || cmd.equals("/eping") || cmd.equals("/pong") || cmd.equals("/epong"))) {
-            e.setMessage("/lag");
-        }
         if (cmd.equals("/craft")) {
             e.setMessage("/workbench");
         }

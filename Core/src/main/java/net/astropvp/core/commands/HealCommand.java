@@ -22,6 +22,7 @@ public class HealCommand implements CommandExecutor {
         if (cooldown.getCooldown(player)) return false;
 
         player.setHealth(player.getMaxHealth());
+        player.setFoodLevel(20);
         player.sendMessage(ChatManager.translate(config.getString("heal.msg")));
         cooldown.enterCooldown(player);
         return false;
