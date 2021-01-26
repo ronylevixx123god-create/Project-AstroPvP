@@ -53,6 +53,7 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class MysteryChestListener
@@ -160,10 +161,16 @@ public class MysteryChestListener
                         return;
                     }*/
                     player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0f, 3.0f);
+
+                    if (getEmptySlots(player.getInventory()) < chest.getItemBundleSize()) {
+                        player.sendMessage(CC.translate("&c&l(!)&c Please clear some space in your inventory before opening this lootbox!"));
+                        return;
+                    }
+
                     if (CosmicMysteryChest.get().getShardAnimations().hasToggle(player)) {
                         new MysteryChestGUI(player, chest, 0L).skipGUI(CosmicMysteryChest.get());
                     } else {
-                        new MysteryChestGUI(player, chest, 0L).openGUI(CosmicMysteryChest.get());
+                        new MysteryChestGUI(player, chest, 0L).skipGUI(CosmicMysteryChest.get());
                     }
                 } catch (MysteryChestException exception) {
                     player.sendMessage(CC.RedB + CC.Red + exception.getMessage());
@@ -175,6 +182,16 @@ public class MysteryChestListener
     @EventHandler(priority = EventPriority.HIGHEST)
     public void joinEvent(PlayerJoinEvent e) {
         CosmicMysteryChest.get().getShardAnimations().anotoggle(e.getPlayer());
+    }
+
+    public int getEmptySlots(Inventory inventory) {
+        int i = 0;
+        for (ItemStack is : inventory.getContents()) {
+            if (is == null)
+                continue;
+            i++;
+        }
+        return i;
     }
 }
 

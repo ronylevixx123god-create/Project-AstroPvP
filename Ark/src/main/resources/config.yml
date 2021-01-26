@@ -527,8 +527,6 @@ patches:
 
   # Enables /home gui that allows for customizable home icons.
   home_gui: false
-  # Enables /home gui that allows for customizable home icons.
-  home_gui: false
   # Enables /f warp gui that allows for customizable warp icons.
   warp_gui: false
   # Enables /pv gui that allows for customizable vault icons and names.
