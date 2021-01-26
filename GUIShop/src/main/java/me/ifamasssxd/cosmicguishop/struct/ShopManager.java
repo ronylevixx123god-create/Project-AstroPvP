@@ -51,9 +51,10 @@ public class ShopManager {
     private SilkUtil silkSpawners;
 
     private static ItemStack getMobSpawner(EntityType entityType) {
-        Bukkit.getLogger().info("TYPE: " +  entityType + " ID: " + entityType.getTypeId());
+        /*Bukkit.getLogger().info("TYPE: " +  entityType + " ID: " + entityType.getTypeId());
         ItemStack item = ItemBuilder.buildItem(Material.MOB_SPAWNER, 1, entityType.getTypeId(), ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + StringUtils.capitaliseAllWords((String) entityType.name().replace("_", " ").toLowerCase()) + ChatColor.GOLD.toString() + " Spawner",  ChatColor.GRAY + "Be careful where you place this!");
-        item.setDurability(entityType.getTypeId());
+        item.setDurability(entityType.getTypeId());*/
+        ItemStack item = SilkUtil.hookIntoSilkSpanwers().newSpawnerItem(String.valueOf(entityType.getTypeId()), CC.translate("&a&l") + entityType.name() + " &f Spawner", 1, false);
         return item;
     }
 
