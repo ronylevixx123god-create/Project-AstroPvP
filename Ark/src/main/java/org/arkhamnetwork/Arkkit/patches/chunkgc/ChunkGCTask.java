@@ -66,7 +66,7 @@ public class ChunkGCTask
                 npe.printStackTrace();
             }
         }
-        bossesEnabled = new File("plugins/CosmicBosses.jar").exists();
+        bossesEnabled = new File("plugins/Bosses.jar").exists();
     }
 
     public static boolean isEndDragonSpawned() {

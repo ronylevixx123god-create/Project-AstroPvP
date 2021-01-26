@@ -17,7 +17,7 @@ final class DivineImmolationListener implements Listener {
             if (System.currentTimeMillis() - e.getEntity().getMetadata("divineFire").get(0).asLong() < (4 + enchantLevel) * 1000) {
                 e.setCancelled(true);
                 final LivingEntity le = (LivingEntity) e.getEntity();
-                le.damage((double) Math.min(7, 4 + enchantLevel));
+                le.damage((double)2.5);
                 //ParticleEffect.playEffect(ParticleEffect.FLAME, le.getEyeLocation(), 0.15f, 20);
                 //ParticleEffect.playEffect(ParticleEffect.LAVA, le.getEyeLocation(), 0.5f, 15);
 

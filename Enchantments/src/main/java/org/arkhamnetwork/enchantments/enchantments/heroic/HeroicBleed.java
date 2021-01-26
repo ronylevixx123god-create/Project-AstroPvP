@@ -2,6 +2,7 @@ package org.arkhamnetwork.enchantments.enchantments.heroic;
 
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
+import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.ChatColor;
@@ -43,6 +44,7 @@ public class HeroicBleed extends HeroicCustomEnchantment {
         }
     }
 
+    @SneakyThrows
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
         if (!event.isCancelled() && event.getDamage(EntityDamageEvent.DamageModifier.BASE) > 0.0D && user instanceof Player) {
             double bleedChance = 0.1D * enchantLevel + 0.4D;

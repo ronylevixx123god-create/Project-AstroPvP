@@ -23,19 +23,18 @@ public class DamageFixes implements Listener {
         }
     }
 
-    /*@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void specialSet(final EntityDamageByEntityEvent event) {
         if (event.getEntityType() != EntityType.PLAYER || event.getDamager().getType() != EntityType.PLAYER) {
             return;
         }
         final Player damager = (Player) event.getDamager();
         final Player personBeingHit = (Player) event.getEntity();
-        if (CosmicArmorSetsAPI.getArmorSet(damager) == ArmorSet.ENGINEER || CosmicArmorSetsAPI.getArmorSet(damager) == ArmorSet.KOTH ||
-                CosmicArmorSetsAPI.getArmorSet(damager) == ArmorSet.DIMENSIONAL_TRAVELER || CosmicArmorSetsAPI.getArmorSet(damager) == ArmorSet.DRAGON_SLAYER
-                || CosmicArmorSetsAPI.getArmorSet(damager) == ArmorSet.ENGINEER || CosmicArmorSetsAPI.getArmorSet(damager) == ArmorSet.SUPREME
-                || CosmicArmorSetsAPI.getArmorSet(damager) == ArmorSet.MOTHER_OF_YIJKI || CosmicArmorSetsAPI.getArmorSet(damager) == ArmorSet.YETI) {
+        if (CosmicArmorSetsAPI.getArmorSet(damager) == ArmorSet.DIMENSIONAL_TRAVELER || CosmicArmorSetsAPI.getArmorSet(damager) == ArmorSet.DRAGON_SLAYER
+                        || CosmicArmorSetsAPI.getArmorSet(damager) == ArmorSet.ENGINEER || CosmicArmorSetsAPI.getArmorSet(damager) == ArmorSet.SUPREME
+                        || CosmicArmorSetsAPI.getArmorSet(damager) == ArmorSet.MOTHER_OF_YIJKI || CosmicArmorSetsAPI.getArmorSet(damager) == ArmorSet.YETI) {
             event.setDamage(event.getDamage() * 0.05);
         }
-    }*/
+    }
 
 }

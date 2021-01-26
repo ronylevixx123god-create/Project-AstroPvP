@@ -271,15 +271,7 @@ public class EngineerSet extends ArmorSetInfo implements Listener, WeaponedArmor
     }
 
     public boolean onPlayerAttacked(Player damager, EntityDamageByEntityEvent event) {
-        ItemStack handItem = damager.getItemInHand();
         double chance = 4.0D;
-        if (handItem != null) {
-            Material type = handItem.getType();
-            if (type != null && (type == Material.DIAMOND_SWORD || type == Material.GOLD_SWORD) && (new NBTWrapper(handItem)).getString("cosmicType").equals("ENGINEER_SWORD")) {
-                //event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.15D);
-                chance *= 1.2D;
-            }
-        }
         if (ThreadLocalRandom.current().nextDouble(200.0D) <= chance) {
             if (Math.random() < 0.05) {
                 onEngineerAbility(damager);

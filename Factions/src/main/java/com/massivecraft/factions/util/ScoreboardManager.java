@@ -48,9 +48,9 @@ public class ScoreboardManager implements BoardAdapter {
         FPlayer fplayer = FPlayers.i.get(player);
         if (fplayer != null) {
             if (fplayer.hasFaction()) {
-                return CC.GreenB + fplayer.getFaction().getTag() + CC.Gray + " " + getDateSuffix();
+                return CC.AquaB + fplayer.getFaction().getTag() + CC.Gray + " " + getDateSuffix();
             } else {
-                return CC.GreenB + "AstroPvP " + CC.Gray + getDateSuffix();
+                return CC.AquaB + "AstroPvP " + CC.Gray + getDateSuffix();
             }
         }
         return CC.AquaB + "AstroPvP " + CC.Gray + getDateSuffix();
@@ -88,7 +88,7 @@ public class ScoreboardManager implements BoardAdapter {
 
     @Override
     public long getInterval() {
-        return 20L;
+        return 80L;
     }
 
     @Override

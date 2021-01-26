@@ -8,6 +8,7 @@ import com.massivecraft.factions.struct.FactionPermission;
 import com.massivecraft.factions.struct.LogTimer;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
+import lombok.SneakyThrows;
 import me.ifamasssxd.cosmicguishop.CosmicGUIShop;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.libs.EnchantBreakBlockEvent;
@@ -64,6 +65,7 @@ public class HeroicDetonate extends CustomEnchantment {
         HeroicDetonate.loggedBlockFaces.put(p.getUniqueId(), b);
     }
 
+    @SneakyThrows
     public void applyToolEffect(final Player player, final Block block, final int enchantLevel, final BlockEvent event) {
         if (event instanceof BlockBreakEvent) {
             final BlockBreakEvent bbe = (BlockBreakEvent) event;

@@ -19,7 +19,7 @@ public class HeartsUnderName {
         Bukkit.getScheduler().runTaskAsynchronously(P.getP(), () -> {
             com.massivecraft.factions.board.Board board = P.getBoardManager().getPlayerBoards().get(player.getUniqueId());
             if (board == null) {
-                return;C
+                return;
             }
 
             Scoreboard scoreboard = board.getScoreboard();

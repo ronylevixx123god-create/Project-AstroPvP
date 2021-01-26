@@ -55,6 +55,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 public class MysteryChestListener
         implements Listener {
@@ -97,6 +98,7 @@ public class MysteryChestListener
         if (d.getAmount() > 1) {
             event.setCancelled(false);
         }
+
         if ((event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK || event.getAction() == Action.LEFT_CLICK_AIR) && event.hasItem()) {
             ItemStack item = event.getItem().clone();
             if (item == null || item.getType() == Material.AIR) {
@@ -125,6 +127,9 @@ public class MysteryChestListener
                     MysteryChest chest = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get(builder.getString("mysteryChest"));
                     if (chest == null) {
                         throw new MysteryChestException("Unable to determine Lootbox!");
+                    }
+                    if (getEmptySlots(player) < chest.getItemBundleSize()) {
+                        throw new MysteryChestException("Please clear some inventory slots before opening this lootbox!");
                     }
                     if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
                         new MysteryChestItemViewerGUI(player, chest).openGUI(CosmicMysteryChest.get());
@@ -162,10 +167,6 @@ public class MysteryChestListener
                     }*/
                     player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0f, 3.0f);
 
-                    if (getEmptySlots(player.getInventory()) < chest.getItemBundleSize()) {
-                        player.sendMessage(CC.translate("&c&l(!)&c Please clear some space in your inventory before opening this lootbox!"));
-                        return;
-                    }
 
                     if (CosmicMysteryChest.get().getShardAnimations().hasToggle(player)) {
                         new MysteryChestGUI(player, chest, 0L).skipGUI(CosmicMysteryChest.get());
@@ -184,14 +185,15 @@ public class MysteryChestListener
         CosmicMysteryChest.get().getShardAnimations().anotoggle(e.getPlayer());
     }
 
-    public int getEmptySlots(Inventory inventory) {
+    public int getEmptySlots(Player p) {
+        PlayerInventory inventory = p.getInventory();
+        ItemStack[] cont = inventory.getContents();
         int i = 0;
-        for (ItemStack is : inventory.getContents()) {
-            if (is == null)
-                continue;
-            i++;
-        }
-        return i;
+        for (ItemStack item : cont)
+            if (item != null && item.getType() != Material.AIR) {
+                i++;
+            }
+        return 36 - i;
     }
 }
 

@@ -21,8 +21,6 @@ public class MasteryBlackout extends CustomEnchantment {
         this.max = 4;
         this.base = 25.0D;
         this.interval = 10.0D;
-
-        Bukkit.getLogger().info("blackout loaded !");
     }
 
 
@@ -30,12 +28,13 @@ public class MasteryBlackout extends CustomEnchantment {
         if (!(target instanceof Player)) {
             return;
         }
-        if (target.hasMetadata("blackout"))
+        if (target.hasMetadata("blackout")) {
             return;
+        }
 
         Player pTarget = (Player) target;
 
-        if (Math.random() <= (0.06D * enchantLevel / 4)) {
+        if (Math.random() <= 0.005D) {
             int multi = AstroItemSkinsAPI.isInHand((Player) user, SkinType.CORRUPT_SWORD) ? 2 : 1;
             if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.VIRUS_BELT) && Math.random() < 0.50) {
                 pTarget.sendMessage("§2§l* BLOCKED " + ((Player) user).getName() + "'s BLACKOUT §7(First Aid Fannypack) §2§l*");

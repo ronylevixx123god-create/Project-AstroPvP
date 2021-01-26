@@ -34,10 +34,7 @@ public class UndeadRuse extends CustomEnchantment {
     @SneakyThrows
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         if (e instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent) e).getDamager() instanceof Player) {
-            double chance = 0.01 * level;
-            if (chance > 0.04) {
-                chance = 0.04;
-            }
+            double chance = 0.002;
             if (Math.random() < chance) {
                 int zombie_count = (int) (Math.random() / 2.0 * level) + 1;
                 final Player p = (Player) player;

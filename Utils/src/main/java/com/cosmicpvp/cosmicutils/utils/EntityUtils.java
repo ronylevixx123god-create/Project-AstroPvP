@@ -29,7 +29,7 @@ public class EntityUtils {
     private static Field ghastTarget;
 
     static {
-        bossesEnabled = new File("plugins/CosmicBosses.jar").exists();
+        bossesEnabled = new File("plugins/Bosses.jar").exists();
     }
 
     public static void removeAI(org.bukkit.entity.Entity entity) {
