@@ -94,7 +94,7 @@ public class SetBonusListener
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onPlayerDamage(EntityDamageByEntityEvent event) {
+    public void onPlayerDamage(EntityDamageByEntityEvent event) throws Exception {
         double damageAtStart = event.getDamage(EntityDamageEvent.DamageModifier.BASE);
         Player damager = null;
         if (event.getDamager() instanceof Arrow && ((Projectile) event.getDamager()).getShooter() instanceof Player) {

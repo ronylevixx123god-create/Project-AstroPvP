@@ -9,6 +9,7 @@ import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import lombok.SneakyThrows;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicPersistentItem;
@@ -160,6 +161,7 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
         return retr;
     }
 
+    @SneakyThrows
     public void onPlayerInteractable(Player player, ItemStack itemStack, NBTWrapper nbtWrapper, PlayerInteractEvent playerInteractEvent) throws CosmicException {
         playerInteractEvent.setCancelled(true);
         InventoryPetItem item = CosmicPersistentItem.constructItem(itemStack, nbtWrapper, InventoryPetItem.class);

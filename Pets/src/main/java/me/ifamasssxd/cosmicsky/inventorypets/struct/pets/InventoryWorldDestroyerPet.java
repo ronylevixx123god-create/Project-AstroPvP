@@ -4,6 +4,8 @@ import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.struct.Relation;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
@@ -96,10 +98,11 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
                 if (rel.isAlly() || rel.isTruce()) {
                     continue;
                 }
+
                 if (rel.isMember()) {
                     continue;
                 }
-                final double distance = (event == null) ? 10.9 : 3.9;
+                final double distance = (event == null) ? 10.9 : 6.9;
                 if (player.getLocation().distance(other.getLocation()) < distance) {
                     target = nearPlayer;
                     break;
@@ -116,7 +119,13 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         if (target == null || (event != null && target.getLocation().distance(player.getLocation()) > 4.0)) {
             throw new PrefixedPetException("Could not find a valid target!");
         }
-        petItem.setLastUsed(System.currentTimeMillis());
+
+        if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.SEXY_HELMET) && Math.random() < 0.5) {
+            petItem.setLastUsed(System.currentTimeMillis());
+            player.sendMessage(CC.translate("&d&l* CHAD SUNGLASSES BLOCKED &7[&c" + target.getName() + "&7] &d&l*"));
+            target.sendMessage(CC.translate("&d&l* CHAD SUNGLASSES &7[&cBlocked World Destroyer&7] &d&l*"));
+            return true;
+        }
 
 
         final Player p = target;

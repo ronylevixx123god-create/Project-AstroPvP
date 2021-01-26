@@ -14,6 +14,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
+import me.ifamasssxd.cosmicsky.inventorypets.utils.PetUtils;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
 import org.arkhamnetwork.enchantments.mastery.MasteryFeignDeath;
 import org.bukkit.Sound;
@@ -46,10 +47,9 @@ public class InventoryFeignDeathPet extends InventoryPet {
       long lastUse = petItem.getLastUsed();
       long delay = TimeUnit.SECONDS.toMillis((long)this.getCooldown(petItem.getLevel()));
       long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
-      if (lastUse <= 0L || timeTillCanUse <= 0L || player.isOp() && player.isSneaking()) {
-         if (MasteryFeignDeath.deathCooldown.containsKey(player.getUniqueId())) {
-            throw new PrefixedPetException("You must wait at least 10s in between feign death use!");
-         } else {
+      if (PetUtils.isOnCooldown(player, petItem.getPetType()) && (!player.isOp() || !player.isSneaking()))
+         throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU +
+                 TimeUtils.formatSeconds(PetUtils.getSecondsOnCooldown(player, petItem.getPetType())));
             boolean inCombat = CombatLog.inCombat(player);
             boolean inWarzone = Board.getFactionAt(new FLocation(player.getLocation())).isWarZone();
             int xpGain = inWarzone ? 50 : 5;
@@ -58,15 +58,12 @@ public class InventoryFeignDeathPet extends InventoryPet {
             }
             MasteryFeignDeath.vanishPlayer(player, petItem.getLevel());
             petItem.addExperience(player, xpGain);
-            petItem.setLastUsed(System.currentTimeMillis());
+            PetUtils.addPetCooldown(player, petItem.getPetType(), (getCooldown(petItem.getLevel()) * 1000));
             player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
             player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
             player.sendMessage(CC.GreenB + "+ " + CC.Green + NumberUtils.formatMoney((double)xpGain) + " Pet EXP " + CC.GreenB + "[" + CC.Gray + petItem.getExp() + "/" + petItem.getPetType().getInternalClass().getExpForLevel(petItem.getLevel() + 1) + CC.GreenB + "]");
             return true;
-         }
-      } else {
-         throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((long)((int)(timeTillCanUse / 1000L))));
-      }
+
    }
 
    public boolean onTickInHotBar(Player player, int inventorySlot, InventoryPetItem item) {

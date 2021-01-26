@@ -51,9 +51,8 @@ public class ArmorSetHelpMenu
             } else {
                 ++index;
             }
-            for (ItemStack armorSetItem : armorSet.armorSetItems) {
-                this.setItem(slotIndex + index++ * 9, new InventoryItem(armorSetItem));
-            }
+                this.setItem(slotIndex + index++ * 9, new InventoryItem(armorSet.helmet));
+
             ++slotIndex;
         }
         this.setItem(0, new InventoryItem(new ItemBuilder(Material.BOOK, CC.LightPurpleB + "Armor Sets", "", CC.Gray + "Armor Sets are custom sets of armor", CC.Gray + "that have special 'Set Bonuses'.", CC.Gray + "These bonuses are only active if", CC.Gray + "you have ALL pieces of a specific", CC.Gray + "set equipped.", "", CC.Gray + "Sample versions of all available", CC.Gray + "armor sets are currently displayed.").build()));

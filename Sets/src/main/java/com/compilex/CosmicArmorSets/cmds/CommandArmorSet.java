@@ -27,6 +27,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
 import com.google.common.collect.Lists;
+import lombok.SneakyThrows;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -37,6 +38,7 @@ import java.util.Arrays;
 
 public class CommandArmorSet
         implements CommandExecutor {
+    @SneakyThrows
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (args.length == 1 && args[0].equalsIgnoreCase("help") && sender instanceof Player) {
             new ArmorSetHelpMenu((Player) sender).openGUI(CosmicArmorSetsPlugin.get_());

@@ -6,11 +6,13 @@ import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.cosmicpvp.cosmicutils.utils.TimeUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
+import com.earth2me.essentials.utils.LocationUtil;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.cmd.CmdFocus;
+import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.Relation;
 import com.rit.sucy.EnchantmentAPI;
 import java.util.HashMap;
@@ -19,23 +21,31 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
+import me.ifamasssxd.cosmicsky.inventorypets.libs.Vector3D;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
+import me.ifamasssxd.cosmicsky.inventorypets.utils.PetUtils;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -77,33 +87,60 @@ public class InventoryBloodhoundPet extends InventoryPet {
       return 6;
    }
 
-   public boolean onPetItemInteract(Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
+   public boolean onPetItemInteract(final Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
       long lastUse = petItem.getLastUsed();
       long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown(petItem.getLevel()));
       long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
-      if (lastUse > 0L && timeTillCanUse > 0L || (!player.isOp() && !player.isSneaking())) {
 
-         throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((long)((int)(timeTillCanUse / 1000L))));
-      } else if (player.hasMetadata("in_duel")) {
-         return true;
-      } else {
-         Location locationClicked = player.getLocation();
-         if (!player.hasMetadata("spectator") && WorldGuardUtils.isPvPEnabled(locationClicked)) {
-            this.petLevel = petItem.getLevel();
-            petItem.setLastUsed(System.currentTimeMillis());
-            boolean xpGain = true;
-            this.StartBoodHoundPet(player, (Player) player.getNearbyEntities(5, 5, 5).get(0));
-            petItem.addExperience(player, 50);
-            player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
-            player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
-            player.sendMessage(CC.GreenB + "+ " + CC.Green + NumberUtils.formatMoney(50.0D) + " Pet EXP " + CC.GreenB + "[" + CC.Gray + petItem.getExp() + "/" + petItem.getPetType().getInternalClass().getExpForLevel(petItem.getLevel() + 1) + CC.GreenB + "]");
-            return true;
+      if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
+         throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
 
-         } else {
-            return true;
-
-         }
+      LivingEntity target = getTargetEntity(player, 4);
+      if (target == null || !(target instanceof Player))
+         throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "No target found!");
+      final Player pTarget = (Player)target;
+      if (!WorldGuardUtils.isPvPEnabled(pTarget.getLocation()))
+         throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "No valid target found!");
+      FPlayer fPlayer = FactionUtils.getFPlayer(player);
+      Relation relation = FactionUtils.getFPlayer(pTarget).getRelationTo((RelationParticipator)fPlayer);
+      if (relation == Relation.ALLY || relation == Relation.TRUCE || relation.isMember())
+         throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "No valid target found!");
+      petItem.setLastUsed(System.currentTimeMillis());
+      int xpGain = petItem.getLevel() * 5;
+      petItem.addExperience(player, xpGain);
+      player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 1.1F, 3.0F);
+      player.sendMessage(String.valueOf(CC.GreenB) + "+ " + CC.Green + NumberUtils.formatMoney(xpGain) + " Pet EXP " + CC.GreenB + "[" +
+              CC.Gray + petItem.getExp() + "/" +
+              petItem.getPetType().getInternalClass().getExpForLevel(petItem.getLevel() + 1) + CC.GreenB + "]");
+      final String name = player.getName();
+      Faction faction = fPlayer.getFaction();
+      player.chat("/f t " + pTarget.getName());
+      pTarget.setMetadata("noDefenseProcs", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), Boolean.valueOf(true)));
+      pTarget.setMetadata("bloodhound_" + name, (MetadataValue)new FixedMetadataValue((Plugin)CosmicSkyInventoryPets.get(), null));
+      pTarget.setMetadata("bloodhound", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSkyInventoryPets.get(), null));
+      pTarget.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, (4 + petItem.getLevel()) * 20, 0));
+      FPlayer fPTarget = FactionUtils.getFPlayer(pTarget);
+      if (fPTarget.hasFaction() && fPlayer.hasFaction())
+         focusTargetPlayer(player, ((Player) target).getPlayer());
+      int sum = 4 + petItem.getLevel();
+      if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.REINDEER_ANTLERS) && Math.random() < 0.05D) {
+         sum *= 2;
+         player.sendMessage(String.valueOf(CC.RedB) + "* REINDEER ITEM SKIN " + CC.Gray + "(" + CC.White + "2x Pet Length" + CC.Gray + ")");
       }
+      Bukkit.getScheduler().runTaskLater((Plugin)CosmicSkyInventoryPets.get(), new Runnable() {
+         public void run() {
+            if (!pTarget.isOnline())
+               return;
+            if (pTarget.hasMetadata("bloodhound_" + name))
+               pTarget.removeMetadata("bloodhound_" + name, (Plugin)CosmicSkyInventoryPets.get());
+            if (pTarget.hasMetadata("bloodhound"))
+               pTarget.removeMetadata("bloodhound", (Plugin)CosmicSkyInventoryPets.get());
+            if (pTarget.hasMetadata("noDefenseProcs"))
+               pTarget.removeMetadata("noDefenseProcs", (Plugin)Enchantments.getInstance());
+            player.sendMessage(CC.translate("&e&l(!) &eYour &4&l[Tag] &eon " + pTarget.getName() + "&e has &e&nEXPIRED!"));
+         }
+      },(sum * 20));
+      return true;
    }
 
 
@@ -182,6 +219,36 @@ public class InventoryBloodhoundPet extends InventoryPet {
          }
       }
 
+   }
+
+
+   public LivingEntity getTargetEntity(Player player, int maxRangeInBlocks) {
+      Location observerPos = player.getEyeLocation();
+      Vector3D observerDir = new Vector3D(observerPos.getDirection());
+      Vector3D observerStart = new Vector3D(observerPos);
+      Vector3D observerEnd = observerStart.add(observerDir.multiply(maxRangeInBlocks));
+      LivingEntity target = null;
+      for (Entity possibleTarget : player.getNearbyEntities(maxRangeInBlocks, maxRangeInBlocks, maxRangeInBlocks)) {
+         if (!(possibleTarget instanceof LivingEntity))
+            continue;
+         Vector3D targetPos = new Vector3D(possibleTarget.getLocation());
+         Vector3D minimum = targetPos.add(-0.5D, 0.0D, -0.5D);
+         Vector3D maximum = targetPos.add(0.5D, 1.67D, 0.5D);
+         if (hasIntersection(observerStart, observerEnd, minimum, maximum))
+            target = (LivingEntity)possibleTarget;
+      }
+      return target;
+   }
+
+   private boolean hasIntersection(Vector3D p1, Vector3D p2, Vector3D min, Vector3D max) {
+      Vector3D d = p2.subtract(p1).multiply(0.5D);
+      Vector3D e = max.subtract(min).multiply(0.5D);
+      Vector3D c = p1.add(d).subtract(min.add(max).multiply(0.5D));
+      Vector3D ad = d.abs();
+      return (Math.abs(c.x) <= e.x + ad.x && Math.abs(c.y) <= e.y + ad.y && Math.abs(c.z) <= e.z + ad.z &&
+              Math.abs(d.y * c.z - d.z * c.y) <= e.y * ad.z + e.z * ad.y &&
+              Math.abs(d.z * c.x - d.x * c.z) <= e.z * ad.x + e.x * ad.z &&
+              Math.abs(d.x * c.y - d.y * c.x) <= e.x * ad.y + e.y * ad.x);
    }
 
    public boolean onTickInHotBar(Player var1, int var2, InventoryPetItem var3) {

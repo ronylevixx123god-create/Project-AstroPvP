@@ -1,20 +1,16 @@
 package me.ifamasssxd.cosmicsky.inventorypets.struct.pets;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.EssentialsUtils;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.cosmicpvp.cosmicutils.utils.TimeUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
-import com.cosmicpvp.cosmicutils.utils.WorldUtil;
-import com.earth2me.essentials.Essentials;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.Relation;
-import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -25,8 +21,8 @@ import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
+import me.ifamasssxd.cosmicsky.inventorypets.utils.PetUtils;
 import me.libraryaddict.disguise.DisguiseAPI;
-import me.libraryaddict.disguise.disguisetypes.Disguise;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MobDisguise;
 import org.bukkit.ChatColor;
@@ -74,18 +70,18 @@ public class InventoryAbominableSnowmanPet extends InventoryPet {
    }
 
    public boolean onPetItemInteract(Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
-      if (1 == 1)
-         throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "This item is disabled!");
       long lastUse = petItem.getLastUsed();
-      long delay = TimeUnit.SECONDS.toMillis(getCooldown(petItem.getLevel()));
-      long timeTillCanUse = delay - System.currentTimeMillis() - lastUse;
+      long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown(petItem.getLevel()));
+      long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
+
       if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
-         throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int)(timeTillCanUse / 1000L)));
+         throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
+
+      Faction faction = FactionUtils.getFaction(player);
       if (player.hasMetadata("spectator"))
          return true;
       if (player.hasMetadata("in_duel"))
          return true;
-      Faction faction = FactionUtils.getFaction(player);
       if (faction == null || faction.isNone())
          throw new PrefixedPetException("You must be in a faction to use this pet!");
       Location locationClicked = player.getLocation();
@@ -149,7 +145,6 @@ public class InventoryAbominableSnowmanPet extends InventoryPet {
       p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, (int)(1L * freezeDuration(this.petLevel) * 20L), 128));
       p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, (int)(1L * freezeDuration(this.petLevel) * 20L), 128));
       p.setMetadata("frozenSnowman", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSkyInventoryPets.get(), Long.valueOf(System.currentTimeMillis())));
-      WorldUtil.sendWorldEffect(p.getLocation().getBlock(), 57, 2001);
       p.sendMessage(String.valueOf(CC.YellowB) + "POLYMORPH'D [" + CC.Gray + freezeDuration(this.petLevel) + "s" + CC.YellowB + "] " + CC.YellowB + "[" + CC.Gray + caster.getName() + CC.YellowB + "]");
       caster.sendMessage(CC.YellowB + "POLYMORPH'D [" + CC.Gray + freezeDuration(this.petLevel) + "s" + CC.YellowB + "] " + CC.YellowB + "[" + CC.Gray + p.getName() + CC.YellowB + "]");
       (new BukkitRunnable() {

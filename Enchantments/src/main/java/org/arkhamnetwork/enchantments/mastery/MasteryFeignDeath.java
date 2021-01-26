@@ -4,7 +4,9 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.cosmicpvp.cosmicutils.utils.ReflectionUtils;
+import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+import com.google.common.collect.MapMaker;
 import com.massivecraft.factions.Faction;
 import lombok.SneakyThrows;
 import me.ifamasssxd.cosmicduel.utils.TitleManager;
@@ -26,15 +28,14 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.ConcurrentMap;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
 
+
 public class MasteryFeignDeath extends MasteryCustomEnchantment {
-    public static ConcurrentMap<Object, Object> deathCooldown = CacheBuilder.newBuilder().expireAfterWrite(10L, TimeUnit.SECONDS).build().asMap();
+
+
 
     public MasteryFeignDeath() {
         super("Feign Death", GeneralUtil.armor, 1);
@@ -47,7 +48,6 @@ public class MasteryFeignDeath extends MasteryCustomEnchantment {
         double seconds = enchantLevel * 1.5D;
         damaged.setMetadata("feign_vanish", new FixedMetadataValue(Enchantments.getInstance(), System.currentTimeMillis() + seconds * 1000.0D));
         damaged.setMetadata("feign_hits_max", new FixedMetadataValue(Enchantments.getInstance(), enchantLevel));
-        deathCooldown.put(damaged.getUniqueId(), System.currentTimeMillis() + 10000L);
         EntityPlayer player = ((CraftPlayer) damaged).getHandle();
         EntityPlayer fake = new EntityPlayer(player.server, (WorldServer) player.world, player.getProfile(), new PlayerInteractManager(player.world));
         fake.playerConnection = new PlayerConnection(player.server, new NetworkManager(EnumProtocolDirection.SERVERBOUND), fake) {
@@ -69,19 +69,22 @@ public class MasteryFeignDeath extends MasteryCustomEnchantment {
         PacketPlayOutEntityStatus status = new PacketPlayOutEntityStatus(fake, (byte) 3);
         Set<EntityPlayer> whoReceived = new HashSet<>();
         EntityTrackerEntry entry = (((WorldServer) player.world).getTracker()).trackedEntities.get(player.getId());
-        if (entry != null) {
-            CopyOnWriteArrayList<EntityPlayer> trackedPlayers = (CopyOnWriteArrayList<EntityPlayer>) ReflectionUtils.getObject(EntityTrackerEntry.class, entry, "trackedPlayers");
-            for (EntityPlayer tracked : trackedPlayers) {
+        /*if (entry != null) {
+            CopyOnWriteArrayList<EntityPlayer> trackedPlayers =
+                    (CopyOnWriteArrayList<EntityPlayer>) ReflectionUtils.getObject(EntityTrackerEntry.class, entry, "trackedPlayers");
+            Iterator<EntityPlayer> var12 = trackedPlayers.iterator();
+            while (var12.hasNext()) {
+                Object tracked = var12.next();
                 if (tracked instanceof EntityPlayer) {
-                    EntityPlayer pl = tracked;
+                    EntityPlayer pl = (EntityPlayer) tracked;
                     if (pl.playerConnection != null && !pl.playerConnection.isDisconnected()) {
-                        pl.playerConnection.sendPacket(fakePlayer);
-                        pl.playerConnection.sendPacket(status);
+                        pl.playerConnection.sendPacket((Packet) fakePlayer);
+                        pl.playerConnection.sendPacket((Packet) status);
                         whoReceived.add(pl);
                     }
                 }
             }
-        }
+        }*/
         player.playerConnection.sendPacket(fakePlayer);
         player.playerConnection.sendPacket(status);
         whoReceived.add(player);
@@ -92,8 +95,8 @@ public class MasteryFeignDeath extends MasteryCustomEnchantment {
                     pl.playerConnection.sendPacket(destroy);
             }
         }, 30L);
-        TitleManager.sendTitle(damaged, CC.RedB + "Feign Death", TitleManager.TitleColor.RED);
-        TitleManager.sendSubTitle(damaged, CC.Red + NumberUtils.formatSeconds(seconds), TitleManager.TitleColor.RED);
+        //TitleManager.sendTitle(damaged, CC.RedB + "Feign Death", TitleManager.TitleColor.RED);
+        //TitleManager.sendSubTitle(damaged, CC.Red + NumberUtils.formatSeconds(seconds), TitleManager.TitleColor.RED);
         for (Player pl : Bukkit.getServer().getOnlinePlayers())
             pl.hidePlayer(damaged);
         damaged.playSound(damaged.getLocation(), Sound.WITHER_SHOOT, 3.0F, 0.9F);
@@ -123,7 +126,7 @@ public class MasteryFeignDeath extends MasteryCustomEnchantment {
         Player damaged = (Player) damagedEnt;
         double percentHealth = damaged.getHealth() / damaged.getMaxHealth();
         double percent = enchantLevel + (1.0D - percentHealth) * 5.0D;
-        if (Math.random() <= percent * 0.01D && damaged.getHealth() > event.getDamage(EntityDamageEvent.DamageModifier.BASE) && !damaged.isDead() && !deathCooldown.containsKey(damaged.getUniqueId())) {
+        if (Math.random() <= percent * 0.01D && damaged.getHealth() > event.getDamage(EntityDamageEvent.DamageModifier.BASE) && !damaged.isDead()) {
             if (damaged.hasMetadata("feign_vanish"))
                 damaged.removeMetadata("feign_vanish", Enchantments.getInstance());
             if (!(new CustomEnchantProcOnEntityEvent(damaged, attacker, event, this, enchantLevel)).callEvent())

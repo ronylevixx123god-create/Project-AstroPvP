@@ -1,12 +1,6 @@
 package me.ifamasssxd.cosmicsky.inventorypets.struct.pets;
 
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.EssentialsUtils;
-import com.cosmicpvp.cosmicutils.utils.FactionUtils;
-import com.cosmicpvp.cosmicutils.utils.NumberUtils;
-import com.cosmicpvp.cosmicutils.utils.TimeUtils;
-import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
-import com.cosmicpvp.cosmicutils.utils.WorldUtil;
+import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
@@ -182,7 +176,6 @@ public class InventorySkrrtPet extends InventoryPet {
       p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, (int)(1L * (long)this.freezeDuration(this.petLevel) * 20L), 128));
       p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, (int)(1L * (long)this.freezeDuration(this.petLevel) * 20L), 128));
       p.setMetadata("frozenSkrrt", new FixedMetadataValue(CosmicSkyInventoryPets.get(), System.currentTimeMillis()));
-      WorldUtil.sendWorldEffect(p.getLocation().getBlock(), 57, 2001);
       (new BukkitRunnable() {
          public void run() {
             p.removeMetadata("frozenSkrrt", CosmicSkyInventoryPets.get());
