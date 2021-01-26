@@ -75,7 +75,7 @@ final class ExpBottlesListener
             if (!noLimit) {
                 p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot teleport for " + ExpBottlesCommand.getTimeString(p.getMetadata("nextExpBottle").get(0).asLong() - System.currentTimeMillis()) + " due to EXP exhaustion.");
                 if (!p.hasPermission("playervaults.amount.15")) {
-                    p.sendMessage(ChatColor.GRAY + "Upgrade your rank at " + ChatColor.UNDERLINE + "buy.cosmicpvp.com" + ChatColor.GRAY + " to decrease this delay.");
+                    p.sendMessage(ChatColor.GRAY + "Upgrade your rank at " + ChatColor.UNDERLINE + "buy.astropvp.net" + ChatColor.GRAY + " to decrease this delay.");
                 }
                 e.setCancelled(true);
             }

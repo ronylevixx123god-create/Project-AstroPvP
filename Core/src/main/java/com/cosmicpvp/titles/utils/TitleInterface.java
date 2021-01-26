@@ -70,7 +70,7 @@ public class TitleInterface {
         }
         for (int i = 0; i < inventory.getSize(); ++i) {
             if (inventory.getItem(i) != null && inventory.getItem(i).getType() != Material.AIR) continue;
-            inventory.setItem(i, ItemUtils.buildItem(Material.STAINED_GLASS_PANE, (short)7, ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "???", (Object)ChatColor.GRAY + "Unlock new titles by opening", (Object)ChatColor.GRAY + "space chests, defeating bosses,", (Object)ChatColor.GRAY + "or at " + (Object)ChatColor.GOLD + (Object)ChatColor.UNDERLINE + "buy.cosmicpvp.com"));
+            inventory.setItem(i, ItemUtils.buildItem(Material.STAINED_GLASS_PANE, (short)7, ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "???", (Object)ChatColor.GRAY + "Unlock new titles by opening", (Object)ChatColor.GRAY + "space chests, defeating bosses,", (Object)ChatColor.GRAY + "or at " + (Object)ChatColor.GOLD + (Object)ChatColor.UNDERLINE + "buy.astropvp.net"));
         }
         player.openInventory(inventory);
     }

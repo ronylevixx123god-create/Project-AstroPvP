@@ -218,7 +218,7 @@ public class KitPlayer {
             lore.add("");
             lore.add(ChatColor.RED + ChatColor.BOLD.toString() + "LOCKED");
             if (unlockLore) {
-                lore.add(ChatColor.GRAY + "Unlock at " + ChatColor.GRAY + ChatColor.UNDERLINE.toString() + "buy.cosmicpvp.com");
+                lore.add(ChatColor.GRAY + "Unlock at " + ChatColor.GRAY + ChatColor.UNDERLINE.toString() + "buy.astropvp.net");
             }
         }
         ItemStack item = ItemBuilder.buildItem(material, data, kitInstance.getItemName() + " Kit", lore);

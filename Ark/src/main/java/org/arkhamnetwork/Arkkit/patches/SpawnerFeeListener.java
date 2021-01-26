@@ -160,7 +160,7 @@ final class SpawnerFeeListener
             int spawnerCount = ms.getSpawnerCount();
             e.getPlayer().sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "You will be fined $" + this.getMiningPrice(e.getPlayer(), e.getBlock()) + " ($" + baseMiningCost + "x" + spawnerCount + " spawners) for collecting this spawner.");
             if (this.getMiningPriceModifier(e.getPlayer()) == 1.0) {
-                e.getPlayer().sendMessage(ChatColor.GRAY + "Unlock or purchase a rank at " + ChatColor.UNDERLINE + "buy.cosmicpvp.com" + ChatColor.GRAY + " for smaller fees.");
+                e.getPlayer().sendMessage(ChatColor.GRAY + "Unlock or purchase a rank at " + ChatColor.UNDERLINE + "buy.astropvp.net" + ChatColor.GRAY + " for smaller fees.");
             }
         }
     }

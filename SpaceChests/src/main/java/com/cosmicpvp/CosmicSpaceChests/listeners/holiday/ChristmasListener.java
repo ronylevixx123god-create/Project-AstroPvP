@@ -135,7 +135,7 @@ implements Listener {
             ItemRarity ir = CosmicSpaceChestsPlugin.chest_locations.getChestRarity(b.getLocation());
             if (CosmicSpaceChestsPlugin.chest_locations.getChestRarity(loc) == ItemRarity.LEGENDARY && !pl.hasPermission("cosmicpvp.vip")) {
                 pl.sendMessage((Object)ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You are not worthy to open this Legendary Chest...");
-                pl.sendMessage((Object)ChatColor.GRAY + "Unlock the potentional to open this chest at " + (Object)ChatColor.UNDERLINE + "buy.cosmicpvp.me");
+                pl.sendMessage((Object)ChatColor.GRAY + "Unlock the potentional to open this chest at " + (Object)ChatColor.UNDERLINE + "buy.astropvp.net");
                 e.setCancelled(true);
                 return;
             }

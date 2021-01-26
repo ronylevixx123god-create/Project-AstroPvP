@@ -524,7 +524,6 @@ patches:
 
   # Enables an array of WorldBorder fixes, incl. proper piston handling.
   world_border_fixes: false
-
   # Enables /home gui that allows for customizable home icons.
   home_gui: false
   # Enables /f warp gui that allows for customizable warp icons.
@@ -558,7 +557,7 @@ language:
     prefix: '&8[&e&lA&b&lN&8]&r&a'
   spigot_branding:
     global_prefix: '&8[&b&lCosmic&d&lPvP&8]'
-    store_url: buy.cosmicpvp.com
+    store_url: buy.astropvp.net
   fallback_servers:
     kick_message: '§a§lYou are being redirected to a lobby, please wait...'
     server_restarting_alert: '§c§l(!) §cThis server instance is currently restarting!'

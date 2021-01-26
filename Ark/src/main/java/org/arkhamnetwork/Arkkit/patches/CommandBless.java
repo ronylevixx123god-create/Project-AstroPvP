@@ -44,7 +44,7 @@ final class CommandBless
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (!(sender instanceof Player) || !sender.hasPermission("cosmicpvp.heroic")) {
             sender.sendMessage(CC.RedB + "(!) " + CC.Red + "You are not a high enough rank to use that command!");
-            sender.sendMessage(CC.Gray + "Unlock a Heroic rank at " + CC.GrayU + "buy.cosmicpvp.com" + CC.Gray + "!");
+            sender.sendMessage(CC.Gray + "Unlock a Heroic rank at " + CC.GrayU + "buy.astropvp.net" + CC.Gray + "!");
             return true;
         }
         Player pl = (Player) sender;

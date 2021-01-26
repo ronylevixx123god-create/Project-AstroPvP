@@ -116,13 +116,13 @@ final class EssentialsKitViewerListener
         }
         boolean masteryKits = Bukkit.getPluginManager().isPluginEnabled("CosmicArmorSets");
         this.kitMenuSelector = Bukkit.createInventory(null, masteryKits ? 18 : 9, "Choose a kit category...");
-        this.kitMenuSelector.setItem(3, ItemUtils.buildItem(Material.BED, (short) 0, ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "Rank Kits", ChatColor.GRAY + "Kits unlocked through rank purchases", "", ChatColor.YELLOW.toString() + ChatColor.UNDERLINE.toString() + "buy.cosmicpvp.com"));
+        this.kitMenuSelector.setItem(3, ItemUtils.buildItem(Material.BED, (short) 0, ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "Rank Kits", ChatColor.GRAY + "Kits unlocked through rank purchases", "", ChatColor.YELLOW.toString() + ChatColor.UNDERLINE.toString() + "buy.astropvp.net"));
         if (Bukkit.getPluginManager().isPluginEnabled("CosmicEvolutionKits")) {
-            this.kitMenuSelector.setItem(4, ItemUtils.buildItem(Material.BLAZE_POWDER, (short) 0, ChatColor.DARK_PURPLE.toString() + ChatColor.BOLD.toString() + "Evolution Kits", ChatColor.GRAY + "Powerful kits that have a chance to", ChatColor.GRAY + "evolve each time you redeem them.", "", ChatColor.DARK_PURPLE.toString() + ChatColor.UNDERLINE.toString() + "buy.cosmicpvp.com"));
+            this.kitMenuSelector.setItem(4, ItemUtils.buildItem(Material.BLAZE_POWDER, (short) 0, ChatColor.DARK_PURPLE.toString() + ChatColor.BOLD.toString() + "Evolution Kits", ChatColor.GRAY + "Powerful kits that have a chance to", ChatColor.GRAY + "evolve each time you redeem them.", "", ChatColor.DARK_PURPLE.toString() + ChatColor.UNDERLINE.toString() + "buy.astropvp.net"));
         }
-        this.kitMenuSelector.setItem(5, ItemUtils.buildItem(Material.NETHER_STAR, (short) 0, ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "Cosmic Kits", ChatColor.GRAY + "Limited edition kits containing some", ChatColor.GRAY + "of the rarest items in the game.", "", ChatColor.GOLD + ChatColor.UNDERLINE.toString() + "buy.cosmicpvp.com"));
+        this.kitMenuSelector.setItem(5, ItemUtils.buildItem(Material.NETHER_STAR, (short) 0, ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "Cosmic Kits", ChatColor.GRAY + "Limited edition kits containing some", ChatColor.GRAY + "of the rarest items in the game.", "", ChatColor.GOLD + ChatColor.UNDERLINE.toString() + "buy.astropvp.net"));
         if (masteryKits) {
-            this.kitMenuSelector.setItem(13, ItemUtils.buildItem(Material.DIAMOND, (short) 0, CC.RedB + "Mastery Kits", ChatColor.GRAY + "Godly kits only the most skilled", ChatColor.GRAY + "players are capable of unlocking.", "", ChatColor.RED + ChatColor.UNDERLINE.toString() + "buy.cosmicpvp.com"));
+            this.kitMenuSelector.setItem(13, ItemUtils.buildItem(Material.DIAMOND, (short) 0, CC.RedB + "Mastery Kits", ChatColor.GRAY + "Godly kits only the most skilled", ChatColor.GRAY + "players are capable of unlocking.", "", ChatColor.RED + ChatColor.UNDERLINE.toString() + "buy.astropvp.net"));
         }
         for (int i = 0; i < this.kitMenuSelector.getSize(); ++i) {
             ItemStack item = this.kitMenuSelector.getItem(i);

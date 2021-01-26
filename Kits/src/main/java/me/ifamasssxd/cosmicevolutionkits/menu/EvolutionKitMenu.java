@@ -53,7 +53,7 @@ extends CosmicGUI {
                 if (!kitPlayer.hasAccess(this.player, kit)) {
                     this.player.closeInventory();
                     this.player.sendMessage((Object)ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You have not unlocked this Evolution Kit!");
-                    this.player.sendMessage((Object)ChatColor.GRAY + "You can preview a max level version by " + (Object)ChatColor.UNDERLINE + "right-clicking" + (Object)ChatColor.GRAY + " the /vkit item. Unlock access to this kit with a Fallen Hero from " + (Object)ChatColor.GRAY + (Object)ChatColor.UNDERLINE + "buy.cosmicpvp.com!");
+                    this.player.sendMessage((Object)ChatColor.GRAY + "You can preview a max level version by " + (Object)ChatColor.UNDERLINE + "right-clicking" + (Object)ChatColor.GRAY + " the /vkit item. Unlock access to this kit with a Fallen Hero from " + (Object)ChatColor.GRAY + (Object)ChatColor.UNDERLINE + "buy.astropvp.net!");
                     return;
                 }
                 if (kit.checkFund(this.player)) {

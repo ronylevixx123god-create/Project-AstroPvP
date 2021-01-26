@@ -90,7 +90,7 @@ final class ShopCommandListener
                 if (!noLimit) {
                     pl.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot teleport for " + ExpBottlesCommand.getTimeString(pl.getMetadata("nextExpBottle").get(0).asLong() - System.currentTimeMillis()) + " due to EXP exhaustion.");
                     if (!pl.hasPermission("playervaults.amount.15")) {
-                        pl.sendMessage(ChatColor.GRAY + "Upgrade your rank at " + ChatColor.UNDERLINE + "buy.cosmicpvp.com" + ChatColor.GRAY + " to decrease this delay.");
+                        pl.sendMessage(ChatColor.GRAY + "Upgrade your rank at " + ChatColor.UNDERLINE + "buy.astropvp.net" + ChatColor.GRAY + " to decrease this delay.");
                     }
                     e.setCancelled(true);
                 }

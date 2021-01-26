@@ -110,7 +110,7 @@ final class ItemLinkingChatListener
             Player pl = e.getPlayer();
             if (!(pl.hasPermission("itemlinking.senditem") || pl.hasPermission("arkhamjsonitem.senditem") || pl.hasPermission("cosmicpvp.senditem"))) {
                 pl.sendMessage(ChatColor.RED + "You do not have permission to link items in chat with " + (bragShow ? "[BRAG]" : "[ITEM]") + "!");
-                pl.sendMessage(ChatColor.GRAY + "Purchase a rank at " + ChatColor.UNDERLINE + "buy.cosmicpvp.com" + ChatColor.GRAY + " and try again!");
+                pl.sendMessage(ChatColor.GRAY + "Purchase a rank at " + ChatColor.UNDERLINE + "buy.astropvp.net" + ChatColor.GRAY + " and try again!");
                 return;
             }
             if (pl.hasMetadata("last_senditem") && System.currentTimeMillis() - pl.getMetadata("last_senditem").get(0).asLong() <= 5000L) {

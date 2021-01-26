@@ -123,7 +123,7 @@ implements Listener {
                         heroicUpgradeBonusItem = null;
                     } else if (heroicBonusItem != null && heroicBonusItem.equals(i)) {
                         message.addText((Player)null, " " + CC.Yellow + "(" + CC.YellowB + "SRC" + CC.Yellow + ":", ChatColor.YELLOW);
-                        message.addHoverData(CC.Yellow + " Heroic Rank)", CC.YellowB + "Heroic Rank " + CC.Yellow + "(" + CC.YellowB + "Top Rank+" + CC.Yellow + ") " + CC.Gray + "can be\n" + CC.Gray + "obtained from various in game mechanics\n" + CC.Gray + "as well as unlocked at " + CC.GrayU + "buy.cosmicpvp.com" + CC.Gray + "!", "https://buy.cosmicpvp.com", ChatColor.YELLOW);
+                        message.addHoverData(CC.Yellow + " Heroic Rank)", CC.YellowB + "Heroic Rank " + CC.Yellow + "(" + CC.YellowB + "Top Rank+" + CC.Yellow + ") " + CC.Gray + "can be\n" + CC.Gray + "obtained from various in game mechanics\n" + CC.Gray + "as well as unlocked at " + CC.GrayU + "buy.astropvp.net" + CC.Gray + "!", "https://buy.astropvp.net", ChatColor.YELLOW);
                         heroicBonusItem = null;
                     }
                     message.addText((Player)null, "!", ChatColor.GOLD);

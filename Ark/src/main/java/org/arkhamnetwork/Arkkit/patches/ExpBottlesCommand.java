@@ -83,9 +83,9 @@ final class ExpBottlesCommand
             if (!noLimit) {
                 p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot create another XP Bottle for " + ExpBottlesCommand.getTimeString(p.getMetadata("nextExpBottle").get(0).asLong() - System.currentTimeMillis()));
                 if (!p.hasPermission("playervaults.amount.15")) {
-                    p.sendMessage(ChatColor.GRAY + "Complete a Rank Quest from buy.cosmicpvp.com to decrease this delay.");
+                    p.sendMessage(ChatColor.GRAY + "Complete a Rank Quest from buy.astropvp.net to decrease this delay.");
                 } else if (!p.hasPermission("cosmicpvp.heroic")) {
-                    p.sendMessage(ChatColor.GRAY + "Purchase a Heroic Rank Crystal at buy.cosmicpvp.com to decrease this delay.");
+                    p.sendMessage(ChatColor.GRAY + "Purchase a Heroic Rank Crystal at buy.astropvp.net to decrease this delay.");
                 }
                 return true;
             }

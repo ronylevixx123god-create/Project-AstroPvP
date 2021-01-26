@@ -61,13 +61,13 @@ extends CosmicGUI {
             EntityType entityType = type.getEntityType();
             boolean equipped = active != null && active.getType() == type;
             boolean unlocked = this.disguiseTypes.contains(type);
-            ArrayList lore = Lists.newArrayList((Object[])new String[]{"", equipped ? CC.GreenB + "CURRENTLY ACTIVE" : (!unlocked ? CC.RedB + "LOCKED" : CC.GreenB + "UNLOCKED"), "", !unlocked ? CC.Gray + "Unlock disguises at " + CC.GrayU + "buy.cosmicpvp.com" + CC.Gray + "!" : CC.Gray + "Click to " + (equipped ? "de-" : "") + "activate this disguise!"});
+            ArrayList lore = Lists.newArrayList((Object[])new String[]{"", equipped ? CC.GreenB + "CURRENTLY ACTIVE" : (!unlocked ? CC.RedB + "LOCKED" : CC.GreenB + "UNLOCKED"), "", !unlocked ? CC.Gray + "Unlock disguises at " + CC.GrayU + "buy.astropvp.net" + CC.Gray + "!" : CC.Gray + "Click to " + (equipped ? "de-" : "") + "activate this disguise!"});
             String eggName = StringUtils.capitaliseAllWords(type.name().replace("_", " ").toLowerCase());
             this.setItem(index++, new InventoryItem(new ItemBuilder(new ItemStack(Material.MONSTER_EGG, 1, (entityType == EntityType.WITHER ? EntityType.ENDERMAN : (entityType == EntityType.ENDER_DRAGON ? EntityType.BAT : entityType)).getTypeId())).name((equipped ? CC.GreenB : CC.RedB) + eggName).lore(lore).build()).click(() -> {
                 if (this.lastChange != 0L && System.currentTimeMillis() - this.lastChange <= 1000L) {
                     this.player.sendMessage(CC.Red + "Please wait at least 1 second in between disguise changes!");
                 } else if (!unlocked) {
-                    this.player.sendMessage(CC.Red + "Unlock access to disguises at " + CC.RedU + "buy.cosmicpvp.com" + CC.Red + "!");
+                    this.player.sendMessage(CC.Red + "Unlock access to disguises at " + CC.RedU + "buy.astropvp.net" + CC.Red + "!");
                 } else {
                     String timeTillCanRun = CosmicDisguises.get().getDisguiseManager().getDisguiseCooldownString(this.player);
                     if (timeTillCanRun != null) {
