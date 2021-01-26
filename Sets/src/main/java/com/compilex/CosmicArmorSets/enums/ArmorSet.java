@@ -57,7 +57,7 @@ public enum ArmorSet {
     KOTH(new KothArmorSet(), ChatColor.AQUA, CC.WhiteB + CC.Magic + ";" + CC.RedB + " K" + CC.GoldB + "." + CC.YellowB + "O" + CC.GreenB + "." + CC.AquaB + "T" + CC.DarkPurpleB + "." + CC.LightPurpleB + "H " + CC.WhiteB + CC.Magic + ";", Lists.newArrayList("+5% PvP DMG", "+12.5% PvE DMG")),
     ASTRO(new AstroSet(), ChatColor.GREEN, CC.GreenB + "Astro", Lists.newArrayList("+5% Outgoing DMG", "-5% Incoming DMG", "10% Passive Astro Killer Ability")),
     OMNI(new OmniArmorSet(), ChatColor.DARK_BLUE, CC.DarkBlueB + "Omni", Lists.newArrayList("")),
-    ULTRA(new UltraArmorSet(), ChatColor.GRAY, CC.GreenB + "Ultra", Lists.newArrayList("+15% Outgoing DMG", "-7.5% Incoming DMG", "4.5% Ultra Rage Ability", "8.5% Ultra Holy Negation", "4.5% Chance to Bypass Utility Belt", "x1.5 World Destroyer Duration")),
+    ULTRA(new UltraArmorSet(), ChatColor.GRAY, CC.GrayB + "Ultra", Lists.newArrayList("+15% Outgoing DMG", "-7.5% Incoming DMG", "4.5% Ultra Rage Ability", "8.5% Ultra Holy Negation", "4.5% Chance to Bypass Utility Belt", "x1.5 World Destroyer Duration")),
     ANCIENT(new AncientArmorSet(), ChatColor.DARK_AQUA, CC.DarkAquaB + "Ancient", Lists.newArrayList("+7% Outgoing DMG", "3% More Damage", "10% Leviathan's Curse Ability"));
 
     public ItemStack helmet;
