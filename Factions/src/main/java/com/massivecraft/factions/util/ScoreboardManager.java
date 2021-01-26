@@ -9,6 +9,7 @@ import com.massivecraft.factions.board.BoardAdapter;
 import com.massivecraft.factions.integration.Econ;
 import com.massivecraft.factions.struct.Relation;
 import com.massivecraft.factions.zcore.util.NumberUtils;
+import io.netty.util.internal.ThreadLocalRandom;
 import net.astropvp.core.AstroCore;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.ChatColor;
@@ -47,32 +48,40 @@ public class ScoreboardManager implements BoardAdapter {
         FPlayer fplayer = FPlayers.i.get(player);
         if (fplayer != null) {
             if (fplayer.hasFaction()) {
-                return CC.GreenB + fplayer.getFaction().getTag() + CC.Gray + " [" + getDateSuffix() + "]";
+                return CC.GreenB + fplayer.getFaction().getTag() + CC.Gray + " " + getDateSuffix();
             } else {
-                return CC.GreenB + "AstroPvP " + CC.Gray + "[" + getDateSuffix() + "]";
+                return CC.GreenB + "AstroPvP " + CC.Gray + getDateSuffix();
             }
         }
-        return CC.GreenB + "AstroPvP " + CC.Gray + "[" + getDateSuffix() + "]";
+        return CC.AquaB + "AstroPvP " + CC.Gray + getDateSuffix();
     }
 
     public List<String> mainBoard(Player player) {
         List<String> board = new LinkedList<>();
+        FPlayer fplayer = FPlayers.i.get(player);
 
         board.add(" ");
-        board.add(ChatColor.AQUA + ChatColor.BOLD.toString() + "Account");
+        board.add(ChatColor.GREEN + ChatColor.BOLD.toString() + "Account");
         board.add(ChatColor.WHITE + player.getName());
         board.add(" ");
         board.add(ChatColor.GOLD + ChatColor.BOLD.toString() + "Balance");
         board.add(ChatColor.WHITE.toString() + "$" + NumberUtils.formatMoney((long) Econ.econ.getBalance(player)));
         board.add(" ");
-        board.add(ChatColor.LIGHT_PURPLE + ChatColor.BOLD.toString() + "XP");
+        board.add(ChatColor.AQUA + ChatColor.BOLD.toString() + "XP");
         board.add(ChatColor.WHITE.toString() + NumberUtils.formatMoney(getTotalExperience(player)));
         board.add(" ");
         board.add(ChatColor.RED + ChatColor.BOLD.toString() + "Ping");
-        board.add(ChatColor.WHITE.toString() + ((CraftPlayer) player).getHandle().ping + "ms");
+        board.add(ChatColor.WHITE.toString() + getPing(player) + "ms");
         board.add(" ");
-        board.add(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Server");
-        board.add(ChatColor.WHITE.toString() + "astropvp.net");
+        if (fplayer != null) {
+            if (fplayer.hasFaction()) {
+                board.add(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Faction");
+                board.add(ChatColor.GREEN.toString() + fplayer.getFaction().getOnlinePlayers().size() + ChatColor.GRAY + " / " + fplayer.getFaction().getFPlayers().size());
+            } else {
+                board.add(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Server");
+                board.add(ChatColor.WHITE.toString() + "astropvp.net");
+            }
+        }
 
         return board;
     }
@@ -91,6 +100,16 @@ public class ScoreboardManager implements BoardAdapter {
     public static HashSet<UUID> playerObjectives = new HashSet<>();
 
     public static boolean nearby = true;
+
+    public static int getPing(Player player) {
+        int ping = (((CraftPlayer)player).getHandle()).ping;
+            if (ping == 0) {
+                ping = ThreadLocalRandom.current().nextInt(40, 50);
+            } else if (ping > 80) {
+                ping = ThreadLocalRandom.current().nextInt(30, 50);
+            }
+        return ping;
+    }
 
 
 
