@@ -21,7 +21,6 @@ import me.ifamasssxd.cosmicduel.struct.enums.DuelCreateState;
 import me.ifamasssxd.cosmicduel.utils.EnchantUtils;
 import me.ifamasssxd.cosmicduel.utils.ItemBuilder;
 import me.ifamasssxd.cosmicduel.utils.KitUtils;
-import me.ifamasssxd.cosmicduel.utils.PlayerUtils;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -34,7 +33,7 @@ extends CustomInventory {
     NewDuel duel;
 
     public GKitSelectionInventory(NewDuel duel) {
-        super("Select a Duel GKit", PlayerUtils.getRoundedSize(GlobalKits.values().length) / 9);
+        super("Select a Duel GKit", 6);
         this.duel = duel;
     }
 

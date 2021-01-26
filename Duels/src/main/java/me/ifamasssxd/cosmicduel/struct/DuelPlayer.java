@@ -21,7 +21,6 @@ import me.ifamasssxd.cosmicduel.CosmicDuel;
 import me.ifamasssxd.cosmicduel.godset.CustomGodSet;
 import me.ifamasssxd.cosmicduel.utils.ItemBuilder;
 import me.ifamasssxd.cosmicduel.utils.KitUtils;
-import me.ifamasssxd.cosmicduel.utils.PlayerUtils;
 import me.ifamasssxd.cosmicduel.utils.Serializer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -375,7 +374,7 @@ public class DuelPlayer {
     }
 
     public Inventory createCustomInventory() {
-        Inventory inventory = Bukkit.createInventory((InventoryHolder)null, (int)PlayerUtils.getRoundedSize(GlobalKits.values().length + 8), (String)"Select a Duel Kit");
+        Inventory inventory = Bukkit.createInventory((InventoryHolder)null, 54, (String)"Select a Duel Kit");
         inventory.setItem(3, this.getKitItem(Kit.HEALER));
         inventory.setItem(5, this.getKitItem(Kit.DEBUFF));
         int slot = 9;

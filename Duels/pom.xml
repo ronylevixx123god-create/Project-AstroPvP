@@ -8,6 +8,10 @@
     <artifactId>Duels</artifactId>
     <version>0.1</version>
 
+    <build>
+        <finalName>CosmicDuel</finalName>
+    </build>
+
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>

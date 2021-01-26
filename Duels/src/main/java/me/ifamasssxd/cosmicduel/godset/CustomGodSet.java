@@ -126,7 +126,7 @@ public class CustomGodSet {
 
     public Inventory getEditInventory() {
         LinkedList<ItemStack> items = this.getKitItems(true, true);
-        Inventory inventory = Bukkit.createInventory((InventoryHolder)null, (int)PlayerUtils.getRoundedSize(items.size()), (String)"Duel God Set");
+        Inventory inventory = Bukkit.createInventory((InventoryHolder)null, 54, (String)"Duel God Set");
         for (ItemStack item : items) {
             ItemMeta im = (item = item.clone()).getItemMeta();
             List<String> lore = im.hasLore() ? im.getLore() : Lists.newArrayList();
@@ -151,7 +151,7 @@ public class CustomGodSet {
     }
 
     public Inventory getBookRarityMenu() {
-        Inventory inventory = Bukkit.createInventory((InventoryHolder)null, (int)9, (String)GodsetCreationListener.BOOK_RARITY_INVENTORY_NAME);
+        Inventory inventory = Bukkit.createInventory((InventoryHolder)null, 54, (String)GodsetCreationListener.BOOK_RARITY_INVENTORY_NAME);
         HashMap<EnchantSlots, List<CustomEnchantment>> getSortedEnchants = this.getSortedEnchants();
         int index = 2;
         for (EnchantSlots slot : EnchantSlots.values()) {
@@ -195,7 +195,7 @@ public class CustomGodSet {
         List<CustomEnchantment> ofRarity = enchants.stream().filter(ench -> EnchantSlots.getEnchantRarity(TieredEnchantments.getEnchantmentTier((String)ench.name())) == rarity).collect(Collectors.toList());
         Collections.sort(ofRarity, (o1, o2) -> o1.name().compareTo(o2.name()));
         List<CustomEnchantment> currentEnchants = this.getCurrentEnchants(editting);
-        Inventory inventory = Bukkit.createInventory((InventoryHolder)null, (int)PlayerUtils.getRoundedSize(ofRarity.size()), (String)"Duel Enchants");
+        Inventory inventory = Bukkit.createInventory((InventoryHolder)null, 54, (String)"Duel Enchants");
         for (CustomEnchantment enchant : ofRarity) {
             List<String> lore = StringUtils.trimLines((Object)ChatColor.GRAY + EnchantmentDescriptions.getDescription((CustomEnchantment)enchant), ChatColor.GRAY, 38);
             lore.add("");

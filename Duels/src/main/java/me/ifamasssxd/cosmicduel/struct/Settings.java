@@ -65,7 +65,7 @@ public class Settings {
             if (!duel.isRanked() && !setting.isDefaultSetting() || duel.isRanked() && !setting.isRankedDefault()) continue;
             this.currentSettings.add(setting);
         }
-        this.settings = new ClassInventory("Duel Settings", 3);
+        this.settings = new ClassInventory("Duel Settings", 6);
         this.updateSettingsInventory();
         QueueManager queueManager = CosmicDuel.get().getQueueManager();
         this.settings.setCallback((inventory, event) -> {

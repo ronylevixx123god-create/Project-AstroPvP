@@ -90,23 +90,23 @@ public class NewStakeInventory {
         this.p2 = p2;
         this.playerTypes.put(p1.getName(), PlayerType.ONE);
         this.playerTypes.put(p2.getName(), PlayerType.TWO);
-        this.inventory = Bukkit.createInventory((InventoryHolder)null, (int)27, (String)NewStakeInventory.getTradeInventoryTitle(p1.getName(), p2.getName()));
-        ArrayList lore = Lists.newArrayList((Object[])new String[]{"", (Object)ChatColor.YELLOW + ChatColor.BOLD.toString() + "Settings"});
+        this.inventory = Bukkit.createInventory(null, 54, NewStakeInventory.getTradeInventoryTitle(p1.getName(), p2.getName()));
+        ArrayList lore = Lists.newArrayList((Object[])new String[]{"", ChatColor.YELLOW + ChatColor.BOLD.toString() + "Settings"});
         for (Setting setting : Setting.values()) {
             if (duel.getSettings().hasSetting(setting)) {
-                lore.add((Object)ChatColor.YELLOW + setting.getName() + ": " + (Object)ChatColor.GREEN + ChatColor.BOLD.toString() + "ON");
+                lore.add(ChatColor.YELLOW + setting.getName() + ": " + ChatColor.GREEN + ChatColor.BOLD.toString() + "ON");
                 continue;
             }
-            lore.add((Object)ChatColor.YELLOW + setting.getName() + ": " + (Object)ChatColor.RED + ChatColor.BOLD.toString() + "OFF");
+            lore.add(ChatColor.YELLOW + setting.getName() + ": " + ChatColor.RED + ChatColor.BOLD.toString() + "OFF");
         }
         if (this.duel.getKit() == Kit.GKIT) {
-            lore.add((Object)ChatColor.GREEN + ChatColor.BOLD.toString() + "GKit: " + (Object)ChatColor.GREEN + StringUtils.capitalize((String)this.duel.getCustomGKit().getKitName()));
+            lore.add(ChatColor.GREEN + ChatColor.BOLD.toString() + "GKit: " + ChatColor.GREEN + StringUtils.capitalize(this.duel.getCustomGKit().getKitName()));
         } else {
-            lore.add((Object)ChatColor.GREEN + ChatColor.BOLD.toString() + "Kit: " + (Object)ChatColor.GREEN + StringUtils.capitalize((String)this.duel.getKit().getName(true)));
+            lore.add(ChatColor.GREEN + ChatColor.BOLD.toString() + "Kit: " + ChatColor.GREEN + StringUtils.capitalize(this.duel.getKit().getName(true)));
         }
         lore.add(CC.GreenB + "Arena: " + CC.Green + (this.duel.getArena() == null ? "N/A" : this.duel.getArena().getName()));
-        this.pendingItem = ItemBuilder.buildItem((Material)Material.STAINED_GLASS_PANE, (short)14, (String)((Object)ChatColor.YELLOW + "Click to ACCEPT Stake"), (List)lore);
-        this.acceptedItem = ItemBuilder.buildItem((Material)Material.STAINED_GLASS_PANE, (short)5, (String)((Object)ChatColor.YELLOW + "Stake ACCEPTED"), (List)lore);
+        this.pendingItem = ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)14, ChatColor.YELLOW + "Click to ACCEPT Stake", lore);
+        this.acceptedItem = ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)5, ChatColor.YELLOW + "Stake ACCEPTED", lore);
         this.prepareStake(this.inventory);
     }
 
@@ -114,7 +114,7 @@ public class NewStakeInventory {
         inv.setItem(0, this.pendingItem);
         inv.setItem(8, this.pendingItem);
         for (int i = 4; i < inv.getSize(); i += 9) {
-            inv.setItem(i, ItemBuilder.buildItem((Material)Material.STAINED_GLASS_PANE, (short)7, (String)" ", (String[])new String[]{" "}));
+            inv.setItem(i, ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)7, " ", new String[]{" "}));
         }
     }
 
@@ -140,7 +140,7 @@ public class NewStakeInventory {
         if (e.getRawSlot() < e.getInventory().getSize()) {
             if (e.getRawSlot() == 0 && pt == PlayerType.ONE) {
                 this.modified = true;
-                if (this.inventory.getItem(0).equals((Object)this.pendingItem)) {
+                if (this.inventory.getItem(0).equals(this.pendingItem)) {
                     this.inventory.setItem(0, this.acceptedItem);
                     this.checkDone();
                 } else {
@@ -148,7 +148,7 @@ public class NewStakeInventory {
                 }
             } else if (e.getRawSlot() == 8 && pt == PlayerType.TWO) {
                 this.modified = true;
-                if (this.inventory.getItem(8).equals((Object)this.pendingItem)) {
+                if (this.inventory.getItem(8).equals(this.pendingItem)) {
                     this.inventory.setItem(8, this.acceptedItem);
                     this.checkDone();
                 } else {
@@ -159,13 +159,13 @@ public class NewStakeInventory {
                 return;
             }
             if (p.getInventory().firstEmpty() == -1) {
-                p.sendMessage((Object)ChatColor.RED + "Your inventory is full.");
+                p.sendMessage(ChatColor.RED + "Your inventory is full.");
                 return;
             }
             this.modified = true;
             ItemStack is = e.getCurrentItem();
-            e.getInventory().setItem(e.getRawSlot(), (ItemStack)null);
-            p.getInventory().addItem(new ItemStack[]{is});
+            e.getInventory().setItem(e.getRawSlot(), null);
+            p.getInventory().addItem(is);
             p.updateInventory();
             if (this.isSomeoneReady()) {
                 this.resetAcceptButtons();
@@ -175,13 +175,13 @@ public class NewStakeInventory {
                 return;
             }
             if (this.isFull(pt, this.inventory)) {
-                p.sendMessage((Object)ChatColor.RED + "The Stake inventory is full.");
-                p.sendMessage((Object)ChatColor.RED + "Please remove some stake items to make room.");
+                p.sendMessage(ChatColor.RED + "The Stake inventory is full.");
+                p.sendMessage(ChatColor.RED + "Please remove some stake items to make room.");
                 return;
             }
             this.modified = true;
             ItemStack is = e.getCurrentItem();
-            p.getInventory().removeItem(new ItemStack[]{is});
+            p.getInventory().removeItem(is);
             p.updateInventory();
             int firstEmpty = this.getFirstEmpty(pt, this.inventory);
             if (firstEmpty == -1) {
@@ -205,17 +205,17 @@ public class NewStakeInventory {
     }
 
     public boolean isSomeoneReady() {
-        return this.inventory.getItem(0).equals((Object)this.acceptedItem) || this.inventory.getItem(8).equals((Object)this.acceptedItem);
+        return this.inventory.getItem(0).equals(this.acceptedItem) || this.inventory.getItem(8).equals(this.acceptedItem);
     }
 
     public void checkDone() {
         if (this.runnable != null) {
             return;
         }
-        if (this.inventory.getItem(0).equals((Object)this.acceptedItem) && this.inventory.getItem(8).equals((Object)this.acceptedItem)) {
+        if (this.inventory.getItem(0).equals(this.acceptedItem) && this.inventory.getItem(8).equals(this.acceptedItem)) {
             this.modified = false;
             this.runnable = new BukkitRunnable(){
-                AtomicInteger time = new AtomicInteger(6);
+                final AtomicInteger time = new AtomicInteger(6);
 
                 public void run() {
                     if (NewStakeInventory.this.runnable.getTaskId() != this.getTaskId()) {
@@ -232,7 +232,7 @@ public class NewStakeInventory {
                         NewStakeInventory.this.modified = false;
                         NewStakeInventory.this.runnable = null;
                         this.cancel();
-                        NewStakeInventory.this.setMiddle(ItemBuilder.buildItem((Material)Material.STAINED_GLASS_PANE, (short)7, (String)" ", (String[])new String[]{""}));
+                        NewStakeInventory.this.setMiddle(ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)7, " ", new String[]{""}));
                         NewStakeInventory.this.resetAcceptButtons();
                         return;
                     }
@@ -240,7 +240,7 @@ public class NewStakeInventory {
                         this.cancel();
                         for (Player p : duel.getPlayers()) {
                             if (!PlayerUtils.inCombat(p)) continue;
-                            duel.sendMessage((Object)ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + p.getName() + " was in combat and cancelled the duel.", false);
+                            duel.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + p.getName() + " was in combat and cancelled the duel.", false);
                             DuelAPI.cancelDuel(duel, CancelReason.IN_COMBAT_STAKES);
                             return;
                         }
@@ -251,8 +251,8 @@ public class NewStakeInventory {
                         if (DuelAPI.getArenaQueueSize(duel.getArena()) > 0 || DuelAPI.getCurrentlyActiveDuel(duel.getArena()) != null) {
                             duel.setCreateState(DuelCreateState.WAITING);
                             duel.duelState = DuelState.IN_QUEUE;
-                            duel.sendMessage((Object)ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.YELLOW + "This Arena currently has a queue of " + (Object)ChatColor.AQUA + ChatColor.BOLD.toString() + DuelAPI.getArenaQueueSize(duel.getArena()) + " Duel(s).", true);
-                            duel.sendMessage((Object)ChatColor.GRAY + "You must wait for the current duels to be over or you can use '/duel leave' to retrieve your items back.", true);
+                            duel.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "This Arena currently has a queue of " + ChatColor.AQUA + ChatColor.BOLD.toString() + DuelAPI.getArenaQueueSize(duel.getArena()) + " Duel(s).", true);
+                            duel.sendMessage(ChatColor.GRAY + "You must wait for the current duels to be over or you can use '/duel leave' to retrieve your items back.", true);
                             NewStakeInventory.this.p1.closeInventory();
                             NewStakeInventory.this.p2.closeInventory();
                             DuelAPI.queueDuel(duel.getArena(), duel);
@@ -283,12 +283,12 @@ public class NewStakeInventory {
                                 data = 4;
                             }
                         }
-                        ItemStack is = ItemBuilder.buildItem((Material)Material.STAINED_GLASS_PANE, (short)data, (String)((Object)ChatColor.YELLOW + ChatColor.BOLD.toString() + this.time.get()), (String[])new String[]{""});
+                        ItemStack is = ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, data, ChatColor.YELLOW + ChatColor.BOLD.toString() + this.time.get(), new String[]{""});
                         is.setAmount(this.time.get());
                         NewStakeInventory.this.setMiddle(is);
                     }
                 }
-            }.runTaskTimer((Plugin)CosmicDuel.get(), 20L, 20L);
+            }.runTaskTimer(CosmicDuel.get(), 20L, 20L);
         }
     }
 
@@ -310,13 +310,13 @@ public class NewStakeInventory {
     public void closeInventory() {
         for (String p_name : this.playerTypes.keySet()) {
             PlayerType pt = this.playerTypes.get(p_name);
-            Player p = Bukkit.getPlayer((String)p_name);
+            Player p = Bukkit.getPlayer(p_name);
             if (p == null) continue;
             for (ItemStack is : this.getStakes(pt)) {
                 if (p.getInventory().firstEmpty() == -1) {
                     CollectionBin.addItem(p, is);
                 } else {
-                    p.getInventory().addItem(new ItemStack[]{is});
+                    p.getInventory().addItem(is);
                 }
                 p.updateInventory();
             }
@@ -376,9 +376,9 @@ public class NewStakeInventory {
         return this.duel;
     }
 
-    public static enum PlayerType {
+    public enum PlayerType {
         ONE,
-        TWO;
+        TWO
 
     }
 }

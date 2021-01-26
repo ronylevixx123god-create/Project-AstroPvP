@@ -306,7 +306,7 @@ extends NewDuel {
 
     @Override
     public Inventory getDroppedItemsInventory(Player loser) {
-        Inventory inv = Bukkit.createInventory(null, loser.getInventory().getSize() + 9, loser.getName() + "'s Death Loot");
+        Inventory inv = Bukkit.createInventory(null, 54, loser.getName() + "'s Death Loot");
         int index = 0;
         for (ItemStack armor : loser.getInventory().getArmorContents()) {
             if (armor != null && armor.getType() != Material.AIR) {

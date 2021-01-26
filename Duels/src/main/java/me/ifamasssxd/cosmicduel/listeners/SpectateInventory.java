@@ -25,7 +25,6 @@ import me.ifamasssxd.cosmicduel.struct.enums.DuelCreateState;
 import me.ifamasssxd.cosmicduel.struct.enums.DuelState;
 import me.ifamasssxd.cosmicduel.struct.newduel.NewDuel;
 import me.ifamasssxd.cosmicduel.utils.ItemBuilder;
-import me.ifamasssxd.cosmicduel.utils.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -45,7 +44,7 @@ implements Listener {
     private static Inventory spectateInventory;
 
     public SpectateInventory() {
-        spectateInventory = Bukkit.createInventory((InventoryHolder)null, (int)PlayerUtils.getRoundedSize(Arena.arenas.size()), (String)"Select an Arena");
+        spectateInventory = Bukkit.createInventory((InventoryHolder)null, 54, (String)"Select an Arena");
         SpectateInventory.updateInventory();
     }
 

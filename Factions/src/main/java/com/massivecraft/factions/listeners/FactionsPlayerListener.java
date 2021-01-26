@@ -8,6 +8,7 @@ import com.massivecraft.factions.cmd.CmdClaim;
 import com.massivecraft.factions.event.FPlayerLeaveEvent;
 import com.massivecraft.factions.event.PowerLossEvent;
 import com.massivecraft.factions.struct.*;
+import com.massivecraft.factions.util.HeartsUnderName;
 import com.massivecraft.factions.util.ScoreboardManager;
 import com.massivecraft.factions.util.TimeUtil;
 import com.massivecraft.factions.zcore.util.MojangUUIDFetcher;
@@ -78,6 +79,7 @@ public class FactionsPlayerListener implements Listener {
 
         if (P.getP().getBoardManager() != null) {
             P.getP().getBoardManager().getPlayerBoards().put(player.getUniqueId(), new com.massivecraft.factions.board.Board(player, P.getP().getBoardManager().getAdapter()));
+            HeartsUnderName.updateNametag(player, true);
         }
 
         if (fplayer == null)

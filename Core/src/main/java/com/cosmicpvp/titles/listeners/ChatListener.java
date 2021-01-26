@@ -12,8 +12,18 @@ public class ChatListener implements Listener {
     public void onChatEvent(AsyncPlayerChatEvent event) {
         //Bukkit.broadcastMessage(event.getMessage().toUpperCase());
         //Bukkit.broadcastMessage(event.getFormat().toUpperCase());
-        String title = PlayerTitleAPI.getEquippedTitle(event.getPlayer().getUniqueId());
-        String frm = event.getFormat().replace("[ATITLE]", CC.translate(title));
+
+        String title = "";
+
+        if (PlayerTitleAPI.getEquippedTitle(event.getPlayer().getUniqueId()) != null) {
+            if (PlayerTitleAPI.getEquippedTitle(event.getPlayer().getUniqueId()).equals("none")) {
+                title = "";
+            } else {
+                title = " &8[&6" + PlayerTitleAPI.getEquippedTitle(event.getPlayer().getUniqueId()) + "&8]";
+            }
+        }
+
+        String frm = event.getFormat().replace("ATITLE", CC.translate(title));
         event.setFormat(frm);
     }
 }

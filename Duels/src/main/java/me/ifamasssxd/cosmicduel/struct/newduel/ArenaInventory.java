@@ -8,7 +8,7 @@ import me.ifamasssxd.cosmicduel.inventory.CustomInventory;
 public class ArenaInventory
 extends CustomInventory {
     public ArenaInventory() {
-        super("Select an Arena", 1);
+        super("Select an Arena", 5);
     }
 }
 

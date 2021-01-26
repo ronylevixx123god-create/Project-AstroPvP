@@ -17,7 +17,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
@@ -31,13 +30,13 @@ public abstract class CustomInventory {
     protected CustomInventoryBottomCallback bottomCallback = null;
     protected CustomInventoryTopCallback topCallback;
     public Inventory inventoryChest;
-    private static Map<UUID, CustomInventory> playersCustomInventory = new HashMap<UUID, CustomInventory>();
+    private static final Map<UUID, CustomInventory> playersCustomInventory = new HashMap<UUID, CustomInventory>();
 
     public CustomInventory(String title, int rows) {
         this.title = title;
         this.rows = rows;
         this.type = null;
-        Inventory customChest = this.type == null ? Bukkit.getServer().createInventory((InventoryHolder)null, rows * 9, title) : Bukkit.getServer().createInventory((InventoryHolder)null, this.type, title);
+        Inventory customChest = this.type == null ? Bukkit.getServer().createInventory(null, rows * 9, title) : Bukkit.getServer().createInventory(null, this.type, title);
         this.inventoryChest = customChest;
     }
 
@@ -49,7 +48,7 @@ public abstract class CustomInventory {
 
     public static void closeInventories() {
         for (UUID uuid : playersCustomInventory.keySet()) {
-            Player p = Bukkit.getPlayer((UUID)uuid);
+            Player p = Bukkit.getPlayer(uuid);
             if (p == null) continue;
             p.closeInventory();
         }
@@ -84,7 +83,7 @@ public abstract class CustomInventory {
     }
 
     protected void setInventoryItems(CustomInventoryItem[] inventoryItems) {
-        this.inventoryChest.setContents((ItemStack[])inventoryItems);
+        this.inventoryChest.setContents(inventoryItems);
     }
 
     public void updateInventoryItems() {
@@ -136,14 +135,14 @@ public abstract class CustomInventory {
     public CustomInventoryItem removeItem(int slot, boolean update) {
         CustomInventoryItem item = this.inventoryItems.remove(slot);
         if (update) {
-            this.inventoryChest.setItem(slot, (ItemStack)null);
+            this.inventoryChest.setItem(slot, null);
         }
         return item;
     }
 
     public CustomInventoryItem removeItem(CustomInventoryItem item) {
         for (Map.Entry<Integer, CustomInventoryItem> items : this.getItems().entrySet()) {
-            if (items.getValue() == null || !items.getValue().getItemMeta().equals((Object)item.getItemMeta()) || items.getValue().getAmount() != item.getAmount() || !items.getValue().equals((Object)item)) continue;
+            if (items.getValue() == null || !items.getValue().getItemMeta().equals(item.getItemMeta()) || items.getValue().getAmount() != item.getAmount() || !items.getValue().equals(item)) continue;
             this.removeItem(items.getKey(), true);
             return item;
         }
