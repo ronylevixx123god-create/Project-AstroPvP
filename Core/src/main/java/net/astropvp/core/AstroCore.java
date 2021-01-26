@@ -39,6 +39,7 @@ import me.ifamasssxd.cosmicheroicenvoys.commands.CommandSetHeroicBossSpawn;
 import me.ifamasssxd.cosmicheroicenvoys.commands.CommandSpawnHeroicBoss;
 import me.ifamasssxd.cosmicheroicenvoys.listeners.EnvoyListener;
 import me.ifamasssxd.cosmicheroicenvoys.managers.EnvoyManager;
+import me.ifamasssxd.cosmicjackpot.commands.CommandJackpot;
 import me.ifamasssxd.cosmicjackpot.listeners.JackpotListener;
 import me.ifamasssxd.cosmicjackpot.struct.JackpotManager;
 import me.ifamasssxd.cosmictoggles.commands.CommandScoreboard;
@@ -183,6 +184,7 @@ public class AstroCore extends JavaPlugin {
         this.getCommand("corechunkfinder").setExecutor(new CoreChunkFinderCommand());
 
         this.getCommand("coinflip").setExecutor(new CommandCoinFlip());
+        this.getCommand("jackpot").setExecutor(new CommandJackpot());
         this.getServer().getPluginManager().registerEvents(new InventoryListener(), this);
         this.getServer().getPluginManager().registerEvents(new me.ifamasssxd.cosmiccoinflip.listeners.PlayerListener(), this);
 
