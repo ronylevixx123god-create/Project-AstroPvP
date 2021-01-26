@@ -29,14 +29,14 @@ import org.bukkit.inventory.ItemStack;
 public class MaskHelpMenu
 extends CosmicGUI {
     public MaskHelpMenu(Player player) {
-        super(player, "Fallout Masks", InventoryUtils.fitSize((int)((int)Arrays.stream(MaskType.values()).filter(MaskType::isActive).count())));
+        super(player, "Astro Masks", InventoryUtils.fitSize((int)((int)Arrays.stream(MaskType.values()).filter(MaskType::isActive).count())));
     }
 
     public void redraw() {
         int index = 0;
         for (MaskType type : MaskType.values()) {
             if (!type.getMaskData().isActive()) continue;
-            this.setItem(index++, type.createMask(false), () -> this.closeWithDelay(pl -> pl.sendMessage(CC.RedB + "(!)" + CC.Red + " Unlock Player Masks at " + CC.RedU + "buy.falloutpvp.me" + CC.Red + "!")));
+            this.setItem(index++, type.createMask(false), () -> this.closeWithDelay(pl -> pl.sendMessage(CC.RedB + "(!)" + CC.Red + " Unlock Player Masks at " + CC.RedU + "buy.astropvp.net" + CC.Red + "!")));
         }
         ItemStack pane = new ItemBuilder(Material.STAINED_GLASS_PANE, CC.RedB + "???", new String[]{CC.Gray + "This mask has not", CC.Gray + "been discovered yet."}).data((short)DyeColor.RED.getWoolData()).build();
         for (int i = 0; i < this.size; ++i) {
