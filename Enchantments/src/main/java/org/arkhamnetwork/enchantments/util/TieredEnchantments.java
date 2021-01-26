@@ -323,7 +323,7 @@ public enum TieredEnchantments {
         if (TieredEnchantments.retiredEnchantments.contains(ce) || (tier != 7 && TieredEnchantments.heroicEnchantments.contains(ce))) {
             return getRandomEnchantmentBook(tier);
         }
-        if (ce.equals(EnchantmentAPI.getEnchantment("Revoke"))) {
+        if (ce.equals(EnchantmentAPI.getEnchantment("Revoke")) || ce.equals(EnchantmentAPI.getEnchantment("Rogue"))) {
             return getRandomEnchantmentBook(tier);
         }
         return EnchantmentBook.getEnchantmentBook(ce, ce.getMaxLevel(), 100, 0);
