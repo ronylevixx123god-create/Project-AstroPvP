@@ -36,10 +36,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ShopManager {
     private static final String SHOP_NAME = "Shop Items";
@@ -54,8 +51,8 @@ public class ShopManager {
         /*Bukkit.getLogger().info("TYPE: " +  entityType + " ID: " + entityType.getTypeId());
         ItemStack item = ItemBuilder.buildItem(Material.MOB_SPAWNER, 1, entityType.getTypeId(), ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + StringUtils.capitaliseAllWords((String) entityType.name().replace("_", " ").toLowerCase()) + ChatColor.GOLD.toString() + " Spawner",  ChatColor.GRAY + "Be careful where you place this!");
         item.setDurability(entityType.getTypeId());*/
-        Bukkit.broadcastMessage("DEBUG SPAWNER");
-        ItemStack item = SilkUtil.hookIntoSilkSpanwers().newSpawnerItem(String.valueOf(entityType.getTypeId()), CC.translate("&a&l") + entityType.name() + " &f Spawner", 1, false);
+        ItemStack item = SilkUtil.hookIntoSilkSpanwers().newSpawnerItem(String.valueOf(entityType.getTypeId()), CC.translate("&a&l") + entityType.name() + "&f Spawner", 1, false);
+        item.getItemMeta().setLore(Arrays.asList(CC.translate("&7Be careful where you place this spawner."), "", CC.translate("&aType: " + entityType.getName())));
         return item;
     }
 
