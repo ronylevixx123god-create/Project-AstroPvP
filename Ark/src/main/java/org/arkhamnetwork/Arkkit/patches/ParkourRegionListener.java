@@ -1,31 +1,8 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  com.massivecraft.factions.event.LandClaimEvent
- *  net.minecraft.server.v1_7_R4.PacketPlayOutWorldEvent
- *  org.bukkit.ChatColor
- *  org.bukkit.Chunk
- *  org.bukkit.Location
- *  org.bukkit.Material
- *  org.bukkit.block.Block
- *  org.bukkit.entity.Player
- *  org.bukkit.event.EventHandler
- *  org.bukkit.event.EventPriority
- *  org.bukkit.event.Listener
- *  org.bukkit.event.entity.CreatureSpawnEvent
- *  org.bukkit.event.entity.CreatureSpawnEvent$SpawnReason
- *  org.bukkit.event.entity.PlayerDeathEvent
- *  org.bukkit.event.player.PlayerAnimationEvent
- *  org.bukkit.event.player.PlayerToggleFlightEvent
- *  org.bukkit.metadata.MetadataValue
- */
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.massivecraft.factions.event.LandClaimEvent;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.arkhamnetwork.Arkkit.utils.WorldGuardUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
@@ -56,7 +33,8 @@ final class ParkourRegionListener
             b.setType(Material.AIR);
             Location l = b.getLocation().add(0.0, 0.5, 0.0);
             PacketPlayOutWorldEvent particles = new PacketPlayOutWorldEvent(2001, new BlockPosition(Math.round(l.getBlockX()), Math.round(l.getBlockY()), Math.round(l.getBlockZ())), 80, false);
-            ParticleEffect.sendWorldEventPacket(particles, l);
+//            // todo: oliver
+//            ParticleEffect.sendWorldEventPacket(particles, l);
         }
     }
 

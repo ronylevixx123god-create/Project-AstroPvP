@@ -1,29 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.NBTTagCompoundBuilder
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
- *  com.cosmicpvp.cosmicutils.utils.PlayerUtil
- *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
- *  org.arkhamnetwork.Arkkit.patches.ItemID
- *  org.arkhamnetwork.Arkkit.plugins.ArkPlugins
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.Location
- *  org.bukkit.Material
- *  org.bukkit.Sound
- *  org.bukkit.entity.Player
- *  org.bukkit.event.Event
- *  org.bukkit.event.Event$Result
- *  org.bukkit.event.EventHandler
- *  org.bukkit.event.Listener
- *  org.bukkit.event.block.Action
- *  org.bukkit.event.player.PlayerInteractEvent
- *  org.bukkit.inventory.ItemStack
- */
 package me.ifamasssxd.cosmicevolutionkits.listeners;
 
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;

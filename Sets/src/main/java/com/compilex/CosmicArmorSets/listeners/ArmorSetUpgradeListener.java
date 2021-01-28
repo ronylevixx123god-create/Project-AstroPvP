@@ -1,33 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.GeneralUtil
- *  com.cosmicpvp.cosmicutils.utils.ItemUtils
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
- *  com.cosmicpvp.cosmicutils.utils.PlayerUtil
- *  net.minecraft.server.v1_7_R4.NBTBase
- *  org.apache.commons.lang.StringUtils
- *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
- *  org.arkhamnetwork.Arkkit.patches.ItemID
- *  org.arkhamnetwork.Arkkit.plugins.ArkPlugins
- *  org.bukkit.Bukkit
- *  org.bukkit.Location
- *  org.bukkit.Material
- *  org.bukkit.Sound
- *  org.bukkit.World
- *  org.bukkit.entity.Player
- *  org.bukkit.event.EventHandler
- *  org.bukkit.event.EventPriority
- *  org.bukkit.event.Listener
- *  org.bukkit.event.block.Action
- *  org.bukkit.event.inventory.ClickType
- *  org.bukkit.event.inventory.InventoryClickEvent
- *  org.bukkit.event.player.PlayerInteractEvent
- *  org.bukkit.inventory.ItemStack
- */
 package com.compilex.CosmicArmorSets.listeners;
 
 import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;

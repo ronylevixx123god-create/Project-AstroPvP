@@ -2,7 +2,6 @@ package org.arkhamnetwork.enchantments.enchantments.bow;
 
 import com.rit.sucy.CustomEnchantment;
 import lombok.SneakyThrows;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.arkhamnetwork.enchantments.enchantments.armor.Guardians;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

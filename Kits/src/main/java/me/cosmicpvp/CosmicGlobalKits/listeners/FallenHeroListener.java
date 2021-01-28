@@ -1,37 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.cosmicpvp.CosmicSpaceChests.libs.EvolutionKitItems
- *  com.cosmicpvp.CosmicSpaceChests.libs.KitItems
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.WorldGuardUtils
- *  com.google.common.collect.Lists
- *  com.massivecraft.factions.Board
- *  com.massivecraft.factions.FLocation
- *  me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKits
- *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.Location
- *  org.bukkit.Sound
- *  org.bukkit.World$Environment
- *  org.bukkit.entity.Entity
- *  org.bukkit.entity.Item
- *  org.bukkit.entity.LivingEntity
- *  org.bukkit.entity.Player
- *  org.bukkit.event.Event$Result
- *  org.bukkit.event.EventHandler
- *  org.bukkit.event.Listener
- *  org.bukkit.event.block.Action
- *  org.bukkit.event.entity.EntityDamageEvent
- *  org.bukkit.event.entity.EntityDeathEvent
- *  org.bukkit.event.player.PlayerInteractEvent
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.metadata.FixedMetadataValue
- *  org.bukkit.metadata.MetadataValue
- *  org.bukkit.plugin.Plugin
- */
 package me.cosmicpvp.CosmicGlobalKits.listeners;
 
 import com.cosmicpvp.CosmicSpaceChests.libs.EvolutionKitItems;
@@ -46,7 +12,6 @@ import me.cosmicpvp.CosmicGlobalKits.libs.FallenHero;
 import me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits;
 import me.cosmicpvp.CosmicGlobalKits.utils.WorldGuardUtils;
 import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKits;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;

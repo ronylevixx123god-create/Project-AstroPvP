@@ -82,16 +82,16 @@ public enum ParticleEffect {
     public static ParticleEffect fromId(final int id) {
         return ParticleEffect.ID_MAP.get(id);
     }
-
-    @Deprecated
-    public static void sendToPlayer(final ParticleEffect effect, final Player player, final Location location, final float offsetX, final float offsetY, final float offsetZ, final float speed, final int count) {
-        org.arkhamnetwork.Arkkit.libs.ParticleEffect.sendToPlayer(org.arkhamnetwork.Arkkit.libs.ParticleEffect.valueOf(effect.name()), player, location, offsetX, offsetY, offsetZ, speed, count);
-    }
-
-    @Deprecated
-    public static void sendToLocation(final ParticleEffect effect, final Location location, final float offsetX, final float offsetY, final float offsetZ, final float speed, final int count) {
-        org.arkhamnetwork.Arkkit.libs.ParticleEffect.sendToLocation(org.arkhamnetwork.Arkkit.libs.ParticleEffect.valueOf(effect.name()), location, offsetX, offsetY, offsetZ, speed, count);
-    }
+//
+//    @Deprecated
+//    public static void sendToPlayer(final ParticleEffect effect, final Player player, final Location location, final float offsetX, final float offsetY, final float offsetZ, final float speed, final int count) {
+//        org.arkhamnetwork.Arkkit.libs.ParticleEffect.sendToPlayer(org.arkhamnetwork.Arkkit.libs.ParticleEffect.valueOf(effect.name()), player, location, offsetX, offsetY, offsetZ, speed, count);
+//    }
+//
+//    @Deprecated
+//    public static void sendToLocation(final ParticleEffect effect, final Location location, final float offsetX, final float offsetY, final float offsetZ, final float speed, final int count) {
+//        org.arkhamnetwork.Arkkit.libs.ParticleEffect.sendToLocation(org.arkhamnetwork.Arkkit.libs.ParticleEffect.valueOf(effect.name()), location, offsetX, offsetY, offsetZ, speed, count);
+//    }
 
     public static void sendCrackToPlayer(final boolean icon, final int id, final byte data, final Player player, final Location location, final float offsetX, final float offsetY, final float offsetZ, final int count) throws Exception {
         final Object packet = createCrackPacket(icon, id, data, location, offsetX, offsetY, offsetZ, count);
@@ -143,10 +143,11 @@ public enum ParticleEffect {
         return packet;
     }
 
-    @Deprecated
-    public static void playEffect(final ParticleEffect pe, final Location l, final float speed, final int amount) {
-        org.arkhamnetwork.Arkkit.libs.ParticleEffect.playEffect(org.arkhamnetwork.Arkkit.libs.ParticleEffect.valueOf(pe.name()), l, speed, amount);
-    }
+// todo oliver
+//    @Deprecated
+//    public static void playEffect(final ParticleEffect pe, final Location l, final float speed, final int amount) {
+//        org.arkhamnetwork.Arkkit.libs.ParticleEffect.playEffect(org.arkhamnetwork.Arkkit.libs.ParticleEffect.valueOf(pe.name()), l, speed, amount);
+//    }
 
     private static void setValue(final Object instance, final String fieldName, final Object value) throws Exception {
         final Field field = instance.getClass().getDeclaredField(fieldName);

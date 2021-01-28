@@ -1,39 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.compilex.CosmicArmorSets.enums.ArmorSet
- *  com.compilex.CosmicArmorSets.enums.armorsets.MotherOfYijki
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
- *  me.ifamasssxd.killtracker.KillTrackerAPI
- *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
- *  org.arkhamnetwork.Arkkit.patches.EnderpearlCooldown
- *  org.arkhamnetwork.enchantments.enchantments.armor.Phoenix
- *  org.arkhamnetwork.enchantments.util.ArmorUtil
- *  org.arkhamnetwork.enchantments.util.GeneralUtil
- *  org.bukkit.ChatColor
- *  org.bukkit.Location
- *  org.bukkit.Material
- *  org.bukkit.Sound
- *  org.bukkit.entity.EnderPearl
- *  org.bukkit.entity.Entity
- *  org.bukkit.entity.LivingEntity
- *  org.bukkit.entity.Player
- *  org.bukkit.event.Event$Result
- *  org.bukkit.event.EventHandler
- *  org.bukkit.event.EventPriority
- *  org.bukkit.event.Listener
- *  org.bukkit.event.block.Action
- *  org.bukkit.event.entity.EntityDamageEvent
- *  org.bukkit.event.entity.EntityDamageEvent$DamageModifier
- *  org.bukkit.event.player.PlayerInteractEvent
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.metadata.FixedMetadataValue
- *  org.bukkit.metadata.MetadataValue
- *  org.bukkit.plugin.Plugin
- *  org.bukkit.potion.PotionEffect
- *  org.bukkit.potion.PotionEffectType
- */
 package com.compilex.CosmicDungeons.listeners.items;
 
 import com.compilex.CosmicArmorSets.enums.ArmorSet;

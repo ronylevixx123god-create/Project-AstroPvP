@@ -1,30 +1,6 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
- *  org.bukkit.ChatColor
- *  org.bukkit.Location
- *  org.bukkit.Material
- *  org.bukkit.enchantments.Enchantment
- *  org.bukkit.entity.EntityType
- *  org.bukkit.entity.Ghast
- *  org.bukkit.entity.IronGolem
- *  org.bukkit.entity.LivingEntity
- *  org.bukkit.entity.PigZombie
- *  org.bukkit.entity.Skeleton
- *  org.bukkit.entity.Skeleton$SkeletonType
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.metadata.FixedMetadataValue
- *  org.bukkit.metadata.MetadataValue
- *  org.bukkit.plugin.Plugin
- *  org.bukkit.potion.PotionEffect
- *  org.bukkit.potion.PotionEffectType
- */
 package com.compilex.CosmicOutposts.utils;
 
 import com.compilex.CosmicKOTH.CosmicKOTHPlugin;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;

@@ -1,25 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
- *  com.cosmicpvp.cosmicutils.utils.PlayerUtil
- *  com.google.common.collect.Lists
- *  me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKits
- *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
- *  org.bukkit.ChatColor
- *  org.bukkit.Location
- *  org.bukkit.Material
- *  org.bukkit.Sound
- *  org.bukkit.entity.Player
- *  org.bukkit.event.Event$Result
- *  org.bukkit.event.EventHandler
- *  org.bukkit.event.EventPriority
- *  org.bukkit.event.Listener
- *  org.bukkit.event.block.Action
- *  org.bukkit.event.player.PlayerInteractEvent
- *  org.bukkit.inventory.ItemStack
- */
 package me.cosmicpvp.CosmicGlobalKits.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;

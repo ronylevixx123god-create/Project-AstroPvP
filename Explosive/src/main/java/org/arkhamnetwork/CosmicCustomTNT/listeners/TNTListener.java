@@ -1,45 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils
- *  com.massivecraft.factions.Board
- *  com.massivecraft.factions.FLocation
- *  de.dustplanet.util.SilkUtil
- *  net.coreprotect.CoreProtect
- *  net.coreprotect.CoreProtectAPI
- *  net.minecraft.server.v1_7_R4.EntityTNTPrimed
- *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.Effect
- *  org.bukkit.Location
- *  org.bukkit.Material
- *  org.bukkit.Sound
- *  org.bukkit.block.Block
- *  org.bukkit.block.CreatureSpawner
- *  org.bukkit.craftbukkit.v1_7_R4.block.CraftBlock
- *  org.bukkit.craftbukkit.v1_7_R4.entity.CraftTNTPrimed
- *  org.bukkit.entity.Entity
- *  org.bukkit.entity.EntityType
- *  org.bukkit.entity.LivingEntity
- *  org.bukkit.entity.Player
- *  org.bukkit.entity.TNTPrimed
- *  org.bukkit.event.EventHandler
- *  org.bukkit.event.EventPriority
- *  org.bukkit.event.Listener
- *  org.bukkit.event.block.BlockBreakEvent
- *  org.bukkit.event.block.BlockDispenseEvent
- *  org.bukkit.event.block.BlockPlaceEvent
- *  org.bukkit.event.entity.EntityExplodeEvent
- *  org.bukkit.event.entity.ExplosionPrimeEvent
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.metadata.FixedMetadataValue
- *  org.bukkit.metadata.MetadataValue
- *  org.bukkit.plugin.Plugin
- *  org.bukkit.potion.PotionEffect
- *  org.bukkit.potion.PotionEffectType
- */
 package org.arkhamnetwork.CosmicCustomTNT.listeners;
 
 import com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils;
@@ -50,7 +8,6 @@ import lombok.SneakyThrows;
 import net.coreprotect.CoreProtect;
 import net.coreprotect.CoreProtectAPI;
 import net.minecraft.server.v1_8_R3.EntityTNTPrimed;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.arkhamnetwork.CosmicCustomTNT.CosmicCustomTNT;
 import org.arkhamnetwork.CosmicCustomTNT.enums.TNTTypes;
 import org.bukkit.*;

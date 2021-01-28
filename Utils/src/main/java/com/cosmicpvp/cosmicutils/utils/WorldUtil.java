@@ -1,23 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  net.minecraft.server.v1_7_R4.BlockEnderPortal
- *  net.minecraft.server.v1_7_R4.Entity
- *  net.minecraft.server.v1_7_R4.ExceptionWorldConflict
- *  net.minecraft.server.v1_7_R4.MinecraftServer
- *  net.minecraft.server.v1_7_R4.Packet
- *  net.minecraft.server.v1_7_R4.PacketPlayOutBlockBreakAnimation
- *  net.minecraft.server.v1_7_R4.PacketPlayOutWorldEvent
- *  net.minecraft.server.v1_7_R4.RegionFile
- *  net.minecraft.server.v1_7_R4.RegionFileCache
- *  net.minecraft.server.v1_7_R4.WorldServer
- *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
- *  org.bukkit.craftbukkit.v1_7_R4.CraftServer
- *  org.bukkit.craftbukkit.v1_7_R4.CraftWorld
- *  org.bukkit.craftbukkit.v1_7_R4.entity.CraftEntity
- *  org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer
- */
 package com.cosmicpvp.cosmicutils.utils;
 
 import net.minecraft.server.v1_8_R3.*;

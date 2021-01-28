@@ -12,7 +12,6 @@ import me.ifamasssxd.cosmicconquest.CosmicConquests;
 import me.ifamasssxd.cosmicconquest.listeners.ConquestListener;
 import me.ifamasssxd.cosmicconquest.utils.TimeUtils;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
