@@ -285,4 +285,3 @@ final class AsyncMonstersListener
         }
     }
 }
-

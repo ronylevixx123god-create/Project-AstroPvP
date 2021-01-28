@@ -23,6 +23,8 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import de.dustplanet.util.SilkUtil;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.arkhamnetwork.Arkkit.utils.ItemUtils;
@@ -83,11 +85,8 @@ final class MysteryMobSpawnersListener
     }
 
     private static ItemStack getMobSpawner(EntityType entityType) {
-        ItemStack i = ItemUtils.buildItem(Material.MOB_SPAWNER, entityType.getTypeId(), ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + MysteryMobSpawnersListener.getEntityName(entityType) + ChatColor.GOLD.toString() + " Spawner", ChatColor.GRAY + "Be careful where you place this!");
-        if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
-            i = ItemID.setItemID(i, ItemID.generateNewItemID());
-        }
-        return i;
+        ItemStack item = SilkUtil.hookIntoSilkSpanwers().newSpawnerItem(entityType.getTypeId(), CC.translate("&a&l") + entityType.name() + " &f Spawner", 1, false);
+        return item;
     }
 
     private static String getEntityName(EntityType et) {
