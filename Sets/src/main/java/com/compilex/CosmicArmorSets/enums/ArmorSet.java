@@ -244,7 +244,7 @@ public enum ArmorSet {
         ItemMeta im = item.getItemMeta();
         List<String> lore = im.getLore();
         if (lore != null) {
-            lore.removeIf(s -> s.equals(CC.GoldB + "Armor Crystal ("));
+            lore.removeIf(s -> s.startsWith(CC.GoldB + "Armor Crystal ("));
             im.setLore(lore);
         }
         item.setItemMeta(im);

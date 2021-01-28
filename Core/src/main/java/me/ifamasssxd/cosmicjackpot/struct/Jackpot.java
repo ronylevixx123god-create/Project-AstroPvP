@@ -20,6 +20,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import net.astropvp.core.AstroCore;
 import net.milkbowl.vault.economy.EconomyResponse;
+import org.arkhamnetwork.Arkkit.Arkkit;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -43,7 +44,7 @@ public class Jackpot {
 
     public void purchaseTicket(Player player, int tickets, int adjustedTickets) {
         double cost = tickets * this.getTicketPrice();
-        EconomyResponse removed = AstroCore.economy.withdrawPlayer((OfflinePlayer)player, cost);
+        EconomyResponse removed = Arkkit.economy.withdrawPlayer(player, cost);
         if (!removed.transactionSuccess()) {
             Bukkit.getLogger().info("Transaction not successful for " + player.getName() + " for $" + cost + " with " + tickets + " tickets purchased!");
             return;

@@ -1,6 +1,7 @@
 package me.ifamasssxd.cosmicsky.inventorypets.struct.pets;
 
 import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
+import com.compilex.CosmicArmorSets.CosmicArmorSetsPlugin;
 import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.*;
@@ -108,6 +109,9 @@ public class InventoryBansheePet extends InventoryPet {
                 CC.Gray + petItem.getExp() + "/" +
                 petItem.getPetType().getInternalClass().getExpForLevel(petItem.getLevel() + 1) + CC.GreenB + "]");
         int sum = petItem.getLevel() / 2 + 3;
+        if (CosmicArmorSetsAPI.getArmorSet(player) == ArmorSet.ULTRA) {
+            sum += sum/2;
+        }
         if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.REINDEER_ANTLERS) && Math.random() < 0.05D) {
             sum *= 2;
             player.sendMessage(String.valueOf(CC.RedB) + "* REINDEER ITEM SKIN " + CC.Gray + "(" + CC.White + "2x Pet Length" + CC.Gray + ")");
@@ -143,13 +147,13 @@ public class InventoryBansheePet extends InventoryPet {
         player.sendMessage("");
         player.removePotionEffect(PotionEffectType.SPEED);
         player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, (petItem.getLevel() / 2 + 3) * 20, 4));
-        player.setMetadata("banshee_effect", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSkyInventoryPets.get(), null));
+        player.setMetadata("banshee_scrolls", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSkyInventoryPets.get(), null));
         Bukkit.getScheduler().runTaskLater((Plugin)CosmicSkyInventoryPets.get(), new Runnable() {
             public void run() {
                 if (!player.isOnline())
                     return;
-                if (player.hasMetadata("banshee_effect"))
-                    player.removeMetadata("banshee_effect", (Plugin)CosmicSkyInventoryPets.get());
+                if (player.hasMetadata("banshee_scrolls"))
+                    player.removeMetadata("banshee_scrolls", (Plugin)CosmicSkyInventoryPets.get());
                 for (Player player : players) {
                     if (player == null || !player.isOnline())
                         continue;

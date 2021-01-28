@@ -4,6 +4,7 @@ import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,7 +25,7 @@ public class FirstJoin implements Listener {
             ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
             //Bukkit.dispatchCommand(console, "mc give " + event.getPlayer().getName() + " StarterBundle 1");
             event.getPlayer().getInventory().addItem(this.chest.createClaimableItem(true));
-            event.getPlayer().teleport(Bukkit.getWorld("world").getSpawnLocation());
+            event.getPlayer().teleport(new Location(Bukkit.getWorld("world"), 71D, 139.0D, 118D));
         }
     }
 

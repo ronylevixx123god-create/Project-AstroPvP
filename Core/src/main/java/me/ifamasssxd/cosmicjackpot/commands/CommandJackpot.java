@@ -25,6 +25,7 @@ import me.ifamasssxd.cosmicjackpot.struct.JackpotManager;
 import me.ifamasssxd.cosmicjackpot.utils.TimeUtils;
 import net.astropvp.core.AstroCore;
 import org.apache.commons.lang.StringUtils;
+import org.arkhamnetwork.Arkkit.Arkkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -55,7 +56,7 @@ implements CommandExecutor {
                     return true;
                 }
                 double totalPrice = tickets * current.getTicketPrice();
-                if (!AstroCore.economy.has(player, totalPrice)) {
+                if (Arkkit.economy.getBalance(player) < totalPrice) {
                     sender.sendMessage(ChatColor.RED + "You cannot afford the total price of $" + manager.getMoneyFormat().format(totalPrice) + " for " + tickets + " tickets!");
                     return true;
                 }

@@ -15,7 +15,7 @@ import org.bukkit.plugin.Plugin;
 public class MasteryRevoke extends MasteryCustomEnchantment {
     public MasteryRevoke() {
         super("Revoke", GeneralUtil.swords, 10);
-        this.max = 5;
+        this.max = 3;
         this.base = 20.0D;
         this.interval = 5.0D;
     }

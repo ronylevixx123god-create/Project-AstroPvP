@@ -416,18 +416,7 @@ public class ContestManager {
     }
 
     public void givePrize(ContestUser user, Contests contest, int ranking) throws IOException {
-        Player online = Bukkit.getPlayer(user.getUuid());
-        CosmicContests.get().getPrizeManager().addPrize(user, ranking);
-        if (online != null) {
-            online.sendMessage("");
-            online.sendMessage(ChatColor.GREEN.toString() + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.GREEN + "You placed " + (Object)ChatColor.GREEN + (Object)ChatColor.BOLD + StringUtils.getFormattedNumber(ranking) + (Object)ChatColor.GREEN + " in the " + (Object)ChatColor.GREEN + ChatColor.BOLD.toString() + "Most " + contest.getContest().getName() + (Object)ChatColor.GREEN + " Challenge!");
-            online.sendMessage(StringUtils.centerText((Object)ChatColor.GRAY + "You have been rewarded with a " + (Object)ChatColor.GREEN + (Object)ChatColor.UNDERLINE + "Challenge Prize" + (Object)ChatColor.GREEN + " (" + StringUtils.getFormattedNumber(ranking) + ")" + (Object)ChatColor.GRAY + "!"));
-            online.sendMessage(StringUtils.centerText((Object)ChatColor.GRAY + "Claim it with " + (Object)ChatColor.GREEN + "/challenge claim" + (Object)ChatColor.GRAY + "!"));
-            online.sendMessage("");
-        }
-        if (ranking == 1) {
-            Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)("weblink add " + user.getUuid().toString() + " contestWins 1"));
-        }
+       return;
     }
 
     public Set<Contests> getActiveContests() {

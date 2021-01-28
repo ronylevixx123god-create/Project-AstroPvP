@@ -116,7 +116,7 @@ public class ChampionArmorSet
             return false;
         }
         event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.45);
-        if (Math.random() <= 0.05) {
+        if (Math.random() <= 0.02) {
             this.activateChampionAbility(damager, (Player) event.getEntity());
         }
         return true;
@@ -139,7 +139,7 @@ public class ChampionArmorSet
         if (this.isBlockedOutpostWorld(damager)) {
             return false;
         }
-        if (Math.random() <= 0.005 * (double) applied) {
+        if (Math.random() <= 0.006 * (double) applied) {
             this.activateChampionAbility(damager, (Player) event.getEntity());
         }
         return this.modifyDamage(damager, event, 12.0, applied);
@@ -167,9 +167,8 @@ public class ChampionArmorSet
         player.sendMessage("");
         target.sendMessage(CC.translate(("&6&l* CHAMPION WRATH &7[&c" + player.getName() + "&7]")));
         player.setMetadata("immune_freeze", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
-        player.setMetadata("banshee_active", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
         target.setMetadata("noDefenseProcs", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
-        target.setMetadata("bansheed", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
+        target.setMetadata("banshee_scrolls", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
         target.setMetadata("championed", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
         target.playSound(target.getLocation(), Sound.BLAZE_DEATH, 10.0f, 10.0f);
         PlayerPotionEffects.trackPotionEffect(player, new SpecificCustomEnchantment(new Gears(), 5), new PotionEffect(PotionEffectType.SPEED, 160, 4));
@@ -177,9 +176,8 @@ public class ChampionArmorSet
 
             public void run() {
                 player.removeMetadata("immune_freeze", CosmicSkyInventoryPets.get());
-                player.removeMetadata("banshee_active", CosmicSkyInventoryPets.get());
+                player.removeMetadata("banshee_scrolls", CosmicSkyInventoryPets.get());
                 target.removeMetadata("noDefenseProcs", CosmicSkyInventoryPets.get());
-                target.removeMetadata("bansheed", CosmicSkyInventoryPets.get());
                 target.removeMetadata("championed", CosmicSkyInventoryPets.get());
                 target.sendMessage(CC.translate(("&6&l* CHAMPION WRATH FROM &7" + player.getName() + " &c&lEXPIRED &6&l*")));
                 PlayerPotionEffects.untrackPotionEffect(player, PotionEffectType.SPEED);

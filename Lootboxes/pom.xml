@@ -36,6 +36,7 @@
             <version>1.8.8-R0.2-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>net.ess3</groupId>
             <artifactId>EssentialsX</artifactId>
@@ -83,5 +84,34 @@
             <systemPath>${project.basedir}/lib/CosmicSkyCustomItems.jar</systemPath>
         </dependency>
         <!-- System repos -->
+
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>Utils</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/Utils-0.1.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>Arkkit</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/Arkkit.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>Core</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/Core-0.1.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>FactionsUtils</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/Factions-0.1.jar</systemPath>
+        </dependency>
     </dependencies>
 </project>

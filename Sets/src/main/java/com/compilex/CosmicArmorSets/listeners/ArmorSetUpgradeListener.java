@@ -205,7 +205,7 @@ public class ArmorSetUpgradeListener
                     } else if (clickedArmorSet == ArmorSet.ENGINEER) {
                         color = 15176967;
                     } else if (clickedArmorSet == ArmorSet.OMNI) {
-                        color = 2765648;
+                        color = 0x76CEF7;
                     }
                     display.setInt("color", color);
                     wrapper.setNBTBase("display", display.get());

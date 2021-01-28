@@ -21,7 +21,6 @@
  */
 package me.ifamasssxd.cosmictoggles.toggles;
 
-import com.conaxgames.factions.utils.cmds.CommandToggleSmoke;
 import com.massivecraft.factions.FPlayer;
 import me.ifamasssxd.cosmicduel.CosmicDuel;
 import me.ifamasssxd.itemfilter.Filter;
@@ -48,8 +47,7 @@ public enum CosmicToggle {
     AUCTION("Auction Bid Alerts", "/ah stfu"),
     DUELS("Duel Requests", "/duel toggle"),
     RELATION_REQUESTS("Relation Requests", "/f tr"),
-    CLEAR_INVENTORY_CONFIRMATION("/clearinventory Confirmation", "/toggleciconfirm"),
-    Mysteryanimation("Lootbox Animation", "/am");
+    CLEAR_INVENTORY_CONFIRMATION("/clearinventory Confirmation", "/toggleciconfirm");
 
     private final String displayName;
     private final String command;
@@ -61,17 +59,11 @@ public enum CosmicToggle {
         if (this == FILTER) {
             return !ChatFilter.disabledFilteredPlayers.contains(player.getUniqueId());
         }
-        if (this == Mysteryanimation) {
-            //return CosmicMysteryChest.get().getToggle().hasToggle(player);
-        }
         if (this == PAY) {
             return !AstroCore.getInstance().getPayToggles().hasToggle(player);
         }
         if (this == SCOREBOARD) {
             return !AstroCore.getInstance().getToggleManager().getScoreboardToggles().contains(player.getUniqueId());
-        }
-        if (this == SMOKE) {
-            return !CommandToggleSmoke.toggled.contains(player.getUniqueId());
         }
         if (this == ITEM_FILTER) {
             Filter filter = AstroCore.getInstance().getFilterManager().getItemFilters().get(player.getUniqueId());

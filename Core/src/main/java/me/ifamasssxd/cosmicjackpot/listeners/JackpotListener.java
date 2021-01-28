@@ -36,6 +36,7 @@ import me.ifamasssxd.cosmicjackpot.struct.Jackpot;
 import me.ifamasssxd.cosmicjackpot.struct.JackpotHistory;
 import me.ifamasssxd.cosmicjackpot.struct.JackpotManager;
 import net.astropvp.core.AstroCore;
+import org.arkhamnetwork.Arkkit.Arkkit;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
@@ -112,7 +113,7 @@ implements Listener {
         JackpotManager manager = AstroCore.getInstance().getJackpotManager();
         Jackpot current = manager.getCurrentJackpot();
         double price = ticketsToPurchase * current.getTicketPrice();
-        if (!AstroCore.economy.has(player, price)) {
+        if (Arkkit.economy.getBalance(player) < price) {
             player.sendMessage(ChatColor.RED + "You no longer have $" + manager.getMoneyFormat().format(price) + " required to purchase " + ticketsToPurchase + " tickets!");
             return;
         }

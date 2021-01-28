@@ -23,6 +23,10 @@ public class HeroicArmorFix implements Listener {
 
         try {
 
+            if (e.getPlayer().getItemInHand().getType() == Material.GOLD_SWORD || e.getPlayer().getItemInHand().getType() == Material.GOLD_AXE) {
+                e.getPlayer().getItemInHand().setDurability((short) 0);
+            }
+
             if (helmet.getType() == Material.LEATHER_HELMET) {
                 helmet.setDurability((short) 0);
             }
