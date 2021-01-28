@@ -158,7 +158,7 @@ public class NatureWrath extends CustomEnchantment {
 
                 if (AstroItemSkinsAPI.hasSkinEquipped(pEnt, SkinType.CUPID_AMULET)) {
                     freeze = false;
-                    pEnt.sendMessage("§c§l* CUPID AMULET BLOCKED §7[Natures Wrath] §c§l*");
+                    pEnt.sendMessage(CC.translate("&c&l* CUPID AMULET BLOCKED &7[Natures Wrath] &c&l*"));
                 }
                 if (freeze) {
                     pEnt.setWalkSpeed(0.0f);

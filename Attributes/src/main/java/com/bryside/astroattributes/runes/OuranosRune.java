@@ -25,7 +25,7 @@ public class OuranosRune extends Rune implements Listener {
             level = this.getMaxLevel();
         }
 
-        return new String[]{CC.RedB + "Level: " + CC.DarkGray + level, CC.RedB + "Apply: " + CC.DarkGray + chance + "%", "", CC.RedB + "''Omni Combatant''", CC.Red + "Your damage is converted to", CC.Red + "AoE damage around your target.", CC.Red + "Damage is diluted, but all enchants.", "§ccan still multi-proc. Your AoE radius", "§cand max targets scales with level.", "", CC.Gray + "Titan Attributes can " + CC.Underline + "ONLY" + CC.Gray + " be applied", CC.Gray + "to " + CC.Red + "Heroic Weapons " + CC.Gray + "and only", CC.Gray + CC.Underline + "1 attribute" + CC.Gray + " can be imbued per weapon.", "", CC.Gray + "To learn more about Titan Attributes, use " + CC.Red + "/titan"};
+        return new String[]{CC.RedB + "Level: " + CC.DarkGray + level, CC.RedB + "Apply: " + CC.DarkGray + chance + "%", "", CC.RedB + "''Omni Combatant''", CC.Red + "Your damage is converted to", CC.Red + "AoE damage around your target.", CC.Red + "Damage is diluted, but all enchants.", CC.translate("&ccan still multi-proc. Your AoE radius"), CC.translate("&cand max targets scales with level."), "", CC.Gray + "Titan Attributes can " + CC.Underline + "ONLY" + CC.Gray + " be applied", CC.Gray + "to " + CC.Red + "Heroic Weapons " + CC.Gray + "and only", CC.Gray + CC.Underline + "1 attribute" + CC.Gray + " can be imbued per weapon.", "", CC.Gray + "To learn more about Titan Attributes, use " + CC.Red + "/titan"};
     }
 
     public String getDisplayName() {

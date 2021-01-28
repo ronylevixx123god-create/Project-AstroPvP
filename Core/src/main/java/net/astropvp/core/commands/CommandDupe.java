@@ -29,7 +29,7 @@ public class CommandDupe implements CommandExecutor {
         boolean isOpened = lore.contains(CC.Gray + "Drag n' Drop onto item to enchant.");
         if (!isOpened) {
             if (!display.contains(" ")) {
-                sender.sendMessage("§cYou may not dupe this item.");
+                sender.sendMessage(CC.translate("&cYou may not dupe this item!"));
                 return false;
             }
             display = display.substring(display.indexOf(" ") + 1);

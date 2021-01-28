@@ -71,7 +71,7 @@ public class RocketEscape extends CustomEnchantment {
 
                     if (pl.getInventory().getChestplate() != null && AstroBackpacksAPI.itemHasSkin(pl.getInventory().getChestplate()) && AstroBackpacksAPI.getBackpackByItem(pl.getInventory().getChestplate()).equals(BackpackType.CURSED_WINGS)) {
                         pl.playSound(pl.getLocation(), Sound.ANVIL_BREAK, 5, 5);
-                        pl.sendMessage("§6§l* CURSED WINGS BLOCKED §nROCKET ESCAPE§r §7[" + attacker.getKiller().getName() + "§7] §6§l*");
+                        pl.sendMessage(CC.translate("&6&l* CURSED WINGS BLOCKED &nROCKET ESCAPE&r &7[") + attacker.getKiller().getName() + CC.translate("&7] &6&l*"));
                         return;
                     }
                 }

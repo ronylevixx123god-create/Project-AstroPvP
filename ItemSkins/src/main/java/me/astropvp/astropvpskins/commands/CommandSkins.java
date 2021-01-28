@@ -26,7 +26,7 @@
 /*    */   }
 /*    */   
 /*    */   public static Inventory getInventory() {
-/* 29 */     Inventory inventory = Bukkit.createInventory(null, 45, "§8Astro Item Skins");
+/* 29 */     Inventory inventory = Bukkit.createInventory(null, 45, CC.translate("&8Astro Item Skins"));
 /* 30 */     HashMap<ItemSkinType, Integer> map = new HashMap<>();
 /* 31 */     map.put(ItemSkinType.HELMET, 4);
 /* 32 */     map.put(ItemSkinType.CHESTPLATE, 13);

@@ -29,7 +29,7 @@ public class AtlasRune extends Rune implements Listener {
             level = this.getMaxLevel();
         }
 
-        return new String[]{CC.RedB + "Level: " + CC.DarkGray + level, CC.RedB + "Apply: " + CC.DarkGray + chance + "%", "", CC.RedB + "''Compound Punishment''", CC.Red + "% of damage from attacks is combined", CC.Red + "every 2-5 attacks, depending on level.", "", CC.Red + "Example: if you deal 10 DMG", "§cper swing, you might deal 2 DMG", "§cfor 2 swings, followed by 26 DMG", "§con your 3rd swing.", "", CC.Gray + "Titan Attributes can " + CC.Underline + "ONLY" + CC.Gray + " be applied", CC.Gray + "to " + CC.Red + "Heroic Weapons " + CC.Gray + "and only", CC.Gray + CC.Underline + "1 attribute" + CC.Gray + " can be imbued per weapon.", "", CC.Gray + "To learn more about Titan Attributes, use " + CC.Red + "/titan"};
+        return new String[]{CC.RedB + "Level: " + CC.DarkGray + level, CC.RedB + "Apply: " + CC.DarkGray + chance + "%", "", CC.RedB + "''Compound Punishment''", CC.Red + "% of damage from attacks is combined", CC.Red + "every 2-5 attacks, depending on level.", "", CC.Red + "Example: if you deal 10 DMG", CC.translate("&cper swing, you might deal 2 DMG"), CC.translate("&cfor 2 swings, followed by 26 DMG"), CC.translate("&con your 3rd swing."), "", CC.Gray + "Titan Attributes can " + CC.Underline + "ONLY" + CC.Gray + " be applied", CC.Gray + "to " + CC.Red + "Heroic Weapons " + CC.Gray + "and only", CC.Gray + CC.Underline + "1 attribute" + CC.Gray + " can be imbued per weapon.", "", CC.Gray + "To learn more about Titan Attributes, use " + CC.Red + "/titan"};
     }
 
     public String getDisplayName() {

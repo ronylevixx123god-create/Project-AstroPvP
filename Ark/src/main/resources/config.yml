@@ -559,8 +559,8 @@ language:
     global_prefix: '&8[&b&lCosmic&d&lPvP&8]'
     store_url: buy.astropvp.net
   fallback_servers:
-    kick_message: '§a§lYou are being redirected to a lobby, please wait...'
-    server_restarting_alert: '§c§l(!) §cThis server instance is currently restarting!'
+    kick_message: '&a&lYou are being redirected to a lobby, please wait...'
+    server_restarting_alert: '&c&l(!) &cThis server instance is currently restarting!'
   player_shops:
     currency: 'Cash'
   network_private_messages:

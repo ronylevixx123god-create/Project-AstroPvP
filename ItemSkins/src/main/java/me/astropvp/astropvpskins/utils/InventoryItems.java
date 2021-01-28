@@ -96,7 +96,7 @@ public class InventoryItems {
             b1++;
         }
         len = (len <= 9) ? 9 : ((len <= 18) ? 18 : ((len <= 27) ? 27 : ((len <= 36) ? 36 : 45)));
-        Inventory inventory = Bukkit.createInventory(null, len, "§8Item Skins: " + display);
+        Inventory inventory = Bukkit.createInventory(null, len, CC.translate("&8Item Skins: ") + display);
         int pos = 0;
         byte b2;
         int k;

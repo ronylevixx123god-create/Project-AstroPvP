@@ -26,7 +26,7 @@ public class HeroicBlock extends HeroicCustomEnchantment {
                 return;
             Player player = (Player) damaged;
             double random = Math.random();
-            double chance = (player.isBlocking() ? 0.16D : 0.7D) * level;
+            double chance = (player.isBlocking() ? 0.001D : 0.001D) * level;
             if (random < chance) {
                 double reduceDamage = 0.1D * level;
                 double finalDamage = Math.max(0.0D, e.getFinalDamage());
@@ -34,9 +34,9 @@ public class HeroicBlock extends HeroicCustomEnchantment {
                     return;
                 double damageToReflect = reduceDamage;
                 e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * reduceDamage);
-                double reflectChance = 0.08D * level + (player.isBlocking() ? 0.05D : 0.0D);
+                double reflectChance = 0.001D * level + (player.isBlocking() ? 0.001D : 0.001D);
                 if (Math.random() < reflectChance && attacker instanceof Player) {
-                    player.sendMessage(CC.GreenB + "* BLOCKED §7[" + NumberUtils.formatSeconds(finalDamage) + "]§&§l *");
+                    player.sendMessage(CC.GreenB + CC.translate("* BLOCKED &7[") + NumberUtils.formatSeconds(finalDamage) + CC.translate("]&a&l *"));
                     de.inventivegames.particle.ParticleEffect.CRIT.sendToPlayer(player,player.getLocation().add(0.0D, 1.0D, 0.0D),0,0,0, 0.75F, 25);
                     if (damageToReflect > 0.0D) {
                         Player attacking = (Player) attacker;

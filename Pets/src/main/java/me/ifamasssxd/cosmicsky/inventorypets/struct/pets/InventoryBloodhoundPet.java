@@ -154,7 +154,7 @@ public class InventoryBloodhoundPet extends InventoryPet {
       pTarget.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 0));
       this.removeNearMeta(player, pTarget);
       pTarget.sendMessage("");
-      pTarget.sendMessage("" + ChatColor.RED + ChatColor.BOLD + "** BLOODHOUND PET: (No Bless) for (" + ChatColor.GRAY + "10s" + ChatColor.RED + "§l) **");
+      pTarget.sendMessage("" + ChatColor.RED + ChatColor.BOLD + "** BLOODHOUND PET: (No Bless) for (" + ChatColor.GRAY + "10s" + ChatColor.RED + ") **");
       pTarget.sendMessage("");
       (new BukkitRunnable() {
          public void run() {

@@ -69,7 +69,7 @@ public class HeroicRocketEscape extends HeroicCustomEnchantment {
 
                     if (((Player) player).getInventory().getChestplate() != null && AstroBackpacksAPI.itemHasSkin(((Player) player).getInventory().getChestplate()) && AstroBackpacksAPI.getBackpackByItem(((Player) player).getInventory().getChestplate()).equals(BackpackType.CURSED_WINGS)) {
                         pl.playSound(pl.getLocation(), Sound.ANVIL_BREAK, 5, 5);
-                        pl.sendMessage("§6§l* CURSED WINGS BLOCKED §nROCKET ESCAPE§r §7[" + target.getKiller().getName() + "§7] §6§l*");
+                        pl.sendMessage(CC.translate("&6&l* CURSED WINGS BLOCKED &nROCKET ESCAPE&r &7[") + target.getKiller().getName() + CC.translate("&7] &6&l*"));
                         return;
                     }
                 }

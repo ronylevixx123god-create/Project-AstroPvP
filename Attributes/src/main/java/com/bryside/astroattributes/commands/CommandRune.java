@@ -151,15 +151,16 @@ public class CommandRune implements CommandExecutor {
                     Bukkit.getPlayer(args[3]).getInventory().addItem(new ItemStack[]{item2});
                     return false;
                 } else if (args.length <= 4) {
-                    sender.sendMessage("");
-                    sender.sendMessage("§a§lAstro§e§lAttributes§f - §7V1.0");
-                    sender.sendMessage("§a/titan give <type> <amount> <level> <chance> <player>");
-                    sender.sendMessage("§a/titan givecorrupt <amount> <success rate> <player>");
-                    sender.sendMessage("§a/titan giveholygrail <amount> <player>");
-                    sender.sendMessage("§a/titan givexp <amount> <amount of exp> <player>");
-                    if (sender instanceof Player) {
-                        sender.sendMessage("§a/titan testitem");
-                        sender.sendMessage("§a/titan list");
+                    if (sender.isOp()) {
+                        sender.sendMessage("");
+                        sender.sendMessage(CC.translate("&a&lAstro&e&lAttributes&f - &7V1.0"));
+                        sender.sendMessage("/titan give <type> <amount> <level> <chance> <player>");
+                        sender.sendMessage("/titan givecorrupt <amount> <success rate> <player>");
+                        sender.sendMessage("/titan giveholygrail <amount> <player>");
+                        sender.sendMessage("/titan givexp <amount> <amount of exp> <player>");
+
+                        sender.sendMessage("/titan testitem");
+                        sender.sendMessage("/titan list");
                         sender.sendMessage("");
                     }
 
