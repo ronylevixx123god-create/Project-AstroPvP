@@ -1,7 +1,7 @@
 package org.arkhamnetwork.enchantments.listeners;
 
+import com.compilex.CosmicKOTH.CosmicKOTHPlugin;
 import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
-import com.compilex.CosmicOutposts.CosmicOutpostsPlugin;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
 import com.google.common.collect.Lists;
@@ -128,7 +128,7 @@ public class CosmicAlchemistListener implements Listener {
                 final ItemStack newItem = this.getCombinedItem(finalOffer);
                 ExpUtils.setTotalExperience(p, ExpUtils.getTotalExperience(p) - cost);
                 p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + " - " + cost + "XP");
-                if (Bukkit.getPluginManager().isPluginEnabled("CosmicOutposts") && CosmicOutpostsAPI.isDefender(p, CosmicOutpostsPlugin.get_().getTraineeOutpost())) {
+                if (Bukkit.getPluginManager().isPluginEnabled("CosmicOutposts") && CosmicOutpostsAPI.isDefender(p, CosmicKOTHPlugin.get_().getTraineeOutpost())) {
                     p.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "-35% COST " + ChatColor.GRAY + "[Trainee Outpost Perk]");
                 }
                 wizardInv.setItem(3, ItemUtils.setTypeAndDurability(wizardInv.getItem(3), Material.STAINED_GLASS_PANE, (short) 5));

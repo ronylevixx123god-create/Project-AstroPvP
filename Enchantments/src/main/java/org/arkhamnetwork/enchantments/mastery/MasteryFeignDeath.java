@@ -9,7 +9,6 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.MapMaker;
 import com.massivecraft.factions.Faction;
 import lombok.SneakyThrows;
-import me.ifamasssxd.cosmicduel.utils.TitleManager;
 import net.minecraft.server.v1_8_R3.*;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.MasteryCustomEnchantment;

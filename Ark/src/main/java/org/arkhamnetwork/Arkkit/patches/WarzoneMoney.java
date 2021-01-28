@@ -1,18 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.sk89q.worldguard.protection.regions.ProtectedRegion
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.Location
- *  org.bukkit.command.CommandSender
- *  org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer
- *  org.bukkit.entity.Player
- *  org.bukkit.plugin.Plugin
- *  org.bukkit.scheduler.BukkitRunnable
- */
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.cosmicutils.utils.CC;

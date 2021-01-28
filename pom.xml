@@ -37,6 +37,7 @@
         <module>Conquest</module>
         <module>CompilexPermissions</module>
         <module>Masks</module>
+        <module>EnchantmentsAPI</module>
     </modules>
 
     <build>

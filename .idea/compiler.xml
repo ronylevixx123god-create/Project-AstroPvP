@@ -32,6 +32,7 @@
         <module name="Pets" />
         <module name="Utils" />
         <module name="Ark" />
+        <module name="EnchantmentsAPI" />
         <module name="Backpacks" />
         <module name="Arkkit" />
         <module name="CompilexPermissions" />
