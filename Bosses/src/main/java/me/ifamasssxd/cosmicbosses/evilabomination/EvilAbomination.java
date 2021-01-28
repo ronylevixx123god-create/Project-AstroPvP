@@ -211,7 +211,7 @@ public class EvilAbomination extends Boss implements GuardBoss {
     }
 
     @Override
-    public void onDamageTaken(final EntityDamageByEntityEvent event, final Entity damager) throws Exception {
+    public void onDamageTaken(final EntityDamageByEntityEvent event, final Entity damager) {
         if (damager instanceof Projectile) {
             event.setCancelled(true);
             return;

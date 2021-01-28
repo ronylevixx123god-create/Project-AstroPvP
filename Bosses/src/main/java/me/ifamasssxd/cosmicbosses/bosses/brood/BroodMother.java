@@ -241,7 +241,7 @@ public class BroodMother extends Boss {
     }
 
     @Override
-    public void onDamageTaken(final EntityDamageByEntityEvent event, final org.bukkit.entity.Entity damager) throws Exception {
+    public void onDamageTaken(final EntityDamageByEntityEvent event, final org.bukkit.entity.Entity damager) {
         if (!event.isCancelled()) {
             final Creature ent = (Creature) this.getEntity();
             event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) / 2.0);

@@ -1,31 +1,5 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  com.compilex.CosmicFund.CosmicFundAPI
- *  com.cosmicpvp.CosmicBossEggs.boss.type.Bosses
- *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
- *  me.ifamasssxd.factionupgrades.FactionUpgradeAPI
- *  me.ifamasssxd.factionupgrades.struct.FactionUpgrade
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.GameMode
- *  org.bukkit.Location
- *  org.bukkit.Material
- *  org.bukkit.OfflinePlayer
- *  org.bukkit.Sound
- *  org.bukkit.block.Block
- *  org.bukkit.command.CommandSender
- *  org.bukkit.entity.Player
- *  org.bukkit.event.Event
- *  org.bukkit.metadata.FixedMetadataValue
- *  org.bukkit.metadata.MetadataValue
- *  org.bukkit.plugin.Plugin
- *  org.bukkit.scheduler.BukkitRunnable
- */
 package org.arkhamnetwork.Arkkit.patches;
 
-import com.cosmicpvp.CosmicBossEggs.boss.type.Bosses;
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
 import me.ifamasssxd.factionupgrades.FactionUpgradeAPI;
 import me.ifamasssxd.factionupgrades.struct.FactionUpgrade;
@@ -202,7 +176,6 @@ final class WarzoneMoneyTask
         }
         if (Arkkit.get().getConfig().getBoolean("settings.warzoneMoney.treasureGoblins") && this.iteration % 120L == 0L && Bukkit.getPlayer(uuid = WarzoneMoney.warzoneTimes.keySet().toArray(new UUID[WarzoneMoney.warzoneTimes.size()])[new Random().nextInt(WarzoneMoney.warzoneTimes.size())]) != null && (p2 = Bukkit.getPlayer(uuid)).hasMetadata("warzoneEntryTime")) {
             Location lastLocation;
-            Bosses.PIG_ZOMBIE.b.spawnBoss(p2.getLocation().add(0.0, 1.0, 0.0));
             Location location = lastLocation = p2.hasMetadata("warzoneLastLocation") ? (Location) p2.getMetadata("warzoneLastLocation").get(0).value() : null;
             if (lastLocation != null) {
                 lastLocation.setY(p2.getLocation().getY());

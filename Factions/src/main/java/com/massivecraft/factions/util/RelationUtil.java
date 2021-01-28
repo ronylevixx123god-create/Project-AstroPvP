@@ -34,6 +34,8 @@ public class RelationUtil {
         return "" + RelationUtil.getColorOfThatToMe(that, me) + ret;
     }
 
+
+
     public static String describeThatToMeAsync(RelationParticipator that, RelationParticipator me) {
         return RelationUtil.describeThatToMeAsync(that, me, false);
     }

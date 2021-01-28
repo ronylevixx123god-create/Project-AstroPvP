@@ -378,7 +378,7 @@ public class Yijki extends Boss implements GlobalBoss {
     }
 
     @Override
-    public void onDamageTaken(final EntityDamageByEntityEvent event, final Entity damager) throws Exception {
+    public void onDamageTaken(final EntityDamageByEntityEvent event, final Entity damager) {
         if (damager instanceof Player || damager instanceof Arrow) {
             final Player p = (damager instanceof Arrow) ? (Player) ((Arrow) damager).getShooter() : ((Player) damager);
             WitherPhase phase = null;

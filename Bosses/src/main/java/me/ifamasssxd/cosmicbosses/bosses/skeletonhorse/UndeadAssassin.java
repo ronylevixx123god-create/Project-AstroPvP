@@ -3,6 +3,7 @@ package me.ifamasssxd.cosmicbosses.bosses.skeletonhorse;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.google.common.collect.Lists;
+import lombok.SneakyThrows;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import me.ifamasssxd.cosmicbosses.entities.CustomEntity;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
@@ -257,8 +258,9 @@ public class UndeadAssassin extends Boss {
         super.onAttackPlayer(event, player);
     }
 
+    @SneakyThrows
     @Override
-    public void onDamageTaken(final EntityDamageByEntityEvent event, final Entity damager) throws Exception {
+    public void onDamageTaken(final EntityDamageByEntityEvent event, final Entity damager){
         if (event.getDamager() instanceof Projectile) {
             event.setCancelled(true);
             return;

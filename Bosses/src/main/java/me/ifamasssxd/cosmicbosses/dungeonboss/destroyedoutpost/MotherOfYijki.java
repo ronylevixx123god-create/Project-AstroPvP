@@ -238,7 +238,7 @@ public class MotherOfYijki extends DungeonYijki {
     }
 
     @Override
-    public void onDamageTaken(final EntityDamageByEntityEvent event, final org.bukkit.entity.Entity damager) throws Exception {
+    public void onDamageTaken(final EntityDamageByEntityEvent event, final org.bukkit.entity.Entity damager) {
         if (this.inDifferentDimension) {
             event.setCancelled(true);
             if (damager instanceof Player) {

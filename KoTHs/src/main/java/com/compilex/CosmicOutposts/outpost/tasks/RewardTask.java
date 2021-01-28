@@ -26,6 +26,8 @@ import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.Factions;
 import com.massivecraft.factions.integration.Econ;
 import java.util.Random;
+
+import lombok.SneakyThrows;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
 import org.bukkit.Bukkit;
@@ -58,6 +60,7 @@ implements Runnable {
         Bukkit.getLogger().info("Unable to find depositFactionBalance, using old deposit method..");
     }
 
+    @SneakyThrows
     @Override
     public void run() {
         ++this.iteration;

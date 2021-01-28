@@ -326,7 +326,7 @@ public class HolidaySpirit extends Boss {
     }
 
     @Override
-    public void onDamageTaken(final EntityDamageByEntityEvent event, final org.bukkit.entity.Entity damager) throws Exception {
+    public void onDamageTaken(final EntityDamageByEntityEvent event, final org.bukkit.entity.Entity damager) {
         if (event.getDamager() instanceof Projectile && damager instanceof Player) {
             event.setCancelled(true);
             return;

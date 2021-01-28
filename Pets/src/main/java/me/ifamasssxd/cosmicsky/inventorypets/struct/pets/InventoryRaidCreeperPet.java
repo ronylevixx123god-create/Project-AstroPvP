@@ -1,6 +1,5 @@
 package me.ifamasssxd.cosmicsky.inventorypets.struct.pets;
 
-import com.compilex.CosmicCustomCreepers.CosmicCustomCreepers;
 import com.compilex.CosmicCustomCreepers.enums.CreeperTypes;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
@@ -13,6 +12,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
+import org.arkhamnetwork.CosmicCustomTNT.CosmicCustomTNT;
 import org.bukkit.Sound;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Player;
@@ -46,7 +46,7 @@ public class InventoryRaidCreeperPet extends InventoryPet {
       long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
       if (lastUse <= 0L || timeTillCanUse <= 0L || player.isOp() && player.isSneaking()) {
          petItem.setLastUsed(System.currentTimeMillis());
-         Creeper c = CosmicCustomCreepers.get().getCreeperListener().processCustomCreeperPlaced(event, CreeperTypes.Raid);
+         Creeper c = CosmicCustomTNT.get().getCreeperListener().processCustomCreeperPlaced(event, CreeperTypes.Raid);
          if (c == null) {
             throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Unable to spawn Raid Creeper!");
          } else {

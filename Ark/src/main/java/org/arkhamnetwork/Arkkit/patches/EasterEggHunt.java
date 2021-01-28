@@ -1,21 +1,5 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  com.cosmicpvp.CosmicBossEggs.boss.type.Bosses
- *  com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI
- *  com.massivecraft.factions.Board
- *  com.massivecraft.factions.FLocation
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.Location
- *  org.bukkit.Material
- *  org.bukkit.entity.Player
- *  org.bukkit.scheduler.BukkitRunnable
- */
 package org.arkhamnetwork.Arkkit.patches;
 
-import com.cosmicpvp.CosmicBossEggs.boss.type.Bosses;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
@@ -43,7 +27,6 @@ final class EasterEggHunt
         for (Player pl : Bukkit.getOnlinePlayers()) {
             if (!Board.getFactionAt(new FLocation(pl.getLocation())).isWarZone()) continue;
             Location eggHunt = this.getNearbyLocation(pl.getLocation(), 32, 0);
-            Bosses.CHICKEN.b.spawnBoss(eggHunt);
             for (int i = 0; i < 6; ++i) {
                 CosmicSpaceChestsAPI.dropChest(this.getNearbyLocation(eggHunt, 8, 40));
             }

@@ -1,44 +1,5 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  com.cosmicpvp.CosmicBossEggs.util.MiscUtil
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.google.common.collect.Lists
- *  me.ifamasssxd.cosmicbosses.utils.BossUtils
- *  me.ifamasssxd.cosmicbosses.utils.WorldGuardUtils
- *  net.minecraft.server.v1_7_R4.EntityCreature
- *  net.minecraft.server.v1_7_R4.EntityHuman
- *  net.minecraft.server.v1_7_R4.EntityInsentient
- *  net.minecraft.server.v1_7_R4.PathfinderGoal
- *  net.minecraft.server.v1_7_R4.PathfinderGoalFloat
- *  net.minecraft.server.v1_7_R4.PathfinderGoalLookAtPlayer
- *  net.minecraft.server.v1_7_R4.PathfinderGoalPanic
- *  net.minecraft.server.v1_7_R4.PathfinderGoalRandomStroll
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.Location
- *  org.bukkit.Material
- *  org.bukkit.Sound
- *  org.bukkit.command.Command
- *  org.bukkit.command.CommandSender
- *  org.bukkit.craftbukkit.v1_7_R4.entity.CraftLivingEntity
- *  org.bukkit.entity.Entity
- *  org.bukkit.entity.EntityType
- *  org.bukkit.entity.Player
- *  org.bukkit.entity.Zombie
- *  org.bukkit.inventory.EntityEquipment
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.metadata.FixedMetadataValue
- *  org.bukkit.metadata.MetadataValue
- *  org.bukkit.plugin.Plugin
- *  org.bukkit.potion.PotionEffect
- *  org.bukkit.potion.PotionEffectType
- *  org.bukkit.scheduler.BukkitRunnable
- */
 package org.arkhamnetwork.Arkkit.patches;
 
-import com.cosmicpvp.CosmicBossEggs.util.MiscUtil;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import net.minecraft.server.v1_8_R3.EntityCreature;
@@ -110,8 +71,6 @@ public class Christmas
                 return false;
             }
         });
-        this.hat = MiscUtil.getPlayerHead("MysteryMerchant");
-        this.present = MiscUtil.getPlayerHead("defib");
     }
 
     public void spawnEvilElf(Location l) {

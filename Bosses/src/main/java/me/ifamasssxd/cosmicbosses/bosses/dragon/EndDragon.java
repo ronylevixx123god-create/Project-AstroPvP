@@ -161,7 +161,7 @@ public class EndDragon extends Boss implements GlobalBoss {
     }
 
     @Override
-    public void onDamageTaken(final EntityDamageByEntityEvent event, final org.bukkit.entity.Entity damager) throws Exception {
+    public void onDamageTaken(final EntityDamageByEntityEvent event, final org.bukkit.entity.Entity damager) {
         if (!(damager instanceof Player)) {
             event.setCancelled(true);
             return;

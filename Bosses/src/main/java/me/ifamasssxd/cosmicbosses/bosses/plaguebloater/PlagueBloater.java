@@ -159,7 +159,7 @@ public class PlagueBloater extends Boss {
     }
 
     @Override
-    public void onDamageTaken(final EntityDamageByEntityEvent event, final Entity damager) throws Exception {
+    public void onDamageTaken(final EntityDamageByEntityEvent event, final Entity damager) {
         if (event.getDamager() instanceof Projectile) {
             event.setCancelled(true);
             if (damager instanceof Player) {

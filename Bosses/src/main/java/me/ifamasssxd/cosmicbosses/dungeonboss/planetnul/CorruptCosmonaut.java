@@ -554,7 +554,7 @@ public class CorruptCosmonaut extends Boss implements DungeonBoss {
     }
 
     public enum BossPhase {
-        PHASE_1(2000, 6, 0.25f, 15.0f, Lists.newArrayList(SoulReaperAbility.class, CloneWarAbility.class, SilencerAbility.class, ArmorMagnetAbility.class, BloodMagicAbility.class, RobotSummonerAbility.class, ComboBreakerAbility.class));
+        PHASE_1(2000, 6, 0.25f, 15.0f, Lists.newArrayList(SoulReaperAbility.class, CloneWarAbility.class,ArmorMagnetAbility.class, BloodMagicAbility.class, RobotSummonerAbility.class, ComboBreakerAbility.class));
         //PHASE_1(2000, 6, 0.25f, 15.0f, Lists.newArrayList(SilencerAbility.class, RobotSummonerAbility.class));
 
         private int maxHealth;

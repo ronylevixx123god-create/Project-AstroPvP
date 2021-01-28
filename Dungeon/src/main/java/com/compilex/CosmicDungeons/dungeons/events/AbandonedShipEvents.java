@@ -64,6 +64,7 @@ import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.Faction;
+import lombok.SneakyThrows;
 import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijki;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.cosmicbosses.struct.DamageTracker;
@@ -419,6 +420,7 @@ extends DungeonEvents {
         }
     }
 
+    @SneakyThrows
     @EventHandler(priority=EventPriority.LOWEST)
     public void onPlayerInteractTeleportLever(PlayerInteractEvent e) {
         Block teleportLever;

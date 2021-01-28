@@ -64,8 +64,9 @@ implements Listener {
                 p.updateInventory();
                 p.playSound(p.getLocation(), Sound.LEVEL_UP, 1.0f, 0.72f);
                 RandomFireworks.getManager().launchRandomFirework(p.getLocation());
-                AstroCore.getTitleManagerAPI().sendTitle(p, ChatColor.AQUA + vkit.getKit().getItemName());
-                AstroCore.getTitleManagerAPI().sendSubtitle(p, ChatColor.GREEN + "Evolution Kit Unlocked");
+                // todo: bowp??!?
+//                AstroCore.getTitleManagerAPI().sendTitle(p, ChatColor.AQUA + vkit.getKit().getItemName());
+//                AstroCore.getTitleManagerAPI().sendSubtitle(p, ChatColor.GREEN + "Evolution Kit Unlocked");
                 Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(p, "VKIT_UNLOCK", new Object[]{vkit}));
             }
             catch (Exception err) {

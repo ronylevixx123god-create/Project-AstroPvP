@@ -1,5 +1,6 @@
 package com.massivecraft.factions.util;
 
+import com.compilex.CompilexPermissions.PermissionsAPI;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
@@ -12,10 +13,12 @@ import com.massivecraft.factions.zcore.util.NumberUtils;
 import io.netty.util.internal.ThreadLocalRandom;
 import net.astropvp.core.AstroCore;
 import net.minecraft.server.v1_8_R3.*;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Team;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -93,6 +96,24 @@ public class ScoreboardManager implements BoardAdapter {
 
     @Override
     public void onScoreboardCreate(Player player, org.bukkit.scoreboard.Scoreboard b) {
+        Bukkit.getOnlinePlayers().forEach(o -> {
+            Bukkit.getPlayer(o.getUniqueId());
+
+            if (Bukkit.getPlayer(o.getUniqueId()) != null) {
+
+                Team team = b.getTeam("Test");
+
+                if (team == null) {
+                    team = b.registerNewTeam("Test");
+                }
+
+                team.setPrefix(ChatColor.RED.toString());
+
+                if (!team.hasEntry(o.getName())) {
+                    team.addEntry(o.getName());
+                }
+            }
+        });
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

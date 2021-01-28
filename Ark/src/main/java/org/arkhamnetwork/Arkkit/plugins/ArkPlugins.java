@@ -196,7 +196,6 @@ public enum ArkPlugins {
     NO_FALL_REGIONS(new NoFallRegions(Arkkit.get()), "No Fall regions that need to have _nofall in them."),
     TRICK_OR_TREATERS(new TrickOrTreaters(Arkkit.get()), "Trick or Treaters spawn randomly on players!"),
     NO_SPAWN_HOMES(new NoSpawnHomes(Arkkit.get()), "Blocks players from setting homes or warps at /spawn."),
-    END_DRAGON(new EndDragon(Arkkit.get()), "End Dragon boss spawning patch, with an egg to show timers as well."),
     FAT_BUCKETS(new FatBuckets(Arkkit.get()), "Enables Fat Buckets"),
     PORTAL_REGIONS(new PortalRegions(Arkkit.get()), "Enables warp portal regions."),
     SPAWN_POD(new SpawnPod(Arkkit.get()), "Enables legacy spawn pods on first join."),

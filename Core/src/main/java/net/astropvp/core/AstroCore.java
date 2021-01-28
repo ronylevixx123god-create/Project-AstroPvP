@@ -92,7 +92,7 @@ public class AstroCore extends JavaPlugin {
     public static AstroCore getInstance() {
         return instance;
     }
-    @Getter @Setter private static TitleManagerAPI titleManagerAPI;
+    @Getter @Setter public static TitleManagerAPI titleManagerAPI;
 
     // Sponges
     private CommandHelp commandHelp;

@@ -18,6 +18,8 @@ import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.Factions;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+
+import lombok.SneakyThrows;
 import org.bukkit.entity.Player;
 
 public class VanillaMonsterSpawnTask
@@ -32,6 +34,7 @@ implements Runnable {
         this.lastFactionPointsGiven = System.currentTimeMillis();
     }
 
+    @SneakyThrows
     @Override
     public void run() {
         if (this.outpost.getOutpostTier() == OutpostTier.VANILLA) {

@@ -2,6 +2,7 @@ package me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost;
 
 import com.google.common.collect.Lists;
 import de.inventivegames.particle.ParticleEffect;
+import lombok.SneakyThrows;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import me.ifamasssxd.cosmicbosses.bosses.skeletonhorse.EmpoweredArrow;
 import me.ifamasssxd.cosmicbosses.bosses.skeletonhorse.Summoning;
@@ -225,8 +226,9 @@ public class YijkiDisciple extends Boss implements MiniBoss {
         super.onAttackPlayer(event, player);
     }
 
+    @SneakyThrows
     @Override
-    public void onDamageTaken(final EntityDamageByEntityEvent event, final Entity damager) throws Exception {
+    public void onDamageTaken(final EntityDamageByEntityEvent event, final Entity damager) {
         if (event.getDamager() instanceof Projectile) {
             event.setCancelled(true);
             return;

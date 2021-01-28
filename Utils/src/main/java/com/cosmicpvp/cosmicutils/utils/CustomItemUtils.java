@@ -1,8 +1,6 @@
 package com.cosmicpvp.cosmicutils.utils;
 
 import com.compilex.CosmicCustomCreepers.enums.CreeperTypes;
-import com.cosmicpvp.CosmicBossEggs.boss.type.Bosses;
-import com.cosmicpvp.CosmicBossEggs.util.MiscUtil;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.cosmicpvp.CosmicSpaceChests.listeners.EnvoySummonItemListener;
@@ -121,10 +119,6 @@ public class CustomItemUtils {
 
     public static ItemStack getMoneyNoteNoIID(String string, int i) {
         return ArkhamMoneyNotesAPI.getMoneyNoteNoIID((String) string, (long) i);
-    }
-
-    public static ItemStack getBossEgg(Bosses b) {
-        return MiscUtil.getBossEgg(b.b);
     }
 
     public static ItemStack getEnchantmentBook(CustomEnchantment ce) {

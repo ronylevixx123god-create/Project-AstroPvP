@@ -43,7 +43,7 @@ public class InventoryFeignDeathPet extends InventoryPet {
       return (int)TimeUnit.MINUTES.toSeconds(10L);
    }
 
-   public boolean onPetItemInteract(Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
+   public boolean onPetItemInteract(Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws Exception {
       long lastUse = petItem.getLastUsed();
       long delay = TimeUnit.SECONDS.toMillis((long)this.getCooldown(petItem.getLevel()));
       long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);

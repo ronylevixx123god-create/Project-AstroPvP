@@ -41,7 +41,7 @@ public enum BossType {
     MOTHER_OF_YIJKI((Class<? extends Boss>) MotherOfYijki.class, ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD + "Mother of Yijki", EntityType.WITHER.getTypeId(), Sound.WITHER_SPAWN, 1.4f, "An ancient deadly creature only found within the Cosmic Dungeons."),
     CORRUPT_COSMONAUT(CorruptCosmonaut.class, ChatColor.GOLD.toString() + ChatColor.BOLD + "The Corrupt Cosmonaut", EntityType.SKELETON.getTypeId(), Sound.SKELETON_HURT, 1.4f, "An ancient deadly creature only found within the Planet Nul Dungeon."),
     EVIL_ABOMINATION((Class<? extends Boss>) EvilAbomination.class, CC.LightPurpleB + "Evil Abomination", EntityType.ZOMBIE.getTypeId(), Sound.WITHER_SPAWN, 1.4f, "An ancient plague carrier who seeks to spread the plague to all."),
-    ENDER_DRAGON((Class<? extends Boss>) EndDragon.class, CC.LightPurpleB + "Timeless Dragon", EntityType.ENDER_DRAGON.getTypeId(), Sound.ENDERDRAGON_GROWL, 1.5f, "An ancient mythical beast though to only have existed in lore.");
+    END_DRAGON((Class<? extends Boss>) EndDragon.class, CC.LightPurpleB + "Timeless Dragon", EntityType.ENDER_DRAGON.getTypeId(), Sound.ENDERDRAGON_GROWL, 1.5f, "An ancient mythical beast though to only have existed in lore.");
 
     Class<? extends Boss> bossClass;
     String eggName;

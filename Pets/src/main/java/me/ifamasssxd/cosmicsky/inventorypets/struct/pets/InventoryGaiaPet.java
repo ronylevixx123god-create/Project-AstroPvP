@@ -44,7 +44,7 @@ public class InventoryGaiaPet extends InventoryPet {
       return (int)TimeUnit.MINUTES.toSeconds(10L);
    }
 
-   public boolean onPetItemInteract(Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
+   public boolean onPetItemInteract(Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws Exception {
       long lastUse = petItem.getLastUsed();
       long delay = TimeUnit.SECONDS.toMillis((long)this.getCooldown(petItem.getLevel()));
       long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
@@ -53,7 +53,7 @@ public class InventoryGaiaPet extends InventoryPet {
       } else {
          boolean inWarzone = Board.getFactionAt(new FLocation(player.getLocation())).isWarZone();
          int xpGain = inWarzone ? 50 : 5;
-         int affected = ((Enchantments)Bukkit.getPluginManager().getPlugin("Enchantments")).getNaturesWrathEnchant().procNaturesWrath(player, player, petItem.getLevel(), (EntityDamageEvent)null, 0.5D);
+         int affected = ((Enchantments)Bukkit.getPluginManager().getPlugin("Enchantments")).getNaturesWrathEnchant().procNaturesWrath(player, player, petItem.getLevel(), null, 0.5D);
          if (affected == 0) {
             throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "No valid enemy players nearby!");
          } else {

@@ -30,6 +30,10 @@
             <id>codemc-repo</id>
             <url>https://repo.codemc.io/repository/maven-public/</url>
         </repository>
+        <repository>
+            <id>inventive-repo</id>
+            <url>https://repo.inventivetalent.org/content/groups/public/</url>
+        </repository>
     </repositories>
 
     <!-- ConaxGames Repos -->
@@ -45,6 +49,11 @@
             <artifactId>EssentialsX</artifactId>
             <version>2.17.2</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.inventivetalent</groupId>
+            <artifactId>particleapi</artifactId>
+            <version>2.1.1</version>
         </dependency>
         <dependency>
             <groupId>com.github.MilkBowl</groupId>

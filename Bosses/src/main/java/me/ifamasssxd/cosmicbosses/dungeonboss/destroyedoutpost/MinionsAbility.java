@@ -5,7 +5,6 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import kotlin.Metadata;
 import kotlin.TypeCastException;
-import kotlin.collections.CollectionsKt;
 import kotlin.jvm.internal.Intrinsics;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
@@ -306,6 +305,5 @@ public final class MinionsAbility extends BossAbility<MotherOfYijki> implements 
         final Location location3 = boss.location;
         Intrinsics.checkExpressionValueIsNotNull((Object) location3, "boss.location");
         array[n3] = new Location(location3.getWorld(), -66.0, 82.0, -663.0);
-        this.locationLists = CollectionsKt.listOf(array);
     }
 }

@@ -135,6 +135,11 @@
             <artifactId>Conquest</artifactId>
             <version>0.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>Core</artifactId>
+            <version>0.1</version>
+        </dependency>
 
         <!-- System Repos -->
         <dependency>

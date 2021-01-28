@@ -279,7 +279,7 @@ public class KingSlime extends Boss {
     }
 
     @Override
-    public void onDamageTaken(final EntityDamageByEntityEvent event, final Entity damager) throws Exception {
+    public void onDamageTaken(final EntityDamageByEntityEvent event, final Entity damager) {
         super.onDamageTaken(event, damager);
     }
 

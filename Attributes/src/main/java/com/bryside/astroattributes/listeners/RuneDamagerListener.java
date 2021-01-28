@@ -19,7 +19,7 @@ public class RuneDamagerListener implements Listener {
             priority = EventPriority.LOW,
             ignoreCancelled = true
     )
-    public void damageEvent(EntityDamageByEntityEvent e) {
+    public void damageEvent(EntityDamageByEntityEvent e) throws Exception {
         if (e.getDamager() instanceof Player) {
             Player damager = (Player) e.getDamager();
             ItemStack item = damager.getItemInHand();

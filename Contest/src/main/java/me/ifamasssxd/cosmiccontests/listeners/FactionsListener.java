@@ -16,6 +16,7 @@
  */
 package me.ifamasssxd.cosmiccontests.listeners;
 
+import com.compilex.CompilexPermissions.PermissionsAPI;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.event.FPlayerJoinEvent;
@@ -67,6 +68,8 @@ implements Listener {
         if (user != null) {
             user.setFactionTag(null);
         }
+
+//        event.getPlayer().setPlayerListName(PermissionsAPI.getPermissionUser(event.getPlayer().getUniqueId()).getPrefix() + " " + event.getPlayer().getName());
     }
 }
 

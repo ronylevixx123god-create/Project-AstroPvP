@@ -1,6 +1,5 @@
 package me.ifamasssxd.cosmicsky.inventorypets.struct.pets;
 
-import com.compilex.CosmicCustomCreepers.CosmicCustomCreepers;
 import com.compilex.CosmicCustomCreepers.enums.CreeperTypes;
 import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
 import com.compilex.CosmicOutposts.outpost.enums.OutpostTier;
@@ -8,18 +7,20 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.cosmicpvp.cosmicutils.utils.TimeUtils;
 import com.google.common.collect.Lists;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
+import org.arkhamnetwork.CosmicCustomTNT.CosmicCustomTNT;
 import org.bukkit.Sound;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class InventoryVileCreeperPet extends InventoryPet {
    public InventoryPets getOwner() {
@@ -27,7 +28,7 @@ public class InventoryVileCreeperPet extends InventoryPet {
    }
 
    public List getPetDescription(int level) {
-      return Lists.newArrayList(new String[]{CC.Gray + "An extremely dangerous creeper,", CC.Gray + "species, famous for its vicious", CC.Gray + "modern warfare deployments.", "", CC.WhiteB + "Ability", CC.Gray + "Spawn a " + CC.DarkPurple + "Vile Creeper", CC.Gray + "Corrupts the area it explodes", CC.Gray + "in, applying [" + CC.Red + "Rot and Decay V" + CC.Gray + "]", CC.Gray + "for a 5 second duration.", "", CC.WhiteB + "Cooldown", CC.Gray + (10 - (level - 1)) + " Minutes"});
+      return Lists.newArrayList(CC.Gray + "An extremely dangerous creeper,", CC.Gray + "species, famous for its vicious", CC.Gray + "modern warfare deployments.", "", CC.WhiteB + "Ability", CC.Gray + "Spawn a " + CC.DarkPurple + "Vile Creeper", CC.Gray + "Corrupts the area it explodes", CC.Gray + "in, applying [" + CC.Red + "Rot and Decay V" + CC.Gray + "]", CC.Gray + "for a 5 second duration.", "", CC.WhiteB + "Cooldown", CC.Gray + (10 - (level - 1)) + " Minutes");
    }
 
    public int getExpForLevel(int level) {
@@ -50,7 +51,7 @@ public class InventoryVileCreeperPet extends InventoryPet {
          OutpostTier outpostTier = CosmicOutpostsAPI.getOutpostTierOfWorld(player);
          if (outpostTier != OutpostTier.VANILLA && outpostTier != OutpostTier.TRAINEE && outpostTier != OutpostTier.HERO) {
             petItem.setLastUsed(System.currentTimeMillis());
-            Creeper c = CosmicCustomCreepers.get().getCreeperListener().processCustomCreeperPlaced(event, CreeperTypes.Vile);
+            Creeper c = CosmicCustomTNT.get().getCreeperListener().processCustomCreeperPlaced(event, CreeperTypes.Vile);
             if (c == null) {
                throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Unable to spawn Vile Creeper!");
             } else {

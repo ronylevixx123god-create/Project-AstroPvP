@@ -147,7 +147,7 @@ public class DungeonYijki extends Boss implements DungeonBoss {
     }
 
     @Override
-    public void onDamageTaken(final EntityDamageByEntityEvent event, final Entity damager) throws Exception {
+    public void onDamageTaken(final EntityDamageByEntityEvent event, final Entity damager) {
         if (!(damager instanceof Player) && !(damager instanceof Arrow)) {
             event.setCancelled(true);
             return;
