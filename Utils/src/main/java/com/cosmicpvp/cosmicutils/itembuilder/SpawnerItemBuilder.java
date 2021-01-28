@@ -6,6 +6,8 @@
  */
 package com.cosmicpvp.cosmicutils.itembuilder;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
+import de.dustplanet.util.SilkUtil;
 import org.arkhamnetwork.Arkkit.utils.ItemUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -32,7 +34,8 @@ public class SpawnerItemBuilder
     }
 
     private ItemStack getMobSpawner(EntityType entityType) {
-        return ItemUtils.buildItem((Material) Material.MOB_SPAWNER, (short) entityType.getTypeId(), (String) (ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + SpawnerItemBuilder.getEntityName(entityType) + ChatColor.GOLD.toString() + " Spawner"), (String[]) new String[]{(Object) ((Object) ChatColor.GRAY) + "Be careful where you place this!"});
+        return SilkUtil.hookIntoSilkSpanwers().newSpawnerItem(entityType.getTypeId(), CC.translate("&a&l") + entityType.name() + " &f Spawner", 1, false);
+        //return ItemUtils.buildItem((Material) Material.MOB_SPAWNER, (short) entityType.getTypeId(), (String) (ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + SpawnerItemBuilder.getEntityName(entityType) + ChatColor.GOLD.toString() + " Spawner"), (String[]) new String[]{(Object) ((Object) ChatColor.GRAY) + "Be careful where you place this!"});
     }
 
     @Override

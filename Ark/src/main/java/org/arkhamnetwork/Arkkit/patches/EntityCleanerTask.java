@@ -13,6 +13,7 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.patches.chunkgc.ChunkAPI;
 import org.arkhamnetwork.Arkkit.patches.chunkgc.ChunkGCTask;
@@ -70,8 +71,11 @@ final class EntityCleanerTask
     }
 
     public void syncRemoveEntities(String world, Entity[] le) {
-        if (le.length > 0) {
+        if (le.length > 3000) {
             Bukkit.getLogger().info("(" + world + "'s janitor) Removing " + le.length + " out-of-range entities");
+            Bukkit.broadcastMessage(CC.translate(""));
+            Bukkit.broadcastMessage(CC.translate("&c&l*** &4&lREMOVED ALL WORLD ENTITIES TO PREVENT LAG &c&l***"));
+            Bukkit.broadcastMessage(CC.translate(""));
             for (Entity ent : le) {
                 ent.remove();
             }
