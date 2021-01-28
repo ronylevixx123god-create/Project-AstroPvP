@@ -90,7 +90,7 @@ public class UltraArmorSet
             return false;
         }
         this.removeResistance(damaged);
-        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.7);
+        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.65);
         return true;
     }
 

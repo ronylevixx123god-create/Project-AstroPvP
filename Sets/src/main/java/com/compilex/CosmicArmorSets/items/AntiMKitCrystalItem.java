@@ -24,6 +24,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.mockito.internal.matchers.Null;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -49,8 +50,11 @@ public class AntiMKitCrystalItem extends CosmicItem implements InventoryInteract
                 armorSet = (AbilityArmorSet)object;
             } else if (object instanceof Set) {
                 set = (Set<AbilityArmorSet>)object;
-            } else {
+            } else { try {
                 armorSet = AbilityArmorSet.fromName(object.toString());
+            } catch(NullPointerException e) {
+
+            }
             }
             if (armorSet != null)
                 set.add(armorSet);
@@ -89,7 +93,7 @@ public class AntiMKitCrystalItem extends CosmicItem implements InventoryInteract
         return
                 applyItemData((new ItemBuilder(Material.INK_SACK, name, new String[0])).lore(lore)
                         .data(DyeColor.YELLOW.getDyeData()).build())
-                        .setNBTBase("cosmicData",
+                        .setNBTBase("conaxData",
                                 (NBTBase)(new NBTTagCompoundBuilder()).setNBTBase("mKits", (NBTBase)list.build()).setInt("success", success).get())
                         .assignIID().build();
     }
@@ -133,7 +137,7 @@ public class AntiMKitCrystalItem extends CosmicItem implements InventoryInteract
     }
 
     private ItemStack applyToItem(NBTWrapper wrapper, ItemStack item, Pair<Set<AbilityArmorSet>, Integer> pair) {
-        NBTTagCompoundBuilder builder = wrapper.getCompoundOrCreate("cosmicData");
+        NBTTagCompoundBuilder builder = wrapper.getCompoundOrCreate("conaxData");
         NBTTagListBuilder list = new NBTTagListBuilder();
         Set<AbilityArmorSet> set = (Set<AbilityArmorSet>)pair.first;
         StringBuilder loreBuild = new StringBuilder();
@@ -142,7 +146,7 @@ public class AntiMKitCrystalItem extends CosmicItem implements InventoryInteract
             loreBuild.append(armor.getDisplayName()).append(CC.Gray).append(", ");
         }
         builder.setNBTBase("antiMkits", (NBTBase)list.build());
-        wrapper.setNBTBase("cosmicData", (NBTBase)builder.get());
+        wrapper.setNBTBase("conaxData", (NBTBase)builder.get());
         item = wrapper.build();
         ItemMeta im = item.getItemMeta();
         List<String> lore = im.getLore();
