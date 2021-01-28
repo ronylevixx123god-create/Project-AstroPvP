@@ -46,26 +46,6 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.1.0</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <artifactSet>
-                                <excludes>
-                                    <exlude>org.bukkit:*</exlude>
-                                </excludes>
-                            </artifactSet>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 
@@ -139,6 +119,7 @@
             <groupId>com.conaxgames</groupId>
             <artifactId>Arkkit</artifactId>
             <version>0.1</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
