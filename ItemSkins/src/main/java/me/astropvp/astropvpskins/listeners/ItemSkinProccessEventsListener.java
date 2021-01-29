@@ -136,14 +136,14 @@ public class ItemSkinProccessEventsListener implements Listener {
                         if (damaged.getItemInHand() == null || !damaged.getItemInHand().getType().name().endsWith("_SWORD")) {
                             continue;
                         }
-                        e.setDamage(Math.max(0.0, e.getDamage(EntityDamageEvent.DamageModifier.BASE) + e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.1));
+                        e.setDamage(Math.max(0.0, e.getDamage(EntityDamageEvent.DamageModifier.BASE) + e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.05));
                     } else if (type == SkinType.TRIDENT_SWORD) {
 
                         new MasteryMarkOfTheBeast().applyDefenseEffect(damager, (LivingEntity) e.getEntity(), 3, e);
                         new Blessed().applyEffect(damager, (LivingEntity) e.getEntity(), 4, e);
                         // Todo: ENCHANTMENTS (getHex) from main class, can't compile :)
                         // TODO: ONLY THING UNTIL ITEM SKINS IS FINE
-                        //Enchantments.getHex().applyEffect((LivingEntity) damager, (LivingEntity) e.getEntity(), 5, e);
+                        new Hex().applyEffect(damager, (LivingEntity) e.getEntity(), 5, e);
                     } else if (type == SkinType.BOOTS_RETALIATION) {
                         if (e.getEntity() instanceof Player) {
                             continue;
@@ -163,9 +163,9 @@ public class ItemSkinProccessEventsListener implements Listener {
                     } else if (type == SkinType.SKULL_SCYTHE) {
                         e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.025);
                     } else if (type == SkinType.DEEPSPACE_BACKPACK) {
-                        e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.03);
+                        e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.003);
                     } else if (type == SkinType.SANTA_HAT) {
-                        e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.05);
+                        e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.005);
                     } else if (type == SkinType.JOLLY_CANDY_SWORD) {
                         e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.075);
                     } else if (type == SkinType.LEVIATHAN_TROPHY) {

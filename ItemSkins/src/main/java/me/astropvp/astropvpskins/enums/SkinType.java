@@ -91,7 +91,7 @@ public enum SkinType {
     CORRUPT_SWORD((CC.DarkPurpleB) + "Corrupt Greatsword", ItemSkinType.SWORD, new CorruptSwordSkin(), Arrays.asList((CC.Red) + "2x Chance to Neutralize enemies", (CC.Red) + "2x Blackout duration on enemies.")),
     SEXY_SWORD((CC.LightPurpleB) + "Selfie Stick", ItemSkinType.SWORD, new SelfieStickSkin(), Arrays.asList(new String[0])),
     CUPID_SWORD((CC.RedB) + "Blade of Love", ItemSkinType.SWORD, new CupidSwordSkin(), Arrays.asList((CC.Red) + "2% Chain Lifesteal")),
-    SEXY_HELMET((CC.LightPurpleB) + "Chad Sunglasses", ItemSkinType.HELMET, new SexyHelmetSkin(), Arrays.asList((CC.Red) + "Immune to World Destroyer")),
+    SEXY_HELMET((CC.LightPurpleB) + "Chad Sunglasses", ItemSkinType.HELMET, new SexyHelmetSkin(), Arrays.asList((CC.Red) + "50% Chance to Block World Destroyer")),
     CORRUPT_HELMET(CC.DarkPurpleB + "Corrupt Cosmonaut Visor", ItemSkinType.HELMET, new CorruptHelmetSkin(), Arrays.asList((CC.Red) + "50% Chance to block Neutralize", (CC.Red) + "50% Silence Duration")),
     CUPID_AMULET((CC.RedB) + "Amulet of Angels", ItemSkinType.AMULET, new CupidAmuletSkin(), Arrays.asList((CC.Red) + "Immune to Nature's Wrath", (CC.Red) + "Immune to Revenge of Yijki")),
     SEXY_AMULET((CC.LightPurpleB) + "40K Gold Chain", ItemSkinType.AMULET, new SexyHelmetSkin(), Arrays.asList((CC.Red) + "+2% /sell prices")),

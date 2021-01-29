@@ -14,10 +14,10 @@ final class DivineImmolationListener implements Listener {
     public void onEntityDamage(final EntityDamageEvent e) throws Exception {
         if (e.getEntity().hasMetadata("divineFire") && e.getCause() == EntityDamageEvent.DamageCause.WITHER && e.getEntity() instanceof LivingEntity) {
             final int enchantLevel = e.getEntity().getMetadata("divineFireLevel").get(0).asInt();
-            if (System.currentTimeMillis() - e.getEntity().getMetadata("divineFire").get(0).asLong() < (4 + enchantLevel) * 1000) {
+            if (System.currentTimeMillis() - e.getEntity().getMetadata("divineFire").get(0).asLong() < (3 + enchantLevel) * 1000) {
                 e.setCancelled(true);
                 final LivingEntity le = (LivingEntity) e.getEntity();
-                le.damage((double)2.5);
+                le.damage((double)1.0);
                 //ParticleEffect.playEffect(ParticleEffect.FLAME, le.getEyeLocation(), 0.15f, 20);
                 //ParticleEffect.playEffect(ParticleEffect.LAVA, le.getEyeLocation(), 0.5f, 15);
 

@@ -26,11 +26,11 @@
 /*    */   public static ItemStack addSkinNBT(String line, ItemStack item) {
 /* 27 */     ItemStack finalItem = item;
 /* 28 */     NBTWrapper wrapper = new NBTWrapper(item);
-/* 29 */     NBTTagCompoundBuilder compoundBuilder = wrapper.hasKey("conaxData") ?
-/* 30 */       new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")) :
+/* 29 */     NBTTagCompoundBuilder compoundBuilder = wrapper.hasKey("cosmicData") ?
+/* 30 */       new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) :
 /* 31 */       new NBTTagCompoundBuilder();
 /* 32 */     compoundBuilder.setString("itemSkinType", line);
-/* 33 */     finalItem = wrapper.setNBTBase("conaxData", (NBTBase)compoundBuilder.get()).build();
+/* 33 */     finalItem = wrapper.setNBTBase("cosmicData", (NBTBase)compoundBuilder.get()).build();
 /* 34 */     return finalItem;
 /*    */   }
 /*    */   
@@ -46,10 +46,10 @@
 /*    */   public static ItemStack removeSkinNBT(String line, ItemStack item) {
 /* 47 */     ItemStack finalItem = item;
 /* 48 */     NBTWrapper wrapper = new NBTWrapper(item);
-/* 49 */     if (wrapper.hasKey("conaxData")) {
-/* 50 */       NBTTagCompoundBuilder builder = new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData"));
+/* 49 */     if (wrapper.hasKey("cosmicData")) {
+/* 50 */       NBTTagCompoundBuilder builder = new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData"));
 /* 51 */       builder.remove("itemSkinType");
-/* 52 */       finalItem = wrapper.setNBTBase("conaxData", (NBTBase)builder.get()).build();
+/* 52 */       finalItem = wrapper.setNBTBase("cosmicData", (NBTBase)builder.get()).build();
 /*    */     } 
 /* 54 */     return finalItem;
 /*    */   }
