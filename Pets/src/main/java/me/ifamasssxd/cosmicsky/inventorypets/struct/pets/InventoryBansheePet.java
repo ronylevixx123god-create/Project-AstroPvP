@@ -48,8 +48,8 @@ public class InventoryBansheePet extends InventoryPet {
 
     public List getPetDescription(int level) {
         return Lists.newArrayList((Object[])new String[] {
-                CC.Gray + "Call upon the deadly screeming Banshee.", CC.Gray, CC.YellowB + "Ability", CC.Gray + "Activates " + CC.Gray + "[RKO]:", CC.DarkRed + "* " + CC.DarkRed + "1.5x DMG to all players(8s) ", CC.DarkRed + "* " + CC.DarkRed + "Immune to freezes (8s) ", CC.DarkRed + "* " + CC.DarkRed + "Gears V (8s) ", CC.DarkRed + "* " + CC.DarkRed + "AoE (8x8) Silence IV (5s) ", CC.DarkRed + "* " + CC.DarkRed + "Negates enemy Phoenix (5s) ", CC.DarkRed + "* " + CC.DarkRed + "Negates enemy Holy White Scrolls (5s) ",
-                CC.Gray, CC.YellowB + "Cooldown", CC.Gray + " " + CC.Gray });
+                CC.Gray + "Call upon the deadly screeming Banshee.", CC.Gray, CC.YellowB + "Ability", CC.Gray + "Activates " + CC.Gray + "[RKO]:", CC.DarkRed + "* " + CC.Gray + "1.5x DMG to all players(8s) ", CC.DarkRed + "* " + CC.Gray + "Immune to freezes (8s) ", CC.DarkRed + "* " + CC.Gray + "Gears V (8s) ", CC.DarkRed + "* " + CC.Gray + "AoE (8x8) Silence IV (5s) ", CC.DarkRed + "* " + CC.Gray + "Negates enemy Phoenix (5s) ", CC.DarkRed + "* " + CC.Gray + "Negates enemy Holy White Scrolls (5s) ",
+                CC.Gray, CC.YellowB + "Cooldown", CC.Gray + " " + TimeUtils.formatSeconds(getCooldown(level)) });
     }
 
     public int getCooldown(int level) {
@@ -79,7 +79,7 @@ public class InventoryBansheePet extends InventoryPet {
     }
 
     public int getMaxLevel() {
-        return 10;
+        return 5;
     }
 
     public boolean onPetItemInteract(final Player player, ItemStack item, final InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
@@ -138,7 +138,7 @@ public class InventoryBansheePet extends InventoryPet {
         }
         ParticleEffect.playEffect(ParticleEffect.LARGE_EXPLODE, player.getLocation().add(0.0D, 1.0D, 0.0D), 1.0F, 3);
         player.sendMessage("");
-        player.sendMessage(CC.translate("&4&l** BANSHEE [&68s&4&l] - RKO! **"));
+        player.sendMessage(CC.translate("&4&l** BANSHEE [&6" + sum + "s&4&l] - RKO! **"));
         player.sendMessage("");
         player.removePotionEffect(PotionEffectType.SPEED);
         player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, (petItem.getLevel() / 2 + 3) * 20, 4));

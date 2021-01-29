@@ -59,26 +59,6 @@ final class SpawnPodListener
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onPlayerJoin(PlayerJoinEvent e) {
-        final Player pl = e.getPlayer();
-        if (newPlayers.contains(pl.getName())) {
-            pl.setAllowFlight(false);
-            pl.teleport(pl.getWorld().getSpawnLocation().clone().add(0.0, 360.0, 0.0), PlayerTeleportEvent.TeleportCause.PLUGIN);
-            pl.setPlayerTime(18000L, false);
-            Bukkit.getScheduler().runTaskLater(Arkkit.get(), new Runnable() {
-
-                @Override
-                public void run() {
-                    pl.sendMessage("");
-                    pl.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "YOU ARE ENTERING THE PLANET'S ATMOSPHERE!");
-                    pl.sendMessage(ChatColor.RED.toString() + ChatColor.UNDERLINE.toString() + "BRACE FOR IMPACT!");
-                    pl.sendMessage("");
-                    pl.playSound(pl.getLocation(), Sound.AMBIENCE_THUNDER, 1.0f, 1.0f);
-                }
-            }, 15L);
-        }
-    }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent e) {
