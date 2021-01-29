@@ -81,10 +81,10 @@ public class RuneApplyListener implements Listener {
         RuneType type = e.getRuneType();
         Location l = player.getLocation();
 
-        if (item.getItemMeta().getLore().contains("§9§l * §7Extra HP From Potions (+1.0 HP)")) {
+        if (item.getItemMeta().getLore().contains(CC.translate("&9&l * &7Extra HP From Potions (+1.0 HP)"))) {
             e.setCancelled(true);
             player.getInventory().addItem(e.getRuneType().getRune().getItemStack(level, success));
-            player.sendMessage("§cYou cannot apply a titan attribute to an item with weapon bonus runes.");
+            player.sendMessage(CC.translate("&cYou cannot apply a titan attribute to an item with weapon bonus runes."));
             return;
         }
 

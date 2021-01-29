@@ -19,7 +19,7 @@ public class InventorySkinClickListener implements Listener {
         if (item == null) {
             return;
         }
-        if (title.equals("§8Astro Item Skins")) {
+        if (title.equals(CC.translate("&8Astro Item Skins"))) {
             e.setCancelled(true);
             Material material = item.getType();
             ItemSkinType type = (material == Material.DIAMOND_HELMET) ? ItemSkinType.HELMET : (
@@ -39,7 +39,7 @@ public class InventorySkinClickListener implements Listener {
             }
             Inventory inv = InventoryItems.createSkinInventory(type);
             e.getWhoClicked().openInventory(inv);
-        } else if (title.startsWith("§8Item Skins:")) {
+        } else if (title.startsWith(CC.translate("&8Item Skins:"))) {
             if (item.equals(InventoryItems.createBackButton())) {
                 Inventory invv = CommandSkins.getInventory();
                 e.getWhoClicked().openInventory(invv);

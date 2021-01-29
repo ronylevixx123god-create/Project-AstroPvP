@@ -48,7 +48,7 @@ public class EnchantmentBook {
             lore.add(s);
         }
         lore.add(ChatColor.GRAY.toString() + getEnchantmentType(ench.getNaturalMaterials()) + " Enchantment");
-        lore.add("§6Max Level: §f" + ench.getMaxLevel());
+        lore.add(CC.translate("&6Max Level: &f") + ench.getMaxLevel());
         lore.add(ChatColor.GRAY.toString() + "Drag n' Drop onto item to enchant.");
         final ItemMeta im = is.getItemMeta();
         im.setLore(lore);
@@ -64,7 +64,7 @@ public class EnchantmentBook {
             lore.add(s);
         }
         lore.add(ChatColor.GRAY.toString() + getEnchantmentType(ench.getNaturalMaterials()) + " Enchantment");
-        lore.add("§6Max Level: §f" + ench.getMaxLevel());
+        lore.add(CC.translate("&6Max Level: &f") + ench.getMaxLevel());
         lore.add(ChatColor.GRAY.toString() + "Drag n' Drop onto item to enchant.");
         final ItemMeta im = is.getItemMeta();
         im.setLore(lore);

@@ -10,8 +10,3 @@
 /*   */   }
 /*   */ }
 
-
-/* Location:              C:\Users\bryan\Downloads\GalacticItemSkins.jar!\me\galacticpvp\galacticitemskins\objects\skins\amulets\SexyAmuletSkin.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

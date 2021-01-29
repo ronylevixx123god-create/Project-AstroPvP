@@ -66,7 +66,7 @@ public class InventoryWitcherPet extends InventoryPet {
     }
 
     public int getMaxLevel() {
-        return 6;
+        return 5;
     }
 
     public int getCooldown(int level) {

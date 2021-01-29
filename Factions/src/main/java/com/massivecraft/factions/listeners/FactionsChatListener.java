@@ -91,7 +91,7 @@ public class FactionsChatListener implements Listener {
             ChatMode chat = me.getChatMode();
 
             // new chat
-            String title = (PlayerTitleAPI.getEquippedTitle(talkingPlayer.getUniqueId() == null ? "" : PlayerTitleAPI.getEquippedTitle(talkingPlayer.getUniqueId())));
+            //String title = (PlayerTitleAPI.getEquippedTitle(talkingPlayer.getUniqueId() == null ? "" : PlayerTitleAPI.getEquippedTitle(talkingPlayer.getUniqueId())));
             // new chat
 
             if (chat != ChatMode.PUBLIC && this.p.handleCommand(talkingPlayer, msg, false, true)) {

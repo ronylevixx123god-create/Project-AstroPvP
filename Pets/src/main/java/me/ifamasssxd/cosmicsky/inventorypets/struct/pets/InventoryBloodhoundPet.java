@@ -95,7 +95,7 @@ public class InventoryBloodhoundPet extends InventoryPet {
       if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
          throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
 
-      LivingEntity target = getTargetEntity(player, 4);
+      LivingEntity target = getTargetEntity(player, 6);
       if (target == null || !(target instanceof Player))
          throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "No target found!");
       final Player pTarget = (Player)target;
@@ -154,7 +154,7 @@ public class InventoryBloodhoundPet extends InventoryPet {
       pTarget.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 0));
       this.removeNearMeta(player, pTarget);
       pTarget.sendMessage("");
-      pTarget.sendMessage("" + ChatColor.RED + ChatColor.BOLD + "** BLOODHOUND PET: (No Bless) for (" + ChatColor.GRAY + "10s" + ChatColor.RED + "§l) **");
+      pTarget.sendMessage("" + ChatColor.RED + ChatColor.BOLD + "** BLOODHOUND PET: (No Bless) for (" + ChatColor.GRAY + "10s" + ChatColor.RED + ") **");
       pTarget.sendMessage("");
       (new BukkitRunnable() {
          public void run() {

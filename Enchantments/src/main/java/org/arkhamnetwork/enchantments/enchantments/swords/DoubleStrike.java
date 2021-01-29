@@ -1,5 +1,6 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.rit.sucy.CustomEnchantment;
 import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.Enchantments;
@@ -26,7 +27,7 @@ public class DoubleStrike extends CustomEnchantment {
     @SneakyThrows
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
         double random = Math.random();
-        double chance = 0.02D * level;
+        double chance = 0.001D * level;
         if (random < chance) {
             double dmg = VanillaDamageListener.getLastFinalDamage((Entity) playerHit);
             if (dmg == 0.0D)
@@ -38,7 +39,7 @@ public class DoubleStrike extends CustomEnchantment {
                     if (!playerHit.isDead() && playerHit.getHealth() > 0.0D) {
                         playerHit.setMetadata("doubleStriked", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), Long.valueOf(System.currentTimeMillis())));
                         playerHit.damage(fdmg, (Entity) player);
-                        pp.sendMessage("§6§l** DOUBLE STRIKE **");
+                        pp.sendMessage(CC.translate("&6&l** DOUBLE STRIKE **"));
                     }
                 }
             }, 2L);

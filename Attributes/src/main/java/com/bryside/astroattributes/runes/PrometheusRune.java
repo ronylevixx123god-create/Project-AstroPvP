@@ -25,7 +25,7 @@ public class PrometheusRune extends Rune implements Listener {
             level = this.getMaxLevel();
         }
 
-        return new String[]{CC.RedB + "Level: " + CC.DarkGray + level, CC.RedB + "Apply: " + CC.DarkGray + chance + "%", "", CC.RedB + "''Unstopable Vengeance''", CC.Red + "Your damage is multiplied based on", CC.Red + "how many damage events you have taken", CC.Red + "since your last attacks, up to a cap,", "§cwith an effectiveness timeout.", "", CC.Gray + "Titan Attributes can " + CC.Underline + "ONLY" + CC.Gray + " be applied", CC.Gray + "to " + CC.Red + "Heroic Weapons " + CC.Gray + "and only", CC.Gray + CC.Underline + "1 attribute" + CC.Gray + " can be imbued per weapon.", "", CC.Gray + "To learn more about Titan Attributes, use " + CC.Red + "/titan"};
+        return new String[]{CC.RedB + "Level: " + CC.DarkGray + level, CC.RedB + "Apply: " + CC.DarkGray + chance + "%", "", CC.RedB + "''Unstopable Vengeance''", CC.Red + "Your damage is multiplied based on", CC.Red + "how many damage events you have taken", CC.Red + "since your last attacks, up to a cap,", CC.translate("&cwith an effectiveness timeout."), "", CC.Gray + "Titan Attributes can " + CC.Underline + "ONLY" + CC.Gray + " be applied", CC.Gray + "to " + CC.Red + "Heroic Weapons " + CC.Gray + "and only", CC.Gray + CC.Underline + "1 attribute" + CC.Gray + " can be imbued per weapon.", "", CC.Gray + "To learn more about Titan Attributes, use " + CC.Red + "/titan"};
     }
 
     public String getDisplayName() {

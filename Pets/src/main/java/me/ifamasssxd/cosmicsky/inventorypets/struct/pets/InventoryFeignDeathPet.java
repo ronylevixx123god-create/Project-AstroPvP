@@ -36,7 +36,7 @@ public class InventoryFeignDeathPet extends InventoryPet {
    }
 
    public int getMaxLevel() {
-      return 4;
+      return 5;
    }
 
    public int getCooldown(int level) {

@@ -29,7 +29,7 @@ public class Inventories {
                 final ItemMeta meta = x.getItemMeta();
                 final List<String> lore = meta.hasLore() ? meta.getLore() : new ArrayList<String>();
                 lore.add("");
-                lore.add(CC.GreenB + "CHANCE: §a§n" + Utils.getPercentage(l) + "§a%");
+                lore.add(CC.GreenB + CC.translate("CHANCE: &a&n") + Utils.getPercentage(l) + CC.translate("&a%"));
                 lore.add("");
                 meta.setLore(lore);
                 x.setItemMeta(meta);

@@ -1,5 +1,6 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
@@ -40,7 +41,7 @@ public class HeroicTrap extends HeroicCustomEnchantment {
 
         if (random < chance) {
             if (AstroItemSkinsAPI.hasSkinEquipped(ptarget, SkinType.FLAMING_HALO) && Math.random() < 0.50) {
-                ptarget.sendMessage("§6§l* FLAMING HALO BLOCKED §7[Titan Trap] §6§l*");
+                ptarget.sendMessage(CC.translate("&6&l* FLAMING HALO BLOCKED &7[Titan Trap] &6&l*"));
                 return;
             }
 

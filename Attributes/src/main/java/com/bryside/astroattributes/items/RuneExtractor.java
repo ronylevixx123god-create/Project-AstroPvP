@@ -15,13 +15,13 @@ public class RuneExtractor {
 
     static {
         material = Material.BOWL;
-        displayName = "§d§lRune Extractor §7(Drag n' Drop)";
+        displayName = CC.translate("&d&lRune Extractor &7(Drag n' Drop)");
     }
 
     public static ItemStack createNewRuneExtractor(int apply) {
         ItemStack item = new ItemStack(material);
         ItemMeta itemMeta = item.getItemMeta();
-        List lore = Arrays.asList(CC.Gray + "An exotic piece of scrap that has been", CC.Gray + "flying around in the cosmos for an eternity.", CC.Gray + "The few that are lucky enough to obtain this", CC.Gray + "item can extract any sword with a rune", CC.Gray + "applied onto it, but " + CC.Underline + "ONLY" + CC.Gray + " for a small price.", "", CC.LightPurple + "Apply: §f" + apply + "%", CC.Red + "", "§cPlace on sword to extract attribute.");
+        List lore = Arrays.asList(CC.Gray + "An exotic piece of scrap that has been", CC.Gray + "flying around in the cosmos for an eternity.", CC.Gray + "The few that are lucky enough to obtain this", CC.Gray + "item can extract any sword with a rune", CC.Gray + "applied onto it, but " + CC.Underline + "ONLY" + CC.Gray + " for a small price.", "", CC.LightPurple + CC.translate("Apply: &f") + apply + "%", CC.Red + "", CC.translate("&cPlace on sword to extract attribute."));
         itemMeta.setLore(lore);
         itemMeta.setDisplayName(displayName);
         item.setItemMeta(itemMeta);
@@ -41,7 +41,7 @@ public class RuneExtractor {
                 }
 
                 l = (String) var1.next();
-            } while (!l.startsWith(CC.LightPurple + "Apply: §f"));
+            } while (!l.startsWith(CC.LightPurple + CC.translate("Apply: &f")));
 
             int apply = Integer.valueOf(l.substring(l.indexOf(":") + 4, l.indexOf("%")));
             return apply;
@@ -52,7 +52,7 @@ public class RuneExtractor {
         if (item != null && item.hasItemMeta() && item.getItemMeta().hasLore() && item.getItemMeta().hasDisplayName() && item.getType() == material) {
             ItemMeta itemMeta = item.getItemMeta();
             String display = itemMeta.getDisplayName();
-            return display.contentEquals(displayName) && itemMeta.getLore().contains("§cPlace on sword to extract attribute.");
+            return display.contentEquals(displayName) && itemMeta.getLore().contains(CC.translate("&cPlace on sword to extract attribute."));
         } else {
             return false;
         }

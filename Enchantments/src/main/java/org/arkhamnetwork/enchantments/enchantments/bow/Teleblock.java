@@ -1,5 +1,6 @@
 package org.arkhamnetwork.enchantments.enchantments.bow;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.rit.sucy.CustomEnchantment;
 import de.inventivegames.particle.ParticleEffect;
 import lombok.SneakyThrows;
@@ -34,7 +35,7 @@ public class Teleblock extends CustomEnchantment {
         final int soulCost = level * 6;
         Player pp = (Player) e.getEntity();
         if (AstroItemSkinsAPI.hasSkinEquipped(pp, SkinType.VIRUS_HELMET_N95)) {
-            pp.sendMessage("§a§l* ANTI CORONA BLOCKED §7[Teleblock] §a§l*");
+            pp.sendMessage(CC.translate("&a&l* ANTI CORONA BLOCKED &7[Teleblock] &a&l*"));
             return;
         }
         if (KillTrackerAPI.hasGodMode(p) && KillTrackerAPI.getAllSouls(p) >= soulCost) {

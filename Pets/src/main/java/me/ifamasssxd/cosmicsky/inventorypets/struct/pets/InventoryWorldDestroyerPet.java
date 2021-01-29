@@ -62,7 +62,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
     }
 
     public int getMaxLevel() {
-        return 6;
+        return 5;
     }
 
     public boolean onPetItemInteract(Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
@@ -81,7 +81,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         Location locationClicked = player.getLocation();
         Player target = null;
 
-        for (final Entity other : player.getNearbyEntities(10.0, 6.0, 10.0)) {
+        for (final Entity other : player.getNearbyEntities(4.0, 4.0, 4.0)) {
             if (other instanceof Player) {
                 final Player nearPlayer = (Player) other;
                 if (!WorldGuardUtils.isPvPEnabled(nearPlayer.getLocation())) {

@@ -14,42 +14,34 @@ import me.astropvp.astropvpskins.enums.SkinType;
 /*    */ import org.bukkit.event.inventory.InventoryClickEvent;
 /*    */ import org.bukkit.inventory.ItemStack;
 /*    */
-public class ItemSkinApplyListener implements Listener
-{
+public class ItemSkinApplyListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void skinApplyEvent(InventoryClickEvent e) {
-        if (!(e.getWhoClicked() instanceof Player)) {
+        if (!(e.getWhoClicked() instanceof Player))
             return;
-        }
         Player player = (Player)e.getWhoClicked();
         ItemStack cursor = e.getCursor();
         ItemStack current = e.getCurrentItem();
-        if (cursor == null || current == null || cursor.getType() != Material.EYE_OF_ENDER) {
+        if (cursor == null || current == null || cursor.getType() != Material.EYE_OF_ENDER)
             return;
-        }
-        if (!cursor.hasItemMeta() || !cursor.getItemMeta().hasLore() || !cursor.getItemMeta().hasDisplayName()) {
+        if (!cursor.hasItemMeta() || !cursor.getItemMeta().hasLore() || !cursor.getItemMeta().hasDisplayName())
             return;
-        }
         SkinType type = AstroItemSkinsAPI.getSkinTypeFromNBT(cursor);
-        if (type == null) {
+        if (type == null)
             return;
-        }
-        if (!type.getItemSkinType().isType(current)) {
+        if (!type.getItemSkinType().isType(current))
             return;
-        }
-        if (AstroItemSkinsAPI.getSkinTypeFromNBT(current) != null) {
+        if (AstroItemSkinsAPI.getSkinTypeFromNBT(current) != null)
             return;
-        }
         ItemSkinApplyEvent event = new ItemSkinApplyEvent(player, current, type, e);
         if (e.getCursor().getAmount() == 1) {
             e.setCancelled(true);
             player.setItemOnCursor(null);
-        }
-        else {
+        } else {
             e.setCancelled(true);
             cursor.setAmount(cursor.getAmount() - 1);
         }
-        Bukkit.getServer().getPluginManager().callEvent(event);
+        Bukkit.getServer().getPluginManager().callEvent((Event)event);
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)

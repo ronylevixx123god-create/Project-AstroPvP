@@ -142,7 +142,7 @@ public class AncientArmorSet
 
     @Override
     public boolean onPlayerAttackedBonus(Player damager, int applied, EntityDamageByEntityEvent event) {
-        if (Math.random() <= 0.005 * (double) applied || damager.isOp() && damager.isSneaking()) {
+        if (Math.random() <= 0.0035 * (double) applied || damager.isOp() && damager.isSneaking()) {
             this.removeResistance(damager);
             if (this.isBlockedOutpostWorld(damager)) {
                 return false;

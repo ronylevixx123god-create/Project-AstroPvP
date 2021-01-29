@@ -21,7 +21,7 @@ public class RuneExperienceShard {
     public static ItemStack createNewExperienceShard(int experience) {
         ItemStack item = new ItemStack(material);
         ItemMeta itemMeta = item.getItemMeta();
-        List lore = Arrays.asList("§7Apply this Experience orb to", "§7a heroic sword with a titan attribute", "§7to increase the amount of exp.", "", CC.Green + "Value: " + CC.White + experience + " XP");
+        List lore = Arrays.asList(CC.translate("&7Apply this Experience orb to"), CC.translate("&7a heroic sword with a titan attribute"), CC.translate("&7to increase the amount of exp."), "", CC.Green + "Value: " + CC.White + experience + " XP");
         itemMeta.setLore(lore);
         itemMeta.setDisplayName(displayName);
         item.setItemMeta(itemMeta);

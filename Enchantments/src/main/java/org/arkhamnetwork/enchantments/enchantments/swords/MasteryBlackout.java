@@ -37,7 +37,7 @@ public class MasteryBlackout extends CustomEnchantment {
         if (Math.random() <= 0.005D) {
             int multi = AstroItemSkinsAPI.isInHand((Player) user, SkinType.CORRUPT_SWORD) ? 2 : 1;
             if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.VIRUS_BELT) && Math.random() < 0.50) {
-                pTarget.sendMessage("§2§l* BLOCKED " + ((Player) user).getName() + "'s BLACKOUT §7(First Aid Fannypack) §2§l*");
+                pTarget.sendMessage(CC.translate("&2&l* BLOCKED ") + ((Player) user).getName() + CC.translate("'s BLACKOUT &7(First Aid Fannypack) &2&l*"));
                 ((Player) user).sendMessage(CC.translate("&7&l* &7&l&mBLACKOUT&r &7[Blocked by " + pTarget.getName() + "'s First Aid Fannypack] &7&l*"));
                 return;
             }

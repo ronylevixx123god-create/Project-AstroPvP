@@ -7,7 +7,7 @@
 /*    */   extends ItemSkin
 /*    */ {
 /*    */   public CorruptSwordSkin() {
-/* 10 */     super(SkinType.CUPID_BOOTS);
+/* 10 */     super(SkinType.CORRUPT_SWORD);
 /*    */   }
 /*    */ }
 

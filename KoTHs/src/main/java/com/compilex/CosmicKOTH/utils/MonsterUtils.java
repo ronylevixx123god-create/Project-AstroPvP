@@ -54,10 +54,7 @@ public class MonsterUtils {
         if (rand <= 0.7) {
             et = EntityType.SKELETON;
         }
-        if (et == null) {
-            et = EntityType.PIG_ZOMBIE;
-        }
-        PigZombie le = null;
+        LivingEntity le = null;
         if (et == EntityType.PIG_ZOMBIE) {
             PigZombie b = (PigZombie)l.getWorld().spawnEntity(l, EntityType.PIG_ZOMBIE);
             b.setMaxHealth(b.getMaxHealth() * 3.0);
