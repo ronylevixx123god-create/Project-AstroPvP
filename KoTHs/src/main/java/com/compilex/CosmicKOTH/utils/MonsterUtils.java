@@ -51,7 +51,7 @@ public class MonsterUtils {
         if (rand <= 0.35) {
             et = EntityType.IRON_GOLEM;
         }
-        if (rand <= 0.7) {
+        if (rand <= 0.95) {
             et = EntityType.SKELETON;
         }
         LivingEntity le = null;
@@ -71,7 +71,7 @@ public class MonsterUtils {
             b2.setPlayerCreated(false);
             b2.setCustomName(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "Space " + ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD.toString() + "Droid");
             b2.setCustomNameVisible(true);
-            le = (PigZombie) b2;
+            le = b2;
         } else if (et == EntityType.SKELETON) {
             Skeleton b3 = (Skeleton)l.getWorld().spawnEntity(l, EntityType.SKELETON);
             b3.setSkeletonType(Skeleton.SkeletonType.WITHER);
@@ -80,14 +80,14 @@ public class MonsterUtils {
             b3.setHealth(b3.getMaxHealth());
             b3.setCustomName(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "Space " + ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD.toString() + "Undead");
             b3.setCustomNameVisible(true);
-            le = (PigZombie) b3;
+            le = b3;
         } else if (et == EntityType.GHAST) {
             Ghast b4 = (Ghast)l.getWorld().spawnEntity(l, EntityType.GHAST);
             b4.setMaxHealth(b4.getMaxHealth() * 7.0);
             b4.setHealth(b4.getMaxHealth());
             b4.setCustomName(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "Space " + ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD.toString() + "Phantom");
             b4.setCustomNameVisible(true);
-            le = (PigZombie) b4;
+            le =  b4;
         }
         if (CosmicKOTHPlugin.isVanillaGalaxy()) {
             le.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, Integer.MAX_VALUE, 0));
