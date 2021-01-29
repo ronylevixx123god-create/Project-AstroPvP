@@ -64,19 +64,25 @@ implements Listener {
         if (!(e.getEntity() instanceof Player) && e.getEntity().getKiller() != null) {
             Player killer = e.getEntity().getKiller();
             ItemStack hand = killer.getItemInHand();
-            if (hand == null || !ItemUtils.isTrackable(hand)) {
-                return;
+            try {
+
+
+                if (hand == null || !ItemUtils.isTrackable(hand)) {
+                    return;
+                }
+                Tracker tracker = Tracker.getTrackerType(hand);
+                if (tracker == null || !tracker.trackMobKills()) {
+                    return;
+                }
+                int kills = ItemUtils.getTrackedKills(hand);
+                if (kills == -1) {
+                    kills = 0;
+                }
+                killer.playSound(killer.getLocation(), Sound.ORB_PICKUP, 1.0f, 1.4f);
+                ItemUtils.setTrackedKills(hand, tracker, ++kills);
+            } catch (Exception ex) {
+
             }
-            Tracker tracker = Tracker.getTrackerType(hand);
-            if (tracker == null || !tracker.trackMobKills()) {
-                return;
-            }
-            int kills = ItemUtils.getTrackedKills(hand);
-            if (kills == -1) {
-                kills = 0;
-            }
-            killer.playSound(killer.getLocation(), Sound.ORB_PICKUP, 1.0f, 1.4f);
-            ItemUtils.setTrackedKills(hand, tracker, ++kills);
         }
     }
 
