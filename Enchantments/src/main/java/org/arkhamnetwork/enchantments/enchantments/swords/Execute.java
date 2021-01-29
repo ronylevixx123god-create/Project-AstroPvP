@@ -1,7 +1,9 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import com.rit.sucy.CustomEnchantment;
+import me.astropvp.damageindicators.utils.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -35,6 +37,16 @@ public class Execute extends CustomEnchantment {
             e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * mod);
             final Location l = target.getLocation();
             WorldUtil.sendWorldEffect(l.getBlock(), Material.REDSTONE_WIRE.getId(), 2001);
+        }
+
+        try {
+            if (DamageIndicatorUtils.isPlayerIndicating((Player) player)) {
+                DamageIndicatorUtils.createDamageIndicator((Player) player,
+                        target.getLocation().add(1.0D, 2.0D, 0.0D),
+                        new String[] { CC.translate("&b&l* EXECUTE *") });
+            }
+        } catch (Exception ex) {
+
         }
     }
 }

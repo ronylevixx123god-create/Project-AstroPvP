@@ -4,6 +4,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.rit.sucy.CustomEnchantment;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.damageindicators.utils.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
@@ -48,6 +49,16 @@ public class MasteryBlackout extends CustomEnchantment {
             pTarget.setMetadata("blackout", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), "banana"));
             Enchantments.getInstance().getServer().getScheduler().runTaskLaterAsynchronously((Plugin) Enchantments.getInstance(), () -> target.removeMetadata("blackout", (Plugin) Enchantments.getInstance()), ((4 + enchantLevel * multi) * 20));
             //this.applyCooldown(user, 6);
+
+            try {
+                if (DamageIndicatorUtils.isPlayerIndicating((Player) user)) {
+                    DamageIndicatorUtils.createDamageIndicator((Player) user,
+                            target.getLocation().add(1.0D, 2.0D, 0.0D),
+                            new String[] { CC.translate("&5&L* BLACKOUT &7[" + (2 + enchantLevel) * multi + "&7s] &5&l *") });
+                }
+            } catch (Exception ex) {
+
+            }
 
             return;
         }

@@ -59,6 +59,7 @@ public class HeroicDeathbringer extends CustomEnchantment {
                 chance *= 0.005D;
                 if (random < chance) {
                     e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.2D);
+
                 }
 
             }

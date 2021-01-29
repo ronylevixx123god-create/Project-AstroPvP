@@ -132,11 +132,6 @@ final class SmarterEssentialsListener
         if (cmd.contains(" ")) {
             cmd = cmd.split(" ")[0];
         }
-        if (SmarterEssentials.ess3.getUser(e.getPlayer()).isMuted() && this.blockedMutedCommands.contains(cmd)) {
-            e.setCancelled(true);
-            e.setMessage("/null");
-            return;
-        }
         if (cmd.equals("list") || cmd.equals("elist") || cmd.equals("who") || cmd.equals("ewho") || cmd.equals("online") || cmd.equals("eonline") || cmd.equals("playerlist") || cmd.equals("eplayerlist")) {
             e.setCancelled(true);
             e.setMessage("/null");

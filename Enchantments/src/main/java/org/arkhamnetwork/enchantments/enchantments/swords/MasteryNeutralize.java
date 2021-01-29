@@ -4,8 +4,10 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.rit.sucy.CustomEnchantment;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.damageindicators.utils.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
+import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -41,7 +43,7 @@ public class MasteryNeutralize extends CustomEnchantment {
         }
 
 
-        if ((level) * multi >= ThreadLocalRandom.current().nextInt(100)) {
+        if ((level) * multi >= ThreadLocalRandom.current().nextInt(250)) {
 
             if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.LOST_AMULET) && Math.random() < 0.5) {
                 pTarget.sendMessage(CC.translate("&5&l* BLOCKED ") + ((Player) user).getName() + CC.translate("'s NEUTRALIZE &7(Lost Amulet) &5&l*"));
@@ -56,6 +58,16 @@ public class MasteryNeutralize extends CustomEnchantment {
             pTarget.playSound(pTarget.getLocation(), Sound.ENDERMAN_SCREAM, 1.0f, 0.3f);
 
             pTarget.setMetadata("neutralized", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), "banana"));
+
+            try {
+                if (DamageIndicatorUtils.isPlayerIndicating((Player) user)) {
+                    DamageIndicatorUtils.createDamageIndicator((Player) user,
+                            target.getLocation().add(1.0D, 2.0D, 0.0D),
+                            new String[] { String.valueOf(CC.DarkRedB) + "* NEUTRALIZED *", String.valueOf(CC.DarkRed) + level + "s" });
+                }
+            } catch (Exception ex) {
+
+            }
         }
     }
 }
