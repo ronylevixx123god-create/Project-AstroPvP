@@ -201,9 +201,10 @@ implements Listener {
             if (Math.random() <= 0.05) {
                 loot.add(CosmicArmorSetsAPI.createHeroicWeapon(((Random)random).nextBoolean() ? HeroicWeaponType.SWORD : HeroicWeaponType.AXE));
             }
-            if (Math.random() <= 0.05) {
-                loot.add(CosmicDisguiseAPI.createRedeemableDisguise("CHICKEN"));
-            }
+            // todo: fix disguise
+//            if (Math.random() <= 0.05) {
+//                loot.add(CosmicDisguiseAPI.createRedeemableDisguise("CHICKEN"));
+//            }
             if (ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin().isRunning() && Math.random() <= 0.25) {
                 loot.add(((EquipmentLootboxes)ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin()).createHeroicGKitGenerator(true));
             }

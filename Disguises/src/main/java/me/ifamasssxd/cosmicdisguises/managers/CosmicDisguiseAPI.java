@@ -1,16 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
- *  me.libraryaddict.disguise.disguisetypes.DisguiseType
- *  org.apache.commons.lang.StringUtils
- *  org.arkhamnetwork.Arkkit.patches.ItemID
- *  org.arkhamnetwork.Arkkit.plugins.ArkPlugins
- *  org.bukkit.Material
- *  org.bukkit.inventory.ItemStack
- */
 package me.ifamasssxd.cosmicdisguises.managers;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
