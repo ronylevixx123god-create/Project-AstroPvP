@@ -13,6 +13,6 @@ public class MobSpawnerFix implements Listener {
         if (e.getSpawnReason() != CreatureSpawnEvent.SpawnReason.SPAWNER) {
             return;
         }
-            e.getEntity().setMetadata("monsterAmount", new FixedMetadataValue(Bukkit.getPluginManager().getPlugin("Arkkit"), e.getEntity().hasMetadata("monsterAmount") ? (e.getEntity().getMetadata("monsterAmount").get(0).asInt() + 5) : 5));
+            e.getEntity().setMetadata("monsterAmount", new FixedMetadataValue(Bukkit.getPluginManager().getPlugin("Arkkit"), e.getEntity().hasMetadata("monsterAmount") ? (e.getEntity().getMetadata("monsterAmount").get(0).asInt() + 8) : 8));
     }
 }
