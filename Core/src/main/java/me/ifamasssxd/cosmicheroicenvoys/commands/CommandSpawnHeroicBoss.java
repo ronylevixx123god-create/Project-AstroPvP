@@ -19,8 +19,8 @@ implements CommandExecutor {
         if (!sender.isOp()) {
             return true;
         }
-        AstroCore.getInstance().getEnvoyManager().spawnBoss();
-        AstroCore.getInstance().getEnvoyManager().startEnvoyTimer();
+        //AstroCore.getInstance().getEnvoyManager().spawnBoss();
+        //AstroCore.getInstance().getEnvoyManager().startEnvoyTimer();
         return false;
     }
 }

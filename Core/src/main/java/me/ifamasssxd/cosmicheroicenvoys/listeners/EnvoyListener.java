@@ -21,7 +21,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 
 public class EnvoyListener
 implements Listener {
-    @EventHandler
+    /*@EventHandler
     public void onEntityDeath(EntityDeathEvent event) {
         EnvoyManager manager = AstroCore.getInstance().getEnvoyManager();
         if (manager.getBossUUID() != null && manager.getBossUUID().equals(event.getEntity().getUniqueId())) {
@@ -30,6 +30,6 @@ implements Listener {
                 event.getEntity().getWorld().dropItem(event.getEntity().getLocation(), CosmicConquestAPI.createFactionToken((int)(ThreadLocalRandom.current().nextInt(5) + 2)));
             }
         }
-    }
+    }*/
 }
 

@@ -6,6 +6,8 @@ import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import lombok.SneakyThrows;
 import me.astropvp.AstroBackpacksAPI;
+import me.astropvp.damageindicators.DamageIndicators;
+import me.astropvp.damageindicators.utils.DamageIndicatorUtils;
 import me.astropvp.objects.BackpackType;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.events.CustomEnchantProcOnEntityEvent;
@@ -22,6 +24,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
+
+import java.util.Arrays;
 
 public class Silence extends CustomEnchantment {
     public Silence() {
@@ -65,6 +69,15 @@ public class Silence extends CustomEnchantment {
             de.inventivegames.particle.ParticleEffect.ENCHANTMENT_TABLE.sendToPlayer(pTarget,target.getLocation(),0,0,0,0.4f, 80);
             de.inventivegames.particle.ParticleEffect.PORTAL.sendToPlayer(pTarget,target.getLocation(),0,0,0,0.4f, 60);
 
+            try {
+                if (DamageIndicatorUtils.isPlayerIndicating((Player) user)) {
+                    DamageIndicatorUtils.createDamageIndicator((Player) user,
+                            target.getLocation().add(1.0D, 2.0D, 0.0D),
+                            new String[]{ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "* SILENCED " + ChatColor.GRAY + "[" + durationTicks / 20L + "s] " + ChatColor.DARK_PURPLE + ChatColor.BOLD + "*"});
+                }
+            } catch (Exception e) {
+
+            }
 
             Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
                 @SneakyThrows

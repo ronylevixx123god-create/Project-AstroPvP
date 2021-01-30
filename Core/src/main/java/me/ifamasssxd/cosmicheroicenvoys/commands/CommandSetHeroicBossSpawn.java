@@ -39,7 +39,7 @@ implements CommandExecutor {
         }
         AstroCore.getInstance().getConfig().set("bossSpawn", (Object)loc);
         AstroCore.getInstance().saveConfig();
-        AstroCore.getInstance().getEnvoyManager().setBossLocation(LocationUtils.getLocation(loc));
+        //AstroCore.getInstance().getEnvoyManager().setBossLocation(LocationUtils.getLocation(loc));
         sender.sendMessage((Object)ChatColor.RED + "Set boss spawn location at " + loc + ".");
         return false;
     }

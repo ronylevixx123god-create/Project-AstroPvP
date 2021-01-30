@@ -16,14 +16,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class BossSpawnTask implements Runnable {
+public class BossSpawnTask {
     Random random;
 
     public BossSpawnTask() {
         this.random = new Random();
     }
 
-    @Override
+    /*@Override
     public void run() {
         final boolean enabled = CosmicBosses.getInstance().isNaturalSpawnEnabled();
         if (!enabled) {
@@ -76,5 +76,5 @@ public class BossSpawnTask implements Runnable {
             }
         }
         return null;
-    }
+    }*/
 }

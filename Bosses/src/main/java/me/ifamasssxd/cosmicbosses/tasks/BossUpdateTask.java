@@ -8,8 +8,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Event;
 
-public class BossUpdateTask implements Runnable {
-    @SneakyThrows
+public class BossUpdateTask  {
+    /*@SneakyThrows
     @Override
     public void run() {
         for (final Boss boss : Boss.bosses.values()) {
@@ -30,5 +30,5 @@ public class BossUpdateTask implements Runnable {
                 System.out.println("Removing invalid boss!");
             }
         }
-    }
+    }*/
 }

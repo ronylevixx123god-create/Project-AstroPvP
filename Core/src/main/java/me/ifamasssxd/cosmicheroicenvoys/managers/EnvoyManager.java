@@ -43,7 +43,7 @@ import java.util.Random;
 import java.util.UUID;
 
 public class EnvoyManager {
-    private Location bossLocation;
+    /*private Location bossLocation;
     private int spawnTimeInSeconds = 0;
     private int randomDelay = 0;
     private int spawnTimer = 0;
@@ -199,6 +199,6 @@ public class EnvoyManager {
 
     public long getLastBossSpawn() {
         return this.lastBossSpawn;
-    }
+    }*/
 }
 
