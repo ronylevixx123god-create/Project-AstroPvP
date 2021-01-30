@@ -176,8 +176,8 @@ public class AstroCore extends JavaPlugin {
         this.dataManager.cacheAllEquippedTitles();
         hcf = new File("plugins/HCFactions.jar").exists();
 
-        this.envoyManager = new EnvoyManager();
-        this.envoyManager.startTimer();
+        //this.envoyManager = new EnvoyManager();
+        //this.envoyManager.startTimer();
         this.getCommand("spawnheroicboss").setExecutor(new CommandSpawnHeroicBoss());
         this.getCommand("setheroicbossspawn").setExecutor(new CommandSetHeroicBossSpawn());
 
@@ -278,13 +278,13 @@ public class AstroCore extends JavaPlugin {
         this.dataManager.saveAllEquippedTitlesToSQL();
         this.filterManager.saveFilters();
 
-        Boss bos;
+        /*Boss bos;
         if (this.envoyManager.getBossUUID() != null && this.envoyManager.getBossLocation() != null && (bos = Boss.bosses.get(this.envoyManager.getBossUUID())) != null) {
             bos.onDeath(null);
             bos.getEntity().remove();
             Boss.bosses.remove(bos.getEntity().getUniqueId());
             System.out.println("Removing boss!");
-        }
+        }*/
 
         for (CoinFlipMatch active : this.coinFlipManager.getCoinFlipMatches()) {
             if (active.getMatchState() == CoinFlipMatch.MatchState.WAITING) {
