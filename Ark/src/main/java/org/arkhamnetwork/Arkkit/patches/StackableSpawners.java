@@ -23,7 +23,7 @@ public class StackableSpawners
     @Override
     public void enable() throws IOException {
         super.enable();
-        maxSpawnersPerBlock = (short) Arkkit.get().getConfig().getInt("settings.stackableSpawners.maxSpawnersPerBlock", 10);
+        maxSpawnersPerBlock = (short) Arkkit.get().getConfig().getInt("settings.stackableSpawners.maxSpawnersPerBlock", 32);
         this.registerListener(new StackableSpawnerListener());
     }
 

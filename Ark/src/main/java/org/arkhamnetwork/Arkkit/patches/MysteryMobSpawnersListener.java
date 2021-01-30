@@ -85,7 +85,7 @@ final class MysteryMobSpawnersListener
     }
 
     private static ItemStack getMobSpawner(EntityType entityType) {
-        ItemStack item = SilkUtil.hookIntoSilkSpanwers().newSpawnerItem(entityType.getTypeId(), CC.translate("&a&l") + entityType.name() + " &f Spawner", 1, false);
+        ItemStack item = SilkUtil.hookIntoSilkSpanwers().newSpawnerItem(String.valueOf(entityType.getTypeId()), CC.translate("&a&l") + entityType.name() + " &f Spawner", 1, false);
         return item;
     }
 

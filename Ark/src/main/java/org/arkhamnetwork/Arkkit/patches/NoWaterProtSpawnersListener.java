@@ -145,7 +145,7 @@ final class NoWaterProtSpawnersListener
                                 cs.setSpawnerCount((short) 1);
                                 spawnCount = 1;
                             }
-                            for (; spawnCount-- > 0; b.getWorld().dropItemNaturally(b.getLocation(), ItemUtils.getMobSpawner(EntityType.fromId(NoWaterProtSpawners.su.getSpawnerEntityID(b)))));
+                            for (; spawnCount-- > 0; b.getWorld().dropItemNaturally(b.getLocation(), ItemUtils.getMobSpawner(EntityType.fromId(Integer.parseInt(NoWaterProtSpawners.su.getSpawnerEntityID(b))))));
                         }
                         if (ArkPlugins.SPAWNER_FEE.getArkPlugin().isRunning()) {
                             SpawnerFee.playerSpawners.remove(BlockValueListener.convertBlockToString(b));

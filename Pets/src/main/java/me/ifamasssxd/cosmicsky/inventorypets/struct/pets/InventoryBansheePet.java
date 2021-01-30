@@ -5,6 +5,11 @@ import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
+import com.massivecraft.factions.Faction;
+import com.massivecraft.factions.iface.RelationParticipator;
+import com.massivecraft.factions.struct.Relation;
+import com.rit.sucy.CustomEnchantment;
+import com.rit.sucy.EnchantmentAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
@@ -14,11 +19,12 @@ import me.ifamasssxd.cosmicsky.inventorypets.libs.Vector3D;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
+import org.arkhamnetwork.Arkkit.patches.CombatLog;
 import org.arkhamnetwork.enchantments.Enchantments;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.arkhamnetwork.enchantments.enchantments.armor.Gears;
+import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
+import org.arkhamnetwork.enchantments.libs.SpecificCustomEnchantment;
+import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -31,10 +37,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class InventoryBansheePet extends InventoryPet {
@@ -54,17 +57,17 @@ public class InventoryBansheePet extends InventoryPet {
 
     public int getCooldown(int level) {
         if (level == 1)
-            return 900;
+            return 450;
         if (level == 2)
-            return 840;
+            return 420;
         if (level == 3)
-            return 780;
+            return 390;
         if (level == 4)
-            return 720;
+            return 360;
         if (level == 5)
-            return 660;
+            return 330;
         if (level == 6)
-            return 600;
+            return 300;
         if (level == 7)
             return 540;
         if (level == 8)
@@ -82,11 +85,10 @@ public class InventoryBansheePet extends InventoryPet {
         return 5;
     }
 
-    public boolean onPetItemInteract(final Player player, ItemStack item, final InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
+    public boolean onPetItemInteract(final Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
         long lastUse = petItem.getLastUsed();
         long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown(petItem.getLevel()));
         long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
-
         if (petItem.getLevel() > 6) {
             petItem.setLevel(6);
             player.setItemInHand(petItem.build());
@@ -97,145 +99,66 @@ public class InventoryBansheePet extends InventoryPet {
         if (!WorldGuardUtils.isPvPEnabled(player.getLocation()))
             throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "Not allowed in this region!");
         petItem.setLastUsed(System.currentTimeMillis());
-        int xpGain = petItem.getLevel() * 5;
-        petItem.addExperience(player, xpGain);
-        player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
-        player.sendMessage(String.valueOf(CC.GreenB) + "+ " + CC.Green + NumberUtils.formatMoney(xpGain) + " Pet EXP " + CC.GreenB + "[" +
-                CC.Gray + petItem.getExp() + "/" +
-                petItem.getPetType().getInternalClass().getExpForLevel(petItem.getLevel() + 1) + CC.GreenB + "]");
-        int sum = petItem.getLevel() / 2 + 3;
-//        if (CosmicArmorSetsAPI.getArmorSet(player) == ArmorSet.ULTRA) {
-//            sum += sum/2;
-//        }
-        if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.REINDEER_ANTLERS) && Math.random() < 0.05D) {
-            sum *= 2;
-            player.sendMessage(String.valueOf(CC.RedB) + "* REINDEER ITEM SKIN " + CC.Gray + "(" + CC.White + "2x Pet Length" + CC.Gray + ")");
-        }
-        final List<Player> players = Lists.newArrayList();
-        for (Entity entity : player.getNearbyEntities(sum, sum, sum)) {
-            if (!(entity instanceof Player))
-                continue;
-            Player p = (Player)entity;
-            if (GeneralUtil.isAtleastTruce(p, player))
-                continue;
-            if (!WorldGuardUtils.isPvPEnabled(p.getLocation()))
-                continue;
-            boolean remove = false;
-            for (int i = 0; i < p.getInventory().getSize(); i++) {
-                ItemStack it = p.getInventory().getItem(i);
-                if (it != null && it.getType() != Material.AIR) {
-                    NBTWrapper wrapper = new NBTWrapper(it);
-                    NBTTagCompoundBuilder tag = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
-
+        final List<Player> nearbyEnemies = Lists.newArrayList();
+        Faction faction = FactionUtils.getFaction(player);
+        for (Entity other : player.getNearbyEntities(8.0D, 8.0D, 8.0D)) {
+            if (other instanceof Player) {
+                Player nearPlayer = (Player)other;
+                Faction nearFac = FactionUtils.getFaction(nearPlayer);
+                if (CosmicArmorSetsAPI.getArmorSet(nearPlayer) == ArmorSet.KOTH)
+                    continue;
+                if (nearPlayer.getGameMode() == GameMode.CREATIVE)
+                    continue;
+                if (nearFac != null && nearFac.getRelationTo((RelationParticipator)faction) != Relation.ENEMY && nearFac.getRelationTo((RelationParticipator)faction) != Relation.NEUTRAL)
+                    continue;
+                if (AstroItemSkinsAPI.hasSkinEquipped(nearPlayer, SkinType.SPRING_2020_AXE)) {
+                    nearPlayer.sendMessage("SPIKED BAT Pet");
+                    continue;
                 }
+                nearbyEnemies.add(nearPlayer);
             }
-            if (remove)
-                continue;
-            p.sendMessage(CC.translate("&c( " + sum + "s Silence, Phoenix - BLOCKED, Holy White Scrolls - BLOCKED )"));
-            p.playSound(p.getLocation(), Sound.GHAST_MOAN, 2.0F, 2.0F);
-            p.setMetadata("noDefenseProcs", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), Boolean.valueOf(true)));
-            players.add(p);
         }
-        ParticleEffect.playEffect(ParticleEffect.LARGE_EXPLODE, player.getLocation().add(0.0D, 1.0D, 0.0D), 1.0F, 3);
+        ParticleEffect.sendToLocation(ParticleEffect.LARGE_EXPLODE, player.getEyeLocation(), (float)Math.random(), (float)Math.random(), (float)Math.random(), 0.5F, 3);
+        int duration = 8;
+        nearbyEnemies.forEach(enemy -> {
+            enemy.playSound(enemy.getLocation(), Sound.WITHER_HURT, 1.0f, 0.25f);
+            enemy.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "* SILENCED " + ChatColor.GRAY + " 7s] " + ChatColor.DARK_PURPLE + ChatColor.BOLD + "*");
+            enemy.setMetadata("noDefenseProcs", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
+            enemy.setMetadata("banshee_scrolls", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
+            enemy.sendMessage(CC.translate(String.format("&4&l*** " + player.getName() + "&4&l's BANSHEE PET [&c%ds&4&l] - RKO! **", new Object[] { Integer.valueOf(duration) })));
+            enemy.sendMessage(CC.translate(String.format("&c( %ds Silence, Phoenix - BLOCKED, Holy White Scrolls - BLOCKED )", new Object[] { Integer.valueOf(duration) })));
+        });
+        CombatLog.flagCombat(player);
+        player.setMetadata("immune_freeze", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
+        player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 1.0f, 0.25f);
+        player.setMetadata("banshee_active", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
+        EnchantmentAPI.getEnchantment("Gears").applyEquipEffect(player, 4);        player.sendMessage("");
+        player.sendMessage(CC.translate("&4&lPET: ** BANSHEE [&68s&4&l] - RKO! **"));
         player.sendMessage("");
-        player.sendMessage(CC.translate("&4&l** BANSHEE [&6" + sum + "s&4&l] - RKO! **"));
-        player.sendMessage("");
-        player.removePotionEffect(PotionEffectType.SPEED);
-        player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, (petItem.getLevel() / 2 + 3) * 20, 4));
-        player.setMetadata("banshee_scrolls", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSkyInventoryPets.get(), null));
-        Bukkit.getScheduler().runTaskLater((Plugin)CosmicSkyInventoryPets.get(), new Runnable() {
+        (new BukkitRunnable() {
             public void run() {
-                if (!player.isOnline())
-                    return;
-                if (player.hasMetadata("banshee_scrolls"))
-                    player.removeMetadata("banshee_scrolls", (Plugin)CosmicSkyInventoryPets.get());
-                for (Player player : players) {
-                    if (player == null || !player.isOnline())
-                        continue;
-                    if (player.hasMetadata("noDefenseProcs"))
-                        player.removeMetadata("noDefenseProcs", (Plugin) Enchantments.getInstance());
-                }
                 player.sendMessage(CC.translate("&4&lPET:  BANSHEE - RKO has worn off! "));
+                player.removeMetadata("immune_freeze", (Plugin)CosmicSkyInventoryPets.get());
+                player.removeMetadata("banshee_active", (Plugin)CosmicSkyInventoryPets.get());
+                EnchantmentAPI.getEnchantment("Gears").applyUnequipEffect(player, 4);
+                nearbyEnemies.forEach(x -> {
+                    x.removeMetadata("noDefenseProcs", (Plugin)CosmicSkyInventoryPets.get());
+                    x.removeMetadata("banshee_scrolls", (Plugin)CosmicSkyInventoryPets.get());
+                    x.sendMessage(CC.translate("&e&l(!) &4&l[RKO] &efrom " + player.getName() + "'s Banshee Pet &e&nEXPIRED!"));
+                });
             }
-        },(sum * 20));
-        Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)CosmicSkyInventoryPets.get(), (Runnable)new BukkitRunnable() {
-            int count = 0;
-
-            public void run() {
-                if (!player.isOnline())
-                    return;
-                if ((petItem.getLevel() / 2 + 3) * 2 <= this.count)
-                    cancel();
-                Iterator<PotionEffect> effects = player.getActivePotionEffects().iterator();
-                while (effects.hasNext()) {
-                    PotionEffect effect = effects.next();
-                    if (effect.getType() == PotionEffectType.SLOW)
-                        player.removePotionEffect(effect.getType());
-                }
-                this.count++;
-            }
-        },  10L);
+        }).runTaskLater((Plugin)CosmicSkyInventoryPets.get(), (20 * duration));
+        int xp = 40 + (new Random()).nextInt(40 + petItem.getLevel());
+        player.playSound(player.getLocation(), Sound.LAVA_POP, 1.1F, 1.0F);
+            petItem.addExperience(player, xp);
+        player.sendMessage(String.valueOf(CC.GreenB) + "+ " + CC.Green + NumberUtils.formatMoney(xp) + " Pet EXP " + CC.GreenB + "[" +
+                CC.Gray + petItem.getExp() + "/" +
+                petItem.getPetType().getInternalClass().getExpForLevel(petItem.getLevel() + 1) + CC.GreenB + "]");        player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 0.2F, 2.0F);
+        player.playSound(player.getLocation(), Sound.GHAST_SCREAM2, 2.0F, 2.0F);
         return true;
     }
 
-    public ArrayList<Player> getPlayersInRadius(Player player, int radius) {
-        ArrayList<Player> list = new ArrayList<>();
-        for (Entity entity : player.getNearbyEntities(radius, radius, radius)) {
-            if (!(entity instanceof Player))
-                continue;
-            Player p = (Player)entity;
-            list.add(p);
-        }
-        return list;
-    }
-
-    public boolean onTickInHotBar(Player player, int inventorySlot, InventoryPetItem item) {
+    public boolean onTickInHotBar(Player var1, int var2, InventoryPetItem var3) {
         return false;
-    }
-
-    public void addPotionEffectReturn(final Player player, final PotionEffect returned, final PotionEffect add) {
-        player.removePotionEffect(returned.getType());
-        player.addPotionEffect(add);
-        Bukkit.getScheduler().runTaskLater((Plugin)CosmicSkyInventoryPets.get(), new Runnable() {
-            public void run() {
-                if (player.hasPotionEffect(add.getType()))
-                    player.removePotionEffect(add.getType());
-                player.addPotionEffect(returned);
-            }
-        },  add.getDuration());
-    }
-
-    public LivingEntity getTargetEntity(Player player, int maxRangeInBlocks) {
-        Location observerPos = player.getEyeLocation();
-        Vector3D observerDir = new Vector3D(observerPos.getDirection());
-        Vector3D observerStart = new Vector3D(observerPos);
-        Vector3D observerEnd = observerStart.add(observerDir.multiply(maxRangeInBlocks));
-        LivingEntity target = null;
-        for (Entity possibleTarget : player.getNearbyEntities(maxRangeInBlocks, maxRangeInBlocks,
-                maxRangeInBlocks)) {
-            if (!(possibleTarget instanceof LivingEntity))
-                continue;
-            Vector3D targetPos = new Vector3D(possibleTarget.getLocation());
-            Vector3D minimum = targetPos.add(-0.5D, 0.0D, -0.5D);
-            Vector3D maximum = targetPos.add(0.5D, 1.67D, 0.5D);
-            if (!hasIntersection(observerStart, observerEnd, minimum, maximum) || (
-                    target != null && target.getLocation().distanceSquared(observerPos) <= possibleTarget
-                            .getLocation().distanceSquared(observerPos)))
-                continue;
-            target = (LivingEntity)possibleTarget;
-        }
-        return target;
-    }
-
-    private boolean hasIntersection(Vector3D p1, Vector3D p2, Vector3D min, Vector3D max) {
-        double epsilon = 9.999999747378752E-5D;
-        Vector3D d = p2.subtract(p1).multiply(0.5D);
-        Vector3D e = max.subtract(min).multiply(0.5D);
-        Vector3D c = p1.add(d).subtract(min.add(max).multiply(0.5D));
-        Vector3D ad = d.abs();
-        return (Math.abs(c.x) <= e.x + ad.x && Math.abs(c.y) <= e.y + ad.y && Math.abs(c.z) <= e.z + ad.z &&
-                Math.abs(d.y * c.z - d.z * c.y) <= e.y * ad.z + e.z * ad.y + 9.999999747378752E-5D &&
-                Math.abs(d.z * c.x - d.x * c.z) <= e.z * ad.x + e.x * ad.z + 9.999999747378752E-5D &&
-                Math.abs(d.x * c.y - d.y * c.x) <= e.x * ad.y + e.y * ad.x + 9.999999747378752E-5D);
     }
 }
