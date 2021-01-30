@@ -43,16 +43,6 @@ public class RareCandyItem extends CosmicItem implements InventoryInteractable {
             throw new PrefixedException("You cannot use Rare Candy on a max level pet!");
          }
 
-         long lastUse = petItem.getLastUsed();
-         long delay = TimeUnit.SECONDS.toMillis((long)petItem.getPetType().getInternalClass().getCooldown(petItem.getLevel()));
-         long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
-         if (lastUse > 0L && timeTillCanUse > 0L) {
-            throw new PrefixedException("You cannot use Rare Candy on a pet on cooldown!");
-         }
-
-         if (System.currentTimeMillis() - petItem.getLastRareCandyUsed() < TimeUnit.DAYS.toMillis(1L)) {
-            throw new PrefixedException("You cannot use another Rare Candy on this pet for: " + CC.Underline + TimeUtils.formatFutureTime(petItem.getLastRareCandyUsed() + TimeUnit.DAYS.toMillis(1L)));
-         }
 
          if (nbtWrapper.isBlacklistedIID()) {
             throw new ItemDupedException("Rare Candy already used!");
