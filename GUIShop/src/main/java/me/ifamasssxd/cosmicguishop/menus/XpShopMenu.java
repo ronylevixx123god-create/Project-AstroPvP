@@ -120,7 +120,7 @@ public class XpShopMenu implements Menu{
         lore.add(CC.Gray + "This shop contains various items that will help");
         lore.add(CC.Gray + "you set up on AstroPvP");
         lore.add("");
-        lore.add(CC.Green + "Your XP: " + CC.White + (int) player.getExp());
+        lore.add(CC.Green + "Your XP: " + CC.White + player.getTotalExperience());
         meta.setLore(lore);
         item.setItemMeta(meta);
         return item;

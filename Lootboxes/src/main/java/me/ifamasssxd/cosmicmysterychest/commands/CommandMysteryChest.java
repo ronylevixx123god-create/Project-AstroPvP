@@ -137,7 +137,7 @@ public class CommandMysteryChest
                         if (GrindingMessagesUtil.isPlayerIndicating(pl)) {
                             pl.sendMessage(CC.GreenB + "(!) " + CC.Green + "Lootbox Received - " + CC.White + ItemUtils.getDisplayName((ItemStack) item));
                         }
-                        sender.sendMessage(CC.Red + pl.getName() + " has received a mystery chest " + chest2.getInternalName() + " -> " + ItemUtils.getDisplayName((ItemStack) item));
+                        //sender.sendMessage(CC.Red + pl.getName() + " has received a mystery chest " + chest2.getInternalName() + " -> " + ItemUtils.getDisplayName((ItemStack) item));
                     }
                     return true;
                 }

@@ -172,14 +172,14 @@ public class MysteryChestGUI
                         ItemStack clone = ItemID.assignItemID(null, (ItemStack) item3.clone());
                         clone.setAmount(1);
                         PlayerUtil.giveOrDropProtectedItem((Player) this.player, (ItemStack) clone, (int) -1);
-                        Bukkit.getLogger().info("[CosmicMysteryChest] Giving: " + ItemUtils.getDisplayName((ItemStack) clone) + " to " + this.player.getName() + ", chance: " + loot.getChance() + " / " + this.chest.getLootTable().getTotalWeight() + ", total chance: " + loot.getChance() / this.chest.getLootTable().getTotalWeight() * 100.0 + "!");
+                        //Bukkit.getLogger().info("[CosmicMysteryChest] Giving: " + ItemUtils.getDisplayName((ItemStack) clone) + " to " + this.player.getName() + ", chance: " + loot.getChance() + " / " + this.chest.getLootTable().getTotalWeight() + ", total chance: " + loot.getChance() / this.chest.getLootTable().getTotalWeight() * 100.0 + "!");
                     }
                     continue;
                 }
                 item3 = ItemID.assignItemID(null, (ItemStack) item3);
             }
             PlayerUtil.giveOrDropProtectedItem((Player) this.player, (ItemStack) item3, (int) -1);
-            Bukkit.getLogger().info("[CosmicMysteryChest] Giving: " + ItemUtils.getDisplayName((ItemStack) item3) + " to " + this.player.getName() + ", chance: " + loot.getChance() + " / " + this.chest.getLootTable().getTotalWeight() + ", total chance: " + loot.getChance() / this.chest.getLootTable().getTotalWeight() * 100.0 + "!");
+            //Bukkit.getLogger().info("[CosmicMysteryChest] Giving: " + ItemUtils.getDisplayName((ItemStack) item3) + " to " + this.player.getName() + ", chance: " + loot.getChance() + " / " + this.chest.getLootTable().getTotalWeight() + ", total chance: " + loot.getChance() / this.chest.getLootTable().getTotalWeight() * 100.0 + "!");
         }
         this.player.updateInventory();
         Bukkit.getPluginManager().callEvent((Event) new CustomCosmicPlayerEvent(this.player, "MYSTERY_CHEST_OPEN", new Object[]{Lists.newArrayList(this.lastPrizesShown), this.chest.getInternalName()}));

@@ -23,14 +23,5 @@ implements Listener {
         CosmicSpongesAPI.cacheSpongeChunk(e.getChunk());
     }
 
-    @EventHandler
-    public void onChunkUnload(ChunkUnloadEvent e) {
-        String cs = e.getChunk().getX() + "," + e.getChunk().getZ();
-        SpongeChunk sc = CosmicSpongesAPI.getCachedSpongeChunks().get(cs);
-        if (sc.getSponges().size() > 0 || sc.isForceSave()) {
-            sc.save();
-        }
-        CosmicSpongesAPI.getCachedSpongeChunks().remove(cs);
-    }
 }
 

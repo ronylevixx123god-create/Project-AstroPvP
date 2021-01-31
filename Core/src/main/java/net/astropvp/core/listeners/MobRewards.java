@@ -17,27 +17,27 @@ public class MobRewards implements Listener {
             String player = e.getEntity().getKiller().getName();
             double num = Math.random();
             try {
-                if (num >= 0 && num <= 0.040) {
+                if (num >= 0 && num <= 0.020) {
                     if (GrindingMessagesUtil.isPlayerIndicating(e.getEntity().getKiller())) {
                         e.getEntity().getKiller().sendMessage(CC.translate("&b&lGrinding &f&l➥ &a+ Grinding Tier III Lootbox"));
                         e.getEntity().getKiller().playSound(e.getEntity().getKiller().getLocation(), Sound.VILLAGER_YES, 5, 5);
                     }
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mc give " + player + " Grinding3 1");
-                    throw new IllegalArgumentException("");
-                } else if (num >= 0 && num <= 0.35) {
+                    return;
+                } else if (num >= 0 && num <= 0.15) {
                     if (GrindingMessagesUtil.isPlayerIndicating(e.getEntity().getKiller())) {
                         e.getEntity().getKiller().sendMessage(CC.translate("&b&lGrinding &f&l➥ &a+ Grinding Tier II Lootbox"));
                         e.getEntity().getKiller().playSound(e.getEntity().getKiller().getLocation(), Sound.VILLAGER_YES, 5, 5);
                     }
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mc give " + player + " Grinding2 1");
-                    throw new IllegalArgumentException("");
-                } else if (num >= 0 && num <= 0.60) {
+                    return;
+                } else if (num >= 0 && num <= 0.25) {
                     if (GrindingMessagesUtil.isPlayerIndicating(e.getEntity().getKiller())) {
                         e.getEntity().getKiller().sendMessage(CC.translate("&b&lGrinding &f&l➥ &a+ Grinding Tier I Lootbox"));
                         e.getEntity().getKiller().playSound(e.getEntity().getKiller().getLocation(), Sound.VILLAGER_YES, 5, 5);
                     }
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mc give " + player + " Grinding1 1");
-                    throw new IllegalArgumentException("");
+                    return;
                 }
 
             } catch (IllegalArgumentException ex) {
