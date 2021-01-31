@@ -1,6 +1,9 @@
 package net.astropvp.core.commands;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -27,14 +30,36 @@ public class CommandDupe implements CommandExecutor {
         String color = display.substring(0, 2);
         List<String> lore = itemMeta.getLore();
         boolean isOpened = lore.contains(CC.Gray + "Drag n' Drop onto item to enchant.");
-        if (!isOpened) {
-            if (!display.contains(" ")) {
-                sender.sendMessage(CC.translate("&cYou may not dupe this item!"));
-                return false;
-            }
-            display = display.substring(display.indexOf(" ") + 1);
+
+        if (item.getType() != Material.BOOK && item.getType() != Material.EMPTY_MAP) {
+            player.sendMessage(CC.translate("&cYou cannot dupe this item."));
+            return false;
         }
-        if ((!display.startsWith("Enchantment Book") && !isOpened) || color.contains(CC.DarkRed)) {
+
+        if (display.contains(CC.DarkRed)) {
+            sender.sendMessage(CC.Red + "You cannot dupe this item.");
+            return false;
+        }
+
+        if (!isOpened && !color.contains(CC.DarkRed)) {
+            item.setAmount(64);
+            player.sendMessage(CC.Green + "You have successfully duplicated your item.");
+            return false;
+        }
+
+        if (display.contains(ChatColor.YELLOW + "White Scroll") && item.getType() == Material.EMPTY_MAP) {
+            item.setAmount(64);
+            player.sendMessage(CC.Green + "You have successfully duplicated your item.");
+            return false;
+        }
+
+        if (isOpened && (!display.contains("Rogue") && !display.contains("Revoke"))) {
+            item.setAmount(64);
+            player.sendMessage(CC.Green + "You have successfully duplicated your item.");
+            return false;
+        }
+
+        if (!display.startsWith("Enchantment Book")) {
             sender.sendMessage(CC.Red + "You cannot dupe this item.");
             return false;
         }
