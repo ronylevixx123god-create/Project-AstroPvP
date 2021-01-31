@@ -164,7 +164,6 @@ public class ServerFixes implements Listener {
     public void onWeatherChange(WeatherChangeEvent e) {
         if (e.toWeatherState()) {
             e.setCancelled(true);
-            System.out.println("Weather event cancelled!");
         }
     }
 
