@@ -10,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.InventoryPickupItemEvent;
 import org.bukkit.event.inventory.InventoryType;
@@ -48,6 +49,14 @@ public class ServerFixes implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         e.setJoinMessage(null);
+    }
+
+    @EventHandler
+    public void onBlockPlace(BlockPlaceEvent e) {
+        if(e.getBlock().getType() == Material.HOPPER) {
+            e.getPlayer().sendMessage(CC.translate("&c&l(!)&c You cannot place hoppers, buy chunk collectors in /shop instead!"));
+            e.setCancelled(true);
+        }
     }
 
     @EventHandler
