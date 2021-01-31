@@ -23,6 +23,7 @@ import me.ifamasssxd.cosmicmysterychest.exceptions.MysteryChestException;
 import me.ifamasssxd.cosmicmysterychest.exceptions.MysteryChestSuccessException;
 import me.ifamasssxd.cosmicmysterychest.guis.ActiveMysteryChestGUI;
 import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
+import net.astropvp.core.utils.GrindingMessagesUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -133,7 +134,9 @@ public class CommandMysteryChest
                     while (amount2-- > 0) {
                         ItemStack item = chest2.createClaimableItem(true, time);
                         PlayerUtil.giveOrDropProtectedItem((Player) pl, (ItemStack) item, (int) -1);
-                        pl.sendMessage(CC.GreenB + "(!) " + CC.Green + "Lootbox Received - " + CC.White + ItemUtils.getDisplayName((ItemStack) item));
+                        if (GrindingMessagesUtil.isPlayerIndicating(pl)) {
+                            pl.sendMessage(CC.GreenB + "(!) " + CC.Green + "Lootbox Received - " + CC.White + ItemUtils.getDisplayName((ItemStack) item));
+                        }
                         sender.sendMessage(CC.Red + pl.getName() + " has received a mystery chest " + chest2.getInternalName() + " -> " + ItemUtils.getDisplayName((ItemStack) item));
                     }
                     return true;

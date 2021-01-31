@@ -124,12 +124,17 @@ public class MysteryChestListener
                     if (!player.getWorld().getName().equals(((World) Bukkit.getWorlds().get(0)).getName())) {
                         throw new MysteryChestException("You must open this Lootbox in the Overworld!");
                     }
+
                     MysteryChest chest = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get(builder.getString("mysteryChest"));
+                    int bundleSize = chest.getItemBundleSize();
+                    if (bundleSize == 0) {
+                        bundleSize = chest.getGarunteedItems().size();
+                    }
+                    if (getEmptySlots(player) < bundleSize) {
+                        throw new MysteryChestException(CC.translate("&c&l(!)&c Please clear some inventory slots before opening this lootbox!"));
+                    }
                     if (chest == null) {
                         throw new MysteryChestException("Unable to determine Lootbox!");
-                    }
-                    if (getEmptySlots(player) < chest.getItemBundleSize()) {
-                        throw new MysteryChestException("Please clear some inventory slots before opening this lootbox!");
                     }
                     if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
                         new MysteryChestItemViewerGUI(player, chest).openGUI(CosmicMysteryChest.get());
@@ -167,8 +172,8 @@ public class MysteryChestListener
                     }*/
                     player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0f, 3.0f);
 
-
                     if (CosmicMysteryChest.get().getShardAnimations().hasToggle(player)) {
+
                         new MysteryChestGUI(player, chest, 0L).skipGUI(CosmicMysteryChest.get());
                     } else {
                         new MysteryChestGUI(player, chest, 0L).skipGUI(CosmicMysteryChest.get());

@@ -88,6 +88,10 @@ final class AsyncMonstersListener
             if (e1.getType() == EntityType.IRON_GOLEM && !this.stackIG) {
                 return;
             }
+
+            if (e1.getType() == EntityType.VILLAGER) {
+                return;
+            }
             int y_scan = 128;
             int n = xz_scan = e1.getType() == EntityType.IRON_GOLEM ? 15 : 16;
             if (e1.getType() == EntityType.ENDERMAN || e1.getType() == EntityType.PIG_ZOMBIE || e1.getType() == EntityType.CREEPER) {
