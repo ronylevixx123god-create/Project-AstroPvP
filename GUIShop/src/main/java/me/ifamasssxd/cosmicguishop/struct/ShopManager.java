@@ -52,7 +52,6 @@ public class ShopManager {
         ItemStack item = ItemBuilder.buildItem(Material.MOB_SPAWNER, 1, entityType.getTypeId(), ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + StringUtils.capitaliseAllWords((String) entityType.name().replace("_", " ").toLowerCase()) + ChatColor.GOLD.toString() + " Spawner",  ChatColor.GRAY + "Be careful where you place this!");
         item.setDurability(entityType.getTypeId());*/
         ItemStack item = SilkUtil.hookIntoSilkSpanwers().newSpawnerItem(String.valueOf(entityType.getTypeId()), CC.translate("&a&l") + entityType.name() + "&f Spawner", 1, false);
-        item.getItemMeta().setLore(Arrays.asList(CC.translate("&7Be careful where you place this spawner."), "", CC.translate("&aType: " + entityType.getName())));
         return item;
     }
 
@@ -227,7 +226,7 @@ public class ShopManager {
                 short dura = data.getData();
                 String string =  ChatColor.YELLOW + ChatColor.BOLD.toString() + (data.getSellCount() > 1 ? data.getSellCount() + "x " : "") + ItemUtils.getPrettyName(data);
                 if (isCollectionChest) {
-                    string =  ChatColor.YELLOW + ChatColor.BOLD.toString() + "Collection " + (data.getType() == Material.TRAPPED_CHEST ? "Trapped " : "") + "Chest";
+                    string =  ChatColor.GREEN + ChatColor.BOLD.toString() + "Chunk Collector";
                     dura = 0;
                 }
                 try {
@@ -328,7 +327,7 @@ public class ShopManager {
         player.playSound(player.getLocation(), Sound.ORB_PICKUP, 1.0f, 1.4f);
         Material type = data.getType();
         if ((type == Material.CHEST || type == Material.TRAPPED_CHEST) && data.getData() == 100) {
-            Bukkit.dispatchCommand((CommandSender) Bukkit.getConsoleSender(), (String) ("collectionchest give" + (type == Material.TRAPPED_CHEST ? "trapped" : "") + " " + player.getName() + " " + buyAmount));
+            Bukkit.dispatchCommand((CommandSender) Bukkit.getConsoleSender(), (String) ("ic give" + player.getName() + " " + buyAmount));
             Bukkit.getPluginManager().callEvent((Event) new CustomCosmicPlayerEvent(player, "SHOP_BUY", new Object[]{totalPrice, data, buyAmount}));
             return;
         }
