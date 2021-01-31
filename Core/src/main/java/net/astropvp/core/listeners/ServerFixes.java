@@ -47,12 +47,12 @@ public class ServerFixes implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
-        e.setJoinMessage("");
+        e.setJoinMessage(null);
     }
 
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
-        e.setQuitMessage("");
+        e.setQuitMessage(null);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
