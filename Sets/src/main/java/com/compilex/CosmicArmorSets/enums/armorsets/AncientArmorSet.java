@@ -100,6 +100,9 @@ public class AncientArmorSet
 
     @Override
     public boolean onPlayerDamaged(Player damaged, EntityDamageByEntityEvent event) {
+        if (!(event.getEntity() instanceof Player)) {
+            return false;
+        }
         if (this.isBlockedOutpostWorld(damaged)) {
             return false;
         }
@@ -117,6 +120,9 @@ public class AncientArmorSet
 
     @Override
     public boolean onPlayerAttacked(Player damager, EntityDamageByEntityEvent event) {
+        if (!(event.getEntity() instanceof Player)) {
+            return false;
+        }
         if (Math.random() <= 0.05 || damager.isOp() && damager.isSneaking()) {
             this.removeResistance(damager);
             if (this.isBlockedOutpostWorld(damager)) {
@@ -130,6 +136,9 @@ public class AncientArmorSet
 
     @Override
     public boolean onPlayerDamagedBonus(Player damaged, int multiplier, EntityDamageByEntityEvent event) {
+        if (!(event.getEntity() instanceof Player)) {
+            return false;
+        }
         if (event.isCancelled()) {
             return false;
         }
@@ -142,6 +151,9 @@ public class AncientArmorSet
 
     @Override
     public boolean onPlayerAttackedBonus(Player damager, int applied, EntityDamageByEntityEvent event) {
+        if (!(event.getEntity() instanceof Player)) {
+            return false;
+        }
         if (Math.random() <= 0.0035 * (double) applied || damager.isOp() && damager.isSneaking()) {
             this.removeResistance(damager);
             if (this.isBlockedOutpostWorld(damager)) {

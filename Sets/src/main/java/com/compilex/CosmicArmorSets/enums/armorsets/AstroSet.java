@@ -94,6 +94,9 @@ public class AstroSet
 
     @Override
     public boolean onPlayerDamaged(Player damaged, EntityDamageByEntityEvent event) {
+        if (!(event.getEntity() instanceof Player)) {
+            return false;
+        }
         if (this.isBlockedOutpostWorld(damaged)) {
             return false;
         }
@@ -110,6 +113,9 @@ public class AstroSet
 
     @Override
     public boolean onPlayerAttacked(Player damager, EntityDamageByEntityEvent event) {
+        if (!(event.getEntity() instanceof Player)) {
+            return false;
+        }
         if (Math.random() < 0.01) {
             OutpostTier outpostTier = CosmicOutpostsAPI.getOutpostTierOfWorld(event.getDamager());
             if (outpostTier == OutpostTier.TRAINEE || outpostTier == OutpostTier.VANILLA || outpostTier == OutpostTier.HERO) {
@@ -140,6 +146,9 @@ public class AstroSet
 
     @Override
     public boolean onPlayerDamagedBonus(Player damaged, int multiplier, EntityDamageByEntityEvent event) {
+        if (!(event.getEntity() instanceof Player)) {
+            return false;
+        }
         if (event.isCancelled()) {
             return false;
         }
@@ -152,6 +161,9 @@ public class AstroSet
 
     @Override
     public boolean onPlayerAttackedBonus(Player damager, int applied, EntityDamageByEntityEvent event) {
+        if (!(event.getEntity() instanceof Player)) {
+            return false;
+        }
         if (Math.random() < 0.01) {
             if (this.isBlockedOutpostWorld(damager)) {
                 return false;

@@ -116,6 +116,9 @@ public class EngineerSet extends ArmorSetInfo implements Listener, WeaponedArmor
     }
 
     public boolean onPlayerDamaged(Player damaged, EntityDamageByEntityEvent event) {
+        if (!(event.getEntity() instanceof Player)) {
+            return false;
+        }
         if (Math.random() <= 0.09) {
             onEngineerAbility(damaged);
         }
@@ -271,6 +274,9 @@ public class EngineerSet extends ArmorSetInfo implements Listener, WeaponedArmor
     }
 
     public boolean onPlayerAttacked(Player damager, EntityDamageByEntityEvent event) {
+        if (!(event.getEntity() instanceof Player)) {
+            return false;
+        }
         double chance = 4.0D;
         if (ThreadLocalRandom.current().nextDouble(200.0D) <= chance) {
             if (Math.random() < 0.05) {
@@ -281,6 +287,9 @@ public class EngineerSet extends ArmorSetInfo implements Listener, WeaponedArmor
     }
 
     public boolean onPlayerDamagedBonus(Player damaged, int multiplier, EntityDamageByEntityEvent event) {
+        if (!(event.getEntity() instanceof Player)) {
+            return false;
+        }
         if (event.isCancelled())
             return false;
         if (damaged.getWorld().getName().contains("dungeon"))

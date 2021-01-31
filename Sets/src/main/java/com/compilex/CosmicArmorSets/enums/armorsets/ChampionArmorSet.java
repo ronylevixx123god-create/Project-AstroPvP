@@ -95,6 +95,9 @@ public class ChampionArmorSet
         if (this.isBlockedOutpostWorld(damaged)) {
             return false;
         }
+        if (!(event.getEntity() instanceof Player)) {
+            return false;
+        }
         if (event.getEntity() instanceof Player) {
             this.removeResistance((Player) event.getEntity());
         }
@@ -108,6 +111,9 @@ public class ChampionArmorSet
 
     @Override
     public boolean onPlayerAttacked(Player damager, EntityDamageByEntityEvent event) {
+        if (!(event.getEntity() instanceof Player)) {
+            return false;
+        }
         this.removeResistance(damager);
         if (this.isBlockedOutpostWorld(damager)) {
             return false;
@@ -124,6 +130,9 @@ public class ChampionArmorSet
 
     @Override
     public boolean onPlayerDamagedBonus(Player damaged, int multiplier, EntityDamageByEntityEvent event) {
+        if (!(event.getEntity() instanceof Player)) {
+            return false;
+        }
         if (event.isCancelled()) {
             return false;
         }
@@ -136,6 +145,9 @@ public class ChampionArmorSet
 
     @Override
     public boolean onPlayerAttackedBonus(Player damager, int applied, EntityDamageByEntityEvent event) {
+        if (!(event.getEntity() instanceof Player)) {
+            return false;
+        }
         if (this.isBlockedOutpostWorld(damager)) {
             return false;
         }
