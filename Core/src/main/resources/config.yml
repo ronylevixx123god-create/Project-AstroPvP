@@ -121,3 +121,6 @@ blocked:
   - YELLOW_SHULKER_BOX
   - DAYLIGHT_DETECTOR_INVERTED
   - DAYLIGHT_DETECTOR
+
+players-indicating:
+  - ''

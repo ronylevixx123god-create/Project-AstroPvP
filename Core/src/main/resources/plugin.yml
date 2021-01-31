@@ -21,6 +21,8 @@ commands:
     aliases: ['bin']
   lastmanstanding:
     aliases: ['lms']
+  grinding:
+    aliases: ['grind']
   dupe:
     description: /dupe
   givetracker:

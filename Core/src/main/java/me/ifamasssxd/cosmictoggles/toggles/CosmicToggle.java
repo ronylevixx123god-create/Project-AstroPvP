@@ -22,10 +22,13 @@
 package me.ifamasssxd.cosmictoggles.toggles;
 
 import com.massivecraft.factions.FPlayer;
+import me.astropvp.damageindicators.DamageIndicators;
+import me.astropvp.damageindicators.utils.DamageIndicatorUtils;
 import me.ifamasssxd.cosmicduel.CosmicDuel;
 import me.ifamasssxd.itemfilter.Filter;
 import me.recolance.auction.Auction;
 import net.astropvp.core.AstroCore;
+import net.astropvp.core.utils.GrindingMessagesUtil;
 import org.arkhamnetwork.Arkkit.patches.ClearInventoryConfirm;
 import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatFilter;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
@@ -47,6 +50,8 @@ public enum CosmicToggle {
     AUCTION("Auction Bid Alerts", "/ah stfu"),
     DUELS("Duel Requests", "/duel toggle"),
     RELATION_REQUESTS("Relation Requests", "/f tr"),
+    TOGGLE_DAMAGEINDICATORS("Damage Indicators", "/di"),
+    GRINDING_NOTIFICATIONS("Grinding Notifications", "/grinding stfu"),
     CLEAR_INVENTORY_CONFIRMATION("/clearinventory Confirmation", "/toggleciconfirm");
 
     private final String displayName;
@@ -92,6 +97,12 @@ public enum CosmicToggle {
         }
         if (this == RELATION_REQUESTS) {
             return fplayer.hasFaction() && fplayer.getFaction().announceRelationshipRequests;
+        }
+        if (this == TOGGLE_DAMAGEINDICATORS) {
+            return DamageIndicatorUtils.isPlayerIndicating(player);
+        }
+        if (this == GRINDING_NOTIFICATIONS) {
+            return GrindingMessagesUtil.isPlayerIndicating(player);
         }
         if (this == CLEAR_INVENTORY_CONFIRMATION) {
             try {

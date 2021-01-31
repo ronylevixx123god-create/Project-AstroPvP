@@ -36,16 +36,13 @@ import org.bukkit.entity.Player;
 public class ToggleMenu
 extends CosmicGUI {
     public ToggleMenu(Player player) {
-        super(player, "AstroPvP Toggles:", InventoryUtils.fitSize(CosmicToggle.values().length));
+        super(player, "AstroPvP Toggles:", 27);
     }
 
     public void redraw() {
         int index = 0;
         FPlayer fplayer = FPlayers.i.get(this.player);
         for (CosmicToggle toggle : CosmicToggle.values()) {
-            if (index == 9) {
-                index += 2;
-            }
             boolean toggled = toggle.getToggle(this.player, fplayer);
             ArrayList<String> lore = Lists.newArrayList(CC.Gray + toggle.getCommand());
             this.setItem(index++, new InventoryItem(new ItemBuilder(Material.STAINED_GLASS_PANE).data(toggled ? (short)DyeColor.LIME.getWoolData() : (short)DyeColor.RED.getWoolData()).lore(lore).name((toggled ? CC.GreenB : CC.RedB) + toggle.getDisplayName()).build()).click(() -> {

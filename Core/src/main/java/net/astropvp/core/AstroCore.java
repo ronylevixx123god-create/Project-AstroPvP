@@ -71,6 +71,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandMap;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -164,6 +165,7 @@ public class AstroCore extends JavaPlugin {
         this.jackpotManager = new JackpotManager();
         this.jackpotManager.loadFileData(this);
         this.getServer().getPluginManager().registerEvents(new JackpotListener(), this);
+        this.getServer().getPluginManager().registerEvents(new GrindingMessagesToggleListener(), this);
         this.getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> this.jackpotManager.onJackpotTick(), 20L, 20L);
 
         this.filterManager = new FilterManager();
@@ -184,6 +186,7 @@ public class AstroCore extends JavaPlugin {
         this.getCommand("corechunkfinder").setExecutor(new CoreChunkFinderCommand());
 
         this.getCommand("coinflip").setExecutor(new CommandCoinFlip());
+        this.getCommand("grinding").setExecutor((CommandExecutor)new ToggleGrindingMessages());
         this.getCommand("jackpot").setExecutor(new CommandJackpot());
         this.getServer().getPluginManager().registerEvents(new InventoryListener(), this);
         this.getServer().getPluginManager().registerEvents(new me.ifamasssxd.cosmiccoinflip.listeners.PlayerListener(), this);
