@@ -16,6 +16,8 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -41,6 +43,16 @@ public class ServerFixes implements Listener {
         if (ent instanceof org.bukkit.entity.Blaze &&
                 e.getCause() == EntityDamageEvent.DamageCause.DROWNING)
             e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onJoin(PlayerJoinEvent e) {
+        e.setJoinMessage("");
+    }
+
+    @EventHandler
+    public void onQuit(PlayerQuitEvent e) {
+        e.setQuitMessage("");
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
