@@ -5,10 +5,7 @@ import net.astropvp.core.utils.ChatManager;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.HumanEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -29,6 +26,13 @@ public class ServerFixes implements Listener {
         if (event.getEntity() instanceof org.bukkit.entity.Blaze || event.getEntity() instanceof org.bukkit.entity.Creeper
                 || event.getEntity() instanceof org.bukkit.entity.Skeleton)
             event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onEntitySpawn3(EntitySpawnEvent event) {
+        if (event.getEntity() instanceof org.bukkit.entity.IronGolem && !event.getEntity().hasMetadata("guardianSummoner")) {
+            ((IronGolem) event.getEntity()).setHealth(1);
+        }
     }
 
     @EventHandler
