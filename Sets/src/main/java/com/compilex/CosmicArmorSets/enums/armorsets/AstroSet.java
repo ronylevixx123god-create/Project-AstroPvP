@@ -126,6 +126,9 @@ public class AstroSet
                 if (damager.hasMetadata("FalloutAbility") && System.currentTimeMillis() - damager.getMetadata("FalloutAbility").get(0).asLong() <= 120000L) {
                     return false;
                 }
+                if (event.getDamager().getWorld().getName().equals("world_duels")) {
+                    return false;
+                }
                 damager.setMetadata("FalloutAbility", new FixedMetadataValue(CosmicArmorSetsPlugin.get_(), System.currentTimeMillis()));
                 FPlayer fp = FPlayers.i.get(damager);
                 for (Entity nearbyEnt : damager.getNearbyEntities(32.0, 64.0, 32.0)) {
