@@ -86,7 +86,6 @@ public class JackpotManager {
                         pl.sendMessage(ChatColor.GRAY + "Use " + ChatColor.LIGHT_PURPLE + "/jackpot buy" + ChatColor.GRAY + " to purchase a ticket!");
                     }
                     if (secondsLeft < 60) continue;
-                    pl.sendMessage("");
                 }
             }
             this.currentJackpot.setSecondsLeft(secondsLeft - 1);
