@@ -37,7 +37,7 @@ public class HeroicInquisitive extends CustomEnchantment {
             return;
         }
         final double random = Math.random();
-        final double chance = 0.075 * enchantLevel * 2.0;
+        final double chance = 0.075 * enchantLevel * 5.0;
         if (random < chance) {
             target.setMetadata("inquisitive_enchant_heroic", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) enchantLevel));
         }
@@ -47,8 +47,8 @@ public class HeroicInquisitive extends CustomEnchantment {
         @EventHandler(priority = EventPriority.HIGH)
         public void onEntityDeath(final EntityDeathEvent e) {
             if (e.getEntity().hasMetadata("inquisitive_enchant_heroic")) {
-                double multiple = 1.0 + 0.25 * e.getEntity().getMetadata("inquisitive_enchant_heroic").get(0).asDouble();
-                multiple *= 2.0;
+                double multiple = 1.0 + 0.25;
+                multiple *= 2.2;
                 e.setDroppedExp((int) (e.getDroppedExp() * multiple));
             }
         }
