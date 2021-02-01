@@ -1,56 +1,4 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.ParticleEffect
- *  com.massivecraft.factions.Board
- *  com.massivecraft.factions.FLocation
- *  com.massivecraft.factions.FPlayer
- *  com.massivecraft.factions.FPlayers
- *  com.massivecraft.factions.Faction
- *  com.massivecraft.factions.struct.FactionPermission
- *  com.rit.sucy.EnchantmentAPI
- *  de.dustplanet.util.SilkUtil
- *  net.coreprotect.CoreProtect
- *  net.coreprotect.CoreProtectAPI
- *  org.arkhamnetwork.Arkkit.Arkkit
- *  org.arkhamnetwork.Arkkit.utils.WorldGuardUtils
- *  org.arkhamnetwork.enchantments.mastery.MasteryRotAndDecay
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.GameMode
- *  org.bukkit.Location
- *  org.bukkit.Material
- *  org.bukkit.OfflinePlayer
- *  org.bukkit.Sound
- *  org.bukkit.block.Block
- *  org.bukkit.block.BlockFace
- *  org.bukkit.block.CreatureSpawner
- *  org.bukkit.craftbukkit.v1_7_R4.block.CraftBlock
- *  org.bukkit.craftbukkit.v1_7_R4.entity.CraftCreeper
- *  org.bukkit.entity.Creeper
- *  org.bukkit.entity.Entity
- *  org.bukkit.entity.EntityType
- *  org.bukkit.entity.Player
- *  org.bukkit.entity.TNTPrimed
- *  org.bukkit.event.Event$Result
- *  org.bukkit.event.EventHandler
- *  org.bukkit.event.EventPriority
- *  org.bukkit.event.Listener
- *  org.bukkit.event.block.Action
- *  org.bukkit.event.block.BlockDispenseEvent
- *  org.bukkit.event.entity.EntityDamageByEntityEvent
- *  org.bukkit.event.entity.EntityDamageEvent$DamageCause
- *  org.bukkit.event.entity.EntityExplodeEvent
- *  org.bukkit.event.player.PlayerInteractEvent
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.metadata.FixedMetadataValue
- *  org.bukkit.metadata.MetadataValue
- *  org.bukkit.plugin.Plugin
- *  org.bukkit.potion.PotionEffect
- *  org.bukkit.potion.PotionEffectType
- */
+
 package com.compilex.CosmicCustomCreepers.listeners;
 
 import com.compilex.CosmicCustomCreepers.enums.CreeperTypes;
@@ -247,25 +195,30 @@ implements Listener {
                     this.spawnFastExplosion(loc.clone().add(0.0, 0.0, -3.0));
                 }
             } else if (egg_type == CreeperTypes.Lucky) {
-                for (Block b : e.blockList()) {
-                    if (b.getType() != Material.MOB_SPAWNER) continue;
-                    double rand = Math.random();
-                    Bukkit.getLogger().info("[CosmicCustomCreeper] Lucky Creeper processing spawner at " + b.getX() + "x ," + b.getY() + "y ," + b.getZ() + "z: " + rand + " <= 0.60?");
-                    if (!(rand <= 0.6)) continue;
-                    e.blockList().remove(b);
-                    ItemStack is = SilkUtil.hookIntoSilkSpanwers().newSpawnerItem(String.valueOf(b.getTypeId()), CC.translate("&a&l") + b.getType().name() + "&f Spawner", 1, false);
-                    CreatureSpawner cs = (CreatureSpawner) b.getState();
-                    int spawnerCount = cs.getSpawnerCount();
-                    if (spawnerCount == 4 && !Board.getFactionAt(new FLocation(cs.getLocation())).isNormal()) {
-                        cs.setSpawnerCount((short)1);
-                        spawnerCount = 1;
+                try {
+                    for (Block b : e.blockList()) {
+                        if (b.getType() != Material.MOB_SPAWNER) continue;
+                        double rand = Math.random();
+                        Bukkit.getLogger().info("[CosmicCustomCreeper] Lucky Creeper processing spawner at " + b.getX() + "x ," + b.getY() + "y ," + b.getZ() + "z: " + rand + " <= 0.60?");
+                        if (!(rand <= 0.6)) continue;
+                        e.blockList().remove(b);
+                        CreatureSpawner cs = (CreatureSpawner) b.getState();
+                        ItemStack is = SilkUtil.hookIntoSilkSpanwers().newSpawnerItem(String.valueOf(cs.getSpawnedType().getTypeId()), CC.translate("&a&l") + cs.getSpawnedType().name() + "&f Spawner", 1, false);
+
+                        int spawnerCount = cs.getSpawnerCount();
+                        if (spawnerCount == 4 && !Board.getFactionAt(new FLocation(cs.getLocation())).isNormal()) {
+                            cs.setSpawnerCount((short) 1);
+                            spawnerCount = 1;
+                        }
+                        b.setType(Material.AIR);
+                        if (b.getType() != Material.AIR) continue;
+                        while (spawnerCount-- > 0) {
+                            b.getWorld().dropItem(b.getLocation(), is);
+                        }
+                        de.inventivegames.particle.ParticleEffect.INSTANT_SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), b.getLocation(), 0f, 0.5f, 0f, 0.6f, 20);
                     }
-                    b.setType(Material.AIR);
-                    if (b.getType() != Material.AIR) continue;
-                    while (spawnerCount-- > 0) {
-                        b.getWorld().dropItem(b.getLocation(), is);
-                    }
-                    de.inventivegames.particle.ParticleEffect.INSTANT_SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), b.getLocation(), 0f,0.5f,0f,0.6f,20);
+                } catch (Exception ex) {
+
                 }
             } else if (egg_type == CreeperTypes.Tactical) {
                 for (Block b : e.blockList()) {
@@ -274,8 +227,9 @@ implements Listener {
                     Bukkit.getLogger().info("[CosmicCustomCreeper] Tactical Creeper processing spawner at " + b.getX() + "x ," + b.getY() + "y ," + b.getZ() + "z: " + rand + " <= 0.30?");
                     if (!(rand <= 0.3)) continue;
                     e.blockList().remove(b);
-                    ItemStack is = SilkUtil.hookIntoSilkSpanwers().newSpawnerItem(String.valueOf(b.getTypeId()), CC.translate("&a&l") + b.getType().name() + "&f Spawner", 1, false);
                     CreatureSpawner cs = (CreatureSpawner) b.getState();
+                    ItemStack is = SilkUtil.hookIntoSilkSpanwers().newSpawnerItem(String.valueOf(cs.getSpawnedType().getTypeId()), CC.translate("&a&l") + cs.getSpawnedType().name() + "&f Spawner", 1, false);
+
                     int spawnerCount = cs.getSpawnerCount();
                     if (spawnerCount == 4 && !Board.getFactionAt(new FLocation(cs.getLocation())).isNormal()) {
                         cs.setSpawnerCount((short)1);
@@ -296,8 +250,8 @@ implements Listener {
                     if (b.getType() != Material.MOB_SPAWNER) continue;
                     Bukkit.getLogger().info("[CosmicCustomCreeper] Raid Creeper processing spawner at " + b.getX() + "x ," + b.getY() + "y ," + b.getZ() + "z: ");
                     e.blockList().remove(b);
-                    ItemStack is = SilkUtil.hookIntoSilkSpanwers().newSpawnerItem(String.valueOf(b.getTypeId()), CC.translate("&a&l") + b.getType().name() + "&f Spawner", 1, false);
                     CreatureSpawner cs = (CreatureSpawner) b.getState();
+                    ItemStack is = SilkUtil.hookIntoSilkSpanwers().newSpawnerItem(String.valueOf(cs.getSpawnedType().getTypeId()), CC.translate("&a&l") + cs.getSpawnedType().name() + "&f Spawner", 1, false);
                     int spawnerCount = cs.getSpawnerCount();
                     if (spawnerCount == 4 && !Board.getFactionAt(new FLocation(cs.getLocation())).isNormal()) {
                         cs.setSpawnerCount((short)1);

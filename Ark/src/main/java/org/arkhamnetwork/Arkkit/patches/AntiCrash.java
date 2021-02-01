@@ -15,7 +15,6 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.commands.CommandArkReboot;
-import org.arkhamnetwork.Arkkit.libs.MinecraftThreadMonitor;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -36,7 +35,6 @@ public class AntiCrash
     protected static Logger log = new Logger();
     protected static boolean reboot_me = false;
     protected static boolean treasureWars = new File("treasurewars").exists();
-    MinecraftThreadMonitor MTM;
 
     public AntiCrash(Plugin p) {
         super(p);
@@ -61,15 +59,7 @@ public class AntiCrash
         SpigotConfig.restartOnCrash = true;
         SpigotConfig.restartScript = "null.sh";
         SpigotConfig.timeoutTime = 300;
-        this.getBukkitPlugin().getServer().getScheduler().runTaskLater(this.getBukkitPlugin(), new Runnable() {
 
-            @Override
-            public void run() {
-                AntiCrash.this.MTM = new MinecraftThreadMonitor();
-                AntiCrash.this.MTM.start();
-                log.debug("Launching MinecraftThreadMonitor thread...", this.getClass());
-            }
-        }, 20L);
         if (Arkkit.get().getConfig().getBoolean("settings.antiCrash.entityScan")) {
             Bukkit.getScheduler().runTaskTimer(Arkkit.get(), new Runnable() {
 
@@ -84,7 +74,7 @@ public class AntiCrash
                         }
                     }
                 }
-            }, 2L, 2L);
+            }, 200L, 200L);
         }
         this.registerListener(new AntiCrashEntityListener());
     }
@@ -92,10 +82,6 @@ public class AntiCrash
     @Override
     public void disable() {
         log.debug("Killing MinecraftThreadMonitor thread...", this.getClass());
-        if (!crash) {
-            this.MTM.interrupt();
-            this.MTM = null;
-        }
         disable_called = true;
         this.unregisterListeners();
     }

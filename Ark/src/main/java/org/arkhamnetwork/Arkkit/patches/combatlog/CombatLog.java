@@ -219,7 +219,6 @@ public class CombatLog
         this.registerListener(new CombatLogCombatListener());
         this.registerListener(new CombatLogLogoutListener(this));
         this.registerCommand(new CommandLogout("logout", "/<command>", "Safetly logs you out of the server.", new ArrayList<String>(Arrays.asList("quit", "exit", "leave"))));
-        this.registerTask(new DespawnNPCTask().runTaskTimer(Arkkit.get(), 20L, 20L), DespawnNPCTask.class);
         this.registerTask(new CombatExpireTask().runTaskTimer(Arkkit.get(), 10L, 10L), CombatExpireTask.class);
     }
 

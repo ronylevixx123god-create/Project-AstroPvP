@@ -53,7 +53,6 @@ import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.libs.MinecraftThreadMonitor;
 import org.arkhamnetwork.Arkkit.patches.AntiCrash;
 import org.arkhamnetwork.Arkkit.utils.FactionUtil;
 import org.bukkit.*;
@@ -117,7 +116,7 @@ public class CombatLogLogoutListener
             Bukkit.getLogger().info("Skipping combatLog check for " + e.getPlayer().getName() + " due to worldName: " + e.getPlayer().getWorld().getName());
             return;
         }
-        if (!(Arkkit.get().shutting_down || AntiCrash.crash || MinecraftThreadMonitor.non_response > 0 || !CombatLog.inCombat(e.getPlayer()) || Bukkit.getPluginManager().getPlugin("NetworkManager") != null && CombatLog.isPvPDisabled(e.getPlayer().getLocation()))) {
+        if (!(Arkkit.get().shutting_down || AntiCrash.crash || !CombatLog.inCombat(e.getPlayer()) || Bukkit.getPluginManager().getPlugin("NetworkManager") != null && CombatLog.isPvPDisabled(e.getPlayer().getLocation()))) {
             if (e.getPlayer().hasMetadata("noCombatLog")) {
                 e.getPlayer().removeMetadata("noCombatLog", Arkkit.get());
                 return;

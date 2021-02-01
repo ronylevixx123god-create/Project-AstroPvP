@@ -192,8 +192,9 @@ implements Listener {
                                 e.blockList().remove(i);
                                 byte data = b.getData();
                                 int typeID = b.getType().getId();
-                                ItemStack is = SilkUtil.hookIntoSilkSpanwers().newSpawnerItem(String.valueOf(b.getTypeId()), CC.translate("&a&l") + b.getType().name() + "&f Spawner", 1, false);
                                 CreatureSpawner cs = (CreatureSpawner) b.getState();
+                                ItemStack is = SilkUtil.hookIntoSilkSpanwers().newSpawnerItem(String.valueOf(cs.getSpawnedType().getTypeId()), CC.translate("&a&l") + cs.getSpawnedType().name() + "&f Spawner", 1, false);
+
                                 int spawnerCount = cs.getSpawnerCount();
                                 if (spawnerCount == 4 && !Board.getFactionAt(new FLocation(cs.getLocation())).isNormal()) {
                                     cs.setSpawnerCount((short)1);
@@ -224,8 +225,9 @@ implements Listener {
                             e.blockList().remove(i);
                             int id = b.getTypeId();
                             byte data = b.getData();
-                            ItemStack is = SilkUtil.hookIntoSilkSpanwers().newSpawnerItem(String.valueOf(b.getTypeId()), CC.translate("&a&l") + b.getType().name() + "&f Spawner", 1, false);
                             CreatureSpawner cs = (CreatureSpawner) b.getState();
+                            ItemStack is = SilkUtil.hookIntoSilkSpanwers().newSpawnerItem(String.valueOf(cs.getSpawnedType().getTypeId()), CC.translate("&a&l") + cs.getSpawnedType().name() + "&f Spawner", 1, false);
+
                             int spawnerCount = cs.getSpawnerCount();
                             if (spawnerCount == 4 && !Board.getFactionAt(new FLocation(cs.getLocation())).isNormal()) {
                                 cs.setSpawnerCount((short)1);

@@ -18,7 +18,6 @@ import me.ifamasssxd.cosmicguishop.utils.SlotUtils;
 import net.minecraft.server.v1_8_R3.NBTBase;
 import org.apache.commons.lang.StringUtils;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
-import org.arkhamnetwork.Arkkit.patches.MysteryMobSpawners;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.*;
 import org.bukkit.command.CommandSender;
@@ -230,7 +229,7 @@ public class ShopManager {
                     dura = 0;
                 }
                 try {
-                    displayItem = data.getType() == Material.MOB_SPAWNER ? (data.getData() == 101 ? MysteryMobSpawners.getMysteryMobSpawner() : this.silkSpawners.newSpawnerItem(String.valueOf(data.getData()), ChatColor.YELLOW + ChatColor.BOLD.toString() + "%creature% Spawner", 1, false)) : null;
+                    displayItem = data.getType() == Material.MOB_SPAWNER ?  this.silkSpawners.newSpawnerItem(String.valueOf(data.getData()), ChatColor.YELLOW + ChatColor.BOLD.toString() + "%creature% Spawner", 1, false) : null;
                 } catch (Exception e) {
                     Bukkit.getLogger().info("Problem loading " + data.getData() + " Spawner!");
                     e.printStackTrace();
@@ -361,9 +360,7 @@ public class ShopManager {
     public ItemStack getCustomItem(ShopMaterialData data, int amount, String color) {
         ItemStack toGive = new ItemStack(data.getType(), amount, data.getData());
         if (data.getType() == Material.MOB_SPAWNER) {
-            if (data.getData() == 101) {
-                toGive = MysteryMobSpawners.getMysteryMobSpawner();
-            } else {
+
                 EntityType type = EntityType.fromId(data.getData());
                 if (type == null) {
                     Bukkit.getLogger().info("Data: " + data.getData() + " from : " + data);
@@ -374,7 +371,6 @@ public class ShopManager {
                     toGive = ItemID.setItemID((ItemStack) toGive, (long) ItemID.generateNewItemID());
                 }
             }
-        }
         if (data.getType() == Material.POTION && data.getSellCount() > 1) {
             ItemMeta im = toGive.getItemMeta();
             ArrayList lore = Lists.newArrayList((Object[]) new String[]{CC.Gray + "Stackable (" + data.getSellCount() + ")"});
