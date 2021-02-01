@@ -102,7 +102,7 @@ public enum ParticleEffect {
             Player pl = CosmicFlyingPlugin.get_().getAsyncPlayerMap().getPlayers().get(data.getKey());
             Location loc = data.getValue();
             if (pl == null || !loc.getWorld().getName().equalsIgnoreCase(location.getWorld().getName()) || !(loc.distanceSquared(location) <= Math.pow(radius, 2.0)) || CommandToggleSmoke.toggled.contains(pl.getUniqueId())) continue;
-            ParticleEffect.sendPacket(pl, packet);
+            //ParticleEffect.sendPacket(pl, packet);
         }
     }
 

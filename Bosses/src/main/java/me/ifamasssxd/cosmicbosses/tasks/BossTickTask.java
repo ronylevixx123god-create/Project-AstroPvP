@@ -3,13 +3,11 @@ package me.ifamasssxd.cosmicbosses.tasks;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class BossTickTask {
-    /*@Override
+public class BossTickTask extends BukkitRunnable {
     public void run() {
-        for (final Boss boss : Boss.bosses.values()) {
-            if (boss.isBossSpawned()) {
+        for (Boss boss : Boss.bosses.values()) {
+            if (boss.isBossSpawned())
                 boss.onTick();
-            }
         }
-    }*/
+    }
 }
