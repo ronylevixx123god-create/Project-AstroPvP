@@ -204,7 +204,6 @@ implements Listener {
                         e.blockList().remove(b);
                         CreatureSpawner cs = (CreatureSpawner) b.getState();
                         ItemStack is = SilkUtil.hookIntoSilkSpanwers().newSpawnerItem(String.valueOf(cs.getSpawnedType().getTypeId()), CC.translate("&a&l") + cs.getSpawnedType().name() + "&f Spawner", 1, false);
-
                         int spawnerCount = cs.getSpawnerCount();
                         if (spawnerCount == 4 && !Board.getFactionAt(new FLocation(cs.getLocation())).isNormal()) {
                             cs.setSpawnerCount((short) 1);

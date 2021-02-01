@@ -266,24 +266,6 @@ public class FactionsChatListener implements Listener {
         List<FancyMessage> creatorHoverInfo = null;
         String channelName = null;
         String channelURL = null;
-        if (ArkPlugins.YOUTUBERS.getArkPlugin().isRunning()) {
-            Player p = event.getPlayer();
-            if (p.hasMetadata("contentCreatorName")) {
-                channelName = p.getMetadata("contentCreatorName").get(0).asString();
-            }
-
-            if (p.hasMetadata("contentCreatorURL")) {
-                channelURL = p.getMetadata("contentCreatorURL").get(0).asString();
-            }
-
-            if (channelName != null && channelURL != null) {
-                creatorHoverInfo = new ArrayList<>();
-                creatorHoverInfo.add(new FancyMessage(channelURL.contains("twitch") ? CC.DarkPurpleB + "Twitch" : CC.DarkRedB + "You" + CC.WhiteB + "Tube"));
-                creatorHoverInfo.add(new FancyMessage(channelName + ChatColor.WHITE + "'s channel:"));
-                creatorHoverInfo.add(new FancyMessage(channelURL));
-                creatorHoverInfo.add(new FancyMessage(ChatColor.GRAY + "Click to visit their channel!"));
-            }
-        }
 
         double elo = 0.0D;
         if (Bukkit.getPluginManager().isPluginEnabled("CosmicDuel") && !this.vanillaGalaxy) {
