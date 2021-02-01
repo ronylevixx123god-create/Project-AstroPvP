@@ -41,7 +41,6 @@ public class CosmicGUIShop extends JavaPlugin {
     public static CosmicGUIShop get() {
         return instance;
     }
-
     public static Economy getEconomy() {
         return economy;
     }
