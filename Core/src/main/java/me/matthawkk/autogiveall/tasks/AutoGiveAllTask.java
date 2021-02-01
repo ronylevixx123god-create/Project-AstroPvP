@@ -67,13 +67,13 @@ implements Runnable {
 
     private void announceGiveAll(long time, boolean minutes) {
         AutoGiveAllTask.sendCenteredMessage("");
-        AutoGiveAllTask.sendCenteredMessage(CC.GreenB + "AUTO GIVE ALL");
+        AutoGiveAllTask.sendCenteredMessage(CC.AquaB + "AUTO GIVE ALL");
         if (minutes) {
-            AutoGiveAllTask.sendCenteredMessage(CC.Green + "Time Remaining: " + CC.White + time + "m");
+            AutoGiveAllTask.sendCenteredMessage(CC.Aqua + "Time Remaining: " + CC.White + time + "m");
         } else {
-            AutoGiveAllTask.sendCenteredMessage(CC.Green + "Time Remaining: " + CC.White + time + "s");
+            AutoGiveAllTask.sendCenteredMessage(CC.Aqua + "Time Remaining: " + CC.White + time + "s");
         }
-        AutoGiveAllTask.sendCenteredMessage(CC.Green + "Use the command /nextgiveall to stay updated!");
+        AutoGiveAllTask.sendCenteredMessage(CC.Gray + "Use the command /nextgiveall to stay updated!");
         AutoGiveAllTask.sendCenteredMessage("");
     }
 }

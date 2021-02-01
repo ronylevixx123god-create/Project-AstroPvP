@@ -46,6 +46,14 @@ public class ServerFixes implements Listener {
             e.setCancelled(true);
     }
 
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void denyMobSpawnerChange(PlayerInteractEvent event){
+        if((event.getClickedBlock() != null) && (event.getItem() != null) && (event.getClickedBlock().getType() == Material.MOB_SPAWNER) && (event.getItem().getType() == Material.MONSTER_EGG)) {
+            event.getPlayer().sendMessage(CC.translate("&cYou cannot place eggs on spawners!"));
+            event.setCancelled(true);
+        }
+    }
+
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         e.setJoinMessage(null);
