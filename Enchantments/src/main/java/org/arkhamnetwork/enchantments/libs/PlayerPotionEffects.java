@@ -112,12 +112,6 @@ public class PlayerPotionEffects {
             retr = (a[0] = new AbstractPotionEffect(pe.getType(), pe.getAmplifier()));
             effects3.put(ce, new CopyOnWriteArrayList<AbstractPotionEffect>(Arrays.asList(a)));
         }
-        if (ArkPlugins.PARKOUR_REGION.getArkPlugin().isRunning()) {
-            final String regionName = WorldGuardUtils.getRegionName(this.getPlayer().getLocation());
-            if (regionName.contains("parkour") && !regionName.contains("enchants")) {
-                return;
-            }
-        }
         if (!hasBetterActiveEffect) {
             if (consumer != null) {
                 consumer.accept(retr);
@@ -223,14 +217,7 @@ public class PlayerPotionEffects {
         if (p == null) {
             return;
         }
-        final boolean parkourRegion = ArkPlugins.PARKOUR_REGION.getArkPlugin().isRunning();
         String regionName = null;
-        if (parkourRegion) {
-            regionName = WorldGuardUtils.getRegionName(p.getLocation());
-            if (regionName.contains("parkour") && !regionName.contains("enchants")) {
-                return;
-            }
-        }
         if (Enchantments.getInstance().dungeonsEnabled) {
             final DungeonPlayer dp = DungeonsAPI.get().getPlayerDungeonData(p);
             if (dp != null && dp.getCurrentDungeon() != null) {
