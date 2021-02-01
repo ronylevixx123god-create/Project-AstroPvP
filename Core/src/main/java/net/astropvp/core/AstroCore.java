@@ -135,6 +135,9 @@ public class AstroCore extends JavaPlugin {
         new ClearLagTask().runTaskTimer(this, 20, 20);
         Bukkit.getScheduler().runTaskTimer(this, new AutoBroadcastTask(), 20L, 6000L);
 
+        Bukkit.getScheduler().runTaskLater(this, ()->
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ic reload"), 100L);
+
         if (!Bukkit.getPluginManager().isPluginEnabled("TitleManager")) {
             Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[Astro] " + ChatColor.RED + "TitleManager is not loaded.");
         } else {

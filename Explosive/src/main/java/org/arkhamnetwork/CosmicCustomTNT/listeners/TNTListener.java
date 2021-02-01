@@ -1,6 +1,7 @@
 package org.arkhamnetwork.CosmicCustomTNT.listeners;
 
 import com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils;
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import de.dustplanet.util.SilkUtil;
@@ -83,7 +84,7 @@ implements Listener {
     public void onExplosivePrime(ExplosionPrimeEvent e) {
         if (e.getEntity() != null && e.getEntity() instanceof TNTPrimed) {
             EntityTNTPrimed tntPrimed = ((CraftTNTPrimed) e.getEntity()).getHandle();
-            ItemStack tntItem = tntPrimed.getTNT();
+            ItemStack tntItem = new ItemStack(Material.TNT);
             TNTTypes tntType = this.getTNTType(tntItem);
             if (tntType != null) {
                 e.getEntity().setMetadata("custom_tnt", new FixedMetadataValue(CosmicCustomTNT.get(), tntType.name()));
@@ -191,7 +192,7 @@ implements Listener {
                                 e.blockList().remove(i);
                                 byte data = b.getData();
                                 int typeID = b.getType().getId();
-                                ItemStack is = ItemUtils.getMobSpawner(EntityType.fromId((Integer.valueOf(su.getSpawnerEntityID(b)))));
+                                ItemStack is = SilkUtil.hookIntoSilkSpanwers().newSpawnerItem(String.valueOf(b.getTypeId()), CC.translate("&a&l") + b.getType().name() + "&f Spawner", 1, false);
                                 CreatureSpawner cs = (CreatureSpawner) b.getState();
                                 int spawnerCount = cs.getSpawnerCount();
                                 if (spawnerCount == 4 && !Board.getFactionAt(new FLocation(cs.getLocation())).isNormal()) {
@@ -223,7 +224,7 @@ implements Listener {
                             e.blockList().remove(i);
                             int id = b.getTypeId();
                             byte data = b.getData();
-                            ItemStack is = ItemUtils.getMobSpawner(EntityType.fromId((Integer.valueOf(su.getSpawnerEntityID(b)))));
+                            ItemStack is = SilkUtil.hookIntoSilkSpanwers().newSpawnerItem(String.valueOf(b.getTypeId()), CC.translate("&a&l") + b.getType().name() + "&f Spawner", 1, false);
                             CreatureSpawner cs = (CreatureSpawner) b.getState();
                             int spawnerCount = cs.getSpawnerCount();
                             if (spawnerCount == 4 && !Board.getFactionAt(new FLocation(cs.getLocation())).isNormal()) {

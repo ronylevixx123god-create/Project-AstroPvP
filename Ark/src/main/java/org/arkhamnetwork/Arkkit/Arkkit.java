@@ -5,6 +5,7 @@ import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
 import org.arkhamnetwork.Arkkit.commands.*;
 import org.arkhamnetwork.Arkkit.patches.AntiCrash;
+import org.arkhamnetwork.Arkkit.patches.SpawnerFee;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.arkhamnetwork.Arkkit.utils.WorldGuardUtils;
@@ -51,6 +52,7 @@ public class Arkkit
         registerCommands();
         setupEconomy();
         WorldGuardUtils.hook();
+        SpawnerFee.loadSpawners();
         Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "Loading Patches ...");
         Bukkit.getScheduler().runTaskLater(this, () -> {
             try {
@@ -88,6 +90,7 @@ public class Arkkit
         } catch (Exception err) {
             err.printStackTrace();
         }
+        SpawnerFee.saveSpawners();
         this.saveConfig();
         this.unregisterPatches();
     }

@@ -54,7 +54,6 @@
 package com.compilex.CosmicCustomCreepers.listeners;
 
 import com.compilex.CosmicCustomCreepers.enums.CreeperTypes;
-import com.compilex.CosmicCustomCreepers.utils.ItemUtils;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.massivecraft.factions.Board;
@@ -254,7 +253,7 @@ implements Listener {
                     Bukkit.getLogger().info("[CosmicCustomCreeper] Lucky Creeper processing spawner at " + b.getX() + "x ," + b.getY() + "y ," + b.getZ() + "z: " + rand + " <= 0.60?");
                     if (!(rand <= 0.6)) continue;
                     e.blockList().remove(b);
-                    ItemStack is = ItemUtils.getMobSpawner(EntityType.fromId(Integer.valueOf((su.getSpawnerEntityID(b)))));
+                    ItemStack is = SilkUtil.hookIntoSilkSpanwers().newSpawnerItem(String.valueOf(b.getTypeId()), CC.translate("&a&l") + b.getType().name() + "&f Spawner", 1, false);
                     CreatureSpawner cs = (CreatureSpawner) b.getState();
                     int spawnerCount = cs.getSpawnerCount();
                     if (spawnerCount == 4 && !Board.getFactionAt(new FLocation(cs.getLocation())).isNormal()) {
@@ -275,7 +274,7 @@ implements Listener {
                     Bukkit.getLogger().info("[CosmicCustomCreeper] Tactical Creeper processing spawner at " + b.getX() + "x ," + b.getY() + "y ," + b.getZ() + "z: " + rand + " <= 0.30?");
                     if (!(rand <= 0.3)) continue;
                     e.blockList().remove(b);
-                    ItemStack is = ItemUtils.getMobSpawner(EntityType.fromId(Integer.valueOf((su.getSpawnerEntityID(b)))));
+                    ItemStack is = SilkUtil.hookIntoSilkSpanwers().newSpawnerItem(String.valueOf(b.getTypeId()), CC.translate("&a&l") + b.getType().name() + "&f Spawner", 1, false);
                     CreatureSpawner cs = (CreatureSpawner) b.getState();
                     int spawnerCount = cs.getSpawnerCount();
                     if (spawnerCount == 4 && !Board.getFactionAt(new FLocation(cs.getLocation())).isNormal()) {
@@ -297,7 +296,7 @@ implements Listener {
                     if (b.getType() != Material.MOB_SPAWNER) continue;
                     Bukkit.getLogger().info("[CosmicCustomCreeper] Raid Creeper processing spawner at " + b.getX() + "x ," + b.getY() + "y ," + b.getZ() + "z: ");
                     e.blockList().remove(b);
-                    ItemStack is = ItemUtils.getMobSpawner(EntityType.fromId(Integer.valueOf((su.getSpawnerEntityID(b)))));
+                    ItemStack is = SilkUtil.hookIntoSilkSpanwers().newSpawnerItem(String.valueOf(b.getTypeId()), CC.translate("&a&l") + b.getType().name() + "&f Spawner", 1, false);
                     CreatureSpawner cs = (CreatureSpawner) b.getState();
                     int spawnerCount = cs.getSpawnerCount();
                     if (spawnerCount == 4 && !Board.getFactionAt(new FLocation(cs.getLocation())).isNormal()) {

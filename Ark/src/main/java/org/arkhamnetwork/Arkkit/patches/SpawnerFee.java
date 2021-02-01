@@ -58,7 +58,7 @@ public class SpawnerFee
         spawnerFeeSaveThread.setName("SpawnerFeeAsyncSaveThread");
     }
 
-    protected static void saveSpawners() {
+    public static void saveSpawners() {
         try {
             new File("playerSpawners.dat").delete();
             BufferedWriter out = new BufferedWriter(new FileWriter("playerSpawners.dat"));
@@ -98,10 +98,12 @@ public class SpawnerFee
         this.loadSpawners();
         this.registerListener(new SpawnerFeeListener());
         this.registerCommand(new CommandSpawnerFee("spawnerfee", "/<command>", "Define spawner fees."));
+        this.loadSpawners();
     }
 
     @Override
     public synchronized void disable() {
+        SpawnerFee.saveSpawners();
         spawnerFeeSaveThread.start();
         while (!spawnersSaved) {
             try {
@@ -113,7 +115,7 @@ public class SpawnerFee
         }
     }
 
-    private void loadSpawners() {
+    public static void loadSpawners() {
         playerSpawners = new HashMap();
         int count = 0;
         boolean conversion = false;
@@ -160,19 +162,21 @@ public class SpawnerFee
                         placeTime = Long.parseLong(data[5]);
                     }
                     if (spawnerType == EntityType.UNKNOWN) continue;
-                    if (cleanSpawners) {
+                    if (1==1) {
+                        System.out.println("CLEANSPAWNER WORKS");
                         b = Bukkit.getWorld(data[0]).getBlockAt(Integer.valueOf(data[1]).intValue(), Integer.valueOf(data[2]).intValue(), Integer.valueOf(data[3]).intValue());
                         if (b.getType() != Material.MOB_SPAWNER) {
                             Bukkit.getLogger().info("[Arkkit (SpawnerFee)] Cleaned non-existing mob spawner at " + b.getLocation() + " as spawnerType " + spawnerType + "!");
                             continue;
                         }
-                        CreatureSpawner cs = (CreatureSpawner) b.getState();
-                        if (cs.getSpawnerCount() != spawnerCount) {
-                            Bukkit.getLogger().info("[Arkkit (SpawnerFee) Assigned spawnerCount value:1(" + cs.getSpawnerCount() + ") to spawner at: " + b.getLocation());
-                            cs.setSpawnerCount((short) 1);
-                        }
+                        CreatureSpawner cs = (CreatureSpawner) b.getState();;
+                        //if (cs.getSpawnerCount() != spawnerCount) {
+                            Bukkit.getLogger().info("[Arkkit (SpawnerFee) Assigned spawnerCount value: " + cs.getSpawnerCount() + ") to spawner at: " + b.getLocation());
+                        cs.setSpawnerCount((short) spawnerCount);
+                        //}
                     }
                     playerSpawners.put(data[0] + "," + data[1] + "," + data[2] + "," + data[3], new SpawnerLocation(Integer.valueOf(data[1]), Integer.valueOf(data[2]), Integer.valueOf(data[3]), data[0], spawnerType, placeTime, spawnerCount));
+
                     ++count;
                 } catch (NullPointerException npe) {
                     npe.printStackTrace();
