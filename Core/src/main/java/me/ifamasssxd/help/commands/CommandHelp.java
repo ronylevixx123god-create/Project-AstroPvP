@@ -143,7 +143,7 @@ public class CommandHelp {
                 this.helpList.add(new HelpItem("Ender", "/help end"));
             }*/
             this.helpList.add(new HelpItem("Wild PvP", "/wildpvp"));
-            if (CosmicUtils.get().isArkkitEnabled() && ArkPlugins.WARZONE_MONEY.getArkPlugin().isRunning()) {
+            if (CosmicUtils.get().isArkkitEnabled()) {
                 this.helpList.add(new HelpItem("LMS", "/lms"));
             }
             this.helpList.add(new HelpItem("Outposts", "/outposts"));

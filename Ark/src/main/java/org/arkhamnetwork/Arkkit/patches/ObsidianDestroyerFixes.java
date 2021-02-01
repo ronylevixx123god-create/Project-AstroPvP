@@ -45,7 +45,6 @@ public class ObsidianDestroyerFixes
     public void enable() {
         this.registerListener(new ObsidianDestroyerBootstrapListener());
         this.registerListener(new ExplosionPhysicsSanity());
-        this.registerListener(new GrowthPhysicsSanity());
     }
 
     @Override

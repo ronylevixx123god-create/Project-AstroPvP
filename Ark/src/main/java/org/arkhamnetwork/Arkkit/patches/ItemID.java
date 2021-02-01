@@ -1,16 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.GeneralUtil
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.Material
- *  org.bukkit.event.inventory.InventoryClickEvent
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
- *  org.bukkit.plugin.Plugin
- */
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
@@ -180,4 +167,3 @@ public class ItemID
         Arkkit.get().saveConfig();
     }
 }
-

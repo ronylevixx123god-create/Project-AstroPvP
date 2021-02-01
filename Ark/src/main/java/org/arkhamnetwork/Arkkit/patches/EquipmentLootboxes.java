@@ -95,36 +95,14 @@ public class EquipmentLootboxes
         super(p);
     }
 
-    public ItemStack createLootboxItem(boolean applyIID) {
-        return applyIID && ArkPlugins.ITEM_ID.getArkPlugin().isRunning() ? ItemID.assignItemID(null, this.lootboxItem.clone()) : this.lootboxItem.clone();
-    }
 
-    public ItemStack createHeroicLootboxItem(boolean applyIID) {
-        return applyIID && ArkPlugins.ITEM_ID.getArkPlugin().isRunning() ? ItemID.assignItemID(null, this.heroicLootboxItem.clone()) : this.heroicLootboxItem.clone();
-    }
 
-    public ItemStack createHeroicGKitGenerator(boolean applyIID) {
-        ItemStack retr = new ItemBuilder(Material.CHEST, CC.RedB + "Heroic G-Kit Generator ", "", CC.GrayU + "Right-Click" + CC.Gray + " to receive a random", CC.Gray + "Heroic G-Kit Armor Piece!").build();
-        if (applyIID && ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
-            retr = ItemID.assignItemID(null, retr);
-        }
-        return new NBTWrapper(retr).setString("conaxData", "GKIT_GENERATOR").build();
-    }
 
-    public ItemStack createMKitGenerator(boolean applyIID) {
-        ItemStack retr = new ItemBuilder(Material.CHEST, CC.DarkRedB + "Random M-Kit Generator", "", CC.GrayU + "Right-Click" + CC.Gray + " to receive a random", CC.Gray + "Mastery Kit Armor Piece!").build();
-        if (applyIID && ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
-            retr = ItemID.assignItemID(null, retr);
-        }
-        return new NBTWrapper(retr).setString("conaxData", "MKIT_GENERATOR").build();
-    }
 
     @Override
     public void enable() throws IOException {
         super.enable();
         this.registerCommand(new LootboxCommand("elootbox", "/<command>", "Lootbox admin command"));
-        this.registerCommand(new MKitGeneratorCommand(this));
-        this.registerCommand(new HeroicArmorGeneratorCommand(this));
         this.registerListener(new LootboxListener());
     }
 
@@ -236,9 +214,7 @@ public class EquipmentLootboxes
             if (this.lastArmorPeice == null) {
                 this.lastArmorPeice = this.getRandomArmorSetItem();
             }
-            if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
-                this.lastArmorPeice = ItemID.assignItemID(null, this.lastArmorPeice);
-            }
+
             if (announce) {
                 Bukkit.broadcastMessage(CC.GoldB + "(!) " + CC.Gold + this.player.getName() + " received a " + this.lastArmorPeice.getItemMeta().getDisplayName() + CC.Gold + " from a " + (this.heroic ? "Heroic " : "") + "Equipment Lootbox!");
             } else {
@@ -254,17 +230,6 @@ public class EquipmentLootboxes
             }
         }
 
-        public void onInventoryClose() {
-            if (!this.finished && this.readyToGive) {
-                this.givePrize(true);
-            } else if (!this.finished) {
-                this.finished = true;
-                if (!PlayerUtil.giveOrDropProtectedItem(this.player, this.heroic ? EquipmentLootboxes.this.createHeroicLootboxItem(true) : EquipmentLootboxes.this.createLootboxItem(true), -1)) {
-                    this.player.sendMessage(CC.Red + "Your inventory was full so your Lootbox has been dropped at your feet!");
-                }
-            }
-            super.onInventoryClose();
-        }
 
         private ItemStack getRandomArmorSetItem() {
             ItemStack retr;
@@ -323,19 +288,6 @@ public class EquipmentLootboxes
                     if (player.getWorld().getName().startsWith("world_duels")) {
                         player.sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot use this in the duel world!");
                         return;
-                    }
-                    if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
-                        String gen = null;
-                        long id = ItemID.getItemID(item);
-                        String string = gkitGenerator ? "gkit armor generator" : (heroicLootbox ? "heroic armor" : (gen = mkitGenerator ? "mkit armor generator" : "Lootbox"));
-                        if (id != -1L && ItemID.blacklist_iid.contains(id)) {
-                            player.sendMessage(CC.RedB + "That " + gen + " has already been claimed!");
-                            player.setItemInHand(null);
-                            player.updateInventory();
-                            Bukkit.getLogger().info("[EquipmentLootbox] Found already claimed " + gen + " from " + player.getName() + " itemID: " + id + " item: " + item);
-                            return;
-                        }
-                        ItemID.blacklistIID(id, gen + " claimed " + player.getName());
                     }
                     if (item.getAmount() > 1) {
                         item.setAmount(1);
@@ -425,7 +377,6 @@ public class EquipmentLootboxes
                     return true;
                 }
                 pl.sendMessage(CC.GoldB + "(!) " + CC.Gold + "You have been given an " + CC.GoldB + "Equipment Lootbox!");
-                PlayerUtil.giveOrDropProtectedItem(pl, heroic ? EquipmentLootboxes.this.createHeroicLootboxItem(true) : EquipmentLootboxes.this.createLootboxItem(true), -1);
                 sender.sendMessage(CC.Red + "Given lootbox to " + pl.getName() + "!");
                 return true;
             }

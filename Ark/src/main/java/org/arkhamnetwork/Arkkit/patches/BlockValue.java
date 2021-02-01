@@ -95,7 +95,6 @@ public class BlockValue
         blockValueSaveThread.setName("BlockValueAsyncSaveThread");
         this.loadBlockValues();
         this.registerListener(new BlockValueListener());
-        this.registerCommand(new CommandBlockValue("blockvalue", "/<command>", "Define block values."));
         this.scanLoadedChunks();
     }
 

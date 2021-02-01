@@ -58,9 +58,7 @@ final class WithdrawMCMMOListener
                 e.getPlayer().sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot add more EXP to " + type.name() + ", as it would exceed the level cap.");
                 return;
             }
-            if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning() && (itemID = ItemID.getItemID(e.getItem())) != -1L) {
-                ItemID.blacklistIID(itemID, "mcMMOLevelRedeem");
-            }
+
             WithdrawMCMMOCommand.addXPAndLevel(e.getPlayer(), type.name(), xpValue);
             e.getPlayer().setItemInHand(null);
             e.getPlayer().updateInventory();

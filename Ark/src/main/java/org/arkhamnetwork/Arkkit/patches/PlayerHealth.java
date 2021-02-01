@@ -45,7 +45,6 @@ public class PlayerHealth
         if (Bukkit.getPluginManager().isPluginEnabled("LibsDisguises")) {
             Bukkit.getLogger().info("[HealthDispaly] Detected LibsDisguises.jar, Launching SpoofHealthDisplay()...");
             this.registerListener(new DisguiseCommandListener());
-            this.registerTask(new SpoofHealthDisplay().runTaskTimer(Arkkit.get(), 20L, 20L), PlayerHealth.class);
         }
     }
 

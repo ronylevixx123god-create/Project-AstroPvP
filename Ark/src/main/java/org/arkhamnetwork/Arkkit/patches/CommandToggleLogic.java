@@ -33,7 +33,6 @@ final class CommandToggleLogic
 
     public CommandToggleLogic(String command, String usage, String description) {
         super(command, usage, description);
-        ArkPlugins.YPPERIN.getArkPlugin().registerListener(new CommandToggleLogicListener());
     }
 
     @Override

@@ -1,13 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  org.bukkit.ChatColor
- *  org.bukkit.command.Command
- *  org.bukkit.command.CommandSender
- *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
- */
 package org.arkhamnetwork.Arkkit.patches;
 
 import org.arkhamnetwork.Arkkit.Arkkit;
@@ -137,4 +127,3 @@ final class CommandItemID
         return true;
     }
 }
-

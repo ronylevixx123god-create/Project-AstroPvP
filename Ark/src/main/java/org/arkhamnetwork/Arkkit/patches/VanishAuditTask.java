@@ -37,9 +37,6 @@ final class VanishAuditTask
         extends BukkitRunnable {
     private final List<String> playersToWatch = new ArrayList<String>(Arrays.asList("Vaquxine"));
 
-    VanishAuditTask() {
-        ArkPlugins.YPPERIN.getArkPlugin().registerListener(new VanishAuditListener());
-    }
 
     public void run() {
     }

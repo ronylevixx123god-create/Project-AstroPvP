@@ -31,9 +31,11 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import com.compilex.CosmicCustomCreepers.enums.CreeperTypes;
 import com.compilex.CosmicCustomCreepers.utils.ItemUtils;
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import de.dustplanet.silkspawners.SilkSpawners;
+import de.dustplanet.util.SilkUtil;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.arkhamnetwork.CosmicCustomTNT.enums.TNTTypes;
 import org.bukkit.Bukkit;
@@ -52,6 +54,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Random;
 
@@ -145,7 +148,7 @@ final class NoWaterProtSpawnersListener
                                 cs.setSpawnerCount((short) 1);
                                 spawnCount = 1;
                             }
-                            for (; spawnCount-- > 0; b.getWorld().dropItemNaturally(b.getLocation(), ItemUtils.getMobSpawner(EntityType.fromId(Integer.parseInt(NoWaterProtSpawners.su.getSpawnerEntityID(b))))));
+                            for (; spawnCount-- > 0; b.getWorld().dropItemNaturally(b.getLocation(), SilkUtil.hookIntoSilkSpanwers().newSpawnerItem(String.valueOf(b.getTypeId()), CC.translate("&a&l") + b.getType().name() + "&f Spawner", 1, false)));
                         }
                         if (ArkPlugins.SPAWNER_FEE.getArkPlugin().isRunning()) {
                             SpawnerFee.playerSpawners.remove(BlockValueListener.convertBlockToString(b));

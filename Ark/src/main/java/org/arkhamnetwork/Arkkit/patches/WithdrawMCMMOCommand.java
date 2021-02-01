@@ -111,9 +111,6 @@ final class WithdrawMCMMOCommand
         p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "- " + format.format(amount) + " " + skillType + " XP");
         p.playSound(p.getLocation(), Sound.ORB_PICKUP, 1.0f, 0.2f);
         ItemStack mcmmoCert = WithdrawMCMMO.getMCMMOXpCert(amount, skillType, p.getName());
-        if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
-            ItemID.setItemID(mcmmoCert, ItemID.generateNewItemID());
-        }
         p.getInventory().addItem(mcmmoCert);
         return true;
     }

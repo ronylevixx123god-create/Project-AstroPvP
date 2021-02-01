@@ -71,7 +71,6 @@ public class EnderpearlCooldown
     public void enable() {
         this.registerListener(new EnderpearlCooldownListener(this));
         if (new File("plugins/WorldBorder.jar").exists()) {
-            this.registerListener(new WorldBorderEnderpearlListener());
         }
     }
 

@@ -39,6 +39,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="Arkkit" target="8" />
       <module name="ArmorSets" target="1.8" />
       <module name="CrateBoxes" target="8" />
       <module name="Disguises (1)" target="8" />

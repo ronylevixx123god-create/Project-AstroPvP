@@ -16,7 +16,6 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
 import org.apache.commons.lang.StringUtils;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -153,18 +152,11 @@ public class PlayerTrade {
 
     boolean canTradeItem(Player player, ItemStack item) {
         long id;
-        if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning() && (id = ItemID.getItemID(item)) != -1L) {
-            if (ItemID.blacklist_iid.contains(id)) {
-                player.sendMessage(CC.RedB + "(!) " + CC.Red + "That item is blacklisted and cannot be traded!");
-                player.getInventory().removeItem(item);
-                Bukkit.getLogger().info("[CosmicTrade] " + player.getName() + " tried to trade blacklisted item: " + id + " Item: " + item);
-                return false;
-            }
             if (item.getAmount() > 1) {
                 player.sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot trade this item while it is stacked!");
                 return false;
             }
-        }
+
         List alreadyTrading = this.getCurrentlyTradedItems().get(player.getUniqueId());
         int limit = TradeMenu.leftTradingSlots.size();
         if (alreadyTrading != null && alreadyTrading.size() >= limit) {

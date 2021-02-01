@@ -260,22 +260,6 @@ final class AntiDupeListener
     }
 
     @EventHandler(priority = EventPriority.LOW)
-    public void onPlayerDropItem(PlayerDropItemEvent e) {
-        final Player p = e.getPlayer();
-        if (p.hasMetadata("lastTeleportEvent") && System.currentTimeMillis() - p.getMetadata("lastTeleportEvent").get(0).asLong() < 500L) {
-            e.setCancelled(true);
-            p.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "You cannot drop items so quickly after teleporting.");
-            Bukkit.getScheduler().runTaskLater(Arkkit.get(), new Runnable() {
-
-                @Override
-                public void run() {
-                    p.updateInventory();
-                }
-            }, 1L);
-        }
-    }
-
-    @EventHandler(priority = EventPriority.LOW)
     public void onInventoryClick(InventoryClickEvent e) {
         Player p = (Player) e.getWhoClicked();
         if (p.hasMetadata("lastTeleportEvent") && System.currentTimeMillis() - p.getMetadata("lastTeleportEvent").get(0).asLong() < 250L) {

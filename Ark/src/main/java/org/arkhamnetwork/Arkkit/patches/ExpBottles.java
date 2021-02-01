@@ -35,9 +35,9 @@ public class ExpBottles
 
     public static ItemStack getXpBottle(int xpAmount, String enchanter) {
         ItemStack i = ItemUtils.buildItem(Material.EXP_BOTTLE, (short) 0, ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "Experience Bottle" + ChatColor.GRAY + " (Throw)", ChatColor.LIGHT_PURPLE + "Value " + ChatColor.WHITE + xpAmount + " XP", ChatColor.LIGHT_PURPLE + "Enchanter " + ChatColor.WHITE + enchanter);
-        if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
+        /*if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
             i = ItemID.setItemID(i, ItemID.generateNewItemID());
-        }
+        }*/
         return i;
     }
 

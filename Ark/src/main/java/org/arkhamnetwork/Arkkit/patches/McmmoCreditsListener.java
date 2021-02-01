@@ -51,9 +51,6 @@ final class McmmoCreditsListener
             e.setUseInteractedBlock(Event.Result.DENY);
             e.getPlayer().setItemInHand(null);
             e.getPlayer().updateInventory();
-            if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning() && (itemID = ItemID.getItemID(e.getItem())) != -1L) {
-                ItemID.blacklistIID(itemID, "mcMMOCreditUse");
-            }
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "addcredits " + e.getPlayer().getName() + " " + value);
         }
     }
@@ -76,9 +73,6 @@ final class McmmoCreditsListener
                 ExperienceAPI.addLevel(e.getPlayer(), type.name(), value);
                 e.getPlayer().sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "+" + value + " " + type.name() + " LEVELS!");
                 e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.ORB_PICKUP, 1.0f, 0.33f);
-                if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning() && (itemID = ItemID.getItemID(e.getItem())) != -1L) {
-                    ItemID.blacklistIID(itemID, "mcmmoSkillCreditUse");
-                }
             } else {
                 e.getPlayer().sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "You cannot add that many " + type.name() + " levels, as it would exceed the level cap.");
             }

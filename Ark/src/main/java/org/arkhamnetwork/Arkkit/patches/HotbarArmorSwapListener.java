@@ -119,9 +119,6 @@ final class HotbarArmorSwapListener
         e.setCancelled(true);
         e.setUseInteractedBlock(Event.Result.DENY);
         e.setUseItemInHand(Event.Result.DENY);
-        if (AntiHack.hasTeleportedCrossWorld(p)) {
-            return;
-        }
         p.setMetadata("lastArmorSwap", new FixedMetadataValue(Arkkit.get(), MinecraftServer.currentTick));
         this.equipArmor(p, e.getItem());
         if (HotbarArmorSwap.masksEnabled && e.hasItem() && e.getItem().getType().toString().toLowerCase().contains("helmet")) {

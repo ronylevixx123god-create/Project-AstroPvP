@@ -59,7 +59,6 @@ public class AntiLag
                 }
             }
         }, 200L, 200L);
-        this.registerListener(new AntiPistonListener());
         this.registerListener(new AntiLagListener());
     }
 

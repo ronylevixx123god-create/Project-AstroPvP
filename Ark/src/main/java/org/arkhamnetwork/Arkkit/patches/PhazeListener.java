@@ -142,7 +142,6 @@ final class PhazeListener
         Player p;
         if (e.getCause() == EntityDamageEvent.DamageCause.SUFFOCATION && e.getEntity() instanceof Player && (p = (Player) e.getEntity()).getLocation().getBlock().getType() == Material.AIR && p.getEyeLocation().getBlock().getType() != Material.AIR && this.isNearEnchantmentTable(p)) {
             Bukkit.getLogger().info("[Arkkit (AntiHack)] Kicking " + p.getName() + " due to impossible block collision at " + p.getLocation() + "!");
-            AntiHack.playerNamesTeleportToSpawn.add(p.getName());
             p.setMetadata("noCombatLog", new FixedMetadataValue(Arkkit.get(), System.currentTimeMillis()));
             p.kickPlayer("Impossible block collision!");
         }
@@ -164,22 +163,6 @@ final class PhazeListener
             if (i.hasItemMeta() && i.getItemMeta().hasLore() && i.getItemMeta().getLore().size() >= 4 && (weaponName = ChatColor.stripColor(i.getItemMeta().getLore().get(3))).contains(" ") && !weaponName.endsWith("!") && EnchantmentAPI.isRegistered(possibleEnchantName = weaponName.split(" ")[0])) {
                 e.getWhoClicked().sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "Invalid lore found on player head, removed.");
                 e.setCurrentItem(null);
-            }
-        }
-    }
-
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onPlayerJoin(PlayerJoinEvent e) {
-        FPlayer fp = FactionUtils.getFPlayer(e.getPlayer());
-        if (fp == null) {
-            e.getPlayer().kickPlayer("Invalid faction data, please re-join.");
-        }
-        if (AntiHack.ess3 != null) {
-            if (!e.getPlayer().hasPermission("essentials.god")) {
-                AntiHack.ess3.getUser(e.getPlayer()).setGodModeEnabled(false);
-            }
-            if (!e.getPlayer().hasPermission("essentials.socialspy")) {
-                AntiHack.ess3.getUser(e.getPlayer()).setSocialSpyEnabled(false);
             }
         }
     }
@@ -235,27 +218,6 @@ final class PhazeListener
             if (e.getFrom().clone().add(0.0, 1.0, 0.0).getBlock().getType() == Material.PORTAL && !e.getFrom().clone().add(0.0, 1.0, 0.0).getBlock().hasMetadata("dungeonPortalBlock") && !e.getFrom().clone().add(0.0, 1.0, 0.0).getBlock().hasMetadata("dungeonExitPortalBlock")) {
                 e.getFrom().clone().add(0.0, 1.0, 0.0).getBlock().setType(Material.AIR);
             }
-        }
-    }
-
-    @EventHandler(priority = EventPriority.LOW)
-    public void onPlayerJoinGamemodeCheck(PlayerJoinEvent e) {
-        e.setJoinMessage(null);
-        boolean op = e.getPlayer().isOp();
-        final Player pl = e.getPlayer();
-        if (!op) {
-            pl.setGameMode(GameMode.SURVIVAL);
-            Bukkit.getScheduler().runTaskLater(Arkkit.get(), new Runnable() {
-
-                @Override
-                public void run() {
-                    pl.setGameMode(GameMode.SURVIVAL);
-                }
-            }, 21L);
-        }
-        if (AntiHack.playerNamesTeleportToSpawn.contains(e.getPlayer().getName())) {
-            AntiHack.playerNamesTeleportToSpawn.remove(e.getPlayer().getName());
-            e.getPlayer().teleport(e.getPlayer().getWorld().getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
         }
     }
 
@@ -333,14 +295,6 @@ final class PhazeListener
         }
     }
 
-    @EventHandler
-    public void onInventoryClickPostTeleport(InventoryClickEvent e) {
-        if (AntiHack.hasTeleportedCrossWorld((Player) e.getWhoClicked())) {
-            e.setCancelled(true);
-            e.setResult(Event.Result.DENY);
-            return;
-        }
-    }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onChestFall(EntityChangeBlockEvent e) {

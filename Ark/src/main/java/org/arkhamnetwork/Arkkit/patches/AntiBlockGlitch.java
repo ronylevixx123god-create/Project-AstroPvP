@@ -23,9 +23,7 @@ public class AntiBlockGlitch
         this.registerListener(new AntiBlockGlitchListener());
         this.registerListener(new AntiWitherSpawnerListener());
         this.registerListener(new AntiGlitchSwordListener());
-        if (Bukkit.getWorld("world_nether") != null) {
-            this.registerTask(new NetherCeilingPunishmentTask().runTaskTimer(Arkkit.get(), 40L, 40L), NetherCeilingPunishmentTask.class);
-        }
+
     }
 
     @Override

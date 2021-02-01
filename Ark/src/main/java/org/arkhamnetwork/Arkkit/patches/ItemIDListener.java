@@ -1,26 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.GeneralUtil
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.Location
- *  org.bukkit.Material
- *  org.bukkit.World
- *  org.bukkit.entity.Player
- *  org.bukkit.event.Event$Result
- *  org.bukkit.event.EventHandler
- *  org.bukkit.event.EventPriority
- *  org.bukkit.event.Listener
- *  org.bukkit.event.block.Action
- *  org.bukkit.event.block.BlockPlaceEvent
- *  org.bukkit.event.inventory.InventoryClickEvent
- *  org.bukkit.event.inventory.InventoryPickupItemEvent
- *  org.bukkit.event.player.PlayerInteractEvent
- *  org.bukkit.event.player.PlayerPickupItemEvent
- *  org.bukkit.inventory.ItemStack
- */
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
@@ -152,4 +129,3 @@ final class ItemIDListener
         }
     }
 }
-
