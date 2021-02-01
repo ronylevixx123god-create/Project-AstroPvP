@@ -21,6 +21,8 @@
  */
 package me.ifamasssxd.cosmictoggles.toggles;
 
+import com.earth2me.essentials.Essentials;
+import com.earth2me.essentials.commands.EssentialsToggleCommand;
 import com.massivecraft.factions.FPlayer;
 import me.astropvp.damageindicators.DamageIndicators;
 import me.astropvp.damageindicators.utils.DamageIndicatorUtils;
@@ -38,7 +40,7 @@ import org.bukkit.entity.Player;
 public enum CosmicToggle {
     GLOBAL_CHAT("Global Chat", "/f global"),
     FILTER("Chat Filter", "/togglefilter"),
-    MSG("Private Messages", "/togglemsg"),
+    MSG("Private Messages", "/msgtoggle"),
     F_TP("Teleportation Requests", "/f tptoggle"),
     PAY("Receive /pay", "/togglepay"),
     SCOREBOARD("Faction Scoreboard", "/togglesb"),
@@ -101,6 +103,7 @@ public enum CosmicToggle {
         if (this == TOGGLE_DAMAGEINDICATORS) {
             return DamageIndicatorUtils.isPlayerIndicating(player);
         }
+
         if (this == GRINDING_NOTIFICATIONS) {
             return GrindingMessagesUtil.isPlayerIndicating(player);
         }

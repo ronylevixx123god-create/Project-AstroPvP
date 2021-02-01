@@ -40,7 +40,7 @@ final class CommandBump
             Player p = (Player) sender;
             FPlayer fp = FPlayers.i.get(p);
             FLocation fl = new FLocation(p.getLocation());
-            if (!fp.getRelationToLocation().isAtLeast(Relation.ALLY) && !Board.getFactionAt(fl).isWarZone()) {
+            if (!fp.getRelationToLocation().isAtLeast(Relation.ALLY) && !Board.getFactionAt(fl).isWarZone() && !Board.getFactionAt(fl).isWilderness()) {
                 p.sendMessage(ChatColor.RED + "You cannot use /bump in enemy territory.");
                 return true;
             }
