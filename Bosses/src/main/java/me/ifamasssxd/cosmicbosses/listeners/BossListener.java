@@ -132,7 +132,7 @@ public class BossListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    /*@EventHandler(priority = EventPriority.LOWEST)
     public void onChunkUnload(final ChunkUnloadEvent unloadEvent) {
         for (final Boss boss : Boss.bosses.values()) {
             if (boss != null && !boss.getEntity().isDead() && boss.getEntity().getLocation().getChunk().getX() == unloadEvent.getChunk().getX() && boss.getEntity().getLocation().getChunk().getZ() == unloadEvent.getChunk().getZ() && boss.getEntity().getLocation().getChunk().getWorld().getName().equals(unloadEvent.getChunk().getWorld().getName()) && !unloadEvent.isCancelled()) {
@@ -153,7 +153,7 @@ public class BossListener implements Listener {
             toRemove.forEach(loc -> change.getStoredBlocks().remove(loc));
             Bukkit.getLogger().info("Replacing " + toRemove.size() + " blocks in unloading chunk..");
         }
-    }
+    }*/
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onEntityDAmage(final EntityDamageEvent e) throws Exception {

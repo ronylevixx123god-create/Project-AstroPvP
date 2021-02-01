@@ -64,6 +64,7 @@ import me.matthawkk.autogiveall.struct.GiveAllManager;
 import me.matthawkk.autogiveall.tasks.AutoGiveAllTask;
 import net.astropvp.core.commands.*;
 import net.astropvp.core.listeners.*;
+import net.astropvp.core.tasks.ClearLagTask;
 import net.astropvp.core.tasks.LastManStandingCapTask;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
@@ -131,6 +132,7 @@ public class AstroCore extends JavaPlugin {
         setupEconomy();
         events();
         new LastManStandingCapTask().runTaskTimer(this, 20L, 20L);
+        new ClearLagTask().runTaskTimer(this, 20, 20);
         Bukkit.getScheduler().runTaskTimer(this, new AutoBroadcastTask(), 20L, 6000L);
 
         if (!Bukkit.getPluginManager().isPluginEnabled("TitleManager")) {
@@ -214,6 +216,8 @@ public class AstroCore extends JavaPlugin {
         this.getCommand("togglesb").setExecutor(new CommandScoreboard());
         this.getCommand("toggles").setExecutor(new CommandToggles());
         this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
+
+        getCommand("clearlag").setExecutor(new CommandClearLag());
 
         this.getCommand("filter").setExecutor(new CommandFilter());
         this.getCommand("wiki").setExecutor(new CommandWiki());
@@ -332,6 +336,7 @@ public class AstroCore extends JavaPlugin {
         pm.registerEvents(new LastManStandingListener(), this);
         pm.registerEvents(new MobSpawnerFix(), this);
         pm.registerEvents(new PayListener(), this);
+        pm.registerEvents(new onDeathDropListener(), this);
     }
 
     public void showError(Player sender, Throwable exception, String commandLabel) {

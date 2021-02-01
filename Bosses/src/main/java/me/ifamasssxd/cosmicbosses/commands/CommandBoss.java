@@ -43,7 +43,7 @@ public class CommandBoss implements CommandExecutor {
         if (args.length != 2 && args.length != 3) {
             if (args.length == 1) {
                 if (args[0].equalsIgnoreCase("spawntask")) {
-                    CosmicBosses.getInstance().getTask().run();
+                    //CosmicBosses.getInstance().getTask().run();
                     return true;
                 }
                 if (args[0].equalsIgnoreCase("list")) {

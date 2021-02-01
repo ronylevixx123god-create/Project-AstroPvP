@@ -78,3 +78,6 @@ commands:
     description: givebackpack.
   giveenchantmentcrystal:
     description: giveenchantmentcrystal
+  clearlag:
+    description: /clearlag
+    aliases: [ cl ]

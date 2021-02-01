@@ -291,7 +291,7 @@ implements Runnable {
             int multi = this.runtime / 240;
             int toSpawn = Math.min(35, 20 + 2 * multi);
             toSpawn = i = toSpawn / 2;
-            while (i > 0) {
+            /*while (i > 0) {
                 LivingEntity ent = MonsterUtils.spawnEnvoyMonster(LocationUtils.getNearbyLocation(CosmicKOTHPlugin.get_().getKothCenter(), 20, 2, 6));
                 int nearby = 0;
                 for (Entity entity : ent.getNearbyEntities(4.0, 4.0, 4.0)) {
@@ -300,7 +300,7 @@ implements Runnable {
                     break;
                 }
                 --i;
-            }
+            }*/
             this.kothBroadcast("");
             this.kothBroadcast(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "*** KOTH MONSTERS HAVE SPAWNED! ***");
             this.kothBroadcast(ChatColor.GRAY + "The longer the KOTH lasts, the more minions spawn!");

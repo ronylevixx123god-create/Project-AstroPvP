@@ -61,7 +61,7 @@ public class CorruptCosmonautEntity extends EntitySkeleton {
                 }
             }
             if (this.getGoalTarget() != null) {
-                this.getNavigation().d = this.getNavigation().a(this.getGoalTarget());
+                //this.getNavigation().d = this.getNavigation().a(this.getGoalTarget());
             }
         } else if (this.getGoalTarget().isAlive()) {
 
@@ -81,9 +81,9 @@ public class CorruptCosmonautEntity extends EntitySkeleton {
             this.setGoalTarget(null);
         }
         this.world.methodProfiler.b();
-        if (this.getGoalTarget() != null && (this.getNavigation().d == null || this.random.nextInt(20) == 0)) {
-            this.getNavigation().d = this.getNavigation().a(this.getGoalTarget());
-        }
+        //if (this.getGoalTarget() != null && (this.getNavigation().d == null || this.random.nextInt(20) == 0)) {
+            //this.getNavigation().d = this.getNavigation().a(this.getGoalTarget());
+        //}
 
         super.m();
     }

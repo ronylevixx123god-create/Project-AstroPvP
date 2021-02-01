@@ -89,7 +89,7 @@ public class MonsterUtils {
             b4.setCustomNameVisible(true);
             le =  b4;
         }
-        if (CosmicKOTHPlugin.isVanillaGalaxy()) {
+        /*if (CosmicKOTHPlugin.isVanillaGalaxy()) {
             le.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, Integer.MAX_VALUE, 0));
             le.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, new Random().nextInt(3)));
             le.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0));
@@ -97,7 +97,7 @@ public class MonsterUtils {
             le.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, Integer.MAX_VALUE, 1));
             le.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, new Random().nextInt(3)));
             le.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, new Random().nextInt(2)));
-        }
+        }*/
         ItemStack i = new ItemStack(Material.DIAMOND_SWORD);
         i.addEnchantment(Enchantment.KNOCKBACK, new Random().nextBoolean() ? 1 : 2);
         le.getEquipment().setItemInHand(i);

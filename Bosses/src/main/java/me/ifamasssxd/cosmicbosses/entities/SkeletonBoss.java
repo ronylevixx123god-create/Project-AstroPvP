@@ -69,7 +69,7 @@ public class SkeletonBoss extends EntitySkeleton {
                 }
             }
             if (this.getGoalTarget() != null) {
-                this.getNavigation().d = this.getNavigation().a(this.getGoalTarget());
+                //this.getNavigation().d = this.getNavigation().a(this.getGoalTarget());
             }
         } else if (this.getGoalTarget().isAlive()) {
 
@@ -89,21 +89,21 @@ public class SkeletonBoss extends EntitySkeleton {
             this.setGoalTarget(null);
         }
         this.world.methodProfiler.b();
-        if (this.getGoalTarget() != null && (this.getNavigation().d == null || this.random.nextInt(20) == 0)) {
+        /*if (this.getGoalTarget() != null && (this.getNavigation().d == null || this.random.nextInt(20) == 0)) {
             this.getNavigation().d = this.getNavigation().a(this.getGoalTarget());
         } else if (((this.getNavigation().d == null && this.random.nextInt(180) == 0) || this.random.nextInt(120) == 0) && this.aU < 100) {
             this.bQ();
-        }
+        }*/
         final int i = MathHelper.floor(this.getBoundingBox().b + 0.5);
         this.pitch = 0.0f;
-        if (this.getNavigation().d != null && this.random.nextInt(100) != 0) {
+        /*if (this.getNavigation().d != null && this.random.nextInt(100) != 0) {
             this.world.methodProfiler.a("followpath");
             Vec3D vec3d = this.getNavigation().d.a((Entity) this);
             final double d0 = this.width * 2.0f;
             this.world.methodProfiler.b();
         } else {
             this.getNavigation().d = null;
-        }
+        }*/
 
         super.m();
     }
