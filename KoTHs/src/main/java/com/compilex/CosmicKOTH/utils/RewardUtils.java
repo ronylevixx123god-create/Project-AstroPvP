@@ -61,7 +61,6 @@ import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.itembuilder.KitGemBuilder;
 import com.cosmicpvp.cosmicutils.itembuilder.SpawnerItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.CustomItemUtils;
-import com.gmail.nossr50.datatypes.skills.SkillType;
 import com.google.common.collect.Lists;
 import java.io.File;
 import java.util.ArrayList;
@@ -75,7 +74,6 @@ import me.ifamasssxd.killtracker.listeners.Tracker;
 import org.arkhamnetwork.Arkkit.patches.EquipmentLootboxes;
 import org.arkhamnetwork.Arkkit.patches.EssentialsAddHomes;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
-import org.arkhamnetwork.Arkkit.patches.McmmoCredits;
 import org.arkhamnetwork.Arkkit.patches.ShowcaseExpander;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.arkhamnetwork.Arkkit.utils.ItemUtils;
@@ -292,20 +290,10 @@ public class RewardUtils {
 
     public static ItemStack getRandomVanillaKOTHItem(int tier) {
         if (vanillaKothRewardsTier1.isEmpty()) {
-            vanillaKothRewardsTier1.add(RewardUtils.build(McmmoCredits.buildSkillCreditItem((SkillType)SkillType.UNARMED, (int)75)));
-            vanillaKothRewardsTier1.add(RewardUtils.build(McmmoCredits.buildSkillCreditItem((SkillType)SkillType.ARCHERY, (int)75)));
-            vanillaKothRewardsTier1.add(RewardUtils.build(McmmoCredits.buildSkillCreditItem((SkillType)SkillType.SWORDS, (int)75)));
-            vanillaKothRewardsTier1.add(RewardUtils.build(McmmoCredits.buildSkillCreditItem((SkillType)SkillType.MINING, (int)150)));
-            vanillaKothRewardsTier1.add(RewardUtils.build(McmmoCredits.buildSkillCreditItem((SkillType)SkillType.WOODCUTTING, (int)150)));
-            vanillaKothRewardsTier1.add(RewardUtils.build(McmmoCredits.buildSkillCreditItem((SkillType)SkillType.ACROBATICS, (int)125)));
             vanillaKothRewardsTier1.add(RewardUtils.build(RewardUtils.getVanillaEnchantmentBook(Enchantment.LOOT_BONUS_MOBS, 3)));
             vanillaKothRewardsTier1.add(RewardUtils.build(RewardUtils.setAmount(CreeperTypes.getCCItem((CreeperTypes)CreeperTypes.Lucky), 3)));
             vanillaKothRewardsTier1.add(new SpawnerItemBuilder(EntityType.BLAZE).setAmount(4));
             vanillaKothRewardsTier1.add(new ItemBuilder(CreeperTypes.getCCItem((CreeperTypes)CreeperTypes.Lucky)));
-            vanillaKothRewardsTier1.add(RewardUtils.build(McmmoCredits.buildSkillCreditItem((SkillType)SkillType.AXES, (int)75)));
-            vanillaKothRewardsTier1.add(RewardUtils.build(McmmoCredits.buildSkillCreditItem((SkillType)SkillType.REPAIR, (int)75)));
-            vanillaKothRewardsTier1.add(RewardUtils.build(McmmoCredits.buildSkillCreditItem((SkillType)SkillType.SALVAGE, (int)75)));
-            vanillaKothRewardsTier1.add(RewardUtils.build(McmmoCredits.buildSkillCreditItem((SkillType)SkillType.ALCHEMY, (int)75)));
             vanillaKothRewardsTier1.add(RewardUtils.build(new ItemStack(Material.MONSTER_EGG, 32, EntityType.CREEPER.getTypeId())));
             vanillaKothRewardsTier1.add((ItemBuilder)new EssentialsItemBuilder("373:16425 16 effect:strength power:2 duration:134 name:&f&k;_&c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH_&f&k;_&4&lStrength_II_Ext. lore:&7Please_mom,_just_a_little_bit_longer!"));
             vanillaKothRewardsTier1.add((ItemBuilder)new CustomTitleBuilder("#Cleared"));
@@ -314,7 +302,6 @@ public class RewardUtils {
             vanillaKothRewardsTier2.add((ItemBuilder)new BoosterBuilder("EXP", 1800, 2.0));
             vanillaKothRewardsTier2.add((ItemBuilder)new BoosterBuilder("MCMMO", 1800, 2.0));
             vanillaKothRewardsTier2.add((ItemBuilder)new BoosterBuilder("EXP", 900, 5.0));
-            vanillaKothRewardsTier2.add(new ItemBuilder(McmmoCredits.buildMcmmoCreditItem((int)50)));
             vanillaKothRewardsTier2.add(new ItemBuilder(RewardUtils.getVanillaEnchantmentBook(Enchantment.DURABILITY, 4)));
             vanillaKothRewardsTier2.add(new ItemBuilder(RewardUtils.getVanillaEnchantmentBook(Enchantment.DURABILITY, 3)).setAmount(2));
             vanillaKothRewardsTier2.add(new ItemBuilder(RewardUtils.getVanillaEnchantmentBook(Enchantment.LOOT_BONUS_MOBS, 4)));

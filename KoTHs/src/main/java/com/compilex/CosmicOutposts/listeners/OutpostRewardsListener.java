@@ -39,7 +39,6 @@ import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
 import com.compilex.CosmicOutposts.utils.MonsterUtils;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
-import com.gmail.nossr50.events.experience.McMMOPlayerXpGainEvent;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.FPlayer;
@@ -106,36 +105,6 @@ implements Listener {
         }
     }
 
-    @EventHandler
-    public void onMcMMOGainXP(McMMOPlayerXpGainEvent e) {
-        Faction playerFaction = FPlayers.i.get(e.getPlayer()).getFaction();
-        if (Bukkit.getPluginManager().isPluginEnabled("CosmicFactionBoosters") && BoosterAPI.hasActiveBooster(playerFaction, BoosterType.MCMMO)) {
-            return;
-        }
-        if (playerFaction.isNormal()) {
-            double xpMod = 1.0;
-            if (CosmicOutpostsAPI.controlsTraineeOutpost(e.getPlayer())) {
-                xpMod = 1.25;
-            }
-            if (CosmicOutpostsAPI.controlsHeroOutpost(e.getPlayer())) {
-                xpMod = 1.5;
-            }
-            if (CosmicOutpostsAPI.controlsVanillaOutpost(e.getPlayer())) {
-                xpMod = 1.75;
-            }
-            if (CosmicOutpostsAPI.controlsCosmonautOutpost(e.getPlayer())) {
-                xpMod = 2.0;
-            }
-            if (xpMod > 1.0) {
-                Player p = e.getPlayer();
-                if (!p.hasMetadata("CosmicOutposts.lastmcMMOBuffAlert") || System.currentTimeMillis() - p.getMetadata("CosmicOutposts.lastmcMMOBuffAlert").get(0).asLong() > 10000L) {
-                    p.setMetadata("CosmicOutposts.lastmcMMOBuffAlert", new FixedMetadataValue((Plugin)CosmicKOTHPlugin.get_(), System.currentTimeMillis()));
-                    p.sendMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + "+ " + xpMod + "x mcMMO " + ChatColor.GREEN + "(" + playerFaction.getTag() + "'s Astro Outpost " + ChatColor.GRAY + "[Tier: " + CosmicOutpostsAPI.getOutpostPlayerControls(p).getOutpostTier().chatPrefix + "]" + ChatColor.GREEN + ")");
-                }
-                e.setRawXpGained((float)((double)e.getRawXpGained() * xpMod));
-            }
-        }
-    }
 
     @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
     public void onCreatureSpawn(CreatureSpawnEvent e) {
