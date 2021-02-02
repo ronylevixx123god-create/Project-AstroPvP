@@ -84,7 +84,7 @@ extends JavaPlugin {
     private DungeonsAPI api;
     private static CosmicDungeonsPlugin _;
     private Economy economy;
-    private boolean disableDungeons = true;
+    private boolean disableDungeons = false;
     private boolean lowCostKeys = false;
     private boolean fundEnabled = false;
     private boolean disableCalled = false;
