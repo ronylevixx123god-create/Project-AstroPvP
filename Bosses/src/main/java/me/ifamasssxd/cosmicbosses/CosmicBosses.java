@@ -111,10 +111,6 @@ public class CosmicBosses extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents((Listener) new WitherBossListener(), (Plugin) this);
         this.getServer().getPluginManager().registerEvents((Listener) new DungeonBossListener(), (Plugin) this);
         this.getServer().getPluginManager().registerEvents((Listener) new EggListener(), (Plugin) this);
-        if (CosmicBosses.mcMMOEnabled) {
-            this.getServer().getPluginManager().registerEvents((Listener) new McmmoListener(), (Plugin) this);
-            System.out.println("Registering mcmmo listener.");
-        }
     }
 
     private void registerCommands() {
