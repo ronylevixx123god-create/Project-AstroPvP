@@ -537,7 +537,6 @@ public abstract class Outpost {
                 if (item != null) {
                     if (GeneralUtil.isArmor(item) && ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin().isRunning()) {
                         Bukkit.getLogger().info("[CosmicHCFOutposts] Replacing " + item + " with Equipment Lootbox!");
-                        item = ((EquipmentLootboxes)ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin()).createLootboxItem(true);
                     }
                     chest.getInventory().addItem(item);
                 }

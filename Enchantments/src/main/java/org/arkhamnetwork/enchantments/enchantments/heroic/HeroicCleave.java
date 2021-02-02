@@ -1,7 +1,5 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
-import com.gmail.nossr50.datatypes.player.McMMOPlayer;
-import com.gmail.nossr50.util.player.UserManager;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
@@ -39,20 +37,6 @@ public class HeroicCleave extends HeroicCustomEnchantment {
             return;
         }
         player.setMetadata("previous_cleave_use", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) System.currentTimeMillis()));
-        if (this.mcmmo) {
-            final Player p = (Player) player;
-            try {
-                if (UserManager.getPlayer(p) != null) {
-                    final McMMOPlayer mcMMOPlayer = UserManager.getPlayer(p);
-                    if (mcMMOPlayer.getAxesManager() != null && mcMMOPlayer.getAxesManager().canUseSkullSplitter(playerHit)) {
-                        return;
-                    }
-                }
-            } catch (IndexOutOfBoundsException err) {
-                Bukkit.getLogger().info("[Enchantments (Cleave)] Player " + p.getName() + " has null mcMMO profile? Assuming skullSplitter=true!");
-                return;
-            }
-        }
         if (damage > 0.0 && e.getDamage(EntityDamageEvent.DamageModifier.BASE) > 0.0) {
             final List<Entity> aoe = (List<Entity>) e.getEntity().getNearbyEntities(radius, radius, radius);
             for (final Entity aoe_ent : aoe) {

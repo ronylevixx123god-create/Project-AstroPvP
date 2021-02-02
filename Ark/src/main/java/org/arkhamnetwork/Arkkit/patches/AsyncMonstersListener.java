@@ -1,6 +1,5 @@
 package org.arkhamnetwork.Arkkit.patches;
 
-import com.gmail.nossr50.mcMMO;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.Board;
@@ -222,7 +221,6 @@ final class AsyncMonstersListener
                 AMUtils.setMonsterAmount(e2, monsterAmount - monstersToKill + monstersToAdd);
                 ((CraftEntity) e2).getHandle().fromMobSpawner = true;
                 e2.setMetadata("fromMobSpawner", new FixedMetadataValue(Arkkit.get(), true));
-                e2.setMetadata("mcMMO: Spawned Entity", mcMMO.metadataValue);
                 if (e2 instanceof Ageable && !(a = (Ageable) e2).isAdult()) {
                     a.setAdult();
                 }

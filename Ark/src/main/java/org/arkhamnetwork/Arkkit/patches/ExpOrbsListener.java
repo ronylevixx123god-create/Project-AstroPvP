@@ -37,7 +37,11 @@ final class ExpOrbsListener
             e.setUseInteractedBlock(Event.Result.DENY);
             e.setUseItemInHand(Event.Result.DENY);
             p.setItemInHand(null);
-            ExpUtils.setTotalExperience(p, ExpUtils.getTotalExperience(p) + xpValue);
+            int exp = (int) (p.getTotalExperience() + xpValue);
+            p.setTotalExperience(0);
+            p.setExp(0);
+            p.setLevel(0);
+            p.giveExp(exp);
             p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "+ " + xpValue + " xp");
         }
     }

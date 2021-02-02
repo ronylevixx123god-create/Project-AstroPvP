@@ -22,18 +22,13 @@ public class SkillSwipe extends CustomEnchantment {
         if (target instanceof Player) {
             final double random = Math.random();
             final double chance = 0.2 * enchantLevel;
-            int amountToSteal = enchantLevel * 6;
-            final int targetXp = ExpUtils.getTotalExperience((Player) target);
+            float amountToSteal = enchantLevel * 6;
+            final float targetXp = ((Player) target).getTotalExperience();
             if (targetXp - amountToSteal < 0) {
                 amountToSteal = targetXp;
             }
             if (amountToSteal <= 0) {
                 return;
-            }
-            if (random < chance) {
-                ExpUtils.setTotalExperience((Player) target, targetXp - amountToSteal);
-                ExpUtils.setTotalExperience((Player) user, ExpUtils.getTotalExperience((Player) user) + amountToSteal);
-                user.getWorld().spawnEntity(user.getTargetBlock((HashSet<Byte>) null, 1).getLocation(), EntityType.EXPERIENCE_ORB);
             }
         }
     }

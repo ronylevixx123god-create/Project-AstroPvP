@@ -9,13 +9,11 @@ import lombok.Setter;
 import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
 import org.arkhamnetwork.enchantments.cmds.*;
 import org.arkhamnetwork.enchantments.enchantments.armor.*;
-import org.arkhamnetwork.enchantments.enchantments.armor.boots.Nimble;
 import org.arkhamnetwork.enchantments.enchantments.axes.*;
 import org.arkhamnetwork.enchantments.enchantments.bow.*;
 import org.arkhamnetwork.enchantments.enchantments.heroic.*;
 import org.arkhamnetwork.enchantments.enchantments.swords.*;
 import org.arkhamnetwork.enchantments.enchantments.tools.*;
-import org.arkhamnetwork.enchantments.enchantments.weapons.Training;
 import org.arkhamnetwork.enchantments.items.EMPPulseItem;
 import org.arkhamnetwork.enchantments.listeners.*;
 import org.arkhamnetwork.enchantments.mastery.*;
@@ -78,7 +76,7 @@ public class Enchantments extends EnchantPlugin {
                 new Telepathy(), new Lucky(), new Leadership(), new SmokeBomb(), new Rage(), new ArrowLifesteal(), new Clarity(), new Spirits(), new UndeadRuse(), new Trickster(),
                 new BloodLust(), new Devour(), new Protection(), new Destruction(), new Hellfire(), new Ragdoll(), new Sniper(), new Snare(), this.naturesWrathEnchant = new NatureWrath(), new DivineImmolation(),
                 new Rogue(),
-                new Ghost(), new CreeperArmor(), new KillAura(), new Shackle(), new Immortal(), new Pummel(), new Barbarian(), new Skilling(), new Training(), new Nimble(),
+                new Ghost(), new CreeperArmor(), new KillAura(), new Shackle(), new Immortal(), new Pummel(), new Barbarian(),
                 new ArrowDeflect(), new Greatsword(), new Virus(), new Unfocus(), new Teleblock(), new Longbow(), new Inversion(), new Farcast(), new Paradox(), new Solitude(),
                 new Heavy(), new Hijack(), new Enrage(), new Dodge(), new Insanity(), new Phoenix(), new Disintegrate(), new BloodLink(), new Resilience(),
                 new Sticky(), new Metaphysical(), new Pacify(), new TargetTracking(), new DimensionRift(), new EagleEye(), new Marksman(), new Blacksmith(), new ArrowBreak(), new Assassin(),

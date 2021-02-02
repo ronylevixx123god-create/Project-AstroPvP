@@ -1,7 +1,6 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
-import com.gmail.nossr50.mcMMO;
 import com.rit.sucy.CustomEnchantment;
 import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.Enchantments;
@@ -34,7 +33,6 @@ public class Guardians extends CustomEnchantment {
         final IronGolem ig = (IronGolem) spawnLocation.getWorld().spawnEntity(spawnLocation, EntityType.IRON_GOLEM);
         ig.setMetadata("guardianSummoner", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) summoner.getName()));
         ig.setMetadata("no_loot", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) true));
-        ig.setMetadata("mcMMO: Spawned Entity", (MetadataValue) mcMMO.metadataValue);
         ig.setCanPickupItems(false);
         ig.setCustomName(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + summoner.getName() + "'s Guardian");
         ig.setCustomNameVisible(true);

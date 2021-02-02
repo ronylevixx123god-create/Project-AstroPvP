@@ -95,7 +95,12 @@ final class ExpBottlesListener
             if (xpValue == 710000 || xpValue > 710000 && xpValue % 710000 == 0) {
                 return;
             }
-            ExpUtils.setTotalExperience(p, ExpUtils.getTotalExperience(p) + xpValue);
+            int exp = (p.getTotalExperience() +xpValue);
+            p.setTotalExperience(0);
+            p.setExp(0);
+            p.setLevel(0);
+            p.giveExp(exp);
+
             p.playSound(p.getLocation(), Sound.GLASS, 1.0f, 0.8f);
             p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "+ " + xpValue + " xp");
         }

@@ -61,7 +61,7 @@ public class CosmicBosses extends JavaPlugin {
     @SneakyThrows
     public void onEnable() {
         (CosmicBosses.instance = this).saveDefaultConfig();
-        CosmicBosses.mcMMOEnabled = Bukkit.getPluginManager().isPluginEnabled("mcMMO");
+        //CosmicBosses.mcMMOEnabled = Bukkit.getPluginManager().isPluginEnabled("mcMMO");
         this.registerCommands();
         this.registerListeners();
         this.registerTasks();

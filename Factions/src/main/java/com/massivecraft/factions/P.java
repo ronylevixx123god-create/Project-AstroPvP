@@ -213,7 +213,6 @@ public class P extends MPlugin {
         /*
          This is the requirements for all additions put into Factions. (vvv)
         */
-        this.mcMMOTestUtil();
         this.registerNewListeners();
         this.registerNewCommands();
         this.cosmicFlyingPlugin = new CosmicFlyingPlugin();
@@ -341,28 +340,12 @@ public class P extends MPlugin {
         this.getServer().getPluginManager().registerEvents(new NetherMobSpawnerListener(), this);
 
         this.getServer().getPluginManager().registerEvents(new BoosterListener(this.boosterManager), this);
-        if (this.getServer().getPluginManager().isPluginEnabled("mcMMO")) {
-            this.getServer().getPluginManager().registerEvents(new mcMMOListener(), this);
-        }
 
         this.bannerListener = new BannerListener();
         this.getServer().getPluginManager().registerEvents(this.bannerListener, this);
         this.getServer().getPluginManager().registerEvents(new CommandListener(), this);
     }
 
-    private void mcMMOTestUtil() {
-        if (new File("plugins/mcMMO-beta.jar").exists() || new File("plugins/mcMMO.jar").exists()) {
-            Bukkit.getScheduler().runTaskLater(this, new Runnable(){
-                @Override
-                public void run() {
-                    if (!Bukkit.getPluginManager().isPluginEnabled("mcMMO")) {
-                        Bukkit.getLogger().info("mcMMO failed to load! (parties.yml error?) rebooting server!");
-                        Bukkit.shutdown();
-                    }
-                }
-            }, 200L);
-        }
-    }
 
     public static void debugCosmicFactionPoints(String debugString) {
         if (!debug) {

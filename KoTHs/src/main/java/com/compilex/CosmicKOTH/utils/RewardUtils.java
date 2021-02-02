@@ -215,9 +215,6 @@ public class RewardUtils {
         if (Math.random() <= 0.1) {
             rewards.add(CustomItemUtils.createRandomEvolutionKitGem());
         }
-        if (Math.random() <= 0.05) {
-            rewards.add(((EquipmentLootboxes)ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin()).createLootboxItem(true));
-        }
         if (Math.random() <= 0.03) {
             rewards.add(ItemID.removeItemID((ItemStack)com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils.setAmount((ItemStack)TieredEnchantments.getMysteryEnchantmentBook((int)7), (int)1)));
         }

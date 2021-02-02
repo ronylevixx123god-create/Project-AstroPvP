@@ -90,9 +90,9 @@ final class ExpBottlesCommand
                 return true;
             }
         }
-        int amount = 0;
+        float amount = 0;
         if (args[0].equalsIgnoreCase("all")) {
-            amount = ExpUtils.getTotalExperience(p);
+            amount = p.getTotalExperience();
         } else {
             try {
                 amount = Integer.parseInt(args[0]);
@@ -105,7 +105,7 @@ final class ExpBottlesCommand
             p.sendMessage(ChatColor.RED + "You must withdraw at least 25XP points per bottle.");
             return true;
         }
-        int currentXp = ExpUtils.getTotalExperience(p);
+        float currentXp = p.getTotalExperience();
         if (currentXp < amount) {
             p.sendMessage(ChatColor.RED + "You only have " + currentXp + " xp points to convert.");
             p.sendMessage(ChatColor.GRAY + "View your exp values with /xp");
@@ -120,12 +120,16 @@ final class ExpBottlesCommand
             p.sendMessage(ChatColor.RED + "You " + ChatColor.UNDERLINE + "cannot" + ChatColor.RED + " bottle EXP in Warzones.");
             return true;
         }
-        ExpUtils.setTotalExperience(p, currentXp - amount);
+        int exp = (int) (player.getTotalExperience() - amount);
+        player.setTotalExperience(0);
+        player.setExp(0);
+        player.setLevel(0);
+        player.giveExp(exp);
         p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "- " + amount + " xp");
         p.sendMessage(ChatColor.YELLOW + "You are now afflicted with " + ChatColor.UNDERLINE + "EXP Exhaustion" + ChatColor.YELLOW + " for " + this.getExpBottleCreationDelayMinutes(p) + " minute(s).");
         p.sendMessage(ChatColor.YELLOW + "You " + ChatColor.UNDERLINE + "cannot" + ChatColor.YELLOW + " use /xpbottle or teleport while EXP Exhausted.");
         p.playSound(p.getLocation(), Sound.ORB_PICKUP, 1.0f, 0.2f);
-        p.getInventory().addItem(ExpBottles.getXpBottle(amount, p.getName()));
+        p.getInventory().addItem(ExpBottles.getXpBottle((int) amount, p.getName()));
         p.setMetadata("nextExpBottle", new FixedMetadataValue(Arkkit.get(), System.currentTimeMillis() + (long) ((int) Math.round(this.getExpBottleCreationDelayMinutes(p) * 60.0 * 1000.0))));
         return true;
     }

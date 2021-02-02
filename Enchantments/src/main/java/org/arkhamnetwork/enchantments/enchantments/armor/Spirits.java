@@ -1,7 +1,5 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
-import com.gmail.nossr50.mcMMO;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
@@ -132,7 +130,6 @@ public class Spirits extends CustomEnchantment {
                         blaze.setMetadata("faction", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) facName));
                         blaze.setMetadata("acenstoralSummoner", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) p.getName()));
                         blaze.setMetadata("no_loot", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) true));
-                        blaze.setMetadata("mcMMO: Spawned Entity", (MetadataValue) mcMMO.metadataValue);
                         blaze.setCanPickupItems(false);
                         blaze.setCustomName(ChatColor.RED.toString() + ChatColor.BOLD.toString() + p.getName() + "'s Spirit");
                         blaze.setCustomNameVisible(true);

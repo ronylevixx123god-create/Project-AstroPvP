@@ -23,7 +23,6 @@ import me.ifamasssxd.factionupgrades.FactionUpgradeAPI;
 import me.ifamasssxd.factionupgrades.struct.FactionUpgrade;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
-import org.arkhamnetwork.Arkkit.utils.ExpUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -45,7 +44,7 @@ public class TPWarmup
     }
 
     protected static double getTeleportWarmupDelay(Player p) {
-        double xp = ExpUtils.getTotalExperience(p);
+        double xp = p.getTotalExperience();
         double teleportWarmup = 7.0;
         if (Bukkit.getPluginManager().isPluginEnabled("FactionUpgrades")) {
             int tpMasterTier = FactionUpgradeAPI.getPerkLevel(p, FactionUpgrade.TP_MASTERY);

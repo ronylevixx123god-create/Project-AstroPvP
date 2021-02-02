@@ -71,7 +71,7 @@ public class ScoreboardManager implements BoardAdapter {
         board.add(ChatColor.WHITE.toString() + "$" + NumberUtils.formatMoney((long) Econ.econ.getBalance(player)));
         board.add(" ");
         board.add(ChatColor.AQUA + ChatColor.BOLD.toString() + "XP");
-        board.add(ChatColor.WHITE.toString() + NumberUtils.formatMoney(getTotalExperience(player)));
+        board.add(ChatColor.WHITE.toString() + NumberUtils.formatMoney(player.getTotalExperience()));
         board.add(" ");
         board.add(ChatColor.RED + ChatColor.BOLD.toString() + "Ping");
         board.add(ChatColor.WHITE.toString() + getPing(player) + "ms");

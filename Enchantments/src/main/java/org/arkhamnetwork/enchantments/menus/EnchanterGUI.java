@@ -35,7 +35,7 @@ public class EnchanterGUI extends CosmicGUI {
 
                     NumberUtils.formatMoney(adjustedPrice) + CC.White + " EXP " + CC.Gray + "(Infernal Stronghold)") : (realPriceString + " EXP")))).data(
                     (short) rarity.getPaneColor().getWoolData()).build(), () -> {
-                int playerXp = ExpUtils.getTotalExperience(this.player);
+                int playerXp = this.player.getTotalExperience();
                 int price = (int) rarity.getPrice();
                 int newAdjustedPrice = HCFOutpostUtils.doesControlOutpost(this.player, "infernal") ? (int) (price * 0.9D) : price;
                 if (newAdjustedPrice > playerXp) {
@@ -49,7 +49,11 @@ public class EnchanterGUI extends CosmicGUI {
                     this.player.closeInventory();
                     return;
                 }
-                ExpUtils.setTotalExperience(this.player, playerXp - newAdjustedPrice);
+                int exp = (playerXp - newAdjustedPrice);
+                this.player.setTotalExperience(0);
+                this.player.setExp(0);
+                this.player.setLevel(0);
+                this.player.giveExp(exp);
                 this.player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "- " + NumberUtils.formatMoney(newAdjustedPrice) + " xp");
                 this.player.getInventory().addItem(TieredEnchantments.getMysteryEnchantmentBook(rarity.getTier()));
                 this.player.playSound(this.player.getLocation(), Sound.VILLAGER_HAGGLE, 1.0F, 0.44F);

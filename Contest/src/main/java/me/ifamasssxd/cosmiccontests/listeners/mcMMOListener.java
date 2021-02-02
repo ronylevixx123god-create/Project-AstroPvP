@@ -11,7 +11,7 @@ import org.bukkit.event.Listener;
 
 public class mcMMOListener
 implements Listener {
-    @EventHandler
+    /*@EventHandler
     public void onPLayerGainXP(McMMOPlayerXpGainEvent event) {
         mcMMOSkillContest contest;
         ContestManager manager = CosmicContests.get().getContestManager();
@@ -22,6 +22,6 @@ implements Listener {
             }
             contest.onPlayerGainXP(user, event.getSkill().name(), event.getRawXpGained());
         }
-    }
+    }*/
 }
 

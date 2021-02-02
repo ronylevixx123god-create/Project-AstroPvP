@@ -56,7 +56,7 @@ final class ExpOrbsCommand
             p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You must withdraw at least 100XP points per orb.");
             return true;
         }
-        int currentXp = ExpUtils.getTotalExperience(p);
+        float currentXp = p.getTotalExperience();
         if (currentXp < amount) {
             p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You only have " + currentXp + " xp points to convert.");
             p.sendMessage(ChatColor.GRAY + "View your exp values with /xp");
@@ -71,7 +71,12 @@ final class ExpOrbsCommand
             p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You " + ChatColor.UNDERLINE + "cannot" + ChatColor.RED + " convert EXP in Warzones.");
             return true;
         }
-        ExpUtils.setTotalExperience(p, currentXp - amount);
+        int exp = (player.getTotalExperience() - amount);
+        p.setTotalExperience(0);
+        p.setExp(0);
+        p.setLevel(0);
+        p.giveExp(exp);
+
         p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "- " + amount + " xp");
         p.playSound(p.getLocation(), Sound.ORB_PICKUP, 1.0f, 0.2f);
         p.getInventory().addItem(ExpOrbs.getXpOrb(amount, p.getName()));

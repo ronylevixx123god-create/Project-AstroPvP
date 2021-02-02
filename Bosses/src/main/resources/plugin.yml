@@ -1,7 +1,7 @@
 name: CosmicBosses
 version: 0.1
 main: me.ifamasssxd.cosmicbosses.CosmicBosses
-softdepend: [ Vault, mcMMO, Essentials, Factions ]
+softdepend: [ Vault, Essentials, Factions ]
 author: quantiom
 commands:
   spawnboss:

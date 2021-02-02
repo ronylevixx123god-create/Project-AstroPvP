@@ -12,8 +12,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import com.gmail.nossr50.datatypes.player.PlayerProfile;
-import com.gmail.nossr50.util.player.UserManager;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.Bukkit;
@@ -36,20 +34,8 @@ public class SafeShutdown
     public void disable() {
         if (Arkkit.get().shutting_down) {
             boolean hasWhitelist = Bukkit.hasWhitelist();
-            boolean mcmmo = Bukkit.getPluginManager().isPluginEnabled("mcMMO");
             Bukkit.setWhitelist(true);
             for (Player p : Bukkit.getOnlinePlayers()) {
-                if (mcmmo) {
-                    try {
-                        PlayerProfile pp = UserManager.getPlayer(p).getProfile();
-                        pp.changed = true;
-                        pp.save();
-                    } catch (Exception err) {
-                        Bukkit.getLogger().info("[Arkkit (SafeShutdown)] Handled exception caught for saving player " + p.getName() + "'s mcMMO data.");
-                        err.printStackTrace();
-                        continue;
-                    }
-                }
                 p.kickPlayer("The server is rebooting!");
             }
             for (World w : Bukkit.getWorlds()) {

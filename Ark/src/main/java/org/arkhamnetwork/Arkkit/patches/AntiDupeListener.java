@@ -55,10 +55,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import com.gmail.nossr50.datatypes.player.McMMOPlayer;
-import com.gmail.nossr50.datatypes.skills.AbilityType;
-import com.gmail.nossr50.util.ItemUtils;
-import com.gmail.nossr50.util.player.UserManager;
 import com.massivecraft.factions.*;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
@@ -279,32 +275,6 @@ final class AntiDupeListener
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
-    public void onItemPickup(PlayerPickupItemEvent e) {
-        block5:
-        {
-            if (AntiDupe.mcmmo) {
-                try {
-                    McMMOPlayer mcMMOPlayer;
-                    if (UserManager.getPlayer(e.getPlayer()) != null && ((mcMMOPlayer = UserManager.getPlayer(e.getPlayer())).getAbilityMode(AbilityType.BERSERK) || mcMMOPlayer.isUsingUnarmed() && ItemUtils.isSharable(e.getItem().getItemStack()))) {
-                        e.setCancelled(true);
-                        if (e.getPlayer().getInventory().firstEmpty() != -1) {
-                            ItemStack is = e.getItem().getItemStack().clone();
-                            e.getItem().remove();
-                            e.getPlayer().getInventory().addItem(is);
-                            e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.ITEM_PICKUP, 1.0f, 1.0f);
-                            e.getPlayer().updateInventory();
-                        }
-                    }
-                } catch (Exception err) {
-                    if (err instanceof IndexOutOfBoundsException) break block5;
-                    err.printStackTrace();
-                    e.getPlayer().removeMetadata("cl_combat", Arkkit.get());
-                    e.getPlayer().kickPlayer("Invalid mcMMO data, please relog!");
-                }
-            }
-        }
-    }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerJoin(PlayerJoinEvent e) {
