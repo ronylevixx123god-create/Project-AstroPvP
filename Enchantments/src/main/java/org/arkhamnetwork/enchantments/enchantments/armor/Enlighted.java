@@ -35,7 +35,7 @@ public class Enlighted extends CustomEnchantment {
                 public void run() {
                     GeneralUtil.healPlayer(player, 1.0);
                 }
-            }, 1L);
+            }, 20L);
         }
     }
 }

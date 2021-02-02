@@ -63,7 +63,7 @@ public class MasteryNeutralize extends CustomEnchantment {
                 if (DamageIndicatorUtils.isPlayerIndicating((Player) user)) {
                     DamageIndicatorUtils.createDamageIndicator((Player) user,
                             target.getLocation().add(1.0D, 2.0D, 0.0D),
-                            new String[] { String.valueOf(CC.DarkRedB) + "* NEUTRALIZED *", String.valueOf(CC.DarkRed) + level + "s" });
+                            new String[] { String.valueOf(CC.DarkRedB) + "* NEUTRALIZED * §7[" + level + "§7s] §4§l*" });
                 }
             } catch (Exception ex) {
 

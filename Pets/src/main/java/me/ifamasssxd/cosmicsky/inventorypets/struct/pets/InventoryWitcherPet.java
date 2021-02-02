@@ -9,6 +9,7 @@ import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.struct.Relation;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.damageindicators.utils.DamageIndicatorUtils;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
@@ -99,7 +100,13 @@ public class InventoryWitcherPet extends InventoryPet {
             player.sendMessage(String.valueOf(CC.RedB) + "* REINDEER ITEM SKIN " + CC.Gray + "(" + CC.White + "2x Pet Length" + CC.Gray + ")");
         }
 
+        if (playerHasApollo(player)) {
+            sum*=1.5;
+        }
+
         procAbility(player, sum, petItem.getLevel());
+
+
         return true;
     }
 
@@ -118,9 +125,18 @@ public class InventoryWitcherPet extends InventoryPet {
             p.setWalkSpeed(0.0F);
             p.setMetadata("witcher_ability", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
             p.setMetadata("teleblock", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), Long.valueOf(System.currentTimeMillis() + (level * 2000))));
+            try {
+                if (DamageIndicatorUtils.isPlayerIndicating((Player) player)) {
+                    DamageIndicatorUtils.createDamageIndicator((Player) player,
+                            p.getLocation().add(1.0D, 2.0D, 0.0D),
+                            new String[] { CC.DarkRedB + "* WITCHER §7[" + sum + "] §4§l*" });
+                }
+            } catch (Exception ex) {
+
+            }
             players.add(p);
         }
-        ParticleEffect.playEffect(ParticleEffect.LARGE_EXPLODE, player.getLocation().add(0.0D, 1.0D, 0.0D), 1.0F, 3);
+        //ParticleEffect.playEffect(ParticleEffect.LARGE_EXPLODE, player.getLocation().add(0.0D, 1.0D, 0.0D), 1.0F, 3);
         player.sendMessage("");
         player.sendMessage(CC.translate("&4&l** WITCHER PET [&6" + sum + "s&4&l] AOE - Ragdoll, Soul Enchantments - BLOCKED **"));
         player.sendMessage("");
@@ -205,5 +221,9 @@ public class InventoryWitcherPet extends InventoryPet {
                 Math.abs(d.y * c.z - d.z * c.y) <= e.y * ad.z + e.z * ad.y + 9.999999747378752E-5D &&
                 Math.abs(d.z * c.x - d.x * c.z) <= e.z * ad.x + e.x * ad.z + 9.999999747378752E-5D &&
                 Math.abs(d.x * c.y - d.y * c.x) <= e.x * ad.y + e.y * ad.x + 9.999999747378752E-5D);
+    }
+
+    public boolean playerHasApollo(Player pl) {
+        return CosmicArmorSetsAPI.getBonusCrystalsEquipped(pl).containsKey(ArmorSet.APOLLO) || CosmicArmorSetsAPI.getArmorSet(pl) == ArmorSet.APOLLO;
     }
 }

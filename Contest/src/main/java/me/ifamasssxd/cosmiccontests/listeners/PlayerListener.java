@@ -54,14 +54,6 @@ implements Listener {
             if (user.getName() != null && !user.getName().equals(pl.getName())) {
                 user.updateName(pl.getName());
             }
-            if ((prizes = CosmicContests.get().getPrizeManager().getCachedPrizes().get(pl.getUniqueId())) != null && !prizes.isEmpty()) {
-                Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)CosmicContests.get(), () -> {
-                    pl.playSound(pl.getLocation(), Sound.WITHER_SHOOT, 1.0f, 1.4f);
-                    pl.sendMessage("");
-                    pl.sendMessage((Object)ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.GREEN + "You have " + (Object)ChatColor.GREEN + (Object)ChatColor.BOLD + (Object)ChatColor.UNDERLINE + prizes.size() + (Object)ChatColor.GREEN + " pending Challenge prizes!");
-                    pl.sendMessage((Object)ChatColor.GRAY + "Use " + (Object)ChatColor.GREEN + "/challenge claim" + (Object)ChatColor.GRAY + " to claim your prizes!");
-                }, 50L);
-            }
         }
     }
 

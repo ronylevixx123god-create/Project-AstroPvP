@@ -1,11 +1,14 @@
 package me.ifamasssxd.cosmicsky.inventorypets.struct.pets;
 
+import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
+import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.struct.Relation;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.damageindicators.utils.DamageIndicatorUtils;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
@@ -52,6 +55,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
             return 6.0D;
         return 3.0D;
     }
+
 
     public int getCooldown(int level) {
         return 300;
@@ -111,7 +115,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         }
 
         if (WorldGuardUtils.isPvPDisabled(locationClicked)) {
-            player.sendMessage(ChatColor.RED + "Combat is disabled in this region.");
+            player.sendMessage("PET: " + CC.Red + "Not allowed in this region!");
             return true;
         }
         if (player.hasMetadata("inDungeonParkour"))
@@ -120,8 +124,19 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
             throw new PrefixedPetException("Could not find a valid target!");
         }
 
-        if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.SEXY_HELMET) && Math.random() < 0.5) {
+        if (playerHasApollo(target)) {
+            player.sendMessage(CC.translate("&f&l* &7&n" + target.getName() + "&f&l APOLLO SET BLOCKED CAGE *"));
+            target.sendMessage(CC.translate("&f&l* BLOCKED &7&n" + player.getName() + "&f&l WORLD DESTROYER *"));
+            return true;
+        }
+
+        if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.SEXY_HELMET) && Math.random() < 0.5 && !playerHasApollo(player)) {
             petItem.setLastUsed(System.currentTimeMillis());
+            if (playerHasApollo(player)) {
+                target.sendMessage(CC.translate("&c&l* CHAD SUNGLASSES &a&lBYPASSED &7[&c" + player.getName() + "&cApollo Set" + "&7] &c&l*"));
+                player.sendMessage(CC.translate("&a&l* BYPASSED CHAD SUNGLASSED FROM &c&n" + target.getName() + "&a&l *"));
+                return true;
+            }
             player.sendMessage(CC.translate("&d&l* CHAD SUNGLASSES BLOCKED &7[&c" + target.getName() + "&7] &d&l*"));
             target.sendMessage(CC.translate("&d&l* CHAD SUNGLASSES &7[&cBlocked World Destroyer&7] &d&l*"));
             return true;
@@ -170,9 +185,24 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
                 }
             }
         }
-        Bukkit.getScheduler().runTaskLater(CosmicSkyInventoryPets.get(), () -> getBlockModifier().removeBlocks(p.getUniqueId(), true, true), (long) cageDuration(petItem.getLevel()) * 20);
+        if (playerHasApollo(player)) {
+            Bukkit.getScheduler().runTaskLater(CosmicSkyInventoryPets.get(), () -> getBlockModifier().removeBlocks(p.getUniqueId(), true, true), (long) ((long) (cageDuration(petItem.getLevel()) +cageDuration(petItem.getLevel()/2)) * 20));
 
+        } else {
+            Bukkit.getScheduler().runTaskLater(CosmicSkyInventoryPets.get(), () -> getBlockModifier().removeBlocks(p.getUniqueId(), true, true), (long) cageDuration(petItem.getLevel()) * 20);
+        }
         petItem.addExperience(player, 100);
+
+
+        try {
+            if (DamageIndicatorUtils.isPlayerIndicating((Player) player)) {
+                DamageIndicatorUtils.createDamageIndicator((Player) player,
+                        target.getLocation().add(1.0D, 2.0D, 0.0D),
+                        new String[] { CC.YellowB + "* WORLD DESTROYER §7[" + cageDuration(petItem.getLevel()) + "] §e§l*" });
+            }
+        } catch (Exception ex) {
+
+        }
 
         player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
         player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
@@ -186,4 +216,9 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
     public boolean onTickInHotBar(Player player, int inventorySlot, InventoryPetItem item) {
         return false;
     }
+
+    public boolean playerHasApollo(Player pl) {
+        return CosmicArmorSetsAPI.getBonusCrystalsEquipped(pl).containsKey(ArmorSet.APOLLO) || CosmicArmorSetsAPI.getArmorSet(pl) == ArmorSet.APOLLO;
+    }
+
 }

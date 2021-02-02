@@ -28,7 +28,7 @@ public class Angelic extends CustomEnchantment {
 
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         final double random = Math.random();
-        final double chance = 0.03 * level;
+        final double chance = 0.015 * level;
         if (random < chance) {
             long healDelay = 100L;
             if (level <= 1) {

@@ -99,23 +99,6 @@ public class KothSanityListener implements Listener {
         }
     }
 
-    @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent e) {
-        if (CosmicKOTHAPI.canTeleportToKOTH()) {
-            final Player p = e.getPlayer();
-            Bukkit.getScheduler().runTaskLater((Plugin)CosmicKOTHPlugin.get_(), new Runnable(){
-
-                @Override
-                public void run() {
-                    p.sendMessage("");
-                    p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "*** A KOTH EVENT IS RUNNING! ***");
-                    p.sendMessage((Object)ChatColor.GRAY + "Use " + (Object)ChatColor.GREEN + "/koth" + (Object)ChatColor.GRAY + " to view event information!");
-                    p.sendMessage("");
-                }
-            }, 25L);
-        }
-    }
-
     @EventHandler(priority=EventPriority.LOWEST)
     public void onPlayerInteract(PlayerInteractEvent e) {
         if (e.hasItem() && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && e.getItem().getType() == Material.WEB && e.getPlayer().getWorld().getName().equals("world_koth")) {

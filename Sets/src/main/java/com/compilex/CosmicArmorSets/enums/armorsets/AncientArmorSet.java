@@ -123,14 +123,14 @@ public class AncientArmorSet
         if (!(event.getEntity() instanceof Player)) {
             return false;
         }
-        if (Math.random() <= 0.05 || damager.isOp() && damager.isSneaking()) {
+        if (Math.random() <= 0.03 || damager.isOp() && damager.isSneaking()) {
             this.removeResistance(damager);
             if (this.isBlockedOutpostWorld(damager)) {
                 return false;
             }
             this.startAncientEffect(damager, (Player) event.getEntity());
         }
-        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.45);
+        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.30);
         return true;
     }
 
@@ -154,7 +154,7 @@ public class AncientArmorSet
         if (!(event.getEntity() instanceof Player)) {
             return false;
         }
-        if (Math.random() <= 0.0035 * (double) applied || damager.isOp() && damager.isSneaking()) {
+        if (Math.random() <= 0.0025 * (double) applied || damager.isOp() && damager.isSneaking()) {
             this.removeResistance(damager);
             if (this.isBlockedOutpostWorld(damager)) {
                 return false;

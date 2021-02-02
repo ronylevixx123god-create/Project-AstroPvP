@@ -67,7 +67,7 @@ public class InventoryStitchesPet extends InventoryPet {
             throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
         }
         if (!WorldGuardUtils.isPvPEnabled(player.getLocation())) {
-            throw new PrefixedPetException("You cannot use this pet in non pvp-enabled territory.");
+            throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "Not allowed in this region!");
         }
         List<Player> nearbyEntities = player.getNearbyEntities(14, 14, 14).stream().filter(nearbyEntity -> {
             if (!(nearbyEntity instanceof Player))

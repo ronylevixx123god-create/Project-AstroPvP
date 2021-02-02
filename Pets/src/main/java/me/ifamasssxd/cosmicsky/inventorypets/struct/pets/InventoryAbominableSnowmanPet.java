@@ -1,5 +1,7 @@
 package me.ifamasssxd.cosmicsky.inventorypets.struct.pets;
 
+import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
+import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
@@ -86,7 +88,7 @@ public class InventoryAbominableSnowmanPet extends InventoryPet {
          throw new PrefixedPetException("You must be in a faction to use this pet!");
       Location locationClicked = player.getLocation();
       if (!WorldGuardUtils.isPvPEnabled(locationClicked)) {
-         player.sendMessage(ChatColor.RED + "Combat is disabled in this region.");
+         player.sendMessage(String.valueOf(CC.RedB) + "PET: " + CC.Red + "Not allowed in this region!");
          return true;
       }
       this.petLevel = petItem.getLevel();
@@ -196,4 +198,5 @@ public class InventoryAbominableSnowmanPet extends InventoryPet {
       }
       return distance;
    }
+
 }

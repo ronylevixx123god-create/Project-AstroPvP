@@ -6,8 +6,11 @@ import com.cosmicpvp.cosmicutils.utils.TimeUtils;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
+
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import me.astropvp.damageindicators.utils.DamageIndicatorUtils;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
@@ -23,50 +26,59 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class InventoryFeignDeathPet extends InventoryPet {
-   public InventoryPets getOwner() {
-      return null;
-   }
+    public InventoryPets getOwner() {
+        return null;
+    }
 
-   public List getPetDescription(int level) {
-      return Lists.newArrayList(CC.Gray + "A ghastly pet that can", CC.Gray + "control death itself.", "", CC.WhiteB + "Ability", CC.Gray + "Fake your own death.", CC.Gray + "[" + CC.DarkRed + "Feign Death" + CC.Gray + "]", "", CC.WhiteB + "Cooldown", CC.Gray + " 10 Minutes");
-   }
+    public List getPetDescription(int level) {
+        return Lists.newArrayList(CC.Gray + "A ghastly pet that can", CC.Gray + "control death itself.", "", CC.WhiteB + "Ability", CC.Gray + "Fake your own death.", CC.Gray + "[" + CC.DarkRed + "Feign Death" + CC.Gray + "]", "", CC.WhiteB + "Cooldown", CC.Gray + " 10 Minutes");
+    }
 
-   public int getExpForLevel(int level) {
-      return level * 750;
-   }
+    public int getExpForLevel(int level) {
+        return level * 750;
+    }
 
-   public int getMaxLevel() {
-      return 5;
-   }
+    public int getMaxLevel() {
+        return 5;
+    }
 
-   public int getCooldown(int level) {
-      return (int)TimeUnit.MINUTES.toSeconds(10L);
-   }
+    public int getCooldown(int level) {
+        return (int) TimeUnit.MINUTES.toSeconds(10L);
+    }
 
-   public boolean onPetItemInteract(Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws Exception {
-      long lastUse = petItem.getLastUsed();
-      long delay = TimeUnit.SECONDS.toMillis((long)this.getCooldown(petItem.getLevel()));
-      long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
-      if (PetUtils.isOnCooldown(player, petItem.getPetType()) && (!player.isOp() || !player.isSneaking()))
-         throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU +
-                 TimeUtils.formatSeconds(PetUtils.getSecondsOnCooldown(player, petItem.getPetType())));
-            boolean inCombat = CombatLog.inCombat(player);
-            boolean inWarzone = Board.getFactionAt(new FLocation(player.getLocation())).isWarZone();
-            int xpGain = inWarzone ? 50 : 5;
-            if (!inCombat) {
-               xpGain = 1;
+    public boolean onPetItemInteract(Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws Exception {
+        long lastUse = petItem.getLastUsed();
+        long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown(petItem.getLevel()));
+        long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
+        if (PetUtils.isOnCooldown(player, petItem.getPetType()) && (!player.isOp() || !player.isSneaking()))
+            throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU +
+                    TimeUtils.formatSeconds(PetUtils.getSecondsOnCooldown(player, petItem.getPetType())));
+        boolean inCombat = CombatLog.inCombat(player);
+        boolean inWarzone = Board.getFactionAt(new FLocation(player.getLocation())).isWarZone();
+        int xpGain = inWarzone ? 50 : 5;
+        if (!inCombat) {
+            xpGain = 1;
+        }
+        MasteryFeignDeath.vanishPlayer(player, petItem.getLevel());
+        petItem.addExperience(player, xpGain);
+        PetUtils.addPetCooldown(player, petItem.getPetType(), (getCooldown(petItem.getLevel()) * 1000));
+        player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
+        player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
+        try {
+            if (DamageIndicatorUtils.isPlayerIndicating((Player) player)) {
+                DamageIndicatorUtils.createDamageIndicator((Player) player,
+                        player.getLocation().add(1.0D, 2.0D, 0.0D),
+                        new String[]{CC.YellowB + "* FEIGN DEATH *"});
             }
-            MasteryFeignDeath.vanishPlayer(player, petItem.getLevel());
-            petItem.addExperience(player, xpGain);
-            PetUtils.addPetCooldown(player, petItem.getPetType(), (getCooldown(petItem.getLevel()) * 1000));
-            player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
-            player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
-            player.sendMessage(CC.GreenB + "+ " + CC.Green + NumberUtils.formatMoney((double)xpGain) + " Pet EXP " + CC.GreenB + "[" + CC.Gray + petItem.getExp() + "/" + petItem.getPetType().getInternalClass().getExpForLevel(petItem.getLevel() + 1) + CC.GreenB + "]");
-            return true;
+        } catch (Exception ex) {
 
-   }
+        }
+        player.sendMessage(CC.GreenB + "+ " + CC.Green + NumberUtils.formatMoney((double) xpGain) + " Pet EXP " + CC.GreenB + "[" + CC.Gray + petItem.getExp() + "/" + petItem.getPetType().getInternalClass().getExpForLevel(petItem.getLevel() + 1) + CC.GreenB + "]");
+        return true;
 
-   public boolean onTickInHotBar(Player player, int inventorySlot, InventoryPetItem item) {
-      return false;
-   }
+    }
+
+    public boolean onTickInHotBar(Player player, int inventorySlot, InventoryPetItem item) {
+        return false;
+    }
 }

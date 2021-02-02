@@ -17,7 +17,7 @@ public class DeathGod extends CustomEnchantment {
 
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         final double random = Math.random();
-        final double procChance = 0.010 * level;
+        final double procChance = 0.008 * level;
         if (random < procChance && player.getHealth() - e.getDamage(EntityDamageEvent.DamageModifier.BASE) <= 4 + level) {
             e.setCancelled(true);
             e.setDamage(0.0);

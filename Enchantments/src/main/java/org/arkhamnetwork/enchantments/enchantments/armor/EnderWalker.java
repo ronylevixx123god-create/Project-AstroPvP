@@ -77,7 +77,7 @@ public class EnderWalker extends CustomEnchantment {
                         player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 200, 0));
                     }
                 }
-            }, 2L);
+            }, 20L);
             de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayer((Player) player, player.getLocation(), 0,1,0,0.75f,70);
         }
     }

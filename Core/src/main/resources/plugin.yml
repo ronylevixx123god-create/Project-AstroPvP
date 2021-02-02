@@ -23,6 +23,8 @@ commands:
     aliases: ['lms']
   grinding:
     aliases: ['grind']
+  list:
+    aliases: ['elist']
   dupe:
     description: /dupe
   givetracker:
