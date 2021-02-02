@@ -14,7 +14,6 @@
  */
 package me.ifamasssxd.cosmicevolutionkits.structure.ekits;
 
-import com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils;
 import com.google.common.collect.Lists;
 import com.rit.sucy.EnchantmentAPI;
 import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKit;
@@ -81,9 +80,6 @@ extends EvolutionKit {
         }
         if (kitLevel >= 9 && Math.random() < 0.05 * (double)(kitLevel - 8)) {
             troll_axe.addCustomEnchant("Soul Trap", Math.max(1, Math.min(2 + new Random().nextInt(EnchantmentAPI.getEnchantment((String)"Soul Trap").getMaxLevel()), EnchantmentAPI.getEnchantment((String)"Soul Trap").getMaxLevel())));
-        }
-        if (kitLevel == 10 && Math.random() < 0.05) {
-            items.add(ItemUtils.getTitleVoucher((String)"Troll"));
         }
         items.add(EnchantmentBook.applyTransmogScroll((ItemStack)troll_axe.addEnchant(Enchantment.DAMAGE_ALL, 5).addEnchant(Enchantment.FIRE_ASPECT, 2).addEnchant(Enchantment.DURABILITY, 3).build()));
         return items;

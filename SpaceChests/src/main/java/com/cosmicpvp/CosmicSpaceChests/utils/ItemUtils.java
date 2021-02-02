@@ -6,14 +6,12 @@ import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.cosmicpvp.CosmicSpaceChests.libs.RankItems;
 import com.cosmicpvp.CosmicSpaceChests.libs.TitleItems;
 import com.cosmicpvp.CosmicSpaceChests.listeners.EnvoySummonItemListener;
-import com.gmail.nossr50.datatypes.skills.SkillType;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
 import me.ifamasssxd.cosmicbosses.utils.BossEggUtils;
 import me.ifamasssxd.cosmicguishop.ArkhamMoneyNotesAPI;
 import org.arkhamnetwork.Arkkit.patches.ItemNametag;
-import org.arkhamnetwork.Arkkit.patches.McmmoCredits;
 import org.arkhamnetwork.CosmicCustomTNT.enums.TNTTypes;
 import org.arkhamnetwork.enchantments.EnchantmentBook;
 import org.arkhamnetwork.enchantments.util.TieredEnchantments;
@@ -105,13 +103,6 @@ public class ItemUtils {
         return TitleItems.getTitleItem(title);
     }
 
-    public static ItemStack getMCMMOVoucher(int amount) {
-        return McmmoCredits.buildMcmmoCreditItem((int)amount);
-    }
-
-    public static ItemStack getSkillVoucher(SkillType type, int amount) {
-        return McmmoCredits.buildSkillCreditItem((SkillType)type, (int)amount);
-    }
 
     public static ItemStack getMobSpawner(EntityType entityType) {
         return ItemUtils.buildItem(Material.MOB_SPAWNER, entityType.getTypeId(), ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + ItemUtils.getEntityName(entityType) + ChatColor.GOLD.toString() + " Spawner", new String[0]);
@@ -158,7 +149,7 @@ public class ItemUtils {
         return BossEggUtils.getBossEgg((BossType)bossType);
     }
 
-    private static String getEntityName(EntityType et) {
+    public static String getEntityName(EntityType et) {
         if (et == EntityType.IRON_GOLEM) {
             return "Iron Golem";
         }
@@ -168,7 +159,7 @@ public class ItemUtils {
         return et.getName();
     }
 
-    private static int getItemRarityID(ItemRarity ir) {
+    public static int getItemRarityID(ItemRarity ir) {
         if (ir == ItemRarity.SIMPLE) {
             return 1;
         }

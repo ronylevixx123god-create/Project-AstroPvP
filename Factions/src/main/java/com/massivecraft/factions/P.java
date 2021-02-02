@@ -26,7 +26,6 @@ package com.massivecraft.factions;
 import com.conaxgames.factions.boosters.commands.CommandBooster;
 import com.conaxgames.factions.boosters.commands.CommandCheckBooster;
 import com.conaxgames.factions.boosters.listeners.BoosterListener;
-import com.conaxgames.factions.boosters.listeners.mcMMOListener;
 import com.conaxgames.factions.boosters.struct.BoosterManager;
 import com.conaxgames.factions.boosters.tasks.BoosterTask;
 import com.conaxgames.factions.utils.cmds.Command2FA;

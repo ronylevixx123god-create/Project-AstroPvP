@@ -19,17 +19,13 @@
  */
 package me.ifamasssxd.cosmicevolutionkits.structure.ekits;
 
-import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
-import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
-import com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils;
 import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKit;
+import me.ifamasssxd.cosmicevolutionkits.utils.ItemUtils;
 import me.ifamasssxd.killtracker.KillTrackerAPI;
-import org.arkhamnetwork.Arkkit.patches.MysteryMobSpawners;
-import org.arkhamnetwork.enchantments.EnchantmentBook;
 import org.arkhamnetwork.enchantments.EnchantmentOrb;
 import org.arkhamnetwork.enchantments.libs.OrbType;
 import org.arkhamnetwork.enchantments.util.TieredEnchantments;
@@ -62,11 +58,7 @@ extends EvolutionKit {
             int dustRarityId;
             for (dustRarityId = 3 + new Random().nextInt(2); (double)kitLevel * 0.08 > Math.random() && dustRarityId < 6; ++dustRarityId) {
             }
-            ItemRarity ir = CosmicSpaceChestsAPI.getItemRarity((int)dustRarityId);
-            if (ir == ItemRarity.GOD) {
-                ir = Math.random() < 0.35 ? ItemRarity.SOUL : ItemRarity.LEGENDARY;
-            }
-            items.add(EnchantmentBook.getSecretDust((ItemRarity)ir, (int)((int)((double)(kitLevel * 10) * Math.random()))));
+
         }
         if (kitLevel >= 2) {
             int soulCount = Math.max((int)((double)(kitLevel * 500) * (Math.random() * 2.0)), kitLevel * 200) / 2;
@@ -77,9 +69,6 @@ extends EvolutionKit {
             while (blackScrollCount-- >= 0) {
                 items.add(ItemUtils.getBlackscroll((int)(kitLevel * 5 + new Random().nextInt(51))));
             }
-        }
-        if (kitLevel >= 4 && Math.random() < (double)kitLevel * 0.1) {
-            items.add(MysteryMobSpawners.getMysteryMobSpawner());
         }
         if (kitLevel >= 5) {
             int whiteScrollCount = kitLevel / 5;

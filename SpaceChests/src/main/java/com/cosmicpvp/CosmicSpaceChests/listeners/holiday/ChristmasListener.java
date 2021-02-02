@@ -7,8 +7,6 @@ import com.cosmicpvp.CosmicSpaceChests.tasks.holiday.Christmas2018Task;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.Packet;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
-import org.arkhamnetwork.Arkkit.patches.Christmas;
-import org.arkhamnetwork.Arkkit.patches.Drinks;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -171,14 +169,6 @@ implements Listener {
                 }
                 this.spawnChristmasMonster(b.getLocation().add(0.0, 1.0, 0.0), EntityType.PIG_ZOMBIE);
                 this.spawnChristmasMonster(b.getLocation().add(0.0, 1.0, 0.0), EntityType.SKELETON);
-            }
-            if (new Random().nextBoolean()) {
-                ItemStack candy = Christmas.getChristmasCandy();
-                candy.setAmount(new Random().nextInt(64) + 1);
-                b.getWorld().dropItem(b.getLocation(), candy);
-            } else {
-                ItemStack eggnog = Drinks.getChristmasDrink();
-                eggnog.setAmount(new Random().nextInt(32) + 1);
             }
             return;
         }

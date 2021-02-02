@@ -8,7 +8,6 @@ import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.Packet;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
-import org.arkhamnetwork.Arkkit.patches.Halloween;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
@@ -159,9 +158,6 @@ implements Listener {
             for (ItemStack i : items = CosmicSpaceChestsAPI.getItems(ir, 4)) {
                 b.getWorld().dropItemNaturally(b.getLocation(), i);
             }
-            ItemStack candy = Halloween.getHalloweenCandy();
-            candy.setAmount(new Random().nextInt(64) + 1);
-            b.getWorld().dropItem(b.getLocation(), candy);
             return;
         }
     }

@@ -20,7 +20,6 @@ import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsPlugin;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.cosmicpvp.CosmicSpaceChests.listeners.EnvoySummonItemListener;
 import com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils;
-import org.arkhamnetwork.Arkkit.patches.Easter;
 import org.arkhamnetwork.CosmicCustomTNT.enums.TNTTypes;
 import org.arkhamnetwork.enchantments.EnchantmentBook;
 import org.bukkit.Bukkit;
@@ -66,8 +65,6 @@ implements CommandExecutor {
                 return true;
             }
             if (args[0].equalsIgnoreCase("easter")) {
-                ItemStack is = Easter.getEasterEgg();
-                ItemUtils.giveItemToPlayer(ply, is);
                 ply.sendMessage((Object)ChatColor.GRAY + "You got an " + (Object)ChatColor.YELLOW + (Object)ChatColor.UNDERLINE + "Easter Egg!");
                 ply.updateInventory();
                 if (sender instanceof Player && !((Player)sender).getName().equalsIgnoreCase(ply.getName())) {

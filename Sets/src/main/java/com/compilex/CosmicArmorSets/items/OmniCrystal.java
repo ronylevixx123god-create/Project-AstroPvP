@@ -102,7 +102,7 @@ public class OmniCrystal
         cosmicData.setInt("omniArmorSet", 1);
         clickedWrapper.setNBTBase("conaxData", cosmicData.get());
         NBTTagCompoundBuilder display = clickedWrapper.hasKey("display") ? new NBTTagCompoundBuilder(clickedWrapper.getNBTBase("display")) : new NBTTagCompoundBuilder();
-        display.setInt("color", 0x76CEF7);
+        display.setInt("color", 0x0027FF);
         clickedWrapper.setNBTBase("display", display.get());
         event.setCurrentItem(clickedWrapper.build());
     }

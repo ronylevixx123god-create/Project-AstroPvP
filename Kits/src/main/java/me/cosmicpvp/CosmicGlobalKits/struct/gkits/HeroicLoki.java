@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Random;
 import me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits;
 import me.cosmicpvp.CosmicGlobalKits.struct.GlobalKit;
-import org.arkhamnetwork.Arkkit.patches.NewYears;
 import org.arkhamnetwork.enchantments.EnchantmentOrb;
 import org.arkhamnetwork.enchantments.libs.OrbType;
 import org.bukkit.ChatColor;
@@ -102,10 +101,6 @@ extends GlobalKit {
             if (orb != null) {
                 rewards.add(orb);
             }
-        } else {
-            ItemStack candy = NewYears.getExplosiveCake();
-            candy.setAmount(32);
-            rewards.add(candy);
         }
         return rewards;
     }

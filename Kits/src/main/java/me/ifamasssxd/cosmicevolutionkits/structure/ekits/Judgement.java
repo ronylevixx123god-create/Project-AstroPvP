@@ -21,7 +21,6 @@ import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKit;
 import me.ifamasssxd.cosmicevolutionkits.utils.EnchantedItemBuilder;
 import me.ifamasssxd.cosmicevolutionkits.utils.ItemBuilder;
 import org.arkhamnetwork.Arkkit.patches.ExpBottles;
-import org.arkhamnetwork.Arkkit.patches.McmmoCredits;
 import org.arkhamnetwork.enchantments.EnchantmentBook;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -143,7 +142,6 @@ extends EvolutionKit {
         }
         karma_boots.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchant(Enchantment.PROTECTION_FALL, 2).addEnchant(Enchantment.DURABILITY, 3);
         items.add(EnchantmentBook.applyTransmogScroll((ItemStack)karma_boots.build()));
-        items.add(McmmoCredits.buildMcmmoCreditItem((int)(5 * kitLevel)));
         items.add(ExpBottles.getXpBottle((int)(kitLevel == 1 ? 25000 : (kitLevel == 2 ? 50000 : (kitLevel == 3 ? 100000 : (kitLevel == 4 ? 200000 : (kitLevel == 5 ? 350000 : (kitLevel == 6 ? 500000 : (kitLevel == 7 ? 750000 : (kitLevel == 8 ? 1000000 : (kitLevel == 9 ? 1500000 : (kitLevel == 10 ? 2000000 : 25000)))))))))), (String)"Judgment VKit"));
         return items;
     }

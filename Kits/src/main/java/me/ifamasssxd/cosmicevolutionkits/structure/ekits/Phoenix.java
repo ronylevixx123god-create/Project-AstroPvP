@@ -14,12 +14,12 @@
  */
 package me.ifamasssxd.cosmicevolutionkits.structure.ekits;
 
-import com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils;
 import com.google.common.collect.Lists;
 import com.rit.sucy.EnchantmentAPI;
 import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKit;
 import me.ifamasssxd.cosmicevolutionkits.utils.EnchantedItemBuilder;
 import me.ifamasssxd.cosmicevolutionkits.utils.ItemBuilder;
+import me.ifamasssxd.cosmicevolutionkits.utils.ItemUtils;
 import org.arkhamnetwork.enchantments.EnchantmentBook;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

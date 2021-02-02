@@ -27,7 +27,6 @@ import me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits;
 import me.cosmicpvp.CosmicGlobalKits.struct.GlobalKit;
 import me.cosmicpvp.CosmicGlobalKits.utils.ItemUtils;
 import me.ifamasssxd.killtracker.KillTrackerAPI;
-import org.arkhamnetwork.Arkkit.patches.Halloween;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -104,10 +103,6 @@ extends GlobalKit {
         rewards.add(sword);
         if (Math.random() < 0.005) {
             rewards.add(CosmicArmorSetsAPI.getArmorSet((ArmorSet)ArmorSet.PHANTOM)[random.nextInt(4)]);
-        } else {
-            ItemStack candy = Halloween.getHalloweenCandy();
-            candy.setAmount(16 + random.nextInt(17));
-            rewards.add(candy);
         }
         if (Math.random() < 0.02) {
             rewards.add(com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils.getTitleVoucher((String)"GrimReaper"));
