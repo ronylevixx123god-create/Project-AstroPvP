@@ -27,7 +27,7 @@ public class ArkhamMoneyNotesAPI {
     public static final double MAX_CASH = 1.0E15;
 
     public static ItemStack getMoneyNote(String signer, long amount) {
-        ItemStack i = ItemUtils.buildItem(Material.PAPER, (short)0, String.valueOf(ChatColor.AQUA.toString()) + ChatColor.BOLD.toString() + "Cosmic Note" + (Object)ChatColor.GRAY + " (Right Click)", String.valueOf(ChatColor.LIGHT_PURPLE.toString()) + "Value " + (Object)ChatColor.WHITE + "$" + ArkhamMoneyNotesAPI.insertCommas(NumberUtils.formatMoney(amount)), (Object)ChatColor.LIGHT_PURPLE + "Signer " + (Object)ChatColor.GRAY + signer);
+        ItemStack i = ItemUtils.buildItem(Material.PAPER, (short)0, String.valueOf(ChatColor.AQUA.toString()) + ChatColor.BOLD.toString() + "Astro Note" + (Object)ChatColor.GRAY + " (Right Click)", String.valueOf(ChatColor.LIGHT_PURPLE.toString()) + "Value " + (Object)ChatColor.WHITE + "$" + ArkhamMoneyNotesAPI.insertCommas(NumberUtils.formatMoney(amount)), (Object)ChatColor.LIGHT_PURPLE + "Signer " + (Object)ChatColor.GRAY + signer);
         if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
             ItemID.setItemID((ItemStack)i, (long)ItemID.generateNewItemID());
         }
@@ -35,7 +35,7 @@ public class ArkhamMoneyNotesAPI {
     }
 
     public static ItemStack getMoneyNoteNoIID(String signer, long amount) {
-        ItemStack i = ItemUtils.buildItem(Material.PAPER, (short)0, String.valueOf(ChatColor.AQUA.toString()) + ChatColor.BOLD.toString() + "Cosmic Note" + (Object)ChatColor.GRAY + " (Right Click)", String.valueOf(ChatColor.LIGHT_PURPLE.toString()) + "Value " + (Object)ChatColor.WHITE + "$" + ArkhamMoneyNotesAPI.insertCommas(NumberUtils.formatMoney(amount)), (Object)ChatColor.LIGHT_PURPLE + "Signer " + (Object)ChatColor.GRAY + signer);
+        ItemStack i = ItemUtils.buildItem(Material.PAPER, (short)0, String.valueOf(ChatColor.AQUA.toString()) + ChatColor.BOLD.toString() + "Astro Note" + (Object)ChatColor.GRAY + " (Right Click)", String.valueOf(ChatColor.LIGHT_PURPLE.toString()) + "Value " + (Object)ChatColor.WHITE + "$" + ArkhamMoneyNotesAPI.insertCommas(NumberUtils.formatMoney(amount)), (Object)ChatColor.LIGHT_PURPLE + "Signer " + (Object)ChatColor.GRAY + signer);
         return i;
     }
 
