@@ -58,6 +58,7 @@ public enum ArmorSet {
     ASTRO(new AstroSet(), ChatColor.GREEN, CC.GreenB + "Astro", Lists.newArrayList("+5% Outgoing DMG", "-5% Incoming DMG", "10% Passive Astro Killer Ability")),
     OMNI(new OmniArmorSet(), ChatColor.DARK_BLUE, CC.DarkBlueB + "Omni", Lists.newArrayList("")),
     ULTRA(new UltraArmorSet(), ChatColor.GRAY, CC.GrayB + "Ultra", Lists.newArrayList("+15% Outgoing DMG", "-7.5% Incoming DMG", "4.5% Ultra Rage Ability", "8.5% Ultra Holy Negation", "4.5% Chance to Bypass Utility Belt", "x1.5 World Destroyer Duration")),
+    APOLLO(new ApolloSet(), ChatColor.WHITE, CC.WhiteB + "Apollo", Lists.newArrayList("+20% Outgoing DMG", "-12.5% Incoming DMG", "Bypass Chad Sunglasses.", "x1.5 Pet Duration.", "Immune to World Destroyer")),
     ANCIENT(new AncientArmorSet(), ChatColor.DARK_AQUA, CC.DarkAquaB + "Ancient", Lists.newArrayList("+7% Outgoing DMG", "3% More Damage", "10% Leviathan's Curse Ability"));
 
     public ItemStack helmet;

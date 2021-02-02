@@ -284,7 +284,7 @@ implements Listener {
             items.add(item);
         }
         return items;
-    }
+    }h
 
     public List<ItemStack> getOtherDungeonLoot(DungeonType dungeonType) {
         int mcmmoCredits;

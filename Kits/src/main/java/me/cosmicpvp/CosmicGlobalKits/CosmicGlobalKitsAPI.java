@@ -295,9 +295,6 @@ public class CosmicGlobalKitsAPI {
                 rewards.add(itemStack);
                 rewards.add(new ItemStack(Material.ARROW, 1));
                 rewards.add(EnchantmentBook.getEnchantmentBook((CustomEnchantment)EnchantmentAPI.getEnchantment((String)"Blind"), (int)(new Random().nextInt(EnchantmentAPI.getEnchantment((String)"Blind").getMaxLevel()) + 1)));
-                ItemStack eggnog = Drinks.getChristmasDrink();
-                eggnog.setAmount(16);
-                rewards.add(eggnog);
             }
             if (gkit.getKitName().equals("guardian")) {
                 helmet = ItemUtils.buildItem(Material.DIAMOND_HELMET, (short)0, ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "Heroic Halo of the Guardian", ChatColor.GOLD.toString() + ChatColor.ITALIC.toString() + "A glowing, warm, light halo.");
@@ -341,9 +338,6 @@ public class CosmicGlobalKitsAPI {
                 rewards.add(itemStack);
                 rewards.add(new ItemStack(Material.ARROW, 1));
                 rewards.add(EnchantmentBook.getEnchantmentBook((CustomEnchantment)EnchantmentAPI.getEnchantment((String)"Clarity"), (int)(new Random().nextInt(EnchantmentAPI.getEnchantment((String)"Clarity").getMaxLevel()) + 1)));
-                ItemStack candy = Christmas.getChristmasCandy();
-                candy.setAmount(32);
-                rewards.add(candy);
             }
             if (gkit.getKitName().equals("diablo")) {
                 helmet = ItemUtils.buildItem(Material.DIAMOND_HELMET, (short)0, ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "Heroic Executioner's Hood", ChatColor.GOLD.toString() + ChatColor.ITALIC.toString() + "A blood-soaked silk coif.");
@@ -767,15 +761,6 @@ public class CosmicGlobalKitsAPI {
                 EnchantmentAPI.getEnchantment((String)"Rage").addToItem(axe2, new Random().nextInt(EnchantmentAPI.getEnchantment((String)"Rage").getMaxLevel()) + 1);
                 EnchantmentAPI.getEnchantment((String)"Enrage").addToItem(axe2, new Random().nextInt(EnchantmentAPI.getEnchantment((String)"Enrage").getMaxLevel()) + 1);
                 rewards.add(axe2);
-                ItemStack drinks = Drinks.getDrink();
-                drinks.setAmount(64);
-                rewards.add(drinks);
-                ItemStack treats = NewYears.getExplosiveCake();
-                treats.setAmount(16);
-                rewards.add(treats);
-                ItemStack itemStack = NewYears.getCosmicCracker();
-                itemStack.setAmount(8);
-                rewards.add(itemStack);
             }
             if (gkit.getKitName().equals("enchantment")) {
                 int minTier = 1;
@@ -838,9 +823,6 @@ public class CosmicGlobalKitsAPI {
                         rewards.add(EnchantmentBook.getEnchantmentBook((CustomEnchantment)EnchantmentAPI.getEnchantment((String)"Explosives Expert"), (int)1));
                     }
                 }
-                ItemStack itemStack = Drinks.getDrink();
-                itemStack.setAmount(8);
-                rewards.add(itemStack);
             }
             if (gkit.getKitName().equals("grandmaster")) {
                 ItemStack helmet2 = ItemUtils.buildItem(Material.DIAMOND_HELMET, (short)0, ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "Heroic Shroud of Judgement", ChatColor.GOLD.toString() + ChatColor.ITALIC.toString() + "Strike fear into your enemies,", ChatColor.GOLD.toString() + ChatColor.ITALIC.toString() + "and heroism into your allies.");
@@ -862,7 +844,6 @@ public class CosmicGlobalKitsAPI {
                 boots = ItemUtils.buildItem(Material.DIAMOND_BOOTS, (short)0, ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "Heroic Sandals of Silence", ChatColor.GOLD.toString() + ChatColor.ITALIC.toString() + "Invisible to the ears of your enemies.");
                 EnchantmentAPI.getEnchantment((String)"Ender Shift").addToItem(boots, new Random().nextInt(EnchantmentAPI.getEnchantment((String)"Ender Shift").getMaxLevel()) + 1);
                 EnchantmentAPI.getEnchantment((String)"Gears").addToItem(boots, new Random().nextInt(EnchantmentAPI.getEnchantment((String)"Gears").getMaxLevel()) + 1);
-                EnchantmentAPI.getEnchantment((String)"Nimble").addToItem(boots, new Random().nextInt(EnchantmentAPI.getEnchantment((String)"Nimble").getMaxLevel()) + 1);
                 EnchantmentAPI.getEnchantment((String)"Tank").addToItem(boots, new Random().nextInt(EnchantmentAPI.getEnchantment((String)"Tank").getMaxLevel()) + 1);
                 EnchantmentAPI.getEnchantment((String)"Armored").addToItem(boots, new Random().nextInt(EnchantmentAPI.getEnchantment((String)"Armored").getMaxLevel()) + 1);
                 rewards.add(helmet2);
@@ -892,7 +873,6 @@ public class CosmicGlobalKitsAPI {
             }
             if (gkit.getKitName().equals("voidwalker")) {
                 ItemStack boots2 = ItemUtils.buildItem(Material.DIAMOND_BOOTS, (short)0, ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "Heroic Erebus' Sandals of the Void", ChatColor.GOLD.toString() + ChatColor.ITALIC.toString() + "You walk on the thin line between", ChatColor.GOLD.toString() + ChatColor.ITALIC.toString() + "existence and extinction, do your", ChatColor.GOLD.toString() + ChatColor.ITALIC.toString() + "enemies dare to follow?");
-                EnchantmentAPI.getEnchantment((String)"Nimble").addToItem(boots2, new Random().nextInt(EnchantmentAPI.getEnchantment((String)"Nimble").getMaxLevel()) + 1);
                 EnchantmentAPI.getEnchantment((String)"Armored").addToItem(boots2, new Random().nextInt(EnchantmentAPI.getEnchantment((String)"Armored").getMaxLevel()) + 1);
                 EnchantmentAPI.getEnchantment((String)"Tank").addToItem(boots2, new Random().nextInt(EnchantmentAPI.getEnchantment((String)"Tank").getMaxLevel()) + 1);
                 EnchantmentAPI.getEnchantment((String)"Ender Shift").addToItem(boots2, new Random().nextInt(EnchantmentAPI.getEnchantment((String)"Ender Shift").getMaxLevel()) + 1);
@@ -1086,9 +1066,6 @@ public class CosmicGlobalKitsAPI {
                     EnchantmentAPI.getEnchantment((String)"Soul Trap").addToItem(sword, new Random().nextInt(EnchantmentAPI.getEnchantment((String)"Soul Trap").getMaxLevel()) + 1);
                 }
                 rewards.add(sword);
-                ItemStack candy = Halloween.getHalloweenCandy();
-                candy.setAmount(64);
-                rewards.add(candy);
             }
             if (gkit.getKitName().equals("paladin")) {
                 ItemStack helmet6 = ItemUtils.buildItem(Material.DIAMOND_HELMET, (short)0, ChatColor.GOLD.toString() + "Heroic Shroud of the Holy Order", ChatColor.GOLD.toString() + ChatColor.ITALIC.toString() + "A shiny, elegant silk shroud,", ChatColor.GOLD.toString() + ChatColor.ITALIC.toString() + "linked together with chainmail.");
@@ -1143,7 +1120,7 @@ public class CosmicGlobalKitsAPI {
                     int var10_104 = 0;
                     boolean bl = false;
                     while (++var10_104 < 2 + new Random().nextInt(2)) {
-                        rewards.add(RandomizationScroll.getRandomizationScroll((ItemRarity)CosmicSpaceChestsAPI.getItemRarity((int)(2 + new Random().nextInt(5)))));
+                        rewards.add(RandomizationScroll.getRandomizationScroll((ItemRarity) CosmicSpaceChestsAPI.getItemRarity((int)(2 + new Random().nextInt(5)))));
                     }
                 }
             }
@@ -1177,7 +1154,6 @@ public class CosmicGlobalKitsAPI {
                 EnchantmentAPI.getEnchantment((String)"Gears").addToItem(boots, new Random().nextInt(EnchantmentAPI.getEnchantment((String)"Gears").getMaxLevel()) + 1);
                 EnchantmentAPI.getEnchantment((String)"Anti Gravity").addToItem(boots, new Random().nextInt(EnchantmentAPI.getEnchantment((String)"Anti Gravity").getMaxLevel()) + 1);
                 EnchantmentAPI.getEnchantment((String)"Undead Ruse").addToItem(boots, new Random().nextInt(EnchantmentAPI.getEnchantment((String)"Undead Ruse").getMaxLevel()) + 1);
-                EnchantmentAPI.getEnchantment((String)"Nimble").addToItem(boots, new Random().nextInt(EnchantmentAPI.getEnchantment((String)"Nimble").getMaxLevel()) + 1);
                 EnchantmentAPI.getEnchantment((String)"Ghost").addToItem(boots, new Random().nextInt(EnchantmentAPI.getEnchantment((String)"Ghost").getMaxLevel()) + 1);
                 EnchantmentAPI.getEnchantment((String)"Rocket Escape").addToItem(boots, new Random().nextInt(EnchantmentAPI.getEnchantment((String)"Rocket Escape").getMaxLevel()) + 1);
                 EnchantmentAPI.getEnchantment((String)"Metaphysical").addToItem(boots, new Random().nextInt(EnchantmentAPI.getEnchantment((String)"Metaphysical").getMaxLevel()) + 1);

@@ -176,6 +176,8 @@ public class ArmorSetUpgradeListener
                         color = 15176967;
                     } else if (clickedArmorSet == ArmorSet.OMNI) {
                         color = 0x0027FF;
+                    } else if (clickedArmorSet == ArmorSet.APOLLO) {
+                        color = 0x000000;
                     }
                     display.setInt("color", color);
                     wrapper.setNBTBase("display", display.get());
