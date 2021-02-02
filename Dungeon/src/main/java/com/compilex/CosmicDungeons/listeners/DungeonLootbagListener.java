@@ -178,11 +178,6 @@ implements Listener {
             if (Math.random() <= 0.01) {
                 loot.add(DungeonType.DESTROYED_OUTPOST.getDungeonInstance().getDungeonPortal());
             }
-            if (Math.random() <= 0.05 && ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin().isRunning()) {
-                loot.add(((EquipmentLootboxes)ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin()).createLootboxItem(true));
-            } else if (Math.random() <= 0.01 && ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin().isRunning()) {
-                loot.add(((EquipmentLootboxes)ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin()).createHeroicLootboxItem(true));
-            }
             if (Math.random() <= 0.1) {
                 loot.add(EnchantmentBook.getHeroicBlackscroll(true));
             }
@@ -205,9 +200,6 @@ implements Listener {
 //            if (Math.random() <= 0.05) {
 //                loot.add(CosmicDisguiseAPI.createRedeemableDisguise("CHICKEN"));
 //            }
-            if (ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin().isRunning() && Math.random() <= 0.25) {
-                loot.add(((EquipmentLootboxes)ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin()).createHeroicGKitGenerator(true));
-            }
             if (Math.random() <= 0.1) {
                 loot.add(CosmicArmorSetsAPI.createArmorSetUpgrade(ArmorSet.values()[((Random)random).nextInt(ArmorSet.values().length)], (double)(50 + ((Random)random).nextInt(51))));
             }
@@ -325,7 +317,6 @@ implements Listener {
             mcmmoCredits = Math.min(250, 100 + 10 * daysSinceAvailable);
         }
         loot.add(ItemUtils.getMoneyNote("Cosmic Dungeon", moneyToGive));
-        loot.add(ItemUtils.getMCMMOVoucher(mcmmoCredits));
         return loot;
     }
 
