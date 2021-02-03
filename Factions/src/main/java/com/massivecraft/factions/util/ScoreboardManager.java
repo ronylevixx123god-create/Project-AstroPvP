@@ -104,7 +104,7 @@ public class ScoreboardManager implements BoardAdapter {
                         if (team == null) {
                             team = b.registerNewTeam("Test");
                         }
-                        final Player joinPlayer = player.getPlayer();
+                        final Player joinPlayer = o.getPlayer();
                         String prefix = FPlayers.getPlayerPrefix(o);
                         final FPlayer fp = FactionUtils.getFPlayer(o);
                         Object fplayer = null;
