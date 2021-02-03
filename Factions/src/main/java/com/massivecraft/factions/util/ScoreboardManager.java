@@ -123,7 +123,7 @@ public class ScoreboardManager implements BoardAdapter {
                                 prefix = prefix + color + " ";
                             }
                             else if (P.getP().getPrefixType() == PrefixType.FACTION) {
-                                if (!P.getP().isEnabled()) {
+                                if (P.getP().isEnabled()) {
                                     prefix = FormatUtils.getFactionPrefixForOtherFaction(fp.getPlayer(), fJoinFaction);
                                     if (prefix != null) {
                                         prefix = FormatUtils.trimPrefix(prefix) + " " + FormatUtils.getRankColorEnding(o);
