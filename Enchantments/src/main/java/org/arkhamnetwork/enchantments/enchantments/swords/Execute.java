@@ -24,7 +24,7 @@ public class Execute extends CustomEnchantment {
         if (!(target instanceof Player)) {
             return;
         }
-        if (target.getHealth() > 10.0) {
+        if (target.getHealth() > 12.0) {
             return;
         }
         if (GeneralUtil.isEffectedByRage(target)) {
