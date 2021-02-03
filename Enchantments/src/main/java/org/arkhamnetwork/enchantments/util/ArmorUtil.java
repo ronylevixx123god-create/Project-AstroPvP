@@ -106,70 +106,75 @@ public class ArmorUtil {
                             }
                         }
                     }
-                    final Item items = (Item) item.getItem();
-                    if (items == Items.LEATHER_HELMET) {
-                        ++armor_val;
-                    }
-                    if (items == Items.LEATHER_CHESTPLATE) {
-                        armor_val += 3;
-                    }
-                    if (items == Items.LEATHER_LEGGINGS) {
-                        armor_val += 2;
-                    }
-                    if (items == Items.LEATHER_BOOTS) {
-                        ++armor_val;
-                    }
-                    if (items == Items.CHAINMAIL_HELMET) {
-                        armor_val += 2;
-                    }
-                    if (items == Items.CHAINMAIL_CHESTPLATE) {
-                        armor_val += 5;
-                    }
-                    if (items == Items.CHAINMAIL_LEGGINGS) {
-                        armor_val += 4;
-                    }
-                    if (items == Items.CHAINMAIL_BOOTS) {
-                        ++armor_val;
-                    }
-                    if (items == Items.IRON_HELMET) {
-                        armor_val += 2;
-                    }
-                    if (items == Items.IRON_CHESTPLATE) {
-                        armor_val += 6;
-                    }
-                    if (items == Items.IRON_LEGGINGS) {
-                        armor_val += 5;
-                    }
-                    if (items == Items.IRON_BOOTS) {
-                        armor_val += 2;
-                    }
-                    if (items == Items.DIAMOND_HELMET) {
-                        armor_val += 3;
-                    }
-                    if (items == Items.DIAMOND_CHESTPLATE) {
-                        armor_val += 8;
-                    }
-                    if (items == Items.DIAMOND_LEGGINGS) {
-                        armor_val += 6;
-                    }
-                    if (items == Items.DIAMOND_BOOTS) {
-                        armor_val += 3;
-                    }
-                    if (items == Items.GOLDEN_HELMET) {
-                        armor_val += 2;
-                    }
-                    if (items == Items.GOLDEN_CHESTPLATE) {
-                        armor_val += 5;
-                    }
-                    if (items == Items.GOLDEN_LEGGINGS) {
-                        armor_val += 3;
-                    }
-                    if (items == Items.GOLDEN_BOOTS) {
-                        ++armor_val;
+                    try {
+                        final Item items = (Item) item.getItem();
+                        if (items == Items.LEATHER_HELMET) {
+                            ++armor_val;
+                        }
+                        if (items == Items.LEATHER_CHESTPLATE) {
+                            armor_val += 3;
+                        }
+                        if (items == Items.LEATHER_LEGGINGS) {
+                            armor_val += 2;
+                        }
+                        if (items == Items.LEATHER_BOOTS) {
+                            ++armor_val;
+                        }
+                        if (items == Items.CHAINMAIL_HELMET) {
+                            armor_val += 2;
+                        }
+                        if (items == Items.CHAINMAIL_CHESTPLATE) {
+                            armor_val += 5;
+                        }
+                        if (items == Items.CHAINMAIL_LEGGINGS) {
+                            armor_val += 4;
+                        }
+                        if (items == Items.CHAINMAIL_BOOTS) {
+                            ++armor_val;
+                        }
+                        if (items == Items.IRON_HELMET) {
+                            armor_val += 2;
+                        }
+                        if (items == Items.IRON_CHESTPLATE) {
+                            armor_val += 6;
+                        }
+                        if (items == Items.IRON_LEGGINGS) {
+                            armor_val += 5;
+                        }
+                        if (items == Items.IRON_BOOTS) {
+                            armor_val += 2;
+                        }
+                        if (items == Items.DIAMOND_HELMET) {
+                            armor_val += 3;
+                        }
+                        if (items == Items.DIAMOND_CHESTPLATE) {
+                            armor_val += 8;
+                        }
+                        if (items == Items.DIAMOND_LEGGINGS) {
+                            armor_val += 6;
+                        }
+                        if (items == Items.DIAMOND_BOOTS) {
+                            armor_val += 3;
+                        }
+                        if (items == Items.GOLDEN_HELMET) {
+                            armor_val += 2;
+                        }
+                        if (items == Items.GOLDEN_CHESTPLATE) {
+                            armor_val += 5;
+                        }
+                        if (items == Items.GOLDEN_LEGGINGS) {
+                            armor_val += 3;
+                        }
+                        if (items == Items.GOLDEN_BOOTS) {
+                            ++armor_val;
+                        }
+                    } catch (Exception ex) {
+
                     }
                 }
             }
         }
         return armor_val;
+
     }
 }

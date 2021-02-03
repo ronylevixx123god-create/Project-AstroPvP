@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.compat.ParamBuilder
  *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
@@ -52,10 +52,11 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
 
-public class BoosterListener
-implements Listener {
-    private final BoosterManager manager;
+public class BoosterListener implements Listener {
+    private BoosterManager manager;
 
     public BoosterListener(BoosterManager manager) {
         this.manager = manager;
@@ -66,54 +67,59 @@ implements Listener {
         if (event.hasItem()) {
             ItemStack item = event.getItem();
             Player player = event.getPlayer();
-            if (manager != null) {
-                if (this.manager.isBoosterItem(item)) {
-                    event.setCancelled(true);
-                    event.setUseInteractedBlock(Event.Result.DENY);
-                    event.setUseItemInHand(Event.Result.DENY);
-                    Faction faction = FactionUtils.getFaction(player, false);
-                    if (!FactionUtils.isNormal(faction)) {
-                        player.sendMessage(ChatColor.RED + "You must be in a faction to use a Faction Booster!");
+            if (this.manager != null) {
+            if (this.manager.isBoosterItem(item)) {
+                event.setCancelled(true);
+                event.setUseInteractedBlock(Event.Result.DENY);
+                event.setUseItemInHand(Event.Result.DENY);
+                Faction faction = FactionUtils.getFaction(player, false);
+                if (faction == null || !FactionUtils.isNormal(faction)) {
+                    player.sendMessage(ChatColor.RED + "You must be in a faction to use a Faction Booster!");
+                    return;
+                }
+                FactionBoosters currentBoosters = this.manager.getFactionBooster(faction);
+                BoosterItemInfo info = this.manager.getBoosterItemInfo(item);
+                if (info != null) {
+                    if (player.getWorld().getName().startsWith("world_duels")) {
+                        player.sendMessage(ChatColor.RED + "You cannot use this item in the duel world.");
                         return;
                     }
-                    FactionBoosters currentBoosters = this.manager.getFactionBooster(faction);
-                    BoosterItemInfo info = this.manager.getBoosterItemInfo(item);
-                    if (info != null) {
-                        if (player.getWorld().getName().startsWith("world_duels")) {
-                            player.sendMessage(ChatColor.RED + "You cannot use this item in the duel world.");
-                            return;
-                        }
-                        if (currentBoosters != null && currentBoosters.isBoosterActive(info.getType())) {
-                            ActiveBooster booster = currentBoosters.get(info.getType());
-                            if (booster.getWhoApplied().equals(player.getName())) {
-                                if (booster.getMultiplier() >= 10.0) {
-                                    player.sendMessage(ChatColor.RED + "You cannot apply more than a 10x multiplier.");
-                                    return;
-                                }
-                                if (booster.getMultiplier() != info.getMultiplier()) {
-                                    player.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You can only apply the same " + booster.getMultiplier() + "x multiplier while your booster is active.");
-                                    return;
-                                }
-                                booster.setMaxSeconds(info.getDuration() + (booster.getMaxSeconds() - booster.getSecondsElapsed()));
-                                booster.setTimeApplied(System.currentTimeMillis());
-                                booster.setSecondsElapsed(0);
-                                this.activateBooster(faction, player, booster, item);
+                    if (currentBoosters != null &&
+                            currentBoosters.isBoosterActive(info.getType())) {
+                        ActiveBooster booster = (ActiveBooster) currentBoosters.get(info.getType());
+                        if (booster.getWhoApplied().equals(player.getName())) {
+                            if (booster.getMultiplier() >= 10.0D) {
+                                player.sendMessage(ChatColor.RED + "You cannot apply more than a 10x multiplier.");
                                 return;
                             }
-                            player.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "Your faction already has this booster activated by " + booster.getWhoApplied() + " for another " + booster.getFormattedTimeLeft() + "!");
+                            if (booster.getMultiplier() != info.getMultiplier()) {
+                                player.sendMessage(ChatColor.RED + ChatColor.BOLD
+                                        .toString() + "(!) " + ChatColor.RED + "You can only apply the same " + booster
+                                        .getMultiplier() + "x multiplier while your booster is active.");
+                                return;
+                            }
+                            booster.setMaxSeconds(info.getDuration() + booster.getMaxSeconds() - booster.getSecondsElapsed());
+                            booster.setTimeApplied(System.currentTimeMillis());
+                            booster.setSecondsElapsed(0);
+                            activateBooster(faction, player, booster, item);
                             return;
                         }
-                        if (currentBoosters == null) {
-                            currentBoosters = new FactionBoosters();
-                            this.manager.getFactionBoosters().put(FactionUtils.getFactionId(faction), currentBoosters);
-                        }
-                        ActiveBooster newBooster = new ActiveBooster(player.getName(), info.getMultiplier(), System.currentTimeMillis(), 0, info.getDuration(), info.getType());
-                        currentBoosters.put(info.getType(), newBooster);
-                        this.activateBooster(faction, player, newBooster, item);
-                    } else {
-                        player.sendMessage(ChatColor.RED + "Invalid Booster detected.");
+                        player.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "Your faction already has this booster activated by " + booster
+                                .getWhoApplied() + " for another " + booster
+                                .getFormattedTimeLeft() + "!");
+                        return;
                     }
+                    if (currentBoosters == null) {
+                        currentBoosters = new FactionBoosters();
+                        this.manager.getFactionBoosters().put(FactionUtils.getFactionId(faction), currentBoosters);
+                    }
+                    ActiveBooster newBooster = new ActiveBooster(player.getName(), info.getMultiplier(), System.currentTimeMillis(), 0, info.getDuration(), info.getType());
+                    currentBoosters.put(info.getType(), newBooster);
+                    activateBooster(faction, player, newBooster, item);
+                } else {
+                    player.sendMessage(ChatColor.RED + "Invalid Booster detected.");
                 }
+            }
             }
         }
     }
@@ -124,29 +130,29 @@ implements Listener {
         } else {
             player.setItemInHand(null);
         }
-        if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
+        if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning())
             ItemID.blacklistIID(ItemID.getItemID(item), "xp booster use");
-        }
         player.updateInventory();
-        player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0f, 0.5f);
-        ReflectionUtils.callReflectionMethod(faction, Faction.class, "sendMessage", new ParamBuilder(String.class, ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + ChatColor.GREEN + player.getName() + " used a " + ChatColor.GREEN + ChatColor.UNDERLINE.toString() + booster.getMultiplier() + "x " + booster.getBoosterType().getItemName() + ChatColor.GREEN + " Faction Booster!" + ChatColor.GRAY + " [" + booster.getFormattedTimeLeft() + " left]"));
-        Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(player, "BOOSTER_USE", new Object[]{booster.getBoosterType().name(), booster.getMultiplier(), booster.getMaxSeconds()}));
+        player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0F, 0.5F);
+        ReflectionUtils.callReflectionMethod(faction, Faction.class, "sendMessage", new ParamBuilder(String.class, ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + ChatColor.GREEN + player.getName() + " used a " + ChatColor.GREEN + ChatColor.UNDERLINE
+                .toString() + booster.getMultiplier() + "x " + booster.getBoosterType().getItemName() + ChatColor.GREEN + " Faction Booster!" + ChatColor.GRAY + " [" + booster
+                .getFormattedTimeLeft() + " left]"));
+        Bukkit.getPluginManager().callEvent((Event)new CustomCosmicPlayerEvent(player, "BOOSTER_USE", new Object[] { booster.getBoosterType().name(), Double.valueOf(booster.getMultiplier()), Integer.valueOf(booster.getMaxSeconds()) }));
     }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         Faction faction = FactionUtils.getFaction(player);
-        if (faction == null || !FactionUtils.isNormal(faction)) {
+        if (faction == null || !FactionUtils.isNormal(faction))
             return;
-        }
         BoosterManager manager = P.getP().getBoosterManager();
         if (manager.getFactionBoosters().containsKey(FactionUtils.getFactionId(faction))) {
             FactionBoosters boosters = manager.getFactionBooster(faction);
-            Bukkit.getScheduler().scheduleSyncDelayedTask(P.getP(), () -> {
-                player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0f, 0.7f);
+            Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)P.getP(), () -> {
+                player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0F, 0.7F);
                 manager.showActiveBoosters(player, boosters);
-            }, 40L);
+            },40L);
         }
     }
 
@@ -155,22 +161,26 @@ implements Listener {
         if (event.getEntity().getKiller() != null) {
             Player player = event.getEntity().getKiller();
             Faction fac = FactionUtils.getFaction(player);
-            if (fac == null || !FactionUtils.isNormal(fac)) {
+            if (fac == null || !FactionUtils.isNormal(fac))
                 return;
-            }
             BoosterManager manager = P.getP().getBoosterManager();
             FactionBoosters boosters = manager.getFactionBooster(fac);
-            if (boosters != null && boosters.isBoosterActive(BoosterType.EXP)) {
-                ActiveBooster booster = boosters.get(BoosterType.EXP);
-                event.setDroppedExp((int)((double)event.getDroppedExp() * booster.getMultiplier()));
-                int notify = 0;
-                if (player.hasMetadata("expBoosterNotify") && player.getMetadata("expBoosterNotify").size() > 0 && (notify = player.getMetadata("expBoosterNotify").get(0).asInt()) >= 5) {
-                    player.sendMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + "+ " + booster.getMultiplier() + "x EXP " + ChatColor.GREEN + "(" + booster.getWhoApplied() + "'s Faction Booster " + ChatColor.GRAY + "[" + booster.getFormattedTimeLeft() + "]" + ChatColor.GREEN + ")");
-                    notify = 0;
+            if (boosters != null)
+                if (boosters.isBoosterActive(BoosterType.EXP)) {
+                    ActiveBooster booster = (ActiveBooster)boosters.get(BoosterType.EXP);
+                    event.setDroppedExp((int)(event.getDroppedExp() * booster.getMultiplier()));
+                    int notify = 0;
+                    if (player.hasMetadata("expBoosterNotify") && player.getMetadata("expBoosterNotify").size() > 0) {
+                        notify = ((MetadataValue)player.getMetadata("expBoosterNotify").get(0)).asInt();
+                        if (notify >= 5) {
+                            player.sendMessage(ChatColor.GREEN + ChatColor.BOLD
+                                    .toString() + "+ " + booster.getMultiplier() + "x EXP " + ChatColor.GREEN + "(" + booster
+                                    .getWhoApplied() + "'s Faction Booster " + ChatColor.GRAY + "[" + booster.getFormattedTimeLeft() + "]" + ChatColor.GREEN + ")");
+                            notify = 0;
+                        }
+                    }
+                    player.setMetadata("expBoosterNotify", (MetadataValue)new FixedMetadataValue((Plugin)P.getP(), Integer.valueOf(++notify)));
                 }
-                player.setMetadata("expBoosterNotify", new FixedMetadataValue(P.getP(), ++notify));
-            }
         }
     }
 }
-

@@ -79,7 +79,7 @@ public class ApolloSet extends ArmorSetInfo
         if (this.isBlockedOutpostWorld(damager)) {
             return false;
         }
-        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.55);
+        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.65);
         this.removeResistance(damager);
         return true;
     }

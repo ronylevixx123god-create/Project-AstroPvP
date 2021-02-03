@@ -21,22 +21,20 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class CommandCheckBooster
-implements CommandExecutor {
+public class CommandCheckBooster implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player player = (Player)sender;
         Faction faction = FactionUtils.getFaction(player);
         if (faction == null || !faction.isNormal()) {
-            player.sendMessage((Object)ChatColor.RED + "You must be in a faction to use that command!");
+            player.sendMessage(ChatColor.RED + "You must be in a faction to use that command!");
             return true;
         }
         FactionBoosters boosters = P.getP().getBoosterManager().getFactionBooster(faction);
         if (boosters == null || boosters.isEmpty()) {
-            player.sendMessage((Object)ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "Your faction does not have any active boosters!");
+            player.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "Your faction does not have any active boosters!");
             return true;
         }
         P.getP().getBoosterManager().showActiveBoosters(player, boosters);
         return false;
     }
 }
-

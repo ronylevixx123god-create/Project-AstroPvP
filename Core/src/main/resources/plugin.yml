@@ -25,6 +25,8 @@ commands:
     aliases: ['grind']
   list:
     aliases: ['elist']
+  giveapollorank:
+    description: Receive an apollo rank
   dupe:
     description: /dupe
   givetracker:

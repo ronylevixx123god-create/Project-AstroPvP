@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.apache.commons.lang.StringUtils
  *  org.bukkit.Bukkit
@@ -24,46 +24,41 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class CommandBooster
-implements CommandExecutor {
+public class CommandBooster implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!sender.isOp()) {
+        if (!sender.isOp())
             return true;
-        }
         if (args.length == 4) {
             double mult;
             String type = args[0];
             String pName = args[1];
-            Player pl = Bukkit.getPlayer((String)pName);
+            Player pl = Bukkit.getPlayer(pName);
             if (pl == null) {
-                sender.sendMessage((Object)ChatColor.RED + "Invalid player name given.");
+                sender.sendMessage(ChatColor.RED + "Invalid player name given.");
                 return true;
             }
-            if (!StringUtils.isNumeric((String)args[3])) {
-                sender.sendMessage((Object)ChatColor.RED + "Please enter a valid duration.");
+            if (!StringUtils.isNumeric(args[3])) {
+                sender.sendMessage(ChatColor.RED + "Please enter a valid duration.");
                 return true;
             }
             BoosterType boosterType = null;
             try {
                 boosterType = BoosterType.valueOf(type);
-            }
-            catch (Exception e) {
-                sender.sendMessage((Object)ChatColor.RED + "Please enter a valid booster item amount: EXP, MCMMO");
+            } catch (Exception e) {
+                sender.sendMessage(ChatColor.RED + "Please enter a valid booster item amount: EXP, MCMMO");
                 return true;
             }
             try {
-                mult = Math.max(Double.parseDouble(args[2]), 1.1);
-            }
-            catch (Exception e) {
-                sender.sendMessage((Object)ChatColor.RED + "Please enter a valid multplier.");
+                mult = Math.max(Double.parseDouble(args[2]), 1.1D);
+            } catch (Exception e) {
+                sender.sendMessage(ChatColor.RED + "Please enter a valid multplier.");
                 return true;
             }
             int duration = Integer.parseInt(args[3]);
-            if (duration < 0) {
+            if (duration < 0)
                 duration = 1;
-            }
             ItemStack item = P.getP().getBoosterManager().createBooster(boosterType, duration, mult);
-            pl.getInventory().addItem(item);
+            pl.getInventory().addItem(new ItemStack[] { item });
             pl.updateInventory();
             sender.sendMessage(ChatColor.RED + "Booster given to " + pl.getName());
             return true;
@@ -72,4 +67,3 @@ implements CommandExecutor {
         return false;
     }
 }
-

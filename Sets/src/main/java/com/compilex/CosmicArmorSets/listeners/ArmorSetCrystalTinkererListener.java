@@ -94,7 +94,6 @@ public class ArmorSetCrystalTinkererListener implements Listener {
                     }
                     String customName = event.getPlayer() instanceof Player ? event.getPlayer().getName() : event.getPlayer().getCustomName();
                     event.setCancelled(true);
-                    CosmicArmorSetsPlugin.get_().getLogger().info("Cancelling " + event.getEnchant().name() + " against " + target.getName() + " from " + customName + " due to Anti M-Kit!");
                 }
             } else {
                 Map<ArmorSet, Integer> equipped = CosmicArmorSetsAPI.getBonusCrystalsEquipped((Player) event.getTarget());

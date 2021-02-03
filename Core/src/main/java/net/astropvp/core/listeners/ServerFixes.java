@@ -5,6 +5,7 @@ import net.astropvp.core.utils.ChatManager;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -52,6 +53,16 @@ public class ServerFixes implements Listener {
             event.getPlayer().sendMessage(CC.translate("&cYou cannot place eggs on spawners!"));
             event.setCancelled(true);
         }
+    }
+
+    @EventHandler
+    public void killPlayerSound(PlayerDeathEvent e) {
+        Player p = e.getEntity();
+        if (!(e.getEntity().getKiller() instanceof Player)) {
+            return;
+        }
+        Player killer = p.getKiller();
+        killer.playSound(killer.getLocation(), Sound.SUCCESSFUL_HIT, 20, 20);
     }
 
     @EventHandler

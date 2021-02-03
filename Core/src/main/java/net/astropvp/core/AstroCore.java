@@ -191,6 +191,9 @@ public class AstroCore extends JavaPlugin {
         this.getCommand("corechunkfinder").setExecutor(new CoreChunkFinderCommand());
 
         this.getCommand("coinflip").setExecutor(new CommandCoinFlip());
+
+        this.getCommand("giveapollorank").setExecutor(new GiveApolloCommand());
+
         this.getCommand("list").setExecutor(new ListCommand());
         this.getCommand("grinding").setExecutor((CommandExecutor)new ToggleGrindingMessages());
         this.getCommand("jackpot").setExecutor(new CommandJackpot());
@@ -211,6 +214,7 @@ public class AstroCore extends JavaPlugin {
         this.toggleManager.loadToggles();
 
         this.getServer().getPluginManager().registerEvents(new ChatListener(), this);
+        this.getServer().getPluginManager().registerEvents(new BlockCommand(), this);
         this.getServer().getPluginManager().registerEvents(new BackpackListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerDamageListener(), this);
         this.getServer().getPluginManager().registerEvents(new PortablePicnicListener(), this);

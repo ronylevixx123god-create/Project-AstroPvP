@@ -137,13 +137,11 @@ public class ItemSkinProccessEventsListener implements Listener {
                             continue;
                         }
                         e.setDamage(Math.max(0.0, e.getDamage(EntityDamageEvent.DamageModifier.BASE) + e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.05));
-                    } else if (type == SkinType.TRIDENT_SWORD) {
+                    } else if (type == SkinType.TRIDENT_SWORD && Math.random() <=0.08) {
 
                         new MasteryMarkOfTheBeast().applyDefenseEffect(damager, (LivingEntity) e.getEntity(), 3, e);
                         new Blessed().applyEffect(damager, (LivingEntity) e.getEntity(), 4, e);
-                        // Todo: ENCHANTMENTS (getHex) from main class, can't compile :)
-                        // TODO: ONLY THING UNTIL ITEM SKINS IS FINE
-                        new Hex().applyEffect(damager, (LivingEntity) e.getEntity(), 5, e);
+                        //new Hex().applyEffect(damager, (LivingEntity) e.getEntity(), 5, e);
                     } else if (type == SkinType.BOOTS_RETALIATION) {
                         if (e.getEntity() instanceof Player) {
                             continue;

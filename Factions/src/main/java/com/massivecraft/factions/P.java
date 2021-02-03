@@ -77,6 +77,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -134,7 +135,7 @@ public class P extends MPlugin {
     @Getter @Setter
     private BannerListener bannerListener;
 
-    public P() {
+    public P() throws IOException {
         p = this;
         new Board();
         this.fChestManager = new FChestManager();
@@ -218,13 +219,12 @@ public class P extends MPlugin {
         this.cosmicFlyingPlugin.onEnable();
 
         this.boosterManager = new BoosterManager();
-        this.boosterManager.loadActiveBoosters();this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new BoosterTask(), 20L, 20L);
+        this.boosterManager.loadActiveBoosters();
+        getServer().getScheduler().scheduleSyncRepeatingTask((Plugin)this, (Runnable)new BoosterTask(), 20L, 20L);
 
         this.saveDefaultConfig();
         this.startOfMap = this.getConfig().getLong("startOfMap");
         this.vanillaPlanet = this.getConfig().getBoolean("vanilla", false);
-
-        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new BoosterTask(), 20L, 20L);
 
         this.fundEnabled = this.getServer().getPluginManager().isPluginEnabled("CosmicFund");
         this.fpointsEnabled = new File("plugins/CosmicFactionPoints.jar").exists();
@@ -338,7 +338,7 @@ public class P extends MPlugin {
         this.getServer().getPluginManager().registerEvents(new VIPCommandBlocker(), this);
         this.getServer().getPluginManager().registerEvents(new NetherMobSpawnerListener(), this);
 
-        this.getServer().getPluginManager().registerEvents(new BoosterListener(this.boosterManager), this);
+        getServer().getPluginManager().registerEvents((Listener)new BoosterListener(this.boosterManager), (Plugin)this);
 
         this.bannerListener = new BannerListener();
         this.getServer().getPluginManager().registerEvents(this.bannerListener, this);
@@ -352,6 +352,7 @@ public class P extends MPlugin {
         }
         Bukkit.getLogger().info("[CosmicFactionPoints] " + debugString);
     }
+
 
     public static void logCosmicFactionPoints(String debugString) {
         Bukkit.getLogger().info("[CosmicFactionPoints] " + debugString);
