@@ -2,10 +2,8 @@ package com.massivecraft.factions.util;
 
 import com.compilex.CompilexPermissions.PermissionsAPI;
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.massivecraft.factions.FPlayer;
-import com.massivecraft.factions.FPlayers;
-import com.massivecraft.factions.Faction;
-import com.massivecraft.factions.P;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import com.massivecraft.factions.*;
 import com.massivecraft.factions.board.BoardAdapter;
 import com.massivecraft.factions.integration.Econ;
 import com.massivecraft.factions.struct.Relation;
@@ -30,7 +28,7 @@ public class ScoreboardManager implements BoardAdapter {
     public static String getDateSuffix() {
         return format.format(new Date());
     }
-
+    public FPlayer fme;
     private static final DateFormat format = new SimpleDateFormat("MM/dd");
 
     @Override
@@ -97,19 +95,43 @@ public class ScoreboardManager implements BoardAdapter {
     @Override
     public void onScoreboardCreate(Player player, org.bukkit.scoreboard.Scoreboard b) {
         Bukkit.getOnlinePlayers().forEach(o -> {
-            Bukkit.getPlayer(o.getUniqueId());
+                    Bukkit.getPlayer(o.getUniqueId());
 
-            if (Bukkit.getPlayer(o.getUniqueId()) != null) {
+                    if (Bukkit.getPlayer(o.getUniqueId()) != null) {
 
-                Team team = b.getTeam("Test");
+                        Team team = b.getTeam("Test");
 
-                if (team == null) {
-                    team = b.registerNewTeam("Test");
-                }
+                        if (team == null) {
+                            team = b.registerNewTeam("Test");
+                        }
+                        final Player joinPlayer = player.getPlayer();
+                        String prefix = FPlayers.getPlayerPrefix(o);
+                        final FPlayer fp = FactionUtils.getFPlayer(o);
+                        Object fplayer = null;
+                        if (fplayer == null) {
+                            fplayer = FactionUtils.getFPlayer(joinPlayer);
+                        }
+                        final Faction fJoinFaction = FactionUtils.getFaction(joinPlayer);
+                        if (P.getP().getPrefixType() == PrefixType.RANK || o.hasPermission("arkkit.staff.hidden")) {
+                            if (prefix != null) {
+                                prefix = FPlayers.trimPrefix(prefix);
+                            }
+                            final String color = FPlayers.getFactionEnding(fp.getFaction(), fJoinFaction);
+                            prefix = prefix + color + " ";
+                        } else if (P.getP().getPrefixType() == PrefixType.FACTION) {
+                            prefix = FPlayers.getFactionColorForOtherFaction(fp.getPlayer(), fJoinFaction);
+                            prefix = FPlayers.trimPrefix(prefix);
+                        }
 
-                team.setPrefix(ChatColor.RED.toString());
+                        if (!team.getPrefix().equals(prefix)) {
+                            team.setPrefix((prefix != null) ? prefix : "");
+                        }
+                        final String teamName = FPlayers.getTeamDisplayName(o);
+                        if (team.getDisplayName().equals(teamName)) {
+                        }
+                        team.setDisplayName(teamName);
 
-                if (!team.hasEntry(o.getName())) {
+                    if (!team.hasEntry(o.getName())) {
                     team.addEntry(o.getName());
                 }
             }
