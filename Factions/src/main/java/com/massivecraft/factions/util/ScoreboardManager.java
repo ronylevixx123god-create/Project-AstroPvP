@@ -99,40 +99,60 @@ public class ScoreboardManager implements BoardAdapter {
 
                     if (Bukkit.getPlayer(o.getUniqueId()) != null) {
 
-                        Team team = b.getTeam("Test");
-
-                        if (team == null) {
-                            team = b.registerNewTeam("Test");
-                        }
                         final Player joinPlayer = o.getPlayer();
-                        String prefix = FPlayers.getPlayerPrefix(o);
-                        final FPlayer fp = FactionUtils.getFPlayer(o);
+                        if (joinPlayer == null || !joinPlayer.isOnline()) {
+                            return;
+                        }
+                        if (b == null) {
+                            return;
+                        }
                         Object fplayer = null;
-                        if (fplayer == null) {
-                            fplayer = FactionUtils.getFPlayer(joinPlayer);
-                        }
-                        final Faction fJoinFaction = FactionUtils.getFaction(joinPlayer);
-                        if (P.getP().getPrefixType() == PrefixType.RANK || o.hasPermission("arkkit.staff.hidden")) {
-                            if (prefix != null) {
-                                prefix = FPlayers.trimPrefix(prefix);
+                        String prefix = FormatUtils.getPlayerPrefix(o);
+                        final boolean factionsEnabled = P.getP().isEnabled();
+                        if (factionsEnabled) {
+                            final FPlayer fp = FactionUtils.getFPlayer(o);
+                            if (fplayer == null) {
+                                fplayer = FactionUtils.getFPlayer(joinPlayer);
                             }
-                            final String color = FPlayers.getFactionEnding(fp.getFaction(), fJoinFaction);
-                            prefix = prefix + color + " ";
-                        } else if (P.getP().getPrefixType() == PrefixType.FACTION) {
-                            prefix = FPlayers.getFactionColorForOtherFaction(fp.getPlayer(), fJoinFaction);
-                            prefix = FPlayers.trimPrefix(prefix);
+                            final Faction fJoinFaction = FactionUtils.getFaction(joinPlayer);
+                            if (P.getP().getPrefixType() == PrefixType.RANK || o.hasPermission("arkkit.staff.hidden")) {
+                                if (prefix != null) {
+                                    prefix = FormatUtils.trimPrefix(prefix);
+                                }
+                                final String color = FormatUtils.getFactionEnding(fp.getFaction(), fJoinFaction);
+                                prefix = prefix + color + " ";
+                            }
+                            else if (P.getP().getPrefixType() == PrefixType.FACTION) {
+                                if (!P.getP().isEnabled()) {
+                                    prefix = FormatUtils.getFactionPrefixForOtherFaction(fp.getPlayer(), fJoinFaction);
+                                    if (prefix != null) {
+                                        prefix = FormatUtils.trimPrefix(prefix) + " " + FormatUtils.getRankColorEnding(o);
+                                    }
+                                    else {
+                                        prefix = FormatUtils.getRankColorEnding(o);
+                                    }
+                                }
+                                else {
+                                    prefix = FormatUtils.getFactionColorForOtherFaction(fp.getPlayer(), fJoinFaction);
+                                    prefix = FormatUtils.trimPrefix(prefix);
+                                }
+                            }
                         }
-
+                        final String pl_teamName = FormatUtils.getTeamName(o);
+                        final Team team = (b.getTeam(pl_teamName) != null) ? b.getTeam(pl_teamName) : b.registerNewTeam(pl_teamName);
                         if (!team.getPrefix().equals(prefix)) {
                             team.setPrefix((prefix != null) ? prefix : "");
                         }
-                        final String teamName = FPlayers.getTeamDisplayName(o);
-                        if (team.getDisplayName().equals(teamName)) {
+                        if (!team.hasEntry(o.getName())) {
+                            team.addEntry(o.getName());
                         }
+                        final String teamName = FormatUtils.getTeamDisplayName(o);
+
                         team.setDisplayName(teamName);
 
-                    if (!team.hasEntry(o.getName())) {
-                    team.addEntry(o.getName());
+
+                        if (!team.hasEntry(o.getName())) {
+                             team.addEntry(o.getName());
                 }
             }
         });
