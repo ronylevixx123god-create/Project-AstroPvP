@@ -29,7 +29,7 @@ public class FreezeCommand extends Command {
             return false;
         }
 
-        if (args.length > 1) {
+        if (args.length != 1) {
             player.sendMessage(CC.Red + "/ss <target>");
             return false;
         }
