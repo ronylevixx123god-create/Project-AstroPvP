@@ -6,6 +6,7 @@ import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.damageindicators.utils.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.util.GeneralCooldown;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -42,6 +43,9 @@ public class MasteryNeutralize extends CustomEnchantment {
         } catch (Exception ignored) {
         }
 
+        if (GeneralCooldown.isOnGeneralCooldown(user)) {
+            return;
+        }
 
         if ((level) * multi >= ThreadLocalRandom.current().nextInt(250)) {
 
@@ -58,6 +62,7 @@ public class MasteryNeutralize extends CustomEnchantment {
             pTarget.playSound(pTarget.getLocation(), Sound.ENDERMAN_SCREAM, 1.0f, 0.3f);
 
             pTarget.setMetadata("neutralized", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), "banana"));
+            GeneralCooldown.enterCooldown(user);
 
             try {
                 if (DamageIndicatorUtils.isPlayerIndicating((Player) user)) {

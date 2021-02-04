@@ -3,6 +3,7 @@ package org.arkhamnetwork.enchantments.enchantments.heroic;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.util.GeneralCooldown;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
@@ -53,12 +54,16 @@ public class HeroicDeathbringer extends CustomEnchantment {
         @EventHandler
         public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
             Entity damage = e.getDamager();
+            if (GeneralCooldown.isOnGeneralCooldown((Player) damage)) {
+                return;
+            }
             if (doubleDamage.contains(damage)) {
                 double random = Math.random();
                 double chance = 0.002D * playerLevels.get((damage instanceof Projectile) ? ((Projectile) damage).getShooter() : damage);
                 chance *= 0.005D;
                 if (random < chance) {
                     e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.2D);
+                    GeneralCooldown.enterCooldown((Player) damage);
 
                 }
 

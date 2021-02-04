@@ -5,6 +5,7 @@ import com.rit.sucy.CustomEnchantment;
 import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.listeners.VanillaDamageListener;
+import org.arkhamnetwork.enchantments.util.GeneralCooldown;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
@@ -34,12 +35,16 @@ public class DoubleStrike extends CustomEnchantment {
                 dmg = e.getDamage(EntityDamageEvent.DamageModifier.BASE);
             final double fdmg = dmg;
             Player pp = (Player) e.getDamager();
+            if (GeneralCooldown.isOnGeneralCooldown(pp)) {
+                return;
+            }
             Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), new Runnable() {
                 public void run() {
                     if (!playerHit.isDead() && playerHit.getHealth() > 0.0D) {
                         playerHit.setMetadata("doubleStriked", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), Long.valueOf(System.currentTimeMillis())));
                         playerHit.damage(fdmg, (Entity) player);
                         pp.sendMessage(CC.translate("&6&l** DOUBLE STRIKE **"));
+                        GeneralCooldown.enterCooldown(pp);
                     }
                 }
             }, 2L);

@@ -4,6 +4,7 @@ import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import com.rit.sucy.CustomEnchantment;
 import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.util.GeneralCooldown;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
@@ -27,10 +28,14 @@ public class Devour extends CustomEnchantment {
             if (GeneralUtil.isEffectedByRage(target)) {
                 return;
             }
+            if (GeneralCooldown.isOnGeneralCooldown((Player) user)) {
+                return;
+            }
             final double mod = Bleed.getBleedStack(target) * 0.015 + enchantLevel * 0.1 + 1.0;
             event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * mod);
             target.setMetadata("effectedByDevour", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) System.currentTimeMillis()));
             final Location l = target.getLocation();
+            GeneralCooldown.enterCooldown((Player) user);
             WorldUtil.sendWorldEffect(l.getBlock(), Material.MYCEL.getId(), 2001);
         }
     }

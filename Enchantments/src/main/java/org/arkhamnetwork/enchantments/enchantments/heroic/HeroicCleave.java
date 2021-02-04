@@ -1,6 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
 import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.util.GeneralCooldown;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
@@ -33,6 +34,9 @@ public class HeroicCleave extends HeroicCustomEnchantment {
         if (player.hasMetadata("previous_cleave_use") && System.currentTimeMillis() - player.getMetadata("previous_cleave_use").get(0).asLong() <= 1500L) {
             return;
         }
+        if (GeneralCooldown.isOnGeneralCooldown((Player) player)) {
+            return;
+        }
         if (player.hasMetadata("skullSplitterProc") && System.currentTimeMillis() - player.getMetadata("skullSplitterProc").get(0).asLong() <= 1000L) {
             return;
         }
@@ -57,6 +61,7 @@ public class HeroicCleave extends HeroicCustomEnchantment {
                     continue;
                 }
                 le_ent.setMetadata("lastCleaveDamage", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) System.currentTimeMillis()));
+                GeneralCooldown.enterCooldown((Player) player);
                 le_ent.damage(damage);
             }
         }
