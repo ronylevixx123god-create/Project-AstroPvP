@@ -63,6 +63,7 @@ import me.matthawkk.autogiveall.struct.GiveAllManager;
 import me.matthawkk.autogiveall.tasks.AutoGiveAllTask;
 import net.astropvp.core.commands.*;
 import net.astropvp.core.listeners.*;
+import net.astropvp.core.staff.FreezeCommand;
 import net.astropvp.core.staff.StaffChatCommand;
 import net.astropvp.core.tasks.ClearLagTask;
 import net.astropvp.core.tasks.LastManStandingCapTask;
@@ -253,7 +254,7 @@ public class AstroCore extends JavaPlugin {
         this.getCommand("lastmanstanding").setExecutor(new LastManStandingCommand());
         this.getCommand("togglepay").setExecutor(new CommandTogglePay());
 
-        Arrays.asList(new Broadcast(), new StaffChatCommand()).forEach(this:: registerCommand);
+        Arrays.asList(new Broadcast(), new FreezeCommand(), new StaffChatCommand()).forEach(this:: registerCommand);
 
         this.getServer().getPluginManager().registerEvents(new CommandListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
