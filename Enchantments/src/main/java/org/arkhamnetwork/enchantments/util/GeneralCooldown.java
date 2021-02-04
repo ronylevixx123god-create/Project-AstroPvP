@@ -10,7 +10,7 @@ public class GeneralCooldown {
     public static void enterCooldown(Player player) {
         player.setMetadata("generalCooldown", new FixedMetadataValue(Enchantments.getInstance(), player.getName()));
         Bukkit.getScheduler().runTaskLater(Enchantments.getInstance(), ()->{
-            player.removeMetadata("generalcooldown", Enchantments.getInstance());
+            player.removeMetadata("generalCooldown", Enchantments.getInstance());
         },100L);
     }
 
