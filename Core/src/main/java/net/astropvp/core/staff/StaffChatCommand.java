@@ -36,7 +36,7 @@ public class StaffChatCommand extends Command {
             player.sendMessage(CC.Red + "Message was empty.");
             return false;
         }
-        StaffChat.send(text.toString());
+        StaffChat.send(player, text.toString());
         return false;
     }
 }
