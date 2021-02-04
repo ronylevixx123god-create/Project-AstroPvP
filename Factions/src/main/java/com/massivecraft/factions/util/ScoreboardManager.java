@@ -117,7 +117,7 @@ public class ScoreboardManager implements BoardAdapter {
                                 fplayer = FactionUtils.getFPlayer(joinPlayer);
                             }
                             final Faction fJoinFaction = FactionUtils.getFaction(joinPlayer);
-                            if (P.getP().getPrefixType() == PrefixType.RANK && !o.hasPermission("arkkit.staff.hidden")) {
+                            if (P.getP().getPrefixType() == PrefixType.RANK || o.hasPermission("arkkit.staff.hidden")) {
                                 if (prefix != null) {
                                     prefix = FormatUtils.trimPrefix(prefix);
                                 }

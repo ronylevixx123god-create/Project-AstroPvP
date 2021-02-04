@@ -63,6 +63,7 @@ import me.matthawkk.autogiveall.struct.GiveAllManager;
 import me.matthawkk.autogiveall.tasks.AutoGiveAllTask;
 import net.astropvp.core.commands.*;
 import net.astropvp.core.listeners.*;
+import net.astropvp.core.staff.Freeze;
 import net.astropvp.core.staff.FreezeCommand;
 import net.astropvp.core.staff.StaffChatCommand;
 import net.astropvp.core.tasks.ClearLagTask;
@@ -214,6 +215,7 @@ public class AstroCore extends JavaPlugin {
 
         this.toggleManager.loadToggles();
 
+        this.getServer().getPluginManager().registerEvents(new Freeze(), this);
         this.getServer().getPluginManager().registerEvents(new ChatListener(), this);
         this.getServer().getPluginManager().registerEvents(new BlockCommand(), this);
         this.getServer().getPluginManager().registerEvents(new BackpackListener(), this);
