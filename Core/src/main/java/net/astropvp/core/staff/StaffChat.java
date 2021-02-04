@@ -15,7 +15,7 @@ public class StaffChat {
     public static void sendGlobal(String msg) {
         Bukkit.getOnlinePlayers().forEach(player -> {
             if (player.hasPermission("astrocore.staff")) {
-                player.sendMessage(StaffUtil.format + " " + CC.Gray + msg);
+                player.sendMessage(StaffUtil.format + CC.Gray + msg);
             }
         });
     }
