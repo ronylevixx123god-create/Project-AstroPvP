@@ -19,10 +19,7 @@ public class FormatUtils
     public static String getPlayerPrefix(final Player player) {
         String prefix = "";
         try {
-            if (P.getP().getPrefixType() == PrefixType.RANK || player.hasPermission("arkkit.staff.hidden")) {
-                prefix = PermissionsAPI.getPermissionUser(player.getUniqueId()).getPrefix() + " ";
-            }
-            else if (P.getP().getPrefixType() == PrefixType.FACTION) {
+           if (P.getP().getPrefixType() == PrefixType.FACTION) {
                 final Faction fac = FactionUtils.getFaction(player);
                 if (fac != null && (boolean)FactionUtils.callFactionMethod(fac, "isNormal", null)) {
                     prefix = (String)FactionUtils.callFactionMethod(fac, "getTag", null);

@@ -1,5 +1,6 @@
 package com.massivecraft.factions.util;
 
+import com.compilex.CompilexPermissions.PermissionsAPI;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.massivecraft.factions.FPlayer;
@@ -108,6 +109,7 @@ public class ScoreboardManager implements BoardAdapter {
                         if (b == null) {
                             return;
                         }
+
                         Object fplayer = null;
                         String prefix = FormatUtils.getPlayerPrefix(o);
                         final boolean factionsEnabled = P.getP().isEnabled();
@@ -117,14 +119,7 @@ public class ScoreboardManager implements BoardAdapter {
                                 fplayer = FactionUtils.getFPlayer(joinPlayer);
                             }
                             final Faction fJoinFaction = FactionUtils.getFaction(joinPlayer);
-                            if (P.getP().getPrefixType() == PrefixType.RANK && !o.hasPermission("arkkit.staff.hidden")) {
-                                if (prefix != null) {
-                                    prefix = FormatUtils.trimPrefix(prefix);
-                                }
-                                final String color = FormatUtils.getFactionEnding(fp.getFaction(), fJoinFaction);
-                                prefix = prefix + color + " ";
-                            }
-                            else if (P.getP().getPrefixType() == PrefixType.FACTION) {
+                            if (P.getP().getPrefixType() == PrefixType.FACTION) {
                                 if (P.getP().isEnabled()) {
                                     prefix = FormatUtils.getFactionPrefixForOtherFaction(fp.getPlayer(), fJoinFaction);
                                     if (prefix != null) {

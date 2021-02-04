@@ -185,6 +185,9 @@ public class P extends MPlugin {
             this.suicide();
             return;
         }
+        if (this.prefixType == null) {
+            this.prefixType = PrefixType.FACTION;
+        }
         if (!this.preEnable()) {
             return;
         }
