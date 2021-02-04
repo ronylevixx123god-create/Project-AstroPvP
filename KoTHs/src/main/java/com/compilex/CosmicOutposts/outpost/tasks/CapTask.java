@@ -39,37 +39,29 @@ import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.Factions;
-import java.io.File;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 import me.ifamasssxd.factionupgrades.FactionUpgradeAPI;
 import me.ifamasssxd.factionupgrades.struct.FactionUpgrade;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
+
+import java.io.File;
+import java.math.BigDecimal;
+import java.util.*;
 
 public class CapTask
 implements Runnable {
     private float capPercent;
     private Faction attackingFaction = null;
     private Faction defendingFaction = null;
-    private Outpost outpost;
+    private final Outpost outpost;
     private int iterations = 0;
     private final float capMod = 1.0f;
-    private static HashMap<String, Long> factionNotifyTimes = new HashMap();
+    private static final HashMap<String, Long> factionNotifyTimes = new HashMap();
     private boolean webLink = false;
     private boolean factionUpgrades = false;
     private boolean masks = false;
@@ -86,7 +78,7 @@ implements Runnable {
         ++this.iterations;
         List<Player> playersInCapzone = this.getPlayersInCapZone();
         if (this.defendingFaction != null && this.attackingFaction == null && (double)this.capPercent >= 0.1 && this.defendingFaction.getFPlayers().size() > 0 && Bukkit.getPluginManager().isPluginEnabled("CosmicFactionQuests")) {
-            Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)("fquests add HOLD_" + this.outpost.getOutpostTier().name() + "_OUTPOST_I " + this.defendingFaction.getTag()));
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "fquests add HOLD_" + this.outpost.getOutpostTier().name() + "_OUTPOST_I " + this.defendingFaction.getTag());
         }
         if (playersInCapzone.size() == 0) {
             return;
@@ -99,7 +91,7 @@ implements Runnable {
         }
         if (this.outpost.getControllingFaction() != null && Factions.i.getByTag(this.outpost.getControllingFaction()) == null) {
             this.outpost.setControllingFaction(null);
-            if (this.defendingFaction != null && this.attackingFaction != null && this.attackingFaction.equals((Object)this.defendingFaction)) {
+            if (this.defendingFaction != null && this.attackingFaction != null && this.attackingFaction.equals(this.defendingFaction)) {
                 this.attackingFaction = null;
             }
             this.defendingFaction = null;
@@ -158,7 +150,7 @@ implements Runnable {
             }
             boolean bl = strongestFactionHasMask = this.masks && this.doesPlayerInStrongestFactionHaveOutpostMask(strongestFaction, playersInCapzone);
             if (this.isAFactionAttacking() && this.attackingFaction.getTag().equals(strongestFaction)) {
-                if (this.isAFactionDefending() && !this.attackingFaction.equals((Object)this.defendingFaction)) {
+                if (this.isAFactionDefending() && !this.attackingFaction.equals(this.defendingFaction)) {
                     float capPercentDecreaseInterval = this.getCapPercentDecreaseInterval(FMC);
                     this.getClass();
                     float f = capPercentDecreaseInterval * 1.0f;
@@ -280,51 +272,51 @@ implements Runnable {
         if (this.outpost.getOutpostTier() == OutpostTier.COSMONAUT) {
             colorCode = "&6";
         }
-        Bukkit.broadcastMessage((String)"");
-        Bukkit.broadcastMessage((String)ChatColor.translateAlternateColorCodes((char)'&', (String)("" + colorCode + "&l(!) " + colorCode + "&n&l" + this.attackingFaction.getTag() + "" + colorCode + "&l have claimed the &n&l" + this.outpost.getOutpostTier().chatPrefix + " Outpost!")));
-        Bukkit.broadcastMessage((String)ChatColor.translateAlternateColorCodes((char)'&', (String)("&7Use " + colorCode + "&l/outpost &7to view more information.")));
-        Bukkit.broadcastMessage((String)"");
+        Bukkit.broadcastMessage("");
+        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "" + colorCode + "&l(!) " + colorCode + "&n&l" + this.attackingFaction.getTag() + "" + colorCode + "&l have claimed the &n&l" + this.outpost.getOutpostTier().chatPrefix + " Outpost!"));
+        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&7Use " + colorCode + "&l/outpost &7to view more information."));
+        Bukkit.broadcastMessage("");
         this.defendingFaction = this.attackingFaction;
         this.attackingFaction = null;
-        Bukkit.getServer().getScheduler().runTask((Plugin) CosmicKOTHPlugin.get_(), new Runnable(){
+        Bukkit.getServer().getScheduler().runTask(CosmicKOTHPlugin.get_(), new Runnable(){
 
             @Override
             public void run() {
                 for (Player p : CapTask.this.outpost.getWorld().getPlayers()) {
                     if (CosmicOutpostsAPI.getOutpostPlayerControls(p) != null && CosmicOutpostsAPI.getOutpostPlayerControls(p).equals(CapTask.this.outpost)) {
-                        p.setMetadata("ignore_combat_tag", (MetadataValue)new FixedMetadataValue((Plugin)CosmicKOTHPlugin.get_(), (Object)true));
+                        p.setMetadata("ignore_combat_tag", new FixedMetadataValue(CosmicKOTHPlugin.get_(), true));
                         p.teleport(CapTask.this.outpost.getDefenderSpawn(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
-                        p.removeMetadata("ignore_combat_tag", (Plugin)CosmicKOTHPlugin.get_());
+                        p.removeMetadata("ignore_combat_tag", CosmicKOTHPlugin.get_());
                         continue;
                     }
-                    p.setMetadata("ignore_combat_tag", (MetadataValue)new FixedMetadataValue((Plugin)CosmicKOTHPlugin.get_(), (Object)true));
+                    p.setMetadata("ignore_combat_tag", new FixedMetadataValue(CosmicKOTHPlugin.get_(), true));
                     p.teleport(CapTask.this.outpost.getAttackerSpawn(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
-                    p.removeMetadata("ignore_combat_tag", (Plugin)CosmicKOTHPlugin.get_());
+                    p.removeMetadata("ignore_combat_tag", CosmicKOTHPlugin.get_());
                 }
             }
         });
         for (Player pla : playersInCapzone) {
-            Faction fac = FactionUtils.getFaction((Player)pla, (boolean)true);
-            if (fac == null || !fac.equals((Object)this.defendingFaction)) continue;
-            Bukkit.getPluginManager().callEvent((Event)new CustomCosmicPlayerEvent(pla, "OUTPOST_CAP", new Object[]{this.outpost.getOutpostTier().name()}));
+            Faction fac = FactionUtils.getFaction(pla, true);
+            if (fac == null || !fac.equals(this.defendingFaction)) continue;
+            Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(pla, "OUTPOST_CAP", new Object[]{this.outpost.getOutpostTier().name()}));
         }
     }
 
     private void doOutpostOwnedLogic(List<Player> playersInCapzone) {
         if (this.capPercent <= 0.0f) {
-            Bukkit.broadcastMessage((String)"");
-            Bukkit.broadcastMessage((String)ChatColor.translateAlternateColorCodes((char)'&', (String)("&c&l(!) &c&n&l" + this.defendingFaction.getTag() + "&c&l have lost the &n&l" + this.outpost.getOutpostTier().chatPrefix + " Outpost!&c&l They had control for &n" + this.outpost.getTimeStringSinceLastCap() + "!")));
-            Bukkit.broadcastMessage((String)ChatColor.translateAlternateColorCodes((char)'&', (String)"&7Use &c&l/outpost &7to view more information."));
-            Bukkit.broadcastMessage((String)"");
+            Bukkit.broadcastMessage("");
+            Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&c&l(!) &c&n&l" + this.defendingFaction.getTag() + "&c&l have lost the &n&l" + this.outpost.getOutpostTier().chatPrefix + " Outpost!&c&l They had control for &n" + this.outpost.getTimeStringSinceLastCap() + "!"));
+            Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&7Use &c&l/outpost &7to view more information."));
+            Bukkit.broadcastMessage("");
             long startCapTime = this.outpost.getCapTime();
             int secondsCappedFor = (int)((System.currentTimeMillis() - startCapTime) / 1000L);
             CosmicOutpostsAPI.incrementCapTime(Factions.i.getByTag(this.defendingFaction.getTag()), this.outpost.getOutpostTier(), secondsCappedFor);
             Bukkit.getLogger().info("Adding " + secondsCappedFor + " of cap time to " + this.outpost.getControllingFaction());
             if (playersInCapzone != null) {
                 for (Player player : playersInCapzone) {
-                    Faction plFaction = FactionUtils.getFaction((Player)player);
-                    if (plFaction == null || !plFaction.equals((Object)this.attackingFaction)) continue;
-                    Bukkit.getPluginManager().callEvent((Event)new CustomCosmicPlayerEvent(player, "OUTPOST_UNCAP", new Object[]{this.outpost.getOutpostTier().name()}));
+                    Faction plFaction = FactionUtils.getFaction(player);
+                    if (plFaction == null || !plFaction.equals(this.attackingFaction)) continue;
+                    Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(player, "OUTPOST_UNCAP", new Object[]{this.outpost.getOutpostTier().name()}));
                 }
             }
             if (this.doesFactionControlAnOutpost(this.attackingFaction.getTag())) {
@@ -356,13 +348,13 @@ implements Runnable {
         if (factionCounts.size() > 1) {
             return 0.0f;
         }
-        int factionMembers = (Integer)factionCounts.values().iterator().next();
+        int factionMembers = factionCounts.values().iterator().next();
         return Math.min(Math.min(0.005f, 0.001f * (float)factionMembers), 1.0f - this.capPercent);
     }
 
     private float getCapPercentDecreaseInterval(FactionMemberCounts factionCounts) {
         if (this.outpost.getControllingFaction() != null) {
-            if (factionCounts.size() > 1 || !((String)factionCounts.keySet().iterator().next()).equals(this.outpost.getControllingFaction())) {
+            if (factionCounts.size() > 1 || !factionCounts.keySet().iterator().next().equals(this.outpost.getControllingFaction())) {
                 int hostiles = 0;
                 Iterator iterator = factionCounts.values().iterator();
                 while (iterator.hasNext()) {
@@ -379,7 +371,7 @@ implements Runnable {
             if (factionCounts.size() > 1) {
                 return 0.0f;
             }
-            String faction = (String)factionCounts.keySet().iterator().next();
+            String faction = factionCounts.keySet().iterator().next();
             if (faction.equals(this.getAttackingFaction().getTag()) && !faction.equals(this.getDefendingFaction().getTag())) {
                 int hostiles2 = 0;
                 Iterator members = factionCounts.values().iterator();
@@ -388,7 +380,7 @@ implements Runnable {
                     hostiles2 += members2;
                 }
                 if (factionCounts.containsKey(this.outpost.getControllingFaction())) {
-                    hostiles2 -= ((Integer)factionCounts.get(this.outpost.getControllingFaction())).intValue();
+                    hostiles2 -= factionCounts.get(this.outpost.getControllingFaction()).intValue();
                 }
                 int hostilesMod2 = Math.max(1, Math.min(5, hostiles2 / 3));
                 return Math.min(0.005f, 0.001f * (float)hostilesMod2);
@@ -438,8 +430,8 @@ implements Runnable {
 
     public boolean doesPlayerInStrongestFactionHaveOutpostMask(String factionTag, List<Player> playersInCapzone) {
         for (Player p : playersInCapzone) {
-            FPlayer fp = (FPlayer)FPlayers.i.get((OfflinePlayer)p);
-            if (!fp.getFaction().getTag().equals(factionTag) || !MaskUtils.hasMaskEquipped((Player)p, (String)"OUTPOST")) continue;
+            FPlayer fp = FPlayers.i.get(p);
+            if (!fp.getFaction().getTag().equals(factionTag) || !MaskUtils.hasMaskEquipped(p, "OUTPOST")) continue;
             return true;
         }
         return false;
@@ -448,25 +440,26 @@ implements Runnable {
     public FactionMemberCounts getFactionMemberCounts(List<Player> l) {
         FactionMemberCounts factionCounts = new FactionMemberCounts();
         for (Player p : l) {
-            FPlayer fp = (FPlayer)FPlayers.i.get((OfflinePlayer)p);
+            FPlayer fp = FPlayers.i.get(p);
             if (!fp.getFaction().isNormal()) continue;
-            factionCounts.put(fp.getFaction().getTag(), factionCounts.containsKey(fp.getFaction().getTag()) ? (Integer)factionCounts.get(fp.getFaction().getTag()) + 1 : 1);
+            factionCounts.put(fp.getFaction().getTag(), factionCounts.containsKey(fp.getFaction().getTag()) ? factionCounts.get(fp.getFaction().getTag()) + 1 : 1);
         }
         return factionCounts;
     }
 
     public List<Player> getPlayersInCapZone() {
-        ArrayList<Player> l = new ArrayList<Player>();
+        ArrayList<Player> l = new ArrayList<>();
         for (Player p : Arkkit.get().getAsyncPlayerMap().values()) {
-            if (!p.getWorld().equals((Object)this.outpost.getWorld()) || !WorldGuardUtils.getRegionName(p.getLocation()).equals(Outpost.OUTPOST_CAP_REGION) || p.getGameMode() != GameMode.SURVIVAL || CosmicKOTHPlugin.get_().getEss3().getUser(p).isVanished()) continue;
-            l.add(p);
+            if (!p.getWorld().equals(this.outpost.getWorld()) || !WorldGuardUtils.getRegionName(p.getLocation()).equals(Outpost.OUTPOST_CAP_REGION) || p.getGameMode() != GameMode.SURVIVAL || CosmicKOTHPlugin.get_().getEss3().getUser(p).isVanished()) {
+                l.add(p);
+            }
         }
         return l;
     }
 
     public float applyFactionUpgrades(Faction faction, float f) {
         if (this.factionUpgrades) {
-            int perkLevel = FactionUpgradeAPI.getPerkLevel((Faction)faction, (FactionUpgrade)FactionUpgrade.OUTPOST_CONTROL);
+            int perkLevel = FactionUpgradeAPI.getPerkLevel(faction, FactionUpgrade.OUTPOST_CONTROL);
             if (perkLevel == 1) {
                 f *= 1.1f;
             }
