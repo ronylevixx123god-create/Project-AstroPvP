@@ -30,7 +30,6 @@ import me.ifamasssxd.betterpay.PayListener;
 import me.ifamasssxd.betterpay.PayToggle;
 import me.ifamasssxd.betterpay.commands.CommandTogglePay;
 import me.ifamasssxd.corechunkfinder.CoreChunkFinderCommand;
-import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.cosmiccoinflip.commands.CommandCoinFlip;
 import me.ifamasssxd.cosmiccoinflip.listeners.InventoryListener;
 import me.ifamasssxd.cosmiccoinflip.struct.CoinFlipManager;
@@ -64,6 +63,7 @@ import me.matthawkk.autogiveall.struct.GiveAllManager;
 import me.matthawkk.autogiveall.tasks.AutoGiveAllTask;
 import net.astropvp.core.commands.*;
 import net.astropvp.core.listeners.*;
+import net.astropvp.core.staff.StaffChatCommand;
 import net.astropvp.core.tasks.ClearLagTask;
 import net.astropvp.core.tasks.LastManStandingCapTask;
 import net.milkbowl.vault.economy.Economy;
@@ -81,7 +81,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.lang.reflect.Field;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.HashMap;
 
 @Getter @Setter
@@ -253,7 +253,7 @@ public class AstroCore extends JavaPlugin {
         this.getCommand("lastmanstanding").setExecutor(new LastManStandingCommand());
         this.getCommand("togglepay").setExecutor(new CommandTogglePay());
 
-        Collections.singletonList(new Broadcast()).forEach(this:: registerCommand);
+        Arrays.asList(new Broadcast(), new StaffChatCommand()).forEach(this:: registerCommand);
 
         this.getServer().getPluginManager().registerEvents(new CommandListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);

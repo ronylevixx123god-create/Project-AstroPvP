@@ -1,9 +1,11 @@
 package com.massivecraft.factions.util;
 
-import com.compilex.CompilexPermissions.PermissionsAPI;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
-import com.massivecraft.factions.*;
+import com.massivecraft.factions.FPlayer;
+import com.massivecraft.factions.FPlayers;
+import com.massivecraft.factions.Faction;
+import com.massivecraft.factions.P;
 import com.massivecraft.factions.board.BoardAdapter;
 import com.massivecraft.factions.integration.Econ;
 import com.massivecraft.factions.struct.Relation;
@@ -115,7 +117,7 @@ public class ScoreboardManager implements BoardAdapter {
                                 fplayer = FactionUtils.getFPlayer(joinPlayer);
                             }
                             final Faction fJoinFaction = FactionUtils.getFaction(joinPlayer);
-                            if (P.getP().getPrefixType() == PrefixType.RANK || o.hasPermission("arkkit.staff.hidden")) {
+                            if (P.getP().getPrefixType() == PrefixType.RANK && !o.hasPermission("arkkit.staff.hidden")) {
                                 if (prefix != null) {
                                     prefix = FormatUtils.trimPrefix(prefix);
                                 }
