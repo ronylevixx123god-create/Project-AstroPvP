@@ -12,6 +12,9 @@ import org.bukkit.event.entity.EntityDamageEvent;
 final class DivineImmolationListener implements Listener {
     @EventHandler
     public void onEntityDamage(final EntityDamageEvent e) throws Exception {
+        if (!(e.getEntity() instanceof Player)) {
+            return;
+        }
         if (e.getEntity().hasMetadata("divineFire") && e.getCause() == EntityDamageEvent.DamageCause.WITHER && e.getEntity() instanceof LivingEntity) {
             final int enchantLevel = e.getEntity().getMetadata("divineFireLevel").get(0).asInt();
             if (System.currentTimeMillis() - e.getEntity().getMetadata("divineFire").get(0).asLong() < (3 + enchantLevel) * 1000) {

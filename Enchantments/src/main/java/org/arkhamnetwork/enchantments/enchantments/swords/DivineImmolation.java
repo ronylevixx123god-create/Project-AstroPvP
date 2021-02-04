@@ -39,6 +39,9 @@ public class DivineImmolation extends CustomEnchantment {
         Player p = (Player) player;
         double radius = 1.0D * level;
         double damage = 2.5;
+        if (!(player instanceof Player) || !(playerHit instanceof Player) ) {
+            return;
+        }
         if (!GeneralUtil.isSword(p.getItemInHand()))
             return;
         if (p.hasMetadata("lastItemHeldChange") && MinecraftServerUtils.getCurrentServerTick() - ((MetadataValue) p.getMetadata("lastItemHeldChange").get(0)).asLong() <= 5L)

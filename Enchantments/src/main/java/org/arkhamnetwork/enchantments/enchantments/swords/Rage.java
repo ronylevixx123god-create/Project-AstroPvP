@@ -45,6 +45,9 @@ public class Rage extends CustomEnchantment {
         if (target instanceof ArmorStand) {
             return;
         }
+        if (!(target instanceof Player)) {
+            return;
+        }
         if (!event.isCancelled() && event.getDamage(EntityDamageEvent.DamageModifier.BASE) > 0.0D && user instanceof Player) {
             Player pUser = (Player) user;
             if (!pUser.getItemInHand().getType().name().toLowerCase().contains("_sword") || !(event.getDamager() instanceof LivingEntity))
@@ -54,10 +57,10 @@ public class Rage extends CustomEnchantment {
             if (user.hasMetadata("noRageUntil") && (user.getMetadata("noRageUntil").get(0)).asLong() > System.currentTimeMillis())
                 return;
 
-            double mod = 0.117D * enchantLevel;
+            double mod = 0.12D * enchantLevel;
             double hitCombo = ((target instanceof Player) ? getPVPHitCombo((Player) user) : getPVEHitCombo((Player) user)) * mod + 1.0D;
-            if (hitCombo > 6.0D)
-                hitCombo = 6.0D;
+            if (hitCombo > 8.0D)
+                hitCombo = 8.0D;
             if (hitCombo > 1.0D && !GeneralUtil.isEffectedByDevour(target)) {
                 playRageEffect(target.getEyeLocation(), enchantLevel);
                 event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * hitCombo * mod);
