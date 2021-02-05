@@ -2,6 +2,8 @@ package net.astropvp.core.staff;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import lombok.Getter;
+import org.arkhamnetwork.Arkkit.libs.SpawnerLocation;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -10,14 +12,14 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class Freeze implements Listener {
 
     @Getter
-    public static List<UUID> frozenPlayers = new ArrayList<>();
+    public static HashMap<UUID, Location> frozenPlayers = new HashMap<>();
 
     public static void handle(Player target, Player staff) {
         if (frozenPlayers.contains(target.getUniqueId())) {
@@ -33,7 +35,7 @@ public class Freeze implements Listener {
         target.sendMessage(CC.Red + "Do not disconnect.");
         target.sendMessage("");
         StaffChat.sendGlobal(CC.White + "[Freeze] " + CC.Aqua + target.getName() + CC.Gray + " has been frozen by " + CC.White +  staff.getName());
-        frozenPlayers.add(target.getUniqueId());
+        frozenPlayers.put(target.getUniqueId(), target.getLocation());
     }
 
     public static void unfreeze(Player target, Player staff) {
@@ -51,7 +53,11 @@ public class Freeze implements Listener {
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
         if (isFrozen(event.getPlayer())) {
-            event.setCancelled(true);
+            if (event.getFrom().getBlockX() != event.getTo().getBlockX()
+                    || event.getFrom().getBlockY() != event.getTo().getBlockY()
+                    || event.getFrom().getBlockZ() != event.getTo().getBlockZ()) {
+                event.getPlayer().teleport(frozenPlayers.get(event.getPlayer().getUniqueId()));
+            }
         }
     }
 
