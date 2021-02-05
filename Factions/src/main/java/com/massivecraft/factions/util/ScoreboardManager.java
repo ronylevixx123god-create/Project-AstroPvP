@@ -1,129 +1,116 @@
 package com.massivecraft.factions.util;
 
-import com.compilex.CompilexPermissions.PermissionsAPI;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.massivecraft.factions.FPlayer;
-import com.massivecraft.factions.FPlayers;
-import com.massivecraft.factions.Faction;
-import com.massivecraft.factions.P;
-import com.massivecraft.factions.board.BoardAdapter;
+import com.cosmicpvp.cosmicutils.utils.ReflectionUtils;
+import com.cosmicpvp.cosmicutils.utils.UserScoreboard;
+import com.cosmicpvp.scoreboard.CosmicScoreboardPlugin;
+import com.massivecraft.factions.*;
+import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.integration.Econ;
 import com.massivecraft.factions.struct.Relation;
 import com.massivecraft.factions.zcore.util.NumberUtils;
-import io.netty.util.internal.ThreadLocalRandom;
-import net.astropvp.core.AstroCore;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.Team;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class ScoreboardManager implements BoardAdapter {
+public class ScoreboardManager {
+    public static HashSet<UUID> playerObjectives = new HashSet<>();
+
+    private static DateFormat format = new SimpleDateFormat("MM/dd");
+
+    public static boolean nearby = true;
 
     public static String getDateSuffix() {
         return format.format(new Date());
     }
 
-    private static final DateFormat format = new SimpleDateFormat("MM/dd");
-
-    @Override
-    public List<String> getScoreboard(Player player, com.massivecraft.factions.board.Board board) {
-        if (AstroCore.getInstance().getToggleManager().getScoreboardToggles().contains(player.getUniqueId())) {
-            return null;
-        } else {
-            return this.mainBoard(player);
-        }
-    }
-
-    @Override
-    public void preLoop() {
-    }
-
-    @Override
-    public String getTitle(Player player) {
-        FPlayer fplayer = FPlayers.i.get(player);
-        if (fplayer != null) {
-            if (fplayer.hasFaction()) {
-                return CC.AquaB + fplayer.getFaction().getTag() + CC.Gray + " " + getDateSuffix();
-            } else {
-                return CC.AquaB + "AstroPvP " + CC.Gray + getDateSuffix();
-            }
-        }
-        return CC.AquaB + "AstroPvP " + CC.Gray + getDateSuffix();
-    }
-
-    public List<String> mainBoard(Player player) {
-        List<String> board = new LinkedList<>();
-        FPlayer fplayer = FPlayers.i.get(player);
-
-        board.add(" ");
-        board.add(ChatColor.GREEN + ChatColor.BOLD.toString() + "Account");
-        board.add(ChatColor.WHITE + player.getName());
-        board.add(" ");
-        board.add(ChatColor.GOLD + ChatColor.BOLD.toString() + "Balance");
-        board.add(ChatColor.WHITE.toString() + "$" + NumberUtils.formatMoney((long) Econ.econ.getBalance(player)));
-        board.add(" ");
-        board.add(ChatColor.AQUA + ChatColor.BOLD.toString() + "XP");
-        board.add(ChatColor.WHITE.toString() + NumberUtils.formatMoney(player.getTotalExperience()));
-        board.add(" ");
-        board.add(ChatColor.RED + ChatColor.BOLD.toString() + "Ping");
-        board.add(ChatColor.WHITE.toString() + getPing(player) + "ms");
-        board.add(" ");
-        if (fplayer != null) {
-            if (fplayer.hasFaction()) {
-                board.add(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Faction");
-                board.add(ChatColor.GREEN.toString() + fplayer.getFaction().getOnlinePlayers().size() + ChatColor.GRAY + " / " + fplayer.getFaction().getFPlayers().size());
-            } else {
-                board.add(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Server");
-                board.add(ChatColor.WHITE.toString() + "astropvp.net");
-            }
-        }
-
-        return board;
-    }
-
-    @Override
-    public long getInterval() {
-        return 80L;
-    }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    public static HashSet<UUID> playerObjectives = new HashSet<>();
-
-    public static boolean nearby = true;
-
-    public static int getPing(Player player) {
-        int ping = (((CraftPlayer)player).getHandle()).ping;
-            if (ping == 0) {
-                ping = ThreadLocalRandom.current().nextInt(40, 50);
-            } else if (ping > 80) {
-                ping = ThreadLocalRandom.current().nextInt(30, 50);
-            }
-        return ping;
-    }
-
-
-
     private static boolean newScoreboardManager = false;
 
     private static boolean checked = false;
 
-    /*public static void setPlayerFactionScoreboardAsync(Player player) {
+    private static boolean usingNewScoreboard() {
+        if (checked)
+            return newScoreboardManager;
+        try {
+            newScoreboardManager = (ReflectionUtils.getMethod(CosmicScoreboardPlugin.getPlugin().getClass(), "getPlaceholderManager") != null);
+            Bukkit.getLogger().info("New Scoreboard Manager: " + newScoreboardManager);
+        } catch (Exception e) {
+            Bukkit.getLogger().info("Unable to load new PlaceholderManager data!");
+        }
+        checked = true;
+        return newScoreboardManager;
+    }
 
+    public static void setPlayerFactionScoreboardAsync(Player player) {
+        if (player == null)
+            return;
+        if (player.hasMetadata("boss_scoreboard") && player.getMetadata("boss_scoreboard").size() > 0) {
+            long expire = ((MetadataValue)player.getMetadata("boss_scoreboard").get(0)).asLong();
+            if (expire > System.currentTimeMillis())
+                return;
+        }
+        if (player.hasMetadata("custom_scoreboard") && player.getMetadata("custom_scoreboard").size() > 0) {
+            long expire = ((MetadataValue)player.getMetadata("custom_scoreboard").get(0)).asLong();
+            if (expire > System.currentTimeMillis())
+                return;
+        }
+        try {
+            if (usingNewScoreboard() &&
+                    CosmicScoreboardPlugin.getPlugin().getPlaceholderManager().hasPlaceholders(player)) {
+                UserScoreboard scoreboard = (UserScoreboard)CosmicScoreboardPlugin.getPlugin().getPlaceholderManager().getStoredScoreboards().get(player.getUniqueId());
+                Objective koth;
+                if (scoreboard != null && (koth = scoreboard.getScoreboard().getObjective("koth")) != null) {
+                    koth.unregister();
+                    scoreboard.setSlot(DisplaySlot.SIDEBAR);
+                }
+                return;
+            }
+        } catch (Exception exception) {}
+        if (player.hasMetadata("toggle_scoreboard") && player.getMetadata("toggle_scoreboard").size() > 0)
+            return;
+        Scoreboard scoreboardComp = new Scoreboard();
+        CraftPlayer craftPlayer = (CraftPlayer)player;
+        PlayerConnection playerConnection = (craftPlayer.getHandle()).playerConnection;
+        if (playerConnection.isDisconnected())
+            return;
+        ScoreboardObjective scoreboardObjective = (scoreboardComp.getObjective("Factions") != null) ? scoreboardComp.getObjective("Factions") : scoreboardComp.registerObjective("Factions", (IScoreboardCriteria)new ScoreboardBaseCriteria("dummy"));
+        Faction faction = ((FPlayer)FPlayers.i.get((OfflinePlayer)player)).getFaction();
+        if (faction == null)
+            faction = Factions.i.getNone();
+        LinkedList<PacketPlayOutScoreboardScore> scores = new LinkedList<>();
+        if (faction != Factions.i.getNone()) {
+            scoreboardObjective.setDisplayName(ChatColor.GREEN + "" + ChatColor.BOLD + " " + faction
+                    .getTag() + " " + ChatColor.GRAY +
+                    getDateSuffix());
+        } else {
+            scoreboardObjective.setDisplayName(ChatColor.GREEN + "" + ChatColor.BOLD + " Astro" + ChatColor.YELLOW + ChatColor.BOLD + "PvP " + ChatColor.GRAY +
+
+                    getDateSuffix());
+        }
+        String name = ChatColor.GRAY + player.getName();
+        if (name.length() > 16)
+            name = name.substring(0, 16);
+        ScoreboardScore playerName = scoreboardComp.getPlayerScoreForObjective(name, scoreboardObjective);
+        playerName.setScore(15);
+        scores.add(new PacketPlayOutScoreboardScore(playerName));
+        int index = 15;
         scores.add(getScore(ChatColor.BLACK + " ", scoreboardComp, scoreboardObjective, index--));
         scores.add(getScore(ChatColor.AQUA + ChatColor.BOLD.toString() + "Account", scoreboardComp, scoreboardObjective, index--));
         scores.add(getScore(ChatColor.WHITE + player.getName(), scoreboardComp, scoreboardObjective, index--));
         scores.add(getScore(ChatColor.YELLOW + " ", scoreboardComp, scoreboardObjective, index--));
         scores.add(getScore(ChatColor.GOLD + ChatColor.BOLD.toString() + "Balance", scoreboardComp, scoreboardObjective, index--));
-        scores.add(getScore(ChatColor.WHITE.toString() + "$" + NumberUtils.formatMoney((long)Econ.econ.getBalance(player)), scoreboardComp, scoreboardObjective, index--));
+        scores.add(getScore(ChatColor.WHITE.toString() + "$" + NumberUtils.formatMoney((long)Econ.econ.getBalance((OfflinePlayer)player)), scoreboardComp, scoreboardObjective, index--));
         scores.add(getScore(ChatColor.LIGHT_PURPLE + "  ", scoreboardComp, scoreboardObjective, index--));
         scores.add(getScore(ChatColor.LIGHT_PURPLE + ChatColor.BOLD.toString() + "XP", scoreboardComp, scoreboardObjective, index--));
         scores.add(getScore(ChatColor.WHITE.toString() + NumberUtils.formatMoney(getTotalExperience(player)), scoreboardComp, scoreboardObjective, index--));
@@ -131,29 +118,29 @@ public class ScoreboardManager implements BoardAdapter {
         scores.add(getScore(ChatColor.RED + ChatColor.BOLD.toString() + "Ping", scoreboardComp, scoreboardObjective, index--));
         scores.add(getScore(ChatColor.WHITE.toString() + ((CraftPlayer) player).getHandle().ping, scoreboardComp, scoreboardObjective, index--));
         scores.add(getScore(ChatColor.DARK_BLUE + "  ", scoreboardComp, scoreboardObjective, index--));
-            scores.add(getScore(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Server", scoreboardComp, scoreboardObjective, index--));
-            scores.add(getScore(ChatColor.WHITE.toString() + "astropvp.net", scoreboardComp, scoreboardObjective, index--));
+        scores.add(getScore(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Server", scoreboardComp, scoreboardObjective, index--));
+        scores.add(getScore(ChatColor.WHITE.toString() + "astropvp.net", scoreboardComp, scoreboardObjective, index--));
         if (!playerObjectives.contains(player.getUniqueId())) {
             PacketPlayOutScoreboardObjective scoreboardP = new PacketPlayOutScoreboardObjective(scoreboardObjective, 0);
             PacketPlayOutScoreboardDisplayObjective displayP = new PacketPlayOutScoreboardDisplayObjective(1, scoreboardObjective);
-            (craftPlayer.getHandle()).playerConnection.sendPacket(scoreboardP);
-            (craftPlayer.getHandle()).playerConnection.sendPacket(displayP);
+            (craftPlayer.getHandle()).playerConnection.sendPacket((Packet)scoreboardP);
+            (craftPlayer.getHandle()).playerConnection.sendPacket((Packet)displayP);
             playerObjectives.add(player.getUniqueId());
         } else {
             PacketPlayOutScoreboardObjective scoreboardP = new PacketPlayOutScoreboardObjective(scoreboardObjective, 1);
             PacketPlayOutScoreboardDisplayObjective displayP = new PacketPlayOutScoreboardDisplayObjective(1, scoreboardObjective);
             PacketPlayOutScoreboardObjective scoreboardP2 = new PacketPlayOutScoreboardObjective(scoreboardObjective, 0);
             PacketPlayOutScoreboardDisplayObjective displayP2 = new PacketPlayOutScoreboardDisplayObjective(1, scoreboardObjective);
-            (craftPlayer.getHandle()).playerConnection.sendPacket(scoreboardP);
-            (craftPlayer.getHandle()).playerConnection.sendPacket(displayP);
-            (craftPlayer.getHandle()).playerConnection.sendPacket(scoreboardP2);
-            (craftPlayer.getHandle()).playerConnection.sendPacket(displayP2);
+            (craftPlayer.getHandle()).playerConnection.sendPacket((Packet)scoreboardP);
+            (craftPlayer.getHandle()).playerConnection.sendPacket((Packet)displayP);
+            (craftPlayer.getHandle()).playerConnection.sendPacket((Packet)scoreboardP2);
+            (craftPlayer.getHandle()).playerConnection.sendPacket((Packet)displayP2);
         }
         for (PacketPlayOutScoreboardScore score : scores)
-            playerConnection.sendPacket(score);
-    } */
+            playerConnection.sendPacket((Packet)score);
+    }
 
-    private static final DecimalFormat newFormat = new DecimalFormat("#.##");
+    private static DecimalFormat newFormat = new DecimalFormat("#.##");
 
     private static String getFactionString(Faction faction) {
         int online = 0;
@@ -165,7 +152,7 @@ public class ScoreboardManager implements BoardAdapter {
         return ChatColor.GREEN.toString() + online + ChatColor.GRAY + " / " + lists.size();
     }
 
-    private static final DecimalFormat decimalFormat = new DecimalFormat("#,###");
+    private static DecimalFormat decimalFormat = new DecimalFormat("#,###");
 
     private static String getNearestPlayer(Faction current, Player player) {
         int pvp = 0, nonPvp = 0;
@@ -174,10 +161,10 @@ public class ScoreboardManager implements BoardAdapter {
                 Player pl = (Player)ent;
                 if (!player.canSee(pl))
                     continue;
-                FPlayer fp = FPlayers.i.get(pl);
+                FPlayer fp = FPlayers.i.get((OfflinePlayer)pl);
                 if (fp == null)
                     continue;
-                Relation relation = current.getRelationTo(fp);
+                Relation relation = current.getRelationTo((RelationParticipator)fp);
                 if (pl.hasMetadata("ghostEnchantment")) {
                     int ghostLevel = pl.getMetadata("ghostEnchantment").get(0).asInt();
                     if (relation.isAtMost(Relation.NEUTRAL)) {
@@ -206,8 +193,7 @@ public class ScoreboardManager implements BoardAdapter {
             name = name.substring(0, 16);
         ScoreboardScore playerName = scoreboardComp.getPlayerScoreForObjective(name, objective);
         playerName.setScore(score);
-        // POSSIBLY FUCKED
-        return new PacketPlayOutScoreboardScore(playerName.getPlayerName(), objective);
+        return new PacketPlayOutScoreboardScore(playerName);
     }
 
     private static int getExpAtLevel(Player player) {
@@ -250,9 +236,9 @@ public class ScoreboardManager implements BoardAdapter {
         if (playerObjectives.contains(player.getUniqueId())) {
             CraftPlayer craftPlayer = (CraftPlayer)player;
             Scoreboard scoreboardComp = new Scoreboard();
-            ScoreboardObjective scoreboardObjective = scoreboardComp.registerObjective("Factions", new ScoreboardBaseCriteria("dummy"));
-            (craftPlayer.getHandle()).playerConnection.sendPacket(new PacketPlayOutScoreboardObjective(scoreboardObjective, 1));
-            (craftPlayer.getHandle()).playerConnection.sendPacket(new PacketPlayOutScoreboardDisplayObjective(1, scoreboardObjective));
+            ScoreboardObjective scoreboardObjective = scoreboardComp.registerObjective("Factions", (IScoreboardCriteria)new ScoreboardBaseCriteria("dummy"));
+            (craftPlayer.getHandle()).playerConnection.sendPacket((Packet)new PacketPlayOutScoreboardObjective(scoreboardObjective, 1));
+            (craftPlayer.getHandle()).playerConnection.sendPacket((Packet)new PacketPlayOutScoreboardDisplayObjective(1, scoreboardObjective));
             playerObjectives.remove(player.getUniqueId());
         }
     }

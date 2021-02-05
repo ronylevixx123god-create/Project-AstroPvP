@@ -136,6 +136,14 @@
             <scope>compile</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>sb</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>C:/Users/brend/Desktop/Scoreboard.jar</systemPath>
+        </dependency>
+
         <!-- New Cosmic Repos -->
         <dependency>
             <groupId>com.conaxgames</groupId>
