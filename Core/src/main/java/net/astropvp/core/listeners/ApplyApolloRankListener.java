@@ -19,6 +19,12 @@ public class ApplyApolloRankListener implements Listener {
             if (event.getItem() == null) {
                 return;
             }
+            if (!event.getItem().getType().equals(Material.NETHER_STAR)) {
+                return;
+            }
+            if (!event.getItem().getItemMeta().hasLore()) {
+                return;
+            } // must be a netherstar with a lore, then we check again.
             ItemStack itemStack = event.getItem();
             if (GiveApolloCommand.isApolloRank(itemStack)) {
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + event.getPlayer().getName() + " group add apollo");
