@@ -125,6 +125,8 @@ public class AstroCore extends JavaPlugin {
 
     @Getter private GiveAllManager giveAllManager;
 
+    private Freeze freezeCommand;
+
     @SneakyThrows
     public void onEnable() {
         instance = this;
@@ -273,6 +275,8 @@ public class AstroCore extends JavaPlugin {
         Bukkit.getServer().getPluginManager().registerEvents(new PermissionListener(this.dataManager), this);
 
         this.getServer().getPluginManager().registerEvents(new EnvoyListener(), this);
+
+        freezeCommand = new Freeze();
 
         Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
         Bukkit.getConsoleSender().sendMessage(" ******************************************** ");

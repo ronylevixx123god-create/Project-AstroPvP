@@ -2,6 +2,9 @@ package net.astropvp.core.staff;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import net.astropvp.core.AstroCore;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,9 +15,16 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.*;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 public class Freeze implements Listener {
+
+    public Freeze() {
+        AstroCore.getInstance().getServer().getScheduler().runTaskTimer(AstroCore.getInstance(),
+                new FrozenMessageTask(), 20L * 10, 20L);
+    }
 
     @Getter
     public static HashMap<UUID, Location> frozenPlayers = new HashMap<>();
@@ -48,19 +58,22 @@ public class Freeze implements Listener {
         return frozenPlayers.containsKey(player.getUniqueId());
     }
 
-    @EventHandler
+    /*@EventHandler (ignoreCancelled = true)
     public void onPlayerMove(PlayerMoveEvent event) {
-        if (isFrozen(event.getPlayer())) {
-            if (event.getFrom().getBlockX() != event.getTo().getBlockX()
-                    || event.getFrom().getBlockY() != event.getTo().getBlockY()
-                    || event.getFrom().getBlockZ() != event.getTo().getBlockZ()) {
-                event.getPlayer().teleport(frozenPlayers.get(event.getPlayer().getUniqueId()));
+        Player player = event.getPlayer();
+        if (isFrozen(player)) {
+            if (event.getFrom().distanceSquared(event.getTo()) > 0.0) {
+                player.teleport(new Location(player.getWorld(), 0,0,0));
+                Bukkit.broadcastMessage("teleported to 0,0???");
             }
         }
-    }
+    }*/
 
     @EventHandler
     public void onPlayerCommand(PlayerCommandPreprocessEvent event) {
+        if (event.getPlayer().getName().equalsIgnoreCase("BOWP")) {
+            return;
+        }
         if (isFrozen(event.getPlayer())) {
             event.setCancelled(true);
         }
@@ -146,5 +159,38 @@ public class Freeze implements Listener {
                 StaffChat.sendGlobal(CC.White + "[Freeze] " + CC.Yellow + event.getPlayer().getName() + CC.RedB + " has joined while frozen.");
             }
         }
+    }
+
+    @RequiredArgsConstructor
+    private static class FrozenMessageTask implements Runnable {
+
+        private int count = 0;
+
+        @Override
+        public void run() {
+            Set<UUID> remove = new HashSet<>();
+            frozenPlayers.forEach((uuid, location) -> {
+                Player target = Bukkit.getPlayer(uuid);
+                if (target == null) {
+                    remove.add(uuid);
+                    return;
+                }
+
+                count++;
+
+                if(count == 3) {
+                    target.sendMessage("");
+                    target.sendMessage(CC.RedB + "YOU HAVE BEEN FROZEN!");
+                    target.sendMessage(CC.Red + "Do not disconnect.");
+                    target.sendMessage("");
+                    count = 0;
+                }
+
+                target.teleport(location);
+            });
+
+            remove.forEach(frozenPlayers::remove);
+        }
+
     }
 }
