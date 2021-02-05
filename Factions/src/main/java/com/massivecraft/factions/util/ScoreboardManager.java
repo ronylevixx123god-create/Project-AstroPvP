@@ -94,10 +94,6 @@ public class ScoreboardManager implements BoardAdapter {
         return 80L;
     }
 
-    @Override
-    public void onScoreboardCreate(Player player, org.bukkit.scoreboard.Scoreboard b) {
-    }
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public static HashSet<UUID> playerObjectives = new HashSet<>();

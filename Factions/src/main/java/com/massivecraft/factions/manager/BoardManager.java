@@ -105,8 +105,6 @@ public class BoardManager implements Runnable {
                     }
                 }
 
-                this.adapter.onScoreboardCreate(player, scoreboard);
-
                 player.setScoreboard(scoreboard);
             } catch (Exception e) {
                 e.printStackTrace();
