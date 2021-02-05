@@ -166,6 +166,7 @@ public class KothArmorSet
 
     @Override
     public boolean onPlayerDamaged(Player damaged, EntityDamageByEntityEvent event) {
+        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.85);
         return false;
     }
 

@@ -45,6 +45,9 @@ public class Silence extends CustomEnchantment {
         final double chance = (enchantLevel + solitudeLevel) * 0.020;
         if (Math.random() < chance && target instanceof Player) {
             final Player pTarget = (Player) target;
+            if (pTarget.hasMetadata("noDefenseProcs")) {
+                return;
+            }
             if (!new CustomEnchantProcOnEntityEvent(user, (LivingEntity) pTarget, (Event) event, this, enchantLevel).callEvent()) {
                 return;
             }

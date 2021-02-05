@@ -107,7 +107,7 @@ public class UltraArmorSet
         }
         event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.55);
         this.removeResistance(damager);
-        if (Math.random() <= 0.1) {
+        if (Math.random() <= 0.25) {
             this.activateUltraAbility(damager, (Player) event.getEntity());
         }
         return true;
@@ -137,7 +137,7 @@ public class UltraArmorSet
         if (this.isBlockedOutpostWorld(damager)) {
             return false;
         }
-        if (Math.random() <= 0.005 * (double) applied) {
+        if (Math.random() <= 0.008 * (double) applied) {
             this.activateUltraAbility(damager, (Player) event.getEntity());
         }
         return this.modifyDamage(damager, event, 10.0, applied);
@@ -152,9 +152,9 @@ public class UltraArmorSet
     }
 
     public void activateUltraAbility(Player player, final Player target) {
-        target.setLastDamage(target.getLastDamage() * 1.1);
-        target.sendMessage(CC.translate("&e&l*&5&l*&c&l* &7&lULTRA RAGE &f[&c" + player.getName() + "&f] &c&l*&5&l*&e&l*"));
-        player.sendMessage(CC.translate("&e&l*&5&l*&c&l* &7&lULTRA RAGE &f[&aUltra Rage&f] &c&l*&5&l*&e&l*"));
+        player.setLastDamage(player.getLastDamage()*1.05);
+        target.sendMessage(CC.translate("&e&l*&4&l*&e&l* &7&lULTRA STRIKED &f[&c" + player.getName() + "&f] &c&l*&4&l*&e&l*"));
+        player.sendMessage(CC.translate("&e&l*&4&l*&e&l* &f&lULTRA STRIKE &7x2 &f&lDMG &e&l*&4&l*&e&l*"));
         target.setMetadata("ultra", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
         target.setMetadata("bansheed", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
         new BukkitRunnable() {

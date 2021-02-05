@@ -51,8 +51,8 @@ public class ConquestManager
     public ConquestManager() {
         this.xCenter = 0;
         this.zCenter = 0;
-        this.maxRange = 10000;
-        this.minRange = 200;
+        this.maxRange = 4500;
+        this.minRange = 300;
         this.disabledBlocks = Lists.newArrayList(new Material[] { Material.BEDROCK });
         this.lastConquer = new ConquerData(System.currentTimeMillis(), null, null);
         this.bosses = new HashSet<Entity>();
@@ -219,10 +219,10 @@ public class ConquestManager
             wildernessLocation.getChunk().load();
         }
         Bukkit.broadcastMessage("");
-        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&f&l** &b&lCOSMIC CONQUEST &f&l**"));
+        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&f&l** &e&lASTRO CONQUEST &f&l**"));
         Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&7A &bConquest Chest&7 has spawned at &f&l" + wildernessLocation.getBlockX() + "&fx &f&l" + wildernessLocation.getBlockY() + "&fy &f&l" + wildernessLocation.getBlockZ() + "&fz"));
         Bukkit.broadcastMessage("");
-        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', ChatColor.WHITE + ChatColor.BOLD.toString() + "(!) &7Conquest Chests contain " + ChatColor.AQUA + "faction crystals" + ChatColor.GRAY + " and other extremely rare and powerful loot. But BEWARE! They are defended by " + ChatColor.WHITE + ChatColor.UNDERLINE.toString() + "dangerous space demons."));
+        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&a&lLOOT: &fConquest Lootbox"));
         Bukkit.broadcastMessage("");
         this.populateChests(wildernessLocation);
         CosmicConquests.get().getConfig().set("unclaimed", true);
