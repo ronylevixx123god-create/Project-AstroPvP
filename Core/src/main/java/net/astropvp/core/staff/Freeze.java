@@ -104,13 +104,7 @@ public class Freeze implements Listener {
             event.setCancelled(true);
         }
     }
-
-    @EventHandler
-    public void onPlayerTeleport(PlayerTeleportEvent event) {
-        if (isFrozen(event.getPlayer())) {
-            event.setCancelled(true);
-        }
-    }
+    
     @EventHandler
     public void onPlayerPortal(PlayerPortalEvent event) {
         if (isFrozen(event.getPlayer())) {
