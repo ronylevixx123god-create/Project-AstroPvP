@@ -62,15 +62,15 @@ public class Rogue extends CustomEnchantment {
     }
 
     public boolean isPlayerBehind(final Player player, final Entity theEntity) {
-        final Location playerLoc = player.getLocation();
-        final Location targetLoc = theEntity.getLocation();
-        final double pvecy = -Math.sin(Math.toRadians(playerLoc.getPitch()));
-        final double pvecx = -Math.cos(Math.toRadians(playerLoc.getPitch())) * Math.sin(Math.toRadians(playerLoc.getYaw()));
-        final double pvecz = Math.cos(Math.toRadians(playerLoc.getPitch())) * Math.cos(Math.toRadians(playerLoc.getYaw()));
-        final double tvecy = -Math.sin(Math.toRadians(targetLoc.getPitch()));
-        final double tvecx = -Math.cos(Math.toRadians(targetLoc.getPitch())) * Math.sin(Math.toRadians(targetLoc.getYaw()));
-        final double tvecz = Math.cos(Math.toRadians(targetLoc.getPitch())) * Math.cos(Math.toRadians(targetLoc.getYaw()));
-        final double dot = tvecx * pvecx + tvecy * pvecy + tvecz * pvecz;
+        Location playerLoc = player.getLocation();
+        Location targetLoc = theEntity.getLocation();
+        double pvecy = -Math.sin(Math.toRadians(playerLoc.getPitch()));
+        double pvecx = -Math.cos(Math.toRadians(playerLoc.getPitch())) * Math.sin(Math.toRadians(playerLoc.getYaw()));
+        double pvecz = Math.cos(Math.toRadians(playerLoc.getPitch())) * Math.cos(Math.toRadians(playerLoc.getYaw()));
+        double tvecy = -Math.sin(Math.toRadians(targetLoc.getPitch()));
+        double tvecx = -Math.cos(Math.toRadians(targetLoc.getPitch())) * Math.sin(Math.toRadians(targetLoc.getYaw()));
+        double tvecz = Math.cos(Math.toRadians(targetLoc.getPitch())) * Math.cos(Math.toRadians(targetLoc.getYaw()));
+        double dot = tvecx * pvecx + tvecy * pvecy + tvecz * pvecz;
         return dot > 0.6;
     }
 }

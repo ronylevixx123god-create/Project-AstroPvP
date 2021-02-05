@@ -18,6 +18,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.tasks.BleedTask;
+import me.ifamasssxd.cosmicsky.inventorypets.utils.CageCooldown;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -114,14 +115,18 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
             }
         }
 
+
         if (WorldGuardUtils.isPvPDisabled(locationClicked)) {
-            player.sendMessage("PET: " + CC.Red + "Not allowed in this region!");
-            return true;
+            throw new PrefixedPetException("Not allowed in this region!");
         }
         if (player.hasMetadata("inDungeonParkour"))
             throw new PrefixedPetException("You cannot use this pet while in the dungeon parkour.");
         if (target == null || (event != null && target.getLocation().distance(player.getLocation()) > 4.0)) {
             throw new PrefixedPetException("Could not find a valid target!");
+        }
+
+        if (CageCooldown.isOnCageCooldown(target)) {
+            throw new PrefixedPetException(target.getName() + " is still on Cage Cooldown! This lasts 20 seconds.");
         }
 
         if (playerHasApollo(target)) {
@@ -141,6 +146,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
             target.sendMessage(CC.translate("&d&l* CHAD SUNGLASSES &7[&cBlocked World Destroyer&7] &d&l*"));
             return true;
         }
+
 
 
         final Player p = target;
@@ -203,6 +209,8 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         } catch (Exception ex) {
 
         }
+
+        CageCooldown.enterCageCooldown(target);
 
         player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
         player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);

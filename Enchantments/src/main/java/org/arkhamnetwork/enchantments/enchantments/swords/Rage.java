@@ -9,6 +9,7 @@ import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -41,6 +42,12 @@ public class Rage extends CustomEnchantment {
     }
 
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
+        if (target instanceof ArmorStand) {
+            return;
+        }
+        if (!(target instanceof Player)) {
+            return;
+        }
         if (!event.isCancelled() && event.getDamage(EntityDamageEvent.DamageModifier.BASE) > 0.0D && user instanceof Player) {
             Player pUser = (Player) user;
             if (!pUser.getItemInHand().getType().name().toLowerCase().contains("_sword") || !(event.getDamager() instanceof LivingEntity))
@@ -52,8 +59,8 @@ public class Rage extends CustomEnchantment {
 
             double mod = 0.12D * enchantLevel;
             double hitCombo = ((target instanceof Player) ? getPVPHitCombo((Player) user) : getPVEHitCombo((Player) user)) * mod + 1.0D;
-            if (hitCombo > 6.0D)
-                hitCombo = 6.0D;
+            if (hitCombo > 8.0D)
+                hitCombo = 8.0D;
             if (hitCombo > 1.0D && !GeneralUtil.isEffectedByDevour(target)) {
                 playRageEffect(target.getEyeLocation(), enchantLevel);
                 event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * hitCombo * mod);

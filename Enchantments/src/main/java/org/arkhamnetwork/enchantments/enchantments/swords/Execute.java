@@ -24,7 +24,7 @@ public class Execute extends CustomEnchantment {
         if (!(target instanceof Player)) {
             return;
         }
-        if (target.getHealth() > 12.0) {
+        if (target.getHealth() > 10.0) {
             return;
         }
         if (GeneralUtil.isEffectedByRage(target)) {
@@ -32,7 +32,7 @@ public class Execute extends CustomEnchantment {
         }
         final double random = Math.random();
         final double chance = 0.1 * level;
-        final double mod = 5.2;
+        final double mod = 4.2;
         if (random < chance) {
             e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * mod);
             final Location l = target.getLocation();

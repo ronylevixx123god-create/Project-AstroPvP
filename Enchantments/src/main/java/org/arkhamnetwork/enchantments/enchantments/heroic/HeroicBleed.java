@@ -4,6 +4,7 @@ import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.util.GeneralCooldown;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -46,9 +47,13 @@ public class HeroicBleed extends HeroicCustomEnchantment {
 
     @SneakyThrows
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
+        if (GeneralCooldown.isOnGeneralCooldown((Player) user)) {
+            return;
+        }
         if (!event.isCancelled() && event.getDamage(EntityDamageEvent.DamageModifier.BASE) > 0.0D && user instanceof Player) {
             double bleedChance = 0.1D * enchantLevel + 0.4D;
             if (Math.random() < bleedChance && getBleedStack(target) < getMaxBleedStack(enchantLevel))
+                GeneralCooldown.enterCooldown((Player) user);
                 addBleedStack(user, target);
         }
     }

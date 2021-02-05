@@ -64,7 +64,18 @@ public class InventoryFeignDeathPet extends InventoryPet {
         PetUtils.addPetCooldown(player, petItem.getPetType(), (getCooldown(petItem.getLevel()) * 1000));
         player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
         player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
+
         try {
+            if (DamageIndicatorUtils.isPlayerIndicating((Player) player)) {
+                DamageIndicatorUtils.createDamageIndicator((Player) player,
+                        player.getLocation().add(1.0D, 2.0D, 0.0D),
+                        new String[] { CC.YellowB + "* BANSHEED §7[" + petItem.getLevel()*1.5 + "§7s ] §el*" });
+            }
+        } catch (Exception ex) {
+
+        }
+
+        /*try {
             if (DamageIndicatorUtils.isPlayerIndicating((Player) player)) {
                 DamageIndicatorUtils.createDamageIndicator((Player) player,
                         player.getLocation().add(1.0D, 2.0D, 0.0D),
@@ -72,7 +83,7 @@ public class InventoryFeignDeathPet extends InventoryPet {
             }
         } catch (Exception ex) {
 
-        }
+        }*/
         player.sendMessage(CC.GreenB + "+ " + CC.Green + NumberUtils.formatMoney((double) xpGain) + " Pet EXP " + CC.GreenB + "[" + CC.Gray + petItem.getExp() + "/" + petItem.getPetType().getInternalClass().getExpForLevel(petItem.getLevel() + 1) + CC.GreenB + "]");
         return true;
 

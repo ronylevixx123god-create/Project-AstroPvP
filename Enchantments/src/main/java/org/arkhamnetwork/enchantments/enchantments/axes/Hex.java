@@ -3,6 +3,7 @@ package org.arkhamnetwork.enchantments.enchantments.axes;
 import com.rit.sucy.CustomEnchantment;
 import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.util.GeneralCooldown;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -39,6 +40,9 @@ public class Hex extends CustomEnchantment {
         if (!(playerHit instanceof Player)) {
             return;
         }
+        if (GeneralCooldown.isOnGeneralCooldown((Player) player)) {
+            return;
+        }
         if (isHexed(playerHit))
             return;
         final double random = Math.random();
@@ -48,6 +52,7 @@ public class Hex extends CustomEnchantment {
             playerHit.setMetadata("hexEnchantLevel", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) level));
             de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), playerHit.getEyeLocation(), 0,1,0,0.6f,25);
             ((Player) playerHit).sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "* HEX DEBUFF [" + ChatColor.LIGHT_PURPLE + ChatColor.BOLD + (2 + level / 2) + "s" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "] *");
+            GeneralCooldown.enterCooldown((Player) player);
             Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
                 @Override
                 public void run() {

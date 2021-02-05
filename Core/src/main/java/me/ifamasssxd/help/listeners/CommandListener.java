@@ -259,7 +259,7 @@ public class CommandListener implements Listener {
         } else if (command.equals("/buylink") || command.equals("/buy")) {
             Player pl3 = event.getPlayer();
             pl3.sendMessage("");
-            pl3.sendMessage(ChatColor.AQUA + ChatColor.BOLD.toString() + "Astro" + ChatColor.LIGHT_PURPLE + ChatColor.BOLD.toString() + "PvP Store");
+            pl3.sendMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + "Astro" + ChatColor.YELLOW + ChatColor.BOLD.toString() + "PvP Store");
             pl3.sendMessage(ChatColor.WHITE + ChatColor.UNDERLINE.toString() + "http://buy.astropvp.net");
             pl3.sendMessage(ChatColor.GRAY + "Click the link above to visit the shop.");
             pl3.sendMessage("");

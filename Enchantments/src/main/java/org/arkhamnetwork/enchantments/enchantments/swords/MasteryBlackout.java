@@ -6,6 +6,7 @@ import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.damageindicators.utils.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.util.GeneralCooldown;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -35,6 +36,10 @@ public class MasteryBlackout extends CustomEnchantment {
 
         Player pTarget = (Player) target;
 
+        if (GeneralCooldown.isOnGeneralCooldown((Player) user)) {
+            return;
+        }
+
         if (Math.random() <= 0.005D) {
             int multi = AstroItemSkinsAPI.isInHand((Player) user, SkinType.CORRUPT_SWORD) ? 2 : 1;
             if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.VIRUS_BELT) && Math.random() < 0.50) {
@@ -48,6 +53,7 @@ public class MasteryBlackout extends CustomEnchantment {
             ((Player) user).sendMessage(CC.translate("&7&l* BLACKOUT &7[" + (2 + enchantLevel) * multi + "s on: &e" + pTarget.getName() + "&7] &7&l*"));
             pTarget.setMetadata("blackout", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), "banana"));
             Enchantments.getInstance().getServer().getScheduler().runTaskLaterAsynchronously((Plugin) Enchantments.getInstance(), () -> target.removeMetadata("blackout", (Plugin) Enchantments.getInstance()), ((4 + enchantLevel * multi) * 20));
+            GeneralCooldown.enterCooldown((Player) user);
             //this.applyCooldown(user, 6);
 
             try {

@@ -120,14 +120,6 @@ public class ScoreboardManager implements BoardAdapter {
                             }
                             final Faction fJoinFaction = FactionUtils.getFaction(joinPlayer);
                             if (P.getP().getPrefixType() == PrefixType.FACTION) {
-                            if (P.getP().getPrefixType() == PrefixType.RANK || o.hasPermission("arkkit.staff.hidden")) {
-                                if (prefix != null) {
-                                    prefix = FormatUtils.trimPrefix(prefix);
-                                }
-                                final String color = FormatUtils.getFactionEnding(fp.getFaction(), fJoinFaction);
-                                prefix = prefix + color + " ";
-                            }
-                            else if (P.getP().getPrefixType() == PrefixType.FACTION) {
                                 if (P.getP().isEnabled()) {
                                     prefix = FormatUtils.getFactionPrefixForOtherFaction(fp.getPlayer(), fJoinFaction);
                                     if (prefix != null) {
