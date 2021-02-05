@@ -8,8 +8,8 @@ import com.cosmicpvp.factionpoints.struct.ExpiringChunkData;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.Lists;
 import com.google.gson.reflect.TypeToken;
-import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.FactionPermissions;
+import com.massivecraft.factions.struct.Permission;
 import com.massivecraft.factions.struct.PermissionManager;
 import com.massivecraft.factions.struct.Relation;
 import com.massivecraft.factions.util.AsciiCompass;
@@ -226,108 +226,126 @@ public class Board {
         return ret;
     }
 
-    public static ArrayList<String> getMap(Faction faction, FLocation fLocation, Player player) {
-        double wMult = 1.0D, hMult = 1.0D;
-        if (player.hasPermission("cosmicpvp.heroic") || (P.p.outpostsEnabled && CosmicOutpostsAPI.controlsTraineeOutpost(player))) {
-            hMult = 1.85D;
-            wMult = 1.25D;
+    public static ArrayList<FancyMessage> getMap(Faction faction, FLocation fLocation, Player player) {
+        double wMult = 1.0;
+        double hMult = 1.0;
+        if (player.hasPermission("cosmicpvp.heroic") || P.p.outpostsEnabled && CosmicOutpostsAPI.controlsTraineeOutpost(player)) {
+            hMult = 1.85;
+            wMult = 1.25;
         }
-        return getMap(faction, fLocation, player.getLocation().getYaw(), wMult, hMult, player);
+        return Board.getMap(faction, fLocation, player.getLocation().getYaw(), wMult, hMult, player);
     }
 
-    public static ArrayList<String> getMap(Faction faction, FLocation flocation, double inDegrees) {
-        return getMap(faction, flocation, inDegrees, 1.0D, 1.0D, null);
+    public static ArrayList<FancyMessage> getMap(Faction faction, FLocation flocation, double inDegrees) {
+        return Board.getMap(faction, flocation, inDegrees, 1.0, 1.0, null);
     }
 
-    public static ArrayList<String> getMap(Faction faction, FLocation flocation, double inDegrees, double widthMultiplier, double heightMultiplier, Player player) {
-        ArrayList<String> ret = new ArrayList<>();
-        Faction factionLoc = getFactionAt(flocation);
+    public static ArrayList<FancyMessage> getMap(Faction faction, FLocation flocation, double inDegrees, double widthMultiplier, double heightMultiplier, Player player) {
+        FPlayer fPlayer = FPlayers.i.get(player);
+        long timeSinceClaimed;
+        ExpiringChunkData data;
+        ArrayList<FancyMessage> ret = new ArrayList<>();
+        Faction factionLoc = Board.getFactionAt(flocation);
+        ArrayList<String> asciiCompass = AsciiCompass.getAsciiCompass(inDegrees, ChatColor.DARK_GREEN, P.p.txt.parse("<gray>"));
+
         String str = "(" + flocation.getCoordString() + ") " + factionLoc.getTag(faction);
-        if (P.p.factionPointsEnabled) {
-            ExpiringChunkData data = (ExpiringChunkData)CosmicFactionPoints.get().getChunkManager().getChunksToExpire().get(flocation);
-            if (data != null && data.getTimeClaimed() > 0L) {
-                long timeSinceClaimed = System.currentTimeMillis() - data.getTimeClaimed();
-                if (timeSinceClaimed > 0L)
-                    if (timeSinceClaimed < TimeUnit.HOURS.toMillis(24L)) {
-                        str = str + " (claim " + TimeUtil.formatSeconds(timeSinceClaimed / 1000L) + " old)";
-                    } else {
-                        str = str + " (claim >1d old)";
-                    }
-            }
+        if (P.p.factionPointsEnabled && (data = CosmicFactionPoints.get().getChunkManager().getChunksToExpire().get(flocation)) != null && data.getTimeClaimed() > 0L && (timeSinceClaimed = System.currentTimeMillis() - data.getTimeClaimed()) > 0L) {
+            str = timeSinceClaimed < TimeUnit.HOURS.toMillis(24L) ? str + " (claim " + TimeUtil.formatSeconds(timeSinceClaimed / 1000L) + " old)" : str + " (claim >1d old)";
         }
-        int spawnerCount = getSpawnersInChunk(flocation);
+        int spawnerCount = Board.getSpawnersInChunk(flocation);
         str = str + CC.Aqua + " [" + CC.White + spawnerCount + "x" + CC.Aqua + " spawners]";
         if (spawnerCount > 0 && player != null) {
-            (new FancyMessage(P.p.txt.titleize(str))).formattedTooltip(getChunkSpawnerHoverData(flocation)).send(player);
+            new FancyMessage(P.p.txt.titleize(str)).formattedTooltip(Board.getChunkSpawnerHoverData(flocation)).send(player);
         } else {
-            ret.add(P.p.txt.titleize(str));
+            ret.add(new FancyMessage(P.p.txt.titleize(str)));
         }
-        int halfWidth = (int)Math.ceil(Conf.mapWidth * widthMultiplier / 2.0D);
-        int halfHeight = (int)Math.ceil(Conf.mapHeight * heightMultiplier / 2.0D);
+        int halfWidth = Conf.mapWidth / 2;
+        // Use player's value for height
+        int halfHeight = Conf.mapHeight / 2;
         FLocation topLeft = flocation.getRelative(-halfWidth, -halfHeight);
         int width = halfWidth * 2 + 1;
         int height = halfHeight * 2 + 1;
-        if (Conf.showMapFactionKey)
-            height--;
+        if (Conf.showMapFactionKey) {
+            --height;
+        }
         Map<String, Character> fList = new HashMap<>();
         int chrIdx = 0;
         for (int dz = 0; dz < height; dz++) {
-            String row = "";
-            for (int dx = 0; dx < width; dx++) {
+            FancyMessage row = new FancyMessage("");
+            if (dz < 3) {
+                row.then(asciiCompass.get(dz));
+            }
+            for (int dx = (dz < 3 ? 6 : 3); dx < width; dx++) {
                 if (dx == halfWidth && dz == halfHeight) {
-                    row = row + ChatColor.AQUA + "+";
-                    continue;
-                }
-                FLocation flocationHere = topLeft.getRelative(dx, dz);
-                Faction factionHere = getFactionAt(flocationHere);
-                Relation relation = faction.getRelationTo((RelationParticipator)factionHere);
-                if (factionHere.isNone()) {
-                    row = row + ChatColor.GRAY + "-";
-                    continue;
-                }
-                if (factionHere.isSafeZone()) {
-                    row = row + Conf.colorPeaceful + "+";
-                    continue;
-                }
-                if (factionHere.isWarZone()) {
-                    row = row + ChatColor.DARK_RED + "+";
-                    continue;
-                }
-                if (factionHere == faction || factionHere == factionLoc || relation.isAtLeast(Relation.ALLY) || (Conf.showNeutralFactionsOnMap && relation
-                        .equals(Relation.NEUTRAL)) || (Conf.showTruceFactionsOnMap && relation
-                        .equals(Relation.TRUCE)) || (Conf.showEnemyFactionsOnMap && relation
-                        .equals(Relation.ENEMY))) {
-                    if (!fList.containsKey(factionHere.getTag())) {
-                        if (Conf.mapKeyChrs.length < chrIdx)
-                            continue;
-                        try {
-                            fList.put(factionHere.getTag(), Character.valueOf(Conf.mapKeyChrs[chrIdx++]));
-                        } catch (ArrayIndexOutOfBoundsException err) {
-                            err.printStackTrace();
+                    row.then("+").color(ChatColor.AQUA).tooltip("You are here");
+                } else {
+                    FLocation flocationHere = topLeft.getRelative(dx, dz);
+                    Faction factionHere = Board.getFactionAt(flocationHere);
+                    Relation relation = faction.getRelationTo(factionHere);
+                    if (factionHere.isWilderness()) {
+                        row.then("-").color(ChatColor.GRAY);
+                        if (fPlayer.getPlayer().hasPermission(Permission.CLAIM.node)) {
+
+                            row.tooltip(String.format(ChatColor.translateAlternateColorCodes('&', "Click to try to claim &2(%1$d, %2$d)"), dx + topLeft.getX(), dz + topLeft.getZ()))
+                                    .command(String.format("/f claimat %s %d %d", flocation.getWorldName(), dx + topLeft.getX(), dz + topLeft.getZ()));
                         }
+                    } else if (factionHere.isSafeZone()) {
+                        row.then("+").color(Conf.colorPeaceful).tooltip(oneLineToolTip(factionHere, fPlayer));
+                    } else if (factionHere.isWarZone()) {
+                        row.then("+").color(Conf.colorWar).tooltip(oneLineToolTip(factionHere, fPlayer));
+                    } else if (factionHere == faction
+                            || factionHere == factionLoc
+                            || relation.isAtLeast(Relation.ALLY)
+                            || Conf.showNeutralFactionsOnMap
+                            && relation.equals(Relation.NEUTRAL)
+                            || Conf.showTruceFactionsOnMap
+                            && relation.equals(Relation.TRUCE)
+                            || Conf.showEnemyFactionsOnMap
+                            && relation.equals(Relation.ENEMY)) {
+                        if (!fList.containsKey(factionHere.getTag())) {
+                            if (Conf.mapKeyChrs.length < chrIdx) continue;
+                            try {
+                                fList.put(factionHere.getTag(), Conf.mapKeyChrs[chrIdx++]);
+                            } catch (ArrayIndexOutOfBoundsException err) {
+                                err.printStackTrace();
+                                continue;
+                            }
+                        }
+                        char tag = fList.get(factionHere.getTag());
+                        // row.then(String.valueOf(tag)).color(factionHere.getColorTo(faction)).tooltip(oneLineToolTip(factionHere, fPlayer));
+                        //TRENT FIX HERE
+                        //if (P.p.factionPointsEnabled && FactionsCoreChunkAPI.isCoreChunk(flocationHere)){
+                        //    row.then("$").color(ChatColor.YELLOW).tooltip(faction.getTag() + "'s Core").color(ChatColor.YELLOW);
+                        //    Bukkit.broadcastMessage("IS CORE");
+                        //}else{
+                        //    row.then("!").color(factionHere.getColorTo(faction)).tooltip(oneLineToolTip(factionHere, fPlayer));
+                        //    Bukkit.broadcastMessage("IS NOT CORE");
+                        //}
+                        //row.then((P.p.factionPointsEnabled && FactionsCoreChunkAPI.isCoreChunk(flocationHere) ? ChatColor.YELLOW : factionHere.getColorTo(faction)) + "" + tag);
+
+
+                        row.then((P.p.factionPointsEnabled && FactionsCoreChunkAPI.isCoreChunk(flocationHere) ? ChatColor.YELLOW : factionHere.getColorTo(faction)) + "" + tag).tooltip(oneLineToolTip(factionHere, fPlayer));
+                    } else {
+                        row.then("-").color(ChatColor.GRAY);
                     }
-                    char tag = fList.get(factionHere.getTag()).charValue();
-                    row = row + ((P.p.factionPointsEnabled && FactionsCoreChunkAPI.isCoreChunk(flocationHere)) ? ChatColor.YELLOW : factionHere.getColorTo(faction)) + "" + tag;
-                    continue;
                 }
-                row = row + ChatColor.GRAY + "-";
-                continue;
             }
             ret.add(row);
         }
-        ArrayList<String> asciiCompass = AsciiCompass.getAsciiCompass(inDegrees, ChatColor.RED, P.p.txt.parse("<a>"));
-        ret.set(1, (String)asciiCompass.get(0) + ((String)ret.get(1)).substring(9));
-        ret.set(2, (String)asciiCompass.get(1) + ((String)ret.get(2)).substring(9));
-        ret.set(3, (String)asciiCompass.get(2) + ((String)ret.get(3)).substring(9));
+
         if (Conf.showMapFactionKey) {
-            String fRow = "";
+            FancyMessage fRow = new FancyMessage("");
             for (String key : fList.keySet()) {
                 Faction f = Factions.i.getByTag(key);
-                fRow = fRow + String.format("%s%s: %s ", (f != null) ? f.getColorTo(faction) : ChatColor.GRAY, fList.get(key), key);
+                fRow.then(String.format("%s%s: %s ", f != null ? f.getColorTo(faction) : ChatColor.GRAY, fList.get(key), key));
             }
             ret.add(fRow);
         }
         return ret;
+    }
+
+    private static List<String> oneLineToolTip(Faction faction, FPlayer to) {
+        return Collections.singletonList(faction.describeTo(to));
     }
 
     private static ConcurrentMap<Object, Object> expiringSpawnerCountMap = CacheBuilder.newBuilder().expireAfterWrite(1L, TimeUnit.MINUTES).build().asMap();
