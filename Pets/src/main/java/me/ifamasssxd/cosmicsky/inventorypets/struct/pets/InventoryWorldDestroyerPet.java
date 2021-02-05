@@ -122,11 +122,11 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         if (player.hasMetadata("inDungeonParkour"))
             throw new PrefixedPetException("You cannot use this pet while in the dungeon parkour.");
         if (target == null || (event != null && target.getLocation().distance(player.getLocation()) > 4.0)) {
-            throw new NonPrefixedPetException("Could not find a valid target!");
+            throw new PrefixedPetException("Could not find a valid target!");
         }
 
         if (CageCooldown.isOnCageCooldown(target)) {
-            throw new NonPrefixedPetException(target.getName() + " is still on Cage Cooldown! This lasts 20 seconds.");
+            throw new PrefixedPetException(target.getName() + " is still on Cage Cooldown! This lasts 20 seconds.");
         }
 
         if (playerHasApollo(target)) {

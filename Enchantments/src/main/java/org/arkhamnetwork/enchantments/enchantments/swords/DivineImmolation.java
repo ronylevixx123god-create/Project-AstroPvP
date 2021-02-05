@@ -21,6 +21,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.Iterator;
 import java.util.List;
 
 public class DivineImmolation extends CustomEnchantment {
@@ -32,6 +33,7 @@ public class DivineImmolation extends CustomEnchantment {
         Bukkit.getPluginManager().registerEvents(new DivineImmolationListener(), (Plugin) Enchantments.getInstance());
     }
 
+/*
     @SneakyThrows
     public void applyEffect(LivingEntity player, LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
         if (!CommandEnchDust.soulEnabled)
@@ -88,3 +90,54 @@ public class DivineImmolation extends CustomEnchantment {
         }
     }
 }
+*/
+
+    @SneakyThrows
+    public void applyEffect(LivingEntity player, LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
+        if (player.hasMetadata("witcher_ability"))
+            return;
+        if (CommandEnchDust.soulEnabled) {
+            Player p = (Player)player;
+            double radius = 1.0D * level;
+            double damage = 2.5;
+            if (GeneralUtil.isSword(p.getItemInHand()) && (
+                    !p.hasMetadata("lastItemHeldChange") || MinecraftServerUtils.getCurrentServerTick() - ((MetadataValue)p.getMetadata("lastItemHeldChange").get(0)).asLong() > 5L) && (
+                    !p.hasMetadata("soulTrap") || ((MetadataValue)p.getMetadata("soulTrap").get(0)).asLong() <= System.currentTimeMillis()) &&
+                    KillTrackerAPI.hasGodMode(p) && KillTrackerAPI.getAllSouls(p) > 0) {
+                if (!p.hasMetadata("lastSoulRemoveEvent") || System.currentTimeMillis() - ((MetadataValue)p.getMetadata("lastSoulRemoveEvent").get(0)).asLong() > 1000L)
+                    KillTrackerAPI.removeSoulsFromGems(p, 1);
+                List<Entity> ents = playerHit.getNearbyEntities(radius, radius, radius);
+                ents.add(playerHit);
+                Iterator<Entity> var11 = ents.iterator();
+                while (true) {
+                    if (!var11.hasNext())
+                        return;
+                    Entity ent = var11.next();
+                    if (ent instanceof LivingEntity) {
+                        Player pEnt = null;
+                        if (ent instanceof Player)
+                            pEnt = (Player)ent;
+                        if ((pEnt == null || !p.getName().equals(pEnt.getName())) && (
+                                pEnt == null || !GeneralUtil.isAtleastTruce(p, pEnt)) && (
+                                pEnt == null || pEnt.getGameMode() == GameMode.SURVIVAL) && (
+                                pEnt == null || p.canSee(pEnt)))
+                            if (!WorldGuardUtils.isPvPDisabled(ent.getLocation()) && !ent.hasMetadata("spectator")) {
+                                LivingEntity le = (LivingEntity)ent;
+                                le.damage(damage);
+                                de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(),le.getEyeLocation(), 0,0,0,0.3f,10);
+                                de.inventivegames.particle.ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(),le.getEyeLocation(), 0,0,0,0.3f,10);
+                                le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, (int)(damage * 20.0D), 1));
+                                if (le instanceof Player) {
+                                    ((Player)le).playSound(le.getLocation(), Sound.FIREWORK_BLAST, 1.0F, 0.3F);
+                                    ((Player)le).playSound(le.getLocation(), Sound.ZOMBIE_PIG_ANGRY, 0.8F, 0.5F);
+                                }
+                                ent.setMetadata("divineFire", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), Long.valueOf(System.currentTimeMillis())));
+                                ent.setMetadata("divineFireLevel", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), Integer.valueOf(level)));
+                            }
+                    }
+                }
+            }
+        }
+    }
+}
+

@@ -50,7 +50,7 @@ public class InventoryWitcherPet extends InventoryPet {
     }
 
     public List<String> getPetDescription(int level) {
-        return Lists.newArrayList(new String[] {
+        return Lists.newArrayList(new String[]{
                 String.valueOf(CC.Gray) + "Call upon the deadly screaming Banshee.", "",
                 String.valueOf(CC.YellowB) + "Ability", String.valueOf(CC.Gray) + "Activates " + CC.DarkRedB + "[Witcher]:",
                 String.valueOf(CC.DarkRedB) + "* " + CC.Gray + "Immune to almost all knockback (" + (level * 2) + "s)",
@@ -59,10 +59,11 @@ public class InventoryWitcherPet extends InventoryPet {
                 String.valueOf(CC.DarkRedB) + "* " + CC.Gray + "Silences enemy soul enchantments in a 8x8 radius for (" + (level * 2) + "s)",
                 String.valueOf(CC.DarkRedB) + "* " + CC.Gray + "Freezes enemies in a 8x8 radius for 1s",
                 String.valueOf(CC.YellowB) + "Cooldown",
-                String.valueOf(CC.Gray) + (getCooldown(level) / 60) + " Minutes" });
+                String.valueOf(CC.Gray) + (getCooldown(level) / 60) + " Minutes"});
     }
 
-    public void onDisable(CosmicSkyInventoryPets plugin) {}
+    public void onDisable(CosmicSkyInventoryPets plugin) {
+    }
 
     public int getExpForLevel(int level) {
         return 575 * level;
@@ -73,7 +74,7 @@ public class InventoryWitcherPet extends InventoryPet {
     }
 
     public int getCooldown(int level) {
-        return (int)TimeUnit.MINUTES.toSeconds((11 - level));
+        return (int) TimeUnit.MINUTES.toSeconds((11 - level));
     }
 
     public boolean onPetItemInteract(Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
@@ -103,7 +104,7 @@ public class InventoryWitcherPet extends InventoryPet {
         }
 
         if (playerHasApollo(player)) {
-            sum*=1.5;
+            sum *= 1.5;
         }
 
         procAbility(player, sum, petItem.getLevel());
@@ -117,7 +118,7 @@ public class InventoryWitcherPet extends InventoryPet {
         for (Entity entity : player.getNearbyEntities(8.0D, 8.0D, 8.0D)) {
             if (!(entity instanceof Player))
                 continue;
-            Player p = (Player)entity;
+            Player p = (Player) entity;
             if (GeneralUtil.isAtleastTruce(p, player))
                 continue;
             if (!WorldGuardUtils.isPvPEnabled(p.getLocation()))
@@ -129,48 +130,54 @@ public class InventoryWitcherPet extends InventoryPet {
             p.sendMessage(CC.translate("&cWitcher Pet - ( " + sum + "s Ragdoll, Soul Enchantments - BLOCKED)"));
             p.playSound(p.getLocation(), Sound.GHAST_MOAN, 2.0F, 2.0F);
             p.setWalkSpeed(0.0F);
-            p.setMetadata("witcher_ability", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
-            p.setMetadata("teleblock", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), Long.valueOf(System.currentTimeMillis() + (level * 2000))));
+            p.setMetadata("witcher_ability", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
+            p.setMetadata("teleblock", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), Long.valueOf(System.currentTimeMillis() + (level * 2000))));
             WitcherCooldown.enterWitcherCooldown(p);
             try {
                 if (DamageIndicatorUtils.isPlayerIndicating((Player) player)) {
                     DamageIndicatorUtils.createDamageIndicator((Player) player,
                             p.getLocation().add(1.0D, 2.0D, 0.0D),
-                            new String[] { CC.DarkRedB + "* WITCHER §7[" + sum + "] §4§l*" });
+                            new String[]{CC.DarkRedB + "* WITCHER §7[" + sum + "s] §4§l*"});
                 }
             } catch (Exception ex) {
 
             }
             players.add(p);
         }
-
-
-
-
         //ParticleEffect.playEffect(ParticleEffect.LARGE_EXPLODE, player.getLocation().add(0.0D, 1.0D, 0.0D), 1.0F, 3);
         player.sendMessage("");
         player.sendMessage(CC.translate("&4&l** WITCHER PET [&6" + sum + "s&4&l] AOE - Ragdoll, Soul Enchantments - BLOCKED **"));
         player.sendMessage("");
-        player.setMetadata("witcher_effect", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSkyInventoryPets.get(), null));
-        player.setMetadata("noknockback", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSkyInventoryPets.get(), null));
-        Bukkit.getScheduler().runTaskLater((Plugin)CosmicSkyInventoryPets.get(), new Runnable() {
+        player.setMetadata("witcher_effect", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), null));
+        player.setMetadata("noknockback", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), null));
+        Bukkit.getScheduler().runTaskLater((Plugin) CosmicSkyInventoryPets.get(), new Runnable() {
+            public void run() {
+                for (Player player : players) {
+                    if (player == null || !player.isOnline())
+                        continue;
+                    player.setWalkSpeed(0.2F);
+                }
+            }
+        }, 30L);
+
+        Bukkit.getScheduler().runTaskLater((Plugin) CosmicSkyInventoryPets.get(), new Runnable() {
             public void run() {
                 if (!player.isOnline())
                     return;
                 if (player.hasMetadata("witcher_effect"))
-                    player.removeMetadata("witcher_effect", (Plugin)CosmicSkyInventoryPets.get());
+                    player.removeMetadata("witcher_effect", (Plugin) CosmicSkyInventoryPets.get());
                 if (player.hasMetadata("noknockback"))
-                    player.removeMetadata("noknockback", (Plugin)CosmicSkyInventoryPets.get());
+                    player.removeMetadata("noknockback", (Plugin) CosmicSkyInventoryPets.get());
                 for (Player player : players) {
                     if (player == null || !player.isOnline())
                         continue;
                     if (player.hasMetadata("witcher_ability"))
-                        player.removeMetadata("witcher_ability", (Plugin)Enchantments.getInstance());
+                        player.removeMetadata("witcher_ability", (Plugin) Enchantments.getInstance());
                     player.setWalkSpeed(0.2F);
                 }
                 player.sendMessage(CC.translate("&4&lPET:  Witcher Pet - WITCHER has worn off! "));
             }
-        },(sum * 20));
+        }, (sum * 20));
     }
 
     public ArrayList<Player> getPlayersInRadius(Player player, int radius) {
@@ -178,7 +185,7 @@ public class InventoryWitcherPet extends InventoryPet {
         for (Entity entity : player.getNearbyEntities(radius, radius, radius)) {
             if (!(entity instanceof Player))
                 continue;
-            Player p = (Player)entity;
+            Player p = (Player) entity;
             list.add(p);
         }
         return list;
@@ -191,13 +198,13 @@ public class InventoryWitcherPet extends InventoryPet {
     public void addPotionEffectReturn(final Player player, final PotionEffect returned, final PotionEffect add) {
         player.removePotionEffect(returned.getType());
         player.addPotionEffect(add);
-        Bukkit.getScheduler().runTaskLater((Plugin)CosmicSkyInventoryPets.get(), new Runnable() {
+        Bukkit.getScheduler().runTaskLater((Plugin) CosmicSkyInventoryPets.get(), new Runnable() {
             public void run() {
                 if (player.hasPotionEffect(add.getType()))
                     player.removePotionEffect(add.getType());
                 player.addPotionEffect(returned);
             }
-        },  add.getDuration());
+        }, add.getDuration());
     }
 
     public LivingEntity getTargetEntity(Player player, int maxRangeInBlocks) {
@@ -217,7 +224,7 @@ public class InventoryWitcherPet extends InventoryPet {
                     target != null && target.getLocation().distanceSquared(observerPos) <= possibleTarget
                             .getLocation().distanceSquared(observerPos)))
                 continue;
-            target = (LivingEntity)possibleTarget;
+            target = (LivingEntity) possibleTarget;
         }
         return target;
     }
