@@ -13,8 +13,6 @@ public interface BoardAdapter {
 
 	long getInterval();
 
-	void onScoreboardCreate(Player player, Scoreboard board);
-
 	void preLoop();
 
 }

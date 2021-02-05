@@ -77,10 +77,10 @@ public class FactionsPlayerListener implements Listener {
         Player player = event.getPlayer();
         FPlayer fplayer = FPlayers.i.get(player);
 
-        if (P.getP().getBoardManager() != null) {
-            P.getP().getBoardManager().getPlayerBoards().put(player.getUniqueId(), new com.massivecraft.factions.board.Board(player, P.getP().getBoardManager().getAdapter()));
-            HeartsUnderName.updateNametag(player, true);
-        }
+//        if (P.getP().getBoardManager() != null) {
+//            P.getP().getBoardManager().getPlayerBoards().put(player.getUniqueId(), new com.massivecraft.factions.board.Board(player, P.getP().getBoardManager().getAdapter()));
+//            HeartsUnderName.updateNametag(player, true);
+//        }
 
         if (fplayer == null)
             return;
