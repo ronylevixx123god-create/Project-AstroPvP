@@ -53,4 +53,17 @@ public class GiveApolloCommand implements CommandExecutor {
         return false;
     }
 
+    public static boolean isApolloRank(ItemStack item) {
+        if (item == null) {
+            return false;
+        }
+        if (item.getType() == Material.AIR) {
+            return false;
+        }
+        if (!(item.hasItemMeta())) {
+            return false;
+        }
+        return item.getItemMeta().getLore().contains(CC.translate("&8[&3✬&8] &bobtained from &f&nbuy.astropvp.net&7 (&n/buy&7)")) && item.getType() == Material.NETHER_STAR;
+    }
+
 }
