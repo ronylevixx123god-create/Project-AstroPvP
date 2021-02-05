@@ -49,28 +49,34 @@ public class FactionsPlayerListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onLeaveFaction(final FPlayerLeaveEvent event) {
-        Bukkit.getServer().getScheduler().runTaskLaterAsynchronously(this.p, new Runnable() {
-            public void run() {
-                if (event.getFPlayer() == null || event.getFPlayer().isOffline())
+        Bukkit.getServer().getScheduler().runTaskLaterAsynchronously(this.p, () -> {
+            if (event.getFPlayer() == null || event.getFPlayer().isOffline()) {
+                return;
+            }
+            if (Conf.factionScoreboardEnable) {
+                if (!event.getFPlayer().hasFaction() || event.getFPlayer().getFaction() == null) {
                     return;
-                if (Conf.factionScoreboardEnable) {
-                    if (!event.getFPlayer().hasFaction() || event.getFPlayer().getFaction() == null)
-                        return;
+                }
+                for (Player player : event.getFPlayer().getFaction().getOnlinePlayers()) {
+                    ScoreboardManager.setPlayerFactionScoreboardAsync(player);
                 }
             }
-        },  10L);
+        }, 10L);
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onLoss(final PowerLossEvent event) {
-        Bukkit.getServer().getScheduler().runTaskLaterAsynchronously(this.p, new Runnable() {
-            public void run() {
-                if (event.getFPlayer() == null || event.getFPlayer().isOffline())
-                    return;
+        Bukkit.getServer().getScheduler().runTaskLaterAsynchronously(this.p, () -> {
+            if (event.getFPlayer() == null || event.getFPlayer().isOffline()) {
+                return;
             }
-        },  10L);
+            if (Conf.factionScoreboardEnable) {
+                for (Player player : FPlayers.i.get(event.getFPlayer().getPlayer()).getFaction().getOnlinePlayers()) {
+                    ScoreboardManager.setPlayerFactionScoreboardAsync(player);
+                }
+            }
+        }, 10L);
     }
-
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
@@ -135,8 +141,9 @@ public class FactionsPlayerListener implements Listener {
         Faction myFaction = me.getFaction();
         if (myFaction != null)
             myFaction.memberLoggedOff();
-        if (Conf.factionScoreboardEnable)
+        if (Conf.factionScoreboardEnable) {
             ScoreboardManager.removeScoreboardSync(event.getPlayer());
+        }
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
