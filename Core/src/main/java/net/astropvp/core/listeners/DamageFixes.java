@@ -33,9 +33,12 @@ public class DamageFixes implements Listener {
         }
         final Player damager = (Player) event.getDamager();
         final Player personBeingHit = (Player) event.getEntity();
-        if (CosmicArmorSetsAPI.getArmorSet(damager) == ArmorSet.DIMENSIONAL_TRAVELER || CosmicArmorSetsAPI.getArmorSet(damager) == ArmorSet.DRAGON_SLAYER
-                        || CosmicArmorSetsAPI.getArmorSet(damager) == ArmorSet.ENGINEER || CosmicArmorSetsAPI.getArmorSet(damager) == ArmorSet.SUPREME
-                        || CosmicArmorSetsAPI.getArmorSet(damager) == ArmorSet.MOTHER_OF_YIJKI || CosmicArmorSetsAPI.getArmorSet(damager) == ArmorSet.YETI) {
+        if (CosmicArmorSetsAPI.getArmorSet(damager) == ArmorSet.DIMENSIONAL_TRAVELER && CosmicArmorSetsAPI.getBonusCrystalsEquipped(damager).isEmpty()||
+                CosmicArmorSetsAPI.getArmorSet(damager) == ArmorSet.DRAGON_SLAYER && CosmicArmorSetsAPI.getBonusCrystalsEquipped(damager).isEmpty()
+                        || CosmicArmorSetsAPI.getArmorSet(damager) == ArmorSet.ENGINEER && CosmicArmorSetsAPI.getBonusCrystalsEquipped(damager).isEmpty()
+                || CosmicArmorSetsAPI.getArmorSet(damager) == ArmorSet.SUPREME && CosmicArmorSetsAPI.getBonusCrystalsEquipped(damager).isEmpty()
+                        || CosmicArmorSetsAPI.getArmorSet(damager) == ArmorSet.MOTHER_OF_YIJKI && CosmicArmorSetsAPI.getBonusCrystalsEquipped(damager).isEmpty()
+                || CosmicArmorSetsAPI.getArmorSet(damager) == ArmorSet.YETI && CosmicArmorSetsAPI.getBonusCrystalsEquipped(damager).isEmpty()) {
             event.setDamage(event.getDamage() * 0.05);
         }
     }
