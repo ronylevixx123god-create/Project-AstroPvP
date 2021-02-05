@@ -2,7 +2,6 @@ package com.massivecraft.factions.util;
 
 import com.compilex.CompilexPermissions.PermissionsAPI;
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
@@ -31,7 +30,7 @@ public class ScoreboardManager implements BoardAdapter {
     public static String getDateSuffix() {
         return format.format(new Date());
     }
-    public FPlayer fme;
+
     private static final DateFormat format = new SimpleDateFormat("MM/dd");
 
     @Override
@@ -97,62 +96,6 @@ public class ScoreboardManager implements BoardAdapter {
 
     @Override
     public void onScoreboardCreate(Player player, org.bukkit.scoreboard.Scoreboard b) {
-        Bukkit.getOnlinePlayers().forEach(o -> {
-                    Bukkit.getPlayer(o.getUniqueId());
-
-                    if (Bukkit.getPlayer(o.getUniqueId()) != null) {
-
-                        final Player joinPlayer = o.getPlayer();
-                        if (joinPlayer == null || !joinPlayer.isOnline()) {
-                            return;
-                        }
-                        if (b == null) {
-                            return;
-                        }
-
-                        Object fplayer = null;
-                        String prefix = FormatUtils.getPlayerPrefix(o);
-                        final boolean factionsEnabled = P.getP().isEnabled();
-                        if (factionsEnabled) {
-                            final FPlayer fp = FactionUtils.getFPlayer(o);
-                            if (fplayer == null) {
-                                fplayer = FactionUtils.getFPlayer(joinPlayer);
-                            }
-                            final Faction fJoinFaction = FactionUtils.getFaction(joinPlayer);
-                            if (P.getP().getPrefixType() == PrefixType.FACTION) {
-                                if (P.getP().isEnabled()) {
-                                    prefix = FormatUtils.getFactionPrefixForOtherFaction(fp.getPlayer(), fJoinFaction);
-                                    if (prefix != null) {
-                                        prefix = FormatUtils.trimPrefix(prefix) + " " + FormatUtils.getRankColorEnding(o);
-                                    }
-                                    else {
-                                        prefix = FormatUtils.getRankColorEnding(o);
-                                    }
-                                }
-                                else {
-                                    prefix = FormatUtils.getFactionColorForOtherFaction(fp.getPlayer(), fJoinFaction);
-                                    prefix = FormatUtils.trimPrefix(prefix);
-                                }
-                            }
-                        }
-                        final String pl_teamName = FormatUtils.getTeamName(o);
-                        final Team team = (b.getTeam(pl_teamName) != null) ? b.getTeam(pl_teamName) : b.registerNewTeam(pl_teamName);
-                        if (!team.getPrefix().equals(prefix)) {
-                            team.setPrefix((prefix != null) ? prefix : "");
-                        }
-                        if (!team.hasEntry(o.getName())) {
-                            team.addEntry(o.getName());
-                        }
-                        final String teamName = FormatUtils.getTeamDisplayName(o);
-
-                        team.setDisplayName(teamName);
-
-
-                        if (!team.hasEntry(o.getName())) {
-                             team.addEntry(o.getName());
-                }
-            }
-        });
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

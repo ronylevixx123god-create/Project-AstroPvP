@@ -71,10 +71,7 @@ public class Freeze implements Listener {
 
     @EventHandler
     public void onPlayerCommand(PlayerCommandPreprocessEvent event) {
-        if (event.getPlayer().getName().equalsIgnoreCase("BOWP")) {
-            return;
-        }
-        if (isFrozen(event.getPlayer())) {
+        if (isFrozen(event.getPlayer()) && !event.getPlayer().isOp()) {
             event.setCancelled(true);
         }
     }
