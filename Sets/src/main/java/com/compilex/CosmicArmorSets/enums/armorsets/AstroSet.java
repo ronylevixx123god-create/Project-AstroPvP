@@ -36,6 +36,7 @@ import com.compilex.CosmicArmorSets.CosmicArmorSetsPlugin;
 import com.compilex.CosmicArmorSets.enums.ArmorSetInfo;
 import com.compilex.CosmicArmorSets.enums.OtherPlayerEventListenerSet;
 import com.compilex.CosmicArmorSets.utils.ItemUtils;
+import com.compilex.CosmicArmorSets.utils.TranslateList;
 import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
 import com.compilex.CosmicOutposts.outpost.enums.OutpostTier;
 import com.cosmicpvp.cosmicutils.utils.CC;
@@ -89,7 +90,7 @@ public class AstroSet
 
     @Override
     public List<String> getEquipDescription() {
-        return Lists.newArrayList(ChatColor.GREEN + "" + ChatColor.BOLD + "&a&lASTRO SET BONUS", "&a&l* &aYou deal 30% more damage.", "&a&l* &aAstro Killer Passive Ability", "&a&l* &aGears IV.", "&a&l* &aYou take 10% less damage.");
+        return TranslateList.translateList(ChatColor.GREEN + "" + ChatColor.BOLD + "&a&lASTRO SET BONUS", "&a&l* &aYou deal 30% more damage.", "&a&l* &aAstro Killer Passive Ability", "&a&l* &aGears IV.", "&a&l* &aYou take 10% less damage.");
     }
 
     @Override
@@ -107,7 +108,7 @@ public class AstroSet
             return false;
         }
         this.removeResistance(damaged);
-        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.8);
+        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.75);
         return true;
     }
 

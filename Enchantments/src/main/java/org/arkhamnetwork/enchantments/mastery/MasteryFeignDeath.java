@@ -16,6 +16,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
 
 import lombok.SneakyThrows;
+import me.astropvp.damageindicators.utils.DamageIndicatorUtils;
 import net.minecraft.server.v1_8_R3.Entity;
 import net.minecraft.server.v1_8_R3.EntityHuman;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
@@ -86,6 +87,15 @@ public class MasteryFeignDeath extends MasteryCustomEnchantment {
         EntityTrackerEntry entry = (EntityTrackerEntry)(((WorldServer)player.world).getTracker()).trackedEntities.get(player.getId());
         player.playerConnection.sendPacket((Packet)fakePlayer);
         player.playerConnection.sendPacket((Packet)status);
+        try {
+            if (DamageIndicatorUtils.isPlayerIndicating(damaged)) {
+                DamageIndicatorUtils.createDamageIndicator(damaged,
+                        damaged.getLocation().add(1.0D, 2.0D, 0.0D),
+                        new String[] { CC.YellowB + "* FEIGN DEATH §7[" + seconds + "§7s ] §el*" });
+            }
+        } catch (Exception ex) {
+
+        }
         whoReceived.add(player);
         Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Enchantments.getInstance(), () -> {
             PacketPlayOutEntityDestroy destroy = new PacketPlayOutEntityDestroy(new int[] { entityId });
@@ -94,10 +104,13 @@ public class MasteryFeignDeath extends MasteryCustomEnchantment {
                     pl.playerConnection.sendPacket((Packet)destroy);
             }
         },30L);
-        for (Player pl : Bukkit.getServer().getOnlinePlayers())
+        for (Player pl : Bukkit.getServer().getOnlinePlayers()) {
             pl.hidePlayer(damaged);
+            pl.playSound(pl.getLocation(), Sound.WITHER_SHOOT, 3.0F, 0.9F);
+        }
         damaged.playSound(damaged.getLocation(), Sound.WITHER_SHOOT, 3.0F, 0.9F);
         damaged.sendMessage(CC.DarkRedB + "* Feign Death - VANISHED [" + NumberUtils.formatSeconds(seconds) + "s] *");
+
         Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Enchantments.getInstance(), () -> {
             if (damaged.isValid() && damaged.hasMetadata("feign_vanish"))
                 unvanish(damaged);
