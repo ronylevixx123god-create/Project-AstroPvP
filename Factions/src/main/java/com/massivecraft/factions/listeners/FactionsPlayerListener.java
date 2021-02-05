@@ -8,7 +8,6 @@ import com.massivecraft.factions.cmd.CmdClaim;
 import com.massivecraft.factions.event.FPlayerLeaveEvent;
 import com.massivecraft.factions.event.PowerLossEvent;
 import com.massivecraft.factions.struct.*;
-import com.massivecraft.factions.util.HeartsUnderName;
 import com.massivecraft.factions.util.ScoreboardManager;
 import com.massivecraft.factions.util.TimeUtil;
 import com.massivecraft.factions.zcore.util.MojangUUIDFetcher;
@@ -157,7 +156,7 @@ public class FactionsPlayerListener implements Listener {
         boolean changedFaction = !me.lastFactionMessage.equals(me.getFactionHereMessage());
         if (me.isMapAutoUpdating()) {
             if (!this.showTimes.containsKey(player.getUniqueId()) || this.showTimes.get(player.getUniqueId()) <= System.currentTimeMillis()) {
-                me.sendMessage(Board.getMap(me.getFaction(), to, player));
+                me.sendFancyMessage(Board.getMap(me.getFaction(), to, player));
                 this.showTimes.put(player.getUniqueId(), System.currentTimeMillis() + 4000L);
             }
         } else {
