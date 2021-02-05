@@ -44,7 +44,6 @@ import org.bukkit.util.Vector;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
@@ -173,16 +172,15 @@ public class MasteryRotAndDecay extends MasteryCustomEnchantment {
         final Set<EntityPlayer> affected = new HashSet<>();
         affected.add(player);
         if (blocks.size() > 0) {
-            EntityTrackerEntry entry = (EntityTrackerEntry) (((WorldServer) player.world).getTracker()).trackedEntities.get(player.getId());
+            EntityTrackerEntry entry = (((WorldServer) player.world).getTracker()).trackedEntities.get(player.getId());
             if (entry != null) {
-                CopyOnWriteArrayList<EntityPlayer> trackedPlayers = (CopyOnWriteArrayList<EntityPlayer>) ReflectionUtils.getObject(EntityTrackerEntry.class, entry, "trackedPlayers");
+                ArrayList<EntityPlayer> trackedPlayers = (ArrayList<EntityPlayer>) ReflectionUtils.getObject(EntityTrackerEntry.class, entry, "trackedPlayers");
                 for (EntityPlayer tracked : trackedPlayers) {
-                    if (tracked instanceof EntityPlayer) {
-                        EntityPlayer pl = tracked;
-                        if (pl.playerConnection == null || pl.playerConnection.isDisconnected() || (
-                                event != null && !(new CustomEnchantProcOnEntityEvent(sourcePlayer, pl.getBukkitEntity(), event, this, enchantLevel)).callEvent()))
+                    if (tracked != null) {
+                        if (tracked.playerConnection == null || tracked.playerConnection.isDisconnected() || (
+                                event != null && !(new CustomEnchantProcOnEntityEvent(sourcePlayer, tracked.getBukkitEntity(), event, this, enchantLevel)).callEvent()))
                             continue;
-                        affected.add(pl);
+                        affected.add(tracked);
                     }
                 }
             }
