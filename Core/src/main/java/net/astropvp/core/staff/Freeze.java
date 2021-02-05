@@ -2,7 +2,6 @@ package net.astropvp.core.staff;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import lombok.Getter;
-import org.arkhamnetwork.Arkkit.libs.SpawnerLocation;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,7 +12,6 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.*;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 public class Freeze implements Listener {
@@ -22,7 +20,7 @@ public class Freeze implements Listener {
     public static HashMap<UUID, Location> frozenPlayers = new HashMap<>();
 
     public static void handle(Player target, Player staff) {
-        if (frozenPlayers.contains(target.getUniqueId())) {
+        if (frozenPlayers.containsKey(target.getUniqueId())) {
             unfreeze(target, staff);
         } else {
             freeze(target, staff);
@@ -47,7 +45,7 @@ public class Freeze implements Listener {
     }
 
     public Boolean isFrozen(Player player) {
-        return frozenPlayers.contains(player.getUniqueId());
+        return frozenPlayers.containsKey(player.getUniqueId());
     }
 
     @EventHandler
