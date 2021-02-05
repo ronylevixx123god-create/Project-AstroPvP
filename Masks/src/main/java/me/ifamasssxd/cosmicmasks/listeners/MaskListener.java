@@ -102,7 +102,6 @@ public class MaskListener implements Listener {
                     player.sendMessage(CC.RedB + "(!) " + CC.Red + "It seems you tried to claim a duplicate Random Mask, it has been removed from your inventory.");
                     player.setItemInHand((ItemStack)null);
                     player.updateInventory();
-                    Bukkit.getLogger().info("Removing " + (Object)item + " frm " + player.getName() + " due to being claimed!");
                     return;
                 }
                 if (id != -1L) {
@@ -266,7 +265,6 @@ public class MaskListener implements Listener {
             player.updateInventory();
             player.playSound(player.getLocation(), Sound.LEVEL_UP, 2.0f, 1.4f);
             player.playSound(player.getLocation(), Sound.HORSE_ARMOR, 3.0f, 1.1f);
-            Bukkit.getLogger().info("[CosmicMasks] " + player.getName() + " equipped " + type.name() + " mask=" + (Object)cursor + " onto " + (Object)clicked.getType() + "!");
             return;
         }
         if (!(clicked == null || clickedType == Material.AIR || event.getClick() != ClickType.RIGHT || cursorType != null && cursorType != Material.AIR || (mask2 = new NBTTagCompoundBuilder((clickedWrapper = new NBTWrapper(clicked)).getNBTBase("conaxData")).getString("maskOverride")) == null || mask2.isEmpty() || (type2 = MaskType.getFromName(mask2.toUpperCase())) == null)) {
@@ -286,7 +284,6 @@ public class MaskListener implements Listener {
             player.updateInventory();
             player.playSound(player.getLocation(), Sound.ANVIL_USE, 3.0f, 1.1f);
             player.playSound(player.getLocation(), Sound.HORSE_ARMOR, 3.0f, 1.3f);
-            Bukkit.getLogger().info("[CosmicMasks] " + player.getName() + " UN-equipped " + type2.name() + " from=" + (Object)clicked);
         }
     }
 
