@@ -50,7 +50,10 @@ import com.massivecraft.factions.manager.BannerManager;
 import com.massivecraft.factions.manager.BoardManager;
 import com.massivecraft.factions.struct.*;
 import com.massivecraft.factions.struct.managers.FChestManager;
-import com.massivecraft.factions.util.*;
+import com.massivecraft.factions.util.LazyLocation;
+import com.massivecraft.factions.util.MapFLocToStringSetTypeAdapter;
+import com.massivecraft.factions.util.MyLocationTypeAdapter;
+import com.massivecraft.factions.util.ScoreboardManager;
 import com.massivecraft.factions.zcore.MPlugin;
 import com.massivecraft.factions.zcore.util.MojangUUIDFetcher;
 import com.massivecraft.factions.zcore.util.TextUtil;
@@ -123,8 +126,6 @@ public class P extends MPlugin {
     @Getter @Setter private boolean includeBank = false;
     @Getter @Setter private boolean includeHoppers = true;
     @Getter @Setter public boolean upgradesEnabled = false;
-    private PrefixType prefixType;
-
 
 
     @Getter @Setter
@@ -184,9 +185,6 @@ public class P extends MPlugin {
             this.log(Level.SEVERE, "GSON lib not found. Your CraftBukkit build is too old (< 1.3.2) or otherwise not compatible.");
             this.suicide();
             return;
-        }
-        if (this.prefixType == null) {
-            this.prefixType = PrefixType.FACTION;
         }
         if (!this.preEnable()) {
             return;
@@ -367,10 +365,6 @@ public class P extends MPlugin {
     public CoreChunkManager getChunkManager() {
         return this.chunkManager;
     } */
-
-    public PrefixType getPrefixType() {
-        return this.prefixType;
-    }
 
     public long getStartOfMap() {
         return this.startOfMap;

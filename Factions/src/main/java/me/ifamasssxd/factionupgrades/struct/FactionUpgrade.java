@@ -22,6 +22,7 @@ public enum FactionUpgrade {
     WARP_MASTER(Material.ENDER_PEARL, (Upgrade)new WarpMaster(12, "Warp Master", Lists.newArrayList("Create more /f warps."))),
     MAX_FACTION_SIZE(Material.EMERALD, (Upgrade)new MaxFactionSize(10, "Max Faction Size", Lists.newArrayList("Increases max faction size."))),
     FACTION_POWER_BOOST(Material.DIAMOND, (Upgrade)new FactionPowerBoost(5, "Faction Power Boost", Lists.newArrayList("Adds passive faction power boosts."))),
+    MCMMO_MASTERY(Material.BOOK, (Upgrade)new mcMMOMastery(4, "mcMMO Mastery", Lists.newArrayList("Shorter mcMMO Active Ability Cooldowns"))),
     MONSTER_FARM(Material.BLAZE_ROD, (Upgrade)new MonsterFarm(4, "Monster Farm", Lists.newArrayList("Increased mob spawn rates in claims."))),
     EXP_HARVEST(Material.EXP_BOTTLE, (Upgrade)new EXPHarvest(3, "XP Harvest", Lists.newArrayList("Increases Vanilla XP gained from monsters."))),
     TP_MASTERY(Material.BOOK, (Upgrade)new TPMastery(4, "TP Mastery", Lists.newArrayList("Decreases teleportation casting time."))),

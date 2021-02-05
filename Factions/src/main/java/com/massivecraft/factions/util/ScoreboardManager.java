@@ -2,7 +2,6 @@ package com.massivecraft.factions.util;
 
 import com.compilex.CompilexPermissions.PermissionsAPI;
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
@@ -31,7 +30,7 @@ public class ScoreboardManager implements BoardAdapter {
     public static String getDateSuffix() {
         return format.format(new Date());
     }
-    public FPlayer fme;
+
     private static final DateFormat format = new SimpleDateFormat("MM/dd");
 
     @Override
