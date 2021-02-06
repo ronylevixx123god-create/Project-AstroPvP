@@ -34,6 +34,7 @@ import me.ifamasssxd.cosmicduel.tasks.*;
 import me.ifamasssxd.cosmicduel.utils.CollectionBin;
 import me.ifamasssxd.cosmicduel.utils.DuelToggles;
 import me.ifamasssxd.cosmicduel.utils.WorldGuardUtils;
+import me.ifamasssxd.cosmicfactionboosters.listeners.mcMMOListener;
 import org.arkhamnetwork.Arkkit.commands.CommandArkReboot;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -179,23 +180,23 @@ extends JavaPlugin {
     }
 
     public void registerTasks() {
-        Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)CosmicDuel.get(), (Runnable)new DuelArenaTask(), 20L, 20L);
-        Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)CosmicDuel.get(), (Runnable)new DuelTask(), 20L, 20L);
-        Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)CosmicDuel.get(), (Runnable)new QueueUpdateTask(), 20L, 700L);
-        Bukkit.getScheduler().scheduleAsyncRepeatingTask((Plugin)CosmicDuel.get(), (Runnable)new DuelInviteTask(), 20L, 20L);
-        this.getServer().getScheduler().scheduleSyncRepeatingTask((Plugin)this, (Runnable)new RebootTask(), 20L, 20L);
-        this.getServer().getScheduler().scheduleSyncRepeatingTask((Plugin)this, (Runnable)new QueueTask(this), (long)(this.getConfig().getInt("queue-delay", 5) * 20), (long)(this.getConfig().getInt("queue-delay", 5) * 20));
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(CosmicDuel.get(), new DuelArenaTask(), 20L, 20L);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(CosmicDuel.get(), new DuelTask(), 20L, 20L);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(CosmicDuel.get(), new QueueUpdateTask(), 20L, 700L);
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(CosmicDuel.get(), new DuelInviteTask(), 20L, 20L);
+        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new RebootTask(), 20L, 20L);
+        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new QueueTask(this), this.getConfig().getInt("queue-delay", 5) * 20, this.getConfig().getInt("queue-delay", 5) * 20);
     }
 
     public void registerCommands() {
-        this.getCommand("setduelworld").setExecutor((CommandExecutor)new CommandSetDuelWorld());
-        this.getCommand("removeduelspawn").setExecutor((CommandExecutor)new CommandRemoveDuelSpawn());
-        this.getCommand("setduelspawn").setExecutor((CommandExecutor)new CommandSetDuelSpawn());
-        this.getCommand("spectate").setExecutor((CommandExecutor)new CommandSpectate());
-        this.getCommand("duel").setExecutor((CommandExecutor)new CommandDuel());
-        this.getCommand("viewdeathinventory").setExecutor((CommandExecutor)new CommandViewDeathInventory());
-        this.getCommand("setrankedarena").setExecutor((CommandExecutor)new CommandSetRankArena());
-        this.getCommand("resetelo").setExecutor((CommandExecutor)new CommandResetELO());
+        this.getCommand("setduelworld").setExecutor(new CommandSetDuelWorld());
+        this.getCommand("removeduelspawn").setExecutor(new CommandRemoveDuelSpawn());
+        this.getCommand("setduelspawn").setExecutor(new CommandSetDuelSpawn());
+        this.getCommand("spectate").setExecutor(new CommandSpectate());
+        this.getCommand("duel").setExecutor(new CommandDuel());
+        this.getCommand("viewdeathinventory").setExecutor(new CommandViewDeathInventory());
+        this.getCommand("setrankedarena").setExecutor(new CommandSetRankArena());
+        this.getCommand("resetelo").setExecutor(new CommandResetELO());
     }
 
     public void registerListeners() {
@@ -210,7 +211,7 @@ extends JavaPlugin {
         this.registerListener(new SettingsListener());
         this.registerListener(new CustomKitListener());
         if (mcMMOEnabled) {
-            this.getServer().getPluginManager().registerEvents((Listener)new mcMMOListener(), (Plugin)this);
+            this.getServer().getPluginManager().registerEvents(new mcMMOListener(), this);
         }
         if (enchantsEnabled) {
             this.registerListener(new GodsetCreationListener());
@@ -218,7 +219,7 @@ extends JavaPlugin {
     }
 
     private void registerListener(Listener listener) {
-        this.getServer().getPluginManager().registerEvents(listener, (Plugin)this);
+        this.getServer().getPluginManager().registerEvents(listener, this);
     }
 
     private void setupDuelLog() {
