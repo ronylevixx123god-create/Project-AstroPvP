@@ -17,8 +17,6 @@ import com.cosmicpvp.CosmicSpaceChests.tasks.CosmicEnvoyChestPrunerTask;
 import com.cosmicpvp.CosmicSpaceChests.tasks.CosmicEnvoyPingerTask;
 import com.cosmicpvp.CosmicSpaceChests.tasks.CosmicEnvoyTask;
 import com.cosmicpvp.CosmicSpaceChests.tasks.HologramUpdateTask;
-import com.cosmicpvp.CosmicSpaceChests.tasks.holiday.Christmas2018Task;
-import com.cosmicpvp.CosmicSpaceChests.tasks.holiday.Halloween2018Task;
 import com.cosmicpvp.CosmicSpaceChests.utils.ChestMap;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import org.bukkit.Bukkit;
@@ -39,8 +37,6 @@ extends JavaPlugin {
     public static CosmicSpaceChestsPlugin plugin = null;
     public static boolean worldEventsEnabled = false;
     private static HologramUpdateTask hologramTask;
-    private Halloween2018Task halloweenTask;
-    private Christmas2018Task christmasTask;
 
     public void onEnable() {
         plugin = this;
@@ -131,12 +127,5 @@ extends JavaPlugin {
         return hologramTask;
     }
 
-    public Halloween2018Task getHalloweenTask() {
-        return this.halloweenTask;
-    }
-
-    public Christmas2018Task getChristmasTask() {
-        return this.christmasTask;
-    }
 }
 

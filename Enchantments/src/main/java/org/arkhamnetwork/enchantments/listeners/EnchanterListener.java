@@ -24,7 +24,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class EnchanterListener implements Listener {
@@ -111,8 +110,6 @@ public class EnchanterListener implements Listener {
             p.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW.toString() + "You examine the " + i.getItemMeta().getDisplayName().substring(0, i.getItemMeta().getDisplayName().indexOf(ChatColor.GRAY.toString())) + "...");
             p.sendMessage(ChatColor.YELLOW + "and discover " + book.getItemMeta().getDisplayName() + "!");
             Bukkit.dispatchCommand((CommandSender) Bukkit.getConsoleSender(), "contest add " + p.getName() + " beopened 1");
-            final Firework fw = (Firework) p.getWorld().spawnEntity(p.getLocation(), EntityType.FIREWORK);
-            final FireworkMeta fwm = fw.getFireworkMeta();
             Color c = null;
             if (tier == 1) {
                 c = Color.WHITE;
@@ -135,10 +132,6 @@ public class EnchanterListener implements Listener {
             if (c == null) {
                 c = Color.BLACK;
             }
-            final FireworkEffect effect = FireworkEffect.builder().flicker(true).withColor(c).withFade(c).with(FireworkEffect.Type.STAR).trail(true).build();
-            fwm.addEffect(effect);
-            fwm.setPower(0);
-            fw.setFireworkMeta(fwm);
         }
     }
 

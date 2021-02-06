@@ -23,7 +23,9 @@
  */
 package me.ifamasssxd.cosmiccoinflip.struct;
 
+import com.compilex.CompilexPermissions.CompilexPermissions;
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.HCFOutpostUtils;
 import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
 import com.google.common.collect.Lists;
@@ -243,10 +245,16 @@ public class CoinFlipMatch {
         UUID loser = player.getUniqueId().equals(this.playerUUID) ? this.player2UUID : this.playerUUID;
         double totalWines = this.wager * 2.0;
         double taxRate = TAX;
+        double win;
         if (HCFOutpostUtils.doesControlOutpost(player, "frozen")) {
             taxRate = 0.0;
         }
-        double win = totalWines * (1.0 - taxRate);
+        if (player.hasPermission("astrocore.apollo")) {
+            win = totalWines;
+            player.sendMessage(CC.translate("&b&lAPOLLO: &fNo CF tax!"));
+        } else {
+            win = totalWines * (1.0 - taxRate);
+        }
         CoinFlipManager manager = AstroCore.getInstance().getCoinFlipManager();
         manager.addWin(player.getUniqueId(), loser, win, taxRate * this.wager);
         EconomyResponse response = AstroCore.getInstance().getEcon().depositPlayer((OfflinePlayer)player, win);

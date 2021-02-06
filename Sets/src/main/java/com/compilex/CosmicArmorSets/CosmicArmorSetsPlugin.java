@@ -42,7 +42,7 @@ public class CosmicArmorSetsPlugin
             for (Player pl : Bukkit.getServer().getOnlinePlayers()) {
                 CosmicArmorSetsAPI.getAbilityArmorSet(pl);
             }
-        }, 20L, 20L);
+        }, 100L, 100L);
         if (Bukkit.getPluginManager().isPluginEnabled("CosmicSkyCustomItems")) {
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new CrystalExtractionItem());
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new AntiMKitCrystalItem());

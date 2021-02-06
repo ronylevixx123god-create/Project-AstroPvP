@@ -3,7 +3,6 @@ package com.cosmicpvp.CosmicSpaceChests.listeners.holiday;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsPlugin;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
-import com.cosmicpvp.CosmicSpaceChests.tasks.holiday.Halloween2018Task;
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.Packet;
@@ -57,7 +56,6 @@ implements Listener {
             return;
         }
         if (e.getEntity().hasMetadata("pumpkinHarvest") && e.getEntity().getWorld().getName().equalsIgnoreCase("world_arena")) {
-            Halloween2018Task.spawnCosmicPumpkin(null);
             e.getEntity().remove();
             this.lastDropped = System.currentTimeMillis() + 1500L;
         }

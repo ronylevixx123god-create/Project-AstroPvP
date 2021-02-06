@@ -1,13 +1,14 @@
 package me.ily2bb.slotbot;
 
-import com.compilex.CosmicDungeons.DungeonsAPI;
 import me.ily2bb.slotbot.commands.CommandSkinCommand;
 import me.ily2bb.slotbot.commands.CommandSlotBot;
 import me.ily2bb.slotbot.listener.SlotBotInventoryListener;
+import me.ily2bb.slotbot.managers.SlotBotManager;
 import me.ily2bb.slotbot.objects.Glow;
 import me.ily2bb.slotbot.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.Listener;
@@ -36,7 +37,7 @@ public class SlotBotPlugin extends JavaPlugin {
         if (file.exists()) {
             this.getLogger().info(ChatColor.translateAlternateColorCodes('&', "&aSuccessfully loaded Slot Bots..."));
         } else {
-            final String l = Utils.toBase64(new ItemStack[]{DungeonsAPI.get().getCosmonautFuel()}, 9) + ":show:1";
+            final String l = Utils.toBase64(new ItemStack[]{new ItemStack(Material.EMERALD)}, 9) + ":show:1";
             final List<String> list = Arrays.asList(l);
             this.getConfig().addDefault("items", list);
             this.getConfig().addDefault("slot-bot-enabled", true);

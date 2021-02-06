@@ -29,7 +29,7 @@ implements Runnable {
     public CosmicEnvoyTask(CosmicSpaceChestsPlugin fdp) {
         plugin = fdp;
         this.r = new Random();
-        currentEnvoyDelay = (long)new Random().nextInt(plugin.getConfig().getInt("cosmic_envoy.max_delay") - plugin.getConfig().getInt("cosmic_envoy.min_delay")) * 1200L;
+        currentEnvoyDelay = 99999999;
     }
 
     @Override

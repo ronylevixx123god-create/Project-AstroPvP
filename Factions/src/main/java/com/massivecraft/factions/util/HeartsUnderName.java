@@ -10,7 +10,7 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 
 public class HeartsUnderName {
-    public static void updateNametag(Player player, boolean hearts) {
+ /*   public static void updateNametag(Player player, boolean hearts) {
 
         if (player.hasMetadata("NPC")) {
             return;
@@ -40,5 +40,5 @@ public class HeartsUnderName {
             }
 
         });
-    }
+    }*/
 }

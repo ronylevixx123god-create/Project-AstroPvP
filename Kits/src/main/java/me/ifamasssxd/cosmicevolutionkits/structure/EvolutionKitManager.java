@@ -21,7 +21,7 @@ public class EvolutionKitManager {
                 if (!(gui instanceof EvolutionKitMenu) || !((EvolutionKitMenu)gui).isOpen()) continue;
                 gui.redraw();
             }
-        }, 20L, 20L);
+        }, 200L, 200L);
     }
 }
 

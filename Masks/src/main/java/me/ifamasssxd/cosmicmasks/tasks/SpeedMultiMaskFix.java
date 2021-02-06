@@ -28,7 +28,7 @@ public class SpeedMultiMaskFix {
                 if (!MaskType.hasEquipped(p, "TERMINATOR") && !MaskType.hasEquipped(p, "REINDEER")) continue;
                 p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 120, 3), true);
             }
-        }, 80L, 80L);
+        }, 100L, 100L);
     }
 }
 

@@ -90,7 +90,7 @@ extends JavaPlugin {
     }
 
     void registerTasks() {
-        this.getServer().getScheduler().runTaskTimer((Plugin)this, (Runnable)new SpectralMaskTask(), 20L, 20L);
+        this.getServer().getScheduler().runTaskTimer((Plugin)this, (Runnable)new SpectralMaskTask(), 200L, 200L);
     }
 
     public static CosmicMasks get() {

@@ -24,8 +24,6 @@ import com.cosmicpvp.CosmicSpaceChests.libs.EvolutionKitItems;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.cosmicpvp.CosmicSpaceChests.libs.RankItems;
 import com.cosmicpvp.CosmicSpaceChests.tasks.CosmicEnvoyTask;
-import com.cosmicpvp.CosmicSpaceChests.tasks.holiday.Christmas2018Task;
-import com.cosmicpvp.CosmicSpaceChests.tasks.holiday.Halloween2018Task;
 import com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils;
 import com.cosmicpvp.CosmicSpaceChests.utils.LocationUtils;
 import com.cosmicpvp.cosmicutils.utils.CC;
@@ -70,25 +68,12 @@ implements CommandExecutor {
                 new CosmicEnvoyTask(CosmicSpaceChestsPlugin.plugin).run();
                 return true;
             }
-            if (args[0].equalsIgnoreCase("hween")) {
-                Halloween2018Task.spawnCosmicPumpkinBoss();
-                return true;
-            }
             if (args[0].equalsIgnoreCase("starthween")) {
                 Integer parsed = args.length == 2 ? NumberUtils.parseIntOrNull((String)args[1]) : 901;
                 if (parsed == null) {
                     parsed = 901;
                 }
-                CosmicSpaceChestsPlugin.plugin.getHalloweenTask().setNextSpawnInSeconds(parsed);
                 sender.sendMessage(CC.Red + "Starting next pumpkin event in " + TimeUtils.formatSeconds((long)parsed.intValue()));
-                return true;
-            }
-            if (args[0].equalsIgnoreCase("hweenloot")) {
-                Halloween2018Task.spawnCosmicPumpkin(pl.getName());
-                return true;
-            }
-            if (args[0].equalsIgnoreCase("startchristmas")) {
-                Christmas2018Task.spawnCosmicChristmasBoss();
                 return true;
             }
             if (args[0].equalsIgnoreCase("christmas")) {
@@ -96,7 +81,6 @@ implements CommandExecutor {
                 if (parsed == null) {
                     parsed = 901;
                 }
-                CosmicSpaceChestsPlugin.plugin.getChristmasTask().setNextSpawnInSeconds(parsed);
                 sender.sendMessage(CC.Red + "Starting next pumpkin event in " + TimeUtils.formatSeconds((long)parsed.intValue()));
                 return true;
             }

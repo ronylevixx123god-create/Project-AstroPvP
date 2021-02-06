@@ -42,13 +42,6 @@ extends BukkitRunnable {
         if (this.spawnHologram != null && !this.spawnHologram.isDeleted()) {
             this.spawnHologram.delete();
         }
-        Bukkit.getScheduler().runTaskLater((Plugin)CosmicSpaceChestsPlugin.plugin, new Runnable(){
-
-            @Override
-            public void run() {
-                //HologramUpdateTask.this.spawnHologram = HologramsAPI.createHologram((Plugin)CosmicSpaceChestsPlugin.plugin, (Location)HologramUpdateTask.this.hologramLocation, (String[])new String[]{ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "PREVIOUS COSMIC ENVOY", ChatColor.LIGHT_PURPLE.toString() + CosmicEnvoyTask.getPreviousEnvoySpawnString() + " ago"});
-            }
-        }, 1L);
     }
 
     public void setHologramLocation(Location l) {

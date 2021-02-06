@@ -3,7 +3,6 @@ package com.cosmicpvp.CosmicSpaceChests.listeners.holiday;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsPlugin;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
-import com.cosmicpvp.CosmicSpaceChests.tasks.holiday.Christmas2018Task;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.Packet;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
@@ -58,7 +57,6 @@ implements Listener {
             return;
         }
         if (e.getEntity().hasMetadata("christmasSpirit") && e.getEntity().getWorld().getName().equalsIgnoreCase("world_arena")) {
-            Christmas2018Task.spawnCosmicPumpkin(null);
             e.getEntity().remove();
             this.lastDropped = System.currentTimeMillis() + 1500L;
         }

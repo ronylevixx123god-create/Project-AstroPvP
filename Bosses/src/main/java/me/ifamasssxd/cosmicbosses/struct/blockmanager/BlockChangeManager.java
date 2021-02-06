@@ -32,7 +32,7 @@ public class BlockChangeManager {
         this.faces = (List<BlockFace>) Lists.newArrayList(new BlockFace[]{BlockFace.EAST, BlockFace.SOUTH, BlockFace.NORTH, BlockFace.WEST, BlockFace.UP, BlockFace.DOWN});
         this.flowers = (List<Material>) Lists.newArrayList(new Material[]{Material.LONG_GRASS, Material.BROWN_MUSHROOM, Material.RED_ROSE, Material.RED_MUSHROOM, Material.YELLOW_FLOWER, Material.CACTUS, Material.SUGAR_CANE_BLOCK});
         this.random = new Random();
-        Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin) CosmicBosses.getInstance(), this::checkStoredBlocks, 20L, 20L);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin) CosmicBosses.getInstance(), this::checkStoredBlocks, 200L, 200L);
     }
 
     private void checkStoredBlocks() {

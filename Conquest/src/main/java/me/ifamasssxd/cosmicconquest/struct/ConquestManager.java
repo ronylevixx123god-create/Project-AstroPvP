@@ -82,7 +82,7 @@ public class ConquestManager
         else {
             this.startTask(this.getTaskDelay());
         }
-        Bukkit.getScheduler().scheduleAsyncRepeatingTask(CosmicConquests.get(), () -> this.conquestChests.keySet().forEach(loc -> {
+        /*Bukkit.getScheduler().scheduleAsyncRepeatingTask(CosmicConquests.get(), () -> this.conquestChests.keySet().forEach(loc -> {
             try {
                 de.inventivegames.particle.ParticleEffect.PORTAL.sendToPlayers(Bukkit.getOnlinePlayers(), loc.clone().add(0.5, 0.0, 0.5), 0.85f, 0.5f, 0.85f, 0.1f, 30);
                 de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), loc.clone().add(0.5, 0.0, 0.5), 0.85f, 0.5f, 0.85f, 0.1f, 30);
@@ -92,7 +92,7 @@ public class ConquestManager
             catch (Exception e) {
                 e.printStackTrace();
             }
-        }), 10L, 10L);
+        }), 100L, 100L);*/
         new BukkitRunnable() {
             public void run() {
                 for (final Map.Entry<Location, ChestData> loc : ConquestManager.this.conquestChests.entrySet()) {

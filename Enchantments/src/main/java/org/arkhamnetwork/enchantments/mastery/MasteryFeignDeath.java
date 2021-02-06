@@ -106,7 +106,6 @@ public class MasteryFeignDeath extends MasteryCustomEnchantment {
         },30L);
         for (Player pl : Bukkit.getServer().getOnlinePlayers()) {
             pl.hidePlayer(damaged);
-            pl.playSound(pl.getLocation(), Sound.WITHER_SHOOT, 3.0F, 0.9F);
         }
         damaged.playSound(damaged.getLocation(), Sound.WITHER_SHOOT, 3.0F, 0.9F);
         damaged.sendMessage(CC.DarkRedB + "* Feign Death - VANISHED [" + NumberUtils.formatSeconds(seconds) + "s] *");

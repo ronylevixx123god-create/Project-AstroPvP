@@ -39,7 +39,7 @@ public class ThanosMaskTask {
                 if (!p.hasMetadata("lavaStriderEnchant")) continue;
                 p.removeMetadata("lavaStriderEnchant", (Plugin)CosmicMasks.get());
             }
-        }, 20L, 20L);
+        }, 100L, 100L);
     }
 }
 

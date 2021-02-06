@@ -61,7 +61,7 @@ public class DisguiseManager {
     private final Map<UUID, Set<DisguiseType>> cachedAvailableTypes = new HashMap<UUID, Set<DisguiseType>>();
 
     public void onEnable(CosmicDisguises plugin) {
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, this::clearBannedCombatDisguises, 20L, 20L);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, this::clearBannedCombatDisguises, 100L, 100L);
     }
 
     public void clearBannedCombatDisguises() {

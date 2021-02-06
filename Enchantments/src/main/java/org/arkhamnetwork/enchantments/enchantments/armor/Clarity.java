@@ -44,7 +44,7 @@ public class Clarity extends CustomEnchantment {
                     }
                 }
             }
-        }), 3L, 3L);
+        }), 10L, 10L);
     }
 
     public static boolean canBlindnessApply(final Player player, final int blindLevel) {
