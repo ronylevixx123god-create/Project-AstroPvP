@@ -4,8 +4,8 @@ import com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
-import de.dustplanet.util.SilkUtil;
 import lombok.SneakyThrows;
+import me.astropvp.astrospawners.items.ItemSpawner;
 import net.coreprotect.CoreProtect;
 import net.coreprotect.CoreProtectAPI;
 import net.minecraft.server.v1_8_R3.EntityTNTPrimed;
@@ -36,13 +36,11 @@ import java.util.concurrent.ThreadLocalRandom;
 public class TNTListener
 implements Listener {
     public static HashMap<Location, TNTTypes> tnt_tracker = new HashMap();
-    private static SilkUtil su = null;
     private final List<Material> nonSolidBlocks;
     private final int silentTNTSoundRange = 16;
     private boolean coreProtectEnabled = false;
 
     public TNTListener() {
-        su = SilkUtil.hookIntoSilkSpanwers();
         this.coreProtectEnabled = new File("plugins/CoreProtect.jar").exists();
         this.nonSolidBlocks = new ArrayList<Material>(Arrays.asList(Material.AIR, Material.SAND, Material.WATER, Material.LAVA, Material.STATIONARY_LAVA, Material.STATIONARY_WATER));
     }
@@ -193,7 +191,7 @@ implements Listener {
                                 byte data = b.getData();
                                 int typeID = b.getType().getId();
                                 CreatureSpawner cs = (CreatureSpawner) b.getState();
-                                ItemStack is = SilkUtil.hookIntoSilkSpanwers().newSpawnerItem(String.valueOf(cs.getSpawnedType().getTypeId()), CC.translate("&a&l") + cs.getSpawnedType().name() + "&f Spawner", 1, false);
+                                ItemStack is = ItemSpawner.getItem(cs.getSpawnedType(), 1);
 
                                 int spawnerCount = cs.getSpawnerCount();
                                 if (spawnerCount == 4 && !Board.getFactionAt(new FLocation(cs.getLocation())).isNormal()) {
@@ -226,7 +224,7 @@ implements Listener {
                             int id = b.getTypeId();
                             byte data = b.getData();
                             CreatureSpawner cs = (CreatureSpawner) b.getState();
-                            ItemStack is = SilkUtil.hookIntoSilkSpanwers().newSpawnerItem(String.valueOf(cs.getSpawnedType().getTypeId()), CC.translate("&a&l") + cs.getSpawnedType().name() + "&f Spawner", 1, false);
+                            ItemStack is = ItemSpawner.getItem(cs.getSpawnedType(), 1);
 
                             int spawnerCount = cs.getSpawnerCount();
                             if (spawnerCount == 4 && !Board.getFactionAt(new FLocation(cs.getLocation())).isNormal()) {
@@ -260,7 +258,7 @@ implements Listener {
                         @Override
                         public void run() {
                             TNTListener.this.spawnFastExplosion(l);
-                            de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), l, 0f, 0.0f, 0f, 1.2f, 30);
+                            //de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), l, 0f, 0.0f, 0f, 1.2f, 30);
 
                         }
                     }, 100L);
@@ -270,7 +268,7 @@ implements Listener {
                         @Override
                         public void run() {
                             TNTListener.this.spawnFastExplosion(l);
-                            de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), l, 0f, 0.0f, 0f, 1.2f, 30);
+                            //de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), l, 0f, 0.0f, 0f, 1.2f, 30);
                         }
                     }, 200L);
                     Bukkit.getScheduler().runTaskLater(CosmicCustomTNT.get(), new Runnable(){
@@ -279,7 +277,7 @@ implements Listener {
                         @Override
                         public void run() {
                             TNTListener.this.spawnFastExplosion(l);
-                            de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), l, 0f, 0.0f, 0f, 1.2f, 30);
+                            //de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), l, 0f, 0.0f, 0f, 1.2f, 30);
                         }
                     }, 300L);
                     break block18;

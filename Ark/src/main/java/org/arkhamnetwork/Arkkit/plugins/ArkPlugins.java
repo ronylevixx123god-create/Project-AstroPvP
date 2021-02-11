@@ -49,7 +49,6 @@ public enum ArkPlugins {
     FILL_COMMAND(new FillCommand(Arkkit.get()), "Enables /fill which automatically fills dispensers with TNT from inventory."),
     SPAWNER_FEE(new SpawnerFee(Arkkit.get()), "Charges players $ to mine spawners."),
     ANTI_GOD_APPLE_CRAFT(new AntiGodAppleCraft(Arkkit.get()), "Prevents god apples from being crafted."),
-    ASYNC_MONSTERS(new AsyncMonsters(Arkkit.get()), "Enables monster spawner entity stacking."),
     POTION_FIX(new PotionFix(Arkkit.get()), "Nerfs vanilla potion behavior to prevent crazy OP effects like STR III."),
     ANTI_LOOT_STEAL(new AntiLootSteal(Arkkit.get()), "Loot can only be picked up by the killer of the entity for a few seconds."),
     HOTBAR_ARMOR_SWAP(new HotbarArmorSwap(Arkkit.get()), "Enables right-click-to-equip mechanic for armor."),

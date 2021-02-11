@@ -42,7 +42,6 @@ public enum CosmicToggle {
     FILTER("Chat Filter", "/togglefilter"),
     MSG("Private Messages", "/msgtoggle"),
     F_TP("Teleportation Requests", "/f tptoggle"),
-    PAY("Receive /pay", "/togglepay"),
     SCOREBOARD("Faction Scoreboard", "/togglesb"),
     SMOKE("Fly Particles", "/togglesmoke"),
     ITEM_FILTER("Item Filter", "/filter toggle"),
@@ -65,9 +64,6 @@ public enum CosmicToggle {
         }
         if (this == FILTER) {
             return !ChatFilter.disabledFilteredPlayers.contains(player.getUniqueId());
-        }
-        if (this == PAY) {
-            return !AstroCore.getInstance().getPayToggles().hasToggle(player);
         }
         if (this == SCOREBOARD) {
             return !AstroCore.getInstance().getToggleManager().getScoreboardToggles().contains(player.getUniqueId());

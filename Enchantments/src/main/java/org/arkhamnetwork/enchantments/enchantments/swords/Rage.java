@@ -45,9 +45,6 @@ public class Rage extends CustomEnchantment {
         if (target instanceof ArmorStand) {
             return;
         }
-        if (!(target instanceof Player)) {
-            return;
-        }
         if (!event.isCancelled() && event.getDamage(EntityDamageEvent.DamageModifier.BASE) > 0.0D && user instanceof Player) {
             Player pUser = (Player) user;
             if (!pUser.getItemInHand().getType().name().toLowerCase().contains("_sword") || !(event.getDamager() instanceof LivingEntity))

@@ -10,8 +10,8 @@ import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.struct.FactionPermission;
 import com.rit.sucy.EnchantmentAPI;
-import de.dustplanet.util.SilkUtil;
 import lombok.SneakyThrows;
+import me.astropvp.astrospawners.items.ItemSpawner;
 import net.coreprotect.CoreProtect;
 import net.coreprotect.CoreProtectAPI;
 import org.arkhamnetwork.Arkkit.Arkkit;
@@ -45,11 +45,9 @@ import java.util.*;
 public class CreeperListener
 implements Listener {
     private boolean coreProtectEnabled = false;
-    private static SilkUtil su = null;
     private final List<Material> nonSolidBlocks;
 
     public CreeperListener() {
-        su = SilkUtil.hookIntoSilkSpanwers();
         this.coreProtectEnabled = new File("plugins/CoreProtect.jar").exists();
         this.nonSolidBlocks = new ArrayList<Material>(Arrays.asList(Material.AIR, Material.CHEST));
     }
@@ -203,7 +201,7 @@ implements Listener {
                         if (!(rand <= 0.6)) continue;
                         e.blockList().remove(b);
                         CreatureSpawner cs = (CreatureSpawner) b.getState();
-                        ItemStack is = SilkUtil.hookIntoSilkSpanwers().newSpawnerItem(String.valueOf(cs.getSpawnedType().getTypeId()), CC.translate("&a&l") + cs.getSpawnedType().name() + "&f Spawner", 1, false);
+                        ItemStack is = ItemSpawner.getItem(cs.getSpawnedType(), 1);
                         int spawnerCount = cs.getSpawnerCount();
                         if (spawnerCount == 4 && !Board.getFactionAt(new FLocation(cs.getLocation())).isNormal()) {
                             cs.setSpawnerCount((short) 1);
@@ -227,7 +225,7 @@ implements Listener {
                     if (!(rand <= 0.3)) continue;
                     e.blockList().remove(b);
                     CreatureSpawner cs = (CreatureSpawner) b.getState();
-                    ItemStack is = SilkUtil.hookIntoSilkSpanwers().newSpawnerItem(String.valueOf(cs.getSpawnedType().getTypeId()), CC.translate("&a&l") + cs.getSpawnedType().name() + "&f Spawner", 1, false);
+                    ItemStack is = ItemSpawner.getItem(cs.getSpawnedType(), 1);
 
                     int spawnerCount = cs.getSpawnerCount();
                     if (spawnerCount == 4 && !Board.getFactionAt(new FLocation(cs.getLocation())).isNormal()) {
@@ -239,7 +237,7 @@ implements Listener {
                     while (spawnerCount-- > 0) {
                         b.getWorld().dropItem(b.getLocation(), is);
                     }
-                    de.inventivegames.particle.ParticleEffect.INSTANT_SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), b.getLocation(), 0f,0.5f,0f,0.6f,20);
+                    //de.inventivegames.particle.ParticleEffect.INSTANT_SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), b.getLocation(), 0f,0.5f,0f,0.6f,20);
                 }
                 e.setCancelled(true);
                 e.setYield(0.0f);
@@ -250,7 +248,7 @@ implements Listener {
                     Bukkit.getLogger().info("[CosmicCustomCreeper] Raid Creeper processing spawner at " + b.getX() + "x ," + b.getY() + "y ," + b.getZ() + "z: ");
                     e.blockList().remove(b);
                     CreatureSpawner cs = (CreatureSpawner) b.getState();
-                    ItemStack is = SilkUtil.hookIntoSilkSpanwers().newSpawnerItem(String.valueOf(cs.getSpawnedType().getTypeId()), CC.translate("&a&l") + cs.getSpawnedType().name() + "&f Spawner", 1, false);
+                    ItemStack is = ItemSpawner.getItem(cs.getSpawnedType(), 1);
                     int spawnerCount = cs.getSpawnerCount();
                     if (spawnerCount == 4 && !Board.getFactionAt(new FLocation(cs.getLocation())).isNormal()) {
                         cs.setSpawnerCount((short)1);
@@ -261,7 +259,7 @@ implements Listener {
                     while (spawnerCount-- > 0) {
                         b.getWorld().dropItem(b.getLocation(), is);
                     }
-                    de.inventivegames.particle.ParticleEffect.INSTANT_SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), b.getLocation(), 0f,0.5f,0f,0.6f,20);
+                    //de.inventivegames.particle.ParticleEffect.INSTANT_SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), b.getLocation(), 0f,0.5f,0f,0.6f,20);
                 }
                 e.setCancelled(true);
                 e.setYield(0.0f);
@@ -280,7 +278,7 @@ implements Listener {
                     p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, stunTicks, 128));
                     p.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "* STUN CREEPER [" + ChatColor.GRAY + "3s" + ChatColor.RED + ChatColor.BOLD + "] *");
                     p.setMetadata("stunCreeperCooldown", new FixedMetadataValue(Arkkit.get(), System.currentTimeMillis() + 30000L));
-                    de.inventivegames.particle.ParticleEffect.CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), p.getEyeLocation(), 0f,0.5f,0f,1.2f,30);
+                    //de.inventivegames.particle.ParticleEffect.CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), p.getEyeLocation(), 0f,0.5f,0f,1.2f,30);
 
                     Bukkit.getScheduler().runTaskLater(CosmicCustomTNT.get(), new Runnable(){
 
@@ -290,7 +288,7 @@ implements Listener {
                         }
                     }, stunTicks);
                 }
-                de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(),e.getEntity().getLocation(), 0f,1f,0f,1.2f,30);
+                //de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(),e.getEntity().getLocation(), 0f,1f,0f,1.2f,30);
 
                 e.getEntity().getWorld().playSound(e.getEntity().getLocation(), Sound.EXPLODE, 1.0f, 1.0f);
                 e.getEntity().remove();
@@ -304,7 +302,7 @@ implements Listener {
                         int duration = 5;
                         int radius = 4;
                         ((MasteryRotAndDecay)EnchantmentAPI.getEnchantment("Rot and Decay")).applyRotAndDecayEffect(p, e.getEntity().getLocation().getBlock(), radius, duration, null);
-                        de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(),e.getEntity().getLocation(), 0f,1f,0f,1.2f,30);
+                        //de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(),e.getEntity().getLocation(), 0f,1f,0f,1.2f,30);
                         e.getEntity().getWorld().playSound(e.getEntity().getLocation(), Sound.EXPLODE, 1.0f, 1.0f);
                         e.getEntity().remove();
                         e.setCancelled(true);

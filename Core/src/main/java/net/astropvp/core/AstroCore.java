@@ -61,12 +61,12 @@ import me.ifamasssxd.killtracker.listeners.SoulGemListener;
 import me.matthawkk.autobroadcast.tasks.AutoBroadcastTask;
 import me.matthawkk.autogiveall.struct.GiveAllManager;
 import me.matthawkk.autogiveall.tasks.AutoGiveAllTask;
+import me.recolance.auction.Auction;
 import net.astropvp.core.commands.*;
 import net.astropvp.core.listeners.*;
 import net.astropvp.core.staff.Freeze;
 import net.astropvp.core.staff.FreezeCommand;
 import net.astropvp.core.staff.StaffChatCommand;
-import net.astropvp.core.tasks.ClearLagTask;
 import net.astropvp.core.tasks.LastManStandingCapTask;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
@@ -82,11 +82,13 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.HashMap;
 
-@Getter @Setter
+@Getter
+@Setter
 public class AstroCore extends JavaPlugin {
 
     private static AstroCore instance;
@@ -127,6 +129,7 @@ public class AstroCore extends JavaPlugin {
 
     private Freeze freezeCommand;
 
+
     @SneakyThrows
     public void onEnable() {
         instance = this;
@@ -136,7 +139,6 @@ public class AstroCore extends JavaPlugin {
         setupEconomy();
         events();
         new LastManStandingCapTask().runTaskTimer(this, 20L, 20L);
-        new ClearLagTask().runTaskTimer(this, 20, 20);
         Bukkit.getScheduler().runTaskTimer(this, new AutoBroadcastTask(), 20L, 6000L);
 
         Bukkit.getScheduler().runTaskLater(this, ()->
@@ -172,7 +174,11 @@ public class AstroCore extends JavaPlugin {
         this.payToggles = new PayToggle("toggles.yml");
 
         this.jackpotManager = new JackpotManager();
-        this.jackpotManager.loadFileData(this);
+        try {
+            this.jackpotManager.loadFileData(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         this.getServer().getPluginManager().registerEvents(new JackpotListener(), this);
         this.getServer().getPluginManager().registerEvents(new GrindingMessagesToggleListener(), this);
         this.getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> this.jackpotManager.onJackpotTick(), 20L, 20L);
@@ -205,12 +211,20 @@ public class AstroCore extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new me.ifamasssxd.cosmiccoinflip.listeners.PlayerListener(), this);
 
         this.coinFlipManager = new CoinFlipManager();
-        this.coinFlipManager.loadCoinFlips();
+        try {
+            this.coinFlipManager.loadCoinFlips();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         this.coinFlipManager.loadToggles();
         if (!this.getConfig().getBoolean("resetStats")) {
             this.getConfig().set("resetStats", true);
             this.saveConfig();
-            this.coinFlipManager.clearStats();
+            try {
+                this.coinFlipManager.clearStats();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new AutoGiveAllTask(), 20L, 20L);
@@ -230,7 +244,6 @@ public class AstroCore extends JavaPlugin {
         this.getCommand("toggles").setExecutor(new CommandToggles());
         this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
 
-        getCommand("clearlag").setExecutor(new CommandClearLag());
 
         this.getCommand("filter").setExecutor(new CommandFilter());
         this.getCommand("wiki").setExecutor(new CommandWiki());
@@ -296,7 +309,11 @@ public class AstroCore extends JavaPlugin {
     @SneakyThrows
     public void onDisable() {
         this.payToggles.saveToggles();
-        this.jackpotManager.saveFileData();
+        try {
+            this.jackpotManager.saveFileData();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         this.dataManager.saveAllEquippedTitlesToSQL();
         this.filterManager.saveFilters();
 
@@ -325,7 +342,11 @@ public class AstroCore extends JavaPlugin {
             Bukkit.getLogger().info("Depositing $" + active.getWager() + " to " + active.getSecondPlayer().getName() + " due to reload...");
         }
         this.coinFlipManager.getCoinFlipMatches().clear();
-        this.coinFlipManager.saveCoinFlipRecords();
+        try {
+            this.coinFlipManager.saveCoinFlipRecords();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         this.coinFlipManager.saveToggles();
 
         this.toggleManager.saveToggles();
@@ -351,7 +372,6 @@ public class AstroCore extends JavaPlugin {
         pm.registerEvents(new LastManStandingListener(), this);
         pm.registerEvents(new MobSpawnerFix(), this);
         pm.registerEvents(new PayListener(), this);
-        pm.registerEvents(new onDeathDropListener(), this);
     }
 
     public void showError(Player sender, Throwable exception, String commandLabel) {
@@ -426,6 +446,26 @@ public class AstroCore extends JavaPlugin {
             e.printStackTrace();
 
         }
+    }
+
+    public TogglesManager getToggleManager() {
+        return toggleManager;
+    }
+
+    public FilterManager getFilterManager() {
+        return filterManager;
+    }
+
+    public CoinFlipManager getCoinFlipManager() {
+        return coinFlipManager;
+    }
+
+    public JackpotManager getJackpotManager() {
+        return jackpotManager;
+    }
+
+    public PayToggle getPayToggles() {
+        return this.payToggles;
     }
 
 }

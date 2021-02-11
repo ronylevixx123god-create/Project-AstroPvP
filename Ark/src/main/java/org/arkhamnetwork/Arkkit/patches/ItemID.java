@@ -151,7 +151,7 @@ public class ItemID
             if (m != Material.getMaterial(383)) continue;
             durabilityMap.put(m, new int[]{0, 51, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 90, 91, 92, 93, 94, 95, 96, 97, 99});
         }
-        this.registerTask(new ItemIDAutoSaveTask().runTaskTimer(Arkkit.get(), 200L, 200L), ItemIDAutoSaveTask.class);
+        //this.registerTask(new ItemIDAutoSaveTask().runTaskTimer(Arkkit.get(), 200L, 200L), ItemIDAutoSaveTask.class);
         this.registerListener(new ItemIDListener());
         this.registerCommand(new CommandItemID("itemid", "/<command>", "ItemID admin command.", Arrays.asList("iid")));
     }

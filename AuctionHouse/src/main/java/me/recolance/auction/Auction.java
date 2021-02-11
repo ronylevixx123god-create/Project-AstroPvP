@@ -36,6 +36,8 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.io.IOException;
+
 public class Auction
         extends JavaPlugin {
     public static Auction plugin;
@@ -66,7 +68,11 @@ public class Auction
         Controller.expireListings();
         Controller.expireOfflineUnclaimedListings();
         this.bidManager = new BidManager();
-        this.bidManager.loadBids(this);
+        try {
+            this.bidManager.loadBids(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         this.bidManager.startBidTimer();
     }
 
@@ -146,5 +152,6 @@ public class Auction
     public BidManager getBidManager() {
         return this.bidManager;
     }
+
 }
 

@@ -1,7 +1,7 @@
 name: CosmicCustomTNT
 main: org.arkhamnetwork.CosmicCustomTNT.CosmicCustomTNT
 version: 1.0
-softdepend: [SilkSpawners, WorldGuard]
+softdepend: [WorldGuard]
 commands:
   ctnt:
     description: Root command.

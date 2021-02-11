@@ -5,8 +5,7 @@ import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.google.common.collect.Lists;
-import de.dustplanet.silkspawners.SilkSpawners;
-import de.dustplanet.util.SilkUtil;
+import me.astropvp.astrospawners.items.ItemSpawner;
 import me.ifamasssxd.cosmicguishop.CosmicGUIShop;
 import me.ifamasssxd.cosmicguishop.menus.ClickableItemStack;
 import me.ifamasssxd.cosmicguishop.menus.ConfirmPurchaseMenu;
@@ -44,24 +43,16 @@ public class ShopManager {
     private Map<ShopCategory, ShopItemMap> shopItems = new HashMap<ShopCategory, ShopItemMap>();
     private File priceFile;
     private YamlConfiguration priceConfig;
-    private SilkUtil silkSpawners;
 
     private static ItemStack getMobSpawner(EntityType entityType) {
         /*Bukkit.getLogger().info("TYPE: " +  entityType + " ID: " + entityType.getTypeId());
         ItemStack item = ItemBuilder.buildItem(Material.MOB_SPAWNER, 1, entityType.getTypeId(), ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + StringUtils.capitaliseAllWords((String) entityType.name().replace("_", " ").toLowerCase()) + ChatColor.GOLD.toString() + " Spawner",  ChatColor.GRAY + "Be careful where you place this!");
         item.setDurability(entityType.getTypeId());*/
-        ItemStack item = SilkUtil.hookIntoSilkSpanwers().newSpawnerItem(String.valueOf(entityType.getTypeId()), CC.translate("&a&l") + entityType.name() + "&f Spawner", 1, false);
+        ItemStack item = ItemSpawner.getItem(entityType, 1);
         return item;
     }
 
     public void loadAllShopItems() throws NoSuchFieldException, IllegalAccessException, IOException {
-        if (this.silkSpawners == null) {
-            SilkSpawners spawners = (SilkSpawners) Bukkit.getPluginManager().getPlugin("SilkSpawners");
-            Field field = spawners.getClass().getDeclaredField("su");
-            field.setAccessible(true);
-            this.silkSpawners = (SilkUtil) field.get( spawners);
-            Bukkit.getLogger().info("Loaded SilkSpawner Utilities...");
-        }
         this.shopItems.clear();
         if (!CosmicGUIShop.get().getDataFolder().exists()) {
             CosmicGUIShop.get().getDataFolder().mkdir();
@@ -229,7 +220,7 @@ public class ShopManager {
                     dura = 0;
                 }
                 try {
-                    displayItem = data.getType() == Material.MOB_SPAWNER ?  this.silkSpawners.newSpawnerItem(String.valueOf(data.getData()), ChatColor.YELLOW + ChatColor.BOLD.toString() + "%creature% Spawner", 1, false) : null;
+                    displayItem = data.getType() == Material.MOB_SPAWNER ?  ItemSpawner.getItem(EntityType.fromId(data.getData()), 1)  : null;
                 } catch (Exception e) {
                     Bukkit.getLogger().info("Problem loading " + data.getData() + " Spawner!");
                     e.printStackTrace();
