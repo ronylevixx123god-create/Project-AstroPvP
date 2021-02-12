@@ -37,7 +37,9 @@ import com.conaxgames.factions.utils.listeners.*;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import com.massivecraft.factions.cmd.*;
+import com.massivecraft.factions.cmd.CmdAutoHelp;
+import com.massivecraft.factions.cmd.CommandAdminFaction;
+import com.massivecraft.factions.cmd.FCmdRoot;
 import com.massivecraft.factions.cmd.killtracker.CmdDeaths;
 import com.massivecraft.factions.cmd.killtracker.CmdKills;
 import com.massivecraft.factions.cmd.killtracker.FileManager;
@@ -46,7 +48,6 @@ import com.massivecraft.factions.integration.EssentialsFeatures;
 import com.massivecraft.factions.listeners.*;
 import com.massivecraft.factions.listeners.menu.MenuListener;
 import com.massivecraft.factions.listeners.menu.fchest.FChestListener;
-import com.massivecraft.factions.manager.BannerManager;
 import com.massivecraft.factions.manager.BoardManager;
 import com.massivecraft.factions.struct.*;
 import com.massivecraft.factions.struct.managers.FChestManager;
@@ -126,14 +127,6 @@ public class P extends MPlugin {
     @Getter @Setter private boolean includeBank = false;
     @Getter @Setter private boolean includeHoppers = true;
     @Getter @Setter public boolean upgradesEnabled = false;
-
-
-    @Getter @Setter
-    private BannerManager bannerManager;
-    @Getter @Setter
-    private BannerItem bannerItem;
-    @Getter @Setter
-    private BannerListener bannerListener;
 
     public P() throws IOException {
         p = this;
@@ -233,8 +226,6 @@ public class P extends MPlugin {
          This is the requirements for all additions put into Factions. (^^^)
         */
 
-        this.bannerManager = new BannerManager();
-
         this.getBaseCommands().add(this.cmdBase);
         EssentialsFeatures.setup();
         Econ.setup();
@@ -305,10 +296,6 @@ public class P extends MPlugin {
         this.getCommand("givefacbooster").setExecutor(new CommandBooster());
         this.getCommand("booster").setExecutor(new CommandCheckBooster());
 
-//        this.getCommand("fsetbanner").setExecutor(new CommandSetBanner());
-//        this.getCommand("fbanner").setExecutor(new CommandBanner());
-//        this.getCommand("frecall").setExecutor(new CommandRecall());
-
         this.getCommand("fupgrade").setExecutor(new CommandFUpgrade());
         this.getCommand("converttofactionpoints").setExecutor(new CommandConvertToFactionPoints());
         this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
@@ -339,10 +326,6 @@ public class P extends MPlugin {
         this.getServer().getPluginManager().registerEvents(new NetherMobSpawnerListener(), this);
 
         getServer().getPluginManager().registerEvents((Listener)new BoosterListener(this.boosterManager), (Plugin)this);
-
-        this.bannerListener = new BannerListener();
-        this.getServer().getPluginManager().registerEvents(this.bannerListener, this);
-        this.getServer().getPluginManager().registerEvents(new CommandListener(), this);
     }
 
 

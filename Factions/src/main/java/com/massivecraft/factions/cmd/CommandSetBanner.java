@@ -26,7 +26,6 @@ import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.P;
-import com.massivecraft.factions.struct.BannerDesign;
 import com.massivecraft.factions.struct.Role;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;

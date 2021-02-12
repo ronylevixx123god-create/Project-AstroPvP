@@ -25,7 +25,6 @@ import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.LocationUtils;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.P;
-import com.massivecraft.factions.manager.BannerManager;
 import com.massivecraft.factions.struct.FactionBanner;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
 import org.bukkit.ChatColor;
@@ -37,7 +36,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
 
 public class CommandRecall
 implements CommandExecutor {
