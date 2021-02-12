@@ -305,9 +305,9 @@ public class P extends MPlugin {
         this.getCommand("givefacbooster").setExecutor(new CommandBooster());
         this.getCommand("booster").setExecutor(new CommandCheckBooster());
 
-        this.getCommand("fsetbanner").setExecutor(new CommandSetBanner());
-        this.getCommand("fbanner").setExecutor(new CommandBanner());
-        this.getCommand("frecall").setExecutor(new CommandRecall());
+//        this.getCommand("fsetbanner").setExecutor(new CommandSetBanner());
+//        this.getCommand("fbanner").setExecutor(new CommandBanner());
+//        this.getCommand("frecall").setExecutor(new CommandRecall());
 
         this.getCommand("fupgrade").setExecutor(new CommandFUpgrade());
         this.getCommand("converttofactionpoints").setExecutor(new CommandConvertToFactionPoints());
