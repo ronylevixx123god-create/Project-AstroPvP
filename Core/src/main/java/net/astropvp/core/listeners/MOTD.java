@@ -27,6 +27,14 @@ public class MOTD implements Listener {
             player.sendMessage(CC.translate("&eRecommended Version: &f&nAstro Client (1.8.8)"));
             player.sendMessage(CC.translate("&c "));
             player.playSound(player.getLocation(), Sound.GHAST_MOAN, 5, 5);
+            sendBeta(player);
         }, 15L);
+    }
+
+    private void sendBeta(Player player) {
+        player.sendMessage(CC.translate("&7"));
+        player.sendMessage(CC.translate("&c<&c&l!&c> &eThis map is being ran as a &e&lBETA&e."));
+        player.sendMessage(CC.translate("&c<&c&l!&c> &7Report all bugs or issues in our discord: &fdiscord.astropvp.net&7."));
+        player.sendMessage(CC.translate("&7"));
     }
 }
