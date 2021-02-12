@@ -103,7 +103,7 @@ public class ScoreboardManager {
             name = name.substring(0, 16);
         ScoreboardScore playerName = scoreboardComp.getPlayerScoreForObjective(name, scoreboardObjective);
         playerName.setScore(15);
-        scores.add(new PacketPlayOutScoreboardScore(""));
+        scores.add(new PacketPlayOutScoreboardScore(playerName));
         int index = 15;
         scores.add(getScore(ChatColor.BLACK + " ", scoreboardComp, scoreboardObjective, index--));
         scores.add(getScore(ChatColor.AQUA + ChatColor.BOLD.toString() + "Account", scoreboardComp, scoreboardObjective, index--));
