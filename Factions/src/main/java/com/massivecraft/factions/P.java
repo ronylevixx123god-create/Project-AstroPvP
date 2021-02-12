@@ -196,7 +196,7 @@ public class P extends MPlugin {
         getConfig().options().copyDefaults(true);
         saveDefaultConfig();
 
-//        P.getP().setBoardManager(new BoardManager(new ScoreboardManager()));
+        P.getP().setBoardManager(new BoardManager(new ScoreboardManager()));
 
         FPlayers.i.loadFromDisc();
         Factions.i.loadFromDisc();
@@ -250,17 +250,6 @@ public class P extends MPlugin {
         this.getServer().getPluginManager().registerEvents(new MenuListener(), this);
         this.citizensEnabled = this.getServer().getPluginManager().isPluginEnabled("Citizens");
         this.outpostsEnabled = new File("plugins/CosmicOutposts.jar").exists();
-        this.getServer().getScheduler().runTaskTimer(this, () -> {
-            if (Conf.factionScoreboardEnable) {
-                for (Player player : P.this.getServer().getOnlinePlayers()) {
-                    try {
-                        ScoreboardManager.setPlayerFactionScoreboardAsync(player);
-                    } catch (Exception err) {
-                        err.printStackTrace();
-                    }
-                }
-            }
-        }, 50L, 50L);
         try {
             Class.forName("net.ess3.api.events.PlayerSellEvent");
             this.getServer().getPluginManager().registerEvents(new FactionEssentialsListener(), this);

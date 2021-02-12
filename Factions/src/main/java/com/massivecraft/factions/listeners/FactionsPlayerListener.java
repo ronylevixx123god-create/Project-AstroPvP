@@ -78,6 +78,7 @@ public class FactionsPlayerListener implements Listener {
 
 //        if (P.getP().getBoardManager() != null) {
 //            P.getP().getBoardManager().getPlayerBoards().put(player.getUniqueId(), new com.massivecraft.factions.board.Board(player, P.getP().getBoardManager().getAdapter()));
+//            HeartsUnderName.updateNametag(player, true);
 //        }
 
         if (fplayer == null)
@@ -108,9 +109,9 @@ public class FactionsPlayerListener implements Listener {
         Faction fac = fplayer.getFaction();
         if (fac == null || !fac.isNormal())
             return;
-//        if (P.getP().getBoardManager() != null) {
-//            P.getP().getBoardManager().getPlayerBoards().remove(player.getUniqueId());
-//        }
+        if (P.getP().getBoardManager() != null) {
+            P.getP().getBoardManager().getPlayerBoards().remove(player.getUniqueId());
+        }
         String message = ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW.toString() + ChatColor.BOLD + player.getName() + ChatColor.YELLOW + " has logged out.";
         for (FPlayer member : fac.getFPlayers()) {
             if (member.equals(fplayer))
@@ -532,11 +533,11 @@ public class FactionsPlayerListener implements Listener {
     public void onPlayerKick(PlayerKickEvent event) {
         FPlayer badGuy = FPlayers.i.get(event.getPlayer().getUniqueId().toString());
         Player player = event.getPlayer();
-//        if (player != null) {
-//            if (P.getP().getBoardManager() != null) {
-//                P.getP().getBoardManager().getPlayerBoards().remove(player.getUniqueId());
-//            }
-//        }
+        if (player != null) {
+            if (P.getP().getBoardManager() != null) {
+                P.getP().getBoardManager().getPlayerBoards().remove(player.getUniqueId());
+            }
+        }
         if (badGuy == null)
             return;
         if (Conf.removePlayerDataWhenBanned && event.getReason().equals("Banned by admin.")) {
