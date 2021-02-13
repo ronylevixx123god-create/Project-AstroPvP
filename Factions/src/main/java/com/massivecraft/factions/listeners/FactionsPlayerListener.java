@@ -8,7 +8,6 @@ import com.massivecraft.factions.cmd.CmdClaim;
 import com.massivecraft.factions.event.FPlayerLeaveEvent;
 import com.massivecraft.factions.event.PowerLossEvent;
 import com.massivecraft.factions.struct.*;
-import com.massivecraft.factions.util.ScoreboardManager;
 import com.massivecraft.factions.util.TimeUtil;
 import com.massivecraft.factions.zcore.util.MojangUUIDFetcher;
 import com.massivecraft.factions.zcore.util.TextUtil;
@@ -136,8 +135,7 @@ public class FactionsPlayerListener implements Listener {
         Faction myFaction = me.getFaction();
         if (myFaction != null)
             myFaction.memberLoggedOff();
-        if (Conf.factionScoreboardEnable)
-            ScoreboardManager.removeScoreboardSync(event.getPlayer());
+
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
