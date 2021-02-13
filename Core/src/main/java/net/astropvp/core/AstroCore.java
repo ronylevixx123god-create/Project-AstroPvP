@@ -139,7 +139,7 @@ public class AstroCore extends JavaPlugin {
         saveConfig();
         setupEconomy();
         events();
-        new LastManStandingCapTask().runTaskTimer(this, 20L, 20L);
+        new LastManStandingCapTask().runTaskTimer(this, 80L, 80L);
         Bukkit.getScheduler().runTaskTimer(this, new AutoBroadcastTask(), 20L, 6000L);
 
         Bukkit.getScheduler().runTaskLater(this, ()->

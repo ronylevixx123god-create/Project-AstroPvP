@@ -32,12 +32,12 @@ public class CombatLogBlock implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    /*@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void stopPvP(PlayerCommandPreprocessEvent event) {
-        if (FactionUtils.isWarZone(event.getPlayer().getLocation()) && event.getMessage().toLowerCase().startsWith("/pvp") && (!WorldGuardUtils.inRegion(event.getPlayer().getLocation(), "desert") || !WorldGuardUtils.inRegion(event.getPlayer().getLocation(), "spawn_region"))
-                || FactionUtils.isWarZone(event.getPlayer().getLocation()) && event.getMessage().toLowerCase().startsWith("/wildpvp") && (!WorldGuardUtils.inRegion(event.getPlayer().getLocation(), "desert") || !WorldGuardUtils.inRegion(event.getPlayer().getLocation(), "spawn_region"))) {
+        if (event.getMessage().toLowerCase().startsWith("/pvp") && (!WorldGuardUtils.inRegion(event.getPlayer().getLocation(), "desert") || !WorldGuardUtils.inRegion(event.getPlayer().getLocation(), "spawn_region"))
+                || event.getMessage().toLowerCase().startsWith("/wildpvp") && (!WorldGuardUtils.inRegion(event.getPlayer().getLocation(), "desert") || !WorldGuardUtils.inRegion(event.getPlayer().getLocation(), "spawn_region"))) {
             event.setCancelled(true);
             event.getPlayer().sendMessage(CC.translate("&c&l(!)&c You must be in &2Wilderness&c to create a queue."));
         }
-    }
+    }*/
 }
