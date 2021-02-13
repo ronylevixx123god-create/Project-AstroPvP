@@ -209,7 +209,7 @@ extends JavaPlugin {
         Bukkit.getScheduler().scheduleSyncDelayedTask(CosmicDungeonsPlugin.get(), () -> {
             for (FPlayer fplayer : FPlayers.i.get()) {
                 try {
-                    UUID uuid = UUID.fromString(fplayer.getAccountId());
+                    UUID uuid = fplayer.getPlayer().getUniqueId();
                     this.factionsInsideOnEnable.put(uuid, fplayer.getFactionId());
                 }
                 catch (Exception e) {

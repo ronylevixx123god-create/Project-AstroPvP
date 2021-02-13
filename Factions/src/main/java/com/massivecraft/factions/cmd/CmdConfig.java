@@ -13,7 +13,6 @@ import com.massivecraft.factions.Conf;
 import com.massivecraft.factions.P;
 import com.massivecraft.factions.struct.FactionPermissions;
 import com.massivecraft.factions.struct.Permission;
-import com.massivecraft.factions.util.ScoreboardManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -55,8 +54,8 @@ public class CmdConfig
                 }
             }
             if ((field = this.argAsString(0).toLowerCase()).equals("shownearby")) {
-                ScoreboardManager.nearby = !ScoreboardManager.nearby;
-                this.sender.sendMessage(ChatColor.RED + "Showing Nearby on Scoreboard: " + ScoreboardManager.nearby);
+                //ScoreboardManager.nearby = !ScoreboardManager.nearby;
+                //this.sender.sendMessage(ChatColor.RED + "Showing Nearby on Scoreboard: " + ScoreboardManager.nearby);
                 return;
             }
             if (field.equals("debug")) {
