@@ -24,7 +24,7 @@ public class MOTD implements Listener {
             player.sendMessage(ChatManager.translate(CC.translate("&aDiscord: &f&ndiscord.astropvp.net")));
             player.sendMessage(ChatManager.translate(CC.translate("&aStore: &f&nbuy.astropvp.net")));
             player.sendMessage(CC.translate("&c "));
-            player.sendMessage(CC.translate("&eRecommended Version: &f&nAstro Client (1.8.8)"));
+            player.sendMessage(CC.translate("&eRecommended Version: &f&nCosmic Client (1.8.8)"));
             player.sendMessage(CC.translate("&c "));
             player.playSound(player.getLocation(), Sound.GHAST_MOAN, 5, 5);
             sendBeta(player);
@@ -32,9 +32,8 @@ public class MOTD implements Listener {
     }
 
     private void sendBeta(Player player) {
-        player.sendMessage(CC.translate("&7"));
-        player.sendMessage(CC.translate("&c<&c&l!&c> &eThis map is being ran as a &e&lBETA&e."));
-        player.sendMessage(CC.translate("&c<&c&l!&c> &7Report all bugs or issues in our discord: &fdiscord.astropvp.net&7."));
+        player.sendMessage(CC.translate("&8[&c&l✪&8] &fThis map is being ran as a &c&lBETA&f."));
+        player.sendMessage(CC.translate("&7Report all bugs in our discord: &fdiscord.astropvp.net&7."));
         player.sendMessage(CC.translate("&7"));
     }
 }
