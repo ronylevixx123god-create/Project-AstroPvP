@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.util.List;
 
 public class WhitelistUtil {
 
@@ -22,9 +23,16 @@ public class WhitelistUtil {
 
         config = YamlConfiguration.loadConfiguration(configFile);
 
-        for (String val : config.getDefaultSection().getKeys(false)) {
-            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "whitelist " + action + " " + val);
-            Bukkit.broadcastMessage(CC.Gray + "(Whitelist) "+ CC.Yellow + "Automatically " + action + "ed " + val + ". ");
+        // WHITELIST:
+        //  - "BOWP"
+        //  - "Kipes"
+        //  - "tempay"
+        //  - "horseass"
+
+        List<String> names = config.getStringList("WHITELIST");
+        for (String name : names) {
+            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "whitelist " + action + " " + name);
+            Bukkit.broadcastMessage(CC.Gray + "(Whitelist) "+ CC.Yellow + "Automatically " + action + "ed " + name + ". ");
         }
     }
 }
