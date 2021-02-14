@@ -1,4 +1,4 @@
-package net.astropvp.core.staff;
+package net.astropvp.core.conaxgames.staff;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import org.bukkit.Bukkit;
