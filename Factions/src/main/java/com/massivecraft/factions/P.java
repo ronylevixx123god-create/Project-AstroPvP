@@ -54,7 +54,6 @@ import com.massivecraft.factions.struct.managers.FChestManager;
 import com.massivecraft.factions.util.LazyLocation;
 import com.massivecraft.factions.util.MapFLocToStringSetTypeAdapter;
 import com.massivecraft.factions.util.MyLocationTypeAdapter;
-import com.massivecraft.factions.util.ScoreboardManager;
 import com.massivecraft.factions.zcore.MPlugin;
 import com.massivecraft.factions.zcore.util.MojangUUIDFetcher;
 import com.massivecraft.factions.zcore.util.TextUtil;
@@ -189,7 +188,7 @@ public class P extends MPlugin {
         getConfig().options().copyDefaults(true);
         saveDefaultConfig();
 
-        P.getP().setBoardManager(new BoardManager(new ScoreboardManager()));
+        //P.getP().setBoardManager(new BoardManager(new ScoreboardManager()));
 
         FPlayers.i.loadFromDisc();
         Factions.i.loadFromDisc();
