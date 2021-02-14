@@ -27,20 +27,6 @@ import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-
-import java.io.*;
-import java.lang.reflect.Type;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
-
 import me.ifamasssxd.cosmicjackpot.utils.ItemUtils;
 import me.ifamasssxd.cosmicjackpot.utils.TimeUtils;
 import net.astropvp.core.AstroCore;
@@ -48,13 +34,18 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.text.DecimalFormat;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class JackpotManager {
     private File topFile;
@@ -119,20 +110,16 @@ public class JackpotManager {
         double winnings = this.currentJackpot.getPlayerWinnings();
         double taxesCollected = this.currentJackpot.getTotalWinnings() - this.currentJackpot.getPlayerWinnings();
         this.startNewJackpot();
+
         JackpotHistory history = this.jackpotHistory.computeIfAbsent(winner.getUuid(), e -> new JackpotHistory(winner.getUsername()));
         history.setJackpotWinnings(history.getJackpotWinnings() + (long)winnings);
         history.setJackpotWins(history.getJackpotWins() + 1.0);
         Player pl = Bukkit.getPlayer(winner.getUuid());
-        if (pl == null) {
-            pl = (Player) Bukkit.getOfflinePlayer(winner.getUuid());
-        } else {
-            pl.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "+ $" + ChatColor.GREEN + this.moneyFormat.format(winnings));
-        }
         AstroCore.economy.depositPlayer(pl, winnings);
-        Bukkit.getLogger().info("Depositing $" + winnings + " into " + pl.getName() + "'s player (" + "Online" + ").");
+
         this.taxesCollected = (long)((double)this.taxesCollected + taxesCollected);
         this.saveWinnings();
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "contest add " + winner.getUuid() + " lotteryMoneyWin " + winnings);
+        // contest is not used Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "contest add " + winner.getUuid() + " lotteryMoneyWin " + winnings);
     }
 
     public Inventory getJackpotConfirmMenu(int ticketsToBuy, double totalCost) {

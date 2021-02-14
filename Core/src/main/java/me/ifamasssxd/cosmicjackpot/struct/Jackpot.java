@@ -11,6 +11,11 @@
 package me.ifamasssxd.cosmicjackpot.struct;
 
 import com.google.common.collect.Lists;
+import net.milkbowl.vault.economy.EconomyResponse;
+import org.arkhamnetwork.Arkkit.Arkkit;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
@@ -18,17 +23,10 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
-import net.astropvp.core.AstroCore;
-import net.milkbowl.vault.economy.EconomyResponse;
-import org.arkhamnetwork.Arkkit.Arkkit;
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
-
 public class Jackpot {
     public static transient double TAX = 0.1;
     private Map<PlayerInfo, Integer> entries = new ConcurrentHashMap<PlayerInfo, Integer>();
-    private long totalWinnings;
+    private long totalWinnings = 1;
     private int secondsLeft;
 
     public String toString() {
