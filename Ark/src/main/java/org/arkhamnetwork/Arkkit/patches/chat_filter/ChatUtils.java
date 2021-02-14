@@ -28,9 +28,7 @@ public class ChatUtils {
             for (int i = 0; i < 75; ++i) {
                 player.sendMessage(" ");
             }
-            player.sendMessage(ChatColor.YELLOW + "=============================================================================================================================================================================================");
             player.sendMessage(ChatColor.GRAY + "The chat has been " + ChatColor.AQUA + ChatColor.UNDERLINE + "cleared" + ChatColor.GRAY + " by " + ChatColor.YELLOW + clearer);
-            player.sendMessage(ChatColor.YELLOW + "=============================================================================================================================================================================================");
         }
         whoCleared.sendMessage(ChatColor.GREEN + "You have cleared the chat.");
     }
@@ -44,9 +42,7 @@ public class ChatUtils {
                 for (int i = 0; i < 75; ++i) {
                     player.sendMessage(" ");
                 }
-                player.sendMessage(ChatColor.YELLOW + "=============================================================================================================================================================================================");
                 player.sendMessage(ChatColor.GRAY + "The chat has been " + ChatColor.RED + ChatColor.UNDERLINE + "disabled" + ChatColor.GRAY + " by " + ChatColor.YELLOW + toggler);
-                player.sendMessage(ChatColor.YELLOW + "=============================================================================================================================================================================================");
             }
             if (whoToggled != null) {
                 whoToggled.sendMessage(ChatColor.RED + "You have toggled the chat OFF.");
@@ -57,9 +53,7 @@ public class ChatUtils {
                 for (int i = 0; i < 75; ++i) {
                     player.sendMessage(" ");
                 }
-                player.sendMessage(ChatColor.YELLOW + "=============================================================================================================================================================================================");
                 player.sendMessage(ChatColor.GRAY + "The chat has been " + ChatColor.GREEN + ChatColor.UNDERLINE + "enabled" + ChatColor.GRAY + " by " + ChatColor.YELLOW + toggler);
-                player.sendMessage(ChatColor.YELLOW + "=============================================================================================================================================================================================");
             }
             if (whoToggled != null) {
                 whoToggled.sendMessage(ChatColor.GREEN + "You have toggled the chat ON.");

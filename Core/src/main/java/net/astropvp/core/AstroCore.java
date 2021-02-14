@@ -295,17 +295,7 @@ public class AstroCore extends JavaPlugin {
         freezeCommand = new Freeze();
 
         Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
-        Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
-        Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
-        Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
-        Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
-        Bukkit.getConsoleSender().sendMessage(" ");
         Bukkit.getConsoleSender().sendMessage(" ASTRO CORE DEBUG: PLUGIN SHOULD BE LOADED NOW");
-        Bukkit.getConsoleSender().sendMessage(" ");
-        Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
-        Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
-        Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
-        Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
         Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
     }
 
