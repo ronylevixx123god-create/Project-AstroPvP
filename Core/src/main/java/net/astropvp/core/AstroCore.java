@@ -61,12 +61,12 @@ import me.ifamasssxd.killtracker.listeners.SoulGemListener;
 import me.matthawkk.autobroadcast.tasks.AutoBroadcastTask;
 import me.matthawkk.autogiveall.struct.GiveAllManager;
 import me.matthawkk.autogiveall.tasks.AutoGiveAllTask;
-import me.recolance.auction.Auction;
 import net.astropvp.core.commands.*;
 import net.astropvp.core.listeners.*;
 import net.astropvp.core.staff.Freeze;
 import net.astropvp.core.staff.FreezeCommand;
 import net.astropvp.core.staff.StaffChatCommand;
+import net.astropvp.core.staff.StaffListeners;
 import net.astropvp.core.tasks.LastManStandingCapTask;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
@@ -246,7 +246,6 @@ public class AstroCore extends JavaPlugin {
         this.getCommand("toggles").setExecutor(new CommandToggles());
         this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
 
-
         this.getCommand("filter").setExecutor(new CommandFilter());
         this.getCommand("wiki").setExecutor(new CommandWiki());
         this.getCommand("spawnmenu").setExecutor(new CommandSpawnMenu());
@@ -275,6 +274,7 @@ public class AstroCore extends JavaPlugin {
 
         Arrays.asList(new Broadcast(), new FreezeCommand(), new StaffChatCommand()).forEach(this:: registerCommand);
 
+        this.getServer().getPluginManager().registerEvents(new StaffListeners(), this);
         this.getServer().getPluginManager().registerEvents(new CommandListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
         this.getServer().getPluginManager().registerEvents(new ItemListener(), this);

@@ -83,7 +83,7 @@ public class ItemLinking
         String before = whole.substring(0, index);
         String after = whole.substring(index + spliterator.length());
         if (bragShow && sender != null) {
-            JSONMessage message = new JSONMessage(before.trim() + " ", ChatColor.WHITE);
+            JSONMessage message = new JSONMessage(before.trim(), ChatColor.WHITE);
             UUID uuid = recentlyAssignedIds.asMap().computeIfAbsent(sender.getUniqueId(), e -> new UUIDStorage()).getUUID();
             ChatColor color = ChatColor.GOLD;
             message.addRunCommand(color + ChatColor.ITALIC.toString() + sender.getName() + "'s Inventory", color, "/brag " + uuid, ChatColor.GRAY + "Click to view " + CC.GrayU + sender.getName() + CC.Gray + "'s inventory!");

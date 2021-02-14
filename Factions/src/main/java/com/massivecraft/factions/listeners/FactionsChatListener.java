@@ -88,10 +88,6 @@ public class FactionsChatListener implements Listener {
             FPlayer me = FPlayers.i.get(talkingPlayer.getUniqueId().toString());
             ChatMode chat = me.getChatMode();
 
-            // new chat
-            //String title = (PlayerTitleAPI.getEquippedTitle(talkingPlayer.getUniqueId() == null ? "" : PlayerTitleAPI.getEquippedTitle(talkingPlayer.getUniqueId())));
-            // new chat
-
             if (chat != ChatMode.PUBLIC && this.p.handleCommand(talkingPlayer, msg, false, true)) {
                 if (Conf.logPlayerCommands) {
                     Bukkit.getLogger().log(Level.INFO, "[PLAYER_COMMAND] " + talkingPlayer.getName() + ": " + msg);

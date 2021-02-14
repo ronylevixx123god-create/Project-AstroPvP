@@ -15,8 +15,6 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.*;
 
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
 public class Freeze implements Listener {
@@ -57,17 +55,6 @@ public class Freeze implements Listener {
     public Boolean isFrozen(Player player) {
         return frozenPlayers.containsKey(player.getUniqueId());
     }
-
-    /*@EventHandler (ignoreCancelled = true)
-    public void onPlayerMove(PlayerMoveEvent event) {
-        Player player = event.getPlayer();
-        if (isFrozen(player)) {
-            if (event.getFrom().distanceSquared(event.getTo()) > 0.0) {
-                player.teleport(new Location(player.getWorld(), 0,0,0));
-                Bukkit.broadcastMessage("teleported to 0,0???");
-            }
-        }
-    }*/
 
     @EventHandler
     public void onPlayerCommand(PlayerCommandPreprocessEvent event) {
@@ -159,17 +146,12 @@ public class Freeze implements Listener {
 
         @Override
         public void run() {
-            Set<UUID> remove = new HashSet<>();
             frozenPlayers.forEach((uuid, location) -> {
                 Player target = Bukkit.getPlayer(uuid);
-                if (target == null) {
-                    remove.add(uuid);
-                    return;
-                }
 
                 count++;
 
-                if(count == 3) {
+                if(count == 2) {
                     target.sendMessage("");
                     target.sendMessage(CC.RedB + "YOU HAVE BEEN FROZEN!");
                     target.sendMessage(CC.Red + "Do not disconnect.");
@@ -179,8 +161,6 @@ public class Freeze implements Listener {
 
                 target.teleport(location);
             });
-
-            remove.forEach(frozenPlayers::remove);
         }
 
     }
