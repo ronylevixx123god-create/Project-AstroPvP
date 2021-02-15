@@ -27,27 +27,23 @@ package me.ifamasssxd.betterpay.commands;
 import com.earth2me.essentials.ChargeException;
 import com.earth2me.essentials.CommandSource;
 import com.earth2me.essentials.I18n;
-import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.User;
 import com.earth2me.essentials.commands.EssentialsLoopCommand;
 import com.earth2me.essentials.commands.NotEnoughArgumentsException;
 import com.earth2me.essentials.commands.PlayerExemptException;
 import com.earth2me.essentials.commands.PlayerNotFoundException;
 import com.earth2me.essentials.utils.FormatUtil;
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.Locale;
-
 import net.astropvp.core.AstroCore;
 import net.ess3.api.IEssentials;
 import net.ess3.api.MaxMoneyException;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Locale;
 
 public class CommandPay
 extends EssentialsLoopCommand {
@@ -129,7 +125,7 @@ extends EssentialsLoopCommand {
                 return;
             }
             user.payUser(player, this.amount);
-            Trade.log("Command", "Pay", "Player", user.getName(), new Trade(this.amount, this.ess), player.getName(), new Trade(this.amount, this.ess), user.getLocation(), this.ess);
+            //Trade.log("Command", "Pay", "Player", user.getName(), new Trade(this.amount, this.ess), player.getName(), new Trade(this.amount, this.ess), user.getLocation(), this.ess);
         }
         catch (MaxMoneyException ex) {
             sender.sendMessage(I18n.tl("maxMoney", new Object[0]));

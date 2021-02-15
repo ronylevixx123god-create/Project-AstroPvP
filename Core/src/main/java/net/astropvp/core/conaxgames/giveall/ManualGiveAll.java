@@ -1,5 +1,6 @@
 package net.astropvp.core.conaxgames.giveall;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -15,7 +16,7 @@ public class ManualGiveAll {
         Bukkit.getOnlinePlayers().forEach(player -> {
             if (player.getInventory().firstEmpty() == -1) {
                 if (player.getInventory().firstEmpty() == -1) {
-                    player.sendMessage("can't add to inventory, put in /claim.");
+                    player.sendMessage(CC.Red + "Couldn't put the give all item in your inventory. Put it in your /claim until reboot.");
                     List<ItemStack> currentClaim = claim.get(player);
                     currentClaim.add(i);
                     claim.put(player, currentClaim);
