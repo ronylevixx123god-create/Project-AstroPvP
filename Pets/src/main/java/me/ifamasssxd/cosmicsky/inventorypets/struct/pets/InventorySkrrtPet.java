@@ -17,6 +17,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
+import me.ifamasssxd.cosmicsky.inventorypets.utils.SkrrtCooldown;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -147,10 +148,15 @@ public class InventorySkrrtPet extends InventoryPet {
 
          FPlayer castingPlayer = (FPlayer)FPlayers.i.get(player);
          FPlayer surroundingPlayer = (FPlayer)FPlayers.i.get(p);
+         if (SkrrtCooldown.isOnSkrrtCooldown(p)) {
+             player.sendMessage(CC.translate("&c" + p.getName() +  " is still on Skrrt Cooldown! This lasts 20 seconds."));
+             return;
+         }
          if (castingPlayer.getRelationTo(surroundingPlayer) == Relation.ENEMY || castingPlayer.getRelationTo(surroundingPlayer) == Relation.NEUTRAL) {
             p.sendMessage("" + ChatColor.DARK_RED + ChatColor.BOLD + "* SKRRT: (" + ChatColor.GRAY + player.getName() + ChatColor.DARK_RED + ")");
             player.sendMessage("" + ChatColor.DARK_RED + ChatColor.BOLD + "* SKRRT: (" + ChatColor.GRAY + p.getName() + ChatColor.DARK_RED + ")");
-            CombatLog.flagCombat(p);
+             SkrrtCooldown.enterSkrrtCooldown(p);
+             CombatLog.flagCombat(p);
             this.freezeThePlayer(p);
             player.setMetadata("frozenSkrrt", new FixedMetadataValue(CosmicSkyInventoryPets.get(), System.currentTimeMillis()));
          }

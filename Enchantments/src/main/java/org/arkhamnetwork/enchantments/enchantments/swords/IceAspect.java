@@ -30,8 +30,8 @@ public class IceAspect extends CustomEnchantment {
             return;
         }
         final double random = Math.random();
-        final double chance = 0.035 * level;
-        final int time = 2 * level;
+        final double chance = 0.035;
+        final int time = 2 * level-1;
         if (random < chance && playerHit instanceof Player) {
             final Location l = playerHit.getLocation();
             if (!new CustomEnchantProcOnEntityEvent(player, playerHit, (Event) e, this, level).callEvent()) {

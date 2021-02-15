@@ -28,7 +28,7 @@ import java.util.HashMap;
 public class GiveAllManager {
     public static HashMap<Player, Integer> lootboxes = new HashMap();
     private static long nextGiveAll = 1800L;
-    private static final ItemStack giveAllItem = (CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("MysteryLootbox")).createClaimableItem(false);
+    private static final ItemStack giveAllItem = (CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("BetaBundle")).createClaimableItem(false);
 
     public static long getNextGiveAll() {
         return nextGiveAll;

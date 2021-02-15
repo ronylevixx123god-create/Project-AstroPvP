@@ -22,7 +22,7 @@ import java.text.DecimalFormat;
 public class Rogue extends CustomEnchantment {
 
     public Rogue() {
-        super("Rogue", GeneralUtil.axe, 2);
+        super("Rogue", GeneralUtil.swords, 2);
         this.max = 3;
         this.base = 10.0;
         this.interval = 10.0;
@@ -45,14 +45,14 @@ public class Rogue extends CustomEnchantment {
             return;
         }
         if (this.isPlayerBehind(p, playerHit)) {
-            final double multi = 1.0 + 0.166666666666666 * level + Math.random() / 2.75;
+            final double multi = 1.0 + 0.166666666666666 * level + Math.random() / 3;
             final int soulCost = 150;
             if (soulCost > KillTrackerAPI.getAllSouls(p)) {
                 return;
             }
             double damage = e.getDamage(EntityDamageEvent.DamageModifier.BASE);
-            if (damage < 10) {
-                damage = 10;
+            if (damage > 8) {
+                damage = 8;
             }
             e.setDamage(damage + (multi * 0.85));
             try {

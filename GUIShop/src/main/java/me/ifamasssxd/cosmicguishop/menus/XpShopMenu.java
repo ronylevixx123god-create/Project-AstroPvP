@@ -32,6 +32,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -82,6 +83,19 @@ public class XpShopMenu implements Menu{
         if (item == null || item.getType().equals(Material.AIR) || item.getItemMeta().getDisplayName().startsWith(CC.GreenB + "Astro Xp Shop") || item.getItemMeta().getDisplayName().equals("&f")) {
             return;
         }
+        if (e.getClickedInventory() == null) {
+            return;
+        }
+
+        if (e.getClickedInventory().getType() == InventoryType.PLAYER) {
+            return;
+        }
+
+
+        if (!(e.getRawSlot() <e.getInventory().getSize())) {
+            return;
+        }
+
         int cost = (int) getCostFromItem(item);
         if (cost == 0)
             return;
@@ -103,7 +117,7 @@ public class XpShopMenu implements Menu{
             itemStack.setItemMeta(meta);
             player.getInventory().addItem(itemStack);
             player.updateInventory();
-            player.sendMessage(CC.Green + "Purchased " + meta.getDisplayName() + CC.Green + " for " + (int) cost + "xp");
+            player.sendMessage(CC.Green + "Purchased " + meta.getDisplayName() + CC.Green + " for " + (int) cost + "XP!");
         }
     }
 

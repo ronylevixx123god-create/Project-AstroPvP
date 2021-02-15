@@ -76,7 +76,15 @@
             <artifactId>Spawners</artifactId>
             <version>0.1</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/SilkSpawners.jar</systemPath>
+            <systemPath>${project.basedir}/lib/AstroSpawners.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>Utils</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/Utils-0.1.jar</systemPath>
         </dependency>
     </dependencies>
 

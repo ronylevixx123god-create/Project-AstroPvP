@@ -118,8 +118,16 @@ public class Spirits extends CustomEnchantment {
                 int acenstoral_count = level / 10 + 1;
                 final Player p = (Player) player;
                 final Location spawnLoc = player.getLocation().add(0.0, 1.0, 0.0);
-                de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), spawnLoc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.64f, 45);
-                de.inventivegames.particle.ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(), spawnLoc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.64f, 45);
+                try {
+                    de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), spawnLoc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.64f, 45);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+                try {
+                    de.inventivegames.particle.ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(), spawnLoc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.64f, 45);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
                 final FPlayer fp = FPlayers.i.get(player.getUniqueId().toString());
                 final String facName = fp.hasFaction() ? fp.getFaction().getId() : "";
                 while (acenstoral_count > 0) {

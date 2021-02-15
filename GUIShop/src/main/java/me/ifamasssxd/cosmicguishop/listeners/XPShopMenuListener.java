@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.InventoryHolder;
 
 public class XPShopMenuListener implements Listener {
@@ -22,6 +23,14 @@ public class XPShopMenuListener implements Listener {
     private void onClick(InventoryClickEvent event) {
         InventoryHolder holder = event.getInventory().getHolder();
         if (!(holder instanceof XpShopMenu)) {
+            return;
+        }
+
+        if (event.getClickedInventory() == null) {
+            return;
+        }
+
+        if (event.getClickedInventory().getType() == InventoryType.PLAYER) {
             return;
         }
         ((XpShopMenu)holder).onClick((Player)event.getWhoClicked(), event.getSlot(), event.getClick(), event);

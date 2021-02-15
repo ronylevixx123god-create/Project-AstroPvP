@@ -17,6 +17,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -207,12 +208,27 @@ public class SlotBotInventoryListener implements Listener {
         }
         final Player damager = (Player) event.getDamager();
         final Player personBeingHit = (Player) event.getEntity();
-        if (damager.getInventory().getHelmet().getType() == Material.DIAMOND_HELMET  ||
-        damager.getInventory().getChestplate().getType() == Material.DIAMOND_CHESTPLATE ||
-        damager.getInventory().getLeggings().getType() == Material.DIAMOND_LEGGINGS ||
-        damager.getInventory().getBoots().getType() == Material.DIAMOND_BOOTS) {
-            event.setDamage(event.getDamage() * 0.70);
+        if (damager.getInventory().getHelmet().getType() == Material.DIAMOND_HELMET &&
+                damager.getInventory().getChestplate().getType() == Material.DIAMOND_CHESTPLATE &&
+                damager.getInventory().getLeggings().getType() == Material.DIAMOND_LEGGINGS &&
+                damager.getInventory().getBoots().getType() == Material.DIAMOND_BOOTS) {
+            event.setDamage(event.getDamage() * 0.85);
         }
+
+    }
+        @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+        public void dmgDebuf2(final EntityDamageByEntityEvent event) {
+            if (event.getEntityType() != EntityType.PLAYER || event.getDamager().getType() != EntityType.PLAYER) {
+                return;
+            }
+            final Player damager = (Player) event.getDamager();
+            final Player personBeingHit = (Player) event.getEntity();
+            if (personBeingHit.getInventory().getHelmet().getType() == Material.DIAMOND_HELMET  &&
+                    personBeingHit.getInventory().getChestplate().getType() == Material.DIAMOND_CHESTPLATE &&
+                    personBeingHit.getInventory().getLeggings().getType() == Material.DIAMOND_LEGGINGS &&
+                    personBeingHit.getInventory().getBoots().getType() == Material.DIAMOND_BOOTS) {
+                event.setDamage(event.getDamage() * 5);
+            }
     }
 
 

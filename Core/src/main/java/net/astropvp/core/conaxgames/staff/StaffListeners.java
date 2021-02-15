@@ -11,9 +11,15 @@ public class StaffListeners implements Listener {
     // Staff chat
     @EventHandler (priority = EventPriority.HIGHEST)
     public void onChat(AsyncPlayerChatEvent event) {
-        if (StaffUtil.inStaffChat.contains(event.getPlayer())) {
-            StaffChat.sendStaffMessage(event.getPlayer(), event.getMessage());
-            event.setCancelled(true);
+        try {
+
+
+            if (StaffUtil.inStaffChat.contains(event.getPlayer())) {
+                StaffChat.sendStaffMessage(event.getPlayer(), event.getMessage());
+                event.setCancelled(true);
+            }
+        } catch (Exception e) {
+
         }
     }
     @EventHandler
