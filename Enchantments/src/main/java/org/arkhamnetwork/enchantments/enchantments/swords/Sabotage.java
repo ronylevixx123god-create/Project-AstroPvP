@@ -31,6 +31,9 @@ public class Sabotage extends CustomEnchantment {
         if (!GeneralUtil.isSword(p.getItemInHand())) {
             return;
         }
+        if (!(playerHit instanceof Player)) {
+            return;
+        }
         if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.CORRUPT_BOOTS)) {
             return;
         }
