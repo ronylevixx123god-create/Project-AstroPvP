@@ -73,6 +73,15 @@ public class Freeze implements Listener {
     }
 
     @EventHandler
+    public void onPlayerMove(PlayerMoveEvent event) {
+        if (event.getPlayer() != null) {
+            if (isFrozen(event.getPlayer())) {
+                event.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler
     public void onPlayerDamage(EntityDamageByEntityEvent event) {
         if (event.getEntity() instanceof Player) {
             if (isFrozen((Player) event.getEntity())) {
