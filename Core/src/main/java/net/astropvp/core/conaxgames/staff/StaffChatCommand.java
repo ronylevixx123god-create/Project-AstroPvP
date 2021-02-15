@@ -35,10 +35,10 @@ public class StaffChatCommand extends Command {
         if (text.toString().isEmpty()) {
             if (StaffUtil.inStaffChat.contains(player)) {
                 StaffUtil.inStaffChat.remove(player);
-                player.sendMessage(CC.Red + "You have now left staff chat.");
+                player.sendMessage(CC.Red + "You have left staff chat.");
             } else {
                 StaffUtil.inStaffChat.add(player);
-                player.sendMessage(CC.Green + "You have now in staff chat.");
+                player.sendMessage(CC.Green + "You are now in staff chat.");
             }
             return false;
         }
