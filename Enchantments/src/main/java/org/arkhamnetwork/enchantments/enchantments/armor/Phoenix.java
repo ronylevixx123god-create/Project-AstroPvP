@@ -66,19 +66,19 @@ public class Phoenix extends CustomEnchantment {
     public static boolean procPhoenix(Player player, LivingEntity damager, int level, double dmg) throws Exception {
         if (player.getHealth() <= 0.0D)
             return false;
-        if (player.hasMetadata("witchered"))
+        if (player.hasMetadata("witchered") && !ItemSkinUtils.hasItemSkin(player, "CORRUPT_BELT_UTILITY"))
             return false;
-        if (player.hasMetadata("noSoulProcs"))
+        if (player.hasMetadata("noSoulProcs") && !ItemSkinUtils.hasItemSkin(player, "CORRUPT_BELT_UTILITY"))
             return false;
         if (player.getHealth() - dmg <= 0.0D) {
-            if (damager instanceof Player && Math.random() <= 0.5D && MaskType.hasEquipped((Player) damager, "DEATH_KNIGHT") && !ItemSkinUtils.hasItemSkin(player, "CORRUPT_BELT_UTILITY")) {
+            if (Math.random() <= 0.5D && MaskType.hasEquipped((Player) damager, "DEATH_KNIGHT") && !ItemSkinUtils.hasItemSkin(player, "CORRUPT_BELT_UTILITY")) {
                 player.sendMessage(CC.RedB + "* PHOENIX BLOCKED [" + CC.Gray + ((Player) damager).getName() + CC.RedB + "] *");
                 ((Player) damager).sendMessage(CC.RedB + "* DEATH KNIGHT MASK [" + CC.Gray + player.getName() + "'s Phoenix Blocked" + CC.RedB + "] *");
                 last_phoenix.put(player.getUniqueId().toString(), Long.valueOf(System.currentTimeMillis()));
                 Bukkit.getLogger().info("Phoenix blocked from proccing for " + player.getName() + " from damager " + ((Player) damager).getName());
                 return false;
             }
-            if (damager instanceof Player && MaskType.hasEquipped((Player) damager, "THANOS") && !ItemSkinUtils.hasItemSkin(player, "CORRUPT_BELT_UTILITY")) {
+            if (MaskType.hasEquipped((Player) damager, "THANOS") && !ItemSkinUtils.hasItemSkin(player, "CORRUPT_BELT_UTILITY")) {
                 player.sendMessage(CC.RedB + "* PHOENIX BLOCKED [" + CC.Gray + ((Player) damager).getName() + CC.RedB + "] *");
                 ((Player) damager).sendMessage(CC.RedB + "* THANOS MASK [" + CC.Gray + player.getName() + "'s Phoenix Blocked" + CC.RedB + "] *");
                 last_phoenix.put(player.getUniqueId().toString(), Long.valueOf(System.currentTimeMillis()));
@@ -96,7 +96,7 @@ public class Phoenix extends CustomEnchantment {
                 player.sendMessage(ChatColor.GRAY + "You have " + ChatColor.UNDERLINE + KillTrackerAPI.getAllSouls(player) + ChatColor.GRAY + " souls left.");
                 player.sendMessage("");
                 player.sendTitle(new Title(CC.translate("&c&l*** PHOENIX ***"), CC.translate("&7You have &n") + KillTrackerAPI.getAllSouls(player) + CC.translate("&7 Souls Left."), 10, 40, 10));
-                if (ItemSkinUtils.hasItemSkin(player, "CORRUPT_BELT_UTILITY") && Math.random() < 0.25) {
+                if (ItemSkinUtils.hasItemSkin(player, "CORRUPT_BELT_UTILITY") && Math.random() < 0.5) {
                     MasteryFeignDeath.vanishPlayer(player, 3);
                 }
                 player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 1.0F, 1.25F);
@@ -171,9 +171,13 @@ public class Phoenix extends CustomEnchantment {
         if (player instanceof Player) {
             double dmg = e.getDamage(EntityDamageEvent.DamageModifier.BASE);
             dmg *= ArmorUtil.getArmorDamageNullificationPercent(ArmorUtil.getArmorValue((Player) player));
-            if (procPhoenix((Player) player, attacker, level, dmg)) {
-                e.setDamage(0.0D);
-                e.setCancelled(true);
+            try {
+                if (procPhoenix((Player) player, attacker, level, dmg)) {
+                    e.setDamage(0.0D);
+                    e.setCancelled(true);
+                }
+            } catch (Exception exception) {
+                exception.printStackTrace();
             }
         }
     }

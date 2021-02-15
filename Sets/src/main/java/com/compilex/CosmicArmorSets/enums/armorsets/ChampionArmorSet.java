@@ -87,7 +87,13 @@ public class ChampionArmorSet
 
     @Override
     public List<String> getEquipDescription() {
-        return TranslateList.translateList(ChatColor.GOLD + "" + ChatColor.BOLD + "CHAMPION SET BONUS: ", "\u00a76\u00a7l* \u00a76+40% DMG", "\u00a76\u00a7l*\u00a76 Enemies deal 20% less damage", "\u00a76\u00a7l*\u00a76 Champion Wrath Ability", "\u00a76\u00a7l* \u00a76Auto Bless");
+        return TranslateList.translateList(ChatColor.GOLD + "" + ChatColor.BOLD + "",
+                "CHAMPION SET BONUS: "
+                , "➥ +40% DMG"
+                , "➥ Enemies deal 20% less damage"
+                , "➥ Champion Wrath Ability"
+                , "➥ Auto Bless"
+        , "");
     }
 
     @Override
