@@ -17,7 +17,7 @@ public class ManualGiveAll {
             if (player.getInventory().firstEmpty() == -1) {
                 if (player.getInventory().firstEmpty() == -1) {
                     player.sendMessage(CC.Red + "Couldn't put the give all item in your inventory. Put it in your /claim until reboot.");
-                    if (claim.get(player) != null) {
+                    if (claim.containsKey(player)) {
                         List<ItemStack> currentClaim = claim.get(player);
                         currentClaim.add(i);
                         claim.put(player, currentClaim);
