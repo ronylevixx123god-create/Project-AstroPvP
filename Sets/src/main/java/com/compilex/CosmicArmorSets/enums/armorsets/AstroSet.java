@@ -90,7 +90,13 @@ public class AstroSet
 
     @Override
     public List<String> getEquipDescription() {
-        return TranslateList.translateList(ChatColor.GREEN + "" + ChatColor.BOLD + "&a&lASTRO SET BONUS", "&a&l* &aYou deal 30% more damage.", "&a&l* &aAstro Killer Passive Ability", "&a&l* &aGears IV.", "&a&l* &aYou take 10% less damage.");
+        return TranslateList.translateList(ChatColor.GREEN + "" + ChatColor.BOLD + "",
+                "&a&lASTRO SET BONUS"
+                , "&a&l➥ &aYou deal 30% more damage."
+                , "&a&l➥ &aAstro Killer Passive Ability"
+                , "&a&l➥ &aGears IV."
+                , "&a&l➥ &aYou take 10% less damage."
+        , "");
     }
 
     @Override

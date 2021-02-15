@@ -75,7 +75,16 @@ public class UltraArmorSet
 
     @Override
     public List<String> getEquipDescription() {
-        return TranslateList.translateList(ChatColor.GRAY + "" + ChatColor.BOLD + "&7&lULTRA SET BONUS", "&7&l* &7You deal 35% more damage.", "&7&l* &7Enemies deal 20% less damage to you.", "&7&l* &740% Holy Ultra Negation.", "&7&l* &710% Chance to proc Ultra Rage.", "&7&l* &7x1.5 World Destroyer Duration.", "&7&l* &750% Chance to Bypass Utility Belt.");
+        return TranslateList.translateList(ChatColor.GRAY + "" + ChatColor.BOLD +
+                "",
+                "&7&lULTRA SET BONUS",
+                "&7&l➥ &7You deal 35% more damage.",
+                "&7&l➥ &7Enemies deal 20% less damage to you.",
+                "&7&l➥ &740% Holy Ultra Negation.",
+                "&7&l➥ &710% Chance to proc Ultra Rage.",
+                "&7&l➥ &7x1.5 World Destroyer Duration.",
+                "&7&l➥ &750% Chance to Bypass Utility Belt."
+        , "");
     }
 
     @Override

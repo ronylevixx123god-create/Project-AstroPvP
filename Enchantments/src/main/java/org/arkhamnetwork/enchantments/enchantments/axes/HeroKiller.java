@@ -41,9 +41,6 @@ public class HeroKiller extends CustomEnchantment {
             return;
         }
         if (KillTrackerAPI.hasGodMode(p) && KillTrackerAPI.getAllSouls(p) > 0) {
-            if (!this.isWearingHeroic((Player) playerHit)) {
-                return;
-            }
             if (!p.hasMetadata("lastSoulRemoveEvent") || System.currentTimeMillis() - p.getMetadata("lastSoulRemoveEvent").get(0).asLong() > 1000L) {
                 KillTrackerAPI.removeSoulsFromGems(p, 4);
             }

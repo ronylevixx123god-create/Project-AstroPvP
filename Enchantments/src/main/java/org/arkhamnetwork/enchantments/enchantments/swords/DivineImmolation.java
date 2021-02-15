@@ -94,16 +94,14 @@ public class DivineImmolation extends CustomEnchantment {
 
     @SneakyThrows
     public void applyEffect(LivingEntity player, LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
-        if (player.hasMetadata("witcher_ability"))
-            return;
         if (CommandEnchDust.soulEnabled) {
             Player p = (Player)player;
             double radius = 1.0D * level;
             double damage = 2.5;
             if (GeneralUtil.isSword(p.getItemInHand()) && (
                     !p.hasMetadata("lastItemHeldChange") || MinecraftServerUtils.getCurrentServerTick() - ((MetadataValue)p.getMetadata("lastItemHeldChange").get(0)).asLong() > 5L) && (
-                    !p.hasMetadata("soulTrap") || ((MetadataValue)p.getMetadata("soulTrap").get(0)).asLong() <= System.currentTimeMillis()) &&
-                    KillTrackerAPI.hasGodMode(p) && KillTrackerAPI.getAllSouls(p) > 0) {
+
+                    KillTrackerAPI.hasGodMode(p) && KillTrackerAPI.getAllSouls(p) > 0)) {
                 if (!p.hasMetadata("lastSoulRemoveEvent") || System.currentTimeMillis() - ((MetadataValue)p.getMetadata("lastSoulRemoveEvent").get(0)).asLong() > 1000L)
                     KillTrackerAPI.removeSoulsFromGems(p, 1);
                 List<Entity> ents = playerHit.getNearbyEntities(radius, radius, radius);
@@ -124,8 +122,16 @@ public class DivineImmolation extends CustomEnchantment {
                             if (!WorldGuardUtils.isPvPDisabled(ent.getLocation()) && !ent.hasMetadata("spectator")) {
                                 LivingEntity le = (LivingEntity)ent;
                                 le.damage(damage);
-                                de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(),le.getEyeLocation(), 0,0,0,0.3f,10);
-                                de.inventivegames.particle.ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(),le.getEyeLocation(), 0,0,0,0.3f,10);
+                                try {
+                                    de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(),le.getEyeLocation(), 0,0,0,0.3f,10);
+                                } catch (Exception exception) {
+                                    exception.printStackTrace();
+                                }
+                                try {
+                                    de.inventivegames.particle.ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(),le.getEyeLocation(), 0,0,0,0.3f,10);
+                                } catch (Exception exception) {
+                                    exception.printStackTrace();
+                                }
                                 le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, (int)(damage * 20.0D), 1));
                                 if (le instanceof Player) {
                                     ((Player)le).playSound(le.getLocation(), Sound.FIREWORK_BLAST, 1.0F, 0.3F);

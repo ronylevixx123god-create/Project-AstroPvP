@@ -9,10 +9,14 @@ import me.ily2bb.slotbot.utils.Inventories;
 import me.ily2bb.slotbot.utils.LootTable;
 import me.ily2bb.slotbot.utils.Utils;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -195,5 +199,21 @@ public class SlotBotInventoryListener implements Listener {
             return;
         ItemDeleter.removeItemDeleter(deleter);
     }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void dmgDebuf(final EntityDamageByEntityEvent event) {
+        if (event.getEntityType() != EntityType.PLAYER || event.getDamager().getType() != EntityType.PLAYER) {
+            return;
+        }
+        final Player damager = (Player) event.getDamager();
+        final Player personBeingHit = (Player) event.getEntity();
+        if (damager.getInventory().getHelmet().getType() == Material.DIAMOND_HELMET  ||
+        damager.getInventory().getChestplate().getType() == Material.DIAMOND_CHESTPLATE ||
+        damager.getInventory().getLeggings().getType() == Material.DIAMOND_LEGGINGS ||
+        damager.getInventory().getBoots().getType() == Material.DIAMOND_BOOTS) {
+            event.setDamage(event.getDamage() * 0.70);
+        }
+    }
+
 
 }

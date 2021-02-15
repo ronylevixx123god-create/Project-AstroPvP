@@ -49,7 +49,15 @@ public class ApolloSet extends ArmorSetInfo
 
     @Override
     public List<String> getEquipDescription() {
-        return TranslateList.translateList(ChatColor.WHITE + "" + ChatColor.BOLD + "&f&lAPOLLO SET BONUS", "&f&l* &fYou deal 40% more damage.", "&f&l* &fEnemies deal 35% less damage to you.", "&f&l* &fBypass Chad Sunglasses.", "&f&l* &fx1.5 Pet Duration.", "&f&l* &fImmune to World Destroyer", "&f&l* &fSpeed IV.");
+        return TranslateList.translateList(ChatColor.WHITE + "" + ChatColor.BOLD + "",
+                "&f&lAPOLLO SET BONUS"
+                , "&f&l➥ &fYou deal 40% more damage."
+                , "&f&l➥ &fEnemies deal 35% less damage to you."
+                , "&f&l➥ &fBypass Chad Sunglasses."
+                , "&f&l➥ &fx1.5 Pet Duration."
+                , "&f&l➥ &fImmune to World Destroyer"
+                , "&f&l➥ &fSpeed IV.",
+                "");
     }
 
     @Override
@@ -79,7 +87,7 @@ public class ApolloSet extends ArmorSetInfo
         if (this.isBlockedOutpostWorld(damager)) {
             return false;
         }
-        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.65);
+        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.55);
         this.removeResistance(damager);
         return true;
     }
@@ -95,7 +103,7 @@ public class ApolloSet extends ArmorSetInfo
         if (this.isBlockedOutpostWorld(damaged)) {
             return false;
         }
-        this.modifyDamage(damaged, event, -15.0, multiplier);
+        this.modifyDamage(damaged, event, -12.5, multiplier);
         return false;
     }
 
@@ -108,7 +116,7 @@ public class ApolloSet extends ArmorSetInfo
         if (this.isBlockedOutpostWorld(damager)) {
             return false;
         }
-        return this.modifyDamage(damager, event, 15.0, applied);
+        return this.modifyDamage(damager, event, 12.5, applied);
     }
 
     @Override

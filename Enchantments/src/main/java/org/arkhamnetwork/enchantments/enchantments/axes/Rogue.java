@@ -45,13 +45,21 @@ public class Rogue extends CustomEnchantment {
             return;
         }
         if (this.isPlayerBehind(p, playerHit)) {
-            final double multi = 1.0 + 0.166666666666666 * level + Math.random() / 2.0;
+            final double multi = 1.0 + 0.166666666666666 * level + Math.random() / 2.75;
             final int soulCost = 150;
             if (soulCost > KillTrackerAPI.getAllSouls(p)) {
                 return;
             }
-            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (multi * 0.85));
-            de.inventivegames.particle.ParticleEffect.CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 0,1,0,0.4f,12);
+            double damage = e.getDamage(EntityDamageEvent.DamageModifier.BASE);
+            if (damage < 10) {
+                damage = 10;
+            }
+            e.setDamage(damage + (multi * 0.85));
+            try {
+                de.inventivegames.particle.ParticleEffect.CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 0,1,0,0.4f,12);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
 
             ((Player) player).sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&l** ROGUE &7[" + new DecimalFormat("##.##").format(multi) + "x] &c&l-" + soulCost + " SOULS **"));
             KillTrackerAPI.removeSoulsFromGems(p, soulCost);
