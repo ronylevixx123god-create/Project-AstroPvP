@@ -13,6 +13,7 @@ package me.matthawkk.autogiveall.commands;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import me.matthawkk.autogiveall.struct.GiveAllManager;
+import net.astropvp.core.conaxgames.giveall.ManualGiveAll;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -26,6 +27,24 @@ implements CommandExecutor {
             return true;
         }
         Player player = (Player)sender;
+
+        if (ManualGiveAll.claim.containsKey(player)) {
+            if (getEmptyInvSlots(player) >= ManualGiveAll.claim.get(player).size()) {
+                for (ItemStack i : ManualGiveAll.claim.get(player)) {
+                    player.getInventory().addItem(i);
+                    if (i.hasItemMeta() && i.getItemMeta().hasDisplayName()) {
+                        player.sendMessage(CC.Green + "Added " + i.getItemMeta().getDisplayName() + " to your inventory.");
+                    } else {
+                        player.sendMessage(CC.Green + "Added " + i.getType() + " to your inventory.");
+                    }
+                    ManualGiveAll.claim.get(player).remove(i);
+                }
+            } else {
+                player.sendMessage(CC.Red + "You do not have enough inventory space to claim.");
+                return true;
+            }
+        }
+
         if (!GiveAllManager.hasAvailableLootboxes(player)) {
             player.sendMessage(CC.Red + "You do not have any available lootboxes.");
             return true;
@@ -42,6 +61,16 @@ implements CommandExecutor {
         player.sendMessage(CC.Green + "You have been given your lootboxes.");
         GiveAllManager.setAvailableLootboxes(player, 0);
         return false;
+    }
+
+    public static int getEmptyInvSlots(Player player) {
+        int count = 0;
+        for (ItemStack i : player.getInventory()) {
+            if (i == null) {
+                count++;
+            }
+        }
+        return count;
     }
 }
 

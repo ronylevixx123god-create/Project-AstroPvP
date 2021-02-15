@@ -1,4 +1,4 @@
-package net.astropvp.core.staff;
+package net.astropvp.core.conaxgames.staff;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import org.bukkit.Bukkit;
@@ -8,7 +8,7 @@ public class StaffChat {
     public static void sendStaffMessage(Player sender, String msg) {
         Bukkit.getOnlinePlayers().forEach(player -> {
             if (player.hasPermission("astrocore.staff")) {
-                player.sendMessage(StaffUtil.format + CC.White + sender.getName() + " " + CC.Gray + msg);
+                player.sendMessage(StaffUtil.format + CC.Yellow + sender.getName() + ": " + CC.LightPurple + msg);
             }
         });
     }

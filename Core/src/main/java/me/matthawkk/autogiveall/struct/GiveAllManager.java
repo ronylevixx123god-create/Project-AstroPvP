@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GiveAllManager {
-    private static HashMap<Player, Integer> lootboxes = new HashMap();
+    public static HashMap<Player, Integer> lootboxes = new HashMap();
     private static long nextGiveAll = 1800L;
     private static final ItemStack giveAllItem = (CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("MysteryLootbox")).createClaimableItem(false);
 
@@ -39,7 +39,7 @@ public class GiveAllManager {
     }
 
     public static void doGiveAll() {
-        ArrayList ipList = Lists.newArrayList();
+        ArrayList<InetSocketAddress> ipList = Lists.newArrayList();
         for (Player p : Bukkit.getServer().getOnlinePlayers()) {
             InetSocketAddress ip = p.getAddress();
             if (ipList.contains(ip)) {

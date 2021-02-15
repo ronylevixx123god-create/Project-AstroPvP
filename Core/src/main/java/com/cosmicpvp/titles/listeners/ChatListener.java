@@ -10,8 +10,6 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 public class ChatListener implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     public void onChatEvent(AsyncPlayerChatEvent event) {
-        //Bukkit.broadcastMessage(event.getMessage().toUpperCase());
-        //Bukkit.broadcastMessage(event.getFormat().toUpperCase());
 
         String title = "";
 

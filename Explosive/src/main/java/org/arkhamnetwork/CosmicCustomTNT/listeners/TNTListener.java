@@ -88,10 +88,12 @@ implements Listener {
                 e.getEntity().setMetadata("custom_tnt", new FixedMetadataValue(CosmicCustomTNT.get(), tntType.name()));
                 return;
             }
-            Location loc = tntPrimed.getSource().getBukkitEntity().getLocation();
-            TNTTypes tnt_type = tnt_tracker.remove(loc);
-            if (tnt_type != null) {
-                e.getEntity().setMetadata("custom_tnt", new FixedMetadataValue(CosmicCustomTNT.get(), tnt_type.name()));
+            if (tntPrimed.getSource() != null && tntPrimed.getSource().getBukkitEntity() != null) {
+                Location loc = tntPrimed.getSource().getBukkitEntity().getLocation();
+                TNTTypes tnt_type = tnt_tracker.remove(loc);
+                if (tnt_type != null) {
+                    e.getEntity().setMetadata("custom_tnt", new FixedMetadataValue(CosmicCustomTNT.get(), tnt_type.name()));
+                }
             }
         }
     }

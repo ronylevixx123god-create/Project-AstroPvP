@@ -1,4 +1,4 @@
-package net.astropvp.core.staff;
+package net.astropvp.core.conaxgames.staff;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import org.bukkit.Bukkit;
@@ -33,7 +33,13 @@ public class StaffChatCommand extends Command {
             text.append(arg).append(" ");
         }
         if (text.toString().isEmpty()) {
-            player.sendMessage(CC.Red + "Message was empty.");
+            if (StaffUtil.inStaffChat.contains(player)) {
+                StaffUtil.inStaffChat.remove(player);
+                player.sendMessage(CC.Red + "You have now left staff chat.");
+            } else {
+                StaffUtil.inStaffChat.add(player);
+                player.sendMessage(CC.Green + "You have now in staff chat.");
+            }
             return false;
         }
         StaffChat.sendStaffMessage(player, text.toString());
