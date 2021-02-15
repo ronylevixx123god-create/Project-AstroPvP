@@ -2,7 +2,6 @@ package net.astropvp.core.conaxgames.giveall;
 
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import net.astropvp.core.conaxgames.staff.Freeze;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -31,16 +30,7 @@ public class ManualGiveAllCommand extends Command {
             player.sendMessage(CC.Red + "No Permission.");
             return false;
         }
-
-        if (args[0] != null) {
-            Player target = Bukkit.getPlayer(args[0]);
-            if (target == null || !target.isOnline()) {
-                player.sendMessage(CC.Red + "Can't find target or target was not online.");
-                return false;
-            }
-            Freeze.handle(target, player);
-        }
-
+        
         if (player.getItemInHand() == null || player.getItemInHand().getType().equals(Material.AIR)) {
             player.sendMessage(CC.Red + "Item was air or null. Cancelling this giveall.");
             return false;
