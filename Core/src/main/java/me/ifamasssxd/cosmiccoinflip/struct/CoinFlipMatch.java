@@ -23,36 +23,28 @@
  */
 package me.ifamasssxd.cosmiccoinflip.struct;
 
-import com.compilex.CompilexPermissions.CompilexPermissions;
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.HCFOutpostUtils;
 import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
 import com.google.common.collect.Lists;
+import me.ifamasssxd.cosmiccoinflip.utils.FactionUtils;
+import me.ifamasssxd.cosmiccoinflip.utils.ItemBuilder;
+import net.astropvp.core.AstroCore;
+import net.milkbowl.vault.economy.EconomyResponse;
+import org.bukkit.*;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.scheduler.BukkitRunnable;
+
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
-
-import me.ifamasssxd.cosmiccoinflip.utils.FactionUtils;
-import me.ifamasssxd.cosmiccoinflip.utils.ItemBuilder;
-import net.astropvp.core.AstroCore;
-import net.milkbowl.vault.economy.EconomyResponse;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.DyeColor;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.Sound;
-import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class CoinFlipMatch {
     private final Player starterPlayer;
@@ -171,6 +163,7 @@ public class CoinFlipMatch {
                 CoinColor coinColor = !lastTick ? (CoinFlipMatch.this.previousColor == CoinFlipMatch.this.getFirstColor() ? CoinFlipMatch.this.getSecondColor() : CoinFlipMatch.this.getFirstColor()) : (color = CoinFlipMatch.this.getWinnerColor());
                 String winnerName = lastTick && color.equals(CoinFlipMatch.this.getFirstColor()) ? CoinFlipMatch.this.getFirstColor().getChatColor() + ChatColor.BOLD.toString() + CoinFlipMatch.this.getStarterPlayer().getName() : (lastTick && color.equals(CoinFlipMatch.this.getSecondColor()) ? CoinFlipMatch.this.getSecondColor().getChatColor() + ChatColor.BOLD.toString() + CoinFlipMatch.this.getSecondPlayer().getName() : null);
                 CoinFlipMatch.this.previousColor = color;
+                //TODO: BOWPEY IS SO CUTE vv NULL POINTER ON THIS LINE
                 CoinFlipMatch.this.coinFlipMenu.setItem(4, ItemBuilder.buildItem(Material.WOOL, color.getDyeColor().getWoolData(), winnerName != null ? winnerName : color.getName(), Lists.newArrayList(winnerName != null ? winnerName + ChatColor.GRAY + " has won the Coin Flip!" : ChatColor.GRAY + "Rolling...")));
                 for (Player pl : CoinFlipMatch.this.getPlayers()) {
                     if (pl == null) continue;

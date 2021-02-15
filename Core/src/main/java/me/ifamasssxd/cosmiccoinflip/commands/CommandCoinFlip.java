@@ -16,23 +16,20 @@
  */
 package me.ifamasssxd.cosmiccoinflip.commands;
 
-import java.text.DecimalFormat;
-
 import me.ifamasssxd.cosmiccoinflip.struct.CoinFlipManager;
 import me.ifamasssxd.cosmiccoinflip.struct.CoinFlipMatch;
 import me.ifamasssxd.cosmiccoinflip.struct.WinLossStats;
 import net.astropvp.core.AstroCore;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
+
+import java.text.DecimalFormat;
 
 public class CommandCoinFlip
 implements CommandExecutor {
