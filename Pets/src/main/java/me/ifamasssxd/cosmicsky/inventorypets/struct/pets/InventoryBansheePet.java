@@ -16,6 +16,7 @@ import me.astropvp.damageindicators.utils.DamageIndicatorUtils;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
+import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.libs.Vector3D;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
@@ -101,7 +102,11 @@ public class InventoryBansheePet extends InventoryPet {
             throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "Not allowed in this region!");
         petItem.setLastUsed(System.currentTimeMillis());
         final List<Player> nearbyEnemies = Lists.newArrayList();
+
         Faction faction = FactionUtils.getFaction(player);
+        if (player.getNearbyEntities(8.0D, 8.0D, 8.0D).isEmpty()) {
+            throw new PrefixedPetException("Could not find a valid target!");
+        }
         for (Entity other : player.getNearbyEntities(8.0D, 8.0D, 8.0D)) {
             if (other instanceof Player) {
                 Player nearPlayer = (Player)other;

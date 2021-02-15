@@ -56,6 +56,10 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
+        <repository>
+            <id>inventive-repo</id>
+            <url>https://repo.inventivetalent.org/content/groups/public/</url>
+        </repository>
     </repositories>
 
     <!-- Enchantments, CustomItems -->
@@ -63,17 +67,13 @@
     <!-- Enchantments, CustomItems -->
 
     <dependencies>
+
         <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Explosive</artifactId>
-            <version>0.1</version>
+            <groupId>org.inventivetalent</groupId>
+            <artifactId>particleapi</artifactId>
+            <version>2.1.1</version>
         </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Enchantments</artifactId>
-            <version>0.1</version>
-        </dependency>
-        <!-- ConaxGames Repos -->
+
         <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>server</artifactId>
@@ -99,67 +99,123 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- New Cosmic Repos -->
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Arkkit</artifactId>
-            <version>0.1</version>
-        </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>Utils</artifactId>
             <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/Utils-0.1.jar</systemPath>
         </dependency>
+
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>CustomItems</artifactId>
+            <artifactId>di</artifactId>
             <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/DamageIndicators.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>Sets</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/CosmicArmorSets.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>Skins</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/AstroItemSkins.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>Factions</artifactId>
             <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/Factions-0.1.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>CustomItems</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/CosmicSkyCustomItems.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>Sets</artifactId>
+            <artifactId>e</artifactId>
             <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/Enchantments.jar</systemPath>
         </dependency>
+
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>Bosses</artifactId>
+            <artifactId>Arkkit</artifactId>
             <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/Arkkit.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>Core</artifactId>
             <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/AstroCore.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>ItemSkins</artifactId>
-            <version>0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>KoTHs</artifactId>
-            <version>0.1</version>
-        </dependency>
-
-        <!-- System Repos -->
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>lib</artifactId>
+            <artifactId>Libs</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/LibsDisguises (2).jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>api</artifactId>
+            <artifactId>Bosses</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/CosmicBosses.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>EnchantmentsAPI</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/EnchantmentsAPI.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>Creeper</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/CosmicCustomCreepers.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>tnt</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/CosmicCustomTNT.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>Outpost</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/CosmicKOTH (1).jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>vkits</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/CosmicEvolutionKit.jar</systemPath>
         </dependency>
     </dependencies>
 </project>

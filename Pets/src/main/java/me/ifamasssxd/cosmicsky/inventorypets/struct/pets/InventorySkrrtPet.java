@@ -124,8 +124,11 @@ public class InventorySkrrtPet extends InventoryPet {
       }).runTaskLater(CosmicSkyInventoryPets.get(), 1L * (long)this.freezeDuration(this.petLevel) * 20L);
    }
 
-   private void skrrtAbilities(final Player player) {
+   private void skrrtAbilities(final Player player) throws PrefixedPetException {
       Iterator var2 = player.getNearbyEntities(16.0D, 16.0D, 16.0D).iterator();
+      if (player.getNearbyEntities(16.0D, 16.0D, 16.0D).isEmpty()) {
+         throw new PrefixedPetException("Could not find a valid target!");
+      }
 
       while(true) {
          Player p;
