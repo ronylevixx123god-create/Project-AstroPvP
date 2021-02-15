@@ -75,7 +75,7 @@ public class ApolloSet extends ArmorSetInfo
             return false;
         }
         this.removeResistance(damaged);
-        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.55);
+        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.65);
         return true;
     }
 
@@ -87,7 +87,7 @@ public class ApolloSet extends ArmorSetInfo
         if (this.isBlockedOutpostWorld(damager)) {
             return false;
         }
-        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.55);
+        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.60);
         this.removeResistance(damager);
         return true;
     }
@@ -103,7 +103,7 @@ public class ApolloSet extends ArmorSetInfo
         if (this.isBlockedOutpostWorld(damaged)) {
             return false;
         }
-        this.modifyDamage(damaged, event, -12.5, multiplier);
+        this.modifyDamage(damaged, event, -10.0, multiplier);
         return false;
     }
 
@@ -116,7 +116,7 @@ public class ApolloSet extends ArmorSetInfo
         if (this.isBlockedOutpostWorld(damager)) {
             return false;
         }
-        return this.modifyDamage(damager, event, 12.5, applied);
+        return this.modifyDamage(damager, event, 10.0, applied);
     }
 
     @Override
