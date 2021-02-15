@@ -49,7 +49,11 @@ public class DoubleStrike extends CustomEnchantment {
                 }
             }, 2L);
 
-            de.inventivegames.particle.ParticleEffect.RED_DUST.sendToPlayers(Bukkit.getOnlinePlayers(),playerHit.getLocation(), (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5F, 20);
+            try {
+                de.inventivegames.particle.ParticleEffect.RED_DUST.sendToPlayers(Bukkit.getOnlinePlayers(),playerHit.getLocation(), (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5F, 20);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
 
         }
     }
