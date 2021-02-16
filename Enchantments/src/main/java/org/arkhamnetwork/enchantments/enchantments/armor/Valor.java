@@ -20,8 +20,8 @@ public class Valor extends CustomEnchantment {
     public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
         if (!(player instanceof Player))
             return;
-        double damage_negation = level * 0.015D;
-        double hp_threshold = (level * 2 + 6);
+        double damage_negation = level * 0.010D;
+        double hp_threshold = (level * 2 +6);
         if (player.getHealth() <= hp_threshold && (((Player) player).getItemInHand().getType() == Material.GOLD_SWORD || ((Player) player).getItemInHand().getType() == Material.DIAMOND_SWORD) && e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1.0D - damage_negation) > 1.0D) {
             e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1.0D - damage_negation));
             Location l = player.getLocation();

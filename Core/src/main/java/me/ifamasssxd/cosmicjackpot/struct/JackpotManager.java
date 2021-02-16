@@ -23,6 +23,9 @@ package me.ifamasssxd.cosmicjackpot.struct;
 
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
 import com.cosmicpvp.cosmicutils.utils.JSONUtils;
+import com.earth2me.essentials.api.Economy;
+import com.earth2me.essentials.api.NoLoanPermittedException;
+import com.earth2me.essentials.api.UserDoesNotExistException;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -43,6 +46,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -64,7 +68,7 @@ public class JackpotManager {
     private LinkedList<JackpotHistory> sortedHistory = new LinkedList();
     private long lastListUpdate;
 
-    public void onJackpotTick() {
+    public void onJackpotTick() throws UserDoesNotExistException, NoLoanPermittedException {
         int secondsLeft = this.currentJackpot.getSecondsLeft();
         if (secondsLeft > 0) {
             if (secondsLeft == 300 || secondsLeft == 60 || secondsLeft == 30 || secondsLeft == 10 || secondsLeft <= 5 && secondsLeft > 0) {
@@ -86,7 +90,7 @@ public class JackpotManager {
         }
     }
 
-    public void drawWinner() {
+    public void drawWinner() throws UserDoesNotExistException, NoLoanPermittedException {
         PlayerInfo winner = this.currentJackpot.getRandomWinner();
         if (winner == null) {
             Bukkit.broadcastMessage(ChatColor.RED.toString() + ChatColor.BOLD + "(!) " + ChatColor.RED + "No Jackpot winner available due to no ticket sales!");
@@ -115,7 +119,7 @@ public class JackpotManager {
         history.setJackpotWinnings(history.getJackpotWinnings() + (long)winnings);
         history.setJackpotWins(history.getJackpotWins() + 1.0);
         Player pl = Bukkit.getPlayer(winner.getUuid());
-        AstroCore.economy.depositPlayer(pl, winnings);
+        Economy.add(pl.getUniqueId(), BigDecimal.valueOf(winnings));
 
         this.taxesCollected = (long)((double)this.taxesCollected + taxesCollected);
         this.saveWinnings();

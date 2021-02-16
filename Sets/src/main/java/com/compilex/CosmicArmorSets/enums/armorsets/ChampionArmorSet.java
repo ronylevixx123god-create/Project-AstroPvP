@@ -127,7 +127,7 @@ public class ChampionArmorSet
         if (event.getEntity() instanceof Player && CosmicArmorSetsAPI.hasInfiniteLuck((Player) event.getEntity(), 3, damager)) {
             return false;
         }
-        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.45);
+        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.40);
         if (Math.random() <= 0.02) {
             this.activateChampionAbility(damager, (Player) event.getEntity());
         }

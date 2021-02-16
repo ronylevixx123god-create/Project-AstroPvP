@@ -151,7 +151,11 @@ public class EngineerSet extends ArmorSetInfo implements Listener, WeaponedArmor
                     this.world.getWorld().playEffect(getBukkitEntity().getLocation(), Effect.STEP_SOUND, mat.getId());
 
                 }
-                de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), this.getBukkitEntity().getLocation(), 0f, 0.5f, 0f, 0.6f, 5);
+                try {
+                    de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), this.getBukkitEntity().getLocation(), 0f, 0.5f, 0f, 0.6f, 5);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
 
                 this.bukkitEntity.getLocation().getWorld().playSound(this.bukkitEntity.getLocation(), Sound.ZOMBIE_WOOD, 1.2F, 0.9f);
 

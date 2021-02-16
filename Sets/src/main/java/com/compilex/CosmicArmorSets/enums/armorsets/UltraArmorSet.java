@@ -102,7 +102,7 @@ public class UltraArmorSet
             return false;
         }
         this.removeResistance(damaged);
-        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.65);
+        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.80);
         return true;
     }
 
@@ -114,7 +114,7 @@ public class UltraArmorSet
         if (this.isBlockedOutpostWorld(damager)) {
             return false;
         }
-        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.55);
+        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.35);
         this.removeResistance(damager);
         if (Math.random() <= 0.25) {
             this.activateUltraAbility(damager, (Player) event.getEntity());
@@ -161,7 +161,6 @@ public class UltraArmorSet
     }
 
     public void activateUltraAbility(Player player, final Player target) {
-        player.setLastDamage(player.getLastDamage()*1.05);
         target.sendMessage(CC.translate("&e&l*&4&l*&e&l* &7&lULTRA STRIKED &f[&c" + player.getName() + "&f] &c&l*&4&l*&e&l*"));
         player.sendMessage(CC.translate("&e&l*&4&l*&e&l* &f&lULTRA STRIKE &7x2 &f&lDMG &e&l*&4&l*&e&l*"));
         target.setMetadata("ultra", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));

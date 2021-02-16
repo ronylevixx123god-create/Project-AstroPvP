@@ -65,33 +65,35 @@ public class AtlasRune extends Rune implements Listener {
     @Override
     public void procDamageEvent(final EntityDamageByEntityEvent e, final int level, final Player damager) throws Exception {
 
-        if (atlases.containsKey(damager)) {
-            double amt = 1 + (atlases.get(damager) / 100);
-            de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayer((Player) e.getEntity(),e.getEntity().getLocation(), 0,1, 0,1.0f,4);
+        try {
+            if (atlases.containsKey(damager)) {
+                double amt = 1 + (atlases.get(damager) / 100);
+                de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayer((Player) e.getEntity(), e.getEntity().getLocation(), 0, 1, 0, 1.0f, 4);
 
-            atlases.remove(damager, atlases.get(damager));
-            e.setDamage((e.getDamage(EntityDamageEvent.DamageModifier.BASE)) * amt);
+                atlases.remove(damager, atlases.get(damager));
 
-            atlases.remove(damager);
+                atlases.remove(damager);
+
+            }
+            if (hits.get(damager) != null && hits.get(damager) - 1 > 0) {
+                setNeededHits(damager, hits.get(damager) - 1);
+                return;
+            }
+            if (hits.get(damager) == null) {
+                setNeededHits(damager, ThreadLocalRandom.current().nextInt(2, 5));
+                return;
+            }
+            final int amount = (10 * level) < 80 ? 10 * level : 70;
+            damager.sendMessage(CC.translate("&4&l*ATLAS* &cNext attack: +&f" + (100 + amount) + "% &cDMG"));
+            Bukkit.getScheduler().runTask(DragonRunesPlugin.getInstance(), () -> {
+                atlases.put(damager, amount);
+
+                setNeededHits(damager, ThreadLocalRandom.current().nextInt(2, 7));
+
+            });
+        } catch (Exception ex) {
 
         }
-        if (hits.get(damager) != null && hits.get(damager) - 1 > 0) {
-            setNeededHits(damager, hits.get(damager) - 1);
-            return;
-        }
-        if (hits.get(damager) == null) {
-            setNeededHits(damager, ThreadLocalRandom.current().nextInt(2, 5));
-            return;
-        }
-        final int amount = (10 * level) < 80 ? 10 * level : 70;
-        damager.sendMessage(CC.translate("&4&l*ATLAS* &cNext attack: +&f" + (100 + amount) + "% &cDMG"));
-        e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.25);
-        Bukkit.getScheduler().runTask(DragonRunesPlugin.getInstance(), () -> {
-            atlases.put(damager, amount);
-
-            setNeededHits(damager, ThreadLocalRandom.current().nextInt(2, 7));
-
-        });
     }
 
 

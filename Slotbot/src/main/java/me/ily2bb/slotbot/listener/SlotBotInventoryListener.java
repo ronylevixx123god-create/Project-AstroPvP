@@ -231,5 +231,12 @@ public class SlotBotInventoryListener implements Listener {
             }
     }
 
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void damageCap(EntityDamageEvent e) {
+        if (e.getDamage() > 15) {
+            e.setDamage(15);
+        }
+    }
+
 
 }
