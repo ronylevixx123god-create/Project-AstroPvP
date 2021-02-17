@@ -14,7 +14,6 @@ public class ManualGiveAll {
 
     public static void func(ItemStack i) {
         Bukkit.getOnlinePlayers().forEach(player -> {
-            if (player.getInventory().firstEmpty() == -1) {
                 if (player.getInventory().firstEmpty() == -1) {
                     player.sendMessage(CC.Red + "Couldn't put the give all item in your inventory. Put it in your /claim until reboot.");
                     if (claim.containsKey(player)) {
@@ -27,7 +26,6 @@ public class ManualGiveAll {
                 } else {
                     player.getInventory().addItem(i);
                 }
-            }
         });
     }
 }
