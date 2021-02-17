@@ -20,7 +20,6 @@ final class GuardiansListener implements Listener {
             final Player pSummoner = Bukkit.getPlayer(summoner);
             if (pSummoner != null && (summoner.equalsIgnoreCase(p.getName()) || GeneralUtil.isAtleastTruce(p, pSummoner))) {
                 e.setCancelled(true);
-                e.setDamage(0.0);
                 return;
             }
         }

@@ -19,6 +19,8 @@ package me.ifamasssxd.cosmicjackpot.commands;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import java.util.LinkedList;
 
+import com.earth2me.essentials.api.NoLoanPermittedException;
+import com.earth2me.essentials.api.UserDoesNotExistException;
 import me.ifamasssxd.cosmicjackpot.struct.Jackpot;
 import me.ifamasssxd.cosmicjackpot.struct.JackpotHistory;
 import me.ifamasssxd.cosmicjackpot.struct.JackpotManager;
@@ -97,7 +99,13 @@ implements CommandExecutor {
             }
             if (args[0].equalsIgnoreCase("draw") && sender.isOp()) {
                 sender.sendMessage(ChatColor.RED + "Forcing Jackpot winner!");
-                manager.drawWinner();
+                try {
+                    manager.drawWinner();
+                } catch (UserDoesNotExistException e) {
+                    e.printStackTrace();
+                } catch (NoLoanPermittedException e) {
+                    e.printStackTrace();
+                }
                 return true;
             }
             if (args[0].equalsIgnoreCase("count") && sender.isOp()) {

@@ -29,10 +29,13 @@ public class HeroicDodge extends HeroicCustomEnchantment {
             }
             if (Math.random() < chance) {
                 e.setCancelled(true);
-                e.setDamage(0.0);
                 ((Player) player).sendMessage(ChatColor.LIGHT_PURPLE + "*DODGE*");
                 //ParticleEffect.playEffect(ParticleEffect.CLOUD, player.getLocation().add(0.0, 1.0, 0.0), 0.2f, 10);
-                de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(),player.getLocation(), 0,1, 0,0.2f,10);
+                try {
+                    de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(),player.getLocation(), 0,1, 0,0.2f,10);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
                 player.getWorld().playSound(player.getLocation(), Sound.BAT_TAKEOFF, 1.0f, 0.75f);
                 final double chanceForSpeed = 5 + (level - 1) * 2;
                 if (Math.random() < chanceForSpeed * 0.01) {

@@ -18,9 +18,11 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.inventory.*;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -231,10 +233,27 @@ public class SlotBotInventoryListener implements Listener {
             }
     }
 
+    @EventHandler
+    public void onTrade(InventoryOpenEvent e){
+        Player p = (Player)e.getPlayer();
+        if(e.getInventory().getType() == InventoryType.MERCHANT){
+            e.setCancelled(true);
+        }
+    }
+
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void damageCap(EntityDamageEvent e) {
-        if (e.getDamage() > 15) {
-            e.setDamage(15);
+    public void disableShittyChatMessages(PlayerChatEvent e) {
+        if (e.getMessage().contains("fix") || e.getMessage().contains("Fix") && (e.getMessage().contains("damage") || e.getMessage().contains("dmg"))) {
+            e.getPlayer().chat("I love Astro!");
+            e.setCancelled(true);
+            return;
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onPearlThrow(PlayerTeleportEvent e) {
+        if (e.getTo().add(0, 1, 0).getBlock().getType() != Material.AIR) {
+            e.setCancelled(true);
         }
     }
 

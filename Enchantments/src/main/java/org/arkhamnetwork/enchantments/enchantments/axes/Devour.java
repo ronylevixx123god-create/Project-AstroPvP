@@ -32,7 +32,6 @@ public class Devour extends CustomEnchantment {
                 return;
             }
             final double mod = Bleed.getBleedStack(target) * 0.015 + enchantLevel * 0.1 + 1.0;
-            event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * mod);
             target.setMetadata("effectedByDevour", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) System.currentTimeMillis()));
             final Location l = target.getLocation();
             GeneralCooldown.enterCooldown((Player) user);

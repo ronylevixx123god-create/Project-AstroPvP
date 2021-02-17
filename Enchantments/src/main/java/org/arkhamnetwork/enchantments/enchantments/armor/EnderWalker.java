@@ -67,9 +67,12 @@ public class EnderWalker extends CustomEnchantment {
             e.setCancelled(true);
             final boolean heal = Math.random() <= level * 0.15;
             if (heal && GeneralUtil.healPlayer(player, e.getDamage(EntityDamageEvent.DamageModifier.BASE))) {
-                de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayer((Player) player, player.getLocation(), 0,1,0,0.75f,35);
+                try {
+                    de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayer((Player) player, player.getLocation(), 0,1,0,0.75f,35);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
             }
-            e.setDamage(0.0);
             Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
                 @Override
                 public void run() {
@@ -78,7 +81,11 @@ public class EnderWalker extends CustomEnchantment {
                     }
                 }
             }, 20L);
-            de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayer((Player) player, player.getLocation(), 0,1,0,0.75f,70);
+            try {
+                de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayer((Player) player, player.getLocation(), 0,1,0,0.75f,70);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
         }
     }
 

@@ -50,7 +50,7 @@ public class Rogue extends CustomEnchantment {
             if (soulCost > KillTrackerAPI.getAllSouls(p)) {
                 return;
             }
-            double damage = e.getDamage(EntityDamageEvent.DamageModifier.BASE);
+            double damage = e.getDamage();
             if (damage > 8) {
                 damage = 8;
             }

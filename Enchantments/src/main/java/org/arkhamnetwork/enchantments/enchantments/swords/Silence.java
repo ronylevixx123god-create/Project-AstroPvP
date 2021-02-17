@@ -69,8 +69,16 @@ public class Silence extends CustomEnchantment {
             //ParticleEffect.playEffect(ParticleEffect.ENCHANTMENT_TABLE, pTarget.getEyeLocation(), 0.4f, 80);
             //ParticleEffect.playEffect(ParticleEffect.PORTAL, pTarget.getEyeLocation(), 0.4f, 60);
 
-            de.inventivegames.particle.ParticleEffect.ENCHANTMENT_TABLE.sendToPlayer(pTarget,target.getLocation(),0,0,0,0.4f, 80);
-            de.inventivegames.particle.ParticleEffect.PORTAL.sendToPlayer(pTarget,target.getLocation(),0,0,0,0.4f, 60);
+            try {
+                de.inventivegames.particle.ParticleEffect.ENCHANTMENT_TABLE.sendToPlayer(pTarget,target.getLocation(),0,0,0,0.4f, 80);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+            try {
+                de.inventivegames.particle.ParticleEffect.PORTAL.sendToPlayer(pTarget,target.getLocation(),0,0,0,0.4f, 60);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
 
             try {
                 if (DamageIndicatorUtils.isPlayerIndicating((Player) user)) {
@@ -87,8 +95,16 @@ public class Silence extends CustomEnchantment {
                 @Override
                 public void run() {
                     pTarget.removeMetadata("noDefenseProcs", (Plugin) Enchantments.getInstance());
-                    de.inventivegames.particle.ParticleEffect.ENCHANTMENT_TABLE.sendToPlayer(pTarget,target.getLocation(),0,0,0,0.4f, 80);
-                    de.inventivegames.particle.ParticleEffect.PORTAL.sendToPlayer(pTarget,target.getLocation(),0,0,0,0.4f, 60);
+                    try {
+                        de.inventivegames.particle.ParticleEffect.ENCHANTMENT_TABLE.sendToPlayer(pTarget,target.getLocation(),0,0,0,0.4f, 80);
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
+                    try {
+                        de.inventivegames.particle.ParticleEffect.PORTAL.sendToPlayer(pTarget,target.getLocation(),0,0,0,0.4f, 60);
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
                 }
             }, durationTicks);
         }

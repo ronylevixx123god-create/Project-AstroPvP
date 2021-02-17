@@ -26,7 +26,7 @@ public class HeroicEnlighted extends CustomEnchantment {
             return;
         double random = Math.random();
         double chance = 0.008D * level;
-        if (random < chance)
-            Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), () -> GeneralUtil.setPlayerHealth(player, player.getHealth() + 2.0D), 1L);
+        //if (random < chance)
+            //Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), () -> GeneralUtil.setPlayerHealth(player, player.getHealth() + 2.0D), 1L);
     }
 }

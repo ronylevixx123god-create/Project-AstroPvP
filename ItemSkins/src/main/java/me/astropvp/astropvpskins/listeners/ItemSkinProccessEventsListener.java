@@ -156,8 +156,8 @@ public class ItemSkinProccessEventsListener implements Listener {
                             continue;
                         }
                         double health = damaged.getHealth() * 0.1;
-                        damaged.setHealth(damaged.getHealth() - health);
-                        damager.setHealth(Math.min(damaged.getMaxHealth(), damager.getHealth() + health));
+                        //damaged.setHealth(damaged.getHealth() - health);
+                        //damager.setHealth(Math.min(damaged.getMaxHealth(), damager.getHealth() + health));
                     } else if (type == SkinType.SKULL_SCYTHE) {
                         e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.025);
                     } else if (type == SkinType.DEEPSPACE_BACKPACK) {

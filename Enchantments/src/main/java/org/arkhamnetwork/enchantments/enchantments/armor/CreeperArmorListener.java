@@ -28,9 +28,6 @@ final class CreeperArmorListener implements Listener {
                         }
                     }.runTaskLater((Plugin) Enchantments.getInstance(), 1L);
                 }
-                if (level == 3) {
-                    GeneralUtil.healPlayer((LivingEntity) player, Math.min(6.0, e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.1));
-                }
             }
         }
     }

@@ -22,7 +22,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public abstract class ArmorSetInfo {
     protected Random random = ThreadLocalRandom.current();
 
-    public static boolean subtractDirectHealth(Player player, LivingEntity damager, double toSubtract) {
+    public static boolean subtractDirectHealth(Player player, LivingEntity damager, double toSubtract) throws Exception {
         if (player.getHealth() <= 0.0) {
             return false;
         }

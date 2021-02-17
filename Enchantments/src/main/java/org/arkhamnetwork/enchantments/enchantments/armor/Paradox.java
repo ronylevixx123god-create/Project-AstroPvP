@@ -100,7 +100,11 @@ public class Paradox extends CustomEnchantment {
                 if (highImpactPlayers > 0) {
                     KillTrackerAPI.removeSoulsFromGems(p, cost);
                     for (final Player pEnt2 : affectedPlayers) {
-                        de.inventivegames.particle.ParticleEffect.HAPPY_VILLAGER.sendToPlayers(Bukkit.getOnlinePlayers(), pEnt2.getLocation(), 0,0,0,0.64f,20);
+                        try {
+                            de.inventivegames.particle.ParticleEffect.HAPPY_VILLAGER.sendToPlayers(Bukkit.getOnlinePlayers(), pEnt2.getLocation(), 0,0,0,0.64f,20);
+                        } catch (Exception exception) {
+                            exception.printStackTrace();
+                        }
 
                         GeneralUtil.healPlayer((LivingEntity) pEnt2, amountToHeal);
                         pEnt2.playSound(pEnt2.getLocation(), Sound.EAT, 1.0f, 2.0f);
@@ -114,7 +118,11 @@ public class Paradox extends CustomEnchantment {
                     p.playSound(p.getLocation(), Sound.LEVEL_UP, 1.0f, 0.65f);
                 }
             } else {
-                de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), p.getEyeLocation(), 0f, 0.5f, 0f, 0.3f, 30);
+                try {
+                    de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), p.getEyeLocation(), 0f, 0.5f, 0f, 0.3f, 30);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
 
                 p.playSound(p.getLocation(), Sound.ITEM_BREAK, 0.7f, 0.4f);
                 p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "** OUT OF SOULS **");

@@ -33,7 +33,7 @@ public class Enlighted extends CustomEnchantment {
             Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
                 @Override
                 public void run() {
-                    GeneralUtil.healPlayer(player, 1.0);
+                    //GeneralUtil.healPlayer(player, 1.0);
                 }
             }, 20L);
         }

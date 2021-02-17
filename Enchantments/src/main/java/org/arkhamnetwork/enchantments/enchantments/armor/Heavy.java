@@ -29,7 +29,7 @@ public class Heavy extends CustomEnchantment {
         }
         final double damage_negation = level * 0.02;
         if (i != null && i.getType() == Material.BOW && e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1.0 - damage_negation) > 1.0) {
-            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1.0 - damage_negation));
+            //e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1.0 - damage_negation));
             final Location l = player.getLocation();
             WorldUtil.sendWorldEffect(l.getBlock(), 133, 2001);
         }

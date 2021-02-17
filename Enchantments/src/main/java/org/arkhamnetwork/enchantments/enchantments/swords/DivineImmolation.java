@@ -97,7 +97,7 @@ public class DivineImmolation extends CustomEnchantment {
         if (CommandEnchDust.soulEnabled) {
             Player p = (Player)player;
             double radius = 1.0D * level;
-            double damage = 2.5;
+            double damage = 4.0;
             if (GeneralUtil.isSword(p.getItemInHand()) && (
                     !p.hasMetadata("lastItemHeldChange") || MinecraftServerUtils.getCurrentServerTick() - ((MetadataValue)p.getMetadata("lastItemHeldChange").get(0)).asLong() > 5L) && (
 

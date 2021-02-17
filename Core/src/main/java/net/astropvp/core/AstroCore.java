@@ -16,6 +16,8 @@ import com.cosmicpvp.titles.sql.SQLHandler;
 import com.cosmicpvp.titles.sql.TitleDatabaseManager;
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.I18n;
+import com.earth2me.essentials.api.NoLoanPermittedException;
+import com.earth2me.essentials.api.UserDoesNotExistException;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import io.puharesource.mc.titlemanager.api.v2.TitleManagerAPI;
 import lombok.Getter;
@@ -145,6 +147,10 @@ public class AstroCore extends JavaPlugin {
 
         Bukkit.getScheduler().runTaskLater(this, ()->
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ic reload"), 100L);
+        Bukkit.getScheduler().runTaskLater(this, ()->
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "arkload vault_gui"), 100L);
+        Bukkit.getScheduler().runTaskLater(this, ()->
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "arkload death_messages"), 100L);
 
         if (!Bukkit.getPluginManager().isPluginEnabled("TitleManager")) {
             Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[Astro] " + ChatColor.RED + "TitleManager is not loaded.");
@@ -184,7 +190,15 @@ public class AstroCore extends JavaPlugin {
         }
         this.getServer().getPluginManager().registerEvents(new JackpotListener(), this);
         this.getServer().getPluginManager().registerEvents(new GrindingMessagesToggleListener(), this);
-        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> this.jackpotManager.onJackpotTick(), 20L, 20L);
+        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
+            try {
+                this.jackpotManager.onJackpotTick();
+            } catch (UserDoesNotExistException e) {
+                e.printStackTrace();
+            } catch (NoLoanPermittedException e) {
+                e.printStackTrace();
+            }
+        }, 20L, 20L);
 
         this.filterManager = new FilterManager();
         this.filterManager.loadFilters();

@@ -22,7 +22,7 @@ final class LeadershipListener implements Listener {
             final boolean outpost = e.getDamager().getWorld().getName().startsWith("cosmic-station");
             final double incre = Math.min(1.75, 1.0 + level * ((koth || outpost) ? 0.05 : 0.1));
             double damage = e.getDamage(EntityDamageEvent.DamageModifier.BASE);
-            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * incre);
+            //e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * incre);
         }
     }
 }

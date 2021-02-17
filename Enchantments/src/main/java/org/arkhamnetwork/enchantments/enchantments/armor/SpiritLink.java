@@ -21,7 +21,7 @@ public class SpiritLink extends CustomEnchantment {
 
     @SneakyThrows
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
-        final double chance = level * 0.1;
+        final double chance = level * 0.03;
         if (e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK && Math.random() < chance) {
             final Player playerHurt = (Player) player;
             final double healAmount = Math.min(4.0, e.getDamage(EntityDamageEvent.DamageModifier.BASE) / (this.max - (level - 1)) / 4.0);
@@ -32,12 +32,20 @@ public class SpiritLink extends CustomEnchantment {
                     if (!this.isAlly(playerHurt, playerNear)) {
                         continue;
                     }
-                    GeneralUtil.healPlayer((LivingEntity) playerNear, healAmount);
-                    de.inventivegames.particle.ParticleEffect.HEART.sendToPlayers(Bukkit.getOnlinePlayers(), playerNear.getEyeLocation().add(0.0, 0.35, 0.0), 0.0f, (float) Math.random(), 0.0f, 0.05f, 1);
+                    //GeneralUtil.healPlayer((LivingEntity) playerNear, healAmount);
+                    try {
+                        de.inventivegames.particle.ParticleEffect.HEART.sendToPlayers(Bukkit.getOnlinePlayers(), playerNear.getEyeLocation().add(0.0, 0.35, 0.0), 0.0f, (float) Math.random(), 0.0f, 0.05f, 1);
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
 
                 }
             }
-            de.inventivegames.particle.ParticleEffect.HEART.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation().add(0.0, 0.5, 0.0), (float) Math.random() / 2.0f, (float) Math.random() / 2.0f, (float) Math.random() / 2.0f, 0.05f, 3);
+            try {
+                de.inventivegames.particle.ParticleEffect.HEART.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation().add(0.0, 0.5, 0.0), (float) Math.random() / 2.0f, (float) Math.random() / 2.0f, (float) Math.random() / 2.0f, 0.05f, 3);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
 
             player.getWorld().playSound(player.getLocation(), Sound.ORB_PICKUP, 1.0f, 0.35f);
         }

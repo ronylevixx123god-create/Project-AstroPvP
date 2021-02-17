@@ -36,7 +36,7 @@ public class Guardians extends CustomEnchantment {
         ig.setCanPickupItems(false);
         ig.setCustomName(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + summoner.getName() + "'s Guardian");
         ig.setCustomNameVisible(true);
-        final double customHp = 50 + level * 10;
+        final double customHp = level * 15;
         ig.setMaxHealth(customHp);
         ig.setHealth(customHp);
         ig.getWorld().playSound(ig.getLocation(), Sound.IRONGOLEM_DEATH, 1.0f, 0.55f);
@@ -128,7 +128,11 @@ public class Guardians extends CustomEnchantment {
                 }
                 final Player p = (Player) player;
                 final Location spawnLoc = player.getLocation().add(0.0, 2.0, 0.0);
-                de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), spawnLoc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.64f, 45);
+                try {
+                    de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), spawnLoc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.64f, 45);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
 
                 while (guardian_count > 0) {
                     --guardian_count;

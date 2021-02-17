@@ -79,7 +79,7 @@ public class Spirits extends CustomEnchantment {
                                             continue;
                                         } else {
                                             ++healed;
-                                            GeneralUtil.healPlayer((LivingEntity) player, toHeal2);
+                                            //GeneralUtil.healPlayer((LivingEntity) player, toHeal2);
                                             player.setMetadata("heal_cd", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) (System.currentTimeMillis() + required / 20.0 * 1000.0)));
                                             player.playSound(player.getLocation(), Sound.ORB_PICKUP, 0.3f, 1.4f);
                                             try {

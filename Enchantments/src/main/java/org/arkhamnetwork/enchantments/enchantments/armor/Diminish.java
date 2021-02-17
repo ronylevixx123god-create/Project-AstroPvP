@@ -36,7 +36,7 @@ public class Diminish extends CustomEnchantment {
         if (player.hasMetadata("diminishEffect")) {
             final double maxDmg = player.getMetadata("diminishEffect").get(0).asDouble();
             if (e.getDamage(EntityDamageEvent.DamageModifier.BASE) > maxDmg) {
-                e.setDamage(maxDmg);
+                //e.setDamage(maxDmg);
                 player.removeMetadata("diminishEffect", (Plugin) Enchantments.getInstance());
                 return;
             }

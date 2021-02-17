@@ -30,7 +30,6 @@ public class Dodge extends CustomEnchantment {
             }
             if (Math.random() < chance) {
                 e.setCancelled(true);
-                e.setDamage(0.0);
                 ((Player) player).sendMessage(ChatColor.YELLOW + "*DODGE*");
                 de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 0,1,0,0.2f,10);
                 player.getWorld().playSound(player.getLocation(), Sound.BAT_TAKEOFF, 1.0f, 0.75f);

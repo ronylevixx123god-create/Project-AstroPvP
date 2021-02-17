@@ -22,6 +22,5 @@ public class DeepWounds extends CustomEnchantment {
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
         playerHit.setMetadata("deepWounds", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) (System.currentTimeMillis() + level * 1500)));
         final double mod = Bleed.getBleedStack(playerHit) * 0.005 + level * 0.01 + 1.0;
-        e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * mod);
     }
 }
