@@ -22,6 +22,7 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -170,24 +171,9 @@ public class SlotBotInventoryListener implements Listener {
         }
     }
 
-    @EventHandler
-    public void inventoryClose(InventoryCloseEvent e) {
-        if (!(e.getPlayer() instanceof Player))
-            return;
-        Inventory inventory = e.getInventory();
-        if (!inventory.getTitle().contentEquals(CC.DarkGray + "Astro Slot Bot"))
-            return;
-        int slots = SlotBotManager.getSlotBotTickets(inventory);
-        Player player = (Player) e.getPlayer();
-        if (slots <= 0) {
-            for (int i = 2; i <= 6; i++) {
-                if (player.hasMetadata("slot_rolling_" + i))
-                    player.removeMetadata("slot_rolling_" + i, (Plugin) SlotBotPlugin.getInstance());
-            }
-            return;
-        }
-        returnTickets(slots, player);
-    }
+
+
+
 
     @EventHandler
     public void itemDeletionInventoryClose(InventoryCloseEvent e) {
@@ -252,10 +238,13 @@ public class SlotBotInventoryListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPearlThrow(PlayerTeleportEvent e) {
+        if (!e.getCause().equals(PlayerTeleportEvent.TeleportCause.ENDER_PEARL)) return;
         if (e.getTo().add(0, 1, 0).getBlock().getType() != Material.AIR) {
             e.setCancelled(true);
         }
     }
+
+
 
 
 }

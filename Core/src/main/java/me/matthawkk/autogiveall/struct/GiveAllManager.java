@@ -16,6 +16,7 @@ package me.matthawkk.autogiveall.struct;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.google.common.collect.Lists;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
+import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -28,7 +29,7 @@ import java.util.HashMap;
 public class GiveAllManager {
     public static HashMap<Player, Integer> lootboxes = new HashMap();
     private static long nextGiveAll = 1800L;
-    private static final ItemStack giveAllItem = (CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("BetaBundle")).createClaimableItem(false);
+    private static MysteryChest giveAllItem = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("MysteryLootbox");
 
     public static long getNextGiveAll() {
         return nextGiveAll;
@@ -66,7 +67,7 @@ public class GiveAllManager {
                 continue;
             }
             p.sendMessage(CC.Green + "You received a lootbox from the give all!");
-            p.getInventory().addItem(new ItemStack[]{giveAllItem});
+            p.getInventory().addItem(giveAllItem.createClaimableItem(true));
             nextGiveAll = 1800L;
         }
     }
@@ -84,7 +85,7 @@ public class GiveAllManager {
     }
 
     public static ItemStack getGiveAllItem() {
-        return giveAllItem;
+        return giveAllItem.createClaimableItem(true);
     }
 }
 

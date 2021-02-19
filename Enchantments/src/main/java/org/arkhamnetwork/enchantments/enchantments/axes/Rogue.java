@@ -54,7 +54,7 @@ public class Rogue extends CustomEnchantment {
             if (damage > 8) {
                 damage = 8;
             }
-            e.setDamage(damage + (multi * 0.55));
+            e.setDamage(damage + (multi * 0.56));
             try {
                 de.inventivegames.particle.ParticleEffect.CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 0,1,0,0.4f,12);
             } catch (Exception exception) {

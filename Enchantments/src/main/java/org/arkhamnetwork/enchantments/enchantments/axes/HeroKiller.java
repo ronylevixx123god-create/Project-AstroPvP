@@ -45,7 +45,7 @@ public class HeroKiller extends CustomEnchantment {
                 KillTrackerAPI.removeSoulsFromGems(p, 4);
             }
             final double increase = 0.5;
-            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (0.9 + increase));
+            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1 + increase));
         }
     }
 

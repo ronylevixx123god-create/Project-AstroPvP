@@ -26,7 +26,7 @@ public class TerminatorTeleblockListener
 implements Listener {
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Player && event.getEntity() instanceof Player && MaskUtils.hasMaskEquipped((Player) event.getDamager(), "TERMINATOR") && Math.random() < 0.05) {
+        if (event.getDamager() instanceof Player && event.getEntity() instanceof Player && MaskUtils.hasMaskEquipped((Player) event.getDamager(), "TERMINATOR") && Math.random() < 0.002) {
             event.getEntity().setMetadata("teleblock", new FixedMetadataValue(Enchantments.getInstance(), System.currentTimeMillis() + 6000L));
         }
     }
