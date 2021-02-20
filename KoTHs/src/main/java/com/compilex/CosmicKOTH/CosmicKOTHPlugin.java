@@ -155,10 +155,6 @@ extends JavaPlugin {
             }
         }
 
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            p.removeMetadata("CosmicOutposts.lastXpBuffAlert", this);
-            p.removeMetadata("CosmicOutposts.lastmcMMOBuffAlert", this);
-        }
         for (Outpost outpost : this.outposts) {
             if (outpost.getControllingFaction() != null) {
                 this.getConfig().set("mainoutposts." + outpost.getOutpostTier().name().toLowerCase() + ".controllingFaction", outpost.getControllingFaction());
