@@ -64,7 +64,7 @@ implements Runnable {
             @Override
             public void run() {
                 Bukkit.broadcastMessage("");
-                Bukkit.broadcastMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "*** A KOTH EVENT HAS STARTED! ***");
+                Bukkit.broadcastMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "*** A KOTH EVENT HAS STARTED! ***");
                 KothWorldType worldType = KothWorldType.getFromIndex(RewardUtils.getMapIndex());
                 if (worldType != null) {
                     Bukkit.broadcastMessage(CC.GreenB + "          Arena: " + CC.Aqua + worldType.getName(true));
@@ -99,7 +99,7 @@ implements Runnable {
     private void advertHandler() {
         if (this.runtime % 300 == 0) {
             Bukkit.broadcastMessage("");
-            Bukkit.broadcastMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "*** A KOTH EVENT IS RUNNING! ***");
+            Bukkit.broadcastMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "*** A KOTH EVENT IS RUNNING! ***");
             Bukkit.broadcastMessage(ChatColor.GRAY + "Use " + ChatColor.GREEN + "/koth" + ChatColor.GRAY + " to view event information!");
             Bukkit.broadcastMessage("");
         }
