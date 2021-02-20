@@ -169,7 +169,6 @@ public class ConquestListener implements Listener {
                                 ent.remove();
                         }
                         manager.getBosses().clear();
-                        Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), "fquests add CONQUEST_BREAKER " + player.getName());
                         CosmicConquests.get().getConfig().set("unclaimed", Boolean.valueOf(false));
                         CosmicConquests.get().saveConfig();
                         Bukkit.getPluginManager().callEvent((Event)new CustomCosmicPlayerEvent(player, "CONQUEST_BREAK", new Object[] { Integer.valueOf(hitsLeft.getHits()) }));

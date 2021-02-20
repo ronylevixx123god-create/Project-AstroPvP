@@ -156,11 +156,24 @@ public class EnchantmentBookListener implements Listener {
                     de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
                     de.inventivegames.particle.ParticleEffect.MAGIC_CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
 
+                    if (ench_book.getAmount() > 1) {
+                        ItemStack book = ench_book.clone();
+                        book.setAmount(book.getAmount()-1);
+
+                        pl.getInventory().addItem(book);
+                    }
+
                     Bukkit.getPluginManager().callEvent((Event) new CustomCosmicPlayerEvent(pl, "APPLY_ENCHANT", new Object[]{ench_book, EnchantmentBook.getEnchantmentBookSuccessRate(ench_book)}));
                 } else {
                     pl.playSound(pl.getLocation(), Sound.LAVA_POP, 1.0f, 0.75f);
                     pl.playEffect(EntityEffect.WOLF_HEARTS);
                     final Location l = pl.getLocation();
+                    if (ench_book.getAmount() > 1) {
+                        ItemStack book = ench_book.clone();
+                        book.setAmount(book.getAmount()-1);
+
+                        pl.getInventory().addItem(book);
+                    }
                     try {
                         de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.35f, 20);
 

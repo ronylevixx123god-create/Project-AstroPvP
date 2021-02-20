@@ -409,6 +409,8 @@ public class EnchantmentBook {
         final int level = getEnchantmentLevel(ench_book);
         int success_rate = getEnchantmentBookSuccessRate(ench_book);
         int success_rate_mod = 0;
+
+
         int destroy_rate = getEnchantmentBookDestructionRate(ench_book);
         if (Bukkit.getPluginManager().isPluginEnabled("CosmicOutposts") && CosmicOutpostsAPI.controlsHeroOutpost(pl)) {
             success_rate_mod += 10;
@@ -430,18 +432,6 @@ public class EnchantmentBook {
         }
         pl.sendMessage(ChatColor.GRAY + "Applying enchantment book... " + CC.Yellow + success_rate + CC.Gold + "(+" + success_rate_mod + ")" + CC.Yellow + "% success chance...");
         success_rate += success_rate_mod;
-        if (!pl.getName().equals("Woofless") && !pl.getName().equals("TBNRfrags")) {
-            if (success_rate < 100) {
-                success_rate -= 10;
-            }
-            if (success_rate < 1) {
-                success_rate = 1;
-            }
-            destroy_rate *= (int) 1.15;
-        }
-        if (pl.getName().equals("ypperin")) {
-            success_rate = 100;
-        }
         if (new Random().nextInt(100) <= success_rate) {
             ce.addToItem(item, level);
             return true;
