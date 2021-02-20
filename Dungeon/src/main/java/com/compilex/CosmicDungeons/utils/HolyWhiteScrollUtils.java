@@ -36,6 +36,11 @@ public class HolyWhiteScrollUtils {
         return data.getInt("holyScrollsApplied");
     }
 
+    public static boolean isCorrupt(NBTWrapper wrapper) {
+        NBTTagCompoundBuilder data = wrapper.getCompoundOrCreate("conaxData");
+        return data.getBoolean("corrupted");
+    }
+
     public static ItemStack applyCorruptionToItem(ItemStack item) {
         NBTWrapper wrapper = new NBTWrapper(item);
         NBTTagCompoundBuilder builder = wrapper.getCompoundOrCreate("conaxData");
@@ -60,6 +65,30 @@ public class HolyWhiteScrollUtils {
         data.setInt("holyScrollsApplied", Integer.valueOf(applied));
         wrapper.setNBTBase("conaxData", (NBTBase)data.get());
         return wrapper;
+    }
+
+    public static void removeCorrupt(ItemStack i, NBTWrapper wrapper) {
+        List<String> lore = i.getItemMeta().getLore();
+        NBTTagCompoundBuilder data = wrapper.getCompoundOrCreate("conaxData");
+
+        LinkedList<String> newLore = new LinkedList<>();
+        boolean found = false;
+        for (String s : lore) {
+            if (s.startsWith(CC.RedB + "CORRUPT")) {
+                found = true;
+            } else {
+                newLore.add(s);
+            }
+        }
+        if (found) {
+            ItemMeta im = i.getItemMeta();
+            im.setLore(newLore);
+            i.setItemMeta(im);
+            data.setBoolean("corrupted", Boolean.FALSE);
+            data.remove("corrupted");
+            wrapper.setNBTBase("conaxData", data.get());
+
+        }
     }
 
     public static void applyHolyWhitescroll(ItemStack i, int applied, int max, boolean fart) {

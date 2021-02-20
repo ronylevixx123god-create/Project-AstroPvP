@@ -57,7 +57,7 @@ implements InventoryInteractable {
         if (clicked == null || clicked.getType() == Material.AIR || clickedWrapper == null) {
             return;
         }
-        if (!HolyWhiteScrollUtils.itemHasHolyWhitescroll(clicked)) {
+        if (!HolyWhiteScrollUtils.itemHasHolyWhitescroll(clicked) && !HolyWhiteScrollUtils.isCorrupt(clickedWrapper)) {
             player.sendMessage(CC.RedB + "(!) " + CC.Red + "This item must contain a Holy White Scroll before you can apply Holy Water!");
             e.setCancelled(true);
             return;
@@ -76,6 +76,7 @@ implements InventoryInteractable {
         clickedWrapper.setNBTBase("conaxData", (NBTBase)cosmicData.get());
         clicked = clickedWrapper.build();
         HolyWhiteScrollUtils.applyHolyWhitescroll(clicked, scrollsApplied, 4, false);
+            HolyWhiteScrollUtils.removeCorrupt(clicked, clickedWrapper);
         e.setCurrentItem(clicked);
         player.sendMessage(CC.Gold + "Successfully applied Holy Water to this item!");
     }
