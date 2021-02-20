@@ -27,13 +27,7 @@ public class MOTD implements Listener {
             player.sendMessage(CC.translate("&eRecommended Version: &f&nCosmic Client (1.8.8)"));
             player.sendMessage(CC.translate("&c "));
             player.playSound(player.getLocation(), Sound.GHAST_MOAN, 5, 5);
-            sendBeta(player);
         }, 15L);
     }
 
-    private void sendBeta(Player player) {
-        player.sendMessage(CC.translate("&8[&c&l✪&8] &fThis map is being ran as a &c&lBETA&f."));
-        player.sendMessage(CC.translate("&7Report all bugs in our discord: &fdiscord.astropvp.net&7."));
-        player.sendMessage(CC.translate("&7"));
-    }
 }
