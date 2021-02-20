@@ -53,30 +53,19 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class InventoryBloodhoundPet extends InventoryPet {
    static Map items = new HashMap();
    static Map armor = new HashMap();
-   public int petLevel = 0;
+   public int petLevel = 5;
 
    public InventoryPets getOwner() {
       return InventoryPets.BLOODHOUND;
    }
 
    public List getPetDescription(int level) {
-      return Lists.newArrayList(CC.Gray + "Mark your target for assured destruction.", CC.Gray, CC.YellowB + "Ability", CC.Gray + "Affects target player with " + CC.DarkRedB + "[TAG]:", CC.DarkRed + "* " + CC.Gray + "Auto-/f focus target player ", CC.DarkRed + "* " + CC.Gray + "Anti-Bless Slowness I (10s) ", CC.DarkRed + "* " + CC.Gray + "Silence target player (10s) ", CC.DarkRed + "* " + CC.Gray + "1.5x DMG to target players (10s) ", CC.DarkRed + "* " + CC.Gray + "Target is visable on /near for (30s) ", CC.Gray, CC.YellowB + "Cooldown", CC.Gray + " " + TimeUtils.formatSeconds((long) this.getCooldown(level)));
+      return Lists.newArrayList(CC.Gray + "Mark your target for assured destruction.", CC.Gray, CC.YellowB + "Ability", CC.Gray + "Affects target player with " + CC.DarkRedB + "[TAG]:", CC.DarkRed + "* " + CC.Gray + "Auto-/f focus target player ", CC.DarkRed + "* " + CC.Gray + "Anti-Bless Slowness I (10s) ", CC.DarkRed + "* " + CC.Gray + "Silence target player (10s) ", CC.DarkRed + "* " + CC.Gray + "1.5x DMG to target players (10s) ", CC.DarkRed + "* " + CC.Gray + "Target is visable on /near for (30s) ", CC.Gray, CC.YellowB + "Cooldown", CC.Gray + " " + TimeUtils.formatSeconds((long) this.getCooldown(5)));
    }
 
    public int getCooldown(int level) {
-      if (level == 1) {
-         return 600;
-      } else if (level == 2) {
-         return 540;
-      } else if (level == 3) {
-         return 480;
-      } else if (level == 4) {
-         return 420;
-      } else if (level == 5) {
-         return 360;
-      } else {
-         return level == 6 ? 300 : 600;
-      }
+
+      return 360;
    }
    
    public int getExpForLevel(int level) {
@@ -89,8 +78,14 @@ public class InventoryBloodhoundPet extends InventoryPet {
 
    public boolean onPetItemInteract(final Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
       long lastUse = petItem.getLastUsed();
-      long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown(petItem.getLevel()));
+      long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown(5));
       long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
+
+      if (item.getAmount() > 1) {
+         player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));
+
+         return false;
+      }
 
       if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
          throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
@@ -107,22 +102,18 @@ public class InventoryBloodhoundPet extends InventoryPet {
          throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "No valid target found!");
       petItem.setLastUsed(System.currentTimeMillis());
       int xpGain = petItem.getLevel() * 5;
-      petItem.addExperience(player, xpGain);
       player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 1.1F, 3.0F);
-      player.sendMessage(String.valueOf(CC.GreenB) + "+ " + CC.Green + NumberUtils.formatMoney(xpGain) + " Pet EXP " + CC.GreenB + "[" +
-              CC.Gray + petItem.getExp() + "/" +
-              petItem.getPetType().getInternalClass().getExpForLevel(petItem.getLevel() + 1) + CC.GreenB + "]");
       final String name = player.getName();
       Faction faction = fPlayer.getFaction();
       player.chat("/f t " + pTarget.getName());
       pTarget.setMetadata("noDefenseProcs", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), Boolean.valueOf(true)));
       pTarget.setMetadata("bloodhound_" + name, (MetadataValue)new FixedMetadataValue((Plugin)CosmicSkyInventoryPets.get(), null));
       pTarget.setMetadata("bloodhound", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSkyInventoryPets.get(), null));
-      pTarget.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, (4 + petItem.getLevel()) * 20, 0));
+      pTarget.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, (4 + 5) * 20, 0));
       FPlayer fPTarget = FactionUtils.getFPlayer(pTarget);
       if (fPTarget.hasFaction() && fPlayer.hasFaction())
          focusTargetPlayer(player, ((Player) target).getPlayer());
-      int sum = 4 + petItem.getLevel();
+      int sum = 4 + 5;
       if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.REINDEER_ANTLERS) && Math.random() < 0.05D) {
          sum *= 2;
          player.sendMessage(String.valueOf(CC.RedB) + "* REINDEER ITEM SKIN " + CC.Gray + "(" + CC.White + "2x Pet Length" + CC.Gray + ")");

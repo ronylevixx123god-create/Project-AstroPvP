@@ -51,6 +51,11 @@ public class InventoryAlchemistPet extends InventoryPet {
       long lastUse = petItem.getLastUsed();
       long delay = TimeUnit.SECONDS.toMillis((long)this.getCooldown(petItem.getLevel()));
       long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
+      if (item.getAmount() > 1) {
+         player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));
+
+         return false;
+      }
       if (lastUse <= 0L || timeTillCanUse <= 0L || player.isOp() && player.isSneaking()) {
          if (this.getEmptySlots(player) < 3) {
             throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Not enough space (3 slots) in inventory!");
@@ -58,8 +63,6 @@ public class InventoryAlchemistPet extends InventoryPet {
             petItem.setLastUsed(System.currentTimeMillis());
             boolean xp = true;
             player.playSound(player.getLocation(), Sound.LAVA_POP, 1.1F, 1.0F);
-            petItem.addExperience(player, 100);
-            player.sendMessage(CC.GreenB + "+ " + CC.Green + NumberUtils.formatMoney(100.0D) + " Pet EXP " + CC.GreenB + "[" + CC.Gray + petItem.getExp() + "/" + petItem.getPetType().getInternalClass().getExpForLevel(petItem.getLevel() + 1) + CC.GreenB + "]");
             List loot = EvolutionKits.ALCHEMIST.getKit().getItems(player, Math.max(3, petItem.getLevel()));
             Collections.shuffle(loot);
             Iterator var13 = loot.subList(0, this.getItemsToGive(petItem.getLevel()) - 1).iterator();

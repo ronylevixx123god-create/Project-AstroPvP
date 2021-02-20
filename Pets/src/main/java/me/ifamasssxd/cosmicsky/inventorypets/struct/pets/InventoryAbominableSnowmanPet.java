@@ -43,24 +43,18 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class InventoryAbominableSnowmanPet extends InventoryPet {
-   int petLevel = 0;
+   int petLevel = 3;
 
    public InventoryPets getOwner() {
       return InventoryPets.ABOMINABLE_SNOWMANPET;
    }
 
    public List<String> getPetDescription(int level) {
-      return Lists.newArrayList(CC.Gray + "An enormous, monstrous spirit", String.valueOf(CC.Gray) + "well trained in illusionist magic.", (new StringBuilder(String.valueOf(CC.Gray))).toString(), String.valueOf(CC.WhiteB) + "Ability", "[" + CC.DarkRed + "Polymorph" + CC.White + "] " + CC.Gray + "target player, transforming", String.valueOf(CC.Gray) + "them into harmless, immoble snowman for: " + freezeDuration(this.petLevel) + "s", String.valueOf(CC.Gray) + "Any dammage dealt to them will break the spell", (new StringBuilder(String.valueOf(CC.Gray))).toString(), String.valueOf(CC.WhiteB) + "Cooldown", String.valueOf(CC.Gray) + " " + TimeUtils.formatSeconds(getCooldown(level)));
+      return Lists.newArrayList(CC.Gray + "An enormous, monstrous spirit", String.valueOf(CC.Gray) + "well trained in illusionist magic.", (new StringBuilder(String.valueOf(CC.Gray))).toString(), String.valueOf(CC.WhiteB) + "Ability", "[" + CC.DarkRed + "Polymorph" + CC.White + "] " + CC.Gray + "target player, transforming", String.valueOf(CC.Gray) + "them into harmless, immoble snowman for: " + freezeDuration(this.petLevel) + "s", String.valueOf(CC.Gray) + "Any dammage dealt to them will break the spell", (new StringBuilder(String.valueOf(CC.Gray))).toString(),"", String.valueOf(CC.WhiteB) + "Cooldown", String.valueOf(CC.Gray) + " " + TimeUtils.formatSeconds(getCooldown(level)));
    }
 
    public int getCooldown(int level) {
-      if (level == 1)
-         return 600;
-      if (level == 2)
-         return 420;
-      if (level == 3)
          return 300;
-      return 600;
    }
 
    public int getMaxLevel() {
@@ -75,6 +69,11 @@ public class InventoryAbominableSnowmanPet extends InventoryPet {
       long lastUse = petItem.getLastUsed();
       long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown(petItem.getLevel()));
       long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
+
+      if (item.getAmount() > 1) {
+         player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));
+         return false;
+      }
 
       if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
          throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
@@ -91,7 +90,6 @@ public class InventoryAbominableSnowmanPet extends InventoryPet {
          player.sendMessage(String.valueOf(CC.RedB) + "PET: " + CC.Red + "Not allowed in this region!");
          return true;
       }
-      this.petLevel = petItem.getLevel();
       double closest = Double.MAX_VALUE;
       Entity closestp = null;
       for (Entity i : player.getNearbyEntities(3.0D, 3.0D, 3.0D)) {
@@ -127,10 +125,8 @@ public class InventoryAbominableSnowmanPet extends InventoryPet {
          petItem.setLastUsed(System.currentTimeMillis());
          freezeThePlayer(p2, player);
          int xpGain = 100;
-         petItem.addExperience(player, 100);
          player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
          player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
-         player.sendMessage(String.valueOf(CC.GreenB) + "+ " + CC.Green + NumberUtils.formatMoney(100.0D) + " Pet EXP " + CC.GreenB + "[" + CC.Gray + petItem.getExp() + "/" + petItem.getPetType().getInternalClass().getExpForLevel(petItem.getLevel() + 1) + CC.GreenB + "]");
          return true;
       }
       return true;

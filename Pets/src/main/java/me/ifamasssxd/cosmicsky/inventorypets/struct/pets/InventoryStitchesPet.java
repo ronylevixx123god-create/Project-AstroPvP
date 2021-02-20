@@ -63,6 +63,11 @@ public class InventoryStitchesPet extends InventoryPet {
         final long lastUse = petItem.getLastUsed();
         final long delay = TimeUnit.SECONDS.toMillis(this.getCooldown(petItem.getLevel()));
         long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
+        if (itemStack.getAmount() > 1) {
+            player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));
+
+            return false;
+        }
         if (lastUse > 0L && timeTillCanUse > 0L) {
             throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
         }

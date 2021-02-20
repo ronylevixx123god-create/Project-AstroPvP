@@ -43,6 +43,11 @@ public class InventoryAntiTeleblockPet extends InventoryPet {
       long lastUse = petItem.getLastUsed();
       long delay = TimeUnit.SECONDS.toMillis((long)this.getCooldown(petItem.getLevel()));
       long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
+      if (item.getAmount() > 1) {
+         player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));
+
+         return false;
+      }
       if (lastUse <= 0L || timeTillCanUse <= 0L || player.isOp() && player.isSneaking()) {
          if (!player.hasMetadata("teleblock")) {
             player.playSound(player.getLocation(), Sound.VILLAGER_NO, 3.0F, 0.7F);
@@ -51,10 +56,8 @@ public class InventoryAntiTeleblockPet extends InventoryPet {
             petItem.setLastUsed(System.currentTimeMillis());
             player.removeMetadata("teleblock", CosmicSkyInventoryPets.get());
             boolean xp = true;
-            petItem.addExperience(player, 10);
             player.playSound(player.getLocation(), Sound.LAVA_POP, 1.1F, 1.0F);
             player.updateInventory();
-            player.sendMessage(CC.GreenB + "+ " + CC.Green + NumberUtils.formatMoney(10.0D) + " Pet EXP " + CC.GreenB + "[" + CC.Gray + petItem.getExp() + "/" + petItem.getPetType().getInternalClass().getExpForLevel(petItem.getLevel() + 1) + CC.GreenB + "]");
             petItem.getPetType().sendMsg(player, CC.Green, "Teleblock removed!");
             return true;
          }

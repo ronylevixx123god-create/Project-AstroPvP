@@ -68,26 +68,7 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
         return this.createItem((Player) null, this.petType, this.level, this.exp, this.lastUsed, this.lastRareCandyUsed, this.leashed);
     }
 
-    public void addExperience(Player player, int exp) {
-        if (this.exp + exp >= this.exp) {
-            this.exp += exp;
-            if (this.level < this.petType.getInternalClass().getMaxLevel()) {
-                int expNeeded = this.petType.getInternalClass().getExpForLevel(this.level + 1);
-                if (this.exp >= expNeeded) {
-                    int overlap = this.exp - expNeeded;
-                    this.levelUp(player);
-                    this.exp = overlap;
-                }
-            }
-        }
 
-    }
-
-    public void levelUp(Player player) {
-        this.exp = 0;
-        this.level = Math.min(this.petType.getInternalClass().getMaxLevel(), this.level + 1);
-        player.sendMessage(CC.GreenB + "*** " + ItemUtils.getDisplayName(this.item) + CC.Green + " has increased to level " + CC.GreenU + this.level + CC.GreenB + " ***");
-    }
 
     public ItemStack createItem(Player player, Object... objects) {
         if (objects != null && objects.length >= 1) {
@@ -121,45 +102,16 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
             pet.getInternalClass().getPetDescription(level.intValue()).forEach((line) -> {
                 lore.add(CC.Gray + line);
             });
-            lore.add("");
-            String cb = CC.YellowB;
-            lore.add(cb + "Level");
-            lore.add(CC.Gray + " " + level);
-            lore.add("");
-            lore.add(cb + "EXP");
-            lore.addAll(this.getExpLore(pet, ((Number) exp).longValue(), ((Number) level).intValue()));
             if (this.leashed) {
                 lore.add("");
                 lore.add(ChatColor.GOLD + ChatColor.BOLD.toString() + "* LEASHED *");
             }
-            return pet.getInternalClass().onItemCreate(this.applyItemData((new ItemBuilder(Material.SKULL_ITEM, pet.getItemName() + CC.Gray + " [LVL " + ((Number) level).intValue() + "]", new String[0])).data((short) 3).lore(lore).build()).setNBTBase("cosmicData", (new NBTTagCompoundBuilder()).setInt("level", ((Number) level).intValue()).setInt("exp", ((Number) exp).intValue()).setString("petType", pet.name()).setLong("lastUsed", ((Number) lastUsed).longValue()).setLong("lastRareCandyUsed", ((Number) lastRareCandyUsed).longValue()).setBoolean("leashed", leashed).get()).setNBTBase("SkullOwner", pet.getBuilder().get()), this).assignIID().build();
+            return pet.getInternalClass().onItemCreate(this.applyItemData((new ItemBuilder(Material.SKULL_ITEM, pet.getItemName() , new String[0])).data((short) 3).lore(lore).build()).setNBTBase("cosmicData", (new NBTTagCompoundBuilder()).setInt("level", ((Number) level).intValue()).setInt("exp", ((Number) exp).intValue()).setString("petType", pet.name()).setLong("lastUsed", ((Number) lastUsed).longValue()).setLong("lastRareCandyUsed", ((Number) lastRareCandyUsed).longValue()).setBoolean("leashed", leashed).get()).setNBTBase("SkullOwner", pet.getBuilder().get()), this).assignIID().build();
         } else {
             return null;
         }
     }
 
-    private List<String> getExpLore(InventoryPets type, long exp, int level) {
-        List<String> retr = Lists.newArrayList();
-        int required = type.getInternalClass().getExpForLevel(level + 1);
-        double percent = required <= 0 ? 1.0D : (double) exp / (double) required;
-        boolean bars = true;
-        int expBars = (int) Math.floor(50.0D * percent);
-        int redBars = 50 - expBars;
-        StringBuilder builder = new StringBuilder();
-
-        int i;
-        for (i = 0; i < expBars; ++i) {
-            builder.append(CC.Green).append("|");
-        }
-
-        for (i = 0; i < redBars; ++i) {
-            builder.append(CC.Red).append("|");
-        }
-
-        retr.add(builder.toString());
-        retr.add(CC.Gray + " (" + NumberUtils.formatMoney((double) exp) + "/" + NumberUtils.formatMoney((double) required) + ")");
-        return retr;
-    }
 
     @SneakyThrows
     public void onPlayerInteractable(Player player, ItemStack itemStack, NBTWrapper nbtWrapper, PlayerInteractEvent playerInteractEvent) throws CosmicException {
@@ -196,6 +148,11 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
             }
 
             if (type.getInternalClass().onPetItemInteract(player, itemStack, item, playerInteractEvent)) {
+                if (player.getItemInHand().getAmount() >1) {
+                    player.sendMessage(CC.translate("&cYou &ncannot&c use stacked pets!"));
+                    playerInteractEvent.setCancelled(true);
+                    return;
+                }
                 player.getInventory().setItemInHand(item.build());
                 player.updateInventory();
             }

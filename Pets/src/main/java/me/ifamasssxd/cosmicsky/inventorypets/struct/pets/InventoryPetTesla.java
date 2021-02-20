@@ -57,6 +57,11 @@ public class InventoryPetTesla extends InventoryPet {
       long lastUse = petItem.getLastUsed();
       long cd = TimeUnit.SECONDS.toMillis((long)this.getCooldown(petItem.getLevel()));
       long timeTillCanUse = cd - (System.currentTimeMillis() - lastUse);
+      if (item.getAmount() > 1) {
+         player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));
+
+         return false;
+      }
       if (lastUse <= 0L || timeTillCanUse <= 0L || player.isOp() && player.isSneaking()) {
          if (CosmicSkyInventoryPets.get().getPetManager().getTeslaBuffs().containsKey(player.getUniqueId())) {
             throw new PrefixedPetException("You must wait for your previous buff to expire!");
@@ -66,9 +71,7 @@ public class InventoryPetTesla extends InventoryPet {
             boolean inCombat = CombatLog.inCombat(player);
             boolean inWarzone = Board.getFactionAt(new FLocation(player.getLocation())).isWarZone();
             int xp = inCombat && inWarzone ? 10 : 4;
-            petItem.addExperience(player, xp);
             CosmicSkyInventoryPets.get().getPetManager().getTeslaBuffs().put(player.getUniqueId(), new TeslaPetBuff(1.0D, System.currentTimeMillis() + (long)(duration * 1000)));
-            player.sendMessage(CC.GreenB + "+ " + CC.Green + NumberUtils.formatMoney((double)xp) + " Pet EXP " + CC.GreenB + "[" + CC.Gray + petItem.getExp() + "/" + petItem.getPetType().getInternalClass().getExpForLevel(petItem.getLevel() + 1) + CC.GreenB + "]");
             player.sendMessage(this.getOwner().getMsgWithPrefix(CC.Green) + CC.GreenB + " [" + CC.Gray + "Tesla Pet Boost (" + CC.Green + "No Soul Costs" + CC.Gray + ")" + CC.GreenB + "]");
             ASound.ORB_PICKUP.play(player, 1.0F, 3.0F);
             ASound.NOTE_PLING.play(player, 1.0F, 1.0F);

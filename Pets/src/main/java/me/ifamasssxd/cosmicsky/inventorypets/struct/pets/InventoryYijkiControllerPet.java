@@ -69,6 +69,12 @@ public class    InventoryYijkiControllerPet extends InventoryPet {
         long lastUse = petItem.getLastUsed();
         long delay = TimeUnit.SECONDS.toMillis(getCooldown(petItem.getLevel()));
         long timeTillCanUse = delay - System.currentTimeMillis() - lastUse;
+
+        if (item.getAmount() > 1) {
+            player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));
+
+            return false;
+        }
         if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
             throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int)(timeTillCanUse / 1000L)));
         if (player.hasMetadata("in_duel"))
@@ -89,10 +95,8 @@ public class    InventoryYijkiControllerPet extends InventoryPet {
         this.petLevel = petItem.getLevel();
         petItem.setLastUsed(System.currentTimeMillis());
         int xpGain = 50;
-        petItem.addExperience(player, 50);
         player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
         player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
-        player.sendMessage(String.valueOf(CC.GreenB) + "+ " + CC.Green + NumberUtils.formatMoney(50.0D) + " Pet EXP " + CC.GreenB + "[" + CC.Gray + petItem.getExp() + "/" + petItem.getPetType().getInternalClass().getExpForLevel(petItem.getLevel() + 1) + CC.GreenB + "]");
         return true;
     }
 

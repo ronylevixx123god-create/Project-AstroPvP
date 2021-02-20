@@ -50,6 +50,11 @@ public class InventoryBannerPet extends InventoryPet {
       long lastUse = petItem.getLastUsed();
       long delay = TimeUnit.SECONDS.toMillis((long)this.getCooldown(petItem.getLevel()));
       long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
+      if (item.getAmount() > 1) {
+         player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));
+
+         return false;
+      }
       if (lastUse <= 0L || timeTillCanUse <= 0L || player.isOp() && player.isSneaking()) {
          Faction faction = FactionUtils.getFaction(player);
          if (faction == null) {
@@ -77,8 +82,6 @@ public class InventoryBannerPet extends InventoryPet {
                if (!skipped) {
                   cosmicData.setLong("lastExpGained", System.currentTimeMillis());
                   petItem.getWrapper().setNBTBase("cosmicData", cosmicData.get());
-                  petItem.addExperience(player, 500);
-                  player.sendMessage(CC.GreenB + "+ " + CC.Green + NumberUtils.formatMoney(500.0D) + " Pet EXP " + CC.GreenB + "[" + CC.Gray + petItem.getExp() + "/" + petItem.getPetType().getInternalClass().getExpForLevel(petItem.getLevel() + 1) + CC.GreenB + "]");
                }
 
                PlayerUtil.giveOrDropProtectedItem(player, banner, -1);

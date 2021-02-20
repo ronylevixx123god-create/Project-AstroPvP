@@ -35,7 +35,7 @@ public class InventoryFeignDeathPet extends InventoryPet {
     }
 
     public int getExpForLevel(int level) {
-        return level * 750;
+        return 5 * 750;
     }
 
     public int getMaxLevel() {
@@ -50,6 +50,11 @@ public class InventoryFeignDeathPet extends InventoryPet {
         long lastUse = petItem.getLastUsed();
         long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown(petItem.getLevel()));
         long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
+        if (item.getAmount() > 1) {
+            player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));
+
+            return false;
+        }
         if (PetUtils.isOnCooldown(player, petItem.getPetType()) && (!player.isOp() || !player.isSneaking()))
             throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU +
                     TimeUtils.formatSeconds(PetUtils.getSecondsOnCooldown(player, petItem.getPetType())));
@@ -59,23 +64,11 @@ public class InventoryFeignDeathPet extends InventoryPet {
         if (!inCombat) {
             xpGain = 1;
         }
-        MasteryFeignDeath.vanishPlayer(player, petItem.getLevel());
-        petItem.addExperience(player, xpGain);
-        PetUtils.addPetCooldown(player, petItem.getPetType(), (getCooldown(petItem.getLevel()) * 1000));
+        MasteryFeignDeath.vanishPlayer(player, 5);
+        PetUtils.addPetCooldown(player, petItem.getPetType(), (getCooldown(5) * 1000));
         player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
         player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
 
-
-        /*try {
-            if (DamageIndicatorUtils.isPlayerIndicating((Player) player)) {
-                DamageIndicatorUtils.createDamageIndicator((Player) player,
-                        player.getLocation().add(1.0D, 2.0D, 0.0D),
-                        new String[]{CC.YellowB + "* FEIGN DEATH *"});
-            }
-        } catch (Exception ex) {
-
-        }*/
-        player.sendMessage(CC.GreenB + "+ " + CC.Green + NumberUtils.formatMoney((double) xpGain) + " Pet EXP " + CC.GreenB + "[" + CC.Gray + petItem.getExp() + "/" + petItem.getPetType().getInternalClass().getExpForLevel(petItem.getLevel() + 1) + CC.GreenB + "]");
         return true;
 
     }

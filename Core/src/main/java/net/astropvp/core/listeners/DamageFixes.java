@@ -43,7 +43,7 @@ public class DamageFixes implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    /*@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void reduceCritDamage(EntityDamageByEntityEvent e) {
         if (!(e.getDamager() instanceof Player)) {
             return;
@@ -54,7 +54,7 @@ public class DamageFixes implements Listener {
             e.setDamage(e.getDamage() * 0.5);
 
         }
-    }
+    }*/
 
     public boolean isCritical(Player p) {
         return (p.getVelocity().getY() + 0.0784000015258789) <= 0;

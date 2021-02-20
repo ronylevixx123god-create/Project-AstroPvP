@@ -57,6 +57,11 @@ public class InventorySmitePet extends InventoryPet {
       long lastUse = petItem.getLastUsed();
       long delay = TimeUnit.SECONDS.toMillis((long)this.getCooldown(petItem.getLevel()));
       long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
+      if (item.getAmount() > 1) {
+         player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));
+
+         return false;
+      }
       if (lastUse <= 0L || timeTillCanUse <= 0L || player.isOp() && player.isSneaking()) {
          if (player.hasMetadata("smitePetUse") && System.currentTimeMillis() - ((MetadataValue)player.getMetadata("smitePetUse").get(0)).asLong() < 1000L) {
             throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "You cannot attempt to use Smite pets that often!");
@@ -68,8 +73,6 @@ public class InventorySmitePet extends InventoryPet {
                throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "No valid target found!");
             } else {
                int xpGain = 1;
-               petItem.addExperience(player, xpGain);
-               player.sendMessage(CC.GreenB + "+ " + CC.Green + NumberUtils.formatMoney((double)xpGain) + " Pet EXP " + CC.GreenB + "[" + CC.Gray + petItem.getExp() + "/" + petItem.getPetType().getInternalClass().getExpForLevel(petItem.getLevel()) + CC.GreenB + "]");
                if (target instanceof Player) {
                   Player pTarget = (Player)target;
                   if (!WorldGuardUtils.isPvPEnabled(pTarget.getLocation())) {

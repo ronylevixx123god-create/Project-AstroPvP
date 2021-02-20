@@ -48,6 +48,11 @@ public class InventoryGaiaPet extends InventoryPet {
       long lastUse = petItem.getLastUsed();
       long delay = TimeUnit.SECONDS.toMillis((long)this.getCooldown(petItem.getLevel()));
       long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
+      if (item.getAmount() > 1) {
+         player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));
+
+         return false;
+      }
       if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking())) {
          throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((long)((int)(timeTillCanUse / 1000L))));
       } else {
@@ -58,11 +63,9 @@ public class InventoryGaiaPet extends InventoryPet {
             throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "No valid enemy players nearby!");
          } else {
             player.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "PET: ** NATURE'S WRATH **");
-            petItem.addExperience(player, xpGain);
             petItem.setLastUsed(System.currentTimeMillis());
             player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
             player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
-            player.sendMessage(CC.GreenB + "+ " + CC.Green + NumberUtils.formatMoney((double)xpGain) + " Pet EXP " + CC.GreenB + "[" + CC.Gray + petItem.getExp() + "/" + petItem.getPetType().getInternalClass().getExpForLevel(petItem.getLevel() + 1) + CC.GreenB + "]");
             return true;
          }
       }

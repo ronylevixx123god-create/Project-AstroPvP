@@ -50,6 +50,11 @@ public class InventoryEvolutionPet extends InventoryPet {
       long lastUse = petItem.getLastUsed();
       long delay = TimeUnit.SECONDS.toMillis((long)this.getCooldown(petItem.getLevel()));
       long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
+      if (item.getAmount() > 1) {
+         player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));
+
+         return false;
+      }
       if (lastUse <= 0L || timeTillCanUse <= 0L || player.isOp() && player.isSneaking()) {
          if (!player.hasMetadata("inventoryPet_vkit") || player.isOp() && player.isSneaking()) {
             try {
@@ -117,8 +122,6 @@ public class InventoryEvolutionPet extends InventoryPet {
                player.playSound(player.getLocation(), Sound.LAVA_POP, 1.1F, 1.0F);
                if (!second) {
                   int xp = 500;
-                  petItem.addExperience(player, xp);
-                  player.sendMessage(CC.GreenB + "+ " + CC.Green + NumberUtils.formatMoney((double)xp) + " Pet EXP " + CC.GreenB + "[" + CC.Gray + petItem.getExp() + "/" + petItem.getPetType().getInternalClass().getExpForLevel(petItem.getLevel() + 1) + CC.GreenB + "]");
                   petItem.getPetType().sendMsg(player, CC.Green, CC.Green + "\"" + lowestKit.getName() + CC.Green + "\" leveled to Level " + CC.GreenU + ekitPlayer.getLevel(lowestKit) + CC.Green + "!");
                }
 

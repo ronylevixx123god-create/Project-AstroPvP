@@ -57,6 +57,12 @@ public class InventoryPetXpBooster extends InventoryPet {
       long lastUse = petItem.getLastUsed();
       long cd = TimeUnit.SECONDS.toMillis(this.getCooldown(petItem.getLevel()));
       long timeTillCanUse = cd - (System.currentTimeMillis() - lastUse);
+
+      if (item.getAmount() > 1) {
+         player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));
+
+         return false;
+      }
       if (lastUse <= 0L || timeTillCanUse <= 0L || player.isOp() && player.isSneaking()) {
          if (CosmicSkyInventoryPets.get().getPetManager().getPetBuffExpiration().containsKey(player.getUniqueId())) {
             throw new PrefixedPetException("You must wait for your previous buff to expire!");
@@ -64,10 +70,8 @@ public class InventoryPetXpBooster extends InventoryPet {
             double increase = this.getIncrease(petItem.getLevel());
             petItem.setLastUsed(System.currentTimeMillis());
             boolean xp = true;
-            petItem.addExperience(player, 15);
             int duration = this.getDuration(petItem.getLevel());
             CosmicSkyInventoryPets.get().getPetManager().getPetBuffExpiration().put(player.getUniqueId(), new XpPetBuff(increase, System.currentTimeMillis() + (long)(duration * 1000)));
-            player.sendMessage(CC.GreenB + "+ " + CC.Green + NumberUtils.formatMoney(15.0D) + " Pet EXP " + CC.GreenB + "[" + CC.Gray + petItem.getExp() + "/" + petItem.getPetType().getInternalClass().getExpForLevel(petItem.getLevel() + 1) + CC.GreenB + "]");
             player.sendMessage(this.getOwner().getMsgWithPrefix(CC.Green) + CC.GreenB + " [" + CC.Gray + "XP Booster Pet (" + CC.Green + "+" + NumberUtils.formatMoney(increase) + CC.Gray + "x XP)" + CC.GreenB + "]");
             ASound.ORB_PICKUP.play(player, 1.0F, 3.0F);
             ASound.NOTE_PLING.play(player, 1.0F, 1.0F);

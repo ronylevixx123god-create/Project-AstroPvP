@@ -47,6 +47,12 @@ public class InventoryVileCreeperPet extends InventoryPet {
       long lastUse = petItem.getLastUsed();
       long delay = TimeUnit.SECONDS.toMillis((long)this.getCooldown(petItem.getLevel()));
       long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
+
+      if (item.getAmount() > 1) {
+         player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));
+
+         return false;
+      }
       if (lastUse <= 0L || timeTillCanUse <= 0L || player.isOp() && player.isSneaking()) {
          OutpostTier outpostTier = CosmicOutpostsAPI.getOutpostTierOfWorld(player);
          if (outpostTier != OutpostTier.VANILLA && outpostTier != OutpostTier.TRAINEE && outpostTier != OutpostTier.HERO) {
@@ -56,10 +62,8 @@ public class InventoryVileCreeperPet extends InventoryPet {
                throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Unable to spawn Vile Creeper!");
             } else {
                boolean xpGain = true;
-               petItem.addExperience(player, 10);
                player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
                player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
-               player.sendMessage(CC.GreenB + "+ " + CC.Green + NumberUtils.formatMoney(10.0D) + " Pet EXP " + CC.GreenB + "[" + CC.Gray + petItem.getExp() + "/" + petItem.getPetType().getInternalClass().getExpForLevel(petItem.getLevel() + 1) + CC.GreenB + "]");
                return true;
             }
          } else {

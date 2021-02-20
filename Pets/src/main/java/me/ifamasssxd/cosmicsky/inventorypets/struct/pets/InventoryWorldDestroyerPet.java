@@ -38,23 +38,11 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
     }
 
     public List<String> getPetDescription(int level) {
-        return Lists.newArrayList(CC.Gray + "A fragment of the legendary", CC.Gray + "World Destroyer, Yijki.", (new StringBuilder(String.valueOf(CC.Gray))).toString(), CC.WhiteB + "Ability", CC.Gray + "Summon the power of Yijki's", CC.Gray + "[" + CC.DarkPurple + "Dimensional Cage" + CC.Gray + "] ability (" + cageDuration(level) + "s)", (new StringBuilder(String.valueOf(CC.Gray))).toString(), CC.WhiteB + "Cooldown", CC.Gray + " " + TimeUtils.formatSeconds(getCooldown(level)));
+        return Lists.newArrayList(CC.Gray + "A fragment of the legendary", CC.Gray + "World Destroyer, Yijki.", (new StringBuilder(String.valueOf(CC.Gray))).toString(), CC.WhiteB + "Ability", CC.Gray + "Summon the power of Yijki's", CC.Gray + "[" + CC.DarkPurple + "Dimensional Cage" + CC.Gray + "] ability (" + cageDuration(5) + "s)", (new StringBuilder(String.valueOf(CC.Gray))).toString(), CC.WhiteB + "Cooldown", CC.Gray + " " + TimeUtils.formatSeconds(getCooldown(5)));
     }
 
     private double cageDuration(int level) {
-        if (level == 1)
-            return 3.0D;
-        if (level == 2)
-            return 3.5D;
-        if (level == 3)
-            return 4.0D;
-        if (level == 4)
-            return 4.5D;
-        if (level == 5)
-            return 5.0D;
-        if (level == 6)
-            return 6.0D;
-        return 3.0D;
+        return 7.00;
     }
 
 
@@ -63,7 +51,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
     }
 
     public int getExpForLevel(int level) {
-        return 1700 * level;
+        return 1700 * 5;
     }
 
     public int getMaxLevel() {
@@ -72,8 +60,14 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
 
     public boolean onPetItemInteract(Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
         long lastUse = petItem.getLastUsed();
-        long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown(petItem.getLevel()));
+        long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown(5));
         long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
+
+        if (item.getAmount() > 1) {
+            player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));
+
+            return false;
+        }
 
         if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
             throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
@@ -197,14 +191,13 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         } else {
             Bukkit.getScheduler().runTaskLater(CosmicSkyInventoryPets.get(), () -> getBlockModifier().removeBlocks(p.getUniqueId(), true, true), (long) cageDuration(petItem.getLevel()) * 20);
         }
-        petItem.addExperience(player, 100);
 
 
         try {
             if (DamageIndicatorUtils.isPlayerIndicating((Player) player)) {
                 DamageIndicatorUtils.createDamageIndicator((Player) player,
                         target.getLocation().add(1.0D, 2.0D, 0.0D),
-                        new String[] { CC.YellowB + "* WORLD DESTROYER §7[" + cageDuration(petItem.getLevel()) + "] §e§l*" });
+                        new String[] { CC.YellowB + "* WORLD DESTROYER §7[" + cageDuration(5) + "] §e§l*" });
             }
         } catch (Exception ex) {
 
@@ -214,7 +207,6 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
 
         player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
         player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
-        player.sendMessage(CC.GreenB + "+ " + CC.Green + NumberUtils.formatMoney(100.0D) + " Pet EXP " + CC.GreenB + "[" + CC.Gray + petItem.getExp() + "/" + petItem.getPetType().getInternalClass().getExpForLevel(petItem.getLevel() + 1) + CC.GreenB + "]");
         petItem.setLastUsed(System.currentTimeMillis());
 
         return true;

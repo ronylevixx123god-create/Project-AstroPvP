@@ -44,6 +44,11 @@ public class InventoryEnchanterPet extends InventoryPet {
       long lastUse = petItem.getLastUsed();
       long delay = TimeUnit.SECONDS.toMillis((long)this.getCooldown(petItem.getLevel()));
       long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
+      if (item.getAmount() > 1) {
+         player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));
+
+         return false;
+      }
       if (lastUse <= 0L || timeTillCanUse <= 0L || player.isOp() && player.isSneaking()) {
          petItem.setLastUsed(System.currentTimeMillis());
          if (player.hasMetadata("enchanterPet_Effect")) {
@@ -52,8 +57,6 @@ public class InventoryEnchanterPet extends InventoryPet {
             boolean xp = true;
             player.setMetadata("enchanterPet_Effect", new FixedMetadataValue(CosmicSkyInventoryPets.get(), petItem.getLevel()));
             player.playSound(player.getLocation(), Sound.LAVA_POP, 1.1F, 1.0F);
-            petItem.addExperience(player, 50);
-            player.sendMessage(CC.GreenB + "+ " + CC.Green + NumberUtils.formatMoney(50.0D) + " Pet EXP " + CC.GreenB + "[" + CC.Gray + petItem.getExp() + "/" + petItem.getPetType().getInternalClass().getExpForLevel(petItem.getLevel() + 1) + CC.GreenB + "]");
             player.sendMessage(CC.GreenB + "PET: " + CC.Green + "The next Enchantment Book you use will have a +" + petItem.getLevel() + "% modifier applied to its success rate.");
             ASound.ITEM_PICKUP.play(player, 1.1F);
             return true;

@@ -53,14 +53,17 @@ public class InventoryBlessPet extends InventoryPet {
       long lastUse = petItem.getLastUsed();
       long delay = TimeUnit.SECONDS.toMillis((long)this.getCooldown(petItem.getLevel()));
       long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
+      if (item.getAmount() > 1) {
+         player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));
+
+         return false;
+      }
       if (lastUse <= 0L || timeTillCanUse <= 0L || player.isOp() && player.isSneaking()) {
          boolean inWarzone = Board.getFactionAt(new FLocation(player.getLocation())).isWarZone();
          int xpGain = inWarzone ? 50 : 5;
          this.getFplayersInRadius(this.getBlessRadius(petItem.getLevel()), player);
          player.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "PET: ** BLESSED **");
-         petItem.addExperience(player, xpGain);
          petItem.setLastUsed(System.currentTimeMillis());
-         player.sendMessage(CC.GreenB + "+ " + CC.Green + NumberUtils.formatMoney((double)xpGain) + " Pet EXP " + CC.GreenB + "[" + CC.Gray + petItem.getExp() + "/" + petItem.getPetType().getInternalClass().getExpForLevel(petItem.getLevel() + 1) + CC.GreenB + "]");
          return true;
       } else {
          throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((long)((int)(timeTillCanUse / 1000L))));

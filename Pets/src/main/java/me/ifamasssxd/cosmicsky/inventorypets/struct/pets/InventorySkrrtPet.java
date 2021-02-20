@@ -32,7 +32,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class InventorySkrrtPet extends InventoryPet {
-   public int petLevel = 0;
+   public int petLevel = 5;
 
    public InventoryPets getOwner() {
       return InventoryPets.SKRRT;
@@ -43,31 +43,11 @@ public class InventorySkrrtPet extends InventoryPet {
    }
 
    public int getCooldown(int level) {
-      if (level == 1) {
-         return 600;
-      } else if (level == 2) {
-         return 540;
-      } else if (level == 3) {
-         return 480;
-      } else if (level == 4) {
-         return 420;
-      } else {
-         return level == 5 ? 360 : 600;
-      }
+      return 360;
    }
 
    private int freezeDuration(int level) {
-      if (level == 1) {
-         return 2;
-      } else if (level == 2) {
-         return 3;
-      } else if (level == 3) {
-         return 4;
-      } else if (level == 4) {
-         return 5;
-      } else {
-         return level == 5 ? 6 : 2;
-      }
+      return 5;
    }
 
    public int getExpForLevel(int level) {
@@ -82,6 +62,12 @@ public class InventorySkrrtPet extends InventoryPet {
       long lastUse = petItem.getLastUsed();
       long delay = TimeUnit.SECONDS.toMillis((long)this.getCooldown(petItem.getLevel()));
       long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
+
+      if (itemStack.getAmount() > 1) {
+         player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));
+
+         return false;
+      }
       if (lastUse <= 0L || timeTillCanUse <= 0L || player.isOp() && player.isSneaking()) {
          if (player.hasMetadata("spectator")) {
             return true;
@@ -96,14 +82,12 @@ public class InventorySkrrtPet extends InventoryPet {
                   return true;
                } else {
                   petItem.setLastUsed(System.currentTimeMillis());
-                  this.petLevel = petItem.getLevel();
+                  this.petLevel = 5;
                   this.givePlayerGearFive(player);
                   this.skrrtAbilities(player);
                   boolean xpGain = true;
-                  petItem.addExperience(player, 50);
                   player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
                   player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
-                  player.sendMessage(CC.GreenB + "+ " + CC.Green + NumberUtils.formatMoney(50.0D) + " Pet EXP " + CC.GreenB + "[" + CC.Gray + petItem.getExp() + "/" + petItem.getPetType().getInternalClass().getExpForLevel(petItem.getLevel() + 1) + CC.GreenB + "]");
                   return true;
                }
             } else {

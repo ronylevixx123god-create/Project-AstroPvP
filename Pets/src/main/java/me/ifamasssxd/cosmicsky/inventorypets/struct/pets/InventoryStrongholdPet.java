@@ -50,6 +50,11 @@ public class InventoryStrongholdPet extends InventoryPet {
       long lastUse = petItem.getLastUsed();
       long delay = TimeUnit.SECONDS.toMillis((long)this.getCooldown(petItem.getLevel()));
       long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
+      if (item.getAmount() > 1) {
+         player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));
+
+         return false;
+      }
       if (lastUse <= 0L || timeTillCanUse <= 0L || player.isOp() && player.isSneaking()) {
          if (player.hasMetadata("strongholdPet") && ((MetadataValue)player.getMetadata("strongholdPet").get(0)).asLong() > System.currentTimeMillis()) {
             throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "You already have an active /sh sell effect!");
@@ -57,11 +62,9 @@ public class InventoryStrongholdPet extends InventoryPet {
             player.setMetadata("strongholdPet", new FixedMetadataValue(CosmicSkyInventoryPets.get(), System.currentTimeMillis() + TimeUnit.SECONDS.toMillis((long)this.getDuration(petItem.getLevel()))));
             boolean xpGain = true;
             player.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "PET: /sh sell enabled for: " + this.getDuration(petItem.getLevel()) + "s!");
-            petItem.addExperience(player, 5);
             petItem.setLastUsed(System.currentTimeMillis());
             player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
             player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
-            player.sendMessage(CC.GreenB + "+ " + CC.Green + NumberUtils.formatMoney(5.0D) + " Pet EXP " + CC.GreenB + "[" + CC.Gray + petItem.getExp() + "/" + petItem.getPetType().getInternalClass().getExpForLevel(petItem.getLevel() + 1) + CC.GreenB + "]");
             Bukkit.getScheduler().runTaskLater(CosmicSkyInventoryPets.get(), () -> {
                player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "PET: /sh sell ability expired!");
             }, (long)(this.getDuration(petItem.getLevel()) * 20));

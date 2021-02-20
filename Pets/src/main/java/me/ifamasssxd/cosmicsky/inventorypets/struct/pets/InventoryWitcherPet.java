@@ -53,13 +53,13 @@ public class InventoryWitcherPet extends InventoryPet {
         return Lists.newArrayList(new String[]{
                 String.valueOf(CC.Gray) + "Call upon the deadly screaming Banshee.", "",
                 String.valueOf(CC.YellowB) + "Ability", String.valueOf(CC.Gray) + "Activates " + CC.DarkRedB + "[Witcher]:",
-                String.valueOf(CC.DarkRedB) + "* " + CC.Gray + "Immune to almost all knockback (" + (level * 2) + "s)",
-                String.valueOf(CC.DarkRedB) + "* " + CC.Gray + "Teleblocks enemies in a 8x8 radius for (" + (level * 2) + "s)",
-                String.valueOf(CC.DarkRedB) + "* " + CC.Gray + "Negates enemy ragdoll in a 8x8 radius for (" + (level * 2) + "s)",
-                String.valueOf(CC.DarkRedB) + "* " + CC.Gray + "Silences enemy soul enchantments in a 8x8 radius for (" + (level * 2) + "s)",
-                String.valueOf(CC.DarkRedB) + "* " + CC.Gray + "Freezes enemies in a 8x8 radius for 1s",
+                String.valueOf(CC.DarkRedB) + "* " + CC.Gray + "Immune to almost all knockback (" + (5 * 2) + "s)",
+                String.valueOf(CC.DarkRedB) + "* " + CC.Gray + "Teleblocks enemies in a 8x8 radius for (" + (5 * 2) + "s)",
+                String.valueOf(CC.DarkRedB) + "* " + CC.Gray + "Negates enemy ragdoll in a 8x8 radius for (" + (5 * 2) + "s)",
+                String.valueOf(CC.DarkRedB) + "* " + CC.Gray + "Silences enemy soul enchantments in a 8x8 radius for (" + (5 * 2) + "s)",
+                String.valueOf(CC.DarkRedB) + "* " + CC.Gray + "Freezes enemies in a 8x8 radius for 1s", "",
                 String.valueOf(CC.YellowB) + "Cooldown",
-                String.valueOf(CC.Gray) + (getCooldown(level) / 60) + " Minutes"});
+                String.valueOf(CC.Gray) + (getCooldown(5) / 60) + " Minutes"});
     }
 
     public void onDisable(CosmicSkyInventoryPets plugin) {
@@ -74,29 +74,26 @@ public class InventoryWitcherPet extends InventoryPet {
     }
 
     public int getCooldown(int level) {
-        return (int) TimeUnit.MINUTES.toSeconds((11 - level));
+        return (int) TimeUnit.MINUTES.toSeconds((11 - 5));
     }
 
     public boolean onPetItemInteract(Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
         long lastUse = petItem.getLastUsed();
         long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown(petItem.getLevel()));
         long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
-        if (petItem.getLevel() > 6) {
-            petItem.setLevel(6);
-            player.setItemInHand(petItem.build());
+        if (item.getAmount() > 1) {
+            player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));
+
             return false;
         }
+
         if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
             throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
         if (!WorldGuardUtils.isPvPEnabled(player.getLocation()))
             throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "Not allowed in this region!");
         petItem.setLastUsed(System.currentTimeMillis());
         int xpGain = petItem.getLevel() * 5;
-        petItem.addExperience(player, xpGain);
         player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
-        player.sendMessage(String.valueOf(CC.GreenB) + "+ " + CC.Green + NumberUtils.formatMoney(xpGain) + " Pet EXP " + CC.GreenB + "[" +
-                CC.Gray + petItem.getExp() + "/" +
-                petItem.getPetType().getInternalClass().getExpForLevel(petItem.getLevel() + 1) + CC.GreenB + "]");
         int sum = petItem.getLevel() * 2;
         if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.REINDEER_ANTLERS) && Math.random() < 0.05D) {
             sum *= 2;
@@ -107,7 +104,7 @@ public class InventoryWitcherPet extends InventoryPet {
             sum *= 1.5;
         }
 
-        procAbility(player, sum, petItem.getLevel());
+        procAbility(player, sum, 5);
 
 
         return true;

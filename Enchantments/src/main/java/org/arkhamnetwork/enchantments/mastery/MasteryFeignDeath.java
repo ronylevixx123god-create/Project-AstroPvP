@@ -91,7 +91,7 @@ public class MasteryFeignDeath extends MasteryCustomEnchantment {
             if (DamageIndicatorUtils.isPlayerIndicating(damaged)) {
                 DamageIndicatorUtils.createDamageIndicator(damaged,
                         damaged.getLocation().add(1.0D, 2.0D, 0.0D),
-                        new String[] { CC.YellowB + "* FEIGN DEATH §7[" + seconds + "§7s ] §el*" });
+                        new String[] { CC.YellowB + "* FEIGN DEATH §7[" + seconds + "§7s ] §e§l*" });
             }
         } catch (Exception ex) {
 

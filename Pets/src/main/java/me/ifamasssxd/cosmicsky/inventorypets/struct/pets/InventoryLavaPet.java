@@ -52,6 +52,12 @@ public class InventoryLavaPet extends InventoryPet {
       long lastUse = petItem.getLastUsed();
       long delay = TimeUnit.SECONDS.toMillis((long)this.getCooldown(petItem.getLevel()));
       long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
+
+      if (item.getAmount() > 1) {
+         player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));
+
+         return false;
+      }
       if (lastUse <= 0L || timeTillCanUse <= 0L || player.isOp() && player.isSneaking()) {
          int maxBuckets = this.getMaxFill(petItem.getLevel());
          petItem.setLastUsed(System.currentTimeMillis());
@@ -95,10 +101,8 @@ public class InventoryLavaPet extends InventoryPet {
 
          filledXp += filled;
          if (filledXp > 0) {
-            petItem.addExperience(player, filledXp);
             player.playSound(player.getLocation(), Sound.LAVA_POP, 1.1F, 1.0F);
             player.updateInventory();
-            player.sendMessage(CC.GreenB + "+ " + CC.Green + NumberUtils.formatMoney((double)filledXp) + " Pet EXP " + CC.GreenB + "[" + CC.Gray + petItem.getExp() + "/" + petItem.getPetType().getInternalClass().getExpForLevel(petItem.getLevel() + 1) + CC.GreenB + "]");
          } else {
             petItem.setLastUsed(System.currentTimeMillis() - (delay - 10000L));
             petItem.getPetType().sendMsg(player, "No empty buckets in your inventory!");

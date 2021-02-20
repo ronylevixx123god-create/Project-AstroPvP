@@ -43,7 +43,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class InventoryBansheePet extends InventoryPet {
-    public int petLevel = 0;
+    public int petLevel = 5;
 
     private HashMap<String, List<ItemStack>> savedItems = new HashMap<>();
 
@@ -54,29 +54,11 @@ public class InventoryBansheePet extends InventoryPet {
     public List getPetDescription(int level) {
         return Lists.newArrayList((Object[])new String[] {
                 CC.Gray + "Call upon the deadly screeming Banshee.", CC.Gray, CC.YellowB + "Ability", CC.Gray + "Activates " + CC.Gray + "[RKO]:", CC.DarkRed + "* " + CC.Gray + "1.5x DMG to all players(8s) ", CC.DarkRed + "* " + CC.Gray + "Immune to freezes (8s) ", CC.DarkRed + "* " + CC.Gray + "Gears V (8s) ", CC.DarkRed + "* " + CC.Gray + "AoE (8x8) Silence IV (5s) ", CC.DarkRed + "* " + CC.Gray + "Negates enemy Phoenix (5s) ", CC.DarkRed + "* " + CC.Gray + "Negates enemy Holy White Scrolls (5s) ",
-                CC.Gray, CC.YellowB + "Cooldown", CC.Gray + " " + TimeUtils.formatSeconds(getCooldown(level)) });
+                CC.Gray, CC.YellowB + "Cooldown", CC.Gray + " " + TimeUtils.formatSeconds(getCooldown(5)) });
     }
 
     public int getCooldown(int level) {
-        if (level == 1)
-            return 450;
-        if (level == 2)
-            return 420;
-        if (level == 3)
-            return 390;
-        if (level == 4)
-            return 360;
-        if (level == 5)
-            return 330;
-        if (level == 6)
-            return 300;
-        if (level == 7)
-            return 540;
-        if (level == 8)
-            return 480;
-        if (level == 9)
-            return 420;
-        return (level == 10) ? 360 : 900;
+        return 360;
     }
 
     public int getExpForLevel(int level) {
@@ -89,11 +71,11 @@ public class InventoryBansheePet extends InventoryPet {
 
     public boolean onPetItemInteract(final Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
         long lastUse = petItem.getLastUsed();
-        long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown(petItem.getLevel()));
+        long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown(5));
         long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
-        if (petItem.getLevel() > 6) {
-            petItem.setLevel(6);
-            player.setItemInHand(petItem.build());
+        if (item.getAmount() > 1) {
+            player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));
+
             return false;
         }
         if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
@@ -168,12 +150,7 @@ public class InventoryBansheePet extends InventoryPet {
                 });
             }
         }).runTaskLater((Plugin)CosmicSkyInventoryPets.get(), (20 * duration));
-        int xp = 40 + (new Random()).nextInt(40 + petItem.getLevel());
         player.playSound(player.getLocation(), Sound.LAVA_POP, 1.1F, 1.0F);
-            petItem.addExperience(player, xp);
-        player.sendMessage(String.valueOf(CC.GreenB) + "+ " + CC.Green + NumberUtils.formatMoney(xp) + " Pet EXP " + CC.GreenB + "[" +
-                CC.Gray + petItem.getExp() + "/" +
-                petItem.getPetType().getInternalClass().getExpForLevel(petItem.getLevel() + 1) + CC.GreenB + "]");        player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 0.2F, 2.0F);
         player.playSound(player.getLocation(), Sound.GHAST_SCREAM2, 2.0F, 2.0F);
         return true;
     }
