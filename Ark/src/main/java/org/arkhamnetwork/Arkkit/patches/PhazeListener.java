@@ -107,35 +107,6 @@ final class PhazeListener
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
-    public void onEnderpearlTeleport(PlayerTeleportEvent e) {
-        if (e.getCause() == PlayerTeleportEvent.TeleportCause.ENDER_PEARL) {
-            Location to = e.getTo().clone();
-            Location from = e.getFrom().clone();
-            if (to.getY() > from.getY()) {
-                Location to_upwards = to.clone();
-                Bukkit.getLogger().info("to_upwards = " + to_upwards + ", m:" + to_upwards.getBlock().getType().name());
-                to_upwards.setY(Math.ceil(to_upwards.getY()));
-                if (this.isSolidBlock(to_upwards) && !this.isSolidBlock(to_upwards.clone().add(0.0, 1.0, 0.0))) {
-                    Bukkit.getLogger().info("[AntiClip] Preventing (upwards) V-Clip teleport by " + e.getPlayer().getName() + " to " + e.getTo() + " (to_upwards:" + to_upwards + ")");
-                    e.setCancelled(true);
-                    return;
-                }
-                if (this.isSolidBlock(to_upwards.clone().add(0.0, 1.0, 0.0)) && !this.isSolidBlock(to_upwards)) {
-                    Bukkit.getLogger().info("[AntiClip] Preventing (upwards_v2) V-Clip teleport by " + e.getPlayer().getName() + " to " + e.getTo() + " (to_upwards:" + to_upwards + ")");
-                    e.setCancelled(true);
-                    return;
-                }
-            }
-            if (this.isSolidBlock(to.add(0.0, 1.0, 0.0)) || this.isSolidBlock(from.add(0.0, 1.0, 0.0))) {
-                if (to.getY() >= 256.0 && to.getBlock().getType() == Material.BEDROCK && (!this.isSolidBlock(from) || from.getBlock().getType() == Material.BEDROCK)) {
-                    return;
-                }
-                Bukkit.getLogger().info("[AntiClip] Preventing V-Clip teleport by " + e.getPlayer().getName() + " to " + e.getTo());
-                e.setCancelled(true);
-            }
-        }
-    }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerDamage(EntityDamageEvent e) {

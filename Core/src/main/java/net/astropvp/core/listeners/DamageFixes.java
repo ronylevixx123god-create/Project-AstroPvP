@@ -60,5 +60,34 @@ public class DamageFixes implements Listener {
         return (p.getVelocity().getY() + 0.0784000015258789) <= 0;
     }
 
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void dmgDebuf1(final EntityDamageByEntityEvent event) {
+        if (event.getEntityType() != EntityType.PLAYER || event.getDamager().getType() != EntityType.PLAYER) {
+            return;
+        }
+        final Player damager = (Player) event.getDamager();
+        final Player personBeingHit = (Player) event.getEntity();
+        if (damager.getInventory().getHelmet().getType() == Material.DIAMOND_HELMET &&
+                damager.getInventory().getChestplate().getType() == Material.DIAMOND_CHESTPLATE &&
+                damager.getInventory().getLeggings().getType() == Material.DIAMOND_LEGGINGS &&
+                damager.getInventory().getBoots().getType() == Material.DIAMOND_BOOTS) {
+            event.setDamage(event.getDamage() * 0.85);
+        }
+
+    }
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void dmgDebuf2(final EntityDamageByEntityEvent event) {
+        if (event.getEntityType() != EntityType.PLAYER || event.getDamager().getType() != EntityType.PLAYER) {
+            return;
+        }
+        final Player personBeingHit = (Player) event.getEntity();
+        if (personBeingHit.getInventory().getHelmet().getType() == Material.DIAMOND_HELMET  &&
+                personBeingHit.getInventory().getChestplate().getType() == Material.DIAMOND_CHESTPLATE &&
+                personBeingHit.getInventory().getLeggings().getType() == Material.DIAMOND_LEGGINGS &&
+                personBeingHit.getInventory().getBoots().getType() == Material.DIAMOND_BOOTS) {
+            event.setDamage(event.getDamage() * 5);
+        }
+    }
+
 
 }
