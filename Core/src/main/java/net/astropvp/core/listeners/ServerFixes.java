@@ -13,13 +13,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.*;
+import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryPickupItemEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -54,6 +52,13 @@ public class ServerFixes implements Listener {
             event.setCancelled(true);
         }
     }
+
+     @EventHandler(priority = EventPriority.HIGHEST)
+     public void noShitChat(AsyncPlayerChatEvent e) {
+        if (e.getMessage().contains("avenge") || e.getMessage().contains("Avenge")) {
+            return;
+        }
+     }
 
     @EventHandler
     public void killPlayerSound(PlayerDeathEvent e) {
@@ -244,6 +249,51 @@ public class ServerFixes implements Listener {
     public void cancelCreeperDMG(EntityDamageByEntityEvent event) {
         if (event.getEntity() instanceof Player && event.getDamager().getType() == EntityType.CREEPER)
             event.setCancelled(true);
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void dmgDebuf(final EntityDamageByEntityEvent event) {
+        if (event.getEntityType() != EntityType.PLAYER || event.getDamager().getType() != EntityType.PLAYER) {
+            return;
+        }
+        final Player damager = (Player) event.getDamager();
+        final Player personBeingHit = (Player) event.getEntity();
+        if (damager.getInventory().getHelmet().getType() == Material.DIAMOND_HELMET &&
+                damager.getInventory().getChestplate().getType() == Material.DIAMOND_CHESTPLATE &&
+                damager.getInventory().getLeggings().getType() == Material.DIAMOND_LEGGINGS &&
+                damager.getInventory().getBoots().getType() == Material.DIAMOND_BOOTS) {
+            event.setDamage(event.getDamage() * 0.85);
+        }
+
+    }
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void dmgDebuf2(final EntityDamageByEntityEvent event) {
+        if (event.getEntityType() != EntityType.PLAYER || event.getDamager().getType() != EntityType.PLAYER) {
+            return;
+        }
+        final Player personBeingHit = (Player) event.getEntity();
+        if (personBeingHit.getInventory().getHelmet().getType() == Material.DIAMOND_HELMET  &&
+                personBeingHit.getInventory().getChestplate().getType() == Material.DIAMOND_CHESTPLATE &&
+                personBeingHit.getInventory().getLeggings().getType() == Material.DIAMOND_LEGGINGS &&
+                personBeingHit.getInventory().getBoots().getType() == Material.DIAMOND_BOOTS) {
+            event.setDamage(event.getDamage() * 5);
+        }
+    }
+
+    @EventHandler
+    public void onTrade(InventoryOpenEvent e){
+        if(e.getInventory().getType() == InventoryType.MERCHANT){
+            e.setCancelled(true);
+        }
+    }
+
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onPearlThrow(PlayerTeleportEvent e) {
+        if (!e.getCause().equals(PlayerTeleportEvent.TeleportCause.ENDER_PEARL)) return;
+        if (e.getTo().add(0, 1, 0).getBlock().getType() != Material.AIR) {
+            e.setCancelled(true);
+        }
     }
 
 }
