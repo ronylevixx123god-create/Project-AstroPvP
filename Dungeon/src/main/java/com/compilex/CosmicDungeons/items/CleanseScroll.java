@@ -18,8 +18,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Locale;
-
 public class CleanseScroll extends CosmicItem
         implements InventoryInteractable {
     public CleanseScroll() {
@@ -27,7 +25,7 @@ public class CleanseScroll extends CosmicItem
     }
 
     public ItemStack createItem(Player player, Object ... objects) {
-        return this.applyItemData(ItemUtils.addGlow(new ItemBuilder(Material.PAPER, CC.RedB + "Clease Scroll"
+        return this.applyItemData(ItemUtils.addGlow(new ItemBuilder(Material.PAPER, CC.RedB + "Cleanse Scroll"
                 , CC.Gray + "Apply this scroll to any item"
                 , CC.Gray + "that is corrupted or semi-corrupted,"
                 , CC.Gray + "and it will cleanse the complete item.").build())).build();

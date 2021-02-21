@@ -39,6 +39,7 @@ import com.compilex.CosmicDungeons.dungeons.libs.DestroyedOutpostDungeon;
 import com.compilex.CosmicDungeons.dungeons.libs.Dungeon;
 import com.compilex.CosmicDungeons.dungeons.libs.DungeonPlayer;
 import com.compilex.CosmicDungeons.dungeons.libs.DungeonType;
+import com.compilex.CosmicDungeons.items.CleanseScroll;
 import com.compilex.CosmicDungeons.items.HolyWaterItem;
 import com.compilex.CosmicDungeons.items.HolyWhitescrollItem;
 import com.compilex.CosmicDungeons.items.PortalProtectionTrinketItem;
@@ -84,7 +85,7 @@ extends JavaPlugin {
     private DungeonsAPI api;
     private static CosmicDungeonsPlugin _;
     private Economy economy;
-    private boolean disableDungeons = false;
+    private boolean disableDungeons = true;
     private boolean lowCostKeys = false;
     private boolean fundEnabled = false;
     private boolean disableCalled = false;
@@ -213,8 +214,8 @@ extends JavaPlugin {
                     this.factionsInsideOnEnable.put(uuid, fplayer.getFactionId());
                 }
                 catch (Exception e) {
-                    Bukkit.getLogger().info("Unable to get UUID from: " + fplayer.getNameAsync() + " ID: " + fplayer.getAccountId());
-                    e.printStackTrace();
+                    //Bukkit.getLogger().info("Unable to get UUID from: " + fplayer.getNameAsync() + " ID: " + fplayer.getAccountId());
+                    //e.printStackTrace();
                 }
             }
             Bukkit.getLogger().info("[CosmicDungeons] Registered " + this.factionsInsideOnEnable.size() + " players inside of factions!");
@@ -362,6 +363,7 @@ extends JavaPlugin {
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem(this.holyWhitescrollItem);
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new PortalProtectionTrinketItem());
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new HolyWaterItem());
+            CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new CleanseScroll());
         }
     }
 
