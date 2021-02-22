@@ -62,11 +62,16 @@ public class DamageFixes implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void dmgDebuf1(final EntityDamageByEntityEvent event) {
+        if (event.getEntity() == null) {
+            return;
+        }
+        if (event.getDamager() == null) {
+            return;
+        }
         if (event.getEntityType() != EntityType.PLAYER || event.getDamager().getType() != EntityType.PLAYER) {
             return;
         }
         final Player damager = (Player) event.getDamager();
-        final Player personBeingHit = (Player) event.getEntity();
         if (damager.getInventory().getHelmet().getType() == Material.DIAMOND_HELMET &&
                 damager.getInventory().getChestplate().getType() == Material.DIAMOND_CHESTPLATE &&
                 damager.getInventory().getLeggings().getType() == Material.DIAMOND_LEGGINGS &&
@@ -77,6 +82,13 @@ public class DamageFixes implements Listener {
     }
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void dmgDebuf2(final EntityDamageByEntityEvent event) {
+        if (event.getEntity() == null) {
+            return;
+        }
+        if (event.getDamager() == null) {
+            return;
+        }
+
         if (event.getEntityType() != EntityType.PLAYER || event.getDamager().getType() != EntityType.PLAYER) {
             return;
         }
