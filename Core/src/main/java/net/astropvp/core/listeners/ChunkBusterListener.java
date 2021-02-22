@@ -1,11 +1,16 @@
 package net.astropvp.core.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import me.astropvp.astrospawners.data.SpawnerData;
+import me.astropvp.astrospawners.data.SpawnerDataHelper;
+import me.astropvp.astrospawners.items.ItemSpawner;
 import net.astropvp.core.utils.ChunkBusterUtils;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -38,6 +43,13 @@ public class ChunkBusterListener implements Listener {
                 for (int z = 0; z < 16; z++) {
                     for (int y = 0; y < 256; y++) {
                         Block block = event.getBlock().getWorld().getBlockAt(X + x, y, Z + z);
+                        if ((block.getType() == Material.MOB_SPAWNER) && (block.getType() != Material.AIR)) {
+                            SpawnerData data = SpawnerDataHelper.findSpawnerData(block.getLocation());
+                            if (data != null) {
+                                data.setSpawnerAmount(0);
+                                data.setNullSpawner(true);
+                            }
+                        }
                         if ((block.getType() != Material.BEDROCK) && (block.getType() != Material.AIR)) {
                             block.setType(Material.AIR);
                         }
