@@ -5,6 +5,7 @@ import me.astropvp.astrospawners.data.SpawnerData;
 import me.astropvp.astrospawners.data.SpawnerDataHelper;
 import me.astropvp.astrospawners.items.ItemSpawner;
 import net.astropvp.core.utils.ChunkBusterUtils;
+import net.astropvp.core.utils.ChunkbusterCooldown;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -37,6 +38,15 @@ public class ChunkBusterListener implements Listener {
                 event.setCancelled(true);
                 return;
             }
+
+            if (ChunkbusterCooldown.isOnChunkbusterCooldown(event.getPlayer())) {
+                event.getPlayer().sendMessage(ChatColor.RED + "You cannot place a chunkbuster while on Chunkbuster Cooldown! This lasts 60 seconds!");
+                event.setCancelled(true);
+                return;
+            }
+
+
+            ChunkbusterCooldown.enterChunkbusterCooldown(event.getPlayer());
             int X = event.getBlock().getChunk().getX() * 16;
             int Z = event.getBlock().getChunk().getZ() * 16;
             for (int x = 0; x < 16; x++) {
