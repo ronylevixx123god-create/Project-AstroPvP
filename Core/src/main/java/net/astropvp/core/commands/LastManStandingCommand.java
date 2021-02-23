@@ -22,22 +22,15 @@ public class LastManStandingCommand implements CommandExecutor {
         if (args.length == 0 || !args[0].contentEquals("top")) {
             LastManStandingCacher capper = LastManStandingCacher.getLongestPlayerAlive(CapType.SPAWN);
             player.sendMessage("");
-            player.sendMessage(String.valueOf(CC.AquaB) + "*** AstroPvP: " + CC.DarkAquaB + "LAST MAN STANDING " + CC.AquaB + "***");
-            player.sendMessage("");
-            player.sendMessage(String.valueOf(CC.AquaB) + "Current SPAWN LMS: " + CC.DarkAqua + ((capper == null) ? "N/A" : (String.valueOf(FactionUtils.getFPlayer(capper.getPlayer()).getRole().getPrefix()) + ChatColor.stripColor(FactionUtils.getFPlayer(capper.getPlayer()).getFaction().getTag()) + " " + capper.getPlayerName() + " " + CC.Gray + "[" + capper.formatTimeCapped(capper.getLMSTime()) + "]")));
-            if (capper != null) {
-                player.sendMessage(String.valueOf(CC.AquaB) + "Total Earned: " + CC.DarkAqua + "$" + StringUtils.formatWithCommas(capper.getMoneyEarned()) + CC.AquaB + " + " + CC.DarkAqua + StringUtils.formatWithCommas(capper.getExperienceEarned()) + "XP");
-                player.sendMessage(String.valueOf(CC.AquaB) + "Last Location: " + CC.DarkAqua + (int) capper.getPlayer().getLocation().getX() + CC.Bold + "x " + CC.DarkAqua + (int) capper.getPlayer().getLocation().getY() + CC.Bold + "y " + CC.DarkAqua + (int) capper.getPlayer().getLocation().getZ() + CC.Bold + "z");
-            }
-            player.sendMessage(String.valueOf(CC.AquaB) + "Players: " + CC.DarkAqua + LastManStandingCacher.getPlayersAround(CapType.SPAWN));
+            player.sendMessage(String.valueOf(CC.YellowB) + "*** AstroPvP: " + CC.GoldB + "LAST MAN STANDING " + CC.YellowB + "***");
             player.sendMessage("");
             capper = LastManStandingCacher.getLongestPlayerAlive(CapType.DESERT);
-            player.sendMessage(String.valueOf(CC.AquaB) + "Current DESERT LMS: " + CC.DarkAqua + ((capper == null) ? "N/A" : (String.valueOf(FactionUtils.getFPlayer(capper.getPlayer()).getRole().getPrefix()) + ChatColor.stripColor(FactionUtils.getFPlayer(capper.getPlayer()).getFaction().getTag()) + " " + capper.getPlayerName() + " " + CC.Gray + "[" + capper.formatTimeCapped(capper.getLMSTime()) + "]")));
+            player.sendMessage(String.valueOf(CC.YellowB) + "Current DESERT LMS: " + CC.Gold + ((capper == null) ? "N/A" : (String.valueOf(FactionUtils.getFPlayer(capper.getPlayer()).getRole().getPrefix()) + ChatColor.stripColor(FactionUtils.getFPlayer(capper.getPlayer()).getFaction().getTag()) + " " + capper.getPlayerName() + " " + CC.Gray + "[" + capper.formatTimeCapped(capper.getLMSTime()) + "]")));
             if (capper != null) {
-                player.sendMessage(String.valueOf(CC.AquaB) + "Total Earned: " + CC.DarkAqua + "$" + StringUtils.formatWithCommas(capper.getMoneyEarned()) + CC.AquaB + " + " + CC.DarkAqua + StringUtils.formatWithCommas(capper.getExperienceEarned()) + "XP");
-                player.sendMessage(String.valueOf(CC.AquaB) + "Last Location: " + CC.DarkAqua + (int) capper.getPlayer().getLocation().getX() + CC.Bold + "x " + CC.DarkAqua + (int) capper.getPlayer().getLocation().getY() + CC.Bold + "y " + CC.DarkAqua + (int) capper.getPlayer().getLocation().getZ() + CC.Bold + "z");
+                player.sendMessage(String.valueOf(CC.YellowB) + "Total Earned: " + CC.Gold + "$" + StringUtils.formatWithCommas(capper.getMoneyEarned()) + CC.YellowB + " + " + CC.Gold + StringUtils.formatWithCommas(capper.getExperienceEarned()) + "XP");
+                player.sendMessage(String.valueOf(CC.YellowB) + "Last Location: " + CC.Gold + (int) capper.getPlayer().getLocation().getX() + CC.Bold + "x " + CC.Gold + (int) capper.getPlayer().getLocation().getY() + CC.Bold + "y " + CC.Gold + (int) capper.getPlayer().getLocation().getZ() + CC.Bold + "z");
             }
-            player.sendMessage(String.valueOf(CC.AquaB) + "Players: " + CC.DarkAqua + LastManStandingCacher.getPlayersAround(CapType.DESERT));
+            player.sendMessage(String.valueOf(CC.YellowB) + "Players: " + CC.Gold + LastManStandingCacher.getPlayersAround(CapType.DESERT));
             player.sendMessage("");
             player.sendMessage(String.valueOf(CC.Gray) + "Use " + CC.White + "/lms top " + CC.Gray + "to view all LMS players in order of duration.");
             player.sendMessage("");
@@ -50,7 +43,7 @@ public class LastManStandingCommand implements CommandExecutor {
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
-        player.sendMessage(String.valueOf(CC.AquaB) + "Top Surviving Players (" + CC.DarkAquaB + page + CC.AquaB + "/" + CC.DarkAquaB + (1 + LastManStandingCacher.getCachers().size() / 10) + CC.AquaB + ")");
+        player.sendMessage(String.valueOf(CC.YellowB) + "Top Surviving Players (" + CC.GoldB + page + CC.YellowB + "/" + CC.GoldB + (1 + LastManStandingCacher.getCachers().size() / 10) + CC.YellowB + ")");
         List<LastManStandingCacher> cachers = Lists.newArrayList();
         int i;
         for (i = (page - 1) * 10; i < (page - 1) * 10 + 10 && i < LastManStandingCacher.getCachers().size(); i++) {
@@ -70,7 +63,7 @@ public class LastManStandingCommand implements CommandExecutor {
                 cachers.remove(i);
                 i = 0;
             } else {
-                player.sendMessage(String.valueOf(CC.AquaB) + (i + 1) + ". " + CC.DarkAqua + FactionUtils.getFPlayer(capper2.getPlayer()).getRole().getPrefix() + ChatColor.stripColor(FactionUtils.getFPlayer(capper2.getPlayer()).getFaction().getTag()) + " " + capper2.getPlayerName() + ": " + CC.Aqua + capper2.formatTimeCapped(capper2.getSecondsPlayerWasCapping()) + ((i == 0) ? (String.valueOf(CC.DarkAquaB) + " - LMS for [" + CC.Aqua + capper2.formatTimeCapped(capper2.getLMSTime()) + CC.DarkAquaB + "]") : ""));
+                player.sendMessage(String.valueOf(CC.YellowB) + (i + 1) + ". " + CC.Gold + FactionUtils.getFPlayer(capper2.getPlayer()).getRole().getPrefix() + ChatColor.stripColor(FactionUtils.getFPlayer(capper2.getPlayer()).getFaction().getTag()) + " " + capper2.getPlayerName() + ": " + CC.Aqua + capper2.formatTimeCapped(capper2.getSecondsPlayerWasCapping()) + ((i == 0) ? (String.valueOf(CC.GoldB) + " - LMS for [" + CC.Aqua + capper2.formatTimeCapped(capper2.getLMSTime()) + CC.GoldB + "]") : ""));
             }
         }
         return false;

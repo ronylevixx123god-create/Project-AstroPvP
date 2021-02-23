@@ -1,5 +1,6 @@
 package net.astropvp.core.commands;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import net.astropvp.core.AstroCore;
 import net.astropvp.core.cooldown.HealCooldown;
 import net.astropvp.core.utils.ChatManager;
@@ -21,11 +22,16 @@ public class HealCommand implements CommandExecutor {
         final Player player = (Player) sender;
         if (cooldown.getCooldown(player)) return false;
 
-        player.setHealth(player.getMaxHealth());
-        player.setFoodLevel(20);
-        player.sendMessage(ChatManager.translate(config.getString("heal.msg")));
-        cooldown.enterCooldown(player);
-        return false;
+        if (args.length == 0) {
+            player.setHealth(player.getMaxHealth());
+            player.setFoodLevel(20);
+            player.sendMessage(ChatManager.translate(config.getString("heal.msg")));
+            cooldown.enterCooldown(player);
+            return false;
+        } else {
+            player.sendMessage(CC.translate("&cUsage: /heal"));
+            return false;
+        }
     }
 
 }

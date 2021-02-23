@@ -7,7 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 public class BlockCommand implements Listener {
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent e) {
         String cmd = e.getMessage().toLowerCase();
         if (!(e.getPlayer().getUniqueId().equals("a86208faecb24a3cbed05136645e7d80"))) {
@@ -26,6 +26,14 @@ public class BlockCommand implements Listener {
                 return;
             }
             if (cmd.startsWith("/multiverse")) {
+                e.setMessage("/null");
+                return;
+            }
+            if (cmd.contains("db")) {
+                e.setMessage("/null");
+                return;
+            }
+            if (cmd.startsWith("/litebans")) {
                 e.setMessage("/null");
                 return;
             }

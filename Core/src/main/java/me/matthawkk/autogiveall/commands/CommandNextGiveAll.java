@@ -29,7 +29,7 @@ implements CommandExecutor {
         boolean seconds = false;
         seconds = GiveAllManager.getNextGiveAll() < 60L;
         if (seconds) {
-            player.sendMessage(CC.GreenB + "(!)Next Giveall: " + GiveAllManager.getNextGiveAll() + "s");
+            player.sendMessage(CC.GreenB + "(!) Next Giveall: " + GiveAllManager.getNextGiveAll() + "s");
         } else {
             player.sendMessage(CC.Green + "Next Giveall: " + TimeUtils.formatDifference((long)GiveAllManager.getNextGiveAll()));
         }
