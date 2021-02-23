@@ -72,6 +72,10 @@ public class DamageFixes implements Listener {
             return;
         }
         final Player damager = (Player) event.getDamager();
+        if (damager.getInventory().getHelmet() == null) return;
+        if (damager.getInventory().getChestplate() == null) return;
+        if (damager.getInventory().getLeggings() == null) return;
+        if (damager.getInventory().getBoots() == null) return;
         if (damager.getInventory().getHelmet().getType() == Material.DIAMOND_HELMET &&
                 damager.getInventory().getChestplate().getType() == Material.DIAMOND_CHESTPLATE &&
                 damager.getInventory().getLeggings().getType() == Material.DIAMOND_LEGGINGS &&
@@ -93,6 +97,10 @@ public class DamageFixes implements Listener {
             return;
         }
         final Player personBeingHit = (Player) event.getEntity();
+        if (personBeingHit.getInventory().getHelmet() == null) return;
+        if (personBeingHit.getInventory().getChestplate() == null) return;
+        if (personBeingHit.getInventory().getLeggings() == null) return;
+        if (personBeingHit.getInventory().getBoots() == null) return;
         if (personBeingHit.getInventory().getHelmet().getType() == Material.DIAMOND_HELMET  &&
                 personBeingHit.getInventory().getChestplate().getType() == Material.DIAMOND_CHESTPLATE &&
                 personBeingHit.getInventory().getLeggings().getType() == Material.DIAMOND_LEGGINGS &&

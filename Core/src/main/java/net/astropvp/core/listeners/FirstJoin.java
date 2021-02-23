@@ -12,6 +12,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 
 public class FirstJoin implements Listener {
     private MysteryChest chest;
@@ -25,7 +26,7 @@ public class FirstJoin implements Listener {
             ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
             //Bukkit.dispatchCommand(console, "mc give " + event.getPlayer().getName() + " StarterBundle 1");
             event.getPlayer().getInventory().addItem(this.chest.createClaimableItem(true));
-            event.getPlayer().teleport(new Location(Bukkit.getWorld("world"), 130D, 148.0D, 135D));
+            event.getPlayer().teleport(new Location(Bukkit.getWorld("world"), 130D, 148.0D, 135D), PlayerTeleportEvent.TeleportCause.UNKNOWN);
         }
     }
 
@@ -33,7 +34,7 @@ public class FirstJoin implements Listener {
     public void onWorldBorderGlitch(PlayerMoveEvent e) {
         final Player p = e.getPlayer();
         if (p.getLocation().getY() < -2.0) {
-            e.getPlayer().teleport(Bukkit.getWorld("world").getSpawnLocation());
+            e.getPlayer().teleport(Bukkit.getWorld("world").getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
             p.sendMessage(ChatColor.YELLOW + "You have been teleported to spawn!");
         }
     }
