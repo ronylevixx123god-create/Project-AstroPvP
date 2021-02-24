@@ -1,10 +1,5 @@
 package net.astropvp.core;
 
-import com.cosmicpvp.CosmicSponges.CosmicSpongesAPI;
-import com.cosmicpvp.CosmicSponges.libs.SpongeChunk;
-import com.cosmicpvp.CosmicSponges.listeners.BlockFlowListener;
-import com.cosmicpvp.CosmicSponges.listeners.ChunkListener;
-import com.cosmicpvp.CosmicSponges.listeners.SpongeModifyListener;
 import com.cosmicpvp.titles.cmds.CommandTitle;
 import com.cosmicpvp.titles.cmds.CommandTitleSet;
 import com.cosmicpvp.titles.listeners.ChatListener;
@@ -43,6 +38,7 @@ import me.ifamasssxd.cosmicheroicenvoys.managers.EnvoyManager;
 import me.ifamasssxd.cosmicjackpot.commands.CommandJackpot;
 import me.ifamasssxd.cosmicjackpot.listeners.JackpotListener;
 import me.ifamasssxd.cosmicjackpot.struct.JackpotManager;
+import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
 import me.ifamasssxd.cosmictoggles.commands.CommandScoreboard;
 import me.ifamasssxd.cosmictoggles.commands.CommandToggles;
 import me.ifamasssxd.cosmictoggles.manager.TogglesManager;
@@ -65,6 +61,9 @@ import me.matthawkk.autogiveall.struct.GiveAllManager;
 import me.matthawkk.autogiveall.tasks.AutoGiveAllTask;
 import net.astropvp.core.commands.*;
 import net.astropvp.core.conaxgames.giveall.ManualGiveAllCommand;
+import net.astropvp.core.items.ApolloRank;
+import net.astropvp.core.items.AstroPlusRank;
+import net.astropvp.core.items.HeroicUpgrade;
 import net.astropvp.core.listeners.*;
 import net.astropvp.core.conaxgames.staff.Freeze;
 import net.astropvp.core.conaxgames.staff.FreezeCommand;
@@ -142,8 +141,12 @@ public class AstroCore extends JavaPlugin {
         saveConfig();
         setupEconomy();
         events();
-        new LastManStandingCapTask().runTaskTimer(this, 80L, 80L);
-        Bukkit.getScheduler().runTaskTimer(this, new AutoBroadcastTask(), 20L, 6000L);
+        new LastManStandingCapTask().runTaskTimer(this, 20L, 20L);
+
+        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new HeroicUpgrade());
+        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new ApolloRank());
+        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new AstroPlusRank());
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, new AutoBroadcastTask(), 20L, 6000L);
 
         Bukkit.getScheduler().runTaskLater(this, ()->
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ic reload"), 100L);
@@ -164,19 +167,11 @@ public class AstroCore extends JavaPlugin {
             this.getCommand("helpenchants").setExecutor(new CommandHelpEnchants());
         }
 
-        CosmicSpongesAPI.setCachedSpongeChunks(new HashMap<String, SpongeChunk>());
-        this.buildDB();
-        for (World w : Bukkit.getWorlds()) {
-            for (Chunk c : w.getLoadedChunks()) {
-                CosmicSpongesAPI.cacheSpongeChunk(c);
-            }
-        }
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "arkunload lava_sponge");
         WorldGuardPlugin.inst().getConfig().set("simulation.sponge.enable", false);
         for (World w : Bukkit.getWorlds()) {
             WorldGuardPlugin.inst().getGlobalStateManager().get(w).simulateSponge = false;
         }
-        CosmicSpongesAPI.debug = false;
 
 
         this.ess = (Essentials)Bukkit.getPluginManager().getPlugin("Essentials");
@@ -215,11 +210,11 @@ public class AstroCore extends JavaPlugin {
         this.getCommand("spawnheroicboss").setExecutor(new CommandSpawnHeroicBoss());
         this.getCommand("setheroicbossspawn").setExecutor(new CommandSetHeroicBossSpawn());
 
+        this.getCommand("armorcolor").setExecutor(new ArmorColorCommand());
+
         this.getCommand("corechunkfinder").setExecutor(new CoreChunkFinderCommand());
 
         this.getCommand("coinflip").setExecutor(new CommandCoinFlip());
-
-        this.getCommand("giveapollorank").setExecutor(new GiveApolloCommand());
 
         this.getCommand("list").setExecutor(new ListCommand());
         this.getCommand("grinding").setExecutor((CommandExecutor)new ToggleGrindingMessages());
@@ -249,6 +244,7 @@ public class AstroCore extends JavaPlugin {
         this.toggleManager.loadToggles();
 
         this.getServer().getPluginManager().registerEvents(new Freeze(), this);
+        this.getServer().getPluginManager().registerEvents(new ArmorColorClickListener(), this);
         this.getServer().getPluginManager().registerEvents(new ChatListener(), this);
         this.getServer().getPluginManager().registerEvents(new BlockCommand(), this);
         this.getServer().getPluginManager().registerEvents(new BackpackListener(), this);
@@ -295,9 +291,6 @@ public class AstroCore extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new ItemListener(), this);
         this.getServer().getPluginManager().registerEvents(new SoulGemListener(), this);
 
-        this.getServer().getPluginManager().registerEvents(new ChunkListener(), this);
-        this.getServer().getPluginManager().registerEvents(new BlockFlowListener(), this);
-        this.getServer().getPluginManager().registerEvents(new SpongeModifyListener(), this);
         this.getServer().getPluginManager().registerEvents(new ApplyEnchantCrystalListener(), this);
 
         Bukkit.getServer().getPluginManager().registerEvents(new TitleInventoryListener(this.dataManager), this);
@@ -368,7 +361,6 @@ public class AstroCore extends JavaPlugin {
         pm.registerEvents(new ServerFixes(), this);
         pm.registerEvents(new MOTD(), this);
         pm.registerEvents(new HeroicArmorFix(), this);
-        pm.registerEvents(new MobRewards(), this);
         pm.registerEvents(new PotionFix(), this);
         pm.registerEvents(new ChunkBusterListener(), this);
         pm.registerEvents(new OmniGemFix(), this);
