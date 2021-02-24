@@ -38,6 +38,7 @@
         <module>CompilexPermissions</module>
         <module>Masks</module>
         <module>EnchantmentsAPI</module>
+        <module>CustomBlocks</module>
     </modules>
 
     <build>

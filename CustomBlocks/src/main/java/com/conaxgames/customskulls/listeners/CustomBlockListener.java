@@ -1,0 +1,86 @@
+package com.conaxgames.customskulls.listeners;
+
+import com.conaxgames.customskulls.blocks.CustomBlock;
+import com.conaxgames.customskulls.util.CustomBlockUtil;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
+
+public class CustomBlockListener implements Listener {
+
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onPlayerUse(final PlayerInteractEvent event) {
+        if (CustomBlockUtil.isCustomBlock(event.getPlayer().getItemInHand())) {
+            this.interactCustomBlockItem(event, event.getPlayer().getItemInHand());
+        }
+        if (CustomBlockUtil.isCustomBlock(event.getPlayer().getItemInHand())) {
+            this.interactCustomBlockItem(event, event.getPlayer().getItemInHand());
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onPlayerHit(final EntityDamageByEntityEvent event) {
+        if (event.getDamager().getType() != EntityType.PLAYER) {
+            return;
+        }
+        final Player player = (Player)event.getDamager();
+        final ItemStack playerItemInHand = player.getItemInHand();
+        if (CustomBlockUtil.isCustomBlock(playerItemInHand)) {
+            CustomBlockUtil.getCustomBlock(playerItemInHand).hitEntityAction(player, event, event.getEntity(), playerItemInHand);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onBlockBreak(final BlockBreakEvent event) {
+        final Player player = event.getPlayer();
+        final ItemStack item = player.getItemInHand();
+        if (CustomBlockUtil.isCustomBlock(item)) {
+            CustomBlockUtil.getCustomBlock(item).breakBlockAction(player, event, event.getBlock(), item);
+        }
+    }
+
+    private void interactCustomBlockItem(final PlayerInteractEvent event, final ItemStack item) {
+        final Player player = event.getPlayer();
+        final CustomBlock customBlock = CustomBlockUtil.getCustomBlock(item);
+
+        if (event.getAction() == Action.LEFT_CLICK_AIR) {
+            if (!player.isSneaking()) {
+                customBlock.leftClickAirAction(player, item);
+            }
+            else {
+                customBlock.shiftLeftClickAirAction(player, item);
+            }
+        }
+        else if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
+            if (!player.isSneaking()) {
+                customBlock.leftClickBlockAction(player, event, event.getClickedBlock(), item);
+            }
+            else {
+                customBlock.shiftLeftClickBlockAction(player, event, event.getClickedBlock(), item);
+            }
+        }
+        else if (event.getAction() == Action.RIGHT_CLICK_AIR) {
+            if (!player.isSneaking()) {
+                customBlock.rightClickAirAction(player, item);
+            }
+            else {
+                customBlock.shiftRightClickAirAction(player, item);
+            }
+        }
+        else if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            if (!player.isSneaking()) {
+                customBlock.rightClickBlockAction(player, event, event.getClickedBlock(), item);
+            }
+            else {
+                customBlock.shiftRightClickBlockAction(player, event, event.getClickedBlock(), item);
+            }
+        }
+    }
+}
