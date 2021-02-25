@@ -5,12 +5,12 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-final class CorruptDamageTask extends BukkitRunnable {
+public final class CorruptDamageTask extends BukkitRunnable {
     Player p;
     long durationTicks;
     double dmgValue;
 
-    CorruptDamageTask(final Player p, final long durationTicks, final double dmgAmount) {
+    public CorruptDamageTask(final Player p, final long durationTicks, final double dmgAmount) {
         this.p = p;
         this.durationTicks = durationTicks;
         this.dmgValue = dmgAmount;

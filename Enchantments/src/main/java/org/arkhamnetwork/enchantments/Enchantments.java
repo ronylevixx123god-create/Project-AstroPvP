@@ -75,22 +75,27 @@ public class Enchantments extends EnchantPlugin {
                 new Voodoo(), new Stormcaller(), new Execute(), new Disarmor(), new Demonforged(), new AutoSmelt(), new Experience(), new Detonate(), new ObsidianDestroyer(), new Oxygenate(),
                 new Telepathy(), new Lucky(), new Leadership(), new SmokeBomb(), new Rage(), new ArrowLifesteal(), new Clarity(), new Spirits(), new UndeadRuse(), new Trickster(),
                 new BloodLust(), new Devour(), new Protection(), new Destruction(), new Hellfire(), new Ragdoll(), new Sniper(), new Snare(), this.naturesWrathEnchant = new NatureWrath(), new DivineImmolation(),
-                new Rogue(),
-                new Ghost(), new CreeperArmor(), new KillAura(), new Shackle(), new Immortal(), new Pummel(), new Barbarian(),
+                new Rogue(), new HeroicInversion(), new HeroicInsomnia(), new HeroicValor(), new HeroicAegis(), new HeroicEnrage(), new HeroicCorrupt(), new HeroicSolitude(), new HeroicDevour(), new HeroicHex(),
+                new Ghost(), new CreeperArmor(), new KillAura(), new Shackle(), new Immortal(), new Pummel(), new Barbarian(), new HeroicBarbarian(), new HeroicDeepWounds(),
                 new ArrowDeflect(), new Greatsword(), new Virus(), new Unfocus(), new Teleblock(), new Longbow(), new Inversion(), new Farcast(), new Paradox(), new Solitude(),
                 new Heavy(), new Hijack(), new Enrage(), new Dodge(), new Insanity(), new Phoenix(), new Disintegrate(), new BloodLink(), new Resilience(),
                 new Sticky(), new Metaphysical(), new Pacify(), new TargetTracking(), new DimensionRift(), new EagleEye(), new Marksman(), new Blacksmith(), new ArrowBreak(), new Assassin(),
                 new Aegis(), new AntiGank(), new RepairGuard(), new Fuse(), new Dominate(), new DeathGod(), new Diminish(), new HeroicPlagueCarrier(), new HeroicOverload(), new HeroicInquisitive(),
                 new HeroicDeathbringer(), new HeroicEnlighted(), new HeroicBlacksmith(), new HeroicSniper(), new HeroicDiminish(), new HeroicAssassin(), new HeroicDetonate(), new HeroicImplants(), new HeroicLifesteal(), new HeroicArmored(),
-                new HeroicDodge(), new HeroKiller(), new BossSlayer(), new HeroicLuck(), new HeroicCleave(), new HeroicBleed(), this.hex = new Hex(), new Corrupt(), new MasteryMarkOfTheBeast(), new MasteryHorrify(),
+                new HeroicDodge(), new HeroKiller(), new BossSlayer(), new HeroicLuck(), new HeroicCleave(), new HeroicExecute(), new HeroicBleed(), this.hex = new Hex(), new Corrupt(), new MasteryMarkOfTheBeast(), new MasteryHorrify(),
                 new MasteryPoltergeist(), new MasteryFeignDeath(), new HeroicRocketEscape(), new HeroicTeleportation(), new HeroicTrap(), new HeroicBlock(), new HeroicGhost(), new MasterySoulSiphon(), new MasteryMortalCoil(), new MasteryRotAndDecay(),
                 new MasteryDemonicGateway(), new Reflect(), new AvengingAngel(), new HeroicReflect(), new MasteryLifesteal(), new MasteryDeathPact(), new MasteryTombstone(), new MasteryDiscombobulate(), new MasteryAutoSell(), new MasteryExplosivesExpert(),
                 this.permafrostEnchant = new MasteryPermafrost(), new HeroicMetaphysical(), new MasteryBlackout(), new MasteryWebWalker(), new MasteryNeutralize(), new HeroicCactus(), new HeroicTank(), new Sabotage(), new MasteryLavaStrider(), new MasteryRevoke()};
         EnchantmentAPI.registerCustomEnchantments(array);
-        Bukkit.getScheduler().runTaskTimer(this, () -> {
+
+
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
             for (Player p : Bukkit.getServer().getOnlinePlayers())
                 Enchantments.playerLocations.put(p, p.getLocation());
         }, 0L, 40L);
+
+        //THIS IS A TEST
+
         (new File("plugins/Enchantments/config.yml")).delete();
         saveDefaultConfig();
         try {

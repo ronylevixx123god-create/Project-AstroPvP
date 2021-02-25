@@ -36,11 +36,19 @@ public class HeroicBlock extends HeroicCustomEnchantment {
                 double reflectChance = 0.001D * level + (player.isBlocking() ? 0.001D : 0.001D);
                 if (Math.random() < reflectChance && attacker instanceof Player) {
                     player.sendMessage(CC.GreenB + CC.translate("* BLOCKED &7[") + NumberUtils.formatSeconds(finalDamage) + CC.translate("]&a&l *"));
-                    de.inventivegames.particle.ParticleEffect.CRIT.sendToPlayer(player,player.getLocation().add(0.0D, 1.0D, 0.0D),0,0,0, 0.75F, 25);
+                    try {
+                        ParticleEffect.CRIT.sendToPlayer(player,player.getLocation().add(0.0D, 1.0D, 0.0D),0,0,0, 0.75F, 25);
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
                     if (damageToReflect > 0.0D) {
                         Player attacking = (Player) attacker;
                         player.getWorld().playSound(player.getLocation(), Sound.ZOMBIE_METAL, 10.0F, 2.0F);
-                        ParticleEffect.WITCH_MAGIC.sendToPlayer(attacking,attacking.getLocation().add(0.0D, 1.0D, 0.0D),0,0,0, 0.75F, 25);
+                        try {
+                            ParticleEffect.WITCH_MAGIC.sendToPlayer(attacking,attacking.getLocation().add(0.0D, 1.0D, 0.0D),0,0,0, 0.75F, 25);
+                        } catch (Exception exception) {
+                            exception.printStackTrace();
+                        }
                         attacking.sendMessage(CC.RedB + "* " + player.getName() + " REFLECTIVE BLOCK [" + CC.Gray + (int) (reduceDamage * 100.0D) + "% DMG" + CC.RedB + "]");
                     }
                 }

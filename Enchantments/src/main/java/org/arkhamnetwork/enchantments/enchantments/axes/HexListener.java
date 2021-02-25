@@ -10,10 +10,10 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import java.text.DecimalFormat;
 
-final class HexListener implements Listener {
+public final class HexListener implements Listener {
     private DecimalFormat df;
 
-    HexListener() {
+    public HexListener() {
         this.df = new DecimalFormat("#.##");
     }
 

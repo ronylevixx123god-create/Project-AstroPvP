@@ -89,7 +89,11 @@ public class HeroicRocketEscape extends HeroicCustomEnchantment {
                 UUID uuid = player.getUniqueId();
                 RocketEscape.rocket_escapists.add(uuid);
                 Location loc = pl.getLocation();
-                de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(),  loc, (float) Math.random() * 2.0F, (float) Math.random() * 2.0F, (float) Math.random() * 2.0F, 1.25F, 69);
+                try {
+                    de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(),  loc, (float) Math.random() * 2.0F, (float) Math.random() * 2.0F, (float) Math.random() * 2.0F, 1.25F, 69);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
 
                 long flightDuration = level;
                 pl.setMetadata("allow_flight", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), System.currentTimeMillis() + flightDuration * 1000L));

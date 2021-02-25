@@ -54,7 +54,11 @@ public class HeroicBleed extends HeroicCustomEnchantment {
             double bleedChance = 0.1D * enchantLevel + 0.4D;
             if (Math.random() < bleedChance && getBleedStack(target) < getMaxBleedStack(enchantLevel))
                 GeneralCooldown.enterCooldown((Player) user);
+            try {
                 addBleedStack(user, target);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
         }
     }
 

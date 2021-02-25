@@ -74,7 +74,11 @@ public class HeroicDetonate extends CustomEnchantment {
                 if (type == Material.REDSTONE_COMPARATOR || type == Material.SPONGE || type == Material.REDSTONE_COMPARATOR_ON || type == Material.REDSTONE_COMPARATOR_OFF) {
                     return;
                 }
-                this.explode(player, bbe.getBlock(), enchantLevel);
+                try {
+                    this.explode(player, bbe.getBlock(), enchantLevel);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
             }
         }
     }
