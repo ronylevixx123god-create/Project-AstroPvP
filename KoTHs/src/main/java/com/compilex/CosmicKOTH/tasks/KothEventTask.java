@@ -64,12 +64,11 @@ implements Runnable {
             @Override
             public void run() {
                 Bukkit.broadcastMessage("");
-                Bukkit.broadcastMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "*** A KOTH EVENT HAS STARTED! ***");
+                Bukkit.broadcastMessage(CC.translate("&c&l*&6&l*&e&l* &f&lA KOTH EVENT HAS STARTED &e&l*&6&l*&c&l*"));
                 KothWorldType worldType = KothWorldType.getFromIndex(RewardUtils.getMapIndex());
                 if (worldType != null) {
                     Bukkit.broadcastMessage(CC.GreenB + "          Arena: " + CC.Aqua + worldType.getName(true));
                 }
-                Bukkit.broadcastMessage("");
                 Bukkit.broadcastMessage(ChatColor.GRAY + "Use /koth to view event information!");
                 Bukkit.broadcastMessage("");
                 if (worldType == KothWorldType.SANTA_WORKSHOP) {
@@ -89,7 +88,11 @@ implements Runnable {
     public void run() {
         if (!this.capped) {
             ++this.runtime;
-            this.playerCapHandler();
+            try {
+                this.playerCapHandler();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
             this.advertHandler();
             this.monsterSpawnHandler();
         }
@@ -99,8 +102,8 @@ implements Runnable {
     private void advertHandler() {
         if (this.runtime % 300 == 0) {
             Bukkit.broadcastMessage("");
-            Bukkit.broadcastMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "*** A KOTH EVENT IS RUNNING! ***");
-            Bukkit.broadcastMessage(ChatColor.GRAY + "Use " + ChatColor.GREEN + "/koth" + ChatColor.GRAY + " to view event information!");
+            Bukkit.broadcastMessage(CC.translate("&c&l*&6&l*&e&l* &f&lA KOTH EVENT IS RUNNING &e&l*&6&l*&c&l*"));
+            Bukkit.broadcastMessage(ChatColor.GRAY + "Use " + ChatColor.LIGHT_PURPLE + "/koth" + ChatColor.GRAY + " to view event information!");
             Bukkit.broadcastMessage("");
         }
     }
@@ -184,7 +187,7 @@ implements Runnable {
         FPlayer fplayer;
         this.capped = true;
         Bukkit.broadcastMessage("");
-        Bukkit.broadcastMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "*** KOTH CAPTURED BY: " + ChatColor.UNDERLINE + this.getNameOfFlagCapper() + ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + " ***");
+        Bukkit.broadcastMessage(CC.translate("&c&l*&6&l*&e&l* &f&lTHE KOTH HAS BEEN CAPTURED BY: &d&n" + this.getNameOfFlagCapper() + "&r &e&l*&6&l*&c&l*"));
         Bukkit.broadcastMessage(ChatColor.GRAY.toString() + "A " + ChatColor.UNDERLINE + "AstroPvP KOTH Lootbag" + ChatColor.GRAY + " has been added to " + player.getName() + "'s inventory. Prevent them from escaping the /warp koth arena alive to steal the rewards!");
         Bukkit.broadcastMessage("");
         this.logWinner(player);

@@ -448,14 +448,17 @@ implements Runnable {
     }
 
     public List<Player> getPlayersInCapZone() {
-        ArrayList<Player> l = new ArrayList<>();
+        List<Player> l = new ArrayList<>();
         for (Player p : Arkkit.get().getAsyncPlayerMap().values()) {
-            if (!p.getWorld().equals(this.outpost.getWorld()) || !WorldGuardUtils.getRegionName(p.getLocation()).equals(Outpost.OUTPOST_CAP_REGION) || p.getGameMode() != GameMode.SURVIVAL || CosmicKOTHPlugin.get_().getEss3().getUser(p).isVanished()) {
+            if (!p.getWorld().equals(this.outpost.getWorld()))
+                continue;
+            if (WorldGuardUtils.getRegionName(p.getLocation()).equals(Outpost.OUTPOST_CAP_REGION) &&
+                    p.getGameMode() == GameMode.SURVIVAL && !CosmicKOTHPlugin.get_().getEss3().getUser(p).isVanished())
                 l.add(p);
-            }
         }
         return l;
     }
+
 
     public float applyFactionUpgrades(Faction faction, float f) {
         if (this.factionUpgrades) {

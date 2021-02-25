@@ -8,6 +8,7 @@
 package com.compilex.CosmicKOTH.tasks;
 
 import com.compilex.CosmicKOTH.CosmicKOTHAPI;
+import com.cosmicpvp.cosmicutils.utils.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
@@ -49,8 +50,8 @@ implements Runnable {
 
     private void notifyPlayers(String delay) {
         Bukkit.broadcastMessage((String)"");
-        Bukkit.broadcastMessage((String)(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "*** KOTH EVENT STARTING IN " + ChatColor.YELLOW.toString() + (Object)ChatColor.UNDERLINE + delay + ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + " ***"));
-        Bukkit.broadcastMessage((String)((Object)ChatColor.GRAY + "Use " + (Object)ChatColor.GREEN + "/koth" + (Object)ChatColor.GRAY + " to view event information!"));
+        Bukkit.broadcastMessage((String)(CC.translate("&c&l*&6&l*&e&l* &f&lA KOTH EVENT IS STARTING IN &d&n" + delay + "&r &e&l*&6&l*&c&l*")));
+        Bukkit.broadcastMessage((String)((Object)ChatColor.GRAY + "Use " + (Object)ChatColor.LIGHT_PURPLE + "/koth" + (Object)ChatColor.GRAY + " to view event information!"));
         Bukkit.broadcastMessage((String)"");
     }
 }

@@ -29,9 +29,10 @@ public class ArmorColorCommand implements CommandExecutor {
 
         if (!(p.hasPermission("astrocore.apollo"))) {
             p.sendMessage("");
-            p.sendMessage(CC.translate("&c&l(!)&c You cannot use the color armor command."));
-            p.sendMessage(CC.translate("&7Purchase this rank on &f&nbuy.astropvp.net&7!"));
+            p.sendMessage(CC.translate("&c&l(!)&c You cannot use the \"/armorcolor\" command."));
+            p.sendMessage(CC.translate("&7Purchase the apollo rank on &f&nbuy.astropvp.net&7!"));
             p.sendMessage("");
+            return false;
         }
         
         if (p.getItemInHand() == null) {

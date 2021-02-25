@@ -58,7 +58,7 @@ public class ArmorColorGUI extends GUIBuilder {
         }
         if (slot == 2) {
             return ItemBuilder.buildItem(Material.STAINED_GLASS_PANE,1, (short) 3,
-                    CC.translate("&c&lBlue"), CC.translate("&7Click this to select the color blue."));
+                    CC.translate("&b&lBlue"), CC.translate("&7Click this to select the color blue."));
         }
         if (slot == 3) {
             return ItemBuilder.buildItem(Material.STAINED_GLASS_PANE,1, (short) 10,
@@ -78,7 +78,7 @@ public class ArmorColorGUI extends GUIBuilder {
         }
         if (slot == 7) {
             return ItemBuilder.buildItem(Material.STAINED_GLASS_PANE,1, (short) 0,
-                    CC.translate("&d&lWhite"), CC.translate("&7Click this to select the color white."));
+                    CC.translate("&f&lWhite"), CC.translate("&7Click this to select the color white."));
         }
         if (slot == 8) {
             return ItemBuilder.buildItem(Material.STAINED_GLASS_PANE,1, (short) 15,
