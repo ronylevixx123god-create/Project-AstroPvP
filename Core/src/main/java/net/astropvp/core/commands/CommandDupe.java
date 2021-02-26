@@ -40,6 +40,11 @@ public class CommandDupe implements CommandExecutor {
             return false;
         }
 
+        if (item.getItemMeta().hasEnchants()) {
+            player.sendMessage(CC.translate("&cYou cannot dupe this item."));
+            return false;
+        }
+
         if (display.contains(CC.DarkRed)) {
             sender.sendMessage(CC.Red + "You cannot dupe this item.");
             return false;
