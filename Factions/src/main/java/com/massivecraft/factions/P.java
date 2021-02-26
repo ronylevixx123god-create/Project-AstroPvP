@@ -305,14 +305,12 @@ public class P extends MPlugin {
 
         this.upgradesEnabled = Bukkit.getPluginManager().isPluginEnabled("FactionUpgrades");
         this.factionPointsEnabled = new File("plugins/CosmicFactionPoints.jar").exists();
-        this.topManager.loadTopFactions(null, 100);
+        //this.topManager.loadTopFactions(null, 100);
         this.includeBank = this.getConfig().getBoolean("includeBank");
         this.gradualSpawnerValues = this.getConfig().getBoolean("gradualSpawnerValue");
         this.includeHoppers = this.getConfig().getBoolean("includeHoppers", true);
-        this.getServer().getPluginManager().registerEvents(new me.ifamasssxd.factionstop.listeners.CommandListener(), this);
-        this.getCommand("recalcftop").setExecutor(new CommandRecalcFactionsTop());
-        this.getCommand("ftop").setExecutor(new CommandFactionsTop());
-        this.getCommand("editftop").setExecutor(new CommandEditFactionsTop());
+        //this.getServer().getPluginManager().registerEvents(new me.ifamasssxd.factionstop.listeners.CommandListener(), this);
+
 
     }
 
