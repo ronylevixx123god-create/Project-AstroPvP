@@ -11,27 +11,10 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.List;
-
 public class FivePercentDamageIncrease extends CustomBlock {
 
     public FivePercentDamageIncrease(String name, Material material) {
         super(name, material);
-    }
-
-    @Override
-    public void onItemStackCreate(ItemStack p0) {
-
-    }
-
-    @Override
-    public void getSpecificLorePrefix(List<String> p0, ItemStack p1) {
-
-    }
-
-    @Override
-    public void getSpecificLoreSuffix(List<String> p0, ItemStack p1) {
-
     }
 
     @Override
@@ -91,11 +74,6 @@ public class FivePercentDamageIncrease extends CustomBlock {
 
     @Override
     public void clickedInInventoryAction(Player p0, InventoryClickEvent p1) {
-
-    }
-
-    @Override
-    public void activeEffect(Player p0, ItemStack p1) {
 
     }
 }

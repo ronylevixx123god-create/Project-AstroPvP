@@ -2,7 +2,9 @@ package com.conaxgames.customskulls;
 
 import com.conaxgames.customskulls.blocks.CustomBlock;
 import com.conaxgames.customskulls.blocks.impl.FivePercentDamageIncrease;
+import com.conaxgames.customskulls.util.CC;
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -10,7 +12,7 @@ import java.util.Map;
 
 public class CoreSkulls extends JavaPlugin {
 
-    @Getter public CoreSkulls instance;
+    @Getter public static CoreSkulls instance;
     public static Map<String, CustomBlock> customBlocks;
 
     @Override
@@ -26,5 +28,9 @@ public class CoreSkulls extends JavaPlugin {
 
     private void registerCustomBlocks() {
         customBlocks.put("FIVE_PERCENT_DAMAGE_INCREASE", new FivePercentDamageIncrease("FIVE_PERCENT_DAMAGE_INCREASE", Material.SKULL_ITEM));
+    }
+
+    public void info(String string) {
+        Bukkit.getConsoleSender().sendMessage(CC.YELLOW + string);
     }
 }

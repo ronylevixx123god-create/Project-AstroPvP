@@ -48,38 +48,33 @@ public class CustomBlockListener implements Listener {
 
     private void interactCustomBlockItem(final PlayerInteractEvent event, final ItemStack item) {
         final Player player = event.getPlayer();
-        final CustomBlock customBlock = CustomBlockUtil.getCustomBlock(item);
+        if (CustomBlockUtil.isCustomBlock(item)) {
+            final CustomBlock customBlock = CustomBlockUtil.getCustomBlock(item);
 
-        if (event.getAction() == Action.LEFT_CLICK_AIR) {
-            if (!player.isSneaking()) {
-                customBlock.leftClickAirAction(player, item);
-            }
-            else {
-                customBlock.shiftLeftClickAirAction(player, item);
-            }
-        }
-        else if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
-            if (!player.isSneaking()) {
-                customBlock.leftClickBlockAction(player, event, event.getClickedBlock(), item);
-            }
-            else {
-                customBlock.shiftLeftClickBlockAction(player, event, event.getClickedBlock(), item);
-            }
-        }
-        else if (event.getAction() == Action.RIGHT_CLICK_AIR) {
-            if (!player.isSneaking()) {
-                customBlock.rightClickAirAction(player, item);
-            }
-            else {
-                customBlock.shiftRightClickAirAction(player, item);
-            }
-        }
-        else if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            if (!player.isSneaking()) {
-                customBlock.rightClickBlockAction(player, event, event.getClickedBlock(), item);
-            }
-            else {
-                customBlock.shiftRightClickBlockAction(player, event, event.getClickedBlock(), item);
+            if (event.getAction() == Action.LEFT_CLICK_AIR) {
+                if (!player.isSneaking()) {
+                    customBlock.leftClickAirAction(player, item);
+                } else {
+                    customBlock.shiftLeftClickAirAction(player, item);
+                }
+            } else if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
+                if (!player.isSneaking()) {
+                    customBlock.leftClickBlockAction(player, event, event.getClickedBlock(), item);
+                } else {
+                    customBlock.shiftLeftClickBlockAction(player, event, event.getClickedBlock(), item);
+                }
+            } else if (event.getAction() == Action.RIGHT_CLICK_AIR) {
+                if (!player.isSneaking()) {
+                    customBlock.rightClickAirAction(player, item);
+                } else {
+                    customBlock.shiftRightClickAirAction(player, item);
+                }
+            } else if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                if (!player.isSneaking()) {
+                    customBlock.rightClickBlockAction(player, event, event.getClickedBlock(), item);
+                } else {
+                    customBlock.shiftRightClickBlockAction(player, event, event.getClickedBlock(), item);
+                }
             }
         }
     }
