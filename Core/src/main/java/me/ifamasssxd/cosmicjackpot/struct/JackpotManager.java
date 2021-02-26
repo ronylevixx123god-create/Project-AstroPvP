@@ -22,6 +22,7 @@
 package me.ifamasssxd.cosmicjackpot.struct;
 
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.JSONUtils;
 import com.earth2me.essentials.api.Economy;
 import com.earth2me.essentials.api.NoLoanPermittedException;
@@ -77,10 +78,9 @@ public class JackpotManager {
                     if (secondsLeft >= 60) {
                         pl.sendMessage("");
                     }
-                    pl.sendMessage(ChatColor.AQUA + ChatColor.BOLD.toString() + "(!) " + ChatColor.AQUA + "Astro Jackpot (" + ChatColor.AQUA + ChatColor.BOLD + "$" + ChatColor.AQUA + this.getMoneyFormat().format(this.currentJackpot.getPlayerWinnings()) + ") drawing in " + ChatColor.AQUA + ChatColor.BOLD.toString() + (secondsLeft == 60 ? "60s" : TimeUtils.formatDifference(secondsLeft).trim()) + ChatColor.AQUA + "!");
-                    if (secondsLeft > 5) {
-                        pl.sendMessage(ChatColor.GRAY + "Use " + ChatColor.LIGHT_PURPLE + "/jackpot buy" + ChatColor.GRAY + " to purchase a ticket!");
-                    }
+                    pl.sendMessage(CC.translate("&a✪ &e&lJACKPOT &7⎜ &eThe Jackpot &7(&a$" + this.getMoneyFormat().format(this.currentJackpot.getPlayerWinnings()) + "&7)&e will be rolled in &f" + (secondsLeft == 60 ? "60s" : TimeUtils.formatDifference(secondsLeft).trim()) + "&7."));
+                    pl.sendMessage(CC.translate("&7Type &f/jackpot buy (amount)&7 to purchase tickets!"));
+                    //pl.sendMessage(ChatColor.AQUA + ChatColor.BOLD.toString() + "(!) " + ChatColor.AQUA + "Astro Jackpot (" + ChatColor.AQUA + ChatColor.BOLD + "$" + ChatColor.AQUA + this.getMoneyFormat().format(this.currentJackpot.getPlayerWinnings()) + ") drawing in " + ChatColor.AQUA + ChatColor.BOLD.toString() + (secondsLeft == 60 ? "60s" : TimeUtils.formatDifference(secondsLeft).trim()) + ChatColor.AQUA + "!");
                     if (secondsLeft < 60) continue;
                 }
             }
