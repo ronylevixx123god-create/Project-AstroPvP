@@ -35,6 +35,7 @@ public class FCmdRoot extends FCommand {
     public CmdMap cmdMap = new CmdMap();
     public CmdToggleRequests cmdToggleRequests = new CmdToggleRequests();
     public CmdToggleTp cmdToggleTp = new CmdToggleTp();
+    public CmdTop cmdTop = new CmdTop();
     public CmdMod cmdMod = new CmdMod();
     public CmdRecruit cmdRecruit = new CmdRecruit();
     public CmdMoney cmdMoney = new CmdMoney();
@@ -134,6 +135,7 @@ public class FCmdRoot extends FCommand {
         this.addSubCommand(this.cmdMap);
         this.addSubCommand(this.cmdToggleRequests);
         this.addSubCommand(this.cmdToggleTp);
+        this.addSubCommand(this.cmdTop);
         this.addSubCommand(this.cmdMod);
         this.addSubCommand(this.cmdMoney);
         this.addSubCommand(this.cmdOpen);
