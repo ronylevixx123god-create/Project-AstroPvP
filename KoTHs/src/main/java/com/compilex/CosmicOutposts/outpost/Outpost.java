@@ -66,7 +66,6 @@ public class Outpost {
 
     public void startTasks() {
         this.capTaskId = Bukkit.getScheduler().runTaskTimerAsynchronously(this.plugin, this.capTask, 20L, 20L).getTaskId();
-        this.scoreboardTaskId = Bukkit.getScheduler().runTaskTimer(this.plugin, this.scoreboardTask, 40L, 40L).getTaskId();
         this.rewardTaskId = Bukkit.getScheduler().runTaskTimer(this.plugin, this.rewardTask, 6000L, 6000L).getTaskId();
         this.sanityTaskId = Bukkit.getScheduler().runTaskTimer(this.plugin, this.sanityTask, 15L, 15L).getTaskId();
         if (this.vanillaMonsterTask != null) {

@@ -200,32 +200,6 @@ public class ServerFixes implements Listener {
     }
 
     @EventHandler
-    public void onCreeperDeath(EntityDeathEvent e) {
-        EntityType ent = e.getEntityType();
-        ItemStack tnt = new ItemStack(Material.TNT);
-        if (ent.equals(EntityType.CREEPER))
-            e.getDrops().add(tnt);
-    }
-
-    @EventHandler
-    public void onVillagerDeath(EntityDeathEvent e) {
-        EntityType ent = e.getEntityType();
-        ItemStack emerald = new ItemStack(Material.EMERALD);
-        if (ent.equals(EntityType.VILLAGER)) {
-            e.getDrops().add(emerald);
-            e.getDrops().add(emerald);
-            e.getDrops().add(emerald);
-        }
-    }
-
-    @EventHandler
-    public void onGolemDeath(EntityDeathEvent e) {
-        if (e.getEntity().getType() != EntityType.IRON_GOLEM)
-            return;
-        e.getDrops().removeIf(is -> (is.getType() == Material.RED_ROSE));
-    }
-
-    @EventHandler
     public void tntDamage(EntityDamageEvent e) {
         if (e.getEntity() instanceof Player && e
                 .getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION)

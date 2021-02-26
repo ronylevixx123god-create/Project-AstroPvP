@@ -317,7 +317,7 @@ public class ShopManager {
         player.playSound(player.getLocation(), Sound.ORB_PICKUP, 1.0f, 1.4f);
         Material type = data.getType();
         if ((type == Material.CHEST || type == Material.TRAPPED_CHEST) && data.getData() == 100) {
-            Bukkit.dispatchCommand((CommandSender) Bukkit.getConsoleSender(), (String) ("ic give " + player.getName() + " " + buyAmount));
+            Bukkit.dispatchCommand((CommandSender) Bukkit.getConsoleSender(), (String) ("c " + player.getName() + " " + buyAmount));
             Bukkit.getPluginManager().callEvent((Event) new CustomCosmicPlayerEvent(player, "SHOP_BUY", new Object[]{totalPrice, data, buyAmount}));
             return;
         }
