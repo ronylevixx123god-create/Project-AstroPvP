@@ -100,6 +100,7 @@ public class InventoryWitcherPet extends InventoryPet {
             player.sendMessage(String.valueOf(CC.RedB) + "* REINDEER ITEM SKIN " + CC.Gray + "(" + CC.White + "2x Pet Length" + CC.Gray + ")");
         }
 
+
         if (playerHasApollo(player)) {
             sum *= 1.5;
         }
@@ -122,6 +123,11 @@ public class InventoryWitcherPet extends InventoryPet {
                 continue;
             if (WitcherCooldown.isOnWitcherCooldown(p)) {
                 player.sendMessage(CC.translate("&c&lPET: &c" + p.getName() + "&c is still on Witcher Pet Cooldown! This lasts 60 seconds."));
+                continue;
+            }
+            if (playerHasApollo(p)) {
+                player.sendMessage(CC.translate("&f&l* &7&n" + p.getName() + "&f&l APOLLO SET BLOCKED CAGE *"));
+                p.sendMessage(CC.translate("&f&l* BLOCKED &7&n" + player.getName() + "&f&l WORLD DESTROYER *"));
                 continue;
             }
             p.sendMessage(CC.translate("&cWitcher Pet - ( " + sum + "s Ragdoll, Soul Enchantments - BLOCKED)"));
@@ -238,7 +244,7 @@ public class InventoryWitcherPet extends InventoryPet {
                 Math.abs(d.x * c.y - d.y * c.x) <= e.x * ad.y + e.y * ad.x + 9.999999747378752E-5D);
     }
 
-    public boolean playerHasApollo(Player pl) {
+    public static boolean playerHasApollo(Player pl) {
         return CosmicArmorSetsAPI.getBonusCrystalsEquipped(pl).containsKey(ArmorSet.APOLLO) || CosmicArmorSetsAPI.getArmorSet(pl) == ArmorSet.APOLLO;
     }
 }
