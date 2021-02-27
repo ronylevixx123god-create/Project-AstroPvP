@@ -58,7 +58,7 @@ final class ExpBottlesListener
         }
         Player p = e.getPlayer();
         if (!ExpBottlesCommand.canMakeXPBottle(p)) {
-            boolean noLimit = false;
+            boolean noLimit = true;
             if (p.hasPermission("arkkit.xpbottles.immune")) {
                 if (p.getName().equals("Woofless") || p.getName().equals("TBNRfrags")) {
                     if (p.getGameMode() == GameMode.CREATIVE) {

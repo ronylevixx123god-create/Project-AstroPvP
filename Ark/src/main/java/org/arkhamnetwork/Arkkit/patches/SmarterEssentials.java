@@ -58,7 +58,7 @@ public class SmarterEssentials
             if (factions) {
                 this.registerListener(new SellSanity());
                 this.registerListener(new HomeSanityListener());
-                this.registerTask(new NoEvilPotionEffects().runTaskTimer(Arkkit.get(), 15L, 15L), SmarterEssentials.class);
+                //this.registerTask(new NoEvilPotionEffects().runTaskTimer(Arkkit.get(), 15L, 15L), SmarterEssentials.class);
             }
         }
     }

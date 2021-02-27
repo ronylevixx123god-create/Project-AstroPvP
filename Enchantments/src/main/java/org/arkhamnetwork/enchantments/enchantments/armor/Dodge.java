@@ -3,6 +3,7 @@ package org.arkhamnetwork.enchantments.enchantments.armor;
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.rit.sucy.CustomEnchantment;
 import lombok.SneakyThrows;
+import me.astropvp.astroparticles.utils.ParticleUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -31,7 +32,9 @@ public class Dodge extends CustomEnchantment {
             if (Math.random() < chance) {
                 e.setCancelled(true);
                 ((Player) player).sendMessage(ChatColor.YELLOW + "*DODGE*");
-                de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 0,1,0,0.2f,10);
+                if (ParticleUtils.isPlayerIndicating(player.getKiller())) {
+                    de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 0, 1, 0, 0.2f, 10);
+                }
                 player.getWorld().playSound(player.getLocation(), Sound.BAT_TAKEOFF, 1.0f, 0.75f);
             }
         }

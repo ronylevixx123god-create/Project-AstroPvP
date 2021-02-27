@@ -132,8 +132,8 @@ public class NewTrade
 
     @Override
     public void enable() {
-        this.registerListener(new NewTradeListener());
-        this.registerCommand(new NewTradeCommand("trade", "/<command>", "Trade items with other players!", new ArrayList<String>(Arrays.asList("trades", "trading", "exchange"))));
+        //this.registerListener(new NewTradeListener());
+        //this.registerCommand(new NewTradeCommand("trade", "/<command>", "Trade items with other players!", new ArrayList<String>(Arrays.asList("trades", "trading", "exchange"))));
     }
 
     @Override

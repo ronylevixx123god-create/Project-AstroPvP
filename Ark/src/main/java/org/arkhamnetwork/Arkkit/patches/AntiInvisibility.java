@@ -21,7 +21,7 @@ public class AntiInvisibility
 
     @Override
     public void enable() {
-        this.registerTask(new AntiInvisibilityTask().runTaskTimer(this.getBukkitPlugin(), 20L, 40L), this.getClass());
+        //this.registerTask(new AntiInvisibilityTask().runTaskTimer(this.getBukkitPlugin(), 20L, 40L), this.getClass());
         classesEnabled = new File("plugins/CosmicClasses.jar").exists();
     }
 

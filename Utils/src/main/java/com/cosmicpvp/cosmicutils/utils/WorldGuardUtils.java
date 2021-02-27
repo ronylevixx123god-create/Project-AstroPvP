@@ -34,8 +34,8 @@ public class WorldGuardUtils {
         if (wg == null) {
             Bukkit.getLogger().info("Unable to hook into WorldGuard!");
         }
-        Bukkit.getScheduler().scheduleAsyncRepeatingTask(CosmicUtils.get(), WorldGuardUtils::updateAllPlayerRegions, 40L, 10L);
-        Bukkit.getScheduler().scheduleSyncDelayedTask(CosmicUtils.get(), WorldGuardUtils::cacheAllRegions, 20L);
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(CosmicUtils.get(), WorldGuardUtils::updateAllPlayerRegions, 40L, 40L);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(CosmicUtils.get(), WorldGuardUtils::cacheAllRegions, 200L);
         Bukkit.getLogger().info("[ConaxGames] Hooked into WorldGuard!");
         Bukkit.getLogger().info("[ConaxGames] Hooked into WorldGuard!");
         Bukkit.getLogger().info("[ConaxGames] Hooked into WorldGuard!");

@@ -31,7 +31,7 @@ public class HealCooldown {
             public void run() {
                 cooldown.remove(pl.getUniqueId());
             }
-        }.runTaskLater(AstroCore.getInstance(), 20L * 150);
+        }.runTaskLaterAsynchronously(AstroCore.getInstance(), 20L * 150);
     }
 
 }
