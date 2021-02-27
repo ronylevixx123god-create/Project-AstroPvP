@@ -8,7 +8,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 public class SkrrtCooldown {
     public static void enterSkrrtCooldown(Player player) {
         player.setMetadata("skrrtCooldown", new FixedMetadataValue(Enchantments.getInstance(), player.getName()));
-        Bukkit.getScheduler().runTaskLater(Enchantments.getInstance(), ()->{
+        Bukkit.getScheduler().runTaskLaterAsynchronously(Enchantments.getInstance(), ()->{
             player.removeMetadata("skrrtCooldown", Enchantments.getInstance());
         },400L);
     }

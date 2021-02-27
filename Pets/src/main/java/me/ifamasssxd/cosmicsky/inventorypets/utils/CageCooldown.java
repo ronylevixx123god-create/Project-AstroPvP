@@ -8,7 +8,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 public class CageCooldown {
     public static void enterCageCooldown(Player player) {
         player.setMetadata("cageCooldown", new FixedMetadataValue(Enchantments.getInstance(), player.getName()));
-        Bukkit.getScheduler().runTaskLater(Enchantments.getInstance(), ()->{
+        Bukkit.getScheduler().runTaskLaterAsynchronously(Enchantments.getInstance(), ()->{
             player.removeMetadata("cageCooldown", Enchantments.getInstance());
         },400L);
     }
