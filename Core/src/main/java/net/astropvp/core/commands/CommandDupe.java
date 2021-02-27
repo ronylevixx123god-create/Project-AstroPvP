@@ -35,7 +35,7 @@ public class CommandDupe implements CommandExecutor {
         List<String> lore = itemMeta.getLore();
         boolean isOpened = lore.contains(CC.Gray + "Drag n' Drop onto item to enchant.");
 
-        if (item.getType() != Material.BOOK && item.getType() != Material.EMPTY_MAP) {
+        if (item.getType() != Material.BOOK && item.getType() != Material.EMPTY_MAP && item.getType() != Material.INK_SACK) {
             player.sendMessage(CC.translate("&cYou cannot dupe this item."));
             return false;
         }
@@ -51,6 +51,12 @@ public class CommandDupe implements CommandExecutor {
         }
 
         if (!isOpened && !color.contains(CC.DarkRed)) {
+            item.setAmount(64);
+            player.sendMessage(CC.Green + "You have successfully duplicated your item.");
+            return false;
+        }
+
+        if (display.contains(ChatColor.WHITE + "Black Scroll") && item.getType() == Material.INK_SACK) {
             item.setAmount(64);
             player.sendMessage(CC.Green + "You have successfully duplicated your item.");
             return false;

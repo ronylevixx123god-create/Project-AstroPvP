@@ -28,6 +28,7 @@ public class CommandAliases implements Listener {
             e.setMessage("/tpdeny");
             return;
         }
+
         if (cmd.equals("/f unclaim all")) {
             e.setMessage("/f unclaimall");
             return;

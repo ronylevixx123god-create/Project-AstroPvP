@@ -80,12 +80,6 @@ implements Listener {
             }
             Material m1 = e.getClickedBlock().getType();
             Material m2 = e.getClickedBlock().getLocation().add(0.0, 1.0, 0.0).getBlock().getType();
-            if (m1 != Material.AIR && m1 != Material.CHEST && m1 != Material.TRAPPED_CHEST && m2 != Material.AIR && m2 != Material.CHEST && m2 != Material.TRAPPED_CHEST) {
-                Bukkit.getLogger().info("[CosmicFactionUtils (AntiCreeperEggs)] Blocking cegg due to non air/chest block above spawn location. m=" + (Object)m1 + ", m+1=" + (Object)m2);
-                e.setCancelled(true);
-                e.setUseItemInHand(Event.Result.DENY);
-                return;
-            }
             if (e.getClickedBlock().getLocation().distanceSquared(pl.getLocation()) > 25.0) {
                 pl.sendMessage((Object)ChatColor.RED + "You " + (Object)ChatColor.UNDERLINE + "cannot" + (Object)ChatColor.RED + " aim so far away when placing a spawner egg.");
                 e.setCancelled(true);
@@ -113,19 +107,6 @@ implements Listener {
         }
     }
 
-    @EventHandler
-    public void onCreatureSpawn(CreatureSpawnEvent e) {
-        if (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG && e.getEntityType() == EntityType.CREEPER) {
-            Material m1 = e.getEntity().getLocation().getBlock().getType();
-            Material m2 = e.getEntity().getLocation().add(0.0, 1.0, 0.0).getBlock().getType();
-            if (m1 != Material.AIR && m1 != Material.BEDROCK && m1 != Material.CHEST && m1 != Material.TRAPPED_CHEST || m2 != Material.AIR && m2 != Material.BEDROCK && m2 != Material.CHEST && m2 != Material.TRAPPED_CHEST && m2 != Material.STATIONARY_WATER && m2 != Material.WATER) {
-                Bukkit.getLogger().info("[CosmicFactionUtils] Blocking Creeper spawn(egg) at " + (Object)e.getEntity().getLocation() + " due to m1=" + (Object)m1 + ", m2=" + (Object)m2);
-                ItemStack cEgg = new ItemStack(Material.MONSTER_EGG, 1, (short) 50);
-                e.getEntity().getWorld().dropItem(e.getEntity().getLocation(), cEgg);
-                e.setCancelled(true);
-            }
-        }
-    }
 
     @EventHandler
     public void onEntityDamage(EntityDamageEvent e) {
