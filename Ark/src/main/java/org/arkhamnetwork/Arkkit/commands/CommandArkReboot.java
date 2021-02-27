@@ -36,8 +36,7 @@ public class CommandArkReboot
         }
 
         if (restart_task_exists) {
-            restart_task_exists=false;
-            sender.sendMessage(ChatColor.RED + "Cancelled the reboot task.");
+            sender.sendMessage(ChatColor.YELLOW + "There is already a pending restart task running.");
             return true;
         }
         restart_task_exists = true;

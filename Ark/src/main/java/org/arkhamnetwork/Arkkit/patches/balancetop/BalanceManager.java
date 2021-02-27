@@ -164,7 +164,7 @@ public class BalanceManager {
                             CommandBalanceTop.loadAllBalances();
                         }
                     }
-                }.runTaskLater(Arkkit.get(), 1L);
+                }.runTaskLaterAsynchronously(Arkkit.get(), 1L);
             } finally {
                 if (Collections.singletonList(reader).get(0) != null) {
                     reader.close();

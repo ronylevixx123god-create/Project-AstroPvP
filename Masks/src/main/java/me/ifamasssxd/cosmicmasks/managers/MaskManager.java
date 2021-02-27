@@ -80,8 +80,12 @@ public class MaskManager {
                         if (entityId == null) {
                             entityId = event.getPacket().getIntegers().read(0);
                         }
-                        if ((entity = (Entity) observing.getWorld().getEntities().get(entityId)) != null && !(entity instanceof EntityHuman)) {
-                            return;
+                        try {
+                            if ((entity = (Entity) observing.getWorld().getEntities().get(entityId)) != null && !(entity instanceof EntityHuman)) {
+                                return;
+                            }
+                        } catch(Exception e) {
+
                         }
                         event.getPacket().getItemModifier().write(0, maskedItem);
                     }
