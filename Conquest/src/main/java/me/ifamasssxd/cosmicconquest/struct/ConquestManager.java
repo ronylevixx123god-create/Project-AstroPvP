@@ -220,9 +220,8 @@ public class ConquestManager
         }
         Bukkit.broadcastMessage("");
         Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&f&l** &e&lASTRO CONQUEST &f&l**"));
-        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&7A &bConquest Chest&7 has spawned at &f&l" + wildernessLocation.getBlockX() + "&fx &f&l" + wildernessLocation.getBlockY() + "&fy &f&l" + wildernessLocation.getBlockZ() + "&fz"));
-        Bukkit.broadcastMessage("");
-        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&a&lLOOT: &fConquest Lootbox"));
+        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&7A &eConquest Chest&7 has spawned at &f&l" + wildernessLocation.getBlockX() + "&fx &f&l" + wildernessLocation.getBlockY() + "&fy &f&l" + wildernessLocation.getBlockZ() + "&fz"));
+        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&f&l* &e&lLOOT: &fConquest Lootbox"));
         Bukkit.broadcastMessage("");
         this.populateChests(wildernessLocation);
         CosmicConquests.get().getConfig().set("unclaimed", true);
@@ -347,7 +346,6 @@ public class ConquestManager
             final Location loc = chest.getBlock().getLocation();
             CosmicConquests.get().getManager().getConquestChests().put(loc, new ChestData(ConquestListener.maxHits, this.getBossSpawnList()));
             CosmicConquests.get().getManager().getLoot().put(loc, loot);
-            Bukkit.broadcastMessage("should be populated...");
         }
     }
     
