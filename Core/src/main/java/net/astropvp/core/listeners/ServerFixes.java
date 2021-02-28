@@ -55,12 +55,6 @@ public class ServerFixes implements Listener {
         }
     }
 
-     @EventHandler(priority = EventPriority.HIGHEST)
-     public void noShitChat(AsyncPlayerChatEvent e) {
-        if (e.getMessage().contains("avenge") || e.getMessage().contains("Avenge")) {
-            return;
-        }
-     }
 
     @EventHandler
     public void killPlayerSound(PlayerDeathEvent e) {
