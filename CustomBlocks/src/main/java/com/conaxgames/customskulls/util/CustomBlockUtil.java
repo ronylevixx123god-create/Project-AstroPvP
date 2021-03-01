@@ -2,17 +2,26 @@ package com.conaxgames.customskulls.util;
 
 import com.conaxgames.customskulls.CoreSkulls;
 import com.conaxgames.customskulls.blocks.CustomBlock;
+import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.inventory.ItemStack;
 
 public class CustomBlockUtil {
 
-    public static CustomBlock getCustomBlock(final ItemStack item) {
-        NBTWrapper wrapper = new NBTWrapper(item);
-        return CoreSkulls.customBlocks.get(wrapper.getCompound("conaxCustomBlock").getString("conaxCustomBlockName"));
+    public static CustomBlock getCustomItem(final ItemStack item) {
+        NBTItem nbtItem = new NBTItem(item);
+        if (nbtItem.hasNBTData()) {
+            if (nbtItem.hasKey("conaxCustomBlock")) {
+                String abilityType = nbtItem.getString("conaxCustomBlock");
+                if (CoreSkulls.customBlocks.containsKey(abilityType)) {
+                    return CoreSkulls.customBlocks.get(abilityType);
+                }
+            }
+        }
+        return null;
     }
 
-    public static Boolean isCustomBlock(ItemStack itemStack) {
-        NBTWrapper wrapper = new NBTWrapper(itemStack);
-        return (wrapper.hasKey("conaxCustomBlock"));
+    public static Boolean isCustomItem(ItemStack itemStack) {
+        NBTItem nbtItem = new NBTItem(itemStack);
+        return nbtItem.hasKey("conaxCustomBlock");
     }
 }

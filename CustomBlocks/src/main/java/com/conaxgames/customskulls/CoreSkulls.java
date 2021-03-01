@@ -2,23 +2,53 @@ package com.conaxgames.customskulls;
 
 import com.conaxgames.customskulls.blocks.CustomBlock;
 import com.conaxgames.customskulls.blocks.impl.FivePercentDamageIncrease;
+import com.conaxgames.customskulls.blocks.impl.TenPercentDamageIncrease;
+import com.conaxgames.customskulls.commands.AbilityBlocksCommand;
+import com.conaxgames.customskulls.data.LoadCustomBlocks;
+import com.conaxgames.customskulls.listeners.CustomBlockListener;
 import com.conaxgames.customskulls.util.CC;
+import com.conaxgames.customskulls.util.inventoryui.UIListener;
 import lombok.Getter;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandMap;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+import java.lang.reflect.Field;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 public class CoreSkulls extends JavaPlugin {
 
     @Getter public static CoreSkulls instance;
-    public static Map<String, CustomBlock> customBlocks;
+    public static Map<String, CustomBlock> customBlocks = new HashMap<>();
+    private static Field bukkitCommand;
 
     @Override
     public void onEnable() {
         instance = this;
+
+        getConfig().options().copyDefaults(true);
+        saveConfig();
+
+        File file = new File(this.getDataFolder() + File.separator + "data");
+        if(!file.exists()) {
+            file.mkdir();
+            info("Successfully made directory /data/ :)");
+        }
+
         registerCustomBlocks();
+        Collections.singletonList(new AbilityBlocksCommand()).forEach(this:: registerCommand);
+        getServer().getPluginManager().registerEvents(new UIListener(), this);
+        getServer().getPluginManager().registerEvents(new CustomBlockListener(), this);
+        LoadCustomBlocks.load();
+        info("CoreSkulls!");
+    }
+
+    private void registerCommand(Command cmd) {
+        this.registerCommand(cmd, this.getName());
     }
 
     @Override
@@ -27,10 +57,26 @@ public class CoreSkulls extends JavaPlugin {
     }
 
     private void registerCustomBlocks() {
-        customBlocks.put("FIVE_PERCENT_DAMAGE_INCREASE", new FivePercentDamageIncrease("FIVE_PERCENT_DAMAGE_INCREASE", Material.SKULL_ITEM));
+        customBlocks.put("FIVE_PERCENT_DAMAGE_INCREASE", new FivePercentDamageIncrease());
+        customBlocks.put("TEN_PERCENT_DAMAGE_INCREASE", new TenPercentDamageIncrease());
     }
 
     public void info(String string) {
         Bukkit.getConsoleSender().sendMessage(CC.YELLOW + string);
     }
+
+    public void registerCommand(Command cmd, String fallback) {
+        try {
+            if (bukkitCommand == null) {
+                bukkitCommand = Bukkit.getServer().getClass().getDeclaredField("commandMap");
+                bukkitCommand.setAccessible(true);
+            }
+            CommandMap commandMap = (CommandMap) bukkitCommand.get(Bukkit.getServer());
+            commandMap.register(cmd.getName(), fallback, cmd);
+        } catch(Exception e){
+            e.printStackTrace();
+
+        }
+    }
+
 }

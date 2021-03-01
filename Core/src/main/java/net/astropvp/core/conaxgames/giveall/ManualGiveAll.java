@@ -25,6 +25,11 @@ public class ManualGiveAll {
                     }
                 } else {
                     player.getInventory().addItem(i);
+                    if (i.hasItemMeta() && i.getItemMeta().hasDisplayName()) {
+                        player.sendMessage(CC.Green + "You have been given a " + i.getItemMeta().getDisplayName());
+                    } else {
+                        player.sendMessage(CC.Green + "You have been given a " + i.getType());
+                    }
                 }
         });
     }

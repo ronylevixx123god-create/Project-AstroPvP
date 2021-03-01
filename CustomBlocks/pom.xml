@@ -15,7 +15,7 @@
 
     <build>
         <defaultGoal>clean install</defaultGoal>
-        <finalName>AstroCore</finalName>
+        <finalName>CustomBlocks</finalName>
     </build>
 
     <repositories>
@@ -50,6 +50,13 @@
             <artifactId>lombok</artifactId>
             <version>1.16.18</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>itemnb</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/item-nbt-api-plugin-2.7.1.jar</systemPath>
         </dependency>
     </dependencies>
 
