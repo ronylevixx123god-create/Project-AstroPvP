@@ -52,7 +52,7 @@ public class AbilityBlocksCommand extends Command {
         }
         if (strings[0].equals("debug")) {
             player.sendMessage("debug command! you should see a yml file!");
-            MakeCustomBlocks.newFileItem(player, AbilityType.FIVE_PERCENT_DAMAGE_INCREASE);
+            MakeCustomBlocks.newFileItem(player, AbilityType.CAULDRON);
             return true;
         }
         if (strings[0].equals("list")) {

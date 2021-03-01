@@ -18,20 +18,24 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Arrays;
 import java.util.List;
 
-public class TenPercentDamageIncrease extends CustomBlock {
+public class AstroTrophy extends CustomBlock {
 
-    public TenPercentDamageIncrease() {
-        super(CC.B_GOLD + "10% " + CC.GOLD + "Damage Increase", Material.SKULL_ITEM, AbilityType.TEN_PERCENT_DAMAGE_INCREASE);
+    public AstroTrophy() {
+        super(CC.translate("&6&lAstro Trophy"), Material.SKULL_ITEM, AbilityType.ASTROTROPHY);
     }
 
     @Override
     public List<String> addLore() {
         return Arrays.asList(
-                CC.GRAY + "Use this item within your faction chunk",
-                CC.GRAY + "to gain an extra " + CC.RED + "10% Damage Output",
-                CC.GRAY + "onto your enemies, during your battles!",
-                " ",
-                CC.YELLOW + "Place this item to active your buff!"
+                CC.translate("&6Cost to Mine: &f$15,000,000"),
+                "",
+                CC.translate("&7Receive all of the following"),
+                CC.translate("&7buffs when standing in the same chunk."),
+                "",
+                CC.translate("&710% chance to roll the Astro-Slot"),
+                CC.translate("&7Bot without consuming your ticket."),
+                "",
+                CC.translate("&7Place custom block to use!")
         );
     }
 

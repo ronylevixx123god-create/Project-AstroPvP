@@ -18,20 +18,25 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Arrays;
 import java.util.List;
 
-public class FivePercentDamageIncrease extends CustomBlock {
+public class Cauldron extends CustomBlock {
 
-    public FivePercentDamageIncrease() {
-        super(CC.B_GOLD + "5% " + CC.GOLD + "Damage Increase", Material.SKULL_ITEM, AbilityType.FIVE_PERCENT_DAMAGE_INCREASE);
+    public Cauldron() {
+        super(CC.translate("&6&lCauldron"), Material.SKULL_ITEM, AbilityType.CAULDRON);
     }
 
     @Override
     public List<String> addLore() {
         return Arrays.asList(
-                CC.GRAY + "Use this item within your faction chunk",
-                CC.GRAY + "to gain an extra " + CC.RED + "5% Damage Output",
-                CC.GRAY + "onto your enemies, during your battles!",
-                " ",
-                CC.YELLOW + "Place this item to active your buff!"
+                CC.translate("&6Cost to Mine: &f$25,000,000"),
+                "",
+                CC.translate("&7Receive all of the following"),
+                CC.translate("&7buffs when standing in the same chunk."),
+                "",
+                CC.translate("&6&l* &ePhantasm: &f+5% Outgoing Damage"),
+                CC.translate("&6&l* &eStolen Mind: &f-5% Incoming Damage"),
+                CC.translate("&6&l* &eSpooky Aura: &f33% Less Phoenix Cooldown"),
+                "",
+                CC.translate("&7Place custom block to use!")
         );
     }
 
@@ -77,7 +82,7 @@ public class FivePercentDamageIncrease extends CustomBlock {
 
     @Override
     public void placeBlockAction(Player p0, BlockPlaceEvent p1, Block p2, ItemStack p3) {
-        Bukkit.broadcastMessage("You placed a FivePercentDamageIncrease item!");
+        Bukkit.broadcastMessage("You placed a Cauldron item!");
     }
 
     @Override

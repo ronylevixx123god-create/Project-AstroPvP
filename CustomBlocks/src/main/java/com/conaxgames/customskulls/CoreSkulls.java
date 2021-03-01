@@ -1,8 +1,10 @@
 package com.conaxgames.customskulls;
 
 import com.conaxgames.customskulls.blocks.CustomBlock;
-import com.conaxgames.customskulls.blocks.impl.FivePercentDamageIncrease;
-import com.conaxgames.customskulls.blocks.impl.TenPercentDamageIncrease;
+import com.conaxgames.customskulls.blocks.impl.AstroTrophy;
+import com.conaxgames.customskulls.blocks.impl.Cauldron;
+import com.conaxgames.customskulls.blocks.impl.PumpkinPie;
+import com.conaxgames.customskulls.blocks.impl.TreasureChest;
 import com.conaxgames.customskulls.commands.AbilityBlocksCommand;
 import com.conaxgames.customskulls.data.LoadCustomBlocks;
 import com.conaxgames.customskulls.listeners.CustomBlockListener;
@@ -57,8 +59,10 @@ public class CoreSkulls extends JavaPlugin {
     }
 
     private void registerCustomBlocks() {
-        customBlocks.put("FIVE_PERCENT_DAMAGE_INCREASE", new FivePercentDamageIncrease());
-        customBlocks.put("TEN_PERCENT_DAMAGE_INCREASE", new TenPercentDamageIncrease());
+        customBlocks.put("CAULDRON", new Cauldron());
+        customBlocks.put("PUMPKINPIE", new PumpkinPie());
+        customBlocks.put("TREASURECHEST", new TreasureChest());
+        customBlocks.put("ASTROTROPHY", new AstroTrophy());
     }
 
     public void info(String string) {
