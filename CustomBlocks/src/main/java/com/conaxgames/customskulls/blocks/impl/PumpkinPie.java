@@ -27,7 +27,7 @@ public class PumpkinPie extends CustomBlock {
     @Override
     public List<String> addLore() {
         return Arrays.asList(
-                CC.translate("&eCost to Mine: &f$25,000,000"),
+                CC.translate("&eCost to Mine: &f$" + AbilityType.PUMPKINPIE.getPickupPrice()),
                 "",
                 CC.translate("&7Receive all of the following"),
                 CC.translate("&7buffs when standing in the same chunk."),

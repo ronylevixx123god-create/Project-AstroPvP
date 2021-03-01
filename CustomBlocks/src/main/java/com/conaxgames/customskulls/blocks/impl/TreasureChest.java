@@ -27,7 +27,7 @@ public class TreasureChest extends CustomBlock {
     @Override
     public List<String> addLore() {
         return Arrays.asList(
-                CC.translate("&6Cost to Mine: &f$15,000,000"),
+                CC.translate("&6Cost to Mine: &f$" + AbilityType.TREASURECHEST.getPickupPrice()),
                 "",
                 CC.translate("&7Receive all of the following"),
                 CC.translate("&7buffs when standing in the same chunk."),
