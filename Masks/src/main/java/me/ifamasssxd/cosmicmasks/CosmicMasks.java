@@ -23,9 +23,6 @@ import me.ifamasssxd.cosmicmasks.listeners.MaskEffectListener;
 import me.ifamasssxd.cosmicmasks.listeners.MaskListener;
 import me.ifamasssxd.cosmicmasks.listeners.TerminatorTeleblockListener;
 import me.ifamasssxd.cosmicmasks.managers.MaskManager;
-import me.ifamasssxd.cosmicmasks.tasks.SpectralMaskTask;
-import me.ifamasssxd.cosmicmasks.tasks.SpeedMultiMaskFix;
-import me.ifamasssxd.cosmicmasks.tasks.ThanosMaskTask;
 import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
 import org.bukkit.Bukkit;
@@ -60,9 +57,6 @@ extends JavaPlugin {
         this.maskManager.onEnable(this);
         this.registerCommands();
         this.registerListeners();
-        this.registerTasks();
-        SpeedMultiMaskFix.fixMasks();
-        ThanosMaskTask.checkThanos();
         this.getServer().getScheduler().scheduleSyncRepeatingTask((Plugin)this, () -> {
             for (Player player : Bukkit.getServer().getOnlinePlayers()) {
                 MaskType.rescanMask(player, true);
@@ -89,9 +83,6 @@ extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents((Listener)new MaskEffectListener(), (Plugin)this);
     }
 
-    void registerTasks() {
-        this.getServer().getScheduler().runTaskTimer((Plugin)this, (Runnable)new SpectralMaskTask(), 200L, 200L);
-    }
 
     public static CosmicMasks get() {
         return instance;

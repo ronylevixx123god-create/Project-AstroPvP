@@ -5,6 +5,7 @@ import com.bryside.astroattributes.enums.RuneType;
 import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import com.rit.sucy.CustomEnchantment;
+import me.astropvp.astroparticles.utils.ParticleUtils;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -56,14 +57,17 @@ public class Rage extends CustomEnchantment {
 
             double mod = 0.225D * enchantLevel;
             double hitCombo = ((target instanceof Player) ? getPVPHitCombo((Player) user) : getPVEHitCombo((Player) user)) * mod + 1.0D;
-            if (hitCombo > 3.5D)
-                hitCombo = 3.5D;
+            if (hitCombo > 5.0D)
+                hitCombo = 5.0D;
             if (hitCombo > 1.0D && !GeneralUtil.isEffectedByDevour(target)) {
-                playRageEffect(target.getEyeLocation(), enchantLevel);
+                if (user instanceof Player) {
+                    if (ParticleUtils.isPlayerIndicating((Player) user))
+                        playRageEffect(target.getEyeLocation(), enchantLevel);
+                }
                 double damage = event.getDamage(EntityDamageEvent.DamageModifier.BASE);
 
-                if (damage*hitCombo*mod >20) {
-                    event.setDamage(20);
+                if (damage*hitCombo*mod >25) {
+                    event.setDamage(25);
                 } else {
                     event.setDamage((damage * hitCombo * mod));
                 }

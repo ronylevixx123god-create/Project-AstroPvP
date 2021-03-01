@@ -24,6 +24,7 @@ package me.ifamasssxd.cosmictoggles.toggles;
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.commands.EssentialsToggleCommand;
 import com.massivecraft.factions.FPlayer;
+import me.astropvp.astroparticles.utils.ParticleUtils;
 import me.astropvp.damageindicators.DamageIndicators;
 import me.astropvp.damageindicators.utils.DamageIndicatorUtils;
 import me.ifamasssxd.cosmicduel.CosmicDuel;
@@ -44,6 +45,7 @@ public enum CosmicToggle {
     F_TP("Teleportation Requests", "/f tptoggle"),
     SCOREBOARD("Faction Scoreboard", "/togglesb"),
     SMOKE("Fly Particles", "/togglesmoke"),
+    PARTICLE("Toggle Particles", "/particles"),
     ITEM_FILTER("Item Filter", "/filter toggle"),
     DEATH_MESSAGES("Death Messages", "/toggledeathmessage"),
     COINFLIP("Coin Flip Notifications", "/coinflip stfu"),
@@ -64,6 +66,10 @@ public enum CosmicToggle {
         }
         if (this == FILTER) {
             return !ChatFilter.disabledFilteredPlayers.contains(player.getUniqueId());
+        }
+
+        if (this == PARTICLE) {
+            return ParticleUtils.isPlayerIndicating(player);
         }
         if (this == SCOREBOARD) {
             return !AstroCore.getInstance().getToggleManager().getScoreboardToggles().contains(player.getUniqueId());

@@ -107,7 +107,7 @@ public class TPWarmup
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ess r");
         }
         this.registerListener(new TPWarmupListener());
-        this.registerTask(new TPWarmupMovementMonitorTask().runTaskTimer(Arkkit.get(), 20L, 20L), TPWarmupMovementMonitorTask.class);
+        this.registerTask(new TPWarmupMovementMonitorTask().runTaskTimerAsynchronously(Arkkit.get(), 20L, 20L), TPWarmupMovementMonitorTask.class);
     }
 
     @Override

@@ -149,8 +149,6 @@ public class AstroCore extends JavaPlugin {
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, new AutoBroadcastTask(), 20L, 6000L);
 
         Bukkit.getScheduler().runTaskLater(this, ()->
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ic reload"), 100L);
-        Bukkit.getScheduler().runTaskLater(this, ()->
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "arkload vault_gui"), 100L);
         Bukkit.getScheduler().runTaskLater(this, ()->
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "arkload death_messages"), 100L);

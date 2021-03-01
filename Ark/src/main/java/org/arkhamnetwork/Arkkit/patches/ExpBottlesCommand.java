@@ -126,11 +126,8 @@ final class ExpBottlesCommand
         player.setLevel(0);
         player.giveExp(exp);
         p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "- " + amount + " xp");
-        p.sendMessage(ChatColor.YELLOW + "You are now afflicted with " + ChatColor.UNDERLINE + "EXP Exhaustion" + ChatColor.YELLOW + " for " + this.getExpBottleCreationDelayMinutes(p) + " minute(s).");
-        p.sendMessage(ChatColor.YELLOW + "You " + ChatColor.UNDERLINE + "cannot" + ChatColor.YELLOW + " use /xpbottle or teleport while EXP Exhausted.");
         p.playSound(p.getLocation(), Sound.ORB_PICKUP, 1.0f, 0.2f);
         p.getInventory().addItem(ExpBottles.getXpBottle((int) amount, p.getName()));
-        p.setMetadata("nextExpBottle", new FixedMetadataValue(Arkkit.get(), System.currentTimeMillis() + (long) ((int) Math.round(this.getExpBottleCreationDelayMinutes(p) * 60.0 * 1000.0))));
         return true;
     }
 

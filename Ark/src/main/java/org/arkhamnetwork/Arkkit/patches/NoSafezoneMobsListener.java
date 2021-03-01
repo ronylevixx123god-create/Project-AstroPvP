@@ -25,15 +25,6 @@ final class NoSafezoneMobsListener
     NoSafezoneMobsListener() {
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onEntityDamage(EntityDamageEvent e) throws Exception {
-        if (e.getEntity() instanceof LivingEntity && e.getEntityType() != EntityType.PLAYER && WorldGuardUtils.isPvPDisabled(e.getEntity().getLocation())) {
-            //ParticleEffect.playEffect(ParticleEffect.FIREWORKS_SPARK, e.getEntity().getLocation(), 0.65f, 20);
-            de.inventivegames.particle.ParticleEffect.FIREWORKS_SPARK.sendToPlayer((Player) e.getEntity(),e.getEntity().getLocation(),0,0,0,0.65f, 20);
-            e.setCancelled(true);
-            e.setDamage(0.0);
-            e.getEntity().remove();
-        }
-    }
+
 }
 

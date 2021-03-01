@@ -53,8 +53,8 @@ public class BetterTrade
             ArkPlugins.TRADING.getArkPlugin().kill();
             Bukkit.getLogger().info("Killing old trade system for new one..");
         }
-        this.registerListener(new BetterTradeListener(this));
-        this.registerCommand(new BetterTradeCommand(this, "trade", "/<command>", "Trade items with other players!", Lists.newArrayList("trade", "trades", "exchange")));
+        //this.registerListener(new BetterTradeListener(this));
+        //this.registerCommand(new BetterTradeCommand(this, "trade", "/<command>", "Trade items with other players!", Lists.newArrayList("trade", "trades", "exchange")));
         this.tradeTask = new BukkitRunnable() {
 
             public void run() {

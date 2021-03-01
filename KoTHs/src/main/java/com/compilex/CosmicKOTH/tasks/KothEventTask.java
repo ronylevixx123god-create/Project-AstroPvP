@@ -6,7 +6,6 @@ import com.compilex.CosmicKOTH.struct.KothWorldType;
 import com.compilex.CosmicKOTH.utils.*;
 import com.cosmicpvp.cosmicutils.itembuilder.CustomTitleBuilder;
 import com.cosmicpvp.cosmicutils.itembuilder.MaskBuilder;
-import com.cosmicpvp.cosmicutils.struct.factions.points.FactionPointUtils;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemUtils;
 import com.cosmicpvp.cosmicutils.utils.JSONMessage;
@@ -208,9 +207,6 @@ implements Runnable {
         }
         if (ArkPlugins.COMBAT_LOG.getArkPlugin().isRunning()) {
             CombatLog.flagCombat(this.playerCapped);
-        }
-        if ((fplayer = FPlayers.i.get(this.playerCapped)) != null && fplayer.getFaction().isNormal()) {
-            FactionPointUtils.giveFactionPoints(fplayer.getFaction(), this.playerCapped, "koth", null);
         }
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "fquests add KOTH_CAPTURER " + this.playerCapped.getName());
         if (KothItemUtils.isArmorSetsEnabled()) {

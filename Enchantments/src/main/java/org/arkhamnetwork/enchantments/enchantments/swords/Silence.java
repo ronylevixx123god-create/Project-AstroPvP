@@ -6,6 +6,7 @@ import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import lombok.SneakyThrows;
 import me.astropvp.AstroBackpacksAPI;
+import me.astropvp.astroparticles.utils.ParticleUtils;
 import me.astropvp.damageindicators.DamageIndicators;
 import me.astropvp.damageindicators.utils.DamageIndicatorUtils;
 import me.astropvp.objects.BackpackType;
@@ -46,7 +47,7 @@ public class Silence extends CustomEnchantment {
         if (EnchantmentAPI.getEnchantments(user.getEquipment().getItemInHand()).containsKey(EnchantmentAPI.getEnchantment("Perfect Solitude"))) {
             solitudeLevel = 4;
         }
-        final double chance = (enchantLevel + solitudeLevel) * 0.020;
+        final double chance = (enchantLevel + solitudeLevel) * 0.050;
         if (Math.random() < chance && target instanceof Player) {
             final Player pTarget = (Player) target;
             if (pTarget.hasMetadata("noDefenseProcs")) {
@@ -99,15 +100,17 @@ public class Silence extends CustomEnchantment {
                 @Override
                 public void run() {
                     pTarget.removeMetadata("noDefenseProcs", (Plugin) Enchantments.getInstance());
-                    try {
-                        de.inventivegames.particle.ParticleEffect.ENCHANTMENT_TABLE.sendToPlayer(pTarget,target.getLocation(),0,0,0,0.4f, 80);
-                    } catch (Exception exception) {
-                        exception.printStackTrace();
-                    }
-                    try {
-                        de.inventivegames.particle.ParticleEffect.PORTAL.sendToPlayer(pTarget,target.getLocation(),0,0,0,0.4f, 60);
-                    } catch (Exception exception) {
-                        exception.printStackTrace();
+                    if (ParticleUtils.isPlayerIndicating((Player) user)) {
+                        try {
+                            de.inventivegames.particle.ParticleEffect.ENCHANTMENT_TABLE.sendToPlayer(pTarget, target.getLocation(), 0, 0, 0, 0.4f, 80);
+                        } catch (Exception exception) {
+                            exception.printStackTrace();
+                        }
+                        try {
+                            de.inventivegames.particle.ParticleEffect.PORTAL.sendToPlayer(pTarget, target.getLocation(), 0, 0, 0, 0.4f, 60);
+                        } catch (Exception exception) {
+                            exception.printStackTrace();
+                        }
                     }
                 }
             }, durationTicks);

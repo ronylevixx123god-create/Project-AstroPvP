@@ -292,9 +292,9 @@ public class FactionsChatListener implements Listener {
             player = var18.next();
             FPlayer you = FPlayers.i.get(player);
             String current_string = event.getFormat();
-            if (follower.hasFaction()) {
+
                 current_string = current_string.replace("[FACTION]", follower.getChatTag(you).trim().replace(" ", ""));
-            }
+
             current_string = current_string.replace("%1$s", "/UniqueSplitString/");
             String[] current_message_string = current_string.split("/UniqueSplitString/");
             fancy_message = seasonalHoverInfo != null ? (new FancyMessage(current_message_string[0])).formattedTooltip(seasonalHoverInfo) : new FancyMessage(current_message_string[0]);

@@ -19,6 +19,7 @@
  */
 package me.ifamasssxd.cosmicduel.commands;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.VanishUtils;
 import com.gmail.nossr50.runnables.skills.BleedTimerTask;
 import com.google.common.collect.Lists;
@@ -335,7 +336,7 @@ implements CommandExecutor {
                 return true;
             }
         } else if (args.length == 0) {
-            new DuelMenu(p).openInventory(p);
+            p.sendMessage(CC.translate("&cUsage: /duel <name>"));
         } else {
             this.sendHelp(p);
         }

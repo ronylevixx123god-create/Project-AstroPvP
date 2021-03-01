@@ -39,6 +39,7 @@ public class MaskData {
     }
 
     public MaskData(CosmicMask internal, String base, String fullyEncoded, String username, boolean active, UUID uuid, String displayName, String special, List<String> lore) {
+        this.active = false;
         this.base64 = base;
         this.specialAbility = special;
         this.uuid = uuid;
@@ -49,15 +50,14 @@ public class MaskData {
         GameProfile profile = new GameProfile(this.uuid, this.username);
         profile.getProperties().put("textures", new Property("textures", this.fullyEncoded));
         this.skullOwnerBuilder = new NBTTagCompoundBuilder();
-        GameProfileSerializer.serialize((NBTTagCompound)this.skullOwnerBuilder.get(), (GameProfile)profile);
+        GameProfileSerializer.serialize(this.skullOwnerBuilder.get(), profile);
         this.displayName = displayName;
-        this.lore = lore;
+        (this.lore = lore).add("");
+        this.lore.add(String.valueOf(String.valueOf(CC.GrayI)) + "Attach this mask to any helmet");
+        this.lore.add(String.valueOf(String.valueOf(CC.GrayI)) + "to give it a visual override!");
         this.lore.add("");
-        this.lore.add(CC.GrayI + "Attach this mask to any helmet");
-        this.lore.add(CC.GrayI + "to give it a visual override!");
-        this.lore.add("");
-        this.lore.add(CC.Gray + "To equip, place this mask on a helmet.");
-        this.lore.add(CC.Gray + "To remove, right-click helmet while attached.");
+        this.lore.add(String.valueOf(String.valueOf(CC.Gray)) + "To equip, place this mask on a helmet.");
+        this.lore.add(String.valueOf(String.valueOf(CC.Gray)) + "To remove, right-click helmet while attached.");
     }
 
     public String getBase64() {

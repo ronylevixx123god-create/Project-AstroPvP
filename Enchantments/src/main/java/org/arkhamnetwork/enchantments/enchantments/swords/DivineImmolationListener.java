@@ -1,6 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
 import de.inventivegames.particle.ParticleEffect;
+import me.astropvp.astroparticles.utils.ParticleUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
@@ -24,8 +25,9 @@ final class DivineImmolationListener implements Listener {
                 //ParticleEffect.playEffect(ParticleEffect.FLAME, le.getEyeLocation(), 0.15f, 20);
                 //ParticleEffect.playEffect(ParticleEffect.LAVA, le.getEyeLocation(), 0.5f, 15);
 
-                de.inventivegames.particle.ParticleEffect.FLAME.sendToPlayer((Player) le,le.getEyeLocation(),0,0,0,0.15f, 20);
-                ParticleEffect.LAVA.sendToPlayer((Player) le,le.getEyeLocation(),0,0,0,0.5f, 15);
+                if (ParticleUtils.isPlayerIndicating(le.getKiller())) {
+                    de.inventivegames.particle.ParticleEffect.FLAME.sendToPlayer((Player) le, le.getEyeLocation(), 0, 0, 0, 0.15f, 20);
+                }
                 if (le instanceof Player) {
                     ((Player) le).sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "** DIVINE IMMOLATION **");
                     ((Player) le).playSound(le.getLocation(), Sound.ZOMBIE_PIG_ANGRY, 0.6f, 0.8f);

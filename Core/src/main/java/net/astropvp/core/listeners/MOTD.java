@@ -14,7 +14,7 @@ public class MOTD implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
 
-        Bukkit.getScheduler().runTaskLater(AstroCore.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLaterAsynchronously(AstroCore.getInstance(), () -> {
             Player player = e.getPlayer();
             for (int i = 0; i < 120; i++) {
                 player.sendMessage(CC.translate("&c "));

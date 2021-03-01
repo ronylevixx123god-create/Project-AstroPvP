@@ -4,6 +4,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import net.astropvp.core.utils.ChatManager;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -54,12 +55,6 @@ public class ServerFixes implements Listener {
         }
     }
 
-     @EventHandler(priority = EventPriority.HIGHEST)
-     public void noShitChat(AsyncPlayerChatEvent e) {
-        if (e.getMessage().contains("avenge") || e.getMessage().contains("Avenge")) {
-            return;
-        }
-     }
 
     @EventHandler
     public void killPlayerSound(PlayerDeathEvent e) {
@@ -218,6 +213,7 @@ public class ServerFixes implements Listener {
             }
         }
     }*/
+
 
 
     @EventHandler(priority = EventPriority.HIGHEST)

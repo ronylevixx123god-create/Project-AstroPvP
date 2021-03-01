@@ -185,7 +185,6 @@ public class DimensionalTravelerSet
             boolean bl = needsToFreeze = !this.storedPlayerWalkSpeeds.containsKey(pNear.getUniqueId());
             if (pNear.getWalkSpeed() > 0.0f && needsToFreeze) {
                 this.storedPlayerWalkSpeeds.put(pNear.getUniqueId(), Float.valueOf(pNear.getWalkSpeed()));
-                pNear.setWalkSpeed(0.0f);
             }
             if (Clarity.canBlindnessApply(pNear, 0)) {
                 pNear.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 60, 0));
@@ -194,9 +193,6 @@ public class DimensionalTravelerSet
             pNear.playSound(pNear.getLocation().add(0.0, 4.0, 0.0), Sound.ENDERMAN_TELEPORT, 1.0f, 1.1f);
             pNear.playSound(pNear.getLocation().add(0.0, 4.0, 0.0), Sound.ANVIL_LAND, 1.0f, 1.1f);
             pNear.sendMessage(CC.DarkPurpleB + "** DIMENSIONAL SHIFT (" + CC.Red + fpNear.getRelationTo(damagedFPlayer).getColor() + damaged.getName() + " [4s]" + CC.DarkPurpleB + ") **");
-            if (needsToFreeze) {
-                nearbyPlayers.add(pNear);
-            }
             this.spawnDimensionalBlocks(pNear, damagedFPlayer.getFaction(), damaged);
         }
         Bukkit.getScheduler().scheduleSyncDelayedTask(CosmicArmorSetsPlugin.get_(), () -> nearbyPlayers.forEach(this::unfreeze), 80L);

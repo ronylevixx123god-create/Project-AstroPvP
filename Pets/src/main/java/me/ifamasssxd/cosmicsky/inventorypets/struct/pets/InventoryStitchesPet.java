@@ -84,6 +84,10 @@ public class InventoryStitchesPet extends InventoryPet {
                 return false;
             if (EssentialsUtils.isInGodMode(casted))
                 return false;
+            if (MaskUtils.hasMaskEquipped(casted, "EQUALIZER")) {
+                player.sendMessage(CC.translate("&2&l(EQUALIZER) &a" + casted.getName() + "&2Immune to Stitches Pet!"));
+                return false;
+            }
             if (nearbyEntity.hasMetadata("lastStitches") &&
                     TimeUnit.SECONDS.toMillis(90) - (System.currentTimeMillis() - nearbyEntity.getMetadata("lastStitches").get(0).asLong()) > 0) {
                 return false;

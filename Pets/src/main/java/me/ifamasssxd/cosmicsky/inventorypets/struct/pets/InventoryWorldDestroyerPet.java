@@ -123,11 +123,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
             throw new PrefixedPetException(target.getName() + " is still on Cage Cooldown! This lasts 20 seconds.");
         }
 
-        if (playerHasApollo(target)) {
-            player.sendMessage(CC.translate("&f&l* &7&n" + target.getName() + "&f&l APOLLO SET BLOCKED CAGE *"));
-            target.sendMessage(CC.translate("&f&l* BLOCKED &7&n" + player.getName() + "&f&l WORLD DESTROYER *"));
-            return true;
-        }
+
 
         if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.SEXY_HELMET) && Math.random() < 0.5 && !playerHasApollo(player)) {
             petItem.setLastUsed(System.currentTimeMillis());

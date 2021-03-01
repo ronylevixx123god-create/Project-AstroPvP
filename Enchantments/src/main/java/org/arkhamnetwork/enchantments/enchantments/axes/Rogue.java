@@ -3,6 +3,7 @@ package org.arkhamnetwork.enchantments.enchantments.axes;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import lombok.SneakyThrows;
+import me.astropvp.astroparticles.utils.ParticleUtils;
 import me.ifamasssxd.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.enchantments.cmds.CommandEnchDust;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -55,10 +56,15 @@ public class Rogue extends CustomEnchantment {
                 damage = 8;
             }
             e.setDamage(damage + (multi * 0.56));
-            try {
-                de.inventivegames.particle.ParticleEffect.CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 0,1,0,0.4f,12);
-            } catch (Exception exception) {
-                exception.printStackTrace();
+
+            if (player instanceof Player) {
+                if (ParticleUtils.isPlayerIndicating((Player) player)) {
+                    try {
+                        de.inventivegames.particle.ParticleEffect.CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 0, 1, 0, 0.4f, 12);
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
+                }
             }
 
             ((Player) player).sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&l** ROGUE &7[" + new DecimalFormat("##.##").format(multi) + "x] &c&l-" + soulCost + " SOULS **"));

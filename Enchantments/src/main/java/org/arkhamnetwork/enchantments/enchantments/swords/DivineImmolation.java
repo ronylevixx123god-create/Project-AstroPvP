@@ -4,6 +4,7 @@ import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.rit.sucy.CustomEnchantment;
 import lombok.SneakyThrows;
+import me.astropvp.astroparticles.utils.ParticleUtils;
 import me.ifamasssxd.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.cmds.CommandEnchDust;
@@ -122,15 +123,21 @@ public class DivineImmolation extends CustomEnchantment {
                             if (!WorldGuardUtils.isPvPDisabled(ent.getLocation()) && !ent.hasMetadata("spectator")) {
                                 LivingEntity le = (LivingEntity)ent;
                                 le.damage(damage);
-                                try {
-                                    de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(),le.getEyeLocation(), 0,0,0,0.3f,10);
-                                } catch (Exception exception) {
-                                    exception.printStackTrace();
-                                }
-                                try {
-                                    de.inventivegames.particle.ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(),le.getEyeLocation(), 0,0,0,0.3f,10);
-                                } catch (Exception exception) {
-                                    exception.printStackTrace();
+
+                                if (le instanceof Player) {
+                                    if (ParticleUtils.isPlayerIndicating((Player) le)) {
+
+                                        try {
+                                            de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), le.getEyeLocation(), 0, 0, 0, 0.3f, 10);
+                                        } catch (Exception exception) {
+                                            exception.printStackTrace();
+                                        }
+                                        try {
+                                            de.inventivegames.particle.ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(), le.getEyeLocation(), 0, 0, 0, 0.3f, 10);
+                                        } catch (Exception exception) {
+                                            exception.printStackTrace();
+                                        }
+                                    }
                                 }
                                 le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, (int)(damage * 20.0D), 1));
                                 if (le instanceof Player) {

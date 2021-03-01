@@ -8,7 +8,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 public class WitcherCooldown {
     public static void enterWitcherCooldown(Player player) {
         player.setMetadata("witcherCooldown", new FixedMetadataValue(Enchantments.getInstance(), player.getName()));
-        Bukkit.getScheduler().runTaskLater(Enchantments.getInstance(), ()->{
+        Bukkit.getScheduler().runTaskLaterAsynchronously(Enchantments.getInstance(), ()->{
             player.removeMetadata("witcherCooldown", Enchantments.getInstance());
         },1200L);
     }

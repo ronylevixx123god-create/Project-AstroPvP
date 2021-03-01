@@ -161,7 +161,6 @@ public class InventorySkrrtPet extends InventoryPet {
    }
 
    private void freezeThePlayer(final Player p) {
-      p.setFlying(false);
       p.playSound(p.getLocation(), Sound.STEP_SNOW, 1.0F, 1.4F);
       p.setWalkSpeed(0.0F);
       p.removePotionEffect(PotionEffectType.JUMP);
@@ -175,7 +174,6 @@ public class InventorySkrrtPet extends InventoryPet {
             p.removePotionEffect(PotionEffectType.SLOW);
             p.removePotionEffect(PotionEffectType.JUMP);
             p.setWalkSpeed(0.2F);
-            p.setFlying(true);
          }
       }).runTaskLater(CosmicSkyInventoryPets.get(), 1L * (long)this.freezeDuration(this.petLevel) * 20L);
    }

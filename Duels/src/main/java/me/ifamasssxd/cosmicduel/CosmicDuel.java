@@ -34,7 +34,6 @@ import me.ifamasssxd.cosmicduel.tasks.*;
 import me.ifamasssxd.cosmicduel.utils.CollectionBin;
 import me.ifamasssxd.cosmicduel.utils.DuelToggles;
 import me.ifamasssxd.cosmicduel.utils.WorldGuardUtils;
-import me.ifamasssxd.cosmicfactionboosters.listeners.mcMMOListener;
 import org.arkhamnetwork.Arkkit.commands.CommandArkReboot;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -180,12 +179,12 @@ extends JavaPlugin {
     }
 
     public void registerTasks() {
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(CosmicDuel.get(), new DuelArenaTask(), 20L, 20L);
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(CosmicDuel.get(), new DuelTask(), 20L, 20L);
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(CosmicDuel.get(), new QueueUpdateTask(), 20L, 700L);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(CosmicDuel.get(), new DuelArenaTask(), 200L, 200L);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(CosmicDuel.get(), new DuelTask(), 80L, 80L);
+        //Bukkit.getScheduler().scheduleSyncRepeatingTask(CosmicDuel.get(), new QueueUpdateTask(), 20L, 700L);
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(CosmicDuel.get(), new DuelInviteTask(), 20L, 20L);
         this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new RebootTask(), 20L, 20L);
-        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new QueueTask(this), this.getConfig().getInt("queue-delay", 5) * 20, this.getConfig().getInt("queue-delay", 5) * 20);
+        //this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new QueueTask(this), this.getConfig().getInt("queue-delay", 5) * 20, this.getConfig().getInt("queue-delay", 5) * 20);
     }
 
     public void registerCommands() {
@@ -210,9 +209,7 @@ extends JavaPlugin {
         this.registerListener(new PotionListener());
         this.registerListener(new SettingsListener());
         this.registerListener(new CustomKitListener());
-        if (mcMMOEnabled) {
-            this.getServer().getPluginManager().registerEvents(new mcMMOListener(), this);
-        }
+
         if (enchantsEnabled) {
             this.registerListener(new GodsetCreationListener());
         }
