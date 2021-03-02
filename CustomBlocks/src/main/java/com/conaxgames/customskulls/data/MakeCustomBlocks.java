@@ -33,7 +33,7 @@ public class MakeCustomBlocks {
         ymlFile.set("location", block.getLocation());
 
         AbilityData data = AbilityData.getByUUID(AbilityData.getUUID(player.getLocation()));
-        data.setOwner(player.getUniqueId().toString());
+        data.setOwner(player.getUniqueId());
         data.setUuid(AbilityData.getUUID(player.getLocation()));
         data.setLocation(player.getLocation());
         data.setAbilityType(abilityType);

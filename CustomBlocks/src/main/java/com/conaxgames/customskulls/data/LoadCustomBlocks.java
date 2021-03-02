@@ -7,6 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.util.UUID;
 
 public class LoadCustomBlocks {
 
@@ -40,7 +41,7 @@ public class LoadCustomBlocks {
             }
 
             AbilityData data = AbilityData.getByUUID(AbilityData.getUUID(location));
-            data.setOwner(owner);
+            data.setOwner(UUID.fromString(owner));
             data.setUuid(AbilityData.getUUID(location));
             data.setLocation(location);
             data.setAbilityType(AbilityType.valueOf(ability));

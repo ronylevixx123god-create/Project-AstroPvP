@@ -8,6 +8,7 @@ import org.bukkit.Location;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -17,7 +18,7 @@ public class AbilityData {
     @Getter
     private static Map<String, AbilityData> abilityDataMap = new HashMap<>();
 
-    private String owner;
+    private UUID owner;
     private String uuid;
     private Location location;
     private AbilityType abilityType;

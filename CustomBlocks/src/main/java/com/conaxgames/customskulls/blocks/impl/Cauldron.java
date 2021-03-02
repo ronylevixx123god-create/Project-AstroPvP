@@ -135,7 +135,7 @@ public class Cauldron extends CustomBlock {
 
     @Override
     public void damageGivenEvent(Player p0, EntityDamageByEntityEvent p1, Chunk p2) {
-
+        p1.setDamage(1); //sets the event damage. BOWP hits Kipes for this damage
     }
 
     @Override
