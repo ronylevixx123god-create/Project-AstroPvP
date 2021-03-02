@@ -17,7 +17,7 @@ import java.util.UUID;
 
 public class HeroicAegis extends HeroicCustomEnchantment {
     public HeroicAegis() {
-        super("Holy Aegis", "Aegis", GeneralUtil.chestplates, 2);
+        super("Holy Aegis", "Aegis", GeneralUtil.armor, 2);
         this.max = 6;
     }
 

@@ -73,7 +73,6 @@ import net.astropvp.core.tasks.LastManStandingCapTask;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -87,7 +86,6 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Arrays;
-import java.util.HashMap;
 
 @Getter
 @Setter
@@ -302,6 +300,7 @@ public class AstroCore extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
         Bukkit.getConsoleSender().sendMessage(" ASTRO CORE DEBUG: PLUGIN SHOULD BE LOADED NOW");
         Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
+
     }
 
     @SneakyThrows
@@ -322,6 +321,7 @@ public class AstroCore extends JavaPlugin {
             Boss.bosses.remove(bos.getEntity().getUniqueId());
             System.out.println("Removing boss!");
         }*/
+
 
         for (CoinFlipMatch active : this.coinFlipManager.getCoinFlipMatches()) {
             if (active.getMatchState() == CoinFlipMatch.MatchState.WAITING) {

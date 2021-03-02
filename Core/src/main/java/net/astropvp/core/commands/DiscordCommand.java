@@ -1,6 +1,7 @@
 package net.astropvp.core.commands;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -18,6 +19,7 @@ public class DiscordCommand implements CommandExecutor {
         p.sendMessage(CC.translate("&7Click the link above to join the discord."));
         p.sendMessage("");
         return false;
+
     }
 
 }
