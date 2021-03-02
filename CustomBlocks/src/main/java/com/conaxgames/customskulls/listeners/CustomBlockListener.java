@@ -56,7 +56,7 @@ public class CustomBlockListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGH)
     public void onBlockBreak(final BlockBreakEvent event) {
         final Player player = event.getPlayer();
         final ItemStack item = player.getItemInHand();
@@ -70,10 +70,10 @@ public class CustomBlockListener implements Listener {
         if (customBlock == null) {
             return;
         }
-        customBlock.breakBlockAction(player, event, event.getBlock(), item);
+        customBlock.breakBlockAction(player, event, event.getBlock(), item, customBlock, data);
     }
 
-    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGH)
     public void onBlockPlace(final BlockPlaceEvent event) {
         final Player player = event.getPlayer();
         final ItemStack item = player.getItemInHand();

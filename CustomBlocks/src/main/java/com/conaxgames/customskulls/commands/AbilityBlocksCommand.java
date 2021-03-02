@@ -1,14 +1,10 @@
 package com.conaxgames.customskulls.commands;
 
-import com.conaxgames.customskulls.data.MakeCustomBlocks;
-import com.conaxgames.customskulls.enums.AbilityType;
 import com.conaxgames.customskulls.ui.CustomBlocksAdminUI;
 import com.conaxgames.customskulls.ui.ViewCustomBlocksFromFileUI;
 import com.conaxgames.customskulls.util.CC;
-import de.tr7zw.nbtapi.NBTItem;
 import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -38,18 +34,6 @@ public class AbilityBlocksCommand extends Command {
 
         if (strings[0].equals("items")) {
             CustomBlocksAdminUI.open(player);
-            return true;
-        }
-        if (strings[0].equals("nbt")) {
-            if (player.getItemInHand() != null && player.getItemInHand().getType() != Material.AIR) {
-                NBTItem nbtItem = new NBTItem(player.getItemInHand());
-                player.sendMessage(String.valueOf(nbtItem.getKeys()));
-            }
-            return true;
-        }
-        if (strings[0].equals("debug")) {
-            player.sendMessage("debug command! you should see a yml file!");
-            MakeCustomBlocks.newFileItem(player, AbilityType.TREASURECHEST, player.getLocation().getBlock());
             return true;
         }
         if (strings[0].equals("list")) {

@@ -1,6 +1,7 @@
 package com.conaxgames.customskulls.blocks;
 
 
+import com.conaxgames.customskulls.ability.AbilityData;
 import com.conaxgames.customskulls.enums.AbilityType;
 import com.conaxgames.customskulls.util.ItemBuilderUtils;
 import com.mojang.authlib.GameProfile;
@@ -88,7 +89,7 @@ public abstract class CustomBlock {
 
     public abstract void placeBlockAction(final Player p0, final BlockPlaceEvent p1, final Block p2, final ItemStack p3);
 
-    public abstract void breakBlockAction(final Player p0, final BlockBreakEvent p1, final Block p2, final ItemStack p3);
+    public abstract void breakBlockAction(final Player p0, final BlockBreakEvent p1, final Block p2, final ItemStack p3, CustomBlock customBlock, AbilityData data);
 
     public abstract void clickedInInventoryAction(final Player p0, final InventoryClickEvent p1);
 

@@ -1,7 +1,9 @@
 package com.conaxgames.customskulls.blocks.impl;
 
 import com.conaxgames.customskulls.CoreSkulls;
+import com.conaxgames.customskulls.ability.AbilityData;
 import com.conaxgames.customskulls.blocks.CustomBlock;
+import com.conaxgames.customskulls.data.DeleteCustomBlocks;
 import com.conaxgames.customskulls.data.MakeCustomBlocks;
 import com.conaxgames.customskulls.enums.AbilityType;
 import com.conaxgames.customskulls.util.CC;
@@ -90,11 +92,21 @@ public class AstroTrophy extends CustomBlock {
     public void placeBlockAction(Player p0, BlockPlaceEvent p1, Block p2, ItemStack p3) {
         // check if the player has a faction.
         // check if the player is in faction land
-        MakeCustomBlocks.newFileItem(p0, AbilityType.ASTROTROPHY, p1.getBlock());
+        FPlayer fPlayer = FPlayers.i.get(p0);
+        if (fPlayer == null) {
+            p0.sendMessage(CC.RED + "You must have a faction to place a block of this type.");
+            return;
+        }
+        if (fPlayer.getRelationToLocation().isMember()) {
+            MakeCustomBlocks.newFileItem(p0, AbilityType.ASTROTROPHY, p1.getBlock(), this);
+        } else {
+            p0.sendMessage(CC.RED + "You must be in your own claim to place a block of this type");
+            p1.setCancelled(true);
+        }
     }
 
     @Override
-    public void breakBlockAction(Player player, BlockBreakEvent p1, Block p2, ItemStack p3) {
+    public void breakBlockAction(Player player, BlockBreakEvent p1, Block p2, ItemStack p3, CustomBlock cb, AbilityData data) {
         FPlayer fPlayer = FPlayers.i.get(player);
         Player breaker = p1.getPlayer();
         if (fPlayer == null) {
@@ -102,38 +114,21 @@ public class AstroTrophy extends CustomBlock {
             return;
         }
         // If the custom block is being broken in the wilderness.
-        if (FactionUtils.isWilderness(breaker.getLocation())) {
+        if (FactionUtils.isWilderness(p2.getLocation())) {
             if (CoreSkulls.getEconomy().has(breaker, AbilityType.ASTROTROPHY.getPickupPrice())) {
                 CoreSkulls.getEconomy().withdrawPlayer(breaker, AbilityType.ASTROTROPHY.getPickupPrice());
                 breaker.sendMessage(CC.B_RED + "-$" + AbilityType.ASTROTROPHY.getPickupPrice());
                 breaker.sendMessage(CC.GREEN + "You broke a " + AbilityType.ASTROTROPHY.getName() + CC.GREEN + "!");
 
                 ItemBuilderUtils item = new ItemBuilderUtils(this.getItem()).setLore(this.addLore());
-                p2.getDrops().clear();
-                p2.getDrops().add(item.toItemStack());
+                p1.getBlock().getDrops().clear(); // clears the events item stack
+                p2.breakNaturally(new ItemBuilderUtils(Material.AIR).toItemStack()); // break the block
+                p2.getWorld().dropItemNaturally(p2.getLocation(), item.toItemStack()); // dropping our item stack
+                DeleteCustomBlocks.func(p2.getLocation()); // delete file and memory.
             } else {
                 breaker.sendMessage(CC.RED + "You do not have the required $" + AbilityType.ASTROTROPHY.getPickupPrice() + " to pick this block up.");
                 p1.setCancelled(true);
             }
-            return;
-        }
-        // If the block is in a member claim else, stop them breaking it.
-        if (fPlayer.getRelationToLocation().isMember()) {
-            if (CoreSkulls.getEconomy().has(breaker, AbilityType.ASTROTROPHY.getPickupPrice())) {
-                CoreSkulls.getEconomy().withdrawPlayer(breaker, AbilityType.ASTROTROPHY.getPickupPrice());
-                breaker.sendMessage(CC.B_RED + "-$" + AbilityType.ASTROTROPHY.getPickupPrice());
-                breaker.sendMessage(CC.GREEN + "You broke a " + AbilityType.ASTROTROPHY.getName() + CC.GREEN + "!");
-
-                ItemBuilderUtils item = new ItemBuilderUtils(this.getItem()).setLore(this.addLore());
-                p2.getDrops().clear();
-                p2.getDrops().add(item.toItemStack());
-            } else {
-                breaker.sendMessage(CC.RED + "You do not have the required $" + AbilityType.ASTROTROPHY.getPickupPrice() + " to pick this block up.");
-                p1.setCancelled(true);
-            }
-        } else {
-            breaker.sendMessage(CC.RED + "You can not break this block.");
-            p1.setCancelled(true);
         }
     }
 
