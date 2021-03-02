@@ -1,10 +1,11 @@
 package com.conaxgames.customskulls.ui;
 
+import com.conaxgames.customskulls.CoreSkulls;
 import com.conaxgames.customskulls.ability.AbilityData;
+import com.conaxgames.customskulls.blocks.CustomBlock;
 import com.conaxgames.customskulls.util.CC;
 import com.conaxgames.customskulls.util.ItemBuilderUtils;
 import com.conaxgames.customskulls.util.inventoryui.InventoryUI;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
@@ -14,8 +15,9 @@ public class ViewCustomBlocksFromFileUI {
         InventoryUI inventoryUI = new InventoryUI("Custom Blocks", 6);
         for (String key : AbilityData.getAbilityDataMap().keySet()) {
             AbilityData data = AbilityData.getByUUID(key);
+            CustomBlock customBlock = CoreSkulls.customBlocks.get(data.getAbilityType().getName());
             inventoryUI.addItem(new InventoryUI.AbstractClickableItem(
-                    new ItemBuilderUtils(Material.SKULL_ITEM)
+                    new ItemBuilderUtils(customBlock.getItem())
                             .setName(CC.YELLOW + data.getAbilityType().getName())
                             .setDurability((short) 3)
                             .addLoreLine("")

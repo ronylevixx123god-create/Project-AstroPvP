@@ -1,6 +1,7 @@
 package com.conaxgames.customskulls.blocks.impl;
 
 import com.conaxgames.customskulls.blocks.CustomBlock;
+import com.conaxgames.customskulls.data.MakeCustomBlocks;
 import com.conaxgames.customskulls.enums.AbilityType;
 import com.conaxgames.customskulls.util.CC;
 import org.bukkit.Bukkit;
@@ -84,6 +85,9 @@ public class TreasureChest extends CustomBlock {
 
     @Override
     public void placeBlockAction(Player p0, BlockPlaceEvent p1, Block p2, ItemStack p3) {
+        // check if the player has a faction.
+        // check if the player is in faction land
+        MakeCustomBlocks.newFileItem(p0, AbilityType.TREASURECHEST, p1.getBlock());
     }
 
     @Override

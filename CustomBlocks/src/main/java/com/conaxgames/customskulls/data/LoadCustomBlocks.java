@@ -31,9 +31,12 @@ public class LoadCustomBlocks {
             AbilityType abilityType = AbilityType.valueOf(ability);
 
             // This CustomBlock doesn't exist? Oh noes, we better delete it! It's always nice to keep things clean.
-            if (CoreSkulls.getInstance().getServer().getWorld(location.getWorld().getUID()).getBlockAt(location).getType() != abilityType.getMaterial()) {
-                CoreSkulls.getInstance().info("[CustomSkulls] The block at a location was not a skull. We can safely say it's not a CustomBlock.");
+            if (CoreSkulls.getInstance().getServer().getWorld(location.getWorld().getName()).getBlockAt(location).getType() != abilityType.getMaterial()) {
+                CoreSkulls.getInstance().info("[CustomSkulls] The block at a location was not the material. We can safely say it's not a CustomBlock.");
+                CoreSkulls.getInstance().info(CoreSkulls.getInstance().getServer().getWorld(location.getWorld().getName()).getBlockAt(location).getType().toString());
+                CoreSkulls.getInstance().info(abilityType.getMaterial().toString());
                 file.delete();
+                continue;
             }
 
             AbilityData data = AbilityData.getByUUID(AbilityData.getUUID(location));
