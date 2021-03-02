@@ -28,7 +28,6 @@ public class CustomBlockUtil {
         return nbtItem.hasKey("conaxCustomBlock");
     }
 
-
     public static AbilityData getBlockDataInChunk(Player player) {
         Chunk chunk = player.getLocation().getChunk();
         for (AbilityData data : AbilityData.getAbilityDataMap().values()) {

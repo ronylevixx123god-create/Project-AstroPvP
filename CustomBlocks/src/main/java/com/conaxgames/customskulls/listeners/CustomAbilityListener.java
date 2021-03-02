@@ -19,7 +19,7 @@ public class CustomAbilityListener implements Listener {
             AbilityData data = CustomBlockUtil.getBlockDataInChunk(player);
             if (data == null) return;
 
-            CustomBlock customBlock = CoreSkulls.customBlocks.get(data.getUuid());
+            CustomBlock customBlock = CoreSkulls.customBlocks.get(data.getAbilityType().getName());
 
             if (customBlock == null) return;
             // This is when a player hits another player, we can multiply their damage, or reduce it!
