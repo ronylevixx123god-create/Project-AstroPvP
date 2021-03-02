@@ -4,6 +4,7 @@ import com.conaxgames.customskulls.CoreSkulls;
 import com.conaxgames.customskulls.ability.AbilityData;
 import com.conaxgames.customskulls.blocks.CustomBlock;
 import com.conaxgames.customskulls.util.CustomBlockUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -56,15 +57,16 @@ public class CustomBlockListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onBlockBreak(final BlockBreakEvent event) {
         final Player player = event.getPlayer();
         final ItemStack item = player.getItemInHand();
-        AbilityData data = CustomBlockUtil.getBlockDataInChunk(player);
+        AbilityData data = AbilityData.getAbilityDataMap().get(AbilityData.getUUID(event.getBlock().getLocation()));
         if (data == null) {
             return;
         }
 
+        Bukkit.broadcastMessage(data.getAbilityType().getName());
         CustomBlock customBlock = CoreSkulls.customBlocks.get(data.getAbilityType().getName());
 
         if (customBlock == null) {

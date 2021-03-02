@@ -113,8 +113,7 @@ public class AstroTrophy extends CustomBlock {
             // The block must be in the land to remove it.
             return;
         }
-        // If the custom block is being broken in the wilderness.
-        if (FactionUtils.isWilderness(p2.getLocation())) {
+        if (FactionUtils.isWilderness(p2.getLocation()) || (fPlayer.getRelationToLocation().isMember())) {
             if (CoreSkulls.getEconomy().has(breaker, AbilityType.ASTROTROPHY.getPickupPrice())) {
                 CoreSkulls.getEconomy().withdrawPlayer(breaker, AbilityType.ASTROTROPHY.getPickupPrice());
                 breaker.sendMessage(CC.B_RED + "-$" + AbilityType.ASTROTROPHY.getPickupPrice());
@@ -129,6 +128,9 @@ public class AstroTrophy extends CustomBlock {
                 breaker.sendMessage(CC.RED + "You do not have the required $" + AbilityType.ASTROTROPHY.getPickupPrice() + " to pick this block up.");
                 p1.setCancelled(true);
             }
+        } else {
+            breaker.sendMessage(CC.RED + "You can not break this block as it is not in your claim or wilderness.");
+            p1.setCancelled(true);
         }
     }
 

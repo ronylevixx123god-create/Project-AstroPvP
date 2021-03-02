@@ -32,7 +32,7 @@ public class AbilityBlocksCommand extends Command {
             return false;
         }
 
-        if (strings[0].equals("items")) {
+        if (strings[0].equals("view")) {
             CustomBlocksAdminUI.open(player);
             return true;
         }
@@ -47,7 +47,7 @@ public class AbilityBlocksCommand extends Command {
 
     public void usage(Player player) {
         player.sendMessage(CC.GRAY + CC.STRIKE_THROUGH + "---------------------------------------");
-        player.sendMessage(CC.GOLD + "/cb items" + CC.YELLOW + " - Opens a UI to get all CustomBlocks.");
+        player.sendMessage(CC.GOLD + "/cb view" + CC.YELLOW + " - Opens a UI to view all custom blocks.");
         player.sendMessage(CC.GOLD + "/cb list" + CC.YELLOW + " - View all placed CustomBlocks in memory.");
         player.sendMessage(CC.GRAY + CC.STRIKE_THROUGH + "---------------------------------------");
     }
