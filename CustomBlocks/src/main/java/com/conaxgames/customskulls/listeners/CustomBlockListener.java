@@ -1,7 +1,10 @@
 package com.conaxgames.customskulls.listeners;
 
+import com.conaxgames.customskulls.CoreSkulls;
+import com.conaxgames.customskulls.ability.AbilityData;
 import com.conaxgames.customskulls.blocks.CustomBlock;
 import com.conaxgames.customskulls.util.CustomBlockUtil;
+import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -20,8 +23,18 @@ public class CustomBlockListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerUse(final PlayerInteractEvent event) {
+        if (event.getPlayer().getItemInHand() == null || event.getPlayer().getItemInHand().getType() == Material.AIR) {
+            return;
+        }
         if (CustomBlockUtil.isCustomItem(event.getPlayer().getItemInHand())) {
             this.interactCustomBlockItem(event, event.getPlayer().getItemInHand());
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onDamage(final PlayerInteractEvent event) {
+        if (event.getPlayer().getItemInHand() == null || event.getPlayer().getItemInHand().getType() == Material.AIR) {
+            return;
         }
         if (CustomBlockUtil.isCustomItem(event.getPlayer().getItemInHand())) {
             this.interactCustomBlockItem(event, event.getPlayer().getItemInHand());
@@ -34,25 +47,39 @@ public class CustomBlockListener implements Listener {
             return;
         }
         final Player player = (Player)event.getDamager();
+        if (player.getItemInHand() == null || player.getItemInHand().getType() == Material.AIR) {
+            return;
+        }
         final ItemStack playerItemInHand = player.getItemInHand();
         if (CustomBlockUtil.isCustomItem(playerItemInHand)) {
             Objects.requireNonNull(CustomBlockUtil.getCustomItem(playerItemInHand)).hitEntityAction(player, event, event.getEntity(), playerItemInHand);
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onBlockBreak(final BlockBreakEvent event) {
         final Player player = event.getPlayer();
         final ItemStack item = player.getItemInHand();
-        if (CustomBlockUtil.isCustomItem(item)) {
-            Objects.requireNonNull(CustomBlockUtil.getCustomItem(item)).breakBlockAction(player, event, event.getBlock(), item);
+        AbilityData data = CustomBlockUtil.getBlockDataInChunk(player);
+        if (data == null) {
+            return;
         }
+
+        CustomBlock customBlock = CoreSkulls.customBlocks.get(data.getAbilityType().getName());
+
+        if (customBlock == null) {
+            return;
+        }
+        customBlock.breakBlockAction(player, event, event.getBlock(), item);
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onBlockPlace(final BlockPlaceEvent event) {
         final Player player = event.getPlayer();
         final ItemStack item = player.getItemInHand();
+        if (event.getPlayer().getItemInHand() == null || event.getPlayer().getItemInHand().getType() == Material.AIR) {
+            return;
+        }
         if (CustomBlockUtil.isCustomItem(item)) {
             Objects.requireNonNull(CustomBlockUtil.getCustomItem(item)).placeBlockAction(player, event, event.getBlock(), item);
         }
@@ -60,6 +87,9 @@ public class CustomBlockListener implements Listener {
 
     private void interactCustomBlockItem(final PlayerInteractEvent event, final ItemStack item) {
         final Player player = event.getPlayer();
+        if (event.getPlayer().getItemInHand() == null || event.getPlayer().getItemInHand().getType() == Material.AIR) {
+            return;
+        }
         if (CustomBlockUtil.isCustomItem(item)) {
             CustomBlock customBlock = CustomBlockUtil.getCustomItem(item);
             if (customBlock != null) {

@@ -3,6 +3,7 @@ package com.conaxgames.customskulls.data;
 import com.conaxgames.customskulls.CoreSkulls;
 import com.conaxgames.customskulls.ability.AbilityData;
 import com.conaxgames.customskulls.enums.AbilityType;
+import org.bukkit.block.Block;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
@@ -11,7 +12,7 @@ import java.io.IOException;
 
 public class MakeCustomBlocks {
 
-    public static void newFileItem(Player player, AbilityType abilityType) throws IOException {
+    public static void newFileItem(Player player, AbilityType abilityType, Block block) {
         File file = new File(CoreSkulls.getInstance().getDataFolder().toString() + "/data/" + AbilityData.getUUID(player.getLocation()) + ".yml");
 
         if (!file.exists()) {
@@ -25,8 +26,9 @@ public class MakeCustomBlocks {
 
         YamlConfiguration ymlFile = YamlConfiguration.loadConfiguration(file);
 
+        ymlFile.set("owner", player.getUniqueId().toString());
         ymlFile.set("ability", abilityType.getName());
-        ymlFile.set("location", player.getLocation());
+        ymlFile.set("location", block.getLocation());
 
         AbilityData data = AbilityData.getByUUID(AbilityData.getUUID(player.getLocation()));
         data.setUuid(AbilityData.getUUID(player.getLocation()));

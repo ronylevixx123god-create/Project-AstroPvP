@@ -22,25 +22,31 @@ public class LoadCustomBlocks {
             if (file == null) { // Null check because those pesky files!
                 return;
             }
-            YamlConfiguration ymlFile = YamlConfiguration.loadConfiguration(file); // Load the file into YAML because bukkit!
+            // Load the file into YAML because we need to get some values from it!
+            YamlConfiguration ymlFile = YamlConfiguration.loadConfiguration(file);
 
+            String owner = ymlFile.getString("owner");
             String ability = ymlFile.getString("ability");
             Location location = (Location) ymlFile.get("location");
+            AbilityType abilityType = AbilityType.valueOf(ability);
 
-            // If we store abilities as enums, we can change the material to a value below.
-            //if (CoreSkulls.getInstance().getServer().getWorld(String.valueOf(location.getWorld())).getBlockAt(location).getType() != Material.SKULL) {
-                // this skull doesn't exist? Oh noes, we better delete it!
-                // delete the file.
-                // delete memory, although there shouldn't be
-                // send a nice pretty message.
-                //CoreSkulls.getInstance().info("[CustomSkulls] Found a location which is not a skull!");
-            //}
+            // This CustomBlock doesn't exist? Oh noes, we better delete it! It's always nice to keep things clean.
+            if (CoreSkulls.getInstance().getServer().getWorld(location.getWorld().getName()).getBlockAt(location).getType() != abilityType.getMaterial()) {
+                CoreSkulls.getInstance().info("[CustomSkulls] The block at a location was not the material. We can safely say it's not a CustomBlock.");
+                CoreSkulls.getInstance().info(CoreSkulls.getInstance().getServer().getWorld(location.getWorld().getName()).getBlockAt(location).getType().toString());
+                CoreSkulls.getInstance().info(abilityType.getMaterial().toString());
+                file.delete();
+                continue;
+            }
 
             AbilityData data = AbilityData.getByUUID(AbilityData.getUUID(location));
+            data.setOwner(owner);
             data.setUuid(AbilityData.getUUID(location));
             data.setLocation(location);
             data.setAbilityType(AbilityType.valueOf(ability));
-            CoreSkulls.getInstance().info("Put " + data.getAbilityType() + " into memory.");
+
+            // This is a debug message which can be deleted at a later date!
+            CoreSkulls.getInstance().info("[CustomSkulls] Put " + data.getAbilityType() + " into memory.");
         }
     }
 

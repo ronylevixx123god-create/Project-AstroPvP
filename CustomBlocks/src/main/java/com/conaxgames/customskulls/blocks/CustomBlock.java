@@ -6,6 +6,7 @@ import com.conaxgames.customskulls.util.ItemBuilderUtils;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import de.tr7zw.nbtapi.NBTItem;
+import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -13,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -23,11 +25,13 @@ import java.util.List;
 import java.util.UUID;
 
 public abstract class CustomBlock {
+    private final String identifier;
     private final String name;
     private final Material material;
     private final AbilityType abilityType;
 
-    public CustomBlock(String name, Material material, AbilityType abilityType) {
+    public CustomBlock(String identifier, String name, Material material, AbilityType abilityType) {
+        this.identifier = identifier;
         this.name = name;
         this.material = material;
         this.abilityType = abilityType;
@@ -37,6 +41,10 @@ public abstract class CustomBlock {
 
     public String getName() {
         return name;
+    }
+
+    public String getIdentifier() {
+        return identifier;
     }
 
     public ItemStack getItem() {
@@ -83,5 +91,11 @@ public abstract class CustomBlock {
     public abstract void breakBlockAction(final Player p0, final BlockBreakEvent p1, final Block p2, final ItemStack p3);
 
     public abstract void clickedInInventoryAction(final Player p0, final InventoryClickEvent p1);
+
+    // p0 in this case is giving damage to an enemy while a custom block is active.
+    public abstract void damageGivenEvent(final Player p0, final EntityDamageByEntityEvent p1, final Chunk p2);
+
+    // p0 in this case is the killer of the mob.
+    public abstract void mobDeathEvent(Player p0, EntityDeathEvent p1);
 
 }
