@@ -17,6 +17,7 @@ public class AbilityData {
     @Getter
     private static Map<String, AbilityData> abilityDataMap = new HashMap<>();
 
+    private String owner;
     private String uuid;
     private Location location;
     private AbilityType abilityType;

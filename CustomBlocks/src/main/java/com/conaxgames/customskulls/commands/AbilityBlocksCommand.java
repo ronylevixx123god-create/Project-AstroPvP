@@ -1,9 +1,9 @@
 package com.conaxgames.customskulls.commands;
 
-import com.conaxgames.customskulls.ability.AbilityData;
 import com.conaxgames.customskulls.data.MakeCustomBlocks;
 import com.conaxgames.customskulls.enums.AbilityType;
-import com.conaxgames.customskulls.ui.CustomBlocksUI;
+import com.conaxgames.customskulls.ui.CustomBlocksAdminUI;
+import com.conaxgames.customskulls.ui.ViewCustomBlocksFromFileUI;
 import com.conaxgames.customskulls.util.CC;
 import de.tr7zw.nbtapi.NBTItem;
 import lombok.SneakyThrows;
@@ -14,7 +14,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.Collections;
-import java.util.Map;
 
 public class AbilityBlocksCommand extends Command {
 
@@ -38,7 +37,7 @@ public class AbilityBlocksCommand extends Command {
         }
 
         if (strings[0].equals("items")) {
-            CustomBlocksUI.open(player);
+            CustomBlocksAdminUI.open(player);
             return true;
         }
         if (strings[0].equals("nbt")) {
@@ -50,13 +49,11 @@ public class AbilityBlocksCommand extends Command {
         }
         if (strings[0].equals("debug")) {
             player.sendMessage("debug command! you should see a yml file!");
-            MakeCustomBlocks.newFileItem(player, AbilityType.CAULDRON);
+            MakeCustomBlocks.newFileItem(player, AbilityType.TREASURECHEST, player.getLocation().getBlock());
             return true;
         }
         if (strings[0].equals("list")) {
-            for (Map.Entry<String, AbilityData> data : AbilityData.getAbilityDataMap().entrySet()) {
-                player.sendMessage(data.getValue().getUuid());
-            }
+            ViewCustomBlocksFromFileUI.open(player);
             return true;
         }
 
@@ -67,7 +64,7 @@ public class AbilityBlocksCommand extends Command {
     public void usage(Player player) {
         player.sendMessage(CC.GRAY + CC.STRIKE_THROUGH + "---------------------------------------");
         player.sendMessage(CC.GOLD + "/cb items" + CC.YELLOW + " - Opens a UI to get all CustomBlocks.");
-        player.sendMessage(CC.GOLD + "/cb list" + CC.YELLOW + " - Sends a list of all CustomBlocks in memory.");
+        player.sendMessage(CC.GOLD + "/cb list" + CC.YELLOW + " - View all placed CustomBlocks in memory.");
         player.sendMessage(CC.GRAY + CC.STRIKE_THROUGH + "---------------------------------------");
     }
 }

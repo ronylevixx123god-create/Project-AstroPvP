@@ -10,7 +10,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 
 import java.util.Map;
 
-public class CustomBlocksUI {
+public class CustomBlocksAdminUI {
     public static void open(Player player) {
 
         InventoryUI inventoryUI = new InventoryUI("Custom Items", 6);

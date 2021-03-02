@@ -7,6 +7,7 @@ import com.conaxgames.customskulls.blocks.impl.PumpkinPie;
 import com.conaxgames.customskulls.blocks.impl.TreasureChest;
 import com.conaxgames.customskulls.commands.AbilityBlocksCommand;
 import com.conaxgames.customskulls.data.LoadCustomBlocks;
+import com.conaxgames.customskulls.listeners.CustomAbilityListener;
 import com.conaxgames.customskulls.listeners.CustomBlockListener;
 import com.conaxgames.customskulls.util.CC;
 import com.conaxgames.customskulls.util.inventoryui.UIListener;
@@ -45,6 +46,7 @@ public class CoreSkulls extends JavaPlugin {
         Collections.singletonList(new AbilityBlocksCommand()).forEach(this:: registerCommand);
         getServer().getPluginManager().registerEvents(new UIListener(), this);
         getServer().getPluginManager().registerEvents(new CustomBlockListener(), this);
+        getServer().getPluginManager().registerEvents(new CustomAbilityListener(), this);
         LoadCustomBlocks.load();
         info("CoreSkulls!");
     }

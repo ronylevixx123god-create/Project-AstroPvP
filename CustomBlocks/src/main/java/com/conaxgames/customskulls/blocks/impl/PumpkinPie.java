@@ -3,7 +3,7 @@ package com.conaxgames.customskulls.blocks.impl;
 import com.conaxgames.customskulls.blocks.CustomBlock;
 import com.conaxgames.customskulls.enums.AbilityType;
 import com.conaxgames.customskulls.util.CC;
-import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -21,7 +22,7 @@ import java.util.List;
 public class PumpkinPie extends CustomBlock {
 
     public PumpkinPie() {
-        super(CC.translate("&e&lPumpkin Pie"), Material.SKULL_ITEM, AbilityType.PUMPKINPIE);
+        super("PUMPKINPIE", CC.translate("&e&lPumpkin Pie"), Material.SKULL_ITEM, AbilityType.PUMPKINPIE);
     }
 
     @Override
@@ -82,7 +83,6 @@ public class PumpkinPie extends CustomBlock {
 
     @Override
     public void placeBlockAction(Player p0, BlockPlaceEvent p1, Block p2, ItemStack p3) {
-        Bukkit.broadcastMessage("You placed TenPercentDamageIncrease item!");
     }
 
     @Override
@@ -91,5 +91,14 @@ public class PumpkinPie extends CustomBlock {
 
     @Override
     public void clickedInInventoryAction(Player p0, InventoryClickEvent p1) {
+    }
+
+    @Override
+    public void damageGivenEvent(Player p0, EntityDamageByEntityEvent p1, Chunk p2) {
+    }
+
+    @Override
+    public void mobDeathEvent(Player p0, EntityDeathEvent p1) {
+
     }
 }

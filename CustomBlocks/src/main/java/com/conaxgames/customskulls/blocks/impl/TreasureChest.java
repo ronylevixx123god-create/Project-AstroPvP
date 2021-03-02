@@ -4,6 +4,7 @@ import com.conaxgames.customskulls.blocks.CustomBlock;
 import com.conaxgames.customskulls.enums.AbilityType;
 import com.conaxgames.customskulls.util.CC;
 import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -11,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -21,7 +23,7 @@ import java.util.List;
 public class TreasureChest extends CustomBlock {
 
     public TreasureChest() {
-        super(CC.translate("&6&lTreasure Chest"), Material.SKULL_ITEM, AbilityType.TREASURECHEST);
+        super("TREASURECHEST", CC.translate("&6&lTreasure Chest"), Material.SKULL_ITEM, AbilityType.TREASURECHEST);
     }
 
     @Override
@@ -82,7 +84,6 @@ public class TreasureChest extends CustomBlock {
 
     @Override
     public void placeBlockAction(Player p0, BlockPlaceEvent p1, Block p2, ItemStack p3) {
-        Bukkit.broadcastMessage("You placed TenPercentDamageIncrease item!");
     }
 
     @Override
@@ -91,5 +92,20 @@ public class TreasureChest extends CustomBlock {
 
     @Override
     public void clickedInInventoryAction(Player p0, InventoryClickEvent p1) {
+    }
+
+    @Override
+    public void damageGivenEvent(Player p0, EntityDamageByEntityEvent p1, Chunk p2) {
+    }
+
+    @Override
+    public void mobDeathEvent(Player p0, EntityDeathEvent p1) {
+        if (p1 == null) {
+            Bukkit.broadcastMessage("boof2");
+            return;
+        }
+        p1.getEntity().getKiller().sendMessage("boofaoda");
+        //p1.setDroppedExp(p1.getDroppedExp() * 2);
+        p0.sendMessage(CC.GREEN + "You got extra XP because of " + this.getName());
     }
 }

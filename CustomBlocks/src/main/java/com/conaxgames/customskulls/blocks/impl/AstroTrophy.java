@@ -1,9 +1,10 @@
 package com.conaxgames.customskulls.blocks.impl;
 
 import com.conaxgames.customskulls.blocks.CustomBlock;
+import com.conaxgames.customskulls.data.MakeCustomBlocks;
 import com.conaxgames.customskulls.enums.AbilityType;
 import com.conaxgames.customskulls.util.CC;
-import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -11,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -21,7 +23,7 @@ import java.util.List;
 public class AstroTrophy extends CustomBlock {
 
     public AstroTrophy() {
-        super(CC.translate("&6&lAstro Trophy"), Material.SKULL_ITEM, AbilityType.ASTROTROPHY);
+        super("ASTROTROPHY", CC.translate("&6&lAstro Trophy"), Material.SKULL_ITEM, AbilityType.ASTROTROPHY);
     }
 
     @Override
@@ -81,14 +83,28 @@ public class AstroTrophy extends CustomBlock {
 
     @Override
     public void placeBlockAction(Player p0, BlockPlaceEvent p1, Block p2, ItemStack p3) {
-        Bukkit.broadcastMessage("You placed TenPercentDamageIncrease item!");
+        // check if the player has a faction.
+        // check if the player is in faction land
+        MakeCustomBlocks.newFileItem(p0, AbilityType.ASTROTROPHY, p1.getBlock());
     }
 
     @Override
     public void breakBlockAction(Player p0, BlockBreakEvent p1, Block p2, ItemStack p3) {
+        p0.sendMessage(CC.RED + "You can not break this block! You must use the GUI to pick it up.");
+        p1.setCancelled(true);
     }
 
     @Override
     public void clickedInInventoryAction(Player p0, InventoryClickEvent p1) {
+    }
+
+    @Override
+    public void damageGivenEvent(Player p0, EntityDamageByEntityEvent p1, Chunk p2) {
+
+    }
+
+    @Override
+    public void mobDeathEvent(Player p0, EntityDeathEvent p1b) {
+
     }
 }

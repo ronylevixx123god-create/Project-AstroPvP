@@ -25,6 +25,7 @@ public class LoadCustomBlocks {
             // Load the file into YAML because we need to get some values from it!
             YamlConfiguration ymlFile = YamlConfiguration.loadConfiguration(file);
 
+            String owner = ymlFile.getString("owner");
             String ability = ymlFile.getString("ability");
             Location location = (Location) ymlFile.get("location");
             AbilityType abilityType = AbilityType.valueOf(ability);
@@ -36,6 +37,7 @@ public class LoadCustomBlocks {
             }
 
             AbilityData data = AbilityData.getByUUID(AbilityData.getUUID(location));
+            data.setOwner(owner);
             data.setUuid(AbilityData.getUUID(location));
             data.setLocation(location);
             data.setAbilityType(AbilityType.valueOf(ability));

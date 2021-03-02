@@ -1,5 +1,7 @@
 package com.conaxgames.customskulls.listeners;
 
+import com.conaxgames.customskulls.CoreSkulls;
+import com.conaxgames.customskulls.ability.AbilityData;
 import com.conaxgames.customskulls.blocks.CustomBlock;
 import com.conaxgames.customskulls.util.CustomBlockUtil;
 import org.bukkit.Material;
@@ -58,12 +60,17 @@ public class CustomBlockListener implements Listener {
     public void onBlockBreak(final BlockBreakEvent event) {
         final Player player = event.getPlayer();
         final ItemStack item = player.getItemInHand();
-        if (event.getPlayer().getItemInHand() == null || event.getPlayer().getItemInHand().getType() == Material.AIR) {
+        AbilityData data = CustomBlockUtil.getBlockDataInChunk(player);
+        if (data == null) {
             return;
         }
-        if (CustomBlockUtil.isCustomItem(item)) {
-            Objects.requireNonNull(CustomBlockUtil.getCustomItem(item)).breakBlockAction(player, event, event.getBlock(), item);
+
+        CustomBlock customBlock = CoreSkulls.customBlocks.get(data.getAbilityType().getName());
+
+        if (customBlock == null) {
+            return;
         }
+        customBlock.breakBlockAction(player, event, event.getBlock(), item);
     }
 
     @EventHandler(priority = EventPriority.HIGH)
