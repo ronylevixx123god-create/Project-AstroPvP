@@ -1,9 +1,14 @@
 package com.conaxgames.customskulls.blocks.impl;
 
+import com.conaxgames.customskulls.CoreSkulls;
 import com.conaxgames.customskulls.blocks.CustomBlock;
 import com.conaxgames.customskulls.data.MakeCustomBlocks;
 import com.conaxgames.customskulls.enums.AbilityType;
 import com.conaxgames.customskulls.util.CC;
+import com.conaxgames.customskulls.util.ItemBuilderUtils;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import com.massivecraft.factions.FPlayer;
+import com.massivecraft.factions.FPlayers;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -89,9 +94,47 @@ public class AstroTrophy extends CustomBlock {
     }
 
     @Override
-    public void breakBlockAction(Player p0, BlockBreakEvent p1, Block p2, ItemStack p3) {
-        p0.sendMessage(CC.RED + "You can not break this block! You must use the GUI to pick it up.");
-        p1.setCancelled(true);
+    public void breakBlockAction(Player player, BlockBreakEvent p1, Block p2, ItemStack p3) {
+        FPlayer fPlayer = FPlayers.i.get(player);
+        Player breaker = p1.getPlayer();
+        if (fPlayer == null) {
+            // The block must be in the land to remove it.
+            return;
+        }
+        // If the custom block is being broken in the wilderness.
+        if (FactionUtils.isWilderness(breaker.getLocation())) {
+            if (CoreSkulls.getEconomy().has(breaker, AbilityType.ASTROTROPHY.getPickupPrice())) {
+                CoreSkulls.getEconomy().withdrawPlayer(breaker, AbilityType.ASTROTROPHY.getPickupPrice());
+                breaker.sendMessage(CC.B_RED + "-$" + AbilityType.ASTROTROPHY.getPickupPrice());
+                breaker.sendMessage(CC.GREEN + "You broke a " + AbilityType.ASTROTROPHY.getName() + CC.GREEN + "!");
+
+                ItemBuilderUtils item = new ItemBuilderUtils(this.getItem()).setLore(this.addLore());
+                p2.getDrops().clear();
+                p2.getDrops().add(item.toItemStack());
+            } else {
+                breaker.sendMessage(CC.RED + "You do not have the required $" + AbilityType.ASTROTROPHY.getPickupPrice() + " to pick this block up.");
+                p1.setCancelled(true);
+            }
+            return;
+        }
+        // If the block is in a member claim else, stop them breaking it.
+        if (fPlayer.getRelationToLocation().isMember()) {
+            if (CoreSkulls.getEconomy().has(breaker, AbilityType.ASTROTROPHY.getPickupPrice())) {
+                CoreSkulls.getEconomy().withdrawPlayer(breaker, AbilityType.ASTROTROPHY.getPickupPrice());
+                breaker.sendMessage(CC.B_RED + "-$" + AbilityType.ASTROTROPHY.getPickupPrice());
+                breaker.sendMessage(CC.GREEN + "You broke a " + AbilityType.ASTROTROPHY.getName() + CC.GREEN + "!");
+
+                ItemBuilderUtils item = new ItemBuilderUtils(this.getItem()).setLore(this.addLore());
+                p2.getDrops().clear();
+                p2.getDrops().add(item.toItemStack());
+            } else {
+                breaker.sendMessage(CC.RED + "You do not have the required $" + AbilityType.ASTROTROPHY.getPickupPrice() + " to pick this block up.");
+                p1.setCancelled(true);
+            }
+        } else {
+            breaker.sendMessage(CC.RED + "You can not break this block.");
+            p1.setCancelled(true);
+        }
     }
 
     @Override
@@ -100,11 +143,9 @@ public class AstroTrophy extends CustomBlock {
 
     @Override
     public void damageGivenEvent(Player p0, EntityDamageByEntityEvent p1, Chunk p2) {
-
     }
 
     @Override
     public void mobDeathEvent(Player p0, EntityDeathEvent p1b) {
-
     }
 }
