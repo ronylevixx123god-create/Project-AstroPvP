@@ -47,7 +47,7 @@ public class HeroicHex extends HeroicCustomEnchantment {
         if (isHexed(playerHit))
             return;
         final double random = Math.random();
-        final double chance = 0.04 * level;
+        final double chance = 0.02 * level;
         if (random < chance && (!playerHit.hasMetadata("hexEnchantExpire") || playerHit.getMetadata("hexEnchantExpire").get(0).asLong() < System.currentTimeMillis())) {
             playerHit.setMetadata("hexEnchantExpire", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) (System.currentTimeMillis() + (2 + level / 2) * 1000)));
             playerHit.setMetadata("hexEnchantLevel", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) level));
@@ -56,7 +56,7 @@ public class HeroicHex extends HeroicCustomEnchantment {
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
-            ((Player) playerHit).sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "* BEWITCHED HEX DEBUFF [" + ChatColor.LIGHT_PURPLE + ChatColor.BOLD + (2 + level / 2) + "s" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "] *");
+            ((Player) playerHit).sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "* BEWITCHED HEX DEBUFF [" + ChatColor.LIGHT_PURPLE + ChatColor.BOLD + "8" + "s" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "] *");
             GeneralCooldown.enterCooldown((Player) player);
             Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
                 @Override

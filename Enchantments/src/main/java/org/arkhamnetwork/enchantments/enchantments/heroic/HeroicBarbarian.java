@@ -15,7 +15,7 @@ import org.bukkit.plugin.Plugin;
 
 public class HeroicBarbarian extends HeroicCustomEnchantment {
     public HeroicBarbarian() {
-        super("Brutal Barbarian","Deep Wounds", GeneralUtil.axe, 2);
+        super("Brutal Barbarian","Barbarian", GeneralUtil.axe, 2);
         this.max = 4;
         this.base = 20.0;
         this.interval = 5.0;

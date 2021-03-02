@@ -29,6 +29,8 @@ commands:
     description: /dupe
   givetracker:
     description: Gives a player a kill tracker.
+  astroitem:
+    description: Custom items for astro
   withdrawsouls:
     description: Take souls from items.
     aliases: [takesouls, removesouls, withdraws, splitsouls, ws, withdrawsoul]

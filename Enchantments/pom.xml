@@ -201,7 +201,7 @@
             <artifactId>Utils</artifactId>
             <version>0.1</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/Utils-0.1.jar</systemPath>
+            <systemPath>${project.basedir}/lib/CosmicPvPUtils(1).jar</systemPath>
         </dependency>
 
         <dependency>
@@ -218,6 +218,14 @@
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/worldedit-bukkit-6.1.7.3.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>ap</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/AstroToggleParticles.jar</systemPath>
         </dependency>
 
         <dependency>
