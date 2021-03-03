@@ -1,6 +1,13 @@
 package me.ily2bb.slotbot.listener;
 
+import com.conaxgames.customskulls.CoreSkulls;
+import com.conaxgames.customskulls.ability.AbilityData;
+import com.conaxgames.customskulls.blocks.CustomBlock;
+import com.conaxgames.customskulls.enums.AbilityType;
+import com.conaxgames.customskulls.util.CustomBlockUtil;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import com.massivecraft.factions.FPlayer;
 import me.ily2bb.slotbot.CosmicSlotBotAPI;
 import me.ily2bb.slotbot.SlotBotPlugin;
 import me.ily2bb.slotbot.managers.SlotBotManager;
@@ -112,6 +119,23 @@ public class SlotBotInventoryListener implements Listener {
                 inventory.setContents(contents);
                 SlotBotManager.startRolling(player, inventory, tickets);
                 player.updateInventory();
+
+                if (CustomBlockUtil.chunkHasCertainBlock(player, "ASTROTROPHY")) {
+                    FPlayer killer = FactionUtils.getFPlayer(player);
+                    for (AbilityData data : CustomBlockUtil.getBlockDatasInChunk(player)) {
+                        FPlayer owner = FactionUtils.getFPlayer(Bukkit.getPlayer(data.getOwner()));
+                        CustomBlock customBlock = CoreSkulls.customBlocks.get(data.getAbilityType().getName());
+                        if (killer.getFaction() == owner.getFaction() && customBlock.getIdentifier().equals("ASTROTROPHY")) {
+                            if (Math.random() < 0.1) {
+                                returnTickets(tickets, player);
+                                player.sendMessage("");
+                                player.sendMessage(CC.translate("&8[&e&l☆&8] &eAstroTrophy returned your tickets from the slot bot."));
+                                player.sendMessage(CC.translate("&7The chances of this happening is 10%."));
+                                player.sendMessage("");
+                            }
+                        }
+                    }
+                }
             }
         } else if (inventory.getTitle().contentEquals(CC.DarkGray + "Astro Slot Bot Loot")) {
             ItemStack item = e.getCurrentItem();
@@ -170,9 +194,6 @@ public class SlotBotInventoryListener implements Listener {
             }
         }
     }
-
-
-
 
 
     @EventHandler
