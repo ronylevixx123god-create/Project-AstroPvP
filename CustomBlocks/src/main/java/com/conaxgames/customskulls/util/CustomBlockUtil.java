@@ -8,6 +8,9 @@ import org.bukkit.Chunk;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CustomBlockUtil {
 
     public static CustomBlock getCustomItem(final ItemStack item) {
@@ -28,14 +31,15 @@ public class CustomBlockUtil {
         return nbtItem.hasKey("conaxCustomBlock");
     }
 
-    public static AbilityData getBlockDataInChunk(Player player) {
+    public static List<AbilityData> getBlockDatasInChunk(Player player) {
+        List<AbilityData> abilityDataList = new ArrayList<>();
         Chunk chunk = player.getLocation().getChunk();
         for (AbilityData data : AbilityData.getAbilityDataMap().values()) {
             if (chunk == data.getLocation().getChunk()) { // The chunk the player is in has a CustomBlock in it!
-                return data;
+                abilityDataList.add(data);
             }
         }
-        return null;
+        return abilityDataList;
     }
 
     public static Boolean chunkContainsABlock(Player player) {

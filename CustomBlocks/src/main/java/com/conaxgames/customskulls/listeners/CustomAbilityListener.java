@@ -16,14 +16,15 @@ public class CustomAbilityListener implements Listener {
     public void pvpEvent(EntityDamageByEntityEvent event) {
         Player player = (Player) event.getDamager();
         if (CustomBlockUtil.chunkContainsABlock(player)) {
-            AbilityData data = CustomBlockUtil.getBlockDataInChunk(player);
-            if (data == null) return;
+            for (AbilityData data : CustomBlockUtil.getBlockDatasInChunk(player)) {
+                if (data == null) return;
 
-            CustomBlock customBlock = CoreSkulls.customBlocks.get(data.getAbilityType().getName());
+                CustomBlock customBlock = CoreSkulls.customBlocks.get(data.getAbilityType().getName());
 
-            if (customBlock == null) return;
-            // This is when a player hits another player, we can multiply their damage, or reduce it!
-            customBlock.damageGivenEvent(player, event, player.getLocation().getChunk());
+                if (customBlock == null) return;
+                // This is when a player hits another player, we can multiply their damage, or reduce it!
+                customBlock.damageGivenEvent(player, event, player.getLocation().getChunk());
+            }
         }
     }
 
@@ -31,19 +32,20 @@ public class CustomAbilityListener implements Listener {
     public void MobDeathEvent(EntityDeathEvent event) {
         if (event.getEntity().getKiller() != null) {
             Player player = event.getEntity().getKiller();
-            AbilityData data = CustomBlockUtil.getBlockDataInChunk(player);
-            if (data == null) {
-                return;
+            for (AbilityData data : CustomBlockUtil.getBlockDatasInChunk(player)) {
+                if (data == null) {
+                    return;
+                }
+
+                CustomBlock customBlock = CoreSkulls.customBlocks.get(data.getAbilityType().getName());
+
+                if (customBlock == null) {
+                    return;
+                }
+
+                // This is when a mob dies, we can double the exp dropped for example!
+                customBlock.mobDeathEvent(player, event);
             }
-
-            CustomBlock customBlock = CoreSkulls.customBlocks.get(data.getAbilityType().getName());
-
-            if (customBlock == null) {
-                return;
-            }
-
-            // This is when a mob dies, we can double the exp dropped for example!
-            customBlock.mobDeathEvent(player, event);
         }
     }
 }
