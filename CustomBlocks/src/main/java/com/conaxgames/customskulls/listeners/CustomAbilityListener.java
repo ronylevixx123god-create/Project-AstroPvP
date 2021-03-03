@@ -14,6 +14,7 @@ public class CustomAbilityListener implements Listener {
 
     @EventHandler
     public void pvpEvent(EntityDamageByEntityEvent event) {
+        if (!(event.getDamager() instanceof Player)) return;
         Player player = (Player) event.getDamager();
         if (CustomBlockUtil.chunkContainsABlock(player)) {
             for (AbilityData data : CustomBlockUtil.getBlockDatasInChunk(player)) {
@@ -23,7 +24,7 @@ public class CustomAbilityListener implements Listener {
 
                 if (customBlock == null) return;
                 // This is when a player hits another player, we can multiply their damage, or reduce it!
-                customBlock.damageGivenEvent(player, event, player.getLocation().getChunk());
+                customBlock.damageGivenEvent(player, event, player.getLocation().getChunk(), data);
             }
         }
     }

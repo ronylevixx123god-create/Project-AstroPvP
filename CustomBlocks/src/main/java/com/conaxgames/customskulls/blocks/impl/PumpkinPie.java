@@ -8,8 +8,10 @@ import com.conaxgames.customskulls.data.MakeCustomBlocks;
 import com.conaxgames.customskulls.enums.AbilityType;
 import com.conaxgames.customskulls.util.CC;
 import com.conaxgames.customskulls.util.ItemBuilderUtils;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -120,7 +122,7 @@ public class PumpkinPie extends CustomBlock {
 
             ItemBuilderUtils item = new ItemBuilderUtils(this.getItem()).setLore(this.addLore());
             p1.getBlock().getDrops().clear(); // clears the events item stack
-            p2.breakNaturally(new ItemBuilderUtils(Material.AIR).toItemStack()); // break the block
+            //p2.breakNaturally(new ItemBuilderUtils(Material.AIR).toItemStack()); // break the block
             p2.getWorld().dropItemNaturally(p2.getLocation(), item.toItemStack()); // dropping our item stack
             DeleteCustomBlocks.func(p2.getLocation()); // delete file and memory.
         } else {
@@ -134,8 +136,22 @@ public class PumpkinPie extends CustomBlock {
     }
 
     @Override
-    public void damageGivenEvent(Player p0, EntityDamageByEntityEvent p1, Chunk p2) {
+    public void damageGivenEvent(Player p0, EntityDamageByEntityEvent p1, Chunk p2, AbilityData data) {
+        if (FactionUtils.getFPlayer(Bukkit.getPlayer(data.getOwner())) == null) return;
+        FPlayer blockowner = FactionUtils.getFPlayer(Bukkit.getPlayer(data.getOwner()));
+
+        //getdamager is person doing dmg
+        //getentity is the guy being hit
+
+        if (!(p1.getEntity() instanceof Player)) return;
+        if (!(p1.getDamager() instanceof Player)) return;
+
+        FPlayer pvper = FactionUtils.getFPlayer((Player) p1.getDamager());
+        if (blockowner.getFaction() != pvper.getFaction()) return;
+
+        p1.setDamage(p1.getDamage()*1.05); //sets the event damage. BOWP hits Kipes for this damage
     }
+
 
     @Override
     public void mobDeathEvent(Player p0, EntityDeathEvent p1) {

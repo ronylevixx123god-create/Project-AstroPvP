@@ -120,7 +120,7 @@ public class TreasureChest extends CustomBlock {
 
             ItemBuilderUtils item = new ItemBuilderUtils(this.getItem()).setLore(this.addLore());
             p1.getBlock().getDrops().clear(); // clears the events item stack
-            p2.breakNaturally(new ItemBuilderUtils(Material.AIR).toItemStack()); // break the block
+            //p2.breakNaturally(new ItemBuilderUtils(Material.AIR).toItemStack()); // break the block
             p2.getWorld().dropItemNaturally(p2.getLocation(), item.toItemStack()); // dropping our item stack
             DeleteCustomBlocks.func(p2.getLocation()); // delete file and memory.
         } else {
@@ -134,7 +134,8 @@ public class TreasureChest extends CustomBlock {
     }
 
     @Override
-    public void damageGivenEvent(Player p0, EntityDamageByEntityEvent p1, Chunk p2) {
+    public void damageGivenEvent(Player p0, EntityDamageByEntityEvent p1, Chunk p2, AbilityData abilityData) {
+
     }
 
     @Override

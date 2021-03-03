@@ -94,7 +94,7 @@ public abstract class CustomBlock {
     public abstract void clickedInInventoryAction(final Player p0, final InventoryClickEvent p1);
 
     // p0 in this case is giving damage to an enemy while a custom block is active.
-    public abstract void damageGivenEvent(final Player p0, final EntityDamageByEntityEvent p1, final Chunk p2);
+    public abstract void damageGivenEvent(final Player p0, final EntityDamageByEntityEvent p1, final Chunk p2, AbilityData abilityData);
 
     // p0 in this case is the killer of the mob.
     public abstract void mobDeathEvent(Player p0, EntityDeathEvent p1);

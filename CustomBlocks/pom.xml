@@ -66,15 +66,17 @@
             <systemPath>${project.basedir}/lib/Factions-0.1.jar</systemPath>
         </dependency>
         <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>utils</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/Utils-0.1.jar</systemPath>
+        </dependency>
+        <dependency>
             <groupId>com.github.MilkBowl</groupId>
             <artifactId>VaultAPI</artifactId>
             <version>1.7</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Utils</artifactId>
-            <version>0.1</version>
         </dependency>
     </dependencies>
 

@@ -3,8 +3,11 @@ package com.conaxgames.customskulls.listeners;
 import com.conaxgames.customskulls.CoreSkulls;
 import com.conaxgames.customskulls.ability.AbilityData;
 import com.conaxgames.customskulls.blocks.CustomBlock;
+import com.conaxgames.customskulls.enums.AbilityType;
+import com.conaxgames.customskulls.util.CC;
 import com.conaxgames.customskulls.util.CustomBlockUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -58,7 +61,7 @@ public class CustomBlockListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onBlockBreak(final BlockBreakEvent event) {
+    public void onBlockBreak(BlockBreakEvent event) {
         final Player player = event.getPlayer();
         final ItemStack item = player.getItemInHand();
         AbilityData data = AbilityData.getAbilityDataMap().get(AbilityData.getUUID(event.getBlock().getLocation()));
@@ -66,12 +69,12 @@ public class CustomBlockListener implements Listener {
             return;
         }
 
-        Bukkit.broadcastMessage(data.getAbilityType().getName());
         CustomBlock customBlock = CoreSkulls.customBlocks.get(data.getAbilityType().getName());
 
         if (customBlock == null) {
             return;
         }
+
         customBlock.breakBlockAction(player, event, event.getBlock(), item, customBlock, data);
     }
 
@@ -82,10 +85,29 @@ public class CustomBlockListener implements Listener {
         if (event.getPlayer().getItemInHand() == null || event.getPlayer().getItemInHand().getType() == Material.AIR) {
             return;
         }
+
+        if (!(CustomBlockUtil.isCustomItem(item))) {
+            return;
+        }
+        if (CustomBlockUtil.getBlockDatasInChunk(player) == null) {
+            return;
+        }
+
+        for (AbilityData data : CustomBlockUtil.getBlockDatasInChunk(player)) {
+            if (data.getAbilityType().getName().toLowerCase().contains(ChatColor.stripColor(CustomBlockUtil.getCustomItem(item).getName().toLowerCase().replace(" ", "")))) {
+                player.sendMessage(CC.translate("&c&l(!)&c This chunk already contains this custom block."));
+                event.setCancelled(true);
+                return;
+            }
+        }
+
         if (CustomBlockUtil.isCustomItem(item)) {
             Objects.requireNonNull(CustomBlockUtil.getCustomItem(item)).placeBlockAction(player, event, event.getBlock(), item);
         }
+
+
     }
+
 
     private void interactCustomBlockItem(final PlayerInteractEvent event, final ItemStack item) {
         final Player player = event.getPlayer();
