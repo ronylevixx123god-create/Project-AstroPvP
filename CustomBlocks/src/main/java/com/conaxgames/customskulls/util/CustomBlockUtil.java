@@ -51,4 +51,25 @@ public class CustomBlockUtil {
         }
         return false;
     }
+
+    public static boolean chunkHasCertainBlock(Player p, String abilityData) {
+        for (AbilityData abilityData2 : CustomBlockUtil.getBlockDatasInChunk(p)) {
+
+            if (abilityData2 == null) {
+                return false;
+            }
+
+            CustomBlock customBlock = CoreSkulls.customBlocks.get(abilityData2.getAbilityType().getName());
+
+
+            if (customBlock == null) {
+                return false;
+            }
+
+            if (customBlock.getIdentifier().equals(abilityData)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

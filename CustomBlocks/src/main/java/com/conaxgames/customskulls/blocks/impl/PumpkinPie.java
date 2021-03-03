@@ -122,7 +122,9 @@ public class PumpkinPie extends CustomBlock {
 
             ItemBuilderUtils item = new ItemBuilderUtils(this.getItem()).setLore(this.addLore());
             p1.getBlock().getDrops().clear(); // clears the events item stack
+
             //p2.breakNaturally(new ItemBuilderUtils(Material.AIR).toItemStack()); // break the block
+            p1.getBlock().setType(Material.AIR);
             p2.getWorld().dropItemNaturally(p2.getLocation(), item.toItemStack()); // dropping our item stack
             DeleteCustomBlocks.func(p2.getLocation()); // delete file and memory.
         } else {
