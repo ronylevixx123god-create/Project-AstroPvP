@@ -13,18 +13,16 @@ import java.util.Map;
 public class CustomBlocksAdminUI {
     public static void open(Player player) {
 
-        InventoryUI inventoryUI = new InventoryUI("Custom Items", 6);
+        InventoryUI inventoryUI = new InventoryUI("Astro Custom Blocks", 1);
         for (Map.Entry<String, CustomBlock> customBlock : CoreSkulls.customBlocks.entrySet()) {
             inventoryUI.addItem(new InventoryUI.AbstractClickableItem(
                     new ItemBuilderUtils(customBlock.getValue().getItem()).setLore(customBlock.getValue().addLore())
-                            .addLoreLine("")
-                            .addLoreLine(CC.DARK_GRAY + customBlock.getKey())
-                            .addLoreLine("")
-                            .addLoreLine(CC.AQUA + "Click to add to your inventory.")
                             .toItemStack()) {
                 @Override
                 public void onClick(InventoryClickEvent event) {
-                    giveItem(player, customBlock.getValue(), true);
+                    if (player.hasPermission("customblocks.admin")) {
+                        giveItem(player, customBlock.getValue(), true);
+                    }
                 }
             });
         }

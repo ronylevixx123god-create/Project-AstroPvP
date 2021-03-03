@@ -33,6 +33,11 @@ public class CommandAliases implements Listener {
             e.setMessage("/f unclaimall");
             return;
         }
+
+        if (cmd.equals("/customblocks") || cmd.equals("/customblock")) {
+            e.setMessage("/cblocks view");
+            return;
+        }
         if (cmd.equals("/craft")) {
             e.setMessage("/workbench");
             return;

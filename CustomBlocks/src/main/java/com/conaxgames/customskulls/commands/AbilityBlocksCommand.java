@@ -36,9 +36,15 @@ public class AbilityBlocksCommand extends Command {
             CustomBlocksAdminUI.open(player);
             return true;
         }
+
         if (strings[0].equals("list")) {
-            ViewCustomBlocksFromFileUI.open(player);
-            return true;
+            if (player.hasPermission("customblocks.admin")) {
+                ViewCustomBlocksFromFileUI.open(player);
+                return true;
+            } else {
+                player.sendMessage(CC.translate("&cNo permission."));
+                return true;
+            }
         }
 
         usage(player);
