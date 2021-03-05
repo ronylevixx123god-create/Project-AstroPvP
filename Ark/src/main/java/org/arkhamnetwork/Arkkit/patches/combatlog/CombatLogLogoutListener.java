@@ -1,52 +1,8 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.FactionUtils
- *  com.massivecraft.factions.Faction
- *  com.massivecraft.factions.iface.RelationParticipator
- *  com.massivecraft.factions.struct.Relation
- *  me.vaqxine.NetworkManager.NetworkManager
- *  net.citizensnpcs.api.CitizensAPI
- *  net.citizensnpcs.api.npc.NPC
- *  net.minecraft.server.v1_7_R4.MinecraftServer
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.EntityEffect
- *  org.bukkit.Location
- *  org.bukkit.Material
- *  org.bukkit.World$Environment
- *  org.bukkit.entity.Entity
- *  org.bukkit.entity.EntityType
- *  org.bukkit.entity.LivingEntity
- *  org.bukkit.entity.Player
- *  org.bukkit.entity.Zombie
- *  org.bukkit.event.Event
- *  org.bukkit.event.EventHandler
- *  org.bukkit.event.EventPriority
- *  org.bukkit.event.Listener
- *  org.bukkit.event.entity.EntityCombustEvent
- *  org.bukkit.event.entity.EntityDamageByEntityEvent
- *  org.bukkit.event.entity.EntityDamageEvent
- *  org.bukkit.event.entity.EntityDamageEvent$DamageCause
- *  org.bukkit.event.entity.EntityDeathEvent
- *  org.bukkit.event.entity.EntityRegainHealthEvent
- *  org.bukkit.event.entity.PotionSplashEvent
- *  org.bukkit.event.player.PlayerJoinEvent
- *  org.bukkit.event.player.PlayerQuitEvent
- *  org.bukkit.event.player.PlayerTeleportEvent$TeleportCause
- *  org.bukkit.event.player.PlayerVelocityEvent
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.metadata.FixedMetadataValue
- *  org.bukkit.metadata.MetadataValue
- *  org.bukkit.plugin.Plugin
- *  org.bukkit.potion.PotionEffect
- *  org.bukkit.potion.PotionEffectType
- *  org.bukkit.util.Vector
- */
+
 package org.arkhamnetwork.Arkkit.patches.combatlog;
 
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.struct.Relation;
 import net.citizensnpcs.api.CitizensAPI;
@@ -116,7 +72,12 @@ public class CombatLogLogoutListener
             Bukkit.getLogger().info("Skipping combatLog check for " + e.getPlayer().getName() + " due to worldName: " + e.getPlayer().getWorld().getName());
             return;
         }
-        if (!(Arkkit.get().shutting_down || AntiCrash.crash || !CombatLog.inCombat(e.getPlayer()) || Bukkit.getPluginManager().getPlugin("NetworkManager") != null && CombatLog.isPvPDisabled(e.getPlayer().getLocation()))) {
+
+        if (!(WorldGuardUtils.isPvPEnabled(e.getPlayer().getLocation()))) {
+            Bukkit.getLogger().info("Skipping " + e.getPlayer().getName() + " combatlog death due to logging off in safezone (" + e.getPlayer().getLocation() + ")");
+            return;
+        }
+        if (!(Arkkit.get().shutting_down || AntiCrash.crash || !CombatLog.inCombat(e.getPlayer()) && CombatLog.isPvPDisabled(e.getPlayer().getLocation()))) {
             if (e.getPlayer().hasMetadata("noCombatLog")) {
                 e.getPlayer().removeMetadata("noCombatLog", Arkkit.get());
                 return;

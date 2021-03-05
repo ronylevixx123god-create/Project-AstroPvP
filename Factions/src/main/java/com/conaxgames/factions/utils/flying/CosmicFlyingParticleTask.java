@@ -36,7 +36,6 @@ implements Runnable {
                         if (player.getWorld().getName().equals("cosmic-pvparenas")
                                 || player.getWorld().getName().equals("world_duels")
                                 || player.getWorld().getName().equals("world_duels2")) continue;
-                        ParticleEffect.CLOUD.sendToPlayer(player, player.getLocation().subtract(0.0, 0.5, 0.0), 0.0f, 0.0f, 0.0f, 0.005f, 5);
                     }
                     catch (Exception err) {
                         err.printStackTrace();
