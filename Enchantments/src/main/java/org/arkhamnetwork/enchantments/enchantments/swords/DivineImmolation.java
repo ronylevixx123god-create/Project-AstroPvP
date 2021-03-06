@@ -139,7 +139,7 @@ public class DivineImmolation extends CustomEnchantment {
                                         }
                                     }
                                 }
-                                le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, (int)(damage * 20.0D), 1));
+                                le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, (int)(damage * 10.0D), 0));
                                 if (le instanceof Player) {
                                     ((Player)le).playSound(le.getLocation(), Sound.FIREWORK_BLAST, 1.0F, 0.3F);
                                     ((Player)le).playSound(le.getLocation(), Sound.ZOMBIE_PIG_ANGRY, 0.8F, 0.5F);

@@ -17,6 +17,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
+import org.mozilla.javascript.EcmaError;
 
 import java.text.DecimalFormat;
 
@@ -58,12 +59,16 @@ public class Rogue extends CustomEnchantment {
             e.setDamage(damage + (multi * 0.56));
 
             if (player instanceof Player) {
-                if (ParticleUtils.isPlayerIndicating((Player) player)) {
-                    try {
-                        de.inventivegames.particle.ParticleEffect.CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 0, 1, 0, 0.4f, 12);
-                    } catch (Exception exception) {
-                        exception.printStackTrace();
+                try {
+                    if (ParticleUtils.isPlayerIndicating((Player) player)) {
+                        try {
+                            de.inventivegames.particle.ParticleEffect.CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 0, 1, 0, 0.4f, 12);
+                        } catch (Exception exception) {
+                            exception.printStackTrace();
+                        }
                     }
+                } catch (Exception exception) {
+
                 }
             }
 

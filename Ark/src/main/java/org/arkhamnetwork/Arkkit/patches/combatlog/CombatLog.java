@@ -131,7 +131,7 @@ public class CombatLog
             }
         } catch (Exception err) {
             err.printStackTrace();
-            pl.setMetadata("cl_combat", new FixedMetadataValue(Arkkit.get(), System.currentTimeMillis()));
+            //pl.setMetadata("cl_combat", new FixedMetadataValue(Arkkit.get(), System.currentTimeMillis()));
         }
         return false;
     }
@@ -148,7 +148,7 @@ public class CombatLog
             }
         } catch (Exception err) {
             err.printStackTrace();
-            pl.setMetadata("cl_combat", new FixedMetadataValue(Arkkit.get(), System.currentTimeMillis()));
+            //pl.setMetadata("cl_combat", new FixedMetadataValue(Arkkit.get(), System.currentTimeMillis()));
         }
         return 0L;
     }

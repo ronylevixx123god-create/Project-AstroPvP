@@ -80,8 +80,12 @@ public class Bleed extends CustomEnchantment {
                 final double amountToHeal = Math.max(2.0, bleedStack * 0.05 * bloodLustLevel);
                 GeneralUtil.healPlayer((LivingEntity) pEnt, amountToHeal);
 
-                if (ParticleUtils.isPlayerIndicating(pEnt)) {
-                    de.inventivegames.particle.ParticleEffect.DRIP_LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), pEnt.getLocation(), 0f, 1f, 0f, 0.075f, 10);
+                try {
+                    if (ParticleUtils.isPlayerIndicating(pEnt)) {
+                        de.inventivegames.particle.ParticleEffect.DRIP_LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), pEnt.getLocation(), 0f, 1f, 0f, 0.075f, 10);
+                    }
+                } catch (Exception exception) {
+
                 }
 
                 pEnt.playSound(pEnt.getLocation(), Sound.EAT, 0.4f, 0.6f);

@@ -77,6 +77,11 @@ public class CombatLogLogoutListener
             Bukkit.getLogger().info("Skipping " + e.getPlayer().getName() + " combatlog death due to logging off in safezone (" + e.getPlayer().getLocation() + ")");
             return;
         }
+
+        if (!(CombatLog.inCombat(e.getPlayer()))) {
+            Bukkit.getLogger().info("Skipping " + e.getPlayer().getName() + " because not in combat");
+            return;
+        }
         if (!(Arkkit.get().shutting_down || AntiCrash.crash || !CombatLog.inCombat(e.getPlayer()) && CombatLog.isPvPDisabled(e.getPlayer().getLocation()))) {
             if (e.getPlayer().hasMetadata("noCombatLog")) {
                 e.getPlayer().removeMetadata("noCombatLog", Arkkit.get());
@@ -84,7 +89,7 @@ public class CombatLogLogoutListener
             }
             if (spawnNPC && e.getPlayer().getHealth() >= 2.0) {
                 Player pKiller;
-                if (e.getPlayer().getWorld().getName().equals("world_duels2")) {
+                if (e.getPlayer().getWorld().getName().equals("world_duels")) {
                     return;
                 }
                 if (combatNPCs.containsKey(e.getPlayer().getUniqueId().toString())) {

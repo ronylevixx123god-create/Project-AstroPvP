@@ -21,17 +21,23 @@ final class DivineImmolationListener implements Listener {
             if (System.currentTimeMillis() - e.getEntity().getMetadata("divineFire").get(0).asLong() < (3 + enchantLevel) * 1000) {
                 e.setCancelled(true);
                 final LivingEntity le = (LivingEntity) e.getEntity();
-                le.damage((double)4.0);
+                le.damage((double)2.0);
                 //ParticleEffect.playEffect(ParticleEffect.FLAME, le.getEyeLocation(), 0.15f, 20);
                 //ParticleEffect.playEffect(ParticleEffect.LAVA, le.getEyeLocation(), 0.5f, 15);
 
-                if (ParticleUtils.isPlayerIndicating(le.getKiller())) {
-                    de.inventivegames.particle.ParticleEffect.FLAME.sendToPlayer((Player) le, le.getEyeLocation(), 0, 0, 0, 0.15f, 20);
-                }
                 if (le instanceof Player) {
                     ((Player) le).sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "** DIVINE IMMOLATION **");
                     ((Player) le).playSound(le.getLocation(), Sound.ZOMBIE_PIG_ANGRY, 0.6f, 0.8f);
+                    try {
+                        if (ParticleUtils.isPlayerIndicating(le.getKiller())) {
+                            de.inventivegames.particle.ParticleEffect.FLAME.sendToPlayer((Player) le, le.getEyeLocation(), 0, 0, 0, 0.15f, 20);
+                        }
+                    } catch (Exception exception) {
+
+                    }
                 }
+
+
             }
         }
     }

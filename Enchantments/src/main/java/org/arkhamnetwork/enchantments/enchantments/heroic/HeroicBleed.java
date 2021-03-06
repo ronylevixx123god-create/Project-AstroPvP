@@ -6,6 +6,7 @@ import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import lombok.SneakyThrows;
 import me.astropvp.astroparticles.utils.ParticleUtils;
 import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.enchantments.armor.Cactus;
 import org.arkhamnetwork.enchantments.util.GeneralCooldown;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.ChatColor;
@@ -96,8 +97,12 @@ public class HeroicBleed extends HeroicCustomEnchantment {
         } else {
             le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, bleedStack * 10, Math.max(1, bleedStack / 3)));
         }
-        if (ParticleUtils.isPlayerIndicating(le.getKiller())) {
-            playBleedEffect(le.getLocation().add(0.0D, 1.0D, 0.0D), bleedStack);
+        try {
+            if (ParticleUtils.isPlayerIndicating(le.getKiller())) {
+                playBleedEffect(le.getLocation().add(0.0D, 1.0D, 0.0D), bleedStack);
+            }
+        } catch (Exception e) {
+
         }
     }
 
