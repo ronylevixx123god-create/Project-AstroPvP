@@ -40,7 +40,7 @@ public class ChunkBusterListener implements Listener {
             }
 
             if (ChunkbusterCooldown.isOnChunkbusterCooldown(event.getPlayer())) {
-                event.getPlayer().sendMessage(ChatColor.RED + "You cannot place a chunkbuster while on Chunkbuster Cooldown! This lasts 60 seconds!");
+                event.getPlayer().sendMessage(ChatColor.RED + "You cannot place a chunkbuster while on Chunkbuster Cooldown! This lasts 15 seconds!");
                 event.setCancelled(true);
                 return;
             }

@@ -32,6 +32,17 @@ public class CombatLogBlock implements Listener {
         }
     }
 
+    @EventHandler
+    public void duelfix(final PlayerCommandPreprocessEvent event) {
+        final Player player = event.getPlayer();
+        final String msg = event.getMessage().toLowerCase();
+        if (player.getLocation().getWorld().getName().equals("world_duels") && !player.isOp()) {
+            event.setCancelled(true);
+            event.setMessage("/null");
+            player.sendMessage(ChatColor.RED + "You cannot use commands during a duel!");
+        }
+    }
+
     /*@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void stopPvP(PlayerCommandPreprocessEvent event) {
         if (event.getMessage().toLowerCase().startsWith("/pvp") && (!WorldGuardUtils.inRegion(event.getPlayer().getLocation(), "desert") || !WorldGuardUtils.inRegion(event.getPlayer().getLocation(), "spawn_region"))

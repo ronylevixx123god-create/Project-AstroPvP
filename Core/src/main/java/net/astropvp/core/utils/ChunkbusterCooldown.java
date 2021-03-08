@@ -13,7 +13,7 @@ public class ChunkbusterCooldown {
         Bukkit.getScheduler().runTaskLaterAsynchronously(AstroCore.getInstance(), ()->{
             player.removeMetadata("chunkbusterCooldown", AstroCore.getInstance());
             player.sendMessage(CC.translate("&aYou can now place a chunk buster again!"));
-        },1200L);
+        },300L);
     }
 
     public static boolean isOnChunkbusterCooldown(Player player) {

@@ -62,14 +62,14 @@
             <version>0.1</version>
             <scope>provided</scope>
         </dependency>
+        <!-- System Repos -->
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>Utils</artifactId>
+            <artifactId>utils</artifactId>
             <version>0.1</version>
-            <scope>provided</scope>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/Utils-0.1.jar</systemPath>
         </dependency>
-
-        <!-- System Repos -->
     </dependencies>
 
 </project>

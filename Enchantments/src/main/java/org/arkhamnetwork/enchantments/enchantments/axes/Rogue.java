@@ -17,7 +17,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
-import org.mozilla.javascript.EcmaError;
 
 import java.text.DecimalFormat;
 
