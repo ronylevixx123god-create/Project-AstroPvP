@@ -55,7 +55,7 @@ public class DetonateLegacy extends CustomEnchantment {
                 if (x != 0 || z != 0) {
                     final Block blockExploding = null;
                     final Material m = blockExploding.getType();
-                    if (m != Material.LADDER && m != Material.GLOWSTONE && m != Material.BEDROCK && m != Material.WATER && m != Material.STATIONARY_WATER && m != Material.LAVA && m != Material.STATIONARY_LAVA && m != Material.SIGN && m != Material.SIGN_POST && m != Material.AIR && m != Material.BEDROCK && m != Material.OBSIDIAN) {
+                    if (m != Material.LADDER && m != Material.GLOWSTONE && m != Material.BEDROCK && m != Material.WATER && m != Material.STATIONARY_WATER && m != Material.LAVA && m != Material.STATIONARY_LAVA && m != Material.SIGN && m != Material.SIGN_POST && m != Material.AIR && m != Material.BEDROCK && m != Material.OBSIDIAN && m != Material.SAND && m!= Material.GRAVEL) {
                         if (m != Material.SPONGE) {
                             final FLocation floc = new FLocation(blockExploding.getLocation());
                             final Faction f = Board.getFactionAt(floc);

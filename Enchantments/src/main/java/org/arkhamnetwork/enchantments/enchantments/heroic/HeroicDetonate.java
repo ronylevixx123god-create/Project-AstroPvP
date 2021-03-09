@@ -105,7 +105,7 @@ public class HeroicDetonate extends CustomEnchantment {
         FPlayer fp = null;
         for (final Block bl : blocks) {
             final Material m = bl.getType();
-            if (m != Material.LADDER && m != Material.GLOWSTONE && m != Material.BEDROCK && m != Material.WATER && m != Material.STATIONARY_WATER && m != Material.LAVA && m != Material.STATIONARY_LAVA && m != Material.SIGN && m != Material.SIGN_POST && m != Material.AIR && m != Material.OBSIDIAN && m != Material.SPONGE && m != Material.IRON_DOOR && m != Material.IRON_DOOR_BLOCK && m != Material.WOODEN_DOOR && m != Material.WOOD_DOOR && m != Material.HOPPER && m != Material.ANVIL && m != Material.REDSTONE_COMPARATOR && m != Material.REDSTONE_COMPARATOR_OFF) {
+            if (m != Material.LADDER && m != Material.GLOWSTONE && m != Material.BEDROCK && m != Material.WATER && m != Material.STATIONARY_WATER && m != Material.LAVA && m != Material.STATIONARY_LAVA && m != Material.SIGN && m != Material.SIGN_POST && m != Material.AIR && m != Material.OBSIDIAN && m != Material.SPONGE && m != Material.IRON_DOOR && m != Material.IRON_DOOR_BLOCK && m != Material.WOODEN_DOOR && m != Material.WOOD_DOOR && m != Material.HOPPER && m != Material.ANVIL && m != Material.REDSTONE_COMPARATOR && m != Material.REDSTONE_COMPARATOR_OFF && m!= Material.SAND && m!= Material.GRAVEL) {
                 if (m == Material.REDSTONE_COMPARATOR_ON) {
                     continue;
                 }

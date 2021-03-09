@@ -24,6 +24,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.PetUtils;
+import me.ifamasssxd.cosmicsky.inventorypets.utils.SnowmanCooldown;
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MobDisguise;
@@ -54,7 +55,7 @@ public class InventoryAbominableSnowmanPet extends InventoryPet {
    }
 
    public int getCooldown(int level) {
-         return 300;
+         return 600;
    }
 
    public int getMaxLevel() {
@@ -78,6 +79,7 @@ public class InventoryAbominableSnowmanPet extends InventoryPet {
       if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
          throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
 
+
       Faction faction = FactionUtils.getFaction(player);
       if (player.hasMetadata("spectator"))
          return true;
@@ -98,6 +100,10 @@ public class InventoryAbominableSnowmanPet extends InventoryPet {
          Player p = (Player)i;
          if ( p.getGameMode().equals(GameMode.CREATIVE))
             continue;
+         if (SnowmanCooldown.isOnSnowCooldown(p)) {
+            player.sendMessage(CC.translate("&cThis player is still on snowman cooldown, this lasts 60s."));
+            continue;
+         }
          if (p.hasMetadata("chadsunglasses"))
             continue;
          if (p.hasMetadata("NPC"))
@@ -133,6 +139,7 @@ public class InventoryAbominableSnowmanPet extends InventoryPet {
    }
 
    private void freezeThePlayer(final Player p, Player caster) {
+      SnowmanCooldown.enterSnowCooldown(p);
       p.setFlying(false);
       MobDisguise snowman = new MobDisguise(DisguiseType.SNOWMAN);
       p.playSound(p.getLocation(), Sound.STEP_SNOW, 1.0F, 1.4F);

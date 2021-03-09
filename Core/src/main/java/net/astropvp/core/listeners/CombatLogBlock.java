@@ -36,7 +36,7 @@ public class CombatLogBlock implements Listener {
     public void duelfix(final PlayerCommandPreprocessEvent event) {
         final Player player = event.getPlayer();
         final String msg = event.getMessage().toLowerCase();
-        if (player.getLocation().getWorld().getName().equals("world_duels") && !player.isOp()) {
+        if (player.getLocation().getWorld().getName().equals("world_duels") && !player.isOp() && !msg.equalsIgnoreCase("/fix")) {
             event.setCancelled(true);
             event.setMessage("/null");
             player.sendMessage(ChatColor.RED + "You cannot use commands during a duel!");
