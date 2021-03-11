@@ -66,6 +66,9 @@ public final class CosmicSkyInventoryPets extends JavaPlugin implements Listener
       this.getServer().getPluginManager().registerEvents(new PetLogicListener(this.petManager), this);
       this.getServer().getPluginManager().registerEvents(new PetListener(), this);
       this.getServer().getPluginManager().registerEvents(new ArcaneCreeperListener(), this);
+      this.getServer().getPluginManager().registerEvents(new FairyListener(), this);
+      this.getServer().getPluginManager().registerEvents(new DemonicListener(), this);
+
       Bukkit.getPluginManager().registerEvents(new PetLeashListener(), this);
 
       try {

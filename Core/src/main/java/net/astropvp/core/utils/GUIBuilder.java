@@ -1,5 +1,7 @@
 package net.astropvp.core.utils;
 
+import com.earth2me.essentials.api.NoLoanPermittedException;
+import com.earth2me.essentials.api.UserDoesNotExistException;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -24,7 +26,7 @@ public abstract class GUIBuilder implements InventoryHolder {
 
     protected abstract ItemStack getItems(int paramInt);
 
-    public abstract void click(InventoryClickEvent paramInventoryClickEvent);
+    public abstract void click(InventoryClickEvent paramInventoryClickEvent) throws UserDoesNotExistException, NoLoanPermittedException;
 
     public void open() {
         this.inventory = Bukkit.createInventory(this, getSlots(), getName());

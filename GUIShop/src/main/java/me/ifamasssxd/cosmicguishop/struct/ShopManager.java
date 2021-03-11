@@ -177,7 +177,8 @@ public class ShopManager {
                 ItemStack displayItem;
                 final ShopMaterialData data = (ShopMaterialData) item.getKey();
                 final ItemPrice price = (ItemPrice) item.getValue();
-                boolean isCollectionChest = (data.getType() == Material.CHEST || data.getType() == Material.TRAPPED_CHEST) && data.getData() == 100;
+                boolean isCollectionChest = (data.getType() == Material.CHEST) && data.getData() == 100;
+                boolean isChunkBuster = (data.getType() == Material.ENDER_PORTAL_FRAME ) && data.getData() == 100;
                 boolean isPotionBundle = data.getType() == Material.POTION && data.getSellCount() > 1;
                 int potionBundleCount = isPotionBundle ? data.getData() - 100 : 0;
                 ArrayList lore = Lists.newArrayList();
@@ -201,13 +202,12 @@ public class ShopManager {
                 lore.add( ChatColor.GRAY + ChatColor.STRIKETHROUGH.toString() + "-----------------------");
                 if (price.getBuyPrice() > 0.0) {
                     lore.add( ChatColor.YELLOW + "Left-Click " +  ChatColor.GRAY + "to buy " +  ChatColor.YELLOW + "1x");
-                    if (data.getType() != Material.MOB_SPAWNER) {
                         lore.add( ChatColor.YELLOW + "Shift Left-Click " +  ChatColor.GRAY + "to buy " +  ChatColor.YELLOW + data.getType().getMaxStackSize() + "x");
                         if (emptySlots > 1) {
                             lore.add( ChatColor.YELLOW + "Middle-Click" +  ChatColor.GRAY + " to buy inventory " +  ChatColor.YELLOW + data.getType().getMaxStackSize() * emptySlots + "x");
                         }
                     }
-                }
+
                 if (price.getSellPrice() > 0.0) {
                     lore.add("");
                     lore.add(ChatColor.YELLOW + "Right-Click " +  ChatColor.GRAY + "to sell " +  ChatColor.YELLOW + "1x");
@@ -218,6 +218,10 @@ public class ShopManager {
                 if (isCollectionChest) {
                     string =  ChatColor.GREEN + ChatColor.BOLD.toString() + "Chunk Collector";
                     dura = 0;
+                }
+                if (isChunkBuster) {
+                    string = ChatColor.GREEN + ChatColor.BOLD.toString() + "Chunk Buster";
+                    dura= 0;
                 }
                 try {
                     displayItem = data.getType() == Material.MOB_SPAWNER ?  ItemSpawner.getItem(EntityType.fromId(data.getData()), 1)  : null;
@@ -316,8 +320,13 @@ public class ShopManager {
         player.sendMessage( ChatColor.GREEN + "Successfully purchased " +  ChatColor.GREEN +  ChatColor.BOLD + buyAmount + "x " +  ChatColor.GREEN + ItemUtils.getPrettyName(data) + "!");
         player.playSound(player.getLocation(), Sound.ORB_PICKUP, 1.0f, 1.4f);
         Material type = data.getType();
-        if ((type == Material.CHEST || type == Material.TRAPPED_CHEST) && data.getData() == 100) {
+        if (type == Material.CHEST && data.getData() == 100) {
             Bukkit.dispatchCommand((CommandSender) Bukkit.getConsoleSender(), (String) ("c " + player.getName() + " " + buyAmount));
+            Bukkit.getPluginManager().callEvent((Event) new CustomCosmicPlayerEvent(player, "SHOP_BUY", new Object[]{totalPrice, data, buyAmount}));
+            return;
+        }
+        if (type == Material.ENDER_PORTAL_FRAME && data.getData() == 100) {
+            Bukkit.dispatchCommand((CommandSender) Bukkit.getConsoleSender(), (String) ("kit chunkbuster " + player.getName()));
             Bukkit.getPluginManager().callEvent((Event) new CustomCosmicPlayerEvent(player, "SHOP_BUY", new Object[]{totalPrice, data, buyAmount}));
             return;
         }

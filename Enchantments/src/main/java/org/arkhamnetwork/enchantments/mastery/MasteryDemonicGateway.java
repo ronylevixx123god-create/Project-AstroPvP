@@ -51,14 +51,13 @@ public class MasteryDemonicGateway extends MasteryCustomEnchantment {
         this.crystalShootTicks = CacheBuilder.newBuilder().expireAfterWrite(5L, TimeUnit.SECONDS).build().asMap();
         this.max = 6;
         this.armorSet = "NECROMANCER";
-        Bukkit.getPluginManager().registerEvents((Listener) new MasteryDemonicGatewayListener(this), (Plugin) Enchantments.getInstance());
     }
 
     public void applyDefenseEffect(final LivingEntity user, final LivingEntity target, final int enchantLevel, final EntityDamageEvent event) {
         if (!(target instanceof Player)) {
             return;
         }
-        final Player damaged = (Player) user;
+        /*final Player damaged = (Player) user;
         final double chance = 0.015 + 0.005 * enchantLevel;
         if (Math.random() <= chance) {
             if (this.demonicGateway.containsKey(damaged.getUniqueId())) {
@@ -355,5 +354,6 @@ public class MasteryDemonicGateway extends MasteryCustomEnchantment {
                 }
             }
         }
+    }*/
     }
 }

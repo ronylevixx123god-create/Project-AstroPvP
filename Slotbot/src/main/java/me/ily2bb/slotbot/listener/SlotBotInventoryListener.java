@@ -241,6 +241,6 @@ public class SlotBotInventoryListener implements Listener {
             event.getPlayer().getInventory().addItem(new ItemStack[] { new ItemStack(Material.ENDER_PEARL, 1) });
             return;
         }
-    }
+    }M
 
 }

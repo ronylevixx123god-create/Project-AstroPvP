@@ -27,6 +27,9 @@ commands:
     aliases: ['elist']
   dupe:
     description: /dupe
+  spawnershop:
+    description: /spawnershop
+    aliases: ['spawnershop', 'spawners', 'spawner']
   givetracker:
     description: Gives a player a kill tracker.
   astroitem:

@@ -195,6 +195,7 @@ public class AstroCore extends JavaPlugin {
         this.filterManager.loadFilters();
         this.itemListener = new ItemFilterListener();
         this.getServer().getPluginManager().registerEvents(this.itemListener, this);
+        this.getServer().getPluginManager().registerEvents(new SpawnerShopListener(), this);
 
         this.setupSQL();
         this.dataManager = new TitleDatabaseManager();
@@ -209,6 +210,7 @@ public class AstroCore extends JavaPlugin {
         this.getCommand("armorcolor").setExecutor(new ArmorColorCommand());
 
         this.getCommand("corechunkfinder").setExecutor(new CoreChunkFinderCommand());
+        this.getCommand("spawnershop").setExecutor(new SpawnerShopCommand());
 
         this.getCommand("coinflip").setExecutor(new CommandCoinFlip());
 
