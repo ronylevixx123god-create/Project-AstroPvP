@@ -64,15 +64,6 @@ public class BlockValueLocation {
         return System.currentTimeMillis() - this.placeTime;
     }
 
-    public int getBlockValue() {
-        long day = TimeUnit.DAYS.toMillis(1L);
-        int baseValue = BlockValue.getBlockValueBase(this.blockType);
-        long aliveTime = this.getMillisecondsSincePlace();
-        long days = aliveTime / day;
-        double percent = Math.min(100L, Math.max(20L, 20L + days * 20L));
-        baseValue = (int) ((double) baseValue * (0.01 * percent));
-        return baseValue;
-    }
 
     public int getX() {
         return this.x;

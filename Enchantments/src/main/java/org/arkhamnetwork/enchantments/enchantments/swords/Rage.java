@@ -50,15 +50,11 @@ public class Rage extends CustomEnchantment {
             Player pUser = (Player) user;
             if (!pUser.getItemInHand().getType().name().toLowerCase().contains("_sword") || !(event.getDamager() instanceof LivingEntity))
                 return;
-            if (target.hasMetadata("doubledStriked") && System.currentTimeMillis() - (target.getMetadata("doubleStriked").get(0)).asLong() < 500L)
-                return;
-            if (user.hasMetadata("noRageUntil") && (user.getMetadata("noRageUntil").get(0)).asLong() > System.currentTimeMillis())
-                return;
 
-            double mod = 0.23D * enchantLevel;
+            double mod = 0.24D * enchantLevel;
             double hitCombo = ((target instanceof Player) ? getPVPHitCombo((Player) user) : getPVEHitCombo((Player) user)) * mod + 1.0D;
-            if (hitCombo > 4.5D)
-                hitCombo = 4.5D;
+            if (hitCombo > 8.0D)
+                hitCombo = 8.0D;
             if (hitCombo > 1.0D && !GeneralUtil.isEffectedByDevour(target)) {
                 if (user instanceof Player) {
                     if (ParticleUtils.isPlayerIndicating((Player) user))
@@ -66,8 +62,8 @@ public class Rage extends CustomEnchantment {
                 }
                 double damage = event.getDamage(EntityDamageEvent.DamageModifier.BASE);
 
-                if (damage*hitCombo*mod >23) {
-                    event.setDamage(23);
+                if (damage*hitCombo*mod >35) {
+                    event.setDamage(35);
                 } else {
                     event.setDamage((damage * hitCombo * mod));
                 }

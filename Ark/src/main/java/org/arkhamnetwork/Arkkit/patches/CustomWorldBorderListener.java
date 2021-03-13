@@ -19,11 +19,6 @@ final class CustomWorldBorderListener
     CustomWorldBorderListener() {
     }
 
-    @EventHandler
-    public void onEntityTNTMove(EntityTNTMoveEvent e) {
-        if (WorldBorder.plugin.getWorldBorder(e.getWorld().getName()) != null && !WorldBorder.plugin.getWorldBorder(e.getWorld().getName()).insideBorder(e.getX(), e.getZ())) {
-            e.setCancelled(true);
-        }
-    }
+
 }
 

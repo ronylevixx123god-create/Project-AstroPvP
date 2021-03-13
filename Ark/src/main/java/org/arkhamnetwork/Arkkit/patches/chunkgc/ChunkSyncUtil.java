@@ -68,7 +68,7 @@ public class ChunkSyncUtil {
                 err.printStackTrace();
                 if (!(err instanceof NoSuchElementException) && !(err instanceof NullPointerException)) break block3;
                 Bukkit.getLogger().info("[Arkkit] Forcing Arkreboot due to null pointer in chunk data!");
-                AntiCrash.restartServer(60);
+                //AntiCrash.restartServer(60);
             }
         }
         return i;

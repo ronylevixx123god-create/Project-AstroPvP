@@ -30,12 +30,5 @@ public class FirstJoin implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void onWorldBorderGlitch(PlayerMoveEvent e) {
-        final Player p = e.getPlayer();
-        if (p.getLocation().getY() < -2.0) {
-            e.getPlayer().teleport(Bukkit.getWorld("world").getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
-            p.sendMessage(ChatColor.YELLOW + "You have been teleported to spawn!");
-        }
-    }
+
 }

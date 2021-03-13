@@ -53,7 +53,7 @@ public class AntiLag
                         Bukkit.getLogger().info("[Arkkit (AntiLag)] averageTPS: " + AntiLag.this.getAverageTPS());
                         if (AntiLag.this.getAverageTPS() < 18.0) {
                             AntiLag.this.rebooting = true;
-                            AntiCrash.restartServer(60);
+                            //AntiCrash.restartServer(60);
                         }
                     }
                 }

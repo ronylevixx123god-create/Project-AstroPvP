@@ -26,7 +26,7 @@ public class RainbowSlidesSkin
 
     public void onEquip(Player player) {
         EnchantmentAPI.getEnchantment("Gears").applyEquipEffect(player, 4);
-        String region = !WorldGuardUtils.getRegionName(player.getLocation()).equals("") ? WorldGuardUtils.getRegionName(player.getLocation()) : null;
+        /*String region = !WorldGuardUtils.getRegionName(player.getLocation()).equals("") ? WorldGuardUtils.getRegionName(player.getLocation()) : null;
         if (region != null) {
             if (!region.contentEquals("parkour_a") && !region.contentEquals("parkour_b") && !region.contentEquals("bridge") &&
                     !region.contentEquals("parkour_tower") && !region.contentEquals("parkour_tower_start") && !region.equals("yijki_realm")) {
@@ -35,16 +35,16 @@ public class RainbowSlidesSkin
         }
         if (!modifyStoredEffect(player, PotionEffectType.JUMP, false)) {
             player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 200, 0), true);
-        }
+        }*/
     }
 
 
     public void onUnequip(Player player) {
         EnchantmentAPI.getEnchantment("Gears").applyUnequipEffect(player, 4);
-        if (modifyStoredEffect(player, PotionEffectType.JUMP, true)) {
+        /*if (modifyStoredEffect(player, PotionEffectType.JUMP, true)) {
             player.removePotionEffect(PotionEffectType.JUMP);
             Bukkit.getLogger().info("[Rainbow Slides] Unequipping jump boost from rainbow slides item skin for " + player.getName());
-        }
+        }*/
     }
 
     public int getMaxActivePotionLevel(Player player) {
@@ -66,7 +66,7 @@ public class RainbowSlidesSkin
     }
 
     public void onUpdate(Player player) {
-        OutpostTier outpostTier = CosmicOutpostsAPI.getOutpostTierOfWorld((LivingEntity) player);
+        /*OutpostTier outpostTier = CosmicOutpostsAPI.getOutpostTierOfWorld((LivingEntity) player);
         if (outpostTier == OutpostTier.TRAINEE || outpostTier == OutpostTier.VANILLA ||
                 outpostTier == OutpostTier.HERO) {
             onUnequip(player);
@@ -89,7 +89,7 @@ public class RainbowSlidesSkin
         if (hasEffect(player, PotionEffectType.JUMP, 0, false)) {
             int stored = getMaxActivePotionLevel(player);
             player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 200, (stored == -1) ? 0 : 0), true);
-        }
+        }*/
     }
 }
 
