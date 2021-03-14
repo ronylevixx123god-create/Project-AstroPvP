@@ -28,7 +28,7 @@ public class AstroItemSkinsPlugin
 
         registerListeners();
         registerCommands();
-        Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
+        Bukkit.getScheduler().runTaskTimer(this, () -> {
             for (Player p : Bukkit.getServer().getOnlinePlayers()) {
                 if (!p.isDead() && p.isOnline() && p.getInventory() != null && p.getInventory().getArmorContents() != null) {
                     new ItemSkinCacher(p);
