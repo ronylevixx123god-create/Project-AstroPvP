@@ -219,6 +219,7 @@ public class AstroCore extends JavaPlugin {
         this.getCommand("jackpot").setExecutor(new CommandJackpot());
         this.getServer().getPluginManager().registerEvents(new InventoryListener(), this);
         this.getServer().getPluginManager().registerEvents(new me.ifamasssxd.cosmiccoinflip.listeners.PlayerListener(), this);
+        this.getServer().getPluginManager().registerEvents(new InstaBreakSponge(), this);
 
         this.coinFlipManager = new CoinFlipManager();
         try {
@@ -237,7 +238,7 @@ public class AstroCore extends JavaPlugin {
             }
         }
 
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new AutoGiveAllTask(), 20L, 20L);
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, new AutoGiveAllTask(), 20L, 20L);
 
         this.toggleManager.loadToggles();
 
@@ -248,7 +249,6 @@ public class AstroCore extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new BackpackListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerDamageListener(), this);
         this.getServer().getPluginManager().registerEvents(new PortablePicnicListener(), this);
-        Bukkit.getScheduler().runTaskTimer(this, new PortablePicnicTask(), 0L, 200L);
         this.getCommand("givebackpack").setExecutor(new CommandGiveBackpack());
 
         this.getCommand("togglesb").setExecutor(new CommandScoreboard());
@@ -300,7 +300,7 @@ public class AstroCore extends JavaPlugin {
         freezeCommand = new Freeze();
 
         Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
-        Bukkit.getConsoleSender().sendMessage(" ASTRO CORE DEBUG: PLUGIN SHOULD BE LOADED NOW");
+        Bukkit.getConsoleSender().sendMessage(" ASTRO CORE PLUGIN SHOULD BE LOADED NOW");
         Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
 
     }
