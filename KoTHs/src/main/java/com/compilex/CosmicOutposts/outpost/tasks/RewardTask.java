@@ -70,7 +70,7 @@ implements Runnable {
                 int i = new Random().nextInt(4) + 2;
                 while (i-- > 0) {
                     try {
-                        MonsterUtils.spawnSoulDemon(LocationUtils.getNearbyLocation(this.outpost.getDefenderSpawn().clone().subtract(0.0, 8.0, 0.0), 10, 6, 2));
+                        //MonsterUtils.spawnSoulDemon(LocationUtils.getNearbyLocation(this.outpost.getDefenderSpawn().clone().subtract(0.0, 8.0, 0.0), 10, 6, 2));
                     } catch (Exception exception) {
                         exception.printStackTrace();
                     }
