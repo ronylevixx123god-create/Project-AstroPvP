@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 
 public class PetHelpMenu extends CosmicGUI {
    public PetHelpMenu(Player player) {
-      super(player, "Pet Help", 27);
+      super(player, "Pet Help", 45);
    }
 
    public void redraw() {

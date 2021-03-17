@@ -39,10 +39,7 @@ import com.compilex.CosmicDungeons.dungeons.libs.DestroyedOutpostDungeon;
 import com.compilex.CosmicDungeons.dungeons.libs.Dungeon;
 import com.compilex.CosmicDungeons.dungeons.libs.DungeonPlayer;
 import com.compilex.CosmicDungeons.dungeons.libs.DungeonType;
-import com.compilex.CosmicDungeons.items.CleanseScroll;
-import com.compilex.CosmicDungeons.items.HolyWaterItem;
-import com.compilex.CosmicDungeons.items.HolyWhitescrollItem;
-import com.compilex.CosmicDungeons.items.PortalProtectionTrinketItem;
+import com.compilex.CosmicDungeons.items.*;
 import com.compilex.CosmicDungeons.listeners.*;
 import com.compilex.CosmicDungeons.listeners.items.HolyWhiteScrollCombatLoggerListener;
 import com.compilex.CosmicDungeons.listeners.items.HolyWhiteScrollListener;
@@ -220,7 +217,7 @@ extends JavaPlugin {
             }
             Bukkit.getLogger().info("[CosmicDungeons] Registered " + this.factionsInsideOnEnable.size() + " players inside of factions!");
         }, 100L);
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(CosmicDungeonsPlugin.get(), () -> {
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(CosmicDungeonsPlugin.get(), () -> {
             DungeonType.values();
             for (DungeonType type : DungeonType.values()) {
                 if (this.availableDungeonKeysTracked.contains((Object)type) || DungeonMasterKeyMenu.getResetString(type) != null) continue;
@@ -364,6 +361,7 @@ extends JavaPlugin {
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new PortalProtectionTrinketItem());
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new HolyWaterItem());
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new CleanseScroll());
+
         }
     }
 

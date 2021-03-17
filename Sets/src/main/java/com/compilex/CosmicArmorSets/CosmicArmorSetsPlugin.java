@@ -33,12 +33,15 @@ public class CosmicArmorSetsPlugin
         p = this;
         p.registerListeners();
         this.registerCommands();
+
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
             for (Player pl : Bukkit.getServer().getOnlinePlayers()) {
                 CosmicArmorSetsAPI.getArmorSet(pl);
             }
         }, 100L, 100L);
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
+
+        //This used to be sync
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
             for (Player pl : Bukkit.getServer().getOnlinePlayers()) {
                 CosmicArmorSetsAPI.getAbilityArmorSet(pl);
             }

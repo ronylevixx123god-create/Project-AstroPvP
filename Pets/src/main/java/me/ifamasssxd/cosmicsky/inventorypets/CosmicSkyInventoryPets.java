@@ -53,7 +53,8 @@ public final class CosmicSkyInventoryPets extends JavaPlugin implements Listener
          pet.getInternalClass().onEnable(this);
       }
 
-      this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new BleedTask(), 0L, 10L);
+      //this used to be sync
+      this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new BleedTask(), 0L, 10L);
    }
 
    private void registerListeners() {

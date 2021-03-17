@@ -70,8 +70,10 @@ extends JavaPlugin {
             ContestUser.getUsers().put(pl.getUniqueId(), user);
             user.loadData(false);
         }
-        this.getServer().getScheduler().scheduleSyncRepeatingTask((Plugin)this, (Runnable)new AnnounceTask(), 20L, 18000L);
-        this.getServer().getScheduler().scheduleSyncRepeatingTask((Plugin)this, (Runnable)new TimeSpentTask(), 20L, 20L);
+
+        //These 2 used to be sync
+        this.getServer().getScheduler().scheduleAsyncRepeatingTask((Plugin)this, (Runnable)new AnnounceTask(), 20L, 18000L);
+        this.getServer().getScheduler().scheduleAsyncRepeatingTask((Plugin)this, (Runnable)new TimeSpentTask(), 20L, 20L);
     }
 
     private void registerArkkitListener() {
