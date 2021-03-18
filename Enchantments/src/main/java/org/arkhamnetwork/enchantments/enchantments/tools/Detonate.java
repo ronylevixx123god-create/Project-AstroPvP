@@ -53,7 +53,7 @@ public class Detonate extends CustomEnchantment {
         Detonate.pickaxeMaterials = new ArrayList<Material>(Arrays.asList(Material.SANDSTONE, Material.STONE, Material.COBBLESTONE, Material.MOSSY_COBBLESTONE, Material.SMOOTH_BRICK, Material.OBSIDIAN, Material.MOB_SPAWNER, Material.COAL_ORE, Material.IRON_ORE, Material.GOLD_ORE, Material.DIAMOND_ORE, Material.LAPIS_ORE, Material.REDSTONE_ORE, Material.EMERALD_ORE, Material.NETHERRACK));
         Detonate.spadeMaterials = new ArrayList<Material>(Arrays.asList(Material.DIRT, Material.SAND, Material.GRAVEL, Material.GRASS, Material.MYCEL, Material.CLAY));
         Bukkit.getPluginManager().registerEvents((Listener) new DetonateListener(), (Plugin) Enchantments.getInstance());
-        Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), () -> this.heroicVersion = EnchantmentAPI.getEnchantment("Atomic Detonate"), 2L);
+        Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin) Enchantments.getInstance(), () -> this.heroicVersion = EnchantmentAPI.getEnchantment("Atomic Detonate"), 2L);
     }
 
     public static void updateSavedBlockFace(final Player p, final BlockFace b) {

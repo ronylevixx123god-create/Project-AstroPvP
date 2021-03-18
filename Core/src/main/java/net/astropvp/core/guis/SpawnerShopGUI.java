@@ -63,7 +63,7 @@ public class SpawnerShopGUI
         }
         if (slot == 1) {
             return ItemBuilder.buildItem(Material.MOB_SPAWNER, 32, (short) 0,
-                    CC.translate("&a&lBlaze Spawner"), CC.translate("&a&l* &fPrice: &$12,4800,00"));
+                    CC.translate("&a&lBlaze Spawner"), CC.translate("&a&l* &fPrice: &7$12,4800,00"));
         }
         if (slot == 2) {
             return ItemBuilder.buildItem(Material.MOB_SPAWNER, 64, (short) 0,

@@ -16,7 +16,7 @@ public class Assassin extends CustomEnchantment {
         this.max = 5;
         this.base = 15.0;
         this.interval = 6.0;
-        Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), () -> this.heroicVersion = EnchantmentAPI.getEnchantment("Shadow Assassin"), 2L);
+        Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin) Enchantments.getInstance(), () -> this.heroicVersion = EnchantmentAPI.getEnchantment("Shadow Assassin"), 2L);
     }
 
     public void applyEffect(final LivingEntity user, final LivingEntity target, final int enchantLevel, final EntityDamageByEntityEvent event) {

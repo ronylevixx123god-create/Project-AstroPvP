@@ -18,9 +18,10 @@ public class Overload extends CustomEnchantment {
         this.max = 3;
         this.base = 20.0;
         this.interval = 5.0;
-        Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
+        Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
             @Override
             public void run() {
+                Bukkit.broadcastMessage("Correct!");
                 Overload.this.heroicVersion = EnchantmentAPI.getEnchantment("Godly Overload");
             }
         }, 2L);
