@@ -36,7 +36,7 @@ public class MasterySoulSiphon extends MasteryCustomEnchantment {
             if (!new CustomEnchantProcOnEntityEvent((LivingEntity) damager, (LivingEntity) damaged, (Event) event, this, enchantLevel).callEvent()) {
                 return;
             }
-            GeneralUtil.healPlayer((LivingEntity) damager, toHeal);
+            //GeneralUtil.healPlayer((LivingEntity) damager, toHeal);
             final int soulCount = KillTrackerAPI.getAllSouls(damaged);
             final int toSteal = (int) Math.min(Math.max(1, soulCount), Math.ceil(enchantLevel * 25.0));
             final int toGive = toSteal / 2;

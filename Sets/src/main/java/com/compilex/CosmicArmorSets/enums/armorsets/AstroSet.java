@@ -114,7 +114,7 @@ public class AstroSet
             return false;
         }
         this.removeResistance(damaged);
-        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.75);
+        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.90);
         return true;
     }
 
@@ -174,6 +174,8 @@ public class AstroSet
         if (!(event.getEntity() instanceof Player)) {
             return false;
         }
+        this.modifyDamage(damager, event, 5.0, applied);
+
         if (Math.random() < 0.01) {
             if (this.isBlockedOutpostWorld(damager)) {
                 return false;
@@ -181,7 +183,6 @@ public class AstroSet
             if (event.getDamager().getWorld().getName().equals("world_duels")) {
                 return false;
             }
-            this.modifyDamage(damager, event, 5.0, applied);
             if (event.getEntity() instanceof Player && event.getEntity().getLocation().distance(damager.getLocation()) <= 2.0 && ((Player) event.getEntity()).getHealth() < damager.getHealth()) {
                 if (damager.hasMetadata("FalloutAbility") && System.currentTimeMillis() - damager.getMetadata("FalloutAbility").get(0).asLong() <= 65000L) {
                     return false;

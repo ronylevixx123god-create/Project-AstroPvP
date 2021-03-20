@@ -88,11 +88,11 @@ public class ChampionArmorSet
     @Override
     public List<String> getEquipDescription() {
         return TranslateList.translateList(ChatColor.GOLD + "" + ChatColor.BOLD + "",
-                "CHAMPION SET BONUS: "
-                , "➥ +40% DMG"
-                , "➥ Enemies deal 20% less damage"
-                , "➥ Champion Wrath Ability"
-                , "➥ Auto Bless"
+                "&6&lCHAMPION SET BONUS: "
+                , "&6&l➥ &6+40% DMG"
+                , "&6&l➥ &6Enemies deal 20% less damage"
+                , "&6&l➥ &6Champion Wrath Ability"
+                , "&6&l➥ &6Auto Bless"
         , "");
     }
 
@@ -111,7 +111,7 @@ public class ChampionArmorSet
             return false;
         }
         this.removeResistance(damaged);
-        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.7);
+        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.75);
         return true;
     }
 
@@ -160,7 +160,7 @@ public class ChampionArmorSet
         if (Math.random() <= 0.006 * (double) applied) {
             this.activateChampionAbility(damager, (Player) event.getEntity());
         }
-        return this.modifyDamage(damager, event, 12.0, applied);
+        return this.modifyDamage(damager, event, 7.5, applied);
     }
 
     @Override

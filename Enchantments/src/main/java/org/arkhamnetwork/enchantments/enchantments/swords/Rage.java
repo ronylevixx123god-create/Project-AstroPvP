@@ -51,7 +51,7 @@ public class Rage extends CustomEnchantment {
             if (!pUser.getItemInHand().getType().name().toLowerCase().contains("_sword") || !(event.getDamager() instanceof LivingEntity))
                 return;
 
-            double mod = 0.24D * enchantLevel;
+            double mod = 0.118D * enchantLevel;
             double hitCombo = ((target instanceof Player) ? getPVPHitCombo((Player) user) : getPVEHitCombo((Player) user)) * mod + 1.0D;
             if (hitCombo > 8.0D)
                 hitCombo = 8.0D;
@@ -62,24 +62,11 @@ public class Rage extends CustomEnchantment {
                 }
                 double damage = event.getDamage(EntityDamageEvent.DamageModifier.BASE);
 
-                if (damage*hitCombo*mod >35) {
-                    event.setDamage(35);
-                } else {
                     event.setDamage((damage * hitCombo * mod));
-                }
                 target.setMetadata("effectedByRage", new FixedMetadataValue(Enchantments.getInstance(), System.currentTimeMillis()));
             }
             if (target instanceof Player) {
                 addPVPHitCombo((Player) user);
-
-                if (((Player) target).getItemInHand() != null) {
-                    if (DragonTitanAttributesAPI.getRuneType(((Player) target).getItemInHand()) != null
-                            && DragonTitanAttributesAPI.getRuneType(((Player) target).getItemInHand()) == RuneType.KRONOS) {
-                        if (RuneType.getLevelOfRune(((Player) target).getItemInHand()) * 0.03 > Math.random())
-                            return;
-                    }
-                }
-                subtractPVPHitCombo((Player) target);
             } else {
                 if (target instanceof Player) {
                     subtractPVEHitCombo((Player) target);

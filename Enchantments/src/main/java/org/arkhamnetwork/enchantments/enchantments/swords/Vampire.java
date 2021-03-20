@@ -26,18 +26,7 @@ public class Vampire extends CustomEnchantment {
             if (playerHit instanceof Player && MaskType.hasEquipped((Player) playerHit, "NECROMANCER")) {
                 return;
             }
-            Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
-                @Override
-                public void run() {
-                    if (player.isDead() || !player.isValid()) {
-                        return;
-                    }
-                    if (GeneralUtil.healPlayer(player, healthGain)) {
-                        ((Player) player).playSound(player.getLocation(), Sound.DRINK, 0.75f, 2.0f);
-                    }
-                }
-            }, 60L);
-            ((Player) player).playSound(player.getLocation(), Sound.DRINK, 0.75f, 2.0f);
+
         }
     }
 }

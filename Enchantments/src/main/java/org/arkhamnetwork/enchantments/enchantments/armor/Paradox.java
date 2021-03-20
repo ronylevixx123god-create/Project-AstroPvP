@@ -106,7 +106,7 @@ public class Paradox extends CustomEnchantment {
                             exception.printStackTrace();
                         }
 
-                        GeneralUtil.healPlayer((LivingEntity) pEnt2, amountToHeal);
+                        //GeneralUtil.healPlayer((LivingEntity) pEnt2, amountToHeal);
                         pEnt2.playSound(pEnt2.getLocation(), Sound.EAT, 1.0f, 2.0f);
                         pEnt2.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "** PARADOX [" + p.getName() + "] (+" + amountToHeal + "HP) **");
                     }

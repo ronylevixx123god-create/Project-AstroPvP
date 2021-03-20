@@ -133,7 +133,7 @@ public class UltraArmorSet
         if (this.isBlockedOutpostWorld(damaged)) {
             return false;
         }
-        this.modifyDamage(damaged, event, -10.0, multiplier);
+        this.modifyDamage(damaged, event, -8.0, multiplier);
         return false;
     }
 
@@ -149,7 +149,8 @@ public class UltraArmorSet
         if (Math.random() <= 0.008 * (double) applied) {
             this.activateUltraAbility(damager, (Player) event.getEntity());
         }
-        return this.modifyDamage(damager, event, 10.0, applied);
+        this.modifyDamage(damager, event, 8.0, applied);
+        return false;
     }
 
     @Override

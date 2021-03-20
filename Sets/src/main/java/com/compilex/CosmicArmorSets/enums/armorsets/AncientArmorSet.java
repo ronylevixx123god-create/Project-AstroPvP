@@ -121,7 +121,7 @@ public class AncientArmorSet
             return false;
         }
         this.removeResistance(damaged);
-        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.75);
+        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.85);
         damaged.setVelocity(damaged.getVelocity().multiply(0.8));
         return true;
     }
@@ -153,7 +153,7 @@ public class AncientArmorSet
         if (this.isBlockedOutpostWorld(damaged)) {
             return false;
         }
-        this.modifyDamage(damaged, event, -7.0, multiplier);
+        this.modifyDamage(damaged, event, -5.0, multiplier);
         return false;
     }
 
