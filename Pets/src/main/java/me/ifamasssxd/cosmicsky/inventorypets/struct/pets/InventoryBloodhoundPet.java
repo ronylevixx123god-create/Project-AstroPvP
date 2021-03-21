@@ -90,7 +90,7 @@ public class InventoryBloodhoundPet extends InventoryPet {
       if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
          throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
 
-      LivingEntity target = getTargetEntity(player, 6);
+      LivingEntity target = getTargetEntity(player, 10);
       if (target == null || !(target instanceof Player))
          throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "No target found!");
       final Player pTarget = (Player)target;

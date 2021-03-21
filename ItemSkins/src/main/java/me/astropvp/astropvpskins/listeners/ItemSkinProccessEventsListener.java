@@ -141,12 +141,17 @@ public class ItemSkinProccessEventsListener implements Listener {
 
                         new MasteryMarkOfTheBeast().applyDefenseEffect(damager, (LivingEntity) e.getEntity(), 3, e);
                         new Blessed().applyEffect(damager, (LivingEntity) e.getEntity(), 4, e);
-                        //new Hex().applyEffect(damager, (LivingEntity) e.getEntity(), 5, e);
+                        new Hex().applyEffect(damager, (LivingEntity) e.getEntity(), 1, e);
+                        e.getEntity().sendMessage("");
+                        e.getEntity().sendMessage(CC.translate("&3&l* TRIDENT OF DEEP &7[" + damager.getName() + "] &3&l*"));
+                        e.getEntity().sendMessage(CC.translate("&3&l * &7+ Hex"));
+                        e.getEntity().sendMessage(CC.translate("&3&l * &7+ Mark Of the Beast"));
+                        e.getEntity().sendMessage(CC.translate("&7"));
                     } else if (type == SkinType.BOOTS_RETALIATION) {
                         if (e.getEntity() instanceof Player) {
                             continue;
                         }
-                        e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.15);
+                        e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.05);
                     } else if (type == SkinType.CUPID_HELMET) {
                         if (!(e.getEntity() instanceof Player)) {
                             continue;
@@ -191,7 +196,7 @@ public class ItemSkinProccessEventsListener implements Listener {
                         if (type != SkinType.MOON_BOOTS) {
                             continue;
                         }
-                        e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.2);
+                        e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.05);
                     }
                 }
             }

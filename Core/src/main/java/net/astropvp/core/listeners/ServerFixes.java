@@ -71,6 +71,16 @@ public class ServerFixes implements Listener {
         Player killer = p.getKiller();
         killer.playSound(killer.getLocation(), Sound.SUCCESSFUL_HIT, 20, 20);
     }
+    
+//    @EventHandler
+//    public void vanishSpawn(PlayerMoveEvent e) {
+//        if (WorldGuardUtils.inRegion(e.getPlayer().getLocation(), "vanish")) {
+//            for (Player pl : Bukkit.getServer().getOnlinePlayers()) {
+//                pl.hidePlayer(e.getPlayer());
+//                e.getPlayer().sendMessage("Hiding");
+//            }
+//        }
+//    }
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {

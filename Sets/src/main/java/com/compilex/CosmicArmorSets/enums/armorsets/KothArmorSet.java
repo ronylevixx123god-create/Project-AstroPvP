@@ -177,7 +177,7 @@ public class KothArmorSet
             return false;
         }
         if (event.getEntity() instanceof Player) {
-            event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.2);
+            event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.25);
         } else {
             event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.5);
         }

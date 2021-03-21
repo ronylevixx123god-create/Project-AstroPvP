@@ -240,7 +240,7 @@ public class AstroCore extends JavaPlugin {
             }
         }
 
-        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, new AutoGiveAllTask(), 20L, 20L);
+        //Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, new AutoGiveAllTask(), 20L, 20L);
 
         this.toggleManager.loadToggles();
 

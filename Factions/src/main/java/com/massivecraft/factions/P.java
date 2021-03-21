@@ -212,7 +212,7 @@ public class P extends MPlugin {
 
         this.boosterManager = new BoosterManager();
         this.boosterManager.loadActiveBoosters();
-        getServer().getScheduler().scheduleSyncRepeatingTask((Plugin)this, (Runnable)new BoosterTask(), 20L, 20L);
+        //getServer().getScheduler().scheduleSyncRepeatingTask((Plugin)this, (Runnable)new BoosterTask(), 20L, 20L);
 
         this.saveDefaultConfig();
         this.startOfMap = this.getConfig().getLong("startOfMap");

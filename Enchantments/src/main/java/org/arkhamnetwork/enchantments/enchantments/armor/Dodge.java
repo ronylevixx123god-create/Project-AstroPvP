@@ -24,7 +24,7 @@ public class Dodge extends CustomEnchantment {
     @SneakyThrows
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         if (e instanceof EntityDamageByEntityEvent) {
-            double chance = 0.025 * level;
+            double chance = 0.015 * level;
             final boolean sneaking = ((Player) player).isSneaking();
             if (sneaking) {
                 chance += 0.15;
