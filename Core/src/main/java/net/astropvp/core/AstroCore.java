@@ -225,6 +225,8 @@ public class AstroCore extends JavaPlugin {
 
         this.getServer().getPluginManager().registerEvents(new DamageIndicators(), this);
 
+        this.getServer().getPluginManager().registerEvents(new WorldBorderPearlFix(), this);
+
         this.coinFlipManager = new CoinFlipManager();
         try {
             this.coinFlipManager.loadCoinFlips();

@@ -109,7 +109,7 @@ public class EnchanterListener implements Listener {
             p.playSound(p.getLocation(), Sound.BAT_TAKEOFF, 0.7f, 1.4f);
             p.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW.toString() + "You examine the " + i.getItemMeta().getDisplayName().substring(0, i.getItemMeta().getDisplayName().indexOf(ChatColor.GRAY.toString())) + "...");
             p.sendMessage(ChatColor.YELLOW + "and discover " + book.getItemMeta().getDisplayName() + "!");
-            Bukkit.dispatchCommand((CommandSender) Bukkit.getConsoleSender(), "contest add " + p.getName() + " beopened 1");
+            //Bukkit.dispatchCommand((CommandSender) Bukkit.getConsoleSender(), "contest add " + p.getName() + " beopened 1");
             Color c = null;
             if (tier == 1) {
                 c = Color.WHITE;

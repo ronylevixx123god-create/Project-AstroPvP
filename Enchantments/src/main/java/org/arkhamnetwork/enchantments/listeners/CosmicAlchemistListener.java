@@ -139,7 +139,7 @@ public class CosmicAlchemistListener implements Listener {
                 p.playSound(p.getLocation(), Sound.VILLAGER_YES, 1.0f, 0.3f);
                 de.inventivegames.particle.ParticleEffect.HAPPY_VILLAGER.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation(), 0f,0.5f,0f,0.55f,16);
 
-                Bukkit.dispatchCommand((CommandSender) Bukkit.getConsoleSender(), "contest add " + p.getName() + " alchemistExch 1");
+                //Bukkit.dispatchCommand((CommandSender) Bukkit.getConsoleSender(), "contest add " + p.getName() + " alchemistExch 1");
                 Bukkit.getPluginManager().callEvent((Event) new CustomCosmicPlayerEvent(p, "ALCHEMIST_TRADE", new Object[]{items, Lists.newArrayList((Object[]) new ItemStack[]{newItem})}));
             }
         }

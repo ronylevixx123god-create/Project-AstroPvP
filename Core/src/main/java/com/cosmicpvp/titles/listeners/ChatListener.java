@@ -17,7 +17,7 @@ public class ChatListener implements Listener {
             if (PlayerTitleAPI.getEquippedTitle(event.getPlayer().getUniqueId()).equals("none")) {
                 title = "";
             } else {
-                title = " &8[&6" + PlayerTitleAPI.getEquippedTitle(event.getPlayer().getUniqueId()) + "&8]";
+                title = " &8[&a" + PlayerTitleAPI.getEquippedTitle(event.getPlayer().getUniqueId()) + "&8]";
             }
         }
 
