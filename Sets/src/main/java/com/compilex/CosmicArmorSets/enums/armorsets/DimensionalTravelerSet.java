@@ -218,7 +218,7 @@ public class DimensionalTravelerSet
             for (int x = -radius; x <= radius; ++x) {
                 for (int z = -radius; z <= radius; ++z) {
                     if (this.random.nextBoolean()) continue;
-                    this.fallingBlocks.add(this.createFallingBlock(new Location(start.getWorld(), startX + x, newY, startZ + z), original, faction));
+                    //this.fallingBlocks.add(this.createFallingBlock(new Location(start.getWorld(), startX + x, newY, startZ + z), original, faction));
                 }
             }
         }

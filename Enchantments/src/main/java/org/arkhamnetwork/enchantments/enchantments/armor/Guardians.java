@@ -113,9 +113,9 @@ public class Guardians extends CustomEnchantment {
                 return;
             }
             final boolean KOTH_or_duel = player.getWorld().getName().equals("world_koth") || player.getWorld().getName().equals("world_duels") || player.getWorld().getName().equals("world_duels2");
-            double chance = 0.01;
-            if (chance > 0.01) {
-                chance = 0.01;
+            double chance = 0.005;
+            if (chance > 0.005) {
+                chance = 0.005;
             }
             if (KOTH_or_duel) {
                 chance /= 2.0;

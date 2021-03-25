@@ -36,6 +36,9 @@ public class Dominate extends CustomEnchantment {
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
         final double procChance = 0.04 * level;
         if (Math.random() < procChance) {
+            if (!(playerHit instanceof Player)) {
+                return;
+            }
             if (playerHit.hasMetadata(Dominate.dominateEffectLevel_metadata) && playerHit.getMetadata(Dominate.dominateEffectLevel_metadata).get(0).asInt() > level) {
                 return;
             }

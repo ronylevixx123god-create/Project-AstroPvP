@@ -21,7 +21,7 @@ public class DamageFixes implements Listener {
         }
         final Player damager = (Player) event.getDamager();
         final Player personBeingHit = (Player) event.getEntity();
-        if (damager.getItemInHand().getType() == Material.DIAMOND_AXE || damager.getItemInHand().getType() == Material.GOLD_AXE) {
+        if (damager.getItemInHand().getType() != Material.DIAMOND_SWORD && damager.getItemInHand().getType() != Material.GOLD_SWORD) {
             event.setDamage(event.getDamage() * 0.50);
         }
     }
