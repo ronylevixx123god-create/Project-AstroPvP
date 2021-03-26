@@ -28,9 +28,7 @@ implements Runnable {
 
     @Override
     public void run() {
-        Bukkit.broadcastMessage("");
         Bukkit.broadcastMessage(CC.translate(this.messagesList.get(this.i)));
-        Bukkit.broadcastMessage("");
         this.i = this.i == this.messagesList.size() - 1 ? 0 : ++this.i;
     }
 }

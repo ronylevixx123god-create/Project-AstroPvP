@@ -10,7 +10,8 @@ import org.bukkit.ChatColor;
 
 public enum BroadcastMessages {
     DISCORD(ChatColor.GREEN + "&8[&a&lAstro&e&lPvP&8] &aMake sure to join our discord at &f/discord&a."),
-    STORE(ChatColor.GREEN + "&8[&a&lAstro&e&lPvP&8] &aMake sure to take advantage of the &f&l50% SALE&a on the store &7(/buy)&a.");
+    STORE(ChatColor.GREEN + "&8[&a&lAstro&e&lPvP&8] &aMake sure to take advantage of the &f&l50% SALE&a on the store &7(/buy)&a."),
+    APOLLO(ChatColor.GREEN + "&8[&a&lAstro&e&lPvP&8] &aYou can buy the &b&lApollo Rank&a on &fbuy.astropvp.net&a.");
 
     String message;
 
