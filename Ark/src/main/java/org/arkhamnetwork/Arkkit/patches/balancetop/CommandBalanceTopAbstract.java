@@ -47,7 +47,7 @@ public class CommandBalanceTopAbstract
                     return;
                 }
                 List<String> page = pageCopy.get(index - 1);
-                sender.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + ChatColor.UNDERLINE.toString() + "Top " + page.size() + " Balances - Page " + index + " / " + pageCopy.size());
+                sender.sendMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + ChatColor.UNDERLINE.toString() + "Top " + page.size() + " Balances - Page " + index + " / " + pageCopy.size());
                 sender.sendMessage("");
                 for (String s : page) {
                     sender.sendMessage(s);

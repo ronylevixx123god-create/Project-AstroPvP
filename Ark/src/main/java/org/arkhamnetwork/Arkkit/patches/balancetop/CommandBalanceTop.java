@@ -117,7 +117,7 @@ public class CommandBalanceTop
                     return;
                 }
                 List<String> page = pageCopy.get(index - 1);
-                sender.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Top Balances (" + ChatColor.GREEN + ChatColor.BOLD + index + ChatColor.YELLOW + ChatColor.BOLD + "/" + ChatColor.GREEN + ChatColor.BOLD + pageCopy.size() + ChatColor.YELLOW + ChatColor.BOLD + ")");
+                sender.sendMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + "Top Balances (" + ChatColor.WHITE + ChatColor.BOLD + index + ChatColor.GREEN + ChatColor.BOLD + "/" + ChatColor.WHITE + ChatColor.BOLD + pageCopy.size() + ChatColor.GREEN + ChatColor.BOLD + ")");
                 for (String s : page) {
                     sender.sendMessage(s);
                 }

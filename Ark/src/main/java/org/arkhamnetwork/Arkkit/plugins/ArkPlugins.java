@@ -7,8 +7,6 @@ import org.arkhamnetwork.Arkkit.patches.balancetop.BalanceTop;
 import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatFilter;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
 import org.arkhamnetwork.Arkkit.patches.createtitle.CreateTitle;
-import org.arkhamnetwork.Arkkit.patches.newtrade.BetterTrade;
-import org.arkhamnetwork.Arkkit.patches.trading.NewTrade;
 
 public enum ArkPlugins {
     ANTI_DUPE(new AntiDupe(Arkkit.get()), "Blocks many common dupe exploits, adds /scanchests"),
@@ -32,7 +30,6 @@ public enum ArkPlugins {
     FORCE_SPAWN(new ForceSpawn(Arkkit.get()), "Enables /forcespawn <radius>, sending all players around executor to world's /spawn. Great for moderation."),
     CREATE_TITLE(new CreateTitle(Arkkit.get()), "Enables /createtitle and /addcreatetitle commands to purchase and create custom player titles."),
     COMBAT_LOG(new CombatLog(Arkkit.get()), "Kills players who logout while within 10s of combat in pvp-enabled area."),
-    TRADING(new NewTrade(Arkkit.get()), "Enables /trade and ability to trade items with other players through GUI."),
     NO_COMBAT_FLYING(new NoCombatFlying(Arkkit.get()), "Clips wings of players who engage in PvP or PvE combat for 10s."),
     PVP_POTION_EFFECTS(new PvPPotionEffects(Arkkit.get()), "Clear potion effects whenever a player goes between a pvp and non-pvp WG flagged area."),
     NO_CURSOR_DROP(new NoCursorDrop(Arkkit.get()), "Prevents users from losing item being held on cursor on inventory close."),
@@ -90,7 +87,6 @@ public enum ArkPlugins {
     DEATH_MESSAGES(new DeathMessages(Arkkit.get()), "Enables nice pvp death messages that display a JSON value of the item used."),
     LORE_TAG(new LoreTag(Arkkit.get()), "Enables the lore tag item to add a custom line of lore text to an item"),
     BLOCK_VALUE(new BlockValue(Arkkit.get()), "Enables tracking of custom block values in claims."),
-    BETTER_TRADE(new BetterTrade(Arkkit.get()), "A much safer trade system made in 2018 using OOP."),
     EQUIPMENT_LOOTBOX(new EquipmentLootboxes(Arkkit.get()), "Equipement lootboxes that give a random Armor Set item."),
     NO_DUPE_EXPLOIT(new NoDupeExploit(Arkkit.get()), "Scans inventories for items with duplicated IID and removes them."),
     NO_SPAWN_HOMES(new NoSpawnHomes(Arkkit.get()), "Blocks players from setting homes or warps at /spawn."),

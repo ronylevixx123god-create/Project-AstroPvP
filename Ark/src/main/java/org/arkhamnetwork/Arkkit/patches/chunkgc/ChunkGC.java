@@ -32,11 +32,11 @@ public class ChunkGC
         for (World w : Bukkit.getWorlds()) {
             ((CraftWorld) w).getHandle().spigotConfig.clearChunksOnTick = true;
         }
-        ChunkSyncUtil.syncChunks();
-        this.registerListener(new ChunkGCListener());
-        this.registerTask(new PlayerMoveTask().runTaskTimer(this.getBukkitPlugin(), 20L, 5L), PlayerMoveTask.class);
+        //ChunkSyncUtil.syncChunks();
+        //this.registerListener(new ChunkGCListener());
+        //this.registerTask(new PlayerMoveTask().runTaskTimer(this.getBukkitPlugin(), 20L, 5L), PlayerMoveTask.class);
         //this.registerTask(new ChunkGCTask().runTaskTimer(this.getBukkitPlugin(), 300L, 1200L), ChunkGCTask.class);
-        this.registerCommand(new CommandForceChunkGC("forcechunkgc", "/<command>", "Forces a global Chunk GC"));
+        //this.registerCommand(new CommandForceChunkGC("forcechunkgc", "/<command>", "Forces a global Chunk GC"));
     }
 
     @Override
