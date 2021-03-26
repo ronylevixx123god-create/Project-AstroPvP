@@ -25,7 +25,7 @@ final class ServerRebootTask
 
     public ServerRebootTask(boolean force) {
         Bukkit.broadcastMessage("");
-        Bukkit.broadcastMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "      *** A Astro reboot has been queued. *** ");
+        Bukkit.broadcastMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "      *** An Astro reboot has been queued. *** ");
         Bukkit.broadcastMessage(ChatColor.GRAY.toString() + ChatColor.ITALIC.toString() + "  This process occurs when Astro pulls a critical core update.");
         Bukkit.broadcastMessage("");
         if (force) {

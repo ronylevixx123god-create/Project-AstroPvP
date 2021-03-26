@@ -13,8 +13,15 @@ public class CommandAliases implements Listener {
             e.setMessage("/f upgrade");
             return;
         }
+
+
         if (cmd.contains(" ")) {
             cmd = cmd.split(" ")[0];
+        }
+
+        if (cmd.equalsIgnoreCase("/f top")) {
+            e.setMessage("/f topp");
+            return;
         }
         if (cmd.equals("/masks")) {
             e.setMessage("/help masks");
