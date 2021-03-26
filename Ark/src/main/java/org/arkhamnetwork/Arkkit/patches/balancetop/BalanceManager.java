@@ -82,7 +82,7 @@ public class BalanceManager {
                     pages.add(new ArrayList(page));
                     page = new ArrayList();
                 }
-                page.add(ChatColor.GREEN + ChatColor.BOLD.toString() + i++ + ". " + ChatColor.GREEN + v.getKey() + ": " + ChatColor.GREEN + ChatColor.BOLD.toString() + "$" + BalanceManager.insertCommas(v.getValue()));
+                page.add(ChatColor.WHITE + ChatColor.BOLD.toString() + i++ + ". " + ChatColor.GREEN + v.getKey() + ": " + ChatColor.WHITE + ChatColor.BOLD.toString() + "$" + BalanceManager.insertCommas(v.getValue()));
             }
             if (pages.size() < 20) {
                 pages.add(page);
