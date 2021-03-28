@@ -94,12 +94,6 @@ implements Comparable<StoredFaction> {
         }
     }
 
-    public void calculateContainerWorth() {
-        this.containerWorth = 0.0;
-        for (BlockValueLocation loc : this.factionContainers) {
-            this.containerWorth += loc.getBlockValue();
-        }
-    }
 
     private int getSpawnerFeeBase(EntityType type) {
         int price;
@@ -126,7 +120,6 @@ implements Comparable<StoredFaction> {
     }
 
     public void calculateTotalBalance() {
-        this.calculateContainerWorth();
         this.totalBalance = 0.0;
         double currentHighest = 0.0;
         Faction faction = this.getFaction();

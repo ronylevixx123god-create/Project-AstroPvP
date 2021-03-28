@@ -24,6 +24,7 @@ public class ArrowBreak extends CustomEnchantment {
             final EntityDamageByEntityEvent edbee = (EntityDamageByEntityEvent) e;
             if (edbee.getDamager() instanceof Projectile && Math.random() < (0.1 + 0.04 * level) / 2.0) {
                 //ParticleEffect.playEffect(ParticleEffect.CRIT, edbee.getDamager().getLocation(), 0.6f, 16);
+                if (!(edbee.getDamager() instanceof Player)) return;
                 de.inventivegames.particle.ParticleEffect.CRIT.sendToPlayer((Player) edbee.getDamager(),edbee.getDamager().getLocation(), 0,0,0,0.6f,16);
                 ((Player) player).playSound(player.getLocation(), Sound.ITEM_BREAK, 0.7f, 0.2f);
                 e.setCancelled(true);

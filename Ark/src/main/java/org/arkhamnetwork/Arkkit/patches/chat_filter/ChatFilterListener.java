@@ -43,11 +43,11 @@ final class ChatFilterListener
             event.setCancelled(true);
             return;
         }
-        if (ChatFilter.block_chat_until_move && ChatFilter.hasntMoved.contains(player.getUniqueId())) {
+        /*if (ChatFilter.block_chat_until_move && ChatFilter.hasntMoved.contains(player.getUniqueId())) {
             player.sendMessage(ChatColor.RED + "You " + ChatColor.UNDERLINE + "cannot" + ChatColor.RED + " chat until your character has moved.");
             event.setCancelled(true);
             return;
-        }
+        }*/
         if (ChatFilter.block_duplicate_messages) {
             if (ChatFilter.lastMessage.containsKey(player.getUniqueId())) {
                 long last_send;
@@ -161,7 +161,7 @@ final class ChatFilterListener
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    /*@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onMove(PlayerMoveEvent event) {
         if (!ChatFilter.block_chat_until_move) {
             return;
@@ -170,7 +170,7 @@ final class ChatFilterListener
             return;
         }
         ChatFilter.hasntMoved.remove(event.getPlayer().getUniqueId());
-    }
+    }*/
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerCommandPreProcess(PlayerCommandPreprocessEvent e) {

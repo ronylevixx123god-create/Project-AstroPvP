@@ -172,7 +172,7 @@ public class SpawnerShopGUI
                 } else {
                     Economy.subtract(player.getName(), price);
                     player.sendMessage(CC.translate("&c&l- $" + price));
-                    Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), "givespawner spawner " + player.getName() + " " + amount + " irongolem");
+                    Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), "givespawner spawner " + player.getName() + " " + amount + " iron_golem");
                 }
                 setItems();
                 break;
@@ -185,7 +185,7 @@ public class SpawnerShopGUI
                 } else {
                     Economy.subtract(player.getName(), price);
                     player.sendMessage(CC.translate("&c&l- $" + price));
-                    Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), "givespawner spawner " + player.getName() + " " + amount + " irongolem");
+                    Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), "givespawner spawner " + player.getName() + " " + amount + " iron_golem");
                 }
                 setItems();
                 break;
@@ -198,7 +198,7 @@ public class SpawnerShopGUI
                 } else {
                     Economy.subtract(player.getName(), price);
                     player.sendMessage(CC.translate("&c&l- $" + price));
-                    Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), "givespawner spawner " + player.getName() + " " + amount + " irongolem");
+                    Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), "givespawner spawner " + player.getName() + " " + amount + " iron_golem");
                 }
                 setItems();
                 break;

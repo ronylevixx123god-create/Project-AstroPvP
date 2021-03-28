@@ -78,7 +78,7 @@ extends JavaPlugin {
 
     private void registerArkkitListener() {
         try {
-            Bukkit.getLogger().info("Hooking into Arkkit EXP Direct deposit..");
+            Bukkit.getLogger().info(r);
             this.getServer().getPluginManager().registerEvents((Listener)new ArkkitListener(), (Plugin)this);
         }
         catch (Exception e) {

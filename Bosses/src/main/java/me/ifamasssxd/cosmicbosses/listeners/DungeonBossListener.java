@@ -51,7 +51,7 @@ public class DungeonBossListener implements Listener {
         }
     }
 
-    @EventHandler
+    /*@EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
 
@@ -63,7 +63,7 @@ public class DungeonBossListener implements Listener {
                 }
             }
         }
-    }
+    }*/
 
     /*@EventHandler
     public void onDamage(EntityDamageByEntityEvent event) {

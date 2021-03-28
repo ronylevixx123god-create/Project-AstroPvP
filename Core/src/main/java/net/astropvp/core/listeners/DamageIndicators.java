@@ -23,6 +23,10 @@ public class DamageIndicators implements Listener {
                 return;
             }
 
+            if (event.getEntity().getLastDamageCause() == null) {
+                return;
+            }
+
             if (event.getEntity().getLastDamageCause().getCause() == null) {
                 return;
             }

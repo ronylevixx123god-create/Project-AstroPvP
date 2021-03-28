@@ -309,12 +309,12 @@ extends DungeonEvents {
         return new NBTWrapper(new ItemBuilder(Material.PAPER, CC.AquaB + "Dimensional Map").lore(lore).build()).setString("cosmicType", "dungeonDimensionalMap").setNBTBase("ench", new NBTTagListBuilder().build()).build();
     }
 
-    @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
+    /*@EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
     public void onPlayerMove(PlayerMoveEvent event) {
         if (this.parkourRestrictionTask != null) {
             this.parkourRestrictionTask.onPlayerMove(event);
         }
-    }
+    }*/
 
     @EventHandler(priority=EventPriority.LOW)
     public void onYijkiDeath(EntityDeathEvent event) {
@@ -983,7 +983,7 @@ extends DungeonEvents {
             this.regions = regions;
         }
 
-        public void onPlayerMove(PlayerMoveEvent event) {
+        /*public void onPlayerMove(PlayerMoveEvent event) {
             String regionMovingTo;
             DungeonPlayer dungeonPlayer;
             Location to = event.getTo();
@@ -1000,7 +1000,7 @@ extends DungeonEvents {
                     this.setToPortal(block, player);
                 }
             }
-        }
+        }*/
 
         public void setToPortal(Block block, Player player) {
             if (this.portalBlocks.add(block)) {

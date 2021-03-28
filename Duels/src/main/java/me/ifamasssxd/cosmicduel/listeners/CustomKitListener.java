@@ -136,7 +136,7 @@ implements Listener {
         }
     }
 
-    @EventHandler
+    /*@EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
         if (event.getTo().getBlockX() == event.getFrom().getBlockX() && event.getTo().getBlockY() == event.getFrom().getBlockY() && event.getTo().getBlockZ() == event.getFrom().getBlockZ()) {
             return;
@@ -153,7 +153,7 @@ implements Listener {
             event.getPlayer().openInventory(duelPlayer.createCustomInventory());
             event.getPlayer().closeInventory();
         }
-    }
+    }*/
 
     @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
     public void onPlayerTakeDamageWhileModifying(EntityDamageEvent event) {

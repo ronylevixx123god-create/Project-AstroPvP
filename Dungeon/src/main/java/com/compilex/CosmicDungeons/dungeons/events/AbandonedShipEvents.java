@@ -495,7 +495,7 @@ extends DungeonEvents {
         }
     }
 
-    @EventHandler
+    /*@EventHandler
     public void onPlayerMoveInMaze(PlayerMoveEvent e) {
         if (e.getFrom().getBlockX() == e.getTo().getBlockX() && e.getFrom().getBlockY() == e.getTo().getBlockY() && e.getFrom().getBlockZ() == e.getTo().getBlockZ()) {
             return;
@@ -530,7 +530,7 @@ extends DungeonEvents {
                 b.setTypeIdAndData(Material.STAINED_CLAY.getId(), (byte)4, true);
             }
         }
-    }
+    }*/
 
     @EventHandler(priority=EventPriority.LOWEST)
     public void onPlayerFallIntoMazeHole(PlayerPortalEvent e) {
@@ -550,7 +550,7 @@ extends DungeonEvents {
         }
     }
 
-    @EventHandler
+    /*@EventHandler
     public void onPlayerMoveInParkour(PlayerMoveEvent e) {
         Block b;
         if (e.getFrom().getBlockX() == e.getTo().getBlockX() && e.getFrom().getBlockY() == e.getTo().getBlockY() && e.getFrom().getBlockZ() == e.getTo().getBlockZ()) {
@@ -571,7 +571,7 @@ extends DungeonEvents {
             WorldUtil.sendWorldEffect(b, 2001);
             b.setTypeIdAndData(Material.ENDER_PORTAL.getId(), (byte)0, false);
         }
-    }
+    }*/
 
     @EventHandler(priority=EventPriority.LOWEST)
     public void onBlockBreak(BlockBreakEvent e) {

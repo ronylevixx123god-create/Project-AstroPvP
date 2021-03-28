@@ -67,8 +67,8 @@ public class TerminatorMask extends CosmicMask {
                     if (eff.getEffectType().getId() == PotionEffectType.SPEED.getId() &&
                             eff.getPotionLevel() == eff.getOriginalLevel() && eff.getPotionLevel() != 3) {
                         //player.removePotionEffect(PotionEffectType.SPEED);
-                        eff.setPotionLevel(3);
-                        detectedNew = true;
+                        //eff.setPotionLevel(3);
+                        //detectedNew = true;
                         Bukkit.getLogger().info("Removing reindeer speed boost being detected: " + eff.getEffectType());
                     }
                 }

@@ -50,8 +50,8 @@ public class ReindeerMask extends CosmicMask {
 
     @Override
     public void onUnequip(Player player) {
-        if (hasEffect(player, PotionEffectType.SPEED, 3, false))
-            player.removePotionEffect(PotionEffectType.SPEED);
+        //if (hasEffect(player, PotionEffectType.SPEED, 3, false))
+            //player.removePotionEffect(PotionEffectType.SPEED);
         PlayerPotionEffects effects = PlayerPotionEffects.getTrackedPotionEffects(player);
         if (effects != null)
             effects.getEffects().forEach((enchantment, effect) -> {
@@ -72,7 +72,7 @@ public class ReindeerMask extends CosmicMask {
             OutpostTier tier = CosmicOutpostsAPI.getOutpostTierOfWorld((LivingEntity)player);
             if (tier != null && tier != OutpostTier.COSMONAUT && tier != OutpostTier.NONE) {
                 if (hasEffect(player, PotionEffectType.SPEED, 3, false))
-                    player.removePotionEffect(PotionEffectType.SPEED);
+                    //player.removePotionEffect(PotionEffectType.SPEED);
                 return;
             }
         }
@@ -83,15 +83,15 @@ public class ReindeerMask extends CosmicMask {
                 for (AbstractPotionEffect eff : e) {
                     if (eff.getEffectType().getId() == PotionEffectType.SPEED.getId() &&
                             eff.getPotionLevel() == eff.getOriginalLevel() && eff.getPotionLevel() != 3) {
-                        player.removePotionEffect(PotionEffectType.SPEED);
-                        eff.setPotionLevel(3);
-                        detectedNew = true;
-                        Bukkit.getLogger().info("Removing reindeer speed boost being detected: " + eff.getEffectType());
+                        //player.removePotionEffect(PotionEffectType.SPEED);
+                        //eff.setPotionLevel(3);
+                        //detectedNew = true;
+                        //Bukkit.getLogger().info("Removing reindeer speed boost being detected: " + eff.getEffectType());
                     }
                 }
             }
-        if ((!detectedNew && hasEffect(player, PotionEffectType.SPEED, 3, false)) || (
-                !detectedNew && !player.hasPotionEffect(PotionEffectType.SPEED)))
-            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 200, 3), true);
+        //if ((!detectedNew && hasEffect(player, PotionEffectType.SPEED, 3, false)) || (
+               // !detectedNew && !player.hasPotionEffect(PotionEffectType.SPEED)))
+            //player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 200, 3), true);
     }
 }

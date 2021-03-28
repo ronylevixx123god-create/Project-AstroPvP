@@ -150,7 +150,7 @@ public class KothSanityListener implements Listener {
     @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
     public void onPlayerDamagedByKoth(EntityDamageByEntityEvent event) {
         if (event.getEntity() instanceof Player && (event.getDamager().hasMetadata("envoyMonster") || event.getDamager() instanceof Projectile && ((Projectile)event.getDamager()).getShooter() instanceof LivingEntity && ((LivingEntity) ((Projectile)event.getDamager()).getShooter()).hasMetadata("envoyMonster"))) {
-            event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.5);
+            //event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.5);
         }
     }
 

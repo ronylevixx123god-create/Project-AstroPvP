@@ -37,7 +37,7 @@ import org.bukkit.plugin.Plugin;
 
 public class DungeonPlayerMoveListener
 implements Listener {
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    /*@EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
     public void onPlayerMove(PlayerMoveEvent e) {
         if (e.getFrom().getBlockX() == e.getTo().getBlockX() && e.getFrom().getBlockY() == e.getTo().getBlockY() && e.getFrom().getBlockZ() == e.getTo().getBlockZ()) {
             return;
@@ -63,6 +63,6 @@ implements Listener {
         } else if (currentRegion == null || currentRegion.isEmpty()) {
             dp.getBukkitPlayer().removeMetadata("lastRegionName", (Plugin)CosmicDungeonsPlugin.get_());
         }
-    }
+    }*/
 }
 
