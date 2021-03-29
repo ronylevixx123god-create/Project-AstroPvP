@@ -50,8 +50,8 @@ public class ReindeerMask extends CosmicMask {
 
     @Override
     public void onUnequip(Player player) {
-        //if (hasEffect(player, PotionEffectType.SPEED, 3, false))
-            //player.removePotionEffect(PotionEffectType.SPEED);
+        if (hasEffect(player, PotionEffectType.SPEED, 3, false))
+            player.removePotionEffect(PotionEffectType.SPEED);
         PlayerPotionEffects effects = PlayerPotionEffects.getTrackedPotionEffects(player);
         if (effects != null)
             effects.getEffects().forEach((enchantment, effect) -> {
@@ -72,7 +72,7 @@ public class ReindeerMask extends CosmicMask {
             OutpostTier tier = CosmicOutpostsAPI.getOutpostTierOfWorld((LivingEntity)player);
             if (tier != null && tier != OutpostTier.COSMONAUT && tier != OutpostTier.NONE) {
                 if (hasEffect(player, PotionEffectType.SPEED, 3, false))
-                    //player.removePotionEffect(PotionEffectType.SPEED);
+                    player.removePotionEffect(PotionEffectType.SPEED);
                 return;
             }
         }
@@ -90,8 +90,8 @@ public class ReindeerMask extends CosmicMask {
                     }
                 }
             }
-        //if ((!detectedNew && hasEffect(player, PotionEffectType.SPEED, 3, false)) || (
-               // !detectedNew && !player.hasPotionEffect(PotionEffectType.SPEED)))
-            //player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 200, 3), true);
+        if ((!detectedNew && hasEffect(player, PotionEffectType.SPEED, 3, false)) || (
+                !detectedNew && !player.hasPotionEffect(PotionEffectType.SPEED)))
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 200, 3), true);
     }
 }

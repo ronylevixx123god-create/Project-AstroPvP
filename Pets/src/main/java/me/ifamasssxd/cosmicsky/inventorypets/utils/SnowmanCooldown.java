@@ -10,7 +10,7 @@ public class SnowmanCooldown {
         player.setMetadata("snowCooldown", new FixedMetadataValue(Enchantments.getInstance(), player.getName()));
         Bukkit.getScheduler().runTaskLaterAsynchronously(Enchantments.getInstance(), ()->{
             player.removeMetadata("snowCooldown", Enchantments.getInstance());
-        },1200);
+        },2400);
     }
 
     public static boolean isOnSnowCooldown(Player player) {

@@ -27,15 +27,15 @@ public class TerminatorMask extends CosmicMask {
                     if (pEffect.getEffectType().getId() == PotionEffectType.SPEED.getId() && pEffect.getPotionLevel() < 3) {
                         Bukkit.getLogger().info("[" + getClass().getSimpleName() + "] Found equipped speed: " + pEffect.getPotionLevel());
                         pEffect.setPotionLevel(3);
-                        //player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 2147483647, pEffect.getPotionLevel()), true);
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 2147483647, pEffect.getPotionLevel()), true);
                     }
                 }
             });
     }
 
     public void onUnequip(Player player) {
-        //if (hasEffect(player, PotionEffectType.SPEED, 3, false))
-            //player.removePotionEffect(PotionEffectType.SPEED);
+        if (hasEffect(player, PotionEffectType.SPEED, 3, false))
+            player.removePotionEffect(PotionEffectType.SPEED);
         PlayerPotionEffects effects = PlayerPotionEffects.getTrackedPotionEffects(player);
         if (effects != null)
             effects.getEffects().forEach((enchantment, effect) -> {
@@ -55,7 +55,7 @@ public class TerminatorMask extends CosmicMask {
             OutpostTier tier = CosmicOutpostsAPI.getOutpostTierOfWorld((LivingEntity)player);
             if (tier != null && tier != OutpostTier.COSMONAUT && tier != OutpostTier.NONE) {
                 if (hasEffect(player, PotionEffectType.SPEED, 3, false))
-                    //player.removePotionEffect(PotionEffectType.SPEED);
+                    player.removePotionEffect(PotionEffectType.SPEED);
                 return;
             }
         }
@@ -77,6 +77,6 @@ public class TerminatorMask extends CosmicMask {
                 !detectedNew && !player.hasPotionEffect(PotionEffectType.SPEED))) {
 
         }
-            //addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 200, 3), true);
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 200, 3), true);
     }
 }

@@ -101,7 +101,7 @@ public class InventoryAbominableSnowmanPet extends InventoryPet {
          if ( p.getGameMode().equals(GameMode.CREATIVE))
             continue;
          if (SnowmanCooldown.isOnSnowCooldown(p)) {
-            player.sendMessage(CC.translate("&cThis player is still on snowman cooldown, this lasts 60s."));
+            player.sendMessage(CC.translate("&cThis player is still on snowman cooldown, this lasts 120s."));
             continue;
          }
          if (p.hasMetadata("chadsunglasses"))

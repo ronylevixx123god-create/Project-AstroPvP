@@ -198,6 +198,7 @@ public class AstroCore extends JavaPlugin {
         this.itemListener = new ItemFilterListener();
         this.getServer().getPluginManager().registerEvents(this.itemListener, this);
         this.getServer().getPluginManager().registerEvents(new SpawnerShopListener(), this);
+        this.getServer().getPluginManager().registerEvents(new TrayPickaxeListener(), this);
 
         this.setupSQL();
         this.dataManager = new TitleDatabaseManager();
@@ -206,6 +207,7 @@ public class AstroCore extends JavaPlugin {
 
         //this.envoyManager = new EnvoyManager();
         //this.envoyManager.startTimer();
+        this.getCommand("traypickaxe").setExecutor(new TrayPickaxeCommand());
         this.getCommand("spawnheroicboss").setExecutor(new CommandSpawnHeroicBoss());
         this.getCommand("setheroicbossspawn").setExecutor(new CommandSetHeroicBossSpawn());
 
