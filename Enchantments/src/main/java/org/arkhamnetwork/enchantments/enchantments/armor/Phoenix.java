@@ -96,7 +96,7 @@ public class Phoenix extends CustomEnchantment {
                 player.sendMessage(ChatColor.GRAY + "You have " + ChatColor.UNDERLINE + KillTrackerAPI.getAllSouls(player) + ChatColor.GRAY + " souls left.");
                 player.sendMessage("");
                 player.sendTitle(new Title(CC.translate("&c&l*** PHOENIX ***"), CC.translate("&7You have &n") + KillTrackerAPI.getAllSouls(player) + CC.translate("&7 Souls Left."), 10, 40, 10));
-                if (ItemSkinUtils.hasItemSkin(player, "CORRUPT_BELT_UTILITY") && Math.random() < 0.5) {
+                if (ItemSkinUtils.hasItemSkin(player, "CORRUPT_BELT_UTILITY") && Math.random() < 0.25) {
                     MasteryFeignDeath.vanishPlayer(player, 3);
                 }
                 player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 1.0F, 1.25F);

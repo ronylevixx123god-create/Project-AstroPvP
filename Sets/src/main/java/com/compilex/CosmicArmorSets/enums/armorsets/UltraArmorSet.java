@@ -114,7 +114,7 @@ public class UltraArmorSet
         if (this.isBlockedOutpostWorld(damager)) {
             return false;
         }
-        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.35);
+        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.30);
         this.removeResistance(damager);
         if (Math.random() <= 0.25) {
             this.activateUltraAbility(damager, (Player) event.getEntity());

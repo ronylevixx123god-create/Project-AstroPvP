@@ -139,6 +139,8 @@ public class Cauldron extends CustomBlock {
 
     @Override
     public void damageGivenEvent(Player p0, EntityDamageByEntityEvent p1, Chunk p2, AbilityData data) {
+        if  (data.getOwner() == null) return;
+        if (Bukkit.getPlayer(data.getOwner()) == null) return;
         if (FactionUtils.getFPlayer(Bukkit.getPlayer(data.getOwner())) == null) return;
         FPlayer blockowner = FactionUtils.getFPlayer(Bukkit.getPlayer(data.getOwner()));
         

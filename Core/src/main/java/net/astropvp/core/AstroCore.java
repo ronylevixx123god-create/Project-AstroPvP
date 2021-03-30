@@ -183,7 +183,7 @@ public class AstroCore extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new GrindingMessagesToggleListener(), this);
 
         //This used to be sync!
-        this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, () -> {
+        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
             try {
                 this.jackpotManager.onJackpotTick();
             } catch (UserDoesNotExistException e) {
