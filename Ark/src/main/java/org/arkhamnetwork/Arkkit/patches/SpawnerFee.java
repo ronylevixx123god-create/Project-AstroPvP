@@ -187,7 +187,7 @@ public class SpawnerFee
                 if (!hasWhitelist) {
                     Bukkit.setWhitelist(false);
                 }
-                Bukkit.shutdown();
+                //Bukkit.shutdown();
             }
         } catch (IOException ioe) {
             ioe.printStackTrace();

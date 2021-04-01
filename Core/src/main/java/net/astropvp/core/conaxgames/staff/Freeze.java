@@ -157,7 +157,9 @@ public class Freeze implements Listener {
         public void run() {
             frozenPlayers.forEach((uuid, location) -> {
                 Player target = Bukkit.getPlayer(uuid);
-
+                if (target == null) {
+                    return;
+                }
                 count++;
 
                 if(count == 2) {

@@ -85,16 +85,6 @@ public class Silence extends CustomEnchantment {
                 exception.printStackTrace();
             }
 
-            try {
-                if (DamageIndicatorUtils.isPlayerIndicating((Player) user)) {
-                    DamageIndicatorUtils.createDamageIndicator((Player) user,
-                            target.getLocation().add(1.0D, 2.0D, 0.0D),
-                            new String[]{ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "* SILENCED " + ChatColor.GRAY + "[" + durationTicks / 20L + "s] " + ChatColor.DARK_PURPLE + ChatColor.BOLD + "*"});
-                }
-            } catch (Exception e) {
-
-            }
-
             Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
                 @SneakyThrows
                 @Override

@@ -48,7 +48,7 @@ implements PermissionsManager {
         this.cachedLoadedGroups.clear();
         if (cachedWebConfiguration == null) {
             Bukkit.getLogger().info("[CompilexPermissions] cachedWebConfiguration found to be null, shutting server down.");
-            Bukkit.shutdown();
+            //Bukkit.shutdown();
             return false;
         }
         boolean loadAll = plugin.getConfig().getBoolean("LOAD_ALL_GROUPS");

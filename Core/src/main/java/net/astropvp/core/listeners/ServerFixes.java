@@ -143,11 +143,6 @@ public class ServerFixes implements Listener {
         }
     }
 
-    @EventHandler
-    public void OnDeath(PlayerDeathEvent e) {
-        e.getDrops().removeIf(i -> i.getType() == Material.POTION);
-    }
-
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPlayerCommand(final PlayerCommandPreprocessEvent event) {
         final Player player = event.getPlayer();
@@ -247,13 +242,5 @@ public class ServerFixes implements Listener {
         }
     }
 
-
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onPearlThrow(PlayerTeleportEvent e) {
-        if (!e.getCause().equals(PlayerTeleportEvent.TeleportCause.ENDER_PEARL)) return;
-        if (e.getTo().add(0, 1, 0).getBlock().getType() != Material.AIR) {
-            e.setCancelled(true);
-        }
-    }
 
 }

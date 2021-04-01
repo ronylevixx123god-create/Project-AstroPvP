@@ -2,7 +2,6 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.gmail.nossr50.mcMMO
  *  com.google.common.collect.Lists
  *  org.bukkit.ChatColor
  *  org.bukkit.GameMode
@@ -24,8 +23,8 @@
  */
 package me.ifamasssxd.cosmicduel.listeners;
 
-import com.gmail.nossr50.mcMMO;
 import com.google.common.collect.Lists;
+import me.ifamasssxd.cosmicduel.CosmicDuel;
 import me.ifamasssxd.cosmicduel.DuelAPI;
 import me.ifamasssxd.cosmicduel.struct.Arena;
 import me.ifamasssxd.cosmicduel.struct.enums.Setting;
@@ -109,7 +108,7 @@ implements Listener {
     @EventHandler(priority=EventPriority.LOWEST, ignoreCancelled=true)
     public void onItemSpawn(ItemSpawnEvent e) {
         if (e.getEntity() != null && e.getEntity().getWorld() != null && e.getEntity().getWorld().getName().equalsIgnoreCase(Arena.getDuelWorldName())) {
-            e.getEntity().setMetadata("mcMMO: Tracked Item", (MetadataValue)new FixedMetadataValue((Plugin)mcMMO.p, (Object)""));
+            e.getEntity().setMetadata("mcMMO: Tracked Item", (MetadataValue)new FixedMetadataValue((Plugin) CosmicDuel.get(), (Object)""));
         }
     }
 

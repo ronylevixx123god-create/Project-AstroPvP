@@ -39,14 +39,5 @@ public class Execute extends CustomEnchantment {
             WorldUtil.sendWorldEffect(l.getBlock(), Material.REDSTONE_WIRE.getId(), 2001);
         }
 
-        try {
-            if (DamageIndicatorUtils.isPlayerIndicating((Player) player)) {
-                DamageIndicatorUtils.createDamageIndicator((Player) player,
-                        target.getLocation().add(1.0D, 2.0D, 0.0D),
-                        new String[] { CC.translate("&b&l* EXECUTE *") });
-            }
-        } catch (Exception ex) {
-
-        }
     }
 }

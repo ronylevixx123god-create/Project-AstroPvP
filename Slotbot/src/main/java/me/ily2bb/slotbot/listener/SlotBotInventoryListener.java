@@ -126,6 +126,9 @@ public class SlotBotInventoryListener implements Listener {
                     for (AbilityData data : CustomBlockUtil.getBlockDatasInChunk(player)) {
                         FPlayer owner = FactionUtils.getFPlayer(Bukkit.getPlayer(data.getOwner()));
                         CustomBlock customBlock = CoreSkulls.customBlocks.get(data.getAbilityType().getName());
+                        if (killer.getFaction() == null) return;
+                        if (customBlock == null) return;
+                        if (owner.getFaction() == null) return;
                         if (killer.getFaction() == owner.getFaction() && customBlock.getIdentifier().equals("ASTROTROPHY")) {
                             if (Math.random() < 0.1) {
                                 returnTickets(tickets, player);

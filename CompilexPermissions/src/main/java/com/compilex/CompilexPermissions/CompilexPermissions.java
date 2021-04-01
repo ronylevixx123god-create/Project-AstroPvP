@@ -138,7 +138,7 @@ extends JavaPlugin {
         if (Bukkit.getPluginManager().isPluginEnabled("ArkhamPermissions")) {
             Bukkit.getLogger().info("[CompilexPermissions] Disabling ArkhamPermissions, renaming .jar to *.DISABLED and rebooting.");
             new File("plugins/ArkhamPermissions.jar").renameTo(new File("plugins/ArkhamPermissions.jar.DISABLED"));
-            Bukkit.shutdown();
+            //Bukkit.shutdown();
             return;
         }
         File oldConfigs = new File("plugins/ArkhamPermissions");
@@ -153,7 +153,7 @@ extends JavaPlugin {
             }
             catch (IOException e) {
                 e.printStackTrace();
-                Bukkit.getServer().shutdown();
+                //Bukkit.getServer().shutdown();
             }
         }
         if (new File("donation_server").exists()) {
@@ -181,7 +181,7 @@ extends JavaPlugin {
                 catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                Bukkit.shutdown();
+                //Bukkit.shutdown();
             }
         }
         this.permissionManager = new PermissionManager();
@@ -197,7 +197,7 @@ extends JavaPlugin {
             catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            Bukkit.shutdown();
+            //Bukkit.shutdown();
             return;
         }
     }
@@ -212,7 +212,7 @@ extends JavaPlugin {
             catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            Bukkit.shutdown();
+            //Bukkit.shutdown();
             return;
         }
         this.sqlWorker = new SQLQueryThread();

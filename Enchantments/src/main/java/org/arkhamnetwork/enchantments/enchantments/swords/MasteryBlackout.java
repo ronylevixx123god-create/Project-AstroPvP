@@ -56,15 +56,6 @@ public class MasteryBlackout extends CustomEnchantment {
             GeneralCooldown.enterCooldown((Player) user);
             //this.applyCooldown(user, 6);
 
-            try {
-                if (DamageIndicatorUtils.isPlayerIndicating((Player) user)) {
-                    DamageIndicatorUtils.createDamageIndicator((Player) user,
-                            target.getLocation().add(1.0D, 2.0D, 0.0D),
-                            new String[] { CC.translate("&5&L* BLACKOUT &7[" + (2 + enchantLevel) * multi + "&7s] &5&l *") });
-                }
-            } catch (Exception ex) {
-
-            }
 
             return;
         }

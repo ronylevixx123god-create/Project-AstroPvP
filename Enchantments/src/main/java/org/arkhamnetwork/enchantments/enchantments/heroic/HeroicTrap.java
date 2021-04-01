@@ -75,15 +75,6 @@ public class HeroicTrap extends HeroicCustomEnchantment {
             Location l = ptarget.getLocation();
             WorldUtil.sendWorldEffect(l.getBlock(), 80, 2001);
 
-            try {
-                if (DamageIndicatorUtils.isPlayerIndicating((Player) player)) {
-                    DamageIndicatorUtils.createDamageIndicator((Player) player,
-                            target.getLocation().add(1.0D, 2.0D, 0.0D),
-                            new String[] { ChatColor.LIGHT_PURPLE + ChatColor.BOLD.toString() + "** TITAN TRAP [" + ChatColor.GRAY + this.df.format(durationTicks / 20.0D) + "s" + ChatColor.LIGHT_PURPLE + ChatColor.BOLD + "] **" });
-                }
-            } catch (Exception ex) {
-
-            }
         }
     }
 }

@@ -64,15 +64,7 @@ public class MasteryNeutralize extends CustomEnchantment {
             pTarget.setMetadata("neutralized", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), "banana"));
             GeneralCooldown.enterCooldown(user);
 
-            try {
-                if (DamageIndicatorUtils.isPlayerIndicating((Player) user)) {
-                    DamageIndicatorUtils.createDamageIndicator((Player) user,
-                            target.getLocation().add(1.0D, 2.0D, 0.0D),
-                            new String[] { String.valueOf(CC.DarkRedB) + "* NEUTRALIZED * §7[" + level + "§7s] §4§l*" });
-                }
-            } catch (Exception ex) {
 
-            }
         }
     }
 }
