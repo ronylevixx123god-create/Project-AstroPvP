@@ -11,11 +11,15 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.Chest;
+import org.bukkit.block.Dispenser;
+import org.bukkit.block.Dropper;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class ChunkBusterListener implements Listener {
@@ -61,6 +65,22 @@ public class ChunkBusterListener implements Listener {
                             }
                         }
                         if ((block.getType() != Material.BEDROCK) && (block.getType() != Material.AIR)) {
+                            if (block.getType() == Material.CHEST || block.getType() == Material.DISPENSER || block.getType() == Material.DROPPER) {
+                                if (block.getType() == Material.CHEST) {
+                                    Chest c = (Chest) block.getState();
+                                    c.getBlockInventory().clear();
+                                }
+
+                                if (block.getType() == Material.DISPENSER) {
+                                    Dispenser d = (Dispenser) block.getState();
+                                    d.getInventory().clear();
+                                }
+
+                                if (block.getType() == Material.DROPPER) {
+                                    Dropper d = (Dropper) block.getState();
+                                    d.getInventory().clear();
+                                }
+                            }
                             block.setType(Material.AIR);
                         }
                     }

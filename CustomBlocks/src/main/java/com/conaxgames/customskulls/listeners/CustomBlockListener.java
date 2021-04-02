@@ -93,6 +93,13 @@ public class CustomBlockListener implements Listener {
             return;
         }
 
+        if (event.getPlayer().getLocation().getChunk() != event.getBlockAgainst().getLocation().getChunk()) {
+            player.sendMessage(CC.translate("&c&l(!)&c You must stand in the same chunk as the block you are placing against."));
+            event.setCancelled(true);
+            return;
+        }
+
+
         for (AbilityData data : CustomBlockUtil.getBlockDatasInChunk(player)) {
             if (data.getAbilityType().getName().toLowerCase().contains(ChatColor.stripColor(CustomBlockUtil.getCustomItem(item).getName().toLowerCase().replace(" ", "")))) {
                 player.sendMessage(CC.translate("&c&l(!)&c This chunk already contains this custom block."));
