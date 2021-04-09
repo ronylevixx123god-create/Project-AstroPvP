@@ -141,7 +141,6 @@ public class ItemSkinProccessEventsListener implements Listener {
 
                         new MasteryMarkOfTheBeast().applyDefenseEffect(damager, (LivingEntity) e.getEntity(), 3, e);
                         new Blessed().applyEffect(damager, (LivingEntity) e.getEntity(), 4, e);
-                        new Hex().applyEffect(damager, (LivingEntity) e.getEntity(), 1, e);
                         e.getEntity().sendMessage("");
                         e.getEntity().sendMessage(CC.translate("&3&l* TRIDENT OF DEEP &7[" + damager.getName() + "] &3&l*"));
                         e.getEntity().sendMessage(CC.translate("&3&l * &7+ Hex"));

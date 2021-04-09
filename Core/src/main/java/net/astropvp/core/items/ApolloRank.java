@@ -1,5 +1,6 @@
 package net.astropvp.core.items;
 
+import com.compilex.CompilexPermissions.PermissionsAPI;
 import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
 import com.compilex.CosmicArmorSets.enums.HeroicWeaponType;
 import com.cosmicpvp.cosmicutils.exceptions.CosmicException;
@@ -78,6 +79,13 @@ public class ApolloRank extends CosmicItem
         if (item.getAmount()>1) {
             throw new PrefixedException("You cannot apply multiple ranks at once!");
         }
+
+        String rank = PermissionsAPI.getPermissionUser(player.getUniqueId()).getGroup();
+
+        if (!rank.equalsIgnoreCase("astro") && !rank.equalsIgnoreCase("astro+")) {
+            throw new PrefixedException("You cannot redeem lower tier ranks.");
+        }
+
         NBTTagCompoundBuilder cosmicData = wrapper.getCompoundOrCreate("conaxData");
 
         cosmicData.setInt("apolloRank", Integer.valueOf(1));

@@ -64,8 +64,8 @@ public class AstroPlusRank extends CosmicItem
 
         String rank = PermissionsAPI.getPermissionUser(player.getUniqueId()).getGroup();
 
-        if (!(rank.equals("astro"))) {
-            throw new PrefixedException("You cannot redeem lower tier ranks. ");
+        if (!rank.equalsIgnoreCase("astro")) {
+            throw new PrefixedException("You cannot redeem lower tier ranks.");
         }
 
         if (item.getAmount()>1) {

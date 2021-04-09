@@ -16,6 +16,9 @@ import com.massivecraft.factions.struct.Relation;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.ItemSkinType;
+import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
@@ -55,7 +58,7 @@ public class InventoryAbominableSnowmanPet extends InventoryPet {
    }
 
    public int getCooldown(int level) {
-         return 600;
+         return 1200;
    }
 
    public int getMaxLevel() {
@@ -104,8 +107,10 @@ public class InventoryAbominableSnowmanPet extends InventoryPet {
             player.sendMessage(CC.translate("&cThis player is still on snowman cooldown, this lasts 120s."));
             continue;
          }
-         if (p.hasMetadata("chadsunglasses"))
+         if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.SEXY_HELMET)) {
+            p.sendMessage(CC.translate("&c&lBLOCKED - SNOWMAN"));
             continue;
+         }
          if (p.hasMetadata("NPC"))
             continue;
          if (p.hasMetadata("in_duel"))
@@ -167,9 +172,9 @@ public class InventoryAbominableSnowmanPet extends InventoryPet {
       if (level == 1)
          return 10;
       if (level == 2)
-         return 15;
+         return 10;
       if (level == 3)
-         return 20;
+         return 10;
       return 10;
    }
 

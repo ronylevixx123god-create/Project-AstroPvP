@@ -22,7 +22,7 @@ public class MasteryRevoke extends MasteryCustomEnchantment {
 
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
         double random = Math.random();
-        double chance = 0.1D * enchantLevel;
+        double chance = 0.005D * enchantLevel;
         long time = (long) (enchantLevel * 1.5D);
         if (target.hasMetadata("revoked"))
             return;
