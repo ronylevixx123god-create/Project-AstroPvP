@@ -19,8 +19,6 @@ commands:
     aliases: ['givecb']
   trash:
     aliases: ['bin']
-  traypickaxe:
-    aliases: ['tray']
   lastmanstanding:
     aliases: ['lms']
   grinding:

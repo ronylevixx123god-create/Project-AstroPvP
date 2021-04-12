@@ -12,8 +12,6 @@ import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import org.arkhamnetwork.Arkkit.patches.ExpBottles;
-import org.arkhamnetwork.Arkkit.patches.trading.NewTrade;
-import org.arkhamnetwork.Arkkit.patches.trading.NewTradeListener;
 import org.arkhamnetwork.enchantments.EnchantmentBook;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.cmds.CommandEnchDust;
@@ -44,7 +42,7 @@ import java.util.Map;
 import java.util.Random;
 
 public class TinkererTradeListener implements Listener {
-    int randMeta;
+   /* int randMeta;
 
     public TinkererTradeListener() {
         this.randMeta = new Random().nextInt(10);
@@ -78,12 +76,12 @@ public class TinkererTradeListener implements Listener {
                                 tinker.setCancelled(true);
                             }
                             if (tinker.callEvent()) {
-                                final int nextOpenSlot = NewTradeListener.getNextOpenTradeSlot(inventory);
+                                //final int nextOpenSlot = NewTradeListener.getNextOpenTradeSlot(inventory);
                                 if (nextOpenSlot == -1) {
                                     break;
                                 }
                                 p1.getInventory().setItem(i, (ItemStack) null);
-                                p1.getOpenInventory().getTopInventory().setItem(nextOpenSlot, item);
+                                //p1.getOpenInventory().getTopInventory().setItem(nextOpenSlot, item);
                                 ++added;
                             }
                         }
@@ -95,9 +93,9 @@ public class TinkererTradeListener implements Listener {
                 }
                 p1.sendMessage(CC.GreenB + "(!) " + CC.Green + "Offering " + CC.GreenB + added + " " + CC.Green + "items to the Tinkerer.");
             } else if (e.getWhoClicked().getInventory().equals(p1.getOpenInventory().getTopInventory())) {
-                if (!NewTrade.getValidSlots().contains(e.getRawSlot())) {
-                    return;
-                }
+                //if (!NewTrade.getValidSlots().contains(e.getRawSlot())) {
+                    //return;
+                //}
                 final ItemStack j = e.getCurrentItem();
                 e.setCurrentItem((ItemStack) null);
                 p1.getInventory().setItem(p1.getInventory().firstEmpty(), j);
@@ -312,5 +310,5 @@ public class TinkererTradeListener implements Listener {
         p.playSound(p.getLocation(), Sound.BLAZE_HIT, 1.0f, 1.5f);
         p.closeInventory();
         Bukkit.getPluginManager().callEvent((Event) new CustomCosmicPlayerEvent(p, "TINKERER_TRADE", new Object[]{given, received}));
-    }
+    }*/
 }

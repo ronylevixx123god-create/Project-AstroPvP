@@ -26,7 +26,7 @@ public class FirstJoin implements Listener {
             ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
             //Bukkit.dispatchCommand(console, "mc give " + event.getPlayer().getName() + " StarterBundle 1");
             event.getPlayer().getInventory().addItem(this.chest.createClaimableItem(true));
-            event.getPlayer().teleport(new Location(Bukkit.getWorld("world"), 0D, 195.0D, 0D), PlayerTeleportEvent.TeleportCause.UNKNOWN);
+            event.getPlayer().teleport(new Location(Bukkit.getWorld("world"), 1D, 125.0D, -15D), PlayerTeleportEvent.TeleportCause.UNKNOWN);
         }
     }
 

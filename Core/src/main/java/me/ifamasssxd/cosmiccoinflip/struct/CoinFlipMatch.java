@@ -37,6 +37,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.text.DecimalFormat;
@@ -126,51 +127,48 @@ public class CoinFlipMatch {
 
     public void startRoll() {
         this.matchState = MatchState.FLIPPING;
-        new BukkitRunnable(){
+        (new BukkitRunnable() {
             int ticks = 0;
-            final int maxTicks = 70 + ThreadLocalRandom.current().nextInt(2) + ThreadLocalRandom.current().nextInt(2) + ThreadLocalRandom.current().nextInt(2);
+
+            int maxTicks = 70 + ThreadLocalRandom.current().nextInt(2) + ThreadLocalRandom.current().nextInt(2) + ThreadLocalRandom.current().nextInt(2);
 
             public void run() {
-                CoinColor color = null;
-                boolean lastTick;
                 if (CoinFlipMatch.this.gavePrize) {
-                    this.cancel();
+                    cancel();
                     return;
                 }
                 if (this.ticks >= this.maxTicks) {
-                    this.cancel();
+                    cancel();
                     ItemStack winner = CoinFlipMatch.this.coinFlipMenu.getItem(4);
                     if (winner != null && winner.getType() == Material.WOOL) {
                         CoinFlipMatch.this.winningColor = CoinColor.getFromDyeColor(winner.getDurability());
-                        CoinFlipMatch.this.endCoinFlip(RemoveReason.WON, CoinFlipMatch.this.getFirstColor() == CoinFlipMatch.this.winningColor ? CoinFlipMatch.this.getStarterPlayer() : CoinFlipMatch.this.getSecondPlayer());
-                        UUID loser = CoinFlipMatch.this.getFirstColor() == CoinFlipMatch.this.winningColor ? CoinFlipMatch.this.getSecondPlayer().getUniqueId() : CoinFlipMatch.this.getStarterPlayer().getUniqueId();
+                        CoinFlipMatch.this.endCoinFlip(CoinFlipMatch.RemoveReason.WON, (CoinFlipMatch.this.getFirstColor() == CoinFlipMatch.this.winningColor) ? CoinFlipMatch.this.getStarterPlayer() : CoinFlipMatch.this.getSecondPlayer());
+                        UUID loser = (CoinFlipMatch.this.getFirstColor() == CoinFlipMatch.this.winningColor) ? CoinFlipMatch.this.getSecondPlayer().getUniqueId() : CoinFlipMatch.this.getStarterPlayer().getUniqueId();
                         AstroCore.getInstance().getCoinFlipManager().addLoss(loser, CoinFlipMatch.this.playerUUID.equals(loser) ? CoinFlipMatch.this.player2UUID : CoinFlipMatch.this.playerUUID, CoinFlipMatch.this.wager);
                     }
                     return;
                 }
-                ++this.ticks;
-                boolean bl = lastTick = this.ticks == this.maxTicks;
-                if (!lastTick && this.ticks >= 20 && (this.ticks >= 50 && this.ticks % 2 == 0 || this.ticks >= 40 && this.ticks % 3 == 0 || this.ticks >= 30 && this.ticks % 4 == 0)) {
+                this.ticks++;
+                boolean lastTick = (this.ticks == this.maxTicks);
+                if (!lastTick && this.ticks >= 20 && ((this.ticks >= 50 && this.ticks % 2 == 0) || (this.ticks >= 40 && this.ticks % 3 == 0) || (this.ticks >= 30 && this.ticks % 4 == 0)))
                     return;
-                }
                 for (Player player : CoinFlipMatch.this.getPlayers()) {
                     if (player == null || !player.isOnline()) {
-                        this.cancel();
+                        cancel();
                         return;
                     }
-                    player.playSound(player.getLocation(), Sound.NOTE_PLING, 1.0f, 1.1f);
+                    player.playSound(player.getLocation(), Sound.NOTE_PLING, 1.0F, 1.1F);
                 }
-                CoinColor coinColor = !lastTick ? (CoinFlipMatch.this.previousColor == CoinFlipMatch.this.getFirstColor() ? CoinFlipMatch.this.getSecondColor() : CoinFlipMatch.this.getFirstColor()) : (color = CoinFlipMatch.this.getWinnerColor());
-                String winnerName = lastTick && color.equals(CoinFlipMatch.this.getFirstColor()) ? CoinFlipMatch.this.getFirstColor().getChatColor() + ChatColor.BOLD.toString() + CoinFlipMatch.this.getStarterPlayer().getName() : (lastTick && color.equals(CoinFlipMatch.this.getSecondColor()) ? CoinFlipMatch.this.getSecondColor().getChatColor() + ChatColor.BOLD.toString() + CoinFlipMatch.this.getSecondPlayer().getName() : null);
+                CoinColor color = !lastTick ? ((CoinFlipMatch.this.previousColor == CoinFlipMatch.this.getFirstColor()) ? CoinFlipMatch.this.getSecondColor() : CoinFlipMatch.this.getFirstColor()) : CoinFlipMatch.this.getWinnerColor();
+                String winnerName = (lastTick && color.equals(CoinFlipMatch.this.getFirstColor())) ? (CoinFlipMatch.this.getFirstColor().getChatColor() + ChatColor.BOLD.toString() + CoinFlipMatch.this.getStarterPlayer().getName()) : ((lastTick && color.equals(CoinFlipMatch.this.getSecondColor())) ? (CoinFlipMatch.this.getSecondColor().getChatColor() + ChatColor.BOLD.toString() + CoinFlipMatch.this.getSecondPlayer().getName()) : null);
                 CoinFlipMatch.this.previousColor = color;
-                //TODO: BOWPEY IS SO CUTE vv NULL POINTER ON THIS LINE
-                CoinFlipMatch.this.coinFlipMenu.setItem(4, ItemBuilder.buildItem(Material.WOOL, color.getDyeColor().getWoolData(), winnerName != null ? winnerName : color.getName(), Lists.newArrayList(winnerName != null ? winnerName + ChatColor.GRAY + " has won the Coin Flip!" : ChatColor.GRAY + "Rolling...")));
+                CoinFlipMatch.this.coinFlipMenu.setItem(4, ItemBuilder.buildItem(Material.WOOL, (short)color.getDyeColor().getWoolData(), (winnerName != null) ? winnerName : color.getName(), Lists.newArrayList(new String[] { (winnerName != null) ? (winnerName + ChatColor.GRAY + " has won the Coin Flip!") : (ChatColor.GRAY + "Rolling...") })));
                 for (Player pl : CoinFlipMatch.this.getPlayers()) {
-                    if (pl == null) continue;
-                    pl.updateInventory();
+                    if (pl != null)
+                        pl.updateInventory();
                 }
             }
-        }.runTaskTimer(AstroCore.getInstance(), 20L, 2L);
+        }).runTaskTimer((Plugin)AstroCore.getInstance(), 20L, 2L);
     }
 
     public CoinColor getWinnerColor() {

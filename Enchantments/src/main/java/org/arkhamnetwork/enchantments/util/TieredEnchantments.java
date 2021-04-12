@@ -41,6 +41,7 @@ public enum TieredEnchantments {
     holyaegis(7),
     maliciouslycorrupt(7),
     perfectsolitude(7),
+    tray(5),
     roboticruse(7),
     vampiricdevour(7),
     bewitchedhex(7),

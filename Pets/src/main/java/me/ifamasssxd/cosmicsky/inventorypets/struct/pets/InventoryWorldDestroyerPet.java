@@ -27,10 +27,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public class InventoryWorldDestroyerPet extends InventoryPet {
+    public static List<Block> blockList = new ArrayList<Block>();
 
     public InventoryPets getOwner() {
         return InventoryPets.WORLD_DESTROYER;
@@ -123,13 +127,12 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         }
 
 
-
         if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.SEXY_HELMET) && Math.random() < 0.5 && !playerHasApollo(player)) {
             petItem.setLastUsed(System.currentTimeMillis());
             if (playerHasApollo(player)) {
                 target.sendMessage(CC.translate("&c&l* CHAD SUNGLASSES &a&lBYPASSED &7[&c" + player.getName() + "&cApollo Set" + "&7] &c&l*"));
                 player.sendMessage(CC.translate("&a&l* BYPASSED CHAD SUNGLASSED FROM &c&n" + target.getName() + "&a&l *"));
-                return true;
+
             }
             player.sendMessage(CC.translate("&d&l* CHAD SUNGLASSES BLOCKED &7[&c" + target.getName() + "&7] &d&l*"));
             target.sendMessage(CC.translate("&d&l* CHAD SUNGLASSES &7[&cBlocked World Destroyer&7] &d&l*"));
@@ -137,56 +140,46 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         }
 
 
-
         final Player p = target;
         final Location location = p.getLocation();
-        final int minX = location.getBlockX() - 1;
-        final int maxX = location.getBlockX() + 2;
-        final int minY = location.getBlockY() - 1;
-        final int maxY = location.getBlockY() + 4;
-        final int minZ = location.getBlockZ() - 1;
-        final int maxZ = location.getBlockZ() + 2;
+
+        final ArrayList<Block> blocks = new ArrayList<Block>();
+        blocks.addAll(this.setOutlinedBlocks(player.getLocation().add(0.0, -1.0, 0.0), Material.BEDROCK));
+        blocks.addAll(this.setInsideBlocks(player.getLocation().add(0.0, -1.0, 0.0), Material.BEDROCK));
+        blocks.addAll(this.setOutlinedBlocks(player.getLocation().clone().add(0.0, 0.0, 0.0), Material.IRON_FENCE));
+        blocks.addAll(this.setOutlinedBlocks(player.getLocation().clone().add(0.0, 1.0, 0.0), Material.IRON_FENCE));
+        blocks.addAll(this.setOutlinedBlocks(player.getLocation().clone().add(0.0, 2.0, 0.0), Material.IRON_FENCE));
+        blocks.addAll(this.setOutlinedBlocks(player.getLocation().clone().add(0.0, 3.0, 0.0), Material.BEDROCK));
+        blocks.addAll(this.setInsideBlocks(player.getLocation().clone().add(0.0, 3.0, 0.0), Material.BEDROCK));
+        blockList.addAll(blocks);
+
         p.playSound(p.getLocation(), Sound.ANVIL_LAND, 1.0f, 1.4f);
         Location loc = p.getLocation().clone();
         p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100, 4));
         BleedTask.bleedPlayer(p, 4);
-        for (int x = minX; x < maxX; ++x) {
-            for (int y = minY; y < maxY; ++y) {
-                for (int z = minZ; z < maxZ; ++z) {
-                    loc.setY(y);
-                    loc.setZ(z);
-                    loc.setX(x);
-                    loc = loc.getBlock().getLocation();
-                    if (this.blockModifier == null) {
-                        this.blockModifier = new BlockModifier();
-                    }
-                    if (!this.getBlockModifier().containsLocation(p.getUniqueId(), loc)) {
-                        final Block b = loc.getBlock();
-                        Material mat = Material.IRON_FENCE;
-                        if (b.getType() == Material.AIR) {
-                            if (y == minY || y == maxY - 1) {
-                                mat = Material.OBSIDIAN;
-                            }
-                            if (x == location.getBlockX() && z == location.getBlockZ() && y > minY && y < maxY - 1) {
-                                this.getBlockModifier().storeBlockToRemove(p.getUniqueId(), b.getLocation());
 
-                            } else {
-                                this.getBlockModifier().storeBlockToRemove(p.getUniqueId(), b.getLocation());
-                                b.setType(mat);
-                            }
-
-                        }
-                    }
-                }
-            }
-        }
         if (playerHasApollo(player)) {
-            Bukkit.getScheduler().runTaskLater(CosmicSkyInventoryPets.get(), () -> getBlockModifier().removeBlocks(p.getUniqueId(), true, true), (long) ((long) (cageDuration(petItem.getLevel()) +cageDuration(petItem.getLevel()/2)) * 20));
+            Bukkit.getScheduler().runTaskLater(CosmicSkyInventoryPets.get(), () -> {
+                List<Block> newBlocks = blocks.stream().filter(Objects::nonNull).collect(Collectors.toList());
+                for (Block block : newBlocks) {
+                    block.setType(Material.AIR);
+                }
+                blockList.removeAll(newBlocks);
+            }, (long) ((long) (cageDuration(petItem.getLevel()) + cageDuration(petItem.getLevel() / 2)) * 20));
 
         } else {
-            Bukkit.getScheduler().runTaskLater(CosmicSkyInventoryPets.get(), () -> getBlockModifier().removeBlocks(p.getUniqueId(), true, true), (long) cageDuration(petItem.getLevel()) * 20);
-        }
+            Bukkit.getScheduler().runTaskLater(CosmicSkyInventoryPets.get(), () -> {
+                        List<Block> newBlocks = blocks.stream().filter(Objects::nonNull).collect(Collectors.toList());
+                        for (Block block : newBlocks) {
+                            block.setType(Material.AIR);
+                        }
+                        blockList.removeAll(newBlocks);
+                    }
 
+
+                    , (long) cageDuration(petItem.getLevel()) * 20);
+
+        }
 
 
         CageCooldown.enterCageCooldown(target);
@@ -196,6 +189,51 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         petItem.setLastUsed(System.currentTimeMillis());
 
         return true;
+    }
+
+    public Block setBlock(Location location, Material material) {
+        if (location.getBlock().getType() == Material.AIR) {
+            location.getBlock().setType(material);
+            return location.getBlock();
+        }
+        return null;
+    }
+
+    public List<Block> setOutlinedBlocks(Location location, Material material) {
+        ArrayList<Block> blocks = new ArrayList<Block>();
+        blocks.add(this.setBlock(location.clone().add(2.0, 0.0, 0.0), material));
+        blocks.add(this.setBlock(location.clone().add(-2.0, 0.0, 0.0), material));
+        blocks.add(this.setBlock(location.clone().add(0.0, 0.0, 2.0), material));
+        blocks.add(this.setBlock(location.clone().add(0.0, 0.0, -2.0), material));
+        blocks.add(this.setBlock(location.clone().add(2.0, 0.0, 2.0), material));
+        blocks.add(this.setBlock(location.clone().add(-2.0, 0.0, 2.0), material));
+        blocks.add(this.setBlock(location.clone().add(2.0, 0.0, -2.0), material));
+        blocks.add(this.setBlock(location.clone().add(-2.0, 0.0, -2.0), material));
+        blocks.add(this.setBlock(location.clone().add(-2.0, 0.0, -1.0), material));
+        blocks.add(this.setBlock(location.clone().add(1.0, 0.0, 2.0), material));
+        blocks.add(this.setBlock(location.clone().add(-1.0, 0.0, 2.0), material));
+        blocks.add(this.setBlock(location.clone().add(2.0, 0.0, 1.0), material));
+        blocks.add(this.setBlock(location.clone().add(2.0, 0.0, -1.0), material));
+        blocks.add(this.setBlock(location.clone().add(-1.0, 0.0, -2.0), material));
+        blocks.add(this.setBlock(location.clone().add(1.0, 0.0, -2.0), material));
+        blocks.add(this.setBlock(location.clone().add(-2.0, 0.0, 1.0), material));
+        blocks.add(this.setBlock(location.clone().add(-1.0, 0.0, -2.0), material));
+        blocks.add(this.setBlock(location.clone().add(1.0, 0.0, -2.0), material));
+        return blocks;
+    }
+
+    public List<Block> setInsideBlocks(Location location, Material material) {
+        ArrayList<Block> blocks = new ArrayList<Block>();
+        blocks.add(this.setBlock(location, material));
+        blocks.add(this.setBlock(location.clone().add(1.0, 0.0, 0.0), material));
+        blocks.add(this.setBlock(location.clone().add(-1.0, 0.0, 0.0), material));
+        blocks.add(this.setBlock(location.clone().add(0.0, 0.0, 1.0), material));
+        blocks.add(this.setBlock(location.clone().add(0.0, 0.0, -1.0), material));
+        blocks.add(this.setBlock(location.clone().add(1.0, 0.0, 1.0), material));
+        blocks.add(this.setBlock(location.clone().add(-1.0, 0.0, 1.0), material));
+        blocks.add(this.setBlock(location.clone().add(-1.0, 0.0, -1.0), material));
+        blocks.add(this.setBlock(location.clone().add(1.0, 0.0, -1.0), material));
+        return blocks;
     }
 
 
