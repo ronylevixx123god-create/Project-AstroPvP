@@ -46,7 +46,6 @@ import me.recolance.auction.util.Util;
 import net.milkbowl.vault.economy.Economy;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.commands.CommandArkReboot;
-import org.arkhamnetwork.Arkkit.patches.AntiCrash;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.Bukkit;
@@ -313,7 +312,7 @@ public class Controller {
         new BukkitRunnable() {
 
             public void run() {
-                if (Auction.stoppingServer || Arkkit.get().shutting_down || AntiCrash.reboot_task_id != -1 || CommandArkReboot.restart_task_exists) {
+                if (Auction.stoppingServer || Arkkit.get().shutting_down || CommandArkReboot.restart_task_exists) {
                     return;
                 }
                 List<Listing> listings = DataHolder.getListings();

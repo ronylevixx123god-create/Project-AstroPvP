@@ -9,7 +9,6 @@ import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.struct.Relation;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import me.astropvp.damageindicators.utils.DamageIndicatorUtils;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
@@ -136,15 +135,6 @@ public class InventoryWitcherPet extends InventoryPet {
             p.setMetadata("witcher_ability", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
             p.setMetadata("teleblock", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), Long.valueOf(System.currentTimeMillis() + (level * 2000))));
             WitcherCooldown.enterWitcherCooldown(p);
-            try {
-                if (DamageIndicatorUtils.isPlayerIndicating((Player) player)) {
-                    DamageIndicatorUtils.createDamageIndicator((Player) player,
-                            p.getLocation().add(1.0D, 2.0D, 0.0D),
-                            new String[]{CC.DarkRedB + "* WITCHER §7[" + sum + "s] §4§l*"});
-                }
-            } catch (Exception ex) {
-
-            }
             players.add(p);
         }
         //ParticleEffect.playEffect(ParticleEffect.LARGE_EXPLODE, player.getLocation().add(0.0D, 1.0D, 0.0D), 1.0F, 3);

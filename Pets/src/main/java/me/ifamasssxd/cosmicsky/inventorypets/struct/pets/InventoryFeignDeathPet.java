@@ -10,7 +10,6 @@ import com.massivecraft.factions.FLocation;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import me.astropvp.damageindicators.utils.DamageIndicatorUtils;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;

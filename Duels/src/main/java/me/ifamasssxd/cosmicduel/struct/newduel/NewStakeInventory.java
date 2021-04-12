@@ -99,11 +99,9 @@ public class NewStakeInventory {
             }
             lore.add(ChatColor.YELLOW + setting.getName() + ": " + ChatColor.RED + ChatColor.BOLD.toString() + "OFF");
         }
-        if (this.duel.getKit() == Kit.GKIT) {
-            lore.add(ChatColor.GREEN + ChatColor.BOLD.toString() + "GKit: " + ChatColor.GREEN + StringUtils.capitalize(this.duel.getCustomGKit().getKitName()));
-        } else {
+
             lore.add(ChatColor.GREEN + ChatColor.BOLD.toString() + "Kit: " + ChatColor.GREEN + StringUtils.capitalize(this.duel.getKit().getName(true)));
-        }
+
         lore.add(CC.GreenB + "Arena: " + CC.Green + (this.duel.getArena() == null ? "N/A" : this.duel.getArena().getName()));
         this.pendingItem = ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)14, ChatColor.YELLOW + "Click to ACCEPT Stake", lore);
         this.acceptedItem = ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)5, ChatColor.YELLOW + "Stake ACCEPTED", lore);

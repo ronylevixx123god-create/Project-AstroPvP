@@ -57,7 +57,6 @@ extends CustomInventory {
                 globalKitItem.setCallback((CustomInventory inventory, CustomInventoryItem customItem, InventoryClickEvent event) -> {
                     event.setCancelled(true);
                     this.duel.setCustomGKit(globalKit);
-                    this.duel.setKit(Kit.GKIT);
                     player.playSound(player.getLocation(), Sound.ORB_PICKUP, 1.0f, 1.0f);
                     this.duel.getSettings().updateSettingsInventory();
                     this.duel.setCreateState(DuelCreateState.SETTINGS);

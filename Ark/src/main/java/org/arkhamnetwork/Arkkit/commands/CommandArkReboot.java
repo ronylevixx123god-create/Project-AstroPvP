@@ -13,6 +13,11 @@
  */
 package org.arkhamnetwork.Arkkit.commands;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
+import me.astropvp.astrospawners.AstroSpawners;
+import me.astropvp.astrospawners.data.SpawnerDataHelper;
+import me.astropvp.astrospawners.utils.PlayerData;
+import me.astropvp.astrospawners.utils.PlayerDataManager;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.StaticMessages;
 import org.bukkit.Bukkit;
@@ -20,10 +25,12 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class CommandArkReboot
         implements CommandExecutor {
     public static boolean restart_task_exists = false;
+    private PlayerDataManager manager;
 
     public CommandArkReboot() {
         Bukkit.getPluginManager().registerEvents(new ArkRebootListener(), Arkkit.get());
@@ -39,8 +46,16 @@ public class CommandArkReboot
             sender.sendMessage(ChatColor.YELLOW + "There is already a pending restart task running.");
             return true;
         }
+
+        manager = new PlayerDataManager(AstroSpawners.getInstance());
         restart_task_exists = true;
         new ServerRebootTask(false).runTaskTimer(Arkkit.get(), 20L, 20L);
+        PlayerDataManager manager = AstroSpawners.getPlayerDataManager();
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            PlayerData data = manager.getPlayerData(p);
+            manager.savePlayerDataAsync(data);
+        }
+        sender.sendMessage(CC.translate("&a&l(!)&a Started Saving Spawner Data & Mobcoins"));
         return true;
     }
 }

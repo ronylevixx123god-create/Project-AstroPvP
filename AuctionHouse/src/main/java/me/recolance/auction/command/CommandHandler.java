@@ -48,7 +48,6 @@ import me.recolance.auction.util.Util;
 import net.milkbowl.vault.economy.Economy;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.commands.CommandArkReboot;
-import org.arkhamnetwork.Arkkit.patches.AntiCrash;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.arkhamnetwork.Arkkit.utils.TimeUtils;
@@ -283,7 +282,7 @@ public class CommandHandler
             return false;
         }
         Player player = (Player) sender;
-        if (Auction.stoppingServer || Arkkit.get().shutting_down || AntiCrash.reboot_task_id != -1 || CommandArkReboot.restart_task_exists) {
+        if (Auction.stoppingServer || Arkkit.get().shutting_down || CommandArkReboot.restart_task_exists) {
             Util.message(player, "&cYou cannot use the Auction House while the server is rebooting.");
             return true;
         }

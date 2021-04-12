@@ -9,7 +9,6 @@ import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.AntiCrash;
 import org.arkhamnetwork.Arkkit.utils.FactionUtil;
 import org.bukkit.*;
 import org.bukkit.entity.*;
@@ -82,7 +81,7 @@ public class CombatLogLogoutListener
             Bukkit.getLogger().info("Skipping " + e.getPlayer().getName() + " because not in combat");
             return;
         }
-        if (!(Arkkit.get().shutting_down || AntiCrash.crash || !CombatLog.inCombat(e.getPlayer()) && CombatLog.isPvPDisabled(e.getPlayer().getLocation()))) {
+        if (!(Arkkit.get().shutting_down || !CombatLog.inCombat(e.getPlayer()) && CombatLog.isPvPDisabled(e.getPlayer().getLocation()))) {
             if (e.getPlayer().hasMetadata("noCombatLog")) {
                 e.getPlayer().removeMetadata("noCombatLog", Arkkit.get());
                 return;

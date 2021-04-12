@@ -97,17 +97,14 @@ public class DuelAPI {
             }
             return;
         }
-        Inventory inv = Bukkit.createInventory(null, 54, p_name + "'s Duel Settings");
+        Inventory inv = Bukkit.createInventory(null, 9, p_name + "'s Duel Settings");
         ArrayList<String> lore = new ArrayList<String>();
         lore.add("");
         for (Setting setting : Setting.values()) {
             lore.add(ChatColor.YELLOW + setting.getName() + ": " + (d.getSettings().hasSetting(setting) ? ChatColor.GREEN + ChatColor.BOLD.toString() + "ON" : ChatColor.RED + ChatColor.BOLD.toString() + "OFF"));
         }
-        if (d.getKit() == Kit.GKIT) {
-            lore.add(ChatColor.YELLOW + "GKit: " + ChatColor.GREEN + ChatColor.BOLD.toString() + StringUtils.capitalize(d.getCustomGKit().getKitName()));
-        } else {
+
             lore.add(ChatColor.YELLOW + "Kit: " + (d.getKit().equals(Kit.BYOB) ? ChatColor.RED + ChatColor.BOLD.toString() + d.getKit().getName() : ChatColor.GREEN + ChatColor.BOLD.toString() + d.getKit().getName()));
-        }
         lore.add(CC.Yellow + "Arena: " + CC.Green + (d.getArena() == null ? "N/A" : d.getArena().getName()));
         lore.add("");
         lore.add(ChatColor.GRAY + "Click to accept access the stakes menu.");

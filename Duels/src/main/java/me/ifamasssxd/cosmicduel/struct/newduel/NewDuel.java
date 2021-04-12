@@ -75,7 +75,7 @@ public abstract class NewDuel {
     }
 
     public boolean isValidCustomMatch() {
-        return this.kit == Kit.DEBUFF || this.kit == Kit.HEALER || this.customGKit != null;
+        return this.customGKit != null;
     }
 
     public abstract String getName();

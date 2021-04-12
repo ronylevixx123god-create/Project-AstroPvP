@@ -82,6 +82,19 @@ public class ServerFixes implements Listener {
 //        }
 //    }
 
+    /*@EventHandler
+    public void blockPearl(PlayerTeleportEvent e) {
+        if (e.getCause() != null && e.getCause() == PlayerTeleportEvent.TeleportCause.ENDER_PEARL) {
+            if (e.getTo().add(0,1,0).getBlock().getType() != Material.AIR &&
+                    e.getTo().add(0,1,0).getBlock().getType() != Material.WATER &&
+                    e.getTo().add(0,1,0).getBlock().getType() != Material.LAVA) {
+                e.setCancelled(true);
+                return;
+            }
+
+        }
+    }*/
+
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         e.setJoinMessage(null);

@@ -375,8 +375,7 @@ public class DuelPlayer {
 
     public Inventory createCustomInventory() {
         Inventory inventory = Bukkit.createInventory((InventoryHolder)null, 54, (String)"Select a Duel Kit");
-        inventory.setItem(3, this.getKitItem(Kit.HEALER));
-        inventory.setItem(5, this.getKitItem(Kit.DEBUFF));
+
         int slot = 9;
         for (GlobalKits globalKit : GlobalKits.values()) {
             try {

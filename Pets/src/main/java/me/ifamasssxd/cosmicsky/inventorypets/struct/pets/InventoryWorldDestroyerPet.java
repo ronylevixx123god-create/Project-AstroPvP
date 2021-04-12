@@ -8,7 +8,6 @@ import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.struct.Relation;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import me.astropvp.damageindicators.utils.DamageIndicatorUtils;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
@@ -189,15 +188,6 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         }
 
 
-        try {
-            if (DamageIndicatorUtils.isPlayerIndicating((Player) player)) {
-                DamageIndicatorUtils.createDamageIndicator((Player) player,
-                        target.getLocation().add(1.0D, 2.0D, 0.0D),
-                        new String[] { CC.YellowB + "* WORLD DESTROYER §7[" + cageDuration(5) + "] §e§l*" });
-            }
-        } catch (Exception ex) {
-
-        }
 
         CageCooldown.enterCageCooldown(target);
 

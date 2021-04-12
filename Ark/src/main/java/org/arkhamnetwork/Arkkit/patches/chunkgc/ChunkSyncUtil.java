@@ -11,7 +11,6 @@ package org.arkhamnetwork.Arkkit.patches.chunkgc;
 
 import net.minecraft.server.v1_8_R3.Chunk;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.AntiCrash;
 import org.arkhamnetwork.Arkkit.utils.LongHash;
 import org.bukkit.Bukkit;
 import org.bukkit.World;

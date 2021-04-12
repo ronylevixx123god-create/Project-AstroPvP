@@ -15,7 +15,6 @@ package org.arkhamnetwork.Arkkit.patches.combatlog;
 
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
-import org.arkhamnetwork.Arkkit.patches.AntiCrash;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -54,7 +53,7 @@ final class CommandLogout
         }
         if (sender instanceof Player) {
             Player p = (Player) sender;
-            if (!(Arkkit.get().shutting_down || AntiCrash.crash || !CombatLog.inCombat(p) || Bukkit.getPluginManager().getPlugin("NetworkManager") != null && CombatLog.isPvPDisabled(p.getLocation()))) {
+            if (!(Arkkit.get().shutting_down || !CombatLog.inCombat(p) || Bukkit.getPluginManager().getPlugin("NetworkManager") != null && CombatLog.isPvPDisabled(p.getLocation()))) {
                 p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) You cannot logout until you are out of combat.");
                 p.sendMessage(ChatColor.GRAY + "You will be out of combat in " + ChatColor.RED + CommandLogout.getCombatSecondsLeft(p) + " second(s)");
                 return true;

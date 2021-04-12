@@ -12,7 +12,6 @@ import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import me.astropvp.damageindicators.utils.DamageIndicatorUtils;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
@@ -120,15 +119,6 @@ public class InventoryBansheePet extends InventoryPet {
             enemy.setMetadata("banshee_scrolls", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
             enemy.sendMessage(CC.translate(String.format("&4&l*** " + player.getName() + "&4&l's BANSHEE PET [&6" + duration + "s&4&l] - RKO! **", new Object[] { Integer.valueOf(duration) })));
             enemy.sendMessage(CC.translate(String.format("&c( %ds Silence, Phoenix - BLOCKED, Holy White Scrolls - BLOCKED )", new Object[] { Integer.valueOf(duration) })));
-            try {
-                if (DamageIndicatorUtils.isPlayerIndicating((Player) player)) {
-                    DamageIndicatorUtils.createDamageIndicator((Player) player,
-                            enemy.getLocation().add(1.0D, 2.0D, 0.0D),
-                            new String[] { CC.RedB + "* BANSHEED §7[" + duration + "§7] §cl*" });
-                }
-            } catch (Exception ex) {
-
-            }
         });
         CombatLog.flagCombat(player);
         player.setMetadata("immune_freeze", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));

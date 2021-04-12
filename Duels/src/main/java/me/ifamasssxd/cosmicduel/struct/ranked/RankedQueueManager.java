@@ -111,7 +111,6 @@ public class RankedQueueManager {
             arena = area;
             break;
         }
-        ranked.setKit(Kit.GODSET);
         if (arena != null) {
             ranked.setArena(arena);
             DuelAPI.duels.add(ranked);

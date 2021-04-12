@@ -87,15 +87,6 @@ public class MasteryFeignDeath extends MasteryCustomEnchantment {
         EntityTrackerEntry entry = (EntityTrackerEntry)(((WorldServer)player.world).getTracker()).trackedEntities.get(player.getId());
         player.playerConnection.sendPacket((Packet)fakePlayer);
         player.playerConnection.sendPacket((Packet)status);
-        try {
-            if (DamageIndicatorUtils.isPlayerIndicating(damaged)) {
-                DamageIndicatorUtils.createDamageIndicator(damaged,
-                        damaged.getLocation().add(1.0D, 2.0D, 0.0D),
-                        new String[] { CC.YellowB + "* FEIGN DEATH §7[" + seconds + "§7s ] §e§l*" });
-            }
-        } catch (Exception ex) {
-
-        }
         whoReceived.add(player);
         Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Enchantments.getInstance(), () -> {
             PacketPlayOutEntityDestroy destroy = new PacketPlayOutEntityDestroy(new int[] { entityId });

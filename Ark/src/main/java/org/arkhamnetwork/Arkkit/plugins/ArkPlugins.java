@@ -12,7 +12,6 @@ public enum ArkPlugins {
     ANTI_DUPE(new AntiDupe(Arkkit.get()), "Blocks many common dupe exploits, adds /scanchests"),
     BOAT_BLOCKER(new BoatBlocker(Arkkit.get()), "Prevents placement of boats due to possible dupe exploits."),
     POTION_STACK_LIMITER(new PotionStackLimiter(Arkkit.get()), "Prevents users from using potions with a stack size > 1."),
-    ANTI_CRASH(new AntiCrash(Arkkit.get()), "Monitors and corrects meomry leaks and catches crash issues, also automatically reboots servers with unstoppable crashes."),
     ASYNC_SPIGOT(new AsyncSpigot(Arkkit.get()), "Disables spigot's built in async method catcher."),
     ENTITY_CLEANER(new EntityCleaner(Arkkit.get()), "Removes entities that are heading towards unloaded chunks. Saves RAM, CPU from tick iterations."),
     TILE_ENTITY_CLEANER(new TileEntityCleaner(Arkkit.get()), "Removes empty tile entities (chests) as chunks load to decrease CPU tick iterations."),
@@ -44,7 +43,6 @@ public enum ArkPlugins {
     EXP_BOTTLES(new ExpBottles(Arkkit.get()), "Enables ability to use /xpbottle to withdraw vanilla levels into exp bottles."),
     NO_EXPLOSION_PHYSICS(new NoExplosionPhysics(Arkkit.get()), "Disables block physics updates caused by exploding creepers."),
     FILL_COMMAND(new FillCommand(Arkkit.get()), "Enables /fill which automatically fills dispensers with TNT from inventory."),
-    SPAWNER_FEE(new SpawnerFee(Arkkit.get()), "Charges players $ to mine spawners."),
     ANTI_GOD_APPLE_CRAFT(new AntiGodAppleCraft(Arkkit.get()), "Prevents god apples from being crafted."),
     POTION_FIX(new PotionFix(Arkkit.get()), "Nerfs vanilla potion behavior to prevent crazy OP effects like STR III."),
     ANTI_LOOT_STEAL(new AntiLootSteal(Arkkit.get()), "Loot can only be picked up by the killer of the entity for a few seconds."),
@@ -91,10 +89,7 @@ public enum ArkPlugins {
     NO_DUPE_EXPLOIT(new NoDupeExploit(Arkkit.get()), "Scans inventories for items with duplicated IID and removes them."),
     NO_SPAWN_HOMES(new NoSpawnHomes(Arkkit.get()), "Blocks players from setting homes or warps at /spawn."),
     FAT_BUCKETS(new FatBuckets(Arkkit.get()), "Enables Fat Buckets"),
-    PORTAL_REGIONS(new PortalRegions(Arkkit.get()), "Enables warp portal regions."),
-    SPAWN_POD(new SpawnPod(Arkkit.get()), "Enables legacy spawn pods on first join."),
-    PVP_SANITY(new PvPSanity(Arkkit.get()), "Prevents 1-hit kill scenarios."),
-    STACKABLE_SPAWNERS(new StackableSpawners(Arkkit.get()), "Ability to stack mob spawners!");
+    PVP_SANITY(new PvPSanity(Arkkit.get()), "Prevents 1-hit kill scenarios.");
 
     private ArkPlugin ap = null;
     private String desc = null;

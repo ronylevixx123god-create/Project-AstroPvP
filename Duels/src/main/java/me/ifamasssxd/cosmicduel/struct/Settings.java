@@ -95,13 +95,9 @@ public class Settings {
         String itemName = (Object)ChatColor.YELLOW + ChatColor.BOLD.toString() + "Kit";
         Material material = this.getDuel().getKit().getMaterial();
         ArrayList lore = Lists.newArrayList();
-        if (this.duel.getCustomGKit() != null && this.duel.getKit() == Kit.GKIT) {
-            itemName = (Object)ChatColor.YELLOW + ChatColor.BOLD.toString() + "Global Kit";
-            lore.add((Object)ChatColor.GREEN + this.duel.getCustomGKit().getItemName());
-            material = this.duel.getCustomGKit().getItemIcon();
-        } else {
+
             lore.add((Object)ChatColor.GREEN + ChatColor.BOLD.toString() + this.getDuel().getKit().getName(true));
-        }
+
         lore.add((Object)ChatColor.GRAY + "Click to select a kit.");
         ItemStack kit_item = ItemBuilder.buildItem(material, 1, this.getDuel().getKit().getData(), itemName, lore);
         kit_item.addUnsafeEnchantment(EnchantUtils.getCustomEnchant(), 1);
@@ -185,7 +181,6 @@ public class Settings {
         ClassInventory inv = new ClassInventory("Select a Kit", PlayerUtils.getRoundedSize(Kit.values().length) / 9);
         int index = 0;
         for (Kit k : Kit.values()) {
-            if (k == Kit.GODSET) continue;
             CustomInventoryItem item = this.getCustomInventoryItem(p, k);
             inv.insertItem(index++, item);
         }
@@ -269,18 +264,10 @@ public class Settings {
 
     public CustomInventoryItem getCustomInventoryItem(final Player p, final Kit k) {
         ArrayList lore = Lists.newArrayList();
-        String itemName = (Object)ChatColor.YELLOW + ChatColor.BOLD.toString() + k.getName() + (k == Kit.HEALER ? " (No Debuff) Kit" : " Kit");
-        if (k == Kit.GKIT) {
-            lore.add((Object)ChatColor.GRAY + "Click to select a /gkit.");
-            itemName = (Object)ChatColor.YELLOW + ChatColor.BOLD.toString() + "Global Kit";
-            if (this.duel.getCustomGKit() != null) {
-                lore.add("");
-                lore.add((Object)ChatColor.GREEN + ChatColor.BOLD.toString() + "Currently Selected");
-                lore.add((Object)ChatColor.GREEN + StringUtils.capitalize((String)this.duel.getCustomGKit().getKitName()));
-            }
-        } else {
+        String itemName = (Object)ChatColor.YELLOW + ChatColor.BOLD.toString() + k.getName() + " Kit";
+
             lore.add((Object)ChatColor.GRAY + "Click to select this kit.");
-        }
+
         CustomInventoryItem item = new CustomInventoryItem(new CustomItem(ItemBuilder.buildItem(k.getMaterial(), k.getData(), itemName, lore)).addEnchantment((Enchantment)(this.getDuel().getKit().equals((Object)k) ? EnchantUtils.getCustomEnchant() : null), 1).buildItem());
         item.setCallback(new CustomInventoryItemCallback(){
 
@@ -289,7 +276,7 @@ public class Settings {
                 event.setCancelled(true);
                 if (k.getPermission() != null && !p.hasPermission(k.getPermission())) {
                     p.sendMessage((Object)ChatColor.RED + "You do not have the required rank to use this kit.");
-                    p.sendMessage((Object)ChatColor.GRAY + "Purchase the rank at " + (Object)ChatColor.RED + ChatColor.UNDERLINE.toString() + "buy.exoduspvp.org" + (Object)ChatColor.GRAY + ".");
+                    p.sendMessage((Object)ChatColor.GRAY + "Purchase the rank at " + (Object)ChatColor.RED + ChatColor.UNDERLINE.toString() + "buy.astropvp.net" + (Object)ChatColor.GRAY + ".");
                     return;
                 }
                 if (Settings.this.hasSetting(Setting.ENVOY) && k != Kit.ENVOY) {
@@ -301,11 +288,6 @@ public class Settings {
                         return;
                     }
                     Settings.this.getCurrentSettings().add(Setting.ENVOY);
-                }
-                if (k == Kit.GKIT) {
-                    Settings.this.getDuel().setCustomGKit(GlobalKits.values()[0]);
-                    new GKitSelectionInventory(Settings.this.getDuel()).prepareInventory(p);
-                    return;
                 }
                 p.playSound(p.getLocation(), Sound.ORB_PICKUP, 1.0f, 1.0f);
                 Settings.this.getDuel().setKit(k);

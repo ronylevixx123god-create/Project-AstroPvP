@@ -30,15 +30,13 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.inventory.*;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerChatEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SlotBotInventoryListener implements Listener {
@@ -215,69 +213,5 @@ public class SlotBotInventoryListener implements Listener {
             return;
         ItemDeleter.removeItemDeleter(deleter);
     }
-
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void dmgDebuf1(final EntityDamageByEntityEvent event) {
-        if (event.getEntity() == null) {
-            return;
-        }
-        if (event.getDamager() == null) {
-            return;
-        }
-        if (event.getEntityType() != EntityType.PLAYER || event.getDamager().getType() != EntityType.PLAYER) {
-            return;
-        }
-        final Player damager = (Player) event.getDamager();
-        if (damager.getInventory().getHelmet() == null) return;
-        if (damager.getInventory().getChestplate() == null) return;
-        if (damager.getInventory().getLeggings() == null) return;
-        if (damager.getInventory().getBoots() == null) return;
-        if (damager.getInventory().getHelmet().getType() == Material.DIAMOND_HELMET &&
-                damager.getInventory().getChestplate().getType() == Material.DIAMOND_CHESTPLATE &&
-                damager.getInventory().getLeggings().getType() == Material.DIAMOND_LEGGINGS &&
-                damager.getInventory().getBoots().getType() == Material.DIAMOND_BOOTS) {
-            event.setDamage(event.getDamage() * 0.30);
-        }
-
-    }
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void dmgDebuf2(final EntityDamageByEntityEvent event) {
-        if (event.getEntity() == null) {
-            return;
-        }
-        if (event.getDamager() == null) {
-            return;
-        }
-
-        if (event.getEntityType() != EntityType.PLAYER || event.getDamager().getType() != EntityType.PLAYER) {
-            return;
-        }
-        final Player personBeingHit = (Player) event.getEntity();
-        if (personBeingHit.getInventory().getHelmet() == null) return;
-        if (personBeingHit.getInventory().getChestplate() == null) return;
-        if (personBeingHit.getInventory().getLeggings() == null) return;
-        if (personBeingHit.getInventory().getBoots() == null) return;
-        if (personBeingHit.getInventory().getHelmet().getType() == Material.DIAMOND_HELMET  ||
-                personBeingHit.getInventory().getChestplate().getType() == Material.DIAMOND_CHESTPLATE ||
-                personBeingHit.getInventory().getLeggings().getType() == Material.DIAMOND_LEGGINGS ||
-                personBeingHit.getInventory().getBoots().getType() == Material.DIAMOND_BOOTS) {
-            event.setDamage(event.getDamage() * 3.5);
-        }
-    }
-
-    @EventHandler
-    public void blockPearl(PlayerTeleportEvent e) {
-        if (e.getCause() != null && e.getCause() == PlayerTeleportEvent.TeleportCause.ENDER_PEARL) {
-            if (e.getTo().add(0,1,0).getBlock().getType() != Material.AIR &&
-                    e.getTo().add(0,1,0).getBlock().getType() != Material.WATER &&
-                    e.getTo().add(0,1,0).getBlock().getType() != Material.LAVA) {
-                e.setCancelled(true);
-                return;
-            }
-
-        }
-    }
-
-
 
 }

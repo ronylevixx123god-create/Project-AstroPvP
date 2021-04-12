@@ -339,9 +339,7 @@ extends NewDuel {
             SimpleDateFormat format = new SimpleDateFormat("EEE MM/dd/yy");
             SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm");
             String extraKitName = null;
-            if (this.getKit() != Kit.BYOB) {
-                extraKitName = this.getCustomGKit() != null && this.getKit() == Kit.GKIT ? ChatColor.GRAY + "using a " + ChatColor.WHITE + StringUtils.getCapitalized(this.getCustomGKit().getKitName()) + ChatColor.GRAY + " /gkit." : ChatColor.GRAY + "using a " + ChatColor.WHITE + this.getKit().getName(true) + ChatColor.GRAY + " kit.";
-            }
+
             ItemStack is = ItemBuilder.buildItem(Material.PAPER, ChatColor.WHITE + ChatColor.BOLD.toString() + loser.getName() + "'s Death Certificate", new String[]{ChatColor.WHITE + loser.getName() + ChatColor.GRAY + " was defeated in a " + ChatColor.WHITE + this.getName(), ChatColor.GRAY + "duel on " + ChatColor.WHITE + format.format(date) + " at " + timeFormat.format(date), ChatColor.GRAY + "in the " + ChatColor.WHITE + this.getArena().getName() + " Arena " + ChatColor.GRAY + "by " + ChatColor.WHITE + winner.getName(), extraKitName});
             if (winner.getInventory().firstEmpty() == -1) {
                 CollectionBin.addItem(winner, is);
@@ -660,18 +658,7 @@ extends NewDuel {
         } else {
             kitItems = this.getKit().getItems();
         }
-        if (this.getCustomGKit() != null && this.getKit() == Kit.GKIT) {
-            CustomGKit defaultGkit = duelPlayer.getDefaultGKit(this.getCustomGKit());
-            if (defaultGkit != null) {
-                kitItems = Lists.newArrayList();
-                kitItems.addAll(defaultGkit.getGKitItems());
-                kitItems.addAll(defaultGkit.getItems());
-            } else {
-                kitItems = KitUtils.getMaxedEnchantsFromGKit(this.getCustomGKit());
-            }
-        } else if ((this.getKit() == Kit.DEBUFF || this.getKit() == Kit.HEALER) && (defaultKit = duelPlayer.getDefaultKit(this.getKit())) != null) {
-            kitItems = defaultKit.getKitItems();
-        }
+
         boolean hadDisabledItems = false;
         int potionsToAdd = 0;
         for (ItemStack itemStack : kitItems) {

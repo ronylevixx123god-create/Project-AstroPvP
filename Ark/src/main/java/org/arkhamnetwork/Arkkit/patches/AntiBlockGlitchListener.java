@@ -29,7 +29,9 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.massivecraft.factions.*;
+import com.massivecraft.factions.iface.RelationParticipator;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
 import org.bukkit.Bukkit;
@@ -54,23 +56,6 @@ final class AntiBlockGlitchListener
     AntiBlockGlitchListener() {
     }
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)
-    public void onBlockPlaceFail(BlockPlaceEvent e) {
-        if (e.isCancelled() || !e.canBuild()) {
-            final Player p = e.getPlayer();
-            final Location l = p.getLocation();
-            if (CombatLog.inCombat(p)) {
-                return;
-            }
-            Bukkit.getScheduler().runTaskLater(Arkkit.get(), new Runnable() {
-
-                @Override
-                public void run() {
-                    p.teleport(l, PlayerTeleportEvent.TeleportCause.UNKNOWN);
-                }
-            }, 2L);
-        }
-    }
 
     @EventHandler
     public void onBlockPistonExtendEvent(BlockPistonExtendEvent e) {

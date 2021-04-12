@@ -203,9 +203,6 @@ implements Listener {
         Player p;
         if (e.hasItem() && e.getItem().getType() == Material.MUSHROOM_SOUP && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && DuelAPI.hasDuel(p = e.getPlayer())) {
             NewDuel d = DuelAPI.getDuel(p);
-            if (!d.getKit().getName().equalsIgnoreCase(Kit.SOUP.getName())) {
-                return;
-            }
             if (!d.getSettings().hasSetting(Setting.HEALING)) {
                 e.setCancelled(true);
                 p.sendMessage((Object)ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.YELLOW + "Your duel has Healing " + (Object)ChatColor.RED + (Object)ChatColor.UNDERLINE + "disabled.");
