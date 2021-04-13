@@ -64,6 +64,7 @@ import net.astropvp.core.conaxgames.giveall.ManualGiveAllCommand;
 import net.astropvp.core.items.ApolloRank;
 import net.astropvp.core.items.AstroPlusRank;
 import net.astropvp.core.items.HeroicUpgrade;
+import net.astropvp.core.items.RogueScratchcard;
 import net.astropvp.core.listeners.*;
 import net.astropvp.core.conaxgames.staff.Freeze;
 import net.astropvp.core.conaxgames.staff.FreezeCommand;
@@ -142,6 +143,7 @@ public class AstroCore extends JavaPlugin {
         new LastManStandingCapTask().runTaskTimer(this, 20L, 20L);
 
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new HeroicUpgrade());
+        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new RogueScratchcard());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new ApolloRank());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new AstroPlusRank());
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, new AutoBroadcastTask(), 20L, 6000L);
@@ -150,6 +152,8 @@ public class AstroCore extends JavaPlugin {
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "arkload vault_gui"), 100L);
         Bukkit.getScheduler().runTaskLater(this, ()->
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "arkload death_messages"), 100L);
+        Bukkit.getScheduler().runTaskLater(this, ()->
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "blockcommand remove ver"), 100L);
 
         if (!Bukkit.getPluginManager().isPluginEnabled("TitleManager")) {
             Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[Astro] " + ChatColor.RED + "TitleManager is not loaded.");
@@ -221,7 +225,6 @@ public class AstroCore extends JavaPlugin {
         this.getCommand("jackpot").setExecutor(new CommandJackpot());
         this.getServer().getPluginManager().registerEvents(new InventoryListener(), this);
         this.getServer().getPluginManager().registerEvents(new me.ifamasssxd.cosmiccoinflip.listeners.PlayerListener(), this);
-        this.getServer().getPluginManager().registerEvents(new InstaBreakSponge(), this);
 
         this.getServer().getPluginManager().registerEvents(new WorldBorderPearlFix(), this);
 
@@ -247,6 +250,7 @@ public class AstroCore extends JavaPlugin {
         this.toggleManager.loadToggles();
 
         this.getServer().getPluginManager().registerEvents(new Freeze(), this);
+        this.getServer().getPluginManager().registerEvents(new RogueScratchCardListener(), this);
         this.getServer().getPluginManager().registerEvents(new ArmorColorClickListener(), this);
         this.getServer().getPluginManager().registerEvents(new ChatListener(), this);
         this.getServer().getPluginManager().registerEvents(new BlockCommand(), this);
