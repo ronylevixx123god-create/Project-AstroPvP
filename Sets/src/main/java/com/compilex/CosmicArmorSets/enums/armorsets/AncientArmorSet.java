@@ -101,7 +101,8 @@ public class AncientArmorSet
                 , "&3&l➥ &3+10% Outgoing Damage from Soul Enchants."
                 , "&3&l➥ &3-15% Incoming Damage."
                 , "&3&l➥ &3Immune to Abyssal Stronghold perks."
-                , "&3&l➥ &3-50% Knockback.", "&3&l* &3Auto Bless."
+                , "&3&l➥ &3-50% Knockback."
+                , "&3&l➥ &3Auto Bless."
                 , "&3&l➥ &3Leviathan's Curse Ability.",
                 "");
     }

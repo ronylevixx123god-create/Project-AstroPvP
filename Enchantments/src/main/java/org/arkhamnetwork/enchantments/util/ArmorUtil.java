@@ -92,20 +92,8 @@ public class ArmorUtil {
 
     public static int getArmorValue(final Player pl) {
         int armor_val = 0;
-        for (final net.minecraft.server.v1_8_R3.ItemStack item : ((CraftPlayer) pl).getHandle().inventory.getArmorContents()) {
+        for (net.minecraft.server.v1_8_R3.ItemStack item : ((CraftPlayer) pl).getHandle().inventory.getArmorContents()) {
             Label_0343:
-            {
-                if (item != null) {
-                    if (item.tag != null && item.tag.hasKey("conaxData")) {
-                        final NBTBase base = item.tag.get("conaxData");
-                        if (base instanceof NBTTagCompound) {
-                            final NBTTagCompound comp = (NBTTagCompound) base;
-                            if (comp.hasKey("armorModifier")) {
-                                armor_val += comp.getInt("armorModifier");
-                                break Label_0343;
-                            }
-                        }
-                    }
                     try {
                         final Item items = (Item) item.getItem();
                         if (items == Items.LEATHER_HELMET) {
@@ -172,8 +160,8 @@ public class ArmorUtil {
 
                     }
                 }
-            }
-        }
+
+
         return armor_val;
 
     }

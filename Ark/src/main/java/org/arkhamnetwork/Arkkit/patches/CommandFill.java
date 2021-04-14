@@ -79,7 +79,7 @@ final class CommandFill
             sender.sendMessage(ChatColor.RED + "Either " + args[0] + " or " + args[1] + " is not a valid number.");
             return true;
         }
-        if (amount < 1 || radius < 0 || radius > 40) {
+        if (amount < 1 || radius < 0 || radius > 64) {
             sender.sendMessage(ChatColor.RED + "You must specify an amount>0 and a positive radius<=40");
             return true;
         }

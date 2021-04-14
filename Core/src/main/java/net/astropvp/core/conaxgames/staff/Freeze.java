@@ -39,6 +39,8 @@ public class Freeze implements Listener {
         target.sendMessage("");
         target.sendMessage(CC.RedB + "YOU HAVE BEEN FROZEN!");
         target.sendMessage(CC.Red + "Do not disconnect.");
+        target.sendMessage(CC.Red + "You the frozen channel in our discord: ");
+        target.sendMessage(CC.RedI + "https://discord.astropvp.net/");
         target.sendMessage("");
         StaffChat.sendGlobal(CC.White + "[Freeze] " + CC.Aqua + target.getName() + CC.Gray + " has been frozen by " + CC.White +  staff.getName());
         frozenPlayers.put(target.getUniqueId(), target.getLocation());

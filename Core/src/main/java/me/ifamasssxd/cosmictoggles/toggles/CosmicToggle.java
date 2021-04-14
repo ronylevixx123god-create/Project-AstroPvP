@@ -25,8 +25,6 @@ import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.commands.EssentialsToggleCommand;
 import com.massivecraft.factions.FPlayer;
 import me.astropvp.astroparticles.utils.ParticleUtils;
-import me.astropvp.damageindicators.DamageIndicators;
-import me.astropvp.damageindicators.utils.DamageIndicatorUtils;
 import me.ifamasssxd.cosmicduel.CosmicDuel;
 import me.ifamasssxd.itemfilter.Filter;
 import me.recolance.auction.Auction;
@@ -53,7 +51,6 @@ public enum CosmicToggle {
     AUCTION("Auction Bid Alerts", "/ah stfu"),
     DUELS("Duel Requests", "/duel toggle"),
     RELATION_REQUESTS("Relation Requests", "/f tr"),
-    TOGGLE_DAMAGEINDICATORS("Damage Indicators", "/di"),
     GRINDING_NOTIFICATIONS("Grinding Notifications", "/grinding stfu"),
     CLEAR_INVENTORY_CONFIRMATION("/clearinventory Confirmation", "/toggleciconfirm");
 
@@ -101,9 +98,6 @@ public enum CosmicToggle {
         }
         if (this == RELATION_REQUESTS) {
             return fplayer.hasFaction() && fplayer.getFaction().announceRelationshipRequests;
-        }
-        if (this == TOGGLE_DAMAGEINDICATORS) {
-            return DamageIndicatorUtils.isPlayerIndicating(player);
         }
 
         if (this == GRINDING_NOTIFICATIONS) {

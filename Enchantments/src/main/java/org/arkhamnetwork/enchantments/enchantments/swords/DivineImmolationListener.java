@@ -30,7 +30,7 @@ final class DivineImmolationListener implements Listener {
                     ((Player) le).playSound(le.getLocation(), Sound.ZOMBIE_PIG_ANGRY, 0.6f, 0.8f);
                     try {
                         if (ParticleUtils.isPlayerIndicating(le.getKiller())) {
-                            de.inventivegames.particle.ParticleEffect.FLAME.sendToPlayer((Player) le, le.getEyeLocation(), 0, 0, 0, 0.15f, 20);
+                            ParticleEffect.LAVA.sendToPlayer((Player) le, le.getEyeLocation(), 0, 0, 0, 0.15f, 5);
                         }
                     } catch (Exception exception) {
 

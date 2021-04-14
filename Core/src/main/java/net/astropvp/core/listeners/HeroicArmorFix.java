@@ -26,39 +26,24 @@ public class HeroicArmorFix implements Listener {
 
 
             if (e.getPlayer().getItemInHand().getType() == Material.GOLD_SWORD || e.getPlayer().getItemInHand().getType() == Material.GOLD_AXE) {
-                //e.getPlayer().getItemInHand().setDurability((short) 0);
+                e.getPlayer().getItemInHand().setDurability((short) 0);
 
-                ItemMeta meta = e.getPlayer().getItemInHand().getItemMeta();
-                meta.spigot().setUnbreakable(true);
-                e.getPlayer().getItemInHand().setItemMeta(meta);
             }
 
             if (helmet.getType() == Material.LEATHER_HELMET) {
-                //helmet.setDurability((short) 0);
-                ItemMeta meta = helmet.getItemMeta();
-                meta.spigot().setUnbreakable(true);
-                helmet.setItemMeta(meta);
+                helmet.setDurability((short) 0);
             }
 
             if (chestplate.getType() == Material.LEATHER_CHESTPLATE) {
-                //chestplate.setDurability((short) 0);
-                ItemMeta meta = chestplate.getItemMeta();
-                meta.spigot().setUnbreakable(true);
-                chestplate.setItemMeta(meta);
+                chestplate.setDurability((short) 0);
             }
 
             if (leggings.getType() == Material.LEATHER_LEGGINGS) {
-                //leggings.setDurability((short) 0);
-                ItemMeta meta = leggings.getItemMeta();
-                meta.spigot().setUnbreakable(true);
-                leggings.setItemMeta(meta);
+                leggings.setDurability((short) 0);
             }
 
             if (boots.getType() == Material.LEATHER_BOOTS) {
-                //boots.setDurability((short) 0);
-                ItemMeta meta = boots.getItemMeta();
-                meta.spigot().setUnbreakable(true);
-                boots.setItemMeta(meta);
+                boots.setDurability((short) 0);
             }
         } catch (Exception ex) {
 

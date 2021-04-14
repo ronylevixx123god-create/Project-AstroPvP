@@ -14,6 +14,7 @@ import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
@@ -126,6 +127,8 @@ public class RogueScratchCardGUI extends GUIBuilder {
                 int number1 = 0;
                 int random1 = generateRandomNumber();
                 this.inventory.setItem(random1, book);
+                player.playSound(player.getLocation(), Sound.NOTE_PLING, 10,10);
+
                 if (random1 == number1) {
                     won = true;
                 }
@@ -139,6 +142,8 @@ public class RogueScratchCardGUI extends GUIBuilder {
                 int number2 = 1;
                 int random2 = generateRandomNumber();
                 this.inventory.setItem(random2, book);
+                player.playSound(player.getLocation(), Sound.NOTE_PLING, 10,10);
+
 
                 if (random2 == number2) {
                     won = true;
@@ -154,6 +159,8 @@ public class RogueScratchCardGUI extends GUIBuilder {
                 int number3 = 2;
                 int random3 = generateRandomNumber();
                 this.inventory.setItem(random3, book);
+                player.playSound(player.getLocation(), Sound.NOTE_PLING, 10,10);
+
 
                 if (random3 == number3) {
                     won = true;
@@ -169,6 +176,8 @@ public class RogueScratchCardGUI extends GUIBuilder {
                 int number4 = 3;
                 int random4 = generateRandomNumber();
                 this.inventory.setItem(random4, book);
+                player.playSound(player.getLocation(), Sound.NOTE_PLING, 10,10);
+
 
                 if (random4 == number4) {
                     won = true;
@@ -184,6 +193,8 @@ public class RogueScratchCardGUI extends GUIBuilder {
                 int number5 = 4;
                 int random5 = generateRandomNumber();
                 this.inventory.setItem(random5, book);
+                player.playSound(player.getLocation(), Sound.NOTE_PLING, 10,10);
+
 
                 if (random5 == number5) {
                     won = true;
@@ -199,6 +210,8 @@ public class RogueScratchCardGUI extends GUIBuilder {
                 int number6 = 5;
                 int random6 = generateRandomNumber();
                 this.inventory.setItem(random6, book);
+                player.playSound(player.getLocation(), Sound.NOTE_PLING, 10,10);
+
 
                 if (random6 == number6) {
                     won = true;
@@ -214,6 +227,8 @@ public class RogueScratchCardGUI extends GUIBuilder {
                 int number7 = 6;
                 int random7 = generateRandomNumber();
                 this.inventory.setItem(random7, book);
+                player.playSound(player.getLocation(), Sound.NOTE_PLING, 10,10);
+
 
                 if (random7 == number7) {
                     won = true;
@@ -230,6 +245,8 @@ public class RogueScratchCardGUI extends GUIBuilder {
                 int number8 = 7;
                 int random8 = generateRandomNumber();
                 this.inventory.setItem(random8, book);
+                player.playSound(player.getLocation(), Sound.NOTE_PLING, 10,10);
+
 
                 if (random8 == number8) {
                     won = true;
@@ -245,6 +262,8 @@ public class RogueScratchCardGUI extends GUIBuilder {
                 int number9 = 8;
                 int random9 = generateRandomNumber();
                 this.inventory.setItem(random9, book);
+                player.playSound(player.getLocation(), Sound.NOTE_PLING, 10,10);
+
 
                 if (random9 == number9) {
                     won = true;
@@ -253,14 +272,21 @@ public class RogueScratchCardGUI extends GUIBuilder {
                 break;
         }
         boolean finalWon = won;
-        Bukkit.getScheduler().runTaskLaterAsynchronously(Enchantments.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLaterAsynchronously(AstroCore.getInstance(), () -> {
             if (finalWon == true) {
-                player.sendMessage(CC.translate("&a&l(!) &aYou have Won!"));
+                player.sendMessage("");
+                player.sendMessage(CC.translate("&a&l(!) &aYou have Won! You have received the Reward!"));
+                player.sendMessage("");
                 player.sendTitle(new Title(CC.translate("&a&lYou won!"), CC.translate("&7You have received the reward."),10,20,10));
                 player.getInventory().addItem(book);
+                player.playSound(player.getLocation(), Sound.VILLAGER_YES, 10,10);
+
             } else {
                 player.sendTitle(new Title(CC.translate("&c&lYou Lost!"), CC.translate("&7Better Luck Next Time."),10,20,10));
+                player.sendMessage("");
                 player.sendMessage(CC.translate("&c&l(!) &cYou have Lost!"));
+                player.sendMessage("");
+                player.playSound(player.getLocation(), Sound.ANVIL_BREAK, 10,10);
             }
             player.closeInventory();
         }, 40);
@@ -289,11 +315,15 @@ public class RogueScratchCardGUI extends GUIBuilder {
             player.sendMessage(CC.translate("&a&l(!) &aYou have Won! You have received the Reward!"));
             player.sendMessage("");
             player.getInventory().addItem(book);
+            player.playSound(player.getLocation(), Sound.VILLAGER_YES, 10,10);
+
         } else {
             player.sendTitle(new Title(CC.translate("&c&lYou Lost!"), CC.translate("&7Better Luck Next Time."),10,20,10));
             player.sendMessage("");
             player.sendMessage(CC.translate("&c&l(!) &cYou have Lost!"));
             player.sendMessage("");
+            player.playSound(player.getLocation(), Sound.ANVIL_BREAK, 10,10);
+
         }
         return;
     }

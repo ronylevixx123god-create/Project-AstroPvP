@@ -55,19 +55,6 @@ final class EnderpearlCooldownListener
         if ((e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && e.hasItem() && e.getItem().getType() == Material.ENDER_PEARL) {
             boolean teleblock;
             Player pl = e.getPlayer();
-            if (pl.hasMetadata("lastEnderpearlThrow")) {
-                long lastEnderpearlThrow = pl.getMetadata("lastEnderpearlThrow").get(0).asLong();
-                long cd = 400L;
-                long timeSinceThrow = System.currentTimeMillis() - lastEnderpearlThrow;
-                if (timeSinceThrow < cd) {
-                    double timeToWait = Math.max(0.1, (double) (cd - timeSinceThrow) / 1000.0);
-                    e.setCancelled(true);
-                    e.setUseItemInHand(Event.Result.DENY);
-                    pl.sendMessage(CC.RedB + "(!) " + CC.Red + "You must wait " + CC.RedB + NumberUtils.format(timeToWait, DecimalFormatType.SECONDS) + CC.Red + "s before throwing another Enderpearl!");
-                    pl.updateInventory();
-                    return;
-                }
-            }
             boolean bl = teleblock = pl.hasMetadata("teleblock") && pl.getMetadata("teleblock").get(0).asLong() > System.currentTimeMillis();
             if (!EnderpearlCooldown.isEnderpearlCooldownOver(pl) || teleblock) {
                 e.setCancelled(true);
@@ -83,12 +70,6 @@ final class EnderpearlCooldownListener
         }
     }
 
-    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void onPlayerThrow(ProjectileLaunchEvent event) {
-        if (event.getEntity() instanceof EnderPearl && event.getEntity().getShooter() instanceof Player) {
-            ((Player) event.getEntity().getShooter()).setMetadata("lastEnderpearlThrow", new FixedMetadataValue(Arkkit.get(), System.currentTimeMillis()));
-        }
-    }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onEnderpearlTeleport(PlayerTeleportEvent e) {

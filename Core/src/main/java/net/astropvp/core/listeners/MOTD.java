@@ -16,9 +16,44 @@ public class MOTD implements Listener {
 
         Bukkit.getScheduler().runTaskLaterAsynchronously(AstroCore.getInstance(), () -> {
             Player player = e.getPlayer();
-            for (int i = 0; i < 120; i++) {
-                player.sendMessage(CC.translate("&c "));
-            }
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&c "));
             player.sendMessage(ChatManager.translate(CC.translate("&a&lASTRO&e&lPVP &f- &7Factions")));
             player.sendMessage(CC.translate("&c "));
             player.sendMessage(ChatManager.translate(CC.translate("&aDiscord: &f&ndiscord.astropvp.net")));

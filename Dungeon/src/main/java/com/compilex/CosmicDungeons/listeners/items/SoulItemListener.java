@@ -150,7 +150,6 @@ implements Listener {
         if (e.getEntity() instanceof Player) {
             Player p = (Player)e.getEntity();
             double dmg = e.getDamage(EntityDamageEvent.DamageModifier.BASE);
-            dmg *= (double)ArmorUtil.getArmorDamageNullificationPercent((float)ArmorUtil.getArmorValue((Player)p));
             if (p.getHealth() > 0.0 && p.getHealth() - dmg <= 0.0) {
                 boolean hasPhoenix = Phoenix.hasPhoenixEquipped((Player)p);
                 int phoenixLevel = Phoenix.phoenixEquipped.getOrDefault(p.getUniqueId(), 0);

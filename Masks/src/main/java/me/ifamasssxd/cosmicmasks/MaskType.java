@@ -110,6 +110,9 @@ public enum MaskType {
     }
 
     public boolean hasEquipped(Player player) {
+        if (player.getInventory() == null) {
+            return false;
+        }
         ItemStack item = player.getInventory().getHelmet();
         if (item == null || item.getType() == Material.AIR) {
             return false;
