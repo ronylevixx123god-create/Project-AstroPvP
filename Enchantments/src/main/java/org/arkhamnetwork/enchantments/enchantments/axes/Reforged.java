@@ -29,7 +29,7 @@ public class Reforged extends CustomEnchantment {
         if (random < chance) {
             final ItemStack weapon = playerAttacker.getItemInHand();
             if (weapon != null && weapon.getDurability() != 0 && weapon.getMaxStackSize() == 1) {
-                playerAttacker.setItemInHand(ItemUtils.addDurability(weapon, 1));
+                //playerAttacker.setItemInHand(ItemUtils.addDurability(weapon, 1));
                 playerAttacker.updateInventory();
             }
         }
@@ -43,7 +43,7 @@ public class Reforged extends CustomEnchantment {
             if (random < chance) {
                 final ItemStack weapon = playerAttacker.getItemInHand();
                 if (weapon != null && weapon.getDurability() != 0 && weapon.getMaxStackSize() == 1) {
-                    playerAttacker.setItemInHand(ItemUtils.addDurability(weapon, 1));
+                    //playerAttacker.setItemInHand(ItemUtils.addDurability(weapon, 1));
                     playerAttacker.updateInventory();
                 }
             }

@@ -92,6 +92,9 @@ public enum MaskType {
     }
 
     public static boolean hasEquipped(Player player, String masktype) {
+        if (masktype == null) {
+            return false;
+        }
         MaskType type = MaskType.getFromName(masktype.toUpperCase());
         return type != null && type.hasEquipped(player);
     }
@@ -110,6 +113,9 @@ public enum MaskType {
     }
 
     public boolean hasEquipped(Player player) {
+        if (player == null) {
+            return false;
+        }
         if (player.getInventory() == null) {
             return false;
         }
