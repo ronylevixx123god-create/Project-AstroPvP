@@ -49,8 +49,10 @@ commands:
     description: Root command.
     usage: /<command>
   armorcolor:
-    aliases: ['colorarmor', 'color']
+    aliases: ['colorarmor', 'color', 'armor']
     description: Color Armor Command
+  merchant:
+    aliases: ['scratchcard']
   jackpot:
     description: Jackpot command.
   togglepay:

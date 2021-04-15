@@ -44,6 +44,21 @@ public class RogueScratchcard extends CosmicItem
         return inventoryItemType == InventoryItemType.CLICKED;
     }
 
+    public static ItemStack getRogueSratchCard() {
+        return new ItemBuilder(Material.PAPER, CC.translate("&c&lScratchCard &7(Right-Click)")
+                , CC.Gray + ""
+                , CC.translate("&7&nRight-Click&7 to have a chance"),
+                CC.translate("&7to unlock a reward from this scratchcard!"),
+                CC.translate(""),
+                CC.translate("&c&l * &cReward: &fRogue Book"),
+                CC.translate("&c&l * &cChance: &f0% - 100%"),
+                CC.translate("&c&l * &cLevel: &fI - III"),
+                CC.translate(""),
+                CC.translate("&8[&c!&8] &fUnlocked from the &cScratch Merchant&f &7(/merchant)&f.")
+
+        ).build();
+    }
+
     public void onInventoryClick(Player player, ItemStack cursor, NBTWrapper wrapper, NBTWrapper clickedWrapper, ItemStack clicked, InventoryClickEvent e) throws CosmicException {
 
     }
@@ -68,7 +83,7 @@ public class RogueScratchcard extends CosmicItem
         }
 
         if (item.getAmount()>1) {
-            throw new PrefixedException("You cannot apply multiple ranks at once!");
+            throw new PrefixedException("You cannot apply multiple cards at once!");
         }
         NBTTagCompoundBuilder cosmicData = wrapper.getCompoundOrCreate("conaxData");
 
