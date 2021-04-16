@@ -289,7 +289,7 @@ public class RogueScratchCardGUI extends GUIBuilder {
                 player.playSound(player.getLocation(), Sound.ANVIL_BREAK, 10,10);
             }
             player.closeInventory();
-        }, 40);
+        }, 25);
 
 
     }

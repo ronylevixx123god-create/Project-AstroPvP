@@ -8,6 +8,8 @@ import com.google.common.collect.Lists;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.Relation;
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
@@ -20,6 +22,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.libs.Vector3D;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
+import net.minecraft.server.v1_8_R3.GameProfileSerializer;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.enchantments.armor.Gears;
@@ -51,9 +54,9 @@ public class InventoryBansheePet extends InventoryPet {
     }
 
     public List getPetDescription(int level) {
-        return Lists.newArrayList((Object[])new String[] {
+        return Lists.newArrayList((Object[]) new String[]{
                 CC.Gray + "Call upon the deadly screeming Banshee.", CC.Gray, CC.YellowB + "Ability", CC.Gray + "Activates " + CC.Gray + "[RKO]:", CC.DarkRed + "* " + CC.Gray + "1.5x DMG to all players(8s) ", CC.DarkRed + "* " + CC.Gray + "Immune to freezes (8s) ", CC.DarkRed + "* " + CC.Gray + "Gears V (8s) ", CC.DarkRed + "* " + CC.Gray + "AoE (8x8) Silence IV (5s) ", CC.DarkRed + "* " + CC.Gray + "Negates enemy Phoenix (5s) ", CC.DarkRed + "* " + CC.Gray + "Negates enemy Holy White Scrolls (5s) ",
-                CC.Gray, CC.YellowB + "Cooldown", CC.Gray + " " + TimeUtils.formatSeconds(getCooldown(5)) });
+                CC.Gray, CC.YellowB + "Cooldown", CC.Gray + " " + TimeUtils.formatSeconds(getCooldown(5))});
     }
 
     public int getCooldown(int level) {
@@ -87,16 +90,17 @@ public class InventoryBansheePet extends InventoryPet {
         Faction faction = FactionUtils.getFaction(player);
         if (player.getNearbyEntities(8.0D, 8.0D, 8.0D).isEmpty()) {
             throw new PrefixedPetException("Could not find a valid target!");
+
         }
         for (Entity other : player.getNearbyEntities(8.0D, 8.0D, 8.0D)) {
             if (other instanceof Player) {
-                Player nearPlayer = (Player)other;
+                Player nearPlayer = (Player) other;
                 Faction nearFac = FactionUtils.getFaction(nearPlayer);
                 if (CosmicArmorSetsAPI.getArmorSet(nearPlayer) == ArmorSet.KOTH)
                     continue;
                 if (nearPlayer.getGameMode() == GameMode.CREATIVE)
                     continue;
-                if (nearFac != null && nearFac.getRelationTo((RelationParticipator)faction) != Relation.ENEMY && nearFac.getRelationTo((RelationParticipator)faction) != Relation.NEUTRAL)
+                if (nearFac != null && nearFac.getRelationTo((RelationParticipator) faction) != Relation.ENEMY && nearFac.getRelationTo((RelationParticipator) faction) != Relation.NEUTRAL)
                     continue;
                 if (AstroItemSkinsAPI.hasSkinEquipped(nearPlayer, SkinType.SPRING_2020_AXE)) {
                     nearPlayer.sendMessage(CC.translate("&c&l* SPIKED BAT SKIN *"));
@@ -112,36 +116,39 @@ public class InventoryBansheePet extends InventoryPet {
         } else {
             duration = 8;
         }
+
         nearbyEnemies.forEach(enemy -> {
             enemy.playSound(enemy.getLocation(), Sound.WITHER_HURT, 1.0f, 0.25f);
             enemy.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "* SILENCED " + ChatColor.GRAY + " 7s] " + ChatColor.DARK_PURPLE + ChatColor.BOLD + "*");
-            enemy.setMetadata("noDefenseProcs", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
-            enemy.setMetadata("banshee_scrolls", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
-            enemy.sendMessage(CC.translate(String.format("&4&l*** " + player.getName() + "&4&l's BANSHEE PET [&6" + duration + "s&4&l] - RKO! **", new Object[] { Integer.valueOf(duration) })));
-            enemy.sendMessage(CC.translate(String.format("&c( %ds Silence, Phoenix - BLOCKED, Holy White Scrolls - BLOCKED )", new Object[] { Integer.valueOf(duration) })));
+            enemy.setMetadata("noDefenseProcs", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
+            enemy.setMetadata("banshee_scrolls", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
+            enemy.sendMessage(CC.translate(String.format("&4&l*** " + player.getName() + "&4&l's BANSHEE PET [&6" + duration + "s&4&l] - RKO! **", new Object[]{Integer.valueOf(duration)})));
+            enemy.sendMessage(CC.translate(String.format("&c( %ds Silence, Phoenix - BLOCKED, Holy White Scrolls - BLOCKED )", new Object[]{Integer.valueOf(duration)})));
         });
         CombatLog.flagCombat(player);
-        player.setMetadata("immune_freeze", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
+        player.setMetadata("immune_freeze", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
         player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 1.0f, 0.25f);
-        player.setMetadata("banshee_active", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
-        EnchantmentAPI.getEnchantment("Gears").applyEquipEffect(player, 5);        player.sendMessage("");
+        player.setMetadata("banshee_active", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
+        EnchantmentAPI.getEnchantment("Gears").applyEquipEffect(player, 5);
+        player.sendMessage("");
         player.sendMessage(CC.translate("&4&lPET: ** BANSHEE [&6" + duration + "s&4&l] - RKO! **"));
         player.sendMessage("");
         (new BukkitRunnable() {
             public void run() {
                 player.sendMessage(CC.translate("&4&lPET:  BANSHEE - RKO has worn off! "));
-                player.removeMetadata("immune_freeze", (Plugin)CosmicSkyInventoryPets.get());
-                player.removeMetadata("banshee_active", (Plugin)CosmicSkyInventoryPets.get());
+                player.removeMetadata("immune_freeze", (Plugin) CosmicSkyInventoryPets.get());
+                player.removeMetadata("banshee_active", (Plugin) CosmicSkyInventoryPets.get());
                 EnchantmentAPI.getEnchantment("Gears").applyUnequipEffect(player, 5);
                 nearbyEnemies.forEach(x -> {
-                    x.removeMetadata("noDefenseProcs", (Plugin)CosmicSkyInventoryPets.get());
-                    x.removeMetadata("banshee_scrolls", (Plugin)CosmicSkyInventoryPets.get());
+                    x.removeMetadata("noDefenseProcs", (Plugin) CosmicSkyInventoryPets.get());
+                    x.removeMetadata("banshee_scrolls", (Plugin) CosmicSkyInventoryPets.get());
                     x.sendMessage(CC.translate("&4&lPET: &4&l[RKO] &efrom " + player.getName() + "'s Banshee Pet &e&nEXPIRED!"));
                 });
             }
-        }).runTaskLater((Plugin)CosmicSkyInventoryPets.get(), (20 * duration));
+        }).runTaskLater((Plugin) CosmicSkyInventoryPets.get(), (20 * duration));
         player.playSound(player.getLocation(), Sound.LAVA_POP, 1.1F, 1.0F);
         player.playSound(player.getLocation(), Sound.GHAST_SCREAM2, 2.0F, 2.0F);
+
         return true;
     }
 

@@ -19,9 +19,9 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class RogueScratchcard extends CosmicItem
+public class RogueScratchCard extends CosmicItem
         implements InventoryInteractable {
-    public RogueScratchcard() {
+    public RogueScratchCard() {
         super("rogue_scratchcard");
     }
 

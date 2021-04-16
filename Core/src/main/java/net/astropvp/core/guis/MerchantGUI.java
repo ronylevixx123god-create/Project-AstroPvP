@@ -4,21 +4,17 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.earth2me.essentials.api.Economy;
 import com.earth2me.essentials.api.NoLoanPermittedException;
 import com.earth2me.essentials.api.UserDoesNotExistException;
-import com.earth2me.essentials.utils.FormatUtil;
-import me.ifamasssxd.cosmiccoinflip.utils.ItemBuilder;
-import net.astropvp.core.items.RogueScratchcard;
+import net.astropvp.core.items.RevokeScratchCard;
+import net.astropvp.core.items.RogueScratchCard;
+import net.astropvp.core.items.SlotbotScratchCard;
 import net.astropvp.core.utils.GUIBuilder;
-import org.arkhamnetwork.Arkkit.patches.Balance;
-import org.arkhamnetwork.Arkkit.patches.balancetop.BalanceManager;
 import org.bukkit.Bukkit;
-import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 import java.util.List;
 
@@ -42,12 +38,14 @@ public class MerchantGUI extends GUIBuilder {
         for (int i = 0; i < 9; i++) {
         }
         this.inventory.setItem(0, getItems(0));
+        this.inventory.setItem(1, getItems(1));
+        this.inventory.setItem(2, getItems(2));
     }
 
     @Override
     protected ItemStack getItems(int slot) {
         if (slot == 0) {
-            ItemStack rogueSratchCard = RogueScratchcard.getRogueSratchCard();
+            ItemStack rogueSratchCard = RogueScratchCard.getRogueSratchCard();
             ItemMeta meta = rogueSratchCard.getItemMeta();
             List lore = meta.getLore();
             lore.add("");
@@ -56,6 +54,28 @@ public class MerchantGUI extends GUIBuilder {
             meta.setLore(lore);
             rogueSratchCard.setItemMeta(meta);
             return rogueSratchCard;
+        }
+        if (slot == 1) {
+            ItemStack revokeSratchCard = RevokeScratchCard.getRogueSratchCard();
+            ItemMeta meta = revokeSratchCard.getItemMeta();
+            List lore = meta.getLore();
+            lore.add("");
+            lore.add(CC.translate("&c&l* PRICE: &f$100,000,000"));
+            lore.add("");
+            meta.setLore(lore);
+            revokeSratchCard.setItemMeta(meta);
+            return revokeSratchCard;
+        }
+        if (slot == 2) {
+            ItemStack slotbotCard = SlotbotScratchCard.getRogueSratchCard();
+            ItemMeta meta = slotbotCard.getItemMeta();
+            List lore = meta.getLore();
+            lore.add("");
+            lore.add(CC.translate("&c&l* PRICE: &f$150,000,000"));
+            lore.add("");
+            meta.setLore(lore);
+            slotbotCard.setItemMeta(meta);
+            return slotbotCard;
         }
         return null;
     }
@@ -68,6 +88,15 @@ public class MerchantGUI extends GUIBuilder {
                 buyItem("rogue_scratchcard", 1000000000, player);
                 setItems();
                 break;
+            case 1:
+                buyItem("revoke_scratchcard", 100000000, player);
+                setItems();
+                break;
+            case 2:
+                buyItem("slotbot_scratchcard", 150000000, player);
+                setItems();
+                break;
+
         }
     }
 
@@ -92,5 +121,6 @@ public class MerchantGUI extends GUIBuilder {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "customitems give " + p.getName() + " " + customItem + " 1");
         }
     }
+
 
 }

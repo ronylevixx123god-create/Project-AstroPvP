@@ -7,8 +7,10 @@ import java.util.UUID;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
+import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.pets.*;
 import net.minecraft.server.v1_8_R3.GameProfileSerializer;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -60,6 +62,15 @@ public enum InventoryPets {
       profile.getProperties().put("textures", new Property("textures", this.skinBlob));
       this.builder = new NBTTagCompoundBuilder();
       GameProfileSerializer.serialize(this.builder.get(), profile);
+   }
+
+
+   public void setPetSkin(String skin) {
+      GameProfile profile = new GameProfile(UUID.randomUUID(), this.name().toLowerCase());
+      profile.getProperties().put("textures", new Property("textures", skin));
+      this.builder = new NBTTagCompoundBuilder();
+      GameProfileSerializer.serialize(this.builder.get(), profile);
+
    }
 
 

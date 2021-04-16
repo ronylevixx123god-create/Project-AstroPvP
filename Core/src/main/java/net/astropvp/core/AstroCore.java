@@ -22,7 +22,6 @@ import me.astropvp.commands.CommandGiveBackpack;
 import me.astropvp.listeners.BackpackListener;
 import me.astropvp.listeners.PlayerDamageListener;
 import me.astropvp.listeners.PortablePicnicListener;
-import me.astropvp.tasks.PortablePicnicTask;
 import me.ifamasssxd.betterpay.PayListener;
 import me.ifamasssxd.betterpay.PayToggle;
 import me.ifamasssxd.betterpay.commands.CommandTogglePay;
@@ -58,13 +57,9 @@ import me.ifamasssxd.killtracker.listeners.PlayerListener;
 import me.ifamasssxd.killtracker.listeners.SoulGemListener;
 import me.matthawkk.autobroadcast.tasks.AutoBroadcastTask;
 import me.matthawkk.autogiveall.struct.GiveAllManager;
-import me.matthawkk.autogiveall.tasks.AutoGiveAllTask;
 import net.astropvp.core.commands.*;
 import net.astropvp.core.conaxgames.giveall.ManualGiveAllCommand;
-import net.astropvp.core.items.ApolloRank;
-import net.astropvp.core.items.AstroPlusRank;
-import net.astropvp.core.items.HeroicUpgrade;
-import net.astropvp.core.items.RogueScratchcard;
+import net.astropvp.core.items.*;
 import net.astropvp.core.listeners.*;
 import net.astropvp.core.conaxgames.staff.Freeze;
 import net.astropvp.core.conaxgames.staff.FreezeCommand;
@@ -143,9 +138,15 @@ public class AstroCore extends JavaPlugin {
         new LastManStandingCapTask().runTaskTimer(this, 20L, 20L);
 
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new HeroicUpgrade());
-        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new RogueScratchcard());
+        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new RogueScratchCard());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new ApolloRank());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new AstroPlusRank());
+
+        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new RevokeScratchCard());
+
+        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new SlotbotScratchCard());
+
+        this.getServer().getPluginManager().registerEvents(new SlotbotScratchCardListener(), this);
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, new AutoBroadcastTask(), 20L, 6000L);
 
         Bukkit.getScheduler().runTaskLater(this, ()->
@@ -259,6 +260,9 @@ public class AstroCore extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new BackpackListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerDamageListener(), this);
         this.getServer().getPluginManager().registerEvents(new PortablePicnicListener(), this);
+
+        this.getServer().getPluginManager().registerEvents(new RevokeScratchCardListener(), this);
+
         this.getCommand("givebackpack").setExecutor(new CommandGiveBackpack());
         this.getCommand("merchant").setExecutor(new MerchantCommand());
 

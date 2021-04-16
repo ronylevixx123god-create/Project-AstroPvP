@@ -51,7 +51,7 @@ public class Rage extends CustomEnchantment {
             if (!pUser.getItemInHand().getType().name().toLowerCase().contains("_sword") || !(event.getDamager() instanceof LivingEntity))
                 return;
 
-            double mod = 0.054 * enchantLevel;
+            double mod = 0.052 * enchantLevel;
             double hitCombo = ((target instanceof Player) ? getPVPHitCombo((Player) user) : getPVEHitCombo((Player) user)) * mod + 1.0D;
             if (user instanceof Player) {
                 if (ParticleUtils.isPlayerIndicating((Player) user)) {
