@@ -66,7 +66,6 @@ implements Comparable<StoredFaction> {
         this.factionID = factionId;
         this.factionSpawners = spawners;
         this.factionContainers = factionContainers;
-        this.useSpawnerFee = ArkPlugins.SPAWNER_FEE.getArkPlugin().isRunning();
     }
 
     public void calculateSpawnerWorth() {
@@ -90,7 +89,7 @@ implements Comparable<StoredFaction> {
                 }
                 spawnerCost *= 0.01 * percent;
             }
-            this.totalSpawnerWorth += spawnerCost * (double)spawner.getSpawnerCount();
+            //this.totalSpawnerWorth += spawnerCost * (double)spawner.getSpawnerCount();
         }
     }
 
@@ -195,8 +194,7 @@ implements Comparable<StoredFaction> {
         retr.add(value + "Faction Wealth: " + key + ChatColor.BOLD.toString() + "$" + key + this.format.format(this.getTotalWorth()));
         retr.add(value + "Member Wealth: " + key + ChatColor.BOLD.toString() + "$" + key + this.format.format(this.totalBalance));
         if (this.useSpawnerFee) {
-            retr.add(value + "Spawner Value: " + key + ChatColor.BOLD.toString() + "$" + key + this.format.format(this.totalSpawnerWorth));
-            retr.add("" + value + "Mob Spawners: " + key + this.getMobSpawnerCount());
+            retr.add(value + "Spawner Value: " + key + ChatColor.BOLD.toString() + "$" + key + this.format.format(this.totalSpawnerWorth));;
         }
         retr.add(value + "Block Value: " + key + ChatColor.BOLD.toString() + "$" + key + this.format.format(this.containerWorth));
         if (P.getP().isIncludeBank()) {
@@ -233,13 +231,7 @@ implements Comparable<StoredFaction> {
         return -1;
     }
 
-    public int getMobSpawnerCount() {
-        int total = 0;
-        for (SpawnerLocation spawner : this.factionSpawners) {
-            total += spawner.getSpawnerCount();
-        }
-        return total;
-    }
+
 
     public String getFactionID() {
         return this.factionID;

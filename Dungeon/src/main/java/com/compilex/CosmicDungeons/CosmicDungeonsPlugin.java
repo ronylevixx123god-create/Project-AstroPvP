@@ -175,7 +175,7 @@ extends JavaPlugin {
         _.mkdirs();
         this.api = new DungeonsAPI();
         this.setupEconomy();
-        this.loadDungeons();
+        //this.loadDungeons();
         this.registerCommands();
         this.registerListeners();
         this.registerTasks();
@@ -316,29 +316,29 @@ extends JavaPlugin {
     private void registerListeners() {
         this.dungeonMenuListener = new DungeonMenuListener();
         this.playerJoinQuitListener = new PlayerJoinQuitListener();
-        this.dungeonMasterNPCListener = new DungeonMasterNPCListener();
-        this.dungeonPortalListener = new DungeonPortalListener();
+        //this.dungeonMasterNPCListener = new DungeonMasterNPCListener();
+        //this.dungeonPortalListener = new DungeonPortalListener();
         this.dungeonPortalCraftListener = new DungeonPortalCraftListener();
         this.dungeonInOutListener = new DungeonInOutListener();
         this.dungeonPlayerDeathListener = new DungeonPlayerDeathListener();
-        this.dungeonPlayerMoveListener = new DungeonPlayerMoveListener();
+        //this.dungeonPlayerMoveListener = new DungeonPlayerMoveListener();
         this.dungeonLootbagListener = new DungeonLootbagListener();
         this.dungeonSanityListener = new DungeonSanityListener();
         this.soulItemListener = new SoulItemListener();
         this.holyWhiteScrollListener = new HolyWhiteScrollListener();
         this.getServer().getPluginManager().registerEvents((Listener)this.dungeonMenuListener, (Plugin)this);
         this.getServer().getPluginManager().registerEvents((Listener)this.playerJoinQuitListener, (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)this.dungeonMasterNPCListener, (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)this.dungeonPortalCraftListener, (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)this.dungeonPortalListener, (Plugin)this);
+        //this.getServer().getPluginManager().registerEvents((Listener)this.dungeonMasterNPCListener, (Plugin)this);
+        //this.getServer().getPluginManager().registerEvents((Listener)this.dungeonPortalCraftListener, (Plugin)this);
+        //this.getServer().getPluginManager().registerEvents((Listener)this.dungeonPortalListener, (Plugin)this);
         this.getServer().getPluginManager().registerEvents((Listener)this.dungeonInOutListener, (Plugin)this);
         this.getServer().getPluginManager().registerEvents((Listener)this.dungeonPlayerDeathListener, (Plugin)this);
         this.getServer().getPluginManager().registerEvents((Listener)this.dungeonLootbagListener, (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)this.dungeonPlayerMoveListener, (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)this.dungeonSanityListener, (Plugin)this);
+        //this.getServer().getPluginManager().registerEvents((Listener)this.dungeonPlayerMoveListener, (Plugin)this);
+        //this.getServer().getPluginManager().registerEvents((Listener)this.dungeonSanityListener, (Plugin)this);
         this.getServer().getPluginManager().registerEvents((Listener)this.soulItemListener, (Plugin)this);
         this.getServer().getPluginManager().registerEvents((Listener)this.holyWhiteScrollListener, (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)new DungeonChallengeChestListener(), (Plugin)this);
+        //this.getServer().getPluginManager().registerEvents((Listener)new DungeonChallengeChestListener(), (Plugin)this);
         try {
             Class.forName("org.arkhamnetwork.Arkkit.patches.combatlog.CombatLoggerDeathEvent");
             this.getServer().getPluginManager().registerEvents((Listener)new HolyWhiteScrollCombatLoggerListener(), (Plugin)this);
@@ -380,8 +380,8 @@ extends JavaPlugin {
     }
 
     private void loadDungeons() {
-        CosmicDungeonsPlugin.get_().getApi().addDungeon(new Dungeon(Bukkit.getWorld("dungeon_yijki_a"), DungeonType.ABANDONED_SHIP, this.getConfig().getString("dungeons.dungeon_yijki_a.name"), new LinkedList<String>(this.getConfig().getStringList("dungeons.dungeon_yijki_a.description"))));
-        CosmicDungeonsPlugin.get_().getApi().addDungeon(new DestroyedOutpostDungeon(Bukkit.getWorld(DungeonType.DESTROYED_OUTPOST.getInternalName()), "&4&l&nDestroyed Outpost", new LinkedList<String>(Lists.newArrayList("", "&4&lDIFFICULTY", "&5&lGodly++", "", "&4&lLORE", CC.Gray + "After investigating the source of the", CC.Gray + "distress signal sent from the Abandoned Spaceship", CC.Gray + "and parsing over the recovered Cosmonaut Ship", CC.Gray + "master log files, a chilling series of events", CC.Gray + "has been uncovered.", "", CC.Gray + "With the teleportation matrix solved, the", CC.Gray + "Mother of Yijki\u2019s source location has been traced.", CC.Gray + "There is a rift into its dimension at the", CC.Gray + "core of this destroyed mining outpost.", "", CC.Gray + "You have been chosen to lead the assault", CC.Gray + "onto the hostile planet to rid the Cosmoverse", CC.Gray + "of this demonic entity of destruction."))));
+        //CosmicDungeonsPlugin.get_().getApi().addDungeon(new Dungeon(Bukkit.getWorld("dungeon_yijki_a"), DungeonType.ABANDONED_SHIP, this.getConfig().getString("dungeons.dungeon_yijki_a.name"), new LinkedList<String>(this.getConfig().getStringList("dungeons.dungeon_yijki_a.description"))));
+        //CosmicDungeonsPlugin.get_().getApi().addDungeon(new DestroyedOutpostDungeon(Bukkit.getWorld(DungeonType.DESTROYED_OUTPOST.getInternalName()), "&4&l&nDestroyed Outpost", new LinkedList<String>(Lists.newArrayList("", "&4&lDIFFICULTY", "&5&lGodly++", "", "&4&lLORE", CC.Gray + "After investigating the source of the", CC.Gray + "distress signal sent from the Abandoned Spaceship", CC.Gray + "and parsing over the recovered Cosmonaut Ship", CC.Gray + "master log files, a chilling series of events", CC.Gray + "has been uncovered.", "", CC.Gray + "With the teleportation matrix solved, the", CC.Gray + "Mother of Yijki\u2019s source location has been traced.", CC.Gray + "There is a rift into its dimension at the", CC.Gray + "core of this destroyed mining outpost.", "", CC.Gray + "You have been chosen to lead the assault", CC.Gray + "onto the hostile planet to rid the Cosmoverse", CC.Gray + "of this demonic entity of destruction."))));
     }
 
     private void mkdirs() {

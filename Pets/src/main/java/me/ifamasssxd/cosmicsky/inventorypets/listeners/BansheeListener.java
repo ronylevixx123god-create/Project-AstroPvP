@@ -19,7 +19,7 @@ public class BansheeListener implements Listener {
         if (event.getEntity().getType().equals(EntityType.PLAYER) && event.getDamager().getType().equals(EntityType.PLAYER)) {
             Player damager = (Player)event.getDamager();
             if (damager.hasMetadata("banshee_active"))
-                event.setDamage(event.getDamage() * 1.55D);
+                event.setDamage(event.getDamage() * 1.50D);
         }
     }
 }

@@ -132,14 +132,13 @@ public class EnchantmentBookListener implements Listener {
                         }
                     }
                 }
-                if (pl.hasPermission("cosmicpvp.heroic") && Math.random() <= 0.05) {
-                    pl.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "(!) " + ChatColor.GREEN + "Due to your " + ChatColor.UNDERLINE + "Heroic Rank" + ChatColor.GREEN + " status, this book will attempt to apply to your equipment but will not be consumed!");
-                } else {
+
+                //THIS IS WHERE YOU FIW APPLYING STACKED BOOKS
                     pl.setItemOnCursor((ItemStack) null);
-                }
+
                 e.setCancelled(true);
                 e.setResult(Event.Result.DENY);
-                if (Bukkit.getPluginManager().isPluginEnabled("CosmicOutposts") && CosmicOutpostsAPI.controlsHeroOutpost(pl)) {
+                if (Bukkit.getPluginManager().isPluginEnabled("CosmicKOTH") && CosmicOutpostsAPI.controlsHeroOutpost(pl)) {
                     pl.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "+10% SUCCESS " + ChatColor.RED + ChatColor.BOLD + "-25% DESTROY " + ChatColor.GRAY + "(Hero Outpost Perk)");
                 }
                 final boolean success = EnchantmentBook.applyEnchantmentBook(pl, ench_book, e.getCurrentItem());

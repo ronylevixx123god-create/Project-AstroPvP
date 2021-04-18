@@ -36,7 +36,7 @@ public class Guardians extends CustomEnchantment {
         ig.setCanPickupItems(false);
         ig.setCustomName(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + summoner.getName() + "'s Guardian");
         ig.setCustomNameVisible(true);
-        final double customHp = level * 15;
+        final double customHp = level;
         ig.setMaxHealth(customHp);
         ig.setHealth(customHp);
         ig.getWorld().playSound(ig.getLocation(), Sound.IRONGOLEM_DEATH, 1.0f, 0.55f);

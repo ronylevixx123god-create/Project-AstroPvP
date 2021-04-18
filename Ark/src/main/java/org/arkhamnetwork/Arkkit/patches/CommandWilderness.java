@@ -73,7 +73,7 @@ final class CommandWilderness
                     continue;
                 player.playSound(player.getLocation(), Sound.BAT_TAKEOFF, 1.0f, 0.67f);
                 player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 60, 0));
-                player.teleport(new Location(world, (double) x + 0.5, y, (double) z + 0.5), PlayerTeleportEvent.TeleportCause.UNKNOWN);
+                player.teleport(new Location(world, (double) x + 0.5, y+4, (double) z + 0.5), PlayerTeleportEvent.TeleportCause.UNKNOWN);
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', WildernessCommand.messageSuccess.replace("{NAME}", player.getName()).replace("{X}", "" + x).replace("{Y}", "" + y).replace("{Z}", "" + z).replace("{WORLD}", world.getName())));
                 //Bukkit.getLogger().info("Wilderness teleporting " + player.getName() + " to " + player.getLocation());
                 return true;

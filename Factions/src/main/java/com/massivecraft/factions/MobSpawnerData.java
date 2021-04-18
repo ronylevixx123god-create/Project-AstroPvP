@@ -16,15 +16,12 @@ final class MobSpawnerData {
 
     public MobSpawnerData(CreatureSpawner creatureSpawner) {
         this.spawnerType = creatureSpawner.getSpawnedType();
-        this.spawnerCount = creatureSpawner.getSpawnerCount();
+        //this.spawnerCount = creatureSpawner.getSpawnerCount();
     }
 
     public EntityType getSpawnerType() {
         return this.spawnerType;
     }
 
-    public int getSpawnerCount() {
-        return this.spawnerCount;
-    }
 }
 

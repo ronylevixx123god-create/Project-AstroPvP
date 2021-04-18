@@ -71,7 +71,7 @@ public class HeroicDetonate extends CustomEnchantment {
             final BlockBreakEvent bbe = (BlockBreakEvent) event;
             if (!bbe.isCancelled()) {
                 final Material type = block.getType();
-                if (type == Material.REDSTONE_COMPARATOR || type == Material.SPONGE || type == Material.REDSTONE_COMPARATOR_ON || type == Material.REDSTONE_COMPARATOR_OFF) {
+                if (type == Material.REDSTONE_COMPARATOR || type == Material.JUKEBOX || type == Material.SPONGE || type == Material.REDSTONE_COMPARATOR_ON || type == Material.REDSTONE_COMPARATOR_OFF) {
                     return;
                 }
                 try {

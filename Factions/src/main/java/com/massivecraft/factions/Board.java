@@ -253,7 +253,6 @@ public class Board {
             str = timeSinceClaimed < TimeUnit.HOURS.toMillis(24L) ? str + " (claim " + TimeUtil.formatSeconds(timeSinceClaimed / 1000L) + " old)" : str + " (claim >1d old)";
         }
         int spawnerCount = Board.getSpawnersInChunk(flocation);
-        str = str + CC.Aqua + " [" + CC.White + spawnerCount + "x" + CC.Aqua + " spawners]";
         if (spawnerCount > 0 && player != null) {
             new FancyMessage(P.p.txt.titleize(str)).formattedTooltip(Board.getChunkSpawnerHoverData(flocation)).send(player);
         } else {
@@ -369,8 +368,6 @@ public class Board {
 
     private static int getSpawnerCount(MobSpawnerData[] data) {
         int total = 0;
-        for (MobSpawnerData m : data)
-            total += m.getSpawnerCount();
         return total;
     }
 
@@ -380,7 +377,7 @@ public class Board {
             return hoverData;
         HashMap<EntityType, Integer> spawnerTypeCounts = new HashMap<>();
         for (MobSpawnerData m : (MobSpawnerData[]) expiringSpawnerCountMap.get(fLocation.toString()))
-            spawnerTypeCounts.put(m.getSpawnerType(), spawnerTypeCounts.getOrDefault(m.getSpawnerType(), 0) + m.getSpawnerCount());
+            spawnerTypeCounts.put(m.getSpawnerType(), spawnerTypeCounts.getOrDefault(m.getSpawnerType(), 0));
         hoverData.add(new FancyMessage(CC.Aqua + "Chunk: " + CC.White + fLocation.toRawString()));
         for (Map.Entry<EntityType, Integer> entry : spawnerTypeCounts.entrySet())
             hoverData.add(new FancyMessage(CC.White + entry.getValue() + "x " + CC.Gray + entry.getKey().name().replace("_", " ")));

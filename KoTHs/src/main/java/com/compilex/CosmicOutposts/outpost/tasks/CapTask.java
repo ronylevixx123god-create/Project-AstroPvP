@@ -112,7 +112,7 @@ implements Runnable {
                 if (this.capPercent < 1.0f) {
                     float capPercentIncreaseInterval = this.getCapPercentIncreaseInterval(FMC);
                     this.getClass();
-                    float f = capPercentIncreaseInterval * 1.0f;
+                    float f = capPercentIncreaseInterval * 5.0f;
                     if (this.factionUpgrades) {
                         f = this.applyFactionUpgrades(this.defendingFaction, f);
                     }
@@ -153,7 +153,7 @@ implements Runnable {
                 if (this.isAFactionDefending() && !this.attackingFaction.equals(this.defendingFaction)) {
                     float capPercentDecreaseInterval = this.getCapPercentDecreaseInterval(FMC);
                     this.getClass();
-                    float f = capPercentDecreaseInterval * 1.0f;
+                    float f = capPercentDecreaseInterval * 5.0f;
                     if (this.factionUpgrades) {
                         f = this.applyFactionUpgrades(this.defendingFaction, f);
                     }
@@ -182,7 +182,7 @@ implements Runnable {
                 if (this.capPercent < 1.0f) {
                     float capPercentIncreaseInterval3 = this.getCapPercentIncreaseInterval(FMC);
                     this.getClass();
-                    float f = capPercentIncreaseInterval3 * 1.0f;
+                    float f = capPercentIncreaseInterval3 * 5.0f;
                     if (this.factionUpgrades) {
                         f = this.applyFactionUpgrades(this.defendingFaction, f);
                     }
@@ -199,7 +199,7 @@ implements Runnable {
                 if (this.isAFactionDefending()) {
                     float capPercentDecreaseInterval2 = this.getCapPercentDecreaseInterval(FMC);
                     this.getClass();
-                    float f = capPercentDecreaseInterval2 * 1.0f;
+                    float f = capPercentDecreaseInterval2 * 5.0f;
                     if (this.factionUpgrades) {
                         f = this.applyFactionUpgrades(this.attackingFaction, f);
                     }

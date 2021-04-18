@@ -46,16 +46,13 @@ public class Rogue extends CustomEnchantment {
             return;
         }
         if (this.isPlayerBehind(p, playerHit)) {
-            final double multi = 1.0 + 0.166666666666666 * level + Math.random() / 3;
+            final double multi = 1.0 + 0.166666666666666 * level + Math.random() / 4;
             final int soulCost = 150;
             if (soulCost > KillTrackerAPI.getAllSouls(p)) {
                 return;
             }
             double damage = e.getDamage();
-            if (damage > 8) {
-                damage = 8;
-            }
-            e.setDamage(damage + (multi * 0.56));
+            e.setDamage(damage + (multi * 0.40));
 
             if (player instanceof Player) {
                 try {

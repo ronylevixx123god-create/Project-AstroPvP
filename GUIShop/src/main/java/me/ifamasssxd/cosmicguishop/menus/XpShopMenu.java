@@ -21,6 +21,8 @@ package me.ifamasssxd.cosmicguishop.menus;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.google.common.collect.Lists;
+
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,7 +63,7 @@ public class XpShopMenu implements Menu{
             ItemMeta meta = item.getItemMeta();
             List<String> lore = meta.hasLore() ? meta.getLore() : new ArrayList<>();
             lore.add(CC.translate("&f&l&c&b"));
-            lore.add(CC.translate("&a&l* COST: " + CC.White + (int) Base64Utils.getCost(s) + CC.GreenB +  " XP"));
+            lore.add(CC.translate("&a&l* COST: " + CC.White + NumberFormat.getInstance().format((int) Base64Utils.getCost(s)) + CC.GreenB +  " XP"));
             lore.add(CC.translate("&f&l&c&b"));
             meta.setLore(lore);
             item.setItemMeta(meta);
@@ -117,7 +119,7 @@ public class XpShopMenu implements Menu{
             itemStack.setItemMeta(meta);
             player.getInventory().addItem(itemStack);
             player.updateInventory();
-            player.sendMessage(CC.Green + "Purchased " + meta.getDisplayName() + CC.Green + " for " + (int) cost + "XP!");
+            player.sendMessage(CC.Green + "Purchased " + meta.getDisplayName() + CC.Green + " for " + NumberFormat.getInstance().format((int) cost) + "XP!");
         }
     }
 
@@ -134,7 +136,7 @@ public class XpShopMenu implements Menu{
         lore.add(CC.Gray + "This shop contains various items that will help");
         lore.add(CC.Gray + "you set up on AstroPvP");
         lore.add("");
-        lore.add(CC.Green + "Your XP: " + CC.White + player.getTotalExperience());
+        lore.add(CC.Green + "Your XP: " + CC.White + NumberFormat.getInstance().format(player.getTotalExperience()));
         meta.setLore(lore);
         item.setItemMeta(meta);
         return item;
