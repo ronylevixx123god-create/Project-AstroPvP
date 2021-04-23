@@ -62,7 +62,7 @@ public class Rage extends CustomEnchantment {
                 hitCombo = 10.0D;
             if (hitCombo > 1.0D) {
 
-                double damage = event.getDamage(EntityDamageEvent.DamageModifier.BASE) +2;
+                double damage = event.getDamage(EntityDamageEvent.DamageModifier.BASE) +4;
 
                 event.setDamage((damage * hitCombo * mod));
                 target.setMetadata("effectedByRage", new FixedMetadataValue(Enchantments.getInstance(), System.currentTimeMillis()));

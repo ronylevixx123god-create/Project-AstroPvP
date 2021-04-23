@@ -85,14 +85,14 @@ implements Listener {
             ItemStack tntItem = new ItemStack(Material.TNT);
             TNTTypes tntType = this.getTNTType(tntItem);
             if (tntType != null) {
-                e.getEntity().setMetadata("custom_tnt", new FixedMetadataValue(CosmicCustomTNT.get(), tntType.name()));
+                //e.getEntity().setMetadata("custom_tnt", new FixedMetadataValue(CosmicCustomTNT.get(), tntType.name()));
                 return;
             }
             if (tntPrimed.getSource() != null && tntPrimed.getSource().getBukkitEntity() != null) {
                 Location loc = tntPrimed.getSource().getBukkitEntity().getLocation();
                 TNTTypes tnt_type = tnt_tracker.remove(loc);
                 if (tnt_type != null) {
-                    e.getEntity().setMetadata("custom_tnt", new FixedMetadataValue(CosmicCustomTNT.get(), tnt_type.name()));
+                    //e.getEntity().setMetadata("custom_tnt", new FixedMetadataValue(CosmicCustomTNT.get(), tnt_type.name()));
                 }
             }
         }
@@ -288,7 +288,7 @@ implements Listener {
                 final List<Block> blockList = e.blockList();
                 for (Block b : blockList) {
                     if (b.getType() == Material.AIR || b.getType() == Material.MOB_SPAWNER) continue;
-                    b.setMetadata("hexBlocks", new FixedMetadataValue(CosmicCustomTNT.get(), System.currentTimeMillis()));
+                    //b.setMetadata("hexBlocks", new FixedMetadataValue(CosmicCustomTNT.get(), System.currentTimeMillis()));
                     de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), b.getLocation(), 0f, 0.0f, 0f, 1.2f, 20);
 
                     Bukkit.getScheduler().runTaskLater(CosmicCustomTNT.get(), new Runnable(){
@@ -336,7 +336,7 @@ implements Listener {
             return;
         }
         TNTPrimed tnt = (TNTPrimed)l.getWorld().spawnEntity(l, EntityType.PRIMED_TNT);
-        tnt.setMetadata("fastExplosion", new FixedMetadataValue(CosmicCustomTNT.get(), true));
+        //tnt.setMetadata("fastExplosion", new FixedMetadataValue(CosmicCustomTNT.get(), true));
         tnt.setFuseTicks(0);
     }
 

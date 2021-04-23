@@ -20,12 +20,12 @@ public class FirstJoin implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerJoin(final PlayerJoinEvent event) {
         final Player player = event.getPlayer();
-        this.chest = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("StarterBundle");
+        //this.chest = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("StarterBundle");
 
         if (!player.hasPlayedBefore()) {
             ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
             //Bukkit.dispatchCommand(console, "mc give " + event.getPlayer().getName() + " StarterBundle 1");
-            event.getPlayer().getInventory().addItem(this.chest.createClaimableItem(true));
+            //event.getPlayer().getInventory().addItem(this.chest.createClaimableItem(true));
             event.getPlayer().teleport(new Location(Bukkit.getWorld("world"), 1D, 125.0D, -15D), PlayerTeleportEvent.TeleportCause.UNKNOWN);
         }
     }

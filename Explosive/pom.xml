@@ -81,12 +81,7 @@
             <version>0.1</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Utils</artifactId>
-            <version>0.1</version>
-            <scope>provided</scope>
-        </dependency>
+
 
 
         <!-- System Repos -->
@@ -179,6 +174,13 @@
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/SilkSpawners.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>astspawners</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/AstroSpawners.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
@@ -311,7 +313,7 @@
             <artifactId>Utils2</artifactId>
             <version>0.1</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/Utils-0.1.jar</systemPath>
+            <systemPath>${project.basedir}/lib/CosmicPvPUtils.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
