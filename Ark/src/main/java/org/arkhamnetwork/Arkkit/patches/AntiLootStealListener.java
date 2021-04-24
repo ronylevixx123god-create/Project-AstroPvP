@@ -65,7 +65,7 @@ final class AntiLootStealListener
     public void onPlayerDeath(PlayerDeathEvent event) {
         if (event.getEntity().getKiller() instanceof Player) {
             if (AntiLootSteal.disabledWorlds.contains(event.getEntity().getWorld().getName())) {
-                return;
+                return;h
             }
             Player killer = event.getEntity().getPlayer().getKiller();
             Player player = event.getEntity().getPlayer();

@@ -3,23 +3,18 @@ package net.astropvp.core.listeners;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import me.astropvp.astrospawners.data.SpawnerData;
 import me.astropvp.astrospawners.data.SpawnerDataHelper;
-import me.astropvp.astrospawners.items.ItemSpawner;
 import net.astropvp.core.utils.ChunkBusterUtils;
-import net.astropvp.core.utils.ChunkbusterCooldown;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.block.Dispenser;
 import org.bukkit.block.Dropper;
-import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class ChunkBusterListener implements Listener {
@@ -43,14 +38,6 @@ public class ChunkBusterListener implements Listener {
                 return;
             }
 
-            if (ChunkbusterCooldown.isOnChunkbusterCooldown(event.getPlayer())) {
-                event.getPlayer().sendMessage(ChatColor.RED + "You cannot place a chunkbuster while on Chunkbuster Cooldown! This lasts 5 seconds!");
-                event.setCancelled(true);
-                return;
-            }
-
-
-            ChunkbusterCooldown.enterChunkbusterCooldown(event.getPlayer());
             int X = event.getBlock().getChunk().getX() * 16;
             int Z = event.getBlock().getChunk().getZ() * 16;
             for (int x = 0; x < 16; x++) {
@@ -64,7 +51,7 @@ public class ChunkBusterListener implements Listener {
                                 data.setNullSpawner(true);
                             }
                         }
-                        if ((block.getType() != Material.BEDROCK) && (block.getType() != Material.AIR)) {
+                        if ((block.getType() != Material.BEDROCK) && (block.getType() != Material.AIR) && (block.getType() != Material.JUKEBOX)) {
                             if (block.getType() == Material.CHEST || block.getType() == Material.DISPENSER || block.getType() == Material.DROPPER) {
                                 if (block.getType() == Material.CHEST) {
                                     Chest c = (Chest) block.getState();

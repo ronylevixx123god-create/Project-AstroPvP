@@ -53,6 +53,10 @@ public class SpawnerShopGUI
 
         this.inventory.setItem(11, getItems(11));
 
+        this.inventory.setItem(12, getItems(12));
+        this.inventory.setItem(13, getItems(13));
+        this.inventory.setItem(14, getItems(14));
+
     }
 
     @Override
@@ -113,6 +117,18 @@ public class SpawnerShopGUI
             return ItemBuilder.buildItem(Material.MOB_SPAWNER, 64, (short) 0,
                     CC.translate("&a&lWitch Spawner"), CC.translate("&a&l* &fPrice: &7$480,000,000"));
 
+        }
+        if (slot == 12) {
+            return ItemBuilder.buildItem(Material.MOB_SPAWNER, 16, (short) 0,
+                    CC.translate("&a&lCreeper Spawner"), CC.translate("&a&l* &fPrice: &7$6,240,000"));
+        }
+        if (slot == 13) {
+            return ItemBuilder.buildItem(Material.MOB_SPAWNER, 32, (short) 0,
+                    CC.translate("&a&lCreeper Spawner"), CC.translate("&a&l* &fPrice: &7$12,480,000"));
+        }
+        if (slot == 14) {
+            return ItemBuilder.buildItem(Material.MOB_SPAWNER, 64, (short) 0,
+                    CC.translate("&a&lCreeper Spawner"), CC.translate("&a&l* &fPrice: &7$24,960,000"));
         }
         return null;
     }
@@ -276,6 +292,45 @@ public class SpawnerShopGUI
                     Economy.subtract(player.getName(), price);
                     player.sendMessage(CC.translate("&c&l- $" + price));
                     Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), "givespawner spawner " + player.getName() + " " + amount + " witch");
+                }
+                setItems();
+                break;
+            case 12:
+                price = 6240000;
+                amount = 16;
+                if (balance<price) {
+                    player.sendMessage(CC.translate("&c&l(!)&c You don't have enough money to purchase this spawner."));
+                    return;
+                } else {
+                    Economy.subtract(player.getName(), price);
+                    player.sendMessage(CC.translate("&c&l- $" + price));
+                    Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), "givespawner spawner " + player.getName() + " " + amount + " creeper");
+                }
+                setItems();
+                break;
+            case 13:
+                price = 12480000;
+                amount = 32;
+                if (balance<price) {
+                    player.sendMessage(CC.translate("&c&l(!)&c You don't have enough money to purchase this spawner."));
+                    return;
+                } else {
+                    Economy.subtract(player.getName(), price);
+                    player.sendMessage(CC.translate("&c&l- $" + price));
+                    Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), "givespawner spawner " + player.getName() + " " + amount + " creeper");
+                }
+                setItems();
+                break;
+            case 14:
+                price = 24960000;
+                amount = 64;
+                if (balance<price) {
+                    player.sendMessage(CC.translate("&c&l(!)&c You don't have enough money to purchase this spawner."));
+                    return;
+                } else {
+                    Economy.subtract(player.getName(), price);
+                    player.sendMessage(CC.translate("&c&l- $" + price));
+                    Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), "givespawner spawner " + player.getName() + " " + amount + " creeper");
                 }
                 setItems();
                 break;

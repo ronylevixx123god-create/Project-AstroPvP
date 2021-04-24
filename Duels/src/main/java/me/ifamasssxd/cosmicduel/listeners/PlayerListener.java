@@ -185,7 +185,7 @@ implements Listener {
                 d.getEndingInventoryCache().put(p.getName(), uuid);
             }
             for (ItemStack is : e.getDrops()) {
-                e.getDrops().remove((Object)is);
+                e.getDrops().remove(is);
             }
             e.setKeepLevel(true);
             System.out.println("EXP: " + p.getExp() + " Level: " + p.getLevel());

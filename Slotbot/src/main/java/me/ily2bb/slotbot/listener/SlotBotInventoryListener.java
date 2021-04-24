@@ -8,6 +8,8 @@ import com.conaxgames.customskulls.util.CustomBlockUtil;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.massivecraft.factions.FPlayer;
+import org.bukkit.event.player.PlayerTeleportEvent;
+
 import me.ily2bb.slotbot.CosmicSlotBotAPI;
 import me.ily2bb.slotbot.SlotBotPlugin;
 import me.ily2bb.slotbot.managers.SlotBotManager;
@@ -15,6 +17,9 @@ import me.ily2bb.slotbot.objects.ItemDeleter;
 import me.ily2bb.slotbot.utils.Inventories;
 import me.ily2bb.slotbot.utils.LootTable;
 import me.ily2bb.slotbot.utils.Utils;
+import net.minecraft.server.v1_8_R3.Slot;
+import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
+import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -201,6 +206,63 @@ public class SlotBotInventoryListener implements Listener {
 
 
     @EventHandler
+    public void inventoryClose(InventoryCloseEvent e) {
+        if (!(e.getPlayer() instanceof Player))
+            return;
+        Inventory inventory = e.getInventory();
+        if (!inventory.getTitle().contentEquals(CC.DarkGray + "Astro Slot Bot"))
+            return;
+        int slots = SlotBotManager.getSlotBotTickets(inventory);
+        Player player = (Player) e.getPlayer();
+        if (slots <= 0) {
+            for (int i = 2; i <= 6; i++) {
+                if (player.hasMetadata("slot_rolling_" + i)) {
+                    player.removeMetadata("slot_rolling_" + i, (Plugin) SlotBotPlugin.getInstance());
+                }
+            }
+            return;
+        }
+
+        Bukkit.getScheduler().runTaskLater(SlotBotPlugin.getInstance(), ()->{
+            if (player.isOnline()) {
+                returnTickets(slots, player);
+            }
+        },100);
+
+    }
+
+    @EventHandler
+    public void trash(final PlayerCommandPreprocessEvent event) {
+        final Player player = event.getPlayer();
+        final String msg = event.getMessage().toLowerCase();
+        if (CombatLog.inCombat(player) && msg.startsWith("/eec")) {
+            event.setCancelled(true);
+            player.sendMessage(ChatColor.RED + "You cannot use /eec while in combat!");
+
+        }
+    }
+
+    @EventHandler
+    public void onhitRemoveFeign(EntityDamageByEntityEvent e) {
+        if (e.getDamager() == null) return;
+        if (e.getDamager() instanceof Player) {
+            Player damager = (Player) e.getDamager();
+
+            if (damager.hasMetadata("feign_vanish")) {
+                Bukkit.getLogger().info("Unvanishing " + damager.getName());
+                damager.removeMetadata("feign_vanish", (Plugin) SlotBotPlugin.getInstance());
+                damager.removeMetadata("feign_hits", (Plugin) SlotBotPlugin.getInstance());
+                damager.removeMetadata("feign_hits_max", (Plugin) SlotBotPlugin.getInstance());
+                damager.sendMessage(CC.translate("&4&l* Feign Death - UNVANISHED &7[Hitting While Vanished]&4&l *"));
+                for (Player pl : Bukkit.getServer().getOnlinePlayers()) {
+                    if (!damager.hasMetadata("spectator"))
+                        pl.showPlayer(damager);
+                }
+            }
+        }
+    }
+
+    @EventHandler
     public void itemDeletionInventoryClose(InventoryCloseEvent e) {
         if (!(e.getPlayer() instanceof Player))
             return;
@@ -214,4 +276,7 @@ public class SlotBotInventoryListener implements Listener {
         ItemDeleter.removeItemDeleter(deleter);
     }
 
+
 }
+
+
