@@ -51,7 +51,7 @@ public class Phoenix extends CustomEnchantment {
         factionUpgrades = Bukkit.getPluginManager().isPluginEnabled("FactionUpgrades");
         this.ess = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
         Bukkit.getPluginManager().registerEvents(new PhoenixListener(this), (Plugin) Enchantments.getInstance());
-        Bukkit.getScheduler().runTaskTimer((Plugin) Enchantments.getEssentials(), new reducePhoenixCount(), 12000L, 12000L);
+        Bukkit.getScheduler().runTaskTimerAsynchronously((Plugin) Enchantments.getEssentials(), new reducePhoenixCount(), 12000L, 12000L);
     }
 
     public static boolean hasPhoenixEquipped(Player player) {
@@ -66,6 +66,10 @@ public class Phoenix extends CustomEnchantment {
     public static boolean procPhoenix(Player player, LivingEntity damager, int level, double dmg) throws Exception {
         if (player.getHealth() <= 0.0D)
             return false;
+        if (player.hasMetadata("phoenixCd")) {
+            player.sendMessage(CC.translate("&cPHOENIX - Still On Cooldown"));
+            return false;
+        }
         if (player.hasMetadata("witchered") && !ItemSkinUtils.hasItemSkin(player, "CORRUPT_BELT_UTILITY"))
             return false;
         if (player.hasMetadata("noSoulProcs") && !ItemSkinUtils.hasItemSkin(player, "CORRUPT_BELT_UTILITY"))
@@ -106,14 +110,19 @@ public class Phoenix extends CustomEnchantment {
                         ((Player) ent).playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 1.0F, 1.25F);
                     }
                 }
+                player.setMetadata("phoenixCd", (MetadataValue) new FixedMetadataValue(Enchantments.getInstance(), "phoenixCd"));
+                Bukkit.getScheduler().runTaskLaterAsynchronously(Enchantments.getInstance(), () -> {
+                    player.sendMessage(CC.translate("&a&lPHOENIX - No Longer on Phoenix Cooldown"));
+                    player.removeMetadata("phoenixCd", Enchantments.getInstance());
+                }, 2400L);
                 Location loc = player.getLocation();
-                de.inventivegames.particle.ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(),  loc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.75F, 80);
-                de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(),  loc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.75F, 80);
+                de.inventivegames.particle.ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(), loc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.75F, 80);
+                de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), loc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.75F, 80);
 
                 return true;
             }
             if (!player.hasMetadata("outOfSoulsMessage") || ((MetadataValue) player.getMetadata("outOfSoulsMessage").get(0)).asLong() < System.currentTimeMillis()) {
-                de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(),player.getEyeLocation(), 0f,0.5f,0f,0.4f,20);
+                de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), player.getEyeLocation(), 0f, 0.5f, 0f, 0.4f, 20);
 
                 player.playSound(player.getLocation(), Sound.ITEM_BREAK, 0.7F, 0.4F);
                 player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "** OUT OF SOULS **");

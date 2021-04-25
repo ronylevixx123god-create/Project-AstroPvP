@@ -63,18 +63,6 @@
             <version>0.1</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Utils</artifactId>
-            <version>0.1</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>GUIShop</artifactId>
-            <version>0.1</version>
-            <scope>provided</scope>
-        </dependency>
 
 
         <!-- System Repos -->
@@ -84,6 +72,22 @@
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/EnchantmentsAPI.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>utils</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/Utils-0.1.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>guishop</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/GUIShop-0.1.jar</systemPath>
         </dependency>
     </dependencies>
 </project>

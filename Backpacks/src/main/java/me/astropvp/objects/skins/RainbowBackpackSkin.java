@@ -21,8 +21,8 @@ public class RainbowBackpackSkin extends Backpack {
 
     @Override
     public void onEquip(Player player) {
-        double health = player.getHealth();
-        player.setMaxHealth(health + 2.0);
+        double health = player.getMaxHealth();
+        health++;
         player.setHealth(health);
     }
 

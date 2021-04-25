@@ -3,13 +3,10 @@ package me.ily2bb.slotbot.listener;
 import com.conaxgames.customskulls.CoreSkulls;
 import com.conaxgames.customskulls.ability.AbilityData;
 import com.conaxgames.customskulls.blocks.CustomBlock;
-import com.conaxgames.customskulls.enums.AbilityType;
 import com.conaxgames.customskulls.util.CustomBlockUtil;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.massivecraft.factions.FPlayer;
-import org.bukkit.event.player.PlayerTeleportEvent;
-
 import me.ily2bb.slotbot.CosmicSlotBotAPI;
 import me.ily2bb.slotbot.SlotBotPlugin;
 import me.ily2bb.slotbot.managers.SlotBotManager;
@@ -17,31 +14,22 @@ import me.ily2bb.slotbot.objects.ItemDeleter;
 import me.ily2bb.slotbot.utils.Inventories;
 import me.ily2bb.slotbot.utils.LootTable;
 import me.ily2bb.slotbot.utils.Utils;
-import net.minecraft.server.v1_8_R3.Slot;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
-import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.entity.EnderPearl;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.event.entity.ProjectileLaunchEvent;
-import org.bukkit.event.inventory.*;
-import org.bukkit.event.player.*;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SlotBotInventoryListener implements Listener {
@@ -242,25 +230,6 @@ public class SlotBotInventoryListener implements Listener {
         }
     }
 
-    @EventHandler
-    public void onhitRemoveFeign(EntityDamageByEntityEvent e) {
-        if (e.getDamager() == null) return;
-        if (e.getDamager() instanceof Player) {
-            Player damager = (Player) e.getDamager();
-
-            if (damager.hasMetadata("feign_vanish")) {
-                Bukkit.getLogger().info("Unvanishing " + damager.getName());
-                damager.removeMetadata("feign_vanish", (Plugin) SlotBotPlugin.getInstance());
-                damager.removeMetadata("feign_hits", (Plugin) SlotBotPlugin.getInstance());
-                damager.removeMetadata("feign_hits_max", (Plugin) SlotBotPlugin.getInstance());
-                damager.sendMessage(CC.translate("&4&l* Feign Death - UNVANISHED &7[Hitting While Vanished]&4&l *"));
-                for (Player pl : Bukkit.getServer().getOnlinePlayers()) {
-                    if (!damager.hasMetadata("spectator"))
-                        pl.showPlayer(damager);
-                }
-            }
-        }
-    }
 
     @EventHandler
     public void itemDeletionInventoryClose(InventoryCloseEvent e) {
