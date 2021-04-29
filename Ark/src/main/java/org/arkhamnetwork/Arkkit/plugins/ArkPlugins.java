@@ -61,6 +61,7 @@ public enum ArkPlugins {
     HIT_ME(new HitMe(Arkkit.get()), "Enables /hitme command to deal self inflicted damage."),
     BUMP(new Bump(Arkkit.get()), "Enables /bump command to deal self inflicted damage in friendly areas."),
     ENDERPEARL_COOLDOWN(new EnderpearlCooldown(Arkkit.get()), "Enables enderpearl cooldowns."),
+    SEASONAL_PREFIXES(new SeasonalPrefixes(Arkkit.get()), "Deason prefixes"),
     NO_VEHICLE_TELEPORT(new NoVehicleTeleport(Arkkit.get()), "Disables teleportation events while in a vehicle."),
     ANTI_MINECART(new AntiMinecart(Arkkit.get()), "Prevents known minecart dupes."),
     NO_SAFEZONE_MOBS(new NoSafezoneMobs(Arkkit.get()), "Automatically despawns monsters in pvp disabled regions when hit."),
