@@ -78,14 +78,14 @@ public class PlagueCarrier extends CustomEnchantment {
     }
 
     private void spawnPlagueCreeper(final Location l, final int level) throws Exception {
-        final Creeper c = (Creeper) l.getWorld().spawnEntity(l, EntityType.CREEPER);
+        /*final Creeper c = (Creeper) l.getWorld().spawnEntity(l, EntityType.CREEPER);
         c.setMetadata("plagueCarrier", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) level));
         c.setCustomName(ChatColor.LIGHT_PURPLE + "Plague Carrier");
         c.setCanPickupItems(false);
         c.setMetadata("no_loot", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) true));
         c.setCustomNameVisible(true);
-        c.setPowered(true);
-        de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), c.getLocation(), 0f, 0.5f, 0f, 0.5f, 20);
+        c.setPowered(true);*/
+        //de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), c.getLocation(), 0f, 0.5f, 0f, 0.5f, 20);
 
     }
 

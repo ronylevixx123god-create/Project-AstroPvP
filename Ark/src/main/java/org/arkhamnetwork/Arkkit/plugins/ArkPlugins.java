@@ -13,7 +13,6 @@ public enum ArkPlugins {
     BOAT_BLOCKER(new BoatBlocker(Arkkit.get()), "Prevents placement of boats due to possible dupe exploits."),
     POTION_STACK_LIMITER(new PotionStackLimiter(Arkkit.get()), "Prevents users from using potions with a stack size > 1."),
     ASYNC_SPIGOT(new AsyncSpigot(Arkkit.get()), "Disables spigot's built in async method catcher."),
-    ENTITY_CLEANER(new EntityCleaner(Arkkit.get()), "Removes entities that are heading towards unloaded chunks. Saves RAM, CPU from tick iterations."),
     TILE_ENTITY_CLEANER(new TileEntityCleaner(Arkkit.get()), "Removes empty tile entities (chests) as chunks load to decrease CPU tick iterations."),
     BULK_SAVING(new BulkSaving(Arkkit.get()), "Disables all incremental I/O saving, only saves on server shutdown, costs RAM, saves (massive) CPU."),
     NO_NATURAL_MOBS(new NoNaturalMobs(Arkkit.get()), "Excluse natural mob spawning from server tick(), saves CPU."),
@@ -23,8 +22,6 @@ public enum ArkPlugins {
     ITEM_LINKING(new ItemLinking(Arkkit.get()), "Enables /senditem command and ability to link items in chat by typing [ITEM]. Requires permission node, itemlinking.senditem."),
     PLUGIN_HIDER(new PluginHider(Arkkit.get()), "Prevents players from obtaining the server's plugin list through means such as /p l /plugin /? /help:, etc."),
     NO_NEW_CHUNKS(new NoNewChunks(Arkkit.get()), "Prevents new chunks from generating in worlds specified in no_new_chunks.worlds section of configuration."),
-    ANTI_INVISIBILITY(new AntiInvisibility(Arkkit.get()), "Prevents non-OP'd players in survival from having the 'invisibility' potion effect."),
-    TNT_LIMITER(new TNTLimiter(Arkkit.get()), "Enables dynamic adjustment of spigot's maxTntPerTntTick setting in spigot.yml."),
     CHAT_FILTER(new ChatFilter(Arkkit.get()), "Enables a dynamic word filtering system via /censor."),
     FORCE_SPAWN(new ForceSpawn(Arkkit.get()), "Enables /forcespawn <radius>, sending all players around executor to world's /spawn. Great for moderation."),
     CREATE_TITLE(new CreateTitle(Arkkit.get()), "Enables /createtitle and /addcreatetitle commands to purchase and create custom player titles."),
@@ -33,7 +30,6 @@ public enum ArkPlugins {
     PVP_POTION_EFFECTS(new PvPPotionEffects(Arkkit.get()), "Clear potion effects whenever a player goes between a pvp and non-pvp WG flagged area."),
     NO_CURSOR_DROP(new NoCursorDrop(Arkkit.get()), "Prevents users from losing item being held on cursor on inventory close."),
     NO_ENCHANTMENT_TABLE_BOOKS(new NoEnchantmentTableBooks(Arkkit.get()), "Prevents users from enchanting books on enchantment tables."),
-    PLAYER_HEALTH(new PlayerHealth(Arkkit.get()), "Display player health values under playernames."),
     ENCHANTMENT_ANVIL_FIX(new EnchantmentAnvilFix(Arkkit.get()), "Disables EnchantmentAPI anvil and enchantment table mechanics."),
     SMARTER_ESSENTIALS(new SmarterEssentials(Arkkit.get()), "Prevents /tpaccept exploitation into enemy faction bases."),
     CHUNK_LOAD_FLUSH(new ChunkLoadFlush(Arkkit.get()), "Removes entities in chunks when they are loaded."),
@@ -43,7 +39,6 @@ public enum ArkPlugins {
     EXP_BOTTLES(new ExpBottles(Arkkit.get()), "Enables ability to use /xpbottle to withdraw vanilla levels into exp bottles."),
     NO_EXPLOSION_PHYSICS(new NoExplosionPhysics(Arkkit.get()), "Disables block physics updates caused by exploding creepers."),
     FILL_COMMAND(new FillCommand(Arkkit.get()), "Enables /fill which automatically fills dispensers with TNT from inventory."),
-    ANTI_GOD_APPLE_CRAFT(new AntiGodAppleCraft(Arkkit.get()), "Prevents god apples from being crafted."),
     POTION_FIX(new PotionFix(Arkkit.get()), "Nerfs vanilla potion behavior to prevent crazy OP effects like STR III."),
     ANTI_LOOT_STEAL(new AntiLootSteal(Arkkit.get()), "Loot can only be picked up by the killer of the entity for a few seconds."),
     HOTBAR_ARMOR_SWAP(new HotbarArmorSwap(Arkkit.get()), "Enables right-click-to-equip mechanic for armor."),
@@ -65,13 +60,9 @@ public enum ArkPlugins {
     TW_AUTO_CRAFT_TNT(new TWAutoCraftTNT(Arkkit.get()), "Enables TreasureWars /tnt"),
     HIT_ME(new HitMe(Arkkit.get()), "Enables /hitme command to deal self inflicted damage."),
     BUMP(new Bump(Arkkit.get()), "Enables /bump command to deal self inflicted damage in friendly areas."),
-    SAND_STACK_LIMITER(new SandStackLimiter(Arkkit.get()), "Enables limitations on max number of physics enabled blocks that can be stacked in one x,z location."),
     ENDERPEARL_COOLDOWN(new EnderpearlCooldown(Arkkit.get()), "Enables enderpearl cooldowns."),
-    OBSIDIAN_DESTROYER_FIXES(new ObsidianDestroyerFixes(Arkkit.get()), "Enables Obsidian Destroyer bugfixes, prevents invincible blocks."),
     NO_VEHICLE_TELEPORT(new NoVehicleTeleport(Arkkit.get()), "Disables teleportation events while in a vehicle."),
     ANTI_MINECART(new AntiMinecart(Arkkit.get()), "Prevents known minecart dupes."),
-    NO_WATER_PROT_SPAWNERS(new NoWaterProtSpawners(Arkkit.get()), "Disbles water protection for mob spawners."),
-    SEASONAL_PREFIXES(new SeasonalPrefixes(Arkkit.get()), "Enables display of seasonal planet victory prefixes."),
     NO_SAFEZONE_MOBS(new NoSafezoneMobs(Arkkit.get()), "Automatically despawns monsters in pvp disabled regions when hit."),
     HOME_GUI(new HomeGUI(Arkkit.get()), "Pretty looking gui for /home that adds customizable icons."),
     VAULT_GUI(new PlayerVaultGUI(Arkkit.get()), "GUI for /pv"),
@@ -88,9 +79,7 @@ public enum ArkPlugins {
     EQUIPMENT_LOOTBOX(new EquipmentLootboxes(Arkkit.get()), "Equipement lootboxes that give a random Armor Set item."),
     NO_DUPE_EXPLOIT(new NoDupeExploit(Arkkit.get()), "Scans inventories for items with duplicated IID and removes them."),
     NO_SPAWN_HOMES(new NoSpawnHomes(Arkkit.get()), "Blocks players from setting homes or warps at /spawn."),
-    FAT_BUCKETS(new FatBuckets(Arkkit.get()), "Enables Fat Buckets"),
-    PVP_SANITY(new PvPSanity(Arkkit.get()), "Prevents 1-hit kill scenarios.");
-
+    FAT_BUCKETS(new FatBuckets(Arkkit.get()), "Enables Fat Buckets");
     private ArkPlugin ap = null;
     private String desc = null;
 

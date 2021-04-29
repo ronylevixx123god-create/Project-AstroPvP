@@ -85,16 +85,13 @@ final class ExpBottlesListener
 
     @EventHandler(priority = EventPriority.LOW)
     public void onExpBottleUse(PlayerInteractEvent e) {
-        if (e.hasItem() && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && ExpBottles.isXpBottle(e.getItem())) {
+        if (e.hasItem() && ExpBottles.isXpBottle(e.getItem())) {
             Player p = e.getPlayer();
             int xpValue = ExpBottles.getXpAmount(e.getItem()) * e.getItem().getAmount();
             e.setCancelled(true);
             e.setUseInteractedBlock(Event.Result.DENY);
             e.setUseItemInHand(Event.Result.DENY);
             p.setItemInHand(null);
-            if (xpValue == 710000 || xpValue > 710000 && xpValue % 710000 == 0) {
-                return;
-            }
             int exp = (p.getTotalExperience() +xpValue);
             p.setTotalExperience(0);
             p.setExp(0);

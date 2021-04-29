@@ -210,12 +210,6 @@ final class AntiDupeListener
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onCreatureSpawn(CreatureSpawnEvent e) {
-        if (e.getEntity() != null) {
-            e.getEntity().setCanPickupItems(false);
-        }
-    }
 
     @EventHandler
     public void onCraftItemEvent(CraftItemEvent e) {
@@ -247,7 +241,7 @@ final class AntiDupeListener
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerTeleportComplete(PlayerTeleportEvent e) {
-        if (e.getFrom().getWorld().equals(e.getTo().getWorld()) || e.getFrom().getWorld().getName().equals("world_duels2")) {
+        if (e.getFrom().getWorld().equals(e.getTo().getWorld()) || e.getFrom().getWorld().getName().equals("world_duels")) {
             if (e.getPlayer().hasMetadata("natureWrathTask") && e.getCause() == PlayerTeleportEvent.TeleportCause.UNKNOWN) {
                 return;
             }

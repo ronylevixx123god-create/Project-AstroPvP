@@ -37,20 +37,5 @@ final class AntiLagListener
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onIronGolemSpawn(CreatureSpawnEvent e) {
-        if (e.getEntityType() == EntityType.CREEPER && this.getEntityTypeCount(e.getLocation().getChunk(), EntityType.CREEPER) > 5) {
-            e.setCancelled(true);
-        }
-    }
-
-    private int getEntityTypeCount(Chunk c, EntityType et) {
-        int x = 0;
-        for (Entity ent : c.getEntities()) {
-            if (ent.getType() != et) continue;
-            ++x;
-        }
-        return x;
-    }
 }
 

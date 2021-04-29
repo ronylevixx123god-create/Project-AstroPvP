@@ -76,12 +76,12 @@ public class HeroicPlagueCarrier extends HeroicCustomEnchantment {
     }
 
     public void spawnPlagueCreeper(Location loc, Player player) {
-        Creeper creeper = (Creeper) loc.getWorld().spawnEntity(loc, EntityType.CREEPER);
+        /*Creeper creeper = (Creeper) loc.getWorld().spawnEntity(loc, EntityType.CREEPER);
         creeper.setCustomNameVisible(true);
         creeper.setPowered(true);
         creeper.setCustomName(ChatColor.LIGHT_PURPLE + "Epidemic Carrier");
         creeper.setMetadata("creeperOwner", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), player.getName()));
         creeper.setMetadata("customCreeperType", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), "Stun"));
-        creeper.setMetadata("noloot", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), Boolean.valueOf(true)));
+        creeper.setMetadata("noloot", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), Boolean.valueOf(true)));*/
     }
 }

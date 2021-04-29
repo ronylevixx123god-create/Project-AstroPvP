@@ -7,6 +7,7 @@ import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import com.rit.sucy.CustomEnchantment;
 import me.astropvp.astroparticles.utils.ParticleUtils;
 import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.util.RageUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -26,65 +27,31 @@ public class Rage extends CustomEnchantment {
         Bukkit.getPluginManager().registerEvents(new RageListener(), Enchantments.getInstance());
     }
 
-    private static int getPVPHitCombo(Player p) {
-        return p.hasMetadata("pvp_rageHitCombo") ? (p.getMetadata("pvp_rageHitCombo").get(0)).asInt() : 0;
-    }
-
-    public static void subtractPVPHitCombo(Player p) {
-        p.setMetadata("pvp_rageHitCombo", new FixedMetadataValue(Enchantments.getInstance(), Math.max(0, getPVPHitCombo(p) - 1)));
-    }
-
-    private static int getPVEHitCombo(Player p) {
-        return p.hasMetadata("pve_rageHitCombo") ? (p.getMetadata("pve_rageHitCombo").get(0)).asInt() : 0;
-    }
-
-    public static void subtractPVEHitCombo(Player p) {
-        p.setMetadata("pve_rageHitCombo", new FixedMetadataValue(Enchantments.getInstance(), Math.max(0, getPVEHitCombo(p) - 1)));
-    }
-
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
         if (target instanceof ArmorStand) {
             return;
         }
         if (!event.isCancelled() && event.getDamage(EntityDamageEvent.DamageModifier.BASE) > 0.0D && user instanceof Player) {
             Player pUser = (Player) user;
-            if (!pUser.getItemInHand().getType().name().toLowerCase().contains("_sword") || !(event.getDamager() instanceof LivingEntity))
+            if (!pUser.getItemInHand().getType().name().toLowerCase().contains("_sword") || !(event.getDamager() instanceof LivingEntity)) {
                 return;
-
-            double mod = 0.055 * enchantLevel;
-            double hitCombo = ((target instanceof Player) ? getPVPHitCombo((Player) user) : getPVEHitCombo((Player) user)) * mod + 1.0D;
-            if (user instanceof Player) {
-                if (ParticleUtils.isPlayerIndicating((Player) user)) {
-                    playRageEffect(target.getEyeLocation(), enchantLevel);
-                }
             }
-            if (hitCombo > 10.0D)
-                hitCombo = 10.0D;
-            if (hitCombo > 1.0D) {
 
-                double damage = event.getDamage(EntityDamageEvent.DamageModifier.BASE) +4;
+            double mod = enchantLevel * 0.5 * RageUtils.getComboOfPlayer(pUser, target instanceof Player);
 
-                event.setDamage((damage * hitCombo * mod));
-                target.setMetadata("effectedByRage", new FixedMetadataValue(Enchantments.getInstance(), System.currentTimeMillis()));
+            if (ParticleUtils.isPlayerIndicating((Player) user)) {
+                playRageEffect(target.getEyeLocation(), enchantLevel);
             }
-            if (target instanceof Player) {
-                addPVPHitCombo((Player) user);
-            } else {
-                if (target instanceof Player) {
-                    subtractPVEHitCombo((Player) target);
-                }
 
-                addPVEHitCombo((Player) user);
+            if (mod > 10) {
+                mod = 10;
             }
+
+            double damage = event.getDamage(EntityDamageEvent.DamageModifier.BASE);
+
+            event.setDamage((damage + mod));
         }
-    }
 
-    private void addPVPHitCombo(Player p) {
-        p.setMetadata("pvp_rageHitCombo", new FixedMetadataValue(Enchantments.getInstance(), getPVPHitCombo(p) + 1));
-    }
-
-    private void addPVEHitCombo(Player p) {
-        p.setMetadata("pve_rageHitCombo", new FixedMetadataValue(Enchantments.getInstance(), getPVEHitCombo(p) + 1));
     }
 
     private void playRageEffect(Location loc, int level) {

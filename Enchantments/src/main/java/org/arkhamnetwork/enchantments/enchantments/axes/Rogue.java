@@ -52,7 +52,7 @@ public class Rogue extends CustomEnchantment {
                 return;
             }
             double damage = e.getDamage();
-            e.setDamage(damage + (multi * 0.40));
+            e.setDamage(damage + (multi * 0.20));
 
             if (player instanceof Player) {
                 try {

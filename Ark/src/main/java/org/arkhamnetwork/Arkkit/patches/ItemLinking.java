@@ -85,7 +85,7 @@ public class ItemLinking
         if (bragShow && sender != null) {
             JSONMessage message = new JSONMessage(before.trim(), ChatColor.WHITE);
             UUID uuid = recentlyAssignedIds.asMap().computeIfAbsent(sender.getUniqueId(), e -> new UUIDStorage()).getUUID();
-            ChatColor color = ChatColor.GOLD;
+            ChatColor color = ChatColor.GREEN;
             message.addRunCommand(color + ChatColor.ITALIC.toString() + sender.getName() + "'s Inventory", color, "/brag " + uuid, ChatColor.GRAY + "Click to view " + CC.GrayU + sender.getName() + CC.Gray + "'s inventory!");
             message.addText(after);
             message.sendToPlayer(p);

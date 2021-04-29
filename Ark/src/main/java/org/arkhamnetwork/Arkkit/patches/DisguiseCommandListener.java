@@ -32,7 +32,6 @@ final class DisguiseCommandListener
                 return;
             }
             Bukkit.getLogger().info("[DisguiseCommandListener] Logged " + e.getPlayer().getName() + "'s disguiseName as " + disguiseName);
-            PlayerHealth.playerDisguises.put(e.getPlayer().getName(), disguiseName);
         }
     }
 }

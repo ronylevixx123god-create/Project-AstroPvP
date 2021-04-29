@@ -66,15 +66,15 @@ public class Phoenix extends CustomEnchantment {
     public static boolean procPhoenix(Player player, LivingEntity damager, int level, double dmg) throws Exception {
         if (player.getHealth() <= 0.0D)
             return false;
-        if (player.hasMetadata("phoenixCd")) {
-            player.sendMessage(CC.translate("&cPHOENIX - Still On Cooldown"));
-            return false;
-        }
         if (player.hasMetadata("witchered") && !ItemSkinUtils.hasItemSkin(player, "CORRUPT_BELT_UTILITY"))
             return false;
         if (player.hasMetadata("noSoulProcs") && !ItemSkinUtils.hasItemSkin(player, "CORRUPT_BELT_UTILITY"))
             return false;
         if (player.getHealth() - dmg <= 0.0D) {
+            if (player.hasMetadata("phoenixCd")) {
+                player.sendMessage(CC.translate("&cPHOENIX - Still On Cooldown"));
+                return false;
+            }
             if (Math.random() <= 0.5D && MaskType.hasEquipped((Player) damager, "DEATH_KNIGHT") && !ItemSkinUtils.hasItemSkin(player, "CORRUPT_BELT_UTILITY")) {
                 player.sendMessage(CC.RedB + "* PHOENIX BLOCKED [" + CC.Gray + ((Player) damager).getName() + CC.RedB + "] *");
                 ((Player) damager).sendMessage(CC.RedB + "* DEATH KNIGHT MASK [" + CC.Gray + player.getName() + "'s Phoenix Blocked" + CC.RedB + "] *");

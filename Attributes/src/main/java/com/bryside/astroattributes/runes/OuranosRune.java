@@ -2,6 +2,7 @@ package com.bryside.astroattributes.runes;
 
 import com.bryside.astroattributes.objects.Rune;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.google.common.collect.Maps;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -60,12 +61,14 @@ public class OuranosRune extends Rune implements Listener {
 
     public void procDamageEvent(EntityDamageByEntityEvent e, int level, Player damager) {
         int amount = 10 * level < 80 ? 10 * level : 70;
-        if (ThreadLocalRandom.current().nextInt(14) <= 1) {
-            damager.sendMessage(CC.translate("&4&l*OURANOS* &cAoE Damage. &7[" + amount + "&7 DMG"));
-            damager.playSound(damager.getLocation(), Sound.ENDERMAN_TELEPORT, 3, 3);
+        if (WorldGuardUtils.isPvPEnabled(damager.getLocation())) {
+            if (ThreadLocalRandom.current().nextInt(14) <= 1) {
+                damager.sendMessage(CC.translate("&4&l*OURANOS* &cAoE Damage. &7[" + amount + "&7 DMG"));
+                damager.playSound(damager.getLocation(), Sound.ENDERMAN_TELEPORT, 3, 3);
+            }
+
+
         }
-
-
     }
 
 

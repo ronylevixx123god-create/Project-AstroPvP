@@ -2,6 +2,7 @@ package com.bryside.astroattributes.runes;
 
 import com.bryside.astroattributes.objects.Rune;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.google.common.collect.Maps;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -56,13 +57,16 @@ public class EosRune extends Rune implements Listener {
 
 
     public void procDamageEvent(EntityDamageByEntityEvent e, int level, Player damager) {
-        if (this.hits.get(damager) != null && Integer.valueOf((Integer) this.hits.get(damager)) - 1 > 0) {
-        } else if (this.hits.get(damager) == null) {
-        } else {
-            int amount = 10 * level < 80 ? 10 * level : 70;
-            if (ThreadLocalRandom.current().nextInt(14) <= 1) {
-                damager.sendMessage(CC.translate("&4&l*EOS* &cHealed nearby &nAlliess&7 [+3 HP]"));
-                damager.playSound(damager.getLocation(), Sound.CHICKEN_EGG_POP, 3, 3);
+        if (WorldGuardUtils.isPvPEnabled(damager.getLocation())) {
+
+            if (this.hits.get(damager) != null && Integer.valueOf((Integer) this.hits.get(damager)) - 1 > 0) {
+            } else if (this.hits.get(damager) == null) {
+            } else {
+                int amount = 10 * level < 80 ? 10 * level : 70;
+                if (ThreadLocalRandom.current().nextInt(14) <= 1) {
+                    damager.sendMessage(CC.translate("&4&l*EOS* &cHealed nearby &nAlliess&7 [+3 HP]"));
+                    damager.playSound(damager.getLocation(), Sound.CHICKEN_EGG_POP, 3, 3);
+                }
             }
         }
     }

@@ -88,7 +88,7 @@ public class DamageFixes implements Listener {
                 personBeingHit.getInventory().getChestplate().getType() == Material.DIAMOND_CHESTPLATE ||
                 personBeingHit.getInventory().getLeggings().getType() == Material.DIAMOND_LEGGINGS ||
                 personBeingHit.getInventory().getBoots().getType() == Material.DIAMOND_BOOTS) {
-            event.setDamage(event.getDamage() * 3.5);
+            event.setDamage(event.getDamage() * 2.5);
         }
     }
 
