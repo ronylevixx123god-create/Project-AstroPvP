@@ -14,7 +14,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 public class DamageFixes implements Listener {
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+
+    /*@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void dmgDebuf(final EntityDamageByEntityEvent event) {
         if (event.getEntityType() != EntityType.PLAYER || event.getDamager().getType() != EntityType.PLAYER) {
             return;
@@ -24,7 +25,7 @@ public class DamageFixes implements Listener {
         if (damager.getItemInHand().getType() != Material.DIAMOND_SWORD && damager.getItemInHand().getType() != Material.GOLD_SWORD) {
             event.setDamage(event.getDamage() * 0.50);
         }
-    }
+    }*/
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void specialSet(final EntityDamageByEntityEvent event) {
@@ -88,7 +89,7 @@ public class DamageFixes implements Listener {
                 personBeingHit.getInventory().getChestplate().getType() == Material.DIAMOND_CHESTPLATE ||
                 personBeingHit.getInventory().getLeggings().getType() == Material.DIAMOND_LEGGINGS ||
                 personBeingHit.getInventory().getBoots().getType() == Material.DIAMOND_BOOTS) {
-            event.setDamage(event.getDamage() * 2.5);
+            event.setDamage(event.getDamage() * 2.0);
         }
     }
 
