@@ -35,7 +35,7 @@ public class CosmicFlyingPlugin {
     }
 
     private void registerTasks() {
-        Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(P.getP(), (Runnable)new CosmicFlyingParticleTask(), 40L, 2L);
+        //Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(P.getP(), (Runnable)new CosmicFlyingParticleTask(), 40L, 2L);
         Bukkit.getServer().getScheduler().runTaskTimer(P.getP(), (Runnable)new CosmicFlyingTask(), 30L, 30L);
     }
 

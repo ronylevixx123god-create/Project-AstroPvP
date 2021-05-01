@@ -210,16 +210,16 @@ public class P extends MPlugin {
         this.cosmicFlyingPlugin = new CosmicFlyingPlugin();
         this.cosmicFlyingPlugin.onEnable();
 
-        this.boosterManager = new BoosterManager();
-        this.boosterManager.loadActiveBoosters();
+        //this.boosterManager = new BoosterManager();
+        //this.boosterManager.loadActiveBoosters();
         //getServer().getScheduler().scheduleSyncRepeatingTask((Plugin)this, (Runnable)new BoosterTask(), 20L, 20L);
 
         this.saveDefaultConfig();
         this.startOfMap = this.getConfig().getLong("startOfMap");
         this.vanillaPlanet = this.getConfig().getBoolean("vanilla", false);
 
-        this.fundEnabled = this.getServer().getPluginManager().isPluginEnabled("CosmicFund");
-        this.fpointsEnabled = new File("plugins/CosmicFactionPoints.jar").exists();
+        //this.fundEnabled = this.getServer().getPluginManager().isPluginEnabled("CosmicFund");
+        //this.fpointsEnabled = new File("plugins/CosmicFactionPoints.jar").exists();
 
         /*
          This is the requirements for all additions put into Factions. (^^^)
@@ -322,7 +322,7 @@ public class P extends MPlugin {
         this.getServer().getPluginManager().registerEvents(new VIPCommandBlocker(), this);
         this.getServer().getPluginManager().registerEvents(new NetherMobSpawnerListener(), this);
 
-        getServer().getPluginManager().registerEvents((Listener)new BoosterListener(this.boosterManager), (Plugin)this);
+        //getServer().getPluginManager().registerEvents((Listener)new BoosterListener(this.boosterManager), (Plugin)this);
     }
 
 

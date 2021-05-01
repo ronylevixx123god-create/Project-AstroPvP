@@ -75,12 +75,12 @@ public class Silence extends CustomEnchantment {
             //ParticleEffect.playEffect(ParticleEffect.PORTAL, pTarget.getEyeLocation(), 0.4f, 60);
 
             try {
-                de.inventivegames.particle.ParticleEffect.ENCHANTMENT_TABLE.sendToPlayer(pTarget,target.getLocation(),0,0,0,0.4f, 80);
+                de.inventivegames.particle.ParticleEffect.ENCHANTMENT_TABLE.sendToPlayer(pTarget,target.getLocation(),0,0,0,0.4f, 5);
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
             try {
-                de.inventivegames.particle.ParticleEffect.PORTAL.sendToPlayer(pTarget,target.getLocation(),0,0,0,0.4f, 60);
+                de.inventivegames.particle.ParticleEffect.PORTAL.sendToPlayer(pTarget,target.getLocation(),0,0,0,0.4f, 5);
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
@@ -93,12 +93,12 @@ public class Silence extends CustomEnchantment {
                     try {
                         if (ParticleUtils.isPlayerIndicating((Player) user)) {
                             try {
-                                de.inventivegames.particle.ParticleEffect.ENCHANTMENT_TABLE.sendToPlayer(pTarget, target.getLocation(), 0, 0, 0, 0.4f, 80);
+                                de.inventivegames.particle.ParticleEffect.ENCHANTMENT_TABLE.sendToPlayer(pTarget, target.getLocation(), 0, 0, 0, 0.4f, 5);
                             } catch (Exception exception) {
                                 exception.printStackTrace();
                             }
                             try {
-                                de.inventivegames.particle.ParticleEffect.PORTAL.sendToPlayer(pTarget, target.getLocation(), 0, 0, 0, 0.4f, 60);
+                                de.inventivegames.particle.ParticleEffect.PORTAL.sendToPlayer(pTarget, target.getLocation(), 0, 0, 0, 0.4f, 5);
                             } catch (Exception exception) {
                                 exception.printStackTrace();
                             }

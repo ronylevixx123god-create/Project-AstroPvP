@@ -136,24 +136,11 @@
             <scope>compile</scope>
         </dependency>
 
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>sb</artifactId>
-            <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>C:/Users/brend/Desktop/Scoreboard.jar</systemPath>
-        </dependency>
 
         <!-- New Cosmic Repos -->
         <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>Arkkit</artifactId>
-            <version>0.1</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Utils</artifactId>
             <version>0.1</version>
             <scope>provided</scope>
         </dependency>
@@ -172,12 +159,6 @@
         <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>Core</artifactId>
-            <version>0.1</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>CustomItems</artifactId>
             <version>0.1</version>
             <scope>provided</scope>
         </dependency>
@@ -235,6 +216,20 @@
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/mcMMO.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>utils</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/Utils-0.1.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>ce</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/CustomItems-0.1.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.inventivetalent</groupId>

@@ -42,7 +42,7 @@ public abstract class SpiralTask
         this.x = (int) fLocation.getX();
         this.z = (int) fLocation.getZ();
         this.readyToGo = true;
-        //this.setTaskID(Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(P.p, this, 2L, 2L));
+        this.setTaskID(Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(P.p, this, 2L, 2L));
     }
 
     private static long now() {
