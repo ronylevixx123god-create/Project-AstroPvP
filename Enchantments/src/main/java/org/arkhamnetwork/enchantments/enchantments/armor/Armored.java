@@ -31,7 +31,9 @@ public class Armored extends CustomEnchantment {
         if (i != null && i.getType().name().contains("_SWORD") && e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1.0D - damage_negation) > 1.0D) {
             //e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1.0D - damage_negation));
             Location l = player.getLocation();
-            WorldUtil.sendWorldEffect(l.getBlock(), 57, 2001);
+            if (Math.random() < 0.05) {
+                WorldUtil.sendWorldEffect(l.getBlock(), 57, 2001);
+            }
         }
     }
 }

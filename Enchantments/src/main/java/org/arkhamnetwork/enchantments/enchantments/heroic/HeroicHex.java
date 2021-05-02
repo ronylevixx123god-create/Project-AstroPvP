@@ -47,7 +47,7 @@ public class HeroicHex extends HeroicCustomEnchantment {
         if (isHexed(playerHit))
             return;
         final double random = Math.random();
-        final double chance = 0.02 * level;
+        final double chance = 0.008 * level;
         if (random < chance && (!playerHit.hasMetadata("hexEnchantExpire") || playerHit.getMetadata("hexEnchantExpire").get(0).asLong() < System.currentTimeMillis())) {
             playerHit.setMetadata("hexEnchantExpire", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) (System.currentTimeMillis() + (2 + level / 2) * 1000)));
             playerHit.setMetadata("hexEnchantLevel", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) level));

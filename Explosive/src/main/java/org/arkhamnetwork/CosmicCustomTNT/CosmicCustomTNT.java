@@ -35,13 +35,11 @@ extends JavaPlugin {
     }
 
     private void registerListeners() {
-        this.getServer().getPluginManager().registerEvents(new TNTListener(), this);
         this.creeperListener = new CreeperListener();
         this.getServer().getPluginManager().registerEvents(this.creeperListener, this);
     }
 
     private void registerCommands() {
-        this.getCommand("ctnt").setExecutor(new CommandCTNT());
         this.getCommand("ccc").setExecutor(new CommandCCC());
     }
 }

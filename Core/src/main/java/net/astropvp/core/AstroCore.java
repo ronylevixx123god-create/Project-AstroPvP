@@ -376,7 +376,6 @@ public class AstroCore extends JavaPlugin {
         pm.registerEvents(new ServerFixes(), this);
         pm.registerEvents(new MOTD(), this);
         pm.registerEvents(new HeroicArmorFix(), this);
-        pm.registerEvents(new PotionFix(), this);
         pm.registerEvents(new ChunkBusterListener(), this);
         pm.registerEvents(new OmniGemFix(), this);
         pm.registerEvents(new CommandAliases(), this);

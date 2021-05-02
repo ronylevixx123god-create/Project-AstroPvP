@@ -60,10 +60,10 @@ public class CmdShow extends FCommand {
             Collection<FPlayer> recruits = finalFaction.getFPlayersWhereRole(Role.RECRUIT);
             if (finalFaction == Factions.i.getNone()) {
                 this.msg(this.p.txt.titleize(ChatColor.AQUA + "No Faction"));
-                this.msg(ChatColor.translateAlternateColorCodes('&', "<c>&4Description: <p>&f%s") ,  "That player is not in a faction.");
+                this.msg(ChatColor.translateAlternateColorCodes('&', "<c>&aDescription: <p>&f%s") ,  "That player is not in a faction.");
             } else {
                 this.msg(this.p.txt.titleize(finalFaction.getTag(this.fme)));
-                this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&4Description: <p>&f%s"), finalFaction.getDescription());
+                this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&aDescription: <p>&f%s"), finalFaction.getDescription());
             }
 
             if (finalFaction.isNormal()) {
@@ -72,21 +72,21 @@ public class CmdShow extends FCommand {
                     peaceStatus = "     " + Conf.colorNeutral + "This faction is Peaceful";
                 }
 
-                this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&4Joining: <p>&f") + (finalFaction.getOpen() ? "Open" : "Invite Only") + peaceStatus);
+                this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&aJoining: <p>&f") + (finalFaction.getOpen() ? "Open" : "Invite Only") + peaceStatus);
                 double powerBoost = finalFaction.getPowerBoost();
                 final String boost = powerBoost == 0.0D ? "" : (powerBoost > 0.0D ? " (bonus: " : " (penalty: ") + powerBoost + ")";
                 final int coordCount = finalFaction.getLandRounded();
                 Faction finalFaction1 = finalFaction;
                 (new BukkitRunnable() {
                     public void run() {
-                        CmdShow.this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&4Land/Power/Maxpower: <p>&f%d/%d/%d %s"), coordCount, finalFaction1.getPowerRounded(), finalFaction1.getPowerMaxRounded(), boost);
+                        CmdShow.this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&aLand/Power/Maxpower: <p>&f%d/%d/%d %s"), coordCount, finalFaction1.getPowerRounded(), finalFaction1.getPowerMaxRounded(), boost);
                         TopFaction tf = P.getP().getTopManager().getTopFaction(finalFaction1.getId());
                         if (tf != null) {
                             StoredFaction sf = tf.getStoredFaction();
-                            CmdShow.this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&4Faction Wealth: <p>&f$%s"), CmdShow.this.df.format((long) sf.getTotalWorth()));
-                            CmdShow.this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&4Spawner Value: <p>&f$%s"), CmdShow.this.df.format((long) sf.getTotalSpawnerWorth()));
-                            CmdShow.this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&4Block Value: <p>&f$%s"), CmdShow.this.df.format((long) sf.getContainerWorth()));
-                            CmdShow.this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&4Faction Rank: <p>&f#%s"), tf.getRank());
+                            CmdShow.this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&aFaction Wealth: <p>&f$%s"), CmdShow.this.df.format((long) sf.getTotalWorth()));
+                            CmdShow.this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&aSpawner Value: <p>&f$%s"), CmdShow.this.df.format((long) sf.getTotalSpawnerWorth()));
+                            CmdShow.this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&aBlock Value: <p>&f$%s"), CmdShow.this.df.format((long) sf.getContainerWorth()));
+                            CmdShow.this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&aFaction Rank: <p>&f#%s"), tf.getRank());
                         }
 
                     }
@@ -98,29 +98,29 @@ public class CmdShow extends FCommand {
                         points = 0L;
                     }
 
-                    this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&4Faction Points: <p>&f%s"), this.df.format(points));
+                    this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&aFaction Points: <p>&f%s"), this.df.format(points));
                     allyList = FactionsCoreChunkAPI.getWhenRaidableString(finalFaction);
                     if (allyList != null) {
-                        this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&4Raid Cooldown: <p>&f%s"), allyList);
+                        this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&aRaid Cooldown: <p>&f%s"), allyList);
                     }
 
                     if (myFaction != null && myFaction.equals(finalFaction)) {
                         FLocation coreChunk = FactionsCoreChunkAPI.getCoreChunk(myFaction);
-                        this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&4Core Chunk: <p>&f%s"), coreChunk == null ? "N/A" : FLocation.chunkToBlock((int) coreChunk.getX()) + "x, " + FLocation.chunkToBlock((int) coreChunk.getZ()) + "z");
+                        this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&aCore Chunk: <p>&f%s"), coreChunk == null ? "N/A" : FLocation.chunkToBlock((int) coreChunk.getX()) + "x, " + FLocation.chunkToBlock((int) coreChunk.getZ()) + "z");
                     }
                 }
 
                 if (Conf.bankEnabled) {
-                    this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&4Bank Balance: <p>&f$%s"), this.df.format(econ));
+                    this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&aBank Balance: <p>&f$%s"), this.df.format(econ));
                 }
 
                 if (finalFaction.isPermanent()) {
-                    this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&4This faction is permanent, remaining even with no members."));
+                    this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&aThis faction is permanent, remaining even with no members."));
                 }
 
-                allyList = this.p.txt.parse(ChatColor.translateAlternateColorCodes('&',"<c>&4Allies: &f"));
-                String truceList = this.p.txt.parse(ChatColor.translateAlternateColorCodes('&',"<c>&4Truces:&f "));
-                String enemyList = this.p.txt.parse(ChatColor.translateAlternateColorCodes('&',"<c>&4Enemies:&f "));
+                allyList = this.p.txt.parse(ChatColor.translateAlternateColorCodes('&',"<c>&aAllies: &f"));
+                String truceList = this.p.txt.parse(ChatColor.translateAlternateColorCodes('&',"<c>&aTruces:&f "));
+                String enemyList = this.p.txt.parse(ChatColor.translateAlternateColorCodes('&',"<c>&aEnemies:&f "));
                 Iterator var19 = Factions.i.get().iterator();
 
                 while (true) {
@@ -169,8 +169,8 @@ public class CmdShow extends FCommand {
                                     this.sendMessage(enemyList);
                                 }
 
-                                FancyMessage onlineList = new FancyMessage(this.p.txt.parse("<c>") + ChatColor.translateAlternateColorCodes('&',"&4Members online:&f "));
-                                FancyMessage offlineList = new FancyMessage(this.p.txt.parse("<c>") + ChatColor.translateAlternateColorCodes('&',"&4Members offline:&f "));
+                                FancyMessage onlineList = new FancyMessage(this.p.txt.parse("<c>") + ChatColor.translateAlternateColorCodes('&',"&aMembers online:&f "));
+                                FancyMessage offlineList = new FancyMessage(this.p.txt.parse("<c>") + ChatColor.translateAlternateColorCodes('&',"&aMembers offline:&f "));
                                 Iterator var32 = admins.iterator();
 
                                 while (true) {

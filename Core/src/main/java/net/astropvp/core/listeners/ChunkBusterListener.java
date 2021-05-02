@@ -1,6 +1,8 @@
 package net.astropvp.core.listeners;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import com.massivecraft.factions.struct.Role;
 import me.astropvp.astrospawners.data.SpawnerData;
 import me.astropvp.astrospawners.data.SpawnerDataHelper;
 import net.astropvp.core.utils.ChunkBusterUtils;
@@ -29,6 +31,13 @@ public class ChunkBusterListener implements Listener {
             }
             if ((FactionUtils.getFaction(event.getPlayer()) == null) || (FactionUtils.getFaction(event.getPlayer()).getId().equals("0"))) {
                 event.getPlayer().sendMessage(ChatColor.RED + "You can only use chunk busters in your territory.");
+                event.setCancelled(true);
+                return;
+            }
+
+            if (FactionUtils.getFPlayer(event.getPlayer()).getRole() == Role.NORMAL || FactionUtils.getFPlayer(event.getPlayer()).getRole() == Role.RECRUIT || FactionUtils.getFPlayer(event.getPlayer()).getRole() == Role.MODERATOR) {
+                event.getPlayer().sendMessage(CC.translate("Your faction role is not high enough to place this!"));
+                event.getPlayer().sendMessage(CC.translate("&c&l* &cRequired Role: &4Co-Leader or Higher."));
                 event.setCancelled(true);
                 return;
             }
@@ -67,6 +76,7 @@ public class ChunkBusterListener implements Listener {
                                     Dropper d = (Dropper) block.getState();
                                     d.getInventory().clear();
                                 }
+
                             }
                             block.setType(Material.AIR);
                         }

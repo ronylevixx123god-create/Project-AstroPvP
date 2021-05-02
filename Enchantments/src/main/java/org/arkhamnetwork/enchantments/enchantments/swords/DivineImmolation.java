@@ -124,7 +124,7 @@ public class DivineImmolation extends CustomEnchantment {
                                 LivingEntity le = (LivingEntity)ent;
                                 le.damage(damage);
 
-                                if (Math.random() > 0.05) {
+                                if (Math.random() > 0.1) {
                                     if (le instanceof Player) {
                                         if (ParticleUtils.isPlayerIndicating((Player) le)) {
 
