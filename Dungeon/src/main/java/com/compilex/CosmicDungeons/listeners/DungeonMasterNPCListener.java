@@ -29,7 +29,7 @@ import com.compilex.CosmicDungeons.CosmicDungeonsPlugin;
 import com.compilex.CosmicDungeons.DungeonsAPI;
 import com.compilex.CosmicDungeons.dungeons.libs.Dungeon;
 import com.compilex.CosmicDungeons.menus.DungeonMasterKeyMenu;
-import com.compilex.CosmicDungeons.utils.ItemUtils;
+import net.astropvp.core.utils.ItemUtils;
 import com.cosmicpvp.cosmicutils.struct.DecimalFormatType;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;

@@ -1,10 +1,13 @@
-package com.compilex.CosmicDungeons.listeners.items;
+package net.astropvp.core.listeners;
 
 import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
 import com.compilex.CosmicArmorSets.enums.ArmorSet;
-import com.compilex.CosmicDungeons.CosmicDungeonsPlugin;
-import com.compilex.CosmicDungeons.utils.HolyWhiteScrollUtils;
 import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
+import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
+import me.ifamasssxd.cosmichcf.struct.OutpostType;
+import me.ifamasssxd.cosmicmasks.MaskType;
+import net.astropvp.core.AstroCore;
+import net.astropvp.core.utils.HolyWhiteScrollUtils;
 import com.cosmicpvp.cosmicutils.CosmicUtils;
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
 import com.cosmicpvp.cosmicutils.exceptions.CosmicException;
@@ -16,9 +19,7 @@ import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
-import me.ifamasssxd.cosmichcf.struct.OutpostType;
-import me.ifamasssxd.cosmicmasks.MaskType;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -50,7 +51,7 @@ public class HolyWhiteScrollListener implements Listener {
                 if (cursor.getconaxData() != null)
                     return;
                 NBTWrapper wrapper = (e.getCurrentItem() != null && e.getCurrentItem().getType() != Material.AIR) ? new NBTWrapper(e.getCurrentItem()) : null;
-                CosmicDungeonsPlugin.get().getHolyWhitescrollItem().onInventoryClick((Player)e.getWhoClicked(), e.getCursor(), cursor, wrapper, e.getCurrentItem(), e);
+                AstroCore.getInstance().getHolyWhitescrollItem().onInventoryClick((Player)e.getWhoClicked(), e.getCursor(), cursor, wrapper, e.getCurrentItem(), e);
             } catch (CosmicException e2) {
                 ((Player)e.getWhoClicked()).sendMessage(e2.getMessage());
                 e.setCancelled(true);

@@ -66,14 +66,20 @@ import net.astropvp.core.conaxgames.staff.FreezeCommand;
 import net.astropvp.core.conaxgames.staff.StaffChatCommand;
 import net.astropvp.core.conaxgames.staff.StaffListeners;
 import net.astropvp.core.tasks.LastManStandingCapTask;
+import net.astropvp.core.utils.CleanseScroll;
+import net.astropvp.core.utils.ItemUtils;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandMap;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -99,6 +105,9 @@ public class AstroCore extends JavaPlugin {
     private CommandHelp commandHelp;
     public static String LORE_SUFFIX = ":  ";
     private File spongeDirectory;
+
+    private HolyWhiteScrollListener holyWhiteScrollListener;
+    private net.astropvp.core.items.HolyWhitescrollItem holyWhitescrollItem;
     // Jackpot
     private JackpotManager jackpotManager;
     public static Economy economy;
@@ -111,8 +120,10 @@ public class AstroCore extends JavaPlugin {
     // PlayerTitles
     @Getter public TitleDatabaseManager dataManager;
     @Getter public static boolean hcf;
-    // CoreChunkFinder
+// CoreChunkFinder
     @Getter private boolean tntDebug = false;
+
+    private SoulItemListener soulItemListener;
     // Heroic Envoys
     @Getter public EnvoyManager envoyManager;
     // Coin Flips
@@ -125,6 +136,23 @@ public class AstroCore extends JavaPlugin {
     @Getter @Setter public static TitleManagerAPI titleManagerAPI;
 
     private Freeze freezeCommand;
+
+    public net.astropvp.core.items.HolyWhitescrollItem getHolyWhitescrollItem() {
+        return this.holyWhitescrollItem;
+    }
+
+    public static ItemStack getSoulPearl() {
+        return ItemUtils.addGlow(ItemUtils.buildItem(Material.ENDER_PEARL, (short)0, (Object)ChatColor.DARK_PURPLE + "" + (Object)ChatColor.BOLD + "Soul Pearl", (Object)ChatColor.LIGHT_PURPLE + "A rare /dungeon trinket that", (Object)ChatColor.LIGHT_PURPLE + "functions like a normal enderpearl,", (Object)ChatColor.LIGHT_PURPLE + "but costs souls instead of being,", (Object)ChatColor.LIGHT_PURPLE + "consumed on use.", "", (Object)ChatColor.DARK_PURPLE + "" + (Object)ChatColor.UNDERLINE + "Soul Cost:" + (Object)ChatColor.LIGHT_PURPLE + " 5/pearl"));
+    }
+
+    public static ItemStack getHolyWhiteScroll() {
+        return AstroCore.getInstance().getHolyWhitescrollItem().createItem(null, new Object[0]);
+    }
+
+    @Deprecated
+    public static ItemStack getOldHolyWhiteScroll() {
+        return ItemUtils.addGlow(ItemUtils.buildItem(Material.PAPER, (short)0, (Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "Holy White Scroll", (Object)ChatColor.YELLOW + "A legendary /dungeon reward that", (Object)ChatColor.YELLOW + "can be applied to armor/weapons,", (Object)ChatColor.YELLOW + "gives a 100% chance of not losing", (Object)ChatColor.YELLOW + "the blessed item on death.", "", (Object)ChatColor.GOLD + "" + (Object)ChatColor.UNDERLINE + "REQ:" + (Object)ChatColor.YELLOW + " White Scroll"));
+    }
 
 
     @SneakyThrows
@@ -145,6 +173,8 @@ public class AstroCore extends JavaPlugin {
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new RevokeScratchCard());
 
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new SlotbotScratchCard());
+
+
 
         this.getServer().getPluginManager().registerEvents(new SlotbotScratchCardListener(), this);
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, new AutoBroadcastTask(), 20L, 6000L);
@@ -219,6 +249,8 @@ public class AstroCore extends JavaPlugin {
         this.getCommand("corechunkfinder").setExecutor(new CoreChunkFinderCommand());
         this.getCommand("spawnershop").setExecutor(new SpawnerShopCommand());
 
+        this.getCommand("givesoulpearl").setExecutor(new SoulPearlCommand());
+
         this.getCommand("coinflip").setExecutor(new CommandCoinFlip());
 
         this.getCommand("list").setExecutor(new ListCommand());
@@ -251,6 +283,19 @@ public class AstroCore extends JavaPlugin {
         this.toggleManager.loadToggles();
 
         this.getServer().getPluginManager().registerEvents(new MerchantGUIListener(), this);
+        this.getServer().getPluginManager().registerEvents(new SoulItemListener(), this);
+        this.getServer().getPluginManager().registerEvents(new HolyWhiteScrollListener(), this);
+        try {
+            Class.forName("org.arkhamnetwork.Arkkit.patches.combatlog.CombatLoggerDeathEvent");
+            this.getServer().getPluginManager().registerEvents((Listener)new HolyWhiteScrollCombatLoggerListener(), (Plugin)this);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        this.holyWhitescrollItem = new HolyWhitescrollItem();
+        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(this.holyWhitescrollItem);
+        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new HolyWaterItem());
+        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new CleanseScroll());
 
         this.getServer().getPluginManager().registerEvents(new Freeze(), this);
         this.getServer().getPluginManager().registerEvents(new RogueScratchCardListener(), this);
@@ -318,6 +363,10 @@ public class AstroCore extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(" ASTRO CORE PLUGIN SHOULD BE LOADED NOW");
         Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
 
+    }
+
+    public HolyWhiteScrollListener getHolyWhiteScrollListener() {
+        return this.holyWhiteScrollListener;
     }
 
     @SneakyThrows

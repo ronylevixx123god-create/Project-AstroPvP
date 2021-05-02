@@ -1,7 +1,5 @@
-package com.compilex.CosmicDungeons.items;
+package net.astropvp.core.utils;
 
-import com.compilex.CosmicDungeons.utils.HolyWhiteScrollUtils;
-import com.compilex.CosmicDungeons.utils.ItemUtils;
 import com.cosmicpvp.cosmicutils.exceptions.CosmicException;
 import com.cosmicpvp.cosmicutils.exceptions.PrefixedException;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;

@@ -1,7 +1,7 @@
-package com.compilex.CosmicDungeons.listeners.items;
+package net.astropvp.core.listeners;
 
-import com.compilex.CosmicDungeons.CosmicDungeonsPlugin;
-import com.compilex.CosmicDungeons.utils.HolyWhiteScrollUtils;
+import net.astropvp.core.AstroCore;
+import net.astropvp.core.utils.HolyWhiteScrollUtils;
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemUtils;
@@ -62,7 +62,7 @@ public class HolyWhiteScrollCombatLoggerListener implements Listener {
                         }
                     if (savedItems.size() <= 0)
                         continue;
-                    CosmicDungeonsPlugin.get_().getHolyWhiteScrollListener().getSavedItems().put(event.getPlayerUUIDString(), savedItems);
+                    AstroCore.getInstance().getHolyWhiteScrollListener().getSavedItems().put(event.getPlayerUUIDString(), savedItems);
                     Bukkit.getLogger().info("Storing " + Arrays.toString(savedItems.toArray((Object[])new ItemStack[savedItems.size()])) + " holy whitescroll'd items for " + event.getPlayerName() + " due to combat logger death!");
                 }
             }

@@ -35,15 +35,14 @@ import com.compilex.CosmicDungeons.cmds.CommandAdminDungeon;
 import com.compilex.CosmicDungeons.cmds.CommandDungeon;
 import com.compilex.CosmicDungeons.cmds.CommandDungeonMaster;
 import com.compilex.CosmicDungeons.cmds.CommandObjective;
-import com.compilex.CosmicDungeons.dungeons.libs.DestroyedOutpostDungeon;
 import com.compilex.CosmicDungeons.dungeons.libs.Dungeon;
 import com.compilex.CosmicDungeons.dungeons.libs.DungeonPlayer;
 import com.compilex.CosmicDungeons.dungeons.libs.DungeonType;
 import com.compilex.CosmicDungeons.items.*;
 import com.compilex.CosmicDungeons.listeners.*;
-import com.compilex.CosmicDungeons.listeners.items.HolyWhiteScrollCombatLoggerListener;
-import com.compilex.CosmicDungeons.listeners.items.HolyWhiteScrollListener;
-import com.compilex.CosmicDungeons.listeners.items.SoulItemListener;
+import net.astropvp.core.listeners.HolyWhiteScrollCombatLoggerListener;
+import net.astropvp.core.listeners.HolyWhiteScrollListener;
+import net.astropvp.core.listeners.SoulItemListener;
 import com.compilex.CosmicDungeons.menus.DungeonMasterKeyMenu;
 import com.compilex.CosmicDungeons.ncphooks.DestroyedOutpostNCPHook;
 import com.compilex.CosmicDungeons.struct.PortalLog;
@@ -61,6 +60,9 @@ import fr.neatmonster.nocheatplus.checks.CheckType;
 import fr.neatmonster.nocheatplus.hooks.NCPHookManager;
 import lombok.SneakyThrows;
 import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
+import net.astropvp.core.utils.CleanseScroll;
+import net.astropvp.core.items.HolyWaterItem;
+import net.astropvp.core.items.HolyWhitescrollItem;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -106,7 +108,7 @@ extends JavaPlugin {
     private DungeonSanityListener dungeonSanityListener;
     private SoulItemListener soulItemListener;
     private HolyWhiteScrollListener holyWhiteScrollListener;
-    private HolyWhitescrollItem holyWhitescrollItem;
+    private net.astropvp.core.items.HolyWhitescrollItem holyWhitescrollItem;
 
     public DungeonsAPI getApi() {
         return this.api;
@@ -309,7 +311,7 @@ extends JavaPlugin {
         return this.holyWhiteScrollListener;
     }
 
-    public HolyWhitescrollItem getHolyWhitescrollItem() {
+    public net.astropvp.core.items.HolyWhitescrollItem getHolyWhitescrollItem() {
         return this.holyWhitescrollItem;
     }
 

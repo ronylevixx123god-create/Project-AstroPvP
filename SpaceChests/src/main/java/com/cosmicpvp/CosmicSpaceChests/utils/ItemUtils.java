@@ -12,7 +12,6 @@ import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
 import me.ifamasssxd.cosmicbosses.utils.BossEggUtils;
 import me.ifamasssxd.cosmicguishop.ArkhamMoneyNotesAPI;
 import org.arkhamnetwork.Arkkit.patches.ItemNametag;
-import org.arkhamnetwork.CosmicCustomTNT.enums.TNTTypes;
 import org.arkhamnetwork.enchantments.EnchantmentBook;
 import org.arkhamnetwork.enchantments.util.TieredEnchantments;
 import org.bukkit.Bukkit;
@@ -120,9 +119,6 @@ public class ItemUtils {
         return book;
     }
 
-    public static ItemStack getCustomTNT(TNTTypes tntType) {
-        return TNTTypes.getTNTItem((TNTTypes)tntType);
-    }
 
     public static ItemStack getCustomCreeperEgg(CreeperTypes creeperType) {
         return CreeperTypes.getCCItem((CreeperTypes)creeperType);

@@ -18,10 +18,9 @@
  *  org.bukkit.event.player.PlayerInteractEvent
  *  org.bukkit.inventory.ItemStack
  */
-package com.compilex.CosmicDungeons.items;
+package net.astropvp.core.items;
 
-import com.compilex.CosmicDungeons.utils.HolyWhiteScrollUtils;
-import com.compilex.CosmicDungeons.utils.ItemUtils;
+
 import com.cosmicpvp.cosmicutils.exceptions.CosmicException;
 import com.cosmicpvp.cosmicutils.exceptions.PrefixedException;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
@@ -31,6 +30,8 @@ import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
 import me.ifamasssxd.cosmicskycustoms.struct.InventoryInteractable;
 import me.ifamasssxd.cosmicskycustoms.struct.InventoryItemType;
+import net.astropvp.core.utils.HolyWhiteScrollUtils;
+import net.astropvp.core.utils.ItemUtils;
 import net.minecraft.server.v1_8_R3.NBTBase;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

@@ -12,16 +12,16 @@
  *  org.bukkit.inventory.ItemStack
  *  org.bukkit.inventory.meta.ItemMeta
  */
-package com.compilex.CosmicDungeons.utils;
+package net.astropvp.core.utils;
 
-import com.compilex.CosmicDungeons.CosmicDungeonsPlugin;
-import com.compilex.CosmicDungeons.DungeonsRewardsAPI;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.google.common.collect.Lists;
 import java.util.LinkedList;
 import java.util.List;
+
+import net.astropvp.core.AstroCore;
 import net.minecraft.server.v1_8_R3.NBTBase;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -155,11 +155,11 @@ public class HolyWhiteScrollUtils {
     }
 
     public static boolean isHolyWhiteScroll(ItemStack i) {
-        return CosmicDungeonsPlugin.get().getHolyWhitescrollItem().isItem(i);
+        return AstroCore.getInstance().getHolyWhitescrollItem().isItem(i);
     }
 
     public static boolean isOldHolyWhiteScroll(ItemStack i) {
-        return i != null && i.hasItemMeta() && i.getType() == Material.PAPER && i.getItemMeta().hasDisplayName() && i.getItemMeta().getDisplayName().equals(DungeonsRewardsAPI.getHolyWhiteScroll().getItemMeta().getDisplayName()) && i.getItemMeta().hasLore() && ((String)i.getItemMeta().getLore().get(0)).equals(DungeonsRewardsAPI.getHolyWhiteScroll().getItemMeta().getLore().get(0));
+        return i != null && i.hasItemMeta() && i.getType() == Material.PAPER && i.getItemMeta().hasDisplayName() && i.getItemMeta().getDisplayName().equals(AstroCore.getInstance().getHolyWhiteScroll().getItemMeta().getDisplayName()) && i.getItemMeta().hasLore() && ((String)i.getItemMeta().getLore().get(0)).equals(AstroCore.getInstance().getHolyWhiteScroll().getItemMeta().getLore().get(0));
     }
 
     public static int getMaxHolyAllowed(ItemStack item) {

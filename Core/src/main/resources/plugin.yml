@@ -27,6 +27,8 @@ commands:
     aliases: ['elist']
   dupe:
     description: /dupe
+  givesoulpearl:
+    description: Gives soulpearl
   spawnershop:
     description: /spawnershop
     aliases: ['spawnershop', 'spawners', 'spawner']

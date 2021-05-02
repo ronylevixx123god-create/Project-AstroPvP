@@ -29,7 +29,7 @@ import com.compilex.CosmicDungeons.dungeons.libs.DungeonType;
 import com.compilex.CosmicDungeons.items.DungeonKeyItem;
 import com.compilex.CosmicDungeons.struct.PortalLog;
 import com.compilex.CosmicDungeons.tasks.HolidayPortalTask;
-import com.compilex.CosmicDungeons.utils.ItemUtils;
+import net.astropvp.core.utils.ItemUtils;
 import com.compilex.CosmicDungeons.utils.LocationUtils;
 import com.compilex.CosmicDungeons.utils.Logger;
 import com.compilex.CosmicDungeons.utils.TimeUtils;
@@ -42,7 +42,6 @@ import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
 import com.google.common.collect.Lists;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.bukkit.Bukkit;

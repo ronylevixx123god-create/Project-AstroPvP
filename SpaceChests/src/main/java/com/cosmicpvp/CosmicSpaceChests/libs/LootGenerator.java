@@ -18,7 +18,6 @@ import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKits;
 import me.ifamasssxd.killtracker.KillTrackerAPI;
 import me.ifamasssxd.killtracker.listeners.Tracker;
 import org.arkhamnetwork.Arkkit.patches.*;
-import org.arkhamnetwork.CosmicCustomTNT.enums.TNTTypes;
 import org.arkhamnetwork.enchantments.EnchantmentBook;
 import org.arkhamnetwork.enchantments.EnchantmentOrb;
 import org.arkhamnetwork.enchantments.RandomizationScroll;
@@ -67,8 +66,6 @@ public class LootGenerator {
         commonExtras.put(ItemUtils.setAmount(EnchantmentBook.getSecretDust(ItemRarity.SIMPLE, 50), 5), 0.02);
         commonExtras.put(ItemUtils.setAmount(RandomizationScroll.getRandomizationScroll(ItemRarity.SIMPLE), 1), 0.02);
         uncommonExtras = new HashMap();
-        uncommonExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Lethal), 32), 0.05);
-        uncommonExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Tactical), 32), 0.05);
         uncommonExtras.put(ItemUtils.getMoneyNoteNoIID("Cosmic Chest", 50000), 0.03);
         uncommonExtras.put(CosmicSpaceChestsAPI.getSpaceFlare(ItemRarity.UNIQUE), 0.02);
         uncommonExtras.put(CosmicSpaceChestsAPI.getSpaceFlare(ItemRarity.ELITE), 0.01);
@@ -87,11 +84,6 @@ public class LootGenerator {
         uncommonExtras.put(ItemUtils.setAmount(EnchantmentBook.getSecretDust(ItemRarity.UNIQUE, 50), 5), 0.02);
         uncommonExtras.put(ItemUtils.setAmount(RandomizationScroll.getRandomizationScroll(ItemRarity.UNIQUE), 1), 0.01);
         rareExtras = new HashMap();
-        rareExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Huge), 32), 0.04);
-        rareExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Lethal), 64), 0.05);
-        rareExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Tactical), 64), 0.05);
-        rareExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Mimic), 32), 0.05);
-        rareExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Hex), 24), 0.05);
         rareExtras.put(ItemUtils.getMoneyNoteNoIID("Cosmic Chest", 100000), 0.03);
         rareExtras.put(CosmicSpaceChestsAPI.getSpaceFlare(ItemRarity.ELITE), 0.02);
         rareExtras.put(CosmicSpaceChestsAPI.getSpaceFlare(ItemRarity.ULTIMATE), 0.01);
@@ -123,7 +115,6 @@ public class LootGenerator {
         ultraRareExtras.put(ItemUtils.getNewBossEgg(BossType.BROOD_MOTHER), 0.0025);
         ultraRareExtras.put(ItemUtils.getNewBossEgg(BossType.KING_SLIME), 5.0E-4);
         ultraRareExtras.put(ItemUtils.getNewBossEgg(BossType.HOLIDAY_SPIRIT), 5.0E-4);
-        ultraRareExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Huge), 64), 0.05);
         ultraRareExtras.put(ItemUtils.getMoneyNoteNoIID("Cosmic Chest", 250000), 0.03);
         ultraRareExtras.put(CosmicSpaceChestsAPI.getSpaceFlare(ItemRarity.ULTIMATE), 0.02);
         ultraRareExtras.put(CosmicSpaceChestsAPI.getSpaceFlare(ItemRarity.LEGENDARY), 0.01);
@@ -165,9 +156,6 @@ public class LootGenerator {
         ultraRareExtras.put(new ItemStack(Material.getMaterial(383), 2, (short) 50), 0.01);
         ultraRareExtras.put(new ItemStack(Material.HOPPER, 16), 0.01);
         ultraRareExtras.put(ItemUtils.setAmount(ItemUtils.getCustomCreeperEgg(CreeperTypes.Tactical), 1), 0.01);
-        ultraRareExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Lucky), 4), 0.01);
-        ultraRareExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Mimic), 64), 0.02);
-        ultraRareExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Hex), 64), 0.02);
         ultraRareExtras.put(KillTrackerAPI.buildTracker(Tracker.Ultimate), 0.01);
         ultraRareExtras.put(ItemUtils.setAmount(EnchantmentBook.getSecretDust(ItemRarity.ULTIMATE, 50), 5), 0.02);
         ultraRareExtras.put(ItemUtils.setAmount(RandomizationScroll.getRandomizationScroll(ItemRarity.ULTIMATE), 2), 0.01);
@@ -220,8 +208,6 @@ public class LootGenerator {
         legendaryExtras.put(KillTrackerAPI.buildTracker(Tracker.Legendary), 0.015);
         legendaryExtras.put(new ItemStack(Material.getMaterial(383), 16, (short) 50), 0.02);
         legendaryExtras.put(new ItemStack(Material.HOPPER, 64), 0.02);
-        legendaryExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Lucky), 16), 0.03);
-        legendaryExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Silent), 32), 0.03);
         legendaryExtras.put(ItemUtils.setAmount(ItemUtils.getCustomCreeperEgg(CreeperTypes.Tactical), 8), 0.03);
         legendaryExtras.put(ItemUtils.setAmount(ItemUtils.getCustomCreeperEgg(CreeperTypes.Huge), 4), 0.015);
         legendaryExtras.put(ItemUtils.setAmount(ItemUtils.getCustomCreeperEgg(CreeperTypes.Lucky), 2), 0.015);
@@ -280,9 +266,6 @@ public class LootGenerator {
         godExtras.put(KillTrackerAPI.buildTracker(Tracker.Legendary), 0.015);
         godExtras.put(new ItemStack(Material.getMaterial(383), 48, (short) 50), 0.02);
         godExtras.put(new ItemStack(Material.HOPPER, 64), 0.02);
-        godExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Lucky), 32), 0.03);
-        godExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Silent), 64), 0.03);
-        godExtras.put(ItemUtils.setAmount(ItemUtils.getCustomTNT(TNTTypes.Huge), 64), 0.03);
         godExtras.put(ItemUtils.setAmount(ItemUtils.getCustomCreeperEgg(CreeperTypes.Tactical), 10), 0.03);
         godExtras.put(ItemUtils.setAmount(ItemUtils.getCustomCreeperEgg(CreeperTypes.Huge), 8), 0.015);
         godExtras.put(ItemUtils.setAmount(ItemUtils.getCustomCreeperEgg(CreeperTypes.Lucky), 5), 0.015);

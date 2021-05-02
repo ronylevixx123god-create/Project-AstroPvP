@@ -19,7 +19,7 @@
 package com.compilex.CosmicDungeons.items;
 
 import com.compilex.CosmicDungeons.DungeonsAPI;
-import com.compilex.CosmicDungeons.utils.ItemUtils;
+import net.astropvp.core.utils.ItemUtils;
 import com.compilex.CosmicDungeons.utils.PortalTrinketUtils;
 import com.cosmicpvp.cosmicutils.exceptions.CosmicException;
 import com.cosmicpvp.cosmicutils.exceptions.PrefixedException;

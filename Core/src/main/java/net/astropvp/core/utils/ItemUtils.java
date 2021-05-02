@@ -9,7 +9,7 @@
  *  org.bukkit.inventory.ItemStack
  *  org.bukkit.inventory.meta.ItemMeta
  */
-package com.compilex.CosmicDungeons.utils;
+package net.astropvp.core.utils;
 
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import java.util.Arrays;

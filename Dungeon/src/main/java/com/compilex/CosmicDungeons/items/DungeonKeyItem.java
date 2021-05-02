@@ -15,8 +15,7 @@
 package com.compilex.CosmicDungeons.items;
 
 import com.compilex.CosmicDungeons.dungeons.libs.DungeonType;
-import com.compilex.CosmicDungeons.items.KeyPair;
-import com.compilex.CosmicDungeons.utils.ItemUtils;
+import net.astropvp.core.utils.ItemUtils;
 import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
@@ -26,7 +25,6 @@ import com.google.common.collect.Lists;
 import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
 
-import net.minecraft.server.v1_8_R3.NBTBase;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 

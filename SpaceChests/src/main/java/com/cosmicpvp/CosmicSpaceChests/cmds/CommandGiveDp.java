@@ -20,7 +20,6 @@ import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsPlugin;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.cosmicpvp.CosmicSpaceChests.listeners.EnvoySummonItemListener;
 import com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils;
-import org.arkhamnetwork.CosmicCustomTNT.enums.TNTTypes;
 import org.arkhamnetwork.enchantments.EnchantmentBook;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -110,18 +109,7 @@ implements CommandExecutor {
                 }
                 return true;
             }
-            if (args[0].equalsIgnoreCase("firetnt")) {
-                ItemStack is = TNTTypes.getTNTItem((TNTTypes)TNTTypes.Incindiary);
-                ItemUtils.giveItemToPlayer(ply, is);
-                ply.sendMessage((Object)ChatColor.GRAY + "You got a " + (Object)ChatColor.YELLOW + (Object)ChatColor.UNDERLINE + "Fire TNT!");
-                ply.updateInventory();
-                if (sender instanceof Player && !((Player)sender).getName().equalsIgnoreCase(ply.getName())) {
-                    ((Player)sender).sendMessage((Object)ChatColor.GRAY + p_name + " has been given 1x " + (Object)ChatColor.YELLOW + (Object)ChatColor.UNDERLINE + "Fire TNT!");
-                } else {
-                    CosmicSpaceChestsPlugin.log.debug(p_name + " has been given 1x " + ChatColor.YELLOW.toString() + (Object)ChatColor.UNDERLINE + "Fire TNT!", this.getClass());
-                }
-                return true;
-            }
+
             ItemRarity ir = CosmicSpaceChestsAPI.getItemRarity(Integer.parseInt(args[0]));
             ChatColor cc = CosmicSpaceChestsAPI.getColor(ir);
             ItemStack is = CosmicSpaceChestsAPI.getDropPackageChest(ir);
