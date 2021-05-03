@@ -63,15 +63,15 @@ public class SpawnerShopGUI
     protected ItemStack getItems(int slot) {
         if (slot == 0) {
             return ItemBuilder.buildItem(Material.MOB_SPAWNER, 16, (short) 0,
-                    CC.translate("&a&lBlaze Spawner"), CC.translate("&a&l* &fPrice: &7$6,240,000"));
+                    CC.translate("&a&lBlaze Spawner"), CC.translate("&a&l* &fPrice: &7$12,000,000"));
         }
         if (slot == 1) {
             return ItemBuilder.buildItem(Material.MOB_SPAWNER, 32, (short) 0,
-                    CC.translate("&a&lBlaze Spawner"), CC.translate("&a&l* &fPrice: &7$12,4800,00"));
+                    CC.translate("&a&lBlaze Spawner"), CC.translate("&a&l* &fPrice: &7$24,000,000"));
         }
         if (slot == 2) {
             return ItemBuilder.buildItem(Material.MOB_SPAWNER, 64, (short) 0,
-                    CC.translate("&a&lBlaze Spawner"), CC.translate("&a&l* &fPrice: &7$24,960,000"));
+                    CC.translate("&a&lBlaze Spawner"), CC.translate("&a&l* &fPrice: &7$48,000,000"));
 
         }
         if (slot == 3) {
@@ -91,31 +91,31 @@ public class SpawnerShopGUI
         }
         if (slot == 6) {
             return ItemBuilder.buildItem(Material.MOB_SPAWNER, 16, (short) 0,
-                    CC.translate("&a&lVillager Spawner"), CC.translate("&a&l* &fPrice: &7$160,000,000"));
+                    CC.translate("&a&lVillager Spawner"), CC.translate("&a&l* &fPrice: &7$400,000,000"));
         }
             if (slot == 7) {
                 return ItemBuilder.buildItem(Material.MOB_SPAWNER, 32, (short) 0,
-                        CC.translate("&a&lVillager Spawner"), CC.translate("&a&l* &fPrice: &7$320,000,000"));
+                        CC.translate("&a&lVillager Spawner"), CC.translate("&a&l* &fPrice: &7$800,000,000"));
 
             }
         if (slot == 8) {
             return ItemBuilder.buildItem(Material.MOB_SPAWNER, 64, (short) 0,
-                    CC.translate("&a&lVillager Spawner"), CC.translate("&a&l* &fPrice: &7$640,000,000"));
+                    CC.translate("&a&lVillager Spawner"), CC.translate("&a&l* &fPrice: &7$1,600,000,000"));
 
         }
         if (slot == 9) {
             return ItemBuilder.buildItem(Material.MOB_SPAWNER, 16, (short) 0,
-                    CC.translate("&a&lWitch Spawner"), CC.translate("&a&l* &fPrice: &7$120,000,000"));
+                    CC.translate("&a&lWitch Spawner"), CC.translate("&a&l* &fPrice: &7$160,000,000"));
 
         }
         if (slot == 10) {
             return ItemBuilder.buildItem(Material.MOB_SPAWNER, 32, (short) 0,
-                    CC.translate("&a&lWitch Spawner"), CC.translate("&a&l* &fPrice: &7$240,000,000"));
+                    CC.translate("&a&lWitch Spawner"), CC.translate("&a&l* &fPrice: &7$320,000,000"));
 
         }
         if (slot == 11) {
             return ItemBuilder.buildItem(Material.MOB_SPAWNER, 64, (short) 0,
-                    CC.translate("&a&lWitch Spawner"), CC.translate("&a&l* &fPrice: &7$480,000,000"));
+                    CC.translate("&a&lWitch Spawner"), CC.translate("&a&l* &fPrice: &7$640,000,000"));
 
         }
         if (slot == 12) {
@@ -141,7 +141,7 @@ public class SpawnerShopGUI
         int amount;
         switch (event.getSlot()) {
             case 0:
-                price = 6240000;
+                price = 12000000;
                 amount = 16;
                 if (balance<price) {
                     player.sendMessage(CC.translate("&c&l(!)&c You don't have enough money to purchase this spawner."));
@@ -154,7 +154,7 @@ public class SpawnerShopGUI
                 setItems();
                 break;
             case 1:
-                price = 12480000;
+                price = 24000000;
                 amount = 32;
                 if (balance<price) {
                     player.sendMessage(CC.translate("&c&l(!)&c You don't have enough money to purchase this spawner."));
@@ -167,7 +167,7 @@ public class SpawnerShopGUI
                 setItems();
                 break;
             case 2:
-                price = 24960000;
+                price = 48000000;
                 amount = 64;
                 if (balance<price) {
                     player.sendMessage(CC.translate("&c&l(!)&c You don't have enough money to purchase this spawner."));
@@ -219,7 +219,7 @@ public class SpawnerShopGUI
                 setItems();
                 break;
             case 6:
-                price = 160000000;
+                price = 400000000;
                 amount = 16;
                 if (balance<price) {
                     player.sendMessage(CC.translate("&c&l(!)&c You don't have enough money to purchase this spawner."));
@@ -232,7 +232,7 @@ public class SpawnerShopGUI
                 setItems();
                 break;
             case 7:
-                price = 320000000;
+                price = 800000000;
                 amount = 32;
                 if (balance<price) {
                     player.sendMessage(CC.translate("&c&l(!)&c You don't have enough money to purchase this spawner."));
@@ -244,7 +244,7 @@ public class SpawnerShopGUI
                 }
                 break;
             case 8:
-                price = 640000000;
+                price = 1600000000;
                 amount = 64;
                 if (balance<price) {
                     player.sendMessage(CC.translate("&c&l(!)&c You don't have enough money to purchase this spawner."));
@@ -257,7 +257,7 @@ public class SpawnerShopGUI
                 setItems();
                 break;
             case 9:
-                price = 120000000;
+                price = 160000000;
                 amount = 16;
                 if (balance<price) {
                     player.sendMessage(CC.translate("&c&l(!)&c You don't have enough money to purchase this spawner."));
@@ -270,7 +270,7 @@ public class SpawnerShopGUI
                 setItems();
                 break;
             case 10:
-                price = 240000000;
+                price = 320000000;
                 amount = 32;
                 if (balance<price) {
                     player.sendMessage(CC.translate("&c&l(!)&c You don't have enough money to purchase this spawner."));
@@ -283,7 +283,7 @@ public class SpawnerShopGUI
                 setItems();
                 break;
             case 11:
-                price = 480000000;
+                price = 640000000;
                 amount = 64;
                 if (balance<price) {
                     player.sendMessage(CC.translate("&c&l(!)&c You don't have enough money to purchase this spawner."));

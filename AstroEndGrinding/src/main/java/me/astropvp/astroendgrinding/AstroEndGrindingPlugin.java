@@ -34,7 +34,7 @@ public class AstroEndGrindingPlugin extends JavaPlugin {
 	}
 	
 	public void registerCommands() {
-		this.getCommand("endgrinding").setExecutor(new CommandEnd());
+		this.getCommand("end").setExecutor(new CommandEnd());
 		this.getCommand("adminend").setExecutor(new CommandAdminEnd());
 	}
 	

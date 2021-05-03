@@ -66,7 +66,7 @@ public class EndLogicListener implements Listener {
 		if(!event.getFrom().getWorld().getName().equals(event.getTo().getWorld().getName())) {
 			EndPlayerData.remove(player);
 			player.sendMessage("");
-			player.sendMessage(CC.YellowB + " (!) " + CC.Yellow + "As a result of leaving the End World, "
+			player.sendMessage(CC.YellowB + "(!) " + CC.Yellow + "As a result of leaving the End World, "
 					+ "you have lost your /end stats!");
 			player.sendMessage("");
 			player.playSound(player.getLocation(), Sound.AMBIENCE_THUNDER, 0.75F, 2F);

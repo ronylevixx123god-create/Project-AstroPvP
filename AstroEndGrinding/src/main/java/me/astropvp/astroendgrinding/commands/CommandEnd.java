@@ -24,7 +24,7 @@ public class CommandEnd implements CommandExecutor {
 		if(args.length >= 1 && args[0].equalsIgnoreCase("stats")) {
 			if(!player.getWorld().getName().equals(AstroEndGrindingAPI.getWorldName())) {
 				player.sendMessage("");
-				player.sendMessage(CC.translate("&c&l(!)&c You must be in the End to view your Stats 7(/warp end)&c."));
+				player.sendMessage(CC.translate("&c&l(!)&c You must be in the End to view your Stats &7(/warp end)&c."));
 				player.sendMessage("");
 				return false;
 			}
@@ -44,7 +44,7 @@ public class CommandEnd implements CommandExecutor {
 		player.sendMessage(CC.translate("&d&lEND GRINDING HELP"));
 		player.sendMessage("");
 		player.sendMessage(CC.translate("&d&l* &5/Warp End &7- &fTeleport to the end world."));
-		player.sendMessage(CC.translate("&d&l* &5/Endgrinding Status &7- &fView your end grinding stats."));
+		player.sendMessage(CC.translate("&d&l* &5/End Stats &7- &fView your end grinding stats."));
 		player.sendMessage("");
 		player.sendMessage(CC.Gray + "The End Warp is a place to grind to earn Exp Bottle(s), BankNote(s), "
 		+ "Items, and more! There is no way to come back to the overworld, unless you die, or you teleport through the portal " +

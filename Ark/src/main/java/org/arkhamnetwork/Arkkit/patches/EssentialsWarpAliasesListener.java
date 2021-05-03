@@ -31,6 +31,10 @@ final class EssentialsWarpAliasesListener
             if (Bukkit.getCommandAliases().containsKey(e.getMessage().replace("/", ""))) {
                 return;
             }
+
+            if (warp.equalsIgnoreCase("end")) {
+                continue;
+            }
             if (!e.getMessage().toLowerCase().equals("/" + warp.toLowerCase())) continue;
             e.setMessage("/warp " + warp);
         }
