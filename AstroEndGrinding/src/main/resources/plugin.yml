@@ -3,7 +3,7 @@ name: AstroEndGrinding
 author: AstroPvP
 version: 1.0
 commands:
-  astroend:
+  endgrinding:
     description: /end
   adminend:
     description: /adminend

@@ -8,6 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -25,8 +26,10 @@ public class PlayerUtils {
             }
         }
         if(!(damaged instanceof Player) || WorldGuardUtils.isInRegionsFast(damaged.getLocation(), "spawn_region")) {
-            EntityDeathEvent deathEvent = new EntityDeathEvent(damaged, null, DamageCause.CUSTOM);
-            deathEvent.setDrops(getDropsOfEntity(damaged));
+            EntityDeathEvent deathEvent = new EntityDeathEvent(damaged, null, 0);
+            for (ItemStack itemStack : getDropsOfEntity(damaged)) {
+                deathEvent.getDrops().add(itemStack);
+            }
             deathEvent.setDroppedExp(getEntityExperience(damaged));
             for (ItemStack item : deathEvent.getDrops()) {
                 damaged.getLocation().getWorld().dropItem(damaged.getLocation(), item);
@@ -38,7 +41,7 @@ public class PlayerUtils {
                 ((Player) damaged).closeInventory();
                 damaged.setHealth(20);
                 damaged.setMaxHealth(20);
-                damaged.teleport(deathEvent.getSpawnLocation());
+                damaged.teleport(Bukkit.getWorld("world").getSpawnLocation());
                 PlayerUtils.subtractExpFromPlayer((Player)damaged, ((Player)damaged).getTotalExperience());
             } else {
                 damaged.remove();
@@ -57,13 +60,13 @@ public class PlayerUtils {
             }
         }
         if (damaged.getHealth() - dmg <= 0) {
-            EntityDeathEvent deathEvent = new EntityDeathEvent(damaged, null, cause);
-            deathEvent.setDrops(getDropsOfEntity(damaged));
+            EntityDeathEvent deathEvent = new EntityDeathEvent(damaged, null, 0);
+            for (ItemStack item : deathEvent.getDrops()) {
+                damaged.getLocation().getWorld().dropItem(damaged.getLocation(), item);
+            }
             deathEvent.setDroppedExp(getEntityExperience(damaged));
             Bukkit.getPluginManager().callEvent(deathEvent);
-            if (deathEvent.isCancelled()) {
-                return;
-            }
+
 
             for (ItemStack item : deathEvent.getDrops()) {
                 damaged.getLocation().getWorld().dropItem(damaged.getLocation(), item);
@@ -73,7 +76,7 @@ public class PlayerUtils {
                 clearContents((Player) damaged);
                 ((Player) damaged).closeInventory();
                 damaged.setHealth(20);
-                damaged.teleport(deathEvent.getSpawnLocation());
+                damaged.teleport(Bukkit.getWorld("world").getSpawnLocation());
             } else {
                 damaged.remove();
             }
