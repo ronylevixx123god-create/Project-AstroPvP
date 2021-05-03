@@ -20,6 +20,7 @@
         <module name="Contest" />
         <module name="Kits" />
         <module name="Core" />
+        <module name="AstroEndGrinding" />
         <module name="GUIShop" />
         <module name="Lootboxes" />
         <module name="AuctionHouse" />

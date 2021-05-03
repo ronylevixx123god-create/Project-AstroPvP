@@ -1,0 +1,10 @@
+main: me.astropvp.astroendgrinding.AstroEndGrindingPlugin
+name: AstroEndGrinding
+author: AstroPvP
+version: 1.0
+commands:
+  astroend:
+    description: /end
+  adminend:
+    description: /adminend
+    aliases: [aend]

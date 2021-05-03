@@ -43,7 +43,6 @@ import com.massivecraft.factions.struct.Role;
 import me.ifamasssxd.cosmicduel.struct.DuelPlayer;
 import mkremins.fanciful.FancyMessage;
 import org.arkhamnetwork.Arkkit.libs.SeasonalWin;
-import org.arkhamnetwork.Arkkit.patches.SeasonalPrefixes;
 import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatUtils;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.Bukkit;

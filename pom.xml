@@ -39,6 +39,7 @@
         <module>Masks</module>
         <module>EnchantmentsAPI</module>
         <module>CustomBlocks</module>
+        <module>AstroEndGrinding</module>
     </modules>
 
     <build>

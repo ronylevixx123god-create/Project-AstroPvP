@@ -20,7 +20,6 @@ import me.ifamasssxd.factionstop.struct.TopFaction;
 import org.arkhamnetwork.Arkkit.libs.BlockValueLocation;
 import org.arkhamnetwork.Arkkit.libs.SpawnerLocation;
 import org.arkhamnetwork.Arkkit.patches.BlockValue;
-import org.arkhamnetwork.Arkkit.patches.SpawnerFee;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
