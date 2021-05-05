@@ -4,6 +4,7 @@ import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
 import com.compilex.CosmicArmorSets.enums.ArmorSetInfo;
 import com.compilex.CosmicArmorSets.enums.WeaponedArmorSet;
 import com.compilex.CosmicArmorSets.utils.ItemUtils;
+import com.compilex.CosmicArmorSets.utils.TranslateList;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
@@ -24,28 +25,31 @@ public class GrinderArmorSet extends ArmorSetInfo
         implements WeaponedArmorSet {
     @Override
     public ItemStack getHelmet(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_HELMET, (short) 0, "&8&lGrinder Helmet", "&8The Old School Grinder Helmet.", "", "&8&lGRINDER SET BONUS", "&8150% Extra Exp.", "&7(&oRequires all 4 grinder items.&7)"), Arrays.asList(EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Drunk"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Implants"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Angelic"))));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_HELMET, (short) 0, "&8&lGrinder Helmet", "&8The Old School Grinder Helmet.", "", "&8&lGRINDER SET BONUS", "&8150% Extra Exp.", "&8Chance to gain x2 Mobcoins", "&7(&oRequires all 4 grinder items.&7)"), Arrays.asList(EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Drunk"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Implants"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Angelic"))));
     }
 
     @Override
     public ItemStack getChestplate(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_CHESTPLATE, (short) 0, "&8&lGrinder Chestplate", "&8The Old School Grinder Chestplate.", "", "&8&lGRINDER SET BONUS", "&8150% Extra Exp.", "&7(&oRequires all 4 grinder items.&7)"), Arrays.asList(EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Drunk"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Implants"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Angelic"))));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_CHESTPLATE, (short) 0, "&8&lGrinder Chestplate", "&8The Old School Grinder Chestplate.", "", "&8&lGRINDER SET BONUS", "&8150% Extra Exp.", "&8Chance to gain x2 Mobcoins", "&7(&oRequires all 4 grinder items.&7)"), Arrays.asList(EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Drunk"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Implants"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Angelic"))));
     }
 
     @Override
     public ItemStack getLeggings(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_LEGGINGS, (short) 0, "&8&lGrinder Leggings", "&8The Old School Grinder Leggings.", "", "&8&lGRINDER SET BONUS", "&8150% Extra Exp.", "&7(&oRequires all 4 grinder items.&7)"), Arrays.asList(EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Drunk"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Implants"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Angelic"))));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_LEGGINGS, (short) 0, "&8&lGrinder Leggings", "&8The Old School Grinder Leggings.", "", "&8&lGRINDER SET BONUS", "&8150% Extra Exp.",  "&8Chance to gain x2 Mobcoins", "&7(&oRequires all 4 grinder items.&7)"), Arrays.asList(EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Drunk"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Implants"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Angelic"))));
     }
 
     @Override
     public ItemStack getBoots(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_BOOTS, (short) 0,  "&8&lGrinder Chestplate", "&8The Old School Grinder Boots.", "", "&8&lGRINDER SET BONUS", "&8150% Extra Exp.", "&7(&oRequires all 4 grinder items.&7)"), Arrays.asList(EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Drunk"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Implants"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Angelic"))));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_BOOTS, (short) 0,  "&8&lGrinder Chestplate", "&8The Old School Grinder Boots.", "", "&8&lGRINDER SET BONUS", "&8150% Extra Exp.", "&8Chance to gain x2 Mobcoins", "&7(&oRequires all 4 grinder items.&7)"), Arrays.asList(EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Drunk"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Implants"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Angelic"))));
     }
 
     @Override
     public List<String> getEquipDescription() {
-        return Lists.newArrayList((ChatColor.DARK_GRAY + "" + ChatColor.BOLD + "GRINDER SET BONUS: " + ChatColor.DARK_GRAY + "150% Extra EXP"));
-    }
+        return TranslateList.translateList(ChatColor.DARK_GRAY + "" + ChatColor.BOLD + "",
+                "&8&lGRINDER SET BONUS"
+                , "&8&l➥ &8150% Extra EXP."
+                , "&8&l➥ &8Chance to gain x2 Mobcoins.",
+                "");    }
 
     @Override
     public boolean onPlayerDamaged(Player damaged, EntityDamageByEntityEvent event) {

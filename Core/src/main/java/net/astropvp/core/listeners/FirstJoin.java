@@ -17,7 +17,7 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 public class FirstJoin implements Listener {
     private MysteryChest chest;
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.LOW)
     public void onPlayerJoin(final PlayerJoinEvent event) {
         final Player player = event.getPlayer();
         //this.chest = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("StarterBundle");
@@ -26,7 +26,7 @@ public class FirstJoin implements Listener {
             ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
             //Bukkit.dispatchCommand(console, "mc give " + event.getPlayer().getName() + " StarterBundle 1");
             //event.getPlayer().getInventory().addItem(this.chest.createClaimableItem(true));
-            event.getPlayer().teleport(new Location(Bukkit.getWorld("world"), 1D, 125.0D, -15D), PlayerTeleportEvent.TeleportCause.UNKNOWN);
+            event.getPlayer().teleport(Bukkit.getWorld("world").getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
         }
     }
 
