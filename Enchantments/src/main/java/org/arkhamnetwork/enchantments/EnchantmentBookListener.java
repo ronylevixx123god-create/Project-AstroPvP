@@ -134,7 +134,13 @@ public class EnchantmentBookListener implements Listener {
                 }
 
                 //THIS IS WHERE YOU FIW APPLYING STACKED BOOKS
+
+                if (pl.getItemOnCursor().getAmount() > 1) {
+                    pl.getItemOnCursor().setAmount(pl.getItemOnCursor().getAmount()-1);
+                } else {
                     pl.setItemOnCursor((ItemStack) null);
+
+                }
 
                 e.setCancelled(true);
                 e.setResult(Event.Result.DENY);
@@ -155,12 +161,14 @@ public class EnchantmentBookListener implements Listener {
                     de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
                     de.inventivegames.particle.ParticleEffect.MAGIC_CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
 
-                    if (ench_book.getAmount() > 1) {
+
+                    //TODO: Check this first
+                    /*if (ench_book.getAmount() > 1) {
                         ItemStack book = ench_book.clone();
                         book.setAmount(book.getAmount()-1);
 
                         pl.getInventory().addItem(book);
-                    }
+                    }*/
 
                     Bukkit.getPluginManager().callEvent((Event) new CustomCosmicPlayerEvent(pl, "APPLY_ENCHANT", new Object[]{ench_book, EnchantmentBook.getEnchantmentBookSuccessRate(ench_book)}));
                 } else {
