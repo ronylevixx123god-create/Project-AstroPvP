@@ -1,16 +1,14 @@
 package me.astropvp.astroendgrinding.listeners;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.astroendgrinding.AstroEndGrindingPlugin;
-import me.astropvp.astroendgrinding.utils.EntityDamageEvent;
 import me.astropvp.astroendgrinding.utils.PlayerUtils;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -18,12 +16,15 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityPortalEnterEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import com.google.common.collect.Lists;
@@ -38,7 +39,7 @@ public class EndLogicListener implements Listener {
 	static {
 		allowedCommands.addAll(Arrays.asList("msg", "message", "staffmode", "staff", "freeze", "lms",
 		"koth", "ft", "filter", "r", "response", "end", "bless", "heal", "cf", "coinflip", "jackpot",
-		"feed", "f", "fix"));
+		"feed", "f", "fix", "bless"));
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
@@ -74,46 +75,8 @@ public class EndLogicListener implements Listener {
 		}
 	}
 	
-	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-	public void markLastHit(EntityDamageEvent event) {
-		if(event.getDamager() == null || !event.getEntity().getWorld().getName()
-		.equals(AstroEndGrindingAPI.getWorldName())) {
-			return;
-		}
-		Entity damager = event.getRealDamager();
-		LivingEntity entity = event.getEntity();
-		if(!(damager instanceof Player) || !(entity instanceof Player)) {
-			return;
-		}
-		Player pdamager = (Player) damager;
-		Player pentity = (Player) entity;
-		pentity.setMetadata("last_hit", new FixedMetadataValue(AstroEndGrindingPlugin.getInstance(),
-		pdamager.getName()));
-	}
-	
-	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-	public void onKill(EntityDamageEvent event) {
-		if(!event.getEntity().getWorld().getName()
-				.equals(AstroEndGrindingAPI.getWorldName()) || event.getDamageCause() != DamageCause.VOID) {
-			return;
-		}
-		LivingEntity entity = event.getEntity();
-		if(!(entity instanceof Player)) {
-			return;
-		}
-		Player pentity = (Player) entity;
-		pentity.sendMessage("");
-		pentity.sendMessage(CC.YellowB + "(!) " + CC.Yellow + "You were knocked off of end!");
-		pentity.sendMessage("");
-		Player last_damager = pentity.hasMetadata("last_hit") ? Bukkit.getPlayer(pentity.getMetadata("last_hit").get(0).asString()) : null;
-		if(last_damager == null || !last_damager.isOnline() || 
-		!last_damager.getWorld().getName().equals(AstroEndGrindingAPI.getWorldName())) {
-			PlayerUtils.killEntity(pentity);
-			return;
-		}
-		pentity.teleport(last_damager);
-		PlayerUtils.killEntity(pentity);
-	}
+
+
 	
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onRightClickEgg(PlayerInteractEvent event) {
@@ -122,6 +85,21 @@ public class EndLogicListener implements Listener {
 		}
 		if(event.getClickedBlock().getType() == Material.DRAGON_EGG) {
 			event.setCancelled(true);
+		}
+	}
+
+	@EventHandler
+	public void onEndWorldJoin(PlayerTeleportEvent e) {
+		if (e.getTo().getWorld().getName().equals("world_the_end") && e.getCause() != TeleportCause.ENDER_PEARL) {
+			Player player = e.getPlayer();
+			player.sendMessage("");
+			player.sendMessage(CC.translate("&d&lWELCOME TO THE END WORLD"));
+			player.sendMessage("");
+			player.sendMessage(CC.translate("&fFind spawners to make the end monsters"));
+			player.sendMessage(CC.translate("&fspawn and kill them for OP rewards."));
+			player.sendMessage("");
+			player.sendMessage(CC.translate("&dYour only way out is by finding the portal!"));
+			player.sendMessage("");
 		}
 	}
 	
@@ -162,5 +140,73 @@ public class EndLogicListener implements Listener {
 		}
 		player.sendMessage(CC.RedB + "(!) " + CC.Red + "/" + cmd + " is denied in this world!");
 		event.setCancelled(true);
+	}
+
+	@EventHandler
+	public void onPortalEnter(EntityPortalEnterEvent event) {
+		if (event.getEntity() instanceof Player) {
+			Player player = (Player) event.getEntity();
+			if (player.getWorld().getName().equals("world_the_end")) {
+				World world = Bukkit.getWorld("world");
+				Location location = world.getSpawnLocation();
+				Bukkit.getScheduler().runTaskLater(AstroEndGrindingPlugin.getInstance(), () -> player.teleport(location), 3L);
+			}
+		}
+	}
+
+	@EventHandler
+	public void onPlayerTeleport(PlayerTeleportEvent event) {
+		if (event.getCause().equals(PlayerTeleportEvent.TeleportCause.END_PORTAL) || event.getCause().equals(PlayerTeleportEvent.TeleportCause.NETHER_PORTAL)) {
+			event.setCancelled(true);
+		}
+	}
+
+	public HashMap<Player, Long> lastDamagerTime = new HashMap<>();
+	public HashMap<Player, Player> lastDamager = new HashMap<>();
+
+	@EventHandler
+	public void playerDamageByOtherPlayer(EntityDamageByEntityEvent e) {
+		if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
+			if (!e.getEntity().getWorld().getName().equalsIgnoreCase("world_the_end")) return;
+			lastDamagerTime.put((Player) e.getEntity(), System.currentTimeMillis());
+			lastDamager.put((Player) e.getEntity(),(Player)  e.getDamager());
+		}
+	}
+
+
+	@EventHandler
+	public void playerDamageEvent(EntityDamageEvent e) {
+		if (e.getEntity() instanceof Player) {
+			if (!e.getEntity().getWorld().getName().equalsIgnoreCase("world_the_end")) return;
+			if (e.getCause() != EntityDamageEvent.DamageCause.VOID) return;
+			Player p = (Player) e.getEntity();
+			if (lastDamagerTime.containsKey(p)) {
+				if (lastDamagerTime.get(p) + 20000 > System.currentTimeMillis()) {
+					Player killer = lastDamager.get(p);
+					if (p.getInventory().getContents() != null) {
+						for (ItemStack itemStack : p.getInventory().getContents()) {
+							if (itemStack != null) {
+								killer.getWorld().dropItem(killer.getLocation(), itemStack);
+							}
+						}
+					}
+					if (p.getInventory().getHelmet() != null) {
+						killer.getWorld().dropItem(killer.getLocation(), p.getInventory().getHelmet());
+					}
+					if (p.getInventory().getChestplate() != null) {
+						killer.getWorld().dropItem(killer.getLocation(), p.getInventory().getChestplate());
+					}
+					if (p.getInventory().getLeggings() != null) {
+						killer.getWorld().dropItem(killer.getLocation(), p.getInventory().getLeggings());
+					}
+					if (p.getInventory().getBoots() != null) {
+						killer.getWorld().dropItem(killer.getLocation(), p.getInventory().getBoots());
+					}
+					p.setHealth(0D);
+					e.setCancelled(true);
+				}
+			}
+
+		}
 	}
 }

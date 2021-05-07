@@ -336,23 +336,7 @@ public class OutpostManager {
     }
 
     public void onBlockPlace(BlockPlaceEvent event) {
-        String id = FactionUtils.getFactionId((Player)event.getPlayer());
-        this.outposts.forEach(out -> {
-            if (out.getLastFactionToCap() == null || out.getLastFactionToCap() != null && !out.getLastFactionToCap().equals(id)) {
-                return;
-            }
-            out.onBlockPlace(event);
-        });
-    }
-
-    public void onBlockPlaceMONITOR(BlockPlaceEvent event) {
-        String id = FactionUtils.getFactionId((Player)event.getPlayer());
-        this.outposts.forEach(out -> {
-            if (out.getLastFactionToCap() == null || out.getLastFactionToCap() != null && !out.getLastFactionToCap().equals(id)) {
-                return;
-            }
-            out.onBlockPlaceMONITOR(event);
-        });
+        this.outposts.forEach(out -> out.onBlockPlace(event));
     }
 
     public boolean saveOutpostData(FileConfiguration config) {

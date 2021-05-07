@@ -25,12 +25,12 @@ public class SpawnMobsRepeatingTask extends BukkitRunnable {
 	@Override
 	public void run() {
 		ticks++;
-		if(ticks % 30 == 0) {
+		if(ticks % 20 == 0) {
 			for(String value : AstroEndGrindingAPI.getBossLocations()) {
 				Object[] values = AstroEndGrindingAPI.getValues(value);
 				MonsterType type = (MonsterType) values[0];
 				Location location = (Location) values[1];
-				if (location.getChunk().getEntities().length == 0) {
+				if (location.getWorld().getNearbyEntities(location, 16, 16, 16).size() == 0) {
 					continue;
 				}
 
@@ -40,7 +40,7 @@ public class SpawnMobsRepeatingTask extends BukkitRunnable {
 
 				int playersInChunk = 0;
 				int mobsAmount = 0;
-				for (Entity entity : location.getChunk().getEntities()) {
+				for (Entity entity : location.getWorld().getNearbyEntities(location, 16, 16, 16)) {
 					if (entity.getType() == EntityType.PLAYER) {
 						playersInChunk++;
 					} else {

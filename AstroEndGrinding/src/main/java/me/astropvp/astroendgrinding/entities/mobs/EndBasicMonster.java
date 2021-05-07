@@ -1,6 +1,7 @@
 package me.astropvp.astroendgrinding.entities.mobs;
 
 import java.util.List;
+import java.util.Random;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
@@ -65,11 +66,15 @@ public class EndBasicMonster extends EndMonster {
 	public List<ItemStack> getRewards() {
 		List<ItemStack> rewards = Lists.newArrayList();
 
-		MysteryChest rewards1 = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("StarterBundle");
+		MysteryChest reward = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("SwagBag");
 
 
-		rewards.add(ArkhamMoneyNotesAPI.getMoneyNote("End Monster", 150000));
-		if(Math.random() < 0.25) {
+		Random random = new Random();
+		int randomNumber = random.nextInt(1000000 - 500000) + 500000;
+
+		rewards.add(ArkhamMoneyNotesAPI.getMoneyNote("End Monster", randomNumber));
+		if(Math.random() < 0.15) {
+			rewards.add(reward.createClaimableItem(true));
 
 		}
 		return rewards;
@@ -80,12 +85,7 @@ public class EndBasicMonster extends EndMonster {
 		Player player = killer.getPlayer();
 		MonsterType type = MonsterType.END_BASIC_MONSTER;
 		int kills = killer.getKills(type);
-		if(kills % 20 == 0) {
-			ItemStack item = new ItemBuilder(Material.APPLE).build();
-			player.sendMessage(CC.YellowB + "Congratulations: " + CC.White + "You have received " + 
-		    CC.WhiteB + item.getAmount() + " " + CC.White + ItemUtils.getDisplayName(item) + CC.White +
-			" as a reward for killing " + kills + " " + type.getName() + "s!");
-		}
+
 	}
 	
 	@Override

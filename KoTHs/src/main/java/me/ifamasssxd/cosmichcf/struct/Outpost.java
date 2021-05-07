@@ -468,7 +468,7 @@ public abstract class Outpost {
         Block broken = event.getBlock();
         Player player = event.getPlayer();
         Set<String> regionsInside = WorldGuardUtils.getRegionsIn(broken.getLocation());
-        if (regionsInside.contains(this.blockRegionNames) && !regionsInside.contains(this.regionName)) {
+        if (regionsInside.contains(this.blockRegionNames) && !regionsInside.contains(this.regionName) && !regionsInside.contains("infernalnobuild") && !regionsInside.contains("frozennobuild")) {
             event.setCancelled(true);
             BlockDurabilityData durability = this.blockDurability.computeIfAbsent(broken, dura -> new BlockDurabilityData(new MaterialData(broken.getType(), broken.getData()), (short) 15));
             broken.getWorld().playEffect(broken.getLocation().add(0.5, 0.5, 0.5), Effect.STEP_SOUND, (Object)broken.getType());

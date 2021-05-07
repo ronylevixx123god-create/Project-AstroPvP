@@ -50,6 +50,8 @@ public class CommandEnd implements CommandExecutor {
 		+ "Items, and more! There is no way to come back to the overworld, unless you die, or you teleport through the portal " +
 		"located in the end.");
 		player.sendMessage("");
+		player.sendMessage(CC.translate("&cHeroic Enchantments and Holy Whitescrolls are disabled in this world!"));
+		player.sendMessage("");
 		return false;
 	}
 

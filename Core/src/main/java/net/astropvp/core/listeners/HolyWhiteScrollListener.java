@@ -28,6 +28,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -61,6 +62,8 @@ public class HolyWhiteScrollListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerDeath(PlayerDeathEvent e) {
         if (e.getEntity().getWorld().getName().contains("world_duel"))
+            return;
+        if (e.getEntity().getWorld().getName().contains("world_the_end"))
             return;
         if (e.getEntity().getWorld().getName().toLowerCase().contains("dungeon"))
             return;
@@ -97,8 +100,8 @@ public class HolyWhiteScrollListener implements Listener {
                     }
                 assert killer != null;
                 if (CosmicArmorSetsAPI.getArmorSet(killer) != null && CosmicArmorSetsAPI.getArmorSet(killer) == ArmorSet.ULTRA && Math.random() < 0.4D) {
-                    e.getEntity().sendMessage(CC.GrayB + "* ULTRA NEGATION [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.GrayB + "] *");
-                    killer.sendMessage(CC.GrayB + "* ULTRA NEGATION [" + CC.Gray + e.getEntity().getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.GrayB + "] *");
+                    e.getEntity().sendMessage(CC.BlueB + "* ULTRA NEGATION [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.BlueB + "] *");
+                    killer.sendMessage(CC.BlueB + "* ULTRA NEGATION [" + CC.Gray + e.getEntity().getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.BlueB + "] *");
                     Bukkit.getLogger().info("Dropping " + i + " due to " + killer.getName() + "'s Ultra Armor Set procing.");
                     continue;
                 }
@@ -148,6 +151,7 @@ public class HolyWhiteScrollListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerRespawn(PlayerRespawnEvent e) {
+        if (e.getPlayer().getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.VOID) return;
         List<ItemStack> toReturn = this.savedItems.remove(e.getPlayer().getUniqueId().toString());
         if (toReturn != null) {
             for (ItemStack i : toReturn) {

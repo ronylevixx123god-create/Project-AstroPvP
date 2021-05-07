@@ -1,6 +1,7 @@
 package me.astropvp.astroendgrinding.entities.mobs;
 
 import java.util.List;
+import java.util.Random;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
@@ -8,6 +9,9 @@ import com.cosmicpvp.cosmicutils.utils.ItemUtils;
 import me.astropvp.astroendgrinding.AstroEndGrindingPlugin;
 import me.astropvp.astroendgrinding.entities.EndMonster;
 import me.ifamasssxd.cosmicguishop.ArkhamMoneyNotesAPI;
+import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
+import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
+import org.arkhamnetwork.Arkkit.patches.ExpBottles;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Creeper;
@@ -43,9 +47,14 @@ public class EndCreeperMonster extends EndMonster {
 	@Override
 	public List<ItemStack> getRewards() {
 		List<ItemStack> rewards = Lists.newArrayList();
-		rewards.add(ArkhamMoneyNotesAPI.getMoneyNote("End Monster", 150000));
-		if(Math.random() < 0.25) {
+		Random random = new Random();
+		int randomNumber = random.nextInt(500000 - 1000000) + 1000000;
+		MysteryChest reward = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("OmniCrystal");
 
+
+		rewards.add(ArkhamMoneyNotesAPI.getMoneyNote("End Monster", randomNumber));
+		if(Math.random() < 0.25) {
+			rewards.add(reward.createClaimableItem(true));
 		}
 		return rewards;
 	}
@@ -55,12 +64,7 @@ public class EndCreeperMonster extends EndMonster {
 		Player player = killer.getPlayer();
 		MonsterType type = MonsterType.END_CREEPER_MONSTER;
 		int kills = killer.getKills(type);
-		if(kills % 20 == 0) {
-			ItemStack item = new ItemBuilder(Material.APPLE).build();
-			player.sendMessage(CC.YellowB + "Congratulations: " + CC.White + "You have received " + 
-		    CC.WhiteB + item.getAmount() + " " + CC.White + ItemUtils.getDisplayName(item) + CC.White +
-			" as a reward for killing " + kills + " " + type.getName() + "s!");
-		}
+
 	}
 	
 	@Override

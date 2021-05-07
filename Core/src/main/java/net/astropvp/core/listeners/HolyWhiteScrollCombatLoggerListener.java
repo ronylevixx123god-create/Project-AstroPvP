@@ -29,6 +29,8 @@ public class HolyWhiteScrollCombatLoggerListener implements Listener {
     public void onCombatLoggerDeath(CombatLoggerDeathEvent event) {
         if (event.getCombatLoggerEntity().getWorld().getName().contains("world_duel"))
             return;
+        if (event.getCombatLoggerEntity().getWorld().getName().contains("world_the_end"))
+            return;
         if (event.getInventoryItems() != null) {
             List<ItemStack> savedItems = new ArrayList<>();
             LivingEntity entity = event.getCombatLoggerEntity();
