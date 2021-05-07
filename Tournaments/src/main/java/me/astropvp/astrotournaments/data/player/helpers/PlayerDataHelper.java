@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import me.astropvp.astrotournaments.AstroTournamentsPlugin;
 import me.astropvp.astrotournaments.data.player.PlayerData;
+import me.astropvp.astrotournaments.data.player.helpers.listeners.PlayerDataListener;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -14,7 +15,6 @@ import org.bukkit.entity.Player;
 
 import com.google.common.collect.Lists;
 
-import me.galacticpvp.galacticpvputils.listeners.data.PlayerDataListener;
 
 public class PlayerDataHelper {
 

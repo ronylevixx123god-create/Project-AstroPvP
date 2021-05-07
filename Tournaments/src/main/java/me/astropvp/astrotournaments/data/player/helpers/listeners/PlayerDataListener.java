@@ -1,5 +1,9 @@
 package me.astropvp.astrotournaments.data.player.helpers.listeners;
 
+import me.astropvp.astrospawners.utils.LocationUtils;
+import me.astropvp.astrotournaments.AstroTournamentsPlugin;
+import me.astropvp.astrotournaments.data.player.PlayerData;
+import me.astropvp.astrotournaments.data.player.helpers.PlayerDataHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -10,19 +14,14 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import me.galacticpvp.galacticpvputils.GalacticPvPUtilsPlugin;
-import me.galacticpvp.galacticpvputils.data.PlayerData;
-import me.galacticpvp.galacticpvputils.data.helpers.PlayerDataHelper;
-import me.galacticpvp.galacticpvputils.utils.CC;
-import me.galacticpvp.galacticpvputils.utils.FactionUtils;
-import me.galacticpvp.galacticpvputils.utils.LocationUtils;
+
 
 public class PlayerDataListener implements Listener {
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
-		Bukkit.getScheduler().runTaskAsynchronously(GalacticPvPUtilsPlugin.getInstance(),
+		Bukkit.getScheduler().runTaskAsynchronously(AstroTournamentsPlugin.getInstance(),
 				(Runnable) new BukkitRunnable() {
 					@Override
 					public void run() {
@@ -32,7 +31,7 @@ public class PlayerDataListener implements Listener {
 						PlayerData data = new PlayerData(player);
 						new PlayerDataHelper(data);
 						data.setDefaultPath("login-time", System.currentTimeMillis());
-						Bukkit.getScheduler().scheduleSyncDelayedTask(GalacticPvPUtilsPlugin.getInstance(), (Runnable)
+						Bukkit.getScheduler().scheduleSyncDelayedTask(AstroTournamentsPlugin.getInstance(), (Runnable)
 						new BukkitRunnable() {
 							@Override
 							public void run() {
@@ -61,7 +60,7 @@ public class PlayerDataListener implements Listener {
 		data.setDefaultPath("last-logout-location", LocationUtils.toStringLocation(player.getLocation()));
 		data.setDefaultPath("last-logout-time", System.currentTimeMillis());
 		data.removeStoredMetaData();
-		Bukkit.getScheduler().runTaskAsynchronously(GalacticPvPUtilsPlugin.getInstance(),
+		Bukkit.getScheduler().runTaskAsynchronously(AstroTournamentsPlugin.getInstance(),
 				(Runnable) new BukkitRunnable() {
 					@Override
 					public void run() {

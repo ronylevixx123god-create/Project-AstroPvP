@@ -1,5 +1,6 @@
 package me.astropvp.astrotournaments.commands;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.astrotournaments.AstroTournamentsAPI;
 import me.astropvp.astrotournaments.data.ActiveTournamentData;
 import org.bukkit.command.Command;
@@ -7,8 +8,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import me.galacticpvp.galacticpvputils.utils.CC;
-import me.galacticpvp.galacticstaffmode.cachers.StaffModeCacher;
 import me.astropvp.astrotournaments.inventories.ChooseSetInventory;
 import me.astropvp.astrotournaments.struct.ActiveTournamentUser;
 
@@ -29,10 +28,7 @@ public class CommandTournament implements CommandExecutor {
 				player.sendMessage(CC.RedB + "(!) " + CC.Red + "You are already in the tournament!");
 				return false;
 			}
-			if(StaffModeCacher.findPlayer(player) != null) {
-				player.sendMessage(CC.RedB + "(!) " + CC.Red + "You can not join this tournament while in staff mode!");
-				return false;
-			}
+
 			ActiveTournamentData.addUser(new ActiveTournamentUser(player));
 			player.teleport(AstroTournamentsAPI.getLobbyLocation());
 			player.openInventory(ChooseSetInventory.getInventory());

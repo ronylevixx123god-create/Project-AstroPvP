@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
 
+import me.astropvp.astrotournaments.data.player.helpers.PlayerDataHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -13,8 +14,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 
 import com.google.common.collect.Maps;
 
-import me.galacticpvp.galacticpvputils.GalacticPvPUtilsPlugin;
-import me.galacticpvp.galacticpvputils.data.helpers.PlayerDataHelper;
+import me.astropvp.astrotournaments.AstroTournamentsPlugin;
 
 public class PlayerData {
 
@@ -28,7 +28,7 @@ public class PlayerData {
 		this.uuid = player.getUniqueId();
 		this.map = Maps.newHashMap();
 		this.saving = false;
-		player.setMetadata("etournament_player_cacher", new FixedMetadataValue(GalacticPvPUtilsPlugin.getInstance(), this));
+		player.setMetadata("etournament_player_cacher", new FixedMetadataValue(AstroTournamentsPlugin.getInstance(), this));
 	}
 
 	public void addStoredValue(String key, Object value) {
@@ -73,7 +73,7 @@ public class PlayerData {
 
 	public YamlConfiguration getConfiguration() {
 		return YamlConfiguration
-				.loadConfiguration(new File(GalacticPvPUtilsPlugin.getInstance().getDataFolder().toString()
+				.loadConfiguration(new File(AstroTournamentsPlugin.getInstance().getDataFolder().toString()
 						+ "/player-data/" + uuid.toString() + ".yml"));
 	}
 
@@ -105,7 +105,7 @@ public class PlayerData {
 			return;
 		}
 		this.saving = true;
-		File file = new File(GalacticPvPUtilsPlugin.getInstance().getDataFolder().toString() + "/player-data/" + uuid.toString() + ".yml");
+		File file = new File(AstroTournamentsPlugin.getInstance().getDataFolder().toString() + "/player-data/" + uuid.toString() + ".yml");
 		YamlConfiguration configuration = YamlConfiguration.loadConfiguration(file);
 		for (Entry<String, Object> entry : map.entrySet()) {
 			String key = entry.getKey();
@@ -124,12 +124,12 @@ public class PlayerData {
 	@Deprecated
 	public void remove() {
 		PlayerDataHelper.getPlayerData().remove(this);
-		this.getPlayer().removeMetadata("etournament_player_cacher", GalacticPvPUtilsPlugin.getInstance());
+		this.getPlayer().removeMetadata("etournament_player_cacher", AstroTournamentsPlugin.getInstance());
 	}
 
 	@Deprecated
 	public void removeStoredMetaData() {
-		this.getPlayer().removeMetadata("etournament_player_cacher", GalacticPvPUtilsPlugin.getInstance());
+		this.getPlayer().removeMetadata("etournament_player_cacher", AstroTournamentsPlugin.getInstance());
 	}
 
 	@Deprecated

@@ -3,6 +3,7 @@ package me.astropvp.astrotournaments.data;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.astrotournaments.AstroTournamentsAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -10,7 +11,6 @@ import org.bukkit.entity.Player;
 
 import com.google.common.collect.Lists;
 
-import me.galacticpvp.galacticpvputils.utils.CC;
 import me.astropvp.astrotournaments.exceptions.ActiveMatchException;
 import me.astropvp.astrotournaments.struct.ActiveTournamentUser;
 import me.astropvp.astrotournaments.struct.OpponentData;

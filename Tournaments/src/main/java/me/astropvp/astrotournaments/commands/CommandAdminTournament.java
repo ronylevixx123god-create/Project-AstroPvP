@@ -1,5 +1,6 @@
 package me.astropvp.astrotournaments.commands;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.astrotournaments.AstroTournamentsAPI;
 import me.astropvp.astrotournaments.data.TournamentGlobalData;
 import me.astropvp.astrotournaments.inventories.TLocationsInventory;
@@ -9,7 +10,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
-import me.galacticpvp.galacticpvputils.utils.CC;
 
 public class CommandAdminTournament implements CommandExecutor {
 

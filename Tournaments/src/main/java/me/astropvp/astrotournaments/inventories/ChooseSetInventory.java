@@ -2,17 +2,15 @@ package me.astropvp.astrotournaments.inventories;
 
 import java.util.Arrays;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import me.astropvp.astrotournaments.utils.InventoryWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import com.exoticpvp.exoticarmorsets.armor.enums.ArmorSetType;
 
-import me.galacticpvp.galacticpvputils.nbt.NBTWrapper;
-import me.galacticpvp.galacticpvputils.struct.InventoryWrapper;
-import me.galacticpvp.galacticpvputils.utils.CC;
-import me.galacticpvp.galacticpvputils.utils.ItemBuilder;
 
 public class ChooseSetInventory {
 	public static Inventory getInventory() {
