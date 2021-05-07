@@ -40,6 +40,7 @@
         <module>EnchantmentsAPI</module>
         <module>CustomBlocks</module>
         <module>AstroEndGrinding</module>
+        <module>Tournaments</module>
     </modules>
 
     <build>

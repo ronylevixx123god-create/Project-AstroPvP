@@ -1,0 +1,10 @@
+name: GalacticTournaments
+main: me.galacticpvp.galactictournaments.GalacticTournamentsPlugin
+version: 1.0
+commands:
+  admintournament:
+    description: /admintournament
+    aliases: [atournament]
+  tournament:
+    description: /tournament
+    aliases: [t]

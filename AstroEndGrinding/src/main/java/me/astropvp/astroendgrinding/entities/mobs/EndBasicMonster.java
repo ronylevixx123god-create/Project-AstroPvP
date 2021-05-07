@@ -11,6 +11,7 @@ import me.astropvp.astroendgrinding.entities.EndMonster;
 import me.ifamasssxd.cosmicguishop.ArkhamMoneyNotesAPI;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -82,9 +83,7 @@ public class EndBasicMonster extends EndMonster {
 	
 	@Override
 	public void onDeath(EntityDeathEvent event, EndPlayerData killer) {
-		Player player = killer.getPlayer();
-		MonsterType type = MonsterType.END_BASIC_MONSTER;
-		int kills = killer.getKills(type);
+		event.getEntity().removeMetadata(getMetadata(), AstroEndGrindingPlugin.getInstance());
 
 	}
 	

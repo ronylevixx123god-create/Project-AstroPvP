@@ -17,6 +17,7 @@
         <module name="Explosive" />
         <module name="Sets" />
         <module name="Dungeon" />
+        <module name="Tournaments" />
         <module name="Contest" />
         <module name="Kits" />
         <module name="Core" />

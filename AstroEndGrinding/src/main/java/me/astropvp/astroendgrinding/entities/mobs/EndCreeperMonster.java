@@ -12,6 +12,7 @@ import me.ifamasssxd.cosmicguishop.ArkhamMoneyNotesAPI;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
 import org.arkhamnetwork.Arkkit.patches.ExpBottles;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Creeper;
@@ -48,7 +49,7 @@ public class EndCreeperMonster extends EndMonster {
 	public List<ItemStack> getRewards() {
 		List<ItemStack> rewards = Lists.newArrayList();
 		Random random = new Random();
-		int randomNumber = random.nextInt(500000 - 1000000) + 1000000;
+		int randomNumber = random.nextInt(1000000 - 500000) + 500000;
 		MysteryChest reward = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("OmniCrystal");
 
 
@@ -61,9 +62,8 @@ public class EndCreeperMonster extends EndMonster {
 	
 	@Override
 	public void onDeath(EntityDeathEvent event, EndPlayerData killer) {
-		Player player = killer.getPlayer();
-		MonsterType type = MonsterType.END_CREEPER_MONSTER;
-		int kills = killer.getKills(type);
+		event.getEntity().removeMetadata(getMetadata(), AstroEndGrindingPlugin.getInstance());
+
 
 	}
 	

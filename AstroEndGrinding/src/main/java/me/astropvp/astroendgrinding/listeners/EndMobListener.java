@@ -2,7 +2,6 @@ package me.astropvp.astroendgrinding.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.astroendgrinding.data.EndPlayerData;
-import me.astropvp.astroendgrinding.utils.EntityDamageEvent;
 import me.astropvp.astroendgrinding.utils.TimeUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Creeper;
@@ -11,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 
@@ -104,10 +104,10 @@ public class EndMobListener implements Listener {
 	
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onDamaged(EntityDamageEvent event) {
-		LivingEntity entity = event.getEntity();
+		LivingEntity entity = (LivingEntity) event.getEntity();
 		for(MonsterType type : MonsterType.values()) {
 			if(type.getInstance().isMobType(entity)) {
-				event.addDivisor(type.getInstance().getDivisorAmount());
+				event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE)*0.50);
 			}
 		}
 	}
