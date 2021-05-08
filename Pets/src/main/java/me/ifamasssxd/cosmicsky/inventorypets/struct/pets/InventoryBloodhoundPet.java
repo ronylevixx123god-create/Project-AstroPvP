@@ -87,9 +87,12 @@ public class InventoryBloodhoundPet extends InventoryPet {
          return false;
       }
 
-      if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
-         throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
+     /* if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
+         throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));*/
 
+      if (PetUtils.isOnCooldown(player, petItem.getPetType()) && (!player.isOp() || !player.isSneaking()))
+         throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU +
+                 TimeUtils.formatSeconds(PetUtils.getSecondsOnCooldown(player, petItem.getPetType())));
       LivingEntity target = getTargetEntity(player, 10);
       if (target == null || !(target instanceof Player))
          throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "No target found!");
@@ -100,7 +103,9 @@ public class InventoryBloodhoundPet extends InventoryPet {
       Relation relation = FactionUtils.getFPlayer(pTarget).getRelationTo((RelationParticipator)fPlayer);
       if (relation == Relation.ALLY || relation == Relation.TRUCE || relation.isMember())
          throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "No valid target found!");
-      petItem.setLastUsed(System.currentTimeMillis());
+      //petItem.setLastUsed(System.currentTimeMillis());
+      PetUtils.addPetCooldown(player, petItem.getPetType(), (getCooldown(5) * 1000));
+
       int xpGain = petItem.getLevel() * 5;
       player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 1.1F, 3.0F);
       final String name = player.getName();

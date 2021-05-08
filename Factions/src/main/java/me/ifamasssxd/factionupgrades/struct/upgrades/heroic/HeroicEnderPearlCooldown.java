@@ -59,11 +59,6 @@ extends HeroicUpgrade {
     }
 
     @Override
-    public long getFTopSpawnerValueRequirement() {
-        return 650000000L;
-    }
-
-    @Override
     public List<String> getPerkList(int currentTier) {
         return Lists.newArrayList(this.getLorePrefix(currentTier, 1) + "-0.5s Enderpearl Cooldown", this.getLorePrefix(currentTier, 2) + "-1.0s Enderpearl Cooldown", this.getLorePrefix(currentTier, 3) + "-1.25s Enderpearl Cooldown", this.getLorePrefix(currentTier, 4) + "-2.0s Enderpearl Cooldown");
     }

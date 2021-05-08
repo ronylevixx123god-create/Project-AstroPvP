@@ -116,7 +116,7 @@ public class UltraArmorSet
         }
         event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.30);
         this.removeResistance(damager);
-        if (Math.random() <= 0.25) {
+        if (Math.random() <= 0.05) {
             this.activateUltraAbility(damager, (Player) event.getEntity());
         }
         return true;
@@ -146,7 +146,7 @@ public class UltraArmorSet
         if (this.isBlockedOutpostWorld(damager)) {
             return false;
         }
-        if (Math.random() <= 0.008 * (double) applied) {
+        if (Math.random() <= 0.004 * (double) applied) {
             this.activateUltraAbility(damager, (Player) event.getEntity());
         }
         this.modifyDamage(damager, event, 8.0, applied);
@@ -165,12 +165,12 @@ public class UltraArmorSet
         target.sendMessage(CC.translate("&e&l*&4&l*&e&l* &7&lULTRA STRIKED &f[&c" + player.getName() + "&f] &c&l*&4&l*&e&l*"));
         player.sendMessage(CC.translate("&e&l*&4&l*&e&l* &f&lULTRA STRIKE &7x2 &f&lDMG &e&l*&4&l*&e&l*"));
         target.setMetadata("ultra", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
-        target.setMetadata("bansheed", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
+        //target.setMetadata("bansheed", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
         new BukkitRunnable() {
 
             public void run() {
                 target.removeMetadata("ultra", CosmicSkyInventoryPets.get());
-                target.removeMetadata("bansheed", CosmicSkyInventoryPets.get());
+                //target.removeMetadata("bansheed", CosmicSkyInventoryPets.get());
             }
         }.runTaskLater(CosmicSkyInventoryPets.get(), 160L);
     }

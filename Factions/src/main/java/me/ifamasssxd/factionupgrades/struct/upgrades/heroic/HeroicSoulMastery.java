@@ -47,11 +47,6 @@ extends HeroicUpgrade {
     }
 
     @Override
-    public long getFTopSpawnerValueRequirement() {
-        return 1250000000L;
-    }
-
-    @Override
     public List<String> getPerkList(int currentTier) {
         return Lists.newArrayList(this.getLorePrefix(currentTier, 1) + "-30% Soul Cost", this.getLorePrefix(currentTier, 2) + "-45% Soul Cost");
     }

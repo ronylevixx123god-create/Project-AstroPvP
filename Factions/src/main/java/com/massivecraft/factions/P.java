@@ -48,7 +48,6 @@ import com.massivecraft.factions.integration.EssentialsFeatures;
 import com.massivecraft.factions.listeners.*;
 import com.massivecraft.factions.listeners.menu.MenuListener;
 import com.massivecraft.factions.listeners.menu.fchest.FChestListener;
-import com.massivecraft.factions.manager.BoardManager;
 import com.massivecraft.factions.struct.*;
 import com.massivecraft.factions.struct.managers.FChestManager;
 import com.massivecraft.factions.util.LazyLocation;
@@ -112,7 +111,6 @@ public class P extends MPlugin {
     private final FChestManager fChestManager;
     private FileManager fileManager;
     public static WorldGuardPlugin wg = null;
-    @Getter @Setter public static BoardManager boardManager;
     @Getter @Setter public BoosterManager boosterManager;
     @Getter @Setter private UpgradeManager upgradeManager;
     private CosmicFlyingPlugin cosmicFlyingPlugin;
@@ -280,11 +278,7 @@ public class P extends MPlugin {
         }
     }
 
-    public void setBoardManager(BoardManager boardManager) {
-        P.boardManager = boardManager;
-        long interval = P.boardManager.getAdapter().getInterval();
-        this.getServer().getScheduler().runTaskTimerAsynchronously(this, P.boardManager, 0L, interval);
-    }
+
 
     private void registerNewCommands() throws IOException {
         this.getCommand("ctool").setExecutor(new CommandCTool());
@@ -402,7 +396,7 @@ public class P extends MPlugin {
         for (Player pl : Bukkit.getOnlinePlayers()) {
             pl.removeMetadata("last_enderpearl_throw", this);
         }
-        this.boosterManager.saveActiveBoosters();
+        //this.boosterManager.saveActiveBoosters();
         CommandToggleSmoke.saveToggles();
         if (this.AutoLeaveTask != null) {
             this.getServer().getScheduler().cancelTask(this.AutoLeaveTask);

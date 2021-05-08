@@ -50,7 +50,7 @@ public class SpawnMobsRepeatingTask extends BukkitRunnable {
 				if (playersInChunk == 0) {
 					continue;
 				}
-				if (mobsAmount >= 6) {
+				if (mobsAmount >= 12) {
 					continue;
 				}
 				type.getInstance().spawn(location);

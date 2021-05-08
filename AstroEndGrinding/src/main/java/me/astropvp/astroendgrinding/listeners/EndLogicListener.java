@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import com.compilex.CompilexPermissions.PermissionsAPI;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.astroendgrinding.AstroEndGrindingPlugin;
 import me.astropvp.astroendgrinding.utils.PlayerUtils;
@@ -38,8 +39,8 @@ public class EndLogicListener implements Listener {
 	private static List<String> allowedCommands = Lists.newArrayList();
 	static {
 		allowedCommands.addAll(Arrays.asList("msg", "message", "staffmode", "staff", "freeze", "lms",
-		"koth", "ft", "filter", "r", "response", "end", "bless", "heal", "cf", "coinflip", "jackpot",
-		"feed", "f", "fix", "bless"));
+		"koth", "ft", "filter", "r", "bless","blessme", "response", "end", "bless", "heal", "cf", "coinflip", "jackpot",
+		"feed", "f", "fix", "filter edit", "filter toggle", "ft", "bless"));
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
@@ -88,20 +89,6 @@ public class EndLogicListener implements Listener {
 		}
 	}
 
-	@EventHandler
-	public void onEndWorldJoin(PlayerTeleportEvent e) {
-		if (e.getTo().getWorld().getName().equals("world_the_end") && e.getCause() != TeleportCause.ENDER_PEARL) {
-			Player player = e.getPlayer();
-			player.sendMessage("");
-			player.sendMessage(CC.translate("&d&lWELCOME TO THE END WORLD"));
-			player.sendMessage("");
-			player.sendMessage(CC.translate("&fFind spawners to make the end monsters"));
-			player.sendMessage(CC.translate("&fspawn and kill them for OP rewards."));
-			player.sendMessage("");
-			player.sendMessage(CC.translate("&dYour only way out is by finding the portal!"));
-			player.sendMessage("");
-		}
-	}
 	
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onFlight(PlayerToggleFlightEvent event) {
@@ -124,21 +111,14 @@ public class EndLogicListener implements Listener {
 		if(!player.getWorld().getName().equals(AstroEndGrindingAPI.getWorldName()) || player.isOp()) {
 			return;
 		}
-		String cmd = event.getMessage().substring(1, event.getMessage().length());
-		String[] cmdSplit = cmd.indexOf(" ") != -1 ? cmd.split(" " ) : new String[] {cmd};
-		for(String command : allowedCommands) {
-			String[] commandSplit = command.indexOf(" ") != -1 ? command.split(" ") : new String[] {command};
-			if(commandSplit.length < cmdSplit.length) {
-				String[] temporary = new String[commandSplit.length];
-				for(int i = 0; i < temporary.length; i++) {
-					temporary[i] = commandSplit[i];
-				}
-			}
-			if(commandSplit.equals(cmdSplit)) {
-				return;
-			}
+		String rank = PermissionsAPI.getPermissionUser(player.getUniqueId()).getGroup();
+		if (rank.equalsIgnoreCase("banteam") || rank.equalsIgnoreCase("mod") || rank.equalsIgnoreCase("srmod")) {
+			return;
 		}
-		player.sendMessage(CC.RedB + "(!) " + CC.Red + "/" + cmd + " is denied in this world!");
+		if (allowedCommands.contains(event.getMessage()) || allowedCommands.contains("/" + event.getMessage())) {
+			return;
+		}
+		player.sendMessage(CC.RedB + "(!) " + event.getMessage() + " is denied in this world!");
 		event.setCancelled(true);
 	}
 
@@ -149,7 +129,7 @@ public class EndLogicListener implements Listener {
 			if (player.getWorld().getName().equals("world_the_end")) {
 				World world = Bukkit.getWorld("world");
 				Location location = world.getSpawnLocation();
-				Bukkit.getScheduler().runTaskLater(AstroEndGrindingPlugin.getInstance(), () -> player.teleport(location), 3L);
+				Bukkit.getScheduler().runTaskLater(AstroEndGrindingPlugin.getInstance(), () -> player.teleport(location, TeleportCause.UNKNOWN), 3L);
 			}
 		}
 	}
@@ -170,6 +150,15 @@ public class EndLogicListener implements Listener {
 			if (!e.getEntity().getWorld().getName().equalsIgnoreCase("world_the_end")) return;
 			lastDamagerTime.put((Player) e.getEntity(), System.currentTimeMillis());
 			lastDamager.put((Player) e.getEntity(),(Player)  e.getDamager());
+		}
+	}
+
+	@EventHandler
+	public void  reduceDMG(EntityDamageByEntityEvent e) {
+		if (!e.getDamager().getLocation().getWorld().getName().equals("world_the_end")) return;
+		if (!e.getEntity().getLocation().getWorld().getName().equals("world_the_end")) return;
+		if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
+			e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE)*0.70);
 		}
 	}
 

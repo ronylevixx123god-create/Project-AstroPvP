@@ -103,7 +103,6 @@ extends CosmicGUI {
                 double cash = upgrade.getMoneyCost(nextTier);
                 int tokenCost = upgrade.getTokenCost(nextTier);
                 int heroicTokenCost = upgrade.getHeroicTokenCost(nextTier);
-                long l = valueRequired = heroic && upgr instanceof HeroicUpgrade ? ((HeroicUpgrade)upgr).getFTopSpawnerValueRequirement() : 0L;
                 if (currentTier >= upgr.getMaxUpgradeLevel()) {
                     this.player.sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "That upgrade is already max level!");
                     return;
@@ -125,11 +124,7 @@ extends CosmicGUI {
                     this.player.sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "You do not have " + heroicTokenCost + "x Heroic Faction Crystals!");
                     return;
                 }
-                if (heroic && (spawnerValue = manager.canAccessHeroic(this.overrideToSee, upgrade)) != null) {
-                    this.player.sendMessage(CC.RedB + "(!) " + CC.Red + "Your faction must have a /f top Spawner value of at least " + CC.RedB + "$" + CC.Red + format.format(valueRequired) + " to use this /f upgrade!");
-                    this.player.sendMessage(CC.GrayB + "Current Spawner Value: $" + CC.Gray + (spawnerValue == -1L ? "0" : format.format(spawnerValue)));
-                    return;
-                }
+
                 if (heroicTokenCost > 0) {
                     this.player.sendMessage(ChatColor.RED.toString() + (Object)ChatColor.BOLD + "- " + format.format(heroicTokenCost) + (Object)ChatColor.RED + "x Heroic Faction Crystals");
                     CosmicConquestAPI.removeHeroicTokensFromInventory((Player)this.player, (int)heroicTokenCost);

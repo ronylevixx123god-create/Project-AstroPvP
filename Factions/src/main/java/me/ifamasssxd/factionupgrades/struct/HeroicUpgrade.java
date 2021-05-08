@@ -20,8 +20,6 @@ extends Upgrade {
 
     public abstract int getHeroicCrystalCost(int var1);
 
-    public abstract long getFTopSpawnerValueRequirement();
-
     protected String getLorePrefix(int level, int cmp) {
         return this.getPrefix(level, cmp) + this.getDescPrefix(level, cmp);
     }

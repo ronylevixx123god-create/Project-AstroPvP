@@ -193,6 +193,8 @@ public class SlotBotInventoryListener implements Listener {
     }
 
 
+
+
     @EventHandler
     public void inventoryClose(InventoryCloseEvent e) {
         if (!(e.getPlayer() instanceof Player))

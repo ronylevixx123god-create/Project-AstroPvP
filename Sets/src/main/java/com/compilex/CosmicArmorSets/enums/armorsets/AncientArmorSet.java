@@ -132,7 +132,7 @@ public class AncientArmorSet
         if (!(event.getEntity() instanceof Player)) {
             return false;
         }
-        if (Math.random() <= 0.01 || damager.isOp() && damager.isSneaking()) {
+        if (Math.random() <= 0.005 || damager.isOp() && damager.isSneaking()) {
             this.removeResistance(damager);
             if (this.isBlockedOutpostWorld(damager)) {
                 return false;
@@ -163,7 +163,7 @@ public class AncientArmorSet
         if (!(event.getEntity() instanceof Player)) {
             return false;
         }
-        if (Math.random() <= 0.001 * (double) applied || damager.isOp() && damager.isSneaking()) {
+        if (Math.random() <= 0.0005 * (double) applied || damager.isOp() && damager.isSneaking()) {
             this.removeResistance(damager);
             if (this.isBlockedOutpostWorld(damager)) {
                 return false;

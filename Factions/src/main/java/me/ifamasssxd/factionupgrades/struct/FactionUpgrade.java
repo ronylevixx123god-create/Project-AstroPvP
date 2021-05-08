@@ -124,7 +124,6 @@ public enum FactionUpgrade {
         long balanceRequired = 0L;
         boolean hasAccess = true;
         if (upgrade instanceof HeroicUpgrade) {
-            balanceRequired = ((HeroicUpgrade)upgrade).getFTopSpawnerValueRequirement();
             hasAccess = P.getP().getUpgradeManager().canAccessHeroic(factionId, this);
         }
         ChatColor chatColor = secondaryColor = this.isHeroic() ? ChatColor.GOLD : ChatColor.AQUA;
@@ -137,7 +136,7 @@ public enum FactionUpgrade {
                 lore.add((Object)secondaryColor + CC.Bold + " * " + CC.Gold + childRequired.getUpgrade().getDisplayName(0) + " " + JSONMessage.getNumber((int)childRequired.getUpgrade().getMaxUpgradeLevel()) + " /f upgrade");
             }
             if (balanceRequired > 0L) {
-                lore.add((Object)secondaryColor + ChatColor.BOLD.toString() + " * " + (Object)secondaryColor + ChatColor.BOLD.toString() + (hasAccess ? CC.Strike : (Object)secondaryColor + ChatColor.BOLD.toString()) + "$" + (hasAccess ? (Object)secondaryColor + CC.Strike : secondaryColor) + format.format(balanceRequired) + " " + (hasAccess ? CC.GoldU + CC.Strike : CC.GoldU) + "Faction Spawner Value");
+                lore.add((Object)secondaryColor + ChatColor.BOLD.toString() + " * " + (Object)secondaryColor + ChatColor.BOLD.toString() + (hasAccess ? CC.Strike : (Object)secondaryColor + ChatColor.BOLD.toString()) + "$" + (hasAccess ? (Object)secondaryColor + CC.Strike : secondaryColor) + format.format(balanceRequired));
             }
             if (heroicTokenCost > 0) {
                 lore.add((Object)secondaryColor + ChatColor.BOLD.toString() + " * " + CC.Gold + heroicTokenCost + "x " + CC.Gold + "Heroic Faction Crystal" + (tokenCost > 1 ? "s" : ""));

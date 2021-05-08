@@ -19,10 +19,7 @@ extends HeroicUpgrade {
         super(maxUpgradeLevel, defaultName, defaultLore);
     }
 
-    @Override
-    public long getFTopSpawnerValueRequirement() {
-        return 950000000L;
-    }
+
 
     @Override
     public int getHeroicCrystalCost(int tier) {

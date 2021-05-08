@@ -4,23 +4,27 @@ import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.FactionChunkOwnershipCache;
+import me.astropvp.astrospawners.AstroSpawners;
+import me.astropvp.astrospawners.utils.MobStackerUtils;
+import me.astropvp.astrospawners.utils.StackedMobDeathEvent;
 import me.ifamasssxd.factionupgrades.FactionUpgradeAPI;
 import me.ifamasssxd.factionupgrades.struct.FactionUpgrade;
 import net.minecraft.server.v1_8_R3.Block;
 import net.minecraft.server.v1_8_R3.BlockCrops;
 import net.minecraft.server.v1_8_R3.BlockPosition;
-import org.arkhamnetwork.CosmicCustomTNT.enums.TNTTypes;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Furnace;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockGrowEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.FurnaceBurnEvent;
@@ -34,32 +38,38 @@ import org.bukkit.metadata.MetadataValue;
 import java.util.Random;
 
 public class PerkListener
-implements Listener {
+        implements Listener {
+
     public PerkListener() {
         FurnaceRecipe recipe = new FurnaceRecipe(new ItemStack(Material.TNT), Material.SULPHUR);
         Bukkit.addRecipe((Recipe)recipe);
     }
 
-    @EventHandler(priority=EventPriority.HIGH)
-    public void EXPHarvest(EntityDeathEvent e) {
+    @EventHandler
+    public void onStackedEntityDeath(StackedMobDeathEvent e) {
         int xpHarvestTier;
-        if (e.getDroppedExp() <= 0) {
-            return;
-        }
         FLocation fl = new FLocation(e.getEntity().getLocation());
-        Faction f = Board.getFactionAt((FLocation)fl);
+        Faction f = Board.getFactionAt((FLocation) fl);
         if (f.isNormal() && (xpHarvestTier = FactionUpgradeAPI.getPerkLevel(f, FactionUpgrade.EXP_HARVEST)) > 0) {
-            double multi = 1.0;
-            if (xpHarvestTier == 1) {
-                multi = 1.05;
+            if (e.getDamager() instanceof Player) {
+                if (e.getEntity().getLastDamageCause() != null) {
+                    if (e.getEntity().getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.FALL)
+                        return;
+                    if (e.getEntity().getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.FIRE)
+                        return;
+                    if (e.getEntity().getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.FIRE_TICK)
+                        return;
+                    if (xpHarvestTier == 1) {
+                        ((Player) e.getDamager()).giveExp(50);
+                    }
+                    if (xpHarvestTier == 2) {
+                        ((Player) e.getDamager()).giveExp(100);
+                    }
+                    if (xpHarvestTier == 3) {
+                        ((Player) e.getDamager()).giveExp(150);
+                    }
+                }
             }
-            if (xpHarvestTier == 2) {
-                multi = 1.15;
-            }
-            if (xpHarvestTier == 3) {
-                multi = 1.25;
-            }
-            e.setDroppedExp((int)((double)e.getDroppedExp() * multi));
         }
     }
 
@@ -188,18 +198,7 @@ implements Listener {
                 gp.setAmount(gp.getAmount() - sulphurCost);
                 furnace.getInventory().setSmelting(gp);
             }
-            if (explosiveExpertTier == 4 && furnace.getInventory().getResult() == null && Math.random() < 0.005) {
-                int x = new Random().nextInt(3);
-                if (x == 0) {
-                    e.setResult(TNTTypes.getTNTItem((TNTTypes)TNTTypes.Silent));
-                }
-                if (x == 1) {
-                    e.setResult(TNTTypes.getTNTItem((TNTTypes)TNTTypes.Lethal));
-                }
-                if (x == 2) {
-                    e.setResult(TNTTypes.getTNTItem((TNTTypes)TNTTypes.Huge));
-                }
-            }
+
         }
     }
 

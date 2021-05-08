@@ -52,10 +52,7 @@ extends HeroicUpgrade {
         return 0.0;
     }
 
-    @Override
-    public long getFTopSpawnerValueRequirement() {
-        return 850000000L;
-    }
+
 
     @Override
     public List<String> getPerkList(int currentTier) {

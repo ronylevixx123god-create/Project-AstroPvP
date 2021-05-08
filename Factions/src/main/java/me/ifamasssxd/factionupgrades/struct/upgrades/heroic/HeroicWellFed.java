@@ -38,10 +38,7 @@ extends HeroicUpgrade {
         return 0;
     }
 
-    @Override
-    public long getFTopSpawnerValueRequirement() {
-        return 50000000L;
-    }
+
 
     @Override
     public double getMoneyCost(int tier) {

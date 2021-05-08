@@ -17,7 +17,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.P;
-import me.ifamasssxd.factionstop.struct.TopFaction;
 import org.bukkit.Bukkit;
 
 import java.io.BufferedReader;
@@ -69,13 +68,7 @@ public class UpgradeManager {
         if (!(upgrade.getUpgrade() instanceof HeroicUpgrade)) {
             return -1L;
         }
-        TopFaction topFac = P.getP().getTopManager().getTopFaction(faction.getId());
-        if (topFac != null && topFac.getStoredFaction().getTotalSpawnerWorth() >= (double)((HeroicUpgrade)upgrade.getUpgrade()).getFTopSpawnerValueRequirement()) {
-            return null;
-        }
-        if (topFac != null) {
-            return (long)topFac.getStoredFaction().getTotalSpawnerWorth();
-        }
+
         return -1L;
     }
 
@@ -83,8 +76,7 @@ public class UpgradeManager {
         if (!(upgrade.getUpgrade() instanceof HeroicUpgrade)) {
             return false;
         }
-        TopFaction topFac = P.getP().getTopManager().getTopFaction(factionID);
-        return topFac != null && topFac.getStoredFaction().getTotalSpawnerWorth() >= (double)((HeroicUpgrade)upgrade.getUpgrade()).getFTopSpawnerValueRequirement();
+        return true;
     }
 
     public void saveUpgradeInfo() {
