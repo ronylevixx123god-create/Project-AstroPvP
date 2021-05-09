@@ -25,7 +25,7 @@ public class Confusion extends CustomEnchantment {
         final int time = 2 * level + 4;
         final int amp = level;
         if (random < chance && playerHit instanceof Player) {
-            playerHit.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, time * 20, amp));
+            //playerHit.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, time * 20, amp));
         }
     }
 }
