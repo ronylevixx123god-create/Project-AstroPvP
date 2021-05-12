@@ -9,6 +9,7 @@ import java.util.UUID;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.astrospawners.utils.LocationUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -116,7 +117,7 @@ public class AstroTournamentsAPI {
 			ActiveTournamentUser user = users.get(i);
 			user.remove();
 			Player player = user.getPlayer();
-			player.teleport(WarpUtils.getSpawnLocation());
+			player.teleport(Bukkit.getWorld("world").getSpawnLocation());
 			player.sendMessage(CC.DarkPurple + "The Tournament has ended!");
 		}
 		ActiveTournamentData.getOpponents().clear();

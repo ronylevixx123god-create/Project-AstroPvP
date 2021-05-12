@@ -21,6 +21,8 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -247,6 +249,14 @@ public class SlotBotInventoryListener implements Listener {
         ItemDeleter.removeItemDeleter(deleter);
     }
 
+    @EventHandler
+    public void  reduceDMG(EntityDamageByEntityEvent e) {
+        if (!e.getDamager().getLocation().getWorld().getName().equals("world_the_end")) return;
+        if (!e.getEntity().getLocation().getWorld().getName().equals("world_the_end")) return;
+        if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
+            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE)*0.60);
+        }
+    }
 
 }
 

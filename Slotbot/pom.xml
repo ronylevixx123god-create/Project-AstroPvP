@@ -98,6 +98,13 @@
             <systemPath>${project.basedir}/lib/Factions-0.1.jar</systemPath>
         </dependency>
 
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>spawners</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/AstroSpawners.jar</systemPath>
+        </dependency>
     </dependencies>
 
 

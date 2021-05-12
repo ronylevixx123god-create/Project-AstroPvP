@@ -51,47 +51,6 @@ public class MinionListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void onEntityDamageByMinion(final EntityDamageByEntityEvent e) throws Exception {
-        if (e.getDamager().hasMetadata("minion")) {
-            final Boss boss = BossUtils.getBossFromMinion(e.getDamager());
-            if (boss == null) {
-                return;
-            }
-            boss.onMinionUpdate(e.getDamager(), (Event) e);
-        } else if (e.getEntity().hasMetadata("minion") || e.getEntity().hasMetadata("do_not_clear")) {
-            if (CosmicBosses.isMcMMOEnabled()) {
-                e.getEntity().setMetadata("mcMMO: Spawned Entity", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
-                if (e.getDamager() instanceof Player || (e.getDamager() instanceof Projectile && ((Projectile) e.getDamager()).getShooter() instanceof Player)) {
-                    Player player;
-                    if (e.getDamager() instanceof Projectile) {
-                        player = (Player) ((Projectile) e.getDamager()).getShooter();
-                    } else {
-                        player = (Player) e.getDamager();
-                    }
-                    player.setMetadata("no_exp_gain", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
-                }
-            }
-            if (e.getEntity().hasMetadata("minion")) {
-                final Boss boss = BossUtils.getBossFromMinion(e.getEntity());
-                if (boss == null) {
-                    return;
-                }
-                boss.onMinionUpdate(e.getEntity(), (Event) e);
-            }
-        } else if (e.getDamager() instanceof Projectile) {
-            final Projectile proj = (Projectile) e.getDamager();
-            if (proj.getShooter() != null && proj.getShooter() instanceof Entity) {
-                final Entity shooter = (Entity) proj.getShooter();
-                if (shooter.hasMetadata("minion")) {
-                    final Boss boss2 = BossUtils.getBossFromMinion(shooter);
-                    if (boss2 != null) {
-                        boss2.onMinionUpdate(shooter, (Event) e);
-                    }
-                }
-            }
-        }
-    }
 
     @EventHandler
     public void onSlimeSplit(final SlimeSplitEvent e) {

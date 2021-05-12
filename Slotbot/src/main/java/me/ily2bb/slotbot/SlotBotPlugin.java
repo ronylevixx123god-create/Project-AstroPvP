@@ -1,5 +1,9 @@
 package me.ily2bb.slotbot;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
+import me.astropvp.astrospawners.AstroSpawners;
+import me.astropvp.astrospawners.utils.PlayerData;
+import me.astropvp.astrospawners.utils.PlayerDataManager;
 import me.ily2bb.slotbot.commands.CommandSkinCommand;
 import me.ily2bb.slotbot.commands.CommandSlotBot;
 import me.ily2bb.slotbot.listener.SlotBotInventoryListener;
@@ -11,6 +15,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -48,6 +53,15 @@ public class SlotBotPlugin extends JavaPlugin {
         this.registerListeners();
         this.registerCommands();
         this.registerGlow();
+
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
+            PlayerDataManager manager = AstroSpawners.getPlayerDataManager();
+            Bukkit.broadcastMessage(CC.translate("&a&l(!)&a Started saving MobCoins..."));
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                PlayerData data = manager.getPlayerData(p);
+                manager.savePlayerData(data);
+            }
+        }, 500, 6000);
         SlotBotPlugin.me = this;
     }
 

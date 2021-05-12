@@ -16,8 +16,6 @@ import me.ifamasssxd.cosmicbosses.struct.enums.Difficulty;
 import me.ifamasssxd.cosmicbosses.utils.BossUtils;
 import net.minecraft.server.v1_8_R3.Entity;
 import net.minecraft.server.v1_8_R3.World;
-import org.arkhamnetwork.Arkkit.patches.Halloween;
-import org.arkhamnetwork.Arkkit.patches.NewYears;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -284,18 +282,12 @@ public class HolidaySpirit extends Boss {
             for (int i = 0; i < 100; ++i) {
                 final int inStack = this.random.nextInt(6) + 10;
                 i += inStack;
-                final ItemStack candy = Halloween.getHalloweenCandy().clone();
-                candy.setAmount(inStack);
-                final Item item = location.getWorld().dropItemNaturally(location, this.addUniqueLore(candy));
-                item.setMetadata("removeDurability", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
+
             }
             for (int cakes = 50 + this.random.nextInt(51), j = 0; j < cakes; ++j) {
                 final int inStack2 = this.random.nextInt(6) + 10;
                 j += inStack2;
-                final ItemStack cake = NewYears.getExplosiveCake().clone();
-                cake.setAmount(inStack2);
-                final Item item2 = location.getWorld().dropItemNaturally(location, this.addUniqueLore(cake));
-                item2.setMetadata("removeDurability", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
+
             }
             if (ThreadLocalRandom.current().nextInt(100) == 0) {
                 location.getWorld().dropItemNaturally(location, CosmicArmorSetsAPI.getArmorSet(ArmorSet.PHANTOM)[ThreadLocalRandom.current().nextInt(4)]);
@@ -336,7 +328,6 @@ public class HolidaySpirit extends Boss {
             ++this.hitCounter;
             if (this.hitCounter >= 4) {
                 this.hitCounter = 0;
-                this.getEntity().getWorld().dropItemNaturally(this.getEntity().getLocation(), Halloween.getHalloweenCandy().clone());
             }
             double percentToReflect = 10.0;
             final double healthMissing = this.getMaxHealth() - this.getEntity().getHealth();

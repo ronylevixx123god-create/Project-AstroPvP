@@ -115,7 +115,7 @@ public class EndLogicListener implements Listener {
 		if (rank.equalsIgnoreCase("banteam") || rank.equalsIgnoreCase("mod") || rank.equalsIgnoreCase("srmod")) {
 			return;
 		}
-		if (allowedCommands.contains(event.getMessage()) || allowedCommands.contains("/" + event.getMessage())) {
+		if (allowedCommands.contains(event.getMessage().toLowerCase().replace("/", ""))) {
 			return;
 		}
 		player.sendMessage(CC.RedB + "(!) " + event.getMessage() + " is denied in this world!");
@@ -153,14 +153,7 @@ public class EndLogicListener implements Listener {
 		}
 	}
 
-	@EventHandler
-	public void  reduceDMG(EntityDamageByEntityEvent e) {
-		if (!e.getDamager().getLocation().getWorld().getName().equals("world_the_end")) return;
-		if (!e.getEntity().getLocation().getWorld().getName().equals("world_the_end")) return;
-		if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
-			e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE)*0.70);
-		}
-	}
+
 
 
 	@EventHandler

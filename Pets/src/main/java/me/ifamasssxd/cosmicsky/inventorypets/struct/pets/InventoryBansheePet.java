@@ -89,7 +89,6 @@ public class InventoryBansheePet extends InventoryPet {
         if (!WorldGuardUtils.isPvPEnabled(player.getLocation()))
             throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "Not allowed in this region!");
         //petItem.setLastUsed(System.currentTimeMillis());
-        PetUtils.addPetCooldown(player, petItem.getPetType(), (getCooldown(5) * 1000));
 
         final List<Player> nearbyEnemies = Lists.newArrayList();
 
@@ -139,6 +138,8 @@ public class InventoryBansheePet extends InventoryPet {
         player.sendMessage("");
         player.sendMessage(CC.translate("&4&lPET: ** BANSHEE [&6" + duration + "s&4&l] - RKO! **"));
         player.sendMessage("");
+        PetUtils.addPetCooldown(player, petItem.getPetType(), (getCooldown(5) * 1000));
+
         (new BukkitRunnable() {
             public void run() {
                 player.sendMessage(CC.translate("&4&lPET:  BANSHEE - RKO has worn off! "));
