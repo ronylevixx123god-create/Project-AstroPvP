@@ -115,7 +115,7 @@ public class EndLogicListener implements Listener {
 		if (rank.equalsIgnoreCase("banteam") || rank.equalsIgnoreCase("mod") || rank.equalsIgnoreCase("srmod")) {
 			return;
 		}
-		if (allowedCommands.contains(event.getMessage()) || allowedCommands.contains("/" + event.getMessage())) {
+		if (allowedCommands.contains(event.getMessage().toLowerCase().replace("/", ""))) {
 			return;
 		}
 		player.sendMessage(CC.RedB + "(!) " + event.getMessage() + " is denied in this world!");

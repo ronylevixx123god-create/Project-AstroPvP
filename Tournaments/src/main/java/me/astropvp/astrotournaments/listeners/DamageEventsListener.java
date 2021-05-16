@@ -1,5 +1,6 @@
 package me.astropvp.astrotournaments.listeners;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.astrotournaments.AstroTournamentsAPI;
 import me.astropvp.astrotournaments.data.ActiveTournamentData;
 import me.astropvp.astrotournaments.struct.ActiveTournamentUser;
@@ -8,11 +9,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.util.Vector;
 
-import me.galacticpvp.galacticpvputils.events.EntityDamageEvent;
-import me.galacticpvp.galacticpvputils.events.EntityDeathEvent;
-import me.galacticpvp.galacticpvputils.utils.CC;
 
 public class DamageEventsListener implements Listener {
 	
