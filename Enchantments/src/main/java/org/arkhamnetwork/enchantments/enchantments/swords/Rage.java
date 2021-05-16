@@ -49,6 +49,10 @@ public class Rage extends CustomEnchantment {
 
             double damage = event.getDamage(EntityDamageEvent.DamageModifier.BASE);
 
+            if (damage > 20) {
+                damage = 15;
+            }
+
             event.setDamage((damage + mod));
         }
 

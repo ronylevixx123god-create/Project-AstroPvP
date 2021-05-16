@@ -71,6 +71,7 @@ final class AntiBlockGlitchListener
     public void onPlayerBlockGlitchWaterLava(PlayerInteractEvent e) {
         if (e.hasBlock() && e.hasItem() && e.getItem().getType() == Material.BUCKET && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
             Material m1 = e.getClickedBlock().getType();
+
             Material m2 = e.getClickedBlock().getLocation().add(0.0, 1.0, 0.0).getBlock().getType();
             Material m3 = e.getClickedBlock().getLocation().subtract(0.0, 1.0, 0.0).getBlock().getType();
             if (m1 == Material.LAVA || m1 == Material.STATIONARY_LAVA || m1 == Material.WATER || m1 == Material.STATIONARY_WATER || m2 == Material.LAVA || m2 == Material.STATIONARY_LAVA || m2 == Material.WATER || m2 == Material.STATIONARY_WATER || m3 == Material.LAVA || m3 == Material.STATIONARY_LAVA || m3 == Material.WATER || m3 == Material.STATIONARY_WATER) {

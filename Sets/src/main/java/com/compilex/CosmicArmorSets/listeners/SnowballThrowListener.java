@@ -10,6 +10,8 @@
  */
 package com.compilex.CosmicArmorSets.listeners;
 
+import com.massivecraft.factions.FPlayers;
+import com.massivecraft.factions.Factions;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,6 +24,7 @@ public class SnowballThrowListener
     public void onThrow(PlayerInteractEvent e) {
         if ((e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && e.getItem() != null && e.getItem().getType() != Material.AIR && e.getItem().getType() == Material.SNOW_BALL && e.getItem().hasItemMeta() && e.getItem().getItemMeta().hasLore()) {
             e.setCancelled(true);
+
         }
     }
 }

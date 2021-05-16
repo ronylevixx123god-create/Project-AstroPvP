@@ -60,10 +60,6 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
-import me.ifamasssxd.factionstop.commands.CommandEditFactionsTop;
-import me.ifamasssxd.factionstop.commands.CommandFactionsTop;
-import me.ifamasssxd.factionstop.commands.CommandRecalcFactionsTop;
-import me.ifamasssxd.factionstop.manager.TopManager;
 import me.ifamasssxd.factionupgrades.commands.CommandConvertToFactionPoints;
 import me.ifamasssxd.factionupgrades.commands.CommandFUpgrade;
 import me.ifamasssxd.factionupgrades.listeners.FactionListener;
@@ -119,7 +115,6 @@ public class P extends MPlugin {
     private boolean vanillaPlanet = false;
     private boolean fpointsEnabled = false;
     private boolean fundEnabled;
-    @Getter @Setter private final TopManager topManager = new TopManager();
     @Getter @Setter private boolean gradualSpawnerValues = false;
     @Getter @Setter private boolean includeBank = false;
     @Getter @Setter private boolean includeHoppers = true;

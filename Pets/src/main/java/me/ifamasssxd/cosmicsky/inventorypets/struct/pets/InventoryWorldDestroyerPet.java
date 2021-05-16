@@ -48,7 +48,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
     }
 
     private double cageDuration(int level) {
-        return 6.00;
+        return 5.00;
     }
 
 

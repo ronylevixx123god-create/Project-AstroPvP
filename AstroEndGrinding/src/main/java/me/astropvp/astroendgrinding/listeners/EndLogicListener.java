@@ -153,14 +153,7 @@ public class EndLogicListener implements Listener {
 		}
 	}
 
-	@EventHandler
-	public void  reduceDMG(EntityDamageByEntityEvent e) {
-		if (!e.getDamager().getLocation().getWorld().getName().equals("world_the_end")) return;
-		if (!e.getEntity().getLocation().getWorld().getName().equals("world_the_end")) return;
-		if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
-			e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE)*0.70);
-		}
-	}
+
 
 
 	@EventHandler

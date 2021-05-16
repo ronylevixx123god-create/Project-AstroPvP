@@ -148,7 +148,11 @@ public class InventorySkrrtPet extends InventoryPet {
                 FPlayer castingPlayer = (FPlayer) FPlayers.i.get(player);
                 FPlayer surroundingPlayer = (FPlayer) FPlayers.i.get(p);
                 if (SkrrtCooldown.isOnSkrrtCooldown(p)) {
-                    player.sendMessage(CC.translate("&c" + p.getName() + " is still on Skrrt Cooldown! This lasts 120 seconds."));
+                    player.sendMessage(CC.translate("&c" + p.getName() + " is still on Skrrt Cooldown! This lasts 240 seconds."));
+                    return;
+                }
+                if (!WorldGuardUtils.isPvPEnabled(p.getLocation())) {
+                    player.sendMessage(CC.translate("&c" + p.getName() + " is in a non-pvp enabled region."));
                     return;
                 }
                 if (castingPlayer.getRelationTo(surroundingPlayer) == Relation.ENEMY || castingPlayer.getRelationTo(surroundingPlayer) == Relation.NEUTRAL) {

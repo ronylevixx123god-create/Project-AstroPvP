@@ -41,7 +41,7 @@ public class Drunk extends CustomEnchantment {
         if (Math.random() < blackoutChance) {
             final Player p = (Player) player;
             p.sendMessage(ChatColor.YELLOW + "You're starting to feel very dizzy...");
-            p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, level * 40, Math.max(0, level - 3)));
+            //p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, level * 40, Math.max(0, level - 3)));
         }
     }
 

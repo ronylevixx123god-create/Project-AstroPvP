@@ -10,7 +10,7 @@ public class SkrrtCooldown {
         player.setMetadata("skrrtCooldown", new FixedMetadataValue(Enchantments.getInstance(), player.getName()));
         Bukkit.getScheduler().runTaskLaterAsynchronously(Enchantments.getInstance(), ()->{
             player.removeMetadata("skrrtCooldown", Enchantments.getInstance());
-        },2400L);
+        },4800L);
     }
 
     public static boolean isOnSkrrtCooldown(Player player) {

@@ -64,20 +64,11 @@ public class SelfDestruct extends CustomEnchantment {
                 final int fuseTicks = 120 - level * 20;
                 while (tntAmount > 0) {
                     --tntAmount;
-                    this.spawnExplosion(p, this.getNearbyLocation(player.getLocation(), 3, 1), fuseTicks);
                 }
             }
         }
     }
 
-    private void spawnExplosion(final Player exploder, final Location l, final int fuseTicks) {
-        if (l.getBlock().getType().isSolid()) {
-            return;
-        }
-        final TNTPrimed tnt = (TNTPrimed) l.getWorld().spawnEntity(l, EntityType.PRIMED_TNT);
-        tnt.setFuseTicks(fuseTicks);
-        tnt.setMetadata("SelfDestructTNT", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) exploder.getName()));
-    }
 
     private Location getNearbyLocation(final Location l, final int radius, final int y_boost) {
         final Random rand = new Random();

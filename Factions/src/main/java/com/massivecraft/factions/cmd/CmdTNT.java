@@ -75,6 +75,9 @@ public class CmdTNT
             String opperation = this.args.get(0);
             int stacks = this.args.size() >= 2 ? (this.args.get(1).equalsIgnoreCase("all") ? -1 : Integer.parseInt(this.args.get(1))) : -1;
             int totalTNT = fac.tnt;
+            if (totalTNT < 0) {
+                fac.tnt = 100000;
+            }
             int tntStacks = totalTNT / 64;
             if (opperation.equalsIgnoreCase("w")) {
                 int stacksToWithdraw;
