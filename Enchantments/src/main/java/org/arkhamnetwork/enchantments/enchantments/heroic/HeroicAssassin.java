@@ -38,6 +38,6 @@ public class HeroicAssassin extends CustomEnchantment {
             dmgMod += 0.010D * enchantLevel;
         if (distance < 3.75D)
             dmgMod += 0.010D * enchantLevel;
-        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * dmgMod);
+        //event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * dmgMod);
     }
 }

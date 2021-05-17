@@ -216,6 +216,11 @@ public class AstroCore extends JavaPlugin {
         }
         this.getServer().getPluginManager().registerEvents(new JackpotListener(), this);
         this.getServer().getPluginManager().registerEvents(new GrindingMessagesToggleListener(), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerDataListener(), this);
+        getCommand("revive").setExecutor((CommandExecutor)new ReviveCommand());
+        this.getServer().getPluginManager().registerEvents(new net.astropvp.core.listeners.PlayerListener(), this);
+
+        this.getServer().getPluginManager().registerEvents(new ReviveGUIListener(), this);
 
         //This used to be sync!
         this.getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
