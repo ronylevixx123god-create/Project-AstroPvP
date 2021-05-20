@@ -28,10 +28,7 @@ import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.google.common.collect.Lists;
 import me.ifamasssxd.cosmicmasks.items.MultiMaskItem;
 import me.ifamasssxd.cosmicmasks.listeners.MaskListener;
-import me.ifamasssxd.cosmicmasks.struct.CosmicMask;
-import me.ifamasssxd.cosmicmasks.struct.ReindeerMask;
-import me.ifamasssxd.cosmicmasks.struct.SantaMask;
-import me.ifamasssxd.cosmicmasks.struct.TerminatorMask;
+import me.ifamasssxd.cosmicmasks.struct.*;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.Bukkit;
@@ -49,6 +46,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public enum MaskType {
     HEADLESS(new MaskData("456de2b44c66a6b039b1a2e46561af76e829faa27626aaf8b948a5065c81262", "eyJ0aW1lc3RhbXAiOjE1Mzk2ODUyODcwNjgsInByb2ZpbGVJZCI6IjU5ZjAzOTljZWVlMzQwOTViYzJmOTBkZTMwNGM5OGMxIiwicHJvZmlsZU5hbWUiOiJCYW5kaWl0byIsInRleHR1cmVzIjp7IlNLSU4iOnsidXJsIjoiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS85YWJkNjA4ZTdkYWNlMmU2OTkyZTQ3ZmJiMmRjZjY2NDhkOTc1Y2FlOGQzMjYxNWM2Y2YwM2VkYzdkYjMyODY4IiwibWV0YWRhdGEiOnsibW9kZWwiOiJzbGltIn19fX0=", "HALLOWEEN", true, UUID.randomUUID(), CC.GoldB + "Headless Mask", Lists.newArrayList(CC.Gray + "A terrifying Mask from the", CC.Gray + "grave of the Headless Horseman.", CC.GoldB + " * " + CC.Gold + "Map One"))),
+    CRANKED(new MaskData(null, "", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmE4N2NkNzUyM2RjYzRjYmVhZWFlYzljOGJlYjg5MmExMDNiOTUzOTVlMDY1ZjI1YmI0ZmM3YTZiZDRiOTAyYyJ9fX0=", "CRANKED", true, UUID.randomUUID(), CC.DarkRedB + "Cranked Mask", CC.DarkRed + "50% To Block Util Belt Skin, 5% Extra Damage", Lists.newArrayList(CC.DarkRed + "50% To Block Util Belt Skin", CC.DarkRed + "5% Extra Damage" , CC.Gray + "A great evil is contained within this", CC.Gray + "horrifying mask. Who knows what inner", CC.Gray + "demons it will unleash.", CC.GoldB + " * " + CC.Gold + "Map Five"))),
     PURGE(new MaskData(null, "", "eyJ0aW1lc3RhbXAiOjE1NDAzNTU5NDg0MDksInByb2ZpbGVJZCI6ImEzOWVmNTdhMzg3YzRjZDE5NzQwNTliNzMyZWJjN2E1IiwicHJvZmlsZU5hbWUiOiJNZXJjaGFudCIsInRleHR1cmVzIjp7IlNLSU4iOnsidXJsIjoiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS85ODYzMWU5ODZlMDEwNWMwNmY2ZDIxNDJlYjI3MmRmMTQ1OTM2NmI3ZGRkY2MxMTk4OTEzNDI2MzZjMjhhMTdlIn19fQ==", "MERCHANT", true, UUID.randomUUID(), CC.RedB + "Purge Mask", CC.Red + "+2.5% DMG", Lists.newArrayList(CC.Red + "+2.5% DMG", CC.Gray + "A great evil is contained within this", CC.Gray + "horrifying mask. Who knows what inner", CC.Gray + "demons it will unleash.", CC.GoldB + " * " + CC.Gold + "Map One"))),
     PUMPKIN_MONSTER(new MaskData("", "eyJ0aW1lc3RhbXAiOjE1NDA1MTIzNjcyMDksInByb2ZpbGVJZCI6IjZjYTU0MGI0MmU4MjRlMjM4ZDc5NzkxMmQ2Y2U4NTgzIiwicHJvZmlsZU5hbWUiOiJIYWxsb3dlZW4iLCJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGYwZDY0NTdhMmIwMTViYTVkYWZiZTFiYWYyNmU2YWQ2YzM1MGVjMTUwODRmY2E2YTg2ZjUwYmU3NTNiNjY3NyJ9fX0=", "Halloween", false, UUID.randomUUID(), CC.GoldB + "Pumpkin Monster", Lists.newArrayList(CC.Gray + "The severed head of a fabled Halloween", CC.Gray + "nightmare known as the Pumpkin Monster", CC.GoldB + " * " + CC.Gold + "Halloween Quests"))),
     GHOST(new MaskData("", "eyJ0aW1lc3RhbXAiOjE1NDAzNTY0MjgwMjAsInByb2ZpbGVJZCI6ImEzOWVmNTdhMzg3YzRjZDE5NzQwNTliNzMyZWJjN2E1IiwicHJvZmlsZU5hbWUiOiJNZXJjaGFudCIsInRleHR1cmVzIjp7IlNLSU4iOnsidXJsIjoiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS8xMDVjNDg3NjllY2MzMjg4YWJkYjcyMThlYmZmMzEyZGNhMmEyOGJjZmNkMjlkMGFjMjk5YWNjMjMyM2VhNzhjIn19fQ==", "Ghost", true, UUID.randomUUID(), CC.DarkAquaB + "Ghost Mask", Lists.newArrayList(CC.Gray + "The deviant mask of the spectre,", CC.Gray + "a metaphysical monstrosity.", CC.GoldB + " * " + CC.Gold + "Ghost Mastery Kit"))),

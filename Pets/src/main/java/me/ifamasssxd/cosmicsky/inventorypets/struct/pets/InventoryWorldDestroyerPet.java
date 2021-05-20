@@ -80,11 +80,9 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
             return false;
         }
 
-        if (PetUtils.isOnCooldown(player, petItem.getPetType()) && (!player.isOp() || !player.isSneaking()))
-            throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU +
-                    TimeUtils.formatSeconds(PetUtils.getSecondsOnCooldown(player, petItem.getPetType())));
-        /*if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
-            throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));*/
+
+        if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
+            throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
         if (player.hasMetadata("in_duel"))
             return true;
         if (player.hasMetadata("spectator"))
@@ -123,8 +121,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         if (CageCooldown.isOnCageCooldown(target))
             throw new PrefixedPetException(target.getName() + " is still on Cage Cooldown! This lasts 20 seconds.");
         if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.SEXY_HELMET) && Math.random() < 0.5D && !playerHasApollo(player)) {
-            //petItem.setLastUsed(System.currentTimeMillis());
-            PetUtils.addPetCooldown(player, petItem.getPetType(), (getCooldown(5) * 1000));
+            petItem.setLastUsed(System.currentTimeMillis());
             if (playerHasApollo(player)) {
                 target.sendMessage(CC.translate("&c&l* CHAD SUNGLASSES &a&lBYPASSED &7[&c" + player.getName() + "&cApollo Set&7] &c&l*"));
                 player.sendMessage(CC.translate("&a&l* BYPASSED CHAD SUNGLASSED FROM &c&n" + target.getName() + "&a&l *"));

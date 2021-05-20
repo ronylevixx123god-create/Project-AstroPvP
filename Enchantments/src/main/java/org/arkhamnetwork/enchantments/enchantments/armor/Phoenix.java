@@ -2,10 +2,12 @@ package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.MaskUtils;
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
 import com.earth2me.essentials.Essentials;
 import com.rit.sucy.CustomEnchantment;
+import com.rit.sucy.EnchantmentAPI;
 import lombok.SneakyThrows;
 import me.ifamasssxd.cosmicmasks.MaskType;
 import me.ifamasssxd.factionupgrades.FactionUpgradeAPI;
@@ -70,9 +72,27 @@ public class Phoenix extends CustomEnchantment {
             return false;
         if (player.hasMetadata("noSoulProcs") && !ItemSkinUtils.hasItemSkin(player, "CORRUPT_BELT_UTILITY"))
             return false;
+
         if (player.getHealth() - dmg <= 0.0D) {
+
             if (player.hasMetadata("phoenixCd")) {
                 player.sendMessage(CC.translate("&cPHOENIX - Still On Cooldown"));
+                return false;
+            }
+            if (MaskUtils.hasMaskEquipped((Player) damager, "CRANKED") && Math.random() < 0.5) {
+                ((Player) damager).playSound(damager.getLocation(), Sound.ANVIL_LAND, 2, 2);
+                ((Player) damager).playSound(player.getLocation(), Sound.ANVIL_LAND, 2, 2);
+                damager.sendMessage(CC.translate("&4&l* CRANKED MASK BLOCKED PHOENIX [&c" + player.getName() + "&4&l] *"));
+                player.sendMessage(CC.translate("&4&l* PHOENIX BLOCKED [&c" + damager.getName() + "Cranked Mask&4&l] *"));
+
+                player.setMetadata("phoenixCd", new FixedMetadataValue(Enchantments.getInstance(), ""));
+                Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
+                    @Override
+                    public void run() {
+                        player.removeMetadata("phoenixCd", Enchantments.getInstance());
+                    }
+                }, 100L);
+
                 return false;
             }
             if (Math.random() <= 0.5D && MaskType.hasEquipped((Player) damager, "DEATH_KNIGHT") && !ItemSkinUtils.hasItemSkin(player, "CORRUPT_BELT_UTILITY")) {

@@ -39,9 +39,9 @@ public class Rage extends CustomEnchantment {
 
             double mod = enchantLevel * 0.55 * RageUtils.getComboOfPlayer(pUser, target instanceof Player);
 
-                if (ParticleUtils.isPlayerIndicating((Player) user) && Math.random() <0.05) {
-                    playRageEffect(target.getEyeLocation(), enchantLevel);
-                }
+            if (ParticleUtils.isPlayerIndicating((Player) user) && Math.random() < 0.05) {
+                playRageEffect(target.getEyeLocation(), enchantLevel);
+            }
 
             if (mod > 15) {
                 mod = 15;
@@ -49,12 +49,8 @@ public class Rage extends CustomEnchantment {
 
             double damage = event.getDamage(EntityDamageEvent.DamageModifier.BASE);
 
-            if (damage+mod > 20) {
-                event.setDamage(15);
-            } else {
-                event.setDamage((damage + mod));
+            event.setDamage((damage + mod));
 
-            }
 
         }
 
