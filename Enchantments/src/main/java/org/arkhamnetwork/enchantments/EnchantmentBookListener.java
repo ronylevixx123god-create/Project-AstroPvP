@@ -175,12 +175,6 @@ public class EnchantmentBookListener implements Listener {
                     pl.playSound(pl.getLocation(), Sound.LAVA_POP, 1.0f, 0.75f);
                     pl.playEffect(EntityEffect.WOLF_HEARTS);
                     final Location l = pl.getLocation();
-                    if (ench_book.getAmount() > 1) {
-                        ItemStack book = ench_book.clone();
-                        book.setAmount(book.getAmount()-1);
-
-                        pl.getInventory().addItem(book);
-                    }
                     try {
                         de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.35f, 20);
 

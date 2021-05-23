@@ -216,6 +216,7 @@ public class AstroCore extends JavaPlugin {
         }
         this.getServer().getPluginManager().registerEvents(new JackpotListener(), this);
         this.getServer().getPluginManager().registerEvents(new GrindingMessagesToggleListener(), this);
+        this.getServer().getPluginManager().registerEvents(new DupePatch(), this);
 
         //This used to be sync!
         this.getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
