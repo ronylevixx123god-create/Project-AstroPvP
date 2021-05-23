@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
  *  org.bukkit.Bukkit
@@ -11,9 +11,12 @@
  */
 package net.astropvp.core.utils;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+
 import java.util.Arrays;
 import java.util.LinkedList;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -31,7 +34,7 @@ public class ItemUtils {
         return is;
     }
 
-    public static ItemStack buildItem(Material m, short metaData, String name, String ... description) {
+    public static ItemStack buildItem(Material m, short metaData, String name, String... description) {
         ItemStack is = new ItemStack(m, 1, metaData);
         ItemMeta im = is.getItemMeta();
         if (name != null) {
@@ -70,9 +73,51 @@ public class ItemUtils {
         if (p.getInventory().firstEmpty() != -1) {
             p.getInventory().addItem(new ItemStack[]{i});
         } else {
-            Bukkit.getLogger().info("[CosmicDungeons] " + p.getName() + " did not have inventory space for " + (Object)i + ", dropping on ground!");
+            Bukkit.getLogger().info("[CosmicDungeons] " + p.getName() + " did not have inventory space for " + (Object) i + ", dropping on ground!");
             p.getWorld().dropItem(p.getLocation(), i);
         }
     }
+
+
+    public static ItemStack getNextPageItem(int page, String name) {
+        ItemStack item = new ItemStack(Material.ARROW);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(String.valueOf(CC.GreenB) + "Next Page");
+        meta.setLore(Arrays.asList(new String[]{String.valueOf(CC.Gray) + "Click to view the next page."}));
+        item.setItemMeta(meta);
+        NBTWrapper wrapper = new NBTWrapper(item);
+        wrapper.setInteger("page", Integer.valueOf(page));
+        wrapper.setString("player", name);
+        item = wrapper.build();
+        return item;
+    }
+
+    public static ItemStack getPreviousPageItem(int page, String name) {
+        ItemStack item = new ItemStack(Material.ARROW);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(String.valueOf(CC.RedB) + "Previous Page");
+        meta.setLore(Arrays.asList(new String[]{String.valueOf(CC.Gray) + "Click to view the last page."}));
+        item.setItemMeta(meta);
+        NBTWrapper wrapper = new NBTWrapper(item);
+        wrapper.setInteger("page", Integer.valueOf(page));
+        wrapper.setString("player", name);
+        item = wrapper.build();
+        return item;
+    }
+
+    public static ItemStack getRevivePlayerItem(int page, String name) {
+        ItemStack item = new ItemStack(Material.PAPER);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(String.valueOf(CC.GreenB) + "Revive Player");
+        meta.setLore(Arrays.asList(new String[]{String.valueOf(CC.Gray) + "Click to revive " + name + "."}));
+        item.setItemMeta(meta);
+        NBTWrapper wrapper = new NBTWrapper(item);
+        wrapper.setInteger("page", Integer.valueOf(page));
+        wrapper.setString("player", name);
+        item = wrapper.build();
+        return item;
+    }
 }
+
+
 

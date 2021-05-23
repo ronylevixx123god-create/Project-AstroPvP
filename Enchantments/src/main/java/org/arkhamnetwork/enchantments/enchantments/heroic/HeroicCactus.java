@@ -21,9 +21,6 @@ public class HeroicCactus extends HeroicCustomEnchantment {
                 if (pAttacker != null) {
                     pAttacker.damage(0.5D);
                     Location l = p.getLocation();
-                    if (Math.random() < 0.06) {
-                        WorldUtil.sendWorldEffect(l.getBlock(), 81, 2001);
-                    }
                 }
             }
             double thornNegateChance = (level == 1) ? 0.2D : 0.5D;

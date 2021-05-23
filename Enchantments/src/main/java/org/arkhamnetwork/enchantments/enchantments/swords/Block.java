@@ -22,7 +22,7 @@ public class Block extends CustomEnchantment {
             final double chance = 0.1 * level;
             if (random < chance && player2.isBlocking()) {
                 final double reduceDamage = 0.5 * (level / 2);
-                e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1.0 - reduceDamage));
+               // e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1.0 - reduceDamage));
                 player2.playSound(player2.getLocation(), Sound.ITEM_BREAK, 0.7f, 0.2f);
             }
         }

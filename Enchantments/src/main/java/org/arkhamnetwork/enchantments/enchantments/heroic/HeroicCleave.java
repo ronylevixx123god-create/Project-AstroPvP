@@ -76,6 +76,6 @@ public class HeroicCleave extends HeroicCustomEnchantment {
             return;
         }
         final Vector unitVector = entity.getLocation().toVector().subtract(pusher.getLocation().toVector()).normalize();
-        entity.setVelocity(unitVector.multiply(speed));
+        //entity.setVelocity(unitVector.multiply(speed));
     }
 }
