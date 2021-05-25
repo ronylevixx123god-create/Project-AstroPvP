@@ -83,7 +83,7 @@ public class Phoenix extends CustomEnchantment {
                 ((Player) damager).playSound(damager.getLocation(), Sound.ANVIL_LAND, 2, 2);
                 ((Player) damager).playSound(player.getLocation(), Sound.ANVIL_LAND, 2, 2);
                 damager.sendMessage(CC.translate("&4&l* CRANKED MASK BLOCKED PHOENIX [&c" + player.getName() + "&4&l] *"));
-                player.sendMessage(CC.translate("&4&l* PHOENIX BLOCKED [&c" + damager.getName() + "Cranked Mask&4&l] *"));
+                player.sendMessage(CC.translate("&4&l* PHOENIX BLOCKED [&c" + damager.getName() + " Cranked Mask&4&l] *"));
 
                 player.setMetadata("phoenixCd", new FixedMetadataValue(Enchantments.getInstance(), ""));
                 Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
