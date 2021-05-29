@@ -1,0 +1,20 @@
+main: me.astropvp.astrospawners.AstroSpawners
+name: AstroSpawners
+version: 1.0
+commands:
+  splitspawners:
+    description: /splitspawners
+    aliases: [splitspawner]
+  givespawner:
+    description: /givespawner
+    aliases: [givespawners]
+  mobcoinshop:
+    description: /mobcoinshop
+    aliases: [transfer, mshop]
+  mobcoins:
+    description: /mobcoins
+    aliases: [coins, mcoins]
+  clearmobs:
+    description: Removes all mobs and hasmap
+  checkmobs:
+    description: Check amount of mobs in hasmap

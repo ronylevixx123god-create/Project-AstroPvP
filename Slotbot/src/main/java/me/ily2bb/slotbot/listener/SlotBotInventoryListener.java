@@ -26,6 +26,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -258,6 +259,14 @@ public class SlotBotInventoryListener implements Listener {
         if (!e.getEntity().getLocation().getWorld().getName().equals("world_the_end")) return;
         if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
             e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE)*0.20);
+        }
+    }
+
+    @EventHandler
+    public void anticrash(ProjectileLaunchEvent e) {
+        if (!(e.getEntity().getShooter() instanceof Player)) {
+            e.setCancelled(true);
+            return;
         }
     }
 

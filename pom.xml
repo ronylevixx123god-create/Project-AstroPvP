@@ -41,6 +41,7 @@
         <module>CustomBlocks</module>
         <module>AstroEndGrinding</module>
         <module>Tournaments</module>
+        <module>SpawnersMobcoins</module>
     </modules>
 
     <build>

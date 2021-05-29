@@ -22,6 +22,7 @@
         <module name="Kits" />
         <module name="Core" />
         <module name="AstroEndGrinding" />
+        <module name="SpawnersMobcoins" />
         <module name="GUIShop" />
         <module name="Lootboxes" />
         <module name="AuctionHouse" />
