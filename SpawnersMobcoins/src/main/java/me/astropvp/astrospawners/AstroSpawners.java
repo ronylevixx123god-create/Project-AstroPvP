@@ -59,8 +59,10 @@ public class AstroSpawners extends JavaPlugin {
         new SpawnerCustomItem("spawner", "<amount> <entity>");
         this.manager2 = new PlayerDataManager(this);
 
-        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, SpawnerDataHelper::onDisable, 1000L, 6000L
+        /*Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, SpawnerDataHelper::onDisable, 1000L, 6000L
         );
+        Doesn't work async, if you do it sync, server would jusr crash cuz so many spawners
+        */
     }
 
     public void loadConfig() {
