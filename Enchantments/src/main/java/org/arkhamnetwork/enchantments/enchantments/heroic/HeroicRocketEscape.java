@@ -5,6 +5,8 @@ import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
 import com.massivecraft.factions.P;
 import lombok.SneakyThrows;
 import me.astropvp.AstroBackpacksAPI;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.objects.BackpackType;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.enchantments.armor.RocketEscape;
@@ -65,13 +67,18 @@ public class HeroicRocketEscape extends HeroicCustomEnchantment {
                         pl.sendMessage(CC.RedB + " ** " + CC.Gray + "Guided Rocket Escape:" + CC.RedB + " SABOTAGED **");
                         return;
                     }
+                }
 
+                if (((Player) player).getInventory().getChestplate() != null && AstroBackpacksAPI.itemHasSkin(((Player) player).getInventory().getChestplate()) && AstroBackpacksAPI.getBackpackByItem(((Player) player).getInventory().getChestplate()).equals(BackpackType.CURSED_WINGS)) {
+                    pl.playSound(pl.getLocation(), Sound.ANVIL_BREAK, 5, 5);
+                    pl.sendMessage(CC.translate("&6&l* CURSED WINGS BLOCKED &nROCKET ESCAPE&r &7[") + target.getKiller().getName() + CC.translate("&7] &6&l*"));
+                    return;
+                }
 
-                    if (((Player) player).getInventory().getChestplate() != null && AstroBackpacksAPI.itemHasSkin(((Player) player).getInventory().getChestplate()) && AstroBackpacksAPI.getBackpackByItem(((Player) player).getInventory().getChestplate()).equals(BackpackType.CURSED_WINGS)) {
-                        pl.playSound(pl.getLocation(), Sound.ANVIL_BREAK, 5, 5);
-                        pl.sendMessage(CC.translate("&6&l* CURSED WINGS BLOCKED &nROCKET ESCAPE&r &7[") + target.getKiller().getName() + CC.translate("&7] &6&l*"));
-                        return;
-                    }
+                if (AstroItemSkinsAPI.hasSkinEquipped(pl, SkinType.NORTH_STAR)) {
+                    pl.playSound(pl.getLocation(), Sound.ANVIL_BREAK, 5, 5);
+                    pl.sendMessage(CC.translate("&a&l* NORTH STAR BLOCKED &nROCKET ESCAPE&r &7[") + target.getKiller().getName() + CC.translate("&7] &a&l*"));
+                    return;
                 }
                 event.setCancelled(true);
                 event.setDamage(0.0D);

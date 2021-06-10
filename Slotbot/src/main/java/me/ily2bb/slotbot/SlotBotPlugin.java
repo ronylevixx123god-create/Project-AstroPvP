@@ -54,14 +54,6 @@ public class SlotBotPlugin extends JavaPlugin {
         this.registerCommands();
         this.registerGlow();
 
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
-            PlayerDataManager manager = AstroSpawners.getPlayerDataManager();
-            Bukkit.broadcastMessage(CC.translate("&a&l(!)&a Started saving MobCoins..."));
-            for (Player p : Bukkit.getOnlinePlayers()) {
-                PlayerData data = manager.getPlayerData(p);
-                manager.savePlayerData(data);
-            }
-        }, 500, 6000);
         SlotBotPlugin.me = this;
     }
 

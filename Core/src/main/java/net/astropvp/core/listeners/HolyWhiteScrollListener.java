@@ -3,6 +3,8 @@ package net.astropvp.core.listeners;
 import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
 import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
 import me.ifamasssxd.cosmichcf.struct.OutpostType;
 import me.ifamasssxd.cosmicmasks.MaskType;
@@ -100,8 +102,8 @@ public class HolyWhiteScrollListener implements Listener {
                     }
                 assert killer != null;
                 if (CosmicArmorSetsAPI.getArmorSet(killer) != null && CosmicArmorSetsAPI.getArmorSet(killer) == ArmorSet.ULTRA && Math.random() < 0.4D) {
-                    e.getEntity().sendMessage(CC.BlueB + "* ULTRA NEGATION [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.BlueB + "] *");
-                    killer.sendMessage(CC.BlueB + "* ULTRA NEGATION [" + CC.Gray + e.getEntity().getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.BlueB + "] *");
+                    e.getEntity().sendMessage(CC.AquaB + "* ULTRA NEGATION [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.AquaB + "] *");
+                    killer.sendMessage(CC.AquaB + "* ULTRA NEGATION [" + CC.Gray + e.getEntity().getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.AquaB + "] *");
                     Bukkit.getLogger().info("Dropping " + i + " due to " + killer.getName() + "'s Ultra Armor Set procing.");
                     continue;
                 }
@@ -110,10 +112,16 @@ public class HolyWhiteScrollListener implements Listener {
                     continue;
                 }
                 (new ItemStack[1])[0] = i;
-                Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(e.getEntity(), "HOLY_WHITESCROLL_DEATH", Lists.newArrayList((Object[])new ItemStack[1])));
-                e.getEntity().getWorld().playSound(e.getEntity().getLocation(), Sound.ITEM_BREAK, 5.0F, 1.2F);
-                e.getEntity().getWorld().playSound(e.getEntity().getLocation(), Sound.WITHER_SHOOT, 3.0F, 10.0F);
+
                 if (isMonopolied && !isKilledHoldingTravAxe) {
+                    if (AstroItemSkinsAPI.hasSkinEquipped(e.getEntity().getPlayer(), SkinType.NORTH_STAR) && Math.random() < 0.33) {
+                        killer.sendMessage(CC.translate("&a&l* " + e.getEntity().getName() + " 's NORTH STAR &7Blocked Monopoly Mask &a&l* "));
+                        e.getEntity().getPlayer().sendMessage(CC.translate("&a&l* NORTH STAR &7Saved you from getting monoed &a&l*"));
+                        continue;
+                    }
+                    Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(e.getEntity(), "HOLY_WHITESCROLL_DEATH", Lists.newArrayList((Object[])new ItemStack[1])));
+                    e.getEntity().getWorld().playSound(e.getEntity().getLocation(), Sound.ITEM_BREAK, 5.0F, 1.2F);
+                    e.getEntity().getWorld().playSound(e.getEntity().getLocation(), Sound.WITHER_SHOOT, 3.0F, 10.0F);
                     if (killerIsControllingFrozen) {
                         e.getEntity().sendMessage(CC.RedB + "* FROZEN STRONGHOLD MONOPOLY [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.RedB + "] *");
                         killer.sendMessage(CC.GreenB + "* FROZEN STRONGHOLD MONOPOLY [" + CC.Gray + e.getEntity().getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.GreenB + "] *");

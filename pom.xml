@@ -42,6 +42,7 @@
         <module>AstroEndGrinding</module>
         <module>Tournaments</module>
         <module>SpawnersMobcoins</module>
+        <module>PlayerVaultsX</module>
     </modules>
 
     <build>

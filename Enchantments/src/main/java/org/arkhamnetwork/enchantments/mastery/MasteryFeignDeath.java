@@ -16,6 +16,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
 
 import lombok.SneakyThrows;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.damageindicators.utils.DamageIndicatorUtils;
 import net.minecraft.server.v1_8_R3.Entity;
 import net.minecraft.server.v1_8_R3.EntityHuman;
@@ -96,6 +98,7 @@ public class MasteryFeignDeath extends MasteryCustomEnchantment {
             }
         },30L);
         for (Player pl : Bukkit.getServer().getOnlinePlayers()) {
+            if (AstroItemSkinsAPI.hasSkinEquipped(pl, SkinType.DOOMSDAY_HELMET)) continue;
             pl.hidePlayer(damaged);
         }
         damaged.playSound(damaged.getLocation(), Sound.WITHER_SHOOT, 3.0F, 0.9F);

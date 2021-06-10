@@ -2,6 +2,7 @@ package org.arkhamnetwork.enchantments.enchantments.swords;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.rit.sucy.CustomEnchantment;
+import javafx.scene.control.Skin;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.damageindicators.utils.DamageIndicatorUtils;
@@ -42,6 +43,9 @@ public class MasteryBlackout extends CustomEnchantment {
 
         if (Math.random() <= 0.005D) {
             int multi = AstroItemSkinsAPI.isInHand((Player) user, SkinType.CORRUPT_SWORD) ? 2 : 1;
+            if (AstroItemSkinsAPI.hasSkinEquipped(pTarget.getPlayer(), SkinType.NORTH_STAR)) {
+                multi = 1;
+            }
             if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.VIRUS_BELT) && Math.random() < 0.50) {
                 pTarget.sendMessage(CC.translate("&2&l* BLOCKED ") + ((Player) user).getName() + CC.translate("'s BLACKOUT &7(First Aid Fannypack) &2&l*"));
                 ((Player) user).sendMessage(CC.translate("&7&l* &7&l&mBLACKOUT&r &7[Blocked by " + pTarget.getName() + "'s First Aid Fannypack] &7&l*"));

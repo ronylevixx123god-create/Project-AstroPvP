@@ -10,6 +10,8 @@ import me.astropvp.astropvpskins.objects.skins.axes.CorruptAxeSkin;
 import me.astropvp.astropvpskins.objects.skins.axes.EasterBasketSkin;
 import me.astropvp.astropvpskins.objects.skins.axes.MeatCleaverAxeSkin;
 import me.astropvp.astropvpskins.objects.skins.axes.SpikedBaseballBatSkin;
+import me.astropvp.astropvpskins.objects.skins.belts.*;
+import me.astropvp.astropvpskins.objects.skins.boots.*;
 import me.astropvp.astropvpskins.objects.skins.bows.CupidBowSkin;
 import me.astropvp.astropvpskins.objects.skins.chestplates.DeepSpaceBackpack;
 import me.astropvp.astropvpskins.objects.skins.helmets.*;
@@ -24,21 +26,21 @@ import me.astropvp.astropvpskins.objects.skins.pickaxes.RubberChickenSkin;
 /*     */
 /*     */
 /*     */
-/*     */ import me.astropvp.astropvpskins.objects.skins.belts.CorruptPowerBeltSkin;
-/*     */ import me.astropvp.astropvpskins.objects.skins.belts.CorruptUtilityBeltSkin;
-/*     */ import me.astropvp.astropvpskins.objects.skins.belts.CupidBeltSkin;
-/*     */ import me.astropvp.astropvpskins.objects.skins.belts.EasterBeltSkin;
-/*     */ import me.astropvp.astropvpskins.objects.skins.belts.SexyBeltSkin;
-/*     */ import me.astropvp.astropvpskins.objects.skins.belts.VirusBeltSkin;
-/*     */ import me.astropvp.astropvpskins.objects.skins.boots.CamouflageBootsSkin;
-/*     */ import me.astropvp.astropvpskins.objects.skins.boots.CorruptBootsSkin;
-/*     */ import me.astropvp.astropvpskins.objects.skins.boots.CupidBootsSkin;
-/*     */ import me.astropvp.astropvpskins.objects.skins.boots.KnightBootsSkin;
-/*     */ import me.astropvp.astropvpskins.objects.skins.boots.MoonBootsSkin;
-/*     */ import me.astropvp.astropvpskins.objects.skins.boots.RainbowSlidesSkin;
-/*     */ import me.astropvp.astropvpskins.objects.skins.boots.RetaliationBoots;
-/*     */ import me.astropvp.astropvpskins.objects.skins.boots.SexyBootsSkin;
-/*     */ import me.astropvp.astropvpskins.objects.skins.boots.VirusBootsSkin;
+/*     */
+/*     */
+/*     */
+/*     */
+/*     */
+/*     */
+/*     */
+/*     */
+/*     */
+/*     */
+/*     */
+/*     */
+/*     */
+/*     */
+/*     */
 /*     */
 /*     */
 /*     */
@@ -132,6 +134,93 @@ public enum SkinType {
                     CC.translate("&c+1 Max Heart"),
                     CC.translate("&c3% chance to silence enemy Soul Enchants"),
                     CC.translate("  &7(7x7 blocks for 7s)")
+            )),
+    DOOMSDAY_HELMET(CC.translate("&2&lDoomsday Helmet"), ItemSkinType.HELMET, new DoomsDayHelmetSkin(),
+            Arrays.asList(
+                    CC.translate("&cAbility to see invisible players"),
+                    CC.translate("&7(Feign Death, Undead Ruse)")
+            )),
+    HEART_HALO(CC.translate("&c&lHeart Halo"), ItemSkinType.HELMET, new HearthHaloSkin(),
+            Arrays.asList(
+                    CC.translate("&cPassively removes 1 Bleedstack every 2s"),
+                    CC.translate("&cImmune to Soul Harvester"),
+                    CC.translate("&c1.25% (Divine) Enlighted Healing")
+            )),
+    NORTH_STAR(CC.translate("&a&lNorth Star"), ItemSkinType.HELMET, new NorthStarSkin(),
+            Arrays.asList(
+                    CC.translate("&c33% Chance to negate Monopoly Mask"),
+                    CC.translate("&c-33% enemy Blackout duration"),
+                    CC.translate("&cBlocks all enemy (Guided) Rocket Escape"),
+                    CC.translate("&cDivine Enlighted IV")
+            )),
+    TIKI_MASK(CC.translate("&6&lTiki Mask"), ItemSkinType.HELMET, new TikiMaskSkin(),
+            Arrays.asList(
+                    CC.translate("&cLimites enemy amulet of corruption to 1 set type"),
+                    CC.translate("&c25% chance to block enemy Silence"),
+                    CC.translate("&cLimits enemy Silence to 60% duration")
+            )),
+    NEON_EMOTIONS(CC.translate("&d&lNeon Emotions"), ItemSkinType.HELMET, new NeonEmotionsSkin(),
+            Arrays.asList(
+                    CC.translate("&c+6% Outgoing Damage"),
+                    CC.translate("&c-2% Incoming Damage"),
+                    CC.translate("&cImmune to Slowness Potion Effect")
+            )),
+    WITCH_HAT(CC.translate("&e&lWitch Hat"), ItemSkinType.HELMET, new NeonEmotionsSkin(),
+            Arrays.asList(
+                    CC.translate("&c-25% Silence duration"),
+                    CC.translate("&cImmune to offensive Titan Attributes"),
+                    CC.translate("&7(Atlas, Ouranos and Prometheus)"),
+                    CC.translate("&cImmune to Trap"),
+                    CC.translate("&cImmune to Bloodhound & Banshee Pet"),
+                    CC.translate("&c10% chance to deflect incoming damage"),
+                    CC.translate("&conto nearby enemy"),
+                    CC.translate("&c2% chance to enable a LVL 10"),
+                    CC.translate("&cBanshee Pet effect when damaged")
+            )),
+
+    AUTUMN_AMULET(CC.translate("&e&lAutumn Amulet"), ItemSkinType.AMULET, new AutumnAmuletSkin(),
+            Arrays.asList(
+                    CC.translate("&c+33% healing from Divine Enlighted"),
+                    CC.translate("&cEach time you enter combat:"),
+                    CC.translate("&c* No cooldown on 1st Phoenix Proc"),
+                    CC.translate("&c* -15% Incoming Damage for 15s"),
+                    CC.translate("&c* Absorption V for 20s")
+            )),
+    LUAU_LEI(CC.translate("&c&lLuau Lei"), ItemSkinType.AMULET, new LuauLei(),
+            Arrays.asList(
+                    CC.translate("&c+25% Outgoing Soul Enchant damage"),
+                    CC.translate("&cChance to block Soul Enchant Damage Modifiers")
+            )),
+    PRESERVED_SNOWFLAKE(CC.translate("&c&lPreserved Snowflake"), ItemSkinType.AMULET, new PreservedSnowflake(),
+            Arrays.asList(
+                    CC.translate("&cImmune to Soul Tether"),
+                    CC.translate("&cImmune to Nature's Wrath"),
+                    CC.translate("&cAbility to see invisible players"),
+                    CC.translate("&7(Feign Death, Undead Ruse)")
+            )),
+    CUPIDS_HEART(CC.translate("&c&lCupids Heart"), ItemSkinType.BELT, new CupidsHeart(),
+            Arrays.asList(
+                    CC.translate("&cBypass enemy (Paladin) Armored"),
+                    CC.translate("&cHoly Aegis VII"),
+                    CC.translate("&c+10% Outgoing Damage to Silenced enemies")
+            )),
+    PARTY_BELT(CC.translate("&a&lParty Belt"), ItemSkinType.BELT, new CupidsHeart(),
+            Arrays.asList(
+                    CC.translate("&cReduce freeze/slowness effect on walk speed by 50%"),
+                    CC.translate("&c25% chance to reduce enemy Rage stack by 1"),
+                    CC.translate("&cImmune to Deep Bleed slowness")
+            )),
+    SNOWFLAKE_SLIPPERS(CC.translate("&c&lSnowflake Flippers"), ItemSkinType.BOOTS, new SnowflakeFlippersSkin(),
+            Arrays.asList(
+                    CC.translate("&cGears IV"),
+                    CC.translate("&cImmune to Teleblock"),
+                    CC.translate("&cImmune to Slowness Potion Effect"),
+                    CC.translate("&cSnowflake Storm Ability"),
+                    CC.translate("&7(10% chance to spawn 4x4 snow floor for 10s."),
+                    CC.translate("&7While stood on the snow floor:"),
+                    CC.translate("&7* You will receive -20% Incoming Damage"),
+                    CC.translate("&7* Your allies will receive -5% Incoming Damage"),
+                    CC.translate("&7* Your enemies will receive Slowness II)")
             )),
     LOST_AMULET(CC.translate("&3&lLost Amulet"), ItemSkinType.AMULET, new LostAmulet(),
             Arrays.asList(CC.translate("&c50% Neutralize Negation"), CC.translate("&c-5% Incoming Damage"), CC.translate("&cIncreases outgoing damage from Soul Enchants by 1.1x")))
