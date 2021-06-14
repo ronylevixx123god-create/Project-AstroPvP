@@ -14,7 +14,7 @@ public class SpawnerShopListener implements Listener {
     @EventHandler
     public void onClick(InventoryClickEvent e) throws UserDoesNotExistException, NoLoanPermittedException {
         Player p = (Player) e.getWhoClicked();
-        if (p.getOpenInventory().getTitle().equals(CC.translate("&8Spawner Shop"))) {
+        if (p.getOpenInventory().getTitle().startsWith(CC.translate("&8Spawner Shop ("))) {
             e.setCancelled(true);
             if (e.getClickedInventory() == p.getOpenInventory().getTopInventory()) {
 

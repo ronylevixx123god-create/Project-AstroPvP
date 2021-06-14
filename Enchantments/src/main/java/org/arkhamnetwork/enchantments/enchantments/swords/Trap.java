@@ -3,6 +3,8 @@ package org.arkhamnetwork.enchantments.enchantments.swords;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import com.rit.sucy.CustomEnchantment;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.events.CustomEnchantProcOnEntityEvent;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -57,6 +59,12 @@ public class Trap extends CustomEnchantment {
                 ptarget.sendMessage(CC.DarkGrayB + "* DRAGON SLAYER [" + ChatColor.GRAY + "Trap blocked!" + CC.DarkGrayB + "] *");
                 return;
             }
+
+            if (AstroItemSkinsAPI.hasSkinEquipped(ptarget, SkinType.WITCH_HAT)) {
+                ptarget.sendMessage(CC.translate("&e&l* WITCH HAT &7Blocked &eTrap &e&l*"));
+                return;
+            }
+
             ptarget.setWalkSpeed(0.0f);
             ptarget.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You have been trapped by " + ((Player) player).getName() + "!");
             Enchantments.getInstance().getServer().getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {

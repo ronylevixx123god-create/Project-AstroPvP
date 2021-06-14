@@ -122,6 +122,8 @@ public class ItemSkinProccessEventsListener implements Listener {
                         e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.003);
                     } else if (type == SkinType.SANTA_HAT) {
                         e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.005);
+                    } else if (type == SkinType.NEON_EMOTIONS) {
+                        e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) *1.006);
                     } else if (type == SkinType.JOLLY_CANDY_SWORD) {
                         e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.075);
                     } else if (type == SkinType.LEVIATHAN_TROPHY) {
@@ -201,6 +203,8 @@ public class ItemSkinProccessEventsListener implements Listener {
                             new MasteryDemonicGateway().applyDefenseEffect(entity, (LivingEntity) e.getDamager(), 5, e);
                         } else if (type2 == SkinType.SANTA_HAT) {
                             e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.95);
+                        } else if (type2 == SkinType.NEON_EMOTIONS) {
+                            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.96);
                         } else if (type2 == SkinType.BOOTS_RETALIATION) {
                             e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.1);
                         } else if (type2 == SkinType.CANDY_COLLECTOR_HELMET) {

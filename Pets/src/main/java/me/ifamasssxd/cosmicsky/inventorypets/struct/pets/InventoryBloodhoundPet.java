@@ -110,6 +110,13 @@ public class InventoryBloodhoundPet extends InventoryPet {
       player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 1.1F, 3.0F);
       final String name = player.getName();
       Faction faction = fPlayer.getFaction();
+
+      if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.WITCH_HAT)) {
+         pTarget.sendMessage(CC.translate("&e&l* WITCH HAT &7Blocked &4Banshee Pet &7[&f" + player + "&7] &e&l*"));
+         player.sendMessage(CC.translate("&e&l* &f" + pTarget + " &7Blocked &4Bloodhound Pet &7[&e&lWitch Hat&7] &e&l*"));
+         return false;
+      }
+
       player.chat("/f t " + pTarget.getName());
       pTarget.setMetadata("noDefenseProcs", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), Boolean.valueOf(true)));
       pTarget.setMetadata("bloodhound_" + name, (MetadataValue)new FixedMetadataValue((Plugin)CosmicSkyInventoryPets.get(), null));

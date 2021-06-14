@@ -9,10 +9,13 @@ import com.earth2me.essentials.Essentials;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import lombok.SneakyThrows;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmicmasks.MaskType;
 import me.ifamasssxd.factionupgrades.FactionUpgradeAPI;
 import me.ifamasssxd.factionupgrades.struct.FactionUpgrade;
 import me.ifamasssxd.killtracker.KillTrackerAPI;
+import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.mastery.MasteryFeignDeath;
 import org.arkhamnetwork.enchantments.util.ArmorUtil;
@@ -84,21 +87,12 @@ public class Phoenix extends CustomEnchantment {
                 ((Player) damager).playSound(player.getLocation(), Sound.ANVIL_LAND, 2, 2);
                 damager.sendMessage(CC.translate("&4&l* CRANKED MASK BLOCKED PHOENIX [&c" + player.getName() + "&4&l] *"));
                 player.sendMessage(CC.translate("&4&l* PHOENIX BLOCKED [&c" + damager.getName() + " Cranked Mask&4&l] *"));
-
-                player.setMetadata("phoenixCd", new FixedMetadataValue(Enchantments.getInstance(), ""));
-                Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
-                    @Override
-                    public void run() {
-                        player.removeMetadata("phoenixCd", Enchantments.getInstance());
-                    }
-                }, 100L);
-
                 return false;
             }
             if (Math.random() <= 0.5D && MaskType.hasEquipped((Player) damager, "DEATH_KNIGHT") && !ItemSkinUtils.hasItemSkin(player, "CORRUPT_BELT_UTILITY")) {
                 player.sendMessage(CC.RedB + "* PHOENIX BLOCKED [" + CC.Gray + ((Player) damager).getName() + CC.RedB + "] *");
                 ((Player) damager).sendMessage(CC.RedB + "* DEATH KNIGHT MASK [" + CC.Gray + player.getName() + "'s Phoenix Blocked" + CC.RedB + "] *");
-                last_phoenix.put(player.getUniqueId().toString(), Long.valueOf(System.currentTimeMillis()));
+
                 Bukkit.getLogger().info("Phoenix blocked from proccing for " + player.getName() + " from damager " + ((Player) damager).getName());
                 return false;
             }
@@ -130,11 +124,7 @@ public class Phoenix extends CustomEnchantment {
                         ((Player) ent).playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 1.0F, 1.25F);
                     }
                 }
-                player.setMetadata("phoenixCd", (MetadataValue) new FixedMetadataValue(Enchantments.getInstance(), "phoenixCd"));
-                Bukkit.getScheduler().runTaskLaterAsynchronously(Enchantments.getInstance(), () -> {
-                    player.sendMessage(CC.translate("&a&lPHOENIX - No Longer on Phoenix Cooldown"));
-                    player.removeMetadata("phoenixCd", Enchantments.getInstance());
-                }, 2400L);
+                enterPhoenixCooldown(player);
                 Location loc = player.getLocation();
                 de.inventivegames.particle.ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(), loc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.75F, 80);
                 de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), loc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.75F, 80);
@@ -150,6 +140,27 @@ public class Phoenix extends CustomEnchantment {
             }
         }
         return false;
+    }
+
+    public static void enterPhoenixCooldown(Player player) {
+
+        if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.AUTUMN_AMULET)) {
+            if (player.hasMetadata("autumn_amulet")) {
+                if (player.getMetadata("autumn_amulet").get(0).asInt() == 0) {
+                    player.sendMessage(CC.translate("&e&l* AUTUMN AMULET &7Ignored 1st &cPhoenix &7Cooldown &e&l*"));
+                    player.setMetadata("autumn_amulet", new FixedMetadataValue(Arkkit.get(), 1));
+                    return;
+                }
+            }
+        }
+        player.setMetadata("phoenixCd", new FixedMetadataValue(Enchantments.getInstance(), ""));
+        last_phoenix.put(player.getUniqueId().toString(), Long.valueOf(System.currentTimeMillis()));
+        Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
+            @Override
+            public void run() {
+                player.removeMetadata("phoenixCd", Enchantments.getInstance());
+            }
+        }, 2400L);
     }
 
     public static boolean canUsePhoenix(Player pl, int enchantLevel) {

@@ -38,6 +38,11 @@ public class Teleblock extends CustomEnchantment {
             pp.sendMessage(CC.translate("&a&l* ANTI CORONA BLOCKED &7[Teleblock] &a&l*"));
             return;
         }
+        if (AstroItemSkinsAPI.hasSkinEquipped(pp, SkinType.SNOWFLAKE_SLIPPERS)) {
+            pp.sendMessage(CC.translate("&c&l* SNOWFLAKE FLIPPERS &7Blocked Teleblock &c&l*"));
+            return;
+        }
+
         if (KillTrackerAPI.hasGodMode(p) && KillTrackerAPI.getAllSouls(p) >= soulCost) {
             KillTrackerAPI.removeSoulsFromGems(p, soulCost);
             ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(),p.getLocation(), 0,1,0,0.55f,60);

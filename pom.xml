@@ -43,6 +43,7 @@
         <module>Tournaments</module>
         <module>SpawnersMobcoins</module>
         <module>PlayerVaultsX</module>
+        <module>AstroSpawnersMobcoins</module>
     </modules>
 
     <build>

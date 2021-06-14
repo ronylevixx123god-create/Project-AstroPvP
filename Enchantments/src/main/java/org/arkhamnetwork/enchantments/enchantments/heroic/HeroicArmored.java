@@ -1,6 +1,8 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.enchantments.axes.Blessed;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -22,6 +24,10 @@ public class HeroicArmored extends HeroicCustomEnchantment {
         ItemStack i = null;
         if (attacker instanceof Player) {
             Player pAttacker = (Player) attacker;
+
+            if (AstroItemSkinsAPI.hasSkinEquipped(pAttacker, SkinType.CUPIDS_HEART)) {
+                return;
+            }
             i = pAttacker.getItemInHand();
             if (Math.random() < level * 0.01D) {
                 Blessed.blessPlayer((Player) player);

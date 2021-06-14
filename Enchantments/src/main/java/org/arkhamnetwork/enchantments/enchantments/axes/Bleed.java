@@ -1,9 +1,12 @@
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import com.rit.sucy.CustomEnchantment;
 import lombok.SneakyThrows;
 import me.astropvp.astroparticles.utils.ParticleUtils;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
@@ -91,6 +94,14 @@ public class Bleed extends CustomEnchantment {
                 pEnt.playSound(pEnt.getLocation(), Sound.EAT, 0.4f, 0.6f);
             }
         } else {
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) le, SkinType.NEON_EMOTIONS)) {
+                le.sendMessage(CC.translate("&d&l* NEON EMOTIONS &7Blocked Slow Effect &d&l*"));
+                return;
+            }
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) le, SkinType.SNOWFLAKE_SLIPPERS)) {
+                le.sendMessage(CC.translate("&c&l* SNOWFLAKE FLIPPERS &7Blocked Slow Effect &c&l*"));
+                return;
+            }
             le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, bleedStack * 20, Math.max(1, bleedStack / 3)));
         }
         this.playBleedEffect(le.getLocation().add(0.0, 1.0, 0.0), bleedStack);

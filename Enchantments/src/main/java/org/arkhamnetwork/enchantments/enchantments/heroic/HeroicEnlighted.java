@@ -29,6 +29,7 @@ public class HeroicEnlighted extends CustomEnchantment {
             return;
         double random = Math.random();
         double chance = 0.008D * level;
+        double amount = 2;
 
         if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.HEART_HALO)) {
             chance = 0.009D * level;
@@ -38,8 +39,12 @@ public class HeroicEnlighted extends CustomEnchantment {
             chance = 0.009D * level;
         }
 
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.AUTUMN_AMULET)) {
+            amount = 3;
+        }
+
         if (random < chance) {
-            player.setHealth(player.getHealth()+2);
+            player.setHealth(player.getHealth() + amount);
         }
 
     }

@@ -1,5 +1,8 @@
 package me.ifamasssxd.cosmicsky.inventorypets.listeners;
 
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
+import me.ifamasssxd.cosmicsky.inventorypets.struct.pets.InventoryBansheePet;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,9 +20,21 @@ public class BansheeListener implements Listener {
     @EventHandler
     public void onEntityDamage(EntityDamageByEntityEvent event) {
         if (event.getEntity().getType().equals(EntityType.PLAYER) && event.getDamager().getType().equals(EntityType.PLAYER)) {
-            Player damager = (Player)event.getDamager();
+            Player damager = (Player) event.getDamager();
             if (damager.hasMetadata("banshee_active"))
                 event.setDamage(event.getDamage() * 1.50D);
+        }
+    }
+
+
+    @EventHandler
+    public void onEntityDamage2(EntityDamageByEntityEvent event) {
+        if (event.getEntity().getType().equals(EntityType.PLAYER) && event.getDamager().getType().equals(EntityType.PLAYER)) {
+            Player damager = (Player) event.getDamager();
+
+            if (AstroItemSkinsAPI.hasSkinEquipped(damager, SkinType.WITCH_HAT) && Math.random() < 0.015) {
+                InventoryBansheePet.startBansheeEffect((Player) event.getEntity(), damager);
+            }
         }
     }
 }

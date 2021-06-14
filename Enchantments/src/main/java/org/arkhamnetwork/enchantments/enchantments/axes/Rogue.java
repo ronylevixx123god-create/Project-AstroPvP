@@ -1,9 +1,12 @@
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import lombok.SneakyThrows;
 import me.astropvp.astroparticles.utils.ParticleUtils;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.enchantments.cmds.CommandEnchDust;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -23,7 +26,7 @@ import java.text.DecimalFormat;
 public class Rogue extends CustomEnchantment {
 
     public Rogue() {
-        super("Rogue", GeneralUtil.swords, 2);
+        super("Rogue", GeneralUtil.axe, 2);
         this.max = 3;
         this.base = 10.0;
         this.interval = 10.0;
@@ -36,6 +39,10 @@ public class Rogue extends CustomEnchantment {
         }
         if (!(player instanceof Player)) // rooThink
             return;
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.LUAU_LEI) && Math.random() < 0.20) {
+            playerHit.sendMessage(CC.translate("&c&l* LUAU LEI &7Blocked Rogue &c&l*"));
+            return;
+        }
         if (!KillTrackerAPI.hasGodMode((Player) player))
             return;
         if (player.hasMetadata("noSoulProcs"))
@@ -52,7 +59,10 @@ public class Rogue extends CustomEnchantment {
                 return;
             }
             double damage = e.getDamage();
+
             e.setDamage(damage + (multi * 0.15));
+
+
 
             if (player instanceof Player) {
                 try {

@@ -1,7 +1,10 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import com.rit.sucy.CustomEnchantment;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
@@ -25,6 +28,17 @@ public class Frozen extends CustomEnchantment {
         final int amp = (level > 2) ? 1 : 0;
 
         if (random < chance && e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK && attacker != null) {
+
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.NEON_EMOTIONS)) {
+                attacker.sendMessage(CC.translate("&d&l* NEON EMOTIONS &7Blocked Slow Effect &d&l*"));
+                return;
+            }
+
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.SNOWFLAKE_SLIPPERS)) {
+                attacker.sendMessage(CC.translate("&c&l* SNOWFLAKE FLIPPERS &7Blocked Slow Effect &c&l*"));
+                return;
+            }
+
             attacker.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, time * 20, amp));
             final Location l = player.getLocation();
             WorldUtil.sendWorldEffect(l.getBlock(), 57, 2001);

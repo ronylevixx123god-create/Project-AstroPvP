@@ -46,6 +46,11 @@ public class HeroicTrap extends HeroicCustomEnchantment {
                 return;
             }
 
+            if (AstroItemSkinsAPI.hasSkinEquipped(ptarget, SkinType.WITCH_HAT)) {
+                ptarget.sendMessage(CC.translate("&e&l* WITCH HAT &7Blocked &dTitan Trap &e&l*"));
+                return;
+            }
+
 
             if (target.hasMetadata("metaphysicalEnchant")) {
                 int metaphysicalLevel = target.getMetadata("metaphysicalEnchant").get(0).asInt();

@@ -1,6 +1,10 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.rit.sucy.CustomEnchantment;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.astrospawners.AstroSpawners;
 import org.arkhamnetwork.enchantments.util.GeneralCooldown;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.entity.LivingEntity;
@@ -24,6 +28,16 @@ public class Paralyze extends CustomEnchantment {
             return;
         }
         if (random < chance) {
+
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.NEON_EMOTIONS)) {
+                playerHit.sendMessage(CC.translate("&d&l* NEON EMOTIONS &7Blocked Slow Effect &d&l*"));
+                return;
+            }
+
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.SNOWFLAKE_SLIPPERS)) {
+                playerHit.sendMessage(CC.translate("&c&l* SNOWFLAKE FLIPPERS &7Blocked Slow Effect &c&l*"));
+                return;
+            }
             playerHit.getLocation().getWorld().strikeLightningEffect(player.getLocation());
             playerHit.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, (int) ((level > 2) ? 1 : 0)));
             if (level == 4) {

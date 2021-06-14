@@ -164,6 +164,13 @@
             <systemPath>${project.basedir}/lib/mcMMO.jar</systemPath>
         </dependency>
         <dependency>
+        <groupId>com.conaxgames</groupId>
+        <artifactId>skins</artifactId>
+        <version>0.1</version>
+        <scope>system</scope>
+        <systemPath>${project.basedir}/lib/ItemSkins-0.1.jar</systemPath>
+    </dependency>
+        <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>enchantmentsapi</artifactId>
             <version>0.1</version>

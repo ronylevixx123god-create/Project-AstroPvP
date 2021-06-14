@@ -18,6 +18,7 @@ public abstract class GUIBuilder implements InventoryHolder {
         this.player = player;
     }
 
+
     protected abstract String getName();
 
     protected abstract int getSlots();

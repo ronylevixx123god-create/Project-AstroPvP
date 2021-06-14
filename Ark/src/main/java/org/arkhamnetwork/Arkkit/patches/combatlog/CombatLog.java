@@ -28,6 +28,7 @@
 package org.arkhamnetwork.Arkkit.patches.combatlog;
 
 import com.cosmicpvp.cosmicutils.struct.DecimalFormatType;
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.MaskUtils;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
@@ -35,6 +36,8 @@ import com.sk89q.worldedit.Vector;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import com.sk89q.worldguard.protection.flags.StateFlag;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
@@ -49,6 +52,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -180,6 +185,14 @@ public class CombatLog
         if (!wasInCombat) {
             pl.setMetadata("cl_combat_monitor_task", new FixedMetadataValue(Arkkit.get(), CombatExpireTask.combatTagged.add(new WeakReference<Player>(pl))));
             pl.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You have entered combat. Do not log out for " + NumberUtils.format((double) CombatLog.getCombatTagDuration(pl) / 1000.0, DecimalFormatType.SECONDS) + "s.");
+
+            if (AstroItemSkinsAPI.hasSkinEquipped(pl, SkinType.AUTUMN_AMULET)) {
+                pl.setMetadata("autumn_amulet", new FixedMetadataValue(Arkkit.get(), 0));
+                pl.sendMessage(CC.translate("&e&l* AUTUMN AMULET &7ItemSkin &e&l**"));
+                pl.sendMessage(CC.translate("&a+ Absorbtion &7(20s)"));
+                pl.sendMessage(CC.translate("&a-15% Incoming Damage &7(15s)"));
+                pl.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 20 * 20, 5));
+            }
         }
         pl.setAllowFlight(false);
         pl.setFlying(false);
@@ -191,17 +204,20 @@ public class CombatLog
     }
 
     public static void unflagCombat(Player pl) {
+        if (pl.hasMetadata("autumn_amulet")) {
+            pl.removeMetadata("autumn_amulet", Arkkit.get());
+        }
         if (pl.hasMetadata("cl_combat_monitor_task")) {
             pl.removeMetadata("cl_combat_monitor_task", Arkkit.get());
-            if (Bukkit.getPluginManager().isPluginEnabled("Enchantments")) {
-                Bleed.clearBleedEffect(pl);
-            }
-            pl.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "(!)" + ChatColor.GREEN + " You have left combat. You may now safely logout.");
-            if (pl.isOp()) {
-                pl.setAllowFlight(true);
-            }
-            pl.updateInventory();
         }
+        if (Bukkit.getPluginManager().isPluginEnabled("Enchantments")) {
+            Bleed.clearBleedEffect(pl);
+        }
+        pl.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "(!)" + ChatColor.GREEN + " You have left combat. You may now safely logout.");
+        if (pl.isOp()) {
+            pl.setAllowFlight(true);
+        }
+        pl.updateInventory();
     }
 
     @Override

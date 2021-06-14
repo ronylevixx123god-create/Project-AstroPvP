@@ -27,8 +27,6 @@ commands:
     aliases: ['elist']
   dupe:
     description: /dupe
-  revive:
-    description: /revive
   givesoulpearl:
     description: Gives soulpearl
   spawnershop:

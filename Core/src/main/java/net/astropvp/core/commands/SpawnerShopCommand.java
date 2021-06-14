@@ -16,17 +16,48 @@ public class SpawnerShopCommand
         if (!(sender instanceof Player)) {
             return false;
         }
-        Player p = (Player) sender;
 
-        if (!(sender instanceof Player)) {
+        int amount = 0;
+
+        if (args.length == 0) {
+            sender.sendMessage(CC.translate("&aUsage: &f/spawnershop <amount>"));
             return false;
         }
 
+
+        try {
+            amount = Integer.parseInt(args[0]);
+
+        } catch (Exception e) {
+            sender.sendMessage(CC.translate("&aUsage: &f/spawnershop <amount>"));
+            sender.sendMessage(CC.translate("&7Ex. \"/spawnershop 500\" will allow you to buy 500 spawners at a time."));
+
+            return false;
+        }
+
+        if (amount == 0) {
+            sender.sendMessage(CC.translate("&aUsage: &f/spawnershop <amount>"));
+            sender.sendMessage(CC.translate("&7Ex. \"/spawnershop 500\" will allow you to buy 500 spawners at a time."));
+            return false;
+        }
+
+        if (amount <= 0) {
+            sender.sendMessage(CC.translate("&aUsage: &f/spawnershop <amount>"));
+            sender.sendMessage(CC.translate("&7Ex. \"/spawnershop 500\" will allow you to buy 500 spawners at a time."));
+            return false;
+        }
+
+        if (amount > 10000) {
+            sender.sendMessage(CC.translate("&c&l(!)&c You cannot buy more than 10,000 spawners at a time."));
+            return false;
+        }
+
+
         Player player = ((Player) sender).getPlayer();
 
-        SpawnerShopGUI spawnerShopGUI = new SpawnerShopGUI(player);
+        SpawnerShopGUI spawnerShopGUI = new SpawnerShopGUI(player, amount);
         spawnerShopGUI.open();
-        player.sendMessage(CC.translate("&aOpening the spawner shop gui..."));
+        player.sendMessage(CC.translate("&a&l(!)&a Opening the spawner shop gui with value &f" + amount + "&a!"));
 
 
         return false;

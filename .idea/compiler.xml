@@ -22,9 +22,9 @@
         <module name="Kits" />
         <module name="Core" />
         <module name="AstroEndGrinding" />
-        <module name="SpawnersMobcoins" />
         <module name="GUIShop" />
         <module name="Lootboxes" />
+        <module name="AstroSpawnersMobcoins" />
         <module name="AuctionHouse" />
         <module name="Factions" />
         <module name="Conquest" />
@@ -40,18 +40,21 @@
         <module name="Backpacks" />
         <module name="Arkkit" />
         <module name="CompilexPermissions" />
-        <module name="PlayerVaultsX" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="ArmorSets" target="1.8" />
+      <module name="AstroSpawners" target="1.8" />
       <module name="CrateBoxes" target="8" />
       <module name="Disguises (1)" target="8" />
       <module name="ItemFilter" target="8" />
       <module name="MoneyNotes" target="1.8" />
       <module name="Permissions" target="8" />
       <module name="Pets (1)" target="8" />
+      <module name="PlayerVaultsX" target="8" />
       <module name="SpaceChests (1)" target="1.8" />
+      <module name="SpawnersMobcoins" target="8" />
+      <module name="VaultsX" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

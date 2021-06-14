@@ -191,24 +191,11 @@ public enum SkinType {
                     CC.translate("&c+25% Outgoing Soul Enchant damage"),
                     CC.translate("&cChance to block Soul Enchant Damage Modifiers")
             )),
-    PRESERVED_SNOWFLAKE(CC.translate("&c&lPreserved Snowflake"), ItemSkinType.AMULET, new PreservedSnowflake(),
-            Arrays.asList(
-                    CC.translate("&cImmune to Soul Tether"),
-                    CC.translate("&cImmune to Nature's Wrath"),
-                    CC.translate("&cAbility to see invisible players"),
-                    CC.translate("&7(Feign Death, Undead Ruse)")
-            )),
     CUPIDS_HEART(CC.translate("&c&lCupids Heart"), ItemSkinType.BELT, new CupidsHeart(),
             Arrays.asList(
                     CC.translate("&cBypass enemy (Paladin) Armored"),
                     CC.translate("&cHoly Aegis VII"),
                     CC.translate("&c+10% Outgoing Damage to Silenced enemies")
-            )),
-    PARTY_BELT(CC.translate("&a&lParty Belt"), ItemSkinType.BELT, new CupidsHeart(),
-            Arrays.asList(
-                    CC.translate("&cReduce freeze/slowness effect on walk speed by 50%"),
-                    CC.translate("&c25% chance to reduce enemy Rage stack by 1"),
-                    CC.translate("&cImmune to Deep Bleed slowness")
             )),
     SNOWFLAKE_SLIPPERS(CC.translate("&c&lSnowflake Flippers"), ItemSkinType.BOOTS, new SnowflakeFlippersSkin(),
             Arrays.asList(

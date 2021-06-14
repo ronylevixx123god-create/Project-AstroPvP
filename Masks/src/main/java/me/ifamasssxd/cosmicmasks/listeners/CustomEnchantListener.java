@@ -33,7 +33,7 @@ implements Listener {
         if (event.getTarget() instanceof Player && event.getEnchant() == Enchantments.getInstance().getNaturesWrathEnchant() && MaskType.THANOS.hasEquipped((Player)event.getTarget())) {
             event.setCancelled(true);
             event.setEvent((Event)null);
-            ((Player)event.getTarget()).sendMessage(CC.GoldB + "* THANOS MASK [" + CC.Gray + "Natures Wrath Blocked" + CC.LightPurpleB + "] *");
+            ((Player)event.getTarget()).sendMessage(CC.GoldB + "* THANOS MASK [" + CC.Gray + "Natures Wrath Blocked" + CC.GoldB + "] *");
         }
     }
 }

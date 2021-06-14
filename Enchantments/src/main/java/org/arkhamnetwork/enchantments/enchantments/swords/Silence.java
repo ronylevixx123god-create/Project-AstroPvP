@@ -7,6 +7,8 @@ import com.rit.sucy.EnchantmentAPI;
 import lombok.SneakyThrows;
 import me.astropvp.AstroBackpacksAPI;
 import me.astropvp.astroparticles.utils.ParticleUtils;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.damageindicators.DamageIndicators;
 import me.astropvp.damageindicators.utils.DamageIndicatorUtils;
 import me.astropvp.objects.BackpackType;
@@ -60,6 +62,12 @@ public class Silence extends CustomEnchantment {
                 ((Player) user).sendMessage(CC.RedB + "* SILENCE BLOCKED [" + CC.Gray + pTarget.getName() + CC.RedB + "] *");
                 return;
             }
+
+            if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.TIKI_MASK) && Math.random() < 0.15) {
+                pTarget.sendMessage(CC.translate("&6&l* TIKI MASK &7Blocked Silence &6&l*"));
+            }
+
+
             long durationTicks = (enchantLevel + solitudeLevel) * 20;
 
             if (pTarget.getInventory().getChestplate() != null && AstroBackpacksAPI.itemHasSkin(pTarget.getInventory().getChestplate()) && AstroBackpacksAPI.getBackpackByItem(pTarget.getInventory().getChestplate()).equals(BackpackType.CURSED_WINGS)) {
@@ -68,6 +76,15 @@ public class Silence extends CustomEnchantment {
             if (ItemSkinUtils.hasItemSkin(pTarget, "CORRUPT_HELMET")) {
                 durationTicks /= 2L;
             }
+
+            if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.TIKI_MASK)) {
+                durationTicks *= 0.6;
+            }
+
+            if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.WITCH_HAT)) {
+                durationTicks*=0.25;
+            }
+
             pTarget.setMetadata("noDefenseProcs", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) true));
             pTarget.playSound(pTarget.getLocation(), Sound.WITHER_HURT, 1.0f, 0.25f);
             pTarget.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "* SILENCED " + ChatColor.GRAY + "[" + durationTicks / 20L + "s] " + ChatColor.DARK_PURPLE + ChatColor.BOLD + "*");

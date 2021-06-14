@@ -168,6 +168,10 @@ public class ArmorSetBonusCrystalItem
             if (ArmorSet.getArmorSetFromItem(clicked) != ArmorSet.OMNI && itemSet != null) {
                 throw new PrefixedException("You cannot apply an Armor Set Crystal to an existing Armor Set piece!");
             }
+
+            if (clicked.getType().name().startsWith("DIAMOND")) {
+                throw new PrefixedException("You cannot apply crystals to diamond armor");
+            }
             if (cursorWrapper.isBlacklistedIID()) {
                 throw new ItemDupedException("Armor set crystal already used!");
             }

@@ -1,7 +1,10 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import de.inventivegames.particle.ParticleEffect;
 import me.astropvp.astroparticles.utils.ParticleUtils;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
@@ -17,6 +20,10 @@ final class DivineImmolationListener implements Listener {
         if (!(e.getEntity() instanceof Player)) {
             return;
         }
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.LUAU_LEI) && Math.random() < 0.20) {
+            e.getEntity().sendMessage(CC.translate("&c&l* LUAU LEI &7Blocked Divine Immolation &c&l*"));
+            return;
+        }
         if (e.getEntity().hasMetadata("divineFire") && e.getCause() == EntityDamageEvent.DamageCause.WITHER && e.getEntity() instanceof LivingEntity) {
             final int enchantLevel = e.getEntity().getMetadata("divineFireLevel").get(0).asInt();
             if (System.currentTimeMillis() - e.getEntity().getMetadata("divineFire").get(0).asLong() < (3 + enchantLevel) * 1000) {
@@ -26,9 +33,9 @@ final class DivineImmolationListener implements Listener {
                         return;
                     }
                 }
-                le.damage((double)2.0);
-                //ParticleEffect.playEffect(ParticleEffect.FLAME, le.getEyeLocation(), 0.15f, 20);
-                //ParticleEffect.playEffect(ParticleEffect.LAVA, le.getEyeLocation(), 0.5f, 15);
+
+                le.damage((double) 2.0);
+
 
                 if (le instanceof Player) {
                     ((Player) le).sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "** DIVINE IMMOLATION **");

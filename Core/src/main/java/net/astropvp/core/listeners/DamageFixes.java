@@ -27,7 +27,7 @@ public class DamageFixes implements Listener {
         }
     }*/
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+/*    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void specialSet(final EntityDamageByEntityEvent event) {
         if (event.getEntityType() != EntityType.PLAYER || event.getDamager().getType() != EntityType.PLAYER) {
             return;
@@ -42,9 +42,9 @@ public class DamageFixes implements Listener {
                 || CosmicArmorSetsAPI.getArmorSet(damager) == ArmorSet.YETI && CosmicArmorSetsAPI.getBonusCrystalsEquipped(damager).isEmpty()) {
             event.setDamage(event.getDamage() * 0.05);
         }
-    }
+    }*/
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+/*    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void dmgDebuf1(final EntityDamageByEntityEvent event) {
         if (event.getEntity() == null) {
             return;
@@ -91,7 +91,7 @@ public class DamageFixes implements Listener {
                 personBeingHit.getInventory().getBoots().getType() == Material.DIAMOND_BOOTS) {
             event.setDamage(event.getDamage() * 2.0);
         }
-    }
+    }*/
 
     public boolean isCritical(Player p) {
         return (p.getVelocity().getY() + 0.0784000015258789) <= 0;

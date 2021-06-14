@@ -1,9 +1,12 @@
 package org.arkhamnetwork.Arkkit.patches.combatlog;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.MaskUtils;
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
 import com.wimbli.WorldBorder.WorldBorder;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import net.minecraft.server.v1_8_R3.ItemStack;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.arkhamnetwork.Arkkit.Arkkit;
@@ -22,6 +25,8 @@ import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class CombatLogCombatListener
         implements Listener {
@@ -30,6 +35,16 @@ public class CombatLogCombatListener
             return (int) (10000L - (System.currentTimeMillis() - pl.getMetadata("cl_combat").get(0).asLong()));
         }
         return 0;
+    }
+
+    @EventHandler
+    public void reduceDamage(EntityDamageEvent e) {
+        if (e.getEntity() == null) return;
+        if (!(e.getEntity() instanceof Player)) return;
+
+        if (AstroItemSkinsAPI.hasSkinEquipped(((Player) e.getEntity()).getPlayer(), SkinType.AUTUMN_AMULET)) {
+            ((Player) e.getEntity()).getKiller().setLastDamage(((Player) e.getEntity()).getKiller().getLastDamage()*0.85);
+        }
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -54,6 +69,7 @@ public class CombatLogCombatListener
                 }
                 this.disableFlight((Player) e.getEntity());
                 CombatLog.flagCombat((Player) e.getEntity());
+
             }
             if (e instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent) e).getDamager() instanceof Player && (e.getEntity() instanceof Player || e.getEntity().hasMetadata("boss") || e.getEntity().hasMetadata("minion") || e.getEntity().hasMetadata("endMonsterKills"))) {
                 Player pDamager = (Player) ((EntityDamageByEntityEvent) e).getDamager();
@@ -84,6 +100,8 @@ public class CombatLogCombatListener
                 }
                 this.disableFlight(pDamager);
                 CombatLog.flagCombat(pDamager);
+
+
             }
             if (e instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent) e).getDamager() instanceof Projectile && ((Projectile) ((EntityDamageByEntityEvent) e).getDamager()).getShooter() instanceof Player && e.getEntity() instanceof Player) {
                 this.disableFlight((Player) ((Projectile) ((EntityDamageByEntityEvent) e).getDamager()).getShooter());
