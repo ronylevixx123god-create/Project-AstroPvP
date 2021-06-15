@@ -7,8 +7,12 @@ import org.bukkit.scoreboard.Team;
 
 import me.astropvp.astroscoreboard.AstroScoreboardAPI;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class PlayerDisplayManager {
-	
+
+
 	public static void setUserPrefix(Player player, Player viewer, String prefix) {
 		if(prefix.length() >= 16) {
 			prefix = prefix.substring(0, 16);

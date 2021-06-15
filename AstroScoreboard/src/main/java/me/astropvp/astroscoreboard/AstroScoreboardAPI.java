@@ -12,15 +12,38 @@ import org.bukkit.entity.Player;
 
 import com.massivecraft.factions.FPlayer;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 
 public class AstroScoreboardAPI {
 
-	public static String getTeamName(Player player) {
-		String name = player.getName();
-		return "s_" + name.substring(0, Math.min(14, name.length()));
+	static Map<String, String> rankOrder = new HashMap<>();
+
+
+	static  {
+		rankOrder.put("owner", "1");
+		rankOrder.put("manager", "2");
+		rankOrder.put("admin", "3");
+		rankOrder.put("banteam", "4");
+		rankOrder.put("srmod", "5");
+		rankOrder.put("mod", "6");
+		rankOrder.put("helper", "7");
+		rankOrder.put("media", "8");
+		rankOrder.put("apollo", "9");
+		rankOrder.put("astro+", "a");
+		rankOrder.put("astro", "b");
 	}
+
+	public static String getTeamName(Player player) {
+		FPlayer fPlayer = FPlayers.i.get(player);
+		String rank = PermissionsAPI.getPermissionUser(player.getUniqueId()).getGroup();
+
+		return rankOrder.get(rank) + fPlayer.getFaction().getId();
+	}
+
+
 
 	public static String getDefaultPrefix(Player player, Player other) throws Exception {
 		FPlayer fp = FactionUtils.getFPlayer(player);
@@ -38,30 +61,40 @@ public class AstroScoreboardAPI {
         String color = fp.getFaction().isWilderness() ? CC.White : fp.getRelationTo(fother).getColor().toString();
 		ChatColor rankColor;
 		String rank = PermissionsAPI.getPermissionUser(player.getUniqueId()).getGroup();
-		if (rank.equals("owner")) {
-			return "§4§lOwner§f";
-		} else if (rank.equals("manager")) {
-			return "§d§lManager§f";
-		} else if (rank.equals("admin")) {
-			return "§9§lAdmin§f";
-		} else if (rank.equals("banteam")) {
-			rankColor = ChatColor.GOLD;
-		} else if (rank.equals("jradmin")) {
-			rankColor = ChatColor.RED;
-		} else if (rank.equals("srmod")) {
-			rankColor = ChatColor.DARK_AQUA;
-		} else if (rank.equals("mod")) {
-			rankColor = ChatColor.BLUE;
-		} else if (rank.equals("jrmod")) {
-			rankColor = ChatColor.DARK_PURPLE;
-		} else if (rank.equals("helper")) {
-			rankColor = ChatColor.GREEN;
-		} else if (rank.equals("apollo")) {
-			rankColor = ChatColor.AQUA;
-		} else if (rank.equals("media")) {
-			rankColor = ChatColor.LIGHT_PURPLE;
-		} else {
-			rankColor = ChatColor.YELLOW;
+		switch (rank) {
+			case "owner":
+				return "§4§lOwner§f";
+			case "manager":
+				return "§d§lManager§f";
+			case "admin":
+				return "§9§lAdmin§f";
+			case "banteam":
+				rankColor = ChatColor.GOLD;
+				break;
+			case "jradmin":
+				rankColor = ChatColor.RED;
+				break;
+			case "srmod":
+				rankColor = ChatColor.DARK_AQUA;
+				break;
+			case "mod":
+				rankColor = ChatColor.BLUE;
+				break;
+			case "jrmod":
+				rankColor = ChatColor.DARK_PURPLE;
+				break;
+			case "helper":
+				rankColor = ChatColor.GREEN;
+				break;
+			case "apollo":
+				rankColor = ChatColor.AQUA;
+				break;
+			case "media":
+				rankColor = ChatColor.LIGHT_PURPLE;
+				break;
+			default:
+				rankColor = ChatColor.YELLOW;
+				break;
 		}
 		return color + faction + rankColor;
 	}

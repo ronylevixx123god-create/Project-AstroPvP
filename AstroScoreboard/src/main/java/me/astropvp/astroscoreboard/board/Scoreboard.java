@@ -1,5 +1,6 @@
 package me.astropvp.astroscoreboard.board;
 
+import com.compilex.CompilexPermissions.PermissionsAPI;
 import com.compilex.CosmicKOTH.CosmicKOTHAPI;
 import com.compilex.CosmicKOTH.CosmicKOTHPlugin;
 import com.compilex.CosmicKOTH.tasks.KothEventTask;
@@ -8,7 +9,9 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.massivecraft.factions.FPlayer;
+import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.integration.Econ;
+import it.unimi.dsi.fastutil.Hash;
 import me.astropvp.astroendgrinding.AstroEndGrindingAPI;
 import me.astropvp.astroendgrinding.AstroEndGrindingPlugin;
 import me.astropvp.astroendgrinding.data.EndPlayerData;
@@ -23,6 +26,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Team;
 
 import java.text.DateFormat;
 import java.text.NumberFormat;
@@ -33,6 +37,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Scoreboard implements BoardAdapter {
     private final AstroScoreboardPlugin plugin = AstroScoreboardPlugin.getInstance();
     private static DateFormat format = new SimpleDateFormat("MM/dd");
+    private final Map<String, String> rankOrder = new HashMap<>();
 
     public List<String> getScoreboard(Player player, Board board) {
         return mainBoard(player);
@@ -43,6 +48,22 @@ public class Scoreboard implements BoardAdapter {
     }
 
     public void preLoop() {
+    }
+
+    public Scoreboard() {
+        rankOrder.put("owner", "1");
+        rankOrder.put("manager", "2");
+        rankOrder.put("admin", "3");
+        rankOrder.put("banteam", "4");
+        rankOrder.put("srmod", "5");
+        rankOrder.put("mod", "6");
+        rankOrder.put("helper", "7");
+        rankOrder.put("media", "8");
+        rankOrder.put("apollo", "9");
+        rankOrder.put("astro+", "a");
+        rankOrder.put("astro", "b");
+
+
     }
 
 
@@ -168,8 +189,8 @@ public class Scoreboard implements BoardAdapter {
         if (player.getLocation().getWorld().getName().equals("world_the_end")) {
             int endPlayers = 0;
             int totalKills = 0;
-            for(Player p : Bukkit.getOnlinePlayers()){
-                if(p.getWorld().getName().equals("world_the_end")){
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                if (p.getWorld().getName().equals("world_the_end")) {
                     endPlayers++;
                 }
             }
@@ -177,7 +198,7 @@ public class Scoreboard implements BoardAdapter {
             EndPlayerData data = EndPlayerData.findPlayer(player);
             board.add("");
             board.add(CC.translate(CC.White + "➥ " + "&5&lEnd Grinding"));
-            for(MonsterType type : MonsterType.values()) {
+            for (MonsterType type : MonsterType.values()) {
                 totalKills += data.getKills(type);
             }
             board.add(CC.translate("&d Kills&7: &f") + totalKills);
@@ -198,7 +219,7 @@ public class Scoreboard implements BoardAdapter {
         board.add(ChatColor.WHITE + player.getName());
         board.add(" ");
         board.add(ChatColor.GOLD + ChatColor.BOLD.toString() + "Balance");
-        board.add(ChatColor.WHITE.toString() + "$" + NumberUtils.formatMoney((long)Econ.econ.getBalance((OfflinePlayer)player)));
+        board.add(ChatColor.WHITE.toString() + "$" + NumberUtils.formatMoney((long) Econ.econ.getBalance((OfflinePlayer) player)));
         board.add(" ");
         board.add(ChatColor.RED + ChatColor.BOLD.toString() + "XP");
         board.add(ChatColor.WHITE.toString() + NumberUtils.formatMoney(player.getTotalExperience()));
@@ -366,6 +387,7 @@ public class Scoreboard implements BoardAdapter {
     }
 
     public void onScoreboardCreate(Player player, org.bukkit.scoreboard.Scoreboard scoreboard) {
+
     }
 
     public AstroScoreboardPlugin getPlugin() {
