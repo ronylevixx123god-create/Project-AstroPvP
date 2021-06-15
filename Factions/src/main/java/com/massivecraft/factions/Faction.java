@@ -27,7 +27,7 @@ public class Faction extends Entity implements EconomyParticipator {
     public transient FPlayer focusedPlayer;
     public transient long lastFocusEvent;
     public boolean announceRelationshipRequests = true;
-    public int tnt = 0;
+    public double tnt = 0;
     public String motd;
     public double money = 0.0;
     private Map<Role, Set<RolePerm>> activeRolePerms = new ConcurrentHashMap<Role, Set<RolePerm>>();

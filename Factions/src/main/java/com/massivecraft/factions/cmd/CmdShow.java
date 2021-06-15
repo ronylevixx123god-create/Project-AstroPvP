@@ -10,8 +10,6 @@ import com.massivecraft.factions.integration.EssentialsFeatures;
 import com.massivecraft.factions.struct.Permission;
 import com.massivecraft.factions.struct.Relation;
 import com.massivecraft.factions.struct.Role;
-import me.ifamasssxd.factionstop.struct.StoredFaction;
-import me.ifamasssxd.factionstop.struct.TopFaction;
 import mkremins.fanciful.FancyMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -80,14 +78,7 @@ public class CmdShow extends FCommand {
                 (new BukkitRunnable() {
                     public void run() {
                         CmdShow.this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&aLand/Power/Maxpower: <p>&f%d/%d/%d %s"), coordCount, finalFaction1.getPowerRounded(), finalFaction1.getPowerMaxRounded(), boost);
-                        TopFaction tf = P.getP().getTopManager().getTopFaction(finalFaction1.getId());
-                        if (tf != null) {
-                            StoredFaction sf = tf.getStoredFaction();
-                            CmdShow.this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&aFaction Wealth: <p>&f$%s"), CmdShow.this.df.format((long) sf.getTotalWorth()));
-                            CmdShow.this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&aSpawner Value: <p>&f$%s"), CmdShow.this.df.format((long) sf.getTotalSpawnerWorth()));
-                            CmdShow.this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&aBlock Value: <p>&f$%s"), CmdShow.this.df.format((long) sf.getContainerWorth()));
-                            CmdShow.this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&aFaction Rank: <p>&f#%s"), tf.getRank());
-                        }
+
 
                     }
                 }).runTask(P.getP());

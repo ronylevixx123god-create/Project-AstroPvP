@@ -72,7 +72,7 @@ public class Board {
 
     public static void setIdAt(String id, FLocation flocation) {
         Faction oldFaction = getFactionAt(flocation);
-        if (oldFaction != null && ocannldFaction.isNormal()) {
+        if (oldFaction != null && oldFaction.isNormal()) {
             String oldId = oldFaction.getId();
             if (fclaimCounts.containsKey(oldId))
                 fclaimCounts.put(oldId, Integer.valueOf(((Integer)fclaimCounts.get(oldId)).intValue() - 1));

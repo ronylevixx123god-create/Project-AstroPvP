@@ -55,18 +55,18 @@ import me.astropvp.astropvpskins.objects.skins.pickaxes.RubberChickenSkin;
 /*     */
 /*     */
 /*     */
-/*     */ import me.astropvp.astropvpskins.objects.skins.swords.CorruptSwordSkin;
-/*     */ import me.astropvp.astropvpskins.objects.skins.swords.CupidSwordSkin;
-/*     */ import me.astropvp.astropvpskins.objects.skins.swords.DeathKnightSkullBladeSkin;
-/*     */ import me.astropvp.astropvpskins.objects.skins.swords.DoomsdayMacheteSkin;
-/*     */ import me.astropvp.astropvpskins.objects.skins.swords.EasterSwordSkin;
-/*     */ import me.astropvp.astropvpskins.objects.skins.swords.JollyCandySwordSkin;
-/*     */ import me.astropvp.astropvpskins.objects.skins.swords.PepeWeaponSkin;
-/*     */ import me.astropvp.astropvpskins.objects.skins.swords.SelfieStickSkin;
-/*     */ import me.astropvp.astropvpskins.objects.skins.swords.SkullScytheSkin;
-/*     */ import me.astropvp.astropvpskins.objects.skins.swords.SpringSwordSkin;
-/*     */ import me.astropvp.astropvpskins.objects.skins.swords.TridentSkin;
-/*     */ import me.astropvp.astropvpskins.objects.skins.swords.VirusSwordSkin;
+/*     */ import me.astropvp.astropvpskins.objects.skins.swords.*;
+/*     */
+/*     */
+/*     */
+/*     */
+/*     */
+/*     */
+/*     */
+/*     */
+/*     */
+/*     */
+/*     */
 /*     */ import me.astropvp.astropvpskins.utils.Utils;
 /*     */ import org.bukkit.Material;
 /*     */ import org.bukkit.inventory.ItemStack;
@@ -209,6 +209,67 @@ public enum SkinType {
                     CC.translate("&7* Your allies will receive -5% Incoming Damage"),
                     CC.translate("&7* Your enemies will receive Slowness II)")
             )),
+
+    BLADE_OF_DARKNESS(CC.translate("&6&lBlade of Darkness"), ItemSkinType.SWORD, new BladeOfDarknessSkin(),
+            Arrays.asList(
+                    CC.translate("&c2% chance to proc Revenge of Yijki"),
+                    CC.translate("&c4% Chain Lifesteal V"),
+                    CC.translate("&c33% chance to reflect Traps"),
+                    CC.translate("&cSoul Siphon III"),
+                    CC.translate("&cHeadless III"),
+                    CC.translate("&cImmune to Blindness")
+            )),
+    SOUL_HARVESTER(CC.translate("&e&lSoul Harvester"), ItemSkinType.SWORD, new SoulHarvesterSkin(),
+            Arrays.asList(
+                    CC.translate("&cIncreases outgoing damage from Soul Enchants by 1.3x"),
+                    CC.translate("&c+10% Outgoing Damage to enemies with Soul Mode active"),
+                    CC.translate("&c50% chance to block Divine Immolation"),
+                    CC.translate("&c-25% Soul Enchant Costs")
+            )),
+    ORNAMENTAL_CARNAGE(CC.translate("&a&lOrnamental Carnage"), ItemSkinType.SWORD, new OrnamentalCarnageSkin(),
+            Arrays.asList(
+                    CC.translate("&c-5% Incoming Damage"),
+                    CC.translate("&c-15% Incoming Damage from enemies with Soul Mode active"),
+                    CC.translate("&cTitan Trap V"),
+                    CC.translate("&c+10% Outgoing Damage to trapped players"),
+                    CC.translate("&c+2 blocks Divine Immolation radius"),
+                    CC.translate("&c2% chance for Dimensional Shift Ability")
+            )),
+    HEARTBREAKER(CC.translate("&c&lHeartbreaker"), ItemSkinType.SWORD, new HeartBreakerSkin(),
+            Arrays.asList(
+                    CC.translate("&cBypass enemy (Vengeful) Diminish"),
+                    CC.translate("&c+1% Damage for each enemy level of (Planetary) Deathbringer"),
+                    CC.translate("&cMartyr Valor V"),
+                    CC.translate("&cReality Inversion V")
+            )),
+    DEVILS_BLADE(CC.translate("&d&lDevils Blade"), ItemSkinType.SWORD, new DevilsBladeSkin(),
+            Arrays.asList(
+                    CC.translate("&cBypass Skrrt Pet immunity"),
+                    CC.translate("&cDeal 20% more outgoing Rage Stack damage"),
+                    CC.translate("&cIncreases outgoing damage from Soul Enchants by 1.2x"),
+                    CC.translate("&c+20% Monopoly Mask chance"),
+                    CC.translate("+25% chance to block Divine Immolation")
+            )),
+    DEVILS_HEART(CC.translate("&d&lDevils Heart"), ItemSkinType.BELT, new DevilsHeartSkin(),
+            Arrays.asList(
+                    CC.translate("&c50% chance to block Utility Belt"),
+                    CC.translate("&c100% chance to block Plague Carrier, Self Destruct and Smoke Bomb"),
+                    CC.translate("&cGuarantees one piece of Holy White Scroll'd equipment to drop per kill")
+            )),
+    MAUIS_HOOK(CC.translate("&c&lMaui's Hook"), ItemSkinType.SWORD, new MauisHookSkin(),
+            Arrays.asList(
+                    CC.translate("&c+15% Outgoing Soul Enchant Damage"),
+                    CC.translate("&cBlackout V"),
+                    CC.translate("&cNeutralize VI"),
+                    CC.translate("&cTranscendence ability"),
+                    CC.translate("&7(For each soul enchant that is"),
+                    CC.translate("&7blocked (not including immunity)"),
+                    CC.translate("&7gain +1 stack. At 10 stacks crouch"),
+                    CC.translate("&7to activate Transcendence massively"),
+                    CC.translate("&7damaging and silencing nearby"),
+                    CC.translate("&7players and pets.)")
+            )),
+
     LOST_AMULET(CC.translate("&3&lLost Amulet"), ItemSkinType.AMULET, new LostAmulet(),
             Arrays.asList(CC.translate("&c50% Neutralize Negation"), CC.translate("&c-5% Incoming Damage"), CC.translate("&cIncreases outgoing damage from Soul Enchants by 1.1x")))
     ;

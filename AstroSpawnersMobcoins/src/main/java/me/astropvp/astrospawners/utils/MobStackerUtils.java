@@ -79,11 +79,12 @@ public class MobStackerUtils {
         int size = 0;
 
         if (entity.getType() == EntityType.BLAZE) {
-            size = entityStack + (data != null ? data.getSpawnerAmount() +50 : 100);
+            size = entityStack + (data != null ? data.getSpawnerAmount() * 3 : 100);
+
 
         } else {
+            size = entityStack + (data != null ? data.getSpawnerAmount() + 50 : 100);
 
-            size = entityStack + (data != null ? data.getSpawnerAmount() * 3 : 100);
         }
 
 

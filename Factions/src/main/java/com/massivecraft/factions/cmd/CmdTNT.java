@@ -73,14 +73,14 @@ public class CmdTNT
         }
         if (this.args.size() >= 1) {
             String opperation = this.args.get(0);
-            int stacks = this.args.size() >= 2 ? (this.args.get(1).equalsIgnoreCase("all") ? -1 : Integer.parseInt(this.args.get(1))) : -1;
-            int totalTNT = fac.tnt;
+            double stacks = this.args.size() >= 2 ? (this.args.get(1).equalsIgnoreCase("all") ? -1 : Integer.parseInt(this.args.get(1))) : -1;
+            double totalTNT = fac.tnt;
             if (totalTNT < 0) {
                 fac.tnt = 100000;
             }
-            int tntStacks = totalTNT / 64;
+            double tntStacks = totalTNT / 64;
             if (opperation.equalsIgnoreCase("w")) {
-                int stacksToWithdraw;
+                double stacksToWithdraw;
                 if (totalTNT < 64) {
                     this.sender.sendMessage(CC.RedB + "(!) " + CC.Red + "You do not have any /f tnt stacks to withdraw!");
                     this.sender.sendMessage(CC.Gray + "You can only withdraw /f tnt in stacks of 64. There are less than 64x TNT in your /f tnt.");
@@ -89,8 +89,8 @@ public class CmdTNT
                 if (!this.checkHasPerm(this.fme, fac, RolePerm.F_TNT_WITHDRAW)) {
                     return;
                 }
-                int playerSlots = this.getEmptyInventorySlots(this.fme.getPlayer());
-                int x = stacksToWithdraw = stacks == -1 ? Math.min(playerSlots, tntStacks) : Math.min(playerSlots, Math.min(tntStacks, stacks));
+                double playerSlots = this.getEmptyInventorySlots(this.fme.getPlayer());
+                double x = stacksToWithdraw = stacks == -1 ? Math.min(playerSlots, tntStacks) : Math.min(playerSlots, Math.min(tntStacks, stacks));
                 while (x-- > 0) {
                     fac.tnt -= 64;
                     this.fme.getPlayer().getInventory().addItem(new ItemStack(Material.TNT, 64));
@@ -103,9 +103,9 @@ public class CmdTNT
                 if (!this.checkHasPerm(this.fme, fac, RolePerm.F_TNT_DEPOSIT)) {
                     return;
                 }
-                int playerTNTStacks = this.getTNTStacksInPlayerInventory(this.fme.getPlayer());
-                int tntToDeposit = stacks == -1 ? playerTNTStacks : Math.min(playerTNTStacks, stacks);
-                int stacksDeposited = 0;
+                double playerTNTStacks = this.getTNTStacksInPlayerInventory(this.fme.getPlayer());
+                double tntToDeposit = stacks == -1 ? playerTNTStacks : Math.min(playerTNTStacks, stacks);
+                double stacksDeposited = 0;
                 PlayerInventory targetInventory = this.fme.getPlayer().getInventory();
                 Block targetBlock = this.fme.getPlayer().getTargetBlock(Collections.singleton(Material.AIR), 5);
                 if (targetBlock.getState() instanceof Chest) {
@@ -119,7 +119,7 @@ public class CmdTNT
                         return;
                     }
                 }
-                for (int x = tntToDeposit; x > 0 && targetInventory.contains(new ItemStack(Material.TNT, 64)); --x) {
+                for (double x = tntToDeposit; x > 0 && targetInventory.contains(new ItemStack(Material.TNT, 64)); --x) {
                     targetInventory.setItem(targetInventory.first(new ItemStack(Material.TNT, 64)), new ItemStack(Material.AIR));
                     fac.tnt += 64;
                     ++stacksDeposited;

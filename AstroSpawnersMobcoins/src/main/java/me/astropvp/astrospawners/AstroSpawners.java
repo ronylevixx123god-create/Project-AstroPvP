@@ -81,6 +81,11 @@ public class AstroSpawners extends JavaPlugin {
         SpawnerDataHelper.onDisable();
         EntityUtils.clearAllEntities();
 
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            PlayerData data = AstroSpawners.getInstance().getManager().getPlayerData(p);
+            AstroSpawners.getInstance().getManager().savePlayerDataAsync(data);
+        }
+
         astroSpawners = null;
     }
 
@@ -122,7 +127,6 @@ public class AstroSpawners extends JavaPlugin {
     public static PlayerDataManager getPlayerDataManager() {
         return manager2;
     }
-
 
 
 }

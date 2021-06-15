@@ -146,7 +146,7 @@ public class SpawnerDataHelper {
     public static void onDisable() {
         for (SpawnerData data : SpawnerDataHelper.data) {
             if (data.getSpawnerAmount() <= 0 || data.isNullSpawner()) {
-                //deletePath(data);
+                deletePath(data);
                 continue;
             }
             createConfiguration(data);
