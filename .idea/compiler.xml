@@ -14,6 +14,7 @@
         <module name="Attributes" />
         <module name="Bosses" />
         <module name="Masks" />
+        <module name="AstroScoreboard" />
         <module name="Explosive" />
         <module name="Sets" />
         <module name="Dungeon" />

@@ -44,6 +44,7 @@
         <module>SpawnersMobcoins</module>
         <module>PlayerVaultsX</module>
         <module>AstroSpawnersMobcoins</module>
+        <module>AstroScoreboard</module>
     </modules>
 
     <build>
