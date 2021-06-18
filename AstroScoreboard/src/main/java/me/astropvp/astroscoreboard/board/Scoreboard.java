@@ -4,10 +4,10 @@ import com.compilex.CompilexPermissions.PermissionsAPI;
 import com.compilex.CosmicKOTH.CosmicKOTHAPI;
 import com.compilex.CosmicKOTH.CosmicKOTHPlugin;
 import com.compilex.CosmicKOTH.tasks.KothEventTask;
+import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
 import com.compilex.CosmicOutposts.outpost.Outpost;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.FactionUtils;
-import com.cosmicpvp.cosmicutils.utils.NumberUtils;
+import com.compilex.CosmicOutposts.outpost.tasks.CapTask;
+import com.cosmicpvp.cosmicutils.utils.*;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.integration.Econ;
@@ -21,6 +21,9 @@ import me.astropvp.astroscoreboard.AstroScoreboardPlugin;
 import me.astropvp.astrospawners.AstroSpawners;
 import me.astropvp.astrospawners.utils.PlayerData;
 import me.astropvp.astrospawners.utils.PlayerDataManager;
+import me.ifamasssxd.cosmichcf.CosmicHCFOutposts;
+import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
+import me.ifamasssxd.cosmichcf.struct.HCFOutpost;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -208,6 +211,21 @@ public class Scoreboard implements BoardAdapter {
             board.add(CC.Yellow + "play.astropvp.net");
             return board;
         }
+/*
+        if (WorldGuardUtils.inRegion(player.getLocation(), "infernalfull")) {
+            List<String> board = new LinkedList<>();
+            EndPlayerData data = EndPlayerData.findPlayer(player);
+            board.add("");
+            board.add(CC.translate("&b&lStronghold"));
+            board.add(String.valueOf(CosmicHCFOutposts.get().getOutpostManager().getOutpostInside(player.getLocation()).getOutpostState()));
+
+            board.addLongLine(-3, this.getOutpostName() + " " + this.getPrettyFormattedCapturePercent(), -3);
+            scoreboard.addLongLine(-4, CC.Gray + " " + this.getOutpostState().getName() + CC.Green + (this.getOutpostState() == OutpostState.CONTROLLED && this.defendingFaction != null ? " " + CC.Gray + "(" + CC.Green + this.defendingFaction.getTag() + CC.Gray + ")" : ""), -4);
+            player.setMetadata("boss_scoreboard", new FixedMetadataValue(CosmicKOTHPlugin.get_(), System.currentTimeMillis() + 30000L));
+            scoreboard.setSlot(DisplaySlot.SIDEBAR);
+
+            return board;
+        }*/
 
 
         PlayerDataManager manager = AstroSpawners.getInstance().getManager();

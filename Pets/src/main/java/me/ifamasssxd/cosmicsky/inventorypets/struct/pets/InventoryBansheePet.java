@@ -110,8 +110,8 @@ public class InventoryBansheePet extends InventoryPet {
                     continue;
                 }
                 if (AstroItemSkinsAPI.hasSkinEquipped(nearPlayer, SkinType.WITCH_HAT)) {
-                    nearPlayer.sendMessage(CC.translate("&e&l* WITCH HAT &7Blocked &4Banshee Pet &7[&f" + player + "&7] &e&l*"));
-                    player.sendMessage(CC.translate("&e&l* &f" + nearPlayer + " &7Blocked &4Banshee Pet &7[&e&lWitch Hat&7] &e&l*"));
+                    nearPlayer.sendMessage(CC.translate("&e&l* WITCH HAT &7Blocked &4Banshee Pet &7[&f" + player.getName() + "&7] &e&l*"));
+                    player.sendMessage(CC.translate("&e&l* &f" + nearPlayer.getName() + " &7Blocked &4Banshee Pet &7[&e&lWitch Hat&7] &e&l*"));
                     continue;
                 }
                 nearbyEnemies.add(nearPlayer);

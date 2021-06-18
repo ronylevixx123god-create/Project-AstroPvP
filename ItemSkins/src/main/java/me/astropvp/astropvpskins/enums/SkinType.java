@@ -242,20 +242,20 @@ public enum SkinType {
                     CC.translate("&cMartyr Valor V"),
                     CC.translate("&cReality Inversion V")
             )),
-    DEVILS_BLADE(CC.translate("&d&lDevils Blade"), ItemSkinType.SWORD, new DevilsBladeSkin(),
+    /*APOLLO_BLADE(CC.translate("&b&lApollo Blade"), ItemSkinType.SWORD, new ApolloBladeSkin(),
             Arrays.asList(
                     CC.translate("&cBypass Skrrt Pet immunity"),
                     CC.translate("&cDeal 20% more outgoing Rage Stack damage"),
                     CC.translate("&cIncreases outgoing damage from Soul Enchants by 1.2x"),
                     CC.translate("&c+20% Monopoly Mask chance"),
-                    CC.translate("+25% chance to block Divine Immolation")
-            )),
-    DEVILS_HEART(CC.translate("&d&lDevils Heart"), ItemSkinType.BELT, new DevilsHeartSkin(),
+                    CC.translate("&c+25% chance to block Divine Immolation")
+            )),*/
+    /*APOLLO_HEART(CC.translate("&b&lApollo Heart"), ItemSkinType.BELT, new ApolloHeartSkin(),
             Arrays.asList(
                     CC.translate("&c50% chance to block Utility Belt"),
                     CC.translate("&c100% chance to block Plague Carrier, Self Destruct and Smoke Bomb"),
                     CC.translate("&cGuarantees one piece of Holy White Scroll'd equipment to drop per kill")
-            )),
+            )),*/
     MAUIS_HOOK(CC.translate("&c&lMaui's Hook"), ItemSkinType.SWORD, new MauisHookSkin(),
             Arrays.asList(
                     CC.translate("&c+15% Outgoing Soul Enchant Damage"),

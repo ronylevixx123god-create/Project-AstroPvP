@@ -11,7 +11,7 @@ import org.bukkit.ChatColor;
 public enum BroadcastMessages {
     DISCORD(ChatColor.GREEN + "&8[&a&lAstro&e&lPvP&8] &aMake sure to join our discord at &f/discord&a."),
     STORE(ChatColor.GREEN + "&8[&a&lAstro&e&lPvP&8] &aMake sure to take advantage of the &f&l50% SALE&a on the store &7(/buy)&a."),
-    SYNC(ChatColor.GREEN + "&8[&a&lAstro&e&lPvP&8] &aYou can &d&lSync&a your account with &b&lDiscord&a using &f/sync&a."),
+    SYNC(ChatColor.GREEN + "&8[&a&lAstro&e&lPvP&8] &aYou can &d&lSync&a your account with &b&lDiscord&a using the &d/sync&a command."),
     APOLLO(ChatColor.GREEN + "&8[&a&lAstro&e&lPvP&8] &aYou can buy the &b&lApollo Rank&a on &fbuy.astropvp.net&a.");
 
     String message;

@@ -58,13 +58,15 @@ public class MOTD implements Listener {
             player.sendMessage(CC.translate("&c "));
             player.sendMessage(CC.translate("&c "));
             player.sendMessage(CC.translate("&c "));
-            player.sendMessage(ChatManager.translate(CC.translate("&a&lASTRO&e&lPVP &f- &7Factions")));
-            player.sendMessage(CC.translate("&c "));
-            player.sendMessage(ChatManager.translate(CC.translate("&aDiscord: &f&ndiscord.astropvp.net")));
-            player.sendMessage(ChatManager.translate(CC.translate("&aStore: &f&nbuy.astropvp.net")));
-            player.sendMessage(CC.translate("&c "));
-            player.sendMessage(CC.translate("&eRecommended Version: &f&nCosmic Client (1.8.8)"));
-            player.sendMessage(CC.translate("&c "));
+            player.sendMessage(CC.translate("&f"));
+            player.sendMessage(CC.translate("&f                   Welcome, &a" + player.getName() + "&f to &a&lAstro&e&lPvP&f!"));
+            player.sendMessage(CC.translate(""));
+            player.sendMessage(CC.translate("                     &a&lSHOP &fbuy.astropvp.net"));
+            player.sendMessage(CC.translate("               &6&lDISCORD &fdiscord.astropvp.net"));
+            player.sendMessage(CC.translate("                   &c&lRULES &frules.astropvp.net"));
+            player.sendMessage("");
+            player.sendMessage(CC.translate("&f&l    WE RECOMMEND YOU TO USE &acosmicclient.com &f&lOR &a1.8.9"));
+            player.sendMessage("");
             if (Conf.gracePeriod) {
                 player.sendMessage(CC.translate("&c&l[!]&c Grace Period is enabled. All explosives are disabled."));
                 player.sendMessage("");

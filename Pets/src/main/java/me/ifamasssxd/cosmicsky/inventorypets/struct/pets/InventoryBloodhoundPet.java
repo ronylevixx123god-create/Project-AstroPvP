@@ -112,7 +112,7 @@ public class InventoryBloodhoundPet extends InventoryPet {
       Faction faction = fPlayer.getFaction();
 
       if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.WITCH_HAT)) {
-         pTarget.sendMessage(CC.translate("&e&l* WITCH HAT &7Blocked &4Banshee Pet &7[&f" + player + "&7] &e&l*"));
+         pTarget.sendMessage(CC.translate("&e&l* WITCH HAT &7Blocked &4Banshee Pet &7[&f" + player.getName() + "&7] &e&l*"));
          player.sendMessage(CC.translate("&e&l* &f" + pTarget + " &7Blocked &4Bloodhound Pet &7[&e&lWitch Hat&7] &e&l*"));
          return false;
       }

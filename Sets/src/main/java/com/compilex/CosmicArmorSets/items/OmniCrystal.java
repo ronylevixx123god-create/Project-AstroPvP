@@ -97,13 +97,17 @@ public class OmniCrystal
         }
         ASound.LEVEL_UP.play(player, 1.1f);
         clicked.setItemMeta(meta);
-        clickedWrapper = new NBTWrapper(clicked);
-        NBTTagCompoundBuilder cosmicData = clickedWrapper.getCompound("conaxData");
-        cosmicData.setInt("omniArmorSet", 1);
-        clickedWrapper.setNBTBase("conaxData", cosmicData.get());
+        //clickedWrapper = new NBTWrapper(clicked);
+        //NBTTagCompoundBuilder cosmicData = clickedWrapper.getCompound("conaxData");
+
+
+        //clickedWrapper.setNBTBase("conaxData", cosmicData.get());
         NBTTagCompoundBuilder display = clickedWrapper.hasKey("display") ? new NBTTagCompoundBuilder(clickedWrapper.getNBTBase("display")) : new NBTTagCompoundBuilder();
         display.setInt("color", 0x0027FF);
         clickedWrapper.setNBTBase("display", display.get());
+        //cosmicData.setInt("omniArmorSet", 1);
+
+
         event.setCurrentItem(clickedWrapper.build());
     }
 }
