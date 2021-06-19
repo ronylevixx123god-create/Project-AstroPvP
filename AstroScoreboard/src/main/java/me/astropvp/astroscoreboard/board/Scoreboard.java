@@ -199,6 +199,8 @@ public class Scoreboard implements BoardAdapter {
             }
             List<String> board = new LinkedList<>();
             EndPlayerData data = EndPlayerData.findPlayer(player);
+            PlayerDataManager manager = AstroSpawners.getInstance().getManager();
+            PlayerData dataCoins = manager.getPlayerData(player);
             board.add("");
             board.add(CC.translate(CC.White + "➥ " + "&5&lEnd Grinding"));
             for (MonsterType type : MonsterType.values()) {
@@ -207,6 +209,8 @@ public class Scoreboard implements BoardAdapter {
             board.add(CC.translate("&d Kills&7: &f") + totalKills);
             board.add(CC.translate("&d End Players&7: &f") + endPlayers);
             board.add(CC.translate("&d Time Spent&7: &f" + TimeUtils.format(data.getTimeInEnd())));
+            board.add(CC.translate("&d Mobcoins&7:&f " + NumberFormat.getIntegerInstance().format(dataCoins.getCoins()) + "⛁"));
+
             board.add("");
             board.add(CC.Yellow + "play.astropvp.net");
             return board;

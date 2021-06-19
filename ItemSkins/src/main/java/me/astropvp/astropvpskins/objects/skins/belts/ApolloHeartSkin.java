@@ -5,6 +5,6 @@ import me.astropvp.astropvpskins.objects.ItemSkin;
 
 public class ApolloHeartSkin extends ItemSkin {
     public ApolloHeartSkin() {
-        super(SkinType.APOLLO_HEART);
+        super(SkinType.SOUL_HARVESTER);
     }
 }

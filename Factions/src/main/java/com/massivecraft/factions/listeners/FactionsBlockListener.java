@@ -37,6 +37,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.CreatureSpawner;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -353,6 +354,8 @@ public class FactionsBlockListener
     //GRACE
     @EventHandler
     public void onBreak(EntityExplodeEvent e) {
+
+        if (e.getEntity() != null && e.getEntity().getType() == EntityType.CREEPER) return;
         if (!Conf.gracePeriod) return;
 
         e.setCancelled(true);

@@ -60,7 +60,7 @@ public class CommandMobCoinShop implements CommandExecutor {
                 values.put(((MysteryChest)chests.get("OPCache")).createClaimableItem(false), Integer.valueOf(26250));
         } else {
             if (chests.containsKey("OmniCrystal"))
-                values.put(((MysteryChest)chests.get("OmniCrystal")).createClaimableItem(false), Integer.valueOf(1750));
+                values.put(((MysteryChest)chests.get("OmniCrystal")).createClaimableItem(false), Integer.valueOf(2000));
             if (chests.containsKey("QuadCrystal"))
                 values.put(((MysteryChest)chests.get("QuadCrystal")).createClaimableItem(false), Integer.valueOf(250));
             if (chests.containsKey("HeroicPet"))
@@ -68,11 +68,11 @@ public class CommandMobCoinShop implements CommandExecutor {
             if (chests.containsKey("AdminWeapon"))
                 values.put(((MysteryChest)chests.get("AdminWeapon")).createClaimableItem(false), Integer.valueOf(400));
             if (chests.containsKey("Slotbot"))
-                values.put(((MysteryChest)chests.get("Slotbot")).createClaimableItem(false), Integer.valueOf(2000));
+                values.put(((MysteryChest)chests.get("Slotbot")).createClaimableItem(false), Integer.valueOf(4000));
             if (chests.containsKey("OPCrystal"))
-                values.put(((MysteryChest)chests.get("OPCrystal")).createClaimableItem(false), Integer.valueOf(8000));
+                values.put(((MysteryChest)chests.get("OPCrystal")).createClaimableItem(false), Integer.valueOf(10000));
             if (chests.containsKey("ArmorCache"))
-                values.put(((MysteryChest)chests.get("ArmorCache")).createClaimableItem(false), Integer.valueOf(8000));
+                values.put(((MysteryChest)chests.get("ArmorCache")).createClaimableItem(false), Integer.valueOf(10000));
             if (chests.containsKey("OPCache"))
                 values.put(((MysteryChest)chests.get("OPCache")).createClaimableItem(false), Integer.valueOf(40000));
         }

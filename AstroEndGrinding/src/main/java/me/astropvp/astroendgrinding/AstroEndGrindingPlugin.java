@@ -1,12 +1,13 @@
 package me.astropvp.astroendgrinding;
 
+import me.astropvp.astroendgrinding.listeners.EndLogicnessListener;
+import me.astropvp.astrospawners.AstroSpawners;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import me.astropvp.astroendgrinding.commands.CommandAdminEnd;
 import me.astropvp.astroendgrinding.commands.CommandEnd;
-import me.astropvp.astroendgrinding.listeners.EndLogicListener;
 import me.astropvp.astroendgrinding.listeners.EndMobListener;
 import me.astropvp.astroendgrinding.tasks.NoFlyTask;
 import me.astropvp.astroendgrinding.tasks.SpawnMobsRepeatingTask;
@@ -29,8 +30,8 @@ public class AstroEndGrindingPlugin extends JavaPlugin {
 	}
 	
 	public void registerListeners() {
-		registerListener(new EndLogicListener());
-		registerListener(new EndMobListener());
+		registerListener(new EndLogicnessListener());
+		registerListener(new EndMobListener(AstroSpawners.getInstance()));
 	}
 	
 	public void registerCommands() {

@@ -68,7 +68,7 @@
             <artifactId>utils</artifactId>
             <version>0.1</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/Utils-0.1.jar</systemPath>
+            <systemPath>${project.basedir}/lib/CosmicPvPUtils(1).jar</systemPath>
         </dependency>
     </dependencies>
 

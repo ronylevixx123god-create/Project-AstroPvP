@@ -3,6 +3,8 @@ package org.arkhamnetwork.enchantments.enchantments.heroic;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import lombok.SneakyThrows;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.damageindicators.utils.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.enchantments.axes.Corrupt;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -24,7 +26,11 @@ public class HeroicInversion extends HeroicCustomEnchantment {
     }
 
     @SneakyThrows
-    public void applyDefenseEffect(final LivingEntity entityHit, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
+    public void applyDefenseEffect(final LivingEntity entityHit, final LivingEntity attacker, int level, final EntityDamageEvent e) {
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) entityHit, SkinType.HEARTBREAKER)) {
+            level = 5;
+        }
+
         final float procChance = (float) (0.08 * level);
         if (Math.random() <= procChance) {
             final Player playerHit = (Player) entityHit;

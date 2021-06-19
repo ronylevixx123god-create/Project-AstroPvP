@@ -36,6 +36,10 @@ public class MasteryNeutralize extends CustomEnchantment {
         Player user = (Player) player;
         Player pTarget = (Player) target;
 
+        if (AstroItemSkinsAPI.isInHand(user, SkinType.MAUIS_HOOK)) {
+            level = 6;
+        }
+
 
         int multi = 1;
         try {

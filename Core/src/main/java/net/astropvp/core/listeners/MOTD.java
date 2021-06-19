@@ -68,7 +68,7 @@ public class MOTD implements Listener {
             player.sendMessage(CC.translate("&f&l    WE RECOMMEND YOU TO USE &acosmicclient.com &f&lOR &a1.8.9"));
             player.sendMessage("");
             if (Conf.gracePeriod) {
-                player.sendMessage(CC.translate("&c&l[!]&c Grace Period is enabled. All explosives are disabled."));
+                player.sendMessage(CC.translate("&c&l[!]&c Grace Period is enabled. TnT Explosives are Disabled."));
                 player.sendMessage("");
             }
             player.playSound(player.getLocation(), Sound.GHAST_MOAN, 5, 5);

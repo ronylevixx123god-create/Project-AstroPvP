@@ -37,15 +37,6 @@ public class CombatLogCombatListener
         return 0;
     }
 
-    @EventHandler
-    public void reduceDamage(EntityDamageEvent e) {
-        if (e.getEntity() == null) return;
-        if (!(e.getEntity() instanceof Player)) return;
-
-        if (AstroItemSkinsAPI.hasSkinEquipped(((Player) e.getEntity()).getPlayer(), SkinType.AUTUMN_AMULET)) {
-            ((Player) e.getEntity()).getKiller().setLastDamage(((Player) e.getEntity()).getKiller().getLastDamage()*0.85);
-        }
-    }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onCombatTag(EntityDamageEvent e) {

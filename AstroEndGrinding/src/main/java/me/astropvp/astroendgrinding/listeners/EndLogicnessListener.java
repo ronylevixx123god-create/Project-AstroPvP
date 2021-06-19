@@ -7,11 +7,9 @@ import java.util.List;
 import com.compilex.CompilexPermissions.PermissionsAPI;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.astroendgrinding.AstroEndGrindingPlugin;
-import me.astropvp.astroendgrinding.utils.PlayerUtils;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
 import org.bukkit.*;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -26,7 +24,6 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.metadata.FixedMetadataValue;
 
 import com.google.common.collect.Lists;
 
@@ -34,7 +31,8 @@ import me.astropvp.astroendgrinding.AstroEndGrindingAPI;
 import me.astropvp.astroendgrinding.data.EndPlayerData;
 
 
-public class EndLogicListener implements Listener {
+public class EndLogicnessListener implements Listener {
+
 	
 	private static List<String> allowedCommands = Lists.newArrayList();
 	static {

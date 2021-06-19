@@ -2,6 +2,8 @@ package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
@@ -33,6 +35,12 @@ public class Diminish extends CustomEnchantment {
     }
 
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
+
+
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.HEARTBREAKER)) {
+            return;
+        }
+
         if (player.hasMetadata("diminishEffect")) {
             final double maxDmg = player.getMetadata("diminishEffect").get(0).asDouble();
             if (e.getDamage(EntityDamageEvent.DamageModifier.BASE) > maxDmg) {

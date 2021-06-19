@@ -5,6 +5,8 @@ import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.rit.sucy.CustomEnchantment;
 import lombok.SneakyThrows;
 import me.astropvp.astroparticles.utils.ParticleUtils;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.cmds.CommandEnchDust;
@@ -98,6 +100,9 @@ public class DivineImmolation extends CustomEnchantment {
         if (CommandEnchDust.soulEnabled) {
             Player p = (Player)player;
             double radius = 1.0D * level;
+            if (AstroItemSkinsAPI.isInHand(p, SkinType.ORNAMENTAL_CARNAGE)) {
+                radius = (1.0D * level) +2;
+            }
             double damage = 2.0;
             if (GeneralUtil.isSword(p.getItemInHand()) && (
                     !p.hasMetadata("lastItemHeldChange") || MinecraftServerUtils.getCurrentServerTick() - ((MetadataValue)p.getMetadata("lastItemHeldChange").get(0)).asLong() > 5L) && (

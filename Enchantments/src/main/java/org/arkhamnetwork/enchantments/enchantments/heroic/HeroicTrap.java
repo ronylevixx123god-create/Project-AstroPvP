@@ -40,6 +40,11 @@ public class HeroicTrap extends HeroicCustomEnchantment {
         double durationTicks = (35 + level * 10);
         Player ptarget = (Player) target;
 
+        if (AstroItemSkinsAPI.isInHand((Player) player, SkinType.ORNAMENTAL_CARNAGE)) {
+            chance = 0.01D * 5;
+            durationTicks = (35 + 5 * 10);
+        }
+
         if (random < chance) {
             if (AstroItemSkinsAPI.hasSkinEquipped(ptarget, SkinType.FLAMING_HALO) && Math.random() < 0.50) {
                 ptarget.sendMessage(CC.translate("&6&l* FLAMING HALO BLOCKED &7[Titan Trap] &6&l*"));

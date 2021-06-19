@@ -2,6 +2,8 @@ package org.arkhamnetwork.enchantments.enchantments.heroic;
 
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import lombok.SneakyThrows;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
 import org.arkhamnetwork.enchantments.libs.SpecificCustomEnchantment;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -23,7 +25,13 @@ public class HeroicValor extends HeroicCustomEnchantment {
     public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
         if (!(player instanceof Player))
             return;
+
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.HEARTBREAKER)) {
+            level = 5;
+        }
         double damage_negation = level * 0.005D;
+
+
         double hp_threshold = (level * 2 +6);
         if (player.getHealth() <= hp_threshold && (((Player) player).getItemInHand().getType() == Material.GOLD_SWORD || ((Player) player).getItemInHand().getType() == Material.DIAMOND_SWORD) && e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1.0D - damage_negation) > 1.0D) {
             e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1.0D - damage_negation));

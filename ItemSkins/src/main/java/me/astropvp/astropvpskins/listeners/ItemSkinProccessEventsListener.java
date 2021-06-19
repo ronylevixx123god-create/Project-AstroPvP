@@ -126,6 +126,10 @@ public class ItemSkinProccessEventsListener implements Listener {
                         e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) *1.006);
                     } else if (type == SkinType.JOLLY_CANDY_SWORD) {
                         e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.075);
+                    } else if (type == SkinType.ORNAMENTAL_CARNAGE) {
+                        e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.1);
+                    } else if (type == SkinType.HEARTBREAKER) {
+                        e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.04);
                     } else if (type == SkinType.LEVIATHAN_TROPHY) {
 
                         if (ThreadLocalRandom.current().nextInt(101) <= 3) {
@@ -224,12 +228,14 @@ public class ItemSkinProccessEventsListener implements Listener {
                                     it -> effectPlayerWithHazmatBoots(entity, it));
                         }else if (type2 == SkinType.LOST_AMULET) {
                             e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.95);
+                        } else if (type2 == SkinType.ORNAMENTAL_CARNAGE) {
+                            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.80);
+                            }
                         }
                     }
                 }
             }
         }
-    }
 
     protected List<Player> getHazmattablePlayersNearby(Player medium, int x, int y, int z) {
 

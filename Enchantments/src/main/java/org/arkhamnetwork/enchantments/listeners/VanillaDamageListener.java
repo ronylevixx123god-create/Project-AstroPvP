@@ -27,4 +27,7 @@ public class VanillaDamageListener implements Listener {
             e.getEntity().setMetadata("lastDamageEventFinalDamage", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) e.getFinalDamage()));
         }
     }
+
+
+
 }

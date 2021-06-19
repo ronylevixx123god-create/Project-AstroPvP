@@ -210,7 +210,7 @@ public enum SkinType {
                     CC.translate("&7* Your enemies will receive Slowness II)")
             )),
 
-    BLADE_OF_DARKNESS(CC.translate("&6&lBlade of Darkness"), ItemSkinType.SWORD, new BladeOfDarknessSkin(),
+/*    BLADE_OF_DARKNESS(CC.translate("&6&lBlade of Darkness"), ItemSkinType.SWORD, new BladeOfDarknessSkin(),
             Arrays.asList(
                     CC.translate("&c2% chance to proc Revenge of Yijki"),
                     CC.translate("&c4% Chain Lifesteal V"),
@@ -218,7 +218,7 @@ public enum SkinType {
                     CC.translate("&cSoul Siphon III"),
                     CC.translate("&cHeadless III"),
                     CC.translate("&cImmune to Blindness")
-            )),
+            )),*/
     SOUL_HARVESTER(CC.translate("&e&lSoul Harvester"), ItemSkinType.SWORD, new SoulHarvesterSkin(),
             Arrays.asList(
                     CC.translate("&cIncreases outgoing damage from Soul Enchants by 1.3x"),

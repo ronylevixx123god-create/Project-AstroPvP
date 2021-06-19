@@ -23,7 +23,7 @@ public class DeathTitleListener implements Listener {
         if (!(killer instanceof Player)) return;
 
         player.getLocation().getWorld().strikeLightningEffect(player.getLocation());
-        killer.sendTitle(new Title(CC.translate("&a&lKILLED &f") + player.getName(), "", 10, 20, 10));
+        killer.sendTitle(new Title(CC.translate("&a&lKILLED &7") + player.getName(), "", 10, 20, 10));
 
     }
 }

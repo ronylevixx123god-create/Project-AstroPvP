@@ -4,11 +4,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.astropvpskins.commands.CommandGiveSkin;
 import me.astropvp.astropvpskins.commands.CommandSkins;
 
-import me.astropvp.astropvpskins.listeners.InventorySkinClickListener;
-import me.astropvp.astropvpskins.listeners.ItemSkinApplyListener;
-import me.astropvp.astropvpskins.listeners.ItemSkinCacherListener;
-import me.astropvp.astropvpskins.listeners.ItemSkinProccessEventsListener;
-import me.astropvp.astropvpskins.listeners.ItemSkinRemoveListener;
+import me.astropvp.astropvpskins.listeners.*;
 import me.astropvp.astropvpskins.objects.skins.ItemSkinCacher;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
@@ -55,6 +51,7 @@ public class AstroItemSkinsPlugin
         registerListener((Listener) new InventorySkinClickListener());
         registerListener((Listener) new ItemSkinProccessEventsListener());
         registerListener((Listener) new ItemSkinCacherListener());
+        registerListener(new MauiHookListener());
     }
 
     public void registerCommands() {

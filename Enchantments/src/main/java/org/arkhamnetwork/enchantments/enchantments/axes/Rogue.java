@@ -39,6 +39,7 @@ public class Rogue extends CustomEnchantment {
         }
         if (!(player instanceof Player)) // rooThink
             return;
+        if (!(playerHit instanceof Player)) return;
         if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.LUAU_LEI) && Math.random() < 0.20) {
             playerHit.sendMessage(CC.translate("&c&l* LUAU LEI &7Blocked Rogue &c&l*"));
             return;
@@ -60,7 +61,15 @@ public class Rogue extends CustomEnchantment {
             }
             double damage = e.getDamage();
 
-            e.setDamage(damage + (multi * 0.15));
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.SOUL_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.HEART_HALO)) {
+                e.setDamage(damage + (multi * 0.17));
+            } else if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.MAUIS_HOOK)) {
+                e.setDamage(damage + (multi * 0.17));
+
+            } else {
+
+                e.setDamage(damage + (multi * 0.15));
+            }
 
 
 

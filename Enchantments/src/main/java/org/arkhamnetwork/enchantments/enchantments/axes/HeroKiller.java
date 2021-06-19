@@ -4,6 +4,8 @@ import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.enchantments.cmds.CommandEnchDust;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -29,6 +31,8 @@ public class HeroKiller extends CustomEnchantment {
         if (!(playerHit instanceof Player)) {
             return;
         }
+
+        if (!(player instanceof Player)) return;
         final Player p = (Player) player;
         final ItemStack used = p.getItemInHand();
         if (used == null || !EnchantmentAPI.itemHasEnchantment(used, this.enchantName)) {
@@ -44,8 +48,18 @@ public class HeroKiller extends CustomEnchantment {
             if (!p.hasMetadata("lastSoulRemoveEvent") || System.currentTimeMillis() - p.getMetadata("lastSoulRemoveEvent").get(0).asLong() > 1000L) {
                 KillTrackerAPI.removeSoulsFromGems(p, 4);
             }
-            final double increase = 0.015;
-            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1 + increase));
+
+
+            double increase = 0.015;
+
+            if (AstroItemSkinsAPI.isInHand((Player) e.getEntity(), SkinType.MAUIS_HOOK)) {
+                increase = 0.017;
+            }
+
+            if (AstroItemSkinsAPI.isInHand((Player) e.getEntity(), SkinType.SOUL_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.HEART_HALO)) {
+                increase = 0.017;
+            }
+                e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1 + increase));
         }
     }
 

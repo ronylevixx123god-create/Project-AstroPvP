@@ -37,6 +37,7 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import com.sk89q.worldguard.protection.flags.StateFlag;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
 import me.astropvp.astropvpskins.enums.SkinType;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
@@ -206,6 +207,12 @@ public class CombatLog
     public static void unflagCombat(Player pl) {
         if (pl.hasMetadata("autumn_amulet")) {
             pl.removeMetadata("autumn_amulet", Arkkit.get());
+        }
+
+        if (pl.hasMetadata("mauiEffect") && !CombatLog.inCombat(pl)) {
+            Bukkit.getScheduler().runTaskLaterAsynchronously(Arkkit.get(), () -> {
+                pl.removeMetadata("mauiEffect", AstroItemSkinsPlugin.getInstance());
+            }, 1200L);
         }
         if (pl.hasMetadata("cl_combat_monitor_task")) {
             pl.removeMetadata("cl_combat_monitor_task", Arkkit.get());

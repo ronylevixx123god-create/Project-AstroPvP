@@ -130,6 +130,12 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
                     return;
                 }
             }
+
+            if (player.hasMetadata("transEffect")) {
+                player.sendMessage(CC.translate("&c&lPET: &cYour pets are silenced by a player's Transcendence Effect."));
+                return;
+            }
+
             if (player.hasMetadata("hazmatBoots")) {
 //         p.setMetadata("hazmatTime", new FixedMetadataValue(AstroItemSkinsPlugin.getInstance(), TimeUnit.SECONDS.toMillis(12)));
 

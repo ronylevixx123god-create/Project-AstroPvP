@@ -1,8 +1,14 @@
 package me.astropvp.astroendgrinding.listeners;
 
+import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
+import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.astroendgrinding.data.EndPlayerData;
 import me.astropvp.astroendgrinding.utils.TimeUtils;
+import me.astropvp.astrospawners.AstroSpawners;
+import me.astropvp.astrospawners.utils.ActionBarMessageUtils;
+import me.astropvp.astrospawners.utils.PlayerData;
+import me.astropvp.astrospawners.utils.PlayerDataManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.LivingEntity;
@@ -19,6 +25,17 @@ import org.bukkit.inventory.ItemStack;
 
 
 public class EndMobListener implements Listener {
+
+	private final PlayerDataManager manager;
+	private final AstroSpawners plugin;
+
+
+	public EndMobListener(AstroSpawners plugin ) {
+		this.plugin = plugin;
+		this.manager = plugin.getManager();
+
+
+	}
 	
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onKill(EntityDeathEvent event) {
@@ -33,6 +50,12 @@ public class EndMobListener implements Listener {
 					Player damager = (Player) event.getEntity().getKiller();
 					EndPlayerData data = EndPlayerData.findPlayer(damager);
 					data.increment(type);
+
+
+					PlayerData dataCoins = manager.getPlayerData((Player) event.getEntity().getKiller());
+					dataCoins.setCoins(dataCoins.getCoins() + 25);
+					ActionBarMessageUtils.sendMessage((Player) event.getEntity().getKiller(), CC.translate("&c+25 Mobcoins &7(Total: &f&n") + dataCoins.getCoins() + CC.Gray + ")");
+
 					type.getInstance().onDeath(event, data);
 
 					int totalMobKills = data.getKills(MonsterType.END_BASIC_MONSTER) + data.getKills(MonsterType.END_CREEPER_MONSTER) + data.getKills(MonsterType.END_SKELETON_MONSTER);

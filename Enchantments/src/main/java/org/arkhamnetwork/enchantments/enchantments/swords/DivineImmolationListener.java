@@ -24,6 +24,12 @@ final class DivineImmolationListener implements Listener {
             e.getEntity().sendMessage(CC.translate("&c&l* LUAU LEI &7Blocked Divine Immolation &c&l*"));
             return;
         }
+
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.SOUL_HARVESTER) && Math.random() < 0.4) {
+            e.getEntity().sendMessage(CC.translate("&e&l* SOUL HARVESTER &fBlocked &cDivine Immolation &e&l*"));
+            return;
+        }
+
         if (e.getEntity().hasMetadata("divineFire") && e.getCause() == EntityDamageEvent.DamageCause.WITHER && e.getEntity() instanceof LivingEntity) {
             final int enchantLevel = e.getEntity().getMetadata("divineFireLevel").get(0).asInt();
             if (System.currentTimeMillis() - e.getEntity().getMetadata("divineFire").get(0).asLong() < (3 + enchantLevel) * 1000) {
@@ -34,7 +40,17 @@ final class DivineImmolationListener implements Listener {
                     }
                 }
 
-                le.damage((double) 2.0);
+                double damage = 2;
+
+                if (AstroItemSkinsAPI.isInHand((Player) e.getEntity(), SkinType.SOUL_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) le, SkinType.HEART_HALO)) {
+                    damage = 3.5;
+                }
+
+                if (AstroItemSkinsAPI.isInHand((Player) e.getEntity(), SkinType.MAUIS_HOOK)) {
+                    damage = 3.5;
+                }
+
+                le.damage((double) damage);
 
 
                 if (le instanceof Player) {
