@@ -4,8 +4,10 @@ import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
+import me.astropvp.AstroBackpacksAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.objects.BackpackType;
 import me.ifamasssxd.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.enchantments.cmds.CommandEnchDust;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -44,7 +46,11 @@ public class HeroKiller extends CustomEnchantment {
         if (p.hasMetadata("soulTrap") && p.getMetadata("soulTrap").get(0).asLong() > System.currentTimeMillis()) {
             return;
         }
-        if (KillTrackerAPI.hasGodMode(p) && KillTrackerAPI.getAllSouls(p) > 0) {
+
+        if (((Player) playerHit).getPlayer().getInventory().getChestplate() != null && AstroBackpacksAPI.itemHasSkin(((Player) playerHit).getPlayer().getInventory().getChestplate()) && AstroBackpacksAPI.getBackpackByItem(((Player) playerHit).getPlayer().getInventory().getChestplate()).equals(BackpackType.TEDDY_BACKPACK)) {
+            return;
+        }
+            if (KillTrackerAPI.hasGodMode(p) && KillTrackerAPI.getAllSouls(p) > 0) {
             if (!p.hasMetadata("lastSoulRemoveEvent") || System.currentTimeMillis() - p.getMetadata("lastSoulRemoveEvent").get(0).asLong() > 1000L) {
                 KillTrackerAPI.removeSoulsFromGems(p, 4);
             }

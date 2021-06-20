@@ -7,6 +7,7 @@ import me.astropvp.astrospawners.utils.PlayerDataManager;
 import me.ily2bb.slotbot.commands.CommandSkinCommand;
 import me.ily2bb.slotbot.commands.CommandSlotBot;
 import me.ily2bb.slotbot.listener.SlotBotInventoryListener;
+import me.ily2bb.slotbot.listener.WitchFix;
 import me.ily2bb.slotbot.managers.SlotBotManager;
 import me.ily2bb.slotbot.objects.Glow;
 import me.ily2bb.slotbot.utils.Utils;
@@ -68,6 +69,7 @@ public class SlotBotPlugin extends JavaPlugin {
 
     public void registerListeners() {
         this.registerListener(new SlotBotInventoryListener());
+        this.registerListener(new WitchFix());
     }
 
     public void registerCommands() {

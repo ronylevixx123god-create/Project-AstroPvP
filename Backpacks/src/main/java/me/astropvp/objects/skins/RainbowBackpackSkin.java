@@ -23,8 +23,8 @@ public class RainbowBackpackSkin extends Backpack {
     public void onEquip(Player player) {
         //double health = player.getMaxHealth();
         //health++;
-        player.setMaxHealth(20.0);
-        player.sendMessage(CC.translate("&c&lNope"));
+        //player.setMaxHealth(20.0);
+        //player.sendMessage(CC.translate("&c&lNope"));
     }
 
     @Override

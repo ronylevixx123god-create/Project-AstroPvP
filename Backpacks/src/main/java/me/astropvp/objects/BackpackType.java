@@ -8,7 +8,9 @@ public enum BackpackType {
     RAINBOW_BACKPACK(CC.GreenB + "Rainbow Backpack", "RAINBOW_BACKPACK", new RainbowBackpackSkin()),
     DEEP_SPACE_BACKPACK(CC.DarkPurpleB + "Deep Space Backpack", "DEEP_SPACE_BACKPACK", new DeepSpaceBackpackSkin()),
     CURSED_WINGS(CC.GoldB + "Cursed Wings", "CURSED_WINGS", new CursedWingsSkin()),
+    TEDDY_BACKPACK(CC.RedB + "Teddy Backpack", "TEDDY_BACKPACK", new TeddyBackpack()),
     PORTABLE_PICNIC(CC.YellowB + "Portable Picnic", "PORTABLE_PICNIC", new PortablePicnicSkin());
+
 
     String name;
     String id;

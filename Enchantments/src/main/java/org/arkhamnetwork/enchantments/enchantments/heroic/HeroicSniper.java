@@ -3,6 +3,8 @@ package org.arkhamnetwork.enchantments.enchantments.heroic;
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
+import me.astropvp.AstroBackpacksAPI;
+import me.astropvp.objects.BackpackType;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.*;
@@ -44,6 +46,11 @@ public class HeroicSniper extends CustomEnchantment {
         if (!(proj.getShooter() instanceof Player)) {
             return;
         }
+
+        if (((Player) target).getPlayer().getInventory().getChestplate() != null && AstroBackpacksAPI.itemHasSkin(((Player) target).getPlayer().getInventory().getChestplate()) && AstroBackpacksAPI.getBackpackByItem(((Player) target).getPlayer().getInventory().getChestplate()).equals(BackpackType.TEDDY_BACKPACK)) {
+            return;
+        }
+
         final Entity victima = (Entity) target;
         final double y = proj.getLocation().getY();
         final double victimay = victima.getLocation().getY();
