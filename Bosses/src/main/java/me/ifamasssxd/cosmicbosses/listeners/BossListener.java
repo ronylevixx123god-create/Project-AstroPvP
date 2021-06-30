@@ -55,7 +55,7 @@ public class BossListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.LOW)
+/*    @EventHandler(priority = EventPriority.LOW)
     public void onEntityDamageEvent(final EntityDamageByEntityEvent e) throws Exception {
         if (e.getEntity().hasMetadata("boss")) {
             final Boss boss = Boss.bosses.get(e.getEntity().getUniqueId());
@@ -84,7 +84,7 @@ public class BossListener implements Listener {
             }
             boss2.onAttackPlayer(e, (Player) e.getEntity());
         }
-    }
+    }*/
 
     private boolean isBossProjectile(final Entity ent) {
         return ent instanceof Projectile && ((Projectile) ent).getShooter() instanceof Entity && ((Entity) ((Projectile) ent).getShooter()).hasMetadata("boss");
@@ -100,7 +100,7 @@ public class BossListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+/*    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onHighest(final EntityDamageByEntityEvent e) {
         if (e.getEntity().hasMetadata("boss")) {
             final Boss boss = Boss.bosses.get(e.getEntity().getUniqueId());
@@ -117,9 +117,9 @@ public class BossListener implements Listener {
                 boss.getDamageTracker().trackDamage((Entity) player, e);
             }
         }
-    }
+    }*/
 
-    @EventHandler(priority = EventPriority.LOWEST)
+/*    @EventHandler(priority = EventPriority.LOWEST)
     public void onLowestEntityDAmage(final EntityDamageByEntityEvent e) {
         if (e.getEntity().hasMetadata("boss") && CosmicBosses.isMcMMOEnabled() && (e.getDamager() instanceof Player || (e.getDamager() instanceof Projectile && ((Projectile) e.getDamager()).getShooter() instanceof Player))) {
             Player player;
@@ -130,7 +130,7 @@ public class BossListener implements Listener {
             }
             player.setMetadata("no_exp_gain", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
         }
-    }
+    }*/
 
     /*@EventHandler(priority = EventPriority.LOWEST)
     public void onChunkUnload(final ChunkUnloadEvent unloadEvent) {
@@ -177,7 +177,7 @@ public class BossListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+/*    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onChunkLoad(final ChunkLoadEvent event) {
         final String chunk = event.getChunk().getX() + ":" + event.getChunk().getZ();
         if (CosmicBosses.getInstance().getPendingBosses().containsKey(chunk)) {
@@ -190,7 +190,7 @@ public class BossListener implements Listener {
                 }
             }, 20L);
         }
-    }
+    }*/
 
     @EventHandler
     public void onEntityChangeBlock(final EntityChangeBlockEvent event) {

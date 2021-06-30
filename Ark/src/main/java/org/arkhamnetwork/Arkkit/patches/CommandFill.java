@@ -53,9 +53,9 @@ final class CommandFill
     @SneakyThrows
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-        int maxPerDispenser;
+        double maxPerDispenser;
         int radius;
-        int amount;
+        double amount;
         if (!(sender instanceof Player)) {
             return true;
         }
@@ -72,9 +72,9 @@ final class CommandFill
             return true;
         }
         try {
-            amount = Integer.parseInt(args[0]);
+            amount = Double.parseDouble(args[0]);
             radius = Integer.parseInt(args[1]);
-            maxPerDispenser = args.length == 3 ? Integer.parseInt(args[2]) : -1;
+            maxPerDispenser = args.length == 3 ? Double.parseDouble(args[2]) : -1;
         } catch (NumberFormatException nfe) {
             sender.sendMessage(ChatColor.RED + "Either " + args[0] + " or " + args[1] + " is not a valid number.");
             return true;
@@ -105,7 +105,7 @@ final class CommandFill
         }
         Material m = p.getItemInHand().getType();
         short metadata = p.getItemInHand().getDurability();
-        int totalAdded = 0;
+        double totalAdded = 0;
         int dispenserCount = 0;
         boolean useFactionTNT = m == Material.TNT && fp.getFaction().tnt >= amount && fp.getFaction().hasRolePerm(fp, RolePerm.F_TNT_WITHDRAW);
         for (Block b : this.getDispensers(p.getLocation(), radius)) {
@@ -116,9 +116,9 @@ final class CommandFill
             FLocation fl = new FLocation(dp.getLocation());
             if (!bypass && !fp.getRelationTo(Board.getFactionAt(fl)).isAtLeast(Relation.ALLY))
                 continue;
-            int emptySlots = this.getEmptyDispenserSlots(dp, m, metadata);
-            int materialCount = this.getMaterialCount(dp, m, metadata);
-            int toAdd = amount;
+            double emptySlots = this.getEmptyDispenserSlots(dp, m, metadata);
+            double materialCount = this.getMaterialCount(dp, m, metadata);
+            double toAdd = amount;
             if (emptySlots <= 0) continue;
             if (maxPerDispenser != -1) {
                 if (materialCount >= maxPerDispenser) continue;
@@ -129,7 +129,7 @@ final class CommandFill
             boolean bl = useFactionTNT = useFactionTNT && fp.getFaction().tnt > 0;
             if (useFactionTNT) {
                 while (toAdd > 0 && emptySlots > 0) {
-                    int tntAmount = Math.min(64, Math.min(emptySlots, toAdd));
+                    int tntAmount = (int) Math.min(64, Math.min(emptySlots, toAdd));
                     if (f.tnt > 0 && f.tnt >= tntAmount) {
                         is = new ItemStack(Material.TNT, tntAmount);
                         dp.getInventory().addItem(is);
@@ -156,8 +156,8 @@ final class CommandFill
                             continue;
                         }
                         if (is.getAmount() <= toAdd) continue;
-                        dp.getInventory().addItem(new ItemStack(m, toAdd, metadata));
-                        is.setAmount(is.getAmount() - toAdd);
+                        dp.getInventory().addItem(new ItemStack(m, (int) toAdd, metadata));
+                        is.setAmount((int) (is.getAmount() - toAdd));
                         p.getInventory().setItem(i, is);
                         totalAdded += toAdd;
                         emptySlots -= toAdd;
@@ -194,8 +194,8 @@ final class CommandFill
         return dispensers;
     }
 
-    private int getEmptyDispenserSlots(Dispenser d, Material m, short metadata) {
-        int c = 0;
+    private double getEmptyDispenserSlots(Dispenser d, Material m, short metadata) {
+        double c = 0;
         for (ItemStack i : d.getInventory()) {
             if (i == null || i.getType() == Material.AIR) {
                 c += 64;
@@ -207,8 +207,8 @@ final class CommandFill
         return c;
     }
 
-    private int getMaterialCount(Dispenser d, Material m, short metadata) {
-        int c = 0;
+    private double getMaterialCount(Dispenser d, Material m, short metadata) {
+        double c = 0;
         for (ItemStack i : d.getInventory()) {
             if (i == null || i.getType() != m || i.getDurability() != metadata) continue;
             c += i.getAmount();

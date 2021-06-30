@@ -26,7 +26,7 @@ import java.text.DecimalFormat;
 public class Rogue extends CustomEnchantment {
 
     public Rogue() {
-        super("Rogue", GeneralUtil.axe, 2);
+        super("Rogue", GeneralUtil.weapons, 2);
         this.max = 3;
         this.base = 10.0;
         this.interval = 10.0;

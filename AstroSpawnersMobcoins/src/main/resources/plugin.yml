@@ -18,3 +18,6 @@ commands:
     description: Removes all mobs and hasmap
   checkmobs:
     description: Check amount of mobs in hasmap
+  stopspawnersplace:
+    description: stop placing spawners
+    aliases: [stopspawners, stopspawnerplace]

@@ -29,6 +29,16 @@ public class MobSpawnerListener implements Listener {
         if (event.getBlockPlaced().getType() != Material.MOB_SPAWNER) {
             return;
         }
+
+        boolean allowSpawners = AstroSpawners.getInstance().getConfig().getBoolean("allow-spawner-placement");
+
+        if (!allowSpawners) {
+            event.getPlayer().sendMessage(CC.translate("&c&l(!)&c Spawner placement has been disabled!"));
+            event.getPlayer().sendMessage(CC.translate("&7You can no longer place FTOP value."));
+            event.setCancelled(true);
+            return;
+        }
+
         ItemStack item = event.getPlayer().getItemInHand();
         if (item.getAmount() > 1) {
             event.getPlayer().sendMessage(CC.translate("&c&l(!)&c You cannot place stacked spawners!"));
@@ -107,6 +117,17 @@ public class MobSpawnerListener implements Listener {
                                                     + ItemSpawner.getSpawnerLimit() + " spawners stacked together!");
                                             return;
                                         }
+
+                                        boolean allowSpawners = AstroSpawners.getInstance().getConfig().getBoolean("allow-spawner-placement");
+
+
+                                        if (!allowSpawners) {
+                                            event.getPlayer().sendMessage(CC.translate("&c&l(!)&c Spawner placement has been disabled!"));
+                                            event.getPlayer().sendMessage(CC.translate("&7You can no longer place FTOP value."));
+                                            event.setCancelled(true);
+                                            return;
+                                        }
+
                                         int math = found.getSpawnerAmount() + amount >= ItemSpawner.getSpawnerLimit()
                                                 ? ItemSpawner.getSpawnerLimit() - found.getSpawnerAmount()
                                                 : amount;

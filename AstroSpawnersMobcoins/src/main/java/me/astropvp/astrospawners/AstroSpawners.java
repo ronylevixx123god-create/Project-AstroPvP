@@ -110,6 +110,8 @@ public class AstroSpawners extends JavaPlugin {
         getCommand("clearmobs").setExecutor(new CommandClearHashMap());
         getCommand("checkmobs").setExecutor(new CommandCheckHashMap());
 
+        getCommand("stopspawnersplace").setExecutor(new CommandStopSpawnersPlace());
+
 
         getCommand("mobcoinshop").setExecutor((CommandExecutor) new CommandMobCoinShop());
         getCommand("mobcoins").setExecutor((CommandExecutor) new CommandMobCoins());

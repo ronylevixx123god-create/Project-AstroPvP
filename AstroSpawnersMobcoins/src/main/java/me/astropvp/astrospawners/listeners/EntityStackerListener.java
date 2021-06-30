@@ -163,21 +163,21 @@ public class EntityStackerListener implements Listener {
             String player = p.getName();
             double num = Math.random();
             try {
-                if (num >= 0 && num <= 0.05) {
+                if (num >= 0 && num <= 0.1) {
                     if (GrindingMessagesUtil.isPlayerIndicating(p)) {
                         p.sendMessage(CC.translate("&b&lGrinding &f&l➥ &a+ Grinding Tier III Lootbox"));
                     }
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mc give " + player + " Grinding3");
 
                     return;
-                } else if (num >= 0 && num <= 0.1) {
+                } else if (num >= 0 && num <= 0.15) {
                     if (GrindingMessagesUtil.isPlayerIndicating(p)) {
                         p.sendMessage(CC.translate("&b&lGrinding &f&l➥ &a+ Grinding Tier II Lootbox"));
                     }
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mc give " + player + " Grinding2");
 
                     return;
-                } else if (num >= 0 && num <= 0.15) {
+                } else if (num >= 0 && num <= 0.20) {
                     if (GrindingMessagesUtil.isPlayerIndicating(p)) {
                         p.sendMessage(CC.translate("&b&lGrinding &f&l➥ &a+ Grinding Tier I Lootbox"));
                     }
@@ -185,9 +185,9 @@ public class EntityStackerListener implements Listener {
                     return;
                 }
 
-                p.playSound(p.getLocation(), Sound.VILLAGER_YES, 5, 5);
                 if (Math.random() < 0.005) {
                     if (GrindingMessagesUtil.isPlayerIndicating(p)) {
+                        p.playSound(p.getLocation(), Sound.VILLAGER_YES, 5, 5);
                         p.sendMessage(CC.translate("&b&lGrinding &f&l➥ &a+ Deluxe Grinding Lootbox"));
                         p.sendTitle(new Title(CC.translate("&a&l+ Deluxe Grinding Lootbox"), CC.translate("&7You can find it in your inventory."), 20, 20, 20));
                     }

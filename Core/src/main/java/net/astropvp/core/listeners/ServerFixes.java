@@ -19,10 +19,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.*;
-import org.bukkit.event.inventory.InventoryOpenEvent;
-import org.bukkit.event.inventory.InventoryPickupItemEvent;
-import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.event.inventory.PrepareItemCraftEvent;
+import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.*;
 import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.inventory.ItemStack;
@@ -49,6 +46,19 @@ public class ServerFixes implements Listener {
         if (ent instanceof org.bukkit.entity.Blaze &&
                 e.getCause() == EntityDamageEvent.DamageCause.DROWNING)
             e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void Interact(InventoryClickEvent event){
+        HumanEntity player = event.getWhoClicked();
+
+        if((player instanceof Player)) {
+            if (event.getInventory().getType() == InventoryType.ANVIL) {
+                event.setCancelled(true);
+                Player clicker = (Player) event.getWhoClicked();
+                clicker.sendMessage("You cannot use anvils.");
+            }
+        }
     }
 
 
