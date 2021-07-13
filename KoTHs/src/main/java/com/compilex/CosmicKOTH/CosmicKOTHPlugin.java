@@ -320,7 +320,7 @@ extends JavaPlugin {
     private void registerCommands() {
         this.getCommand("koth").setExecutor(new CommandKoth());
         this.getCommand("akoth").setExecutor(new CommandAdminKoth());
-        this.getCommand("stronghold").setExecutor((CommandExecutor)new CommandOutpost());
+        this.getCommand("stronghold").setExecutor(new CommandOutpost());
     }
 
     private void registerListeners() {
@@ -328,11 +328,11 @@ extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new KothLootBagListener(), this);
         Bukkit.getPluginManager().registerEvents(new KothInventoryListener(), this);
 
-        this.getServer().getPluginManager().registerEvents((Listener)new OutpostWorldListener(), (Plugin)this);
+        this.getServer().getPluginManager().registerEvents(new OutpostWorldListener(), (Plugin)this);
         if (this.isVanillaPlanet()) {
-            this.getServer().getPluginManager().registerEvents((Listener)new OutpostPerkVanillaListener(), (Plugin)this);
+            this.getServer().getPluginManager().registerEvents(new OutpostPerkVanillaListener(), (Plugin)this);
         } else if (this.isHcfPlanet()) {
-            this.getServer().getPluginManager().registerEvents((Listener)new OutpostPerkListener(), (Plugin)this);
+            this.getServer().getPluginManager().registerEvents(new OutpostPerkListener(), this);
         }
     }
 

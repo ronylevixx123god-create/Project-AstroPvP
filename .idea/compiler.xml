@@ -25,6 +25,7 @@
         <module name="AstroEndGrinding" />
         <module name="GUIShop" />
         <module name="Lootboxes" />
+        <module name="Comms" />
         <module name="AstroSpawnersMobcoins" />
         <module name="AuctionHouse" />
         <module name="Factions" />
@@ -46,6 +47,7 @@
     <bytecodeTargetLevel>
       <module name="ArmorSets" target="1.8" />
       <module name="AstroSpawners" target="1.8" />
+      <module name="ClientComms" target="8" />
       <module name="CrateBoxes" target="8" />
       <module name="Disguises (1)" target="8" />
       <module name="ItemFilter" target="8" />
