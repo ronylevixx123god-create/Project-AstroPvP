@@ -1,12 +1,14 @@
 package me.astropvp.astroscoreboard.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import me.bryside.WildPvPPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scoreboard.Criterias;
@@ -37,10 +39,19 @@ public class PlayerListener implements Listener {
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onQuit(PlayerQuitEvent event) {
 		Player player = event.getPlayer();
+		player.removeMetadata("cageMatch", WildPvPPlugin.getInstance());
 		Scoreboard board = player.getScoreboard();
 		if(board != null) {
 			board.getTeams().forEach(team -> team.unregister());
 		}
 		
+	}
+
+	@EventHandler
+	public void onDeath(PlayerDeathEvent e) {
+		if (!e.getEntity().hasMetadata("cageMatch")) return;
+		e.getEntity().removeMetadata("cageMatch", WildPvPPlugin.getInstance());
+		e.getEntity().getKiller().removeMetadata("cageMatch", WildPvPPlugin.getInstance());
+
 	}
 }

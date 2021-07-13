@@ -1,19 +1,15 @@
 package me.astropvp.astroscoreboard.board;
 
-import com.compilex.CompilexPermissions.PermissionsAPI;
 import com.compilex.CosmicKOTH.CosmicKOTHAPI;
 import com.compilex.CosmicKOTH.CosmicKOTHPlugin;
 import com.compilex.CosmicKOTH.tasks.KothEventTask;
-import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
 import com.compilex.CosmicOutposts.outpost.Outpost;
-import com.compilex.CosmicOutposts.outpost.tasks.CapTask;
-import com.cosmicpvp.cosmicutils.utils.*;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import com.cosmicpvp.cosmicutils.utils.NumberUtils;
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.massivecraft.factions.FPlayer;
-import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.integration.Econ;
-import it.unimi.dsi.fastutil.Hash;
-import me.astropvp.astroendgrinding.AstroEndGrindingAPI;
-import me.astropvp.astroendgrinding.AstroEndGrindingPlugin;
 import me.astropvp.astroendgrinding.data.EndPlayerData;
 import me.astropvp.astroendgrinding.enums.MonsterType;
 import me.astropvp.astroendgrinding.utils.TimeUtils;
@@ -21,15 +17,15 @@ import me.astropvp.astroscoreboard.AstroScoreboardPlugin;
 import me.astropvp.astrospawners.AstroSpawners;
 import me.astropvp.astrospawners.utils.PlayerData;
 import me.astropvp.astrospawners.utils.PlayerDataManager;
-import me.ifamasssxd.cosmichcf.CosmicHCFOutposts;
-import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
-import me.ifamasssxd.cosmichcf.struct.HCFOutpost;
+import me.bryside.WildPvPPlugin;
+import me.bryside.match.CageMatch;
+import me.ifamasssxd.cosmicduel.DuelAPI;
+import me.ifamasssxd.cosmicduel.struct.enums.DuelState;
+import me.ifamasssxd.cosmichcf.managers.OutpostManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.Team;
 
 import java.text.DateFormat;
 import java.text.NumberFormat;
@@ -78,12 +74,141 @@ public class Scoreboard implements BoardAdapter {
 
     public String getTitle(Player player) {
         FPlayer fplayer = FactionUtils.getFPlayer(player);
-        if (!fplayer.getFaction().isWilderness())
+
+        if (player.hasMetadata("cageMatch")) {
+            return CC.translate("&a&lCage Match &7" + getDateSuffix());
+        }
+
+        if (WorldGuardUtils.inRegion(player.getLocation(), "infernalfull")) {
+            return CC.translate("&c&lInfernal Stronghold &7" + getDateSuffix());
+
+        } else if (WorldGuardUtils.inRegion(player.getLocation(), "frozen")) {
+            return CC.translate("&b&lFrozen Stronghold &7" + getDateSuffix());
+
+        } else if (DuelAPI.getDuel(player) != null && (DuelAPI.getDuel(player).getDuelState() == DuelState.STARTING || DuelAPI.getDuel(player).getDuelState() == DuelState.PLAYING)) {
+            return CC.translate("&6&l1v1 Duel &7" + getDateSuffix());
+
+        } else if (!fplayer.getFaction().isWilderness()) {
             return CC.translate("&b&l" + fplayer.getFaction().getTag() + "&7 " + getDateSuffix());
+        } else if (2 == 2) {
+
+
+        }
         return CC.translate("&a&lAstro&e&lPvP &7" + getDateSuffix());
     }
 
+
     public List<String> mainBoard(Player player) {
+
+
+        if (player.hasMetadata("cageMatch")) {
+            List<String> board = new LinkedList<>();
+            CageMatch pvpMatch = WildPvPPlugin.getInstance().getMatchManager().getMatchFromPlayer(player);
+
+            board.add("");
+            board.add(CC.translate("&a&lOpponent"));
+
+
+            Player enemy;
+            if (pvpMatch.getHost() == player) {
+                enemy = pvpMatch.getOpponent();
+            } else {
+                enemy = pvpMatch.getHost();
+            }
+
+            board.add(CC.translate("&c") + enemy.getName());
+            board.add("");
+            board.add(CC.translate("&a&lExpiration"));
+            board.add(String.valueOf(pvpMatch.getRuntime()));
+            board.add("");
+            board.add(CC.translate("&a&lType"));
+            board.add(CC.translate("&fCage Match"));
+            board.add("");
+            board.add(CC.translate("&a&lAccount"));
+            board.add(player.getName());
+
+            return board;
+        }
+
+        if (WorldGuardUtils.inRegion(player.getLocation(), "frozen")) {
+            List<String> board = new LinkedList<>();
+            OutpostManager outpostManager = CosmicKOTHPlugin.get_().getOutpostManager();
+            me.ifamasssxd.cosmichcf.struct.Outpost outpost = outpostManager.getOutpostFromName("great_hall");
+
+            board.add("");
+            board.add(CC.translate("&b&lAttacking"));
+            if (outpost.getAttackingFaction() != null) {
+                board.add(CC.translate("&f") + outpost.getAttackingFaction().getTag());
+            } else {
+                board.add(CC.translate("&fN/A"));
+            }
+            board.add("");
+            board.add(CC.translate("&b&lControlling"));
+            if (outpost.getDefendingFaction() != null) {
+                board.add(outpost.getDefendingFaction().getTag());
+            } else {
+                board.add(CC.translate("&fN/A"));
+            }
+            board.add("");
+            board.add(CC.translate("&b&lCap %"));
+            board.add(round(outpost.getCapPercentage(), 2) + "%");
+            board.add("");
+
+
+            board.add(CC.translate("&b&lStatus"));
+            try {
+                board.add(CC.translate("&f") + outpostManager.getOutpostInside(player.getLocation()).getOutpostState().getName());
+
+            } catch (NullPointerException e) {
+                board.add(CC.translate("&fN/A"));
+
+            }
+
+            board.add("");
+            board.add(CC.translate("&b&lAccount"));
+            board.add(CC.translate("&f") + player.getName());
+            return board;
+        }
+
+        if (WorldGuardUtils.inRegion(player.getLocation(), "infernalfull")) {
+            List<String> board = new LinkedList<>();
+            OutpostManager outpostManager = CosmicKOTHPlugin.get_().getOutpostManager();
+            me.ifamasssxd.cosmichcf.struct.Outpost outpost = outpostManager.getOutpostFromName("courtyard");
+
+            board.add("");
+            board.add(CC.translate("&c&lAttacking"));
+            if (outpost.getAttackingFaction() != null) {
+                board.add(CC.translate("&f") + outpost.getAttackingFaction().getTag());
+            } else {
+                board.add(CC.translate("&fN/A"));
+            }
+            board.add("");
+            board.add(CC.translate("&c&lControlling"));
+            if (outpost.getDefendingFaction() != null) {
+                board.add(outpost.getDefendingFaction().getTag());
+            } else {
+                board.add(CC.translate("&fN/A"));
+            }
+            board.add("");
+            board.add(CC.translate("&c&lCap %"));
+            board.add(round(outpost.getCapPercentage(), 2) + "%");
+            board.add("");
+
+
+            board.add(CC.translate("&c&lStatus"));
+            try {
+                board.add(CC.translate("&f") + outpostManager.getOutpostInside(player.getLocation()).getOutpostState().getName());
+
+            } catch (NullPointerException e) {
+                board.add(CC.translate("&fN/A"));
+
+            }
+
+            board.add("");
+            board.add(CC.translate("&c&lAccount"));
+            board.add(CC.translate("&f") + player.getName());
+            return board;
+        }
 
 
         if (CosmicKOTHAPI.isKOTHRunning() && player.getLocation().getWorld().getName().equals("world_koth")) {
@@ -98,6 +223,41 @@ public class Scoreboard implements BoardAdapter {
             board.add(CC.translate("&a Location&7: &7X37, Y52, Z-28"));
             board.add("");
             board.add(CC.Yellow + "play.astropvp.net");
+            return board;
+        }
+
+        if (DuelAPI.getDuel(player) != null && (DuelAPI.getDuel(player).getDuelState() == DuelState.STARTING || DuelAPI.getDuel(player).getDuelState() == DuelState.PLAYING)) {
+            List<String> board = new LinkedList<>();
+            int seconds = DuelAPI.getDuel(player).getGameTimer();
+            int minutes = seconds / 60;
+            seconds = seconds - (minutes * 60);
+
+            board.add("");
+            board.add(CC.translate("&c&lOpponent"));
+            board.add(CC.translate("&f" + DuelAPI.getDuel(player).getOppositePlayer(player).getName()));
+            board.add("");
+            if (DuelAPI.getDuel(player).getGameTimer() != 0) {
+                board.add(CC.translate("&6&lRuntime"));
+                if (minutes > 0) {
+                    board.add(CC.translate("&e") + minutes + "m " + seconds + "s");
+                } else {
+                    board.add(CC.translate("&e") + seconds + "s");
+
+                }
+                board.add("");
+            }
+            board.add(CC.translate("&6&lArena"));
+            board.add(CC.translate("&f&l") + CC.strip(DuelAPI.getDuel(player).getArena().getName()));
+            board.add("");
+            board.add(CC.translate("&6&lDouble DMG"));
+            if (DuelAPI.getDuel(player).getGameTimer() >= 300) {
+                board.add(CC.translate("&a&lEnabled"));
+            } else {
+                board.add(CC.translate("&c&lDisabled"));
+            }
+            board.add("");
+            board.add(CC.translate("&6&lAccount"));
+            board.add(CC.translate("&e") + player.getName());
             return board;
         }
 
@@ -440,6 +600,15 @@ public class Scoreboard implements BoardAdapter {
         long truncated = value / (divideBy / 10); //the number part of the output times 10
         boolean hasDecimal = truncated < 100 && (truncated / 10d) != (truncated / 10);
         return hasDecimal ? (truncated / 10d) + suffix : (truncated / 10) + suffix;
+    }
+
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
     }
 
 }

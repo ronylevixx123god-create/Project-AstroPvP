@@ -180,6 +180,14 @@
 
         <dependency>
             <groupId>com.conaxgames</groupId>
+            <artifactId>AstroWildpp</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/AstroWildPvP.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>com.conaxgames</groupId>
             <artifactId>worldguard</artifactId>
             <version>0.1</version>
             <scope>system</scope>
@@ -215,20 +223,6 @@
         </dependency>
 
 
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>outpost</artifactId>
-            <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/CosmicOutposts.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>hcfoutpost</artifactId>
-            <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/CosmicHCFOutposts.jar</systemPath>
-        </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>ap</artifactId>

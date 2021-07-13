@@ -179,12 +179,14 @@ extends JavaPlugin {
     }
 
     public void registerTasks() {
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(CosmicDuel.get(), new DuelArenaTask(), 200L, 200L);
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(CosmicDuel.get(), new DuelTask(), 80L, 80L);
-        //Bukkit.getScheduler().scheduleSyncRepeatingTask(CosmicDuel.get(), new QueueUpdateTask(), 20L, 700L);
-        Bukkit.getScheduler().scheduleAsyncRepeatingTask(CosmicDuel.get(), new DuelInviteTask(), 20L, 20L);
-        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new RebootTask(), 20L, 20L);
-        //this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new QueueTask(this), this.getConfig().getInt("queue-delay", 5) * 20, this.getConfig().getInt("queue-delay", 5) * 20);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)get(), (Runnable)new DuelArenaTask(), 20L, 20L);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)get(), (Runnable)new DuelTask(), 20L, 20L);
+
+        //Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)get(), (Runnable)new QueueUpdateTask(), 20L, 700L);
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask((Plugin)get(), (Runnable)new DuelInviteTask(), 20L, 20L);
+        getServer().getScheduler().scheduleSyncRepeatingTask((Plugin)this, (Runnable)new RebootTask(), 20L, 20L);
+        //getServer().getScheduler()
+                //.scheduleSyncRepeatingTask((Plugin)this, (Runnable)new QueueTask(this), (getConfig().getInt("queue-delay", 5) * 20), (getConfig().getInt("queue-delay", 5) * 20));
     }
 
     public void registerCommands() {

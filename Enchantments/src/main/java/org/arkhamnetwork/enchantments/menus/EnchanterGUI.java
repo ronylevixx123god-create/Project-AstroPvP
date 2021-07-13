@@ -2,11 +2,16 @@ package org.arkhamnetwork.enchantments.menus;
 
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
 import com.cosmicpvp.cosmicutils.gui.CosmicGUI;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.HCFOutpostUtils;
-import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
-import com.cosmicpvp.cosmicutils.utils.NumberUtils;
+import com.cosmicpvp.cosmicutils.gui.InventoryItem;
+import com.cosmicpvp.cosmicutils.utils.*;
+import net.astropvp.core.objects.EnchantmentCrystal;
+import net.astropvp.core.objects.EnchantmentCrystalType;
+import net.astropvp.core.utils.EnchantmentCrystalUtils;
+import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.libs.ExpUtils;
+import org.arkhamnetwork.Arkkit.patches.ItemNametag;
+import org.arkhamnetwork.enchantments.EnchantmentBook;
+import org.arkhamnetwork.enchantments.cmds.CommandTransmog;
 import org.arkhamnetwork.enchantments.libs.EnchanterRarity;
 import org.arkhamnetwork.enchantments.util.TieredEnchantments;
 import org.bukkit.Bukkit;
@@ -17,7 +22,7 @@ import org.bukkit.entity.Player;
 
 public class EnchanterGUI extends CosmicGUI {
     public EnchanterGUI(Player player) {
-        super(player, "Astro Enchanter", 9);
+        super(player, "Astro Enchanter", 18);
     }
 
     public void redraw() {
@@ -57,15 +62,15 @@ public class EnchanterGUI extends CosmicGUI {
                 this.player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "- " + NumberUtils.formatMoney(newAdjustedPrice) + " xp");
                 this.player.getInventory().addItem(TieredEnchantments.getMysteryEnchantmentBook(rarity.getTier()));
                 this.player.playSound(this.player.getLocation(), Sound.VILLAGER_HAGGLE, 1.0F, 0.44F);
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "contest add " + this.player.getName() + " enchanterXP " + newAdjustedPrice);
-                if (Bukkit.getPluginManager().isPluginEnabled("CosmicFactionQuests"))
-                    if (rarity.getTier() == 5) {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "fquests add LEGENDARY_ENCHANTER " + this.player.getName());
-                    } else if (rarity.getTier() == 4) {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "fquests add ULTIMATE_ENCHANTER " + this.player.getName());
-                    }
                 Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(this.player, "ENCHANTER_BUY", new Object[]{rarity.name(), newAdjustedPrice}));
             });
         }
+
+        setItem(9, new InventoryItem(EnchantmentBook.getTransmogScroll()));
+        setItem(10, new InventoryItem(EnchantmentBook.getWhiteScroll()));
+        setItem(11, new InventoryItem(EnchantmentBook.getBlackScroll(100)));
+        setItem(12, new InventoryItem(EnchantmentBook.getHeroicBlackscroll(100, 100, false)));
+        setItem(13, new InventoryItem(ItemNametag.getNametagItem()));
     }
+
 }

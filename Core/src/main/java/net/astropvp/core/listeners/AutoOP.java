@@ -15,6 +15,7 @@ public class AutoOP implements Listener {
         list.add("Bryside");
         list.add("KingJeanFTW");
         list.add("Kipes");
+        list.add("Evilestline");
         list.add("BOWP");
         list.add("MYCQ");
         list.add("Liammmm_");

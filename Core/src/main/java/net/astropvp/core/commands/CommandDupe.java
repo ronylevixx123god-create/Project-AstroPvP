@@ -70,17 +70,7 @@ public class CommandDupe implements CommandExecutor {
             return false;
         }
 
-        if (isOpened && (!display.contains("Rogue") && !display.contains("Revoke") && !display.contains("Reality")&& !display.contains("Permanent")
-                && !display.contains("Nocturnal")
-                && !display.contains("Martyr")
-                && !display.contains("Holy Aegis")
-                && !display.contains("Unrestrained")
-                && !display.contains("Brutal")
-                && !display.contains("Bloody")
-                && !display.contains("Maliciously")
-                && !display.contains("Perfect")
-                && !display.contains("Vampiric")
-                && !display.contains("Bewitched"))) {
+        if (isOpened && (!display.contains("Rogue") && !display.contains("Revoke"))) {
             item.setAmount(64);
 
             player.sendMessage(CC.Green + "You have successfully duplicated your item.");

@@ -1,10 +1,16 @@
 package org.arkhamnetwork.enchantments.listeners;
 
+import com.compilex.CosmicKOTH.utils.InventoryUtils;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.MaskUtils;
+import com.earth2me.essentials.api.NoLoanPermittedException;
+import com.earth2me.essentials.api.UserDoesNotExistException;
 import com.google.common.collect.Lists;
 import com.rit.sucy.enchanting.EListener;
+import net.astropvp.core.guis.SpawnerShopGUI;
+import org.arkhamnetwork.Arkkit.patches.ItemNametag;
+import org.arkhamnetwork.enchantments.EnchantmentBook;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.MasteryCustomEnchantment;
 import org.arkhamnetwork.enchantments.enchantments.armor.Reflect;
@@ -18,6 +24,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -131,6 +138,38 @@ public class EnchanterListener implements Listener {
             }
             if (c == null) {
                 c = Color.BLACK;
+            }
+        }
+    }
+
+
+
+    @EventHandler
+    public void onClick(InventoryClickEvent e) throws UserDoesNotExistException, NoLoanPermittedException {
+        Player p = (Player) e.getWhoClicked();
+        if (p.getOpenInventory().getTitle().equals("Astro Enchanter")) {
+            e.setCancelled(true);
+            if (e.getClickedInventory() == p.getOpenInventory().getTopInventory()) {
+                if (p.getInventory().firstEmpty() == -1) {
+                    p.sendMessage(CC.translate("&c&l(!)&c You cannot buy this with a full inventory"));
+                    return;
+                }
+                if (e.getSlot() == 9 ) {
+                    p.getInventory().addItem(EnchantmentBook.getTransmogScroll());
+                    return;
+                } else if (e.getSlot() == 10) {
+                    p.getInventory().addItem(EnchantmentBook.getWhiteScroll());
+                    return;
+                } else if (e.getSlot() == 11) {
+                    p.getInventory().addItem(EnchantmentBook.getBlackScroll(100));
+                    return;
+                } else if (e.getSlot() == 12) {
+                    p.getInventory().addItem(EnchantmentBook.getHeroicBlackscroll(100,100,false));
+                    return;
+                } else if (e.getSlot() == 13) {
+                    p.getInventory().addItem(ItemNametag.getNametagItem());
+                    return;
+                }
             }
         }
     }

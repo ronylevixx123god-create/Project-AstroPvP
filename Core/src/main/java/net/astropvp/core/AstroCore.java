@@ -235,7 +235,6 @@ public class AstroCore extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(this.itemListener, this);
         this.getServer().getPluginManager().registerEvents(new SpawnerShopListener(), this);
 
-        this.getServer().getPluginManager().registerEvents(new DeathTitleListener(), this);
 
         this.setupSQL();
         this.dataManager = new TitleDatabaseManager();
