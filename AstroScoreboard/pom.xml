@@ -156,6 +156,14 @@
 
         <dependency>
             <groupId>com.conaxgames</groupId>
+            <artifactId>printer</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/Printer-2.7.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>com.conaxgames</groupId>
             <artifactId>AstroEndGrinding</artifactId>
             <version>0.1</version>
             <scope>system</scope>

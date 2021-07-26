@@ -10,6 +10,8 @@ import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.integration.Econ;
+import com.reliableplugins.printer.Printer;
+import com.reliableplugins.printer.PrinterPlayer;
 import me.astropvp.astroendgrinding.data.EndPlayerData;
 import me.astropvp.astroendgrinding.enums.MonsterType;
 import me.astropvp.astroendgrinding.utils.TimeUtils;
@@ -75,6 +77,10 @@ public class Scoreboard implements BoardAdapter {
     public String getTitle(Player player) {
         FPlayer fplayer = FactionUtils.getFPlayer(player);
 
+        if (PrinterPlayer.fromPlayer(player) != null && PrinterPlayer.fromPlayer(player).isPrinting()) {
+            return CC.translate("&d&lPrinter Mode&7 " + getDateSuffix());
+        }
+
         if (player.hasMetadata("cageMatch")) {
             return CC.translate("&a&lCage Match &7" + getDateSuffix());
         }
@@ -100,6 +106,21 @@ public class Scoreboard implements BoardAdapter {
 
     public List<String> mainBoard(Player player) {
 
+
+        if (PrinterPlayer.fromPlayer(player) != null && PrinterPlayer.fromPlayer(player).isPrinting()) {
+            PrinterPlayer printerPlayer = PrinterPlayer.fromPlayer(player);
+            List<String> board = new LinkedList<>();
+            board.add("");
+            board.add(CC.translate("&d&lBalance"));
+            board.add(CC.translate("&f$") + NumberUtils.formatMoney(printerPlayer.getRemainingBalance()));
+            board.add("");
+            board.add(CC.translate("&d&lMode"));
+            board.add(CC.translate("&aEnabled"));
+            board.add("");
+            board.add(CC.translate("&d&lAccount"));
+            board.add(CC.translate("&f") + player.getName());
+            return board;
+        }
 
         if (player.hasMetadata("cageMatch")) {
             List<String> board = new LinkedList<>();

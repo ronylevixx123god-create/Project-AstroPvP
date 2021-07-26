@@ -24,6 +24,7 @@ public class AstroSpawners extends JavaPlugin {
     private MobStackerUtils mobStackerUtils;
     private static PlayerDataManager manager2;
 
+
     public MobStackerUtils getMobStackerUtils() {
         return mobStackerUtils;
     }

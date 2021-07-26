@@ -35,8 +35,7 @@ public class CustomItemBuilder
         try {
             if (this.type == CustomItemType.NAMETAG && ArkPlugins.ITEM_NAMETAG.getArkPlugin().isRunning()) {
                 retr = ItemNametag.getNametagItem();
-            } else if (this.type == CustomItemType.MYSTERY_MOBSPAWNER && ArkPlugins.MYSTERY_MOB_SPAWNER.getArkPlugin().isRunning()) {
-                retr = MysteryMobSpawners.getMysteryMobSpawner();
+
             } else if (this.type == CustomItemType.ITEM_NAMETAG && ArkPlugins.ITEM_NAMETAG.getArkPlugin().isRunning()) {
                 retr = ItemNametag.getNametagItem();
             } else if (this.type == CustomItemType.LORETAG && ArkPlugins.LORE_TAG.getArkPlugin().isRunning()) {
@@ -57,11 +56,8 @@ public class CustomItemBuilder
                 retr = EnchantmentBook.getHeroicBlackscroll((boolean) false);
             } else if ((this.type == CustomItemType.EQUIPMENT_LOOTBOX || this.type == CustomItemType.HEROIC_EQUIPMENT_LOOTBOX) && ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin().isRunning()) {
                 EquipmentLootboxes boxes = (EquipmentLootboxes) ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin();
-                retr = this.type == CustomItemType.HEROIC_EQUIPMENT_LOOTBOX ? boxes.createHeroicLootboxItem(false) : boxes.createLootboxItem(false);
             } else if (this.type == CustomItemType.GKIT_GENERATOR && ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin().isRunning()) {
-                retr = ((EquipmentLootboxes) ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin()).createHeroicGKitGenerator(false);
             } else if (this.type == CustomItemType.MKIT_GENERATOR && ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin().isRunning()) {
-                retr = ((EquipmentLootboxes) ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin()).createMKitGenerator(false);
             } else if ((this.type == CustomItemType.DUNGEON_PORTAL_ABANDONED_SHIP || this.type == CustomItemType.DUNGEON_PORTAL_DESTROYED_OUTPOST) && CosmicUtils.get().isDungeonsEnabled()) {
                 retr = DungeonsAPI.get().getDungeon(this.type == CustomItemType.DUNGEON_PORTAL_ABANDONED_SHIP ? 0 : 1).getDungeonPortal();
             } else {

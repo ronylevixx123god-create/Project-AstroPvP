@@ -116,14 +116,14 @@
             <artifactId>WorldGuard</artifactId>
             <version>0.1</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/WorldGuard.jar</systemPath>
+            <systemPath>${project.basedir}/lib/worldguard-6.1.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>worldedit</artifactId>
             <version>0.1</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/worldedit-bukkit-6.0.jar</systemPath>
+            <systemPath>${project.basedir}/lib/WorldEdit (1).jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.gmail.filoghost.holographicdisplays</groupId>

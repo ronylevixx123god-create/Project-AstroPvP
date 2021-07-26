@@ -4,12 +4,15 @@ import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
 import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.conaxgames.customskulls.util.CustomBlockUtil;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import me.astropvp.astrospawners.AstroSpawners;
 import me.astropvp.astrospawners.utils.PlayerData;
 import me.astropvp.astrospawners.utils.PlayerDataManager;
 import me.astropvp.astrospawners.utils.StackedMobDeathEvent;
 import me.astropvp.astrospawners.utils.*;
+import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
+import me.ifamasssxd.cosmichcf.struct.OutpostType;
 import net.astropvp.core.utils.GrindingMessagesUtil;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
@@ -114,8 +117,12 @@ public class EntityStackerListener implements Listener {
                 exp = exp * 1.5;
             }
 
+            if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(p), OutpostType.COURTYARD) && Math.random() < 0.1) {
+                exp = exp *1.75;
+            }
 
-            p.giveExp((int) exp);
+
+                p.giveExp((int) exp);
 
 
         }
@@ -165,12 +172,14 @@ public class EntityStackerListener implements Listener {
             try {
                 if (num >= 0 && num <= 0.1) {
                     if (GrindingMessagesUtil.isPlayerIndicating(p)) {
-                        p.sendMessage(CC.translate("&b&lGrinding &f&l➥ &a+ Grinding Tier III Lootbox"));
+                        p.sendMessage(CC.translate("&b&lGrinding &f&l➥ &a+ Grinding Lootbox"));
                     }
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mc give " + player + " Grinding3");
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mc give " + player + " GrindingLootbox");
 
                     return;
-                } else if (num >= 0 && num <= 0.15) {
+                }
+
+                /*else if (num >= 0 && num <= 0.15) {
                     if (GrindingMessagesUtil.isPlayerIndicating(p)) {
                         p.sendMessage(CC.translate("&b&lGrinding &f&l➥ &a+ Grinding Tier II Lootbox"));
                     }
@@ -183,9 +192,9 @@ public class EntityStackerListener implements Listener {
                     }
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mc give " + player + " Grinding1");
                     return;
-                }
+                }*/
 
-                if (Math.random() < 0.005) {
+                if (Math.random() < 0.002) {
                     if (GrindingMessagesUtil.isPlayerIndicating(p)) {
                         p.playSound(p.getLocation(), Sound.VILLAGER_YES, 5, 5);
                         p.sendMessage(CC.translate("&b&lGrinding &f&l➥ &a+ Deluxe Grinding Lootbox"));

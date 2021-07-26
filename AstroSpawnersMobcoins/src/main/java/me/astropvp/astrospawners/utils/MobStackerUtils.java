@@ -6,11 +6,15 @@ import java.util.List;
 import java.util.UUID;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.massivecraft.factions.Board;
+import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.Faction;
 import me.astropvp.astrospawners.AstroSpawners;
 import me.astropvp.astrospawners.data.SpawnerData;
 import me.astropvp.astrospawners.data.SpawnerDataHelper;
+import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
+import me.ifamasssxd.cosmichcf.struct.OutpostType;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -81,10 +85,16 @@ public class MobStackerUtils {
         if (entity.getType() == EntityType.BLAZE) {
             size = entityStack + (data != null ? 1000 : 100);
 
+            if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFactionAt(event.getLocation()), OutpostType.THE_GREAT_HALL)) {
+                size += size*1.5;
+            }
+
 
         } else {
             size = entityStack + (data != null ? data.getSpawnerAmount() : 100);
-
+            if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFactionAt(event.getLocation()), OutpostType.THE_GREAT_HALL)) {
+                size += size *1.5;
+            }
         }
 
 

@@ -56,7 +56,7 @@ public class McMMOSkillVoucherBuilder
         if (this.random) {
             found = SkillType.values()[ThreadLocalRandom.current().nextInt(SkillType.values().length)];
         }
-        return CustomItemUtils.getSkillVoucher(found, level);
+        return null;
     }
 }
 

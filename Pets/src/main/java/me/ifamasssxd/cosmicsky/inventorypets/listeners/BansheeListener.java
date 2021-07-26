@@ -1,5 +1,6 @@
 package me.ifamasssxd.cosmicsky.inventorypets.listeners;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.pets.InventoryBansheePet;
@@ -21,8 +22,10 @@ public class BansheeListener implements Listener {
     public void onEntityDamage(EntityDamageByEntityEvent event) {
         if (event.getEntity().getType().equals(EntityType.PLAYER) && event.getDamager().getType().equals(EntityType.PLAYER)) {
             Player damager = (Player) event.getDamager();
-            if (damager.hasMetadata("banshee_active"))
+            if (damager.hasMetadata("banshee_active")) {
                 event.setDamage(event.getDamage() * 1.35D);
+                damager.sendMessage(CC.translate("&4&l** BANSHEE PET &7[&f1.5x DMG&7] &4&l**"));
+            }
         }
     }
 

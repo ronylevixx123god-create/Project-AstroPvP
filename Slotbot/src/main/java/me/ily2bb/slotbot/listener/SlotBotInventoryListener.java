@@ -7,6 +7,8 @@ import com.conaxgames.customskulls.util.CustomBlockUtil;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.massivecraft.factions.FPlayer;
+import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
+import me.ifamasssxd.cosmichcf.struct.OutpostType;
 import me.ily2bb.slotbot.CosmicSlotBotAPI;
 import me.ily2bb.slotbot.SlotBotPlugin;
 import me.ily2bb.slotbot.managers.SlotBotManager;
@@ -118,6 +120,13 @@ public class SlotBotInventoryListener implements Listener {
                 SlotBotManager.startRolling(player, inventory, tickets);
                 player.updateInventory();
 
+                if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(player), OutpostType.COURTYARD) && Math.random() < 0.1) {
+                    returnTickets(tickets, player);
+                    player.sendMessage("");
+                    player.sendMessage(CC.translate("&c&l** INFERNAL STRONGHOLD BONUS &7Saved &dSlotbot Tickets &c&l**"));
+                    player.sendMessage("");
+                }
+
                 if (CustomBlockUtil.chunkHasCertainBlock(player, "ASTROTROPHY")) {
                     FPlayer killer = FactionUtils.getFPlayer(player);
                     for (AbilityData data : CustomBlockUtil.getBlockDatasInChunk(player)) {
@@ -131,7 +140,6 @@ public class SlotBotInventoryListener implements Listener {
                                 returnTickets(tickets, player);
                                 player.sendMessage("");
                                 player.sendMessage(CC.translate("&8[&e&l☆&8] &eAstroTrophy returned your tickets from the slot bot."));
-                                player.sendMessage(CC.translate("&7The chances of this happening is 10%."));
                                 player.sendMessage("");
                             }
                         }

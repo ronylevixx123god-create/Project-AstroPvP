@@ -20,8 +20,6 @@ import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKits;
 import me.ifamasssxd.cosmicguishop.ArkhamMoneyNotesAPI;
 import me.ifamasssxd.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.Arkkit.patches.ItemNametag;
-import org.arkhamnetwork.Arkkit.patches.McmmoCredits;
-import org.arkhamnetwork.CosmicCustomTNT.enums.TNTTypes;
 import org.arkhamnetwork.enchantments.EnchantmentBook;
 import org.arkhamnetwork.enchantments.util.TieredEnchantments;
 import org.bukkit.Bukkit;
@@ -177,13 +175,6 @@ public class CustomItemUtils {
         return TitleItems.getTitleItem(title);
     }
 
-    public static ItemStack getMCMMOVoucher(int amount) {
-        return McmmoCredits.buildMcmmoCreditItem((int) amount);
-    }
-
-    public static ItemStack getSkillVoucher(SkillType type, int amount) {
-        return McmmoCredits.buildSkillCreditItem((SkillType) type, (int) amount);
-    }
 
     public static ItemStack getMobSpawner(EntityType entityType) {
         return CustomItemUtils.buildItem(Material.MOB_SPAWNER, entityType.getTypeId(), ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + CustomItemUtils.getEntityName(entityType) + ChatColor.GOLD.toString() + " Spawner", (Object) ((Object) ChatColor.GRAY) + "Be careful where you place this!");
@@ -197,21 +188,13 @@ public class CustomItemUtils {
         return book;
     }
 
-    public static ItemStack getCustomTNT(TNTTypes tntType) {
-        return TNTTypes.getTNTItem((TNTTypes) tntType);
-    }
 
-    public static ItemStack getCustomCreeperEgg(CreeperTypes creeperType) {
-        return CreeperTypes.getCCItem((CreeperTypes) creeperType);
-    }
 
     public static ItemStack getCustomCreeperEgg(String creeperType) {
         return CreeperTypes.getCCItem((CreeperTypes) CreeperTypes.valueOf((String) creeperType));
     }
 
-    public static ItemStack getCustomTNT(String tntEnumName) {
-        return CustomItemUtils.getCustomTNT(TNTTypes.valueOf((String) tntEnumName));
-    }
+
 
     public static ItemStack setAmount(ItemStack i, int amount) {
         i.setAmount(amount);

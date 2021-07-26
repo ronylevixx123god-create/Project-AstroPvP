@@ -62,9 +62,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.BrewEvent;
 import org.bukkit.event.inventory.FurnaceBurnEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -170,6 +168,28 @@ implements Listener {
             if (spawningIn != null && spawningIn.isNormal() && HCFOutpostAPI.isControllingOutpost(spawningIn, OutpostType.COURTYARD) && Math.random() <= 0.5) {
                 event.getEntity().setMetadata("monsterAmount", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)(event.getEntity().hasMetadata("monsterAmount") ? ((MetadataValue)event.getEntity().getMetadata("monsterAmount").get(0)).asInt() + 2 : 2)));
             }
+        }
+    }
+
+
+    @EventHandler
+    public void extraDamage(EntityDamageByEntityEvent e) {
+        if (e.getEntity() == null) return;
+        if (!(e.getEntity() instanceof Player)) return;
+        Player p = ((Player) e.getDamager());
+        if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(p), OutpostType.COURTYARD)) {
+            e.setDamage(e.getDamage()*1.20);
+        }
+    }
+
+
+    @EventHandler
+    public void recudeDamage(EntityDamageEvent e) {
+        if (e.getEntity() == null) return;
+        if (!(e.getEntity() instanceof Player)) return;
+        Player p = ((Player) e.getEntity()).getPlayer();
+        if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(p), OutpostType.THE_GREAT_HALL)) {
+            e.setDamage(e.getDamage()*0.75);
         }
     }
 
