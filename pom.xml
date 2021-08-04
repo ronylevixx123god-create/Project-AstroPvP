@@ -45,6 +45,7 @@
         <module>Comms</module>
         <module>AstroSpawnersMobcoins</module>
         <module>AstroScoreboard</module>
+        <module>AstroClientComms</module>
     </modules>
 
     <build>

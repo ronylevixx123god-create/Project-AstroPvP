@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
-import me.ifamasssxd.factionstop.struct.TopFaction;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.patches.EnderpearlCooldown;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;

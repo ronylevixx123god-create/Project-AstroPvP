@@ -10,6 +10,7 @@
         <module name="CustomBlocks" />
         <module name="SpaceChests" />
         <module name="ItemSkins" />
+        <module name="AstroClientComms" />
         <module name="Enchantments" />
         <module name="Attributes" />
         <module name="Bosses" />

@@ -79,7 +79,7 @@ implements Listener,
 PluginMessageListener {
     public static boolean DEBUGGING = true;
     private static Random random = new Random();
-    private static final String CHANNEL = "CC";
+    private static final String CHANNEL = "cosmic";
     private static final int VERSION = 1;
     private static ClientComms instance;
     private static ConcurrentHashMap<Player, OCMCUser> registeredPlayers;
@@ -125,6 +125,9 @@ PluginMessageListener {
         }
         HMAC_KEY = HandshakeContainer.getKeySpec(hmacKeyBytes);
         this.saveDefaultConfig();
+        // oh makes sense
+        // so there's no packet io between the server and client at all right? it's just recieving
+        // that's true
         ServerType serverType = ClientComms.serverType = ServerType.valueOf(this.getConfig().getString("serverType", "UNKNOWN")) == null ? ServerType.UNKNOWN : ServerType.valueOf(this.getConfig().getString("serverType", "UNKNOWN"));
 
         //Todo: CONAX: Replaced PrisonsHandler() and HCFactionsHandler() with FactionsHandler() as we don't have it
@@ -182,8 +185,11 @@ PluginMessageListener {
         this.getServer().getScheduler().runTaskTimer(this, this::tickIncomingIOQueue, 1L, 1L);
         this.getServer().getScheduler().runTaskTimerAsynchronously(this, this::tickOutgoingIOQueue, 1L, 1L);
         allowedVersions.clear();
+        // -Dcom.cosmicpvp.jarhash3=00000000000000000000000000000000
+        // add that to runtime args
+        // how did you launch it
         if (DEBUGGING) {
-            allowedVersions.add("00000000000000000000000000000000");
+            allowedVersions.add("d5b4a4da90021cb2648d1ea4c5cd69e4");
         }
 
         this.getServer().getScheduler().runTaskTimerAsynchronously(this, () -> {
@@ -203,6 +209,7 @@ PluginMessageListener {
             try {
                 for (String siteHash : this.getHash_Joe()) {
                     if (!allowedVersions.add(siteHash)) continue;
+                    // might be somethingto do with this, idk tho there's a "JarHash" env var in the deobf jar if you take a look
                     this.getLogger().info("New allowed Cosmic Client version found: " + siteHash);
                 }
             }
@@ -511,7 +518,7 @@ PluginMessageListener {
     @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
     public void onJoin(PlayerJoinEvent event) {
         // Todo: manually setting
-        event.getPlayer().setMetadata("cosmicClientVersion", new FixedMetadataValue(this, "0000000000000000000000"));
+        event.getPlayer().setMetadata("cosmicClientVersion", new FixedMetadataValue(this, "d5b4a4da90021cb2648d1ea4c5cd69e4"));
         Bukkit.getConsoleSender().sendMessage("[BOOF]" + event.getPlayer().getName());
         Bukkit.getConsoleSender().sendMessage("[BOOF]" + event.getPlayer().getName());
         Bukkit.getConsoleSender().sendMessage("[BOOF]" + event.getPlayer().getName());

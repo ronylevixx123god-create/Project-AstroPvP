@@ -103,7 +103,7 @@ public class HandshakeManager {
         client_hs.name = name;
         client_hs.uuid = uuid;
         client_hs.mojang_token_hash = mojang_token_hash;
-        client_hs.version = "00000000000000000000000000000000";
+        client_hs.version = "d5b4a4da90021cb2648d1ea4c5cd69e4";
         client_hs.client_random = sr.nextLong();
         long create_time_nanos = System.nanoTime();
         long client_Time = System.currentTimeMillis();

@@ -1,0 +1,4 @@
+name: AstroClientComms
+version: 1
+main: gg.sense.anticheat.CosmicAPI
+authors: [Freddie, Decencies]
