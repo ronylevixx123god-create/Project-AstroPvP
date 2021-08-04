@@ -174,7 +174,7 @@ public class AstroSet
         if (!(event.getEntity() instanceof Player)) {
             return false;
         }
-        this.modifyDamage(damager, event, 5.0, applied);
+        this.modifyDamage(damager, event, 7.5, applied);
 
         if (Math.random() < 0.01) {
             if (this.isBlockedOutpostWorld(damager)) {

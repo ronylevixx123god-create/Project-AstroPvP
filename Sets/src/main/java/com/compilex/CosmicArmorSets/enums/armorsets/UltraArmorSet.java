@@ -133,7 +133,7 @@ public class UltraArmorSet
         if (this.isBlockedOutpostWorld(damaged)) {
             return false;
         }
-        this.modifyDamage(damaged, event, -8.0, multiplier);
+        this.modifyDamage(damaged, event, -5.0, multiplier);
         return false;
     }
 
@@ -149,7 +149,7 @@ public class UltraArmorSet
         if (Math.random() <= 0.004 * (double) applied) {
             this.activateUltraAbility(damager, (Player) event.getEntity());
         }
-        this.modifyDamage(damager, event, 8.0, applied);
+        this.modifyDamage(damager, event, 10.0, applied);
         return false;
     }
 
@@ -172,7 +172,7 @@ public class UltraArmorSet
                 target.removeMetadata("ultra", CosmicSkyInventoryPets.get());
                 //target.removeMetadata("bansheed", CosmicSkyInventoryPets.get());
             }
-        }.runTaskLater(CosmicSkyInventoryPets.get(), 160L);
+        }.runTaskLaterAsynchronously(CosmicSkyInventoryPets.get(), 160L);
     }
 
     @Override

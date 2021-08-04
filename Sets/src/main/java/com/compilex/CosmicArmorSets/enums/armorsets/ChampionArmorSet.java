@@ -145,7 +145,7 @@ public class ChampionArmorSet
         if (this.isBlockedOutpostWorld(damaged)) {
             return false;
         }
-        this.modifyDamage(damaged, event, -5.0, multiplier);
+        this.modifyDamage(damaged, event, -7.5, multiplier);
         return false;
     }
 
@@ -160,7 +160,7 @@ public class ChampionArmorSet
         if (Math.random() <= 0.006 * (double) applied) {
             this.activateChampionAbility(damager, (Player) event.getEntity());
         }
-        return this.modifyDamage(damager, event, 7.5, applied);
+        return this.modifyDamage(damager, event, 10, applied);
     }
 
     @Override
