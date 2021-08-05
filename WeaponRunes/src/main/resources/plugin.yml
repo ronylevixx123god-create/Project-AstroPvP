@@ -1,0 +1,9 @@
+name: AstroWeaponBonuses
+main: me.bryside.weaponrunes.WeaponRunesPlugin
+author: matthawkk
+version: 1.0
+commands:
+  giveweaponbonus:
+    aliases: [gwb, givebonus]
+  weaponbonus:
+    aliases: [weaponbonuses]

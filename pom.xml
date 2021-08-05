@@ -46,6 +46,7 @@
         <module>AstroSpawnersMobcoins</module>
         <module>AstroScoreboard</module>
         <module>AstroClientComms</module>
+        <module>WeaponRunes</module>
     </modules>
 
     <build>
