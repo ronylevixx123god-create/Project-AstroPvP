@@ -193,7 +193,7 @@ public class AncientArmorSet
 
     private void startAncientEffect(final Player player, final Player pTarget) {
 
-        if (WeaponBonusUtils.getWeaponBonusByItem(((Player)pTarget).getItemInHand()) == WeaponBonusType.HERO && Math.random() < 0.5) {
+        if (WeaponBonusUtils.hasWeaponBonus(((Player) pTarget).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player)pTarget).getItemInHand()) == WeaponBonusType.HERO && Math.random() < 0.5) {
 
             pTarget.sendMessage(CC.translate("&3&l** BLOCKED ENEMY ANCIENT ABILITY &7(Hero Weapon Bonus) &3&l**"));
 

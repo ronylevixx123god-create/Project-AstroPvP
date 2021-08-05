@@ -131,7 +131,7 @@ public class DivineImmolation extends CustomEnchantment {
                                 LivingEntity le = (LivingEntity)ent;
                                 le.damage(damage);
 
-                                if (WeaponBonusUtils.getWeaponBonusByItem(((Player)player).getItemInHand()) == WeaponBonusType.REFORGED) {
+                                if (WeaponBonusUtils.hasWeaponBonus(((Player) player).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player)player).getItemInHand()) == WeaponBonusType.REFORGED) {
                                     e.setDamage(e.getDamage()*1.15);
                                 }
 

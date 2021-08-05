@@ -38,6 +38,11 @@ public class InventorySkinClickListener implements Listener {
                 return;
             }
             Inventory inv = InventoryItems.createSkinInventory(type);
+
+            if (e.getCurrentItem().getType() == Material.DIAMOND_LEGGINGS) {
+                e.setCancelled(true);
+                return;
+            }
             e.getWhoClicked().openInventory(inv);
         } else if (title.startsWith(CC.translate("&8Item Skins:"))) {
             if (item.equals(InventoryItems.createBackButton())) {

@@ -119,7 +119,7 @@
             <artifactId>WGSRV</artifactId>
             <version>0.1</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/WorldGuardSERV.jar</systemPath>
+            <systemPath>${project.basedir}/lib/WorldGuard (1).jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>

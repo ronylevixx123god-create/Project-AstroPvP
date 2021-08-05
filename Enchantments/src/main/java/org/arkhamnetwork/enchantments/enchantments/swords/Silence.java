@@ -72,7 +72,7 @@ public class Silence extends CustomEnchantment {
 
             long durationTicks = (enchantLevel + solitudeLevel) * 20;
 
-            if (WeaponBonusUtils.getWeaponBonusByItem(((Player) user).getItemInHand()) == WeaponBonusType.REFORGED && Math.random() < 0.5) {
+            if (WeaponBonusUtils.hasWeaponBonus(((Player) user).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player) user).getItemInHand()) == WeaponBonusType.REFORGED && Math.random() < 0.5) {
                 durationTicks*=1.5;
             }
 
