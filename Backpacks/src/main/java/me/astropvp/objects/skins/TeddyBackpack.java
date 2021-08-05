@@ -16,7 +16,7 @@ public class TeddyBackpack extends Backpack {
 
     @Override
     public BackpackType getType() {
-        return BackpackType.TEDDY_BACKPACK;
+        return BackpackType.VALENTINES_2021_BACKPACK;
     }
 
 

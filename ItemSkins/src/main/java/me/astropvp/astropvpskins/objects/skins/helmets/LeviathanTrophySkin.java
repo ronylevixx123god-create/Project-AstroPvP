@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 
 public class LeviathanTrophySkin extends ItemSkin {
     public LeviathanTrophySkin() {
-        super(SkinType.LEVIATHAN_TROPHY); // will be LeviathanTrophy
+        super(SkinType.RUINS_HELMET); // will be LeviathanTrophy
     }
 
     @Override

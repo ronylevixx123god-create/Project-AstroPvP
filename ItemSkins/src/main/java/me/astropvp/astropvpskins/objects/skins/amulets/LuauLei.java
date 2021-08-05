@@ -5,6 +5,6 @@ import me.astropvp.astropvpskins.objects.ItemSkin;
 
 public class LuauLei extends ItemSkin {
     public LuauLei() {
-             super(SkinType.LUAU_LEI);
+             super(SkinType.SUMMER_2021_AMULET);
            }
 }

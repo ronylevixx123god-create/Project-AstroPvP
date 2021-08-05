@@ -7,7 +7,7 @@
 /*    */   extends ItemSkin
 /*    */ {
 /*    */   public KnightBootsSkin() {
-/* 10 */     super(SkinType.KNIGHT_BOOTS);
+/* 10 */     super(SkinType.MEDIEVAL_BOOTS_KNIGHT);
 /*    */   }
 /*    */ }
 

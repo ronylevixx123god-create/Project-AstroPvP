@@ -10,7 +10,7 @@ public class TridentSkin
         extends ItemSkin {
 
     public TridentSkin() {
-        super(SkinType.TRIDENT_SWORD);
+        super(SkinType.RUINS_SWORD);
     }
 
 

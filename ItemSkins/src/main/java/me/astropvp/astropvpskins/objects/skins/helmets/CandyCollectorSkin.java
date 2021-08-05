@@ -7,7 +7,7 @@
 /*    */   extends ItemSkin
 /*    */ {
 /*    */   public CandyCollectorSkin() {
-/* 10 */     super(SkinType.CANDY_COLLECTOR_HELMET);
+/* 10 */     super(SkinType.CANDY_COLLECTOR);
 /*    */   }
 /*    */ }
 

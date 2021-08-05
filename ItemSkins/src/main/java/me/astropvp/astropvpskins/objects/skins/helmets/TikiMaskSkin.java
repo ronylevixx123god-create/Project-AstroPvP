@@ -5,6 +5,6 @@ import me.astropvp.astropvpskins.objects.ItemSkin;
 
 public class TikiMaskSkin  extends ItemSkin {
     public TikiMaskSkin() {
-             super(SkinType.TIKI_MASK);
+             super(SkinType.SUMMER_2021_HELMET);
            }
 }

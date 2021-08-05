@@ -7,7 +7,7 @@
 /*    */   extends ItemSkin
 /*    */ {
 /*    */   public RetaliationBoots() {
-/* 10 */     super(SkinType.BOOTS_RETALIATION);
+/* 10 */     super(SkinType.HALLOWEEN_BOOTS);
 /*    */   }
 /*    */ }
 

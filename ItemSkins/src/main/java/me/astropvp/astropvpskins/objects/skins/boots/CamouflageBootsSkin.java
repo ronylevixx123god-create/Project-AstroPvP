@@ -15,7 +15,7 @@
 /*    */   extends ItemSkin
 /*    */ {
 /*    */   public CamouflageBootsSkin() {
-/* 18 */     super(SkinType.CAMOUFLAGE_BOOTS);
+/* 18 */     super(SkinType.DOOMSDAY_BOOTS);
 /*    */   }
 /*    */ }
 

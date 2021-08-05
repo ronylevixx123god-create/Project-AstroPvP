@@ -14,7 +14,7 @@ import me.astropvp.astropvpskins.enums.SkinType;
     /*    */
     public SkullScytheSkin() {
         /* 11 */
-        super(SkinType.SKULL_SCYTHE);
+        super(SkinType.SCYTHE1);
         /*    */
     }
 

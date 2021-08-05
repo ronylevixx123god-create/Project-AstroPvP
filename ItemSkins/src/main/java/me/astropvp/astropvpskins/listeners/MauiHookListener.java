@@ -28,7 +28,7 @@ public class MauiHookListener implements Listener {
         if (!(e.getDamager() instanceof Player)) return;
         if (!(e.getEntity() instanceof Player)) return;
         if (Math.random() > 0.06) return;
-        if (!(AstroItemSkinsAPI.isInHand((Player) e.getDamager(), SkinType.MAUIS_HOOK))) {
+        if (!(AstroItemSkinsAPI.isInHand((Player) e.getDamager(), SkinType.SUMMER_2021_SWORD))) {
             return;
         }
 
@@ -51,7 +51,7 @@ public class MauiHookListener implements Listener {
     @EventHandler
     public void sneakMauiEffect(PlayerToggleSneakEvent e) {
 
-        if (e.isSneaking() && e.getPlayer().hasMetadata("mauiEffect") && AstroItemSkinsAPI.isInHand(e.getPlayer(), SkinType.MAUIS_HOOK)) {
+        if (e.isSneaking() && e.getPlayer().hasMetadata("mauiEffect") && AstroItemSkinsAPI.isInHand(e.getPlayer(), SkinType.SUMMER_2021_SWORD)) {
             if (e.getPlayer().getMetadata("mauiEffect").get(0).asInt() >= 10) {
                 List<Entity> nearbyPlayers = e.getPlayer().getNearbyEntities(8, 8, 8);
                 if (nearbyPlayers.isEmpty()) {

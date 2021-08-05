@@ -5,6 +5,6 @@ import me.astropvp.astropvpskins.objects.ItemSkin;
 
 public class NorthStarSkin extends ItemSkin {
     public NorthStarSkin() {
-        super(SkinType.NORTH_STAR);
+        super(SkinType.CHRISTMAS_HELMET_STAR);
     }
 }

@@ -5,6 +5,6 @@ import me.astropvp.astropvpskins.objects.ItemSkin;
 
 public class MauisHookSkin extends ItemSkin {
     public MauisHookSkin() {
-        super(SkinType.MAUIS_HOOK);
+        super(SkinType.SUMMER_2021_SWORD);
     }
 }

@@ -7,7 +7,7 @@
 /*    */   extends ItemSkin
 /*    */ {
 /*    */   public DoomsdayMacheteSkin() {
-/* 10 */     super(SkinType.DOOMSDAY_MACHETE);
+/* 10 */     super(SkinType.DOOMSDAY_SWORD);
 /*    */   }
 /*    */ }
 

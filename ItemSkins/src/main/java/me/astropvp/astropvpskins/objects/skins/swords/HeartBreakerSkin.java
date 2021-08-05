@@ -5,6 +5,6 @@ import me.astropvp.astropvpskins.objects.ItemSkin;
 
 public class HeartBreakerSkin extends ItemSkin {
     public HeartBreakerSkin() {
-        super(SkinType.HEARTBREAKER);
+        super(SkinType.VALENTINES_2021_SWORD);
     }
 }

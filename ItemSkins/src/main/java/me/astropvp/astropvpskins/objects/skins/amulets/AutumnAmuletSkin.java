@@ -5,6 +5,6 @@ import me.astropvp.astropvpskins.objects.ItemSkin;
 
 public class AutumnAmuletSkin extends ItemSkin {
     public AutumnAmuletSkin() {
-        /* 8 */     super(SkinType.AUTUMN_AMULET);
+        /* 8 */     super(SkinType.THANKSGIVING_AMULET_AUTUMN);
         /*   */   }
 }

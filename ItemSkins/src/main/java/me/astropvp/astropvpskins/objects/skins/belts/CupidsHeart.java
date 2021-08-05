@@ -5,6 +5,6 @@ import me.astropvp.astropvpskins.objects.ItemSkin;
 
 public class CupidsHeart extends ItemSkin {
     public CupidsHeart() {
-        super(SkinType.CUPIDS_HEART);
+        super(SkinType.VALENTINES_2021_BELT);
     }
 }

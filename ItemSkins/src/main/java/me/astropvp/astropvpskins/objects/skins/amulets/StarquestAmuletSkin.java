@@ -6,7 +6,7 @@
 /*   */ public class StarquestAmuletSkin
 /*   */   extends ItemSkin {
 /*   */   public StarquestAmuletSkin() {
-/* 9 */     super(SkinType.STARQUEST_AMULET);
+/* 9 */     super(SkinType.COSMIC_CITIZEN_AMULET);
 /*   */   }
 /*   */ }
 

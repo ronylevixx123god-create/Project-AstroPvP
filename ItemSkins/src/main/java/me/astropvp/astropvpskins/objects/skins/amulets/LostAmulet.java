@@ -5,6 +5,6 @@ import me.astropvp.astropvpskins.objects.ItemSkin;
 
 public class LostAmulet extends ItemSkin {
     public LostAmulet() {
-        super(SkinType.LOST_AMULET);
+        super(SkinType.RUINS_AMULET);
     }
 }

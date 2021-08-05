@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 
 public class SnowflakeFlippersSkin extends ItemSkin {
     public SnowflakeFlippersSkin() {
-        super(SkinType.SNOWFLAKE_SLIPPERS);
+        super(SkinType.CHRISTMAS_BOOTS_SLIPPERS);
     }
 
     public void onEquip(Player player) {

@@ -91,7 +91,7 @@ public class ItemSkinProccessEventsListener implements Listener {
                             continue;
                         }
                         e.setDamage(Math.max(0.0, e.getDamage(EntityDamageEvent.DamageModifier.BASE) + e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.05));
-                    } else if (type == SkinType.TRIDENT_SWORD && Math.random() <=0.08) {
+                    } else if (type == SkinType.RUINS_SWORD && Math.random() <=0.08) {
 
                         new MasteryMarkOfTheBeast().applyDefenseEffect(damager, (LivingEntity) e.getEntity(), 3, e);
                         new Blessed().applyEffect(damager, (LivingEntity) e.getEntity(), 4, e);
@@ -116,21 +116,21 @@ public class ItemSkinProccessEventsListener implements Listener {
                         double health = damaged.getHealth() * 0.1;
                         //damaged.setHealth(damaged.getHealth() - health);
                         //damager.setHealth(Math.min(damaged.getMaxHealth(), damager.getHealth() + health));
-                    } else if (type == SkinType.SKULL_SCYTHE) {
+                    } else if (type == SkinType.SCYTHE1) {
                         e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.025);
                     } else if (type == SkinType.DEEPSPACE_BACKPACK) {
                         e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.003);
                     } else if (type == SkinType.SANTA_HAT) {
                         e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.005);
-                    } else if (type == SkinType.NEON_EMOTIONS) {
+                    } else if (type == SkinType.VALENTINES_2021_HELMET) {
                         e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) *1.006);
                     } else if (type == SkinType.JOLLY_CANDY_SWORD) {
                         e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.075);
-                    } else if (type == SkinType.ORNAMENTAL_CARNAGE) {
+                    } else if (type == SkinType.CHRISTMAS_SWORD_ORNAMENTAL) {
                         e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.1);
-                    } else if (type == SkinType.HEARTBREAKER) {
+                    } else if (type == SkinType.VALENTINES_2021_BELT) {
                         e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.04);
-                    } else if (type == SkinType.LEVIATHAN_TROPHY) {
+                    } else if (type == SkinType.RUINS_HELMET) {
 
                         if (ThreadLocalRandom.current().nextInt(101) <= 3) {
                             List<Player> players = damager.getNearbyEntities(7, 12, 7)
@@ -207,11 +207,11 @@ public class ItemSkinProccessEventsListener implements Listener {
                             new MasteryDemonicGateway().applyDefenseEffect(entity, (LivingEntity) e.getDamager(), 5, e);
                         } else if (type2 == SkinType.SANTA_HAT) {
                             e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.95);
-                        } else if (type2 == SkinType.NEON_EMOTIONS) {
+                        } else if (type2 == SkinType.VALENTINES_2021_HELMET) {
                             e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.96);
                         } else if (type2 == SkinType.BOOTS_RETALIATION) {
                             e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.1);
-                        } else if (type2 == SkinType.CANDY_COLLECTOR_HELMET) {
+                        } else if (type2 == SkinType.CANDY_COLLECTOR) {
                             e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.8);
                             if (Math.random() < 0.01) {
 //                                InventoryWitcherPet.(entity, 12, 6);
@@ -226,9 +226,9 @@ public class ItemSkinProccessEventsListener implements Listener {
                         } else if (type2 == SkinType.VIRUS_BOOTS && Math.random() < 0.02) {
                             getHazmattablePlayersNearby(entity, 12, 12, 12).forEach(
                                     it -> effectPlayerWithHazmatBoots(entity, it));
-                        }else if (type2 == SkinType.LOST_AMULET) {
+                        }else if (type2 == SkinType.RUINS_HELMET) {
                             e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.95);
-                        } else if (type2 == SkinType.ORNAMENTAL_CARNAGE) {
+                        } else if (type2 == SkinType.CHRISTMAS_SWORD_ORNAMENTAL) {
                             e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.80);
                             }
                         }

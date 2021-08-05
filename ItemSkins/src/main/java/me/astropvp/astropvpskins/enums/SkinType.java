@@ -116,17 +116,17 @@ public enum SkinType {
     EASTER_SWORD((CC.RedB) + "Jumbo Chocolate Sword", ItemSkinType.SWORD, new EasterSwordSkin(), Arrays.asList((CC.Red) + "+15% Outgoing PvE DMG", (CC.Red) + "Devour V")),
     EASTER_PICKAXE((CC.RedB) + "Easter Basket", ItemSkinType.AXE, new EasterBasketSkin(), Arrays.asList((CC.Red) + "-10% Incoming DMG")),
     PEPE_HELMET((CC.BlueB) + "Pepe Helmet", ItemSkinType.HELMET, new PepeHelmetSkin(), Arrays.asList(new String[0])),
-    SKULL_SCYTHE((CC.RedB) + "Skull Scythe", ItemSkinType.SWORD, new SkullScytheSkin(), Arrays.asList((CC.Red) + "+2.5% Outgoing Damage", (CC.Red) + "10% chance to silence amulet of corruption for 10s")),
-    DOOMSDAY_MACHETE((CC.DarkGreenB) + "Doomsday Machete", ItemSkinType.SWORD, new DoomsdayMacheteSkin(), Arrays.asList((CC.Red) + "Increases outgoing damage from soul enchantments by 1.25x")),
-    TRIDENT_SWORD((CC.DarkAquaB) + "Trident of the Deep", ItemSkinType.SWORD, new TridentSkin(), Arrays.asList((CC.Red) + "Blessed IV", (CC.Red) + "Hex V", (CC.Red) + "Mark of the Beast VI", (CC.Red) + "25% chance to bypass Full Armor Set", (CC.Red) + "or Armor Crystal defensive bonus")),
-    MOON_BOOTS((CC.AquaB) + "Moon Boots", ItemSkinType.BOOTS, new MoonBootsSkin(), Arrays.asList((CC.Red) + "Increases armor set bonus/crystal damage by 1.2x")),
-    KNIGHT_BOOTS((CC.GrayB) + "Knight's Boots", ItemSkinType.BOOTS, new KnightBootsSkin(), Arrays.asList((CC.Red) + "Immune to all but vanilla knockback")),
-    CAMOUFLAGE_BOOTS((CC.DarkGreenB) + "Camouflage Yeezys", ItemSkinType.BOOTS, new CamouflageBootsSkin(), Arrays.asList((CC.Red) + "40% chance to negate soul trap", (CC.Red) + "Demonic Gateway V")),
-    BOOTS_RETALIATION((CC.DarkGreenB) + "Retaliation Boots", ItemSkinType.BOOTS, new RetaliationBoots(), Arrays.asList((CC.Red) + "+15% Outgoing Damage to Bosses", (CC.Red) + "+10% Incoming Damage")),
-    STARQUEST_AMULET((CC.GoldB) + "Starquest Amulet", ItemSkinType.AMULET, new StarquestAmuletSkin(), Arrays.asList((CC.Red) + "4% chance to earn extra dungeon lootbag")),
+    SCYTHE1((CC.RedB) + "Skull Scythe", ItemSkinType.SWORD, new SkullScytheSkin(), Arrays.asList((CC.Red) + "+2.5% Outgoing Damage", (CC.Red) + "10% chance to silence amulet of corruption for 10s")),
+    DOOMSDAY_SWORD((CC.DarkGreenB) + "Doomsday Machete", ItemSkinType.SWORD, new DoomsdayMacheteSkin(), Arrays.asList((CC.Red) + "Increases outgoing damage from soul enchantments by 1.25x")),
+    RUINS_SWORD((CC.DarkAquaB) + "Trident of the Deep", ItemSkinType.SWORD, new TridentSkin(), Arrays.asList((CC.Red) + "Blessed IV", (CC.Red) + "Hex V", (CC.Red) + "Mark of the Beast VI", (CC.Red) + "25% chance to bypass Full Armor Set", (CC.Red) + "or Armor Crystal defensive bonus")),
+    COSMIC_CITIZEN_BOOTS((CC.AquaB) + "Moon Boots", ItemSkinType.BOOTS, new MoonBootsSkin(), Arrays.asList((CC.Red) + "Increases armor set bonus/crystal damage by 1.2x")),
+    MEDIEVAL_BOOTS_KNIGHT((CC.GrayB) + "Knight's Boots", ItemSkinType.BOOTS, new KnightBootsSkin(), Arrays.asList((CC.Red) + "Immune to all but vanilla knockback")),
+    DOOMSDAY_BOOTS((CC.DarkGreenB) + "Camouflage Yeezys", ItemSkinType.BOOTS, new CamouflageBootsSkin(), Arrays.asList((CC.Red) + "40% chance to negate soul trap", (CC.Red) + "Demonic Gateway V")),
+    HALLOWEEN_BOOTS((CC.DarkGreenB) + "Retaliation Boots", ItemSkinType.BOOTS, new RetaliationBoots(), Arrays.asList((CC.Red) + "+15% Outgoing Damage to Bosses", (CC.Red) + "+10% Incoming Damage")),
+    COSMIC_CITIZEN_AMULET((CC.GoldB) + "Starquest Amulet", ItemSkinType.AMULET, new StarquestAmuletSkin(), Arrays.asList((CC.Red) + "4% chance to earn extra dungeon lootbag")),
     DEEPSPACE_BACKPACK((CC.DarkPurpleB) + "Deep Space Backpack", ItemSkinType.CHESTPLATE, new DeepSpaceBackpack(), Arrays.asList((CC.Red) + "+3% Outgoing Damage", (CC.Red) + "Immune to Soul Trap")),
-    CANDY_COLLECTOR_HELMET((CC.GoldB) + "Candy Collector", ItemSkinType.HELMET, new CandyCollectorSkin(), Arrays.asList((CC.Red) + "-20% incoming damage from enemies wielding swords", (CC.Red) + "1% chance to activate witcher ability")),
-    LEVIATHAN_TROPHY(CC.translate("&3&lLeviathan Trophy"), ItemSkinType.HELMET, new LeviathanTrophySkin(),
+    CANDY_COLLECTOR((CC.GoldB) + "Candy Collector", ItemSkinType.HELMET, new CandyCollectorSkin(), Arrays.asList((CC.Red) + "-20% incoming damage from enemies wielding swords", (CC.Red) + "1% chance to activate witcher ability")),
+    RUINS_HELMET(CC.translate("&3&lLeviathan Trophy"), ItemSkinType.HELMET, new LeviathanTrophySkin(),
             Arrays.asList(
                     CC.translate("&cIncreased chance to drop Ancient Scrolls"),
                     CC.translate("&cwhen killing Guardians in /ruins"),
@@ -140,32 +140,32 @@ public enum SkinType {
                     CC.translate("&cAbility to see invisible players"),
                     CC.translate("&7(Feign Death, Undead Ruse)")
             )),
-    HEART_HALO(CC.translate("&c&lHeart Halo"), ItemSkinType.HELMET, new HearthHaloSkin(),
+    VALENTINES_2021_HELMET(CC.translate("&c&lHeart Halo"), ItemSkinType.HELMET, new HearthHaloSkin(),
             Arrays.asList(
                     CC.translate("&cPassively removes 1 Bleedstack every 2s"),
                     CC.translate("&cImmune to Soul Harvester"),
                     CC.translate("&c1.25% (Divine) Enlighted Healing")
             )),
-    NORTH_STAR(CC.translate("&a&lNorth Star"), ItemSkinType.HELMET, new NorthStarSkin(),
+    CHRISTMAS_HELMET_STAR(CC.translate("&a&lNorth Star"), ItemSkinType.HELMET, new NorthStarSkin(),
             Arrays.asList(
                     CC.translate("&c33% Chance to negate Monopoly Mask"),
                     CC.translate("&c-33% enemy Blackout duration"),
                     CC.translate("&cBlocks all enemy (Guided) Rocket Escape"),
                     CC.translate("&cDivine Enlighted IV")
             )),
-    TIKI_MASK(CC.translate("&6&lTiki Mask"), ItemSkinType.HELMET, new TikiMaskSkin(),
+    SUMMER_2021_HELMET(CC.translate("&6&lTiki Mask"), ItemSkinType.HELMET, new TikiMaskSkin(),
             Arrays.asList(
                     CC.translate("&cLimites enemy amulet of corruption to 1 set type"),
                     CC.translate("&c25% chance to block enemy Silence"),
                     CC.translate("&cLimits enemy Silence to 60% duration")
             )),
-    NEON_EMOTIONS(CC.translate("&d&lNeon Emotions"), ItemSkinType.HELMET, new NeonEmotionsSkin(),
+    NYE_HELMET(CC.translate("&d&lNeon Emotions"), ItemSkinType.HELMET, new NeonEmotionsSkin(),
             Arrays.asList(
                     CC.translate("&c+6% Outgoing Damage"),
                     CC.translate("&c-2% Incoming Damage"),
                     CC.translate("&cImmune to Slowness Potion Effect")
             )),
-    WITCH_HAT(CC.translate("&e&lWitch Hat"), ItemSkinType.HELMET, new NeonEmotionsSkin(),
+    THANKSGIVING_HELMET_WITCH(CC.translate("&e&lWitch Hat"), ItemSkinType.HELMET, new WitchHatSkin(),
             Arrays.asList(
                     CC.translate("&c-25% Silence duration"),
                     CC.translate("&cImmune to offensive Titan Attributes"),
@@ -178,7 +178,7 @@ public enum SkinType {
                     CC.translate("&cBanshee Pet effect when damaged")
             )),
 
-    AUTUMN_AMULET(CC.translate("&e&lAutumn Amulet"), ItemSkinType.AMULET, new AutumnAmuletSkin(),
+    THANKSGIVING_AMULET_AUTUMN(CC.translate("&e&lAutumn Amulet"), ItemSkinType.AMULET, new AutumnAmuletSkin(),
             Arrays.asList(
                     CC.translate("&c+33% healing from Divine Enlighted"),
                     CC.translate("&cEach time you enter combat:"),
@@ -186,18 +186,18 @@ public enum SkinType {
                     CC.translate("&c* -15% Incoming Damage for 15s"),
                     CC.translate("&c* Absorption V for 20s")
             )),
-    LUAU_LEI(CC.translate("&c&lLuau Lei"), ItemSkinType.AMULET, new LuauLei(),
+    SUMMER_2021_AMULET(CC.translate("&c&lLuau Lei"), ItemSkinType.AMULET, new LuauLei(),
             Arrays.asList(
                     CC.translate("&c+25% Outgoing Soul Enchant damage"),
                     CC.translate("&cChance to block Soul Enchant Damage Modifiers")
             )),
-    CUPIDS_HEART(CC.translate("&c&lCupids Heart"), ItemSkinType.BELT, new CupidsHeart(),
+    VALENTINES_2021_BELT(CC.translate("&c&lCupids Heart"), ItemSkinType.BELT, new CupidsHeart(),
             Arrays.asList(
                     CC.translate("&cBypass enemy (Paladin) Armored"),
                     CC.translate("&cHoly Aegis VII"),
                     CC.translate("&c+10% Outgoing Damage to Silenced enemies")
             )),
-    SNOWFLAKE_SLIPPERS(CC.translate("&c&lSnowflake Flippers"), ItemSkinType.BOOTS, new SnowflakeFlippersSkin(),
+    CHRISTMAS_BOOTS_SLIPPERS(CC.translate("&c&lSnowflake Flippers"), ItemSkinType.BOOTS, new SnowflakeFlippersSkin(),
             Arrays.asList(
                     CC.translate("&cGears IV"),
                     CC.translate("&cImmune to Teleblock"),
@@ -219,14 +219,14 @@ public enum SkinType {
                     CC.translate("&cHeadless III"),
                     CC.translate("&cImmune to Blindness")
             )),*/
-    SOUL_HARVESTER(CC.translate("&e&lSoul Harvester"), ItemSkinType.SWORD, new SoulHarvesterSkin(),
+THANKSGIVING_SWORD_HARVESTER(CC.translate("&e&lSoul Harvester"), ItemSkinType.SWORD, new SoulHarvesterSkin(),
             Arrays.asList(
                     CC.translate("&cIncreases outgoing damage from Soul Enchants by 1.3x"),
                     CC.translate("&c+10% Outgoing Damage to enemies with Soul Mode active"),
                     CC.translate("&c50% chance to block Divine Immolation"),
                     CC.translate("&c-25% Soul Enchant Costs")
             )),
-    ORNAMENTAL_CARNAGE(CC.translate("&a&lOrnamental Carnage"), ItemSkinType.SWORD, new OrnamentalCarnageSkin(),
+    CHRISTMAS_SWORD_ORNAMENTAL(CC.translate("&a&lOrnamental Carnage"), ItemSkinType.SWORD, new OrnamentalCarnageSkin(),
             Arrays.asList(
                     CC.translate("&c-5% Incoming Damage"),
                     CC.translate("&c-15% Incoming Damage from enemies with Soul Mode active"),
@@ -235,7 +235,7 @@ public enum SkinType {
                     CC.translate("&c+2 blocks Divine Immolation radius"),
                     CC.translate("&c2% chance for Dimensional Shift Ability")
             )),
-    HEARTBREAKER(CC.translate("&c&lHeartbreaker"), ItemSkinType.SWORD, new HeartBreakerSkin(),
+    VALENTINES_2021_SWORD(CC.translate("&c&lHeartbreaker"), ItemSkinType.SWORD, new HeartBreakerSkin(),
             Arrays.asList(
                     CC.translate("&cBypass enemy (Vengeful) Diminish"),
                     CC.translate("&c+1% Damage for each enemy level of (Planetary) Deathbringer"),
@@ -256,7 +256,7 @@ public enum SkinType {
                     CC.translate("&c100% chance to block Plague Carrier, Self Destruct and Smoke Bomb"),
                     CC.translate("&cGuarantees one piece of Holy White Scroll'd equipment to drop per kill")
             )),*/
-    MAUIS_HOOK(CC.translate("&c&lMaui's Hook"), ItemSkinType.SWORD, new MauisHookSkin(),
+    SUMMER_2021_SWORD(CC.translate("&c&lMaui's Hook"), ItemSkinType.SWORD, new MauisHookSkin(),
             Arrays.asList(
                     CC.translate("&c+15% Outgoing Soul Enchant Damage"),
                     CC.translate("&cBlackout V"),
@@ -270,7 +270,7 @@ public enum SkinType {
                     CC.translate("&7players and pets.)")
             )),
 
-    LOST_AMULET(CC.translate("&3&lLost Amulet"), ItemSkinType.AMULET, new LostAmulet(),
+    RUINS_AMULET(CC.translate("&3&lLost Amulet"), ItemSkinType.AMULET, new LostAmulet(),
             Arrays.asList(CC.translate("&c50% Neutralize Negation"), CC.translate("&c-5% Incoming Damage"), CC.translate("&cIncreases outgoing damage from Soul Enchants by 1.1x")))
     ;
 

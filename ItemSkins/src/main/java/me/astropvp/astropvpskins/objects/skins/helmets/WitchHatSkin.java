@@ -5,6 +5,6 @@ import me.astropvp.astropvpskins.objects.ItemSkin;
 
 public class WitchHatSkin extends ItemSkin {
     public WitchHatSkin() {
-        /* 8 */     super(SkinType.WITCH_HAT);
+        /* 8 */     super(SkinType.THANKSGIVING_HELMET_WITCH);
         /*   */   }
 }

@@ -15,7 +15,7 @@
 /*    */   extends ItemSkin
 /*    */ {
 /*    */   public MoonBootsSkin() {
-/* 18 */     super(SkinType.MOON_BOOTS);
+/* 18 */     super(SkinType.COSMIC_CITIZEN_BOOTS);
 /*    */   }
 /*    */ }
 

@@ -18,18 +18,18 @@ public class AstroBackpacksAPI {
 
     public static boolean itemHasSkin(ItemStack item) {
         NBTWrapper wrapper = new NBTWrapper(item);
-        if(!(wrapper.hasKey("conaxData")))
+        if(!(wrapper.hasKey("cosmicData")))
             return false;
         if(wrapper.hasKey("cosmicType") && wrapper.getString("cosmicType").equals("backpack_skin"))
             return false;
-        return(new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")).hasKey("backpackType"));
+        return(new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")).hasKey("backpackType"));
     }
 
     public static BackpackType getBackpackByItem(ItemStack item) {
         if(item == null || item.getType() == Material.AIR)
             return null;
         NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("conaxData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")) : new NBTTagCompoundBuilder();
+        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
         return BackpackUtils.getBackpackTypeFromID(cosmicData.getString("backpackType"));
     }
 
@@ -49,9 +49,9 @@ public class AstroBackpacksAPI {
         meta.setLore(lore);
         item.setItemMeta(meta);
         NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("conaxData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")) : new NBTTagCompoundBuilder();
+        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
         cosmicData.remove("backpackType");
-        wrapper.setNBTBase("conaxData", cosmicData.get());
+        wrapper.setNBTBase("cosmicData", cosmicData.get());
         return wrapper.build();
     }
 

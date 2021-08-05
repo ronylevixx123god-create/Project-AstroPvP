@@ -16,7 +16,7 @@ public class CursedWingsSkin extends Backpack {
 
     @Override
     public BackpackType getType() {
-        return BackpackType.CURSED_WINGS;
+        return BackpackType.HALLOWEEN_BACKPACK;
     }
 
 
