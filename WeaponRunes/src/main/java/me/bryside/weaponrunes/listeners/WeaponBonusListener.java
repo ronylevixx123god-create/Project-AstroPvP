@@ -1,6 +1,8 @@
 package me.bryside.weaponrunes.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.earth2me.essentials.api.NoLoanPermittedException;
+import com.earth2me.essentials.api.UserDoesNotExistException;
 import me.bryside.weaponrunes.enums.WeaponBonusType;
 import me.bryside.weaponrunes.utils.WeaponBonusUtils;
 import org.bukkit.Material;
@@ -56,6 +58,22 @@ public class WeaponBonusListener implements Listener {
             e.setCursor(null);
             e.setCancelled(true);
             ((Player)e.getWhoClicked()).playSound(e.getWhoClicked().getLocation(), Sound.LEVEL_UP, 1.0F, 10.0F);
+        }
+    }
+
+
+    @EventHandler
+    public void onInventoryClick(InventoryClickEvent e) throws UserDoesNotExistException, NoLoanPermittedException {
+        Player p = (Player) e.getWhoClicked();
+        if (p.getOpenInventory().getTitle().startsWith(CC.translate("&8Weapon Bonuses"))) {
+            e.setCancelled(true);
+            if (e.getClickedInventory() == p.getOpenInventory().getTopInventory()) {
+                if (p.isOp()) {
+                    if (e.getCurrentItem() != null && e.getCurrentItem().getType() != Material.AIR && WeaponBonusUtils.isWeaponBonus(e.getCurrentItem())) {
+                        p.getInventory().addItem(WeaponBonusUtils.getWeaponBonusByItem(e.getCurrentItem()).getInstance().getItem(100));
+                    }
+                }
+            }
         }
     }
 }

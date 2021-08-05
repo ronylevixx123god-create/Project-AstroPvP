@@ -10,9 +10,9 @@ import me.bryside.weaponrunes.utils.WeaponBonus;
 import org.bukkit.ChatColor;
 
 public enum WeaponBonusType {
-    CHAMPION("CHAMPION", ChatColor.GREEN, CC.DarkGreenB + "Champion", (short)10, (WeaponBonus)new ChampionWeaponBonus()),
-    HERO("HERO", ChatColor.YELLOW, CC.GoldB + "Hero", (short)14, (WeaponBonus)new HeroWeaponBonus()),
-    REFORGED("REFORGED", ChatColor.AQUA, CC.DarkAquaB + "Reforged", (short)6, (WeaponBonus)new ReforgedWeaponBonus());
+    CHAMPION("CHAMPION", ChatColor.GREEN, CC.GreenB + "Champion", (short)10, (WeaponBonus)new ChampionWeaponBonus()),
+    HERO("HERO", ChatColor.YELLOW, CC.YellowB + "Hero", (short)14, (WeaponBonus)new HeroWeaponBonus()),
+    REFORGED("REFORGED", ChatColor.AQUA, CC.AquaB + "Reforged", (short)6, (WeaponBonus)new ReforgedWeaponBonus());
 
     String id;
 

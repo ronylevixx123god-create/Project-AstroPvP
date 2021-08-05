@@ -52,11 +52,10 @@ public abstract class WeaponBonus {
         ItemMeta meta = i.getItemMeta();
         List<String> lore = (meta.getLore() == null) ? new ArrayList<>() : meta.getLore();
         lore.add("");
-        lore.add(getType().getName() + " Weapon Bonuses:");
+        lore.add(getType().getColor() + "(" + CC.translate("&f&l!") + getType().getColor() + ") " + getType().getName() + " Weapon Bonuses");
         for (String s : bonusType.getInstance().getLore()) {
             lore.add(s);
         }
-        lore.add("");
         meta.setLore(lore);
         i.setItemMeta(meta);
         NBTWrapper wrapper = new NBTWrapper(i);
