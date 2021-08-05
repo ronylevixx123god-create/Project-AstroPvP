@@ -44,6 +44,8 @@ import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.cmd.CmdFocus;
 import com.massivecraft.factions.cmd.CmdUnfocus;
 import com.rit.sucy.EnchantmentAPI;
+import me.bryside.weaponrunes.enums.WeaponBonusType;
+import me.bryside.weaponrunes.utils.WeaponBonusUtils;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
@@ -190,6 +192,14 @@ public class AncientArmorSet
     }
 
     private void startAncientEffect(final Player player, final Player pTarget) {
+
+        if (WeaponBonusUtils.getWeaponBonusByItem(((Player)pTarget).getItemInHand()) == WeaponBonusType.HERO && Math.random() < 0.5) {
+
+            pTarget.sendMessage(CC.translate("&3&l** BLOCKED ENEMY ANCIENT ABILITY &7(Hero Weapon Bonus) &3&l**"));
+
+            return;
+        }
+
         this.focusTargetPlayer(player, pTarget);
         player.sendMessage("");
         player.sendMessage(CC.translate(("&3&l      * LEVIATHAN'S CURSE &7(" + pTarget.getName() + ")&3&l *")));

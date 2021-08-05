@@ -176,6 +176,14 @@
 
         <dependency>
             <groupId>com.conaxgames</groupId>
+            <artifactId>Runes</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/WeaponRunes.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>com.conaxgames</groupId>
             <artifactId>Explosive</artifactId>
             <version>0.1</version>
             <scope>system</scope>

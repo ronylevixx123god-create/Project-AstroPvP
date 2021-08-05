@@ -21,15 +21,15 @@ public class HeroWeaponBonus extends WeaponBonus {
     }
 
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
-        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.05D);
-        if (Math.random() < 0.02D) {
-            event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 2.0D);
-            if (damaged instanceof Player)
-                damager.sendMessage(CC.GoldB + "[" + CC.YellowB + "HEAVY HIT " + CC.Gray + "(2x damage to " + ((Player)damaged).getDisplayName() + ")" + CC.GoldB + " ]");
-        }
+        if (!(damager instanceof Player)) return;
+        if (!(damaged instanceof Player)) return;
+        if (Math.random() > 0.1) return;
+
+        event.setDamage(event.getDamage() *1.25);
+        damager.sendMessage(CC.translate("&e** HERO CRITICAL STRIKE **"));
     }
 
     public void onAttacked(Player damaged, Entity damager, EntityDamageByEntityEvent event) {
-        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.98D);
+        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.95D);
     }
 }

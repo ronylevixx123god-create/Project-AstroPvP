@@ -5,6 +5,8 @@ import de.inventivegames.particle.ParticleEffect;
 import me.astropvp.astroparticles.utils.ParticleUtils;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.bryside.weaponrunes.enums.WeaponBonusType;
+import me.bryside.weaponrunes.utils.WeaponBonusUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
@@ -26,6 +28,9 @@ final class DivineImmolationListener implements Listener {
         }
 
         if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.SOUL_HARVESTER) && Math.random() < 0.4) {
+            if (WeaponBonusUtils.getWeaponBonusByItem(((Player) e.getEntity()).getItemInHand()) == WeaponBonusType.REFORGED && Math.random()<0.5) {
+                return;
+            }
             e.getEntity().sendMessage(CC.translate("&e&l* SOUL HARVESTER &fBlocked &cDivine Immolation &e&l*"));
             return;
         }
@@ -43,12 +48,18 @@ final class DivineImmolationListener implements Listener {
                 double damage = 2;
 
                 if (AstroItemSkinsAPI.isInHand((Player) e.getEntity(), SkinType.SOUL_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) le, SkinType.HEART_HALO)) {
-                    damage = 3.5;
+                    if (WeaponBonusUtils.getWeaponBonusByItem(((Player) e.getEntity()).getItemInHand()) == WeaponBonusType.REFORGED && Math.random()<0.5) {
+                        damage = 2;
+                    } else {
+                        damage = 3.5;
+                    }
                 }
 
                 if (AstroItemSkinsAPI.isInHand((Player) e.getEntity(), SkinType.MAUIS_HOOK)) {
                     damage = 3.5;
                 }
+
+
 
                 le.damage((double) damage);
 

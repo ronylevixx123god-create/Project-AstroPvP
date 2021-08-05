@@ -7,6 +7,8 @@ import lombok.SneakyThrows;
 import me.astropvp.astroparticles.utils.ParticleUtils;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.bryside.weaponrunes.enums.WeaponBonusType;
+import me.bryside.weaponrunes.utils.WeaponBonusUtils;
 import me.ifamasssxd.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.cmds.CommandEnchDust;
@@ -128,6 +130,10 @@ public class DivineImmolation extends CustomEnchantment {
                             if (!WorldGuardUtils.isPvPDisabled(ent.getLocation()) && !ent.hasMetadata("spectator")) {
                                 LivingEntity le = (LivingEntity)ent;
                                 le.damage(damage);
+
+                                if (WeaponBonusUtils.getWeaponBonusByItem(((Player)player).getItemInHand()) == WeaponBonusType.REFORGED) {
+                                    e.setDamage(e.getDamage()*1.15);
+                                }
 
                                 if (Math.random() < 0.2) {
                                     if (le instanceof Player) {

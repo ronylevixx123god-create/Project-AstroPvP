@@ -1,10 +1,13 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.Relation;
 import com.rit.sucy.CustomEnchantment;
+import me.bryside.weaponrunes.enums.WeaponBonusType;
+import me.bryside.weaponrunes.utils.WeaponBonusUtils;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.ArmorUtil;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -35,7 +38,14 @@ public class SelfDestruct extends CustomEnchantment {
             double dmg = e.getDamage(EntityDamageEvent.DamageModifier.BASE);
             dmg *= ArmorUtil.getArmorDamageNullificationPercent((float) ArmorUtil.getArmorValue(p));
             if (player.getHealth() - dmg <= 0.0) {
+
                 if (p.hasMetadata("SelfDestructing") && System.currentTimeMillis() - p.getMetadata("SelfDestructing").get(0).asLong() <= 10000L) {
+                    return;
+                }
+
+                if (WeaponBonusUtils.getWeaponBonusByItem(((Player)attacker).getItemInHand()) == WeaponBonusType.CHAMPION && Math.random() < 0.5) {
+                    attacker.sendMessage(CC.translate("&c&l** BLOCKED " + player.getName() + " &c&lSELF DESTRUCT &7(Champion Weapon Bonus) &c&l**"));
+                    player.sendMessage(CC.translate("&c&l** SELF DESTRUCT BLOCKED &7(" + attacker.getName() + " Champion Weapon Bonus) &c&l**"));
                     return;
                 }
                 p.setMetadata("SelfDestructing", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) System.currentTimeMillis()));

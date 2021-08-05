@@ -12,6 +12,8 @@ import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.damageindicators.DamageIndicators;
 import me.astropvp.damageindicators.utils.DamageIndicatorUtils;
 import me.astropvp.objects.BackpackType;
+import me.bryside.weaponrunes.enums.WeaponBonusType;
+import me.bryside.weaponrunes.utils.WeaponBonusUtils;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.events.CustomEnchantProcOnEntityEvent;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -70,6 +72,10 @@ public class Silence extends CustomEnchantment {
 
             long durationTicks = (enchantLevel + solitudeLevel) * 20;
 
+            if (WeaponBonusUtils.getWeaponBonusByItem(((Player) user).getItemInHand()) == WeaponBonusType.REFORGED && Math.random() < 0.5) {
+                durationTicks*=1.5;
+            }
+
             if (pTarget.getInventory().getChestplate() != null && AstroBackpacksAPI.itemHasSkin(pTarget.getInventory().getChestplate()) && AstroBackpacksAPI.getBackpackByItem(pTarget.getInventory().getChestplate()).equals(BackpackType.CURSED_WINGS)) {
                 durationTicks /= 2.5;
             }
@@ -84,6 +90,7 @@ public class Silence extends CustomEnchantment {
             if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.WITCH_HAT)) {
                 durationTicks*=0.25;
             }
+
 
             pTarget.setMetadata("noDefenseProcs", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) true));
             pTarget.playSound(pTarget.getLocation(), Sound.WITHER_HURT, 1.0f, 0.25f);

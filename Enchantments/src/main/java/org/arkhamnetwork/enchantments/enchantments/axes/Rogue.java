@@ -7,6 +7,8 @@ import lombok.SneakyThrows;
 import me.astropvp.astroparticles.utils.ParticleUtils;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.bryside.weaponrunes.enums.WeaponBonusType;
+import me.bryside.weaponrunes.utils.WeaponBonusUtils;
 import me.ifamasssxd.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.enchantments.cmds.CommandEnchDust;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -62,7 +64,12 @@ public class Rogue extends CustomEnchantment {
             double damage = e.getDamage();
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.SOUL_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.HEART_HALO)) {
-                e.setDamage(damage + (multi * 0.17));
+                if (WeaponBonusUtils.getWeaponBonusByItem(((Player) e.getEntity()).getItemInHand()) == WeaponBonusType.REFORGED && Math.random() < 0.5) {
+                    e.setDamage(damage + (multi * 0.15));
+
+                } else {
+                    e.setDamage(damage + (multi * 0.17));
+                }
             } else if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.MAUIS_HOOK)) {
                 e.setDamage(damage + (multi * 0.17));
 
@@ -70,7 +77,6 @@ public class Rogue extends CustomEnchantment {
 
                 e.setDamage(damage + (multi * 0.15));
             }
-
 
 
             if (player instanceof Player) {

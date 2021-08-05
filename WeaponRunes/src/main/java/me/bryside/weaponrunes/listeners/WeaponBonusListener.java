@@ -18,6 +18,10 @@ public class WeaponBonusListener implements Listener {
     public void onHit(EntityDamageByEntityEvent e) {
         Entity damager = e.getDamager();
         Entity damaged = e.getEntity();
+
+        if (!(damager instanceof Player)) return;
+        if (!(damaged instanceof Player)) return;
+
         if (damager instanceof Player) {
             WeaponBonusType weaponBonusType = WeaponBonusUtils.getWeaponBonusByItem(((Player)damager).getItemInHand());
             weaponBonusType.getInstance().onAttack((Player)damager, damaged, e);
@@ -41,7 +45,7 @@ public class WeaponBonusListener implements Listener {
             if (weaponBonusType == null || !WeaponBonusUtils.isHeroicWeapon(clicked))
                 return;
             e.setCurrentItem(weaponBonusType.getInstance().applyBonus(clicked, weaponBonusType));
-            e.getWhoClicked().sendMessage(CC.translate("&a&l(!)&a Successfully Applied " + weaponBonusType.getName() + "&a to your sword!"));
+            e.getWhoClicked().sendMessage(CC.translate("&a&l(!)&a Successfully Applied " + weaponBonusType.getName() + " Weapon Rune&a to your sword!"));
             e.setCursor(null);
             e.setCancelled(true);
             ((Player)e.getWhoClicked()).playSound(e.getWhoClicked().getLocation(), Sound.LEVEL_UP, 1.0F, 10.0F);
