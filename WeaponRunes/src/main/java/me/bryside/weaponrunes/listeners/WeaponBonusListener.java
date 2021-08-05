@@ -21,6 +21,8 @@ public class WeaponBonusListener implements Listener {
 
         if (!(damager instanceof Player)) return;
         if (!(damaged instanceof Player)) return;
+        if (((Player) damager).getItemInHand() == null && ((Player) damager).getItemInHand().getType() == Material.AIR) return;
+        if (e.isCancelled()) return;
 
         if (damager instanceof Player) {
             WeaponBonusType weaponBonusType = WeaponBonusUtils.getWeaponBonusByItem(((Player)damager).getItemInHand());

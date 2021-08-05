@@ -140,7 +140,7 @@ public class Scoreboard implements BoardAdapter {
             board.add(CC.translate("&c") + enemy.getName());
             board.add("");
             board.add(CC.translate("&a&lExpiration"));
-            board.add(String.valueOf(pvpMatch.getRuntime()));
+            board.add(String.valueOf(pvpMatch.getRuntime()) + "s");
             board.add("");
             board.add(CC.translate("&a&lType"));
             board.add(CC.translate("&fCage Match"));
