@@ -27,7 +27,6 @@ public class MobSpawnerListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlace(BlockPlaceEvent event) {
         if (event.getBlockPlaced().getType() != Material.MOB_SPAWNER) {
-            event.setCancelled(true);
             return;
         }
 

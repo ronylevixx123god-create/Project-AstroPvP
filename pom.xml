@@ -47,6 +47,7 @@
         <module>AstroScoreboard</module>
         <module>AstroClientComms</module>
         <module>WeaponRunes</module>
+        <module>ItemFlip</module>
     </modules>
 
     <build>

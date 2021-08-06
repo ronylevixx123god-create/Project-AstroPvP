@@ -1,7 +1,0 @@
-name: ClientComms
-main: io.apice.clientcomms.ClientComms
-author: Ice
-version: 2.4
-softdepend: [Factions, mcMMO, Arkkit, CosmicGrounds, Prisons]
-commands:
-  clientcomms:

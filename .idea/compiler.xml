@@ -7,10 +7,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="ItemFlip" />
         <module name="CustomBlocks" />
         <module name="SpaceChests" />
         <module name="ItemSkins" />
-        <module name="AstroClientComms" />
         <module name="Enchantments" />
         <module name="Attributes" />
         <module name="Bosses" />
@@ -26,7 +26,6 @@
         <module name="AstroEndGrinding" />
         <module name="GUIShop" />
         <module name="Lootboxes" />
-        <module name="Comms" />
         <module name="AstroSpawnersMobcoins" />
         <module name="AuctionHouse" />
         <module name="Factions" />
@@ -48,8 +47,10 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="ArmorSets" target="1.8" />
+      <module name="AstroClientComms" target="8" />
       <module name="AstroSpawners" target="1.8" />
       <module name="ClientComms" target="8" />
+      <module name="Comms" target="8" />
       <module name="CrateBoxes" target="8" />
       <module name="Disguises (1)" target="8" />
       <module name="ItemFilter" target="8" />
