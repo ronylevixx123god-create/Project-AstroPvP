@@ -18,6 +18,7 @@ import org.arkhamnetwork.enchantments.enchantments.axes.Devour;
 import org.arkhamnetwork.enchantments.enchantments.axes.Hex;
 import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicCleave;
 import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicDodge;
+import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicTrap;
 import org.arkhamnetwork.enchantments.mastery.MasteryDemonicGateway;
 import org.arkhamnetwork.enchantments.mastery.MasteryMarkOfTheBeast;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -100,7 +101,7 @@ public class ItemSkinProccessEventsListener implements Listener {
                         e.getEntity().sendMessage(CC.translate("&3&l * &7+ Hex"));
                         e.getEntity().sendMessage(CC.translate("&3&l * &7+ Mark Of the Beast"));
                         e.getEntity().sendMessage(CC.translate("&7"));
-                    } else if (type == SkinType.BOOTS_RETALIATION) {
+                    } else if (type == SkinType.HALLOWEEN_BOOTS) {
                         if (e.getEntity() instanceof Player) {
                             continue;
                         }
@@ -130,6 +131,10 @@ public class ItemSkinProccessEventsListener implements Listener {
                         e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.1);
                     } else if (type == SkinType.VALENTINES_2021_BELT) {
                         e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.04);
+                    }
+                        else if (type == SkinType.VALENTINES_2021_BOOTS) {
+                            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE)*1.02);
+
                     } else if (type == SkinType.RUINS_HELMET) {
 
                         if (ThreadLocalRandom.current().nextInt(101) <= 3) {
@@ -152,7 +157,7 @@ public class ItemSkinProccessEventsListener implements Listener {
 
                         return;
                     } else {
-                        if (type != SkinType.MOON_BOOTS) {
+                        if (type != SkinType.COSMIC_CITIZEN_BOOTS) {
                             continue;
                         }
                         e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.05);
@@ -203,13 +208,19 @@ public class ItemSkinProccessEventsListener implements Listener {
                             if (Math.random() < 0.01) {
                                 new HeroicDodge().applyDefenseEffect(entity, (LivingEntity) e.getDamager(), 6, e);
                             }
-                        } else if (type2 == SkinType.CAMOUFLAGE_BOOTS) {
+                        } else if (type2 == SkinType.DOOMSDAY_BOOTS) {
                             new MasteryDemonicGateway().applyDefenseEffect(entity, (LivingEntity) e.getDamager(), 5, e);
                         } else if (type2 == SkinType.SANTA_HAT) {
                             e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.95);
+                        } else if (type2 == SkinType.VALENTINES_2021_BOOTS) {
+                            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.75);
+                            if (Math.random() < 0.01) {
+                                new HeroicTrap().applyEffect(entity, (LivingEntity) e.getDamager(), 3, e);
+                            }
+
                         } else if (type2 == SkinType.VALENTINES_2021_HELMET) {
                             e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.96);
-                        } else if (type2 == SkinType.BOOTS_RETALIATION) {
+                        } else if (type2 == SkinType.HALLOWEEN_BOOTS) {
                             e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.1);
                         } else if (type2 == SkinType.CANDY_COLLECTOR) {
                             e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.8);

@@ -13,7 +13,7 @@ import java.util.List;
 public class BugOutBagSkin extends Backpack {
     @Override
     public BackpackType getType() {
-        return BackpackType.BUG_OUT_BAG;
+        return BackpackType.DOOMSDAY_BACKPACK_BUGOUT;
     }
 
     @Override

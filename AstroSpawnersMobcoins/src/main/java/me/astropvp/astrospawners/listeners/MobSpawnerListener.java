@@ -27,6 +27,7 @@ public class MobSpawnerListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlace(BlockPlaceEvent event) {
         if (event.getBlockPlaced().getType() != Material.MOB_SPAWNER) {
+            event.setCancelled(true);
             return;
         }
 
@@ -70,7 +71,10 @@ public class MobSpawnerListener implements Listener {
         int spawnersLeft = amount - math;
         event.getPlayer().sendMessage(CC.translate("&c&l- " + amount + " &c&l" + EntityUtils.getEntityName(type) + "&c&l Spawners"));
         event.getPlayer().sendMessage(CC.translate("&7There are now " + spawnersLeft + "&7 spawners left in your hand."));
-        Bukkit.getScheduler().runTaskAsynchronously(AstroSpawners.getInstance(),
+
+
+        //THIS USED TO BE ASYNC
+        Bukkit.getScheduler().runTask(AstroSpawners.getInstance(),
                 (Runnable) new BukkitRunnable() {
                     @Override
                     public void run() {
@@ -100,6 +104,7 @@ public class MobSpawnerListener implements Listener {
                 if (ItemSpawner.getEntityTypeFromItem(event.getPlayer().getItemInHand()) == type) {
                     int amount = ItemSpawner.getSpawnerAmount(event.getPlayer().getItemInHand());
                     if (amount <= 0) {
+                        event.setCancelled(true);
                         return;
                     }
                     //CHANGED
@@ -115,6 +120,7 @@ public class MobSpawnerListener implements Listener {
                                         if (found.getSpawnerAmount() >= ItemSpawner.getSpawnerLimit()) {
                                             player.sendMessage(CC.RedB + "(!) " + CC.Red + "You can not have more than "
                                                     + ItemSpawner.getSpawnerLimit() + " spawners stacked together!");
+                                            event.setCancelled(true);
                                             return;
                                         }
 

@@ -50,12 +50,8 @@ public class CommandArkReboot
         manager = new PlayerDataManager(AstroSpawners.getInstance());
         restart_task_exists = true;
         new ServerRebootTask(false).runTaskTimer(Arkkit.get(), 20L, 20L);
-        PlayerDataManager manager = AstroSpawners.getPlayerDataManager();
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            PlayerData data = manager.getPlayerData(p);
-            manager.savePlayerDataAsync(data);
-        }
-        sender.sendMessage(CC.translate("&a&l(!)&a Started Saving Spawner Data & Mobcoins"));
+
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "savemc");
         return true;
     }
 }

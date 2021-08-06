@@ -21,7 +21,6 @@ public class AntiDupe
 
     @Override
     public void enable() {
-        mcmmo = Bukkit.getPluginManager().isPluginEnabled("mcMMO");
         this.registerListener(new AntiDupeListener(this));
         this.registerListener(new InventoryScannerListener());
         this.registerListener(new InventoryRatelimitListener());

@@ -226,6 +226,13 @@ THANKSGIVING_SWORD_HARVESTER(CC.translate("&e&lSoul Harvester"), ItemSkinType.SW
                     CC.translate("&c50% chance to block Divine Immolation"),
                     CC.translate("&c-25% Soul Enchant Costs")
             )),
+    VALENTINES_2021_BOOTS(CC.translate("&c&lTeddy Slippers"), ItemSkinType.BOOTS, new TeddySlippersSkin(),
+            Arrays.asList(
+                    CC.translate("&cNerf enemy special Armor Set weapon Outgoing Damage bonuses by 50%"),
+                    CC.translate("&c33% Chance to reflect enemy (Titan) Trap for 1.25x duration"),
+                    CC.translate("&c-2% Incoming Damage"),
+                    CC.translate("&c+1% Outgoing Damage")
+                    )),
     CHRISTMAS_SWORD_ORNAMENTAL(CC.translate("&a&lOrnamental Carnage"), ItemSkinType.SWORD, new OrnamentalCarnageSkin(),
             Arrays.asList(
                     CC.translate("&c-5% Incoming Damage"),

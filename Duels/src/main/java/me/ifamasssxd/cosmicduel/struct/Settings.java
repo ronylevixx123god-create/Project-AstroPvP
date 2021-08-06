@@ -107,8 +107,8 @@ public class Settings {
             event.setResult(Event.Result.DENY);
             this.openKitInventory((Player)event.getWhoClicked());
         });
-        this.settings.insertItem(this.settings.getInventorySize() - 1, cii, true);
-        this.settings.insertItem(this.settings.getInventorySize() - 9, cii, true);
+        //this.settings.insertItem(this.settings.getInventorySize() - 1, cii, true);
+        //this.settings.insertItem(this.settings.getInventorySize() - 9, cii, true);
         CustomInventoryItem confirm = this.getConfirmButton();
         this.settings.insertItem(this.settings.getInventorySize() - 5, confirm);
         for (int i = 0; i < this.settings.getInventorySize(); ++i) {

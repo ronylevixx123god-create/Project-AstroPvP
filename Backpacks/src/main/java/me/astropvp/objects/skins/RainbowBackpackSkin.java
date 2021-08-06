@@ -11,7 +11,7 @@ import java.util.List;
 public class RainbowBackpackSkin extends Backpack {
     @Override
     public BackpackType getType() {
-        return BackpackType.RAINBOW_BACKPACK;
+        return BackpackType.DOOMSDAY_BACKPACK_RAINBOW;
     }
 
     @Override

@@ -18,7 +18,7 @@ public class PortablePicnicSkin extends Backpack {
 
     @Override
     public BackpackType getType() {
-        return BackpackType.PORTABLE_PICNIC;
+        return BackpackType.THANKSGIVING_BACKPACK_PICNIC;
     }
 
     @Override

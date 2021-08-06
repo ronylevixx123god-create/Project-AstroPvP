@@ -21,3 +21,6 @@ commands:
   stopspawnersplace:
     description: stop placing spawners
     aliases: [stopspawners, stopspawnerplace]
+  savemobcoins:
+    description: Save mobcoi,s
+    aliases: [savemc, smc]

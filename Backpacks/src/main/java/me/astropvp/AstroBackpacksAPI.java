@@ -22,7 +22,7 @@ public class AstroBackpacksAPI {
             return false;
         if(wrapper.hasKey("cosmicType") && wrapper.getString("cosmicType").equals("backpack_skin"))
             return false;
-        return(new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")).hasKey("backpackType"));
+        return(new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")).hasKey("itemSkinType"));
     }
 
     public static BackpackType getBackpackByItem(ItemStack item) {
@@ -30,7 +30,7 @@ public class AstroBackpacksAPI {
             return null;
         NBTWrapper wrapper = new NBTWrapper(item);
         NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
-        return BackpackUtils.getBackpackTypeFromID(cosmicData.getString("backpackType"));
+        return BackpackUtils.getBackpackTypeFromID(cosmicData.getString("itemSkinType"));
     }
 
     public static boolean isBackpack(ItemStack item) {

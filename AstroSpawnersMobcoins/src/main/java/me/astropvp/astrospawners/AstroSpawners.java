@@ -45,10 +45,7 @@ public class AstroSpawners extends JavaPlugin {
 
 
         System.out.println("Started Saving mobcoins data...");
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            PlayerData data = manager.getPlayerData(p);
-            manager.savePlayerData(data);
-        }
+
         Bukkit.getScheduler().runTaskLater(AstroSpawners.getInstance(), (Runnable) new BukkitRunnable() {
             @Override
             public void run() {
@@ -78,14 +75,15 @@ public class AstroSpawners extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        MobStackerUtils.onDisable();
-        SpawnerDataHelper.onDisable();
-        EntityUtils.clearAllEntities();
-
         for (Player p : Bukkit.getOnlinePlayers()) {
             PlayerData data = AstroSpawners.getInstance().getManager().getPlayerData(p);
             AstroSpawners.getInstance().getManager().savePlayerDataAsync(data);
         }
+        MobStackerUtils.onDisable();
+        SpawnerDataHelper.onDisable();
+        EntityUtils.clearAllEntities();
+
+
 
         astroSpawners = null;
     }
@@ -110,6 +108,7 @@ public class AstroSpawners extends JavaPlugin {
         getCommand("givespawner").setExecutor(new CommandGiveSpawner());
         getCommand("clearmobs").setExecutor(new CommandClearHashMap());
         getCommand("checkmobs").setExecutor(new CommandCheckHashMap());
+        getCommand("savemobcoins").setExecutor(new SaveMobCoinsCommand());
 
         getCommand("stopspawnersplace").setExecutor(new CommandStopSpawnersPlace());
 
