@@ -1,16 +1,17 @@
-/*   */ package me.astropvp.astropvpskins.objects.skins.helmets;
-/*   */ 
-/*   */ import me.astropvp.astropvpskins.enums.SkinType;
-/*   */ import me.astropvp.astropvpskins.objects.ItemSkin;
-/*   */ 
-/*   */ public class EasterHelmetSkin extends ItemSkin {
-/*   */   public EasterHelmetSkin() {
-/* 8 */     super(SkinType.EASTER_HELMET);
-/*   */   }
-/*   */ }
+ package me.astropvp.astropvpskins.objects.skins.helmets;
+ 
+ import me.astropvp.astropvpskins.enums.SkinType;
+ import me.astropvp.astropvpskins.objects.ItemSkin;
+ import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicDodge;
+ import org.bukkit.entity.Entity;
+ import org.bukkit.entity.LivingEntity;
+ import org.bukkit.entity.Player;
+ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
+ public class EasterHelmetSkin extends ItemSkin {
 
-/* Location:              C:\Users\bryan\Downloads\GalacticItemSkins.jar!\me\galacticpvp\galacticitemskins\objects\skins\helmets\EasterHelmetSkin.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */
+     public void onAttacked(Player damaged, Entity damager, EntityDamageByEntityEvent event) {
+         if(Math.random() < 0.01)
+             (new HeroicDodge()).applyDefenseEffect(damaged, (LivingEntity) damager, 6, (event)); //IMPORT ENCHANTS PLUGIN
+     }
+ }

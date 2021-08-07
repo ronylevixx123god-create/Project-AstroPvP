@@ -9,9 +9,6 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 public class SnowflakeFlippersSkin extends ItemSkin {
-    public SnowflakeFlippersSkin() {
-        super(SkinType.CHRISTMAS_BOOTS_SLIPPERS);
-    }
 
     public void onEquip(Player player) {
         OutpostTier outpostTier = CosmicOutpostsAPI.getOutpostTierOfWorld((LivingEntity) player);
@@ -30,6 +27,8 @@ public class SnowflakeFlippersSkin extends ItemSkin {
             return;
         }
     }
+
+    //TODO: UPDATE
 
     public void onUnequip(Player player) {
         EnchantmentAPI.getEnchantment("Gears").applyUnequipEffect(player, 4);

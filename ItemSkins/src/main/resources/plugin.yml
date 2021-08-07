@@ -1,9 +1,6 @@
-main: me.astropvp.astropvpskins.AstroItemSkinsPlugin
 name: AstroItemSkins
-author: Bryside
+main: me.astropvp.astropvpskins.AstroItemSkinsPlugin
 version: 1.0
 commands:
-  giveskin:
-    description: /giveskin
-  skins:
-    description: /skins
+  itemskin:
+    aliases: [skin, skins, itemskins]

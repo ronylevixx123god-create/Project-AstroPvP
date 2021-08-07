@@ -1,20 +1,15 @@
-/*    */ package me.astropvp.astropvpskins.objects.skins.helmets;
-/*    */ 
-/*    */ import me.astropvp.astropvpskins.enums.SkinType;
-/*    */ import me.astropvp.astropvpskins.objects.ItemSkin;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public class FlamingHaloSkin
-/*    */   extends ItemSkin
-/*    */ {
-/*    */   public FlamingHaloSkin() {
-/* 12 */     super(SkinType.FLAMING_HALO);
-/*    */   }
-/*    */ }
+package me.astropvp.astropvpskins.objects.skins.helmets;
+
+import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.astropvpskins.objects.ItemSkin;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+
+public class FlamingHaloSkin extends ItemSkin {
 
 
-/* Location:              C:\Users\bryan\Downloads\GalacticItemSkins.jar!\me\galacticpvp\galacticitemskins\objects\skins\helmets\FlamingHaloSkin.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */
+    public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
+        event.setDamage(event.getDamage() * 1.04);
+    }
+}

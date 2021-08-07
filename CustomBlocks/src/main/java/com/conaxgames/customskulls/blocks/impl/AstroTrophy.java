@@ -30,7 +30,7 @@ import java.util.List;
 public class AstroTrophy extends CustomBlock {
 
     public AstroTrophy() {
-        super("ASTROTROPHY", CC.translate("&6&lAstro Trophy"), Material.SKULL_ITEM, AbilityType.ASTROTROPHY);
+        super("ASTROTROPHY", CC.translate("&6&lAstro Trophy"), Material.NOTE_BLOCK, AbilityType.ASTROTROPHY);
     }
 
     @Override

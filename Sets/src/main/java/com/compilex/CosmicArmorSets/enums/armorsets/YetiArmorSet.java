@@ -23,6 +23,7 @@
 package com.compilex.CosmicArmorSets.enums.armorsets;
 
 import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
+import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.compilex.CosmicArmorSets.enums.ArmorSetInfo;
 import com.compilex.CosmicArmorSets.enums.WeaponedArmorSet;
 import com.compilex.CosmicArmorSets.utils.ItemUtils;
@@ -73,6 +74,7 @@ public class YetiArmorSet
 
     @Override
     public List<String> getEquipDescription() {
+
         return Lists.newArrayList(ChatColor.WHITE + "" + ChatColor.BOLD + "YETI SET BONUS: " + ChatColor.WHITE + "+10% ATK / -10% DMG");
     }
 

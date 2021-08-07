@@ -1,18 +1,18 @@
-/*    */ package me.astropvp.astropvpskins.objects.skins.helmets;
-/*    */ 
-/*    */ import me.astropvp.astropvpskins.enums.SkinType;
-/*    */ import me.astropvp.astropvpskins.objects.ItemSkin;
-/*    */ 
-/*    */ public class CandyCollectorSkin
-/*    */   extends ItemSkin
-/*    */ {
-/*    */   public CandyCollectorSkin() {
-/* 10 */     super(SkinType.CANDY_COLLECTOR);
-/*    */   }
-/*    */ }
+package me.astropvp.astropvpskins.objects.skins.helmets;
 
+import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.astropvpskins.objects.ItemSkin;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-/* Location:              C:\Users\bryan\Downloads\GalacticItemSkins.jar!\me\galacticpvp\galacticitemskins\objects\skins\helmets\CandyCollectorSkin.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */
+public class CandyCollectorSkin extends ItemSkin {
+
+    public void onAttacked(Player damaged, Entity damager, EntityDamageByEntityEvent event) {
+        if(damager instanceof Player) {
+            Player player = (Player) damager;
+            if(player.getItemInHand().getType().toString().endsWith("_SWORD"))
+                event.setDamage(event.getDamage() * 0.8);
+        }
+    }
+}

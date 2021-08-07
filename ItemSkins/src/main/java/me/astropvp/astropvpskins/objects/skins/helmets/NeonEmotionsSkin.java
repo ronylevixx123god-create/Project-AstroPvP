@@ -4,7 +4,6 @@ import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.ItemSkin;
 
 public class NeonEmotionsSkin  extends ItemSkin {
-    public NeonEmotionsSkin() {
-        /* 8 */     super(SkinType.NYE_HELMET);
-        /*   */   }
+
+        //STILL NEED TO DO EFFECTS FOR THIS
 }

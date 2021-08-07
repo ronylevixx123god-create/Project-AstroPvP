@@ -1,17 +1,25 @@
-/*   */ package me.astropvp.astropvpskins.objects.skins.axes;
-/*   */ 
-/*   */ import me.astropvp.astropvpskins.enums.SkinType;
-/*   */ import me.astropvp.astropvpskins.objects.ItemSkin;
-/*   */ 
-/*   */ public class SpikedBaseballBatSkin
-/*   */   extends ItemSkin {
-/*   */   public SpikedBaseballBatSkin() {
-/* 9 */     super(SkinType.SPRING_2020_AXE);
-/*   */   }
-/*   */ }
+package me.astropvp.astropvpskins.objects.skins.axes;
 
+import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.astropvpskins.objects.ItemSkin;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-/* Location:              C:\Users\bryan\Downloads\GalacticItemSkins.jar!\me\galacticpvp\galacticitemskins\objects\skins\axes\SpikedBaseballBatSkin.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */
+public class SpikedBaseballBatSkin extends ItemSkin {
+
+    public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
+        if(!(damaged instanceof Player))
+            return;
+        if(((Player) damaged).getItemInHand().getType().toString().endsWith("_SWORD"))
+            event.setDamage(event.getDamage() * 1.1);
+    }
+
+    public void onAttacked(Player damaged, Entity damager, EntityDamageByEntityEvent event) {
+        if(!(damager instanceof Player))
+            return;
+        if(((Player) damager).getItemInHand().getType().toString().endsWith("_SWORD"))
+            event.setDamage(event.getDamage() * 0.95);
+    }
+}

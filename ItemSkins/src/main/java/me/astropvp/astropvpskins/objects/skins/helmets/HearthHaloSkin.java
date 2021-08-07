@@ -4,7 +4,6 @@ import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.ItemSkin;
 
 public class HearthHaloSkin  extends ItemSkin {
-    public HearthHaloSkin() {
-        /* 8 */     super(SkinType.VALENTINES_2021_HELMET);
-        /*   */   }
+
+        //BIT CONFUSED TO WHAT THIS SKIN IS ACTUALLY DOING, SEEMS TO JUST BE MODIFYING DAMAGE RN?
 }

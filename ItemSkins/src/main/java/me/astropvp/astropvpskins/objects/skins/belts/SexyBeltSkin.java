@@ -1,22 +1,17 @@
-/*    */ package me.astropvp.astropvpskins.objects.skins.belts;
-/*    */ 
-/*    */ import me.astropvp.astropvpskins.enums.SkinType;
-/*    */ import me.astropvp.astropvpskins.objects.ItemSkin;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public class SexyBeltSkin
-/*    */   extends ItemSkin
-/*    */ {
-/*    */   public SexyBeltSkin() {
-/* 14 */     super(SkinType.SEXY_BELT);
-/*    */   }
-/*    */ }
+package me.astropvp.astropvpskins.objects.skins.belts;
 
+import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.astropvpskins.objects.ItemSkin;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-/* Location:              C:\Users\bryan\Downloads\GalacticItemSkins.jar!\me\galacticpvp\galacticitemskins\objects\skins\belts\SexyBeltSkin.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */
+public class SexyBeltSkin extends ItemSkin {
+
+    public void onAttacked(Player damaged, Entity damager, EntityDamageByEntityEvent event) {
+        if(damager instanceof Projectile)
+            event.setDamage(event.getDamage() * 0.75);
+    }
+}
+

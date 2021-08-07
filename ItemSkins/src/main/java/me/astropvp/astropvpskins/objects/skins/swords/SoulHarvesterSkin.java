@@ -4,7 +4,4 @@ import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.ItemSkin;
 
 public class SoulHarvesterSkin extends ItemSkin {
-    public SoulHarvesterSkin() {
-        super(SkinType.THANKSGIVING_SWORD_HARVESTER);
-    }
 }

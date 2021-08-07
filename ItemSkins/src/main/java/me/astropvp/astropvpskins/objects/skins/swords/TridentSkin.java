@@ -1,18 +1,27 @@
-
 package me.astropvp.astropvpskins.objects.skins.swords;
 
-
+import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.ItemSkin;
+import org.arkhamnetwork.enchantments.enchantments.axes.Blessed;
+import org.arkhamnetwork.enchantments.mastery.MasteryMarkOfTheBeast;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
+public class TridentSkin extends ItemSkin {
 
-public class TridentSkin
-        extends ItemSkin {
-
-    public TridentSkin() {
-        super(SkinType.RUINS_SWORD);
+    public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
+        if(Math.random() <= 0.08) {
+            (new MasteryMarkOfTheBeast()).applyDefenseEffect((LivingEntity)damager, (LivingEntity)damaged, 3, event);
+            (new Blessed()).applyEffect((LivingEntity)damager, (LivingEntity)damaged, 4, event);
+            damaged.sendMessage("");
+            damaged.sendMessage(CC.translate("&3&l* TRIDENT OF DEEP &7[" + damager.getName() + "] &3&l*"));
+            damaged.sendMessage(CC.translate("&3&l * &7+ Hex"));
+            damaged.sendMessage(CC.translate("&3&l * &7+ Mark Of the Beast"));
+            damaged.sendMessage(CC.translate("&7"));
+        }
     }
-
-
 }
 

@@ -53,17 +53,17 @@ public abstract class CustomBlock {
         NBTItem nbtItem = new NBTItem(item.toItemStack());
         nbtItem.setString("conaxCustomBlock", abilityType.getName());
 
-        SkullMeta meta = (SkullMeta) nbtItem.getItem().getItemMeta();
-        GameProfile profile = new GameProfile(UUID.randomUUID(), "");
-        profile.getProperties().put("textures", new Property("textures", abilityType.getSkinTexture()));
-        try {
+        //SkullMeta meta = (SkullMeta) nbtItem.getItem().getItemMeta();
+        //GameProfile profile = new GameProfile(UUID.randomUUID(), "");
+        //profile.getProperties().put("textures", new Property("textures", abilityType.getSkinTexture()));
+        /*try {
             Field profileField = meta.getClass().getDeclaredField("profile");
             profileField.setAccessible(true);
             profileField.set(meta, profile);
         } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
             e.printStackTrace();
-        }
-        nbtItem.getItem().setItemMeta(meta);
+        }*/
+        //nbtItem.getItem().setItemMeta(meta);
         return nbtItem.getItem();
     }
 

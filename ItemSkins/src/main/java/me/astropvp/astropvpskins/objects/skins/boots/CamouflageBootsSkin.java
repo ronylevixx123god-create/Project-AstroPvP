@@ -1,26 +1,16 @@
-/*    */ package me.astropvp.astropvpskins.objects.skins.boots;
-/*    */ 
-/*    */ import me.astropvp.astropvpskins.enums.SkinType;
-/*    */ import me.astropvp.astropvpskins.objects.ItemSkin;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public class CamouflageBootsSkin
-/*    */   extends ItemSkin
-/*    */ {
-/*    */   public CamouflageBootsSkin() {
-/* 18 */     super(SkinType.DOOMSDAY_BOOTS);
-/*    */   }
-/*    */ }
+package me.astropvp.astropvpskins.objects.skins.boots;
 
+import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.astropvpskins.objects.ItemSkin;
+import org.arkhamnetwork.enchantments.mastery.MasteryDemonicGateway;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-/* Location:              C:\Users\bryan\Downloads\GalacticItemSkins.jar!\me\galacticpvp\galacticitemskins\objects\skins\boots\CamouflageBootsSkin.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */
+public class CamouflageBootsSkin extends ItemSkin {
+
+    public void onAttacked(Player damaged, Entity damager, EntityDamageByEntityEvent event) {
+        (new MasteryDemonicGateway()).applyDefenseEffect(damaged, (LivingEntity)damager, 5, event);
+    }
+}

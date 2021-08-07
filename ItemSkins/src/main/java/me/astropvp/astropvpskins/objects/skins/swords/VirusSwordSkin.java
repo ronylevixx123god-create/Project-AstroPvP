@@ -1,17 +1,19 @@
-/*   */ package me.astropvp.astropvpskins.objects.skins.swords;
-/*   */ 
-/*   */ import me.astropvp.astropvpskins.enums.SkinType;
-/*   */ import me.astropvp.astropvpskins.objects.ItemSkin;
-/*   */ 
-/*   */ public class VirusSwordSkin
-/*   */   extends ItemSkin {
-/*   */   public VirusSwordSkin() {
-/* 9 */     super(SkinType.VIRUS_SWORD);
-/*   */   }
-/*   */ }
+package me.astropvp.astropvpskins.objects.skins.swords;
+
+import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.astropvpskins.objects.ItemSkin;
+import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicCleave;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+
+public class VirusSwordSkin extends ItemSkin {
+
+    public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
+        event.setDamage(event.getDamage() * 1.035);
+        (new HeroicCleave()).applyEffect(damager, (LivingEntity)damaged, 5, event);
+    }
+}
 
 
-/* Location:              C:\Users\bryan\Downloads\GalacticItemSkins.jar!\me\galacticpvp\galacticitemskins\objects\skins\swords\VirusSwordSkin.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */
