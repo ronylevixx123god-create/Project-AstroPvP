@@ -99,8 +99,7 @@
             <groupId>com.conaxgames</groupId>
             <artifactId>CustomBlocks</artifactId>
             <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/CustomBlocks.jar</systemPath>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>

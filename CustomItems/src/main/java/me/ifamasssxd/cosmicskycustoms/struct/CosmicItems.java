@@ -20,6 +20,10 @@ public enum CosmicItems {
         this.item = item;
     }
 
+    public String getInternalName() { return this.internalName; }
+
+    public CosmicItem getItem() { return this.item; }
+
     public static ItemStack createItem(String itemName, Object ... args) {
         CosmicItem item = CosmicSkyCustomItems.get().getItemManager().getCustomItem(itemName);
         if (item == null) {

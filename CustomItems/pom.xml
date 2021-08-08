@@ -60,13 +60,15 @@
             <groupId>com.conaxgames</groupId>
             <artifactId>Arkkit</artifactId>
             <version>0.1</version>
-            <scope>provided</scope>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/Arkkit.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>Utils</artifactId>
             <version>0.1</version>
-            <scope>provided</scope>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/CosmicPvPUtils.jar</systemPath>
         </dependency>
 
 

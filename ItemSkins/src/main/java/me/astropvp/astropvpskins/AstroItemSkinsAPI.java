@@ -65,20 +65,20 @@ public class AstroItemSkinsAPI {
 //        }
         switch (type.getItemSkinType()) {
             case HELMET:
-                return player.getInventory().getHelmet() != null && getItemSkinByItem(player.getInventory().getHelmet()).contains(type);
+                return player.getInventory().getHelmet() != null && hasItemSkin(player.getInventory().getHelmet()) && getItemSkinByItem(player.getInventory().getHelmet()).contains(type);
             case AMULET:
             case BACKPACK:
-                return player.getInventory().getChestplate() != null &&  getItemSkinByItem(player.getInventory().getChestplate()).contains(type);
+                return player.getInventory().getChestplate() != null && hasItemSkin(player.getInventory().getChestplate()) &&  getItemSkinByItem(player.getInventory().getChestplate()).contains(type);
             case BELT:
-                return player.getInventory().getLeggings() != null &&  getItemSkinByItem(player.getInventory().getLeggings()).contains(type);
+                return player.getInventory().getLeggings() != null && hasItemSkin(player.getInventory().getLeggings()) &&  getItemSkinByItem(player.getInventory().getLeggings()).contains(type);
             case BOOTS:
-                return player.getInventory().getBoots() != null &&  getItemSkinByItem(player.getInventory().getBoots()).contains(type);
+                return player.getInventory().getBoots() != null && hasItemSkin(player.getInventory().getBoots()) &&  getItemSkinByItem(player.getInventory().getBoots()).contains(type);
             case SWORD:
             case AXE:
             case PICKAXE:
             case BOW:
             case TOOL:
-                return player.getItemInHand() != null &&  getItemSkinByItem(player.getInventory().getItemInHand()).contains(type);
+                return player.getItemInHand() != null && hasItemSkin(player.getItemInHand()) &&  getItemSkinByItem(player.getInventory().getItemInHand()).contains(type);
         }
         return false;
     }
@@ -93,12 +93,14 @@ public class AstroItemSkinsAPI {
     }
 
     public static List<SkinType> getItemSkinByItem(ItemStack item) {
+        List<SkinType> skins = new ArrayList<>();
         if (item == null || item.getType() == Material.AIR || !item.hasItemMeta())
             return null;
         NBTWrapper wrapper = new NBTWrapper(item);
         NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
+        if(!cosmicData.hasKey("itemSkinType"))
+            return skins;
         List<String> stringSkins = new ArrayList<>(Arrays.asList(cosmicData.getString("itemSkinType").split(",")));
-        List<SkinType> skins = new ArrayList<>();
         for(String string : stringSkins) {
             string = string.replace("[", "");
             string = string.replace("]", "");
