@@ -6,6 +6,7 @@ import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import me.astropvp.astropvpskins.enums.ItemSkinType;
 import me.astropvp.astropvpskins.enums.SkinType;
 import net.minecraft.server.v1_8_R3.NBTBase;
+import org.arkhamnetwork.enchantments.util.ArmorSlot;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -17,6 +18,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class AstroItemSkinsAPI {
@@ -57,6 +59,20 @@ public class AstroItemSkinsAPI {
             return false;
         return (new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData"))).hasKey("itemSkinType");
     }
+
+
+    /*public static boolean hasSkinEquipped(Player player, SkinType type) {
+        if (type.getItemSkinType() == ItemSkinType.AMULET || type.getItemSkinType() == ItemSkinType.BACKPACK) {
+            return getItemSkinByItem(player.getInventory().getChestplate()).contains(type);
+
+        } else {
+            ItemSkinCacher cacher = ItemSkinCacher.getItemCacher(player);
+            if (cacher == null)
+                return false;
+            Map<ArmorSlot, SkinType> types = cacher.getSkinTypes();
+            return types.values().contains(type);
+        }
+    }*/
 
     public static boolean hasItemSkin(ItemStack item) {
         NBTWrapper wrapper = new NBTWrapper(item);
