@@ -49,30 +49,39 @@ public class AstroItemSkinsAPI {
             return false;
         SkinType type = SkinType.valueOf(cosmicData.getString("itemSkinType"));
         NBTWrapper wrapper2 = new NBTWrapper(item2);
-        Bukkit.broadcastMessage(wrapper2.toString());
         NBTTagCompoundBuilder cosmicData2 = wrapper2.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper2.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
         if(!cosmicData2.hasKey("itemSkinType"))
             return false;
         SkinType type2 = SkinType.valueOf(cosmicData2.getString("itemSkinType"));
-        Bukkit.broadcastMessage(type.toString() + " " + type2.toString());
         if(type.getItemSkinType() != type2.getItemSkinType())
             return false;
         return (new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData"))).hasKey("itemSkinType");
     }
 
 
-    /*public static boolean hasSkinEquipped(Player player, SkinType type) {
-        if (type.getItemSkinType() == ItemSkinType.AMULET || type.getItemSkinType() == ItemSkinType.BACKPACK) {
-            return getItemSkinByItem(player.getInventory().getChestplate()).contains(type);
-
-        } else {
-            ItemSkinCacher cacher = ItemSkinCacher.getItemCacher(player);
-            if (cacher == null)
-                return false;
-            Map<ArmorSlot, SkinType> types = cacher.getSkinTypes();
-            return types.values().contains(type);
+    public static boolean hasSkinEquipped(Player player, SkinType type) {
+//        if (type.getItemSkinType() == ItemSkinType.AMULET || type.getItemSkinType() == ItemSkinType.BACKPACK) {
+//            return getItemSkinByItem(player.getInventory().getChestplate()).contains(type);
+//        }
+        switch (type.getItemSkinType()) {
+            case HELMET:
+                return player.getInventory().getHelmet() != null && getItemSkinByItem(player.getInventory().getHelmet()).contains(type);
+            case AMULET:
+            case BACKPACK:
+                return player.getInventory().getChestplate() != null &&  getItemSkinByItem(player.getInventory().getChestplate()).contains(type);
+            case BELT:
+                return player.getInventory().getLeggings() != null &&  getItemSkinByItem(player.getInventory().getLeggings()).contains(type);
+            case BOOTS:
+                return player.getInventory().getBoots() != null &&  getItemSkinByItem(player.getInventory().getBoots()).contains(type);
+            case SWORD:
+            case AXE:
+            case PICKAXE:
+            case BOW:
+            case TOOL:
+                return player.getItemInHand() != null &&  getItemSkinByItem(player.getInventory().getItemInHand()).contains(type);
         }
-    }*/
+        return false;
+    }
 
     public static boolean hasItemSkin(ItemStack item) {
         NBTWrapper wrapper = new NBTWrapper(item);
@@ -125,7 +134,6 @@ public class AstroItemSkinsAPI {
 
         skins.remove(stringArray[0]);
         if(skins.size() != 0) {
-            Bukkit.broadcastMessage("1");
             String[] remaining = skins.toArray(new String[0]);
             String s = Arrays.toString(remaining);
             s = s.replaceAll(" ", "");

@@ -16,6 +16,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
@@ -85,6 +86,7 @@ public class ItemSkinListener implements Listener {
         }
     }
 
+
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         AstroItemSkinsAPI.updateSkins(event.getPlayer());
@@ -99,11 +101,11 @@ public class ItemSkinListener implements Listener {
     public void onArmorChange(ArmorEquipEvent event) {
         if (event.getOldArmorPiece() != null && event.getOldArmorPiece().getType() != Material.AIR && AstroItemSkinsAPI.hasItemSkin(event.getOldArmorPiece())) {
             List<SkinType> skins = AstroItemSkinsAPI.getItemSkinByItem(event.getOldArmorPiece());
-            skins.forEach(skin -> {skin.getItemSkin().onEquip(event.getPlayer());});
+            skins.forEach(skin -> {skin.getItemSkin().onUnequip(event.getPlayer());});
         }
         if (event.getNewArmorPiece() != null && event.getNewArmorPiece().getType() != Material.AIR && AstroItemSkinsAPI.hasItemSkin(event.getNewArmorPiece())) {
             List<SkinType> skins = AstroItemSkinsAPI.getItemSkinByItem(event.getNewArmorPiece());
-            skins.forEach(skin -> {skin.getItemSkin().onUnequip(event.getPlayer());});
+            skins.forEach(skin -> {skin.getItemSkin().onEquip(event.getPlayer());});
         }
     }
 }
