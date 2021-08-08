@@ -13,6 +13,7 @@
         <module name="ItemSkins" />
         <module name="Enchantments" />
         <module name="Attributes" />
+        <module name="AstroItemFlip" />
         <module name="Bosses" />
         <module name="Masks" />
         <module name="AstroScoreboard" />
