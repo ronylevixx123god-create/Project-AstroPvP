@@ -21,15 +21,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import me.astropvp.astropvpskins.objects.skins.amulets.AutumnAmuletSkin;
-import me.astropvp.astropvpskins.objects.skins.amulets.CorruptAmuletCorruptionSkin;
-import me.astropvp.astropvpskins.objects.skins.amulets.CorruptAmuletDestructionSkin;
-import me.astropvp.astropvpskins.objects.skins.amulets.CupidAmuletSkin;
-import me.astropvp.astropvpskins.objects.skins.amulets.LostAmulet;
-import me.astropvp.astropvpskins.objects.skins.amulets.LuauLei;
-import me.astropvp.astropvpskins.objects.skins.amulets.RabitsFootAmuletSkin;
-import me.astropvp.astropvpskins.objects.skins.amulets.StaffPassAmuletSkin;
-import me.astropvp.astropvpskins.objects.skins.amulets.StarquestAmuletSkin;
 import me.astropvp.astropvpskins.objects.skins.axes.CorruptAxeSkin;
 import me.astropvp.astropvpskins.objects.skins.axes.EasterBasketSkin;
 import me.astropvp.astropvpskins.objects.skins.axes.MeatCleaverAxeSkin;
@@ -206,6 +197,8 @@ public enum SkinType {
     THANKSGIVING_BACKPACK_PICNIC(CC.YellowB + "Portable Picnic", ItemSkinType.BACKPACK, new PortablePicnicSkin(), Arrays.asList(CC.translate("&cNo Food loss"), CC.translate("&c-4% Incoming Damage"),
             CC.translate("&c+1 Food to nearby allies within"),
             CC.translate("&c10 blocks every 10s")));
+
+
 
 
     private final String display;

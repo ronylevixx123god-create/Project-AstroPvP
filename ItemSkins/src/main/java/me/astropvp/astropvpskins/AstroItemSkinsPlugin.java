@@ -2,6 +2,7 @@ package me.astropvp.astropvpskins;
 
 import me.astropvp.astropvpskins.armorequip.ArmorListener;
 import me.astropvp.astropvpskins.commands.CommandItemSkin;
+import me.astropvp.astropvpskins.listeners.ItemSkinInventoryClickListener;
 import me.astropvp.astropvpskins.listeners.ItemSkinListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -13,6 +14,7 @@ public class AstroItemSkinsPlugin extends JavaPlugin {
         getCommand("itemskin").setExecutor(new CommandItemSkin());
         getServer().getPluginManager().registerEvents(new ItemSkinListener(), this);
         getServer().getPluginManager().registerEvents(new ArmorListener(getConfig().getStringList("blocked")), this);
+        getServer().getPluginManager().registerEvents(new ItemSkinInventoryClickListener(), this);
     }
 
     public void onDisable() {
