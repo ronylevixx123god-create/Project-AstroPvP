@@ -1,10 +1,7 @@
 package com.conaxgames.customskulls;
 
 import com.conaxgames.customskulls.blocks.CustomBlock;
-import com.conaxgames.customskulls.blocks.impl.AstroTrophy;
-import com.conaxgames.customskulls.blocks.impl.Cauldron;
-import com.conaxgames.customskulls.blocks.impl.PumpkinPie;
-import com.conaxgames.customskulls.blocks.impl.TreasureChest;
+import com.conaxgames.customskulls.blocks.impl.*;
 import com.conaxgames.customskulls.commands.AbilityBlocksCommand;
 import com.conaxgames.customskulls.data.LoadCustomBlocks;
 import com.conaxgames.customskulls.listeners.CustomAbilityListener;
@@ -73,6 +70,8 @@ public class CoreSkulls extends JavaPlugin {
         customBlocks.put("PUMPKINPIE", new PumpkinPie());
         customBlocks.put("TREASURECHEST", new TreasureChest());
         customBlocks.put("ASTROTROPHY", new AstroTrophy());
+        customBlocks.put("LEVIATHAN_TOTEM", new LeviathanTotem());
+        customBlocks.put("HALLOWEEN_CANDLE", new HalloweenCandle());
     }
 
     public void info(String string) {

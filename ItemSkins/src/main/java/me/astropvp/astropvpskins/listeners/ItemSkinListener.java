@@ -30,8 +30,9 @@ public class ItemSkinListener implements Listener {
             return;
         if (clicked == null || clicked.getType() == Material.AIR)
             return;
-        if (AstroItemSkinsAPI.isItemSkin(cursor) && event.getClick().isLeftClick() && !AstroItemSkinsAPI.hasItemSkin(clicked, cursor)) {
+        if (AstroItemSkinsAPI.isItemSkin(cursor) && event.getClick().isLeftClick()) {
             SkinType type = AstroItemSkinsAPI.getItemSkin(cursor);
+
             if (type == null || !AstroItemSkinsAPI.isCorrectType(type, clicked))
                 return;
             if (event.getSlotType() == InventoryType.SlotType.ARMOR) {
