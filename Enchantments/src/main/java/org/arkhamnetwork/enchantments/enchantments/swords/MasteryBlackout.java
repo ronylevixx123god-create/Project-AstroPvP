@@ -41,13 +41,13 @@ public class MasteryBlackout extends CustomEnchantment {
             return;
         }
 
-        if (AstroItemSkinsAPI.isInHand(((Player) user).getPlayer(), SkinType.MAUIS_HOOK)) {
+        if (AstroItemSkinsAPI.hasSkinEquipped(((Player) user).getPlayer(), SkinType.SUMMER_2021_SWORD)) {
             enchantLevel = 5;
         }
 
         if (Math.random() <= 0.005D) {
-            int multi = AstroItemSkinsAPI.isInHand((Player) user, SkinType.CORRUPT_SWORD) ? 2 : 1;
-            if (AstroItemSkinsAPI.hasSkinEquipped(pTarget.getPlayer(), SkinType.NORTH_STAR)) {
+            int multi = AstroItemSkinsAPI.hasSkinEquipped((Player) user, SkinType.CORRUPT_SWORD) ? 2 : 1;
+            if (AstroItemSkinsAPI.hasSkinEquipped(pTarget.getPlayer(), SkinType.CHRISTMAS_HELMET_STAR)) {
                 multi = 1;
             }
 

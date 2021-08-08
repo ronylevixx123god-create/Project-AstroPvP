@@ -29,12 +29,12 @@ public class Frozen extends CustomEnchantment {
 
         if (random < chance && e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK && attacker != null) {
 
-            if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.NEON_EMOTIONS)) {
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2021_HELMET)) {
                 attacker.sendMessage(CC.translate("&d&l* NEON EMOTIONS &7Blocked Slow Effect &d&l*"));
                 return;
             }
 
-            if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.SNOWFLAKE_SLIPPERS)) {
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.CHRISTMAS_BOOTS_SLIPPERS)) {
                 attacker.sendMessage(CC.translate("&c&l* SNOWFLAKE FLIPPERS &7Blocked Slow Effect &c&l*"));
                 return;
             }

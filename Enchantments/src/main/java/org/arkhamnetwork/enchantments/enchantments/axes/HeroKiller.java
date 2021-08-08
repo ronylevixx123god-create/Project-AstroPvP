@@ -4,10 +4,8 @@ import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
-import me.astropvp.AstroBackpacksAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import me.astropvp.objects.BackpackType;
 import me.bryside.weaponrunes.enums.WeaponBonusType;
 import me.bryside.weaponrunes.utils.WeaponBonusUtils;
 import me.ifamasssxd.killtracker.KillTrackerAPI;
@@ -49,7 +47,7 @@ public class HeroKiller extends CustomEnchantment {
             return;
         }
 
-        if (((Player) playerHit).getPlayer().getInventory().getChestplate() != null && AstroBackpacksAPI.itemHasSkin(((Player) playerHit).getPlayer().getInventory().getChestplate()) && AstroBackpacksAPI.getBackpackByItem(((Player) playerHit).getPlayer().getInventory().getChestplate()).equals(BackpackType.TEDDY_BACKPACK)) {
+        if (((Player) playerHit).getPlayer().getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped(((Player) playerHit).getPlayer(), SkinType.VALENTINES_2021_BACKPACK)) {
             return;
         }
             if (KillTrackerAPI.hasGodMode(p) && KillTrackerAPI.getAllSouls(p) > 0) {
@@ -60,11 +58,11 @@ public class HeroKiller extends CustomEnchantment {
 
             double increase = 0.015;
 
-            if (AstroItemSkinsAPI.isInHand((Player) e.getEntity(), SkinType.MAUIS_HOOK)) {
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.SUMMER_2021_SWORD)) {
                 increase = 0.017;
             }
 
-            if (AstroItemSkinsAPI.isInHand((Player) e.getEntity(), SkinType.SOUL_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.HEART_HALO)) {
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2021_HELMET)) {
                 if (WeaponBonusUtils.hasWeaponBonus(((Player) e.getEntity()).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player) e.getEntity()).getItemInHand()) == WeaponBonusType.REFORGED && Math.random()<0.5) {
                     increase = 0.015;
                 } else {

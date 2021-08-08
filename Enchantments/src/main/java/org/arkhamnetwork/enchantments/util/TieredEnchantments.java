@@ -226,6 +226,10 @@ public enum TieredEnchantments {
     oxygenate(1),
     autosmelt(1),
     experience(1),
+    combatmedic(4),
+    overwhelm(5),
+    righteousantigank(7),
+    divinelight(8),
     aquatic(1);
 
     private static List<CustomEnchantment> commonEnchants;
@@ -339,13 +343,7 @@ public enum TieredEnchantments {
         if (TieredEnchantments.retiredEnchantments.contains(ce) || (tier != 7 && TieredEnchantments.heroicEnchantments.contains(ce))) {
             return getRandomEnchantmentBook(tier);
         }
-        if (ce.equals(EnchantmentAPI.getEnchantment("Revoke")) || ce.equals(EnchantmentAPI.getEnchantment("Rogue"))
-        || ce.equals(EnchantmentAPI.getEnchantment("Maliciously Corrupt")) || ce.equals(EnchantmentAPI.getEnchantment("Bloody Deep Wounds"))
-        || ce.equals(EnchantmentAPI.getEnchantment("Holy Aegis")) || ce.equals(EnchantmentAPI.getEnchantment("Bewitched Hex"))
-        || ce.equals(EnchantmentAPI.getEnchantment("Vampiric Devour")) || ce.equals(EnchantmentAPI.getEnchantment("Martyr Valor"))
-        || ce.equals(EnchantmentAPI.getEnchantment("Nocturnal Insomnia")) || ce.equals(EnchantmentAPI.getEnchantment("Reality Inversion"))
-        || ce.equals(EnchantmentAPI.getEnchantment("Permanent Execute")) || ce.equals(EnchantmentAPI.getEnchantment("Unrestrained Enrage"))
-        || ce.equals(EnchantmentAPI.getEnchantment("Brutal Barbarian")) || ce.equals(EnchantmentAPI.getEnchantment("Perfect Solitude"))) {
+        if (ce.equals(EnchantmentAPI.getEnchantment("Revoke")) || ce.equals(EnchantmentAPI.getEnchantment("Rogue"))) {
             return getRandomEnchantmentBook(tier);
         }
         return EnchantmentBook.getEnchantmentBook(ce, ce.getMaxLevel(), 100, 0);

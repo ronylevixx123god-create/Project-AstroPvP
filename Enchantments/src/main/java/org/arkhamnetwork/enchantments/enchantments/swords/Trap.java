@@ -60,7 +60,7 @@ public class Trap extends CustomEnchantment {
                 return;
             }
 
-            if (AstroItemSkinsAPI.hasSkinEquipped(ptarget, SkinType.WITCH_HAT)) {
+            if (AstroItemSkinsAPI.hasSkinEquipped(ptarget, SkinType.THANKSGIVING_HELMET_WITCH)) {
                 ptarget.sendMessage(CC.translate("&e&l* WITCH HAT &7Blocked &eTrap &e&l*"));
                 return;
             }

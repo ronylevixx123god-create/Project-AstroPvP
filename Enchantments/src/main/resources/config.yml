@@ -211,3 +211,7 @@ descriptions:
   - Revoke=Chance to disable your enemy's anti m-kit crystals for a brief period of time.
   - Epidemic Carrier=When near death summons powerful Stun Creepers to avenge you, Requires Plague Carrier VIII enchant on item to apply.
   - Rogue=Active soul enchant, Deal up to 2.0x damage if hitting your enemy from behind.
+  - Combat Medic=Chance to remove a bleed stack when your Bleed enchant procs.
+  - Overwhelm=Chance to disable enemy's ability to inflict Reflective Block on you for 6s with every hit.
+  - Righteous Anti Gank=Heroic Enchantment. If more than 2 enemies hit you in a large period, your outgoing damage will be multiplied by up to 1.6x, or up to 2x if they are wielding a sword.
+  - Divine Light=When the user is inflicted with the Blackout effect, instead of disabling their defensive armor crystal bonuses for a brief period of time, all enemies you hit have a chance (up to 100% at max level) to disable theirs instead.

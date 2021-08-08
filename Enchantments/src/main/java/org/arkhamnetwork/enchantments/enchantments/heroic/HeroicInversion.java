@@ -27,7 +27,7 @@ public class HeroicInversion extends HeroicCustomEnchantment {
 
     @SneakyThrows
     public void applyDefenseEffect(final LivingEntity entityHit, final LivingEntity attacker, int level, final EntityDamageEvent e) {
-        if (AstroItemSkinsAPI.hasSkinEquipped((Player) entityHit, SkinType.HEARTBREAKER)) {
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) entityHit, SkinType.VALENTINES_2021_SWORD)) {
             level = 5;
         }
 

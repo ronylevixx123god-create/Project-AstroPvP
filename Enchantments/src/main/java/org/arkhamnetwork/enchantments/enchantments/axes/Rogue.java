@@ -42,7 +42,7 @@ public class Rogue extends CustomEnchantment {
         if (!(player instanceof Player)) // rooThink
             return;
         if (!(playerHit instanceof Player)) return;
-        if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.LUAU_LEI) && Math.random() < 0.20) {
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.SUMMER_2021_AMULET) && Math.random() < 0.20) {
             playerHit.sendMessage(CC.translate("&c&l* LUAU LEI &7Blocked Rogue &c&l*"));
             return;
         }
@@ -63,14 +63,14 @@ public class Rogue extends CustomEnchantment {
             }
             double damage = e.getDamage();
 
-            if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.SOUL_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.HEART_HALO)) {
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2021_HELMET)) {
                 if (WeaponBonusUtils.hasWeaponBonus(((Player) e.getEntity()).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player) e.getEntity()).getItemInHand()) == WeaponBonusType.REFORGED && Math.random() < 0.5) {
                     e.setDamage(damage + (multi * 0.15));
 
                 } else {
                     e.setDamage(damage + (multi * 0.17));
                 }
-            } else if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.MAUIS_HOOK)) {
+            } else if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.SUMMER_2021_SWORD)) {
                 e.setDamage(damage + (multi * 0.17));
 
             } else {

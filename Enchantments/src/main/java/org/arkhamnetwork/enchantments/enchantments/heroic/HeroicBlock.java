@@ -24,6 +24,9 @@ public class HeroicBlock extends HeroicCustomEnchantment {
         if (damaged instanceof Player) {
             if (damaged.hasMetadata("neutralized"))
                 return;
+            if (attacker.hasMetadata("overwhelm_effect")) {
+                return;
+            }
             Player player = (Player) damaged;
             double random = Math.random();
             double chance = (player.isBlocking() ? 0.001D : 0.001D) * level;

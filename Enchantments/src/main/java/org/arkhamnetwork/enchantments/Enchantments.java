@@ -74,7 +74,7 @@ public class Enchantments extends EnchantPlugin {
                 new Lifebloom(), new PlagueCarrier(), new Obliterate(), new EnderWalker(), new Paralyze(), new Drunk(), new Insomnia(), new SkillSwipe(), new Silence(), new Angelic(),
                 new Voodoo(), new Stormcaller(), new Execute(), new Disarmor(), new Demonforged(), new AutoSmelt(), new Experience(), new Detonate(), new ObsidianDestroyer(), new Oxygenate(),
                 new Telepathy(), new Lucky(), new Leadership(), new SmokeBomb(), new Rage(), new ArrowLifesteal(), new Clarity(), new Spirits(), new UndeadRuse(), new Trickster(),
-                new BloodLust(), new Devour(), new Protection(), new Destruction(), new Hellfire(), new Ragdoll(), new Sniper(), new Snare(), this.naturesWrathEnchant = new NatureWrath(), new DivineImmolation(),
+                new BloodLust(), new Devour(), new Protection(), new Destruction(), new Hellfire(), new Ragdoll(), new Sniper(), new Snare(), new CombatMedic(), new Overwhelm(), new HeroicAntiGank(), new DivineLight(), this.naturesWrathEnchant = new NatureWrath(), new DivineImmolation(),
                 new Rogue(), new HeroicInversion(), new HeroicInsomnia(), new HeroicValor(), new HeroicAegis(), new HeroicEnrage(), new HeroicCorrupt(), new HeroicSolitude(), new HeroicDevour(), new HeroicHex(),
                 new Ghost(), new CreeperArmor(), new KillAura(), new Shackle(), new Immortal(), new Pummel(), new Barbarian(), new HeroicBarbarian(), new HeroicDeepWounds(),
                 new Ghost(), new CreeperArmor(), new KillAura(), new Shackle(), new Immortal(), new Pummel(), new Barbarian(),

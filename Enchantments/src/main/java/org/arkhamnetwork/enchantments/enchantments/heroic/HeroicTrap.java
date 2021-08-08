@@ -40,7 +40,7 @@ public class HeroicTrap extends HeroicCustomEnchantment {
         double durationTicks = (35 + level * 10);
         Player ptarget = (Player) target;
 
-        if (AstroItemSkinsAPI.isInHand((Player) player, SkinType.ORNAMENTAL_CARNAGE)) {
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.CHRISTMAS_SWORD_ORNAMENTAL)) {
             chance = 0.01D * 5;
             durationTicks = (35 + 5 * 10);
         }
@@ -51,7 +51,7 @@ public class HeroicTrap extends HeroicCustomEnchantment {
                 return;
             }
 
-            if (AstroItemSkinsAPI.hasSkinEquipped(ptarget, SkinType.WITCH_HAT)) {
+            if (AstroItemSkinsAPI.hasSkinEquipped(ptarget, SkinType.THANKSGIVING_HELMET_WITCH)) {
                 ptarget.sendMessage(CC.translate("&e&l* WITCH HAT &7Blocked &dTitan Trap &e&l*"));
                 return;
             }

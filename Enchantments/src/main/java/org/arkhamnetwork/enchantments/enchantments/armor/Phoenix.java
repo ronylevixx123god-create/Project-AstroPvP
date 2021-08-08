@@ -155,7 +155,7 @@ public class Phoenix extends CustomEnchantment {
 
     public static void enterPhoenixCooldown(Player player) {
 
-        if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.AUTUMN_AMULET)) {
+        if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.THANKSGIVING_AMULET_AUTUMN)) {
             if (player.hasMetadata("autumn_amulet")) {
                 if (player.getMetadata("autumn_amulet").get(0).asInt() == 0) {
                     player.sendMessage(CC.translate("&e&l* AUTUMN AMULET &7Ignored 1st &cPhoenix &7Cooldown &e&l*"));

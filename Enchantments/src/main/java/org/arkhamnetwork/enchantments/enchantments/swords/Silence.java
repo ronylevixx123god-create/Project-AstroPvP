@@ -5,13 +5,9 @@ import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import lombok.SneakyThrows;
-import me.astropvp.AstroBackpacksAPI;
 import me.astropvp.astroparticles.utils.ParticleUtils;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import me.astropvp.damageindicators.DamageIndicators;
-import me.astropvp.damageindicators.utils.DamageIndicatorUtils;
-import me.astropvp.objects.BackpackType;
 import me.bryside.weaponrunes.enums.WeaponBonusType;
 import me.bryside.weaponrunes.utils.WeaponBonusUtils;
 import org.arkhamnetwork.enchantments.Enchantments;
@@ -65,7 +61,7 @@ public class Silence extends CustomEnchantment {
                 return;
             }
 
-            if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.TIKI_MASK) && Math.random() < 0.15) {
+            if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.SUMMER_2021_HELMET) && Math.random() < 0.15) {
                 pTarget.sendMessage(CC.translate("&6&l* TIKI MASK &7Blocked Silence &6&l*"));
             }
 
@@ -76,18 +72,18 @@ public class Silence extends CustomEnchantment {
                 durationTicks*=1.5;
             }
 
-            if (pTarget.getInventory().getChestplate() != null && AstroBackpacksAPI.itemHasSkin(pTarget.getInventory().getChestplate()) && AstroBackpacksAPI.getBackpackByItem(pTarget.getInventory().getChestplate()).equals(BackpackType.CURSED_WINGS)) {
+            if (pTarget.getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.HALLOWEEN_BACKPACK)) {
                 durationTicks /= 2.5;
             }
             if (ItemSkinUtils.hasItemSkin(pTarget, "CORRUPT_HELMET")) {
                 durationTicks /= 2L;
             }
 
-            if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.TIKI_MASK)) {
+            if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.SUMMER_2021_HELMET)) {
                 durationTicks *= 0.6;
             }
 
-            if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.WITCH_HAT)) {
+            if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.THANKSGIVING_HELMET_WITCH)) {
                 durationTicks*=0.25;
             }
 

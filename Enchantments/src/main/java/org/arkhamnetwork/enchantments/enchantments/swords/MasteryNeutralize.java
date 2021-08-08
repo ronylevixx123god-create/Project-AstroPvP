@@ -36,7 +36,7 @@ public class MasteryNeutralize extends CustomEnchantment {
         Player user = (Player) player;
         Player pTarget = (Player) target;
 
-        if (AstroItemSkinsAPI.isInHand(user, SkinType.MAUIS_HOOK)) {
+        if (AstroItemSkinsAPI.hasSkinEquipped(user, SkinType.SUMMER_2021_SWORD)) {
             level = 6;
         }
 
@@ -53,7 +53,7 @@ public class MasteryNeutralize extends CustomEnchantment {
 
         if ((level) * multi >= ThreadLocalRandom.current().nextInt(250)) {
 
-            if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.LOST_AMULET) && Math.random() < 0.5) {
+            if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.RUINS_AMULET) && Math.random() < 0.5) {
                 pTarget.sendMessage(CC.translate("&5&l* BLOCKED ") + ((Player) user).getName() + CC.translate("'s NEUTRALIZE &7(Lost Amulet) &5&l*"));
                 return;
             }
