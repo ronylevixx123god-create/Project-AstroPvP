@@ -5,11 +5,11 @@
  *  com.google.common.collect.Lists
  *  org.bukkit.Bukkit
  */
-package me.matthawkk.autobroadcast.tasks;
+package me.astropvp.autobroadcast.tasks;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.google.common.collect.Lists;
-import me.matthawkk.autobroadcast.struct.BroadcastMessages;
+import me.astropvp.autobroadcast.struct.BroadcastMessages;
 import org.bukkit.Bukkit;
 
 import java.util.List;

@@ -9,10 +9,10 @@
  *  org.bukkit.entity.Player
  *  org.bukkit.inventory.ItemStack
  */
-package me.matthawkk.autogiveall.commands;
+package me.astropvp.autogiveall.commands;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import me.matthawkk.autogiveall.struct.GiveAllManager;
+import me.astropvp.autogiveall.struct.GiveAllManager;
 import net.astropvp.core.conaxgames.giveall.ManualGiveAll;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

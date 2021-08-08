@@ -11,7 +11,7 @@
  *  org.bukkit.entity.Player
  *  org.bukkit.inventory.ItemStack
  */
-package me.matthawkk.autogiveall.struct;
+package me.astropvp.autogiveall.struct;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.google.common.collect.Lists;

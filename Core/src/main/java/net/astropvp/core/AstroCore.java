@@ -51,8 +51,8 @@ import me.ifamasssxd.killtracker.commands.CommandWithdrawSouls;
 import me.ifamasssxd.killtracker.listeners.ItemListener;
 import me.ifamasssxd.killtracker.listeners.PlayerListener;
 import me.ifamasssxd.killtracker.listeners.SoulGemListener;
-import me.matthawkk.autobroadcast.tasks.AutoBroadcastTask;
-import me.matthawkk.autogiveall.struct.GiveAllManager;
+import me.astropvp.autobroadcast.tasks.AutoBroadcastTask;
+import me.astropvp.autogiveall.struct.GiveAllManager;
 import net.astropvp.core.commands.*;
 import net.astropvp.core.conaxgames.giveall.ManualGiveAllCommand;
 import net.astropvp.core.items.*;
@@ -318,9 +318,9 @@ public class AstroCore extends JavaPlugin {
         this.getCommand("givesoulgem").setExecutor(new CommandGiveSoulGem());
         this.getCommand("title").setExecutor(new CommandTitle());
         this.getCommand("titleset").setExecutor(new CommandTitleSet());
-        this.getCommand("claim").setExecutor(new me.matthawkk.autogiveall.commands.CommandClaim());
-        this.getCommand("forcegiveall").setExecutor(new me.matthawkk.autogiveall.commands.CommandForceGiveAll());
-        this.getCommand("nextgiveall").setExecutor(new me.matthawkk.autogiveall.commands.CommandNextGiveAll());
+        this.getCommand("claim").setExecutor(new me.astropvp.autogiveall.commands.CommandClaim());
+        this.getCommand("forcegiveall").setExecutor(new me.astropvp.autogiveall.commands.CommandForceGiveAll());
+        this.getCommand("nextgiveall").setExecutor(new me.astropvp.autogiveall.commands.CommandNextGiveAll());
 
         this.getCommand("giveenchantmentcrystal").setExecutor(new GiveEnchantmentCrystalCommand());
 

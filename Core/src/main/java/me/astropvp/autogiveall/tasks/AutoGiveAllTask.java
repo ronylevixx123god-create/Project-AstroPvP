@@ -7,14 +7,12 @@
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
  */
-package me.matthawkk.autogiveall.tasks;
+package me.astropvp.autogiveall.tasks;
 
 import com.compilex.CompilexPermissions.PermissionsAPI;
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.StringUtils;
-import me.matthawkk.autogiveall.struct.GiveAllManager;
+import me.astropvp.autogiveall.struct.GiveAllManager;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;

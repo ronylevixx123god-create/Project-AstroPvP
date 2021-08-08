@@ -115,56 +115,19 @@ public enum SkinType {
     DEEP_SPACE_BACKPACK(CC.DarkPurpleB + "Deep Space Backpack", ItemSkinType.BACKPACK, new DeepSpaceBackpackSkin(), Arrays.asList(CC.translate("&c+3% Outgoing Damage."), CC.translate("&cImmune to Soul Trap"))),
     HALLOWEEN_BACKPACK(CC.GoldB + "Cursed Wings", ItemSkinType.BACKPACK, new CursedWingsSkin(), Arrays.asList(CC.translate("&c-75% Silence Duration"), CC.translate("&cBlocks all enemy Rocket Escape"), CC.translate("&c-3% Incoming Damage"))),
     VALENTINES_2021_BACKPACK(CC.RedB + "Teddy Backpack", ItemSkinType.BACKPACK, new TeddyBackpackSkin(), Arrays.asList(CC.Red + "Immune to (Lethal) Sniper", CC.Red + "Immune to Hero Killer", CC.Red + "+2% Outgoing Damage")),
-
-
-
-
     MEDIEVAL_HELMET_KING(CC.GoldB + "Royal Crown", ItemSkinType.HELMET, new RoyalCrown(), Arrays.asList(CC.Red + "25% Faster cap time at Citadel Assault", CC.translate("&c-5% Incoming Damage"), CC.translate("&cImmune to enemy Guardians/Undead Ruse"))),
     MEDIEVAL_HELMET_KNIGHT(CC.GrayB + "Knight's Helmet", ItemSkinType.HELMET, new KnightHelmet(), Arrays.asList(CC.Red + "Immune to Teleblock", CC.translate("&cAquatic"), CC.translate("&cAll pearls act as Escapist Pearls"), CC.translate("&c2% Chance to prox Arcane Creeper when damaged"))),
     COSMIC_CITIZEN_HELMET_DRINKING(CC.translate("&b&lDrinking Helmet"), ItemSkinType.HELMET, new DrinkingHelmet(), Arrays.asList(CC.Red + "5-20s shorter /dungeon portal time", CC.translate("&cGhostly Ghost III"))),
     COSMIC_CITIZEN_HELMET_CG(CC.translate("&b&lCosmicGames Hat"), ItemSkinType.HELMET, new CosmicGamesHat(), Arrays.asList(CC.Red + "5% chance to not consume Slotbot Ticket on Spin")),
     CHRISTMAS_HELMET_ICE(CC.translate("&c&lIce Crown"), ItemSkinType.HELMET, new IceCrown(), Arrays.asList(CC.Red + "-5% Incoming Damage", CC.translate("&cReflects (Titan) Trap effects on enemy"))),
-
-
-
     MEDIEVAL_BELT_KING(CC.translate("&6&lRoyal Belt"), ItemSkinType.BELT, new RoyalBelt(), Arrays.asList(CC.Red + "25% chance to not proc Pet Cooldown")),
     MEDIEVAL_BELT_KNIGHT(CC.translate("&7&lChain Belt"), ItemSkinType.BELT, new ChainBelt(), Arrays.asList(CC.Red + "Auto Bless", CC.translate("&c200% damage to Citadel Siege blocks"), CC.translate("&c+2.5% outgoing Damage"))),
     COSMIC_CITIZEN_BELT(CC.translate("&b&lSpace Belt"), ItemSkinType.BELT, new SpaceBelt(), Arrays.asList(CC.Red + "Auto Bless", CC.translate("&c+5% Blackscroll Bonus"), CC.translate("&c+2% to not consume Book on apply"))),
-    DOOMSDAY_BELT(CC.translate("&2&lTactical Belt"), ItemSkinType.BELT, new TacticalBelt(), Arrays.asList(CC.translate("&cIncreases pet ability duration by 1.5x"),
-            CC.translate("&7 (Shackled Golem, Stitches, Sell Bot, Worlock"),
-            CC.translate("&7 Stronghold, Tesla, XP Booster, Anti-Teleblock)"))),
-    HALLOWEEN_BELT(CC.translate("&6&lCandy Sorting Belt"), ItemSkinType.BELT, new HalloweenBelt(),
-            Arrays.asList(CC.translate("&c5% Chance to negate Infinity Luck"),
-                    CC.translate("&cper Heroic Armor piece equipped"),
-                    CC.translate("&cBypasses Candy Collector's Sugar Rush"))),
-    THANKSGIVING_BELT(CC.translate("&e&lPie Belt"), ItemSkinType.BELT, new ThanksGivingBelt(),
-            Arrays.asList(CC.translate("&c+0.5% Outgoing Damage for each enemy Hunger missing"),
-                    CC.translate("&c5% chance to absorb and convert Incoming"),
-                    CC.translate("&cDamage into a Pie Hypnosis stack"),
-            CC.translate("&7 (Each \"Pie Hypnosis\" stack will deal"),
-                    CC.translate("&7 +25% durability damage and increases"),
-                    CC.translate("&7 outgoing damage by 0.5%)"),
-                    CC.translate("&cPie Explosion Ability"),
-                    CC.translate("&7 (Eat a Pumpkin Pie when \"Pie Hypnosis\""),
-                    CC.translate("&7 stack reaches 10 to trigger \"Pie Explosion\","),
-                    CC.translate("&7 healing you for 33% of total HP, fixing"),
-                    CC.translate("&7 your armor for 25% per piece, slowing all"),
-                    CC.translate("&7 nearby enemies and knocking them away)")
-            )),
-    CHRISTMAS_BELT_CANDY(CC.translate("&a&lCandy Buckle"), ItemSkinType.BELT, new CandyBuckle(),
-            Arrays.asList(CC.translate("&cDisable enemy's (Alien) Implants for 10s each hit"),
-                    CC.translate("&c+1% Outgoing Damage for each Food level"),
-                    CC.translate("&cunder 20 that the enemy is missing (max +10%)"),
-                    CC.translate("&c10% chance for Speed IV for 4s when damaged"))),
-
-
+    DOOMSDAY_BELT(CC.translate("&2&lTactical Belt"), ItemSkinType.BELT, new TacticalBelt(), Arrays.asList(CC.translate("&cIncreases pet ability duration by 1.5x"), CC.translate("&7 (Shackled Golem, Stitches, Sell Bot, Worlock"), CC.translate("&7 Stronghold, Tesla, XP Booster, Anti-Teleblock)"))),
+    HALLOWEEN_BELT(CC.translate("&6&lCandy Sorting Belt"), ItemSkinType.BELT, new HalloweenBelt(), Arrays.asList(CC.translate("&c5% Chance to negate Infinity Luck"), CC.translate("&cper Heroic Armor piece equipped"), CC.translate("&cBypasses Candy Collector's Sugar Rush"))),
+    THANKSGIVING_BELT(CC.translate("&e&lPie Belt"), ItemSkinType.BELT, new ThanksGivingBelt(), Arrays.asList(CC.translate("&c+0.5% Outgoing Damage for each enemy Hunger missing"), CC.translate("&c5% chance to absorb and convert Incoming"), CC.translate("&cDamage into a Pie Hypnosis stack"), CC.translate("&7 (Each \"Pie Hypnosis\" stack will deal"), CC.translate("&7 +25% durability damage and increases"), CC.translate("&7 outgoing damage by 0.5%)"), CC.translate("&cPie Explosion Ability"), CC.translate("&7 (Eat a Pumpkin Pie when \"Pie Hypnosis\""), CC.translate("&7 stack reaches 10 to trigger \"Pie Explosion\","), CC.translate("&7 healing you for 33% of total HP, fixing"), CC.translate("&7 your armor for 25% per piece, slowing all"), CC.translate("&7 nearby enemies and knocking them away)"))),
+    CHRISTMAS_BELT_CANDY(CC.translate("&a&lCandy Buckle"), ItemSkinType.BELT, new CandyBuckle(), Arrays.asList(CC.translate("&cDisable enemy's (Alien) Implants for 10s each hit"), CC.translate("&c+1% Outgoing Damage for each Food level"), CC.translate("&cunder 20 that the enemy is missing (max +10%)"), CC.translate("&c10% chance for Speed IV for 4s when damaged"))),
     //TODO Crystaline Band
-
-
-
-
-
-
     MEDIEVAL_AMULET_KING(CC.GoldB + "Amulet of Kings", ItemSkinType.AMULET, new AmuletOfKingsSkin(), Arrays.asList(CC.Red + "15% chance for /end envoy chest loot to auto-/collect")),
     MEDIEVAL_AMULET_KNIGHT(CC.GrayB + "Diamond Necklace", ItemSkinType.AMULET, new DiamondNecklaceSkin(), Arrays.asList(CC.Red + "Increased view distance by 1 chunk")),
     CHRISTMAS_AMULET_SNOWFLAKE(CC.RedB + "Preserved Snowflake", ItemSkinType.AMULET, new PreservedSnowflakeSkin(), Arrays.asList(CC.Red + "Immune to Soul Tether, Soul Trap", CC.Red + "Immune to Nature's Wrath", CC.Red + "Able to see invisible player", CC.Gray + " (Feign Death, Undead Ruse)")),
@@ -172,17 +135,12 @@ public enum SkinType {
     CHRISTMAS_AMULET_SANTA(CC.GreenB + "Secret Santa", ItemSkinType.AMULET, new SecretSantaSkin(), Arrays.asList(CC.Red + "Jolly Suprise ability", CC.Gray + " (5% chance to Feign Death for 2.5s, spawning", CC.Gray + " a \"Demonic Gateway\" where you vanished. On", CC.Gray + " your next attack, you will deal 2x damage", CC.Gray + " if dealt from behind, 30s Cooldown)", CC.Red + "Negates enemy Feign Death")),
     HALLOWEEN_AMULET(CC.GoldB + "Silent Death", ItemSkinType.AMULET, new SilentDeathSkin(), Arrays.asList(CC.Red + "5% chance to afflict enemy", CC.Red + "with Silent Death ability", CC.Gray + " (Enemy will receive 20% Incoming DMG", CC.Gray + " until caster has been hit 5 times", CC.Gray + " or 15 seconds has elapsed.)", CC.Red + "Immune to Silent Death ability", CC.Red + "+3% Outgoing Damage")),
     VALENTINES_2021_AMULET(CC.RedB + "Rose Amulet", ItemSkinType.AMULET, new RoseAmuletSkin(), Arrays.asList(CC.Red + "Immune to Snowflake Axe skin abilities", CC.Red + "-50% damage from enemy Rage", CC.Red + "Automatic Phoenix Feather (30m cooldown)")),
-
     CHRISTMAS_BACKPACK_GOODIES(CC.GreenB + "Sack of Goodies", ItemSkinType.BACKPACK, new SackOfGoodiesSkin(), Arrays.asList(CC.Red + "-2% Incoming Damage", CC.Red + "+2% Outgoing Damage", CC.Red + "1% chance on incoming damage to:", CC.Gray + " * Activate \"Witcher\" pet effect", CC.Gray + " * Activate Titan \"Unbreakable\" pet effect", CC.Gray + " * Activate \"Skrrt\" pet effect", CC.Red + "1% chance on outgoing damage to:", CC.Gray + " * Activate Bloodhound \"Tag\" pet effect", CC.Gray + " * Activate Banshee \"RKO\" pet effect")),
     CHRISTMAS_BACKPACK_REINDEER(CC.RedB + "Baby Reindeer", ItemSkinType.BACKPACK, new BabyReindeerSkin(), Arrays.asList(CC.Red + "Incoming damage has a 33% chance", CC.Red + "to break enemy Silence, Blackout", CC.Red + "Blood Pact ability", CC.Gray + " (50% chance for incoming damage that would", CC.Gray + " normally kill you or bring your health to <=6HP", CC.Gray + " to be redirected at a nearby in-combat ally", CC.Gray + " within 8 blocks for 2x the damage. If no", CC.Gray + " allies are within 8 blocks, you will receive", CC.Gray + " -25% incoming damage when <=6HP)", CC.Red + "Furry Friend ability", CC.Gray + " (Receive Absorbtion V for 8s if an incoming", CC.Gray + " attack brings your health to <=20HP, 30s", CC.Gray + " cooldown)")),
     NYE_BACKPACK(CC.LightPurpleB + "Power Core", ItemSkinType.BACKPACK, new PowerCoreSkin(), Arrays.asList(CC.Red + "Aquatic I", CC.Red + "Lava Strider I", CC.Red + "Ghostly Ghost III", CC.Red + "Obsidianshield I", CC.Red + "Gears IV", CC.Red + "Obsidian you place spawns with 1 bonus", CC.Red + "durability until server reboot")),
     SUMMER_2021_BACKPACK(CC.GoldB + "Surfboard", ItemSkinType.BACKPACK, new SurfboardSkin(), Arrays.asList(CC.Red + "Chance to not activate custom block cooldown")),
     //TODO:COSMIC CAPE HERE
-
-    THANKSGIVING_BACKPACK_PICNIC(CC.YellowB + "Portable Picnic", ItemSkinType.BACKPACK, new PortablePicnicSkin(), Arrays.asList(CC.translate("&cNo Food loss"), CC.translate("&c-4% Incoming Damage"),
-            CC.translate("&c+1 Food to nearby allies within"),
-            CC.translate("&c10 blocks every 10s"))),
-
+    THANKSGIVING_BACKPACK_PICNIC(CC.YellowB + "Portable Picnic", ItemSkinType.BACKPACK, new PortablePicnicSkin(), Arrays.asList(CC.translate("&cNo Food loss"), CC.translate("&c-4% Incoming Damage"), CC.translate("&c+1 Food to nearby allies within"), CC.translate("&c10 blocks every 10s"))),
     CHRISTMAS_SWORD_CANDY(CC.RedB + "Candy Blade", ItemSkinType.SWORD, new CandyBladeSkin(), Arrays.asList(CC.Red + "Chain Lifesteal X", CC.Red + "Sugar Burst Ability", CC.Gray + " (10% chance to deal damage to", CC.Gray + " enemies 20% more often for 3s)")),
     TRIALS_SWORD(CC.GoldB + "Death and Taxes", ItemSkinType.SWORD, new DeathAndTaxesSkin(), Arrays.asList(CC.Red + "Death Toll ability", CC.Gray + " (8% chance to mark a player with \"Death Toll\",", CC.Gray + " which will track all damage you deal to", CC.Gray + " to them with Death and Taxes and damage", CC.Gray + " the player by 25% of damage dealt after 6s.)")),
     MEDIEVAL_SWORD_KING(CC.GoldB + "King Sceptre", ItemSkinType.SWORD, new KingSceptreSkin(), Arrays.asList(CC.Red + "Master Inquisitive V", CC.Red + "2x mob drops from melee'd mobs", CC.Red + "6x vanilla EXP from melee'd mobs", CC.Red + "Auto /sell mob drops")),

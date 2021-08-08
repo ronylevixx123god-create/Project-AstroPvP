@@ -4,7 +4,7 @@
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.CC
  */
-package me.matthawkk.autobroadcast.struct;
+package me.astropvp.autobroadcast.struct;
 
 import org.bukkit.ChatColor;
 
