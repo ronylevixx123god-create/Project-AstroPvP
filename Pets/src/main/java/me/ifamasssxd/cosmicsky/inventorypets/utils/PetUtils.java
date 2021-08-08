@@ -15,7 +15,7 @@ import java.util.List;
 
 public class PetUtils {
     public static void addPetCooldown(Player player, InventoryPets pet, long cooldown) {
-        if (AstroItemSkinsAPI.isInInventory(player, SkinType.SPRING_2020_SWORD) && Math.random() < 0.1D) {
+        if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.SPRING_2020_SWORD) && Math.random() < 0.1D) {
             player.sendMessage(String.valueOf(CC.RedB) + "[BYPASS COOLDOWN] " + CC.Red + "The Popsicle Sword Skin bypassed your pet cooldown!");
             return;
         }

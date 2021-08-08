@@ -35,7 +35,7 @@ public class BansheeListener implements Listener {
         if (event.getEntity().getType().equals(EntityType.PLAYER) && event.getDamager().getType().equals(EntityType.PLAYER)) {
             Player damager = (Player) event.getDamager();
 
-            if (AstroItemSkinsAPI.hasSkinEquipped(damager, SkinType.WITCH_HAT) && Math.random() < 0.015) {
+            if (AstroItemSkinsAPI.hasSkinEquipped(damager, SkinType.THANKSGIVING_HELMET_WITCH) && Math.random() < 0.015) {
                 InventoryBansheePet.startBansheeEffect((Player) event.getEntity(), damager);
             }
         }
