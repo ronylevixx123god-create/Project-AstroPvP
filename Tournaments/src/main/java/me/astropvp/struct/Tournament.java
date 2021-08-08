@@ -3,7 +3,7 @@ package me.astropvp.struct;
 import com.google.common.collect.Lists;
 import me.astropvp.CosmicTournamentsPlugin;
 import me.astropvp.inventories.LobbyInventory;
-import me.astropvp.struct.enums.TournamentState;
+import me.astropvp.enums.TournamentState;
 import me.astropvp.tasks.TournamentLobbyTask;
 import me.astropvp.tasks.TournamentWaitingTask;
 import me.astropvp.utils.InventoryStorage;
@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Tournament {
-    private List<ActiveTournamentPlayer> playerList;
+    private List<TournamentPlayer> playerList;
     private List<TournamentMatch> tournamentMatches;
     private HashMap<Player, String[]> storedInventories;
     private TournamentState state;
@@ -33,7 +33,7 @@ public class Tournament {
     }
 
     public void registerPlayer(Player player) {
-        ActiveTournamentPlayer activeTournamentPlayer = new ActiveTournamentPlayer(player);
+        TournamentPlayer activeTournamentPlayer = new TournamentPlayer(player);
         playerList.add(activeTournamentPlayer);
         this.storedInventories.put(player, InventoryStorage.storeInventory(player));
         LobbyInventory.initiate(player);
@@ -51,12 +51,37 @@ public class Tournament {
         this.waitingTaskId = Bukkit.getScheduler().scheduleAsyncRepeatingTask(CosmicTournamentsPlugin.getInstance(), new TournamentWaitingTask(this), 20L, 20L);
     }
 
-    public void start() { Bukkit.getScheduler().cancelTask(this.waitingTaskId); }
+    public void start() {
+        Bukkit.getScheduler().cancelTask(this.waitingTaskId);
+
+        List<TournamentPlayer> tournamentPlayerList = getPlayerList();
+        int amountOfPlayersEntered = tournamentPlayerList.size();
+        int amountOfMatches;
+        int amountOfRounds;
+
+
+        amountOfMatches = Math.round(amountOfPlayersEntered/2);
+
+
+
+    }
+
+
 
     public TournamentMatch getActiveTournamentMatch(Player player) {
         for(TournamentMatch match : tournamentMatches) {
-            if(match.getPlayer1() == player || match.getPlayer2() == player) {
+            if(match.getTournamentPlayer1() == player || match.getTournamentPlayer2() == player) {
                 return match;
+            }
+        }
+        return null;
+    }
+
+
+    public TournamentPlayer getTournementPlayer(Player p) {
+        for (TournamentPlayer tournamentPlayer : getPlayerList()) {
+            if (p == tournamentPlayer.getPlayer()) {
+                return tournamentPlayer;
             }
         }
         return null;
@@ -67,6 +92,6 @@ public class Tournament {
     public int getStartingTime() { return this.startingTime; }
     public void setStartingTime(int time) { this.startingTime = time; }
     public TournamentState getState() { return this.state; }
-    public List<ActiveTournamentPlayer> getPlayerList() { return this.playerList; }
+    public List<TournamentPlayer> getPlayerList() { return this.playerList; }
 
 }

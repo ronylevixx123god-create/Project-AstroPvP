@@ -1,14 +1,14 @@
 package me.astropvp.struct;
 
-import me.astropvp.struct.enums.PlayerState;
+import me.astropvp.enums.PlayerState;
 import org.bukkit.entity.Player;
 
-public class ActiveTournamentPlayer {
+public class TournamentPlayer {
     private Player player;
 
     private PlayerState playerState;
 
-    public ActiveTournamentPlayer(Player player) {
+    public TournamentPlayer(Player player) {
         this.player = player;
         this.playerState = PlayerState.WAITING;
     }
@@ -16,6 +16,10 @@ public class ActiveTournamentPlayer {
     public Player getPlayer() { return this.player; }
 
     public PlayerState getPlayerState() { return this.playerState; }
+
+    public void setPlayerState(PlayerState playerState) {
+        this.playerState = playerState;
+    }
 
 
 }
