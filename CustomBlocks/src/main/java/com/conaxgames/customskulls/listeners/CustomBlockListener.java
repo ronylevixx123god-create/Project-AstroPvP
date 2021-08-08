@@ -101,7 +101,8 @@ public class CustomBlockListener implements Listener {
 
 
         for (AbilityData data : CustomBlockUtil.getBlockDatasInChunk(player)) {
-            if (data.getAbilityType().getName().toLowerCase().contains(ChatColor.stripColor(CustomBlockUtil.getCustomItem(item).getName().toLowerCase().replace(" ", "")))) {
+
+            if (data.getAbilityType().name().equals(CustomBlockUtil.getCustomItem(item).getIdentifier())) {
                 player.sendMessage(CC.translate("&c&l(!)&c This chunk already contains this custom block."));
                 event.setCancelled(true);
                 return;
