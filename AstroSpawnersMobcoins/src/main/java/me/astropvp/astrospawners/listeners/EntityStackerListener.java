@@ -63,7 +63,7 @@ public class EntityStackerListener implements Listener {
                 if (e.getEntity().getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.FIRE_TICK) return;
             }
 
-            Bukkit.getScheduler().runTaskLaterAsynchronously(AstroSpawners.getInstance(), () -> {
+            //Bukkit.getScheduler().runTaskLaterAsynchronously(AstroSpawners.getInstance(), () -> {
                 int amount = mobStackerUtils.getStackSize(entity);
                 if (amount <= 1) {
                     mobStackerUtils.removeStackedMob(entity);
@@ -73,13 +73,13 @@ public class EntityStackerListener implements Listener {
                 mobStackerUtils.setStackSize(entity, amount);
 
 
-            }, 5L);
+            //}, 5L);
 
             Player p = (Player) e.getDamager();
 
             //Economy.add(p.getName(), 27);
 
-            PlayerUtils.neutralizeKnockback((LivingEntity) entity);
+            //PlayerUtils.neutralizeKnockback((LivingEntity) entity);
 
 
             double exp = 300;
