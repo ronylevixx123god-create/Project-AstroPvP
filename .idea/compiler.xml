@@ -41,7 +41,6 @@
         <module name="WeaponRunes" />
         <module name="Ark" />
         <module name="EnchantmentsAPI" />
-        <module name="Backpacks" />
         <module name="Arkkit" />
         <module name="CompilexPermissions" />
       </profile>
@@ -50,6 +49,7 @@
       <module name="ArmorSets" target="1.8" />
       <module name="AstroClientComms" target="8" />
       <module name="AstroSpawners" target="1.8" />
+      <module name="Backpacks" target="8" />
       <module name="ClientComms" target="8" />
       <module name="Comms" target="8" />
       <module name="CrateBoxes" target="8" />

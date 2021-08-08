@@ -16,6 +16,7 @@
       <set>
         <option value="$PROJECT_DIR$/Arkkit/pom.xml" />
         <option value="$PROJECT_DIR$/AstroClientComms/pom.xml" />
+        <option value="$PROJECT_DIR$/Backpacks/pom.xml" />
         <option value="$PROJECT_DIR$/ClientComms/pom.xml" />
         <option value="$PROJECT_DIR$/Comms/pom.xml" />
         <option value="$PROJECT_DIR$/ItemFilter/pom.xml" />

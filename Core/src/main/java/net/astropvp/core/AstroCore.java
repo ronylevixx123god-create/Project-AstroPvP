@@ -18,10 +18,6 @@ import io.puharesource.mc.titlemanager.api.v2.TitleManagerAPI;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
-import me.astropvp.commands.CommandGiveBackpack;
-import me.astropvp.listeners.BackpackListener;
-import me.astropvp.listeners.PlayerDamageListener;
-import me.astropvp.listeners.PortablePicnicListener;
 import me.ifamasssxd.betterpay.PayListener;
 import me.ifamasssxd.betterpay.PayToggle;
 import me.ifamasssxd.betterpay.commands.CommandTogglePay;
@@ -304,13 +300,10 @@ public class AstroCore extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new ArmorColorClickListener(), this);
         this.getServer().getPluginManager().registerEvents(new ChatListener(), this);
         this.getServer().getPluginManager().registerEvents(new BlockCommand(), this);
-        this.getServer().getPluginManager().registerEvents(new BackpackListener(), this);
-        this.getServer().getPluginManager().registerEvents(new PlayerDamageListener(), this);
-        this.getServer().getPluginManager().registerEvents(new PortablePicnicListener(), this);
+
 
         this.getServer().getPluginManager().registerEvents(new RevokeScratchCardListener(), this);
 
-        this.getCommand("givebackpack").setExecutor(new CommandGiveBackpack());
         this.getCommand("merchant").setExecutor(new MerchantCommand());
 
         this.getCommand("togglesb").setExecutor(new CommandScoreboard());
