@@ -40,7 +40,7 @@ public class Database {
         this.username = config.getString("sql.username");
         this.password = config.getString("sql.password");
         this.database = config.getString("sql.database");
-        this.url = "jdbc:mysql://" + this.host + ":3306/" + this.database + "?autoReconnect=true";
+        this.url = "jdbc:mysql://" + this.host + ":3308/" + this.database + "?autoReconnect=true";
     }
 
     /*

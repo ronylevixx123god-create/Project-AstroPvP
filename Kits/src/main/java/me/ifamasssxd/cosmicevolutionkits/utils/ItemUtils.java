@@ -8,8 +8,6 @@ import com.cosmicpvp.CosmicSpaceChests.libs.TitleItems;
 import com.cosmicpvp.CosmicSpaceChests.listeners.EnvoySummonItemListener;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
-import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
-import me.ifamasssxd.cosmicbosses.utils.BossEggUtils;
 import me.ifamasssxd.cosmicguishop.ArkhamMoneyNotesAPI;
 import org.arkhamnetwork.Arkkit.patches.ItemNametag;
 import org.arkhamnetwork.CosmicCustomTNT.enums.TNTTypes;
@@ -131,9 +129,6 @@ public class ItemUtils {
         return ItemNametag.getNametagItem();
     }
 
-    public static ItemStack getNewBossEgg(BossType bossType) {
-        return BossEggUtils.getBossEgg((BossType)bossType);
-    }
 
     private static String getEntityName(EntityType et) {
         if (et == EntityType.IRON_GOLEM) {

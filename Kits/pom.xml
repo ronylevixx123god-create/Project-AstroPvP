@@ -13,6 +13,11 @@
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
 
+    <build>
+        <defaultGoal>clean install</defaultGoal>
+        <finalName>Kits</finalName>
+    </build>
+
     <repositories>
         <repository>
             <id>ess-repo</id>
@@ -27,8 +32,8 @@
             <url>https://jitpack.io</url>
         </repository>
         <repository>
-            <id>inventive-repo</id>
-            <url>https://repo.inventivetalent.org/content/groups/public/</url>
+            <id>puha-repo</id>
+            <url>https://repo.puha.io/repo/</url>
         </repository>
     </repositories>
 
@@ -47,15 +52,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.inventivetalent</groupId>
-            <artifactId>particleapi</artifactId>
-            <version>2.1.1</version>
-        </dependency>
-        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.16.18</version>
-            <scope>provided</scope>
+            <version>1.18.10</version>
         </dependency>
         <dependency>
             <groupId>com.github.MilkBowl</groupId>
@@ -63,34 +62,172 @@
             <version>1.7</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>io.puharesource.mc</groupId>
+            <artifactId>TitleManager</artifactId>
+            <version>2.2.0</version>
+        </dependency>
 
         <!-- New Cosmic Repos -->
         <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>Arkkit</artifactId>
             <version>0.1</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>Utils</artifactId>
             <version>0.1</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>Core</artifactId>
+            <artifactId>Factions</artifactId>
             <version>0.1</version>
-            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>Sets</artifactId>
+            <version>0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>CompilexPermissions</artifactId>
+            <version>0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>Enchantments</artifactId>
+            <version>0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>Lootboxes</artifactId>
+            <version>0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>SpaceChests</artifactId>
+            <version>0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>Duels</artifactId>
+            <version>0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>Factions</artifactId>
+            <version>0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>Conquest</artifactId>
+            <version>0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>AuctionHouse</artifactId>
+            <version>0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>Lootboxes</artifactId>
+            <version>0.1</version>
         </dependency>
 
         <!-- System repos -->
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>skycustomi</artifactId>
+            <artifactId>MCMMO</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/EnchantmentsAPI.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>points</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/CosmicFactionPoints.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>items</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/CosmicSkyCustomItems.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>worldguard</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/WorldGuard.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>slot</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/Slotbot-0.1.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>AstroSpawners</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/AstroSpawners.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>Skins</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/ItemSkins-0.1.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>masks</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/CosmicMasks.jar</systemPath>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>outpost</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/CosmicOutposts.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>hcfoutpost</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/CosmicHCFOutposts.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>ap</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/AstroToggleParticles.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>bosses</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/CosmicBosses.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>Lootboxes</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/CosmicMysteryChest.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
@@ -101,101 +238,75 @@
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>EnchantmentsAPI</artifactId>
-            <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/EnchantmentsAPI.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Facs</artifactId>
-            <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/Factions-0.1.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>ArmorSets</artifactId>
-            <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/CosmicArmorSets.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>SChests</artifactId>
+            <artifactId>SpaceChests</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/CosmicSpaceChests.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>Core</artifactId>
+            <artifactId>AuctionHouse</artifactId>
             <version>0.1</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/Core-0.1.jar</systemPath>
+            <systemPath>${project.basedir}/lib/Auction.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>WGSRV</artifactId>
+            <artifactId>Arkkit</artifactId>
             <version>0.1</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/WorldGuardSERV.jar</systemPath>
+            <systemPath>${project.basedir}/lib/Arkkit.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>WE</artifactId>
+            <artifactId>Utils</artifactId>
             <version>0.1</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/worldedit-bukkit-6.0.jar</systemPath>
+            <systemPath>${project.basedir}/lib/Utils-0.1.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>CosmicConquestAPI</artifactId>
+            <artifactId>Sets</artifactId>
             <version>0.1</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/CosmicConquest.jar</systemPath>
+            <systemPath>${project.basedir}/lib/CosmicArmorSets.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>dng</artifactId>
-            <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/CosmicDungeons.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>ccree</artifactId>
-            <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/CosmicCustomCreepers.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>ctnt</artifactId>
-            <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/CosmicCustomTNT.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>compilexperms</artifactId>
+            <artifactId>CompilexPermissions</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/CompilexPermissions_2_1_1_1.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>mcmmo</artifactId>
+            <artifactId>Duels</artifactId>
             <version>0.1</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/mcMMO.jar</systemPath>
+            <systemPath>${project.basedir}/lib/CosmicDuel (1).jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>Core</artifactId>
+            <artifactId>Conquest</artifactId>
             <version>0.1</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/Core-0.1.jar</systemPath>
+            <systemPath>${project.basedir}/lib/CosmicConquest.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>wordledit</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/worldedit-bukkit-6.1.7.3.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>DamageIndicators</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/DamageIndicators.jar</systemPath>
         </dependency>
     </dependencies>
+
+
 </project>

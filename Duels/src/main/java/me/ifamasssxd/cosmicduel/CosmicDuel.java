@@ -237,7 +237,7 @@ extends JavaPlugin {
     }
 
     private void setupTables() {
-        this.sqlDatabase.executeUpdate("CREATE TABLE IF NOT EXISTS duelStats(uuid varchar(64) PRIMARY KEY, customKits longtext);", false);
+        this.sqlDatabase.executeUpdate("CREATE TABLE IF NOT EXISTS duelStats(uuid varchar(64) PRIMARY KEY, customKits longtext, customGodSet longText);", false);
         this.sqlDatabase.executeUpdate("CREATE TABLE IF NOT EXISTS `" + this.serverName + "_stats`(uuid varchar(64) PRIMARY KEY, name varchar(16), wins int, losses int, rankedWins int, rankedLosses int, elo double, lastRankedMatch bigint);", false);
     }
 
