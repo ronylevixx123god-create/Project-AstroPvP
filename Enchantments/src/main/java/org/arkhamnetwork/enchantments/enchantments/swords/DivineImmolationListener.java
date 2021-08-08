@@ -22,12 +22,12 @@ final class DivineImmolationListener implements Listener {
         if (!(e.getEntity() instanceof Player)) {
             return;
         }
-        if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.LUAU_LEI) && Math.random() < 0.20) {
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.SUMMER_2021_AMULET) && Math.random() < 0.20) {
             e.getEntity().sendMessage(CC.translate("&c&l* LUAU LEI &7Blocked Divine Immolation &c&l*"));
             return;
         }
 
-        if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.SOUL_HARVESTER) && Math.random() < 0.4) {
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.THANKSGIVING_SWORD_HARVESTER) && Math.random() < 0.4) {
             if (WeaponBonusUtils.hasWeaponBonus(((Player) e.getEntity()).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player) e.getEntity()).getItemInHand()) == WeaponBonusType.REFORGED && Math.random()<0.5) {
                 return;
             }
@@ -47,7 +47,7 @@ final class DivineImmolationListener implements Listener {
 
                 double damage = 2;
 
-                if (AstroItemSkinsAPI.isInHand((Player) e.getEntity(), SkinType.SOUL_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) le, SkinType.HEART_HALO)) {
+                if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) le, SkinType.VALENTINES_2021_HELMET)) {
                     if (WeaponBonusUtils.hasWeaponBonus(((Player) e.getEntity()).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player) e.getEntity()).getItemInHand()) == WeaponBonusType.REFORGED && Math.random()<0.5) {
                         damage = 2;
                     } else {
@@ -55,7 +55,7 @@ final class DivineImmolationListener implements Listener {
                     }
                 }
 
-                if (AstroItemSkinsAPI.isInHand((Player) e.getEntity(), SkinType.MAUIS_HOOK)) {
+                if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.SUMMER_2021_SWORD)) {
                     damage = 3.5;
                 }
 

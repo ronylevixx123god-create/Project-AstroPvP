@@ -42,12 +42,12 @@ public class IceAspect extends CustomEnchantment {
                 return;
             }
 
-            if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.SNOWFLAKE_SLIPPERS)) {
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.CHRISTMAS_BOOTS_SLIPPERS)) {
                 playerHit.sendMessage(CC.translate("&c&l* SNOWFLAKE FLIPPERS &7Blocked Slow Effect &c&l*"));
                 return;
             }
 
-            if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.NEON_EMOTIONS)) {
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2021_HELMET)) {
                 playerHit.sendMessage(CC.translate("&d&l* NEON EMOTIONS &7Blocked Slow Effect &d&l*"));
                 return;
             }

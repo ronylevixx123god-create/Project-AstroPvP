@@ -161,12 +161,12 @@ public class NatureWrath extends CustomEnchantment {
                     pEnt.sendMessage(CC.translate("&c&l* CUPID AMULET BLOCKED &7[Natures Wrath] &c&l*"));
                 }
 
-                if (AstroItemSkinsAPI.hasSkinEquipped(pEnt, SkinType.SNOWFLAKE_SLIPPERS)) {
+                if (AstroItemSkinsAPI.hasSkinEquipped(pEnt, SkinType.CHRISTMAS_BOOTS_SLIPPERS)) {
                     pEnt.sendMessage(CC.translate("&c&l* SNOWFLAKE FLIPPERS &7Blocked Slow Effect &c&l*"));
                     freeze = false;
                 }
 
-                if (AstroItemSkinsAPI.hasSkinEquipped((Player) pEnt, SkinType.NEON_EMOTIONS)) {
+                if (AstroItemSkinsAPI.hasSkinEquipped((Player) pEnt, SkinType.VALENTINES_2021_HELMET)) {
                     pEnt.sendMessage(CC.translate("&d&l* NEON EMOTIONS &7Blocked Slow Effect &d&l*"));
                     freeze = false;
                 }

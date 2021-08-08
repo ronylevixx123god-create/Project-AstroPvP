@@ -3,8 +3,8 @@ package org.arkhamnetwork.enchantments.enchantments.heroic;
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
-import me.astropvp.AstroBackpacksAPI;
-import me.astropvp.objects.BackpackType;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.*;
@@ -47,7 +47,7 @@ public class HeroicSniper extends CustomEnchantment {
             return;
         }
 
-        if (((Player) target).getPlayer().getInventory().getChestplate() != null && AstroBackpacksAPI.itemHasSkin(((Player) target).getPlayer().getInventory().getChestplate()) && AstroBackpacksAPI.getBackpackByItem(((Player) target).getPlayer().getInventory().getChestplate()).equals(BackpackType.TEDDY_BACKPACK)) {
+        if (((Player) target).getPlayer().getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.VALENTINES_2021_BACKPACK)) {
             return;
         }
 

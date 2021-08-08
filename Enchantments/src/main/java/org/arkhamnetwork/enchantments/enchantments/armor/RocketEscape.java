@@ -4,10 +4,8 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.massivecraft.factions.P;
 import com.rit.sucy.CustomEnchantment;
 import lombok.SneakyThrows;
-import me.astropvp.AstroBackpacksAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import me.astropvp.objects.BackpackType;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
 import org.arkhamnetwork.enchantments.util.ArmorUtil;
@@ -72,13 +70,13 @@ public class RocketEscape extends CustomEnchantment {
                     }
 
                 }
-                if (pl.getInventory().getChestplate() != null && AstroBackpacksAPI.itemHasSkin(pl.getInventory().getChestplate()) && AstroBackpacksAPI.getBackpackByItem(pl.getInventory().getChestplate()).equals(BackpackType.CURSED_WINGS)) {
+                if (pl.getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped(pl, SkinType.HALLOWEEN_BACKPACK)) {
                     pl.playSound(pl.getLocation(), Sound.ANVIL_BREAK, 5, 5);
                     pl.sendMessage(CC.translate("&6&l* CURSED WINGS BLOCKED &nROCKET ESCAPE&r &7[") + attacker.getKiller().getName() + CC.translate("&7] &6&l*"));
                     return;
                 }
 
-                if (AstroItemSkinsAPI.hasSkinEquipped(pl, SkinType.NORTH_STAR)) {
+                if (AstroItemSkinsAPI.hasSkinEquipped(pl, SkinType.CHRISTMAS_HELMET_STAR)) {
                     pl.playSound(pl.getLocation(), Sound.ANVIL_BREAK, 5, 5);
                     pl.sendMessage(CC.translate("&a&l* NORTH STAR BLOCKED &nROCKET ESCAPE&r &7[") + attacker.getKiller().getName() + CC.translate("&7] &a&l*"));
                     return;

@@ -59,7 +59,7 @@ public class Bleed extends CustomEnchantment {
         return 20;
     }
 
-    private void addBleedStack(final LivingEntity leDamager, final LivingEntity le) throws Exception {
+    public static void addBleedStack(final LivingEntity leDamager, final LivingEntity le) throws Exception {
         le.setMetadata("bleedStack", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) (getBleedStack(le) + 1)));
         final int bleedStack = getBleedStack(le) / 2;
         if (le instanceof Player) {
@@ -94,20 +94,20 @@ public class Bleed extends CustomEnchantment {
                 pEnt.playSound(pEnt.getLocation(), Sound.EAT, 0.4f, 0.6f);
             }
         } else {
-            if (AstroItemSkinsAPI.hasSkinEquipped((Player) le, SkinType.NEON_EMOTIONS)) {
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) le, SkinType.VALENTINES_2021_HELMET)) {
                 le.sendMessage(CC.translate("&d&l* NEON EMOTIONS &7Blocked Slow Effect &d&l*"));
                 return;
             }
-            if (AstroItemSkinsAPI.hasSkinEquipped((Player) le, SkinType.SNOWFLAKE_SLIPPERS)) {
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) le, SkinType.CHRISTMAS_BOOTS_SLIPPERS)) {
                 le.sendMessage(CC.translate("&c&l* SNOWFLAKE FLIPPERS &7Blocked Slow Effect &c&l*"));
                 return;
             }
             le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, bleedStack * 20, Math.max(1, bleedStack / 3)));
         }
-        this.playBleedEffect(le.getLocation().add(0.0, 1.0, 0.0), bleedStack);
+        Bleed.playBleedEffect(le.getLocation().add(0.0, 1.0, 0.0), bleedStack);
     }
 
-    private void playBleedEffect(final Location loc, final int bleedStack) {
+    private static void playBleedEffect(final Location loc, final int bleedStack) {
         for (int i = Math.max(1, bleedStack / 2); i > 0; --i) {
             WorldUtil.sendWorldEffect(loc.getBlock(), Material.REDSTONE_BLOCK.getId(), 2001);
         }

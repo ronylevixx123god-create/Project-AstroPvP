@@ -38,7 +38,7 @@ public class Teleblock extends CustomEnchantment {
             pp.sendMessage(CC.translate("&a&l* ANTI CORONA BLOCKED &7[Teleblock] &a&l*"));
             return;
         }
-        if (AstroItemSkinsAPI.hasSkinEquipped(pp, SkinType.SNOWFLAKE_SLIPPERS)) {
+        if (AstroItemSkinsAPI.hasSkinEquipped(pp, SkinType.CHRISTMAS_BOOTS_SLIPPERS)) {
             pp.sendMessage(CC.translate("&c&l* SNOWFLAKE FLIPPERS &7Blocked Teleblock &c&l*"));
             return;
         }

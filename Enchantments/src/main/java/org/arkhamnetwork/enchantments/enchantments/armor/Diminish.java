@@ -37,7 +37,7 @@ public class Diminish extends CustomEnchantment {
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
 
 
-        if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.HEARTBREAKER)) {
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2021_SWORD)) {
             return;
         }
 

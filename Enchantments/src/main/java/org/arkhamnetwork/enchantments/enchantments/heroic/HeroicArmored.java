@@ -25,7 +25,7 @@ public class HeroicArmored extends HeroicCustomEnchantment {
         if (attacker instanceof Player) {
             Player pAttacker = (Player) attacker;
 
-            if (AstroItemSkinsAPI.hasSkinEquipped(pAttacker, SkinType.CUPIDS_HEART)) {
+            if (AstroItemSkinsAPI.hasSkinEquipped(pAttacker, SkinType.VALENTINES_2021_BELT)) {
                 return;
             }
             i = pAttacker.getItemInHand();

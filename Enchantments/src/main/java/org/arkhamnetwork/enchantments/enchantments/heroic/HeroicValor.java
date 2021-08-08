@@ -26,7 +26,7 @@ public class HeroicValor extends HeroicCustomEnchantment {
         if (!(player instanceof Player))
             return;
 
-        if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.HEARTBREAKER)) {
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.VALENTINES_2021_SWORD)) {
             level = 5;
         }
         double damage_negation = level * 0.005D;
