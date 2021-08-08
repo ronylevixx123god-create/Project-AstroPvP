@@ -35,7 +35,7 @@ final class ChatLimiterListener
     @EventHandler(priority = EventPriority.LOW)
     public void onAsyncPlayerChatEvent(AsyncPlayerChatEvent e) {
         Player pl = e.getPlayer();
-        if (pl.isOp() || pl.getName().equalsIgnoreCase("BOWP")) {
+        if (pl.isOp()) {
             return;
         }
         boolean vip = pl.hasPermission("chatlimiter.vip") || pl.hasPermission("arkhamchat.vip");

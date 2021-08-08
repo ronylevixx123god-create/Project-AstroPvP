@@ -37,7 +37,7 @@ public class AstroItemSkinsAPI {
             skins.addAll(getItemSkinByItem(player.getItemInHand()));
         return skins;
     }
-
+k
     public static boolean hasItemSkin(ItemStack item, ItemStack item2) {
         NBTWrapper wrapper = new NBTWrapper(item);
         if (!wrapper.hasKey("cosmicData"))
