@@ -135,19 +135,19 @@ public enum SkinType {
     SUMMER_2021_SWORD(CC.translate("&c&lMaui's Hook"), ItemSkinType.SWORD, new MauisHookSkin(), Arrays.asList(CC.translate("&c+15% Outgoing Soul Enchant Damage"), CC.translate("&cBlackout V"), CC.translate("&cNeutralize VI"), CC.translate("&cTranscendence ability"),CC.translate("&7(For each soul enchant that is"), CC.translate("&7blocked (not including immunity)"), CC.translate("&7gain +1 stack. At 10 stacks crouch"), CC.translate("&7to activate Transcendence massively"), CC.translate("&7damaging and silencing nearby"), CC.translate("&7players and pets.)"))),
     RUINS_AMULET(CC.translate("&3&lLost Amulet"), ItemSkinType.AMULET, new LostAmulet(), Arrays.asList(CC.translate("&c50% Neutralize Negation"), CC.translate("&c-5% Incoming Damage"), CC.translate("&cIncreases outgoing damage from Soul Enchants by 1.1x"))),
     DOOMSDAY_BACKPACK_BUGOUT(CC.GreenB + "Bug-Out Bag", ItemSkinType.BACKPACK, new BugOutBagSkin(), Arrays.asList(CC.translate("&c10% chance to keep each equipped item on death."))),
-    DOOMSDAY_BACKPACK_RAINBOW(CC.GreenB + "Rainbow Backpack", ItemSkinType.BACKPACK, new RainbowBackpackSkin(), Arrays.asList(CC.translate("&c10% chance to keep each equipped item on death."))),
-    DEEP_SPACE_BACKPACK(CC.DarkPurpleB + "Deep Space Backpack", ItemSkinType.BACKPACK, new DeepSpaceBackpackSkin(), Arrays.asList(CC.translate("&c10% chance to keep each equipped item on death."))),
-    HALLOWEEN_BACKPACK(CC.GoldB + "Cursed Wings", ItemSkinType.BACKPACK, new CursedWingsSkin(), Arrays.asList(CC.translate("&c10% chance to keep each equipped item on death."))),
+    DOOMSDAY_BACKPACK_RAINBOW(CC.GreenB + "Rainbow Backpack", ItemSkinType.BACKPACK, new RainbowBackpackSkin(), Arrays.asList(CC.translate("&c+1 Max Heart."))),
+    DEEP_SPACE_BACKPACK(CC.DarkPurpleB + "Deep Space Backpack", ItemSkinType.BACKPACK, new DeepSpaceBackpackSkin(), Arrays.asList(CC.translate("&c+3% Outgoing Damage."), CC.translate("&cImmune to Soul Trap"))),
+    HALLOWEEN_BACKPACK(CC.GoldB + "Cursed Wings", ItemSkinType.BACKPACK, new CursedWingsSkin(), Arrays.asList(CC.translate("&c-75% Silence Duration"), CC.translate("&cBlocks all enemy Rocket Escape"), CC.translate("&c-3% Incoming Damage"))),
     VALENTINES_2021_BACKPACK(CC.RedB + "Teddy Backpack", ItemSkinType.BACKPACK, new TeddyBackpackSkin(), Arrays.asList(CC.translate("&c10% chance to keep each equipped item on death."))),
 
 
 
 
     MEDIEVAL_HELMET_KING(CC.GoldB + "Royal Crown", ItemSkinType.HELMET, new RoyalCrown(), Arrays.asList(CC.Red + "25% Faster cap time at Citadel Assault", CC.translate("&c-5% Incoming Damage"), CC.translate("&cImmune to enemy Guardians/Undead Ruse"))),
-    MEDIEVAL_HELMET_KNIGHT(CC.GrayB + "Knight's Helmet", ItemSkinType.HELMET, new KnightHelmet(), Arrays.asList(CC.Red + "Immune to Teleblock", CC.translate("Aquatic"), CC.translate("&cAll pearls act as Escapist Pearls"), CC.translate("2% Chance to prox Arcane Creeper when damaged"))),
-    COSMIC_CITIZEN_HELMET_DRINKING(CC.translate("&b&lDrinking Helmet"), ItemSkinType.HELMET, new DrinkingHelmet(), Arrays.asList(CC.Red + "5-20s shorter /dungeon portal time", CC.translate("Ghostly Ghost III"))),
+    MEDIEVAL_HELMET_KNIGHT(CC.GrayB + "Knight's Helmet", ItemSkinType.HELMET, new KnightHelmet(), Arrays.asList(CC.Red + "Immune to Teleblock", CC.translate("&cAquatic"), CC.translate("&cAll pearls act as Escapist Pearls"), CC.translate("&c2% Chance to prox Arcane Creeper when damaged"))),
+    COSMIC_CITIZEN_HELMET_DRINKING(CC.translate("&b&lDrinking Helmet"), ItemSkinType.HELMET, new DrinkingHelmet(), Arrays.asList(CC.Red + "5-20s shorter /dungeon portal time", CC.translate("&cGhostly Ghost III"))),
     COSMIC_CITIZEN_HELMET_CG(CC.translate("&b&lCosmicGames Hat"), ItemSkinType.HELMET, new CosmicGamesHat(), Arrays.asList(CC.Red + "5% chance to not consume Slotbot Ticket on Spin")),
-    CHRISTMAS_HELMET_ICE(CC.translate("&c&lIce Crown"), ItemSkinType.HELMET, new IceCrown(), Arrays.asList(CC.Red + "-5% Incoming Damage", CC.translate("Reflects (Titan) Trap effects on enemy"))),
+    CHRISTMAS_HELMET_ICE(CC.translate("&c&lIce Crown"), ItemSkinType.HELMET, new IceCrown(), Arrays.asList(CC.Red + "-5% Incoming Damage", CC.translate("&cReflects (Titan) Trap effects on enemy"))),
 
 
 
@@ -155,8 +155,8 @@ public enum SkinType {
     MEDIEVAL_BELT_KNIGHT(CC.translate("&7&lChain Belt"), ItemSkinType.BELT, new ChainBelt(), Arrays.asList(CC.Red + "Auto Bless", CC.translate("&c200% damage to Citadel Siege blocks"), CC.translate("&c+2.5% outgoing Damage"))),
     COSMIC_CITIZEN_BELT(CC.translate("&b&lSpace Belt"), ItemSkinType.BELT, new SpaceBelt(), Arrays.asList(CC.Red + "Auto Bless", CC.translate("&c+5% Blackscroll Bonus"), CC.translate("&c+2% to not consume Book on apply"))),
     DOOMSDAY_BELT(CC.translate("&2&lTactical Belt"), ItemSkinType.BELT, new TacticalBelt(), Arrays.asList(CC.translate("&cIncreases pet ability duration by 1.5x"),
-            CC.translate(" (Shackled Golem, Stitches, Sell Bot, Worlock"),
-            CC.translate(" Stronghold, Tesla, XP Booster, Anti-Teleblock)"))),
+            CC.translate("&7 (Shackled Golem, Stitches, Sell Bot, Worlock"),
+            CC.translate("&7 Stronghold, Tesla, XP Booster, Anti-Teleblock)"))),
     HALLOWEEN_BELT(CC.translate("&6&lCandy Sorting Belt"), ItemSkinType.BELT, new HalloweenBelt(),
             Arrays.asList(CC.translate("&c5% Chance to negate Infinity Luck"),
                     CC.translate("&cper Heroic Armor piece equipped"),
@@ -203,7 +203,9 @@ public enum SkinType {
     SUMMER_2021_BACKPACK(CC.GoldB + "Surfboard", ItemSkinType.BACKPACK, new SurfboardSkin(), Arrays.asList(CC.Red + "Chance to not activate custom block cooldown")),
     //TODO:COSMIC CAPE HERE
 
-    THANKSGIVING_BACKPACK_PICNIC(CC.YellowB + "Portable Picnic", ItemSkinType.BACKPACK, new PortablePicnicSkin(), Arrays.asList("10% chance to keep each equipped item on death."));
+    THANKSGIVING_BACKPACK_PICNIC(CC.YellowB + "Portable Picnic", ItemSkinType.BACKPACK, new PortablePicnicSkin(), Arrays.asList(CC.translate("&cNo Food loss"), CC.translate("&c-4% Incoming Damage"),
+            CC.translate("&c+1 Food to nearby allies within"),
+            CC.translate("&c10 blocks every 10s")));
 
 
     private final String display;
@@ -213,6 +215,10 @@ public enum SkinType {
     private final List<String> lore;
 
     private final ItemSkin skin;
+
+    public List<String> getLore() {
+        return lore;
+    }
 
     SkinType(String display, ItemSkinType itemSkinType, ItemSkin skin, List<String> extra) {
         this.lore = new ArrayList<>();
@@ -234,6 +240,9 @@ public enum SkinType {
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(CC.WhiteB + "Item Skin (" + getName() + CC.WhiteB + ")");
         List<String> lore = new ArrayList<>();
+        for (String line : getLore()) {
+            lore.add(line);
+        }
         lore.add("");
         lore.add(CC.GrayI + "Attach this skin to any " + CC.WhiteU + getItemSkinType().getModifiedName());
         lore.add(CC.Gray + "to override its visual appearance.");
