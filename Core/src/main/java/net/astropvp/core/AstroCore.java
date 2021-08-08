@@ -213,6 +213,7 @@ public class AstroCore extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new JackpotListener(), this);
         this.getServer().getPluginManager().registerEvents(new GrindingMessagesToggleListener(), this);
         this.getServer().getPluginManager().registerEvents(new DupePatch(), this);
+        this.getServer().getPluginManager().registerEvents(new CustomPearlListener(), this);
 
         //This used to be sync!
         this.getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
@@ -241,7 +242,7 @@ public class AstroCore extends JavaPlugin {
         //this.envoyManager.startTimer();
         this.getCommand("spawnheroicboss").setExecutor(new CommandSpawnHeroicBoss());
         this.getCommand("setheroicbossspawn").setExecutor(new CommandSetHeroicBossSpawn());
-
+        getCommand("givepearl").setExecutor(new GivePearlCommand());
         this.getCommand("armorcolor").setExecutor(new ArmorColorCommand());
 
         this.getCommand("corechunkfinder").setExecutor(new CoreChunkFinderCommand());

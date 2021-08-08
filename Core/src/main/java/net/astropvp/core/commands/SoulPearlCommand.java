@@ -12,7 +12,7 @@ public class SoulPearlCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         Player pSender = (Player) commandSender;
-        pSender.getInventory().addItem(new ItemStack[]{AstroCore.getInstance().getSoulPearl()});
+        pSender.getInventory().addItem(AstroCore.getInstance().getSoulPearl());
         pSender.sendMessage(CC.translate("&aYou have received a soulpearl!"));
         return true;
     }

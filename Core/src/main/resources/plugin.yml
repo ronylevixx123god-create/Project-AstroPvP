@@ -95,3 +95,4 @@ commands:
   clearlag:
     description: /clearlag
     aliases: [ cl ]
+  givepearl:
