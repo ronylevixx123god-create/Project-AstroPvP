@@ -1,0 +1,8 @@
+name: AstroRevive
+main: me.bryside.astrorevive.AstroRevivePlugin
+version: 1.0
+description: none
+commands:
+   revive:
+      description: revive
+      usage: /<command>

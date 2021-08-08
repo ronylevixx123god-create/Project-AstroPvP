@@ -56,7 +56,7 @@ public class TournamentMainInventory {
      private static ItemStack getInfoItem() {
          ItemStack item = new ItemStack(Material.BOOK);
          ItemMeta meta = item.getItemMeta();
-         meta.setDisplayName(CC.AquaB + "Cosmic" + CC.LightPurpleB + "PvP" + CC.AquaB + "Tournaments");
+         meta.setDisplayName(CC.translate("&a&lAstro Tournaments"));
          List<String> lore = new ArrayList<>();
          lore.add(CC.Gray + "The ultimate battle of all battles, tournaments are a");
          lore.add(CC.White + "round-based, knockout event " + CC.Gray + "ensuring only the best");

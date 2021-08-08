@@ -1,4 +1,4 @@
-package me.astropvp.struct.enums;
+package me.astropvp.enums;
 
 public enum TournamentState {
     OPEN, CLOSED;

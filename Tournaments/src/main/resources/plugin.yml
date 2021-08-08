@@ -1,10 +1,8 @@
-name: GalacticTournaments
-main: me.galacticpvp.galactictournaments.GalacticTournamentsPlugin
+name: AstroTournaments
+main: me.astropvp.CosmicTournamentsPlugin
 version: 1.0
 commands:
-  admintournament:
-    description: /admintournament
-    aliases: [atournament]
   tournament:
-    description: /tournament
-    aliases: [t]
+    aliases: [tourney]
+  admintournament:
+    aliases: [atournament, admintourney, atourney]

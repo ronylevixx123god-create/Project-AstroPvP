@@ -2,6 +2,7 @@ package me.astropvp.commands;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.CosmicTournamentsPlugin;
+import me.astropvp.enums.Language;
 import me.astropvp.utils.Base64Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -30,6 +31,13 @@ public class CommandAdminTournament implements CommandExecutor {
 //            }
 //        }, 100L);
 //        return false;
+
+        if (CosmicTournamentsPlugin.getInstance().getActiveTournament() == null) {
+            CosmicTournamentsPlugin.getInstance().createTournament();
+            Bukkit.broadcastMessage(Language.CREATE_TOURNAMENT.getMessage());
+        }
+
+
         String string[] = Base64Utils.playerInventoryToBase64(player.getInventory());
         Bukkit.broadcastMessage(string[0]);
         Bukkit.broadcastMessage(CC.Red + string[1]);

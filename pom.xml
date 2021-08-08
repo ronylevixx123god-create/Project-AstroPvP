@@ -48,6 +48,7 @@
         <module>AstroClientComms</module>
         <module>WeaponRunes</module>
         <module>ItemFlip</module>
+        <module>AstroRevive</module>
     </modules>
 
     <build>
