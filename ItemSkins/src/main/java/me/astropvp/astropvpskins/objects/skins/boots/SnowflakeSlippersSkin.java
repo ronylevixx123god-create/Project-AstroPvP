@@ -8,7 +8,7 @@ import me.astropvp.astropvpskins.objects.ItemSkin;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
-public class SnowflakeFlippersSkin extends ItemSkin {
+public class SnowflakeSlippersSkin extends ItemSkin {
 
     public void onEquip(Player player) {
         OutpostTier outpostTier = CosmicOutpostsAPI.getOutpostTierOfWorld((LivingEntity) player);

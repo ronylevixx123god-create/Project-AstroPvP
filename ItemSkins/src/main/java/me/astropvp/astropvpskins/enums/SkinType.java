@@ -8,6 +8,7 @@ import me.astropvp.astropvpskins.objects.skins.amulets.*;
 import me.astropvp.astropvpskins.objects.skins.backpacks.*;
 import me.astropvp.astropvpskins.objects.skins.belts.*;
 import me.astropvp.astropvpskins.objects.skins.helmets.*;
+import me.astropvp.astropvpskins.objects.skins.swords.*;
 import net.minecraft.server.v1_8_R3.NBTBase;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.ChatColor;
@@ -33,27 +34,11 @@ import me.astropvp.astropvpskins.objects.skins.boots.MoonBootsSkin;
 import me.astropvp.astropvpskins.objects.skins.boots.RainbowSlidesSkin;
 import me.astropvp.astropvpskins.objects.skins.boots.RetaliationBoots;
 import me.astropvp.astropvpskins.objects.skins.boots.SexyBootsSkin;
-import me.astropvp.astropvpskins.objects.skins.boots.SnowflakeFlippersSkin;
+import me.astropvp.astropvpskins.objects.skins.boots.SnowflakeSlippersSkin;
 import me.astropvp.astropvpskins.objects.skins.boots.TeddySlippersSkin;
 import me.astropvp.astropvpskins.objects.skins.boots.VirusBootsSkin;
 import me.astropvp.astropvpskins.objects.skins.bows.CupidBowSkin;
 import me.astropvp.astropvpskins.objects.skins.pickaxes.RubberChickenSkin;
-import me.astropvp.astropvpskins.objects.skins.swords.CorruptSwordSkin;
-import me.astropvp.astropvpskins.objects.skins.swords.CupidSwordSkin;
-import me.astropvp.astropvpskins.objects.skins.swords.DeathKnightSkullBladeSkin;
-import me.astropvp.astropvpskins.objects.skins.swords.DoomsdayMacheteSkin;
-import me.astropvp.astropvpskins.objects.skins.swords.EasterSwordSkin;
-import me.astropvp.astropvpskins.objects.skins.swords.HeartBreakerSkin;
-import me.astropvp.astropvpskins.objects.skins.swords.JollyCandySwordSkin;
-import me.astropvp.astropvpskins.objects.skins.swords.MauisHookSkin;
-import me.astropvp.astropvpskins.objects.skins.swords.OrnamentalCarnageSkin;
-import me.astropvp.astropvpskins.objects.skins.swords.PepeWeaponSkin;
-import me.astropvp.astropvpskins.objects.skins.swords.SelfieStickSkin;
-import me.astropvp.astropvpskins.objects.skins.swords.SkullScytheSkin;
-import me.astropvp.astropvpskins.objects.skins.swords.SoulHarvesterSkin;
-import me.astropvp.astropvpskins.objects.skins.swords.SpringSwordSkin;
-import me.astropvp.astropvpskins.objects.skins.swords.TridentSkin;
-import me.astropvp.astropvpskins.objects.skins.swords.VirusSwordSkin;
 
 public enum SkinType {
     CUPID_HELMET(CC.RedB + "Cupid's Crown", ItemSkinType.HELMET, new MeatCleaverAxeSkin(), Arrays.asList(CC.Red + "5% to steal enemy health if below half health.")),
@@ -118,7 +103,7 @@ public enum SkinType {
     THANKSGIVING_AMULET_AUTUMN(CC.translate("&e&lAutumn Amulet"), ItemSkinType.AMULET, new AutumnAmuletSkin(), Arrays.asList(CC.translate("&c+33% healing from Divine Enlighted"), CC.translate("&cEach time you enter combat:"), CC.translate("&c* No cooldown on 1st Phoenix Proc"), CC.translate("&c* -15% Incoming Damage for 15s"), CC.translate("&c* Absorption V for 20s"))),
     SUMMER_2021_AMULET(CC.translate("&c&lLuau Lei"), ItemSkinType.AMULET, new LuauLei(), Arrays.asList(CC.translate("&c+25% Outgoing Soul Enchant damage"), CC.translate("&cChance to block Soul Enchant Damage Modifiers"))),
     VALENTINES_2021_BELT(CC.translate("&c&lCupids Heart"), ItemSkinType.BELT, new CupidsHeart(), Arrays.asList(CC.translate("&cBypass enemy (Paladin) Armored"), CC.translate("&cHoly Aegis VII"), CC.translate("&c+10% Outgoing Damage to Silenced enemies"))),
-    CHRISTMAS_BOOTS_SLIPPERS(CC.translate("&c&lSnowflake Flippers"), ItemSkinType.BOOTS, new SnowflakeFlippersSkin(), Arrays.asList(CC.translate("&cGears IV"), CC.translate("&cImmune to Teleblock"), CC.translate("&cImmune to Slowness Potion Effect"), CC.translate("&cSnowflake Storm Ability"), CC.translate("&7(10% chance to spawn 4x4 snow floor for 10s."), CC.translate("&7While stood on the snow floor:"), CC.translate("&7* You will receive -20% Incoming Damage"), CC.translate("&7* Your allies will receive -5% Incoming Damage"), CC.translate("&7* Your enemies will receive Slowness II)"))),
+    CHRISTMAS_BOOTS_SLIPPERS(CC.translate("&c&lSnowflake Slippers"), ItemSkinType.BOOTS, new SnowflakeSlippersSkin(), Arrays.asList(CC.translate("&cGears IV"), CC.translate("&cImmune to Teleblock"), CC.translate("&cImmune to Slowness Potion Effect"), CC.translate("&cSnowflake Storm Ability"), CC.translate("&7(10% chance to spawn 4x4 snow floor for 10s."), CC.translate("&7While stood on the snow floor:"), CC.translate("&7* You will receive -20% Incoming Damage"), CC.translate("&7* Your allies will receive -5% Incoming Damage"), CC.translate("&7* Your enemies will receive Slowness II)"))),
     THANKSGIVING_SWORD_HARVESTER(CC.translate("&e&lSoul Harvester"), ItemSkinType.SWORD, new SoulHarvesterSkin(), Arrays.asList(CC.translate("&cIncreases outgoing damage from Soul Enchants by 1.3x"), CC.translate("&c+10% Outgoing Damage to enemies with Soul Mode active"), CC.translate("&c50% chance to block Divine Immolation"), CC.translate("&c-25% Soul Enchant Costs"))),
     VALENTINES_2021_BOOTS(CC.translate("&c&lTeddy Slippers"), ItemSkinType.BOOTS, new TeddySlippersSkin(), Arrays.asList(CC.translate("&cNerf enemy special Armor Set weapon Outgoing Damage bonuses by 50%"), CC.translate("&c33% Chance to reflect enemy (Titan) Trap for 1.25x duration"), CC.translate("&c-2% Incoming Damage"), CC.translate("&c+1% Outgoing Damage"))),
     CHRISTMAS_SWORD_ORNAMENTAL(CC.translate("&a&lOrnamental Carnage"), ItemSkinType.SWORD, new OrnamentalCarnageSkin(), Arrays.asList(CC.translate("&c-5% Incoming Damage"), CC.translate("&c-15% Incoming Damage from enemies with Soul Mode active"), CC.translate("&cTitan Trap V"), CC.translate("&c+10% Outgoing Damage to trapped players"), CC.translate("&c+2 blocks Divine Immolation radius"), CC.translate("&c2% chance for Dimensional Shift Ability"))),
@@ -196,7 +181,16 @@ public enum SkinType {
 
     THANKSGIVING_BACKPACK_PICNIC(CC.YellowB + "Portable Picnic", ItemSkinType.BACKPACK, new PortablePicnicSkin(), Arrays.asList(CC.translate("&cNo Food loss"), CC.translate("&c-4% Incoming Damage"),
             CC.translate("&c+1 Food to nearby allies within"),
-            CC.translate("&c10 blocks every 10s")));
+            CC.translate("&c10 blocks every 10s"))),
+
+    CHRISTMAS_SWORD_CANDY(CC.RedB + "Candy Blade", ItemSkinType.SWORD, new CandyBladeSkin(), Arrays.asList(CC.Red + "Chain Lifesteal X", CC.Red + "Sugar Burst Ability", CC.Gray + " (10% chance to deal damage to", CC.Gray + " enemies 20% more often for 3s)")),
+    TRIALS_SWORD(CC.GoldB + "Death and Taxes", ItemSkinType.SWORD, new DeathAndTaxesSkin(), Arrays.asList(CC.Red + "Death Toll ability", CC.Gray + " (8% chance to mark a player with \"Death Toll\",", CC.Gray + " which will track all damage you deal to", CC.Gray + " to them with Death and Taxes and damage", CC.Gray + " the player by 25% of damage dealt after 6s.)")),
+    MEDIEVAL_SWORD_KING(CC.GoldB + "King Sceptre", ItemSkinType.SWORD, new KingSceptreSkin(), Arrays.asList(CC.Red + "Master Inquisitive V", CC.Red + "2x mob drops from melee'd mobs", CC.Red + "6x vanilla EXP from melee'd mobs", CC.Red + "Auto /sell mob drops")),
+    SPRING_2021_SWORD(CC.GreenB + "Party Blade", ItemSkinType.SWORD, new PartyBladeSkin(), Arrays.asList(CC.Red + "Bypass enemy (Heroic) Aegis", CC.Red + "Immune to enemy Leadership", CC.Red + "+20% Outgoing damage when (Titan) Trapped/Frozen", CC.Red + "Inverted Knockback", CC.Gray + " (your enemy gets pulled to you each time you hit them)", CC.Red + "Silence enemy Amulet of Corruption for +3s per hit, max 30s")),
+    NYE_SWORD(CC.LightPurpleB + "Party Killer", ItemSkinType.SWORD, new PartyKillerSkin(), Arrays.asList(CC.Red + "Anti Gank II", CC.Red + "+1% Outgoing Damage per combat tagged", CC.Red + "enemy player in your chunk (max +5%)", CC.Red + "Attacks have a 20% chance to pull target", CC.Red + "slightly towards you and push nearby enemies", CC.Red + "within a 3x3 radius of target away", CC.Red + "Attacks combat tag all enemies", CC.Red + "within a 4x64x4 radius of a target", CC.Red + "50% Pet Leash Negation")),
+    COSMIC_CITIZEN_SWORD(CC.AquaB + "Sparkler", ItemSkinType.SWORD, new SparklerSkin(), Arrays.asList(CC.Red + "Transforms any creeper you hit into a Raid Creeper")),
+    THANKSGIVING_SWORD_FEAST(CC.YellowB + "The Feast", ItemSkinType.SWORD, new TheFeastSkin(), Arrays.asList(CC.Red + "Soul Tether V", CC.Red + "-1 Food on enemy on Outgoing Damage", CC.Red + "20% chance to gain 1HP as you feed on your enemy", CC.Red + "20% chance to afflict enemies with Hunger IV for 3s"));
+
 
 
 
