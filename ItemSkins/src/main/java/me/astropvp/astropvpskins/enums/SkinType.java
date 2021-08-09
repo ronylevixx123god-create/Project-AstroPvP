@@ -127,7 +127,37 @@ public enum SkinType {
     HALLOWEEN_BELT(CC.translate("&6&lCandy Sorting Belt"), ItemSkinType.BELT, new HalloweenBelt(), Arrays.asList(CC.translate("&c5% Chance to negate Infinity Luck"), CC.translate("&cper Heroic Armor piece equipped"), CC.translate("&cBypasses Candy Collector's Sugar Rush"))),
     THANKSGIVING_BELT(CC.translate("&e&lPie Belt"), ItemSkinType.BELT, new ThanksGivingBelt(), Arrays.asList(CC.translate("&c+0.5% Outgoing Damage for each enemy Hunger missing"), CC.translate("&c5% chance to absorb and convert Incoming"), CC.translate("&cDamage into a Pie Hypnosis stack"), CC.translate("&7 (Each \"Pie Hypnosis\" stack will deal"), CC.translate("&7 +25% durability damage and increases"), CC.translate("&7 outgoing damage by 0.5%)"), CC.translate("&cPie Explosion Ability"), CC.translate("&7 (Eat a Pumpkin Pie when \"Pie Hypnosis\""), CC.translate("&7 stack reaches 10 to trigger \"Pie Explosion\","), CC.translate("&7 healing you for 33% of total HP, fixing"), CC.translate("&7 your armor for 25% per piece, slowing all"), CC.translate("&7 nearby enemies and knocking them away)"))),
     CHRISTMAS_BELT_CANDY(CC.translate("&a&lCandy Buckle"), ItemSkinType.BELT, new CandyBuckle(), Arrays.asList(CC.translate("&cDisable enemy's (Alien) Implants for 10s each hit"), CC.translate("&c+1% Outgoing Damage for each Food level"), CC.translate("&cunder 20 that the enemy is missing (max +10%)"), CC.translate("&c10% chance for Speed IV for 4s when damaged"))),
-    //TODO Crystaline Band
+
+    CHRISTMAS_BELT_CRYSTALINE(CC.translate("&c&lCrystalline Band"), ItemSkinType.BELT, new CrystallineBand(), Arrays.asList(
+            CC.translate("&cImmune to Icy Wrath Ability"),
+            CC.translate("&cObsidian Guardians X"),
+            CC.translate("&c20% Chance to negate Blackout proc"))),
+    SPRING_2021_BELT(CC.translate("&a&lParty Belt"), ItemSkinType.BELT, new PartyBelt(), Arrays.asList(
+            CC.translate("&cReduce freeze/slowness effects on walk speed by 50%"),
+            CC.translate("&c25% Chance to reduce enemy Rage Stacks by 1 when hit"),
+            CC.translate("&cImmune to Deep Bleed Slowness"))),
+    TRIALS_BELT(CC.translate("&6&lCinder Wolf Belt"), ItemSkinType.BELT, new CinderWolf(), Arrays.asList(
+            CC.translate("&cCinder Ability"),
+            CC.translate("&7 (5% chance when hit to:"),
+            CC.translate("&7 * Spawn 4 Fireballs in each direction,"),
+            CC.translate("&7 which upon impact with a player"),
+            CC.translate("&7 deal 33% of their current health"),
+            CC.translate("&7 * Receive Gears IV for 7s"),
+            CC.translate("&7 * Deal +5 Outgoing Damage for 7s%"),
+            CC.translate("&7 * AoE damage every 1s for 7s)")
+    )),
+    SUMMER_2021_BELT(CC.translate("&c&lHula Skirt"), ItemSkinType.BELT, new HulaSkirt(), Arrays.asList(
+            CC.translate("&cImmune to Lifesteal"),
+            CC.translate("&cChance for Bonus Mobs to drop Rare Mob loot in /invasions")
+    )),
+    INFINITY_BELT(CC.translate("&9&lInfinity Belt"), ItemSkinType.BELT, new InfinityBelt(), Arrays.asList(
+            CC.translate("&cEquipped armor will regain to 10% durability"),
+            CC.translate("&cinstead of breaking (10m cooldown)"),
+            CC.translate("&cImmune to Soul Trap"),
+            CC.translate("&cImmune to (Obsidian) Guardians"),
+            CC.translate("&cNegates enemy (Reinforced) Tank")
+    )),
+
     MEDIEVAL_AMULET_KING(CC.GoldB + "Amulet of Kings", ItemSkinType.AMULET, new AmuletOfKingsSkin(), Arrays.asList(CC.Red + "15% chance for /end envoy chest loot to auto-/collect")),
     MEDIEVAL_AMULET_KNIGHT(CC.GrayB + "Diamond Necklace", ItemSkinType.AMULET, new DiamondNecklaceSkin(), Arrays.asList(CC.Red + "Increased view distance by 1 chunk")),
     CHRISTMAS_AMULET_SNOWFLAKE(CC.RedB + "Preserved Snowflake", ItemSkinType.AMULET, new PreservedSnowflakeSkin(), Arrays.asList(CC.Red + "Immune to Soul Tether, Soul Trap", CC.Red + "Immune to Nature's Wrath", CC.Red + "Able to see invisible player", CC.Gray + " (Feign Death, Undead Ruse)")),
