@@ -69,8 +69,8 @@ public class HolyWhiteScrollListener implements Listener {
             return;
         if (e.getEntity().getWorld().getName().toLowerCase().contains("dungeon"))
             return;
-        if ((e.getEntity() != null && e.getEntity() == null) || (e.getEntity().getKiller() != null && e.getEntity().getKiller() == null))
-            return;
+        //if ((e.getEntity() != null && e.getEntity() == null) || (e.getEntity().getKiller() != null && e.getEntity().getKiller() == null))
+            //return;
         Player killer = e.getEntity().getKiller();
         boolean wearingMonopolyMask = (killer != null && MaskType.MONOPOLY.hasEquipped(killer));
         boolean controlling = (killer != null && CosmicUtils.get().isOutpostsEnabled() && CosmicOutpostsAPI.controlsCosmonautOutpost(killer));
@@ -84,7 +84,6 @@ public class HolyWhiteScrollListener implements Listener {
                 boolean isBansheed = e.getEntity().hasMetadata("banshee_scrolls");
                 boolean isControlling = (controlling && Math.random() > 0.1D);
                 boolean isMonopolied = (wearingMonopolyMask && Math.random() <= (killerIsControllingFrozen ? 0.48D : 0.33D));
-                boolean wearingUltra = (e.getEntity().hasMetadata("armorSet") && ((MetadataValue)e.getEntity().getMetadata("armorSet").get(0)).asString().equalsIgnoreCase("ultra"));
                 boolean isTravAxe = false;
                 boolean isKilledHoldingTravAxe = false;
                 if (killer != null && CosmicArmorSetsAPI.getArmorSet(killer) == ArmorSet.DIMENSIONAL_TRAVELER) {
@@ -114,7 +113,7 @@ public class HolyWhiteScrollListener implements Listener {
                 (new ItemStack[1])[0] = i;
 
                 if (isMonopolied && !isKilledHoldingTravAxe) {
-                    if (AstroItemSkinsAPI.hasSkinEquipped(e.getEntity().getPlayer(), SkinType.NORTH_STAR) && Math.random() < 0.33) {
+                    if (AstroItemSkinsAPI.hasSkinEquipped(e.getEntity().getPlayer(), SkinType.CHRISTMAS_HELMET_STAR) && Math.random() < 0.33) {
                         killer.sendMessage(CC.translate("&a&l* " + e.getEntity().getName() + " 's NORTH STAR &7Blocked Monopoly Mask &a&l* "));
                         e.getEntity().getPlayer().sendMessage(CC.translate("&a&l* NORTH STAR &7Saved you from getting monoed &a&l*"));
                         continue;

@@ -187,7 +187,7 @@ public class CombatLog
             pl.setMetadata("cl_combat_monitor_task", new FixedMetadataValue(Arkkit.get(), CombatExpireTask.combatTagged.add(new WeakReference<Player>(pl))));
             pl.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You have entered combat. Do not log out for " + NumberUtils.format((double) CombatLog.getCombatTagDuration(pl) / 1000.0, DecimalFormatType.SECONDS) + "s.");
 
-            if (AstroItemSkinsAPI.hasSkinEquipped(pl, SkinType.AUTUMN_AMULET)) {
+            if (AstroItemSkinsAPI.hasSkinEquipped(pl, SkinType.THANKSGIVING_AMULET_AUTUMN)) {
                 pl.setMetadata("autumn_amulet", new FixedMetadataValue(Arkkit.get(), 0));
                 pl.sendMessage(CC.translate("&e&l* AUTUMN AMULET &7ItemSkin &e&l**"));
                 pl.sendMessage(CC.translate("&a+ Absorbtion &7(20s)"));
