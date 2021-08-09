@@ -1,10 +1,11 @@
-package me.bryside.astrorevive;
+package me.astropvp;
+
+import me.astropvp.commands.ReviveCommand;
+import me.astropvp.objects.DeathInventory;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 import javax.swing.JProgressBar;
-
-import me.bryside.astrorevive.commands.ReviveCommand;
-import me.bryside.astrorevive.inventories.DeathInventory;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
@@ -57,30 +58,23 @@ public class AstroRevivePlugin extends JavaPlugin {
 
     public void save(DeathInventory inv) {
         ConfigurationSection section = getConfig().createSection(inv.getID() + "");
-        ItemStack[] armor = inv.getArmor();
-        ItemStack[] items = inv.getItems();
+        String armor = inv.getArmor();
+        String items = inv.getItems();
         section.set("time", inv.getTime());
         section.set("player", inv.getPlayer().toString());
-        section.set("ID", Integer.valueOf(inv.getID()));
+        section.set("ID", inv.getID());
         section.set("armor", armor);
         section.set("items", items);
         section.set("killer", inv.getKiller());
         section.set("damage", inv.getDamage());
-        section.set("revived", Boolean.valueOf(inv.isRevived()));
+        section.set("revived", inv.isRevived());
         section.set("reviver", inv.getReviver());
     }
 
     public void load(String ID) {
         ConfigurationSection section = getConfig().getConfigurationSection(ID);
-        ArrayList<ItemStack> invItems = (ArrayList<ItemStack>)section.getList("items");
-        ArrayList<ItemStack> invArmor = (ArrayList<ItemStack>)section.getList("armor");
-        ItemStack[] items = new ItemStack[invItems.size()];
-        ItemStack[] armor = new ItemStack[invArmor.size()];
-        int i;
-        for (i = 0; i < invItems.size(); i++)
-            items[i] = invItems.get(i);
-        for (i = 0; i < invArmor.size(); i++)
-            armor[i] = invArmor.get(i);
+        String items = section.getString("items");
+        String armor = section.getString("armor");
         DeathInventory inv = new DeathInventory(this, section.getString("player"), section.getLong("time"), armor, items, section.getString("killer"), section.getString("damage"));
         inv.setID(section.getInt("ID"));
         inv.setReviver(section.getString("reviver"));
