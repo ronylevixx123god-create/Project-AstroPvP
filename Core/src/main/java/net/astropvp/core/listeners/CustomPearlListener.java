@@ -2,6 +2,7 @@ package net.astropvp.core.listeners;
 
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.ifamasssxd.killtracker.KillTrackerAPI;
 import net.astropvp.core.entities.EscapistPearlEntity;
 import net.astropvp.core.items.pearls.EscapistPearlItem;
 import net.astropvp.core.items.pearls.OmniPearlItem;
@@ -10,6 +11,7 @@ import net.minecraft.server.v1_8_R3.EntityEnderPearl;
 import net.minecraft.server.v1_8_R3.EntityLiving;
 import net.minecraft.server.v1_8_R3.World;
 import org.arkhamnetwork.Arkkit.patches.EnderpearlCooldown;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
@@ -26,6 +28,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
 
 public class CustomPearlListener implements Listener {
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onThrow(PlayerInteractEvent event) {
         if (event.getPlayer().getGameMode() == GameMode.CREATIVE)
@@ -35,14 +38,41 @@ public class CustomPearlListener implements Listener {
         Player player = event.getPlayer();
         ItemStack item = player.getItemInHand();
         if (item != null && item.getType() == Material.ENDER_PEARL) {
-            if (!EnderpearlCooldown.isEnderpearlCooldownOver(player) || !canThrowPearl(event.getItem(), player))
+            if (!EnderpearlCooldown.isEnderpearlCooldownOver(player) || !canThrowPearl(event.getItem(), player)) {
+                event.setCancelled(true);
+                player.updateInventory();
                 return;
-            EscapistPearlEntity escapistPearlEntity = (EscapistPearlItem.isEscapistPearl(item) ||
-                    AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.SEXY_BELT)) ? new EscapistPearlEntity(player) : null;
-            if (escapistPearlEntity == null)
+            }
+            if (OmniPearlItem.isOmniPearl(item)) {
+                if (!KillTrackerAPI.hasSoulAmount((Player)player, (int)5)) {
+                    player.sendMessage((Object) ChatColor.RED + "" + (Object)ChatColor.BOLD + " *** NOT ENOUGH SOULS " + (Object)ChatColor.RED + "(REQ: 5)" + (Object)ChatColor.BOLD + " ***");
+                    event.setCancelled(true);
+                    player.updateInventory();
+
+                    return;
+                } else {
+                    KillTrackerAPI.removeSoulsFromGems((Player)player, (int)5);
+                }
+            }
+            EscapistPearlEntity escapistPearlEntity = (EscapistPearlItem.isEscapistPearl(item) || OmniPearlItem.isOmniPearl(item) ||
+            AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.SEXY_BELT)) ? new EscapistPearlEntity(player) : null;
+            if (escapistPearlEntity == null) {
+                //event.setCancelled(true);
+                //player.updateInventory();
                 return;
-            ((CraftWorld)player.getLocation().getWorld()).getHandle().addEntity(escapistPearlEntity);
+            }
             event.setCancelled(true);
+
+            ((CraftWorld)player.getLocation().getWorld()).getHandle().addEntity(escapistPearlEntity);
+            if (EscapistPearlItem.isEscapistPearl(item)) {
+                if (item.getAmount() == 1) {
+                    player.setItemInHand(null);
+                } else {
+                    item.setAmount(item.getAmount() - 1);
+                }
+            }
+            player.updateInventory();
+            //event.setCancelled(true);
         }
     }
 
@@ -56,20 +86,33 @@ public class CustomPearlListener implements Listener {
         return true;
     }
 
+    @EventHandler
     public void onThrow(ProjectileLaunchEvent e) {
         Player player = (Player) e.getEntity().getShooter();
         if(e.getEntity() instanceof EnderPearl) {
-            if(OmniPearlItem.isOmniPearl(((Player) e.getEntity().getShooter()).getItemInHand())) {
-                EscapistPearlEntity escapistPearlEntity = new EscapistPearlEntity(player);
-                escapistPearlEntity.getBukkitEntity().setVelocity(escapistPearlEntity.getBukkitEntity().getVelocity().multiply(2.5));
-                ((CraftWorld)player.getLocation().getWorld()).getHandle().addEntity(escapistPearlEntity);
-                e.setCancelled(true);
-                //TODO: NOT WORKING
-                return;
-            }
+
             if(SuperPearlItem.isSuperPearl(((Player) e.getEntity().getShooter()).getItemInHand())) {
                 e.getEntity().setVelocity(e.getEntity().getVelocity().multiply(2.5));
+                return;
             }
+
+            if(OmniPearlItem.isOmniPearl(((Player) e.getEntity().getShooter()).getItemInHand())) {
+                //EscapistPearlEntity escapistPearlEntity = new EscapistPearlEntity(player);
+                //escapistPearlEntity.getBukkitEntity().setVelocity(escapistPearlEntity.getBukkitEntity().getVelocity().multiply(2.5));
+                //((CraftWorld)player.getLocation().getWorld()).getHandle().addEntity(escapistPearlEntity);
+                //e.setCancelled(true);
+
+                if (!KillTrackerAPI.hasSoulAmount((Player)player, (int)5)) {
+                    player.sendMessage((Object) ChatColor.RED + "" + (Object)ChatColor.BOLD + " *** NOT ENOUGH SOULS " + (Object)ChatColor.RED + "(REQ: 5)" + (Object)ChatColor.BOLD + " ***");
+                    player.updateInventory();
+                    e.setCancelled(true);
+                } else {
+                    KillTrackerAPI.removeSoulsFromGems((Player)player, (int)5);
+                    e.getEntity().setVelocity(e.getEntity().getVelocity().multiply(2.5));
+                }
+                return;
+            }
+
         }
     }
 }
