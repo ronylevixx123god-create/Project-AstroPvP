@@ -15,10 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class AstroItemSkinsAPI {
@@ -65,20 +62,20 @@ public class AstroItemSkinsAPI {
 //        }
         switch (type.getItemSkinType()) {
             case HELMET:
-                return player.getInventory().getHelmet() != null && hasItemSkin(player.getInventory().getHelmet()) && getItemSkinByItem(player.getInventory().getHelmet()).contains(type);
+                return player.getInventory().getHelmet() != null && hasItemSkin(player.getInventory().getHelmet()) && Objects.requireNonNull(getItemSkinByItem(player.getInventory().getHelmet())).contains(type);
             case AMULET:
             case BACKPACK:
-                return player.getInventory().getChestplate() != null && hasItemSkin(player.getInventory().getChestplate()) &&  getItemSkinByItem(player.getInventory().getChestplate()).contains(type);
+                return player.getInventory().getChestplate() != null && hasItemSkin(player.getInventory().getChestplate()) &&  Objects.requireNonNull(getItemSkinByItem(player.getInventory().getChestplate())).contains(type);
             case BELT:
-                return player.getInventory().getLeggings() != null && hasItemSkin(player.getInventory().getLeggings()) &&  getItemSkinByItem(player.getInventory().getLeggings()).contains(type);
+                return player.getInventory().getLeggings() != null && hasItemSkin(player.getInventory().getLeggings()) &&  Objects.requireNonNull(getItemSkinByItem(player.getInventory().getLeggings())).contains(type);
             case BOOTS:
-                return player.getInventory().getBoots() != null && hasItemSkin(player.getInventory().getBoots()) &&  getItemSkinByItem(player.getInventory().getBoots()).contains(type);
+                return player.getInventory().getBoots() != null && hasItemSkin(player.getInventory().getBoots()) &&  Objects.requireNonNull(getItemSkinByItem(player.getInventory().getBoots())).contains(type);
             case SWORD:
             case AXE:
             case PICKAXE:
             case BOW:
             case TOOL:
-                return player.getItemInHand() != null && hasItemSkin(player.getItemInHand()) &&  getItemSkinByItem(player.getInventory().getItemInHand()).contains(type);
+                return player.getItemInHand() != null && hasItemSkin(player.getItemInHand()) &&  Objects.requireNonNull(getItemSkinByItem(player.getInventory().getItemInHand())).contains(type);
         }
         return false;
     }

@@ -356,10 +356,16 @@ implements Comparable<CustomEnchantment> {
         return this.name().compareTo(customEnchantment.name());
     }
 
+    double currentdamage = 0;
+
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
+        Bukkit.broadcastMessage(this.enchantName + " || " + user.getName() + " || " + String.valueOf(event.getDamage() - currentdamage));
+        currentdamage = event.getDamage();
     }
 
     public void applyDefenseEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageEvent event) {
+        Bukkit.broadcastMessage(this.enchantName + " || " + user.getName() + " || " + String.valueOf(event.getDamage() - currentdamage));
+        currentdamage = event.getDamage();
     }
 
     public void applyToolEffect(Player player, Block block, int enchantLevel, BlockEvent event) {
