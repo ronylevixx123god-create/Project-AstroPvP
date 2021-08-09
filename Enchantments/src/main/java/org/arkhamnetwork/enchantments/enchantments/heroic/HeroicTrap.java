@@ -13,6 +13,9 @@ import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -66,6 +69,7 @@ public class HeroicTrap extends HeroicCustomEnchantment {
                     return;
                 }
             }
+            ptarget.setMetadata("titantrap", new FixedMetadataValue(Enchantments.getInstance(), level));
             ptarget.setWalkSpeed(0.001F);
             ptarget.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, (int) durationTicks, 128), true);
             Location location = ptarget.getEyeLocation();
@@ -77,6 +81,7 @@ public class HeroicTrap extends HeroicCustomEnchantment {
             ptarget.playSound(ptarget.getLocation(), Sound.WATER, 10.0F, 1.1F);
             ptarget.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "** TITAN TRAP [" + ChatColor.GRAY + this.df.format(durationTicks / 20.0D) + "s" + ChatColor.RED + ChatColor.BOLD + "] **");
             Enchantments.getInstance().getServer().getScheduler().runTaskLater(Enchantments.getInstance(), () -> {
+                ptarget.removeMetadata("titantrap", Enchantments.getInstance());
                 ptarget.setWalkSpeed(0.2F);
                 ptarget.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "** FREE [" + ChatColor.GRAY + "Titan Trap" + ChatColor.GREEN + ChatColor.BOLD + "] **");
                 for (Player tar : pl)

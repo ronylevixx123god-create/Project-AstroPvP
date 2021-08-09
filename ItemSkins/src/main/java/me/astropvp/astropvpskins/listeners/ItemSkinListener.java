@@ -7,10 +7,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
@@ -106,6 +108,23 @@ public class ItemSkinListener implements Listener {
         if (event.getNewArmorPiece() != null && event.getNewArmorPiece().getType() != Material.AIR && AstroItemSkinsAPI.hasItemSkin(event.getNewArmorPiece())) {
             List<SkinType> skins = AstroItemSkinsAPI.getItemSkinByItem(event.getNewArmorPiece());
             skins.forEach(skin -> {skin.getItemSkin().onEquip(event.getPlayer());});
+        }
+    }
+
+    @EventHandler
+    public void onDeath(EntityDeathEvent event) {
+        LivingEntity killed = event.getEntity();
+        Entity killer = killed.getKiller();
+        if (killer instanceof Player) {
+            List<SkinType> killerSkins = AstroItemSkinsAPI.getItemSkinsOnPlayer((Player) killer);
+            for (SkinType skin : killerSkins)
+                skin.getItemSkin().onKill((Player) killer, killed, event);
+        }
+        if (killed instanceof Player) {
+            List<SkinType> damagedSkins = AstroItemSkinsAPI.getItemSkinsOnPlayer((Player) killed);
+            for (SkinType skin : damagedSkins)
+                skin.getItemSkin().onKilled((Player) killed, killer, event);
+
         }
     }
 }
