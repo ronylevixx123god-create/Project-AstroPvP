@@ -11,6 +11,7 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -19,9 +20,6 @@ import java.util.List;
 
 public class CommandSlotBot implements CommandExecutor {
     public boolean onCommand(final CommandSender sender, final Command arg1, final String arg2, final String[] args) {
-        if (!(sender instanceof Player)) {
-            return false;
-        }
         if (args.length >= 1 && sender.hasPermission("slotbot.setitem")) {
             if (args.length >= 2 && args[0].contentEquals("additem")) {
                 final Player player = (Player) sender;
@@ -120,6 +118,7 @@ public class CommandSlotBot implements CommandExecutor {
                     final int amount = Integer.parseInt(args[2]);
                     final ItemStack item2 = CosmicSlotBotAPI.createSlotBotItem();
                     item2.setAmount(amount);
+
                     if (Utils.isInventoryFull(player)) {
                         player.getWorld().dropItem(player.getLocation(), item2);
                         sender.sendMessage(String.valueOf(CC.Green) + "Dropped " + amount + " slot bot tickets at " + player.getName() + "'s location.");
