@@ -1,5 +1,5 @@
 name: AstroRevive
-main: me.bryside.astrorevive.AstroRevivePlugin
+main: me.astropvp.AstroRevivePlugin
 version: 1.0
 description: none
 commands:

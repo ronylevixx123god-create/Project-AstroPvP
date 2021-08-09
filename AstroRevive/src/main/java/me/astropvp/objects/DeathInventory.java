@@ -1,9 +1,12 @@
-package me.bryside.astrorevive.inventories;
+package me.astropvp.objects;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.UUID;
 
-import me.bryside.astrorevive.AstroRevivePlugin;
+import lombok.SneakyThrows;
+import me.astropvp.AstroRevivePlugin;
+import me.astropvp.utils.Base64Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -16,9 +19,9 @@ public class DeathInventory implements Serializable {
 
     private Long time;
 
-    private ItemStack[] items;
+    private String items;
 
-    private ItemStack[] armor;
+    private String armor;
 
     private String damage;
 
@@ -32,11 +35,11 @@ public class DeathInventory implements Serializable {
         this.time = time;
     }
 
-    public void setItems(ItemStack[] items) {
+    public void setItems(String items) {
         this.items = items;
     }
 
-    public void setArmor(ItemStack[] armor) {
+    public void setArmor(String armor) {
         this.armor = armor;
     }
 
@@ -72,11 +75,11 @@ public class DeathInventory implements Serializable {
         return this.time;
     }
 
-    public ItemStack[] getItems() {
+    public String getItems() {
         return this.items;
     }
 
-    public ItemStack[] getArmor() {
+    public String getArmor() {
         return this.armor;
     }
 
@@ -110,16 +113,16 @@ public class DeathInventory implements Serializable {
 
     public DeathInventory(AstroRevivePlugin inst, Player player, String killer, String damage) {
         this.player = player.getUniqueId();
-        this.time = Long.valueOf(System.currentTimeMillis());
-        this.armor = player.getInventory().getArmorContents();
-        this.items = player.getInventory().getContents();
+        this.time = System.currentTimeMillis();
+        this.armor = Base64Utils.playerInventoryToBase64(player.getInventory())[1];
+        this.items = Base64Utils.playerInventoryToBase64(player.getInventory())[0];
         this.inst = inst;
         setDamage(damage);
         setKiller(killer);
         inst.getDeathInventories().add(this);
     }
 
-    public DeathInventory(AstroRevivePlugin inst, String uuid, long time, ItemStack[] armor, ItemStack[] items, String killer, String damage) {
+    public DeathInventory(AstroRevivePlugin inst, String uuid, long time, String armor, String items, String killer, String damage) {
         this.player = UUID.fromString(uuid);
         this.time = Long.valueOf(time);
         this.armor = armor;
@@ -128,6 +131,27 @@ public class DeathInventory implements Serializable {
         setDamage(damage);
         setKiller(killer);
         inst.getDeathInventories().add(this);
+    }
+
+    public int getTotal() {
+        int total = 0;
+        try {
+            for (ItemStack item : Base64Utils.itemStackArrayFromBase64(getArmor())) {
+                if (item == null) continue;
+                ++total;
+            }
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+        try {
+            for (ItemStack item : Base64Utils.itemStackArrayFromBase64(getItems())) {
+                if (item == null) continue;
+                ++total;
+            }
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+        return total;
     }
 
     public void revive(Player whoRevived) {
@@ -140,36 +164,24 @@ public class DeathInventory implements Serializable {
             if (i != null && i.getType() != Material.AIR)
                 player.getWorld().dropItem(player.getLocation(), i);
         }
-        player.getInventory().setArmorContents(getArmor());
+        try {
+            player.getInventory().setArmorContents(Base64Utils.itemStackArrayFromBase64(getArmor()));
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
         whoRevived.sendMessage("Revive");
-        player.getInventory().setContents(getItems());
+        try {
+            player.getInventory().setContents(Base64Utils.itemStackArrayFromBase64(getItems()));
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
         setRevived(true);
         setReviver(whoRevived.getName());
     }
 
-    public int getTotal() {
-        int total = 0;
-        for (ItemStack item : getArmor()) {
-            if (item != null)
-                total++;
-        }
-        for (ItemStack item : getItems()) {
-            if (item != null)
-                total++;
-        }
-        return total;
-    }
 
-    private ItemStack[] getAll() {
-        ItemStack[] allItems = new ItemStack[this.items.length + this.armor.length];
-        for (ItemStack item : this.armor)
-            allItems[allItems.length] = item;
-        for (ItemStack item : this.items)
-            allItems[allItems.length] = item;
-        return allItems;
-    }
 
     public int getID() {
-        return (int)(this.time.longValue() / 1000L);
+        return (int)(this.time / 1000L);
     }
 }

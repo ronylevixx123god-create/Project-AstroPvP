@@ -81,11 +81,6 @@
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>Factions</artifactId>
-            <version>0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
             <artifactId>Sets</artifactId>
             <version>0.1</version>
         </dependency>
@@ -112,11 +107,6 @@
         <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>Duels</artifactId>
-            <version>0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Factions</artifactId>
             <version>0.1</version>
         </dependency>
         <dependency>
