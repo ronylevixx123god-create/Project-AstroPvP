@@ -71,15 +71,11 @@ public class EnderShift extends CustomEnchantment {
                 final Location loc = pl.getLocation();
                 de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(),  loc, (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, 1.25f, 100);
 
-                Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
-                    @SneakyThrows
-                    @Override
-                    public void run() {
-                        if (Bukkit.getPlayer(String.valueOf(UUID.fromString(uuid))) != null) {
-                            de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), Bukkit.getPlayer(String.valueOf(UUID.fromString(uuid))).getLocation(), (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, 1.25f, 100);
-                        }
-                        EnderShift.ender_shifters.remove(uuid);
+                Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) () -> {
+                    if (Bukkit.getPlayer(String.valueOf(UUID.fromString(uuid))) != null) {
+                            //de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), Bukkit.getPlayer(String.valueOf(UUID.fromString(uuid))).getLocation(), (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, 1.25f, 100);
                     }
+                    EnderShift.ender_shifters.remove(uuid);
                 }, (long) (20 * (level + 7) + 10));
             }
         }

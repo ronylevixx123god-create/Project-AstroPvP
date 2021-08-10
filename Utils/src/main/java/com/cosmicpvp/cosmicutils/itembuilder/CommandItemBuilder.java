@@ -49,11 +49,11 @@ public class CommandItemBuilder
     public ItemStack build() {
         ItemStack i = ItemUtils.buildItem(this.getType(), (short) 0, ChatColor.translateAlternateColorCodes('&', this.itemName), (String[]) this.itemLore);
         NBTWrapper wrapper = new NBTWrapper(i);
-        NBTTagCompoundBuilder builder = wrapper.getCompoundOrCreate("conaxData");
+        NBTTagCompoundBuilder builder = wrapper.getCompoundOrCreate("cosmicData");
         wrapper.setString("cosmicType", "commandItem");
         builder.setString("command", this.command);
         builder.setString("message", this.message);
-        wrapper.setNBTBase("conaxData", builder.get());
+        wrapper.setNBTBase("cosmicData", builder.get());
         i = wrapper.build();
         return i;
     }

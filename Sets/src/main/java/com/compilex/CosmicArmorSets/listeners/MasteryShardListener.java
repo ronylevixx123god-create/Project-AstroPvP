@@ -68,11 +68,11 @@ public class MasteryShardListener
             AbilityArmorSet set;
             event.setCancelled(true);
             Player player = (Player) event.getWhoClicked();
-            NBTTagCompoundBuilder builder = cursorWrapper.getCompound("conaxData");
+            NBTTagCompoundBuilder builder = cursorWrapper.getCompound("cosmicData");
             if (builder != null && builder.hasKey("masteryShard") && (set = AbilityArmorSet.fromName(builder.getString("masteryShard"))) != null) {
                 NBTTagListBuilder shardList;
                 NBTWrapper clickedWrapper = new NBTWrapper(clicked);
-                NBTTagCompoundBuilder clickedCosmicData = clickedWrapper.getCompoundOrCreate("conaxData");
+                NBTTagCompoundBuilder clickedCosmicData = clickedWrapper.getCompoundOrCreate("cosmicData");
                 NBTTagListBuilder nBTTagListBuilder = shardList = !clickedCosmicData.hasKey("masteryShard") ? new NBTTagListBuilder() : new NBTTagListBuilder(clickedCosmicData.getNBTBase("masteryShard"));
                 if (shardList.contains(set.name())) {
                     player.sendMessage(CC.RedB + "(!) " + CC.Red + "This book already has this Mastery Shard equipped!");
@@ -80,7 +80,7 @@ public class MasteryShardListener
                 }
                 shardList.addString(set.name());
                 clickedCosmicData.setNBTBase("masteryShard", shardList.build());
-                clickedWrapper.setNBTBase("conaxData", clickedCosmicData.get());
+                clickedWrapper.setNBTBase("cosmicData", clickedCosmicData.get());
                 ItemStack newBook = clickedWrapper.build();
                 ItemMeta im = newBook.getItemMeta();
                 List<String> lore = im.getLore() == null ? Lists.newArrayList() : im.getLore();

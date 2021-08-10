@@ -89,7 +89,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class EquipmentLootboxes
         extends ArkPlugin {
     private final ItemStack lootboxItem = new ItemBuilder(Material.CHEST, CC.GoldB + "Equipment Lootbox " + CC.Gray + "(Right Click)", "", CC.GrayU + "Right-click" + CC.Gray + " to receive a random", CC.Gray + "item from one of these armor sets!", "", CC.GoldB + "Available Armor Sets", CC.GoldB + " * " + CC.RedB + "Phantom Armor Set", CC.GoldB + " * " + CC.AquaB + "Yeti Armor Set", CC.GoldB + " * " + CC.WhiteB + "Mother Of Yijki Armor Set", CC.GoldB + " * " + CC.GreenB + "Ranger Armor Set", CC.GoldB + " * " + CC.DarkRedB + "Supreme Armor Set", CC.GoldB + " * " + CC.DarkPurpleB + "Dimensional Traveler Armor Set").build();
-    private final ItemStack heroicLootboxItem = new NBTWrapper(new ItemBuilder(Material.CHEST, CC.GoldB + "Heroic Equipment Lootbox " + CC.Gray + "(Right Click)", "", CC.GrayU + "Right-click" + CC.Gray + " to receive a random", CC.Gray + "heroic armor piece from", CC.Gray + "one of these armor sets!", "", CC.GoldB + "Available Armor Sets", CC.GoldB + " * " + CC.RedB + "Phantom Armor Set", CC.GoldB + " * " + CC.AquaB + "Yeti Armor Set", CC.GoldB + " * " + CC.WhiteB + "Mother Of Yijki Armor Set", CC.GoldB + " * " + CC.GreenB + "Ranger Armor Set", CC.GoldB + " * " + CC.DarkRedB + "Supreme Armor Set", CC.GoldB + " * " + CC.DarkPurpleB + "Dimensional Traveler Armor Set").build()).setString("conaxData", "heroicLootbox").build();
+    private final ItemStack heroicLootboxItem = new NBTWrapper(new ItemBuilder(Material.CHEST, CC.GoldB + "Heroic Equipment Lootbox " + CC.Gray + "(Right Click)", "", CC.GrayU + "Right-click" + CC.Gray + " to receive a random", CC.Gray + "heroic armor piece from", CC.Gray + "one of these armor sets!", "", CC.GoldB + "Available Armor Sets", CC.GoldB + " * " + CC.RedB + "Phantom Armor Set", CC.GoldB + " * " + CC.AquaB + "Yeti Armor Set", CC.GoldB + " * " + CC.WhiteB + "Mother Of Yijki Armor Set", CC.GoldB + " * " + CC.GreenB + "Ranger Armor Set", CC.GoldB + " * " + CC.DarkRedB + "Supreme Armor Set", CC.GoldB + " * " + CC.DarkPurpleB + "Dimensional Traveler Armor Set").build()).setString("cosmicData", "heroicLootbox").build();
 
     public EquipmentLootboxes(Plugin p) {
         super(p);
@@ -281,8 +281,8 @@ public class EquipmentLootboxes
                 boolean gkitGenerator = false;
                 boolean heroicLootbox = false;
                 boolean mkitGenerator = false;
-                gkitGenerator = item.getType() == Material.CHEST && isWrapper.getString("conaxData").equals("GKIT_GENERATOR");
-                if (gkitGenerator || (heroicLootbox = isWrapper.getString("conaxData").equals("heroicLootbox")) || (mkitGenerator = isWrapper.getString("conaxData").equals("MKIT_GENERATOR")) || item.getItemMeta().getDisplayName().equals(EquipmentLootboxes.this.lootboxItem.getItemMeta().getDisplayName()) && ItemUtils.isLoreSameWithoutIID(EquipmentLootboxes.this.lootboxItem.getItemMeta().getLore(), item.getItemMeta().getLore())) {
+                gkitGenerator = item.getType() == Material.CHEST && isWrapper.getString("cosmicData").equals("GKIT_GENERATOR");
+                if (gkitGenerator || (heroicLootbox = isWrapper.getString("cosmicData").equals("heroicLootbox")) || (mkitGenerator = isWrapper.getString("cosmicData").equals("MKIT_GENERATOR")) || item.getItemMeta().getDisplayName().equals(EquipmentLootboxes.this.lootboxItem.getItemMeta().getDisplayName()) && ItemUtils.isLoreSameWithoutIID(EquipmentLootboxes.this.lootboxItem.getItemMeta().getLore(), item.getItemMeta().getLore())) {
                     event.setCancelled(true);
                     event.setUseItemInHand(Event.Result.DENY);
                     if (player.getWorld().getName().startsWith("world_duels")) {
@@ -312,8 +312,8 @@ public class EquipmentLootboxes
                             if (type != null) {
                                 retr.setType(type.getMaterial());
                                 NBTWrapper wrapper = new NBTWrapper(retr);
-                                wrapper.setString("conaxData", "HEROIC_ARMOR");
-                                wrapper.setNBTBase("conaxData", new NBTTagCompoundBuilder().setInt("durability", Integer.valueOf(type.getDurability())).setInt("maxDurability", Integer.valueOf(type.getDurability())).setInt("armorModifier", Integer.valueOf(type.getArmorModifier())).get());
+                                wrapper.setString("cosmicData", "HEROIC_ARMOR");
+                                wrapper.setNBTBase("cosmicData", new NBTTagCompoundBuilder().setInt("durability", Integer.valueOf(type.getDurability())).setInt("maxDurability", Integer.valueOf(type.getDurability())).setInt("armorModifier", Integer.valueOf(type.getArmorModifier())).get());
                                 retr = wrapper.build();
                                 LeatherArmorMeta im = (LeatherArmorMeta) retr.getItemMeta();
                                 List lore = im.getLore();

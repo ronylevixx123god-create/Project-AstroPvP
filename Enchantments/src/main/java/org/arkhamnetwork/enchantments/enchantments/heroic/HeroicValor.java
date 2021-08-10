@@ -29,7 +29,7 @@ public class HeroicValor extends HeroicCustomEnchantment {
         if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.VALENTINES_2021_SWORD)) {
             level = 5;
         }
-        double damage_negation = level * 0.005D;
+        double damage_negation = level * 0.02D;
 
 
         double hp_threshold = (level * 2 +6);

@@ -43,8 +43,8 @@ public class Rage extends CustomEnchantment {
                 playRageEffect(target.getEyeLocation(), enchantLevel);
             }
 
-            if (mod > 20) {
-                mod = 20;
+            if (mod > 10) {
+                mod = 10;
             }
 
             double damage = event.getDamage(EntityDamageEvent.DamageModifier.BASE);

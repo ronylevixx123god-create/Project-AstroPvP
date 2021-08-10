@@ -58,7 +58,7 @@ public class CommandHeroicArmor implements CommandExecutor {
                     Integer parsed = NumberUtils.parseIntOrNull(args[2]);
                     if (parsed != null && parsed > 0) {
                         NBTWrapper wrapper = new NBTWrapper(item);
-                        item = wrapper.setNBTBase("conaxData", new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")).setInt("armorModifier", parsed).get()).build();
+                        item = wrapper.setNBTBase("cosmicData", new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")).setInt("armorModifier", parsed).get()).build();
                         sender.sendMessage(CC.Red + "Item given with armor modifier: " + parsed);
                     }
                 }

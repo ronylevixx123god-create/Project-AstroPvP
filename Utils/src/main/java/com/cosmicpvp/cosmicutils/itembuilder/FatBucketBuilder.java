@@ -46,11 +46,11 @@ public class FatBucketBuilder
         }
         ItemStack bucket = ItemUtils.buildItem((Material) this.getType(), (short) 0, (String) ChatColor.translateAlternateColorCodes('&', "&c&lFat Bucket &7(&f" + dataText + "&7)"), (String[]) new String[]{(Object) ((Object) ChatColor.GRAY) + "An extremely large bucket that", (Object) ((Object) ChatColor.GRAY) + "can hold up to 256 lava sources."});
         NBTWrapper wrapper = new NBTWrapper(bucket);
-        NBTTagCompoundBuilder builder = wrapper.getCompoundOrCreate("conaxData");
+        NBTTagCompoundBuilder builder = wrapper.getCompoundOrCreate("cosmicData");
         wrapper.setString("cosmicType", "fatBucket");
         builder.setInt("fatBucketUses", this.bucketUses);
         builder.setInt("fatBucketCharges", this.currentCharge);
-        wrapper.setNBTBase("conaxData", (NBTBase) builder.get());
+        wrapper.setNBTBase("cosmicData", (NBTBase) builder.get());
         bucket = wrapper.build();
         return bucket;
     }

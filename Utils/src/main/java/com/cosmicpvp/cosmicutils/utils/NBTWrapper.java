@@ -78,7 +78,7 @@ public class NBTWrapper {
     }
 
     public NBTTagCompoundBuilder getconaxData() {
-        return this.getCompound("conaxData");
+        return this.getCompound("cosmicData");
     }
 
     public boolean isBlacklistedIID() {

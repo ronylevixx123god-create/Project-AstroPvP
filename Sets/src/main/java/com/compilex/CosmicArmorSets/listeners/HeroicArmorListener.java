@@ -98,7 +98,7 @@ public class HeroicArmorListener
             }
             if (wrapper != null && wrapper.getString("cosmicType").equals("HEROIC_ARMOR")) {
                 AbilityArmorSet set;
-                NBTTagCompoundBuilder builder = new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData"));
+                NBTTagCompoundBuilder builder = new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData"));
                 int armorModifier = builder.getInt("armorModifier");
                 String abilitySet = builder.getString("abilitySet");
                 int requiredModifier = typeToCompare.getArmorModifier();
@@ -108,7 +108,7 @@ public class HeroicArmorListener
                 if (armorModifier != requiredModifier) {
                     Bukkit.getLogger().info("Updating outdated Heroic Armor with modifier: " + armorModifier + " new: " + typeToCompare.getArmorModifier() + " for " + player.getName());
                     builder.setInt("armorModifier", requiredModifier);
-                    wrapper.setNBTBase("conaxData", builder.get());
+                    wrapper.setNBTBase("cosmicData", builder.get());
                     ItemStack item = wrapper.build();
                     ItemMeta im = item.getItemMeta();
                     List lore = im.getLore();
@@ -205,7 +205,7 @@ public class HeroicArmorListener
     }
 
     private boolean isMkitArmor(ItemStack item) {
-        NBTTagCompoundBuilder builder = new NBTWrapper(item).getCompound("conaxData");
+        NBTTagCompoundBuilder builder = new NBTWrapper(item).getCompound("cosmicData");
         if (builder == null) {
             return false;
         }

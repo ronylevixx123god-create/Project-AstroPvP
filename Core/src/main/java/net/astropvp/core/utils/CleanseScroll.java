@@ -46,12 +46,12 @@ public class CleanseScroll extends CosmicItem
         if (cursor.getAmount() > 1) {
             throw new PrefixedException("You cannot apply stacked Cleanse Scrolls to an item.");
         }
-        NBTTagCompoundBuilder cosmicData = clickedWrapper.getCompoundOrCreate("conaxData");
+        NBTTagCompoundBuilder cosmicData = clickedWrapper.getCompoundOrCreate("cosmicData");
 
         cosmicData.setInt("cleanseScroll", Integer.valueOf(1));
         e.setCancelled(true);
         e.getWhoClicked().setItemOnCursor((ItemStack)null);
-        clickedWrapper.setNBTBase("conaxData", (NBTBase)cosmicData.get());
+        clickedWrapper.setNBTBase("cosmicData", (NBTBase)cosmicData.get());
         clicked = clickedWrapper.build();
         HolyWhiteScrollUtils.setHolyWhiteScrollsApplied(clickedWrapper, 0);
         HolyWhiteScrollUtils.applyHolyWhitescroll(clicked, 1, HolyWhiteScrollUtils.getMaxHolyAllowed(clicked), false);

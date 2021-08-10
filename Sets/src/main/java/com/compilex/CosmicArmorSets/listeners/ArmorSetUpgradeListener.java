@@ -96,7 +96,7 @@ public class ArmorSetUpgradeListener
                 player.sendMessage(CC.Red + "(!) " + CC.Red + "You must apply this Upgrade in the Overworld!");
                 return;
             }
-            NBTTagCompoundBuilder builder = cursorWrapper.getCompound("conaxData");
+            NBTTagCompoundBuilder builder = cursorWrapper.getCompound("cosmicData");
             if (builder == null) {
                 return;
             }
@@ -174,7 +174,7 @@ public class ArmorSetUpgradeListener
                         color = 518113;
                     } else if (clickedArmorSet == ArmorSet.ENGINEER) {
                         color = 15176967;
-                    } else if (clickedArmorSet == ArmorSet.OMNI) {
+                    } else if (clickedArmorSet == ArmorSet.OMNI_PVP_HACK) {
                         color = 0x0027FF;
                     } else if (clickedArmorSet == ArmorSet.APOLLO) {
                         color = 0x000000;

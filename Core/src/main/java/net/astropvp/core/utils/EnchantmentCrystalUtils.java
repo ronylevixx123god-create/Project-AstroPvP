@@ -25,7 +25,7 @@ public class EnchantmentCrystalUtils {
         if(item == null || item.getType() == Material.AIR || !item.hasItemMeta())
             return null;
         NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("conaxData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")) : new NBTTagCompoundBuilder();
+        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
         EnchantmentCrystalType type = EnchantmentCrystalType.valueOf(cosmicData.getString("enchantmentCrystalType"));
         return type.getEnchantment();
     }

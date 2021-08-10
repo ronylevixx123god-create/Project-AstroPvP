@@ -32,20 +32,20 @@ public class HolyWhiteScrollUtils {
     private static String corruptLoreLine = CC.RedB + "CORRUPT (" + CC.Gray + "cannot be protected" + CC.RedB + ")";
 
     public static int getHolyScrollsApplied(NBTWrapper wrapper) {
-        NBTTagCompoundBuilder data = wrapper.getCompoundOrCreate("conaxData");
+        NBTTagCompoundBuilder data = wrapper.getCompoundOrCreate("cosmicData");
         return data.getInt("holyScrollsApplied");
     }
 
     public static boolean isCorrupt(NBTWrapper wrapper) {
-        NBTTagCompoundBuilder data = wrapper.getCompoundOrCreate("conaxData");
+        NBTTagCompoundBuilder data = wrapper.getCompoundOrCreate("cosmicData");
         return data.getBoolean("corrupted");
     }
 
     public static ItemStack applyCorruptionToItem(ItemStack item) {
         NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder builder = wrapper.getCompoundOrCreate("conaxData");
+        NBTTagCompoundBuilder builder = wrapper.getCompoundOrCreate("cosmicData");
         builder.setBoolean("corrupted", Boolean.TRUE);
-        wrapper.setNBTBase("conaxData", (NBTBase)builder.get());
+        wrapper.setNBTBase("cosmicData", (NBTBase)builder.get());
         item = wrapper.build();
         ItemMeta im = item.getItemMeta();
         List lore = im.getLore();
@@ -61,15 +61,15 @@ public class HolyWhiteScrollUtils {
     }
 
     public static NBTWrapper setHolyWhiteScrollsApplied(NBTWrapper wrapper, int applied) {
-        NBTTagCompoundBuilder data = wrapper.getCompoundOrCreate("conaxData");
+        NBTTagCompoundBuilder data = wrapper.getCompoundOrCreate("cosmicData");
         data.setInt("holyScrollsApplied", Integer.valueOf(applied));
-        wrapper.setNBTBase("conaxData", (NBTBase)data.get());
+        wrapper.setNBTBase("cosmicData", (NBTBase)data.get());
         return wrapper;
     }
 
     public static void removeCorrupt(ItemStack i, NBTWrapper wrapper) {
         List<String> lore = i.getItemMeta().getLore();
-        NBTTagCompoundBuilder data = wrapper.getCompoundOrCreate("conaxData");
+        NBTTagCompoundBuilder data = wrapper.getCompoundOrCreate("cosmicData");
 
         LinkedList<String> newLore = new LinkedList<>();
         boolean found = false;
@@ -86,7 +86,7 @@ public class HolyWhiteScrollUtils {
             i.setItemMeta(im);
             data.setBoolean("corrupted", Boolean.FALSE);
             data.remove("corrupted");
-            wrapper.setNBTBase("conaxData", data.get());
+            wrapper.setNBTBase("cosmicData", data.get());
 
         }
     }
@@ -164,7 +164,7 @@ public class HolyWhiteScrollUtils {
 
     public static int getMaxHolyAllowed(ItemStack item) {
         NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder cosmicData = wrapper.getCompoundOrCreate("conaxData");
+        NBTTagCompoundBuilder cosmicData = wrapper.getCompoundOrCreate("cosmicData");
         return cosmicData.hasKey("holyWater") ? 4 : 3;
     }
 }

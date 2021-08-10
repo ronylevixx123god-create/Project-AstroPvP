@@ -65,7 +65,7 @@ implements InventoryInteractable {
 //        if (cursor.getAmount() > 1) {
 //            throw new PrefixedException("You cannot apply stacked Holy White Scrolls to an item.");
 //        }
-        NBTTagCompoundBuilder cosmicData = clickedWrapper.getCompoundOrCreate("conaxData");
+        NBTTagCompoundBuilder cosmicData = clickedWrapper.getCompoundOrCreate("cosmicData");
         if (cosmicData != null) {
             if (cosmicData.hasKey("abilitySet")) {
                 throw new PrefixedException("You cannot apply a Holy Whitescroll to Mastery Kit items!");

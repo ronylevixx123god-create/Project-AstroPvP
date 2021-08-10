@@ -184,7 +184,7 @@ public class KothArmorSet
         ItemStack item = damager.getItemInHand();
         if (event.getEntity() instanceof Player && item != null && (item.getType() == Material.GOLD_AXE || item.getType() == Material.GOLD_SWORD) && (wrapper = new NBTWrapper(item)).getString("cosmicType").equals("HEROIC_WEAPON")) {
             String kothWeapon;
-            NBTTagCompoundBuilder builder = wrapper.getCompound("conaxData");
+            NBTTagCompoundBuilder builder = wrapper.getCompound("cosmicData");
             String string = kothWeapon = builder != null ? builder.getString("KOTH_WEAPON") : "";
             if (kothWeapon.equalsIgnoreCase("AXE")) {
                 Player damaged = (Player) event.getEntity();

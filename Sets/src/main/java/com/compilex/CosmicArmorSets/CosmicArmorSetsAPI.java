@@ -83,7 +83,7 @@ public class CosmicArmorSetsAPI {
             armorset = ArmorSet.RANGER;
         }
         String armorLore = armorset == null ? CC.Gray + "armor set" : armorset.getDisplayName() + CC.Gray + " armor";
-        ItemStack retr = new NBTWrapper(new ItemBuilder(Material.INK_SACK, CC.GoldB + "Heroic " + (armorset != null ? CC.Gold + "(" + armorset.getDisplayName() + CC.Gold + ") " + CC.GoldB : "Armor") + "Upgrade", "", CC.Gray + "Apply to any " + armorLore, CC.Gray + "for a " + CC.Gold + (int) successRate + "%" + CC.Gray + " chance to imbue it", CC.Gray + "with the power of Heroic Armor!", "", CC.Gray + "This will increase the armor's base", CC.Gray + "stats as well as add a " + CC.Gold + "12.5% negation", CC.Gray + "to enemy " + CC.Gold + "Infinite Luck" + CC.Gray + " enchantments.").data(DyeColor.YELLOW.getDyeData()).build()).setString("cosmicType", "HEROIC_ARMOR_UPGRADE").setNBTBase("conaxData", new NBTTagCompoundBuilder().setDouble("success", Double.valueOf(successRate)).setString("setType", armorset == null ? "ANY" : armorset.name()).get()).build();
+        ItemStack retr = new NBTWrapper(new ItemBuilder(Material.INK_SACK, CC.GoldB + "Heroic " + (armorset != null ? CC.Gold + "(" + armorset.getDisplayName() + CC.Gold + ") " + CC.GoldB : "Armor") + "Upgrade", "", CC.Gray + "Apply to any " + armorLore, CC.Gray + "for a " + CC.Gold + (int) successRate + "%" + CC.Gray + " chance to imbue it", CC.Gray + "with the power of Heroic Armor!", "", CC.Gray + "This will increase the armor's base", CC.Gray + "stats as well as add a " + CC.Gold + "12.5% negation", CC.Gray + "to enemy " + CC.Gold + "Infinite Luck" + CC.Gray + " enchantments.").data(DyeColor.YELLOW.getDyeData()).build()).setString("cosmicType", "HEROIC_ARMOR_UPGRADE").setNBTBase("cosmicData", new NBTTagCompoundBuilder().setDouble("success", Double.valueOf(successRate)).setString("setType", armorset == null ? "ANY" : armorset.name()).get()).build();
         if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
             retr = ItemID.assignItemID(null, retr);
         }
@@ -152,9 +152,9 @@ public class CosmicArmorSetsAPI {
     }
 
     public static NBTWrapper createHeroicWeaponNBT(NBTWrapper wrapper, HeroicWeaponType type) {
-        NBTTagCompoundBuilder compoundBuilder = wrapper.hasKey("conaxData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")) : new NBTTagCompoundBuilder();
+        NBTTagCompoundBuilder compoundBuilder = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
         compoundBuilder.setString("type", type.name()).setInt("durability", type.getDurability()).setDouble("dmgIncr", type.getAttackModifier()).setInt("maxDurability", type.getDurability()).get();
-        return wrapper.setString("cosmicType", "HEROIC_WEAPON").setNBTBase("conaxData", compoundBuilder.get());
+        return wrapper.setString("cosmicType", "HEROIC_WEAPON").setNBTBase("cosmicData", compoundBuilder.get());
     }
 
     public static boolean isHeroicArmor(ItemStack item) {
@@ -252,8 +252,8 @@ public class CosmicArmorSetsAPI {
 
     public static String getAbilityArmorSetStringFromItem(ItemStack item) {
         NBTWrapper wrapper = new NBTWrapper(item);
-        if (wrapper.hasKey("conaxData")) {
-            NBTTagCompoundBuilder cosmicData = new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData"));
+        if (wrapper.hasKey("cosmicData")) {
+            NBTTagCompoundBuilder cosmicData = new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData"));
             String abilityArmorSet = cosmicData.getString("abilitySet");
             if (abilityArmorSet == null || abilityArmorSet.isEmpty()) {
                 return null;
@@ -421,7 +421,7 @@ public class CosmicArmorSetsAPI {
         }
         item.addUnsafeEnchantment(Enchantment.DURABILITY, 3);
         NBTWrapper wrapper = new NBTWrapper(item);
-        wrapper.setString("cosmicType", "HEROIC_ARMOR").setNBTBase("conaxData", wrapper.getCompoundOrCreate("conaxData").setInt("durability", Integer.valueOf(durability)).setInt("armorModifier", Integer.valueOf(armorModifier)).setInt("maxDurability", Integer.valueOf(durability)).get());
+        wrapper.setString("cosmicType", "HEROIC_ARMOR").setNBTBase("cosmicData", wrapper.getCompoundOrCreate("cosmicData").setInt("durability", Integer.valueOf(durability)).setInt("armorModifier", Integer.valueOf(armorModifier)).setInt("maxDurability", Integer.valueOf(durability)).get());
         return wrapper.build();
     }
 
@@ -429,12 +429,12 @@ public class CosmicArmorSetsAPI {
         item.setType(type.getMaterial());
         int modifier = type.getArmorModifier();
         NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder builder = wrapper.getCompoundOrCreate("conaxData");
+        NBTTagCompoundBuilder builder = wrapper.getCompoundOrCreate("cosmicData");
         if (builder.hasKey("abilitySet")) {
             modifier = (int) Math.ceil((double) modifier / 2.0);
         }
         wrapper.setString("cosmicType", "HEROIC_ARMOR");
-        wrapper.setNBTBase("conaxData", builder.setInt("durability", Integer.valueOf(type.getDurability())).setInt("maxDurability", Integer.valueOf(type.getDurability())).setInt("armorModifier", Integer.valueOf(modifier)).get());
+        wrapper.setNBTBase("cosmicData", builder.setInt("durability", Integer.valueOf(type.getDurability())).setInt("maxDurability", Integer.valueOf(type.getDurability())).setInt("armorModifier", Integer.valueOf(modifier)).get());
         ItemStack finished = wrapper.build();
         ItemMeta im = finished.getItemMeta();
         if (addLore) {

@@ -57,9 +57,9 @@ public class CosmicKOTHAPI {
         im.setLore(lore);
         item.setItemMeta(im);
         NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder builder = wrapper.getCompoundOrCreate("conaxData");
+        NBTTagCompoundBuilder builder = wrapper.getCompoundOrCreate("cosmicData");
         builder.setString("KOTH_WEAPON", weaponType.name());
-        wrapper.setNBTBase("conaxData", (NBTBase)builder.get());
+        wrapper.setNBTBase("cosmicData", (NBTBase)builder.get());
         return wrapper.build();
     }
 

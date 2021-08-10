@@ -49,12 +49,12 @@ public class HeroicUpgrade extends CosmicItem
         if (cursor.getAmount() > 1) {
             throw new PrefixedException("You cannot apply stacked Heroic Weapon upgrades to an item.");
         }
-        NBTTagCompoundBuilder cosmicData = clickedWrapper.getCompoundOrCreate("conaxData");
+        NBTTagCompoundBuilder cosmicData = clickedWrapper.getCompoundOrCreate("cosmicData");
 
         cosmicData.setInt("heroicWeaponUpgrade", Integer.valueOf(1));
         e.setCancelled(true);
         e.getWhoClicked().setItemOnCursor((ItemStack)null);
-        clickedWrapper.setNBTBase("conaxData", (NBTBase)cosmicData.get());
+        clickedWrapper.setNBTBase("cosmicData", (NBTBase)cosmicData.get());
         clicked = clickedWrapper.build();
         if (type == Material.DIAMOND_AXE) {
             CosmicArmorSetsAPI.convertIntoHeroicWeapon(HeroicWeaponType.AXE, clicked, true);

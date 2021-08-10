@@ -41,9 +41,9 @@ public class OmniArmorSet
     public ItemStack getHelmet(boolean applyTransmog) {
         ItemStack item = ItemUtils.buildItem(Material.DIAMOND_HELMET, (short) 0, "&1&lOmni Helmet", "", "&7Through the veil it's all so clear: &1purposeful.", "&7Your path. announcing itself, appearas within the mist", "&7Your breath hitches, held your next step, &1precise, infallable", "", "&7A flash, so fast, so clean, you exhale.", "&7The &1smell of death &7surrounds you.", "&7His life drains, once, splashing over your boots", "&7to the earth below.", "", "&7Your smirk, the thrist quenched....... for now.......", "&4&oWho's Next?!", "", "&3&lOMNI SET BONUS", "&3&l* &3Acts as ANY Armor Set type/piece.");
         NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("conaxData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")) : new NBTTagCompoundBuilder();
+        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
         cosmicData.setInt("omniArmorSet", 1);
-        wrapper.setNBTBase("conaxData", cosmicData.get());
+        wrapper.setNBTBase("cosmicData", cosmicData.get());
         NBTTagCompoundBuilder display = wrapper.hasKey("display") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("display")) : new NBTTagCompoundBuilder();
         display.setInt("color", 0xFF0000);
         wrapper.setNBTBase("display", display.get());
@@ -54,9 +54,9 @@ public class OmniArmorSet
     public ItemStack getChestplate(boolean applyTransmog) {
         ItemStack item = ItemUtils.buildItem(Material.DIAMOND_CHESTPLATE, (short) 0, "&1&lOmni Chestplate", "", "&3&lOMNI SET BONUS", "&3&l* &3Acts as ANY Armor Set type/piece.");
         NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("conaxData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")) : new NBTTagCompoundBuilder();
+        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
         cosmicData.setInt("omniArmorSet", 1);
-        wrapper.setNBTBase("conaxData", cosmicData.get());
+        wrapper.setNBTBase("cosmicData", cosmicData.get());
         NBTTagCompoundBuilder display = wrapper.hasKey("display") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("display")) : new NBTTagCompoundBuilder();
         display.setInt("color", 0xFF0000);
         wrapper.setNBTBase("display", display.get());
@@ -67,9 +67,9 @@ public class OmniArmorSet
     public ItemStack getLeggings(boolean applyTransmog) {
         ItemStack item = ItemUtils.buildItem(Material.DIAMOND_LEGGINGS, (short) 0, "&1&lOmni Leggings", "", "&3&lOMNI SET BONUS", "&3&l* &3Acts as ANY Armor Set type/piece.");
         NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("conaxData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")) : new NBTTagCompoundBuilder();
+        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
         cosmicData.setInt("omniArmorSet", 1);
-        wrapper.setNBTBase("conaxData", cosmicData.get());
+        wrapper.setNBTBase("cosmicData", cosmicData.get());
         NBTTagCompoundBuilder display = wrapper.hasKey("display") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("display")) : new NBTTagCompoundBuilder();
         display.setInt("color", 0xFF0000);
         wrapper.setNBTBase("display", display.get());

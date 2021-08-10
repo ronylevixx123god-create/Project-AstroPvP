@@ -89,7 +89,7 @@ public class EnchantmentBook {
     public static ItemStack getHeroicBlackscroll(final int successRateMin, final int successRateMax, final boolean applyIID) {
         final int chosenMax = successRateMin + ThreadLocalRandom.current().nextInt(successRateMax - successRateMin + 1);
         final ItemStack is = ItemUtils.buildItem(Material.INK_SACK, (short) 0, CC.LightPurpleB + "Heroic Black Scroll", ChatColor.GRAY.toString() + "Removes a random enchantment", ChatColor.GRAY.toString() + "from an item and converts", ChatColor.GRAY.toString() + "it into a " + ChatColor.LIGHT_PURPLE + successRateMin + "%-" + chosenMax + "%" + ChatColor.GRAY + " success book.", CC.LightPurpleB + "(!)" + CC.LightPurple + " Chance to extract Heroic Enchantments");
-        return new NBTWrapper((applyIID && ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) ? ItemID.assignItemID(null, is) : is).setString("cosmicType", "heroicBlackscroll").setNBTBase("conaxData", new NBTTagCompoundBuilder().setInt("min", Integer.valueOf(successRateMin)).setInt("max", Integer.valueOf(chosenMax)).get()).setGlowing().build();
+        return new NBTWrapper((applyIID && ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) ? ItemID.assignItemID(null, is) : is).setString("cosmicType", "heroicBlackscroll").setNBTBase("cosmicData", new NBTTagCompoundBuilder().setInt("min", Integer.valueOf(successRateMin)).setInt("max", Integer.valueOf(chosenMax)).get()).setGlowing().build();
     }
 
     public static ItemStack getHeroicBlackscroll(final boolean applyIID) {
@@ -110,7 +110,7 @@ public class EnchantmentBook {
         }
         final int selectedMax = min + ran.nextInt(max - min + 1);
         final ItemStack is = ItemUtils.buildItem(Material.INK_SACK, (short) 0, CC.LightPurpleB + "Heroic Black Scroll", ChatColor.GRAY.toString() + "Removes a random enchantment", ChatColor.GRAY.toString() + "from an item and converts", ChatColor.GRAY.toString() + "it into a " + ChatColor.LIGHT_PURPLE + min + "%-" + selectedMax + "%" + ChatColor.GRAY + " success book.", CC.LightPurpleB + "(!)" + CC.LightPurple + " Chance to extract Heroic Enchantments");
-        return new NBTWrapper((applyIID && ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) ? ItemID.assignItemID(null, is) : is).setString("cosmicType", "heroicBlackscroll").setNBTBase("conaxData", new NBTTagCompoundBuilder().setInt("min", Integer.valueOf(min)).setInt("max", Integer.valueOf(selectedMax)).get()).setGlowing().build();
+        return new NBTWrapper((applyIID && ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) ? ItemID.assignItemID(null, is) : is).setString("cosmicType", "heroicBlackscroll").setNBTBase("cosmicData", new NBTTagCompoundBuilder().setInt("min", Integer.valueOf(min)).setInt("max", Integer.valueOf(selectedMax)).get()).setGlowing().build();
     }
 
     public static ItemStack getTransmogScroll() {

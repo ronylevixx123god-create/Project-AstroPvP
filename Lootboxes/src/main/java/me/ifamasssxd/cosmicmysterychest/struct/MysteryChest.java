@@ -137,12 +137,12 @@ public class MysteryChest {
         im.setLore(lore);
         hand.setItemMeta(im);
         NBTWrapper wrapper = new NBTWrapper(hand);
-        NBTTagCompoundBuilder builder = wrapper.getCompoundOrCreate("conaxData");
+        NBTTagCompoundBuilder builder = wrapper.getCompoundOrCreate("cosmicData");
         builder.setString("mysteryChest", this.internalName);
         if (expiration != null && expiration > 0L) {
             builder.setLong("expiration", expiration);
         }
-        wrapper.setNBTBase("conaxData", builder.get());
+        wrapper.setNBTBase("cosmicData", builder.get());
         hand = wrapper.build();
         hand.setAmount(1);
         if (iid && ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {

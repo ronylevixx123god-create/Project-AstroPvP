@@ -66,7 +66,7 @@ public class ArmorSetBonusCrystalItem
 
     public static ItemStack applyCrystalToItem(List<ArmorSet> set, ItemStack item) {
         NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder data = wrapper.getCompoundOrCreate("conaxData");
+        NBTTagCompoundBuilder data = wrapper.getCompoundOrCreate("cosmicData");
         NBTTagListBuilder list = new NBTTagListBuilder();
         String loreBuild = "";
         NBTTagListBuilder nbtTagListBuilder = new NBTTagListBuilder();
@@ -77,7 +77,7 @@ public class ArmorSetBonusCrystalItem
         }
         data.setNBTBase("crystalBonuses", list.build());
         data.setNBTBase("bonuses", list.build());
-        wrapper.setNBTBase("conaxData", data.get());
+        wrapper.setNBTBase("cosmicData", data.get());
         item = wrapper.build();
         ItemMeta im = item.getItemMeta();
         List<String> lore = im.getLore() == null ? Lists.newArrayList() : im.getLore();
@@ -145,7 +145,7 @@ public class ArmorSetBonusCrystalItem
         } else if (!set.isEmpty()) {
             name = CC.GoldB + "Armor Crystal (" + set.stream().findFirst().orElse(null).getDisplayName() + CC.GoldB + ")";
         }
-        return this.applyItemData(new ItemBuilder(Material.NETHER_STAR, name).lore(lore).build()).setNBTBase("conaxData", new NBTTagCompoundBuilder().setNBTBase("bonuses", list.build()).setDouble("bonusChance", Double.valueOf(chance.doubleValue())).get()).assignIID().build();
+        return this.applyItemData(new ItemBuilder(Material.NETHER_STAR, name).lore(lore).build()).setNBTBase("cosmicData", new NBTTagCompoundBuilder().setNBTBase("bonuses", list.build()).setDouble("bonusChance", Double.valueOf(chance.doubleValue())).get()).assignIID().build();
     }
 
     public boolean acceptsInventoryClickType(InventoryItemType inventoryItemType) {
@@ -157,7 +157,7 @@ public class ArmorSetBonusCrystalItem
             return;
         }
         event.setCancelled(true);
-        NBTTagCompoundBuilder data = cursorWrapper.getCompound("conaxData");
+        NBTTagCompoundBuilder data = cursorWrapper.getCompound("cosmicData");
         if (data == null) {
             return;
         }
@@ -165,7 +165,7 @@ public class ArmorSetBonusCrystalItem
         if (sets != null) {
             double chanceToApply;
             ArmorSet itemSet = ArmorSet.getArmorSetFromItem(clicked);
-            if (ArmorSet.getArmorSetFromItem(clicked) != ArmorSet.OMNI && itemSet != null) {
+            if (ArmorSet.getArmorSetFromItem(clicked) != ArmorSet.OMNI_PVP_HACK && itemSet != null) {
                 throw new PrefixedException("You cannot apply an Armor Set Crystal to an existing Armor Set piece!");
             }
 

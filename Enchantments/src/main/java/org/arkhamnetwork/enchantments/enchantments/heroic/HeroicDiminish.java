@@ -42,26 +42,25 @@ public class HeroicDiminish extends CustomEnchantment {
         }
 
         if (player.hasMetadata("diminishEffect")) {
-            final double dmgToDeal;
-            final double maxDmg = dmgToDeal = player.getMetadata("diminishEffect").get(0).asDouble();
-            if (dmgToDeal > 0.0 && attacker instanceof Player) {
-
-                attacker.damage(Math.min(15, dmgToDeal));
-                final Player attackerPlayer = (Player) attacker;
-                Bukkit.getLogger().info("[Heroic Diminish] Damaging attacker " + attackerPlayer.getName() + " for " + dmgToDeal + " due to being then diminishEffect: " + maxDmg + " maxDmg: " + e.getDamage(EntityDamageEvent.DamageModifier.BASE));
+            double maxDmg = ((MetadataValue)player.getMetadata("diminishEffect").get(0)).asDouble();
+            double dmgToDeal = maxDmg;
+            if (dmgToDeal > 0.0D && attacker instanceof Player) {
+                attacker.damage(dmgToDeal);
+                Player attackerPlayer = (Player)attacker;
+                Bukkit.getLogger().info("[Heroic Diminish] Damaging attacker " + attackerPlayer.getName() + " for " + dmgToDeal + " due to being then diminishEffect: " + maxDmg + " maxDmg: " + e.getFinalDamage());
             }
-            if (e.getDamage(EntityDamageEvent.DamageModifier.BASE) > maxDmg) {
+            if (e.getFinalDamage() > maxDmg) {
                 e.setDamage(maxDmg);
-                player.removeMetadata("diminishEffect", (Plugin) Enchantments.getInstance());
+                player.removeMetadata("diminishEffect", (Plugin)Enchantments.getInstance());
                 return;
             }
         }
-        final double random = Math.random();
-        final double procChance = 0.001 * level;
+        double random = Math.random();
+        double procChance = 0.05D * level;
         if (random < procChance) {
-            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) / 2.0);
-            player.setMetadata("diminishEffect", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) (e.getDamage(EntityDamageEvent.DamageModifier.BASE) / 2.0)));
-            ((Player) player).sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "* DIMINISH [" + ChatColor.YELLOW + "MAX DMG: " + this.df.format(e.getDamage(EntityDamageEvent.DamageModifier.BASE) / 2.0) + ChatColor.BOLD + "] *");
+            e.setDamage(e.getDamage() / 2.0D);
+            player.setMetadata("diminishEffect", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), Double.valueOf(e.getFinalDamage() / 2.0D)));
+            ((Player)player).sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "* DIMINISH [" + ChatColor.YELLOW + "MAX DMG: " + this.df.format(e.getFinalDamage() / 2.0D) + ChatColor.BOLD + "] *");
         }
     }
 }
