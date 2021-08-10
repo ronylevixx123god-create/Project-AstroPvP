@@ -376,7 +376,7 @@ public class ShopManager {
             ArrayList lore = Lists.newArrayList((Object[]) new String[]{CC.Gray + "Stackable (" + data.getSellCount() + ")"});
             im.setLore((List) lore);
             toGive.setItemMeta(im);
-            toGive = new NBTWrapper(toGive).setString("cosmicType", "stackable").setNBTBase("cosmicData", (NBTBase) new NBTTagCompoundBuilder().setInt("maxStackSize", Integer.valueOf(data.getSellCount())).setLong("uniquePots", Long.valueOf(System.nanoTime())).get()).build();
+            toGive = new NBTWrapper(toGive).setString("cosmicType", "stackable").setNBTBase("conaxData", (NBTBase) new NBTTagCompoundBuilder().setInt("maxStackSize", Integer.valueOf(data.getSellCount())).setLong("uniquePots", Long.valueOf(System.nanoTime())).get()).build();
             toGive.setAmount(data.getSellCount());
         }
         return toGive;

@@ -86,12 +86,12 @@ public class ApolloRank extends CosmicItem
             throw new PrefixedException("You cannot redeem lower tier ranks.");
         }
 
-        NBTTagCompoundBuilder cosmicData = wrapper.getCompoundOrCreate("cosmicData");
+        NBTTagCompoundBuilder cosmicData = wrapper.getCompoundOrCreate("conaxData");
 
         cosmicData.setInt("apolloRank", Integer.valueOf(1));
         event.setCancelled(true);
         player.setItemInHand(null);
-        wrapper.setNBTBase("cosmicData", (NBTBase)cosmicData.get());
+        wrapper.setNBTBase("conaxData", (NBTBase)cosmicData.get());
         item = wrapper.build();
 
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + player.getName() + " group add apollo");

@@ -56,7 +56,7 @@ public enum ArmorSet {
     ENGINEER(new EngineerSet(), ChatColor.GOLD, CC.GoldB + "Engineer", Lists.newArrayList("-9% Incoming DMG", "20% B-2 Bomber Passive Ability")),
     KOTH(new KothArmorSet(), ChatColor.AQUA, CC.WhiteB + CC.Magic + ";" + CC.RedB + " K" + CC.GoldB + "." + CC.YellowB + "O" + CC.GreenB + "." + CC.AquaB + "T" + CC.DarkPurpleB + "." + CC.LightPurpleB + "H " + CC.WhiteB + CC.Magic + ";", Lists.newArrayList("+5% PvP DMG", "+12.5% PvE DMG")),
     ASTRO(new AstroSet(), ChatColor.GREEN, CC.GreenB + "Astro", Lists.newArrayList("+7.5% Outgoing DMG", "-5% Incoming DMG", "10% Passive Astro Killer Ability")),
-    OMNI_PVP_HACK(new OmniArmorSet(), ChatColor.DARK_BLUE, CC.DarkBlueB + "Omni", Lists.newArrayList("")),
+    OMNI(new OmniArmorSet(), ChatColor.DARK_BLUE, CC.DarkBlueB + "Omni", Lists.newArrayList("")),
     GRINDER(new GrinderArmorSet(), ChatColor.DARK_GRAY, CC.DarkGrayB + "Grinder", Lists.newArrayList("")),
     ULTRA(new UltraArmorSet(), ChatColor.GRAY, CC.GrayB + "Ultra", Lists.newArrayList("+10% Outgoing DMG", "-5% Incoming DMG", "4.5% Ultra Rage Ability", "8.5% Ultra Holy Negation", "4.5% Chance to Bypass Utility Belt", "x1.5 World Destroyer Duration")),
     APOLLO(new ApolloSet(), ChatColor.WHITE, CC.WhiteB + "Apollo", Lists.newArrayList("+15% Outgoing DMG", "-10% Incoming DMG", "Bypass Chad Sunglasses.", "x1.5 Pet Duration.", "Immune to Witcher Pet")),
@@ -180,7 +180,7 @@ public enum ArmorSet {
     }
 
     public static List<ArmorSet> getFromArmorBonusCrystal(NBTWrapper wrapper) {
-        NBTTagCompoundBuilder cosmicData = wrapper.getCompound("cosmicData");
+        NBTTagCompoundBuilder cosmicData = wrapper.getCompound("conaxData");
         if (cosmicData == null) {
             return null;
         }
@@ -215,7 +215,7 @@ public enum ArmorSet {
 
     public static ItemStack applyCrystalToItem(List<ArmorSet> set, ItemStack item) {
         NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder data = wrapper.getCompoundOrCreate("cosmicData");
+        NBTTagCompoundBuilder data = wrapper.getCompoundOrCreate("conaxData");
         NBTTagListBuilder nbtTagListBuilder = new NBTTagListBuilder();
         StringBuilder sb = new StringBuilder();
         set.forEach(s -> {
@@ -223,7 +223,7 @@ public enum ArmorSet {
             sb.append(s.getDisplayName()).append(CC.Gray).append(", ");
         });
         data.setNBTBase("crystalBonuses", nbtTagListBuilder.build());
-        wrapper.setNBTBase("cosmicData", data.get());
+        wrapper.setNBTBase("conaxData", data.get());
         item = wrapper.build();
         ItemMeta im = item.getItemMeta();
         List<String> lore = im.getLore() == null ? Lists.newArrayList() : im.getLore();
@@ -238,10 +238,10 @@ public enum ArmorSet {
     }
 
     public static ItemStack removeCrystalFromItem(NBTWrapper wrapper) {
-        NBTTagCompoundBuilder data = wrapper.getCompoundOrCreate("cosmicData");
+        NBTTagCompoundBuilder data = wrapper.getCompoundOrCreate("conaxData");
         data.remove("crystalBonus");
         data.remove("crystalBonuses");
-        wrapper.setNBTBase("cosmicData", data.get());
+        wrapper.setNBTBase("conaxData", data.get());
         ItemStack item = wrapper.build();
         ItemMeta im = item.getItemMeta();
         List<String> lore = im.getLore();

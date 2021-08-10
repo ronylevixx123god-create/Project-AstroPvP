@@ -63,7 +63,7 @@ implements Listener {
             Player p = e.getPlayer();
             DungeonType bagType = DungeonType.ABANDONED_SHIP;
             NBTWrapper wrapper = new NBTWrapper(is);
-            if (wrapper.getString("cosmicType").equals("lootbag") && (type = (data = new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData"))).getString("bagType")) != null && (foundType = DungeonType.getFromName(type)) != null) {
+            if (wrapper.getString("cosmicType").equals("lootbag") && (type = (data = new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData"))).getString("bagType")) != null && (foundType = DungeonType.getFromName(type)) != null) {
                 bagType = foundType;
             }
             if (this.getEmptyInventorySlots(p) < 4 && !CosmicDungeonsPlugin.get().isDevplanet()) {

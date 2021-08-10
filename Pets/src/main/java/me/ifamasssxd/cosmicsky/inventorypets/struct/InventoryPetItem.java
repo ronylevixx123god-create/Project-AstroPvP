@@ -47,7 +47,7 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
 
     public void loadNBT() {
         if (this.wrapper != null) {
-            NBTTagCompoundBuilder builder = this.wrapper.getCompound("cosmicData");
+            NBTTagCompoundBuilder builder = this.wrapper.getCompound("conaxData");
             if (builder != null && builder.hasKey("petType")) {
                 this.petType = InventoryPets.fromName(builder.getString("petType"));
                 this.level = builder.getInt("level");
@@ -106,7 +106,7 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
                 lore.add("");
                 lore.add(ChatColor.GOLD + ChatColor.BOLD.toString() + "* LEASHED *");
             }
-            return pet.getInternalClass().onItemCreate(this.applyItemData((new ItemBuilder(Material.SKULL_ITEM, pet.getItemName() , new String[0])).data((short) 3).lore(lore).build()).setNBTBase("cosmicData", (new NBTTagCompoundBuilder()).setInt("level", ((Number) level).intValue()).setInt("exp", ((Number) exp).intValue()).setString("petType", pet.name()).setLong("lastUsed", ((Number) lastUsed).longValue()).setLong("lastRareCandyUsed", ((Number) lastRareCandyUsed).longValue()).setBoolean("leashed", leashed).get()).setNBTBase("SkullOwner", pet.getBuilder().get()), this).assignIID().build();
+            return pet.getInternalClass().onItemCreate(this.applyItemData((new ItemBuilder(Material.SKULL_ITEM, pet.getItemName() , new String[0])).data((short) 3).lore(lore).build()).setNBTBase("conaxData", (new NBTTagCompoundBuilder()).setInt("level", ((Number) level).intValue()).setInt("exp", ((Number) exp).intValue()).setString("petType", pet.name()).setLong("lastUsed", ((Number) lastUsed).longValue()).setLong("lastRareCandyUsed", ((Number) lastRareCandyUsed).longValue()).setBoolean("leashed", leashed).get()).setNBTBase("SkullOwner", pet.getBuilder().get()), this).assignIID().build();
         } else {
             return null;
         }

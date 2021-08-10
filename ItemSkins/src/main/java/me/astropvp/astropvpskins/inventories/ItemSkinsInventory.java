@@ -49,23 +49,23 @@ public class ItemSkinsInventory {
             if (type == ItemSkinType.BELT) {
                 item = new ItemStack(Material.IRON_LEGGINGS);
                 NBTWrapper wrapper = new NBTWrapper(item);
-                NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
+                NBTTagCompoundBuilder cosmicData = wrapper.hasKey("conaxData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")) : new NBTTagCompoundBuilder();
                 cosmicData.setString("itemSkinType", "CUPID_BELT");
-                wrapper.setNBTBase("cosmicData", cosmicData.get());
+                wrapper.setNBTBase("conaxData", cosmicData.get());
                 item = wrapper.build();
             } else if (type == ItemSkinType.AMULET) {
                 item = new ItemStack(Material.IRON_CHESTPLATE);
                 NBTWrapper wrapper = new NBTWrapper(item);
-                NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
+                NBTTagCompoundBuilder cosmicData = wrapper.hasKey("conaxData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")) : new NBTTagCompoundBuilder();
                 cosmicData.setString("itemSkinType", "SEXY_AMULET");
-                wrapper.setNBTBase("cosmicData", cosmicData.get());
+                wrapper.setNBTBase("conaxData", cosmicData.get());
                 item = wrapper.build();
             } else if (type == ItemSkinType.BACKPACK) {
                 item = new ItemStack(Material.GOLD_CHESTPLATE);
                 NBTWrapper wrapper = new NBTWrapper(item);
-                NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
+                NBTTagCompoundBuilder cosmicData = wrapper.hasKey("conaxData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")) : new NBTTagCompoundBuilder();
                 cosmicData.setString("itemSkinType", "DOOMSDAY_BACKPACK_RAINBOW");
-                wrapper.setNBTBase("cosmicData", cosmicData.get());
+                wrapper.setNBTBase("conaxData", cosmicData.get());
                 item = wrapper.build();
             }
         ItemMeta meta = item.getItemMeta();

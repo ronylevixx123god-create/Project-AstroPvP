@@ -93,7 +93,7 @@ public class AntiMKitCrystalItem extends CosmicItem implements InventoryInteract
         return
                 applyItemData((new ItemBuilder(Material.INK_SACK, name, new String[0])).lore(lore)
                         .data(DyeColor.YELLOW.getDyeData()).build())
-                        .setNBTBase("cosmicData",
+                        .setNBTBase("conaxData",
                                 (NBTBase)(new NBTTagCompoundBuilder()).setNBTBase("mKits", (NBTBase)list.build()).setInt("success", success).get())
                         .assignIID().build();
     }
@@ -137,7 +137,7 @@ public class AntiMKitCrystalItem extends CosmicItem implements InventoryInteract
     }
 
     private ItemStack applyToItem(NBTWrapper wrapper, ItemStack item, Pair<Set<AbilityArmorSet>, Integer> pair) {
-        NBTTagCompoundBuilder builder = wrapper.getCompoundOrCreate("cosmicData");
+        NBTTagCompoundBuilder builder = wrapper.getCompoundOrCreate("conaxData");
         NBTTagListBuilder list = new NBTTagListBuilder();
         Set<AbilityArmorSet> set = (Set<AbilityArmorSet>)pair.first;
         StringBuilder loreBuild = new StringBuilder();
@@ -146,7 +146,7 @@ public class AntiMKitCrystalItem extends CosmicItem implements InventoryInteract
             loreBuild.append(armor.getDisplayName()).append(CC.Gray).append(", ");
         }
         builder.setNBTBase("antiMkits", (NBTBase)list.build());
-        wrapper.setNBTBase("cosmicData", (NBTBase)builder.get());
+        wrapper.setNBTBase("conaxData", (NBTBase)builder.get());
         item = wrapper.build();
         ItemMeta im = item.getItemMeta();
         List<String> lore = im.getLore();

@@ -137,14 +137,14 @@ public class MaskManager {
         if (checkInvalidHelmets && (material == Material.PUMPKIN || material == Material.JACK_O_LANTERN)) {
             return new ItemStack(Material.AIR);
         }
-        if (checkInvalidHelmets && material == Material.SKULL_ITEM && !(itemWrapper = new NBTWrapper(item)).hasKey("cosmicType") && !itemWrapper.hasKey("cosmicData")) {
+        if (checkInvalidHelmets && material == Material.SKULL_ITEM && !(itemWrapper = new NBTWrapper(item)).hasKey("cosmicType") && !itemWrapper.hasKey("conaxData")) {
             return new ItemStack(Material.AIR);
         }
         if (material != Material.DIAMOND_HELMET && material != Material.LEATHER_HELMET && material != Material.IRON_HELMET && material != Material.GOLD_HELMET && material != Material.CHAINMAIL_HELMET) {
             return null;
         }
         NBTWrapper wrapper = new NBTWrapper(material == Material.DIAMOND_HELMET ? item.clone() : item);
-        if (wrapper.hasKey("cosmicData") && (mask = (builder = new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData"))).getString("maskOverride")) != null && !mask.isEmpty() && (type = MaskType.getFromName(mask.toUpperCase())) != null) {
+        if (wrapper.hasKey("conaxData") && (mask = (builder = new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData"))).getString("maskOverride")) != null && !mask.isEmpty() && (type = MaskType.getFromName(mask.toUpperCase())) != null) {
             double percent;
             double durability = item.getDurability();
             double maxDurability = item.getType().getMaxDurability();
@@ -158,10 +158,10 @@ public class MaskManager {
                 durability = duraLeft = maxDurability - durability;
                 percent = duraLeft / maxDurability * 100.0;
             }
-            NBTTagCompoundBuilder data = newMaskWrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(newMaskWrapper.getNBTBase("cosmicData").clone()) : new NBTTagCompoundBuilder();
+            NBTTagCompoundBuilder data = newMaskWrapper.hasKey("conaxData") ? new NBTTagCompoundBuilder(newMaskWrapper.getNBTBase("conaxData").clone()) : new NBTTagCompoundBuilder();
             data.setInt("durability", Integer.valueOf((int)durability));
             data.setInt("maxDurability", Integer.valueOf((int)maxDurability));
-            newMaskWrapper.setNBTBase("cosmicData", data.get());
+            newMaskWrapper.setNBTBase("conaxData", data.get());
             ItemStack newMask = newMaskWrapper.build();
             newMask.setType(Material.SKULL_ITEM);
             newMask.setDurability((short)3);

@@ -80,12 +80,12 @@ public class SlotbotScratchCard extends CosmicItem
         if (item.getAmount()>1) {
             throw new PrefixedException("You cannot apply multiple cards at once!");
         }
-        NBTTagCompoundBuilder cosmicData = wrapper.getCompoundOrCreate("cosmicData");
+        NBTTagCompoundBuilder cosmicData = wrapper.getCompoundOrCreate("conaxData");
 
         cosmicData.setInt("slotbot_scratchcard", Integer.valueOf(1));
         event.setCancelled(true);
         player.setItemInHand(null);
-        wrapper.setNBTBase("cosmicData", (NBTBase)cosmicData.get());
+        wrapper.setNBTBase("conaxData", (NBTBase)cosmicData.get());
         item = wrapper.build();
 
         SlotbotScratchCardGUI card = new SlotbotScratchCardGUI(player);

@@ -92,7 +92,7 @@ public class MysteryChestListener
     public void onPlayerBlock(BlockPlaceEvent event) {
         NBTTagCompoundBuilder builder;
         NBTWrapper wrapper;
-        if (event.getItemInHand() != null && event.getItemInHand().getType() != Material.AIR && (wrapper = new NBTWrapper(event.getItemInHand())).hasKey("cosmicData") && (builder = wrapper.getCompound("cosmicData")) != null && builder.hasKey("mysteryChest")) {
+        if (event.getItemInHand() != null && event.getItemInHand().getType() != Material.AIR && (wrapper = new NBTWrapper(event.getItemInHand())).hasKey("conaxData") && (builder = wrapper.getCompound("conaxData")) != null && builder.hasKey("mysteryChest")) {
             event.setCancelled(true);
             event.getPlayer().sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot place a Lootbox!");
         }
@@ -114,12 +114,12 @@ public class MysteryChestListener
             NBTTagCompoundBuilder builder = null;
             NBTWrapper wrapper = new NBTWrapper(item);
             try {
-                builder = wrapper.getCompound("cosmicData");
+                builder = wrapper.getCompound("conaxData");
             } catch (NullPointerException ignored) {
             }
             if (builder == null) {
                 try {
-                    builder = wrapper.getCompound("cosmicData");
+                    builder = wrapper.getCompound("conaxData");
                 } catch (NullPointerException ignored) {
                 }
             }

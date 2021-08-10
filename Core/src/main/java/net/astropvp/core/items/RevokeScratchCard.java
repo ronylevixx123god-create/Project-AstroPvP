@@ -85,12 +85,12 @@ public class RevokeScratchCard extends CosmicItem
         if (item.getAmount()>1) {
             throw new PrefixedException("You cannot apply multiple cards at once!");
         }
-        NBTTagCompoundBuilder cosmicData = wrapper.getCompoundOrCreate("cosmicData");
+        NBTTagCompoundBuilder cosmicData = wrapper.getCompoundOrCreate("conaxData");
 
         cosmicData.setInt("revoke_scratchcard", Integer.valueOf(1));
         event.setCancelled(true);
         player.setItemInHand(null);
-        wrapper.setNBTBase("cosmicData", (NBTBase)cosmicData.get());
+        wrapper.setNBTBase("conaxData", (NBTBase)cosmicData.get());
         item = wrapper.build();
 
         RevokeScratchCardGUI card = new RevokeScratchCardGUI(player);

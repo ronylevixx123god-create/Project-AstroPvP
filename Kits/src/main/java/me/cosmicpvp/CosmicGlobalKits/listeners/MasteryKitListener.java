@@ -62,7 +62,7 @@ implements Listener {
             NBTWrapper wrapper = new NBTWrapper(clicked);
             if (wrapper.getString("cosmicType").equalsIgnoreCase("MASTERY_KIT")) {
                 event.setCancelled(true);
-                NBTTagCompoundBuilder cosmicData = new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData"));
+                NBTTagCompoundBuilder cosmicData = new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData"));
                 String masteryKit = cosmicData.getString("kit");
                 if (masteryKit == null || masteryKit.isEmpty()) {
                     player.sendMessage(CC.RedB + "(!) " + CC.Red + "Invalid Mastery Kit item detected!");

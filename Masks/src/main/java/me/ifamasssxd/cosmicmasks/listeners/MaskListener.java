@@ -233,7 +233,7 @@ public class MaskListener implements Listener {
         Material cursorType = null;
         if (cursor != null && (cursorType = cursor.getType()) != Material.AIR && event.getClick() == ClickType.LEFT && cursorType == Material.SKULL_ITEM && clickedType != null && this.isHelmet(clickedType) && (cursorWrapper = new NBTWrapper(cursor)).getString("cosmicType").equals("COSMIC_MASK")) {
             NBTWrapper other = new NBTWrapper(clicked);
-            String mask = new NBTTagCompoundBuilder(other.getNBTBase("cosmicData")).getString("maskOverride");
+            String mask = new NBTTagCompoundBuilder(other.getNBTBase("conaxData")).getString("maskOverride");
             if (mask != null && !mask.isEmpty()) {
                 event.setCancelled(true);
                 player.sendMessage(CC.RedB + "(!) " + CC.Red + "You can only equip a single mask on a helmet!");
@@ -254,7 +254,7 @@ public class MaskListener implements Listener {
                 player.sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot apply stacked Masks!");
                 return;
             }
-            mask = new NBTTagCompoundBuilder(cursorWrapper.getNBTBase("cosmicData")).getString("maskType");
+            mask = new NBTTagCompoundBuilder(cursorWrapper.getNBTBase("conaxData")).getString("maskType");
             MaskType type = MaskType.getFromName(mask.toUpperCase());
             if (type == null) {
                 return;
@@ -267,7 +267,7 @@ public class MaskListener implements Listener {
             player.playSound(player.getLocation(), Sound.HORSE_ARMOR, 3.0f, 1.1f);
             return;
         }
-        if (!(clicked == null || clickedType == Material.AIR || event.getClick() != ClickType.RIGHT || cursorType != null && cursorType != Material.AIR || (mask2 = new NBTTagCompoundBuilder((clickedWrapper = new NBTWrapper(clicked)).getNBTBase("cosmicData")).getString("maskOverride")) == null || mask2.isEmpty() || (type2 = MaskType.getFromName(mask2.toUpperCase())) == null)) {
+        if (!(clicked == null || clickedType == Material.AIR || event.getClick() != ClickType.RIGHT || cursorType != null && cursorType != Material.AIR || (mask2 = new NBTTagCompoundBuilder((clickedWrapper = new NBTWrapper(clicked)).getNBTBase("conaxData")).getString("maskOverride")) == null || mask2.isEmpty() || (type2 = MaskType.getFromName(mask2.toUpperCase())) == null)) {
             if (!this.isValidWorld(player.getWorld().getName())) {
                 event.setCancelled(true);
                 player.sendMessage(CC.RedB + "(!) " + CC.Red + "You can only un-attach a Mask in the main world!");

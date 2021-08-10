@@ -47,7 +47,7 @@ extends ItemBuilder {
         String type;
         NBTTagCompoundBuilder builder;
         NBTWrapper wrapper = new NBTWrapper(item);
-        if (wrapper.getString("cosmicType").equals("DUNGEON_KEY") && (builder = wrapper.getCompound("cosmicData")) != null && (type = builder.getString("dungeonType")) != null && !type.isEmpty()) {
+        if (wrapper.getString("cosmicType").equals("DUNGEON_KEY") && (builder = wrapper.getCompound("conaxData")) != null && (type = builder.getString("dungeonType")) != null && !type.isEmpty()) {
             return DungeonType.getFromName(type);
         }
         return null;
@@ -60,7 +60,7 @@ extends ItemBuilder {
         if (wrapper == null) {
             return null;
         }
-        if (wrapper.getString("cosmicType").equals("DUNGEON_KEY") && (builder = wrapper.getCompound("cosmicData")) != null && (type = builder.getString("dungeonType")) != null && !type.isEmpty() && (dungeonType = DungeonType.getFromName(type)) != null) {
+        if (wrapper.getString("cosmicType").equals("DUNGEON_KEY") && (builder = wrapper.getCompound("conaxData")) != null && (type = builder.getString("dungeonType")) != null && !type.isEmpty() && (dungeonType = DungeonType.getFromName(type)) != null) {
             return new KeyPair(dungeonType, builder.getLong("expiration"));
         }
         return null;
@@ -82,7 +82,7 @@ extends ItemBuilder {
         if (this.expiration != 0L) {
             builder.setLong("expiration", this.expiration);
         }
-        wrapper.setNBTBase("cosmicData", builder.setString("dungeonType", this.dungeonType.name()).get());
+        wrapper.setNBTBase("conaxData", builder.setString("dungeonType", this.dungeonType.name()).get());
         wrapper.assignIID();
         return wrapper.build();
     }

@@ -156,7 +156,7 @@ public class CommandHandler
     private static boolean isItemExpired(Player player, ItemStack item) {
         Long expires;
         NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder builder = wrapper.getCompound("cosmicData");
+        NBTTagCompoundBuilder builder = wrapper.getCompound("conaxData");
         if (builder != null && builder.hasKey("expiration") && (expires = builder.getLong("expiration")) != null && expires > 0L && expires < System.currentTimeMillis()) {
             if (player != null) {
                 player.sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot sell expired items!");
@@ -207,7 +207,7 @@ public class CommandHandler
             return true;
         }
         NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder builder = wrapper.getCompound("cosmicData");
+        NBTTagCompoundBuilder builder = wrapper.getCompound("conaxData");
         if (builder != null && builder.hasKey("expiration") && (expires = builder.getLong("expiration")) != null && expires > 0L && expires < System.currentTimeMillis()) {
             player.sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot sell expired items!");
             player.sendMessage(CC.Gray + "This item expired " + CC.GrayU + TimeUtils.formatDifference((long) ((System.currentTimeMillis() - expires) / 1000L)) + CC.GrayU + " ago!");

@@ -277,9 +277,9 @@ public enum SkinType {
         meta.setLore(lore);
         item.setItemMeta(meta);
         NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
+        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("conaxData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")) : new NBTTagCompoundBuilder();
         cosmicData.setString("itemSkinType", name());
-        wrapper.setNBTBase("cosmicData", cosmicData.get());
+        wrapper.setNBTBase("conaxData", cosmicData.get());
         wrapper.setString("random", UUID.randomUUID().toString());
         wrapper.setString("cosmicType", "item_skin");
         return wrapper.build();
@@ -292,7 +292,7 @@ public enum SkinType {
         meta.setLore(lore);
         item.setItemMeta(meta);
         NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
+        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("conaxData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")) : new NBTTagCompoundBuilder();
         if(!cosmicData.hasKey("itemSkinType")) {
             cosmicData.setString("itemSkinType", name());
         } else {
@@ -305,7 +305,7 @@ public enum SkinType {
             s = s.replace(" ", "");
             cosmicData.setString("itemSkinType", s);
         }
-        wrapper.setNBTBase("cosmicData", cosmicData.get());
+        wrapper.setNBTBase("conaxData", cosmicData.get());
         return wrapper.build();
     }
 

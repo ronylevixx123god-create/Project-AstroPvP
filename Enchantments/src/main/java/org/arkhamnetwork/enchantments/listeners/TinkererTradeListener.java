@@ -232,7 +232,7 @@ public class TinkererTradeListener implements Listener {
         final Material type = armor.getType();
         if (Enchantments.getInstance().armorsetEnabled && (type == Material.LEATHER_BOOTS || type == Material.LEATHER_HELMET || type == Material.LEATHER_CHESTPLATE || type == Material.LEATHER_LEGGINGS)) {
             final NBTWrapper wrapper = new NBTWrapper(armor);
-            final NBTTagCompoundBuilder cosmicData = wrapper.getCompound("cosmicData");
+            final NBTTagCompoundBuilder cosmicData = wrapper.getCompound("conaxData");
             if (cosmicData != null && cosmicData.hasKey("abilitySet")) {
                 String abilitySet = cosmicData.getString("abilitySet");
                 final ItemMeta im = armor.getItemMeta();
