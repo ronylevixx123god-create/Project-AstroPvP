@@ -11,17 +11,17 @@ public class WeaponBonusUtils {
         if (i == null || i.getType() == Material.AIR || !i.hasItemMeta())
             return null;
         NBTWrapper wrapper = new NBTWrapper(i);
-        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("conaxData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")) : new NBTTagCompoundBuilder();
+        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
         return WeaponBonusType.fromId(cosmicData.getString("bonusType"));
     }
 
     public static boolean hasWeaponBonus(ItemStack i) {
         NBTWrapper wrapper = new NBTWrapper(i);
-        if (!wrapper.hasKey("conaxData"))
+        if (!wrapper.hasKey("cosmicData"))
             return false;
         if (wrapper.hasKey("cosmicType") && wrapper.getString("cosmicType").equals("weaponBonus"))
             return false;
-        return (new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData"))).hasKey("bonusType");
+        return (new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData"))).hasKey("bonusType");
     }
 
     public static boolean isWeaponBonus(ItemStack i) {

@@ -40,9 +40,9 @@ public abstract class WeaponBonus {
         meta.setLore(lore);
         item.setItemMeta(meta);
         NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("conaxData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")) : new NBTTagCompoundBuilder();
+        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
         cosmicData.setString("bonusType", getType().getId());
-        wrapper.setNBTBase("conaxData", (NBTBase)cosmicData.get());
+        wrapper.setNBTBase("cosmicData", (NBTBase)cosmicData.get());
         wrapper.setString("random", UUID.randomUUID().toString());
         wrapper.setString("cosmicType", "weaponBonus");
         return wrapper.build();
@@ -59,9 +59,9 @@ public abstract class WeaponBonus {
         meta.setLore(lore);
         i.setItemMeta(meta);
         NBTWrapper wrapper = new NBTWrapper(i);
-        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("conaxData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")) : new NBTTagCompoundBuilder();
+        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
         cosmicData.setString("bonusType", bonusType.getId());
-        wrapper.setNBTBase("conaxData", (NBTBase)cosmicData.get());
+        wrapper.setNBTBase("cosmicData", (NBTBase)cosmicData.get());
         return wrapper.build();
     }
 

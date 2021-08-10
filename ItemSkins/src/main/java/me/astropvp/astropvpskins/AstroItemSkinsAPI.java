@@ -37,22 +37,24 @@ public class AstroItemSkinsAPI {
 
     public static boolean hasItemSkin(ItemStack item, ItemStack item2) {
         NBTWrapper wrapper = new NBTWrapper(item);
-        if (!wrapper.hasKey("conaxData"))
+        if (!wrapper.hasKey("cosmicData"))
             return false;
         if (wrapper.hasKey("cosmicType") && wrapper.getString("cosmicType").equals("item_skin"))
             return false;
-        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("conaxData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")) : new NBTTagCompoundBuilder();
+        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
         if(!cosmicData.hasKey("itemSkinType"))
             return false;
-        SkinType type = SkinType.valueOf(cosmicData.getString("itemSkinType"));
+//        SkinType type = SkinType.valueOf(cosmicData.getString("itemSkinType"));
         NBTWrapper wrapper2 = new NBTWrapper(item2);
-        NBTTagCompoundBuilder cosmicData2 = wrapper2.hasKey("conaxData") ? new NBTTagCompoundBuilder(wrapper2.getNBTBase("conaxData")) : new NBTTagCompoundBuilder();
+        NBTTagCompoundBuilder cosmicData2 = wrapper2.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper2.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
         if(!cosmicData2.hasKey("itemSkinType"))
             return false;
         SkinType type2 = SkinType.valueOf(cosmicData2.getString("itemSkinType"));
-        if(type.getItemSkinType() != type2.getItemSkinType())
-            return false;
-        return (new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData"))).hasKey("itemSkinType");
+        for(SkinType type : getItemSkinByItem(item)) {
+            if (type.getItemSkinType() == type2.getItemSkinType())
+                return true;
+        }
+        return (new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData"))).hasKey("itemSkinType");
     }
 
 
@@ -82,11 +84,11 @@ public class AstroItemSkinsAPI {
 
     public static boolean hasItemSkin(ItemStack item) {
         NBTWrapper wrapper = new NBTWrapper(item);
-        if (!wrapper.hasKey("conaxData"))
+        if (!wrapper.hasKey("cosmicData"))
             return false;
         if (wrapper.hasKey("cosmicType") && wrapper.getString("cosmicType").equals("item_skin"))
             return false;
-        return (new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData"))).hasKey("itemSkinType");
+        return (new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData"))).hasKey("itemSkinType");
     }
 
     public static List<SkinType> getItemSkinByItem(ItemStack item) {
@@ -94,7 +96,7 @@ public class AstroItemSkinsAPI {
         if (item == null || item.getType() == Material.AIR || !item.hasItemMeta())
             return null;
         NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("conaxData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")) : new NBTTagCompoundBuilder();
+        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
         if(!cosmicData.hasKey("itemSkinType"))
             return skins;
         List<String> stringSkins = new ArrayList<>(Arrays.asList(cosmicData.getString("itemSkinType").split(",")));
@@ -110,13 +112,13 @@ public class AstroItemSkinsAPI {
         if (item == null || item.getType() == Material.AIR || !item.hasItemMeta())
             return null;
         NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("conaxData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")) : new NBTTagCompoundBuilder();
+        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
         return SkinType.valueOf(cosmicData.getString("itemSkinType"));
     }
 
     public static ItemStack removeItemSkinFromItem(ItemStack item) {
         NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("conaxData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")) : new NBTTagCompoundBuilder();
+        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
         String skinList = cosmicData.getString("itemSkinType");
         String[] stringArray;
         List<String> skins = new ArrayList<>(Arrays.asList(stringArray = skinList.split(",")));
@@ -140,7 +142,7 @@ public class AstroItemSkinsAPI {
             s = s.replace("]", "");
             cosmicData.setString("itemSkinType", s);
         }
-        wrapper.setNBTBase("conaxData", (NBTBase)cosmicData.get());
+        wrapper.setNBTBase("cosmicData", (NBTBase)cosmicData.get());
 
 
 
