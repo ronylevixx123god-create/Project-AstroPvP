@@ -309,6 +309,13 @@
             <systemPath>${project.basedir}/lib/DamageIndicators.jar</systemPath>
         </dependency>
         <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>Holograms</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/HolographicDisplays.jar</systemPath>
+        </dependency>
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.16.18</version>

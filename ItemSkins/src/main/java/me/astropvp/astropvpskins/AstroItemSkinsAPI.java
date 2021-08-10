@@ -75,7 +75,7 @@ public class AstroItemSkinsAPI {
             case PICKAXE:
             case BOW:
             case TOOL:
-                return player.getItemInHand() != null && hasItemSkin(player.getItemInHand()) &&  Objects.requireNonNull(getItemSkinByItem(player.getInventory().getItemInHand())).contains(type);
+                return player.getItemInHand() != null && player.getItemInHand().getType() != Material.AIR && hasItemSkin(player.getItemInHand()) &&  Objects.requireNonNull(getItemSkinByItem(player.getInventory().getItemInHand())).contains(type);
         }
         return false;
     }

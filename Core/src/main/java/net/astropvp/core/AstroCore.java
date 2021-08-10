@@ -166,6 +166,7 @@ public class AstroCore extends JavaPlugin {
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new ApolloRank());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new AstroPlusRank());
 
+
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new RevokeScratchCard());
 
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new SlotbotScratchCard());
@@ -295,6 +296,8 @@ public class AstroCore extends JavaPlugin {
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(this.holyWhitescrollItem);
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new HolyWaterItem());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new CleanseScroll());
+        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new DimensionalGatewayItem());
+
 
         this.getServer().getPluginManager().registerEvents(new Freeze(), this);
         this.getServer().getPluginManager().registerEvents(new RogueScratchCardListener(), this);
