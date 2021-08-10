@@ -46,12 +46,12 @@ public class HeroicDiminish extends CustomEnchantment {
             final double maxDmg = dmgToDeal = player.getMetadata("diminishEffect").get(0).asDouble();
             if (dmgToDeal > 0.0 && attacker instanceof Player) {
 
-                //attacker.damage(Math.min(15, dmgToDeal));
+                attacker.damage(Math.min(15, dmgToDeal));
                 final Player attackerPlayer = (Player) attacker;
                 Bukkit.getLogger().info("[Heroic Diminish] Damaging attacker " + attackerPlayer.getName() + " for " + dmgToDeal + " due to being then diminishEffect: " + maxDmg + " maxDmg: " + e.getDamage(EntityDamageEvent.DamageModifier.BASE));
             }
             if (e.getDamage(EntityDamageEvent.DamageModifier.BASE) > maxDmg) {
-                //e.setDamage(maxDmg);
+                e.setDamage(maxDmg);
                 player.removeMetadata("diminishEffect", (Plugin) Enchantments.getInstance());
                 return;
             }

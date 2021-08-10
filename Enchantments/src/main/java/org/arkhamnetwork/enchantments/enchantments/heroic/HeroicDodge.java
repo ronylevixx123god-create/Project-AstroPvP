@@ -1,5 +1,6 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
+import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
 import org.arkhamnetwork.enchantments.libs.SpecificCustomEnchantment;
@@ -30,7 +31,7 @@ public class HeroicDodge extends HeroicCustomEnchantment {
             if (Math.random() < chance) {
                 e.setCancelled(true);
                 ((Player) player).sendMessage(ChatColor.LIGHT_PURPLE + "*DODGE*");
-                //ParticleEffect.playEffect(ParticleEffect.CLOUD, player.getLocation().add(0.0, 1.0, 0.0), 0.2f, 10);
+                ParticleEffect.playEffect(ParticleEffect.CLOUD, player.getLocation().add(0.0, 1.0, 0.0), 0.2f, 10);
                 try {
                     de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(),player.getLocation(), 0,1, 0,0.2f,10);
                 } catch (Exception exception) {

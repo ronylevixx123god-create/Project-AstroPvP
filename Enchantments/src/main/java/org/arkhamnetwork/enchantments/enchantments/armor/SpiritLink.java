@@ -32,7 +32,7 @@ public class SpiritLink extends CustomEnchantment {
                     if (!this.isAlly(playerHurt, playerNear)) {
                         continue;
                     }
-                    //GeneralUtil.healPlayer((LivingEntity) playerNear, healAmount);
+                    GeneralUtil.healPlayer((LivingEntity) playerNear, healAmount);
                     try {
                     } catch (Exception exception) {
                         exception.printStackTrace();

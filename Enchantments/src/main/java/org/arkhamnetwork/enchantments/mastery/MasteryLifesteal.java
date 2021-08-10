@@ -54,8 +54,8 @@ public class MasteryLifesteal extends MasteryCustomEnchantment {
                     }
                     ++scanned;
                     final double toSteal = 0.5 + this.random.nextDouble() * enchantLevel;
-                    //GeneralUtil.reducePlayerHealth(nearbyPlayer, toSteal);
-                    //GeneralUtil.healPlayer((LivingEntity) damaged, toSteal);
+                    GeneralUtil.reducePlayerHealth(nearbyPlayer, toSteal);
+                    GeneralUtil.healPlayer((LivingEntity) damaged, toSteal);
                     WorldUtil.sendWorldEffect(nearbyPlayer.getEyeLocation().getBlock(), Material.REDSTONE_BLOCK.getId(), 2001);
                     if (nearbyPlayer.isDead()) {
                         event.setCancelled(true);

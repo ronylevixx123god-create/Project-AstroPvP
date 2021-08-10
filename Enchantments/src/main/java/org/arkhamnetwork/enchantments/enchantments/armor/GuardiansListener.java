@@ -40,7 +40,7 @@ final class GuardiansListener implements Listener {
                 if (pSummoner2 != null && pSummoner2.hasMetadata("bloodLink")) {
                     final int bloodCurseLevel = pSummoner2.getMetadata("bloodLink").get(0).asInt();
                     if (Math.random() < bloodCurseLevel * 0.05 && pSummoner2.getHealth() < pSummoner2.getMaxHealth() && !pSummoner2.isDead()) {
-                        //GeneralUtil.healPlayer((LivingEntity) pSummoner2, (bloodCurseLevel == 5) ? 2 : 1);
+                        GeneralUtil.healPlayer((LivingEntity) pSummoner2, (bloodCurseLevel == 5) ? 2 : 1);
                         de.inventivegames.particle.ParticleEffect.HEART.sendToPlayer(pSummoner2, pSummoner2.getLocation(), 0,1,0,0.2f,2);
                         de.inventivegames.particle.ParticleEffect.HEART.sendToPlayer(pSummoner2, e.getEntity().getLocation(), 0,3,0,0.2f,1);
                     }

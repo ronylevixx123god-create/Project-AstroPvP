@@ -25,10 +25,10 @@ public class Leadership extends CustomEnchantment {
     }
 
     public void applyEquipEffect(final Player player, final int enchantLevel) {
-        //Leadership.Leaderships.put(player.getName(), enchantLevel);
+        Leadership.Leaderships.put(player.getName(), enchantLevel);
     }
 
     public void applyUnequipEffect(final Player player, final int enchantLevel) {
-        //Leadership.Leaderships.remove(player.getName());
+        Leadership.Leaderships.remove(player.getName());
     }
 }

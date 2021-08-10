@@ -89,13 +89,13 @@ public class HeroicBleed extends HeroicCustomEnchantment {
                 if (Math.random() >= 0.2D + bloodLustLevel * 0.05D)
                     continue;
                 double amountToHeal = Math.max(4.0D, bleedStack * 0.1D * bloodLustLevel);
-                //GeneralUtil.healPlayer((LivingEntity) pEnt, amountToHeal);
-                //ParticleEffect.playEffect(ParticleEffect.DRIP_LAVA, pEnt.getLocation(), 0.075F, 10);
-                //de.inventivegames.particle.ParticleEffect.DRIP_LAVA.sendToPlayer(pEnt.getPlayer(), pEnt.getLocation(),0,0,0,0.075F, 10);
+                GeneralUtil.healPlayer((LivingEntity) pEnt, amountToHeal);
+                ParticleEffect.playEffect(ParticleEffect.DRIP_LAVA, pEnt.getLocation(), 0.075F, 10);
+                de.inventivegames.particle.ParticleEffect.DRIP_LAVA.sendToPlayer(pEnt.getPlayer(), pEnt.getLocation(),0,0,0,0.075F, 10);
                 pEnt.playSound(pEnt.getLocation(), Sound.EAT, 0.4F, 0.6F);
             }
         } else {
-            //le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, bleedStack * 10, Math.max(1, bleedStack / 3)));
+            le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, bleedStack * 10, Math.max(1, bleedStack / 3)));
         }
 
         /*if (Math.random() < 0.1) {

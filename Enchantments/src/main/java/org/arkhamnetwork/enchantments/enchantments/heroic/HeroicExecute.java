@@ -19,23 +19,19 @@ public class HeroicExecute extends HeroicCustomEnchantment {
     }
 
     public void applyEffect(LivingEntity player, LivingEntity target, int level, EntityDamageByEntityEvent e) {
-        if (!(target instanceof Player)) {
+        if (!(target instanceof org.bukkit.entity.Player))
             return;
-        }
-        if (target.getHealth() > 12.0) {
+        if (target.getHealth() > 6.0D)
             return;
-        }
-        if (GeneralUtil.isEffectedByRage(target)) {
+        if (GeneralUtil.isEffectedByRage(target))
             return;
-        }
-        final double random = Math.random();
-        final double chance = 0.2 * level;
-        final double mod = 5.2;
+        double random = Math.random();
+        double chance = 0.04D * level;
+        double mod = 3.0D + (level/2D);
         if (random < chance) {
-            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * mod);
-            final Location l = target.getLocation();
+            e.setDamage(e.getDamage() * mod);
+            Location l = target.getLocation();
             WorldUtil.sendWorldEffect(l.getBlock(), Material.REDSTONE_WIRE.getId(), 2001);
         }
-
     }
 }

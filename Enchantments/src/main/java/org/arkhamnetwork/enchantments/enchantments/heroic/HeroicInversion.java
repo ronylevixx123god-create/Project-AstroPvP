@@ -1,6 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import lombok.SneakyThrows;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
@@ -41,8 +42,8 @@ public class HeroicInversion extends HeroicCustomEnchantment {
                     playerHit.sendMessage(ChatColor.DARK_PURPLE + "* CORRUPTED [" + ChatColor.RED + heal + ChatColor.DARK_PURPLE + " DMG] *");
                     return;
                 }
-                //GeneralUtil.healPlayer((LivingEntity) playerHit, heal);
-                //ParticleEffect.playEffect(ParticleEffect.SPELL, playerHit.getLocation().add(0.0, 1.0, 0.0), 0.45f, 20);
+                GeneralUtil.healPlayer((LivingEntity) playerHit, heal);
+                ParticleEffect.playEffect(ParticleEffect.SPELL, playerHit.getLocation().add(0.0, 1.0, 0.0), 0.45f, 20);
                 try {
                     de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayer(playerHit,playerHit.getLocation(), 0,1, 0,1.0f,4);
                 } catch (Exception exception) {

@@ -19,23 +19,20 @@ public class Devour extends CustomEnchantment {
     public Devour() {
         super("Devour", GeneralUtil.axe, 2);
         this.max = 4;
-        this.base = 10.0;
-        this.interval = 8.0;
+        this.base = 10.0D;
+        this.interval = 8.0D;
     }
 
-    public void applyEffect(final LivingEntity user, final LivingEntity target, final int enchantLevel, final EntityDamageByEntityEvent event) {
-        if (!event.isCancelled() && event.getDamage(EntityDamageEvent.DamageModifier.BASE) > 0.0 && user instanceof Player && Bleed.getBleedStack(target) > 0) {
-            if (GeneralUtil.isEffectedByRage(target)) {
-                return;
+    public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
+        if (!event.isCancelled() && event.getDamage() > 0.0D && user instanceof org.bukkit.entity.Player)
+            if (Bleed.getBleedStack(target) > 0) {
+                if (GeneralUtil.isEffectedByRage(target))
+                    return;
+                double mod = Bleed.getBleedStack(target) * 0.015D + enchantLevel * 0.1D + 1.0D;
+                event.setDamage(event.getDamage() * mod);
+                target.setMetadata("effectedByDevour", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), Long.valueOf(System.currentTimeMillis())));
+                Location l = target.getLocation();
+                WorldUtil.sendWorldEffect(l.getBlock(), Material.MYCEL.getId(), 2001);
             }
-            if (GeneralCooldown.isOnGeneralCooldown((Player) user)) {
-                return;
-            }
-            final double mod = Bleed.getBleedStack(target) * 0.015 + enchantLevel * 0.1 + 1.0;
-            target.setMetadata("effectedByDevour", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) System.currentTimeMillis()));
-            final Location l = target.getLocation();
-            GeneralCooldown.enterCooldown((Player) user);
-            WorldUtil.sendWorldEffect(l.getBlock(), Material.MYCEL.getId(), 2001);
-        }
     }
 }

@@ -26,7 +26,6 @@ public class DimensionalGatewayTask extends BukkitRunnable {
         hologram.delete();
         hologram = (Hologram) HolographicDisplaysAPI.createHologram(AstroCore.getInstance(), this.hologram.getLocation(), item.getHologramText(player, i));
         if(i < 0) {
-            this.cancel();
             item.endGateway(player, itemStack, data);
         }
     }

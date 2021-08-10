@@ -86,7 +86,7 @@ public class DimensionalGatewayItem extends CosmicItem implements InventoryInter
             lines.add(CC.Green + CC.Magic + "oooooooooooooooooooooooooooooo");
             Hologram hologram = (Hologram) HolographicDisplaysAPI.createHologram(AstroCore.getInstance(), player.getLocation().add(0, 2, 0), getHologramText(player, 20));
             DimensionalGatewayTask task = new DimensionalGatewayTask(player, hologram, this, clicked, savedLocations.get(player));
-            savedLocations.put(player, new GatewayData(hologram, player.getLocation(),task));
+            savedLocations.put(player, new GatewayData(hologram, player.getLocation(), task));
             AtomicReference<Integer> i = new AtomicReference<>(20);
             Bukkit.getScheduler().runTaskTimer(AstroCore.getInstance(), task, 20L, 20L);
         } else {
@@ -99,12 +99,13 @@ public class DimensionalGatewayItem extends CosmicItem implements InventoryInter
     }
 
     public void endGateway(Player player, ItemStack item, GatewayData data) {
+        data.getHologram().delete();
+        Bukkit.getScheduler().cancelTask(savedLocations.get(player).getTask().getTaskId());
         savedLocations.get(player).getHologram().delete();
         savedLocations.remove(player);
         NBTWrapper wrapper = new NBTWrapper(item);
         wrapper.setString("used", "true");
         item.setType(Material.FIREBALL);
-        Bukkit.getScheduler().cancelTask(savedLocations.get(player).getTask().getTaskId());
     }
 
     public String[] getHologramText(Player player, int i) {

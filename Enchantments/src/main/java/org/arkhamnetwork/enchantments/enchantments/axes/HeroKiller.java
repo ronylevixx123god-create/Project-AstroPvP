@@ -56,17 +56,17 @@ public class HeroKiller extends CustomEnchantment {
             }
 
 
-            double increase = 0.015;
+            double increase = 0.1;
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.SUMMER_2021_SWORD)) {
-                increase = 0.017;
+                increase = 0.12;
             }
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2021_HELMET)) {
                 if (WeaponBonusUtils.hasWeaponBonus(((Player) e.getEntity()).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player) e.getEntity()).getItemInHand()) == WeaponBonusType.REFORGED && Math.random()<0.5) {
-                    increase = 0.015;
+                    increase = 0.1;
                 } else {
-                    increase = 0.017;
+                    increase = 0.12;
                 }
             }
                 e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1 + increase));

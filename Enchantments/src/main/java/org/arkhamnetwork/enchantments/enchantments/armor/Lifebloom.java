@@ -1,5 +1,6 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
+import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.rit.sucy.CustomEnchantment;
 import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.Enchantments;
@@ -51,15 +52,15 @@ public class Lifebloom extends CustomEnchantment {
                     }
                 }
                 p.getWorld().playSound(p.getLocation(), Sound.ORB_PICKUP, 2.0f, 0.75f);
-                //ParticleEffect.playEffect(ParticleEffect.RED_DUST, p.getEyeLocation().add(0.0, 1.0, 0.0), 1.4f, 65);
+                ParticleEffect.playEffect(ParticleEffect.RED_DUST, p.getEyeLocation().add(0.0, 1.0, 0.0), 1.4f, 65);
                 for (final Player ally : allies) {
                     ally.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.GREEN + p.getName() + "'s Lifebloom was activated, fight on!");
-                    //GeneralUtil.setPlayerHealth((LivingEntity) ally, ally.getMaxHealth());
+                    GeneralUtil.setPlayerHealth((LivingEntity) ally, ally.getMaxHealth());
                     ally.getWorld().playSound(ally.getLocation(), Sound.ORB_PICKUP, 1.5f, 0.75f);
                     if (level >= 4) {
                         ally.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 120, level - 4));
                     }
-                    //ParticleEffect.playEffect(ParticleEffect.HAPPY_VILLAGER, ally.getLocation().add(0.0, 1.0, 0.0), 2.0f, 16);
+                    ParticleEffect.playEffect(ParticleEffect.HAPPY_VILLAGER, ally.getLocation().add(0.0, 1.0, 0.0), 2.0f, 16);
                 }
             }
         }

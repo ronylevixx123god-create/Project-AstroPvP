@@ -24,7 +24,7 @@ public class Resilience extends CustomEnchantment {
         final double minDmgToProc = 10 - level;
         final double chance = level * 0.005;
         if (player.getHealth() - dmg <= 0.0 && dmg >= minDmgToProc && Math.random() < chance) {
-            //e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) / 2.0);
+            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) / 2.0);
             ((Player) player).sendMessage(ChatColor.DARK_GREEN + "" + ChatColor.BOLD + "** RESILIENCE (" + ChatColor.DARK_GREEN + "50% DMG TAKEN" + ChatColor.BOLD + ") **");
         }
     }

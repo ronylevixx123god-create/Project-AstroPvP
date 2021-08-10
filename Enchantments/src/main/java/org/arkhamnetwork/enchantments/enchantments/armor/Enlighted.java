@@ -23,19 +23,16 @@ public class Enlighted extends CustomEnchantment {
         }, 2L);
     }
 
-    public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, int level, final EntityDamageEvent e) {
-        final double random = Math.random();
-        if (level > 3) {
+    public void applyDefenseEffect(final LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
+        double random = Math.random();
+        if (level > 3)
             level = 3;
-        }
-        final double chance = 0.075 * level;
-        if (random < chance) {
-            Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
-                @Override
+        double chance = 0.075D * level;
+        if (random < chance)
+            Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), new Runnable() {
                 public void run() {
-                    //GeneralUtil.healPlayer(player, 1.0);
+                    GeneralUtil.healPlayer(player, 1.0D);
                 }
-            }, 20L);
-        }
+            }, 1L);
     }
 }

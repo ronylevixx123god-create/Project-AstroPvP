@@ -1,10 +1,14 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.rit.sucy.CustomEnchantment;
+import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
 
 public class BloodLink extends CustomEnchantment {
     public BloodLink() {
@@ -18,10 +22,10 @@ public class BloodLink extends CustomEnchantment {
     }
 
     public void applyEquipEffect(final Player player, final int enchantLevel) {
-        //player.setMetadata("bloodLink", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)enchantLevel));
+        player.setMetadata("bloodLink", (MetadataValue)new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object)enchantLevel));
     }
 
     public void applyUnequipEffect(final Player player, final int enchantLevel) {
-        //player.removeMetadata("bloodLink", (Plugin)Enchantments.getInstance());
+        player.removeMetadata("bloodLink", (Plugin)Enchantments.getInstance());
     }
 }

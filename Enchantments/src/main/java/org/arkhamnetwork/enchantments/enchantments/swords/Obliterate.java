@@ -1,5 +1,6 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
+import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.rit.sucy.CustomEnchantment;
 import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -28,7 +29,7 @@ public class Obliterate extends CustomEnchantment {
         final boolean inKoth = GeneralUtil.isKOTHWorld(target.getWorld());
         if (!target.hasMetadata("in_duel") && random < chance) {
             final double d_enchantLevel = enchantLevel;
-            //ParticleEffect.playEffect(ParticleEffect.LARGE_EXPLODE, target.getLocation().add(0.0, 1.0, 0.0), 1.0f, 3);
+            ParticleEffect.playEffect(ParticleEffect.LARGE_EXPLODE, target.getLocation().add(0.0, 1.0, 0.0), 1.0f, 3);
             de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayer((Player) target,target.getLocation(), 0,1,0,0.8f,3);
             if (inKoth) {
                 return;

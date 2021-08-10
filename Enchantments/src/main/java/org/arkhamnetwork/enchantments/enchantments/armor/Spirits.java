@@ -42,7 +42,7 @@ public class Spirits extends CustomEnchantment {
         this.max = 10;
         this.base = 20.0;
         this.interval = 5.0;
-        /*Bukkit.getPluginManager().registerEvents((Listener) new acenstoralListener(), (Plugin) Enchantments.getInstance());
+        Bukkit.getPluginManager().registerEvents((Listener) new acenstoralListener(), (Plugin) Enchantments.getInstance());
         Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin) Enchantments.getInstance(), () -> Spirits.spirits.forEach((ent, level) -> {
             if (!(!ent.isValid())) {
                 int required = (int) ((20 + (10 - level) * 4) * 1.5);
@@ -100,7 +100,7 @@ public class Spirits extends CustomEnchantment {
                     Integer currentTick2 = currentTick + 1;
                 }
             }
-        }), 20L, 1L);*/
+        }), 20L, 1L);
     }
 
     @SneakyThrows
