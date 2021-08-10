@@ -14,6 +14,7 @@ package me.ifamasssxd.cosmicmysterychest;
 
 import me.ifamasssxd.cosmicmysterychest.commands.CommandLootboxToggle;
 import me.ifamasssxd.cosmicmysterychest.commands.CommandMysteryChest;
+import me.ifamasssxd.cosmicmysterychest.halflootbox.CommandHalfLootbox;
 import me.ifamasssxd.cosmicmysterychest.items.MysteryLootboxItem;
 import me.ifamasssxd.cosmicmysterychest.listeners.MysteryChestListener;
 import me.ifamasssxd.cosmicmysterychest.managers.MysteryChestManager;
@@ -41,6 +42,7 @@ public class CosmicMysteryChest
         this.chestManager.onEnable(this);
         this.getCommand("mysterychest").setExecutor(new CommandMysteryChest(this));
         this.getCommand("lbtoggle").setExecutor(new CommandLootboxToggle());
+        this.getCommand("givehalflootbox").setExecutor(new CommandHalfLootbox());
         this.getServer().getPluginManager().registerEvents(new MysteryChestListener(), this);
         if (Bukkit.getPluginManager().isPluginEnabled("CosmicSkyCustomItems")) {
             this.mysteryLootboxItem = new MysteryLootboxItem();

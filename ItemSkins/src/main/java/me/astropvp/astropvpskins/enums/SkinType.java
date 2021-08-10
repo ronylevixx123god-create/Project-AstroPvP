@@ -162,7 +162,7 @@ public enum SkinType {
 
     HALLOWEEN_AXE(CC.translate("&6&lCorpse Grinder"), ItemSkinType.AXE, new CorpseGrinder(), Arrays.asList(
             CC.translate("&cDouble Strikg II"),
-            CC.translate("&Bypasses Dodge"),
+            CC.translate("&cBypasses Dodge"),
             CC.translate("&c2x Outgoing Durability Damage"),
             CC.translate("&c+15% Outgoing Damage for 30s"),
             CC.translate("&cwhenever you kill an Enemy Player"),
