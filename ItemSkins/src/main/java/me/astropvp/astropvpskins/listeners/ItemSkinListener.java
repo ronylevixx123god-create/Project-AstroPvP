@@ -47,7 +47,6 @@ public class ItemSkinListener implements Listener {
             ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.BAT_TAKEOFF, 1.0F, 10.0F);
         } else if (event.getClick().isRightClick() && AstroItemSkinsAPI.hasItemSkin(clicked)) {
             List<SkinType> skinTypes = AstroItemSkinsAPI.getItemSkinByItem(clicked);
-            Bukkit.broadcastMessage(skinTypes.toString());
             if (skinTypes.get(0) == null)
                 return;
             if (event.getSlotType() == InventoryType.SlotType.ARMOR) {
