@@ -56,6 +56,7 @@ import me.astropvp.autogiveall.struct.GiveAllManager;
 import net.astropvp.core.commands.*;
 import net.astropvp.core.conaxgames.giveall.ManualGiveAllCommand;
 import net.astropvp.core.items.*;
+import net.astropvp.core.items.encoder.EnchantEncoderItem;
 import net.astropvp.core.listeners.*;
 import net.astropvp.core.conaxgames.staff.Freeze;
 import net.astropvp.core.conaxgames.staff.FreezeCommand;
@@ -296,6 +297,7 @@ public class AstroCore extends JavaPlugin {
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(this.holyWhitescrollItem);
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new HolyWaterItem());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new CleanseScroll());
+        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new EnchantEncoderItem());
 
 
         this.getServer().getPluginManager().registerEvents(new Freeze(), this);

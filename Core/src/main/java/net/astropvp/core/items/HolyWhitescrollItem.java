@@ -62,9 +62,9 @@ implements InventoryInteractable {
             e.setCancelled(true);
             return;
         }
-        if (cursor.getAmount() > 1) {
-            throw new PrefixedException("You cannot apply stacked Holy White Scrolls to an item.");
-        }
+//        if (cursor.getAmount() > 1) {
+//            throw new PrefixedException("You cannot apply stacked Holy White Scrolls to an item.");
+//        }
         NBTTagCompoundBuilder cosmicData = clickedWrapper.getCompoundOrCreate("conaxData");
         if (cosmicData != null) {
             if (cosmicData.hasKey("abilitySet")) {
@@ -91,7 +91,11 @@ implements InventoryInteractable {
         HolyWhiteScrollUtils.setHolyWhiteScrollsApplied(clickedWrapper, ++scrollsApplied);
         wrapper.blacklistIID("holyWhiteScrollApply");
         e.setCancelled(true);
-        e.getWhoClicked().setItemOnCursor((ItemStack)null);
+        if(cursor.getAmount() > 1) {
+            e.getWhoClicked().getItemOnCursor().setAmount(cursor.getAmount() - 1);
+        } else {
+            e.getWhoClicked().setItemOnCursor((ItemStack) null);
+        }
         clicked = clickedWrapper.build();
         HolyWhiteScrollUtils.applyHolyWhitescroll(clicked, scrollsApplied, HolyWhiteScrollUtils.getMaxHolyAllowed(clicked), true);
         e.setCurrentItem(clicked);
