@@ -175,6 +175,13 @@
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
+            <artifactId>holo</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/HolographicDisplays (2).jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
             <artifactId>AstroSpawners</artifactId>
             <version>0.1</version>
             <scope>system</scope>
@@ -307,13 +314,6 @@
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/DamageIndicators.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Holograms</artifactId>
-            <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/HolographicDisplays.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>

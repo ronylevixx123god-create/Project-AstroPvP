@@ -296,7 +296,6 @@ public class AstroCore extends JavaPlugin {
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(this.holyWhitescrollItem);
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new HolyWaterItem());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new CleanseScroll());
-        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new DimensionalGatewayItem());
 
 
         this.getServer().getPluginManager().registerEvents(new Freeze(), this);
