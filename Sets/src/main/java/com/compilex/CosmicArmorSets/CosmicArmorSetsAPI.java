@@ -316,7 +316,7 @@ public class CosmicArmorSetsAPI {
         for (ItemStack armor : player.getInventory().getArmorContents()) {
             if (armor == null || armor.getType() == Material.AIR) continue;
             List<ArmorSet> sets = ArmorSet.getFromArmorBonusCrystal(armor);
-            if (other instanceof Player && AstroItemSkinsAPI.hasSkinEquipped((Player) other, SkinType.CORRUPT_AMULET_CORRUPTION) && armor.getType().toString().endsWith("_CHESTPLATE") && !AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.LEVIATHAN_TROPHY)) {
+            if (other instanceof Player && AstroItemSkinsAPI.hasSkinEquipped((Player) other, SkinType.CORRUPT_AMULET_CORRUPTION) && armor.getType().toString().endsWith("_CHESTPLATE") && !AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.RUINS_HELMET)) {
                 sets.removeAll(ArmorSet.getFromArmorBonusCrystal(((Player) other).getInventory().getChestplate()));
             }
             if (sets == null || sets.isEmpty()) continue;

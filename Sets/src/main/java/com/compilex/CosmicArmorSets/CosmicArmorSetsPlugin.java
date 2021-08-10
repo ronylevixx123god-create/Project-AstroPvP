@@ -33,19 +33,6 @@ public class CosmicArmorSetsPlugin
         p = this;
         p.registerListeners();
         this.registerCommands();
-
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
-            for (Player pl : Bukkit.getServer().getOnlinePlayers()) {
-                CosmicArmorSetsAPI.getArmorSet(pl);
-            }
-        }, 100L, 100L);
-
-        //This used to be sync
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
-            for (Player pl : Bukkit.getServer().getOnlinePlayers()) {
-                CosmicArmorSetsAPI.getAbilityArmorSet(pl);
-            }
-        }, 100L, 100L);
         if (Bukkit.getPluginManager().isPluginEnabled("CosmicSkyCustomItems")) {
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new CrystalExtractionItem());
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new AntiMKitCrystalItem());
@@ -65,6 +52,7 @@ public class CosmicArmorSetsPlugin
     }
 
     private void registerListeners() {
+        getServer().getPluginManager().registerEvents(new ArmorEquipListener(), this);
         this.getServer().getPluginManager().registerEvents(new HeroicArmorListener(), this);
         this.getServer().getPluginManager().registerEvents(new ArmorSetUpgradeListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new SetBonusListener(), this);
