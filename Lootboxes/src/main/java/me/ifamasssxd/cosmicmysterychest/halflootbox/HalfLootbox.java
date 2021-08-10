@@ -46,6 +46,11 @@ public class HalfLootbox {
         this.halfLootboxType = halfLootboxType;
     }
 
+    public HalfLootbox getHalfLootboxFromItem(ItemStack item) {
+        //TODO
+        return null;
+    }
+
 
     public ItemStack getHalfLootboxItem() {
         ItemStack halfLootboxItem = new ItemStack(material);
@@ -71,6 +76,7 @@ public class HalfLootbox {
 
         NBTWrapper wrapper = new NBTWrapper(halfLootboxItem);
         wrapper.setString("cosmicType", getHalfLootboxType().getHalfLootboxString() + "_halflootbox");
+        wrapper.setString("lootbox_name", lootboxInternalName);
         return wrapper.build();
     }
 
@@ -104,7 +110,7 @@ public class HalfLootbox {
     }
 
     public static HalfLootboxType getHalfLootboxType(ItemStack item) {
-        if (item.getType() != Material.ENDER_PEARL || !item.hasItemMeta())
+        if (item.getType() != Material.PRISMARINE_CRYSTALS || !item.hasItemMeta())
             return null;
         String nbtString = new NBTWrapper(item).getString("cosmicType");
         nbtString = nbtString.replace("_halflootbox", "").toUpperCase();
