@@ -31,13 +31,13 @@ import java.util.List;
 public class Cauldron extends CustomBlock {
 
     public Cauldron() {
-        super("CAULDRON", CC.translate("&6&lCauldron"), Material.NOTE_BLOCK, AbilityType.CAULDRON);
+        super("HALLOWEEN_CAULDRON", CC.translate("&6&lCauldron"), Material.NOTE_BLOCK, AbilityType.HALLOWEEN_CAULDRON);
     }
 
     @Override
     public List<String> addLore() {
         return Arrays.asList(
-                CC.translate("&6Cost to Mine: &f$" + AbilityType.CAULDRON.getPickupPrice()),
+                CC.translate("&6Cost to Mine: &f$" + AbilityType.HALLOWEEN_CAULDRON.getPickupPrice()),
                 "",
                 CC.translate("&7Receive all of the following"),
                 CC.translate("&7buffs when standing in the same chunk."),
@@ -100,7 +100,7 @@ public class Cauldron extends CustomBlock {
             return;
         }
         if (fPlayer.getRelationToLocation().isMember()) {
-            MakeCustomBlocks.newFileItem(p0, AbilityType.CAULDRON, p1.getBlock(), this);
+            MakeCustomBlocks.newFileItem(p0, AbilityType.HALLOWEEN_CAULDRON, p1.getBlock(), this);
         } else {
             p0.sendMessage(CC.RED + "You must be in your own claim to place a block of this type");
             p1.setCancelled(true);
@@ -115,10 +115,10 @@ public class Cauldron extends CustomBlock {
             // The block must be in the land to remove it.
             return;
         }
-        if (CoreSkulls.getEconomy().has(breaker, AbilityType.CAULDRON.getPickupPrice())) {
-            CoreSkulls.getEconomy().withdrawPlayer(breaker, AbilityType.CAULDRON.getPickupPrice());
-            breaker.sendMessage(CC.B_RED + "-$" + AbilityType.CAULDRON.getPickupPrice());
-            breaker.sendMessage(CC.GREEN + "You broke a " + AbilityType.CAULDRON.getName() + CC.GREEN + "!");
+        if (CoreSkulls.getEconomy().has(breaker, AbilityType.HALLOWEEN_CAULDRON.getPickupPrice())) {
+            CoreSkulls.getEconomy().withdrawPlayer(breaker, AbilityType.HALLOWEEN_CAULDRON.getPickupPrice());
+            breaker.sendMessage(CC.B_RED + "-$" + AbilityType.HALLOWEEN_CAULDRON.getPickupPrice());
+            breaker.sendMessage(CC.GREEN + "You broke a " + AbilityType.HALLOWEEN_CAULDRON.getName() + CC.GREEN + "!");
 
             ItemBuilderUtils item = new ItemBuilderUtils(this.getItem()).setLore(this.addLore());
             p1.getBlock().getDrops().clear(); // clears the events item stack
@@ -128,7 +128,7 @@ public class Cauldron extends CustomBlock {
             p2.getWorld().dropItemNaturally(p2.getLocation(), item.toItemStack()); // dropping our item stack
             DeleteCustomBlocks.func(p2.getLocation()); // delete file and memory.
         } else {
-            breaker.sendMessage(CC.RED + "You do not have the required $" + AbilityType.CAULDRON.getPickupPrice() + " to pick this block up.");
+            breaker.sendMessage(CC.RED + "You do not have the required $" + AbilityType.HALLOWEEN_CAULDRON.getPickupPrice() + " to pick this block up.");
             p1.setCancelled(true);
         }
     }

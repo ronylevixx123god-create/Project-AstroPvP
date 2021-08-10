@@ -30,13 +30,13 @@ import java.util.List;
 public class HalloweenCandle extends CustomBlock {
 
     public HalloweenCandle() {
-        super("HALLOWEEN_CANDLE", CC.translate("&6&lHalloween Candle"), Material.NOTE_BLOCK, AbilityType.HALLOWEEN_CANDLE);
+        super("HALLOWEEN_CANDLES", CC.translate("&6&lHalloween Candle"), Material.NOTE_BLOCK, AbilityType.HALLOWEEN_CANDLES);
     }
 
     @Override
     public List<String> addLore() {
         return Arrays.asList(
-                CC.translate("&6Cost to Mine: &f$" + AbilityType.HALLOWEEN_CANDLE.getPickupPrice()),
+                CC.translate("&6Cost to Mine: &f$" + AbilityType.HALLOWEEN_CANDLES.getPickupPrice()),
                 "",
                 CC.translate("&7Chance to either not consume a"),
                 CC.translate("&7lootbox or give a guaranteed"),
@@ -102,7 +102,7 @@ public class HalloweenCandle extends CustomBlock {
             return;
         }
         if (fPlayer.getRelationToLocation().isMember()) {
-            MakeCustomBlocks.newFileItem(p0, AbilityType.HALLOWEEN_CANDLE, p1.getBlock(), this);
+            MakeCustomBlocks.newFileItem(p0, AbilityType.HALLOWEEN_CANDLES, p1.getBlock(), this);
         } else {
             p0.sendMessage(CC.RED + "You must be in your own claim to place a block of this type");
             p1.setCancelled(true);
@@ -118,10 +118,10 @@ public class HalloweenCandle extends CustomBlock {
             return;
         }
         if (FactionUtils.isWilderness(p2.getLocation()) || (fPlayer.getRelationToLocation().isMember())) {
-            if (CoreSkulls.getEconomy().has(breaker, AbilityType.HALLOWEEN_CANDLE.getPickupPrice())) {
-                CoreSkulls.getEconomy().withdrawPlayer(breaker, AbilityType.HALLOWEEN_CANDLE.getPickupPrice());
-                breaker.sendMessage(CC.B_RED + "-$" + AbilityType.HALLOWEEN_CANDLE.getPickupPrice());
-                breaker.sendMessage(CC.GREEN + "You broke a " + AbilityType.HALLOWEEN_CANDLE.getName() + CC.GREEN + "!");
+            if (CoreSkulls.getEconomy().has(breaker, AbilityType.HALLOWEEN_CANDLES.getPickupPrice())) {
+                CoreSkulls.getEconomy().withdrawPlayer(breaker, AbilityType.HALLOWEEN_CANDLES.getPickupPrice());
+                breaker.sendMessage(CC.B_RED + "-$" + AbilityType.HALLOWEEN_CANDLES.getPickupPrice());
+                breaker.sendMessage(CC.GREEN + "You broke a " + AbilityType.HALLOWEEN_CANDLES.getName() + CC.GREEN + "!");
 
                 ItemBuilderUtils item = new ItemBuilderUtils(this.getItem()).setLore(this.addLore());
                 p1.getBlock().getDrops().clear(); // clears the events item stack
@@ -131,7 +131,7 @@ public class HalloweenCandle extends CustomBlock {
                 p2.getWorld().dropItemNaturally(p2.getLocation(), item.toItemStack()); // dropping our item stack
                 DeleteCustomBlocks.func(p2.getLocation()); // delete file and memory.
             } else {
-                breaker.sendMessage(CC.RED + "You do not have the required $" + AbilityType.HALLOWEEN_CANDLE.getPickupPrice() + " to pick this block up.");
+                breaker.sendMessage(CC.RED + "You do not have the required $" + AbilityType.HALLOWEEN_CANDLES.getPickupPrice() + " to pick this block up.");
                 p1.setCancelled(true);
             }
         } else {

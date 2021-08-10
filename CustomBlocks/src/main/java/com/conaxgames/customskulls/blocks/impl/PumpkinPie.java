@@ -31,7 +31,7 @@ import java.util.List;
 public class PumpkinPie extends CustomBlock {
 
     public PumpkinPie() {
-        super("PUMPKINPIE", CC.translate("&e&lPumpkin Pie"), Material.NOTE_BLOCK, AbilityType.PUMPKINPIE);
+        super("THANKSGIVING_PIE", CC.translate("&e&lPumpkin Pie"), Material.NOTE_BLOCK, AbilityType.PUMPKINPIE);
     }
 
     @Override
