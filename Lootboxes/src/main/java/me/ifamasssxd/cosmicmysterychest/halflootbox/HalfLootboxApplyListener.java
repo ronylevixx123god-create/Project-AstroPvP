@@ -32,10 +32,7 @@ public class HalfLootboxApplyListener implements Listener {
         ItemStack cursor = e.getCursor();
 
 
-
-
-
-        Player player = (Player)e.getWhoClicked();
+        Player player = (Player) e.getWhoClicked();
         if (e.getClickedInventory() != e.getView().getBottomInventory()) {
             return;
         }
@@ -51,14 +48,14 @@ public class HalfLootboxApplyListener implements Listener {
             return;
         }
 
-        if (cursor.getAmount() > 1 || clicked.getAmount() > 1) {
-            player.sendMessage(CC.translate("&c&l(!)&c You cannot apply stacked half lootboxes!"));
-        }
 
         if (HalfLootbox.isHalfLootboxItem(cursor) && HalfLootbox.isHalfLootboxItem(clicked)) {
+            if (cursor.getAmount() > 1 || clicked.getAmount() > 1) {
+                player.sendMessage(CC.translate("&c&l(!)&c You cannot apply stacked half lootboxes!"));
+                return;
+            }
             HalfLootboxType halfLootboxTypeCursor = HalfLootbox.getHalfLootboxType(cursor);
             HalfLootboxType halfLootboxTypeClicked = HalfLootbox.getHalfLootboxType(clicked);
-
 
 
             if (halfLootboxTypeClicked == HalfLootboxType.LEFT && halfLootboxTypeCursor == HalfLootboxType.RIGHT || halfLootboxTypeClicked == HalfLootboxType.RIGHT && halfLootboxTypeCursor == HalfLootboxType.LEFT) {
@@ -76,7 +73,6 @@ public class HalfLootboxApplyListener implements Listener {
                 e.setCancelled(true);
                 e.getWhoClicked().setItemOnCursor(null);
                 e.setCurrentItem(cosmicMysteryChestCursor.createClaimableItem(false));
-
 
 
                 player.sendMessage(CC.translate("&a&l(!)&a You have created " + cosmicMysteryChestCursor.getDisplayName()));

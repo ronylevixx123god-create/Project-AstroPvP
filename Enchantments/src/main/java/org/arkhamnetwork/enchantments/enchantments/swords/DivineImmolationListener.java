@@ -27,10 +27,7 @@ final class DivineImmolationListener implements Listener {
             return;
         }
 
-        if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.THANKSGIVING_SWORD_HARVESTER) && Math.random() < 0.4) {
-            if (WeaponBonusUtils.hasWeaponBonus(((Player) e.getEntity()).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player) e.getEntity()).getItemInHand()) == WeaponBonusType.REFORGED && Math.random()<0.5) {
-                return;
-            }
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.THANKSGIVING_SWORD_HARVESTER) && Math.random() < 0.4 && !(WeaponBonusUtils.hasWeaponBonus((((Player)e.getEntity()).getKiller().getItemInHand())) && WeaponBonusUtils.getWeaponBonusByItem(((Player)e.getEntity()).getKiller().getItemInHand()) == WeaponBonusType.REFORGED && Math.random()<0.5)) {
             e.getEntity().sendMessage(CC.translate("&e&l* SOUL HARVESTER &fBlocked &cDivine Immolation &e&l*"));
             return;
         }
@@ -47,16 +44,16 @@ final class DivineImmolationListener implements Listener {
 
                 double damage = 2;
 
-                if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) le, SkinType.VALENTINES_2021_HELMET)) {
+                if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) le.getKiller(), SkinType.VALENTINES_2021_HELMET)) {
                     if (WeaponBonusUtils.hasWeaponBonus(((Player) e.getEntity()).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player) e.getEntity()).getItemInHand()) == WeaponBonusType.REFORGED && Math.random()<0.5) {
                         damage = 2;
                     } else {
-                        damage = 3.5;
+                        damage = 2.5;
                     }
                 }
 
-                if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.SUMMER_2021_SWORD)) {
-                    damage = 3.5;
+                if (AstroItemSkinsAPI.hasSkinEquipped((Player) ((Player) e.getEntity()).getKiller(), SkinType.SUMMER_2021_SWORD)) {
+                    damage = 2.5;
                 }
 
 
