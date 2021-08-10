@@ -51,22 +51,23 @@ public class HeroKiller extends CustomEnchantment {
             return;
         }
             if (KillTrackerAPI.hasGodMode(p) && KillTrackerAPI.getAllSouls(p) > 0) {
+                if (!isWearingHeroic((Player)playerHit))
+                    return;
+
             if (!p.hasMetadata("lastSoulRemoveEvent") || System.currentTimeMillis() - p.getMetadata("lastSoulRemoveEvent").get(0).asLong() > 1000L) {
                 KillTrackerAPI.removeSoulsFromGems(p, 4);
             }
 
 
-            double increase = 0.1;
+            double increase = 0.1 * level;
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.SUMMER_2021_SWORD)) {
-                increase = 0.12;
+                increase = increase * 1.15;
             }
 
-            if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2021_HELMET)) {
-                if (WeaponBonusUtils.hasWeaponBonus(((Player) e.getEntity()).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player) e.getEntity()).getItemInHand()) == WeaponBonusType.REFORGED && Math.random()<0.5) {
-                    increase = 0.1;
-                } else {
-                    increase = 0.12;
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2021_HELMET)) {
+                if (!WeaponBonusUtils.hasWeaponBonus(((Player) playerHit).getItemInHand()) || WeaponBonusUtils.getWeaponBonusByItem(((Player) playerHit).getItemInHand()) != WeaponBonusType.REFORGED || !(Math.random() < 0.5)) {
+                    increase = increase * 1.3;
                 }
             }
                 e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1 + increase));
