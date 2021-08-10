@@ -30,15 +30,15 @@ public class HeroicArmored extends HeroicCustomEnchantment {
             }
             i = pAttacker.getItemInHand();
             if (Math.random() < level * 0.01D) {
-                Blessed.blessPlayer((Player) player);
-                Bukkit.getLogger().info("Blessing " + ((Player) player).getName() + " from level " + level + " heroic armored!");
+                Blessed.blessPlayer((Player)player);
             }
         }
-        double damage_negation = level * 0.005D;
-        if (i != null && i.getType().name().contains("_SWORD") && e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1.0D - damage_negation) > 1.0D) {
-            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1.0D - damage_negation));
+        double damage_negation = level * 0.03D;
+        if (i != null && i.getType().name().contains("_SWORD") && e
+                .getDamage() * (1.0D - damage_negation) > 1.0D) {
+            e.setDamage(e.getDamage() * (1.0D - damage_negation));
             Location l = player.getLocation();
-
+            WorldUtil.sendWorldEffect(l.getBlock(), 57, 2001);
         }
     }
 }

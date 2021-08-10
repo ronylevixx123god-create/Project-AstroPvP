@@ -10,6 +10,7 @@ import com.rit.sucy.enchanting.EListener;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
 import me.ifamasssxd.cosmicskycustoms.struct.InventoryInteractable;
 import me.ifamasssxd.cosmicskycustoms.struct.InventoryItemType;
+import org.arkhamnetwork.enchantments.EnchantmentBook;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -27,7 +28,7 @@ public class EnchantEncoderItem extends CosmicItem implements InventoryInteracta
     public ItemStack createItem(Player player, Object... objects) {
         ItemStack item = new ItemStack(Material.SLIME_BALL);
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(CC.RedB + "Enchantment encoder");
+        meta.setDisplayName(CC.RedB + "Enchantment Encoder");
         List<String> lore = new ArrayList<>();
         lore.add("");
         meta.setLore(lore);
@@ -40,20 +41,21 @@ public class EnchantEncoderItem extends CosmicItem implements InventoryInteracta
 
     @Override
     public boolean acceptsInventoryClickType(InventoryItemType inventoryItemType) {
-        return inventoryItemType == InventoryItemType.CLICKED;
+        return inventoryItemType == InventoryItemType.CURSOR;
     }
 
     @Override
     public void onInventoryClick(Player player, ItemStack cursor, NBTWrapper wrapper, NBTWrapper clickedWrapper, ItemStack clicked, InventoryClickEvent e) throws CosmicException {
         if(clicked == null || clicked.getType() == Material.AIR)
             return;
-        cursor.setAmount(0);
+        e.setCancelled(true);
         Map<CustomEnchantment, Integer> enchants = EnchantmentAPI.getAllEnchantments(clicked);
         for(Map.Entry<CustomEnchantment, Integer> entry : enchants.entrySet()) {
             if(entry.getKey().getMaxLevel() == entry.getValue())
                 continue;
             EnchantmentAPI.getEnchantment(entry.getKey().name()).addToItem(clicked, entry.getKey().getMaxLevel());
         }
+        EnchantmentBook.applyTransmogScroll(clicked);
     }
 
 }
