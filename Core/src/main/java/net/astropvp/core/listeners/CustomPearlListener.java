@@ -92,7 +92,7 @@ public class CustomPearlListener implements Listener {
         if(e.getEntity() instanceof EnderPearl) {
 
             if(SuperPearlItem.isSuperPearl(((Player) e.getEntity().getShooter()).getItemInHand())) {
-                e.getEntity().setVelocity(e.getEntity().getVelocity().multiply(2.5));
+                e.getEntity().setVelocity(e.getEntity().getVelocity().multiply(1.5));
                 return;
             }
 
@@ -108,7 +108,7 @@ public class CustomPearlListener implements Listener {
                     e.setCancelled(true);
                 } else {
                     KillTrackerAPI.removeSoulsFromGems((Player)player, (int)5);
-                    e.getEntity().setVelocity(e.getEntity().getVelocity().multiply(2.5));
+                    e.getEntity().setVelocity(e.getEntity().getVelocity().multiply(1.5));
                 }
                 return;
             }

@@ -22,17 +22,18 @@ final class DivineImmolationListener implements Listener {
         if (!(e.getEntity() instanceof Player)) {
             return;
         }
-        if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.SUMMER_2021_AMULET) && Math.random() < 0.20) {
-            e.getEntity().sendMessage(CC.translate("&c&l* LUAU LEI &7Blocked Divine Immolation &c&l*"));
-            return;
-        }
 
-        if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.THANKSGIVING_SWORD_HARVESTER) && Math.random() < 0.4 && !(WeaponBonusUtils.hasWeaponBonus((((Player)e.getEntity()).getKiller().getItemInHand())) && WeaponBonusUtils.getWeaponBonusByItem(((Player)e.getEntity()).getKiller().getItemInHand()) == WeaponBonusType.REFORGED && Math.random()<0.5)) {
-            e.getEntity().sendMessage(CC.translate("&e&l* SOUL HARVESTER &fBlocked &cDivine Immolation &e&l*"));
-            return;
-        }
 
         if (e.getEntity().hasMetadata("divineFire") && e.getCause() == EntityDamageEvent.DamageCause.WITHER && e.getEntity() instanceof LivingEntity) {
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.SUMMER_2021_AMULET) && Math.random() < 0.20) {
+                e.getEntity().sendMessage(CC.translate("&c&l* LUAU LEI &7Blocked Divine Immolation &c&l*"));
+                return;
+            }
+
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.THANKSGIVING_SWORD_HARVESTER) && Math.random() < 0.4 && !(WeaponBonusUtils.hasWeaponBonus((((Player)e.getEntity()).getKiller().getItemInHand())) && WeaponBonusUtils.getWeaponBonusByItem(((Player)e.getEntity()).getKiller().getItemInHand()) == WeaponBonusType.REFORGED && Math.random()<0.5)) {
+                e.getEntity().sendMessage(CC.translate("&e&l* SOUL HARVESTER &fBlocked &cDivine Immolation &e&l*"));
+                return;
+            }
             final int enchantLevel = e.getEntity().getMetadata("divineFireLevel").get(0).asInt();
             if (System.currentTimeMillis() - e.getEntity().getMetadata("divineFire").get(0).asLong() < (3 + enchantLevel) * 1000) {
                 final LivingEntity le = (LivingEntity) e.getEntity();

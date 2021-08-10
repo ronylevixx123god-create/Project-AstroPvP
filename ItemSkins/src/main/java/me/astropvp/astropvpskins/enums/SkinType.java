@@ -89,7 +89,7 @@ public enum SkinType {
     DOOMSDAY_BOOTS(CC.DarkGreenB + "Camouflage Yeezys", ItemSkinType.BOOTS, new CamouflageBootsSkin(), Arrays.asList(CC.Red + "40% chance to negate soul trap", CC.Red + "Demonic Gateway V")),
     HALLOWEEN_BOOTS(CC.DarkGreenB + "Retaliation Boots", ItemSkinType.BOOTS, new RetaliationBoots(), Arrays.asList(CC.Red + "+15% Outgoing Damage to Bosses", CC.Red + "+10% Incoming Damage")),
     COSMIC_CITIZEN_AMULET(CC.GoldB + "Starquest Amulet", ItemSkinType.AMULET, new StarquestAmuletSkin(), Arrays.asList(CC.Red + "4% chance to earn extra dungeon lootbag")),
-    CANDY_COLLECTOR(CC.GoldB + "Candy Collector", ItemSkinType.HELMET, new CandyCollectorSkin(), Arrays.asList(CC.Red + "-20% incoming damage from enemies wielding swords", CC.Red + "1% chance to activate witcher ability")),
+    HALLOWEEN_HELMET(CC.GoldB + "Candy Collector", ItemSkinType.HELMET, new CandyCollectorSkin(), Arrays.asList(CC.Red + "-20% incoming damage from enemies wielding swords", CC.Red + "1% chance to activate witcher ability")),
     RUINS_HELMET(CC.translate("&3&lLeviathan Trophy"), ItemSkinType.HELMET, new LeviathanTrophySkin(), Arrays.asList(CC.translate("&cIncreased chance to drop Ancient Scrolls"), CC.translate("&cwhen killing Guardians in /ruins"), CC.translate("&cImmune to enemy Amulet of Corruption"), CC.translate("&c+1 Max Heart"), CC.translate("&c3% chance to silence enemy Soul Enchants"), CC.translate("  &7(7x7 blocks for 7s)"))),
     DOOMSDAY_HELMET(CC.translate("&2&lDoomsday Helmet"), ItemSkinType.HELMET, new DoomsDayHelmetSkin(), Arrays.asList(CC.translate("&cAbility to see invisible players"), CC.translate("&7(Feign Death, Undead Ruse)"))),
     VALENTINES_2021_HELMET(CC.translate("&c&lHeart Halo"), ItemSkinType.HELMET, new HearthHaloSkin(), Arrays.asList(CC.translate("&cPassively removes 1 Bleedstack every 2s"), CC.translate("&cImmune to Soul Harvester"), CC.translate("&c1.25% (Divine) Enlighted Healing"))),
@@ -190,7 +190,7 @@ public enum SkinType {
             CC.translate("&7 they have up to a max of 20%)")
     )),
 
-    CHRISTMAS_AXE_HATCHET(CC.translate("&c&lGolden Admirer"), ItemSkinType.AXE, new GoldenAdmirer(), Arrays.asList(
+    VALENTINES_2021_AXE(CC.translate("&c&lGolden Admirer"), ItemSkinType.AXE, new GoldenAdmirer(), Arrays.asList(
             CC.translate("&cDisables enemy Cursed Wings and Witch Hat for 10s"),
             CC.translate("&cOutgoing damage has a 50% chance to remove any Trap/Slowness effect on you")
     )),
@@ -222,7 +222,7 @@ public enum SkinType {
     SPRING_2021_SWORD(CC.GreenB + "Party Blade", ItemSkinType.SWORD, new PartyBladeSkin(), Arrays.asList(CC.Red + "Bypass enemy (Heroic) Aegis", CC.Red + "Immune to enemy Leadership", CC.Red + "+20% Outgoing damage when (Titan) Trapped/Frozen", CC.Red + "Inverted Knockback", CC.Gray + " (your enemy gets pulled to you each time you hit them)", CC.Red + "Silence enemy Amulet of Corruption for +3s per hit, max 30s")),
     NYE_SWORD(CC.LightPurpleB + "Party Killer", ItemSkinType.SWORD, new PartyKillerSkin(), Arrays.asList(CC.Red + "Anti Gank II", CC.Red + "+1% Outgoing Damage per combat tagged", CC.Red + "enemy player in your chunk (max +5%)", CC.Red + "Attacks have a 20% chance to pull target", CC.Red + "slightly towards you and push nearby enemies", CC.Red + "within a 3x3 radius of target away", CC.Red + "Attacks combat tag all enemies", CC.Red + "within a 4x64x4 radius of a target", CC.Red + "50% Pet Leash Negation")),
     COSMIC_CITIZEN_SWORD(CC.AquaB + "Sparkler", ItemSkinType.SWORD, new SparklerSkin(), Arrays.asList(CC.Red + "Transforms any creeper you hit into a Raid Creeper")),
-    HAWLLOWEEN_SWORD(CC.GoldB + "Blade of Darkness", ItemSkinType.SWORD, new BladeOfDarknessSkin(), Arrays.asList(CC.Red + "2% chance to proc Revenge of Yijki", CC.Red + "4% Chain Lifesteal V", CC.Red + "33% chance to reflect Traps", CC.Red + "Soul Siphon III", CC.Red + "Headless III", CC.Red + "Immune to Blindness")),
+    HALLOWEEN_SWORD(CC.GoldB + "Blade of Darkness", ItemSkinType.SWORD, new BladeOfDarknessSkin(), Arrays.asList(CC.Red + "2% chance to proc Revenge of Yijki", CC.Red + "4% Chain Lifesteal V", CC.Red + "33% chance to reflect Traps", CC.Red + "Soul Siphon III", CC.Red + "Headless III", CC.Red + "Immune to Blindness")),
     THANKSGIVING_SWORD_FEAST(CC.YellowB + "The Feast", ItemSkinType.SWORD, new TheFeastSkin(), Arrays.asList(CC.Red + "Soul Tether V", CC.Red + "-1 Food on enemy on Outgoing Damage", CC.Red + "20% chance to gain 1HP as you feed on your enemy", CC.Red + "20% chance to afflict enemies with Hunger IV for 3s"));
 
 
