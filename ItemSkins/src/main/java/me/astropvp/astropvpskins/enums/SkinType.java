@@ -5,6 +5,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import me.astropvp.astropvpskins.objects.ItemSkin;
 import me.astropvp.astropvpskins.objects.skins.amulets.*;
+import me.astropvp.astropvpskins.objects.skins.axes.*;
 import me.astropvp.astropvpskins.objects.skins.backpacks.*;
 import me.astropvp.astropvpskins.objects.skins.belts.*;
 import me.astropvp.astropvpskins.objects.skins.helmets.*;
@@ -22,10 +23,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import me.astropvp.astropvpskins.objects.skins.axes.CorruptAxeSkin;
-import me.astropvp.astropvpskins.objects.skins.axes.EasterBasketSkin;
-import me.astropvp.astropvpskins.objects.skins.axes.MeatCleaverAxeSkin;
-import me.astropvp.astropvpskins.objects.skins.axes.SpikedBaseballBatSkin;
 import me.astropvp.astropvpskins.objects.skins.boots.CamouflageBootsSkin;
 import me.astropvp.astropvpskins.objects.skins.boots.CorruptBootsSkin;
 import me.astropvp.astropvpskins.objects.skins.boots.CupidBootsSkin;
@@ -150,13 +147,61 @@ public enum SkinType {
             CC.translate("&cImmune to Lifesteal"),
             CC.translate("&cChance for Bonus Mobs to drop Rare Mob loot in /invasions")
     )),
-    INFINITY_BELT(CC.translate("&9&lInfinity Belt"), ItemSkinType.BELT, new InfinityBelt(), Arrays.asList(
+    /*INFINITY_BELT(CC.translate("&9&lInfinity Belt"), ItemSkinType.BELT, new InfinityBelt(), Arrays.asList(
             CC.translate("&cEquipped armor will regain to 10% durability"),
             CC.translate("&cinstead of breaking (10m cooldown)"),
             CC.translate("&cImmune to Soul Trap"),
             CC.translate("&cImmune to (Obsidian) Guardians"),
             CC.translate("&cNegates enemy (Reinforced) Tank")
+    )),*/
+
+    COSMIC_CITIZEN_AXE(CC.translate("&b&lFirework Rocket"), ItemSkinType.AXE, new FireworkRocket(), Arrays.asList(
+            CC.translate("&cTitan Trap III")
     )),
+    SCYTHE2(CC.RedB + "Skull Scythe", ItemSkinType.AXE, new SkullScytheAxeSkin(), Arrays.asList(CC.Red + "+2.5% Outgoing Damage", CC.Red + "10% chance to silence amulet of corruption for 10s")),
+
+    HALLOWEEN_AXE(CC.translate("&6&lCorpse Grinder"), ItemSkinType.AXE, new CorpseGrinder(), Arrays.asList(
+            CC.translate("&cDouble Strikg II"),
+            CC.translate("&Bypasses Dodge"),
+            CC.translate("&c2x Outgoing Durability Damage"),
+            CC.translate("&c+15% Outgoing Damage for 30s"),
+            CC.translate("&cwhenever you kill an Enemy Player"),
+            CC.translate("&cDeath Coffin III")
+    )),
+    CHRISTMAS_AXE_SNOWFLAKE(CC.translate("&a&lSnowflake"), ItemSkinType.AXE, new Snowflake(), Arrays.asList(
+            CC.translate("&cSnowflake Snowball Ability"),
+            CC.translate("&7 (Right-Click&7 to launch snowflake snowball."),
+            CC.translate("&7 Any enemy players hit by the snowflake"),
+            CC.translate("&7 snowball will receive Slowness II for 2s"),
+            CC.translate("&7 and will take +8% Incoming Damage for 3s,"),
+            CC.translate("&7 8s cooldown)"),
+            CC.translate("&cIcy Wrath Ability"),
+            CC.translate("&7 (4% chance to \"Deep Freeze\" targets,"),
+            CC.translate("&7 slowing them for 2s and increasing their"),
+            CC.translate("&7 incoming damage by +5%"),
+            CC.translate("&7 33% chance to AoE Silence enemy enchants"),
+            CC.translate("&7 including active soul enchants for 2s?"),
+            CC.translate("&7 Pulls nearby enemies towards you."),
+            CC.translate("&7 Reduces outgoing enemy damage by 1%"),
+            CC.translate("&7 each hit for 10s up to max of 10%)"),
+            CC.translate("&c Icy Blood Ability"),
+            CC.translate("&7 (Reduces enemy health regeneration by"),
+            CC.translate("&7 1% for 6s for each bleed stack"),
+            CC.translate("&7 they have up to a max of 20%)")
+    )),
+
+    CHRISTMAS_AXE_HATCHET(CC.translate("&c&lGolden Admirer"), ItemSkinType.AXE, new GoldenAdmirer(), Arrays.asList(
+            CC.translate("&cDisables enemy Cursed Wings and Witch Hat for 10s"),
+            CC.translate("&cOutgoing damage has a 50% chance to remove any Trap/Slowness effect on you")
+    )),
+
+    //TODO Stormbreaker skin
+
+    //TODO New Pickaxe Skins
+
+
+
+
 
     MEDIEVAL_AMULET_KING(CC.GoldB + "Amulet of Kings", ItemSkinType.AMULET, new AmuletOfKingsSkin(), Arrays.asList(CC.Red + "15% chance for /end envoy chest loot to auto-/collect")),
     MEDIEVAL_AMULET_KNIGHT(CC.GrayB + "Diamond Necklace", ItemSkinType.AMULET, new DiamondNecklaceSkin(), Arrays.asList(CC.Red + "Increased view distance by 1 chunk")),
