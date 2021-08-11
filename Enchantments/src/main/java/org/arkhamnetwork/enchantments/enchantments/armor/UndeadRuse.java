@@ -34,10 +34,15 @@ public class UndeadRuse extends CustomEnchantment {
     @SneakyThrows
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         if (e instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent) e).getDamager() instanceof Player) {
+            if(player.hasMetadata("undead_ruse"))
+                return;
             double chance = 0.002;
             if (Math.random() < chance) {
                 int zombie_count = (int) (Math.random() / 2.0 * level) + 1;
                 final Player p = (Player) player;
+                p.setMetadata("undead_ruse", new FixedMetadataValue(Enchantments.getInstance(), System.currentTimeMillis()));
+                Bukkit.getScheduler().runTaskLater(Enchantments.getInstance(), () -> {p.removeMetadata("undead_ruse", Enchantments.getInstance());}, 10000L);
+
                 final Location spawnLoc = p.getTargetBlock((HashSet<Byte>) null, 5).getLocation().add(0.0, 1.0, 0.0);
                 de.inventivegames.particle.ParticleEffect.HEART.sendToPlayers(Bukkit.getOnlinePlayers(), spawnLoc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 20);
 

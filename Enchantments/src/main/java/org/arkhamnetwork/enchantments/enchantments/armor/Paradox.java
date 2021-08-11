@@ -48,12 +48,15 @@ public class Paradox extends CustomEnchantment {
             return;
         }
         final double random = Math.random();
-        final double chance = 0.1 * level;
+        final double chance = 0.02 * level;
         final int radius = 8 + level * 4;
         final List<Player> affectedPlayers = new ArrayList<Player>();
         if (random < chance) {
             final Player p = (Player) player;
-            final double amountToHeal = e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (level / 10);
+            double amountToHeal = Math.round(e.getDamage() * (level) / 10);
+            if(amountToHeal > 20) {
+                amountToHeal = 20;
+            }
             int cost = this.soulCost;
             if (this.cosmicOutposts && CosmicOutpostsAPI.controlsCosmonautOutpost(p)) {
                 cost /= 2;
@@ -106,7 +109,7 @@ public class Paradox extends CustomEnchantment {
                             exception.printStackTrace();
                         }
 
-                        //GeneralUtil.healPlayer((LivingEntity) pEnt2, amountToHeal);
+                        GeneralUtil.healPlayer((LivingEntity) pEnt2, amountToHeal);
                         pEnt2.playSound(pEnt2.getLocation(), Sound.EAT, 1.0f, 2.0f);
                         pEnt2.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "** PARADOX [" + p.getName() + "] (+" + amountToHeal + "HP) **");
                     }

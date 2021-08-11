@@ -2,6 +2,7 @@ package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.MaskUtils;
 import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.earth2me.essentials.Essentials;
@@ -50,7 +51,7 @@ public class NatureWrath extends CustomEnchantment {
         this.interval = 3.0;
         this.soulCost = 75;
         this.ess = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
-        this.cosmicOutposts = new File("plugins/CosmicOutposts.jar").exists();
+        this.cosmicOutposts = Bukkit.getPluginManager().isPluginEnabled("CosmicOutposts");
         this.factionUpgrades = Bukkit.getPluginManager().isPluginEnabled("FactionUpgrades");
         Bukkit.getPluginManager().registerEvents((Listener) new NatureWrathListener(), (Plugin) Enchantments.getInstance());
     }
@@ -75,7 +76,11 @@ public class NatureWrath extends CustomEnchantment {
             if (this.cosmicOutposts && CosmicOutpostsAPI.controlsCosmonautOutpost(p)) {
                 cost /= 2;
             }
-            if (this.factionUpgrades) {
+            if (MaskUtils.hasMaskEquipped((Player) player, "THANOS") && Math.random() < 0.5) {
+                return;
+            }
+
+                if (this.factionUpgrades) {
                 try {
                     final int heroicLevel = UpgradeUtils.getUpgradeLevel(p, "HEROIC_SOUL_MASTERY");
                     if (heroicLevel > 0) {

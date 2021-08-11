@@ -62,9 +62,6 @@ public class InventoryBansheePet extends InventoryPet {
                 CC.Gray, CC.YellowB + "Cooldown", CC.Gray + " " + TimeUtils.formatSeconds(getCooldown(5))});
     }
 
-    public int getCooldown(int level) {
-        return 360;
-    }
 
     public int getExpForLevel(int level) {
         return 700 + 100 * level;
@@ -72,6 +69,10 @@ public class InventoryBansheePet extends InventoryPet {
 
     public int getMaxLevel() {
         return 5;
+    }
+
+    public int getCooldown(int var1) {
+        return 360;
     }
 
     public boolean onPetItemInteract(final Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {

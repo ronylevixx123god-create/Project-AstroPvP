@@ -23,7 +23,7 @@ final class GuardiansListener implements Listener {
                 return;
             }
         }
-        if (e.getEntity().hasMetadata("guardianSummoner") && e instanceof EntityDamageByEntityEvent) {
+        if (e.getEntity().hasMetadata("guardianSummoner")) {
             Entity damager = e.getDamager();
             if (damager instanceof Projectile) {
                 damager = (Entity) ((Projectile) damager).getShooter();

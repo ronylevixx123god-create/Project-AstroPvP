@@ -67,7 +67,7 @@ public class ItemSkinListener implements Listener {
         Entity damager = event.getDamager();
         Entity damaged = event.getEntity();
         if (damager instanceof Player) {
-            List<SkinType> damagerSkins = AstroItemSkinsAPI.getItemSkinsOnPlayer((Player) damaged);
+            List<SkinType> damagerSkins = AstroItemSkinsAPI.getItemSkinsOnPlayer((Player) damager);
             for (SkinType skin : damagerSkins)
                 skin.getItemSkin().onAttack((Player) damager, damaged, event);
         }

@@ -8,6 +8,7 @@ import com.rit.sucy.CustomEnchantment;
 import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.ArmorUtil;
+import org.arkhamnetwork.enchantments.util.GeneralCooldown;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.*;
 import org.bukkit.entity.*;
@@ -37,10 +38,11 @@ public class PlagueCarrier extends CustomEnchantment {
             double dmg = e.getDamage(EntityDamageEvent.DamageModifier.BASE);
             dmg *= ArmorUtil.getArmorDamageNullificationPercent((float) ArmorUtil.getArmorValue(p));
             if (player.getHealth() - dmg <= 0.0) {
-                if (p.hasMetadata("PlagueCarrier") && System.currentTimeMillis() - p.getMetadata("PlagueCarrier").get(0).asLong() <= 10000L) {
+                if (p.hasMetadata("PlagueCarrier")) {
                     return;
                 }
                 p.setMetadata("PlagueCarrier", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) System.currentTimeMillis()));
+                Bukkit.getScheduler().runTaskLater(Enchantments.getInstance(), () -> {p.removeMetadata("PlagueCarrier", Enchantments.getInstance());}, 10000L);
                 final int radius = Math.round(level * 1.5f);
                 final List<LivingEntity> victims = new ArrayList<LivingEntity>();
                 final FPlayer fp = (FPlayer) FPlayers.i.get((OfflinePlayer) p);

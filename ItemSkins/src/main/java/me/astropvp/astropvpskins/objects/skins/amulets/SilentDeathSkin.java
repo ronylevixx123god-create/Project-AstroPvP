@@ -2,7 +2,6 @@ package me.astropvp.astropvpskins.objects.skins.amulets;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.astropvpskins.objects.ItemSkin;
-import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -14,7 +13,6 @@ public class SilentDeathSkin extends ItemSkin {
 
     public void onAttacked(Player damaged, Entity damager, EntityDamageByEntityEvent event) {
         if(Math.random() >= 0.05) {
-            DamageIndicatorUtils.sendDamageIndicator((Player) damager, CC.GoldB + "* SILENT DEATH *", "SILENT_DEATH");
         }
     }
 

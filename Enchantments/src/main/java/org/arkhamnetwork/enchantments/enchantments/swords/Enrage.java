@@ -18,13 +18,13 @@ public class Enrage extends CustomEnchantment {
         final double hpPercent = user.getHealth() / user.getMaxHealth();
         double multi = 1.0;
         if (hpPercent <= 0.75) {
-            multi += 0.15;
+            multi += 0.07;
         }
         if (hpPercent <= 0.5) {
-            multi += 0.15;
+            multi += 0.07;
         }
         if (hpPercent <= 0.25) {
-            multi += 0.15;
+            multi += 0.07;
         }
         event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * multi);
     }

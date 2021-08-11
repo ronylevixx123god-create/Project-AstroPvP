@@ -248,7 +248,7 @@ public class EngineerSet extends ArmorSetInfo implements Listener, WeaponedArmor
             return false;
         if (Math.random() < 0.01)
             onEngineerAbility(damaged);
-        event.setDamage(event.getDamage() * 0.91);
+        this.modifyDamage(damaged, event, -9.0, multiplier);
         return false;
     }
 

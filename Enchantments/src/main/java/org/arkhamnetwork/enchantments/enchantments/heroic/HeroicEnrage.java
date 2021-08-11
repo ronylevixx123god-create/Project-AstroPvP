@@ -23,13 +23,13 @@ public class HeroicEnrage extends HeroicCustomEnchantment {
         final double hpPercent = user.getHealth() / user.getMaxHealth();
         double multi = 1.0;
         if (hpPercent <= 0.75) {
-            multi += 0.16;
+            multi += 0.1;
         }
         if (hpPercent <= 0.5) {
-            multi += 0.16;
+            multi += 0.1;
         }
         if (hpPercent <= 0.25) {
-            multi += 0.16;
+            multi += 0.1;
         }
         event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * multi);
     }

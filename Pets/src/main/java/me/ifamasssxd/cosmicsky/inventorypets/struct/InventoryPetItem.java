@@ -27,6 +27,7 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
     private int exp;
     private long lastRareCandyUsed;
     private boolean leashed;
+    private double cooldown;
 
     public InventoryPetItem(String internalName) {
         super(internalName);
@@ -55,6 +56,7 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
                 this.lastUsed = builder.getLong("lastUsed");
                 this.lastRareCandyUsed = builder.getLong("lastRareCandyUsed");
                 this.leashed = builder.getBoolean("leashed");
+                this.cooldown = builder.getDouble("cooldown");
             }
         }
 
@@ -116,6 +118,15 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
     @SneakyThrows
     public void onPlayerInteractable(Player player, ItemStack itemStack, NBTWrapper nbtWrapper, PlayerInteractEvent playerInteractEvent) throws CosmicException {
         playerInteractEvent.setCancelled(true);
+        InventoryPetItem preitem = CosmicPersistentItem.constructItem(itemStack, nbtWrapper, InventoryPetItem.class);
+        double lastUse1 = preitem.getLastUsed();
+        double delay1 = TimeUnit.SECONDS.toMillis((long) this.getCooldown(5));
+        double timeTillCanUse1 = delay1 - (System.currentTimeMillis() - lastUse1);
+        NBTWrapper wrapper = new NBTWrapper(itemStack);
+        NBTTagCompoundBuilder cosmicData = wrapper.getCompound("cosmicData");
+        cosmicData.setDouble("cooldown", 2D);
+        nbtWrapper.setNBTBase("cosmicData", cosmicData.get());
+        itemStack = wrapper.build();
         InventoryPetItem item = CosmicPersistentItem.constructItem(itemStack, nbtWrapper, InventoryPetItem.class);
         if (item != null) {
             InventoryPets type = item.getPetType();
@@ -177,6 +188,8 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
     public int getLevel() {
         return this.level;
     }
+
+    public double getCooldown(int level) { return this.cooldown; }
 
     public void setLeashed(boolean leashed) {
         this.leashed = leashed;

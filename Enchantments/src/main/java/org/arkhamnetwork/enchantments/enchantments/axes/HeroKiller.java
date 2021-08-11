@@ -59,7 +59,7 @@ public class HeroKiller extends CustomEnchantment {
             }
 
 
-            double increase = 0.1;
+            double increase = 0.05 * level;
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.SUMMER_2021_SWORD)) {
                 increase = increase * 1.15;

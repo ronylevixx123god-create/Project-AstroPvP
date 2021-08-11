@@ -87,20 +87,20 @@ public final class CosmicUtils
             }
         }, 0L, 40L);
         CosmicGUI.activeGUIs.entrySet();
-        this.arkkitEnabled = new File("plugins/Arkkit.jar").exists();
+        this.arkkitEnabled = Bukkit.getPluginManager().isPluginEnabled("Arkkit");
         if (new File("plugins/FactionUpgrades.jar").exists()) {
             UpgradeUtils.factionUpgradesEnabled = true;
         }
-        this.armorsetEnabled = new File("plugins/CosmicArmorSets.jar").exists();
-        this.outpostsEnabled = new File("plugins/CosmicOutposts.jar").exists();
-        this.evolutionKitEnabled = new File("plugins/CosmicEvolutionKit.jar").exists();
-        this.vanishNoPacketEnabled = new File("plugins/VanishNoPacket.jar").exists();
-        this.hcfCrateEnabled = new File("plugins/CosmicHCFCrate.jar").exists();
-        this.conquestsEnabled = new File("plugins/CosmicConquest.jar").exists();
-        this.enchantmentsEnabled = new File("plugins/Enchantments.jar").exists();
-        this.dungeonsEnabled = new File("plugins/CosmicDungeons.jar").exists();
-        this.masksEnabled = new File("plugins/CosmicMasks.jar").exists();
-        this.lootboxesEnabled = new File("plugins/CosmicMysteryChest.jar").exists();
+        this.armorsetEnabled = Bukkit.getPluginManager().isPluginEnabled("CosmicArmorSets");
+        this.outpostsEnabled = Bukkit.getPluginManager().isPluginEnabled("CosmicOutposts");
+        this.evolutionKitEnabled = Bukkit.getPluginManager().isPluginEnabled("CosmicEvolutionKits");
+        this.vanishNoPacketEnabled = Bukkit.getPluginManager().isPluginEnabled("VanishNoPacket");
+        this.hcfCrateEnabled = Bukkit.getPluginManager().isPluginEnabled("CosmicHcfCrate");
+        this.conquestsEnabled = Bukkit.getPluginManager().isPluginEnabled("CosmicConquest");
+        this.enchantmentsEnabled =Bukkit.getPluginManager().isPluginEnabled("Enchantments");
+        this.dungeonsEnabled = Bukkit.getPluginManager().isPluginEnabled("CosmicDungeons");
+        this.masksEnabled = Bukkit.getPluginManager().isPluginEnabled("CosmicMasks");
+        this.lootboxesEnabled = Bukkit.getPluginManager().isPluginEnabled("CosmicMysteryChest");
         this.initStaticClasses();
     }
 

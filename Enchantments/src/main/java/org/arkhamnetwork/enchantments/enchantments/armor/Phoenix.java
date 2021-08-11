@@ -84,7 +84,7 @@ public class Phoenix extends CustomEnchantment {
                 return false;
             }
 
-            if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction((FPlayer) damager), OutpostType.THE_GREAT_HALL) && Math.random() < 0.1) {
+            if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction((Player)damager), OutpostType.THE_GREAT_HALL) && Math.random() < 0.1) {
                 player.sendMessage(CC.translate("&b&l** ENEMY FROZEN STRONGHOLD BONUS &7Blocked &cPhoenix &b&l**"));
                 ((FPlayer) damager).sendMessage(CC.translate("&b&l** FROZEN STRONGHOLD BONUS &7Blocked &a" + damager.getName() + " &cPhoenix &b&l**"));
                 player.playSound(player.getLocation(), Sound.ANVIL_BREAK, 10, 10);

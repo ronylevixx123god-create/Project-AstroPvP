@@ -37,10 +37,11 @@ public class HeroicDiminish extends CustomEnchantment {
 
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
 
-        if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2021_SWORD)) {
+        if (attacker instanceof Player && AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2021_SWORD)) {
             return;
         }
-
+        if (player.hasMetadata("neutralized"))
+            return;
         if (player.hasMetadata("diminishEffect")) {
             double maxDmg = ((MetadataValue)player.getMetadata("diminishEffect").get(0)).asDouble();
             double dmgToDeal = maxDmg;
@@ -59,7 +60,7 @@ public class HeroicDiminish extends CustomEnchantment {
         double procChance = 0.05D * level;
         if (random < procChance) {
             e.setDamage(e.getDamage() / 2.0D);
-            player.setMetadata("diminishEffect", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), Double.valueOf(e.getFinalDamage() / 2.0D)));
+            player.setMetadata("diminishEffect", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), e.getFinalDamage() / 2.0D));
             ((Player)player).sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "* DIMINISH [" + ChatColor.YELLOW + "MAX DMG: " + this.df.format(e.getFinalDamage() / 2.0D) + ChatColor.BOLD + "] *");
         }
     }
