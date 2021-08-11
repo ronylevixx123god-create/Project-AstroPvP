@@ -66,12 +66,12 @@ public class CoreSkulls extends JavaPlugin {
     }
 
     private void registerCustomBlocks() {
-        customBlocks.put("CAULDRON", new Cauldron());
-        customBlocks.put("PUMPKINPIE", new PumpkinPie());
-        customBlocks.put("TREASURECHEST", new TreasureChest());
-        customBlocks.put("ASTROTROPHY", new AstroTrophy());
+        customBlocks.put("HALLOWEEN_CAULDRON", new Cauldron());
+        customBlocks.put("THANKSGIVING_PIE", new PumpkinPie());
+        customBlocks.put("TREASURE_CHEST", new TreasureChest());
+        customBlocks.put("COSMIC_TROPHY", new AstroTrophy());
         customBlocks.put("LEVIATHAN_TOTEM", new LeviathanTotem());
-        customBlocks.put("HALLOWEEN_CANDLE", new HalloweenCandle());
+        customBlocks.put("HALLOWEEN_CANDLES", new HalloweenCandle());
     }
 
     public void info(String string) {

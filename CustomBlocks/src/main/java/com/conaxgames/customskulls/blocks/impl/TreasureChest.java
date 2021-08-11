@@ -29,13 +29,13 @@ import java.util.List;
 public class TreasureChest extends CustomBlock {
 
     public TreasureChest() {
-        super("TREASURECHEST", CC.translate("&6&lTreasure Chest"), Material.NOTE_BLOCK, AbilityType.TREASURECHEST);
+        super("TREASURE_CHEST", CC.translate("&6&lTreasure Chest"), Material.NOTE_BLOCK, AbilityType.TREASURE_CHEST);
     }
 
     @Override
     public List<String> addLore() {
         return Arrays.asList(
-                CC.translate("&6Cost to Mine: &f$" + AbilityType.TREASURECHEST.getPickupPrice()),
+                CC.translate("&6Cost to Mine: &f$" + AbilityType.TREASURE_CHEST.getPickupPrice()),
                 "",
                 CC.translate("&7Receive all of the following"),
                 CC.translate("&7buffs when standing in the same chunk."),
@@ -98,7 +98,7 @@ public class TreasureChest extends CustomBlock {
             return;
         }
         if (fPlayer.getRelationToLocation().isMember()) {
-            MakeCustomBlocks.newFileItem(p0, AbilityType.TREASURECHEST, p1.getBlock(), this);
+            MakeCustomBlocks.newFileItem(p0, AbilityType.TREASURE_CHEST, p1.getBlock(), this);
         } else {
             p0.sendMessage(CC.RED + "You must be in your own claim to place a block of this type");
             p1.setCancelled(true);
@@ -113,10 +113,10 @@ public class TreasureChest extends CustomBlock {
             // The block must be in the land to remove it.
             return;
         }
-        if (CoreSkulls.getEconomy().has(breaker, AbilityType.TREASURECHEST.getPickupPrice())) {
-            CoreSkulls.getEconomy().withdrawPlayer(breaker, AbilityType.TREASURECHEST.getPickupPrice());
-            breaker.sendMessage(CC.B_RED + "-$" + AbilityType.TREASURECHEST.getPickupPrice());
-            breaker.sendMessage(CC.GREEN + "You broke a " + AbilityType.TREASURECHEST.getName() + CC.GREEN + "!");
+        if (CoreSkulls.getEconomy().has(breaker, AbilityType.TREASURE_CHEST.getPickupPrice())) {
+            CoreSkulls.getEconomy().withdrawPlayer(breaker, AbilityType.TREASURE_CHEST.getPickupPrice());
+            breaker.sendMessage(CC.B_RED + "-$" + AbilityType.TREASURE_CHEST.getPickupPrice());
+            breaker.sendMessage(CC.GREEN + "You broke a " + AbilityType.TREASURE_CHEST.getName() + CC.GREEN + "!");
 
             ItemBuilderUtils item = new ItemBuilderUtils(this.getItem()).setLore(this.addLore());
             p1.getBlock().getDrops().clear(); // clears the events item stack
@@ -126,7 +126,7 @@ public class TreasureChest extends CustomBlock {
             p2.getWorld().dropItemNaturally(p2.getLocation(), item.toItemStack()); // dropping our item stack
             DeleteCustomBlocks.func(p2.getLocation()); // delete file and memory.
         } else {
-            breaker.sendMessage(CC.RED + "You do not have the required $" + AbilityType.TREASURECHEST.getPickupPrice() + " to pick this block up.");
+            breaker.sendMessage(CC.RED + "You do not have the required $" + AbilityType.TREASURE_CHEST.getPickupPrice() + " to pick this block up.");
             p1.setCancelled(true);
         }
     }

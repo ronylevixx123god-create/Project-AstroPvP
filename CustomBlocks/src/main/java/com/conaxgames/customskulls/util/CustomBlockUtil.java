@@ -3,6 +3,8 @@ package com.conaxgames.customskulls.util;
 import com.conaxgames.customskulls.CoreSkulls;
 import com.conaxgames.customskulls.ability.AbilityData;
 import com.conaxgames.customskulls.blocks.CustomBlock;
+import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
+import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -15,10 +17,12 @@ import java.util.List;
 public class CustomBlockUtil {
 
     public static CustomBlock getCustomItem(final ItemStack item) {
-        NBTItem nbtItem = new NBTItem(item);
-        if (nbtItem.hasNBTData()) {
-            if (nbtItem.hasKey("conaxCustomBlock")) {
-                String abilityType = nbtItem.getString("conaxCustomBlock");
+        NBTWrapper nbtItem = new NBTWrapper(item);
+        if (nbtItem.hasKey("cosmicType")) {
+            if (nbtItem.hasKey("cosmicType") && nbtItem.getString("cosmicType").equals("custom_block")) {
+                NBTTagCompoundBuilder cosmicData = nbtItem.hasKey("cosmicData") ? new NBTTagCompoundBuilder(nbtItem.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
+                NBTTagCompoundBuilder customBlockData = cosmicData.hasKey("customBlockData") ? new NBTTagCompoundBuilder(cosmicData.getNBTBase("customBlockData")) : new NBTTagCompoundBuilder();
+                String abilityType = customBlockData.getString("type");
                 if (CoreSkulls.customBlocks.containsKey(abilityType)) {
                     return CoreSkulls.customBlocks.get(abilityType);
                 }
@@ -29,7 +33,7 @@ public class CustomBlockUtil {
 
     public static Boolean isCustomItem(ItemStack itemStack) {
         NBTItem nbtItem = new NBTItem(itemStack);
-        return nbtItem.hasKey("conaxCustomBlock");
+        return nbtItem.hasKey("cosmicType") && nbtItem.getString("cosmicType").equals("custom_block");
     }
 
     public static List<AbilityData> getBlockDatasInChunk(Player player) {

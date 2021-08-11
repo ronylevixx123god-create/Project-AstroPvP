@@ -4,6 +4,8 @@ package com.conaxgames.customskulls.blocks;
 import com.conaxgames.customskulls.ability.AbilityData;
 import com.conaxgames.customskulls.enums.AbilityType;
 import com.conaxgames.customskulls.util.ItemBuilderUtils;
+import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
+import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import de.tr7zw.nbtapi.NBTItem;
@@ -50,8 +52,24 @@ public abstract class CustomBlock {
 
     public ItemStack getItem() {
         ItemBuilderUtils item = new ItemBuilderUtils(material).setDurability((short) 3).setName(name).setLore();
-        NBTItem nbtItem = new NBTItem(item.toItemStack());
-        nbtItem.setString("conaxCustomBlock", abilityType.getName());
+
+
+
+        NBTWrapper nbtItem = new NBTWrapper(item.toItemStack());
+
+
+        NBTTagCompoundBuilder cosmicData = nbtItem.hasKey("cosmicData") ? new NBTTagCompoundBuilder(nbtItem.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
+
+        NBTTagCompoundBuilder cosmicData2 = cosmicData.hasKey("customBlockData") ? new NBTTagCompoundBuilder(cosmicData.getNBTBase("customBlockData")) : new NBTTagCompoundBuilder();
+
+
+        nbtItem.setString("cosmicType", "custom_block");
+        cosmicData2.setString("type", abilityType.getName());
+
+        cosmicData.setNBTBase("customBlockData", cosmicData2.get());
+
+        nbtItem.setNBTBase("cosmicData", cosmicData.get());
+
 
         //SkullMeta meta = (SkullMeta) nbtItem.getItem().getItemMeta();
         //GameProfile profile = new GameProfile(UUID.randomUUID(), "");
@@ -64,7 +82,8 @@ public abstract class CustomBlock {
             e.printStackTrace();
         }*/
         //nbtItem.getItem().setItemMeta(meta);
-        return nbtItem.getItem();
+
+        return nbtItem.build();
     }
 
     public abstract void leftClickAirAction(final Player p0, final ItemStack p1);

@@ -30,13 +30,13 @@ import java.util.List;
 public class AstroTrophy extends CustomBlock {
 
     public AstroTrophy() {
-        super("ASTROTROPHY", CC.translate("&6&lAstro Trophy"), Material.NOTE_BLOCK, AbilityType.ASTROTROPHY);
+        super("COSMIC_TROPHY", CC.translate("&6&lAstro Trophy"), Material.NOTE_BLOCK, AbilityType.COSMIC_TROPHY);
     }
 
     @Override
     public List<String> addLore() {
         return Arrays.asList(
-                CC.translate("&6Cost to Mine: &f$" + AbilityType.ASTROTROPHY.getPickupPrice()),
+                CC.translate("&6Cost to Mine: &f$" + AbilityType.COSMIC_TROPHY.getPickupPrice()),
                 "",
                 CC.translate("&7Receive all of the following"),
                 CC.translate("&7buffs when standing in the same chunk."),
@@ -98,7 +98,7 @@ public class AstroTrophy extends CustomBlock {
             return;
         }
         if (fPlayer.getRelationToLocation().isMember()) {
-            MakeCustomBlocks.newFileItem(p0, AbilityType.ASTROTROPHY, p1.getBlock(), this);
+            MakeCustomBlocks.newFileItem(p0, AbilityType.COSMIC_TROPHY, p1.getBlock(), this);
         } else {
             p0.sendMessage(CC.RED + "You must be in your own claim to place a block of this type");
             p1.setCancelled(true);
@@ -114,10 +114,10 @@ public class AstroTrophy extends CustomBlock {
             return;
         }
         if (FactionUtils.isWilderness(p2.getLocation()) || (fPlayer.getRelationToLocation().isMember())) {
-            if (CoreSkulls.getEconomy().has(breaker, AbilityType.ASTROTROPHY.getPickupPrice())) {
-                CoreSkulls.getEconomy().withdrawPlayer(breaker, AbilityType.ASTROTROPHY.getPickupPrice());
-                breaker.sendMessage(CC.B_RED + "-$" + AbilityType.ASTROTROPHY.getPickupPrice());
-                breaker.sendMessage(CC.GREEN + "You broke a " + AbilityType.ASTROTROPHY.getName() + CC.GREEN + "!");
+            if (CoreSkulls.getEconomy().has(breaker, AbilityType.COSMIC_TROPHY.getPickupPrice())) {
+                CoreSkulls.getEconomy().withdrawPlayer(breaker, AbilityType.COSMIC_TROPHY.getPickupPrice());
+                breaker.sendMessage(CC.B_RED + "-$" + AbilityType.COSMIC_TROPHY.getPickupPrice());
+                breaker.sendMessage(CC.GREEN + "You broke a " + AbilityType.COSMIC_TROPHY.getName() + CC.GREEN + "!");
 
                 ItemBuilderUtils item = new ItemBuilderUtils(this.getItem()).setLore(this.addLore());
                 p1.getBlock().getDrops().clear(); // clears the events item stack
@@ -127,7 +127,7 @@ public class AstroTrophy extends CustomBlock {
                 p2.getWorld().dropItemNaturally(p2.getLocation(), item.toItemStack()); // dropping our item stack
                 DeleteCustomBlocks.func(p2.getLocation()); // delete file and memory.
             } else {
-                breaker.sendMessage(CC.RED + "You do not have the required $" + AbilityType.ASTROTROPHY.getPickupPrice() + " to pick this block up.");
+                breaker.sendMessage(CC.RED + "You do not have the required $" + AbilityType.COSMIC_TROPHY.getPickupPrice() + " to pick this block up.");
                 p1.setCancelled(true);
             }
         } else {
