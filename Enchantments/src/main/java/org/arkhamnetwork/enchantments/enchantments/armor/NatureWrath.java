@@ -16,6 +16,7 @@ import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.cmds.CommandEnchDust;
 import org.arkhamnetwork.enchantments.events.CustomEnchantProcOnEntityEvent;
 import org.arkhamnetwork.enchantments.mastery.MasteryPoltergeist;
+import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -103,6 +104,7 @@ public class NatureWrath extends CustomEnchantment {
                 p.playSound(p.getLocation(), Sound.LEVEL_UP, 1.0f, 0.65f);
                 p.sendMessage("");
                 this.procNaturesWrath(p, attacker, level, e, 1.0);
+                DamageIndicatorUtils.sendDamageIndicator((Player) attacker, CC.RedB + "* NATURE'S WRATH *" + CC.DarkPurpleB +  "*", "NATURES_WRATH");
             } else {
                 de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 0,1,0,0.4f,20);
 

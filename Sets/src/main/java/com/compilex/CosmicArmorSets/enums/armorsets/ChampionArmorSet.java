@@ -145,7 +145,7 @@ public class ChampionArmorSet
         if (this.isBlockedOutpostWorld(damaged)) {
             return false;
         }
-        this.modifyDamage(damaged, event, -7.5, multiplier);
+        this.modifyDamage(damaged, event, -5, multiplier);
         return false;
     }
 
@@ -185,7 +185,6 @@ public class ChampionArmorSet
         player.sendMessage("");
         target.sendMessage(CC.translate(("&6&l* CHAMPION WRATH &7[&c" + player.getName() + "&7]")));
         player.setMetadata("immune_freeze", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
-        target.setMetadata("noDefenseProcs", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
         target.setMetadata("banshee_scrolls", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
         target.setMetadata("championed", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
         target.playSound(target.getLocation(), Sound.BLAZE_DEATH, 10.0f, 10.0f);
@@ -195,7 +194,6 @@ public class ChampionArmorSet
             public void run() {
                 player.removeMetadata("immune_freeze", CosmicSkyInventoryPets.get());
                 player.removeMetadata("banshee_scrolls", CosmicSkyInventoryPets.get());
-                target.removeMetadata("noDefenseProcs", CosmicSkyInventoryPets.get());
                 target.removeMetadata("championed", CosmicSkyInventoryPets.get());
                 target.sendMessage(CC.translate(("&6&l* CHAMPION WRATH FROM &7" + player.getName() + " &c&lEXPIRED &6&l*")));
                 PlayerPotionEffects.untrackPotionEffect(player, PotionEffectType.SPEED);

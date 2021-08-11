@@ -45,16 +45,18 @@ public class AstroItemSkinsAPI {
         if(!cosmicData.hasKey("itemSkinType"))
             return false;
 //        SkinType type = SkinType.valueOf(cosmicData.getString("itemSkinType"));
+
         NBTWrapper wrapper2 = new NBTWrapper(item2);
         NBTTagCompoundBuilder cosmicData2 = wrapper2.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper2.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
         if(!cosmicData2.hasKey("itemSkinType"))
             return false;
         SkinType type2 = SkinType.valueOf(cosmicData2.getString("itemSkinType"));
         for(SkinType type : getItemSkinByItem(item)) {
-            if (type.getItemSkinType() == type2.getItemSkinType())
+            if (type.getItemSkinType() == type2.getItemSkinType()) {
                 return true;
+            }
         }
-        return (new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData"))).hasKey("itemSkinType");
+        return false;
     }
 
 

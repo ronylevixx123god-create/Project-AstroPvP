@@ -7,6 +7,7 @@ import com.rit.sucy.CustomEnchantment;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.events.CustomEnchantProcOnEntityEvent;
+import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -16,6 +17,8 @@ import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+
+import java.text.DecimalFormat;
 
 public class IceAspect extends CustomEnchantment {
     public IceAspect() {
@@ -57,6 +60,7 @@ public class IceAspect extends CustomEnchantment {
                 ASound.ANVIL_LAND.play((Player) playerHit, 2.0f, 1.4f);
                 return;
             }
+            DamageIndicatorUtils.sendDamageIndicator((Player) playerHit, CC.DarkPurpleB + "* ICE ASPECT " + CC.Gray + "[" + time + "]" + CC.DarkPurpleB + "*", "ICE_ASPECT");
             WorldUtil.sendWorldEffect(l.getBlock(), 57, 2001);
             playerHit.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, time * 20, 5));
         }

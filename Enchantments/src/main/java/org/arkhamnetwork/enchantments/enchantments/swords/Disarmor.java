@@ -1,7 +1,11 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
+import com.astropvp.cc.packet.type.out.PacketOutHitSplat;
+import com.astropvp.cc.player.CosmicPlayer;
+import com.astropvp.cc.player.CosmicPlayers;
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import com.rit.sucy.CustomEnchantment;
+import net.minecraft.server.v1_8_R3.Packet;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -15,6 +19,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.HashSet;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Disarmor extends CustomEnchantment {
     public Disarmor() {

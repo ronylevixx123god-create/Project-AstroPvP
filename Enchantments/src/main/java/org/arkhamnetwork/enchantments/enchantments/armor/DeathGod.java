@@ -1,6 +1,8 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.rit.sucy.CustomEnchantment;
+import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.LivingEntity;
@@ -23,6 +25,7 @@ public class DeathGod extends CustomEnchantment {
             e.setCancelled(true);
             e.setDamage(0.0D);
             GeneralUtil.healPlayer(player, (5 + level));
+            DamageIndicatorUtils.sendDamageIndicator((Player) e.getEntity(), ChatColor.YELLOW + "" + ChatColor.BOLD + "* DEATH GOD [" + ChatColor.YELLOW + "+" + (5 + level) + "HP" + ChatColor.BOLD + "] *", "DEATH_GOD");
             ((Player)player).sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "* DEATH GOD [" + ChatColor.GOLD + "+" + (5 + level) + "HP" + ChatColor.BOLD + "] *");
         }
     }

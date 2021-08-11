@@ -1,5 +1,6 @@
 package me.astropvp.astropvpskins.listeners;
 
+import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.armorequip.ArmorEquipEvent;
 import me.astropvp.astropvpskins.enums.SkinType;
@@ -25,6 +26,7 @@ import java.util.List;
 
 public class ItemSkinListener implements Listener {
 
+
     @EventHandler
     private void onClick(InventoryClickEvent event) {
         ItemStack cursor = event.getCursor();
@@ -35,7 +37,8 @@ public class ItemSkinListener implements Listener {
             return;
         if (AstroItemSkinsAPI.isItemSkin(cursor) && event.getClick().isLeftClick()) {
             SkinType type = AstroItemSkinsAPI.getItemSkin(cursor);
-
+            if(AstroItemSkinsAPI.hasItemSkin(clicked, cursor))
+                return;
             if (type == null || !AstroItemSkinsAPI.isCorrectType(type, clicked))
                 return;
             if (event.getSlotType() == InventoryType.SlotType.ARMOR) {
@@ -56,7 +59,6 @@ public class ItemSkinListener implements Listener {
             event.setCursor(skinTypes.get(0).getItem());
             event.setCancelled(true);
             ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.BAT_TAKEOFF, 1.0F, 10.0F);
-
         }
     }
 

@@ -2,8 +2,8 @@ package org.arkhamnetwork.enchantments.enchantments.heroic;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
-import me.astropvp.damageindicators.utils.DamageIndicatorUtils;
 import me.ifamasssxd.cosmicmasks.MaskType;
+import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -21,7 +21,7 @@ public class HeroicExecute extends HeroicCustomEnchantment {
     public void applyEffect(LivingEntity player, LivingEntity target, int level, EntityDamageByEntityEvent e) {
         if (!(target instanceof org.bukkit.entity.Player))
             return;
-        if (target.getHealth() > 6.0D)
+        if (target.getHealth() > 12.0D)
             return;
         if (GeneralUtil.isEffectedByRage(target))
             return;
@@ -29,6 +29,7 @@ public class HeroicExecute extends HeroicCustomEnchantment {
         double chance = 0.04D * level;
         double mod = 3.0D + (level/2D);
         if (random < chance) {
+            DamageIndicatorUtils.sendDamageIndicator((Player) e.getEntity(), CC.RedB + "* PERMANENT EXECUTE *", "EXECUTE");
             e.setDamage(e.getDamage() * mod);
             Location l = target.getLocation();
             WorldUtil.sendWorldEffect(l.getBlock(), Material.REDSTONE_WIRE.getId(), 2001);

@@ -5,6 +5,7 @@ import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import com.rit.sucy.CustomEnchantment;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
@@ -38,6 +39,7 @@ public class Frozen extends CustomEnchantment {
                 attacker.sendMessage(CC.translate("&c&l* SNOWFLAKE FLIPPERS &7Blocked Slow Effect &c&l*"));
                 return;
             }
+            DamageIndicatorUtils.sendDamageIndicator((Player) attacker, CC.YellowB + "* FROZEN " + CC.Gray + "[" + time + "s]" + CC.YellowB + " *" + CC.YellowB +  "*", "SABOTAGE");
 
             attacker.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, time * 20, amp));
             final Location l = player.getLocation();

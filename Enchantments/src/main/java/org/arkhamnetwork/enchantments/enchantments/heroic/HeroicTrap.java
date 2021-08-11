@@ -4,8 +4,8 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import me.astropvp.damageindicators.utils.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -72,6 +72,7 @@ public class HeroicTrap extends HeroicCustomEnchantment {
             ptarget.setMetadata("titantrap", new FixedMetadataValue(Enchantments.getInstance(), level));
             ptarget.setWalkSpeed(0.001F);
             ptarget.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, (int) durationTicks, 128), true);
+            DamageIndicatorUtils.sendDamageIndicator((Player) ptarget, CC.DarkAquaB + "* TITAN TRAP " + CC.Gray + "[" + durationTicks/20 + "]" + CC.DarkAquaB + "*" + CC.DarkPurpleB +  "*", "TRAP");
             Location location = ptarget.getEyeLocation();
             Material typeItWas = location.getBlock().getType();
             List<Player> pl = ptarget.getNearbyEntities(32.0D, 32.0D, 32.0D).stream().filter(ent -> ent instanceof Player).map(ent -> (Player) ent).collect(Collectors.toList());

@@ -7,6 +7,7 @@ import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.events.CustomEnchantProcOnEntityEvent;
+import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -66,6 +67,7 @@ public class Trap extends CustomEnchantment {
             }
 
             ptarget.setWalkSpeed(0.0f);
+            DamageIndicatorUtils.sendDamageIndicator((Player) ptarget, CC.AquaB + "* TRAP " + CC.Gray + "[" + 3.25 + "]" + CC.AquaB + "*" + CC.DarkPurpleB +  "*", "TRAP");
             ptarget.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You have been trapped by " + ((Player) player).getName() + "!");
             Enchantments.getInstance().getServer().getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
                 @Override

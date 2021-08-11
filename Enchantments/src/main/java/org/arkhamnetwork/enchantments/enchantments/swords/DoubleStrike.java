@@ -5,6 +5,7 @@ import com.rit.sucy.CustomEnchantment;
 import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.listeners.VanillaDamageListener;
+import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralCooldown;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
@@ -45,6 +46,7 @@ public class DoubleStrike extends CustomEnchantment {
                         playerHit.damage(fdmg, (Entity) player);
                         pp.sendMessage(CC.translate("&6&l** DOUBLE STRIKE **"));
                         GeneralCooldown.enterCooldown(pp);
+                        DamageIndicatorUtils.sendDamageIndicator((Player) playerHit, CC.RedB + "* DOUBLE STRIKE *", "DOUBLE_STRIKE");
                     }
                 }
             }, 2L);

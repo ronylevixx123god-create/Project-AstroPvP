@@ -31,13 +31,13 @@ import java.util.List;
 public class PumpkinPie extends CustomBlock {
 
     public PumpkinPie() {
-        super("THANKSGIVING_PIE", CC.translate("&e&lPumpkin Pie"), Material.NOTE_BLOCK, AbilityType.PUMPKINPIE);
+        super("THANKSGIVING_PIE", CC.translate("&e&lPumpkin Pie"), Material.NOTE_BLOCK, AbilityType.THANKSGIVING_PIE);
     }
 
     @Override
     public List<String> addLore() {
         return Arrays.asList(
-                CC.translate("&eCost to Mine: &f$" + AbilityType.PUMPKINPIE.getPickupPrice()),
+                CC.translate("&eCost to Mine: &f$" + AbilityType.THANKSGIVING_PIE.getPickupPrice()),
                 "",
                 CC.translate("&7Receive all of the following"),
                 CC.translate("&7buffs when standing in the same chunk."),
@@ -100,7 +100,7 @@ public class PumpkinPie extends CustomBlock {
             return;
         }
         if (fPlayer.getRelationToLocation().isMember()) {
-            MakeCustomBlocks.newFileItem(p0, AbilityType.PUMPKINPIE, p1.getBlock(), this);
+            MakeCustomBlocks.newFileItem(p0, AbilityType.THANKSGIVING_PIE, p1.getBlock(), this);
         } else {
             p0.sendMessage(CC.RED + "You must be in your own claim to place a block of this type");
             p1.setCancelled(true);
@@ -115,10 +115,10 @@ public class PumpkinPie extends CustomBlock {
             // The block must be in the land to remove it.
             return;
         }
-        if (CoreSkulls.getEconomy().has(breaker, AbilityType.PUMPKINPIE.getPickupPrice())) {
-            CoreSkulls.getEconomy().withdrawPlayer(breaker, AbilityType.PUMPKINPIE.getPickupPrice());
-            breaker.sendMessage(CC.B_RED + "-$" + AbilityType.PUMPKINPIE.getPickupPrice());
-            breaker.sendMessage(CC.GREEN + "You broke a " + AbilityType.PUMPKINPIE.getName() + CC.GREEN + "!");
+        if (CoreSkulls.getEconomy().has(breaker, AbilityType.THANKSGIVING_PIE.getPickupPrice())) {
+            CoreSkulls.getEconomy().withdrawPlayer(breaker, AbilityType.THANKSGIVING_PIE.getPickupPrice());
+            breaker.sendMessage(CC.B_RED + "-$" + AbilityType.THANKSGIVING_PIE.getPickupPrice());
+            breaker.sendMessage(CC.GREEN + "You broke a " + AbilityType.THANKSGIVING_PIE.getName() + CC.GREEN + "!");
 
             ItemBuilderUtils item = new ItemBuilderUtils(this.getItem()).setLore(this.addLore());
             p1.getBlock().getDrops().clear(); // clears the events item stack
@@ -128,7 +128,7 @@ public class PumpkinPie extends CustomBlock {
             p2.getWorld().dropItemNaturally(p2.getLocation(), item.toItemStack()); // dropping our item stack
             DeleteCustomBlocks.func(p2.getLocation()); // delete file and memory.
         } else {
-            breaker.sendMessage(CC.RED + "You do not have the required $" + AbilityType.PUMPKINPIE.getPickupPrice() + " to pick this block up.");
+            breaker.sendMessage(CC.RED + "You do not have the required $" + AbilityType.THANKSGIVING_PIE.getPickupPrice() + " to pick this block up.");
             p1.setCancelled(true);
         }
     }

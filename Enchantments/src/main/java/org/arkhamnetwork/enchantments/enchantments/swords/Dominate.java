@@ -1,9 +1,11 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
 import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.rit.sucy.CustomEnchantment;
 import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -45,6 +47,7 @@ public class Dominate extends CustomEnchantment {
             if (!playerHit.hasMetadata(Dominate.dominateEffectLevel_metadata) && playerHit instanceof Player) {
                 ((Player) playerHit).sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "* DOMINATED [" + ChatColor.RED + "-" + level * 5 + "% DMG for " + level * 2 + "s" + ChatColor.RED + ChatColor.BOLD + "] *");
             }
+            DamageIndicatorUtils.sendDamageIndicator((Player) e.getEntity(), CC.RedB + "* DOMINATE *", "DOMINATE");
             playerHit.setMetadata(Dominate.dominateEffectExpire_metadata, (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) (MinecraftServerUtils.getCurrentServerTick() + level * 2 * 20)));
             playerHit.setMetadata(Dominate.dominateEffectLevel_metadata, (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) level));
             //ParticleEffect.playEffect(ParticleEffect.ENCHANTMENT_TABLE, playerHit.getLocation().add(0.0, 1.0, 0.0), 0.8f, 32);

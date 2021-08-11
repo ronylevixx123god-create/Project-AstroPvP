@@ -32,6 +32,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
@@ -119,10 +120,10 @@ public class EngineerSet extends ArmorSetInfo implements Listener, WeaponedArmor
         if (!(event.getEntity() instanceof Player)) {
             return false;
         }
-        if (Math.random() <= 0.09) {
+        if (Math.random() <= 0.04) {
             onEngineerAbility(damaged);
         }
-        //event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.65D);
+        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.65D);
         return true;
     }
 
@@ -133,7 +134,7 @@ public class EngineerSet extends ArmorSetInfo implements Listener, WeaponedArmor
         player.sendMessage(CC.translate("&a&l* B-2 BOMBER DEPLOYED [&7" + affected.size() + " &7players&a&l] *"));
         for (Player enemy : affected) {
             enemy.sendMessage(CC.translate("&6&l* B-2 BOMB, RUN! &7(" + player.getName() + ") &6&l*"));
-            //this.fallingBlocks.add(createFallingBlock(enemy.getLocation().add(0, 5, 0), player,FactionUtils.getFaction(player)));
+            this.fallingBlocks.add(createFallingBlock(enemy.getLocation().add(0, 5, 0), player,FactionUtils.getFaction(player)));
         }
     }
 
@@ -141,33 +142,19 @@ public class EngineerSet extends ArmorSetInfo implements Listener, WeaponedArmor
         final Material mat = Material.TNT;
         EntityFallingBlock block = new EntityFallingBlock(location, (World) location.getWorld(), location.getX(), location.getY(), location.getZ(), Block.getById(mat.getId()).getBlockData()) {
             boolean damagedPlayed = false;
-
-
             @SneakyThrows
             public void die() {
-                /* 296 */
-                if (isAlive() && this.damagedPlayed) {
-
-                    this.world.getWorld().playEffect(getBukkitEntity().getLocation(), Effect.STEP_SOUND, mat.getId());
-
-                }
+                if (isAlive() && this.damagedPlayed) { this.world.getWorld().playEffect(getBukkitEntity().getLocation(), Effect.STEP_SOUND, mat.getId()); }
                 try {
                     de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), this.getBukkitEntity().getLocation(), 0f, 0.5f, 0f, 0.6f, 5);
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
-
                 this.bukkitEntity.getLocation().getWorld().playSound(this.bukkitEntity.getLocation(), Sound.ZOMBIE_WOOD, 1.2F, 0.9f);
-
                 super.die();
-
             }
-
-
             public void h() {
-                /* 304 */
                 if (this.ticksLived >= 1) {
-
                     try {
                         List<net.minecraft.server.v1_8_R3.Entity> arraylist = this.world.getEntities(this, this.getBoundingBox());
                         int killed = 0;
@@ -177,36 +164,16 @@ public class EngineerSet extends ArmorSetInfo implements Listener, WeaponedArmor
                             if (ent instanceof EntityHuman) {
                                 CraftPlayer player = (CraftPlayer) ent.getBukkitEntity();
                                 if (player.getGameMode() == GameMode.CREATIVE || player.equals(original) || player.isDead() ||
-                                        EssentialsUtils.isInGodMode(player) || player.hasMetadata("spectator") || player.hasMetadata("NPC") || player.getHealth() <= 0.0D || !WorldGuardUtils.isPvPEnabled(player.getLocation())) {
-                                    continue;
-                                }
-
-                                if (faction.isNormal() && faction.getRelationTo(FPlayers.i.get(player)).isAtLeast(Relation.TRUCE)) {
-                                    continue;
-                                }
-                                /* 335 */
-
-                                /* 337 */
-                                if (player.hasMetadata("b2-bombed")) {
-
-                                    /* 339 */
-                                    die();
-
-
-                                    continue;
-
-                                }
-
-
+                                        EssentialsUtils.isInGodMode(player) || player.hasMetadata("spectator") || player.hasMetadata("NPC") || player.getHealth() <= 0.0D || !WorldGuardUtils.isPvPEnabled(player.getLocation())) { continue; }
+                                if (faction.isNormal() && faction.getRelationTo(FPlayers.i.get(player)).isAtLeast(Relation.TRUCE)) { continue; }
+                                if (player.hasMetadata("b2-bombed")) { die();continue; }
                                 player.setWalkSpeed(0.0f);
                                 player.sendMessage(CC.translate("&c&l* B-2 BOMBED [&7" + original.getName() + " (Frozen for 3s)&c&l] *"));
                                 player.setMetadata("b2-bombed", new FixedMetadataValue(CosmicArmorSetsPlugin.get_(), true));
-
                                 Bukkit.getScheduler().runTaskLaterAsynchronously(CosmicArmorSetsPlugin.get_(), () -> {
-
-                                    if (player.isOnline()) unfreeze(player);
-
-                                }, 3 * 20);
+                                    if (player.isOnline())
+                                        unfreeze(player);
+                                    }, 3 * 20);
                                 this.damagedPlayed = true;
                                 killed++;
                             }
@@ -217,16 +184,11 @@ public class EngineerSet extends ArmorSetInfo implements Listener, WeaponedArmor
                             return;
                         }
                         if (this.ticksLived % 20 == 0) {
-                            if (this.world.getType(new BlockPosition(this.locX, (int) this.locY, (int) this.locZ)) == Blocks.WEB || this.world
-/* 361 */.getType(new BlockPosition(this.locX, (int) this.locY - 1, (int) this.locZ)) == Blocks.WEB) {
+                            if (this.world.getType(new BlockPosition(this.locX, (int) this.locY, (int) this.locZ)) == Blocks.WEB || this.world.getType(new BlockPosition(this.locX, (int) this.locY - 1, (int) this.locZ)) == Blocks.WEB) {
                                 die();
-
                             }
-
                         }
-
                     } catch (Exception e) {
-
                         e.printStackTrace();
                     }
                 }
@@ -242,32 +204,19 @@ public class EngineerSet extends ArmorSetInfo implements Listener, WeaponedArmor
         fallingBlock.setMetadata("b2Bomber", new FixedMetadataValue(CosmicBosses.getInstance(), faction.getId()));
         fallingBlock.setDropItem(false);
         return fallingBlock;
-
     }
 
     public void onPlayerEvent(Event event) {
-        /* 425 */
         if (event instanceof EntityChangeBlockEvent) {
-            /* 426 */
             org.bukkit.entity.Entity falling = ((EntityChangeBlockEvent) event).getEntity();
-            /* 427 */
             if (this.fallingBlocks.remove(falling)) {
-
                 ((EntityChangeBlockEvent) event).setCancelled(true);
-                /* 430 */
                 falling.remove();
-
             }
-            /* 432 */
         } else if (event instanceof PlayerQuitEvent) {
-            /* 433 */
             unfreeze(((PlayerQuitEvent) event).getPlayer());
-            /* 434 */
-            /* 435 */
         } else if (event instanceof PlayerTeleportEvent) {
-            /* 436 */
             unfreeze(((PlayerTeleportEvent) event).getPlayer());
-
         }
     }
 
@@ -280,12 +229,12 @@ public class EngineerSet extends ArmorSetInfo implements Listener, WeaponedArmor
         if (!(event.getEntity() instanceof Player)) {
             return false;
         }
-        double chance = 4.0D;
+/*        double chance = 4.0D;
         if (ThreadLocalRandom.current().nextDouble(200.0D) <= chance) {
             if (Math.random() < 0.05) {
                 onEngineerAbility(damager);
             }
-        }
+        }*/
         return false;
     }
 
@@ -297,8 +246,9 @@ public class EngineerSet extends ArmorSetInfo implements Listener, WeaponedArmor
             return false;
         if (damaged.getWorld().getName().contains("dungeon"))
             return false;
-        if ((ThreadLocalRandom.current().nextInt(100)) <= 4.7D * multiplier)
+        if (Math.random() < 0.01)
             onEngineerAbility(damaged);
+        event.setDamage(event.getDamage() * 0.91);
         return false;
     }
 

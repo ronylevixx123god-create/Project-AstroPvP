@@ -1,8 +1,11 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.rit.sucy.CustomEnchantment;
+import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -20,6 +23,7 @@ public class Poison extends CustomEnchantment {
         final double random = Math.random();
         final double chance = 0.1 * enchantLevel;
         if (random < chance) {
+            DamageIndicatorUtils.sendDamageIndicator((Player) target, CC.YellowB + "* POISON *", "POISON");
             target.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 3, enchantLevel - 1));
         }
     }

@@ -5,6 +5,7 @@ import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import me.ifamasssxd.cosmicmasks.MaskType;
 import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -60,6 +61,7 @@ class TeleblockListener implements Listener {
                         break;
                     }
                 }
+                DamageIndicatorUtils.sendDamageIndicator((Player) e.getEntity(), CC.DarkPurpleB + ChatColor.DARK_PURPLE + "* TELEBLOCK [" + 5 + teleblockLevel * 3 + "s] [-" + pearlsToDestroy + "ep] *", "TELEBLOCK");
                 pHurt.sendMessage(ChatColor.DARK_PURPLE + "** TELEBLOCK [" + 5 + teleblockLevel * 3 + "s] [-" + pearlsToDestroy + "ep] **");
                 pHurt.playSound(pHurt.getLocation(), Sound.ENDERMAN_HIT, 0.75f, 0.6f);
             }

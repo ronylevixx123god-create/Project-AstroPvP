@@ -5,6 +5,7 @@ import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.events.CustomEnchantProcOnEntityEvent;
 import org.arkhamnetwork.enchantments.listeners.CustomEnchantListener;
+import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -59,9 +60,11 @@ public class HeroicMetaphysical extends HeroicCustomEnchantment {
                 final Integer damagedEquipped = ((HeroicMetaphysical) this.customEnchant).getEquippedMetaphysical().get(event.getTarget().getUniqueId());
                 if (damagedEquipped != null) {
                     final double chance = 0.2 * damagedEquipped;
-                    if (HeroicMetaphysical.this.random.nextDouble() <= chance) {
+                    if (Math.random() < chance) {
                         event.setCancelled(true);
                         if (event.getTarget() instanceof Player) {
+                            DamageIndicatorUtils.sendDamageIndicator((Player) event.getTarget(), CC.LightPurpleB + "* POLYMORPHIC METAPHYSICAL " + CC.Gray + "[Ice Aspect blocked]" + CC.LightPurpleB + " *", "METAPHYSICAL");
+                            //CHANGE IF GAY
                             ((Player) event.getTarget()).sendMessage(CC.LightPurpleB + "** POLYMORPHIC METAPHYSICAL (" + CC.Gray + "Ice Aspect blocked!" + CC.LightPurpleB + ") **");
                         }
                     }

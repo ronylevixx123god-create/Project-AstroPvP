@@ -8,6 +8,7 @@ import com.conaxgames.customskulls.listeners.CustomAbilityListener;
 import com.conaxgames.customskulls.listeners.CustomBlockListener;
 import com.conaxgames.customskulls.util.CC;
 import com.conaxgames.customskulls.util.inventoryui.UIListener;
+import de.tr7zw.nbtinjector.NBTInjector;
 import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
@@ -32,10 +33,9 @@ public class CoreSkulls extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-
         getConfig().options().copyDefaults(true);
         saveConfig();
-
+        NBTInjector.inject();
         File file = new File(this.getDataFolder() + File.separator + "data");
         if(!file.exists()) {
             file.mkdir();

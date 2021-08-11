@@ -4,10 +4,11 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.rit.sucy.CustomEnchantment;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import me.astropvp.damageindicators.utils.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralCooldown;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
@@ -64,8 +65,14 @@ public class MasteryNeutralize extends CustomEnchantment {
                 pTarget.setMetadata("silenced", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), "banana"));
             }
             pTarget.playSound(pTarget.getLocation(), Sound.ENDERMAN_SCREAM, 1.0f, 0.3f);
-
+            DamageIndicatorUtils.sendDamageIndicator((Player) pTarget, CC.DarkPurpleB + "* NEUTRALIZED" + CC.Gray +  "[5s]" + CC.Gray + " *", "NEUTRALIZE");
             pTarget.setMetadata("neutralized", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), "banana"));
+            Bukkit.getScheduler().runTaskLater(Enchantments.getInstance(), () -> {
+                pTarget.removeMetadata("neutralized", Enchantments.getInstance());
+                pTarget.removeMetadata("noDefenseProcs", Enchantments.getInstance());
+                pTarget.removeMetadata("silenced", Enchantments.getInstance());
+
+            }, 100L);
             GeneralCooldown.enterCooldown(user);
 
 

@@ -5,8 +5,8 @@ import com.rit.sucy.CustomEnchantment;
 import javafx.scene.control.Skin;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import me.astropvp.damageindicators.utils.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralCooldown;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
@@ -45,7 +45,7 @@ public class MasteryBlackout extends CustomEnchantment {
             enchantLevel = 5;
         }
 
-        if (Math.random() <= 0.005D) {
+        if (Math.random() <= 0.002D * enchantLevel) {
             int multi = AstroItemSkinsAPI.hasSkinEquipped((Player) user, SkinType.CORRUPT_SWORD) ? 2 : 1;
             if (AstroItemSkinsAPI.hasSkinEquipped(pTarget.getPlayer(), SkinType.CHRISTMAS_HELMET_STAR)) {
                 multi = 1;
@@ -58,9 +58,10 @@ public class MasteryBlackout extends CustomEnchantment {
                 return;
             }
             pTarget.playSound(pTarget.getLocation(), Sound.WITHER_HURT, 1.0f, 0.25f);
+            DamageIndicatorUtils.sendDamageIndicator((Player) pTarget, CC.DarkPurpleB + "&7&l* BLACKOUT &7[" + (2 + enchantLevel) * multi + "s on: &e" + pTarget.getName() + "&7] &7&l*", "BLACKOUT");
 
             pTarget.sendMessage(CC.translate("&5&L* BLACKOUT &7[" + (2 + enchantLevel) * multi + "&7s] &5&l *"));
-            ((Player) user).sendMessage(CC.translate("&7&l* BLACKOUT &7[" + (2 + enchantLevel) * multi + "s on: &e" + pTarget.getName() + "&7] &7&l*"));
+            ((Player) user).sendMessage(CC.translate(CC.DarkPurpleB + "* BLACKOUT " + CC.Gray + "[" + (2 + enchantLevel) * multi + "s]" + CC.DarkPurpleB +  " *"));
             pTarget.setMetadata("blackout", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), "banana"));
             Enchantments.getInstance().getServer().getScheduler().runTaskLaterAsynchronously((Plugin) Enchantments.getInstance(), () -> target.removeMetadata("blackout", (Plugin) Enchantments.getInstance()), ((4 + enchantLevel * multi) * 20));
             GeneralCooldown.enterCooldown((Player) user);
