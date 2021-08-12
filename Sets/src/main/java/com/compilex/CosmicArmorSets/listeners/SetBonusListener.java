@@ -34,6 +34,8 @@ import com.compilex.CosmicArmorSets.enums.armorsets.DimensionalTravelerSet;
 import com.compilex.CosmicArmorSets.enums.armorsets.EngineerSet;
 import com.compilex.CosmicArmorSets.enums.armorsets.SupremeArmorSet;
 import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
@@ -106,6 +108,8 @@ public class SetBonusListener
             Map<ArmorSet, Integer> bonuses;
             AbilityArmorSet set;
             ArmorSet damagerArmorSet = CosmicArmorSetsAPI.getArmorSet(damager);
+            if(AstroItemSkinsAPI.hasSkinEquipped((Player) event.getDamager(), SkinType.COSMIC_CITIZEN_BOOTS))
+                event.setDamage(event.getDamage() * 1.2);
             if (damagerArmorSet != null && (event.getDamager() instanceof Player || damagerArmorSet.getArmorSetInfo().supportsBowDamage() && event.getDamager() instanceof Projectile)) {
                 damagerArmorSet.getArmorSetInfo().onPlayerAttacked(damager, event);
             }

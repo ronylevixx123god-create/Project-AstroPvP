@@ -33,7 +33,7 @@ public class HeroicArmored extends HeroicCustomEnchantment {
                 Blessed.blessPlayer((Player)player);
             }
         }
-        double damage_negation = level * 0.03D * 1.5;
+        double damage_negation = level * 0.03D;
         if (i != null && i.getType().name().contains("_SWORD") && e
                 .getDamage() * (1.0D - damage_negation) > 1.0D) {
             e.setDamage(e.getDamage() * (1.0D - damage_negation));

@@ -14,5 +14,6 @@ public class HeroicSolitude extends HeroicCustomEnchantment {
     }
 
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
+
     }
 }
