@@ -46,7 +46,7 @@
             <artifactId>cc</artifactId>
             <version>0.1</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/CCVerify-1.0.jar</systemPath>
+            <systemPath>${project.basedir}/lib/CCVerify-1.0 (8).jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
