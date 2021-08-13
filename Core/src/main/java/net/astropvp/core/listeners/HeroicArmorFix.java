@@ -30,7 +30,7 @@ public class HeroicArmorFix implements Listener {
 
             }
 
-            if (helmet.getType() == Material.LEATHER_HELMET) {
+            if (helmet.getType() == Material.LEATHER_HELMET || helmet.getType() == Material.SKULL_ITEM || helmet.getType() == Material.SKULL) {
                 helmet.setDurability((short) 0);
             }
 

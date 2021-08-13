@@ -326,7 +326,7 @@ public class DimensionalTravelerSet
         if (this.isBlockedOutpostWorld(damager)) {
             return false;
         }
-        return this.modifyDamage(damager, event, 4.5, multiplier);
+        return this.modifyDamage(damager, event, 7.5, multiplier);
     }
 
     @Override
