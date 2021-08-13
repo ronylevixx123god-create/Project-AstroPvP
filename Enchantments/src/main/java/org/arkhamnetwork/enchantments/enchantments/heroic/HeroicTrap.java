@@ -1,6 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
@@ -62,6 +63,8 @@ public class HeroicTrap extends HeroicCustomEnchantment {
                 chance = Math.max(chance, 0.01D);
                 if (random > chance) {
                     ptarget.sendMessage(ChatColor.DARK_GRAY + "" + ChatColor.BOLD + "** METAPHYSICAL (" + ChatColor.DARK_GRAY + "Trap blocked!" + ChatColor.BOLD + ") **");
+                    DamageIndicatorUtils.sendDamageIndicator(ptarget, CC.translate("&8&l* METAPHYSICAL *"), "METAPHYSICAL");
+
                     return;
                 }
             }

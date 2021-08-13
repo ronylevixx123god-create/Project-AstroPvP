@@ -32,6 +32,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.libs.Vector3D;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
+import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.PetUtils;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.Bukkit;
@@ -158,7 +159,10 @@ public class InventoryBloodhoundPet extends InventoryPet {
       this.removeNearMeta(player, pTarget);
       pTarget.sendMessage("");
       pTarget.sendMessage("" + ChatColor.RED + ChatColor.BOLD + "** BLOODHOUND PET: (No Bless) for (" + ChatColor.GRAY + "10s" + ChatColor.RED + ") **");
+
       pTarget.sendMessage("");
+      DamageIndicatorUtils.sendDamageIndicator(pTarget, CC.translate("&c&l* BLOODHOUND *"), "RKO");
+
       (new BukkitRunnable() {
          public void run() {
             pTarget.removeMetadata("noDefenseProcs", Enchantments.getInstance());

@@ -19,6 +19,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
+import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.PetUtils;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.SkrrtCooldown;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
@@ -158,6 +159,9 @@ public class InventorySkrrtPet extends InventoryPet {
                 if (castingPlayer.getRelationTo(surroundingPlayer) == Relation.ENEMY || castingPlayer.getRelationTo(surroundingPlayer) == Relation.NEUTRAL) {
                     p.sendMessage("" + ChatColor.DARK_RED + ChatColor.BOLD + "* SKRRT: (" + ChatColor.GRAY + player.getName() + ChatColor.DARK_RED + ")");
                     player.sendMessage("" + ChatColor.DARK_RED + ChatColor.BOLD + "* SKRRT: (" + ChatColor.GRAY + p.getName() + ChatColor.DARK_RED + ")");
+
+                    DamageIndicatorUtils.sendDamageIndicator(player, CC.translate("&4&l* SKRRT PET *"), "SKRRT");
+
                     SkrrtCooldown.enterSkrrtCooldown(p);
                     CombatLog.flagCombat(p);
                     this.freezeThePlayer(p);

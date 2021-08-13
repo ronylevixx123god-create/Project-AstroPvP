@@ -7,6 +7,7 @@ import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.MasteryCustomEnchantment;
 import org.arkhamnetwork.enchantments.events.CustomEnchantProcOnEntityEvent;
 import org.arkhamnetwork.enchantments.listeners.CustomEnchantListener;
+import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
@@ -59,9 +60,12 @@ public class MasteryMarkOfTheBeast extends MasteryCustomEnchantment {
                 for (final Entity entity : attacker.getNearbyEntities((double) (20 + enchantLevel * 2), (double) (20 + enchantLevel * 2), (double) (20 + enchantLevel * 2))) {
                     if (entity instanceof Player) {
                         ((Player) entity).sendMessage(CC.YellowB + "* MARK OF THE BEAST [" + CC.Gray + attacker.getName() + ": " + NumberUtils.formatSeconds(seconds) + "s" + CC.YellowB + "] *");
+                        DamageIndicatorUtils.sendDamageIndicator((Player) entity, CC.translate("&e&l* MARK OF THE BEAST [&7" + NumberUtils.formatSeconds(seconds) + "s&e&l] *"), "MARK_OF_THE_BEAST");
+
                     }
                 }
                 attacker.sendMessage(CC.RedB + "* MARK OF THE BEAST [" + CC.Gray + NumberUtils.formatSeconds(seconds) + "s" + CC.RedB + "] *");
+
                 Player player = (Player) attackerEnt;
                 Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin) Enchantments.getInstance(), () -> {
                     if (player.isValid()) {
@@ -94,6 +98,7 @@ public class MasteryMarkOfTheBeast extends MasteryCustomEnchantment {
                         ((Player) entity).sendMessage(CC.YellowB + "* MARK OF THE BEAST [" + CC.Gray + attacker.getName() + ": " + NumberUtils.formatSeconds(seconds) + "s" + CC.YellowB + "] *");
                     }
                 }
+
                 attacker.sendMessage(CC.RedB + "* MARK OF THE BEAST [" + CC.Gray + NumberUtils.formatSeconds(seconds) + "s" + CC.RedB + "] *");
                 Player player = (Player) attackerEnt;
                 Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin) Enchantments.getInstance(), () -> {

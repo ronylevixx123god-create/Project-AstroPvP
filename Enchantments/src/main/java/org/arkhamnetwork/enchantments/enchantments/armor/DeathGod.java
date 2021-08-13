@@ -25,7 +25,7 @@ public class DeathGod extends CustomEnchantment {
             e.setCancelled(true);
             e.setDamage(0.0D);
             GeneralUtil.healPlayer(player, (5 + level));
-            DamageIndicatorUtils.sendDamageIndicator((Player) e.getEntity(), ChatColor.YELLOW + "" + ChatColor.BOLD + "* DEATH GOD [" + ChatColor.YELLOW + "+" + (5 + level) + "HP" + ChatColor.BOLD + "] *", "DEATH_GOD");
+            DamageIndicatorUtils.sendDamageIndicator((Player) e.getEntity(), ChatColor.GOLD + "" + ChatColor.BOLD + "* DEATH GOD [" + ChatColor.GOLD + "+" + (5 + level) + "HP" + ChatColor.BOLD + "] *", "DEATH_GOD");
             ((Player)player).sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "* DEATH GOD [" + ChatColor.GOLD + "+" + (5 + level) + "HP" + ChatColor.BOLD + "] *");
         }
     }

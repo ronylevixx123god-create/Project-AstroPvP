@@ -1,6 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.rit.sucy.CustomEnchantment;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
@@ -26,6 +27,7 @@ public class Metaphysical extends CustomEnchantment {
 
     public void applyEquipEffect(final Player player, final int enchantLevel) {
         player.setMetadata("metaphysicalEnchant", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) enchantLevel));
+
     }
 
     public void applyUnequipEffect(final Player player, final int enchantLevel) {

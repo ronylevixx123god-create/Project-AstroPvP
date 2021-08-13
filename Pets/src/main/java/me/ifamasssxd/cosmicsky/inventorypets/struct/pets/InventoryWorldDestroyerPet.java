@@ -20,6 +20,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.tasks.BleedTask;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.CageCooldown;
+import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.PetUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -181,7 +182,8 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         player.sendMessage(CC.translate("&e&l* WORLD DESTROYER &7[&f" + target.getName() + "&7] &e&l*")
         );
         target.sendMessage(CC.translate("&c&l* WORLD DESTROYER &7[&f" + player.getName() + "&7] &c&l*"));
-            petItem.setLastUsed(System.currentTimeMillis());
+
+        petItem.setLastUsed(System.currentTimeMillis());
         if (playerHasApollo(player)) {
             Player finalTarget = target;
             Bukkit.getScheduler().runTaskLater((Plugin) CosmicSkyInventoryPets.get(), () -> {
@@ -189,6 +191,8 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
                 PermissionsAPI.getPermissionUser(finalTarget.getUniqueId()).getPermissionNodes().remove("verus.bypass");
                 PermissionsAPI.getPermissionUser(player.getUniqueId()).getPermissionNodes().remove("verus.bypass");
                 BlockModifier.removeBlocks(p.getUniqueId(), true, true);
+                DamageIndicatorUtils.sendDamageIndicator(finalTarget, CC.translate("&e&l* WORLD DESTROYER [&77s&e&l] *"), "RKO");
+
             }, (long) (cageDuration(petItem.getLevel()) + cageDuration(petItem.getLevel() / 2)) * 20L);
         } else {
             Player finalTarget1 = target;
@@ -196,6 +200,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
                 getBlockModifier();
                 PermissionsAPI.getPermissionUser(finalTarget1.getUniqueId()).getPermissionNodes().remove("verus.bypass");
                 PermissionsAPI.getPermissionUser(player.getUniqueId()).getPermissionNodes().remove("verus.bypass");
+                DamageIndicatorUtils.sendDamageIndicator(finalTarget1, CC.translate("&e&l* WORLD DESTROYER [&75s&e&l] *"), "RKO");
                 BlockModifier.removeBlocks(p.getUniqueId(), true, true);
 
             }, (long) cageDuration(petItem.getLevel()) * 20L);

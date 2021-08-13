@@ -44,7 +44,7 @@ public class Paralyze extends CustomEnchantment {
                 playerHit.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 100, (int) ((level > 2) ? 1 : 0)));
             }
             playerHit.damage((double) (1 + level/2));
-            DamageIndicatorUtils.sendDamageIndicator((Player) playerHit, CC.YellowB + "* PARALYZE *" + CC.YellowB +  "*", "SABOTAGE");
+            DamageIndicatorUtils.sendDamageIndicator((Player) playerHit, CC.YellowB + "* PARALYZE *" + CC.YellowB +  "*", "PARALYZE");
             GeneralCooldown.enterCooldown((Player) player);
         }
     }

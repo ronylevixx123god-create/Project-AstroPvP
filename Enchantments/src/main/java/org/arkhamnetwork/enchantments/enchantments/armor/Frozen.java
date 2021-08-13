@@ -39,7 +39,7 @@ public class Frozen extends CustomEnchantment {
                 attacker.sendMessage(CC.translate("&c&l* SNOWFLAKE FLIPPERS &7Blocked Slow Effect &c&l*"));
                 return;
             }
-            DamageIndicatorUtils.sendDamageIndicator((Player) attacker, CC.YellowB + "* FROZEN " + CC.Gray + "[" + time + "s]" + CC.YellowB + " *" + CC.YellowB +  "*", "SABOTAGE");
+            DamageIndicatorUtils.sendDamageIndicator((Player) attacker, CC.AquaB + "* FROZEN " + CC.Gray + "[" + time*20 + "s]" + CC.AquaB + " *" + CC.AquaB +  "*", "FROZEN");
 
             attacker.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, time * 20, amp));
             final Location l = player.getLocation();

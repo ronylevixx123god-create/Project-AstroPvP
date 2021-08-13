@@ -17,6 +17,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.libs.Vector3D;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
+import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.PetUtils;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.WitcherCooldown;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
@@ -100,6 +101,8 @@ public class InventoryWitcherPet extends InventoryPet {
         }
 
 
+
+
         if (playerHasApollo(player)) {
             sum *= 1.5;
         }
@@ -143,6 +146,10 @@ public class InventoryWitcherPet extends InventoryPet {
         player.sendMessage("");
         player.setMetadata("witcher_effect", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), null));
         player.setMetadata("noknockback", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), null));
+
+        DamageIndicatorUtils.sendDamageIndicator(player, CC.translate("&4&l* WITHER PET *"), "WITHER");
+
+
         Bukkit.getScheduler().runTaskLater((Plugin) CosmicSkyInventoryPets.get(), new Runnable() {
             public void run() {
                 for (Player player : players) {

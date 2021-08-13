@@ -26,6 +26,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
+import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.PetUtils;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.SnowmanCooldown;
 import me.libraryaddict.disguise.DisguiseAPI;
@@ -155,6 +156,9 @@ public class InventoryAbominableSnowmanPet extends InventoryPet {
       p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, (int)(1L * freezeDuration(this.petLevel) * 20L), 128));
       p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, (int)(1L * freezeDuration(this.petLevel) * 20L), 128));
       p.setMetadata("frozenSnowman", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSkyInventoryPets.get(), Long.valueOf(System.currentTimeMillis())));
+
+      DamageIndicatorUtils.sendDamageIndicator(p, CC.translate("&e&l* SNOWMAN PET *"), "RKO");
+
       p.sendMessage(String.valueOf(CC.YellowB) + "POLYMORPH'D [" + CC.Gray + freezeDuration(this.petLevel) + "s" + CC.YellowB + "] " + CC.YellowB + "[" + CC.Gray + caster.getName() + CC.YellowB + "]");
       caster.sendMessage(CC.YellowB + "POLYMORPH'D [" + CC.Gray + freezeDuration(this.petLevel) + "s" + CC.YellowB + "] " + CC.YellowB + "[" + CC.Gray + p.getName() + CC.YellowB + "]");
       (new BukkitRunnable() {
