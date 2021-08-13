@@ -5,6 +5,7 @@ import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.massivecraft.factions.struct.Role;
 import me.astropvp.astrospawners.data.SpawnerData;
 import me.astropvp.astrospawners.data.SpawnerDataHelper;
+import net.astropvp.core.utils.BlocksUtil;
 import net.astropvp.core.utils.ChunkBusterUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -78,7 +79,7 @@ public class ChunkBusterListener implements Listener {
                                 }
 
                             }
-                            block.setType(Material.AIR);
+                            BlocksUtil.setAir(block, false);
                         }
                     }
                 }
