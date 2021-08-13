@@ -8,6 +8,7 @@ import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import lombok.SneakyThrows;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.ItemSkinType;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
 import me.ifamasssxd.cosmichcf.struct.OutpostType;
@@ -21,7 +22,6 @@ import org.arkhamnetwork.enchantments.mastery.MasteryFeignDeath;
 import org.arkhamnetwork.enchantments.util.ArmorUtil;
 import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.arkhamnetwork.enchantments.util.ItemSkinUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -72,10 +72,14 @@ public class Phoenix extends CustomEnchantment {
     public static boolean procPhoenix(Player player, LivingEntity damager, int level, double dmg) throws Exception {
         if (player.getHealth() <= 0.0D)
             return false;
-        if (player.hasMetadata("witchered") && !ItemSkinUtils.hasItemSkin(player, "CORRUPT_BELT_UTILITY"))
+        if (player.hasMetadata("witchered") && !AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
+            player.sendMessage(CC.translate("&c&l* PHOENIX BLOCKED [&7Witcher Ability&c&l] *"));
             return false;
-        if (player.hasMetadata("noSoulProcs") && !ItemSkinUtils.hasItemSkin(player, "CORRUPT_BELT_UTILITY"))
+        }
+        if (player.hasMetadata("noSoulProcs") && !AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
+            player.sendMessage(CC.translate("&c&l* PHOENIX BLOCKED [&7Leviathan Trophy&c&l] *"));
             return false;
+        }
 
         if (player.getHealth() - dmg <= 0.0D) {
 
@@ -101,14 +105,14 @@ public class Phoenix extends CustomEnchantment {
                 player.sendMessage(CC.translate("&4&l* PHOENIX BLOCKED [&c" + damager.getName() + " Cranked Mask&4&l] *"));
                 return false;
             }
-            if (Math.random() <= 0.5D && MaskType.hasEquipped((Player) damager, "DEATH_KNIGHT") && !ItemSkinUtils.hasItemSkin(player, "CORRUPT_BELT_UTILITY") && !(HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction((FPlayer) damager), OutpostType.THE_GREAT_HALL) && Math.random() < 0.1)) {
+            if (Math.random() <= 0.5D && MaskType.hasEquipped((Player) damager, "DEATH_KNIGHT") && !AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY) && !(HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction((FPlayer) damager), OutpostType.THE_GREAT_HALL) && Math.random() < 0.1)) {
                 player.sendMessage(CC.RedB + "* PHOENIX BLOCKED [" + CC.Gray + ((Player) damager).getName() + CC.RedB + "] *");
                 ((Player) damager).sendMessage(CC.RedB + "* DEATH KNIGHT MASK [" + CC.Gray + player.getName() + "'s Phoenix Blocked" + CC.RedB + "] *");
 
                 Bukkit.getLogger().info("Phoenix blocked from proccing for " + player.getName() + " from damager " + ((Player) damager).getName());
                 return false;
             }
-            if (MaskType.hasEquipped((Player) damager, "THANOS") && !ItemSkinUtils.hasItemSkin(player, "CORRUPT_BELT_UTILITY") && !(HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction((FPlayer) damager), OutpostType.THE_GREAT_HALL) && Math.random() < 0.1)) {
+            if (MaskType.hasEquipped((Player) damager, "THANOS") && !AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY) && !(HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction((FPlayer) damager), OutpostType.THE_GREAT_HALL) && Math.random() < 0.1)) {
                 player.sendMessage(CC.RedB + "* PHOENIX BLOCKED [" + CC.Gray + ((Player) damager).getName() + CC.RedB + "] *");
                 ((Player) damager).sendMessage(CC.RedB + "* THANOS MASK [" + CC.Gray + player.getName() + "'s Phoenix Blocked" + CC.RedB + "] *");
                 last_phoenix.put(player.getUniqueId().toString(), Long.valueOf(System.currentTimeMillis()));
@@ -127,7 +131,7 @@ public class Phoenix extends CustomEnchantment {
                 player.sendMessage("");
                 DamageIndicatorUtils.sendDamageIndicator((Player) player,  CC.translate("&c&l* PHOENIX *"), "PHOENIX");
                 player.sendTitle(new Title(CC.translate("&c&l*** PHOENIX ***"), CC.translate("&7You have &n") + KillTrackerAPI.getAllSouls(player) + CC.translate("&7 Souls Left."), 10, 40, 10));
-                if (ItemSkinUtils.hasItemSkin(player, "CORRUPT_BELT_UTILITY") && Math.random() < 0.25 && !(HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction((FPlayer) damager), OutpostType.THE_GREAT_HALL) && Math.random() < 0.1)) {
+                if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY) && Math.random() < 0.25 && !(HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction((FPlayer) damager), OutpostType.THE_GREAT_HALL) && Math.random() < 0.1)) {
                     MasteryFeignDeath.vanishPlayer(player, 3);
                 }
                 player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 1.0F, 1.25F);

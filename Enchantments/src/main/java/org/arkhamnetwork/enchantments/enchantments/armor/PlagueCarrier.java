@@ -70,7 +70,7 @@ public class PlagueCarrier extends CustomEnchantment {
                 int plagueCarriers = radius / 2;
                 while (plagueCarriers > 0) {
                     --plagueCarriers;
-                    this.spawnPlagueCreeper(p.getLocation().add(0.0, 1.0, 0.0), level);
+                    //this.spawnPlagueCreeper(p.getLocation().add(0.0, 1.0, 0.0), level);
                 }
                 if (p.getHealth() > 0.0) {
                     p.damage(p.getHealth());

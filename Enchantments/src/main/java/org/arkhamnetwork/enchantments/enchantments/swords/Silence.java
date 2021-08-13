@@ -14,7 +14,6 @@ import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.events.CustomEnchantProcOnEntityEvent;
 import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.arkhamnetwork.enchantments.util.ItemSkinUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -76,7 +75,7 @@ public class Silence extends CustomEnchantment {
             if (pTarget.getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.HALLOWEEN_BACKPACK)) {
                 durationTicks = (long) (durationTicks * 0.25);
             }
-            if (ItemSkinUtils.hasItemSkin(pTarget, "CORRUPT_HELMET")) {
+            if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.CORRUPT_HELMET)) {
                 durationTicks = (long) (durationTicks * 0.5);
             }
 

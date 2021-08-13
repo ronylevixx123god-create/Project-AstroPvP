@@ -67,7 +67,7 @@ public class HeroicPlagueCarrier extends HeroicCustomEnchantment {
                 int plagueCarriers = radius / 2;
                 while (plagueCarriers > 0) {
                     plagueCarriers--;
-                    spawnPlagueCreeper(p.getLocation().add(0.0D, 1.0D, 0.0D), (Player) player);
+                    //spawnPlagueCreeper(p.getLocation().add(0.0D, 1.0D, 0.0D), (Player) player);
                 }
                 if (p.getHealth() > 0.0D)
                     p.damage(p.getHealth());
