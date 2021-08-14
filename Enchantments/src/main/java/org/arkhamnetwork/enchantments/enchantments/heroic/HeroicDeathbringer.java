@@ -1,5 +1,6 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import org.arkhamnetwork.enchantments.Enchantments;
@@ -65,9 +66,14 @@ public class HeroicDeathbringer extends CustomEnchantment {
             }
             if (doubleDamage.contains(damage)) {
                 double random = Math.random();
-                double chance = 0.1D * playerLevels.get((damage instanceof Projectile) ? ((Projectile) damage).getShooter() : damage);
-                chance *= 1.5D;
+                double chance = 0.025D;
                 if (random < chance) {
+                    e.getEntity().sendMessage(CC.LightPurpleB + "** PLANETARY DEATHBRINGER " + CC.Gray + "[2x DMG] " + CC.LightPurpleB + "**");
+                    if(e.getDamage() > 35) {
+                        e.setDamage(35);
+                        GeneralCooldown.enterCooldown((Player) damage);
+                        return;
+                    }
                     e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 2.0);
                     GeneralCooldown.enterCooldown((Player) damage);
 
