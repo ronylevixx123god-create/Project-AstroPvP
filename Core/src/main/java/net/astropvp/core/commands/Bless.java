@@ -21,7 +21,7 @@ public class Bless implements CommandExecutor {
 
     public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
         Player player = (Player) sender;
-
+        player.sendMessage(String.valueOf(player.getInventory().getHelmet().getType()));
         PlayerPotionEffects.untrackPotionEffect(player, PotionEffectType.BLINDNESS);
         PlayerPotionEffects.untrackPotionEffect(player, PotionEffectType.CONFUSION);
         PlayerPotionEffects.untrackPotionEffect(player, PotionEffectType.HARM);

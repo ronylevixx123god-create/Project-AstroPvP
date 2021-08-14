@@ -125,7 +125,7 @@ public class Phoenix extends CustomEnchantment {
                 player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "- " + soulCost + " Soul Gems");
                 player.sendMessage(ChatColor.GRAY + "You have " + ChatColor.UNDERLINE + KillTrackerAPI.getAllSouls(player) + ChatColor.GRAY + " souls left.");
                 player.sendMessage("");
-                DamageIndicatorUtils.sendDamageIndicator((Player) player,  CC.translate("&c&l* PHOENIX *"), "PHOENIX");
+                DamageIndicatorUtils.sendDamageIndicator((Player) player, CC.YellowB + "&c&l* PHOENIX *" + CC.YellowB +  "*", "PHOENIX");
                 player.sendTitle(new Title(CC.translate("&c&l*** PHOENIX ***"), CC.translate("&7You have &n") + KillTrackerAPI.getAllSouls(player) + CC.translate("&7 Souls Left."), 10, 40, 10));
                 if (ItemSkinUtils.hasItemSkin(player, "CORRUPT_BELT_UTILITY") && Math.random() < 0.25 && !(HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction((FPlayer) damager), OutpostType.THE_GREAT_HALL) && Math.random() < 0.1)) {
                     MasteryFeignDeath.vanishPlayer(player, 3);

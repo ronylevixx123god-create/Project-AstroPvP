@@ -154,7 +154,7 @@ public enum AbilityArmorSet {
         if (wrapper.getString("cosmicType").equals("ANTI_MKIT")) {
             NBTTagCompoundBuilder builder = wrapper.getCompound("conaxData");
             if (builder != null) {
-                int success = builder.getInt("success").intValue();
+                int success = builder.getInt("success");
                 Set<AbilityArmorSet> applied = new HashSet<>();
                 if (builder.hasKey("mKit")) {
                     AbilityArmorSet set = fromName(builder.getString("mKit"));
@@ -171,7 +171,7 @@ public enum AbilityArmorSet {
                         }
                     }
                 }
-                return new Pair(applied, Integer.valueOf(success));
+                return new Pair(applied, success);
             }
         }
         return null;

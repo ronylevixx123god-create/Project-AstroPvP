@@ -51,6 +51,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -184,6 +186,7 @@ public class ChampionArmorSet
         player.sendMessage(CC.translate("&4&lTARGET: &f") + target.getName());
         player.sendMessage("");
         target.sendMessage(CC.translate(("&6&l* CHAMPION WRATH &7[&c" + player.getName() + "&7]")));
+        player.setMetadata("noDefenseProcs", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
         player.setMetadata("immune_freeze", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
         target.setMetadata("banshee_scrolls", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
         target.playSound(target.getLocation(), Sound.BLAZE_DEATH, 10.0f, 10.0f);
@@ -191,6 +194,7 @@ public class ChampionArmorSet
         new BukkitRunnable() {
 
             public void run() {
+                player.removeMetadata("noDefenseProcs", CosmicSkyInventoryPets.get());
                 player.removeMetadata("immune_freeze", CosmicSkyInventoryPets.get());
                 player.removeMetadata("banshee_scrolls", CosmicSkyInventoryPets.get());
                 target.sendMessage(CC.translate(("&6&l* CHAMPION WRATH FROM &7" + player.getName() + " &c&lEXPIRED &6&l*")));
