@@ -30,6 +30,8 @@
  */
 package com.massivecraft.factions.listeners;
 
+import com.astropvp.cc.player.CosmicPlayers;
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.earth2me.essentials.User;
 import com.earth2me.essentials.utils.DateUtil;
 import com.google.common.collect.Lists;
@@ -273,7 +275,7 @@ public class FactionsChatListener implements Listener {
         }
 
         List<FancyMessage> player_faction_info = Lists.newArrayList(new FancyMessage(ChatColor.valueOf(Conf.hoverNames) + "Username: " + ChatColor.valueOf(Conf.hoverChatColor) + event.getPlayer().getName()), new FancyMessage(ChatColor.valueOf(Conf.hoverNames) + "Nick: " + ChatColor.valueOf(Conf.hoverChatColor) + event.getPlayer().getDisplayName()), new FancyMessage(ChatColor.valueOf(Conf.hoverNames) + "Faction: " + ChatColor.valueOf(Conf.hoverChatColor) + follower.getFaction().getTag()), null, new FancyMessage(ChatColor.valueOf(Conf.hoverNames) + "Balance: " + ChatColor.valueOf(Conf.hoverChatColor) + "$" + this.formatter.format(balance)));
-        if (elo != 0.0D) {
+        if (1 == 2) {
             player_faction_info.set(3, new FancyMessage(ChatColor.valueOf(Conf.hoverNames) + "Duel ELO: " + ChatColor.valueOf(Conf.hoverChatColor) + this.eloFormat.format(elo)));
         } else {
             player_faction_info.remove(3);
@@ -283,7 +285,8 @@ public class FactionsChatListener implements Listener {
 
         player_faction_info.add(new FancyMessage(ChatColor.valueOf(Conf.hoverNames) + "Power: " + ChatColor.valueOf(Conf.hoverChatColor) + follower.getPowerRounded() + ChatColor.valueOf(Conf.hoverSlashColor) + "/" + ChatColor.valueOf(Conf.hoverChatColor) + (int)Conf.powerPlayerMax));
         player_faction_info.add(new FancyMessage(ChatColor.valueOf(Conf.hoverNames) + "Logged in: " + ChatColor.valueOf(Conf.hoverChatColor) + DateUtil.formatDateDiff(user.getLastLogin()) + " ago"));
-       // player_faction_info.add(new FancyMessage(ChatColor.AQUA + "Cosmic Client: " + (event.getPlayer().hasMetadata("cosmicClientVersion") ? ChatColor.GREEN.toString() + ChatColor.BOLD + "✓" : ChatColor.RED.toString() + ChatColor.BOLD + "✗")));
+        player_faction_info.add(new FancyMessage(CC.translate("&eCosmic Client: ") + ((CosmicPlayers.get().getCosmicPlayer(event.getPlayer()).isOnCosmicClient()) ? ChatColor.GREEN.toString() + ChatColor.BOLD + "✓" : ChatColor.RED.toString() + ChatColor.BOLD + "✗")));
+
         event.setCancelled(true);
 
         Player player;

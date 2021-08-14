@@ -10,7 +10,6 @@
 package com.conaxgames.factions.utils.flying;
 
 import com.massivecraft.factions.P;
-import de.inventivegames.particle.ParticleEffect;
 import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
