@@ -27,7 +27,7 @@ public class LeviathanTrophySkin extends ItemSkin {
         if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation())) {
             return;
         }
-        if(Math.random() < 0.015) {
+        if(Math.random() < 0.005) {
             List<Player> players = (List<Player>)damager.getNearbyEntities(7.0D, 12.0D, 7.0D).stream().filter(entry -> (entry != damager)).filter(entry -> entry instanceof Player).filter(entry -> !GeneralUtil.isAtleastTruce((Player)entry, (Player) damager)).filter(it -> !it.hasMetadata("noSoulProcs")).map(entry -> (Player)entry).collect(Collectors.toList());
             for (Player p : players) {
                 p.sendMessage(CC.translate("&c&l* " + damager.getName() + "'s LEVIATHAN TROPHY &7(12s Soul Enchant Silence) &c&l*"));

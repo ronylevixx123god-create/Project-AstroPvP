@@ -22,9 +22,9 @@ public class HeroicBlock extends HeroicCustomEnchantment {
     @SneakyThrows
     public void applyDefenseEffect(LivingEntity damaged, LivingEntity attacker, int level, EntityDamageEvent e) {
         if (damaged instanceof Player) {
-            if (damaged.hasMetadata("neutralized"))
+            if (damaged != null && damaged.hasMetadata("neutralized"))
                 return;
-            if (attacker.hasMetadata("overwhelm_effect")) {
+            if (attacker != null && attacker.hasMetadata("overwhelm_effect")) {
                 return;
             }
             Player player = (Player) damaged;

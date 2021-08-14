@@ -193,6 +193,10 @@ public class AncientArmorSet
 
     private void startAncientEffect(final Player player, final Player pTarget) {
 
+        if (pTarget.hasMetadata("banshee_scrolls") || pTarget.hasMetadata("bloodHoundNoBless") || player.hasMetadata("banshee_active")) {
+            return;
+        }
+
         if (WeaponBonusUtils.hasWeaponBonus(((Player) pTarget).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player)pTarget).getItemInHand()) == WeaponBonusType.HERO && Math.random() < 0.5) {
 
             pTarget.sendMessage(CC.translate("&3&l** BLOCKED ENEMY ANCIENT ABILITY &7(Hero Weapon Bonus) &3&l**"));
@@ -224,7 +228,7 @@ public class AncientArmorSet
                 pTarget.removeMetadata("bloodHoundNoBless", CosmicSkyInventoryPets.get());
                 CmdUnfocus.unfocusPlayer(FPlayers.i.get(player).getFaction(), pTarget);
             }
-        }.runTaskLater(CosmicSkyInventoryPets.get(), 100L);
+        }.runTaskLaterAsynchronously(CosmicSkyInventoryPets.get(), 100L);
     }
 
     private void removeNearMeta(Player player, Player pTarget) {

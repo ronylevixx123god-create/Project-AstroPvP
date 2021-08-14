@@ -178,6 +178,11 @@ public class ChampionArmorSet
     }
 
     public void activateChampionAbility(final Player player, final Player target) {
+        if (target.hasMetadata("banshee_scrolls") || target.hasMetadata("bloodHoundNoBless") || player.hasMetadata("banshee_active")) {
+            return;
+        }
+
+
         player.sendMessage("");
         player.sendMessage(CC.translate("&6&l* CHAMPION WRATH PROC *"));
         player.sendMessage(CC.translate("&a&lBUFF: &cBanshee RKO Proc &aActivated"));

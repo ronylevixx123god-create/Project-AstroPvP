@@ -28,7 +28,7 @@ public class HeroicEnlighted extends CustomEnchantment {
         if (player.hasMetadata("neutralized"))
             return;
         double random = Math.random();
-        double chance = 0.02D * level;
+        double chance = 0.01D * level;
         double amount = 2;
 
 
@@ -43,6 +43,9 @@ public class HeroicEnlighted extends CustomEnchantment {
 
 
         if (random < chance) {
+            if (player.getHealth() + amount > player.getMaxHealth()) {
+                return;
+            }
             player.setHealth(player.getHealth() + amount);
         }
 

@@ -90,6 +90,7 @@ public class HeroicBleed extends HeroicCustomEnchantment {
                     continue;
                 double amountToHeal = Math.max(4.0D, bleedStack * 0.1D * bloodLustLevel);
                 GeneralUtil.healPlayer((LivingEntity) pEnt, amountToHeal);
+                playBleedEffect(pEnt.getLocation(), bleedStack);
                 ParticleEffect.playEffect(ParticleEffect.DRIP_LAVA, pEnt.getLocation(), 0.075F, 10);
                 de.inventivegames.particle.ParticleEffect.DRIP_LAVA.sendToPlayer(pEnt.getPlayer(), pEnt.getLocation(),0,0,0,0.075F, 10);
                 pEnt.playSound(pEnt.getLocation(), Sound.EAT, 0.4F, 0.6F);

@@ -12,10 +12,8 @@ final class SilenceListener implements Listener {
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onEntityDamage(final EntityDamageEvent e) {
         if (e.getFinalDamage() > 0.0 && e.getEntity() instanceof Player && e.getEntity().hasMetadata("noDefenseProcs")) {
-            if (AstroItemSkinsAPI.hasSkinEquipped(((Player) e.getEntity()).getKiller(), SkinType.VALENTINES_2021_HELMET)) {
+            if (e.getEntity() != null && ((Player) e.getEntity()).getKiller() != null && ((Player) e.getEntity()).getKiller() instanceof Player && AstroItemSkinsAPI.hasSkinEquipped(((Player) e.getEntity()).getKiller(), SkinType.VALENTINES_2021_HELMET)) {
                 e.setDamage(e.getDamage() * 1.05);
-            } else {
-                e.setDamage(e.getDamage() * 1.02);
             }
         }
     }

@@ -13,7 +13,12 @@
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
 
+
     <build>
+
+        <defaultGoal>clean install</defaultGoal>
+        <finalName>CosmicSkyInventoryPets</finalName>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -24,6 +29,9 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
+
+
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
