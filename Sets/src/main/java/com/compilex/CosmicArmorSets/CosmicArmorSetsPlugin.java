@@ -14,6 +14,7 @@ import com.compilex.CosmicArmorSets.listeners.*;
 import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Map;
@@ -33,6 +34,14 @@ public class CosmicArmorSetsPlugin
         p = this;
         p.registerListeners();
         this.registerCommands();
+        Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)this, () -> {
+            for (Player pl : Bukkit.getServer().getOnlinePlayers())
+                CosmicArmorSetsAPI.getArmorSet(pl);
+        },80L, 80);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)this, () -> {
+            for (Player pl : Bukkit.getServer().getOnlinePlayers())
+                CosmicArmorSetsAPI.getAbilityArmorSet(pl);
+        },80, 80);
         if (Bukkit.getPluginManager().isPluginEnabled("CosmicSkyCustomItems")) {
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new CrystalExtractionItem());
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new AntiMKitCrystalItem());

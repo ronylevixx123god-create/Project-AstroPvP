@@ -6,6 +6,7 @@ import me.astropvp.inventories.LobbyInventory;
 import me.astropvp.enums.TournamentState;
 import me.astropvp.tasks.TournamentLobbyTask;
 import me.astropvp.tasks.TournamentWaitingTask;
+import me.astropvp.utils.BracketUtils;
 import me.astropvp.utils.InventoryStorage;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -15,7 +16,7 @@ import java.util.List;
 
 public class Tournament {
     private List<TournamentPlayer> playerList;
-    private List<TournamentMatch> tournamentMatches;
+    private HashMap<TournamentRound, Integer> tournamentRounds;
     private HashMap<Player, String[]> storedInventories;
     private TournamentState state;
     private int lobbyTaskId;
@@ -53,29 +54,19 @@ public class Tournament {
 
     public void start() {
         Bukkit.getScheduler().cancelTask(this.waitingTaskId);
-
-        List<TournamentPlayer> tournamentPlayerList = getPlayerList();
-        int amountOfPlayersEntered = tournamentPlayerList.size();
-        int amountOfMatches;
-        int amountOfRounds;
-
-
-        amountOfMatches = Math.round(amountOfPlayersEntered/2);
-
-
-
+        this.tournamentRounds = BracketUtils.createTournamentRounds();
     }
 
 
 
-    public TournamentMatch getActiveTournamentMatch(Player player) {
+/*    public TournamentMatch getActiveTournamentMatch(Player player) {
         for(TournamentMatch match : tournamentMatches) {
             if(match.getTournamentPlayer1() == player || match.getTournamentPlayer2() == player) {
                 return match;
             }
         }
         return null;
-    }
+    }*/
 
 
     public TournamentPlayer getTournementPlayer(Player p) {

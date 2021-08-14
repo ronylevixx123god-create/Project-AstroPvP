@@ -1,5 +1,7 @@
 package com.compilex.CosmicArmorSets.utils;
 
+import java.util.Objects;
+
 public final class Pair<FIRST, SECOND> {
     public final FIRST first;
 
@@ -27,11 +29,11 @@ public final class Pair<FIRST, SECOND> {
     }
 
     private static boolean equal(Object a, Object b) {
-        return (a == b) || ((a != null) && (a.equals(b)));
+        return Objects.equals(a, b);
     }
 
     public String toString() {
-        return String.format("{%s,%s}", new Object[]{first, second});
+        return String.format("{%s,%s}", first, second);
     }
 
 

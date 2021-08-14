@@ -12,12 +12,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class ArmorEquipListener implements Listener {
-    @EventHandler
+/*    @EventHandler
     public void onArmorChange(ArmorEquipEvent e) {
         Bukkit.getScheduler().runTaskLater(CosmicArmorSetsPlugin.get_(), () -> {
             CosmicArmorSetsAPI.getArmorSet(e.getPlayer());
             CosmicArmorSetsAPI.getAbilityArmorSet(e.getPlayer());
-        }, 2L);
+        }, 5L);
     }
 
     @EventHandler
@@ -26,5 +26,5 @@ public class ArmorEquipListener implements Listener {
             CosmicArmorSetsAPI.getArmorSet(e.getPlayer());
             CosmicArmorSetsAPI.getAbilityArmorSet(e.getPlayer());
         }, 20L);
-    }
+    }*/
 }

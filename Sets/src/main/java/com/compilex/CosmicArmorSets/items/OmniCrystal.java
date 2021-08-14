@@ -78,9 +78,9 @@ public class OmniCrystal
         if (player.getItemOnCursor().getAmount() <= 1) {
             player.setItemOnCursor(null);
         } else {
-            ItemStack newCUrsor = player.getItemOnCursor();
-            newCUrsor.setAmount(newCUrsor.getAmount() - 1);
-            player.setItemOnCursor(newCUrsor);
+            ItemStack newCursor = player.getItemOnCursor();
+            newCursor.setAmount(newCursor.getAmount() - 1);
+            player.setItemOnCursor(newCursor);
         }
         int chance = cursorWrapper.getconaxData().getInt("success");
         if (ThreadLocalRandom.current().nextInt(101) >= chance) {
@@ -98,20 +98,11 @@ public class OmniCrystal
         ASound.LEVEL_UP.play(player, 1.1f);
         clicked.setItemMeta(meta);
         clickedWrapper = new NBTWrapper(clicked);
-
-
-
-        clickedWrapper.setString("cosmicData", "omniArmorSet");
+        NBTTagCompoundBuilder cosmicData = clickedWrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(clickedWrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
+        cosmicData.setInt("omniArmorSet", 1);
         NBTTagCompoundBuilder display = clickedWrapper.hasKey("display") ? new NBTTagCompoundBuilder(clickedWrapper.getNBTBase("display")) : new NBTTagCompoundBuilder();
         display.setInt("color", 0x0027FF);
         clickedWrapper.setNBTBase("display", display.get());
-
-
-        NBTTagCompoundBuilder cosmicData = clickedWrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(clickedWrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
-
-        cosmicData.setInt("omniArmorSet", 1);
-
-
         clickedWrapper.setNBTBase("cosmicData", cosmicData.get());
 
 
