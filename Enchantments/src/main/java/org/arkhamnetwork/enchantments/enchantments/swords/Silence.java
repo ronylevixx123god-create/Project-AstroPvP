@@ -8,6 +8,7 @@ import lombok.SneakyThrows;
 import me.astropvp.astroparticles.utils.ParticleUtils;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.astropvpskins.objects.skins.axes.GoldenAdmirer;
 import me.bryside.weaponrunes.enums.WeaponBonusType;
 import me.bryside.weaponrunes.utils.WeaponBonusUtils;
 import org.arkhamnetwork.enchantments.Enchantments;
@@ -72,14 +73,14 @@ public class Silence extends CustomEnchantment {
                 durationTicks = (long) (durationTicks * 1.5);
             }
 
-            if (pTarget.getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.HALLOWEEN_BACKPACK)) {
+            if (pTarget.getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.HALLOWEEN_BACKPACK) && (!GoldenAdmirer.isAdmirerSilenced(pTarget))) {
                 durationTicks = (long) (durationTicks * 0.25);
             }
             if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.CORRUPT_HELMET)) {
                 durationTicks = (long) (durationTicks * 0.5);
             }
 
-            if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.THANKSGIVING_HELMET_WITCH)) {
+            if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.THANKSGIVING_HELMET_WITCH) && (!GoldenAdmirer.isAdmirerSilenced(pTarget))) {
                 durationTicks = (long) (durationTicks * 0.75);
             }
             if((enchantLevel + solitudeLevel) * 20 * 0.6 < durationTicks && AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.SUMMER_2021_HELMET)) {

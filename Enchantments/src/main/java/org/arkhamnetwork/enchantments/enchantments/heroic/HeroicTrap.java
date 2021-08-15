@@ -5,6 +5,7 @@ import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.astropvpskins.objects.skins.axes.GoldenAdmirer;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.bukkit.*;
@@ -51,7 +52,7 @@ public class HeroicTrap extends HeroicCustomEnchantment {
                 return;
             }
 
-            if (AstroItemSkinsAPI.hasSkinEquipped(ptarget, SkinType.THANKSGIVING_HELMET_WITCH)) {
+            if (AstroItemSkinsAPI.hasSkinEquipped(ptarget, SkinType.THANKSGIVING_HELMET_WITCH) && (!GoldenAdmirer.isAdmirerSilenced(ptarget))) {
                 ptarget.sendMessage(CC.translate("&e&l* WITCH HAT &7Blocked &dTitan Trap &e&l*"));
                 return;
             }

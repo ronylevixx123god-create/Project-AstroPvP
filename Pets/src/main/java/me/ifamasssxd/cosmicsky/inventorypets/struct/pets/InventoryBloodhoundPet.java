@@ -24,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.astropvpskins.objects.skins.axes.GoldenAdmirer;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
@@ -112,7 +113,7 @@ public class InventoryBloodhoundPet extends InventoryPet {
       final String name = player.getName();
       Faction faction = fPlayer.getFaction();
 
-      if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.THANKSGIVING_HELMET_WITCH)) {
+      if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.THANKSGIVING_HELMET_WITCH) && (!GoldenAdmirer.isAdmirerSilenced(pTarget))) {
          pTarget.sendMessage(CC.translate("&e&l* WITCH HAT &7Blocked &4Banshee Pet &7[&f" + player.getName() + "&7] &e&l*"));
          player.sendMessage(CC.translate("&e&l* &f" + pTarget + " &7Blocked &4Bloodhound Pet &7[&e&lWitch Hat&7] &e&l*"));
          return false;

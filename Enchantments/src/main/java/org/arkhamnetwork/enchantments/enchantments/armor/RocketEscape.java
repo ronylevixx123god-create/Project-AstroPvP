@@ -6,6 +6,7 @@ import com.rit.sucy.CustomEnchantment;
 import lombok.SneakyThrows;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.astropvpskins.objects.skins.axes.GoldenAdmirer;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
 import org.arkhamnetwork.enchantments.util.ArmorUtil;
@@ -70,7 +71,7 @@ public class RocketEscape extends CustomEnchantment {
                     }
 
                 }
-                if (AstroItemSkinsAPI.hasSkinEquipped(pl, SkinType.HALLOWEEN_BACKPACK)) {
+                if (AstroItemSkinsAPI.hasSkinEquipped(pl, SkinType.HALLOWEEN_BACKPACK) && (!GoldenAdmirer.isAdmirerSilenced(pl))) {
                     pl.playSound(pl.getLocation(), Sound.ANVIL_BREAK, 5, 5);
                     pl.sendMessage(CC.translate("&6&l* CURSED WINGS BLOCKED &nROCKET ESCAPE&r &7[") + attacker.getKiller().getName() + CC.translate("&7] &6&l*"));
                     return;

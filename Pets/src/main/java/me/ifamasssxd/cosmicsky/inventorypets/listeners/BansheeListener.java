@@ -3,6 +3,7 @@ package me.ifamasssxd.cosmicsky.inventorypets.listeners;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.astropvpskins.objects.skins.axes.GoldenAdmirer;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.pets.InventoryBansheePet;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -39,7 +40,7 @@ public class BansheeListener implements Listener {
         if (event.getEntity().getType().equals(EntityType.PLAYER) && event.getDamager().getType().equals(EntityType.PLAYER)) {
             Player damager = (Player) event.getDamager();
 
-            if (AstroItemSkinsAPI.hasSkinEquipped((Player)event.getEntity(), SkinType.THANKSGIVING_HELMET_WITCH) && Math.random() < 0.005) {
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player)event.getEntity(), SkinType.THANKSGIVING_HELMET_WITCH) && (!GoldenAdmirer.isAdmirerSilenced(event.getEntity())) && Math.random() < 0.005) {
                 event.getEntity().sendMessage(CC.translate("&e&l* WITCH HAT &7Activated &4Banshee Pet &7on&f " +damager.getName()+ " &e&l*"));
                 damager.sendMessage(CC.translate("&e&l* &f" + event.getEntity().getName() +" WITCH HAT &4Banshee Pet &7Ability &e&l*"));
                 InventoryBansheePet.startBansheeEffect((Player) event.getEntity(), damager);
