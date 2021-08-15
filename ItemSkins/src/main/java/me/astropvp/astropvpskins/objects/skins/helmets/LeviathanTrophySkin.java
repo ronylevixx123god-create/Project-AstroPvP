@@ -5,7 +5,7 @@ import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
 import me.astropvp.astropvpskins.objects.ItemSkin;
-import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
+import me.astropvp.astropvpskins.utils.DamageIndicatorUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
