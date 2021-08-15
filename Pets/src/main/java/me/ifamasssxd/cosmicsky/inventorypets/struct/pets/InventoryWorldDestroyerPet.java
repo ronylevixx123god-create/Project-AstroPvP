@@ -113,6 +113,9 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
                 }
             }
         }
+
+
+        final Player test = target;
         if (WorldGuardUtils.isPvPDisabled(locationClicked))
             throw new PrefixedPetException("Not allowed in this region!");
         if (player.hasMetadata("inDungeonParkour"))
@@ -132,7 +135,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
             target.sendMessage(CC.translate("&d&l* CHAD SUNGLASSES &7[&cBlocked World Destroyer&7] &d&l*"));
             return true;
         }
-        Player p = target;
+        Player p = test;
         Location location = p.getLocation();
         int minX = location.getBlockX() - 1;
         int maxX = location.getBlockX() + 2;
@@ -144,7 +147,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         Location loc = p.getLocation().clone();
         p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100, 4));
         BleedTask.bleedPlayer(p, 4);
-        PermissionsAPI.getPermissionUser(target.getUniqueId()).getPermissionNodes().add("verus.bypass");
+        PermissionsAPI.getPermissionUser(test.getUniqueId()).getPermissionNodes().add("verus.bypass");
         PermissionsAPI.getPermissionUser(player.getUniqueId()).getPermissionNodes().add("verus.bypass");
 
         for (int x = minX; x < maxX; x++) {
@@ -195,12 +198,19 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
 
             }, (long) (cageDuration(petItem.getLevel()) + cageDuration(petItem.getLevel() / 2)) * 20L);
         } else {
+
+
             Player finalTarget1 = target;
             Bukkit.getScheduler().runTaskLater((Plugin) CosmicSkyInventoryPets.get(), () -> {
                 getBlockModifier();
-                PermissionsAPI.getPermissionUser(finalTarget1.getUniqueId()).getPermissionNodes().remove("verus.bypass");
-                PermissionsAPI.getPermissionUser(player.getUniqueId()).getPermissionNodes().remove("verus.bypass");
-                DamageIndicatorUtils.sendDamageIndicator(finalTarget1, CC.translate("&e&l* WORLD DESTROYER [&75s&e&l] *"), "RKO");
+                try {
+
+                    PermissionsAPI.getPermissionUser(finalTarget1.getUniqueId()).getPermissionNodes().remove("verus.bypass");
+                    PermissionsAPI.getPermissionUser(player.getUniqueId()).getPermissionNodes().remove("verus.bypass");
+                    DamageIndicatorUtils.sendDamageIndicator(finalTarget1, CC.translate("&e&l* WORLD DESTROYER [&75s&e&l] *"), "RKO");
+                } catch (Exception e) {
+                    BlockModifier.removeBlocks(p.getUniqueId(), true, true);
+                }
                 BlockModifier.removeBlocks(p.getUniqueId(), true, true);
 
             }, (long) cageDuration(petItem.getLevel()) * 20L);
