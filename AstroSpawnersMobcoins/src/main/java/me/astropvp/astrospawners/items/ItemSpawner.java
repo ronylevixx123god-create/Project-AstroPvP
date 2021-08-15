@@ -7,6 +7,8 @@ import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import me.astropvp.astrospawners.utils.EntityUtils;
+import me.ily2bb.slotbot.CosmicSlotBotAPI;
+import me.ily2bb.slotbot.utils.Utils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -37,7 +39,7 @@ public class ItemSpawner {
         builder.setString("uuid", UUID.randomUUID().toString());
         wrapper.setNBTBase("spawnerData", builder.get());
         item = wrapper.build();
-        return item;
+        return Utils.addSkin(creatureType.name().toUpperCase()+"_SPAWNER", item);
     }
 
     public static EntityType getEntityTypeFromItem(ItemStack item) {

@@ -6,6 +6,7 @@ import com.conaxgames.customskulls.util.CustomBlockUtil;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.astropvp.astrospawners.AstroSpawners;
 import me.astropvp.astrospawners.utils.PlayerData;
 import me.astropvp.astrospawners.utils.PlayerDataManager;
@@ -16,6 +17,8 @@ import me.ifamasssxd.cosmichcf.struct.OutpostType;
 import net.astropvp.core.utils.GrindingMessagesUtil;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
+import org.arkhamnetwork.Arkkit.patches.combatlog.CombatExpireTask;
+import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -193,16 +196,6 @@ public class EntityStackerListener implements Listener {
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mc give " + player + " Grinding1");
                     return;
                 }*/
-
-                if (Math.random() < 0.002) {
-                    if (GrindingMessagesUtil.isPlayerIndicating(p)) {
-                        p.playSound(p.getLocation(), Sound.VILLAGER_YES, 5, 5);
-                        p.sendMessage(CC.translate("&b&lGrinding &f&l➥ &a+ Deluxe Grinding Lootbox"));
-                        p.sendTitle(new Title(CC.translate("&a&l+ Deluxe Grinding Lootbox"), CC.translate("&7You can find it in your inventory."), 20, 20, 20));
-                    }
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mc give " + player + " GrindingDeluxe");
-                    return;
-                }
 
             } catch (IllegalArgumentException ex) {
             }
