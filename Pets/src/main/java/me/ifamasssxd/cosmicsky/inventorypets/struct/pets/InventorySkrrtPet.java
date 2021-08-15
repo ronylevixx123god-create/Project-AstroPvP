@@ -160,7 +160,7 @@ public class InventorySkrrtPet extends InventoryPet {
                     p.sendMessage("" + ChatColor.DARK_RED + ChatColor.BOLD + "* SKRRT: (" + ChatColor.GRAY + player.getName() + ChatColor.DARK_RED + ")");
                     player.sendMessage("" + ChatColor.DARK_RED + ChatColor.BOLD + "* SKRRT: (" + ChatColor.GRAY + p.getName() + ChatColor.DARK_RED + ")");
 
-                    DamageIndicatorUtils.sendDamageIndicator(player, CC.translate("&4&l* SKRRT PET *"), "SKRRT");
+                    DamageIndicatorUtils.sendDamageIndicator(p, CC.translate("&4&l* SKRRT PET *"), "SKRRT");
 
                     SkrrtCooldown.enterSkrrtCooldown(p);
                     CombatLog.flagCombat(p);

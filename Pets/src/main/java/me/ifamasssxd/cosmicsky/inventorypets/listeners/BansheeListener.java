@@ -25,7 +25,7 @@ public class BansheeListener implements Listener {
 
             if (damager.hasMetadata("banshee_active")) {
                 if (!event.getEntity().hasMetadata("bloodHoundNoBless")) {
-                    event.setDamage(event.getDamage() * 1.35D);
+                    event.setDamage(event.getDamage() * 1.40D);
 
                 }
                 damager.sendMessage(CC.translate("&4&l** BANSHEE PET &7[&f1.5x DMG&7] &4&l**"));
@@ -39,7 +39,9 @@ public class BansheeListener implements Listener {
         if (event.getEntity().getType().equals(EntityType.PLAYER) && event.getDamager().getType().equals(EntityType.PLAYER)) {
             Player damager = (Player) event.getDamager();
 
-            if (AstroItemSkinsAPI.hasSkinEquipped(damager, SkinType.THANKSGIVING_HELMET_WITCH) && Math.random() < 0.005) {
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player)event.getEntity(), SkinType.THANKSGIVING_HELMET_WITCH) && Math.random() < 0.005) {
+                event.getEntity().sendMessage(CC.translate("&e&l* WITCH HAT &7Activated &4Banshee Pet &7on&f " +damager.getName()+ " &e&l*"));
+                damager.sendMessage(CC.translate("&e&l* &f" + event.getEntity().getName() +" WITCH HAT &4Banshee Pet &7Ability &e&l*"));
                 InventoryBansheePet.startBansheeEffect((Player) event.getEntity(), damager);
             }
         }

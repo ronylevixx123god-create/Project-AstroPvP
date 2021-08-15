@@ -72,19 +72,20 @@ public class Phoenix extends CustomEnchantment {
     public static boolean procPhoenix(Player player, LivingEntity damager, int level, double dmg) throws Exception {
         if (player.getHealth() <= 0.0D)
             return false;
-        if (player.hasMetadata("witchered") && !AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
-            player.sendMessage(CC.translate("&c&l* PHOENIX BLOCKED [&7Witcher Ability&c&l] *"));
-            return false;
-        }
-        if (player.hasMetadata("noSoulProcs") && !AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
-            player.sendMessage(CC.translate("&c&l* PHOENIX BLOCKED [&7Leviathan Trophy&c&l] *"));
-            return false;
-        }
 
         if (player.getHealth() - dmg <= 0.0D) {
 
             if (player.hasMetadata("phoenixCd")) {
                 player.sendMessage(CC.translate("&cPHOENIX - Still On Cooldown"));
+                return false;
+            }
+
+            if (player.hasMetadata("witchered") && !AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
+                player.sendMessage(CC.translate("&c&l* PHOENIX BLOCKED [&7Witcher Ability&c&l] *"));
+                return false;
+            }
+            if (player.hasMetadata("noSoulProcs") && !AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.RUINS_HELMET)) {
+                player.sendMessage(CC.translate("&c&l* PHOENIX BLOCKED [&7Leviathan Trophy&c&l] *"));
                 return false;
             }
 
