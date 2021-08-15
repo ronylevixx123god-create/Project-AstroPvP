@@ -95,7 +95,20 @@ public class InventoryBloodhoundPet extends InventoryPet {
       if (PetUtils.isOnCooldown(player, petItem.getPetType()) && (!player.isOp() || !player.isSneaking()))
          throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU +
                  TimeUtils.formatSeconds(PetUtils.getSecondsOnCooldown(player, petItem.getPetType())));
-      LivingEntity target = getTargetEntity(player, 10);
+      List<Entity> targets = player.getNearbyEntities(10,10,10);
+      Entity target = null;
+
+
+      for (Entity targett : targets) {
+         if (targett != player && targett instanceof Player) {
+            if (FactionUtils.getFPlayer((Player) targett).getFaction() != FactionUtils.getFPlayer(player).getFaction()) {
+               target = targett;
+               break;
+
+            }
+         }
+      }
+
       if (target == null || !(target instanceof Player))
          throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "No target found!");
       final Player pTarget = (Player)target;
@@ -132,25 +145,15 @@ public class InventoryBloodhoundPet extends InventoryPet {
          sum *= 2;
          player.sendMessage(String.valueOf(CC.RedB) + "* REINDEER ITEM SKIN " + CC.Gray + "(" + CC.White + "2x Pet Length" + CC.Gray + ")");
       }
-      Bukkit.getScheduler().runTaskLater((Plugin)CosmicSkyInventoryPets.get(), new Runnable() {
-         public void run() {
-            if (!pTarget.isOnline())
-               return;
-            if (pTarget.hasMetadata("bloodhound_" + name))
-               pTarget.removeMetadata("bloodhound_" + name, (Plugin)CosmicSkyInventoryPets.get());
-            if (pTarget.hasMetadata("bloodhound"))
-               pTarget.removeMetadata("bloodhound", (Plugin)CosmicSkyInventoryPets.get());
-            if (pTarget.hasMetadata("noDefenseProcs"))
-               pTarget.removeMetadata("noDefenseProcs", (Plugin)Enchantments.getInstance());
-            player.sendMessage(CC.translate("&e&l(!) &eYour &4&l[Tag] &eon " + pTarget.getName() + "&e has &e&nEXPIRED!"));
-         }
-      },(sum * 20));
+
+      startBoodHoundPet(player, pTarget);
+
       return true;
    }
 
 
 
-   private void StartBoodHoundPet(Player player, final Player pTarget) {
+   private void startBoodHoundPet(Player player, final Player pTarget) {
       pTarget.sendMessage("" + ChatColor.DARK_RED + ChatColor.BOLD + "* BLOODHOUND PET: (" + ChatColor.GRAY + player.getName() + ChatColor.DARK_RED + ")");
       player.sendMessage("" + ChatColor.DARK_RED + ChatColor.BOLD + "* BLOODHOUND PET: (" + ChatColor.GRAY + pTarget.getName() + ChatColor.DARK_RED + ")");
       pTarget.setMetadata("noDefenseProcs", new FixedMetadataValue(Enchantments.getInstance(), true));
