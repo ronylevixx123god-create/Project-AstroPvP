@@ -76,7 +76,7 @@ public class NatureWrath extends CustomEnchantment {
             if (this.cosmicOutposts && CosmicOutpostsAPI.controlsCosmonautOutpost(p)) {
                 cost /= 2;
             }
-            if (MaskUtils.hasMaskEquipped((Player) player, "THANOS") && Math.random() < 0.5) {
+            if (MaskUtils.hasMaskEquipped((Player) player, "THANOS")) {
                 return;
             }
 
