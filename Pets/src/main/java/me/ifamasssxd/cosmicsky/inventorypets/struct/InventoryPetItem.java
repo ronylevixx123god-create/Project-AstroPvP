@@ -6,19 +6,30 @@ import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
 
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
 import lombok.SneakyThrows;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
+import me.ifamasssxd.cosmicsky.inventorypets.utils.PetUtils;
+import me.ifamasssxd.cosmicsky.inventorypets.utils.SkullUtils;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicPersistentItem;
 import me.ifamasssxd.cosmicskycustoms.struct.PlayerInteractable;
+import net.minecraft.server.v1_8_R3.GameProfileSerializer;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 
 public class InventoryPetItem extends CosmicPersistentItem implements PlayerInteractable {
     private InventoryPets petType;
@@ -27,7 +38,6 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
     private int exp;
     private long lastRareCandyUsed;
     private boolean leashed;
-    private double cooldown;
 
     public InventoryPetItem(String internalName) {
         super(internalName);
@@ -56,7 +66,6 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
                 this.lastUsed = builder.getLong("lastUsed");
                 this.lastRareCandyUsed = builder.getLong("lastRareCandyUsed");
                 this.leashed = builder.getBoolean("leashed");
-                this.cooldown = builder.getDouble("cooldown");
             }
         }
 
@@ -69,7 +78,6 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
     public ItemStack build() {
         return this.createItem((Player) null, this.petType, this.level, this.exp, this.lastUsed, this.lastRareCandyUsed, this.leashed);
     }
-
 
 
     public ItemStack createItem(Player player, Object... objects) {
@@ -108,7 +116,7 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
                 lore.add("");
                 lore.add(ChatColor.GOLD + ChatColor.BOLD.toString() + "* LEASHED *");
             }
-            return pet.getInternalClass().onItemCreate(this.applyItemData((new ItemBuilder(Material.SKULL_ITEM, pet.getItemName() , new String[0])).data((short) 3).lore(lore).build()).setNBTBase("cosmicData", (new NBTTagCompoundBuilder()).setInt("level", ((Number) level).intValue()).setInt("exp", ((Number) exp).intValue()).setString("petType", pet.name()).setLong("lastUsed", ((Number) lastUsed).longValue()).setLong("lastRareCandyUsed", ((Number) lastRareCandyUsed).longValue()).setBoolean("leashed", leashed).get()).setNBTBase("SkullOwner", pet.getBuilder().get()), this).assignIID().build();
+            return pet.getInternalClass().onItemCreate(this.applyItemData((new ItemBuilder(Material.SKULL_ITEM, pet.getItemName(), new String[0])).data((short) 3).lore(lore).build()).setNBTBase("cosmicData", (new NBTTagCompoundBuilder()).setInt("level", ((Number) level).intValue()).setInt("exp", ((Number) exp).intValue()).setString("petType", pet.name()).setLong("lastUsed", ((Number) lastUsed).longValue()).setLong("lastRareCandyUsed", ((Number) lastRareCandyUsed).longValue()).setBoolean("leashed", leashed).get()).setNBTBase("SkullOwner", pet.getBuilder().get()), this).assignIID().build();
         } else {
             return null;
         }
@@ -119,20 +127,15 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
     public void onPlayerInteractable(Player player, ItemStack itemStack, NBTWrapper nbtWrapper, PlayerInteractEvent playerInteractEvent) throws CosmicException {
         playerInteractEvent.setCancelled(true);
         InventoryPetItem preitem = CosmicPersistentItem.constructItem(itemStack, nbtWrapper, InventoryPetItem.class);
-        double lastUse1 = preitem.getLastUsed();
-        double delay1 = TimeUnit.SECONDS.toMillis((long) this.getCooldown(5));
-        double timeTillCanUse1 = delay1 - (System.currentTimeMillis() - lastUse1);
-        NBTWrapper wrapper = new NBTWrapper(itemStack);
-        NBTTagCompoundBuilder cosmicData = wrapper.getCompound("cosmicData");
-        cosmicData.setDouble("cooldown", 2D);
-        nbtWrapper.setNBTBase("cosmicData", cosmicData.get());
-        itemStack = wrapper.build();
+
+
         InventoryPetItem item = CosmicPersistentItem.constructItem(itemStack, nbtWrapper, InventoryPetItem.class);
         if (item != null) {
             InventoryPets type = item.getPetType();
             if (type == null) {
                 throw new PrefixedException("Corrupted Inventory Pet found?");
             }
+
             if (player.hasMetadata("stitchesPet") && player.hasMetadata("stitchesPetTime")) {
                 final long delay = player.getMetadata("stitchesPetTime").get(0).asLong();
                 final long timeTillCanUse = delay - (System.currentTimeMillis() - player.getMetadata("stitchesPet").get(0).asLong());
@@ -141,6 +144,7 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
                     return;
                 }
             }
+
 
             if (player.hasMetadata("transEffect")) {
                 player.sendMessage(CC.translate("&c&lPET: &cYour pets are silenced by a player's Transcendence Effect."));
@@ -165,17 +169,39 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
             }
 
             if (type.getInternalClass().onPetItemInteract(player, itemStack, item, playerInteractEvent)) {
-                if (player.getItemInHand().getAmount() >1) {
+                if (player.getItemInHand().getAmount() > 1) {
                     player.sendMessage(CC.translate("&cYou &ncannot&c use stacked pets!"));
                     playerInteractEvent.setCancelled(true);
                     return;
                 }
-                player.getInventory().setItemInHand(item.build());
-                player.updateInventory();
+
+                /*
+
+                THIS IS WHEN YOU WNE CHANGE THE NBT FOR COSMIC COOLDOWN!!!
+
+                NBTWrapper wrapper = new NBTWrapper(item.build());
+
+                NBTTagCompoundBuilder cosmicData = wrapper.getCompound("cosmicData");
+                cosmicData.setLong("lastUsed", System.currentTimeMillis());
+
+                nbtWrapper.setNBTBase("cosmicData", cosmicData.get());
+                itemStack = wrapper.build();
+                ItemStack finalItem = itemStack;*/
+
+                ItemStack finalItem = item.build();
+
+                String skinTexture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmVlOWU2NTY3NDk2NzVlNTYzZGE3MTM1N2MxZjg0OTY3MjQ0YzQyMDUwNDY5NzI5M2NlODc4Y2RiOGEzNiJ9fX0=";
+                player.getInventory().setItemInHand(SkullUtils.buildSkullNative(finalItem, skinTexture));
+
             }
         }
 
     }
+
+    public static void printNbt(ItemStack item) {
+        System.out.println(CraftItemStack.asNMSCopy(item).getTag().toString());
+    }
+
 
     public InventoryPets getPetType() {
         return this.petType;
@@ -189,7 +215,6 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
         return this.level;
     }
 
-    public double getCooldown(int level) { return this.cooldown; }
 
     public void setLeashed(boolean leashed) {
         this.leashed = leashed;

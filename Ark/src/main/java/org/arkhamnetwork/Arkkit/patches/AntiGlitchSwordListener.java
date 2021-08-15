@@ -35,6 +35,7 @@ final class AntiGlitchSwordListener
         }
         if (e.getEntity() instanceof Player && e.getDamage() >= 30.0) {
             Player p = (Player) e.getEntity();
+            e.setDamage(30);
             if (e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
                 Entity eAttacker = ((EntityDamageByEntityEvent) e).getDamager();
                 if (eAttacker instanceof Player) {

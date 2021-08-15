@@ -94,7 +94,7 @@ public class MOTD implements Listener {
                 player.sendMessage(CC.translate("&a&l[!]&a Hello &f" + player.getName() + "&a, you are not on the supported version of &f&nCosmicClient&a."));
                 player.sendMessage(CC.translate("&7Please join our discord at &f&ndiscord.astropvp.net&7 and follow the turtorial in &f#cc-features&7."));
                 player.sendMessage(CC.translate("&7You must be on a supported version of &fCosmicClient&7 to see skins, ping, roam etc..."));
-                player.sendTitle(new Title(CC.translate("&aPlease download the Supported Version of &fCosmicClient&a!"), CC.translate("&7You can find it in &f#cc-features&7 in &f/discord&7."), 20, 120, 20));
+                player.sendTitle(new Title(CC.translate("&aPlease download the Astro Version of &fCC&a!"), CC.translate("&7You can find it in &f#cc-features&7 in &f/discord&7."), 20, 120, 20));
                 player.sendMessage("");
             }
         }, 80L);

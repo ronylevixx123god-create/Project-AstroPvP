@@ -128,7 +128,7 @@ public class InventoryBloodhoundPet extends InventoryPet {
 
       if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.THANKSGIVING_HELMET_WITCH) && (!GoldenAdmirer.isAdmirerSilenced(pTarget))) {
          pTarget.sendMessage(CC.translate("&e&l* WITCH HAT &7Blocked &4Banshee Pet &7[&f" + player.getName() + "&7] &e&l*"));
-         player.sendMessage(CC.translate("&e&l* &f" + pTarget + " &7Blocked &4Bloodhound Pet &7[&e&lWitch Hat&7] &e&l*"));
+         player.sendMessage(CC.translate("&e&l* &f" + pTarget.getName() + " &7Blocked &4Bloodhound Pet &7[&e&lWitch Hat&7] &e&l*"));
          return false;
       }
 
