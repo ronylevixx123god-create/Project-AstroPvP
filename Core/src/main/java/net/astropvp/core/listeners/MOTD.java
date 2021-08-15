@@ -69,7 +69,7 @@ public class MOTD implements Listener {
             player.sendMessage(CC.translate("               &6&lDISCORD &fdiscord.astropvp.net"));
             player.sendMessage(CC.translate("                   &c&lRULES &frules.astropvp.net"));
             player.sendMessage("");
-            player.sendMessage(CC.translate("&f&l    WE RECOMMEND YOU TO USE &acosmicclient.com &f&lOR &a1.8.9"));
+            player.sendMessage(CC.translate("&f&l  WE RECOMMEND YOU TO USE &aclient.astropvp.net &f&lOR &a1.8.9"));
             player.sendMessage("");
             if (Conf.gracePeriod) {
                 player.sendMessage(CC.translate("&c&l[!]&c Grace Period is enabled. TnT Explosives are Disabled."));
