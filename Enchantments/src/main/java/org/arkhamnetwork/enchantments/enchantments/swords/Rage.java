@@ -37,7 +37,7 @@ public class Rage extends CustomEnchantment {
                 return;
             }
 
-            double mod = enchantLevel * 0.55 * RageUtils.getComboOfPlayer(pUser, target instanceof Player);
+            double mod = enchantLevel * 0.52 * RageUtils.getComboOfPlayer(pUser, target instanceof Player);
 
             if (ParticleUtils.isPlayerIndicating((Player) user)) {
                 playRageEffect(target.getEyeLocation(), enchantLevel);
