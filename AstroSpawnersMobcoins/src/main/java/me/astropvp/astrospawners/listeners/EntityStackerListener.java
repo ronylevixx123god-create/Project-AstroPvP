@@ -9,6 +9,8 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astrospawners.AstroSpawners;
 import me.astropvp.astrospawners.utils.PlayerData;
 import me.astropvp.astrospawners.utils.PlayerDataManager;
@@ -43,8 +45,7 @@ public class EntityStackerListener implements Listener {
     private final AstroSpawners plugin;
 
 
-
-    public EntityStackerListener(AstroSpawners plugin ) {
+    public EntityStackerListener(AstroSpawners plugin) {
         this.plugin = plugin;
         this.mobStackerUtils = plugin.getMobStackerUtils();
         this.manager = plugin.getManager();
@@ -72,13 +73,13 @@ public class EntityStackerListener implements Listener {
             }
 
             //Bukkit.getScheduler().runTaskLaterAsynchronously(AstroSpawners.getInstance(), () -> {
-                int amount = mobStackerUtils.getStackSize(entity);
-                if (amount <= 1) {
-                    mobStackerUtils.removeStackedMob(entity);
-                    return;
-                }
-                amount--;
-                mobStackerUtils.setStackSize(entity, amount);
+            int amount = mobStackerUtils.getStackSize(entity);
+            if (amount <= 1) {
+                mobStackerUtils.removeStackedMob(entity);
+                return;
+            }
+            amount--;
+            mobStackerUtils.setStackSize(entity, amount);
 
 
             //}, 5L);
@@ -99,12 +100,11 @@ public class EntityStackerListener implements Listener {
             PlayerData data = manager.getPlayerData((Player) e.getDamager());
 
 
-
             if (CosmicArmorSetsAPI.getArmorSet(p) != null && CosmicArmorSetsAPI.getArmorSet(p) == ArmorSet.GRINDER) {
                 exp = exp * 1.5;
 
 
-                if (Math.random() <0.05) {
+                if (Math.random() < 0.05) {
                     data.setCoins(data.getCoins() + 2);
                     ActionBarMessageUtils.sendMessage((Player) e.getDamager(), CC.translate("&6+2 Mobcoins &7(Total: &f&n") + data.getCoins() + CC.Gray + ")");
 
@@ -123,7 +123,7 @@ public class EntityStackerListener implements Listener {
             if (isOnCosmicClient) {
                 blazeLoot(entity, (Player) e.getDamager(), 0.2);
             } else {
-                blazeLoot(entity, (Player) e.getDamager(), 0.2);
+                blazeLoot(entity, (Player) e.getDamager(), 0.1);
 
             }
 
@@ -134,7 +134,11 @@ public class EntityStackerListener implements Listener {
             }
 
             if (isOnCosmicClient) {
-                exp = exp*1.5;
+                exp = exp * 1.5;
+            }
+
+            if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.MEDIEVAL_SWORD_KING)) {
+                exp = exp * 2;
             }
 
             if (CustomBlockUtil.chunkHasCertainBlock(p, "TREASURECHEST")) {
@@ -142,11 +146,11 @@ public class EntityStackerListener implements Listener {
             }
 
             if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(p), OutpostType.COURTYARD) && Math.random() < 0.1) {
-                exp = exp *1.75;
+                exp = exp * 1.75;
             }
 
 
-                p.giveExp((int) exp);
+            p.giveExp((int) exp);
 
 
         }

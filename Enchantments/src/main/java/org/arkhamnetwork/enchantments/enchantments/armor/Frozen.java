@@ -43,7 +43,6 @@ public class Frozen extends CustomEnchantment {
 
             attacker.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, time * 20, amp));
             final Location l = player.getLocation();
-            WorldUtil.sendWorldEffect(l.getBlock(), 57, 2001);
         }
     }
 }

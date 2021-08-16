@@ -32,7 +32,7 @@ public class Devour extends CustomEnchantment {
                 event.setDamage(event.getDamage() * mod);
                 target.setMetadata("effectedByDevour", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), Long.valueOf(System.currentTimeMillis())));
                 Location l = target.getLocation();
-                WorldUtil.sendWorldEffect(l.getBlock(), Material.MYCEL.getId(), 2001);
+
             }
     }
 }

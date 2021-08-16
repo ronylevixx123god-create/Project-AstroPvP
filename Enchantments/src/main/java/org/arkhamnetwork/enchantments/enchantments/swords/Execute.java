@@ -46,7 +46,6 @@ public class Execute extends CustomEnchantment {
             DamageIndicatorUtils.sendDamageIndicator((Player) e.getEntity(), CC.AquaB + "* EXECUTE *", "EXECUTE");
             e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * mod);
             final Location l = target.getLocation();
-            WorldUtil.sendWorldEffect(l.getBlock(), Material.REDSTONE_WIRE.getId(), 2001);
         }
 
     }

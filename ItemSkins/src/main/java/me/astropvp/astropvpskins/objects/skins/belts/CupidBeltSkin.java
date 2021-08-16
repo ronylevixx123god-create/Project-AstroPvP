@@ -13,6 +13,7 @@ public class CupidBeltSkin extends ItemSkin {
         PlayerPotionEffects.untrackPotionEffect(player, PotionEffectType.SLOW_DIGGING);
     }
 
+
     //TODO: ON UPDATE HERE
 }
 

@@ -12,6 +12,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
@@ -85,8 +87,12 @@ public class InventorySkrrtPet extends InventoryPet {
                         player.sendMessage(ChatColor.RED + "Combat is disabled in this region.");
                         return true;
                     } else {
-                        petItem.setLastUsed(System.currentTimeMillis());
-                        PetUtils.addPetCooldown(player, petItem.getPetType(), (getCooldown(5) * 1000));
+                        if(AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.MEDIEVAL_BELT_KING) && Math.random() < 0.25) {
+                            player.sendMessage(CC.translate("&6&l* ROYAL BELT &7Prevented &dPet Cooldown &6&l*"));
+                        } else {
+                            petItem.setLastUsed(System.currentTimeMillis());
+                            PetUtils.addPetCooldown(player, petItem.getPetType(), (getCooldown(5) * 1000));
+                        }
 
                         this.petLevel = 5;
                         this.givePlayerGearFive(player);

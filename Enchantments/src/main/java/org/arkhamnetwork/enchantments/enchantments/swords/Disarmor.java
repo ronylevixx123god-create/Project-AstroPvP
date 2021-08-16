@@ -46,9 +46,7 @@ public class Disarmor extends CustomEnchantment {
             this.unequipRandomArmor((Player) target, (Player) player);
             final Location l = target.getLocation();
             l.getWorld().playSound(l, Sound.ANVIL_BREAK, 1.0f, 0.6f);
-            WorldUtil.sendWorldEffect(l.getBlock(), Material.DIAMOND_ORE.getId(), 2001);
-            WorldUtil.sendWorldEffect(l.getBlock().getRelative(BlockFace.UP), Material.DIAMOND_ORE.getId(), 2001);
-            WorldUtil.sendWorldEffect(l.getBlock().getRelative(BlockFace.UP, 2), Material.DIAMOND_ORE.getId(), 2001);
+
         }
     }
 

@@ -94,6 +94,11 @@ public class InventoryBansheePet extends InventoryPet {
 
         if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(player), OutpostType.COURTYARD) && Math.random() < 0.2) {
             player.sendMessage(CC.translate("&c&l** INFERNAL STRONGHOLD BONUS &7Prevented &dPet Cooldown &c&l**"));
+        }
+            else if(AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.MEDIEVAL_BELT_KING) && Math.random() < 0.25) {
+                player.sendMessage(CC.translate("&6&l* ROYAL BELT &7Prevented &dPet Cooldown &6&l*"));
+
+
         } else {
             petItem.setLastUsed(System.currentTimeMillis());
         }

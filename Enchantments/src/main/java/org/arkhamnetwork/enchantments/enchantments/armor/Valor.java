@@ -25,7 +25,6 @@ public class Valor extends CustomEnchantment {
         if (player.getHealth() <= hp_threshold && (((Player) player).getItemInHand().getType() == Material.GOLD_SWORD || ((Player) player).getItemInHand().getType() == Material.DIAMOND_SWORD) && e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1.0D - damage_negation) > 1.0D) {
             e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1.0D - damage_negation));
             Location l = player.getLocation();
-            WorldUtil.sendWorldEffect(l.getBlock(), 41, 2001);
         }
     }
 }

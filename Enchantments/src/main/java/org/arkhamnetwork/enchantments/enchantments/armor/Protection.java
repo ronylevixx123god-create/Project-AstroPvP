@@ -57,19 +57,15 @@ public class Protection extends CustomEnchantment {
                                 if (fp != null && fp.getFaction() != null && fp.getFaction().getRelationTo((RelationParticipator)fplayer.getFaction()).isAtLeast(Relation.ALLY)) {
                                     if (p.getHealth() + amountToHeal < p.getMaxHealth() && p.getHealth() > 0.0D && !p.isDead()) {
                                         p.setHealth(p.getHealth() + amountToHeal);
-                                        ParticleEffect.playEffect(ParticleEffect.RED_DUST, p.getLocation().add(0.0D, 1.0D, 0.0D), 0.5F, 20);
                                     }
                                     if (level >= 1 && Math.random() <= 0.15D) {
                                         p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, level * 20, (level > 2) ? 1 : 0));
-                                        ParticleEffect.playEffect(ParticleEffect.SPELL, p.getLocation().add(0.0D, 1.0D, 0.0D), 0.5F, 10);
                                     }
                                     if (level >= 2 && Math.random() <= 0.1D) {
                                         p.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, level * 20 * 2, level + 1));
-                                        ParticleEffect.playEffect(ParticleEffect.SPELL, p.getLocation().add(0.0D, 1.0D, 0.0D), 0.5F, 20);
                                     }
                                     if (level >= 3 && Math.random() <= 0.085D) {
                                         p.addPotionEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, level * 20 * 2, level + 1));
-                                        ParticleEffect.playEffect(ParticleEffect.SPELL, p.getLocation().add(0.0D, 1.0D, 0.0D), 0.5F, 30);
                                     }
                                 }
                             }

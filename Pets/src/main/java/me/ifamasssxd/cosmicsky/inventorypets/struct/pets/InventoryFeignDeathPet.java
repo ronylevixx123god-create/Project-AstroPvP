@@ -10,6 +10,8 @@ import com.massivecraft.factions.FLocation;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
@@ -65,7 +67,11 @@ public class InventoryFeignDeathPet extends InventoryPet {
             xpGain = 1;
         }
         MasteryFeignDeath.vanishPlayer(player, 5);
-        PetUtils.addPetCooldown(player, petItem.getPetType(), (getCooldown(5) * 1000));
+        if(AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.MEDIEVAL_BELT_KING) && Math.random() < 0.25) {
+            player.sendMessage(CC.translate("&6&l* ROYAL BELT &7Prevented &dPet Cooldown &6&l*"));
+        } else {
+            PetUtils.addPetCooldown(player, petItem.getPetType(), (getCooldown(5) * 1000));
+        }
         player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
         player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
 

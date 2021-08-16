@@ -1,6 +1,8 @@
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
+import de.inventivegames.particle.ParticleEffect;
+import lombok.SneakyThrows;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -16,15 +18,16 @@ public final class CorruptDamageTask extends BukkitRunnable {
         this.dmgValue = dmgAmount;
     }
 
+    @SneakyThrows
     public void run() {
         this.dmgPlayer(this.p, this.dmgValue);
     }
 
-    private void dmgPlayer(final Player p, final double amount) {
+    private void dmgPlayer(final Player p, final double amount) throws Exception {
         if (p.getHealth() <= 0.0 || p.isDead()) {
             return;
         }
         p.damage(amount);
-        WorldUtil.sendWorldEffect(p.getLocation().add(0.0, 1.0, 0.0).getBlock(), Material.REDSTONE_WIRE.getId(), 2001);
+        ParticleEffect.RED_DUST.sendToPlayer(p.getPlayer(),p.getLocation(), 0,0, 0,1.5f,10);
     }
 }

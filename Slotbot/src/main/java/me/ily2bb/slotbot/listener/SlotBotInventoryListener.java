@@ -7,6 +7,8 @@ import com.conaxgames.customskulls.util.CustomBlockUtil;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.massivecraft.factions.FPlayer;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
 import me.ifamasssxd.cosmichcf.struct.OutpostType;
 import me.ily2bb.slotbot.CosmicSlotBotAPI;
@@ -120,10 +122,17 @@ public class SlotBotInventoryListener implements Listener {
                 SlotBotManager.startRolling(player, inventory, tickets);
                 player.updateInventory();
 
-                if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(player), OutpostType.COURTYARD) && Math.random() < 0.1) {
+                if (FactionUtils.getFaction(player) != null && HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(player), OutpostType.COURTYARD) && Math.random() < 0.1) {
                     returnTickets(tickets, player);
                     player.sendMessage("");
                     player.sendMessage(CC.translate("&c&l** INFERNAL STRONGHOLD BONUS &7Saved &dSlotbot Tickets &c&l**"));
+                    player.sendMessage("");
+                }
+
+                if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.COSMIC_CITIZEN_HELMET_CG) && Math.random() < 0.05) {
+                    returnTickets(tickets, player);
+                    player.sendMessage("");
+                    player.sendMessage(CC.translate("&b&lCosmicGames Hat: &fHas returned your SlotBot Tickets!"));
                     player.sendMessage("");
                 }
 

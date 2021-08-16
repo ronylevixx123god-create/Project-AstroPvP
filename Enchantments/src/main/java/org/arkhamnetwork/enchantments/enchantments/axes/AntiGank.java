@@ -43,7 +43,6 @@ public class AntiGank extends CustomEnchantment {
         if (enemies.size() >= 6 - level) {
             e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * Math.min(1.5, 1.0 + 0.1 * enemies.size()));
             final Location l = playerHit.getLocation().add(0.0, 1.0, 0.0);
-            WorldUtil.sendWorldEffect(l.getBlock(), 86, 2001);
         }
     }
 

@@ -32,7 +32,6 @@ public class HeroicExecute extends HeroicCustomEnchantment {
             DamageIndicatorUtils.sendDamageIndicator((Player) e.getEntity(), CC.RedB + "* PERMANENT EXECUTE *", "EXECUTE");
             e.setDamage(e.getDamage() * mod);
             Location l = target.getLocation();
-            WorldUtil.sendWorldEffect(l.getBlock(), Material.REDSTONE_WIRE.getId(), 2001);
         }
     }
 }
