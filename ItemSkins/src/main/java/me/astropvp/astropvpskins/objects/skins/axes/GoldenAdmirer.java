@@ -1,5 +1,6 @@
 package me.astropvp.astropvpskins.objects.skins.axes;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
 import me.astropvp.astropvpskins.objects.ItemSkin;
 import org.bukkit.entity.Entity;
@@ -14,6 +15,8 @@ public class GoldenAdmirer extends ItemSkin {
         if(!(damaged instanceof Player))
             return;
         damaged.setMetadata("admirerSilence", (MetadataValue)new FixedMetadataValue((Plugin) AstroItemSkinsPlugin.getInstance(), System.currentTimeMillis() + 10000));
+        damager.sendMessage(CC.GoldB + "** GOLDEN ADMIRER " + CC.Gray + "[10s] " + CC.GoldB + "**");
+        damaged.sendMessage(CC.GoldB + "** GOLDEN ADMIRER " + CC.Gray + "[" + damager.getName() +  "] " + CC.GoldB + "**");
     }
 
     public static boolean isAdmirerSilenced(Player player) {

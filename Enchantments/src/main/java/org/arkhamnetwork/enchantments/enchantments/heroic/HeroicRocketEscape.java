@@ -6,6 +6,7 @@ import com.massivecraft.factions.P;
 import lombok.SneakyThrows;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.astropvpskins.objects.skins.axes.GoldenAdmirer;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.enchantments.armor.RocketEscape;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
@@ -67,7 +68,7 @@ public class HeroicRocketEscape extends HeroicCustomEnchantment {
                     }
                 }
 
-                if (((Player) player).getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.HALLOWEEN_BACKPACK)) {
+                if (((Player) player).getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.HALLOWEEN_BACKPACK) && !GoldenAdmirer.isAdmirerSilenced((Player) player)) {
                     pl.playSound(pl.getLocation(), Sound.ANVIL_BREAK, 5, 5);
                     pl.sendMessage(CC.translate("&6&l* CURSED WINGS BLOCKED &nROCKET ESCAPE&r &7[") + target.getKiller().getName() + CC.translate("&7] &6&l*"));
                     return;
