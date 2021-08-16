@@ -17,7 +17,7 @@ public class ItemSkinInventoryClickListener implements Listener {
     public void click(InventoryClickEvent e) {
         String title = e.getInventory().getTitle();
         ItemStack item = e.getCurrentItem();
-        Player player = (Player) e.getWhoClicked();
+        Player player = (Player)e.getWhoClicked();
         if (item == null)
             return;
         if (title.equals(CC.translate("&8Astro Item Skins"))) {
@@ -32,15 +32,11 @@ public class ItemSkinInventoryClickListener implements Listener {
             }
             ItemSkinSubInventory.openInventory(player, type);
         } else if (title.startsWith(CC.translate("&8Item Skins:"))) {
-            if (item.equals(ItemSkinSubInventory.createBackButton())) {
+            if (item.equals(ItemSkinSubInventory.createBackButton()))
                 ItemSkinsInventory.openInventory(player);
-            }
-
-            if (AstroItemSkinsAPI.isItemSkin(item) && player.isOp()) {
-                player.getInventory().addItem(AstroItemSkinsAPI.getItemSkin(item).getItem());
-            }
+            if (AstroItemSkinsAPI.isItemSkin(item) && player.isOp())
+                player.getInventory().addItem(item);
             e.setCancelled(true);
         }
     }
-
 }

@@ -309,4 +309,58 @@ public enum SkinType {
         return wrapper.build();
     }
 
+    public ItemStack getMultiSkin(SkinType type) {
+        ItemStack item = new ItemStack(Material.EYE_OF_ENDER);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(CC.WhiteB + "Multi Item Skin (" + getName() + ", " + type.getName() + CC.WhiteB + ")");
+        List<String> lore = new ArrayList<>();
+        lore.addAll(getLore());
+        lore.add("");
+        lore.add(CC.GrayI + "Attach this skin to any " + CC.WhiteU + getItemSkinType().getModifiedName());
+        lore.add(CC.Gray + "to override its visual appearance.");
+        lore.add("");
+        lore.add(CC.RedB + "NOTE: " + CC.Red + "Requires the Cosmic Client");
+        lore.add(CC.Red + "to render custom item skins.");
+        lore.add(CC.Gray + "* Download at " + CC.GrayU + "discord.astropvp.net");
+        lore.add("");
+        lore.add(CC.Gray + "Drag n' Drop onto item to attach.");
+        lore.add(CC.Gray + "Right-Click item to detach skin.");
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        NBTWrapper wrapper = new NBTWrapper(item);
+        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
+        cosmicData.setString("itemSkinType", name() + "," + type.name());
+        wrapper.setNBTBase("cosmicData", (NBTBase)cosmicData.get());
+        wrapper.setString("random", UUID.randomUUID().toString());
+        wrapper.setString("cosmicType", "item_skin");
+        return wrapper.build();
+    }
+
+    public ItemStack apply(ItemStack item, SkinType type) {
+        ItemMeta meta = item.getItemMeta();
+        List<String> lore = (meta.getLore() == null) ? new ArrayList<>() : meta.getLore();
+        lore.add(CC.WhiteB + "ITEM SKIN: " + getName());
+        lore.add(CC.WhiteB + "ITEM SKIN: " + type.getName());
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        NBTWrapper wrapper = new NBTWrapper(item);
+        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
+        String[] current;
+        if(cosmicData.hasKey("itemSkinType")) {
+            current = cosmicData.getString("itemSkinType").split(",");
+        } else {
+            current = new String[0];
+        }
+        List<String> strings = new ArrayList<>(Arrays.asList(current));
+        strings.add(name());
+        strings.add(type.name());
+        String s = Arrays.toString(strings.toArray());
+        s = s.replace("[", "");
+        s = s.replace("]", "");
+        s = s.replace(" ", "");
+        cosmicData.setString("itemSkinType", s);
+        wrapper.setNBTBase("cosmicData", (NBTBase)cosmicData.get());
+        return wrapper.build();
+    }
+
 }
