@@ -38,6 +38,7 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
     private int exp;
     private long lastRareCandyUsed;
     private boolean leashed;
+    private double cooldown;
 
     public InventoryPetItem(String internalName) {
         super(internalName);
@@ -66,6 +67,7 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
                 this.lastUsed = builder.getLong("lastUsed");
                 this.lastRareCandyUsed = builder.getLong("lastRareCandyUsed");
                 this.leashed = builder.getBoolean("leashed");
+                this.cooldown = builder.getDouble("cooldown");
             }
         }
 
@@ -116,7 +118,11 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
                 lore.add("");
                 lore.add(ChatColor.GOLD + ChatColor.BOLD.toString() + "* LEASHED *");
             }
-            return pet.getInternalClass().onItemCreate(this.applyItemData((new ItemBuilder(Material.SKULL_ITEM, pet.getItemName(), new String[0])).data((short) 3).lore(lore).build()).setNBTBase("cosmicData", (new NBTTagCompoundBuilder()).setInt("level", ((Number) level).intValue()).setInt("exp", ((Number) exp).intValue()).setString("petType", pet.name()).setLong("lastUsed", ((Number) lastUsed).longValue()).setLong("lastRareCandyUsed", ((Number) lastRareCandyUsed).longValue()).setBoolean("leashed", leashed).get()).setNBTBase("SkullOwner", pet.getBuilder().get()), this).assignIID().build();
+            Number cooldown = (Number) ((Number) (objects.length > 6 ? (objects[6] instanceof Number ? objects[6] : NumberUtils.parseNumberOrNull(objects[6].toString())) : null));
+            if (cooldown == null || ((Number) cooldown).longValue() < 0L) {
+                cooldown = 0;
+            }
+            return pet.getInternalClass().onItemCreate(this.applyItemData((new ItemBuilder(Material.SKULL_ITEM, pet.getItemName(), new String[0])).data((short) 3).lore(lore).build()).setNBTBase("cosmicData", (new NBTTagCompoundBuilder()).setInt("level", ((Number) level).intValue()).setInt("exp", ((Number) exp).intValue()).setString("petType", pet.name()).setLong("lastUsed", ((Number) lastUsed).longValue()).setLong("lastRareCandyUsed", ((Number) lastRareCandyUsed).longValue()).setBoolean("leashed", leashed).setDouble("cooldown", ((Number) cooldown).doubleValue()).get()).setNBTBase("SkullOwner", pet.getBuilder().get()), this).assignIID().build();
         } else {
             return null;
         }
@@ -126,9 +132,6 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
     @SneakyThrows
     public void onPlayerInteractable(Player player, ItemStack itemStack, NBTWrapper nbtWrapper, PlayerInteractEvent playerInteractEvent) throws CosmicException {
         playerInteractEvent.setCancelled(true);
-        InventoryPetItem preitem = CosmicPersistentItem.constructItem(itemStack, nbtWrapper, InventoryPetItem.class);
-
-
         InventoryPetItem item = CosmicPersistentItem.constructItem(itemStack, nbtWrapper, InventoryPetItem.class);
         if (item != null) {
             InventoryPets type = item.getPetType();
@@ -175,20 +178,12 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
                     return;
                 }
 
-                /*
-
-                THIS IS WHEN YOU WNE CHANGE THE NBT FOR COSMIC COOLDOWN!!!
-
                 NBTWrapper wrapper = new NBTWrapper(item.build());
 
                 NBTTagCompoundBuilder cosmicData = wrapper.getCompound("cosmicData");
-                cosmicData.setLong("lastUsed", System.currentTimeMillis());
-
+                cosmicData.setDouble("cooldown", 300D);
                 nbtWrapper.setNBTBase("cosmicData", cosmicData.get());
-                itemStack = wrapper.build();
-                ItemStack finalItem = itemStack;*/
-
-                ItemStack finalItem = item.build();
+                ItemStack finalItem = wrapper.build();
 
                 String skinTexture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmVlOWU2NTY3NDk2NzVlNTYzZGE3MTM1N2MxZjg0OTY3MjQ0YzQyMDUwNDY5NzI5M2NlODc4Y2RiOGEzNiJ9fX0=";
                 player.getInventory().setItemInHand(SkullUtils.buildSkullNative(finalItem, skinTexture));
