@@ -7,6 +7,7 @@ import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.bryside.weaponrunes.enums.WeaponBonusType;
 import me.bryside.weaponrunes.utils.WeaponBonusUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
@@ -16,15 +17,17 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 
-final class DivineImmolationListener implements Listener {
+public class DivineImmolationListener implements Listener {
     @EventHandler
-    public void onEntityDamage(final EntityDamageEvent e) throws Exception {
+    public void onEntityDamage(EntityDamageEvent e) throws Exception {
         if (!(e.getEntity() instanceof Player)) {
             return;
         }
 
 
-        if (e.getEntity().hasMetadata("divineFire") && e.getCause() == EntityDamageEvent.DamageCause.WITHER && e.getEntity() instanceof LivingEntity) {
+        if (e.getEntity().hasMetadata("divineFire") && e.getCause() == EntityDamageEvent.DamageCause.WITHER) {
+
+
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.SUMMER_2021_AMULET) && Math.random() < 0.20) {
                 e.getEntity().sendMessage(CC.translate("&c&l* LUAU LEI &7Blocked Divine Immolation &c&l*"));
                 return;
@@ -59,7 +62,7 @@ final class DivineImmolationListener implements Listener {
 
 
 
-                le.damage((double) damage);
+                //le.damage((double) damage);
 
 
                 if (le instanceof Player) {

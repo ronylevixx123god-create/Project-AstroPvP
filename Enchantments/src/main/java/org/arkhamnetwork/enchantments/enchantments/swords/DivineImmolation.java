@@ -1,6 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
 import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.rit.sucy.CustomEnchantment;
 import lombok.SneakyThrows;
@@ -35,7 +36,6 @@ public class DivineImmolation extends CustomEnchantment {
         this.max = 4;
         this.base = 10.0D;
         this.interval = 10.0D;
-        Bukkit.getPluginManager().registerEvents(new DivineImmolationListener(), (Plugin) Enchantments.getInstance());
     }
 
 /*
@@ -106,7 +106,7 @@ public class DivineImmolation extends CustomEnchantment {
                 radius = (1.0D * level) +2;
             }
             double damage = 2.0;
-            if (GeneralUtil.isSword(p.getItemInHand()) && (
+            if ((
                     !p.hasMetadata("lastItemHeldChange") || MinecraftServerUtils.getCurrentServerTick() - ((MetadataValue)p.getMetadata("lastItemHeldChange").get(0)).asLong() > 5L) && (
 
                     KillTrackerAPI.hasGodMode(p) && KillTrackerAPI.getAllSouls(p) > 0)) {
@@ -148,7 +148,7 @@ public class DivineImmolation extends CustomEnchantment {
                                         }
                                     }
                                 }
-                                le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, (int)(damage * 10.0D), 0));
+                                le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, (int)100, 0));
                                 if (le instanceof Player) {
                                     ((Player)le).playSound(le.getLocation(), Sound.FIREWORK_BLAST, 1.0F, 0.3F);
                                     ((Player)le).playSound(le.getLocation(), Sound.ZOMBIE_PIG_ANGRY, 0.8F, 0.5F);

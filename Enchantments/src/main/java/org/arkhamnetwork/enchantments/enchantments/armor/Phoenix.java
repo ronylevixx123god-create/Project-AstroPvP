@@ -89,7 +89,7 @@ public class Phoenix extends CustomEnchantment {
                 return false;
             }
 
-            if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(FactionUtils.getFPlayer(((Player) damager).getPlayer())), OutpostType.THE_GREAT_HALL) && Math.random() < 0.1) {
+            if ((Player)damager != null && FactionUtils.getFPlayer((Player) damager).getPlayer() != null && HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(FactionUtils.getFPlayer(((Player) damager).getPlayer())), OutpostType.THE_GREAT_HALL) && Math.random() < 0.1) {
                 player.sendMessage(CC.translate("&b&l** ENEMY FROZEN STRONGHOLD BONUS &7Blocked &cPhoenix &b&l**"));
                 ((FPlayer) damager).sendMessage(CC.translate("&b&l** FROZEN STRONGHOLD BONUS &7Blocked &a" + damager.getName() + " &cPhoenix &b&l**"));
                 player.playSound(player.getLocation(), Sound.ANVIL_BREAK, 10, 10);
@@ -106,14 +106,14 @@ public class Phoenix extends CustomEnchantment {
                 player.sendMessage(CC.translate("&4&l* PHOENIX BLOCKED [&c" + damager.getName() + " Cranked Mask&4&l] *"));
                 return false;
             }
-            if (Math.random() <= 0.5D && MaskType.hasEquipped((Player) damager, "DEATH_KNIGHT") && !AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY) && !(HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(FactionUtils.getFPlayer(((Player) damager).getPlayer())), OutpostType.THE_GREAT_HALL) && Math.random() < 0.1)) {
+            if (Math.random() <= 0.4D && MaskType.hasEquipped((Player) damager, "DEATH_KNIGHT") && !AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY) && !(FactionUtils.getFPlayer((Player) damager).getPlayer() != null && HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(FactionUtils.getFPlayer(((Player) damager).getPlayer())), OutpostType.THE_GREAT_HALL) && Math.random() < 0.1)) {
                 player.sendMessage(CC.RedB + "* PHOENIX BLOCKED [" + CC.Gray + ((Player) damager).getName() + CC.RedB + "] *");
                 ((Player) damager).sendMessage(CC.RedB + "* DEATH KNIGHT MASK [" + CC.Gray + player.getName() + "'s Phoenix Blocked" + CC.RedB + "] *");
 
                 Bukkit.getLogger().info("Phoenix blocked from proccing for " + player.getName() + " from damager " + ((Player) damager).getName());
                 return false;
             }
-            if (MaskType.hasEquipped((Player) damager, "THANOS") && !AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY) && !(HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(FactionUtils.getFPlayer(((Player) damager).getPlayer())), OutpostType.THE_GREAT_HALL) && Math.random() < 0.1)) {
+            if (MaskType.hasEquipped((Player) damager, "THANOS") && !AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY) && !(FactionUtils.getFPlayer((Player) damager).getPlayer() != null && HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(FactionUtils.getFPlayer(((Player) damager).getPlayer())), OutpostType.THE_GREAT_HALL) && Math.random() < 0.1)) {
                 player.sendMessage(CC.RedB + "* PHOENIX BLOCKED [" + CC.Gray + ((Player) damager).getName() + CC.RedB + "] *");
                 ((Player) damager).sendMessage(CC.RedB + "* THANOS MASK [" + CC.Gray + player.getName() + "'s Phoenix Blocked" + CC.RedB + "] *");
                 last_phoenix.put(player.getUniqueId().toString(), Long.valueOf(System.currentTimeMillis()));
@@ -132,7 +132,7 @@ public class Phoenix extends CustomEnchantment {
                 player.sendMessage("");
                 DamageIndicatorUtils.sendDamageIndicator((Player) player, CC.translate( "&c&l* PHOENIX *"), "PHOENIX");
                 player.sendTitle(new Title(CC.translate("&c&l*** PHOENIX ***"), CC.translate("&7You have &n") + KillTrackerAPI.getAllSouls(player) + CC.translate("&7 Souls Left."), 10, 40, 10));
-                if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY) && Math.random() < 0.25 && !(HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(FactionUtils.getFPlayer(((Player) damager).getPlayer())), OutpostType.THE_GREAT_HALL) && Math.random() < 0.1)) {
+                if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY) && Math.random() < 0.25 && !(FactionUtils.getFPlayer((Player) damager).getPlayer() != null && HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(FactionUtils.getFPlayer(((Player) damager).getPlayer())), OutpostType.THE_GREAT_HALL) && Math.random() < 0.1)) {
                     MasteryFeignDeath.vanishPlayer(player, 3);
                 }
                 player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 1.0F, 1.25F);

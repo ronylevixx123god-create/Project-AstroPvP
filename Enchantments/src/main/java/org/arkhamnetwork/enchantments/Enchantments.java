@@ -24,6 +24,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 import java.io.IOException;
@@ -140,6 +141,8 @@ public class Enchantments extends EnchantPlugin {
         getServer().getPluginManager().registerEvents(new VanillaDamageListener(), this);
         getServer().getPluginManager().registerEvents(new ExploitListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerPotionEffectListener(), this);
+        Bukkit.getPluginManager().registerEvents(new DivineImmolationListener(), (Plugin) Enchantments.getInstance());
+
     }
 
     private void registerTasks() {
