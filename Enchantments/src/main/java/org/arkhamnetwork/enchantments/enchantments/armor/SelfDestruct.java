@@ -48,7 +48,7 @@ public class SelfDestruct extends CustomEnchantment {
 
                 if (attacker == null || !(attacker instanceof Player)) return;
 
-                if ((Player)((Player) attacker).getItemInHand() == null || ((Player) e.getEntity()).getItemInHand() == null)return;
+                if (((Player) attacker).getItemInHand() == null) return;
 
                 if (WeaponBonusUtils.getWeaponBonusByItem(((Player)attacker).getItemInHand()) == WeaponBonusType.CHAMPION && Math.random() < 0.5) {
                     attacker.sendMessage(CC.translate("&c&l** BLOCKED " + player.getName() + " &c&lSELF DESTRUCT &7(Champion Weapon Bonus) &c&l**"));

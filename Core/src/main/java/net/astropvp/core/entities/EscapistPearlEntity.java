@@ -21,7 +21,9 @@ public class EscapistPearlEntity extends EntityEnderPearl {
     }
 
     protected void a(MovingObjectPosition movingObjectPosition) {
-
+    try {
+        if (movingObjectPosition == null) return;
+        if (movingObjectPosition.a() == null) return;
         Block block = this.world.getType(new BlockPosition(movingObjectPosition.a())).getBlock();
         if (block == Blocks.TRIPWIRE)
             return;
@@ -39,8 +41,8 @@ public class EscapistPearlEntity extends EntityEnderPearl {
             this.dead = true;
             return;
         }
-        if ((!((EntityPlayer)getShooter()).playerConnection.isDisconnected()) && (getShooter()).world == this.world) {
-            EntityPlayer entityplayer = (EntityPlayer)getShooter();
+        if ((!((EntityPlayer) getShooter()).playerConnection.isDisconnected()) && (getShooter()).world == this.world) {
+            EntityPlayer entityplayer = (EntityPlayer) getShooter();
             CraftPlayer player = entityplayer.getBukkitEntity();
             Location location = getBukkitEntity().getLocation();
             location.setPitch(player.getLocation().getPitch());
@@ -69,18 +71,19 @@ public class EscapistPearlEntity extends EntityEnderPearl {
                 this.dead = true;
                 return;
             }
-            PlayerTeleportEvent event = new PlayerTeleportEvent((Player)player, player.getLocation(), location, PlayerTeleportEvent.TeleportCause.ENDER_PEARL);
-            Bukkit.getPluginManager().callEvent((Event)event);
+            PlayerTeleportEvent event = new PlayerTeleportEvent((Player) player, player.getLocation(), location, PlayerTeleportEvent.TeleportCause.ENDER_PEARL);
+            Bukkit.getPluginManager().callEvent((Event) event);
             if (!event.isCancelled() && !entityplayer.playerConnection.isDisconnected()) {
                 entityplayer.playerConnection.teleport(event.getTo());
                 IntStream.range(0, 32).forEach(i -> this.world.addParticle(EnumParticle.PORTAL, this.locX, this.locY + this.random.nextDouble() * 2.0D, this.locZ, this.random.nextGaussian(), 0.0D, this.random.nextGaussian()));
                 (getShooter()).fallDistance = 0.0F;
-                    CraftEventFactory.entityDamage = (Entity)this;
-                    getShooter().damageEntity(DamageSource.FALL, 5.0F);
-                    CraftEventFactory.entityDamage = null;
+                CraftEventFactory.entityDamage = (Entity) this;
+                getShooter().damageEntity(DamageSource.FALL, 5.0F);
+                CraftEventFactory.entityDamage = null;
             }
         }
         this.dead = true;
+    } catch (Exception e) {}
     }
 
     private Location getClosestSafeLocation(Location location1) {

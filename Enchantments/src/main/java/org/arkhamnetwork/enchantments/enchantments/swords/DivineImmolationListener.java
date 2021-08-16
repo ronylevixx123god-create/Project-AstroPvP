@@ -33,7 +33,7 @@ public class DivineImmolationListener implements Listener {
                 return;
             }
 
-            if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.THANKSGIVING_SWORD_HARVESTER) && Math.random() < 0.4 && !(WeaponBonusUtils.hasWeaponBonus((((Player)e.getEntity()).getKiller().getItemInHand())) && WeaponBonusUtils.getWeaponBonusByItem(((Player)e.getEntity()).getKiller().getItemInHand()) == WeaponBonusType.REFORGED && Math.random()<0.5)) {
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.THANKSGIVING_SWORD_HARVESTER) && Math.random() < 0.4) {
                 e.getEntity().sendMessage(CC.translate("&e&l* SOUL HARVESTER &fBlocked &cDivine Immolation &e&l*"));
                 return;
             }
@@ -46,23 +46,26 @@ public class DivineImmolationListener implements Listener {
                     }
                 }
 
-                double damage = 2;
+                double damage = 1;
 
+
+                if (!(le.getKiller() instanceof Player)) return;
                 if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) le.getKiller(), SkinType.VALENTINES_2021_HELMET)) {
                     if (WeaponBonusUtils.hasWeaponBonus(((Player) e.getEntity()).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player) e.getEntity()).getItemInHand()) == WeaponBonusType.REFORGED && Math.random()<0.5) {
-                        damage = 2;
+                        damage = 1;
                     } else {
-                        damage = 2.5;
+                        damage = 1.5;
                     }
                 }
 
                 if (AstroItemSkinsAPI.hasSkinEquipped((Player) ((Player) e.getEntity()).getKiller(), SkinType.SUMMER_2021_SWORD)) {
-                    damage = 2.5;
+                    damage = 2;
                 }
 
 
-
-                //le.damage((double) damage);
+                if (Math.random() < 0.3) {
+                    le.damage((double) damage);
+                }
 
 
                 if (le instanceof Player) {
