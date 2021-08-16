@@ -69,6 +69,11 @@ public class HeroicTrap extends HeroicCustomEnchantment {
                     return;
                 }
             }
+            if (AstroItemSkinsAPI.hasSkinEquipped(ptarget, SkinType.CHRISTMAS_BOOTS_SLIPPERS)) {
+                ptarget.sendMessage(CC.translate("&3&l* TEDDY SLIPPERS &7Reflected &dTitan Trap &3&l*"));
+                ptarget = (Player) player;
+                return;
+            }
             ptarget.setMetadata("titantrap", new FixedMetadataValue(Enchantments.getInstance(), level));
             ptarget.setWalkSpeed(0.001F);
             ptarget.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, (int) durationTicks, 128), true);
@@ -81,10 +86,11 @@ public class HeroicTrap extends HeroicCustomEnchantment {
                 near.sendBlockChange(location, Material.STATIONARY_WATER, (byte) 0);
             ptarget.playSound(ptarget.getLocation(), Sound.WATER, 10.0F, 1.1F);
             ptarget.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "** TITAN TRAP [" + ChatColor.GRAY + this.df.format(durationTicks / 20.0D) + "s" + ChatColor.RED + ChatColor.BOLD + "] **");
+            Player finalPtarget = ptarget;
             Enchantments.getInstance().getServer().getScheduler().runTaskLater(Enchantments.getInstance(), () -> {
-                ptarget.removeMetadata("titantrap", Enchantments.getInstance());
-                ptarget.setWalkSpeed(0.2F);
-                ptarget.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "** FREE [" + ChatColor.GRAY + "Titan Trap" + ChatColor.GREEN + ChatColor.BOLD + "] **");
+                finalPtarget.removeMetadata("titantrap", Enchantments.getInstance());
+                finalPtarget.setWalkSpeed(0.2F);
+                finalPtarget.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "** FREE [" + ChatColor.GRAY + "Titan Trap" + ChatColor.GREEN + ChatColor.BOLD + "] **");
                 for (Player tar : pl)
                     tar.sendBlockChange(location, typeItWas, (byte) 0);
             }, (int) durationTicks);
