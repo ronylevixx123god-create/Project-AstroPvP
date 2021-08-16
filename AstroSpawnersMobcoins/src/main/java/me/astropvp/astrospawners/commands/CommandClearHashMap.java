@@ -12,6 +12,8 @@ public class CommandClearHashMap implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+        if (!commandSender.isOp()) return false;
+
         Bukkit.getWorld("world").getEntities().forEach(entity -> {
             if (AstroSpawners.getInstance().getMobStackerUtils().isStackedMob(entity)) {
                 AstroSpawners.getInstance().getMobStackerUtils().removeStackedMob(entity);

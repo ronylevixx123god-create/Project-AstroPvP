@@ -1,5 +1,7 @@
 package net.astropvp.core;
 
+import com.astropvp.cc.player.CosmicPlayers;
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.titles.cmds.CommandTitle;
 import com.cosmicpvp.titles.cmds.CommandTitleSet;
 import com.cosmicpvp.titles.listeners.ChatListener;
@@ -66,10 +68,7 @@ import net.astropvp.core.tasks.LastManStandingCapTask;
 import net.astropvp.core.utils.CleanseScroll;
 import net.astropvp.core.utils.ItemUtils;
 import net.milkbowl.vault.economy.Economy;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandMap;
@@ -171,6 +170,19 @@ public class AstroCore extends JavaPlugin {
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new RevokeScratchCard());
 
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new SlotbotScratchCard());
+
+
+        Bukkit.getScheduler().runTaskTimerAsynchronously(getInstance(), ()-> {
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                if (!CosmicPlayers.get().getCosmicPlayer(p).isOnCosmicClient()) {
+                    p.sendMessage("");
+                    p.sendMessage(CC.translate("&c&lHey &n" + p.getName() + "&c&l, &cwe have noticed that you are not on the official Suported Astro Version of the &nCosmicClient&c."));
+                    p.sendMessage(CC.translate("&7If you wish to download it, follow the steps in the &f#cc-features&7 channel in our &f/discord&7."));
+                    p.sendMessage("");
+                    p.playSound(p.getLocation(), Sound.CHICKEN_EGG_POP, 5, 5);
+                }
+            }
+        },50L, 1800L);
 
 
 

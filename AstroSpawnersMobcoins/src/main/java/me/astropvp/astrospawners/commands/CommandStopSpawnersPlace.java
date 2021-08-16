@@ -11,7 +11,7 @@ public class CommandStopSpawnersPlace implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
 
-
+        if (!commandSender.isOp()) return false;
 
         boolean allowSpawners = AstroSpawners.getInstance().getConfig().getBoolean("allow-spawner-placement");
 

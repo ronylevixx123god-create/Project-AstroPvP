@@ -1,5 +1,7 @@
 package me.astropvp.astrospawners.listeners;
 
+import com.astropvp.cc.CCVerify;
+import com.astropvp.cc.player.CosmicPlayers;
 import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
 import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.conaxgames.customskulls.util.CustomBlockUtil;
@@ -41,6 +43,7 @@ public class EntityStackerListener implements Listener {
     private final AstroSpawners plugin;
 
 
+
     public EntityStackerListener(AstroSpawners plugin ) {
         this.plugin = plugin;
         this.mobStackerUtils = plugin.getMobStackerUtils();
@@ -58,6 +61,8 @@ public class EntityStackerListener implements Listener {
     public void onStackedEntityDeath(StackedMobDeathEvent e) {
         Entity entity = e.getEntity();
         if (e.getDamager() instanceof Player) {
+
+
             if (!mobStackerUtils.isStackedMob(entity)) return;
 
             if (e.getEntity().getLastDamageCause() != null) {
@@ -80,6 +85,9 @@ public class EntityStackerListener implements Listener {
 
             Player p = (Player) e.getDamager();
 
+            boolean isOnCosmicClient = CosmicPlayers.get().getCosmicPlayer(p).isOnCosmicClient();
+
+
             //Economy.add(p.getName(), 27);
 
             //PlayerUtils.neutralizeKnockback((LivingEntity) entity);
@@ -89,6 +97,9 @@ public class EntityStackerListener implements Listener {
 
             //PlayerDataManager manager = AstroSpawners.getPlayerDataManager();
             PlayerData data = manager.getPlayerData((Player) e.getDamager());
+
+
+
             if (CosmicArmorSetsAPI.getArmorSet(p) != null && CosmicArmorSetsAPI.getArmorSet(p) == ArmorSet.GRINDER) {
                 exp = exp * 1.5;
 
@@ -108,12 +119,22 @@ public class EntityStackerListener implements Listener {
                 ActionBarMessageUtils.sendMessage((Player) e.getDamager(), CC.translate("&a+1 Mobcoin &7(Total: &f&n") + data.getCoins() + CC.Gray + ")");
 
             }
-            blazeLoot(entity, (Player) e.getDamager());
+
+            if (isOnCosmicClient) {
+                blazeLoot(entity, (Player) e.getDamager(), 0.2);
+            } else {
+                blazeLoot(entity, (Player) e.getDamager(), 0.2);
+
+            }
 
 
             if (((Player) e.getDamager()).getPlayer().getItemInHand().getType() == Material.DIAMOND_SWORD && ((Player) e.getDamager()).getPlayer().getItemInHand().getItemMeta().hasLore()) {
                 exp = exp + 100;
                 playRageEffect(e.getEntity().getLocation(), 6);
+            }
+
+            if (isOnCosmicClient) {
+                exp = exp*1.5;
             }
 
             if (CustomBlockUtil.chunkHasCertainBlock(p, "TREASURECHEST")) {
@@ -168,12 +189,13 @@ public class EntityStackerListener implements Listener {
         e.setCancelled(true);
     }
 
-    public void blazeLoot(Entity e, Player p) {
+    public void blazeLoot(Entity e, Player p, double chance) {
         if (p instanceof Player) {
             String player = p.getName();
             double num = Math.random();
             try {
-                if (num >= 0 && num <= 0.1) {
+
+                if (num >= 0 && num <= chance) {
                     if (GrindingMessagesUtil.isPlayerIndicating(p)) {
                         p.sendMessage(CC.translate("&b&lGrinding &f&l➥ &a+ Grinding Lootbox"));
                     }

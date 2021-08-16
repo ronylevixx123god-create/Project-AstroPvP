@@ -12,6 +12,9 @@ import org.bukkit.entity.Player;
 public class SaveMobCoinsCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+
+        if (!commandSender.isOp()) return false;
+
         for (Player p : Bukkit.getOnlinePlayers()) {
             PlayerData data = AstroSpawners.getInstance().getManager().getPlayerData(p);
             AstroSpawners.getInstance().getManager().savePlayerDataAsync(data);

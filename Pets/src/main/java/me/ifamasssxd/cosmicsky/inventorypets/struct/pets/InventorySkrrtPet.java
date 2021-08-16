@@ -85,7 +85,7 @@ public class InventorySkrrtPet extends InventoryPet {
                         player.sendMessage(ChatColor.RED + "Combat is disabled in this region.");
                         return true;
                     } else {
-                        //petItem.setLastUsed(System.currentTimeMillis());
+                        petItem.setLastUsed(System.currentTimeMillis());
                         PetUtils.addPetCooldown(player, petItem.getPetType(), (getCooldown(5) * 1000));
 
                         this.petLevel = 5;
