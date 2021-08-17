@@ -7,6 +7,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 
 public class CorpseGrinder extends ItemSkin {
     @Override
@@ -14,5 +15,10 @@ public class CorpseGrinder extends ItemSkin {
         if (!WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
 
         new DoubleStrike().applyEffect(damager, (LivingEntity) damaged, 2, event);
+
+
+        if (Math.random() < 0.01) {
+            event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE)*1.25);
+        }
     }
 }

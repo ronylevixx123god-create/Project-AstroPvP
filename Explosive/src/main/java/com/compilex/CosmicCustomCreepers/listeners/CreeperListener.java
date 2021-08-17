@@ -183,14 +183,14 @@ implements Listener {
             Bukkit.getLogger().info("[CosmicCustomCreepers] EntityExplodeEvent for CustomCreeperEgg: " + egg_type.name() + " entity: " + c);
             if (egg_type == CreeperTypes.Huge) {
                 Location loc = c.getLocation();
-                //this.spawnFastExplosion(loc.clone().add(0.0, 3.0, 0.0));
-                //this.spawnFastExplosion(loc.clone().add(0.0, -3.0, 0.0));
+                this.spawnFastExplosion(loc.clone().add(0.0, 3.0, 0.0));
+                this.spawnFastExplosion(loc.clone().add(0.0, -3.0, 0.0));
                 if (new Random().nextBoolean()) {
-                    //this.spawnFastExplosion(loc.clone().add(3.0, 0.0, 0.0));
-                    //this.spawnFastExplosion(loc.clone().add(0.0, 0.0, 3.0));
+                    this.spawnFastExplosion(loc.clone().add(3.0, 0.0, 0.0));
+                    this.spawnFastExplosion(loc.clone().add(0.0, 0.0, 3.0));
                 } else {
-                    //this.spawnFastExplosion(loc.clone().add(-3.0, 0.0, 0.0));
-                    //this.spawnFastExplosion(loc.clone().add(0.0, 0.0, -3.0));
+                    this.spawnFastExplosion(loc.clone().add(-3.0, 0.0, 0.0));
+                    this.spawnFastExplosion(loc.clone().add(0.0, 0.0, -3.0));
                 }
             } else if (egg_type == CreeperTypes.Lucky) {
                 try {

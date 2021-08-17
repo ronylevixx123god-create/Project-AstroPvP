@@ -4,6 +4,9 @@ import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.rit.sucy.CustomEnchantment;
 import lombok.SneakyThrows;
 import me.astropvp.astroparticles.utils.ParticleUtils;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
+import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -30,6 +33,7 @@ public class Dodge extends CustomEnchantment {
                 chance += 0.15;
             }
             if (Math.random() < chance) {
+                if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.HALLOWEEN_AXE)) return;
                 e.setCancelled(true);
                 ((Player) player).sendMessage(ChatColor.YELLOW + "*DODGE*");
                 try {
