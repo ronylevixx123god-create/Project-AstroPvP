@@ -103,7 +103,7 @@ public class InventoryBansheePet extends InventoryPet {
             petItem.setLastUsed(System.currentTimeMillis());
         }
 
-        final List<Player> nearbyEnemies = Lists.newArrayList();
+        List<Player> nearbyEnemies = Lists.newArrayList();
 
         Faction faction = FactionUtils.getFaction(player);
         if (player.getNearbyEntities(8.0D, 8.0D, 8.0D).isEmpty()) {
@@ -114,8 +114,6 @@ public class InventoryBansheePet extends InventoryPet {
             if (other instanceof Player) {
                 Player nearPlayer = (Player) other;
                 Faction nearFac = FactionUtils.getFaction(nearPlayer);
-                if (CosmicArmorSetsAPI.getArmorSet(nearPlayer) == ArmorSet.KOTH)
-                    continue;
                 if (nearPlayer.getGameMode() == GameMode.CREATIVE)
                     continue;
                 if (nearFac != null && nearFac.getRelationTo((RelationParticipator) faction) != Relation.ENEMY && nearFac.getRelationTo((RelationParticipator) faction) != Relation.NEUTRAL)
@@ -133,6 +131,12 @@ public class InventoryBansheePet extends InventoryPet {
             }
         }
         //ParticleEffect.sendToLocation(ParticleEffect.LARGE_EXPLODE, player.getEyeLocation(), (float)Math.random(), (float)Math.random(), (float)Math.random(), 0.5F, 3);
+
+
+        if (nearbyEnemies.size() == 0) {
+            return true;
+        }
+
         int duration;
         if (playerHasApollo(player)) {
             duration = 12;
