@@ -314,6 +314,10 @@ public enum SkinType {
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(CC.WhiteB + "Multi Item Skin (" + getName() + ", " + type.getName() + CC.WhiteB + ")");
         List<String> lore = new ArrayList<>();
+        lore.add(type.display);
+        lore.addAll(type.getLore());
+        lore.add("");
+        lore.add(display);
         lore.addAll(getLore());
         lore.add("");
         lore.add(CC.GrayI + "Attach this skin to any " + CC.WhiteU + getItemSkinType().getModifiedName());

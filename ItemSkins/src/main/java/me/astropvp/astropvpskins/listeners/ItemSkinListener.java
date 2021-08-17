@@ -1,5 +1,6 @@
 package me.astropvp.astropvpskins.listeners;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.armorequip.ArmorEquipEvent;
@@ -41,27 +42,52 @@ public class ItemSkinListener implements Listener {
                 return;
             if (event.getSlotType() == InventoryType.SlotType.ARMOR)
                 for (SkinType type : typeList)
-                    type.getItemSkin().onEquip((Player)event.getWhoClicked());
-            for (SkinType type : typeList)
-                Bukkit.broadcastMessage(type.toString());
+                    type.getItemSkin().onEquip((Player) event.getWhoClicked());
             if (typeList.size() == 1) {
-                event.setCurrentItem(((SkinType)typeList.get(0)).apply(clicked));
+                event.setCurrentItem(((SkinType) typeList.get(0)).apply(clicked));
             } else {
-                event.setCurrentItem(((SkinType)typeList.get(0)).apply(clicked, typeList.get(1)));
+                event.setCurrentItem(((SkinType) typeList.get(0)).apply(clicked, typeList.get(1)));
             }
             event.setCursor(null);
             event.setCancelled(true);
-            ((Player)event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.BAT_TAKEOFF, 1.0F, 10.0F);
+            ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.BAT_TAKEOFF, 1.0F, 10.0F);
         } else if (event.getClick().isRightClick() && AstroItemSkinsAPI.hasItemSkin(clicked)) {
+
+
             List<SkinType> skinTypes = AstroItemSkinsAPI.getItemSkinByItem(clicked);
             assert skinTypes != null;
+
+
+            for (int i = 0; i < skinTypes.size(); i++) {
+                for (int j = 1; j < skinTypes.size(); i++) {
+                    if (skinTypes.get(i).getItemSkinType() == skinTypes.get(j).getItemSkinType()) {
+
+
+                        if (event.getSlotType() == InventoryType.SlotType.ARMOR) {
+                            skinTypes.get(i).getItemSkin().onUnequip((Player) event.getWhoClicked());
+                            skinTypes.get(j).getItemSkin().onUnequip((Player) event.getWhoClicked());
+                        }
+
+
+                        event.setCurrentItem(AstroItemSkinsAPI.removeMultiSkinFromItem(clicked, skinTypes.get(i), skinTypes.get(j)));
+
+                        event.setCursor(skinTypes.get(i).getMultiSkin(skinTypes.get(j)));
+                        event.setCancelled(true);
+                        ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.BAT_TAKEOFF, 1.0F, 10.0F);
+                        return;
+                    }
+                }
+            }
+
             if (event.getSlotType() == InventoryType.SlotType.ARMOR)
-                skinTypes.get(0).getItemSkin().onUnequip((Player)event.getWhoClicked());
+                skinTypes.get(0).getItemSkin().onUnequip((Player) event.getWhoClicked());
             event.setCurrentItem(AstroItemSkinsAPI.removeItemSkinFromItem(clicked));
-            event.setCursor(((SkinType)skinTypes.get(0)).getItem());
+            event.setCursor(((SkinType) skinTypes.get(0)).getItem());
             event.setCancelled(true);
-            ((Player)event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.BAT_TAKEOFF, 1.0F, 10.0F);
+            ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.BAT_TAKEOFF, 1.0F, 10.0F);
         }
+
+
     }
 
     @EventHandler
@@ -69,14 +95,14 @@ public class ItemSkinListener implements Listener {
         Entity damager = event.getDamager();
         Entity damaged = event.getEntity();
         if (damager instanceof Player) {
-            List<SkinType> damagerSkins = AstroItemSkinsAPI.getItemSkinsOnPlayer((Player)damager);
+            List<SkinType> damagerSkins = AstroItemSkinsAPI.getItemSkinsOnPlayer((Player) damager);
             for (SkinType skin : damagerSkins)
-                skin.getItemSkin().onAttack((Player)damager, damaged, event);
+                skin.getItemSkin().onAttack((Player) damager, damaged, event);
         }
         if (damaged instanceof Player) {
-            List<SkinType> damagedSkins = AstroItemSkinsAPI.getItemSkinsOnPlayer((Player)damaged);
+            List<SkinType> damagedSkins = AstroItemSkinsAPI.getItemSkinsOnPlayer((Player) damaged);
             for (SkinType skin : damagedSkins)
-                skin.getItemSkin().onAttacked((Player)damaged, damager, event);
+                skin.getItemSkin().onAttacked((Player) damaged, damager, event);
         }
     }
 
@@ -120,12 +146,12 @@ public class ItemSkinListener implements Listener {
         if (player != null) {
             List<SkinType> killerSkins = AstroItemSkinsAPI.getItemSkinsOnPlayer(player);
             for (SkinType skin : killerSkins)
-                skin.getItemSkin().onKill(player, (Entity)killed, event);
+                skin.getItemSkin().onKill(player, (Entity) killed, event);
         }
         if (killed instanceof Player) {
-            List<SkinType> damagedSkins = AstroItemSkinsAPI.getItemSkinsOnPlayer((Player)killed);
+            List<SkinType> damagedSkins = AstroItemSkinsAPI.getItemSkinsOnPlayer((Player) killed);
             for (SkinType skin : damagedSkins)
-                skin.getItemSkin().onKilled((Player)killed, (Entity)player, event);
+                skin.getItemSkin().onKilled((Player) killed, (Entity) player, event);
         }
     }
 }
