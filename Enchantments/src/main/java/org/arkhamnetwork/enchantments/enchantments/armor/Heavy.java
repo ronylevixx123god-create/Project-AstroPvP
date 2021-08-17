@@ -31,7 +31,6 @@ public class Heavy extends CustomEnchantment {
                 .getDamage() * (1.0D - damage_negation) > 1.0D) {
             e.setDamage(e.getDamage() * (1.0D - damage_negation));
             Location l = player.getLocation();
-            WorldUtil.sendWorldEffect(l.getBlock(), 133, 2001);
         }
     }
 }

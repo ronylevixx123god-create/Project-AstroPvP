@@ -119,7 +119,12 @@ public class InventoryBloodhoundPet extends InventoryPet {
       if (relation == Relation.ALLY || relation == Relation.TRUCE || relation.isMember())
          throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "No valid target found!");
       //petItem.setLastUsed(System.currentTimeMillis());
-      PetUtils.addPetCooldown(player, petItem.getPetType(), (getCooldown(5) * 1000));
+
+      if(AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.MEDIEVAL_BELT_KING) && Math.random() < 0.25) {
+         player.sendMessage(CC.translate("&6&l* ROYAL BELT &7Prevented &dPet Cooldown &6&l*"));
+      } else {
+         PetUtils.addPetCooldown(player, petItem.getPetType(), (getCooldown(5) * 1000));
+      }
 
       int xpGain = petItem.getLevel() * 5;
       player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 1.1F, 3.0F);

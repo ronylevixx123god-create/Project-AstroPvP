@@ -54,7 +54,7 @@ public class CustomPearlListener implements Listener {
                     KillTrackerAPI.removeSoulsFromGems((Player)player, (int)5);
                 }
             }
-            EscapistPearlEntity escapistPearlEntity = (EscapistPearlItem.isEscapistPearl(item) || OmniPearlItem.isOmniPearl(item) ||
+            EscapistPearlEntity escapistPearlEntity = (EscapistPearlItem.isEscapistPearl(item) || OmniPearlItem.isOmniPearl(item) || AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.MEDIEVAL_HELMET_KNIGHT) ||
             AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.SEXY_BELT)) ? new EscapistPearlEntity(player) : null;
             if (escapistPearlEntity == null) {
                 //event.setCancelled(true);

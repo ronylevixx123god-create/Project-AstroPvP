@@ -40,7 +40,6 @@ public class Cactus extends CustomEnchantment {
                 Player pAttacker = (Player) attacker;
                 pAttacker.damage(0.5D * level);
                 Location l = p.getLocation();
-                WorldUtil.sendWorldEffect(l.getBlock(), 81, 2001);
             }
         }
     }

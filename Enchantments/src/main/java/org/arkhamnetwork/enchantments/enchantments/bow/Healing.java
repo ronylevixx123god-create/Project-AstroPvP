@@ -98,7 +98,6 @@ public class Healing extends CustomEnchantment {
                         player.playSound(player.getLocation(), Sound.ORB_PICKUP, 0.75f, 0.341f);
                     }
                     final Location loc = playerHit.getLocation().add(0.0, 0.5, 0.0);
-                    WorldUtil.sendWorldEffect(loc.getBlock(), Material.EMERALD_BLOCK.getId(), 2001);
                 }
             }
         }
@@ -108,7 +107,6 @@ public class Healing extends CustomEnchantment {
             if (e.getBow() != null && EnchantmentAPI.itemHasEnchantment(e.getBow(), "Healing")) {
                 final Location loc = e.getProjectile().getLocation();
                 e.getProjectile().setMetadata("healing_level", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), EnchantmentAPI.getEnchantments(e.getBow()).get(EnchantmentAPI.getEnchantment("Healing"))));
-                WorldUtil.sendWorldEffect(loc.getBlock(), Material.EMERALD_BLOCK.getId(), 2001);
             }
         }
     }

@@ -27,7 +27,6 @@ public class KillAura extends CustomEnchantment {
         if (target.hasMetadata("monsterAmount") && random < chance) {
             final int mobsToKill = (enchantLevel == 5 && Math.random() < 0.05) ? 3 : 2;
             target.setMetadata("killAura", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) mobsToKill));
-            ParticleEffect.playEffect(ParticleEffect.LARGE_EXPLODE, target.getLocation().add(0.0, 0.5, 0.0), 0.55f, 3);
         }
     }
 }

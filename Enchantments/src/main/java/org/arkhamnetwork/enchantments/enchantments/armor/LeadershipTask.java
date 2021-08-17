@@ -1,6 +1,8 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
+import de.inventivegames.particle.ParticleEffect;
+import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
@@ -16,6 +18,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.Map;
 
 final class LeadershipTask extends BukkitRunnable {
+    @SneakyThrows
     public void run() {
         for (final Map.Entry<String, Integer> LeadershipData : Leadership.Leaderships.entrySet()) {
             final String playerName = LeadershipData.getKey();
@@ -35,7 +38,8 @@ final class LeadershipTask extends BukkitRunnable {
                 if (x <= 0 || l.getWorld().getName().equals("world_duels") || l.getWorld().getName().equals("world_duels2") || l.getWorld().getName().equals("cosmic-pvparenas")) {
                     continue;
                 }
-                WorldUtil.sendWorldEffect(l.getBlock(), Material.SNOW_BLOCK.getId(), 2001);
+                ParticleEffect.SNOWBALL.sendToPlayer(p.getPlayer(),l, 0,0, 0,1.5f,10);
+                //WorldUtil.sendWorldEffect(l.getBlock(), Material.SNOW_BLOCK.getId(), 2001);
             }
         }
     }

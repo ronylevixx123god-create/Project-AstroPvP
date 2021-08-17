@@ -46,7 +46,6 @@ final class CommanderTask extends BukkitRunnable {
                 if (x <= 0 || p.getWorld().getName().equals("world_duels") || p.getWorld().getName().equals("world_duels2") || p.getWorld().getName().equals("cosmic-pvparenas")) {
                     continue;
                 }
-                WorldUtil.sendWorldEffect(l.getBlock(), 57, 2001);
             }
         }
     }

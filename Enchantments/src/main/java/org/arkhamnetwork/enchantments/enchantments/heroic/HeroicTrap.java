@@ -95,7 +95,6 @@ public class HeroicTrap extends HeroicCustomEnchantment {
                     tar.sendBlockChange(location, typeItWas, (byte) 0);
             }, (int) durationTicks);
             Location l = ptarget.getLocation();
-            WorldUtil.sendWorldEffect(l.getBlock(), 80, 2001);
 
         }
     }

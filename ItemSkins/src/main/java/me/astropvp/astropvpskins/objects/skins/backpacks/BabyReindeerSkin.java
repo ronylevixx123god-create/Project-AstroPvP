@@ -2,6 +2,7 @@ package me.astropvp.astropvpskins.objects.skins.backpacks;
 
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.massivecraft.factions.Faction;
 import com.rit.sucy.EnchantmentAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
@@ -20,6 +21,8 @@ public class BabyReindeerSkin extends ItemSkin {
     private final List<Player> cooldowns = new ArrayList<>();
 
     public void onAttacked(Player damaged, Entity damager, EntityDamageByEntityEvent event) {
+        if (!WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
+
         if(damaged.getHealth() - event.getFinalDamage() <=20 && (!cooldowns.contains(damaged))) {
             damaged.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 8, 4));
             cooldowns.add(damaged);

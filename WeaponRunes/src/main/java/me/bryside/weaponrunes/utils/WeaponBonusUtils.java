@@ -16,6 +16,8 @@ public class WeaponBonusUtils {
     }
 
     public static boolean hasWeaponBonus(ItemStack i) {
+        if (i == null) return false;
+        if (i.getType() == Material.AIR) return false;
         NBTWrapper wrapper = new NBTWrapper(i);
         if (!wrapper.hasKey("cosmicData"))
             return false;

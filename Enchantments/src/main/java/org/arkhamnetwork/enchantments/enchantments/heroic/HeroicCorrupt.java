@@ -44,7 +44,6 @@ public class HeroicCorrupt extends HeroicCustomEnchantment {
         if (random < chance && (!playerHit.hasMetadata("corruptEnchantExpire") || playerHit.getMetadata("corruptEnchantExpire").get(0).asLong() < System.currentTimeMillis())) {
             playerHit.setMetadata("corruptEnchantExpire", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) (System.currentTimeMillis() + level * 2 * 1000)));
             playerHit.setMetadata("corruptEnchantLevel", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) level));
-            ParticleEffect.playEffect(ParticleEffect.PORTAL, playerHit.getEyeLocation(), 0.6f, 20);
             try {
                 de.inventivegames.particle.ParticleEffect.PORTAL.sendToPlayer((Player) playerHit, playerHit.getEyeLocation(), 0, 0, 0, 0.7f, 16);
             } catch (Exception exception) {

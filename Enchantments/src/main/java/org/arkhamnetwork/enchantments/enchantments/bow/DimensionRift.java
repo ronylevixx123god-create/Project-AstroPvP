@@ -97,7 +97,6 @@ public class DimensionRift extends CustomEnchantment {
                         }
                     }
                     data.getKey().getBlock().setType((Material) data.getValue());
-                    WorldUtil.sendWorldEffect(data.getKey().getBlock(), data.getValue().getId(), 2001);
                     for (final Player p : playersToBoost) {
                         p.removePotionEffect(PotionEffectType.JUMP);
                         p.setVelocity(new Vector(0.0, 0.5, 0.0));

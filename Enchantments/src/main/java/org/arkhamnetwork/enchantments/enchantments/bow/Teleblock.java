@@ -34,11 +34,22 @@ public class Teleblock extends CustomEnchantment {
     public void applyProjectileEffect(final LivingEntity player, final int level, final ProjectileLaunchEvent e) {
         final Player p = (Player) player;
         final int soulCost = level * 6;
+
+        if (!(e.getEntity() instanceof Player)) {
+            return;
+        }
+
         Player pp = (Player) e.getEntity();
         if (AstroItemSkinsAPI.hasSkinEquipped(pp, SkinType.VIRUS_HELMET_N95)) {
             pp.sendMessage(CC.translate("&a&l* ANTI CORONA BLOCKED &7[Teleblock] &a&l*"));
             return;
         }
+
+        if (AstroItemSkinsAPI.hasSkinEquipped(pp, SkinType.MEDIEVAL_HELMET_KNIGHT)) {
+            pp.sendMessage(CC.translate("&7&l* KNIGHT HELMET Blocked &cTeleblock &7&l*"));
+            return;
+        }
+
         if (AstroItemSkinsAPI.hasSkinEquipped(pp, SkinType.CHRISTMAS_BOOTS_SLIPPERS)) {
             pp.sendMessage(CC.translate("&c&l* SNOWFLAKE FLIPPERS &7Blocked Teleblock &c&l*"));
             return;

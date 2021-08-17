@@ -36,7 +36,6 @@ public class Inversion extends CustomEnchantment {
                 GeneralUtil.healPlayer((LivingEntity) playerHit, heal);
                 e.setDamage(0.0);
                 e.setCancelled(true);
-                ParticleEffect.playEffect(ParticleEffect.SPELL, playerHit.getLocation().add(0.0, 1.0, 0.0), 0.45f, 20);
                 try {
                     de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayer(playerHit,playerHit.getLocation(), 0,1, 0,1.0f,4);
                 } catch (Exception exception) {

@@ -30,7 +30,7 @@ public class Tank extends CustomEnchantment {
         if (i != null && i.getType().name().contains("_AXE") && e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1.0 - damage_negation) > 1.0) {
             e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1.0 - damage_negation));
             final Location l = player.getLocation();
-            WorldUtil.sendWorldEffect(l.getBlock(), 42, 2001);
+            //WorldUtil.sendWorldEffect(l.getBlock(), 42, 2001);
         }
     }
 }

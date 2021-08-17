@@ -78,7 +78,6 @@ public class Trap extends CustomEnchantment {
                 }
             }, 35L);
             final Location l = ptarget.getLocation();
-            WorldUtil.sendWorldEffect(l.getBlock(), 80, 2001);
         }
     }
 
@@ -95,7 +94,6 @@ public class Trap extends CustomEnchantment {
                 final Player p = (Player) e.getEntity();
                 if (p.getWalkSpeed() == 0.0f && !p.isOp()) {
                     final Location l = p.getLocation();
-                    WorldUtil.sendWorldEffect(l.getBlock(), 80, 2001);
                 }
             }
         }

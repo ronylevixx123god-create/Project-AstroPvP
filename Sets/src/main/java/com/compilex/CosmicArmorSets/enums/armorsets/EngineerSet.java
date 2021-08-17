@@ -134,7 +134,7 @@ public class EngineerSet extends ArmorSetInfo implements Listener, WeaponedArmor
         player.sendMessage(CC.translate("&a&l* B-2 BOMBER DEPLOYED [&7" + affected.size() + " &7players&a&l] *"));
         for (Player enemy : affected) {
             enemy.sendMessage(CC.translate("&6&l* B-2 BOMB, RUN! &7(" + player.getName() + ") &6&l*"));
-            this.fallingBlocks.add(createFallingBlock(enemy.getLocation().add(0, 5, 0), player,FactionUtils.getFaction(player)));
+            //this.fallingBlocks.add(createFallingBlock(enemy.getLocation().add(0, 5, 0), player,FactionUtils.getFaction(player)));
         }
     }
 

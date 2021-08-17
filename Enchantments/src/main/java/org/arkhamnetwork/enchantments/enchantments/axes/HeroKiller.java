@@ -59,15 +59,23 @@ public class HeroKiller extends CustomEnchantment {
             }
 
 
-            double increase = 0.05 * level;
+            double increase = 0.1;
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.SUMMER_2021_SWORD)) {
-                increase = increase * 1.15;
+                increase = 0.12;
             }
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2021_HELMET)) {
-                if (playerHit != null && playerHit instanceof Player && ((Player) playerHit).getPlayer().getItemInHand() != null && (!(WeaponBonusUtils.hasWeaponBonus(((Player) playerHit).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player) playerHit).getItemInHand()) == WeaponBonusType.REFORGED && (Math.random() < 0.5)))) {
-                    increase = increase * 1.3;
+
+                if (player == null || !(player instanceof Player) || playerHit == null || !(playerHit instanceof Player)) return;
+
+                if (((Player) player).getItemInHand() == null || ((Player) playerHit).getItemInHand() == null) return;
+
+                if (!(WeaponBonusUtils.hasWeaponBonus(((Player) playerHit).getItemInHand()))) {
+                    if (!(WeaponBonusUtils.getWeaponBonusByItem(((Player) playerHit).getItemInHand()) == WeaponBonusType.REFORGED && Math.random() < 0.5))
+                    {
+                        increase = 0.2;
+                    }
                 }
             }
                 e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1 + increase));

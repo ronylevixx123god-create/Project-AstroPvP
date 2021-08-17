@@ -84,8 +84,6 @@ public class MasteryPermafrost extends MasteryCustomEnchantment {
                 this.blocksToRestore.put(block, new PlayerMaterialData(current, damaged.getUniqueId(), enchantLevel));
                 Material material = Material.SNOW_BLOCK;
                 block.setTypeId(material.getId(), false);
-                if (this.random.nextDouble() <= 0.4D)
-                    WorldUtil.sendWorldEffect(block, material.getId(), 2001);
             }
             Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin) Enchantments.getInstance(), () -> {
                 for (Block block : blocks) {

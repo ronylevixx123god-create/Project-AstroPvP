@@ -25,7 +25,6 @@ public class Hardened extends CustomEnchantment {
         if (random < chance) {
             DurabilityUtil.healMostDamagedArmorPeice((Player) player, (short) 1);
             final Location l = player.getLocation();
-            ParticleEffect.playEffect(ParticleEffect.SPELL, l, 1.0f, 4);
             //de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayer(((Player) player).getPlayer(),l, 0,1, 0,1.0f,4);
         }
     }

@@ -46,7 +46,6 @@ public class Aegis extends CustomEnchantment {
         if (enemies.size() > 8 - level &&
                 !enemies.contains(pAttacker.getUniqueId())) {
             e.setDamage(e.getDamage() * 0.5D);
-            ParticleEffect.playEffect(ParticleEffect.MAGIC_CRIT, player.getEyeLocation(), 0.6F, 16);
             return;
         }
         enemies.add(pAttacker.getUniqueId());

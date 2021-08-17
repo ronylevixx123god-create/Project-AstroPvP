@@ -109,7 +109,11 @@ public class NatureWrath extends CustomEnchantment {
                 p.playSound(p.getLocation(), Sound.LEVEL_UP, 1.0f, 0.65f);
                 p.sendMessage("");
                 this.procNaturesWrath(p, attacker, level, e, 1.0);
-                DamageIndicatorUtils.sendDamageIndicator((Player) attacker, CC.RedB + "* NATURE'S WRATH *" + CC.DarkPurpleB +  "*", "NATURES_WRATH");
+                if (attacker != null) {
+                    if (attacker instanceof Player) {
+                        DamageIndicatorUtils.sendDamageIndicator((Player) attacker, CC.RedB + "* NATURE'S WRATH *" + CC.DarkPurpleB + "*", "NATURES_WRATH");
+                    }
+                }
             } else {
                 de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 0,1,0,0.4f,20);
 

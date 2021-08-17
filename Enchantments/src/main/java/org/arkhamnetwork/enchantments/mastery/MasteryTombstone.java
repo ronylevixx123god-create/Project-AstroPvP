@@ -120,7 +120,6 @@ public class MasteryTombstone extends MasteryCustomEnchantment {
                         if (this.dead) {
                             return;
                         }
-                        WorldUtil.sendWorldEffect(loc.getBlock(), Material.ANVIL.getId(), 2001);
                         final List near = this.world.getEntities(this, this.getBoundingBox());
                         this.world.getWorld().playSound(this.getBukkitEntity().getLocation(), Sound.ANVIL_LAND, 2.0f, 1.1f);
                         for (final Object ent : near) {

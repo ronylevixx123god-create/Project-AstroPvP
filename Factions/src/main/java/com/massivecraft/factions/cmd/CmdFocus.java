@@ -1,6 +1,9 @@
 package com.massivecraft.factions.cmd;
 
+import com.astropvp.cc.player.CosmicPlayers;
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.massivecraft.factions.struct.Relation;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import com.massivecraft.factions.Faction;
 import org.bukkit.OfflinePlayer;
@@ -86,6 +89,7 @@ public class CmdFocus extends FCommand
             if (command) {
                 pSender.sendMessage(ChatColor.GRAY + "Use " + ChatColor.UNDERLINE + "/f unfocus" + ChatColor.GRAY + " to clear your faction target.");
             }
+
             if (command) {
                 myFaction.msg("");
             }
