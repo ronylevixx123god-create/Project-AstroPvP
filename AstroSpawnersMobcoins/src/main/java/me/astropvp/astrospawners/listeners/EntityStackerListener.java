@@ -141,7 +141,7 @@ public class EntityStackerListener implements Listener {
                 exp = exp * 2;
             }
 
-            if (CustomBlockUtil.chunkHasCertainBlock(p, "TREASURECHEST")) {
+            if (CustomBlockUtil.chunkHasCertainBlock(p, "TREASURE_CHEST")) {
                 exp = exp * 1.5;
             }
 

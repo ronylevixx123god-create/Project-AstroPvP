@@ -136,7 +136,7 @@ public class SlotBotInventoryListener implements Listener {
                     player.sendMessage("");
                 }
 
-                if (CustomBlockUtil.chunkHasCertainBlock(player, "ASTROTROPHY")) {
+                if (CustomBlockUtil.chunkHasCertainBlock(player, "COSMIC_TROPHY")) {
                     FPlayer killer = FactionUtils.getFPlayer(player);
                     for (AbilityData data : CustomBlockUtil.getBlockDatasInChunk(player)) {
                         FPlayer owner = FactionUtils.getFPlayer(Bukkit.getPlayer(data.getOwner()));
@@ -144,7 +144,7 @@ public class SlotBotInventoryListener implements Listener {
                         if (killer.getFaction() == null) return;
                         if (customBlock == null) return;
                         if (owner.getFaction() == null) return;
-                        if (killer.getFaction() == owner.getFaction() && customBlock.getIdentifier().equals("ASTROTROPHY")) {
+                        if (killer.getFaction() == owner.getFaction() && customBlock.getIdentifier().equals("COSMIC_TROPHY")) {
                             if (Math.random() < 0.1) {
                                 returnTickets(tickets, player);
                                 player.sendMessage("");
