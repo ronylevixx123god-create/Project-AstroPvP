@@ -53,11 +53,24 @@ public class AstroItemSkinsAPI {
         if (!cosmicData2.hasKey("itemSkinType"))
             return false;
 
-        //TODO When you first apply backpack and than double skin this errors, fix plz
-        SkinType type2 = SkinType.valueOf(cosmicData2.getString("itemSkinType"));
-        for (SkinType type : getItemSkinByItem(item)) {
-            if (type.getItemSkinType() == type2.getItemSkinType())
-                return true;
+        String[] skins = cosmicData2.getString("itemSkinType").split(",");
+        if (skins.length >= 2) {
+            SkinType type1 = SkinType.valueOf(skins[0]);
+            SkinType type2 = SkinType.valueOf(skins[1]);
+
+
+            for (SkinType type : getItemSkinByItem(item)) {
+                if (type.getItemSkinType() == type1.getItemSkinType() || type.getItemSkinType() == type2.getItemSkinType())
+                    return true;
+            }
+
+        } else {
+
+            SkinType type2 = SkinType.valueOf(cosmicData2.getString("itemSkinType"));
+            for (SkinType type : getItemSkinByItem(item)) {
+                if (type.getItemSkinType() == type2.getItemSkinType())
+                    return true;
+            }
         }
         return false;
     }
@@ -141,36 +154,14 @@ public class AstroItemSkinsAPI {
         cosmicData.remove("itemSkinType");
 
 
-        try {
-
-
-            for (String skinType : skins) {
-                if (skinType.equals(skinType1.name())) {
-                    skinsCopy.remove(skinType1.name());
-                }
-                if (skinType.equals(skinType2.name())) {
-                    skinsCopy.remove(skinType2.name());
-
-                }
+        for (String skinType : skins) {
+            if (skinType.equals(skinType1.name())) {
+                skinsCopy.remove(skinType1.name());
             }
-        } catch (Exception e) {
-            if (skinsCopy.size() != 0) {
-                String[] remaining = skinsCopy.<String>toArray(new String[0]);
-                String s = Arrays.toString((Object[]) remaining);
-                s = s.replaceAll(" ", "");
-                s = s.replace("[", "");
-                s = s.replace("]", "");
-                cosmicData.setString("itemSkinType", s);
+            if (skinType.equals(skinType2.name())) {
+                skinsCopy.remove(skinType2.name());
+
             }
-            wrapper.setNBTBase("cosmicData", (NBTBase) cosmicData.get());
-            item = wrapper.build();
-            ItemMeta meta = item.getItemMeta();
-            List<String> lore = meta.getLore();
-            lore = (List<String>) lore.stream().filter(s -> !ChatColor.stripColor(s).startsWith("ITEM SKIN: " + ChatColor.stripColor(skinType1.getName()))).collect(Collectors.toList());
-            lore = (List<String>) lore.stream().filter(s -> !ChatColor.stripColor(s).startsWith("ITEM SKIN: " + ChatColor.stripColor(skinType2.getName()))).collect(Collectors.toList());
-            meta.setLore(lore);
-            item.setItemMeta(meta);
-            return item;
         }
 
 
