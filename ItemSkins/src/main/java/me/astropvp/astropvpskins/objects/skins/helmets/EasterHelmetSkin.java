@@ -11,7 +11,6 @@
  public class EasterHelmetSkin extends ItemSkin {
 
      public void onAttacked(Player damaged, Entity damager, EntityDamageByEntityEvent event) {
-         if(Math.random() < 0.01)
              (new HeroicDodge()).applyDefenseEffect(damaged, (LivingEntity) damager, 6, (event)); //IMPORT ENCHANTS PLUGIN
      }
  }
