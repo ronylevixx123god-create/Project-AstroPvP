@@ -72,6 +72,7 @@ public enum TieredEnchantments {
     polymorphicmetaphysical(7),
     mightycactus(7),
     reinforcedtank(7),
+    extremeinsanity(7),
     naturewrath(6),
     divineimmolation(6),
     immortal(6),
