@@ -1,5 +1,6 @@
 package me.astropvp.astropvpskins.objects.skins.axes;
 
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
 import me.astropvp.astropvpskins.objects.ItemSkin;
 import org.bukkit.entity.Entity;
@@ -11,6 +12,8 @@ import org.bukkit.plugin.Plugin;
 
 public class SkullScytheAxeSkin extends ItemSkin {
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
+        if (!WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
+
         event.setDamage(event.getDamage() * 1.025);
         if(Math.random() <= 0.1) {
             damaged.setMetadata("scytheSilence", (MetadataValue)new FixedMetadataValue((Plugin) AstroItemSkinsPlugin.getInstance(), System.currentTimeMillis() + 10000));
