@@ -3,10 +3,12 @@ package me.astropvp.astropvpskins.listeners;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import java.util.List;
 
+import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.ifamasssxd.cosmicfactionboosters.utils.FactionUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -68,6 +70,10 @@ public class MauiHookListener implements Listener {
                 if (!(entity instanceof Player))
                     continue;
                 final Player target = ((Player)entity).getPlayer();
+                if(GeneralUtil.isAtleastTruce(target, e.getPlayer()))
+                    continue;
+                if(!WorldGuardUtils.isPvPEnabled(target.getLocation()))
+                    continue;
                 target.setMetadata("transEffect", (MetadataValue)new FixedMetadataValue((Plugin)AstroItemSkinsPlugin.getInstance(), ""));
                 target.sendTitle(new Title(CC.translate("&c&l* &f" + e.getPlayer().getName() + "'s &cTranscendence Ability &c&l*"), CC.translate("&7Silenced (Pets) and Massive Damage"), 10, 20, 10));
                 target.playSound(target.getLocation(), Sound.WITHER_HURT, 1.0F, 0.25F);
