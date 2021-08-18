@@ -91,12 +91,15 @@ public class InventoryWitcherPet extends InventoryPet {
             throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
         if (!WorldGuardUtils.isPvPEnabled(player.getLocation()))
             throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "Not allowed in this region!");
+
         if(AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.MEDIEVAL_BELT_KING) && Math.random() < 0.25) {
             player.sendMessage(CC.translate("&6&l* ROYAL BELT &7Prevented &dPet Cooldown &6&l*"));
         } else {
             petItem.setLastUsed(System.currentTimeMillis());
 
         }
+        petItem.setLastUsed(System.currentTimeMillis());
+
         int xpGain = petItem.getLevel() * 5;
         player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
         int sum = petItem.getLevel() * 2;

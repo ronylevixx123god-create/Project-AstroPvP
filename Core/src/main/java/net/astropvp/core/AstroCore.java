@@ -165,6 +165,7 @@ public class AstroCore extends JavaPlugin {
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new RogueScratchCard());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new ApolloRank());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new AstroPlusRank());
+        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new TrapBlockerItem());
 
 
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new RevokeScratchCard());
@@ -187,6 +188,7 @@ public class AstroCore extends JavaPlugin {
 
 
         this.getServer().getPluginManager().registerEvents(new SlotbotScratchCardListener(), this);
+        this.getServer().getPluginManager().registerEvents(new TrapBlockListener(), this);
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, new AutoBroadcastTask(), 20L, 6000L);
 
         Bukkit.getScheduler().runTaskLater(this, ()->

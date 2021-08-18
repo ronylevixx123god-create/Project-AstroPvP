@@ -164,6 +164,14 @@
 
         <dependency>
             <groupId>com.conaxgames</groupId>
+            <artifactId>ccv</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/CCVerify-1.0 (12).jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>com.conaxgames</groupId>
             <artifactId>AstroEndGrinding</artifactId>
             <version>0.1</version>
             <scope>system</scope>
