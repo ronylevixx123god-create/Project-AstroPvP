@@ -158,6 +158,9 @@ public class HolyWhiteScrollListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerRespawn(PlayerRespawnEvent e) {
+        if (e.getPlayer().getLastDamageCause() == null) return;
+        if (e.getPlayer().getLastDamageCause().getCause() == null) return;
+
         if (e.getPlayer().getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.VOID) return;
         List<ItemStack> toReturn = this.savedItems.remove(e.getPlayer().getUniqueId().toString());
         if (toReturn != null) {
