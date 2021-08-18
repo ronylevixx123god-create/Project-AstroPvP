@@ -8,6 +8,7 @@ import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.google.common.collect.Lists;
 
 import java.lang.reflect.Array;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -35,7 +36,7 @@ public class CommandMobCoinShop implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command arg1, String arg2, String[] args) {
         if (!(sender instanceof Player))
             return false;
-        Inventory inventory = Bukkit.createInventory(null, 9, String.valueOf(CC.DarkGray) + "Mob Coin Shop");
+        Inventory inventory = Bukkit.createInventory(null, 18, String.valueOf(CC.DarkGray) + "Mob Coin Shop");
         Map<String, MysteryChest> chests = CosmicMysteryChest.get().getChestManager().getMysteryChestMap();
         LinkedHashMap<ItemStack, Integer> values = new LinkedHashMap<>();
 
@@ -43,38 +44,50 @@ public class CommandMobCoinShop implements CommandExecutor {
 
         if (rank.equals("apollo")) {
             if (chests.containsKey("OmniCrystal"))
-                values.put(((MysteryChest)chests.get("OmniCrystal")).createClaimableItem(false), Integer.valueOf(750));
+                values.put(((MysteryChest)chests.get("OmniCrystal")).createClaimableItem(false), Integer.valueOf(200));
             if (chests.containsKey("QuadCrystal"))
-                values.put(((MysteryChest)chests.get("QuadCrystal")).createClaimableItem(false), Integer.valueOf(187));
+                values.put(((MysteryChest)chests.get("QuadCrystal")).createClaimableItem(false), Integer.valueOf(200));
             if (chests.containsKey("HeroicPet"))
-                values.put(((MysteryChest)chests.get("HeroicPet")).createClaimableItem(false), Integer.valueOf(300));
+                values.put(((MysteryChest)chests.get("HeroicPet")).createClaimableItem(false), Integer.valueOf(200));
             if (chests.containsKey("AdminWeapon"))
-                values.put(((MysteryChest)chests.get("AdminWeapon")).createClaimableItem(false), Integer.valueOf(300));
+                values.put(((MysteryChest)chests.get("AdminWeapon")).createClaimableItem(false), Integer.valueOf(320));
             if (chests.containsKey("Slotbot"))
-                values.put(((MysteryChest)chests.get("Slotbot")).createClaimableItem(false), Integer.valueOf(1500));
-            if (chests.containsKey("OPCrystal"))
-                values.put(((MysteryChest)chests.get("OPCrystal")).createClaimableItem(false), Integer.valueOf(6000));
+                values.put(((MysteryChest)chests.get("Slotbot")).createClaimableItem(false), Integer.valueOf(800));
+            if (chests.containsKey("SkinBundle"))
+                values.put(((MysteryChest)chests.get("SkinBundle")).createClaimableItem(false), Integer.valueOf(160));
             if (chests.containsKey("ArmorCache"))
-                values.put(((MysteryChest)chests.get("ArmorCache")).createClaimableItem(false), Integer.valueOf(6000));
-            if (chests.containsKey("OPCache"))
-                values.put(((MysteryChest)chests.get("OPCache")).createClaimableItem(false), Integer.valueOf(26250));
+                values.put(((MysteryChest)chests.get("ArmorCache")).createClaimableItem(false), Integer.valueOf(200));
+            if (chests.containsKey("HeroicProtVI"))
+                values.put(((MysteryChest)chests.get("HeroicProtVI")).createClaimableItem(false), Integer.valueOf(320));
+            if (chests.containsKey("Backpack"))
+                values.put(((MysteryChest)chests.get("Backpack")).createClaimableItem(false), Integer.valueOf(480));
+            if (chests.containsKey("GrinderCache"))
+                values.put(((MysteryChest)chests.get("GrinderCache")).createClaimableItem(false), Integer.valueOf(400));
+            if (chests.containsKey("CustomBlock"))
+                values.put(((MysteryChest)chests.get("CustomBlock")).createClaimableItem(false), Integer.valueOf(800));
         } else {
             if (chests.containsKey("OmniCrystal"))
-                values.put(((MysteryChest)chests.get("OmniCrystal")).createClaimableItem(false), Integer.valueOf(2000));
+                values.put(((MysteryChest)chests.get("OmniCrystal")).createClaimableItem(false), Integer.valueOf(250));
             if (chests.containsKey("QuadCrystal"))
                 values.put(((MysteryChest)chests.get("QuadCrystal")).createClaimableItem(false), Integer.valueOf(250));
             if (chests.containsKey("HeroicPet"))
-                values.put(((MysteryChest)chests.get("HeroicPet")).createClaimableItem(false), Integer.valueOf(400));
+                values.put(((MysteryChest)chests.get("HeroicPet")).createClaimableItem(false), Integer.valueOf(250));
             if (chests.containsKey("AdminWeapon"))
                 values.put(((MysteryChest)chests.get("AdminWeapon")).createClaimableItem(false), Integer.valueOf(400));
             if (chests.containsKey("Slotbot"))
-                values.put(((MysteryChest)chests.get("Slotbot")).createClaimableItem(false), Integer.valueOf(4000));
-            if (chests.containsKey("OPCrystal"))
-                values.put(((MysteryChest)chests.get("OPCrystal")).createClaimableItem(false), Integer.valueOf(10000));
+                values.put(((MysteryChest)chests.get("Slotbot")).createClaimableItem(false), Integer.valueOf(1000));
+            if (chests.containsKey("SkinBundle"))
+                values.put(((MysteryChest)chests.get("SkinBundle")).createClaimableItem(false), Integer.valueOf(200));
             if (chests.containsKey("ArmorCache"))
-                values.put(((MysteryChest)chests.get("ArmorCache")).createClaimableItem(false), Integer.valueOf(10000));
-            if (chests.containsKey("OPCache"))
-                values.put(((MysteryChest)chests.get("OPCache")).createClaimableItem(false), Integer.valueOf(40000));
+                values.put(((MysteryChest)chests.get("ArmorCache")).createClaimableItem(false), Integer.valueOf(250));
+            if (chests.containsKey("HeroicProtVI"))
+                values.put(((MysteryChest)chests.get("HeroicProtVI")).createClaimableItem(false), Integer.valueOf(400));
+            if (chests.containsKey("Backpack"))
+                values.put(((MysteryChest)chests.get("Backpack")).createClaimableItem(false), Integer.valueOf(600));
+            if (chests.containsKey("GrinderCache"))
+                values.put(((MysteryChest)chests.get("GrinderCache")).createClaimableItem(false), Integer.valueOf(500));
+            if (chests.containsKey("CustomBlock"))
+                values.put(((MysteryChest)chests.get("CustomBlock")).createClaimableItem(false), Integer.valueOf(1000));
         }
 
 
@@ -91,7 +104,7 @@ public class CommandMobCoinShop implements CommandExecutor {
             int price = ((Integer)entry.getValue()).intValue();
             List<String> lore = meta.hasLore() ? meta.getLore() : Lists.newArrayList();
             lore.add("");
-            if (rank.equals("apollo")) {
+            if (rank.equals("apollo") || rank.equals("helper") || rank.equals("mod") || rank.equals("banteam") || rank.equals("admin")) {
                 lore.add(String.valueOf(CC.AquaB) + "* PRICE (Apollo Bonus): " + CC.White + NumberUtils.formatMoney(price) + " Mob Coins");
             } else {
                 lore.add(String.valueOf(CC.GreenB) + "* PRICE: " + CC.White + NumberUtils.formatMoney(price) + " Mob Coins");

@@ -1,6 +1,5 @@
 package net.astropvp.core.items;
 
-import com.compilex.CompilexPermissions.PermissionsAPI;
 import com.cosmicpvp.cosmicutils.exceptions.CosmicException;
 import com.cosmicpvp.cosmicutils.exceptions.PrefixedException;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
@@ -18,12 +17,24 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.metadata.FixedMetadataValue;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class TrapBlockerItem extends CosmicItem
         implements InventoryInteractable {
+
+    private static Map<UUID, Player> trappedPlayers;
+    private static Map<UUID, Player> trapCooldown;
+
+
+
+
     public TrapBlockerItem() {
         super("trap_blocker");
+        this.trappedPlayers = new HashMap<UUID, Player>();
+        this.trapCooldown = new HashMap<UUID, Player>();
     }
 
     public ItemStack createItem(Player player, Object ... objects) {
@@ -43,7 +54,6 @@ public class TrapBlockerItem extends CosmicItem
     }
 
     public boolean acceptsInventoryClickType(InventoryItemType inventoryItemType) {
-
         return inventoryItemType == InventoryItemType.CLICKED;
     }
 
@@ -66,8 +76,13 @@ public class TrapBlockerItem extends CosmicItem
             return;
         }
 
+
         if (!player.getLocation().getWorld().getName().equals("world") || !WorldGuardUtils.isPvPEnabled(player.getLocation())) {
             throw new PrefixedException("You cannot activate that ability here!");
+        }
+
+        if (trapCooldown.containsKey(player.getUniqueId())) {
+            throw new PrefixedException("You cannot use this item yet (120s cooldown).");
         }
 
 
@@ -87,22 +102,19 @@ public class TrapBlockerItem extends CosmicItem
         for (Entity entity : player.getNearbyEntities(8,8,8)) {
             if (!(entity instanceof Player)) return;
             Player p = (Player)entity;
-            if (WorldGuardUtils.isPvPEnabled(p.getLocation()) && FactionUtils.getFaction(p) != FactionUtils.getFaction(player) && !FactionUtils.isInAllyFaction(player, p)) {
-                if (!p.hasMetadata("trap_blocked")) {
-                    p.setMetadata("trap_blocked", new FixedMetadataValue(AstroCore.getInstance(), true));
+            if (WorldGuardUtils.isPvPEnabled(p.getLocation()) && (FactionUtils.getFaction(p) != FactionUtils.getFaction(player) || FactionUtils.isWilderness(FactionUtils.getFaction(player)) && FactionUtils.isWilderness(FactionUtils.getFaction(p))) && !FactionUtils.isInAllyFaction(player, p)) {
+                if (!isTrapped(p.getUniqueId())) {
+                    trappedPlayers.put(p.getUniqueId(), p);
                     p.sendMessage(CC.translate("&c&l* TRAP BLOCKED &7by &f" + player.getName() + "&c&l *"));
                     p.playSound(p.getLocation(), Sound.ANVIL_BREAK, 10, 10);
                     amountOfPlayers++;
                 }
 
-                Bukkit.getScheduler().runTaskLaterAsynchronously(AstroCore.getInstance(), ()-> {
-                    p.removeMetadata("trap_blocked", AstroCore .getInstance());
+                Bukkit.getScheduler().runTaskLater(AstroCore.getInstance(), ()-> {
+                    trappedPlayers.remove(p.getUniqueId());
                     p.sendMessage(CC.translate("&a&l* YOU ARE NO LONGER TRAP BLOCKED *"));
                 }, 300L);
-
             }
-
-
         }
 
         if (amountOfPlayers == 0) {
@@ -112,13 +124,30 @@ public class TrapBlockerItem extends CosmicItem
         }
 
         player.sendMessage(CC.translate("&c&l* TRAP BLOCKED &f" + amountOfPlayers + "&7 nearby enemies &c&l*"));
+        trapCooldown.put(player.getUniqueId(),player);
+
+        Bukkit.getScheduler().runTaskLater(AstroCore.getInstance(), ()-> {
+            player.sendMessage(CC.translate("&a&l* YOU CAN NOW USE A NEW TRAP BLOCKER *"));
+            trapCooldown.remove(player.getUniqueId());
+        }, 2400L);
         player.playSound(player.getLocation(), Sound.ANVIL_LAND, 10, 10);
 
         if (item.getAmount() == 1) {
             player.setItemInHand(null);
         } else {
             item.setAmount(item.getAmount()-1);
+
         }
+    }
+
+
+    public static boolean isTrapped(UUID uuid) {
+        return trappedPlayers.containsKey(uuid);
+    }
+
+
+    public static boolean isOnCooldown(UUID uuid) {
+        return trapCooldown.containsKey(uuid);
     }
 }
 
