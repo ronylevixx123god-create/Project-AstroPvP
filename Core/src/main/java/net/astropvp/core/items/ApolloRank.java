@@ -12,6 +12,7 @@ import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
 import me.ifamasssxd.cosmicskycustoms.struct.InventoryInteractable;
 import me.ifamasssxd.cosmicskycustoms.struct.InventoryItemType;
+import me.ily2bb.slotbot.utils.Utils;
 import net.minecraft.server.v1_8_R3.NBTBase;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -27,7 +28,7 @@ public class ApolloRank extends CosmicItem
     }
 
     public ItemStack createItem(Player player, Object ... objects) {
-        return this.applyItemData((new ItemBuilder(Material.NETHER_STAR, CC.translate("&3&l✪ &b&l&o&nA&f&l&o&np&b&l&n&oo&f&l&n&ol&b&l&n&ol&f&l&n&oo&b&l RANK &f&l&oVoucher &3&l✪ &7(Right Click)")
+        ItemStack itemStack = this.applyItemData((new ItemBuilder(Material.NETHER_STAR, CC.translate("&3&l✪ &b&l&o&nA&f&l&o&np&b&l&n&oo&f&l&n&ol&b&l&n&ol&f&l&n&oo&b&l RANK &f&l&oVoucher &3&l✪ &7(Right Click)")
                 , CC.Gray + ""
                 , CC.translate("&7&nRight-Click&7 to unlock"),
                 CC.translate("&7the &bA&fp&bo&fl&bl&fo &7rank on this server!"),
@@ -38,6 +39,8 @@ public class ApolloRank extends CosmicItem
                 CC.translate("&b&l* &3Unlimited homes"),
                 CC.translate("&b&l* &3Aqua global chat color"),
                 CC.translate("&b&l* &320 AH listings"),
+                CC.translate("&b&l* &3Apollo Header"),
+                CC.translate("&b&l* &3-20% Cost in &f/transfer"),
                 CC.translate("&b&l* &3No &f/cf &3tax"),
                 CC.translate("&b&l* &3Priority discord support"),
                 CC.translate("&b&l* &3Apollo prefix"),
@@ -47,6 +50,8 @@ public class ApolloRank extends CosmicItem
                 CC.translate("&8[&3✬&8] &bobtained from &f&nbuy.astropvp.net&7 (&n/buy&7)")
 
                 ).build())).build();
+
+        return Utils.addSkin("INTERSTELLAR_ORB", itemStack);
     }
 
     public boolean acceptsInventoryClickType(InventoryItemType inventoryItemType) {
