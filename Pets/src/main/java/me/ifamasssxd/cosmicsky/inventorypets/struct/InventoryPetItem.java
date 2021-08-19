@@ -5,31 +5,22 @@ import com.cosmicpvp.cosmicutils.exceptions.PrefixedException;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
-
-import java.lang.reflect.Field;
-import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
-
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
 import lombok.SneakyThrows;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
-import me.ifamasssxd.cosmicsky.inventorypets.utils.PetUtils;
+import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.SkullUtils;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicPersistentItem;
 import me.ifamasssxd.cosmicskycustoms.struct.PlayerInteractable;
-import net.minecraft.server.v1_8_R3.GameProfileSerializer;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class InventoryPetItem extends CosmicPersistentItem implements PlayerInteractable {
     private InventoryPets petType;
@@ -176,19 +167,27 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
                 }
 
                 /*
+
                 THIS IS WHEN YOU WNE CHANGE THE NBT FOR COSMIC COOLDOWN!!!
+
                 NBTWrapper wrapper = new NBTWrapper(item.build());
+
                 NBTTagCompoundBuilder cosmicData = wrapper.getCompound("cosmicData");
                 cosmicData.setLong("lastUsed", System.currentTimeMillis());
+
                 nbtWrapper.setNBTBase("cosmicData", cosmicData.get());
                 itemStack = wrapper.build();
                 ItemStack finalItem = itemStack;*/
 
-                //ItemStack finalItem = item.build();
+                if (!WorldGuardUtils.isPvPEnabled(player.getLocation())) {
+                    playerInteractEvent.setCancelled(true);
+                    throw new PetException("You cannot use that pet here (Safezone)!");
+                }
 
-                //String skinTexture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmVlOWU2NTY3NDk2NzVlNTYzZGE3MTM1N2MxZjg0OTY3MjQ0YzQyMDUwNDY5NzI5M2NlODc4Y2RiOGEzNiJ9fX0=";
-                player.getInventory().setItemInHand(item.build());
-                player.updateInventory();
+                ItemStack finalItem = item.build();
+
+                String skinTexture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmVlOWU2NTY3NDk2NzVlNTYzZGE3MTM1N2MxZjg0OTY3MjQ0YzQyMDUwNDY5NzI5M2NlODc4Y2RiOGEzNiJ9fX0=";
+                player.getInventory().setItemInHand(SkullUtils.buildSkullNative(finalItem, skinTexture));
 
             }
         }

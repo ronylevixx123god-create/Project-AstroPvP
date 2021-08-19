@@ -1,6 +1,9 @@
 package me.ifamasssxd.cosmicsky.inventorypets.listeners;
 
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.events.PacketAdapter;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.InventoryUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import me.ifamasssxd.cosmicsky.inventorypets.managers.InventoryPetManager;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
@@ -12,13 +15,10 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 
-
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryMoveItemEvent;
-import org.bukkit.event.inventory.InventoryOpenEvent;
-import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.inventory.*;
+import org.bukkit.event.player.PlayerInventoryEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.ItemStack;
@@ -28,13 +28,14 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+
 public class PetCooldownListener implements Listener {
 
 
     @EventHandler
-    public void openInventory(InventoryClickEvent e) {
+    public void openInventory(InventoryCloseEvent e) {
 
-            ItemStack[] contents = e.getWhoClicked().getInventory().getContents();
+        ItemStack[] contents = e.getPlayer().getInventory().getContents();
         Map<Integer, ItemStack> slotToSkullMap = IntStream.range(0, contents.length)
                 .filter(slot -> contents[slot] != null)
                 .boxed()
@@ -52,19 +53,22 @@ public class PetCooldownListener implements Listener {
 
                 InventoryPet petItem = InventoryPets.valueOf(petType).getInternalClass();
 
-                InventoryPetItem.constructItem(itemStackEntry.getValue(), wrapper, InventoryPetItem.class);
+                //InventoryPetItem.constructItem(itemStackEntry.getValue(), wrapper, InventoryPetItem.class);
 
                 long lastUse = wrapper.getCompound("cosmicData").getLong("lastUsed");
                 long delay = TimeUnit.SECONDS.toMillis((long) petItem.getCooldown(5));
                 long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
 
                 if (!(lastUse > 0L && timeTillCanUse > 0L)) {
-                    e.getWhoClicked().getInventory().setItem(itemStackEntry.getKey(), InventoryPetItem.constructItem(itemStackEntry.getValue(), wrapper, InventoryPetItem.class).build());
+                    e.getPlayer().getInventory().setItem(itemStackEntry.getKey(), InventoryPetItem.constructItem(itemStackEntry.getValue(), wrapper, InventoryPetItem.class).build());
                     //InventoryPetItem.constructItem(itemStackEntry.getValue(), wrapper, InventoryPetItem.class).build()
                 }
             }
 
 
         }
+
     }
+
+
 }

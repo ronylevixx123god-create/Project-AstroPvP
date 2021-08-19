@@ -86,21 +86,28 @@ public class InventorySkrrtPet extends InventoryPet {
                     if (!WorldGuardUtils.isPvPEnabled(locationClicked)) {
                         player.sendMessage(ChatColor.RED + "Combat is disabled in this region.");
                         return true;
-                    } else {
-                        if(AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.MEDIEVAL_BELT_KING) && Math.random() < 0.25) {
-                            player.sendMessage(CC.translate("&6&l* ROYAL BELT &7Prevented &dPet Cooldown &6&l*"));
-                        } else {
-                            petItem.setLastUsed(System.currentTimeMillis());
-                            PetUtils.addPetCooldown(player, petItem.getPetType(), (getCooldown(5) * 1000));
-                        }
-
-                        this.petLevel = 5;
-                        this.givePlayerGearFive(player);
-                        this.skrrtAbilities(player);
-                        boolean xpGain = true;
-
-                        return true;
                     }
+
+                    if (player.getNearbyEntities(16.0D, 16.0D, 16.0D).isEmpty()) {
+
+                        throw new PrefixedPetException("Could not find a valid target!");
+                    }
+
+                    if(AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.MEDIEVAL_BELT_KING) && Math.random() < 0.25) {
+                        player.sendMessage(CC.translate("&6&l* ROYAL BELT &7Prevented &dPet Cooldown &6&l*"));
+                    } else {
+                        petItem.setLastUsed(System.currentTimeMillis());
+                        PetUtils.addPetCooldown(player, petItem.getPetType(), (getCooldown(5) * 1000));
+                    }
+
+
+                    this.petLevel = 5;
+                    this.givePlayerGearFive(player);
+                    this.skrrtAbilities(player);
+                    boolean xpGain = true;
+
+                    return true;
+
                 } else {
                     throw new PrefixedPetException("You must be in a faction to use this pet!");
                 }
@@ -112,95 +119,96 @@ public class InventorySkrrtPet extends InventoryPet {
 
             //throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((long)((int)(timeTillCanUse / 1000L))));
         }
-     return true;
+        return true;
     }
 
 
-        private void givePlayerGearFive ( final Player player){
-            EnchantmentAPI.getEnchantment("Gears").applyEquipEffect(player, 5);
-            player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
-            player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
-            (new BukkitRunnable() {
-                public void run() {
-                    EnchantmentAPI.getEnchantment("Gears").applyUnequipEffect(player, 5);
-                }
-            }).runTaskLater(CosmicSkyInventoryPets.get(), 1L * (long) this.freezeDuration(this.petLevel) * 20L);
+    private void givePlayerGearFive(final Player player) {
+        EnchantmentAPI.getEnchantment("Gears").applyEquipEffect(player, 5);
+        player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
+        player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
+        (new BukkitRunnable() {
+            public void run() {
+                EnchantmentAPI.getEnchantment("Gears").applyUnequipEffect(player, 5);
+            }
+        }).runTaskLater(CosmicSkyInventoryPets.get(), 1L * (long) this.freezeDuration(this.petLevel) * 20L);
+    }
+
+    private void skrrtAbilities(final Player player) throws PrefixedPetException {
+        Iterator var2 = player.getNearbyEntities(16.0D, 16.0D, 16.0D).iterator();
+        if (player.getNearbyEntities(16.0D, 16.0D, 16.0D).isEmpty()) {
+
+            throw new PrefixedPetException("Could not find a valid target!");
         }
 
-        private void skrrtAbilities ( final Player player) throws PrefixedPetException {
-            Iterator var2 = player.getNearbyEntities(16.0D, 16.0D, 16.0D).iterator();
-            if (player.getNearbyEntities(16.0D, 16.0D, 16.0D).isEmpty()) {
-                throw new PrefixedPetException("Could not find a valid target!");
-            }
-
-            while (true) {
-                Player p;
+        while (true) {
+            Player p;
+            do {
                 do {
                     do {
+                        Entity ent;
                         do {
-                            Entity ent;
-                            do {
-                                if (!var2.hasNext()) {
-                                    return;
-                                }
+                            if (!var2.hasNext()) {
+                                return;
+                            }
 
-                                ent = (Entity) var2.next();
-                            } while (!(ent instanceof Player));
+                            ent = (Entity) var2.next();
+                        } while (!(ent instanceof Player));
 
-                            p = (Player) ent;
-                        } while (EssentialsUtils.isVanished(p));
-                    } while (p.hasMetadata("NPC"));
-                } while (p.hasMetadata("in_duel"));
+                        p = (Player) ent;
+                    } while (EssentialsUtils.isVanished(p));
+                } while (p.hasMetadata("NPC"));
+            } while (p.hasMetadata("in_duel"));
 
-                FPlayer castingPlayer = (FPlayer) FPlayers.i.get(player);
-                FPlayer surroundingPlayer = (FPlayer) FPlayers.i.get(p);
-                if (SkrrtCooldown.isOnSkrrtCooldown(p)) {
-                    player.sendMessage(CC.translate("&c" + p.getName() + " is still on Skrrt Cooldown! This lasts 240 seconds."));
-                    return;
-                }
-                if (!WorldGuardUtils.isPvPEnabled(p.getLocation())) {
-                    player.sendMessage(CC.translate("&c" + p.getName() + " is in a non-pvp enabled region."));
-                    return;
-                }
-                if (castingPlayer.getRelationTo(surroundingPlayer) == Relation.ENEMY || castingPlayer.getRelationTo(surroundingPlayer) == Relation.NEUTRAL) {
-                    p.sendMessage("" + ChatColor.DARK_RED + ChatColor.BOLD + "* SKRRT: (" + ChatColor.GRAY + player.getName() + ChatColor.DARK_RED + ")");
-                    player.sendMessage("" + ChatColor.DARK_RED + ChatColor.BOLD + "* SKRRT: (" + ChatColor.GRAY + p.getName() + ChatColor.DARK_RED + ")");
-
-                    DamageIndicatorUtils.sendDamageIndicator(p, CC.translate("&4&l* SKRRT PET *"), "SKRRT");
-
-                    SkrrtCooldown.enterSkrrtCooldown(p);
-                    CombatLog.flagCombat(p);
-                    this.freezeThePlayer(p);
-                    player.setMetadata("frozenSkrrt", new FixedMetadataValue(CosmicSkyInventoryPets.get(), System.currentTimeMillis()));
-                }
-
-                (new BukkitRunnable() {
-                    public void run() {
-                        player.removeMetadata("frozenSkrrt", CosmicSkyInventoryPets.get());
-                    }
-                }).runTaskLater(CosmicSkyInventoryPets.get(), (long) this.freezeDuration(this.petLevel) * 20L);
+            FPlayer castingPlayer = (FPlayer) FPlayers.i.get(player);
+            FPlayer surroundingPlayer = (FPlayer) FPlayers.i.get(p);
+            if (SkrrtCooldown.isOnSkrrtCooldown(p)) {
+                player.sendMessage(CC.translate("&c" + p.getName() + " is still on Skrrt Cooldown! This lasts 240 seconds."));
+                return;
             }
-        }
+            if (!WorldGuardUtils.isPvPEnabled(p.getLocation())) {
+                player.sendMessage(CC.translate("&c" + p.getName() + " is in a non-pvp enabled region."));
+                return;
+            }
+            if (castingPlayer.getRelationTo(surroundingPlayer) == Relation.ENEMY || castingPlayer.getRelationTo(surroundingPlayer) == Relation.NEUTRAL) {
+                p.sendMessage("" + ChatColor.DARK_RED + ChatColor.BOLD + "* SKRRT: (" + ChatColor.GRAY + player.getName() + ChatColor.DARK_RED + ")");
+                player.sendMessage("" + ChatColor.DARK_RED + ChatColor.BOLD + "* SKRRT: (" + ChatColor.GRAY + p.getName() + ChatColor.DARK_RED + ")");
 
-        public boolean onTickInHotBar (Player var1,int var2, InventoryPetItem var3){
-            return false;
-        }
+                DamageIndicatorUtils.sendDamageIndicator(p, CC.translate("&4&l* SKRRT PET *"), "SKRRT");
 
-        private void freezeThePlayer ( final Player p){
-            p.playSound(p.getLocation(), Sound.STEP_SNOW, 1.0F, 1.4F);
-            p.setWalkSpeed(0.0F);
-            p.removePotionEffect(PotionEffectType.JUMP);
-            p.removePotionEffect(PotionEffectType.SLOW);
-            p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, (int) (1L * (long) this.freezeDuration(this.petLevel) * 20L), 128));
-            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, (int) (1L * (long) this.freezeDuration(this.petLevel) * 20L), 128));
-            p.setMetadata("frozenSkrrt", new FixedMetadataValue(CosmicSkyInventoryPets.get(), System.currentTimeMillis()));
+                SkrrtCooldown.enterSkrrtCooldown(p);
+                CombatLog.flagCombat(p);
+                this.freezeThePlayer(p);
+                player.setMetadata("frozenSkrrt", new FixedMetadataValue(CosmicSkyInventoryPets.get(), System.currentTimeMillis()));
+            }
+
             (new BukkitRunnable() {
                 public void run() {
-                    p.removeMetadata("frozenSkrrt", CosmicSkyInventoryPets.get());
-                    p.removePotionEffect(PotionEffectType.SLOW);
-                    p.removePotionEffect(PotionEffectType.JUMP);
-                    p.setWalkSpeed(0.2F);
+                    player.removeMetadata("frozenSkrrt", CosmicSkyInventoryPets.get());
                 }
-            }).runTaskLater(CosmicSkyInventoryPets.get(), 1L * (long) this.freezeDuration(this.petLevel) * 20L);
+            }).runTaskLater(CosmicSkyInventoryPets.get(), (long) this.freezeDuration(this.petLevel) * 20L);
         }
     }
+
+    public boolean onTickInHotBar(Player var1, int var2, InventoryPetItem var3) {
+        return false;
+    }
+
+    private void freezeThePlayer(final Player p) {
+        p.playSound(p.getLocation(), Sound.STEP_SNOW, 1.0F, 1.4F);
+        p.setWalkSpeed(0.0F);
+        p.removePotionEffect(PotionEffectType.JUMP);
+        p.removePotionEffect(PotionEffectType.SLOW);
+        p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, (int) (1L * (long) this.freezeDuration(this.petLevel) * 20L), 128));
+        p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, (int) (1L * (long) this.freezeDuration(this.petLevel) * 20L), 128));
+        p.setMetadata("frozenSkrrt", new FixedMetadataValue(CosmicSkyInventoryPets.get(), System.currentTimeMillis()));
+        (new BukkitRunnable() {
+            public void run() {
+                p.removeMetadata("frozenSkrrt", CosmicSkyInventoryPets.get());
+                p.removePotionEffect(PotionEffectType.SLOW);
+                p.removePotionEffect(PotionEffectType.JUMP);
+                p.setWalkSpeed(0.2F);
+            }
+        }).runTaskLater(CosmicSkyInventoryPets.get(), 1L * (long) this.freezeDuration(this.petLevel) * 20L);
+    }
+}

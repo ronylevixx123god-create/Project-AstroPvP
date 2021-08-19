@@ -60,7 +60,7 @@ public final class CosmicSkyInventoryPets extends JavaPlugin implements Listener
    private void registerListeners() {
       Bukkit.getPluginManager().registerEvents(new AbominalSnowmanListener(), this);
       Bukkit.getPluginManager().registerEvents(new BansheeListener(), this);
-      //Bukkit.getPluginManager().registerEvents(new PetCooldownListener(), this);
+      Bukkit.getPluginManager().registerEvents(new PetCooldownListener(), this);
       Bukkit.getPluginManager().registerEvents(new TitanListener(), this);
       Bukkit.getPluginManager().registerEvents(new BloodhoundListener(), this);
       Bukkit.getPluginManager().registerEvents(new SkrrtListener(), this);
@@ -70,7 +70,6 @@ public final class CosmicSkyInventoryPets extends JavaPlugin implements Listener
       this.getServer().getPluginManager().registerEvents(new ArcaneCreeperListener(), this);
       this.getServer().getPluginManager().registerEvents(new FairyListener(), this);
       this.getServer().getPluginManager().registerEvents(new DemonicListener(), this);
-
       Bukkit.getPluginManager().registerEvents(new PetLeashListener(), this);
 
       try {

@@ -9,6 +9,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
+import me.ifamasssxd.cosmicsky.inventorypets.utils.PetUtils;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -68,8 +69,9 @@ public class InventoryStitchesPet extends InventoryPet {
 
             return false;
         }
-        if (lastUse > 0L && timeTillCanUse > 0L) {
-            throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
+        if (PetUtils.isOnCooldown(player, petItem.getPetType())) {
+            player.sendMessage(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + PetUtils.getSecondsOnCooldown(player, petItem.getPetType()) + "s");
+            return true;
         }
         if (!WorldGuardUtils.isPvPEnabled(player.getLocation())) {
             throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "Not allowed in this region!");
@@ -96,6 +98,8 @@ public class InventoryStitchesPet extends InventoryPet {
         }).map(e -> (Player) e).collect(Collectors.toList());
         if (nearbyEntities.isEmpty())
             throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "No valid target found! (14x14)");
+
+
         nearbyEntities.forEach(needToBeStitched -> {
             needToBeStitched.sendMessage(CC.translate(String.format("&6&l** %s STITCHES PET [&6%d.0s&6&l] - PET SILENCE! **",
                     player.getName() + (player.getName().endsWith("s") ? "'" : "'s"),
@@ -106,7 +110,9 @@ public class InventoryStitchesPet extends InventoryPet {
             needToBeStitched.setMetadata("lastStitches", new FixedMetadataValue(CosmicSkyInventoryPets.get(), System.currentTimeMillis()));
 
         });
-        petItem.setLastUsed(System.currentTimeMillis());
+
+        PetUtils.addPetCooldown(player, petItem.getPetType(), getCooldown(5)*1000);
+
 
         player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1f, 3.0f);
         player.sendMessage("");

@@ -50,8 +50,7 @@ public class InventoryWitcherPet extends InventoryPet {
     }
 
     public List<String> getPetDescription(int level) {
-        return Lists.newArrayList(new String[]{
-                String.valueOf(CC.Gray) + "Call upon the deadly screaming Banshee.", "",
+        return Lists.newArrayList(String.valueOf(CC.Gray) + "Call upon the deadly screaming Banshee.", "",
                 String.valueOf(CC.YellowB) + "Ability", String.valueOf(CC.Gray) + "Activates " + CC.DarkRedB + "[Witcher]:",
                 String.valueOf(CC.DarkRedB) + "* " + CC.Gray + "Immune to almost all knockback (" + (5 * 2) + "s)",
                 String.valueOf(CC.DarkRedB) + "* " + CC.Gray + "Teleblocks enemies in a 8x8 radius for (" + (5 * 2) + "s)",
@@ -59,11 +58,9 @@ public class InventoryWitcherPet extends InventoryPet {
                 String.valueOf(CC.DarkRedB) + "* " + CC.Gray + "Silences enemy soul enchantments in a 8x8 radius for (" + (5 * 2) + "s)",
                 String.valueOf(CC.DarkRedB) + "* " + CC.Gray + "Freezes enemies in a 8x8 radius for 1s", "",
                 String.valueOf(CC.YellowB) + "Cooldown",
-                String.valueOf(CC.Gray) + (getCooldown(5) / 60) + " Minutes"});
+                String.valueOf(CC.Gray) + (getCooldown(5) / 60) + " Minutes");
     }
 
-    public void onDisable(CosmicSkyInventoryPets plugin) {
-    }
 
     public int getExpForLevel(int level) {
         return 575 * level;
@@ -91,14 +88,15 @@ public class InventoryWitcherPet extends InventoryPet {
             throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
         if (!WorldGuardUtils.isPvPEnabled(player.getLocation()))
             throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "Not allowed in this region!");
-
+        if (player.getNearbyEntities(8.0D, 8.0D, 8.0D).isEmpty()) {
+            throw new PrefixedPetException("Could not find a valid target!");
+        }
         if(AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.MEDIEVAL_BELT_KING) && Math.random() < 0.25) {
             player.sendMessage(CC.translate("&6&l* ROYAL BELT &7Prevented &dPet Cooldown &6&l*"));
         } else {
             petItem.setLastUsed(System.currentTimeMillis());
 
         }
-        petItem.setLastUsed(System.currentTimeMillis());
 
         int xpGain = petItem.getLevel() * 5;
         player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
