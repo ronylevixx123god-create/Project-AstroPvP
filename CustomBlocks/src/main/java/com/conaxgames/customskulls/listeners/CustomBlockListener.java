@@ -9,11 +9,14 @@ import com.conaxgames.customskulls.util.CustomBlockUtil;
 import de.tr7zw.nbtapi.NBTCompound;
 import de.tr7zw.nbtapi.NBTTileEntity;
 import de.tr7zw.nbtinjector.NBTInjector;
+import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import net.minecraft.server.v1_8_R3.NBTTagInt;
+import net.minecraft.server.v1_8_R3.TileEntity;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -113,16 +116,30 @@ public class CustomBlockListener implements Listener {
                 return;
             }
         }
-        Bukkit.broadcastMessage("2");
 
         if (CustomBlockUtil.isCustomItem(item)) {
-            Bukkit.broadcastMessage("1");
+/*            CraftWorld cw = (CraftWorld) player.getWorld();
+            TileEntity tileEntity = cw.getTileEntityAt(event.getBlock().getX(), event.getBlock().getY(), event.getBlock().getZ());
+            NBTTagCompound compound = new NBTTagCompound();
+            compound.setString("type", CustomBlockUtil.getCustomItem(item).getIdentifier());
+            compound.setString("customBlockData", CustomBlockUtil.getCustomItem(item).getIdentifier());
+            compound.setString("type", CustomBlockUtil.getCustomItem(item).getIdentifier());*/
+
+
+
+
+
+
+
+
             NBTCompound entBlock = NBTInjector.getNbtData(event.getBlock().getState());
             entBlock.addCompound("tag").addCompound("customBlockData").setString("type", CustomBlockUtil.getCustomItem(item).getIdentifier());
-            Bukkit.broadcastMessage(NBTInjector.getNbtData(event.getBlock().getState()).toString());
-//            NBTCompound tag = entBlock.getCompound("tag");
-//            NBTCompound customBlockData = tag.addCompound("customBlockData");
-//            customBlockData.setString("type", CustomBlockUtil.getCustomItem(item).getName());
+            NBTCompound tag = entBlock.getCompound("tag");
+            NBTCompound customBlockData = tag.addCompound("customBlockData");
+            customBlockData.setString("type", CustomBlockUtil.getCustomItem(item).getName());
+
+            //event.setCancelled(true);
+
             (CustomBlockUtil.getCustomItem(item)).placeBlockAction(player, event, event.getBlock(), item);
         }
 
