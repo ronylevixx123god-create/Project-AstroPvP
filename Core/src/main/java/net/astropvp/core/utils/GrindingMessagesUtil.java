@@ -3,16 +3,18 @@ package net.astropvp.core.utils;
 import com.google.common.collect.Lists;
 import net.astropvp.core.AstroCore;
 import org.bukkit.entity.Player;
-import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class GrindingMessagesUtil {
 
+
+
     public static boolean isPlayerIndicating(Player player) {
-        return player.hasMetadata("grindingMessages");
+        return AstroCore.grindingMessages.containsKey(player.getUniqueId());
     }
 
     public static void addPlayer(Player player) {
@@ -23,7 +25,7 @@ public class GrindingMessagesUtil {
         AstroCore.getInstance().getConfig().set("players-indicating", players);
         AstroCore.getInstance().saveConfig();
         AstroCore.getInstance().reloadConfig();
-        player.setMetadata("grindingMessages", (MetadataValue)new FixedMetadataValue((Plugin)AstroCore.getInstance(), null));
+        AstroCore.grindingMessages.put(player.getUniqueId(), player);
     }
 
     public static void removePlayer(Player player) {
@@ -34,8 +36,7 @@ public class GrindingMessagesUtil {
         AstroCore.getInstance().getConfig().set("players-indicating", players);
         AstroCore.getInstance().saveConfig();
         AstroCore.getInstance().reloadConfig();
-        if (player.hasMetadata("grindingMessages"))
-            player.removeMetadata("grindingMessages", (Plugin)AstroCore.getInstance());
+        AstroCore.grindingMessages.remove(player.getUniqueId());
     }
 
     public static boolean isPlayerContained(Player player) {

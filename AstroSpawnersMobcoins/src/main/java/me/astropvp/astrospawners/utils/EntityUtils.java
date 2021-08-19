@@ -21,31 +21,6 @@ public class EntityUtils {
 
     public static void onEnable() {
         entities = Lists.newArrayList();
-        Bukkit.getScheduler().scheduleSyncDelayedTask(AstroSpawners.getInstance(),
-                (Runnable) new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        for (int i = entities.size() - 1; i >= 0; i--) {
-                            Object[] object = entities.get(i);
-                            LivingEntity entity = (LivingEntity) object[0];
-                            String display = (String) object[1];
-                            if (display == null || entity == null || entity.isDead()) {
-                                entities.remove(i);
-                                continue;
-                            }
-                            if (entity.hasMetadata("show_health")) {
-                                entity.setCustomName(getHealthString(entity));
-                                entity.removeMetadata("show_health", AstroSpawners.getInstance());
-                            } else {
-                                entity.setCustomName(display);
-                            }
-                            if (!entity.hasMetadata("custom_mob")) {
-                                entity.setMetadata("custom_mob",
-                                        new FixedMetadataValue(AstroSpawners.getInstance(), null));
-                            }
-                        }
-                    }
-                }.runTaskTimer(AstroSpawners.getInstance(), 20, 20));
     }
 
     public static void addHeartsAboveEntity(LivingEntity entity, String display) {

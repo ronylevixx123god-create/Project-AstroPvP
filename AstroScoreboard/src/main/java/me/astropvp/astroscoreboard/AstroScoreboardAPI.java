@@ -63,11 +63,15 @@ public class AstroScoreboardAPI {
 		String rank = PermissionsAPI.getPermissionUser(player.getUniqueId()).getGroup();
 		switch (rank) {
 			case "owner":
-				return "§4§lOwner§f";
+				rankColor = ChatColor.DARK_RED;
+				break;
 			case "manager":
-				return "§d§lManager§f";
+			case "media":
+				rankColor = ChatColor.LIGHT_PURPLE;
+				break;
 			case "admin":
-				return "§9§lAdmin§f";
+				rankColor = ChatColor.BLUE;
+				break;
 			case "banteam":
 				rankColor = ChatColor.GOLD;
 				break;
@@ -88,9 +92,6 @@ public class AstroScoreboardAPI {
 				break;
 			case "apollo":
 				rankColor = ChatColor.AQUA;
-				break;
-			case "media":
-				rankColor = ChatColor.LIGHT_PURPLE;
 				break;
 			default:
 				rankColor = ChatColor.YELLOW;

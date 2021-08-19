@@ -62,11 +62,11 @@ public class AstroScoreboardPlugin extends JavaPlugin {
     }
 
     public void runTasks() {
-        Bukkit.getScheduler().scheduleAsyncDelayedTask(this, (Runnable) new BukkitRunnable() {
+        Bukkit.getScheduler().scheduleSyncDelayedTask(this, (Runnable) new BukkitRunnable() {
             @Override
             public void run() {
                 for (Player player : Bukkit.getOnlinePlayers()) {
-                    FPlayer fplayer = FactionUtils.getFPlayer(player);
+                    //FPlayer fplayer = FactionUtils.getFPlayer(player);
                     for (Player other : Bukkit.getOnlinePlayers()) {
                         try {
                             PlayerDisplayManager.setUserPrefix(player, other, AstroScoreboardAPI.getDefaultPrefix(player, other) + " ");

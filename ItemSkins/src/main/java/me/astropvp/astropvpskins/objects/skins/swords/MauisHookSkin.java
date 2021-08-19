@@ -10,22 +10,38 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 public class MauisHookSkin extends ItemSkin {
+
+    public static Map<Player, Integer> mauiEffect;
+
+    public MauisHookSkin() {
+        this.mauiEffect = new HashMap<>();
+    }
 
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
         if (Math.random() > 0.06D)
             return;
-        if (damager.hasMetadata("mauiEffect") && ((MetadataValue)damager.getMetadata("mauiEffect").get(0)).asInt() == 10 && Math.random() < 0.3D) {
-            damager.sendMessage(CC.translate("&c&l* MAUI ABILITY is Ready for Use &c&l*"));
+        if (mauiEffect.containsKey(damager) && mauiEffect.get(damager) >= 10 && Math.random() < 0.3D) {
+            //if (damager.hasMetadata("mauiEffect") && ((MetadataValue)damager.getMetadata("mauiEffect").get(0)).asInt() >= 10 && Math.random() < 0.3D) {
+            damager.sendMessage(CC.translate("&c&l* MAUI ABILITY is Ready for Use &7(Sneak to activate) &c&l*"));
             return;
         }
-        if (!damager.hasMetadata("mauiEffect")) {
-            damager.setMetadata("mauiEffect", (MetadataValue)new FixedMetadataValue(AstroItemSkinsPlugin.getInstance(), 1));
+        if (!mauiEffect.containsKey(damager)) {
+            //damager.setMetadata("mauiEffect", (MetadataValue)new FixedMetadataValue(AstroItemSkinsPlugin.getInstance(), 1));
+            mauiEffect.put(damager, 1);
         } else {
-            damager.setMetadata("mauiEffect", (MetadataValue)new FixedMetadataValue(AstroItemSkinsPlugin.getInstance(), ((MetadataValue) damager.getMetadata("mauiEffect").get(0)).asInt() + 1));
+            //damager.setMetadata("mauiEffect", (MetadataValue)new FixedMetadataValue(AstroItemSkinsPlugin.getInstance(), ((MetadataValue) damager.getMetadata("mauiEffect").get(0)).asInt() + 1));
+            mauiEffect.put(damager, mauiEffect.get(damager)+1);
         }
-        damager.sendMessage(CC.translate("&c&l* MAUI'S HOOK &7[&fStack x" + ((MetadataValue)damager.getMetadata("mauiEffect").get(0)).asInt() + "&7] &c&l*"));
+        damager.sendMessage(CC.translate("&c&l* MAUI'S HOOK &7[&fStack x" + mauiEffect.get(damager) + "&7] &c&l*"));
     }
 
-    //TODO: SNEAK LISTENER
+    //Sneka listener is in the listeners package
+
+
+
 }

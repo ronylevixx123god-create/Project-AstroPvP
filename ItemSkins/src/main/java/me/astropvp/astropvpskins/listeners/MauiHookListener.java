@@ -8,6 +8,7 @@ import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.astropvpskins.objects.skins.swords.MauisHookSkin;
 import me.ifamasssxd.cosmicfactionboosters.utils.FactionUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -26,43 +27,16 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.github.paperspigot.Title;
 
 public class MauiHookListener implements Listener {
-    @EventHandler
-    public void onMauiHook(EntityDamageByEntityEvent e) {
-        if (!(e.getDamager() instanceof Player))
-            return;
-        if (!(e.getEntity() instanceof Player))
-            return;
-        if (Math.random() > 0.06D)
-            return;
-        if (!AstroItemSkinsAPI.hasSkinEquipped((Player)e.getDamager(), SkinType.SUMMER_2021_SWORD))
-            return;
-        if (!WorldGuardUtils.isPvPEnabled(e.getDamager().getLocation())) {
-            return;
-        }
-
-        if (!WorldGuardUtils.isPvPEnabled(e.getEntity().getLocation())) {
-            return;
-        }
-        if (e.getDamager().hasMetadata("mauiEffect") && ((MetadataValue)e.getDamager().getMetadata("mauiEffect").get(0)).asInt() == 10 && Math.random() < 0.3D) {
-            e.getDamager().sendMessage(CC.translate("&c&l* MAUI ABILITY is Ready for Use &c&l*"));
-            return;
-        }
-        if (!e.getDamager().hasMetadata("mauiEffect")) {
-            e.getDamager().setMetadata("mauiEffect", (MetadataValue)new FixedMetadataValue((Plugin)AstroItemSkinsPlugin.getInstance(), Integer.valueOf(1)));
-        } else {
-            e.getDamager().setMetadata("mauiEffect", (MetadataValue)new FixedMetadataValue((Plugin)AstroItemSkinsPlugin.getInstance(), Integer.valueOf(((MetadataValue)e.getDamager().getMetadata("mauiEffect").get(0)).asInt() + 1)));
-        }
-        e.getDamager().sendMessage(CC.translate("&c&l* MAUI'S HOOK &7[&fStack x" + ((MetadataValue)e.getDamager().getMetadata("mauiEffect").get(0)).asInt() + "&7] &c&l*"));
-    }
 
     @EventHandler
     public void sneakMauiEffect(PlayerToggleSneakEvent e) {
-        if (e.isSneaking() && e.getPlayer().hasMetadata("mauiEffect") && AstroItemSkinsAPI.hasSkinEquipped(e.getPlayer(), SkinType.SUMMER_2021_SWORD) && (
-                (MetadataValue)e.getPlayer().getMetadata("mauiEffect").get(0)).asInt() >= 10) {
+
+        if (e.isSneaking() && MauisHookSkin.mauiEffect.containsKey(e.getPlayer()) && AstroItemSkinsAPI.hasSkinEquipped(e.getPlayer(), SkinType.SUMMER_2021_SWORD) && (
+                MauisHookSkin.mauiEffect.get(e.getPlayer()) >= 10)) {
             List<Entity> nearbyPlayers = e.getPlayer().getNearbyEntities(8.0D, 8.0D, 8.0D);
             if (nearbyPlayers.isEmpty())
                 e.getPlayer().sendMessage(CC.translate("&cNo nearby enemies to activate Transcendence Ability!"));
-            e.getPlayer().removeMetadata("mauiEffect", (Plugin)AstroItemSkinsPlugin.getInstance());
+            MauisHookSkin.mauiEffect.remove(e.getPlayer());
             e.getPlayer().sendMessage(CC.translate("&c&l* TRANSCENDENCE ABILITY &con Nearby Players &7(8x8) &c&l*"));
             e.getPlayer().sendMessage(CC.translate("&7(Damaging enemies, Silencing them and their Pets.)"));
             e.getPlayer().sendTitle(new Title(CC.translate("&c&l* Transcendence Ability *"), CC.translate("&7Maui's Stack Reset"), 10, 20, 10));

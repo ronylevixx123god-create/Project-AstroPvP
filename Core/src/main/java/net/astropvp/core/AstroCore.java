@@ -84,6 +84,9 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -110,6 +113,10 @@ public class AstroCore extends JavaPlugin {
     // BetterPay
     Essentials ess;
     private PayToggle payToggles;
+
+    public static Map<UUID, Player> grindingMessages;
+
+
     // ItemFilter
     @Getter private FilterManager filterManager;
     @Getter private ItemFilterListener itemListener;
@@ -184,6 +191,9 @@ public class AstroCore extends JavaPlugin {
                 }
             }
         },50L, 1800L);
+
+
+        this.grindingMessages = new HashMap<>();
 
 
 
