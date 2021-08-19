@@ -72,9 +72,9 @@ public class HeroKiller extends CustomEnchantment {
                 if (((Player) player).getItemInHand() == null || ((Player) playerHit).getItemInHand() == null) return;
 
                 if (!(WeaponBonusUtils.hasWeaponBonus(((Player) playerHit).getItemInHand()))) {
-                    if (!(WeaponBonusUtils.getWeaponBonusByItem(((Player) playerHit).getItemInHand()) == WeaponBonusType.REFORGED && Math.random() < 0.5))
+                    if (!(WeaponBonusUtils.getWeaponBonusByItem(((Player) playerHit).getItemInHand()) == WeaponBonusType.REFORGED && Math.random() < 0.4))
                     {
-                        increase = 0.2;
+                        increase = 0.15;
                     }
                 }
             }
