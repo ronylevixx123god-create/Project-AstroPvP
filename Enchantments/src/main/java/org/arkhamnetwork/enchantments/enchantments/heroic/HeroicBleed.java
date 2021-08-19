@@ -5,6 +5,9 @@ import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import lombok.SneakyThrows;
 import me.astropvp.astroparticles.utils.ParticleUtils;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
+import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.enchantments.armor.Cactus;
 import org.arkhamnetwork.enchantments.util.GeneralCooldown;
@@ -42,7 +45,7 @@ public class HeroicBleed extends HeroicCustomEnchantment {
     public static void clearBleedEffect(LivingEntity le) {
         le.removeMetadata("bleedStack", (Plugin) Enchantments.getInstance());
         if (le instanceof Player) {
-            //((Player) le).setWalkSpeed(0.2F);
+            ((Player) le).setWalkSpeed(0.2F);
         } else {
             le.removePotionEffect(PotionEffectType.SLOW);
         }
@@ -74,7 +77,7 @@ public class HeroicBleed extends HeroicCustomEnchantment {
         int bleedStack = Math.max(1, getBleedStack(le) / 2);
         if (le instanceof Player) {
             Player p = (Player) le;
-            //p.setWalkSpeed((float) (0.20000000298023224D - 0.0075D * bleedStack));
+            p.setWalkSpeed((float) (0.20000000298023224D - 0.0075D * bleedStack));
             if (bleedStack >= 5 && bleedStack % 5 == 0)
                 p.sendMessage(ChatColor.RED + "** DEEP BLEED [" + ChatColor.DARK_RED + "-" + this.df.format(bleedStack * 0.0075 / 0.20000000298023224 * 100.0) + ChatColor.RED + "% Speed] **");
             for (Entity ent : p.getNearbyEntities(7.0D, 7.0D, 7.0D)) {
@@ -89,6 +92,9 @@ public class HeroicBleed extends HeroicCustomEnchantment {
                 if (Math.random() >= 0.2D + bloodLustLevel * 0.05D)
                     continue;
                 double amountToHeal = Math.max(4.0D, bleedStack * 0.1D * bloodLustLevel);
+                if(AstroItemSkinsAPI.hasSkinEquipped((Player) leDamager, SkinType.CHRISTMAS_AXE_SNOWFLAKE)) {
+                    amountToHeal = amountToHeal/1.5; //fuck knows...
+                }
                 GeneralUtil.healPlayer((LivingEntity) pEnt, amountToHeal);
                 playBleedEffect(pEnt.getLocation(), bleedStack);
                 de.inventivegames.particle.ParticleEffect.DRIP_LAVA.sendToPlayer(pEnt.getPlayer(), pEnt.getLocation(),0,0,0,0.075F, 10);
@@ -98,7 +104,7 @@ public class HeroicBleed extends HeroicCustomEnchantment {
             le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, bleedStack * 10, Math.max(1, bleedStack / 3)));
         }
 
-        /*if (Math.random() < 0.1) {
+        if (Math.random() < 0.1) {
             try {
                 if (ParticleUtils.isPlayerIndicating(le.getKiller())) {
                     playBleedEffect(le.getLocation().add(0.0D, 1.0D, 0.0D), bleedStack);
@@ -106,7 +112,7 @@ public class HeroicBleed extends HeroicCustomEnchantment {
             } catch (Exception e) {
 
             }
-        }*/
+        }
     }
 
     private void playBleedEffect(Location loc, int bleedStack) {
