@@ -116,9 +116,9 @@ public class UltraArmorSet
         }
         event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.30);
         this.removeResistance(damager);
-        if (Math.random() <= 0.09) {
+        if (Math.random() <= 0.065) {
             this.activateUltraAbility(damager, (Player) event.getEntity());
-            event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE)*1.5);
+            event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE)*1.4);
         }
         return true;
     }
@@ -149,7 +149,7 @@ public class UltraArmorSet
         }
         if (Math.random() <= 0.004 * (double) applied) {
             this.activateUltraAbility(damager, (Player) event.getEntity());
-            event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE)*1.5);
+            event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE)*1.4);
 
         }
         this.modifyDamage(damager, event, 10.0, applied);

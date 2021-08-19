@@ -84,6 +84,9 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -110,6 +113,10 @@ public class AstroCore extends JavaPlugin {
     // BetterPay
     Essentials ess;
     private PayToggle payToggles;
+
+    public static Map<UUID, Player> grindingMessages;
+
+
     // ItemFilter
     @Getter private FilterManager filterManager;
     @Getter private ItemFilterListener itemListener;
@@ -165,6 +172,7 @@ public class AstroCore extends JavaPlugin {
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new RogueScratchCard());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new ApolloRank());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new AstroPlusRank());
+        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new TrapBlockerItem());
 
 
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new RevokeScratchCard());
@@ -185,8 +193,12 @@ public class AstroCore extends JavaPlugin {
         },50L, 1800L);
 
 
+        this.grindingMessages = new HashMap<>();
+
+
 
         this.getServer().getPluginManager().registerEvents(new SlotbotScratchCardListener(), this);
+        this.getServer().getPluginManager().registerEvents(new TrapBlockListener(), this);
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, new AutoBroadcastTask(), 20L, 6000L);
 
         Bukkit.getScheduler().runTaskLater(this, ()->

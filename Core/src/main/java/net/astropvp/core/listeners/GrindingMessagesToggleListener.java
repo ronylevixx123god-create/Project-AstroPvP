@@ -17,14 +17,14 @@ public class GrindingMessagesToggleListener implements Listener {
     public void onLogin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         if (GrindingMessagesUtil.isPlayerContained(player))
-            player.setMetadata("grindingMessages", (MetadataValue)new FixedMetadataValue((Plugin) AstroCore.getInstance(), null));
+            AstroCore.grindingMessages.put(player.getUniqueId(), player);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        if (player.hasMetadata("grindingMessages"))
-            player.removeMetadata("grindingMessages", (Plugin)AstroCore.getInstance());
+        if (AstroCore.grindingMessages.containsKey(player.getUniqueId()))
+            AstroCore.grindingMessages.remove(player.getUniqueId());
     }
 }
 

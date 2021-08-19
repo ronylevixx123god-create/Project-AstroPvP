@@ -2,6 +2,8 @@ package org.arkhamnetwork.enchantments.enchantments.heroic;
 
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import lombok.SneakyThrows;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
 import org.arkhamnetwork.enchantments.libs.SpecificCustomEnchantment;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -29,6 +31,8 @@ public class HeroicDodge extends HeroicCustomEnchantment {
                 chance += 0.2;
             }
             if (Math.random() < chance) {
+                if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.HALLOWEEN_AXE)) return;
+
                 e.setCancelled(true);
                 ((Player) player).sendMessage(ChatColor.LIGHT_PURPLE + "*DODGE*");
                 try {

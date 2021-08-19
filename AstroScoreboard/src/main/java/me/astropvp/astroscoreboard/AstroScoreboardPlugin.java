@@ -1,5 +1,6 @@
 package me.astropvp.astroscoreboard;
 
+import com.astropvp.cc.player.CosmicPlayers;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.massivecraft.factions.FPlayer;
@@ -10,6 +11,7 @@ import me.astropvp.astroscoreboard.listeners.PlayerListener;
 import me.astropvp.astroscoreboard.manager.BoardManager;
 import me.astropvp.astroscoreboard.manager.PlayerDisplayManager;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
@@ -64,10 +66,11 @@ public class AstroScoreboardPlugin extends JavaPlugin {
             @Override
             public void run() {
                 for (Player player : Bukkit.getOnlinePlayers()) {
-                    FPlayer fplayer = FactionUtils.getFPlayer(player);
+                    //FPlayer fplayer = FactionUtils.getFPlayer(player);
                     for (Player other : Bukkit.getOnlinePlayers()) {
                         try {
                             PlayerDisplayManager.setUserPrefix(player, other, AstroScoreboardAPI.getDefaultPrefix(player, other) + " ");
+                            PlayerDisplayManager.setUserSuffix(player, other, ((CosmicPlayers.get().getCosmicPlayer(player).isOnCosmicClient()) ? ChatColor.GREEN.toString() + ChatColor.BOLD + " ✓" : ChatColor.RED.toString() + ChatColor.BOLD + " ✗"));
                         } catch (Exception exception) {
                             exception.printStackTrace();
                         }
