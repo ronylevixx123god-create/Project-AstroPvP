@@ -31,6 +31,7 @@ public class HeroicDodge extends HeroicCustomEnchantment {
                 chance += 0.2;
             }
             if (Math.random() < chance) {
+                if (attacker == null) return;
                 if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.HALLOWEEN_AXE)) return;
 
                 e.setCancelled(true);

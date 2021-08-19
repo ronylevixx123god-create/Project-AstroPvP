@@ -1,6 +1,7 @@
 package me.astropvp.astropvpskins.objects.skins.axes;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.massivecraft.factions.P;
 import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
 import me.astropvp.astropvpskins.objects.ItemSkin;
@@ -39,6 +40,8 @@ public class Snowflake extends ItemSkin {
     }
 
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
+        if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
+
         if(!(damaged instanceof Player))
             return;
         if(stacks.containsKey(damager)) {
