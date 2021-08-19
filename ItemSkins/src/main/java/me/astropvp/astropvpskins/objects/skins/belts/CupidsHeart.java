@@ -19,6 +19,7 @@ public class CupidsHeart extends ItemSkin {
     }
 
     public void onAttacked(Player damaged, Entity damager, EntityDamageByEntityEvent event) {
+        if (!(damager instanceof Player)) return;
         new HeroicAegis().applyDefenseEffect(damaged, (LivingEntity) damager, 7, event);
     }
 }

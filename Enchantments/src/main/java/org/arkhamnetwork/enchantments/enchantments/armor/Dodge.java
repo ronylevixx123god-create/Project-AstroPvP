@@ -33,6 +33,7 @@ public class Dodge extends CustomEnchantment {
                 chance += 0.15;
             }
             if (Math.random() < chance) {
+                if (!(attacker instanceof Player)) return;
                 if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.HALLOWEEN_AXE)) return;
                 e.setCancelled(true);
                 ((Player) player).sendMessage(ChatColor.YELLOW + "*DODGE*");
