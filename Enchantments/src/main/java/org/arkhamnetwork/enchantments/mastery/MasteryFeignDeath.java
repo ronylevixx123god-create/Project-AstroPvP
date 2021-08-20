@@ -39,6 +39,7 @@ import org.arkhamnetwork.enchantments.listeners.CustomEnchantListener;
 import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.LivingEntity;
@@ -65,7 +66,8 @@ public class MasteryFeignDeath extends MasteryCustomEnchantment {
 
     public static void vanishPlayer(Player damaged, int enchantLevel) throws NoSuchFieldException, IllegalAccessException {
         double seconds = enchantLevel * 1.5D;
-        DamageIndicatorUtils.sendDamageIndicator(damaged, CC.translate("&e&l* FEIGN DEATH [&7" + seconds + "s&e&l] *"), "RKO");
+        DamageIndicatorUtils.sendDamageIndicator((Player) damaged, CC.DarkRedB + "* Feign Death - VANISHED [" + NumberUtils.formatSeconds(seconds) + "s] *", "SHACKLED_GOLEM");
+
         damaged.setMetadata("feign_vanish", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), Double.valueOf(System.currentTimeMillis() + seconds * 1000.0D)));
         damaged.setMetadata("feign_hits_max", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), Integer.valueOf(enchantLevel)));
         deathCooldown.put(damaged.getUniqueId(), Long.valueOf(System.currentTimeMillis() + 10000L));
@@ -91,6 +93,8 @@ public class MasteryFeignDeath extends MasteryCustomEnchantment {
         player.playerConnection.sendPacket((Packet)fakePlayer);
         player.playerConnection.sendPacket((Packet)status);
         whoReceived.add(player);
+
+
         Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Enchantments.getInstance(), () -> {
             PacketPlayOutEntityDestroy destroy = new PacketPlayOutEntityDestroy(new int[] { entityId });
             for (EntityPlayer pl : whoReceived) {
@@ -104,6 +108,8 @@ public class MasteryFeignDeath extends MasteryCustomEnchantment {
         }
         damaged.playSound(damaged.getLocation(), Sound.WITHER_SHOOT, 3.0F, 0.9F);
         damaged.sendMessage(CC.DarkRedB + "* Feign Death - VANISHED [" + NumberUtils.formatSeconds(seconds) + "s] *");
+
+
 
         Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Enchantments.getInstance(), () -> {
             if (damaged.isValid() && damaged.hasMetadata("feign_vanish"))
