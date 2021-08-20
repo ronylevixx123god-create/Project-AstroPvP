@@ -181,7 +181,7 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
 
                 if (!WorldGuardUtils.isPvPEnabled(player.getLocation())) {
                     playerInteractEvent.setCancelled(true);
-                    throw new PetException("You cannot use that pet here (Safezone)!");
+                    throw new PetException(CC.Red + "You cannot use that pet here (Safezone)!");
                 }
 
                 ItemStack finalItem = item.build();

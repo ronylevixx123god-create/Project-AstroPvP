@@ -1,6 +1,7 @@
 package me.bryside.weaponrunes.runes;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.Random;
@@ -35,6 +36,7 @@ public class ChampionWeaponBonus extends WeaponBonus {
         for (Entity entity : nearbyEnemies) {
             if (!(entity instanceof Player)) continue;
             Player player = ((Player) entity).getPlayer();
+            if (!WorldGuardUtils.isPvPEnabled(player.getLocation())) continue;
             player.getWorld().strikeLightningEffect(player.getLocation());
             int damage = rn.nextInt(10 - 4 + 1) + 5;
             player.damage(damage);
