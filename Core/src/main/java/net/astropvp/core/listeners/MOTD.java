@@ -82,7 +82,7 @@ public class MOTD implements Listener {
         }, 15L);
 
 
-        Bukkit.getScheduler().runTaskLaterAsynchronously(AstroCore.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater(AstroCore.getInstance(), () -> {
             Player player = e.getPlayer();
             if (CosmicPlayers.get().getCosmicPlayer(player).isOnCosmicClient()) {
                 player.sendMessage("");
