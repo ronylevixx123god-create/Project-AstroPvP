@@ -86,7 +86,7 @@ public class EnderShift extends CustomEnchantment {
     }
 
     private static class EnderShiftEvents implements Listener {
-        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+        /*@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
         public void onPlayerShootBow(final EntityShootBowEvent e) {
             if (e.getEntity() instanceof Player && isEnderShifting((Player) e.getEntity())) {
                 e.setCancelled(true);
@@ -101,6 +101,6 @@ public class EnderShift extends CustomEnchantment {
                 e.setDamage(0.0);
                 ((Player) e.getDamager()).playSound(e.getDamager().getLocation(), Sound.ENDERMAN_TELEPORT, 1.0f, 0.54f);
             }
-        }
+        }*/
     }
 }

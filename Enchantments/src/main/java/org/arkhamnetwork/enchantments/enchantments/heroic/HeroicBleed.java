@@ -59,7 +59,7 @@ public class HeroicBleed extends HeroicCustomEnchantment {
             return;
         }
         if (!event.isCancelled() && event.getDamage(EntityDamageEvent.DamageModifier.BASE) > 0.0D && user instanceof Player) {
-            double bleedChance = 0.1D * enchantLevel + 0.4D;
+            double bleedChance = 0.08D * enchantLevel + 0.4D;
             if (Math.random() < bleedChance && getBleedStack(target) < getMaxBleedStack(enchantLevel))
                 GeneralCooldown.enterCooldown((Player) user);
             try {
@@ -81,9 +81,10 @@ public class HeroicBleed extends HeroicCustomEnchantment {
             Player p = (Player) le;
             if(!MaskType.hasEquipped(p, "HOLY")) {
                 p.setWalkSpeed((float) (0.20000000298023224D - 0.0075D * bleedStack));
+
+                if (bleedStack >= 5 && bleedStack % 5 == 0)
+                    p.sendMessage(ChatColor.RED + "** DEEP BLEED [" + ChatColor.DARK_RED + "-" + this.df.format(bleedStack * 0.0075 / 0.20000000298023224 * 100.0) + ChatColor.RED + "% Speed] **");
             }
-            if (bleedStack >= 5 && bleedStack % 5 == 0)
-                p.sendMessage(ChatColor.RED + "** DEEP BLEED [" + ChatColor.DARK_RED + "-" + this.df.format(bleedStack * 0.0075 / 0.20000000298023224 * 100.0) + ChatColor.RED + "% Speed] **");
             for (Entity ent : p.getNearbyEntities(7.0D, 7.0D, 7.0D)) {
                 if (ent.getEntityId() == leDamager.getEntityId())
                     continue;
