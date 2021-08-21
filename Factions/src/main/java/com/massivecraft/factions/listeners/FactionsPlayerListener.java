@@ -1,6 +1,7 @@
 package com.massivecraft.factions.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.*;
@@ -26,6 +27,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
+import org.github.paperspigot.Title;
 
 import java.util.*;
 
@@ -159,8 +161,19 @@ public class FactionsPlayerListener implements Listener {
             String ownersTo = myFaction.getOwnerListStringAsync(to);
             if (changedFaction) {
                 me.sendFactionHereMessage();
-                if (Conf.ownedAreasEnabled && Conf.ownedMessageOnBorder && myFaction == factionTo && !ownersTo.isEmpty())
+
+                if (factionTo.isWilderness()) {
+                    event.getPlayer().sendTitle(new Title(CC.DarkGreen + "Wilderness", CC.Gray + "PvP is enabled in this unclaimed land.", 5, 20, 5));
+                } else if (factionTo.isWarZone()) {
+                    event.getPlayer().sendTitle(new Title(CC.DarkRed + "Warzone", CC.Gray + "Not the safest place to be.", 5, 20, 5));
+
+                } else {
+                    event.getPlayer().sendTitle(new Title(FactionUtils.getRelationTo(myFaction, factionTo).getColor() + factionTo.getTag(), CC.Gray + factionTo.getDescription(), 5, 20, 5));
+                }
+                if (Conf.ownedAreasEnabled && Conf.ownedMessageOnBorder && myFaction == factionTo && !ownersTo.isEmpty()) {
                     me.sendMessage(Conf.ownedLandMessage + ownersTo);
+                    //event.getPlayer().sendTitle(new Title(factionTo.getTag(), CC.Gray + factionTo.getDescription(), 20, 60, 20));
+                }
             } else if (Conf.ownedAreasEnabled && Conf.ownedMessageInsideTerritory && factionFrom == factionTo && myFaction == factionTo) {
                 String ownersFrom = myFaction.getOwnerListStringAsync(from);
                 if (Conf.ownedMessageByChunk || !ownersFrom.equals(ownersTo))
@@ -168,6 +181,7 @@ public class FactionsPlayerListener implements Listener {
                         me.sendMessage(Conf.ownedLandMessage + ownersTo);
                     } else if (!Conf.publicLandMessage.isEmpty()) {
                         me.sendMessage(Conf.publicLandMessage);
+                        //event.getPlayer().sendTitle(new Title(CC.DarkGreen + "Wilderness", CC.Gray + "PvP is enabled in this unclaimed land.", 20, 60, 20));
                     }
             }
         }
