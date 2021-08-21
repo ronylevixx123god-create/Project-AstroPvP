@@ -63,14 +63,12 @@ final class AntiLootStealListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerDeath(PlayerDeathEvent event) {
         if (event.getEntity().getKiller() instanceof Player) {
-            if (AntiLootSteal.disabledWorlds.contains(event.getEntity().getWorld().getName()))
-                return;
             Player killer = event.getEntity().getPlayer().getKiller();
             Player player = event.getEntity().getPlayer();
             for (ItemStack stack : event.getDrops()) {
                 Item item = player.getWorld().dropItemNaturally(player.getLocation(), stack);
                 long time = System.currentTimeMillis();
-                item.setMetadata("antiLoot_uuid", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), killer.getUniqueId()));
+                item.setMetadata("antiLoot_uuidantiLoot_uuid", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), killer.getUniqueId()));
                 item.setMetadata("antiLoot_time", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), Long.valueOf(time)));
             }
             event.getDrops().clear();
