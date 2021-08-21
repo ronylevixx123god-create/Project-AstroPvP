@@ -47,6 +47,7 @@ public enum ArkPlugins {
     ITEM_ID(new ItemID(Arkkit.get()), "Enables Item ID tracking."),
     GOLDEN_APPLE_SICKNESS(new GoldenAppleSickness(Arkkit.get()), "Enables golden apple sickness."),
     CLEAR_INVENTORY_CONFIRM(new ClearInventoryConfirm(Arkkit.get()), "Adds confirmation support to /clearinventory commands."),
+    FWARP_GUI(new WarpGUI(Arkkit.get()), "Similar GUI to HomeGUI but for /f warp"),
     BALANCE_TOP(new BalanceTop(Arkkit.get()), "Enables compilex optimized /baltop."),
     ANTI_LAG(new AntiLag(Arkkit.get()), "Automatically reboots servers with >9H uptime and <17TPS"),
     SAFE_SHUTDOWN(new SafeShutdown(Arkkit.get()), "Safely unloads all loaded chunks on shutdown."),
