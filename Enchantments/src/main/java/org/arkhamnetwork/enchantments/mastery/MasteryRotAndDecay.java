@@ -258,7 +258,7 @@ public class MasteryRotAndDecay extends MasteryCustomEnchantment {
                     event.getDamager().hasMetadata("rotAndDecay")) {
                 String who = ((MetadataValue) event.getDamager().getMetadata("rotAndDecay").get(0)).asString();
                 Player damagedPlayer = (Player) event.getEntity();
-                event.setCancelled(true);
+                //event.setCancelled(true);
                 event.setDamage(0.0D);
                 event.getDamager().remove();
                 de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), event.getDamager().getLocation().add(0.0D, 0.75D, 0.0D), 0.5F, 0.5F, 0.5F, 0.01F, 20);

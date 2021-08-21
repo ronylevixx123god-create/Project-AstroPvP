@@ -169,7 +169,7 @@ public class MasteryTombstone extends MasteryCustomEnchantment {
         @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
         public void onEntityChange(final EntityChangeBlockEvent event) {
             if (event.getEntity().hasMetadata("no_block")) {
-                event.setCancelled(true);
+                //event.setCancelled(true);
             }
         }
     }
