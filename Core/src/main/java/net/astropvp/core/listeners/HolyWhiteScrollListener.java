@@ -100,7 +100,7 @@ public class HolyWhiteScrollListener implements Listener {
                             isKilledHoldingTravAxe = true;
                     }
                 assert killer != null;
-                if (CosmicArmorSetsAPI.getArmorSet(killer) != null && CosmicArmorSetsAPI.getArmorSet(killer) == ArmorSet.ULTRA && Math.random() < 0.4D) {
+                if (CosmicArmorSetsAPI.getArmorSet(killer) != null && CosmicArmorSetsAPI.getArmorSet(killer) == ArmorSet.ULTRA && Math.random() < 0.2D) {
                     e.getEntity().sendMessage(CC.AquaB + "* ULTRA NEGATION [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.AquaB + "] *");
                     killer.sendMessage(CC.AquaB + "* ULTRA NEGATION [" + CC.Gray + e.getEntity().getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.AquaB + "] *");
                     Bukkit.getLogger().info("Dropping " + i + " due to " + killer.getName() + "'s Ultra Armor Set procing.");
