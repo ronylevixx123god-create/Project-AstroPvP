@@ -5,10 +5,7 @@ import com.astropvp.cc.player.CosmicPlayers;
 import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
 import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.conaxgames.customskulls.util.CustomBlockUtil;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.FactionUtils;
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
-import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
+import com.cosmicpvp.cosmicutils.utils.*;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astrospawners.AstroSpawners;
@@ -16,6 +13,7 @@ import me.astropvp.astrospawners.utils.PlayerData;
 import me.astropvp.astrospawners.utils.PlayerDataManager;
 import me.astropvp.astrospawners.utils.StackedMobDeathEvent;
 import me.astropvp.astrospawners.utils.*;
+import me.ifamasssxd.cosmiccoinflip.struct.CoinFlipManager;
 import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
 import me.ifamasssxd.cosmichcf.struct.OutpostType;
 import net.astropvp.core.utils.GrindingMessagesUtil;
@@ -23,10 +21,7 @@ import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatExpireTask;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -122,8 +117,11 @@ public class EntityStackerListener implements Listener {
 
             if (isOnCosmicClient) {
                 blazeLoot(entity, (Player) e.getDamager(), 0.2);
+                EconomyUtils.depositBalance((OfflinePlayer) e.getDamager(), 40);
             } else {
                 blazeLoot(entity, (Player) e.getDamager(), 0.1);
+                EconomyUtils.depositBalance((OfflinePlayer) e.getDamager(), 40);
+
 
             }
 
