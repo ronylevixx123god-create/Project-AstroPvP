@@ -46,6 +46,7 @@
         <module>WeaponRunes</module>
         <module>ItemFlip</module>
         <module>AstroRevive</module>
+        <module>HotFix</module>
     </modules>
 
     <build>
