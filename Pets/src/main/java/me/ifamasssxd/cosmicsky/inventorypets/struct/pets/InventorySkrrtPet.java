@@ -23,7 +23,6 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.PetUtils;
-import me.ifamasssxd.cosmicsky.inventorypets.utils.SkrrtCooldown;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -65,64 +64,17 @@ public class InventorySkrrtPet extends InventoryPet {
     }
 
     public boolean onPetItemInteract(Player player, ItemStack itemStack, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
-        long lastUse = petItem.getLastUsed();
-        long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown(petItem.getLevel()));
-        long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
 
-        if (itemStack.getAmount() > 1) {
-            player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));
-
-            return false;
-        }
-        if (lastUse <= 0L || timeTillCanUse <= 0L || player.isOp() && player.isSneaking()) {
-            if (player.hasMetadata("spectator")) {
-                return true;
-            } else if (player.hasMetadata("in_duel")) {
-                return true;
-            } else {
-                Faction faction = FactionUtils.getFaction(player);
-                if (faction != null && !faction.isNone()) {
-                    Location locationClicked = player.getLocation();
-                    if (!WorldGuardUtils.isPvPEnabled(locationClicked)) {
-                        player.sendMessage(ChatColor.RED + "Combat is disabled in this region.");
-                        return true;
-                    }
-
-                    if (PetUtils.isOnCooldown(player, petItem.getPetType()) && (!player.isOp() || !player.isSneaking())) {
-                        throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU +
-                                TimeUtils.formatSeconds(PetUtils.getSecondsOnCooldown(player, petItem.getPetType())));
-                    }
-
-                    if (player.getNearbyEntities(16.0D, 16.0D, 16.0D).isEmpty()) {
-
-                        throw new PrefixedPetException("Could not find a valid target!");
-                    }
-
-                    if(AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.MEDIEVAL_BELT_KING) && Math.random() < 0.25) {
-                        player.sendMessage(CC.translate("&6&l* ROYAL BELT &7Prevented &dPet Cooldown &6&l*"));
-                    } else {
-                        petItem.setLastUsed(System.currentTimeMillis());
-                        PetUtils.addPetCooldown(player, petItem.getPetType(), (getCooldown(5) * 1000));
-                    }
-
-
-                    this.petLevel = 5;
-                    this.givePlayerGearFive(player);
-                    this.skrrtAbilities(player);
-                    boolean xpGain = true;
-
-
-                } else {
-                    throw new PrefixedPetException("You must be in a faction to use this pet!");
-                }
-            }
-        } else if (PetUtils.isOnCooldown(player, petItem.getPetType()) && (!player.isOp() || !player.isSneaking())) {
-            throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU +
+        if (PetUtils.isOnCooldown(player, petItem.getPetType()) && (!player.isOp() || !player.isSneaking()))
+            throw new PrefixedPetException(CC.Red + "Ability on cooldown: " + CC.RedU +
                     TimeUtils.formatSeconds(PetUtils.getSecondsOnCooldown(player, petItem.getPetType())));
 
+        PetUtils.addPetCooldown(player, petItem.getPetType(), (getCooldown(5) * 1000));
 
-            //throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((long)((int)(timeTillCanUse / 1000L))));
-        }
+
+        this.petLevel = 5;
+        this.givePlayerGearFive(player);
+        this.skrrtAbilities(player);
         return true;
     }
 
@@ -166,10 +118,10 @@ public class InventorySkrrtPet extends InventoryPet {
 
             FPlayer castingPlayer = (FPlayer) FPlayers.i.get(player);
             FPlayer surroundingPlayer = (FPlayer) FPlayers.i.get(p);
-            if (SkrrtCooldown.isOnSkrrtCooldown(p)) {
+            /*if (SkrrtCooldown.isOnSkrrtCooldown(p)) {
                 player.sendMessage(CC.translate("&c" + p.getName() + " is still on Skrrt Cooldown! This lasts 240 seconds."));
                 return;
-            }
+            }*/
             if (!WorldGuardUtils.isPvPEnabled(p.getLocation())) {
                 player.sendMessage(CC.translate("&c" + p.getName() + " is in a non-pvp enabled region."));
                 return;
@@ -180,7 +132,7 @@ public class InventorySkrrtPet extends InventoryPet {
 
                 DamageIndicatorUtils.sendDamageIndicator(p, CC.translate("&4&l* SKRRT PET *"), "SKRRT");
 
-                SkrrtCooldown.enterSkrrtCooldown(p);
+                //SkrrtCooldown.enterSkrrtCooldown(p);
                 CombatLog.flagCombat(p);
                 this.freezeThePlayer(p);
                 player.setMetadata("frozenSkrrt", new FixedMetadataValue(CosmicSkyInventoryPets.get(), System.currentTimeMillis()));

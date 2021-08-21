@@ -2,11 +2,11 @@ package me.ifamasssxd.cosmicsky.inventorypets.struct.pets;
 
 import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
 import com.compilex.CosmicArmorSets.enums.ArmorSet;
-import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
-import com.cosmicpvp.cosmicutils.utils.*;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
+import com.cosmicpvp.cosmicutils.utils.TimeUtils;
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.google.common.collect.Lists;
-import com.massivecraft.factions.Faction;
-import com.massivecraft.factions.struct.Relation;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
@@ -19,8 +19,6 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.PetUtils;
-import me.ifamasssxd.cosmicsky.inventorypets.utils.WitcherCooldown;
-import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -28,20 +26,15 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Witch;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class InventoryWitcherPet extends InventoryPet {
@@ -75,39 +68,16 @@ public class InventoryWitcherPet extends InventoryPet {
     }
 
     public boolean onPetItemInteract(Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
-        long lastUse = petItem.getLastUsed();
-        long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown(petItem.getLevel()));
-        long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
-        if (item.getAmount() > 1) {
-            player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));
+        if (PetUtils.isOnCooldown(player, petItem.getPetType()) && (!player.isOp() || !player.isSneaking()))
+            throw new PrefixedPetException(CC.Red + "Ability on cooldown: " + CC.RedU +
+                    TimeUtils.formatSeconds(PetUtils.getSecondsOnCooldown(player, petItem.getPetType())));
 
-            return false;
-        }
+        PetUtils.addPetCooldown(player, petItem.getPetType(), (getCooldown(5) * 1000));
 
-        if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
-            throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
-        if (!WorldGuardUtils.isPvPEnabled(player.getLocation()))
-            throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "Not allowed in this region!");
-        if (player.getNearbyEntities(8.0D, 8.0D, 8.0D).isEmpty()) {
-            throw new PrefixedPetException("Could not find a valid target!");
-        }
-        if(AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.MEDIEVAL_BELT_KING) && Math.random() < 0.25) {
-            player.sendMessage(CC.translate("&6&l* ROYAL BELT &7Prevented &dPet Cooldown &6&l*"));
-        } else {
-            petItem.setLastUsed(System.currentTimeMillis());
 
-        }
 
-        int xpGain = petItem.getLevel() * 5;
         player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
         int sum = petItem.getLevel() * 2;
-        if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.REINDEER_ANTLERS) && Math.random() < 0.05D) {
-            sum *= 2;
-            player.sendMessage(String.valueOf(CC.RedB) + "* REINDEER ITEM SKIN " + CC.Gray + "(" + CC.White + "2x Pet Length" + CC.Gray + ")");
-        }
-
-
-
 
         if (playerHasApollo(player)) {
             sum *= 1.5;
@@ -129,10 +99,10 @@ public class InventoryWitcherPet extends InventoryPet {
                 continue;
             if (!WorldGuardUtils.isPvPEnabled(p.getLocation()))
                 continue;
-            if (WitcherCooldown.isOnWitcherCooldown(p)) {
+            /*if (WitcherCooldown.isOnWitcherCooldown(p)) {
                 player.sendMessage(CC.translate("&c&lPET: &c" + p.getName() + "&c is still on Witcher Pet Cooldown! This lasts 60 seconds."));
                 continue;
-            }
+            }*/
             if (playerHasApollo(p)) {
                 player.sendMessage(CC.translate("&f&l* &7&n" + p.getName() + "&f&l APOLLO SET BLOCKED WITCHER *"));
                 p.sendMessage(CC.translate("&f&l* BLOCKED &7&n" + player.getName() + "&f&lWITHCER PET *"));
@@ -143,9 +113,11 @@ public class InventoryWitcherPet extends InventoryPet {
             p.setWalkSpeed(0.0F);
             p.setMetadata("witcher_ability", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
             p.setMetadata("teleblock", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), Long.valueOf(System.currentTimeMillis() + (level * 2000))));
-            WitcherCooldown.enterWitcherCooldown(p);
+            //WitcherCooldown.enterWitcherCooldown(p);
             players.add(p);
         }
+
+
         //ParticleEffect.playEffect(ParticleEffect.LARGE_EXPLODE, player.getLocation().add(0.0D, 1.0D, 0.0D), 1.0F, 3);
         player.sendMessage("");
         player.sendMessage(CC.translate("&4&l** WITCHER PET [&6" + sum + "s&4&l] AOE - Ragdoll, Soul Enchantments - BLOCKED **"));

@@ -59,7 +59,7 @@ public class PetCooldownListener implements Listener {
                 long delay = TimeUnit.SECONDS.toMillis((long) petItem.getCooldown(5));
                 long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
 
-                if (!(lastUse > 0L && timeTillCanUse > 0L)) {
+                if (!(lastUse > 0L && timeTillCanUse > 0L) && itemStackEntry.getValue().getAmount() <=1) {
                     e.getPlayer().getInventory().setItem(itemStackEntry.getKey(), InventoryPetItem.constructItem(itemStackEntry.getValue(), wrapper, InventoryPetItem.class).build());
                     //InventoryPetItem.constructItem(itemStackEntry.getValue(), wrapper, InventoryPetItem.class).build()
                 }

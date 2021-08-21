@@ -29,66 +29,51 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
 
 import java.util.UUID;
 
-final class AntiLootStealListener
-        implements Listener {
-    private final int pickupDelayInMiliseconds = AntiLootSteal.itemPickUpDelayInSeconds * 1000;
 
-    AntiLootStealListener() {
-    }
+final class AntiLootStealListener implements Listener {
+    private int pickupDelayInMiliseconds = AntiLootSteal.itemPickUpDelayInSeconds * 1000;
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onItemPickup(PlayerPickupItemEvent event) {
-        Player player = event.getPlayer();
-        Bukkit.broadcastMessage("pickup");
-        if (AntiLootSteal.disabledWorlds.contains(event.getPlayer().getWorld().getName())) {
-            Bukkit.broadcastMessage("returns");
+        if (AntiLootSteal.disabledWorlds.contains(event.getPlayer().getWorld().getName()))
             return;
-        }
-        Bukkit.broadcastMessage(event.getItem().getMetadata("antiLoot_uuid").get(0).asString());
-        if (event.getItem().hasMetadata("antiLoot_uuid") && !(player.isOp())) {
-            Bukkit.broadcastMessage("has metadata");
-            UUID killerUUID = UUID.fromString(event.getItem().getMetadata("antiLoot_uuid").get(0).asString());
-            long timeDifference = System.currentTimeMillis() - event.getItem().getMetadata("antiLoot_time").get(0).asLong();
-            Bukkit.broadcastMessage(player.getUniqueId() + " " + killerUUID);
-            if (player.getUniqueId().equals(killerUUID)) {
-                return;
-            }
-            if (timeDifference >= (long) this.pickupDelayInMiliseconds) {
-                return;
-            }
-            event.setCancelled(true);
-            if (!player.hasMetadata("antiLoot_nextWarning") || player.getMetadata("antiLoot_nextWarning").get(0).asLong() < System.currentTimeMillis()) {
-                player.setMetadata("antiLoot_nextWarning", new FixedMetadataValue(Arkkit.get(), System.currentTimeMillis() + 10000L));
-                player.sendMessage(CC.RedB + "(LOOT) " + CC.Red + "You cannot loot this item for " + ((long) this.pickupDelayInMiliseconds - timeDifference) / 1000L + "s!");
+        if (event.getItem().hasMetadata("antiLoot_uuid")) {
+            Player player = event.getPlayer();
+            if (!player.hasPermission("anti.loot.bypass")) {
+                UUID killerUUID = UUID.fromString(((MetadataValue)event.getItem().getMetadata("antiLoot_uuid").get(0)).asString());
+                long timeDifference = System.currentTimeMillis() - ((MetadataValue)event.getItem().getMetadata("antiLoot_time").get(0)).asLong();
+                if (player.getUniqueId().equals(killerUUID))
+                    return;
+                if (timeDifference >= this.pickupDelayInMiliseconds)
+                    return;
+                event.setCancelled(true);
+                if (!player.hasMetadata("antiLoot_nextWarning") || ((MetadataValue)player.getMetadata("antiLoot_nextWarning").get(0)).asLong() < System.currentTimeMillis()) {
+                    player.setMetadata("antiLoot_nextWarning", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), Long.valueOf(System.currentTimeMillis() + 10000L)));
+                    player.sendMessage(CC.RedB + "(LOOT) " + CC.Red + "You cannot loot this item for " + ((this.pickupDelayInMiliseconds - timeDifference) / 1000L) + "s!");
+                }
             }
         }
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerDeath(PlayerDeathEvent event) {
-        Bukkit.broadcastMessage("player death");
         if (event.getEntity().getKiller() instanceof Player) {
-            Bukkit.broadcastMessage(event.getEntity().getKiller().getName());
-            if (AntiLootSteal.disabledWorlds.contains(event.getEntity().getWorld().getName())) {
+            if (AntiLootSteal.disabledWorlds.contains(event.getEntity().getWorld().getName()))
                 return;
-            }
             Player killer = event.getEntity().getPlayer().getKiller();
             Player player = event.getEntity().getPlayer();
             for (ItemStack stack : event.getDrops()) {
-                Bukkit.broadcastMessage(stack.toString());
-                Item entity = player.getWorld().dropItemNaturally(player.getLocation(), stack);
+                Item item = player.getWorld().dropItemNaturally(player.getLocation(), stack);
                 long time = System.currentTimeMillis();
-                entity.setMetadata("antiLoot_uuid", new FixedMetadataValue(Arkkit.get(), killer.getUniqueId()));
-                entity.setMetadata("antiLoot_time", new FixedMetadataValue(Arkkit.get(), time));
-                Bukkit.broadcastMessage(entity.getMetadata("antiLoot_uuid").get(0).asString());
-                Bukkit.broadcastMessage(entity.getMetadata("antiLoot_time").get(0).asString());
-
+                item.setMetadata("antiLoot_uuid", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), killer.getUniqueId()));
+                item.setMetadata("antiLoot_time", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), Long.valueOf(time)));
             }
             event.getDrops().clear();
         }
     }
 }
-

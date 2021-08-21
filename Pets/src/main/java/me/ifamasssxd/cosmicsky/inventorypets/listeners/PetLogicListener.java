@@ -4,10 +4,12 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.managers.InventoryPetManager;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.buffs.XpPetBuff;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 
 public class PetLogicListener implements Listener {
@@ -42,5 +44,13 @@ public class PetLogicListener implements Listener {
          CosmicSkyInventoryPets.get().getLogger().info("Increasing xp from " + buff.getMultiplier() + " buff!");
       }
 
+   }
+
+
+   @EventHandler
+   public void blockPlace(BlockPlaceEvent e) {
+      if (e.getBlock().getType() == Material.SKULL_ITEM || e.getBlock().getType() == Material.SKULL) {
+         e.setCancelled(true);
+      }
    }
 }

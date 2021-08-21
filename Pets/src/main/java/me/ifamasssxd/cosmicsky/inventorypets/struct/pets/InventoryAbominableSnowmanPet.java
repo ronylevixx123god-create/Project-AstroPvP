@@ -27,8 +27,6 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
-import me.ifamasssxd.cosmicsky.inventorypets.utils.PetUtils;
-import me.ifamasssxd.cosmicsky.inventorypets.utils.SnowmanCooldown;
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MobDisguise;
@@ -72,16 +70,12 @@ public class InventoryAbominableSnowmanPet extends InventoryPet {
 
    public boolean onPetItemInteract(Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
       long lastUse = petItem.getLastUsed();
-      long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown(petItem.getLevel()));
+      long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown(5));
       long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
 
-      if (item.getAmount() > 1) {
-         player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));
-         return false;
-      }
 
       if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
-         throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
+         throw new PrefixedPetException("Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
 
 
       Faction faction = FactionUtils.getFaction(player);
@@ -91,11 +85,7 @@ public class InventoryAbominableSnowmanPet extends InventoryPet {
          return true;
       if (faction == null || faction.isNone())
          throw new PrefixedPetException("You must be in a faction to use this pet!");
-      Location locationClicked = player.getLocation();
-      if (!WorldGuardUtils.isPvPEnabled(locationClicked)) {
-         player.sendMessage(String.valueOf(CC.RedB) + "PET: " + CC.Red + "Not allowed in this region!");
-         return true;
-      }
+
       double closest = Double.MAX_VALUE;
       Entity closestp = null;
       for (Entity i : player.getNearbyEntities(3.0D, 3.0D, 3.0D)) {
@@ -104,10 +94,10 @@ public class InventoryAbominableSnowmanPet extends InventoryPet {
          Player p = (Player)i;
          if ( p.getGameMode().equals(GameMode.CREATIVE))
             continue;
-         if (SnowmanCooldown.isOnSnowCooldown(p)) {
+         /*if (SnowmanCooldown.isOnSnowCooldown(p)) {
             player.sendMessage(CC.translate("&cThis player is still on snowman cooldown, this lasts 120s."));
             continue;
-         }
+         }*/
          if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.SEXY_HELMET)) {
             p.sendMessage(CC.translate("&c&lBLOCKED - SNOWMAN"));
             continue;
@@ -136,7 +126,6 @@ public class InventoryAbominableSnowmanPet extends InventoryPet {
       if (castingPlayer.getRelationTo((RelationParticipator)surroundingPlayer) == Relation.ENEMY || castingPlayer.getRelationTo((RelationParticipator)surroundingPlayer) == Relation.NEUTRAL) {
          petItem.setLastUsed(System.currentTimeMillis());
          freezeThePlayer(p2, player);
-         int xpGain = 100;
          player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
          player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
          return true;
@@ -145,7 +134,7 @@ public class InventoryAbominableSnowmanPet extends InventoryPet {
    }
 
    private void freezeThePlayer(final Player p, Player caster) {
-      SnowmanCooldown.enterSnowCooldown(p);
+      //SnowmanCooldown.enterSnowCooldown(p);
       p.setFlying(false);
       MobDisguise snowman = new MobDisguise(DisguiseType.SNOWMAN);
       p.playSound(p.getLocation(), Sound.STEP_SNOW, 1.0F, 1.4F);

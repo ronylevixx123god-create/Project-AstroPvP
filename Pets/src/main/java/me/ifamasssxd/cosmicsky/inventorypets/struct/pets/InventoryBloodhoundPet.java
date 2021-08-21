@@ -83,25 +83,18 @@ public class InventoryBloodhoundPet extends InventoryPet {
       long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown(5));
       long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
 
-      if (item.getAmount() > 1) {
-         player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));
 
-         return false;
-      }
+      if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
+         throw new PrefixedPetException("Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
 
-     /* if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
-         throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));*/
 
-      if (PetUtils.isOnCooldown(player, petItem.getPetType()) && (!player.isOp() || !player.isSneaking()))
-         throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU +
-                 TimeUtils.formatSeconds(PetUtils.getSecondsOnCooldown(player, petItem.getPetType())));
       List<Entity> targets = player.getNearbyEntities(10,10,10);
       Entity target = null;
 
 
       for (Entity targett : targets) {
          if (targett != player && targett instanceof Player) {
-            if (FactionUtils.getFPlayer((Player) targett).getFaction() != FactionUtils.getFPlayer(player).getFaction()) {
+            if (FactionUtils.getFPlayer((Player) targett).getFaction() != FactionUtils.getFPlayer(player).getFaction() && !FactionUtils.isInAllyFaction(player, (Player) targett)) {
                target = targett;
                break;
 
@@ -110,31 +103,24 @@ public class InventoryBloodhoundPet extends InventoryPet {
       }
 
       if (target == null || !(target instanceof Player))
-         throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "No target found!");
+         throw new PrefixedPetException(String.valueOf(CC.Red + "No target found!"));
       final Player pTarget = (Player)target;
-      if (!WorldGuardUtils.isPvPEnabled(pTarget.getLocation()))
-         throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "No valid target found!");
       FPlayer fPlayer = FactionUtils.getFPlayer(player);
       Relation relation = FactionUtils.getFPlayer(pTarget).getRelationTo((RelationParticipator)fPlayer);
       if (relation == Relation.ALLY || relation == Relation.TRUCE || relation.isMember())
-         throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "No valid target found!");
-      //petItem.setLastUsed(System.currentTimeMillis());
+         throw new PrefixedPetException(String.valueOf(CC.Red + "No valid target found!"));
 
-      if(AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.MEDIEVAL_BELT_KING) && Math.random() < 0.25) {
-         player.sendMessage(CC.translate("&6&l* ROYAL BELT &7Prevented &dPet Cooldown &6&l*"));
-      } else {
-         PetUtils.addPetCooldown(player, petItem.getPetType(), (getCooldown(5) * 1000));
-      }
 
-      int xpGain = petItem.getLevel() * 5;
+      petItem.setLastUsed(System.currentTimeMillis());
+
+
       player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 1.1F, 3.0F);
       final String name = player.getName();
-      Faction faction = fPlayer.getFaction();
 
       if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.THANKSGIVING_HELMET_WITCH) && (!GoldenAdmirer.isAdmirerSilenced(pTarget))) {
          pTarget.sendMessage(CC.translate("&e&l* WITCH HAT &7Blocked &4Banshee Pet &7[&f" + player.getName() + "&7] &e&l*"));
          player.sendMessage(CC.translate("&e&l* &f" + pTarget.getName() + " &7Blocked &4Bloodhound Pet &7[&e&lWitch Hat&7] &e&l*"));
-         return false;
+         return true;
       }
 
       player.chat("/f t " + pTarget.getName());

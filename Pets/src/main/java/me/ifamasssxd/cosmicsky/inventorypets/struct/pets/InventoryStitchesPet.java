@@ -64,18 +64,13 @@ public class InventoryStitchesPet extends InventoryPet {
         final long lastUse = petItem.getLastUsed();
         final long delay = TimeUnit.SECONDS.toMillis(this.getCooldown(petItem.getLevel()));
         long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
-        if (itemStack.getAmount() > 1) {
-            player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));
 
-            return false;
-        }
-        if (PetUtils.isOnCooldown(player, petItem.getPetType())) {
-            player.sendMessage(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + PetUtils.getSecondsOnCooldown(player, petItem.getPetType()) + "s");
-            return true;
-        }
-        if (!WorldGuardUtils.isPvPEnabled(player.getLocation())) {
-            throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "Not allowed in this region!");
-        }
+        if (PetUtils.isOnCooldown(player, petItem.getPetType()) && (!player.isOp() || !player.isSneaking()))
+            throw new PrefixedPetException(CC.Red + "Ability on cooldown: " + CC.RedU +
+                    TimeUtils.formatSeconds(PetUtils.getSecondsOnCooldown(player, petItem.getPetType())));
+
+
+
         List<Player> nearbyEntities = player.getNearbyEntities(14, 14, 14).stream().filter(nearbyEntity -> {
             if (!(nearbyEntity instanceof Player))
                 return false;
@@ -119,7 +114,7 @@ public class InventoryStitchesPet extends InventoryPet {
         player.sendMessage(CC.translate("&6&lPET: ** STITCHES [&e" + (18.0 + petItem.getLevel()) + "s&6&l] &6- " + nearbyEntities.size() + " player(s) pet-silenced! **"));
         player.sendMessage("");
 
-        return false;
+        return true;
     }
 
     @Override

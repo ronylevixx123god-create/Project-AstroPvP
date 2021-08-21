@@ -116,8 +116,8 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
 
     @SneakyThrows
     public void onPlayerInteractable(Player player, ItemStack itemStack, NBTWrapper nbtWrapper, PlayerInteractEvent playerInteractEvent) throws CosmicException {
-        playerInteractEvent.setCancelled(true);
-        InventoryPetItem preitem = CosmicPersistentItem.constructItem(itemStack, nbtWrapper, InventoryPetItem.class);
+        //playerInteractEvent.setCancelled(true);
+        //InventoryPetItem preitem = CosmicPersistentItem.constructItem(itemStack, nbtWrapper, InventoryPetItem.class);
 
 
         InventoryPetItem item = CosmicPersistentItem.constructItem(itemStack, nbtWrapper, InventoryPetItem.class);
@@ -159,12 +159,19 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
                 throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "You cannot use that ability while spectating!");
             }
 
+            if (!WorldGuardUtils.isPvPEnabled(player.getLocation())) {
+                playerInteractEvent.setCancelled(true);
+                throw new PrefixedException(CC.Red + "You cannot use that pet here (Safezone)!");
+            }
+
+            if (player.getItemInHand().getAmount() > 1) {
+                playerInteractEvent.setCancelled(true);
+                throw new PrefixedException(CC.Red + "You cannot use stacked pets!");
+
+            }
+
             if (type.getInternalClass().onPetItemInteract(player, itemStack, item, playerInteractEvent)) {
-                if (player.getItemInHand().getAmount() > 1) {
-                    player.sendMessage(CC.translate("&cYou &ncannot&c use stacked pets!"));
-                    playerInteractEvent.setCancelled(true);
-                    return;
-                }
+
 
                 /*
 
@@ -179,15 +186,13 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
                 itemStack = wrapper.build();
                 ItemStack finalItem = itemStack;*/
 
-                if (!WorldGuardUtils.isPvPEnabled(player.getLocation())) {
-                    playerInteractEvent.setCancelled(true);
-                    throw new PetException(CC.Red + "You cannot use that pet here (Safezone)!");
-                }
+
 
                 ItemStack finalItem = item.build();
 
                 String skinTexture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmVlOWU2NTY3NDk2NzVlNTYzZGE3MTM1N2MxZjg0OTY3MjQ0YzQyMDUwNDY5NzI5M2NlODc4Y2RiOGEzNiJ9fX0=";
-                player.getInventory().setItemInHand(SkullUtils.buildSkullNative(finalItem, skinTexture));
+                //player.getInventory().setItemInHand(SkullUtils.buildSkullNative(finalItem, skinTexture));
+                player.getInventory().setItemInHand(finalItem);
 
             }
         }

@@ -19,7 +19,6 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.tasks.BleedTask;
-import me.ifamasssxd.cosmicsky.inventorypets.utils.CageCooldown;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.PetUtils;
 import org.bukkit.*;
@@ -75,15 +74,10 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown(5));
         long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
 
-        if (item.getAmount() > 1) {
-            player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));
-
-            return false;
-        }
-
 
         if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
-            throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
+            throw new PrefixedPetException("Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
+
         if (player.hasMetadata("in_duel"))
             return true;
         if (player.hasMetadata("spectator"))
@@ -122,14 +116,11 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
             throw new PrefixedPetException("You cannot use this pet while in the dungeon parkour.");
         if (target == null || (event != null && target.getLocation().distance(player.getLocation()) > 4.0D))
             throw new PrefixedPetException("Could not find a valid target!");
-        if (CageCooldown.isOnCageCooldown(target))
-            throw new PrefixedPetException(target.getName() + " is still on Cage Cooldown! This lasts 20 seconds.");
+        /*if (CageCooldown.isOnCageCooldown(target))
+            throw new PrefixedPetException(target.getName() + " is still on Cage Cooldown! This lasts 20 seconds.");*/
         if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.SEXY_HELMET) && Math.random() < 0.5D && !playerHasApollo(player)) {
-            if(AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.MEDIEVAL_BELT_KING) && Math.random() < 0.25) {
-                player.sendMessage(CC.translate("&6&l* ROYAL BELT &7Prevented &dPet Cooldown &6&l*"));
-            } else {
-                petItem.setLastUsed(System.currentTimeMillis());
-            }
+            petItem.setLastUsed(System.currentTimeMillis());
+
             if (playerHasApollo(player)) {
                 target.sendMessage(CC.translate("&c&l* CHAD SUNGLASSES &a&lBYPASSED &7[&c" + player.getName() + "&cApollo Set&7] &c&l*"));
                 player.sendMessage(CC.translate("&a&l* BYPASSED CHAD SUNGLASSED FROM &c&n" + target.getName() + "&a&l *"));
@@ -183,7 +174,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
 
 
 
-        CageCooldown.enterCageCooldown(target);
+        //CageCooldown.enterCageCooldown(target);
         player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
         player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
         player.sendMessage(CC.translate("&e&l* WORLD DESTROYER &7[&f" + target.getName() + "&7] &e&l*")
@@ -211,7 +202,6 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
 
                     PermissionsAPI.getPermissionUser(finalTarget1.getUniqueId()).getPermissionNodes().remove("verus.bypass");
                     PermissionsAPI.getPermissionUser(player.getUniqueId()).getPermissionNodes().remove("verus.bypass");
-                    DamageIndicatorUtils.sendDamageIndicator(finalTarget1, CC.translate("&e&l* WORLD DESTROYER [&75s&e&l] *"), "RKO");
                 } catch (Exception e) {
                     BlockModifier.removeBlocks(p.getUniqueId(), true, true);
                 }

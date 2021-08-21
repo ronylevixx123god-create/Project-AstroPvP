@@ -49,32 +49,13 @@ public class InventoryFeignDeathPet extends InventoryPet {
     }
 
     public boolean onPetItemInteract(Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws Exception {
-        long lastUse = petItem.getLastUsed();
-        long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown(petItem.getLevel()));
-        long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
-        if (item.getAmount() > 1) {
-            player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));
-
-            return false;
-        }
         if (PetUtils.isOnCooldown(player, petItem.getPetType()) && (!player.isOp() || !player.isSneaking()))
-            throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU +
+            throw new PrefixedPetException(CC.Red + "Ability on cooldown: " + CC.RedU +
                     TimeUtils.formatSeconds(PetUtils.getSecondsOnCooldown(player, petItem.getPetType())));
-        boolean inCombat = CombatLog.inCombat(player);
-        boolean inWarzone = Board.getFactionAt(new FLocation(player.getLocation())).isWarZone();
-        int xpGain = inWarzone ? 50 : 5;
-        if (!inCombat) {
-            xpGain = 1;
-        }
+        PetUtils.addPetCooldown(player, petItem.getPetType(), (getCooldown(5) * 1000));
         MasteryFeignDeath.vanishPlayer(player, 5);
-        if(AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.MEDIEVAL_BELT_KING) && Math.random() < 0.25) {
-            player.sendMessage(CC.translate("&6&l* ROYAL BELT &7Prevented &dPet Cooldown &6&l*"));
-        } else {
-            PetUtils.addPetCooldown(player, petItem.getPetType(), (getCooldown(5) * 1000));
-        }
         player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
         player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
-
         return true;
 
     }

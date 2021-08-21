@@ -61,11 +61,10 @@ public class HalfLootboxApplyListener implements Listener {
             if (halfLootboxTypeClicked == HalfLootboxType.LEFT && halfLootboxTypeCursor == HalfLootboxType.RIGHT || halfLootboxTypeClicked == HalfLootboxType.RIGHT && halfLootboxTypeCursor == HalfLootboxType.LEFT) {
 
                 MysteryChest cosmicMysteryChestCursor = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get(new NBTWrapper(cursor).getString("lootbox_name"));
-                MysteryChest cosmicMysteryChestClicked = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get(new NBTWrapper(cursor).getString("lootbox_name"));
+                MysteryChest cosmicMysteryChestClicked = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get(new NBTWrapper(clicked).getString("lootbox_name"));
 
 
-                if (cosmicMysteryChestClicked.getInternalName() != cosmicMysteryChestCursor.getInternalName()) {
-
+                if (!cosmicMysteryChestClicked.getInternalName().equals(cosmicMysteryChestCursor.getInternalName())) {
                     return;
                 }
 
@@ -78,10 +77,11 @@ public class HalfLootboxApplyListener implements Listener {
                 player.sendMessage(CC.translate("&a&l(!)&a You have created " + cosmicMysteryChestCursor.getDisplayName()));
                 player.playSound(player.getLocation(), Sound.ANVIL_USE, 10, 10);
             }
-
-
         }
 
 
     }
+
+
 }
+

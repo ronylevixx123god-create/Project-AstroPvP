@@ -81,35 +81,15 @@ public class InventoryBansheePet extends InventoryPet {
         long lastUse = petItem.getLastUsed();
         long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown(5));
         long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
-        if (item.getAmount() > 1) {
-            player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));
-
-            return false;
-        }
 
         if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
-            throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
-        if (!WorldGuardUtils.isPvPEnabled(player.getLocation()))
-            throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "Not allowed in this region!");
+            throw new PrefixedPetException("Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
 
-        if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(player), OutpostType.COURTYARD) && Math.random() < 0.2) {
-            player.sendMessage(CC.translate("&c&l** INFERNAL STRONGHOLD BONUS &7Prevented &dPet Cooldown &c&l**"));
-        }
-            else if(AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.MEDIEVAL_BELT_KING) && Math.random() < 0.25) {
-                player.sendMessage(CC.translate("&6&l* ROYAL BELT &7Prevented &dPet Cooldown &6&l*"));
-
-
-        } else {
-            petItem.setLastUsed(System.currentTimeMillis());
-        }
 
         List<Player> nearbyEnemies = Lists.newArrayList();
 
         Faction faction = FactionUtils.getFaction(player);
-        if (player.getNearbyEntities(8.0D, 8.0D, 8.0D).isEmpty()) {
-            throw new PrefixedPetException("Could not find a valid target!");
 
-        }
         for (Entity other : player.getNearbyEntities(8.0D, 8.0D, 8.0D)) {
             if (other instanceof Player) {
                 Player nearPlayer = (Player) other;
@@ -130,12 +110,13 @@ public class InventoryBansheePet extends InventoryPet {
                 nearbyEnemies.add(nearPlayer);
             }
         }
-        //ParticleEffect.sendToLocation(ParticleEffect.LARGE_EXPLODE, player.getEyeLocation(), (float)Math.random(), (float)Math.random(), (float)Math.random(), 0.5F, 3);
 
-
-        if (nearbyEnemies.size() == 0) {
-            return true;
+        if (nearbyEnemies.isEmpty()) {
+            throw new PrefixedPetException("Could not find a valid target!");
         }
+
+        petItem.setLastUsed(System.currentTimeMillis());
+
 
         int duration;
         if (playerHasApollo(player)) {
