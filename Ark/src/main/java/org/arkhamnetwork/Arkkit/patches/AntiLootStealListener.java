@@ -18,6 +18,7 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.Tuple;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Item;
@@ -32,21 +33,33 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 
 final class AntiLootStealListener implements Listener {
+
+    private HashMap<Item, Tuple<UUID, Long>> itemsMap;
+
+    public AntiLootStealListener() {
+        itemsMap = new HashMap<>();
+    }
+
     private int pickupDelayInMiliseconds = AntiLootSteal.itemPickUpDelayInSeconds * 1000;
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onItemPickup(PlayerPickupItemEvent event) {
         if (AntiLootSteal.disabledWorlds.contains(event.getPlayer().getWorld().getName()))
             return;
-        if (event.getItem().hasMetadata("antiLoot_uuid")) {
-            Player player = event.getPlayer();
+//        if (event.getItem().hasMetadata("antiLoot_uuid")) {
+        if (itemsMap.containsKey(event.getItem())) {
+        Player player = event.getPlayer();
             if (!player.hasPermission("anti.loot.bypass")) {
-                UUID killerUUID = UUID.fromString(((MetadataValue)event.getItem().getMetadata("antiLoot_uuid").get(0)).asString());
-                long timeDifference = System.currentTimeMillis() - ((MetadataValue)event.getItem().getMetadata("antiLoot_time").get(0)).asLong();
+//                UUID killerUUID = UUID.fromString(((MetadataValue)event.getItem().getMetadata("antiLoot_uuid").get(0)).asString());
+                Tuple<UUID, Long> tuple = itemsMap.get(event.getItem());
+                UUID killerUUID = tuple.getLeft();
+                long timeDifference = System.currentTimeMillis() - tuple.getRight();
                 if (player.getUniqueId().equals(killerUUID))
                     return;
                 if (timeDifference >= this.pickupDelayInMiliseconds)
@@ -70,8 +83,10 @@ final class AntiLootStealListener implements Listener {
             for (ItemStack stack : event.getDrops()) {
                 Item item = player.getWorld().dropItemNaturally(player.getLocation(), stack);
                 long time = System.currentTimeMillis();
-                item.setMetadata("antiLoot_uuid", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), killer.getUniqueId()));
-                item.setMetadata("antiLoot_time", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), Long.valueOf(time)));
+                UUID uuid = killer.getUniqueId();
+                itemsMap.put(item, new Tuple<>(uuid, time));
+/*                item.setMetadata("antiLoot_uuid", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), killer.getUniqueId()));
+                item.setMetadata("antiLoot_time", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), Long.valueOf(time)));*/
             }
             event.getDrops().clear();
         }

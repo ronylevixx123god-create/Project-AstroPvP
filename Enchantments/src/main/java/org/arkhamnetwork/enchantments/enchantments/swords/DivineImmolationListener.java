@@ -62,10 +62,7 @@ public class DivineImmolationListener implements Listener {
                     damage = 2;
                 }
 
-
-                if (Math.random() < 0.2) {
-                    le.damage((double) damage);
-                }
+                le.damage((double) damage);
 
 
                 if (le instanceof Player) {
