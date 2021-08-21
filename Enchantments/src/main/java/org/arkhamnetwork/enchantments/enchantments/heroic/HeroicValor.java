@@ -33,7 +33,6 @@ public class HeroicValor extends HeroicCustomEnchantment {
         double hp_threshold = (level * 5 + 6);
         if (player.getHealth() <= hp_threshold && (((Player) player).getItemInHand().getType() == Material.GOLD_SWORD || ((Player) player).getItemInHand().getType() == Material.DIAMOND_SWORD) && e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1.0D - damage_negation) > 1.0D) {
             e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1.0D - damage_negation));
-            Location l = player.getLocation();
         }
     }
 }

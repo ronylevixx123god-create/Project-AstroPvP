@@ -67,7 +67,7 @@ public class MasteryNeutralize extends CustomEnchantment {
             pTarget.playSound(pTarget.getLocation(), Sound.ENDERMAN_SCREAM, 1.0f, 0.3f);
             DamageIndicatorUtils.sendDamageIndicator((Player) pTarget, CC.DarkPurpleB + "* NEUTRALIZED" + CC.Gray +  "[5s]" + CC.Gray + " *", "NEUTRALIZE");
             pTarget.setMetadata("neutralized", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), "banana"));
-            Bukkit.getScheduler().runTaskLater(Enchantments.getInstance(), () -> {
+            Bukkit.getScheduler().runTaskLaterAsynchronously(Enchantments.getInstance(), () -> {
                 pTarget.removeMetadata("neutralized", Enchantments.getInstance());
                 pTarget.removeMetadata("noDefenseProcs", Enchantments.getInstance());
                 pTarget.removeMetadata("silenced", Enchantments.getInstance());

@@ -25,10 +25,11 @@ public class HeroicEnlighted extends CustomEnchantment {
     }
 
     public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
-        if (player.hasMetadata("neutralized"))
+        if (player.hasMetadata("neutralized")) {
             return;
+        }
         double random = Math.random();
-        double chance = 0.01D * level;
+        double chance = 0.075D * level;
         double amount = 2;
 
 
