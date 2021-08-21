@@ -19,6 +19,7 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import org.arkhamnetwork.Arkkit.Arkkit;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -40,13 +41,18 @@ final class AntiLootStealListener
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onItemPickup(PlayerPickupItemEvent event) {
-        Player player;
+        Player player = event.getPlayer();
+        Bukkit.broadcastMessage("pickup");
         if (AntiLootSteal.disabledWorlds.contains(event.getPlayer().getWorld().getName())) {
+            Bukkit.broadcastMessage("returns");
             return;
         }
-        if (event.getItem().hasMetadata("antiLoot_uuid") && !(player = event.getPlayer()).hasPermission("anti.loot.bypass")) {
+        Bukkit.broadcastMessage(event.getItem().getMetadata("antiLoot_uuid").get(0).asString());
+        if (event.getItem().hasMetadata("antiLoot_uuid") && !(player.isOp())) {
+            Bukkit.broadcastMessage("has metadata");
             UUID killerUUID = UUID.fromString(event.getItem().getMetadata("antiLoot_uuid").get(0).asString());
             long timeDifference = System.currentTimeMillis() - event.getItem().getMetadata("antiLoot_time").get(0).asLong();
+            Bukkit.broadcastMessage(player.getUniqueId() + " " + killerUUID);
             if (player.getUniqueId().equals(killerUUID)) {
                 return;
             }
@@ -63,17 +69,23 @@ final class AntiLootStealListener
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerDeath(PlayerDeathEvent event) {
+        Bukkit.broadcastMessage("player death");
         if (event.getEntity().getKiller() instanceof Player) {
+            Bukkit.broadcastMessage(event.getEntity().getKiller().getName());
             if (AntiLootSteal.disabledWorlds.contains(event.getEntity().getWorld().getName())) {
                 return;
             }
             Player killer = event.getEntity().getPlayer().getKiller();
             Player player = event.getEntity().getPlayer();
             for (ItemStack stack : event.getDrops()) {
+                Bukkit.broadcastMessage(stack.toString());
                 Item entity = player.getWorld().dropItemNaturally(player.getLocation(), stack);
                 long time = System.currentTimeMillis();
                 entity.setMetadata("antiLoot_uuid", new FixedMetadataValue(Arkkit.get(), killer.getUniqueId()));
                 entity.setMetadata("antiLoot_time", new FixedMetadataValue(Arkkit.get(), time));
+                Bukkit.broadcastMessage(entity.getMetadata("antiLoot_uuid").get(0).asString());
+                Bukkit.broadcastMessage(entity.getMetadata("antiLoot_time").get(0).asString());
+
             }
             event.getDrops().clear();
         }
