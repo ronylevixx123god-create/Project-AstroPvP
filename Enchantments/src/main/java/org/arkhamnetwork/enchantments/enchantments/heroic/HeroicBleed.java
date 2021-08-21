@@ -77,7 +77,7 @@ public class HeroicBleed extends HeroicCustomEnchantment {
         int bleedStack = Math.max(1, getBleedStack(le) / 2);
         if (le instanceof Player) {
             Player p = (Player) le;
-            p.setWalkSpeed((float) (0.20000000298023224D - 0.0075D * bleedStack));
+            //p.setWalkSpeed((float) (0.20000000298023224D - 0.0075D * bleedStack));
             if (bleedStack >= 5 && bleedStack % 5 == 0)
                 p.sendMessage(ChatColor.RED + "** DEEP BLEED [" + ChatColor.DARK_RED + "-" + this.df.format(bleedStack * 0.0075 / 0.20000000298023224 * 100.0) + ChatColor.RED + "% Speed] **");
             for (Entity ent : p.getNearbyEntities(7.0D, 7.0D, 7.0D)) {
@@ -101,7 +101,7 @@ public class HeroicBleed extends HeroicCustomEnchantment {
                 pEnt.playSound(pEnt.getLocation(), Sound.EAT, 0.4F, 0.6F);
             }
         } else {
-            le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, bleedStack * 10, Math.max(1, bleedStack / 3)));
+            //le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, bleedStack * 10, Math.max(1, bleedStack / 3)));
         }
 
         if (Math.random() < 0.1) {

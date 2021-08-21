@@ -29,6 +29,7 @@
 package com.compilex.CosmicArmorSets.enums.armorsets;
 
 import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
+import com.compilex.CosmicArmorSets.CosmicArmorSetsPlugin;
 import com.compilex.CosmicArmorSets.enums.ArmorSetInfo;
 import com.compilex.CosmicArmorSets.enums.OtherPlayerEventListenerSet;
 import com.compilex.CosmicArmorSets.utils.ItemUtils;
@@ -191,17 +192,16 @@ public class ChampionArmorSet
         player.sendMessage(CC.translate("&4&lTARGET: &f") + target.getName());
         player.sendMessage("");
         target.sendMessage(CC.translate(("&6&l* CHAMPION WRATH &7[&c" + player.getName() + "&7]")));
-        player.setMetadata("noDefenseProcs", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
+        target.setMetadata("noDefenseProcs", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
         player.setMetadata("immune_freeze", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
         target.setMetadata("banshee_scrolls", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
         target.playSound(target.getLocation(), Sound.BLAZE_DEATH, 10.0f, 10.0f);
         PlayerPotionEffects.trackPotionEffect(player, new SpecificCustomEnchantment(new Gears(), 5), new PotionEffect(PotionEffectType.SPEED, 160, 4));
         new BukkitRunnable() {
-
             public void run() {
-                player.removeMetadata("noDefenseProcs", CosmicSkyInventoryPets.get());
+                target.removeMetadata("noDefenseProcs", CosmicSkyInventoryPets.get());
                 player.removeMetadata("immune_freeze", CosmicSkyInventoryPets.get());
-                player.removeMetadata("banshee_scrolls", CosmicSkyInventoryPets.get());
+                target.removeMetadata("banshee_scrolls", CosmicSkyInventoryPets.get());
                 target.sendMessage(CC.translate(("&6&l* CHAMPION WRATH FROM &7" + player.getName() + " &c&lEXPIRED &6&l*")));
                 PlayerPotionEffects.untrackPotionEffect(player, PotionEffectType.SPEED);
                 PlayerPotionEffects.trackPotionEffect(player, new SpecificCustomEnchantment(new Gears(), 3), new PotionEffect(PotionEffectType.SPEED, 160, 3));
