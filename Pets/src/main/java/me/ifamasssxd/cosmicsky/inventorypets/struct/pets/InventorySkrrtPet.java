@@ -88,6 +88,11 @@ public class InventorySkrrtPet extends InventoryPet {
                         return true;
                     }
 
+                    if (PetUtils.isOnCooldown(player, petItem.getPetType()) && (!player.isOp() || !player.isSneaking())) {
+                        throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU +
+                                TimeUtils.formatSeconds(PetUtils.getSecondsOnCooldown(player, petItem.getPetType())));
+                    }
+
                     if (player.getNearbyEntities(16.0D, 16.0D, 16.0D).isEmpty()) {
 
                         throw new PrefixedPetException("Could not find a valid target!");
@@ -106,7 +111,6 @@ public class InventorySkrrtPet extends InventoryPet {
                     this.skrrtAbilities(player);
                     boolean xpGain = true;
 
-                    return true;
 
                 } else {
                     throw new PrefixedPetException("You must be in a faction to use this pet!");

@@ -29,15 +29,15 @@ public class HeroicAssassin extends CustomEnchantment {
         double dmgMod = 1.0D;
         double heroicMult = 2.5D;
         if (distance < 0.25D * heroicMult)
-            dmgMod += 0.015D * enchantLevel;
+            dmgMod += 0.007D * enchantLevel;
         if (distance < 0.5D * heroicMult)
-            dmgMod += 0.015D * enchantLevel;
+            dmgMod += 0.007D * enchantLevel;
         if (distance < 0.75D * heroicMult)
-            dmgMod += 0.015D * enchantLevel;
+            dmgMod += 0.007D * enchantLevel;
         if (distance < 1.0D * heroicMult)
-            dmgMod += 0.015D * enchantLevel;
+            dmgMod += 0.007D * enchantLevel;
         if (distance < 1.5D * heroicMult)
-            dmgMod += 0.015D * enchantLevel;
+            dmgMod += 0.007D * enchantLevel;
         event.setDamage(event.getDamage() * dmgMod);
     }
 }

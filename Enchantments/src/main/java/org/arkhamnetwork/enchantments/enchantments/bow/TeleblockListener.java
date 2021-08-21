@@ -61,7 +61,6 @@ class TeleblockListener implements Listener {
                         break;
                     }
                 }
-                DamageIndicatorUtils.sendDamageIndicator((Player) e.getEntity(), CC.DarkPurpleB + ChatColor.DARK_PURPLE + "* TELEBLOCK [" + 5 + teleblockLevel * 3 + "s] [-" + pearlsToDestroy + "ep] *", "TELEBLOCK");
                 pHurt.sendMessage(ChatColor.DARK_PURPLE + "** TELEBLOCK [" + 5 + teleblockLevel * 3 + "s] [-" + pearlsToDestroy + "ep] **");
                 pHurt.playSound(pHurt.getLocation(), Sound.ENDERMAN_HIT, 0.75f, 0.6f);
             }

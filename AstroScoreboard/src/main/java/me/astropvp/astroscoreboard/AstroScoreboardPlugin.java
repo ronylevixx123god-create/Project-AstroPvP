@@ -70,7 +70,7 @@ public class AstroScoreboardPlugin extends JavaPlugin {
                     for (Player other : Bukkit.getOnlinePlayers()) {
                         try {
                             PlayerDisplayManager.setUserPrefix(player, other, AstroScoreboardAPI.getDefaultPrefix(player, other) + " ");
-                            PlayerDisplayManager.setUserSuffix(player, other, ((CosmicPlayers.get().getCosmicPlayer(player).isOnCosmicClient()) ? ChatColor.GREEN.toString() + ChatColor.BOLD + " ✓" : ChatColor.RED.toString() + ChatColor.BOLD + " ✗"));
+                            //PlayerDisplayManager.setUserSuffix(player, other, ((CosmicPlayers.get().getCosmicPlayer(player).isOnCosmicClient()) ? ChatColor.GREEN.toString() + ChatColor.BOLD + " ✓" : ChatColor.RED.toString() + ChatColor.BOLD + " ✗"));
                         } catch (Exception exception) {
                             exception.printStackTrace();
                         }
