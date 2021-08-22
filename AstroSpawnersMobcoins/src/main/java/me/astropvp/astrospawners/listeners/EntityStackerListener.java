@@ -116,11 +116,9 @@ public class EntityStackerListener implements Listener {
             }
 
             if (isOnCosmicClient) {
-                blazeLoot(entity, (Player) e.getDamager(), 0.2);
-                EconomyUtils.depositBalance((OfflinePlayer) e.getDamager(), 40);
-            } else {
                 blazeLoot(entity, (Player) e.getDamager(), 0.1);
-                EconomyUtils.depositBalance((OfflinePlayer) e.getDamager(), 40);
+            } else {
+                blazeLoot(entity, (Player) e.getDamager(), 0.06);
 
 
             }
