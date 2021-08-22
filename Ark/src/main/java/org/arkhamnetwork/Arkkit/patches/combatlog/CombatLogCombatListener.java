@@ -126,19 +126,26 @@ public class CombatLogCombatListener
             }
             if (rootCommand.equals("/ci") || rootCommand.equals("/clearinventory") || rootCommand.equals("/eci") || rootCommand.equals("/clean") || rootCommand.equals("/eclean") || rootCommand.equals("/clear") || rootCommand.equals("/eclear") || rootCommand.equals("/clearinvent") || rootCommand.equals("/eclearinvent") || rootCommand.equals("/eclearinventory")) {
                 e.setCancelled(true);
-                e.getPlayer().sendMessage(ChatColor.RED + "You cannot use that command while in combat!");
+                e.getPlayer().sendMessage(ChatColor.RED + "You cannot use that command while in combat! (" + getTimeLeftMSInCombat(e.getPlayer()) + "ms)");
             }
             if (e.getMessage().contains(":") || rootCommand.equals("/tpahere") || rootCommand.equals("/etpahere") || rootCommand.equals("/tpa") || rootCommand.equals("/etpa") || rootCommand.equals("/tpaccept") || rootCommand.equals("/tpyes") || rootCommand.equals("/etpyes") || rootCommand.equals("/etpaccept") || rootCommand.equals("/spawn") || rootCommand.equals("/home") || rootCommand.equals("/espawn") || rootCommand.equals("/ehome") || rootCommand.equals("/vault") || rootCommand.equals("/pvault") || rootCommand.equals("/pv") || rootCommand.equals("/echest") || rootCommand.equals("/enderchest") || rootCommand.equals("/ec") || rootCommand.equals("/bec") || rootCommand.equals("/betterenderchest") || rootCommand.equals("/hub") || rootCommand.equals("/lobby") || rootCommand.equals("/chest") || rootCommand.equals("/vault") || rootCommand.equals("/playervaults") || rootCommand.equals("/hub") || rootCommand.equals("/quit") || rootCommand.equals("/lobby") || rootCommand.equals("/server") || rootCommand.equals("/ah") || rootCommand.equals("/auction") || rootCommand.equals("/auc") || rootCommand.equals("/fly") || rootCommand.equals("/efly") || rootCommand.equals("/tinkerer") || rootCommand.equals("/enchanter") || rootCommand.equals("/bid") || rootCommand.equals("/gift") || rootCommand.equals("/merchant") || rootCommand.equals("/armormerchant") || rootCommand.equals("/showcase") || rootCommand.equals("/tnt") || rootCommand.equals("/sell") || rootCommand.equals("/esell") || rootCommand.equals("/coinflip") || rootCommand.equals("/cf") || rootCommand.equals("/shop") || rootCommand.equals("/store") || rootCommand.equals("/shops") || rootCommand.equals("/cosmicshop") || rootCommand.equals("/cshop") || rootCommand.equals("/fund") || rootCommand.equals("/cosmicfund") || rootCommand.equals("/trade") || rootCommand.equals("/kit") || rootCommand.equals("/kits") || rootCommand.equals("/ekit") || rootCommand.equals("/ekits") || rootCommand.equals("/tnt")) {
                 e.setCancelled(true);
                 e.setMessage("/null");
-                e.getPlayer().sendMessage(ChatColor.RED + "You cannot use that command while in combat!");
+                e.getPlayer().sendMessage(ChatColor.RED + "You cannot use that command while in combat! (" + getTimeLeftMSInCombat(e.getPlayer()) + "ms)");
             }
             if ((rootCommand.equals("/heal") || rootCommand.equals("/eheal")) && Arkkit.get().getConfig().getBoolean("settings.combat_log.block_heal")) {
                 e.setCancelled(true);
-                e.getPlayer().sendMessage(ChatColor.RED + "You cannot use that command while in combat!");
+                e.getPlayer().sendMessage(ChatColor.RED + "You cannot use that command while in combat! (" + getTimeLeftMSInCombat(e.getPlayer()) + "ms)");
+            }
+            if (rootCommand.equals("/ct")) {
+                e.setCancelled(true);
+                e.getPlayer().sendMessage(ChatColor.RED + "Combat Tag Timer: " + getTimeLeftMSInCombat(e.getPlayer()) + "ms.");
+
             }
         }
     }
+
+
 
     @EventHandler
     public void onPlayerTeleport(PlayerTeleportEvent e) {

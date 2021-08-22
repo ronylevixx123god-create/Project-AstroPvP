@@ -39,6 +39,7 @@ import com.sk89q.worldguard.protection.flags.StateFlag;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.astropvpskins.objects.skins.swords.MauisHookSkin;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
@@ -209,9 +210,9 @@ public class CombatLog
             pl.removeMetadata("autumn_amulet", Arkkit.get());
         }
 
-        if (pl.hasMetadata("mauiEffect") && !CombatLog.inCombat(pl)) {
+        if (MauisHookSkin.mauiEffect.containsKey(pl)&& !CombatLog.inCombat(pl)) {
             Bukkit.getScheduler().runTaskLaterAsynchronously(Arkkit.get(), () -> {
-                pl.removeMetadata("mauiEffect", AstroItemSkinsPlugin.getInstance());
+                MauisHookSkin.mauiEffect.remove(pl);
             }, 1200L);
         }
         if (pl.hasMetadata("cl_combat_monitor_task")) {
