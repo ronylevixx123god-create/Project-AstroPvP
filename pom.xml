@@ -47,6 +47,7 @@
         <module>ItemFlip</module>
         <module>AstroRevive</module>
         <module>HotFix</module>
+        <module>FactionBanners</module>
     </modules>
 
     <build>

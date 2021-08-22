@@ -32,6 +32,7 @@
         <module name="AstroSpawnersMobcoins" />
         <module name="AuctionHouse" />
         <module name="Factions" />
+        <module name="FactionBanners" />
         <module name="Conquest" />
         <module name="Slotbot" />
         <module name="Disguises" />
