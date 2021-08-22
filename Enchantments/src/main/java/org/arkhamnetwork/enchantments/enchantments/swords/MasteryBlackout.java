@@ -59,8 +59,8 @@ public class MasteryBlackout extends CustomEnchantment {
             DamageIndicatorUtils.sendDamageIndicator((Player) pTarget, CC.DarkPurpleB + "* BLACKOUT " +CC.Gray + "[" +(2 + enchantLevel) * multi + "s]" + CC.DarkPurpleB  + " *", "BLACKOUT");
             pTarget.sendMessage(CC.translate("&5&L* BLACKOUT &7[" + (2 + enchantLevel) * multi + "&7s] &5&l *"));
             ((Player) user).sendMessage(CC.translate(CC.DarkPurpleB + "* BLACKOUT " + CC.Gray + "[" + (2 + enchantLevel) * multi + "s]" + CC.DarkPurpleB +  " *"));
-            pTarget.setMetadata("blackout", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), "banana"));
-            Enchantments.getInstance().getServer().getScheduler().runTaskLaterAsynchronously((Plugin) Enchantments.getInstance(), () -> target.removeMetadata("blackout", (Plugin) Enchantments.getInstance()), ((4 + enchantLevel * multi) * 20));
+            //pTarget.setMetadata("blackout", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), "banana"));
+            //Enchantments.getInstance().getServer().getScheduler().runTaskLaterAsynchronously((Plugin) Enchantments.getInstance(), () -> target.removeMetadata("blackout", (Plugin) Enchantments.getInstance()), ((4 + enchantLevel * multi) * 20));
             GeneralCooldown.enterCooldown((Player) user);
             //this.applyCooldown(user, 6);
         }

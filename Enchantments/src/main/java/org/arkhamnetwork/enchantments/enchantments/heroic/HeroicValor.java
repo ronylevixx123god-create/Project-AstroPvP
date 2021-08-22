@@ -29,7 +29,7 @@ public class HeroicValor extends HeroicCustomEnchantment {
         if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.VALENTINES_2021_SWORD)) {
             level = 5;
         }
-        double damage_negation = level * 0.01D;
+        double damage_negation = level * 0.015D;
         double hp_threshold = (level * 5 + 6);
         if (player.getHealth() <= hp_threshold && (((Player) player).getItemInHand().getType() == Material.GOLD_SWORD || ((Player) player).getItemInHand().getType() == Material.DIAMOND_SWORD) && e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1.0D - damage_negation) > 1.0D) {
             e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1.0D - damage_negation));
