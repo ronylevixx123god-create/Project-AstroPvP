@@ -227,8 +227,7 @@ public class Phoenix extends CustomEnchantment {
     @SneakyThrows
     public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
         if (player instanceof Player) {
-            double dmg = e.getDamage(EntityDamageEvent.DamageModifier.BASE);
-            dmg *= ArmorUtil.getArmorDamageNullificationPercent(ArmorUtil.getArmorValue((Player) player));
+            double dmg = e.getFinalDamage();
             try {
                 if (procPhoenix((Player) player, attacker, level, dmg)) {
                     e.setDamage(0.0D);
