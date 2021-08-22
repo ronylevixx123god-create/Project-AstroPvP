@@ -29,20 +29,10 @@ public class HeroicEnlighted extends CustomEnchantment {
             return;
         }
         double random = Math.random();
-        double chance = 0.075D * level;
+        double chance = 0.02D * level;
         double amount = 2;
-
-
-        if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.VALENTINES_2021_HELMET)) {
-            amount = amount * 1.2;
-        }
-
-        if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.THANKSGIVING_AMULET_AUTUMN)) {
-            amount = amount * 1.33;
-        }
-
-
-
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.VALENTINES_2021_HELMET)) { amount = amount * 1.2; }
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.THANKSGIVING_AMULET_AUTUMN)) { amount = amount * 1.33; }
         if (random < chance) {
             if (player.getHealth() + amount > player.getMaxHealth()) {
                 return;
