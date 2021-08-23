@@ -26,7 +26,7 @@ public class HeroicExecute extends HeroicCustomEnchantment {
         if (GeneralUtil.isEffectedByRage(target))
             return;
         double random = Math.random();
-        double chance = 0.04D * level;
+        double chance = 0.06D * level;
         double mod = 3.0D + (level/2D);
         if (random < chance) {
             DamageIndicatorUtils.sendDamageIndicator((Player) e.getEntity(), CC.RedB + "* PERMANENT EXECUTE *", "EXECUTE");

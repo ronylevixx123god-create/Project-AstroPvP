@@ -19,12 +19,12 @@ public class DeathGod extends CustomEnchantment {
 
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         double random = Math.random();
-        double procChance = 0.015D * level;
+        double procChance = 0.010D * level;
         if (random < procChance &&
                 player.getHealth() - e.getFinalDamage() <= (4 + level)) {
             e.setCancelled(true);
             e.setDamage(0.0D);
-            GeneralUtil.healPlayer(player, (5 + level));
+            GeneralUtil.healPlayer(player, (1 + level));
             DamageIndicatorUtils.sendDamageIndicator((Player) e.getEntity(), ChatColor.GOLD + "" + ChatColor.BOLD + "* DEATH GOD [" + ChatColor.GOLD + "+" + (5 + level) + "HP" + ChatColor.BOLD + "] *", "DEATH_GOD");
             ((Player)player).sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "* DEATH GOD [" + ChatColor.GOLD + "+" + (5 + level) + "HP" + ChatColor.BOLD + "] *");
         }
