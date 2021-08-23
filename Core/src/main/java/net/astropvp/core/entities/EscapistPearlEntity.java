@@ -29,14 +29,6 @@ public class EscapistPearlEntity extends EntityEnderPearl {
             return;
         if (block == Blocks.WEB)
             return;
-        if (block.getName().endsWith("_STAIR") || (block.getName().toLowerCase().contains("stairs"))) {
-            this.passedThroughSlabOrStair = true;
-            return;
-        }
-        if (getBukkitEntity().getLocation().getBlock().getType().isSolid()) {
-            this.dead = true;
-            return;
-        }
         if (getShooter() == null || !(getShooter() instanceof EntityPlayer)) {
             this.dead = true;
             return;
