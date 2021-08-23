@@ -4,6 +4,7 @@ import com.bryside.astroattributes.enums.RuneType;
 import com.bryside.astroattributes.objects.RuneCacher;
 import com.bryside.astroattributes.utils.Utils;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,6 +28,8 @@ public class RuneDamagerListener implements Listener {
                 return;
             }
 
+
+
             RuneCacher cacher = RuneCacher.getRuneCacher(damager);
             if (cacher == null) {
                 cacher = new RuneCacher(item, damager);
@@ -44,7 +47,6 @@ public class RuneDamagerListener implements Listener {
                     return;
                 }
             }
-
             type.getRune().procDamageEvent(e, level, damager);
         }
 

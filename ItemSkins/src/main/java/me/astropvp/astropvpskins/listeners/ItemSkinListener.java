@@ -56,6 +56,9 @@ public class ItemSkinListener implements Listener {
                 event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Please do not spam apply skins!"));
                 return;
             }
+            if(cursor.getAmount() > 1) {
+                event.getWhoClicked().sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot apply stacked weapon bonuses!");
+            }
             if (event.getSlotType() == InventoryType.SlotType.ARMOR)
                 for (SkinType type : typeList)
                     type.getItemSkin().onEquip((Player) event.getWhoClicked());

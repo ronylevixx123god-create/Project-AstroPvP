@@ -5,6 +5,8 @@ import com.bryside.astroattributes.objects.Rune;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.google.common.collect.Maps;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -67,6 +69,9 @@ public class AtlasRune extends Rune implements Listener {
     public void procDamageEvent(final EntityDamageByEntityEvent e, final int level, final Player damager) throws Exception {
         if (WorldGuardUtils.isPvPEnabled(damager.getLocation())) {
             try {
+                if(e.getEntity() instanceof Player) {
+                    if(AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.THANKSGIVING_HELMET_WITCH));
+                }
                 if (atlases.containsKey(damager)) {
                     double amt = 1 + (atlases.get(damager) / 100);
                     de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayer((Player) e.getEntity(), e.getEntity().getLocation(), 0, 1, 0, 1.0f, 4);

@@ -5,6 +5,7 @@ import com.rit.sucy.EnchantmentAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.util.GeneralCooldown;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
@@ -38,6 +39,7 @@ public class HeroicEnlighted extends CustomEnchantment {
                 return;
             }
             player.setHealth(player.getHealth() + amount);
+            GeneralCooldown.enterCooldown((Player) player);
         }
 
     }

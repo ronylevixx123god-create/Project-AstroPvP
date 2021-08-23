@@ -15,6 +15,8 @@ public class DamageIndicatorUtils {
             place = place.add(ThreadLocalRandom.current().nextBoolean() ? -0.25D : 0.25D, ThreadLocalRandom.current().nextBoolean() ? -0.25D : 0.25D, ThreadLocalRandom.current().nextBoolean() ? -0.25D : 0.25D);
             PacketOutHitSplat hitSplat = new PacketOutHitSplat(new PacketOutHitSplat.HitSplatData(player.getEntityId(), text, type, place.getX(), place.getY(), place.getZ()));
             for (CosmicPlayer cosmicPlayer : CosmicPlayers.get().getAll()) {
+                if (cosmicPlayer.getPlayer().getWorld() != player.getWorld())
+                    continue;
                 if (cosmicPlayer.getPlayer().getLocation().distance(player.getLocation()) > 80.0D)
                     continue;
                 if (cosmicPlayer.getPlayer() == player)

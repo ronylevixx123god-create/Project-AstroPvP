@@ -112,7 +112,9 @@ public class InventoryWitcherPet extends InventoryPet {
             p.playSound(p.getLocation(), Sound.GHAST_MOAN, 2.0F, 2.0F);
             p.setWalkSpeed(0.0F);
             p.setMetadata("witcher_ability", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
-            p.setMetadata("teleblock", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), Long.valueOf(System.currentTimeMillis() + (level * 2000))));
+            if(!AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.CHRISTMAS_BOOTS_SLIPPERS)) {
+                p.setMetadata("teleblock", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), Long.valueOf(System.currentTimeMillis() + (level * 2000))));
+            }
             //WitcherCooldown.enterWitcherCooldown(p);
             players.add(p);
         }
@@ -126,6 +128,7 @@ public class InventoryWitcherPet extends InventoryPet {
         player.setMetadata("noknockback", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), null));
 
         DamageIndicatorUtils.sendDamageIndicator(player, CC.translate("&4&l* WITHER PET *"), "WITHER");
+
 
 
         Bukkit.getScheduler().runTaskLater((Plugin) CosmicSkyInventoryPets.get(), new Runnable() {

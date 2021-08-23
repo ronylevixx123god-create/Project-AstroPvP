@@ -39,7 +39,7 @@ public class Bleed extends CustomEnchantment {
     public static void clearBleedEffect(final LivingEntity le) {
         le.removeMetadata("bleedStack", (Plugin) Enchantments.getInstance());
         if (le instanceof Player) {
-            ((Player) le).setWalkSpeed(0.2f);
+            //((Player) le).setWalkSpeed(0.2f);
         } else {
             le.removePotionEffect(PotionEffectType.SLOW);
         }

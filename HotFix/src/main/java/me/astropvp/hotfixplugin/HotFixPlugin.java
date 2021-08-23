@@ -11,6 +11,7 @@ public class HotFixPlugin extends JavaPlugin {
     public void onEnable() {
         instance = this;
         System.out.println("[HotFix] HotFixPlugin has been Loaded!");
+        Bukkit.getPluginManager().registerEvents(new DamageListener(), this);
     }
 
     @Override
