@@ -3,6 +3,7 @@ package org.arkhamnetwork.enchantments.enchantments.heroic;
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
+import javafx.scene.control.Skin;
 import lombok.SneakyThrows;
 import me.astropvp.astroparticles.utils.ParticleUtils;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
@@ -84,6 +85,9 @@ public class HeroicBleed extends HeroicCustomEnchantment {
 
                 if (bleedStack >= 5 && bleedStack % 5 == 0)
                     p.sendMessage(ChatColor.RED + "** DEEP BLEED [" + ChatColor.DARK_RED + "-" + this.df.format(bleedStack * 0.0075 / 0.20000000298023224 * 100.0) + ChatColor.RED + "% Speed] **");
+            }
+            if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.CHRISTMAS_AMULET_SNOWFLAKE)) {
+                return;
             }
             for (Entity ent : p.getNearbyEntities(7.0D, 7.0D, 7.0D)) {
                 if (ent.getEntityId() == leDamager.getEntityId())

@@ -149,27 +149,6 @@ implements Listener {
         }.runTaskTimer(CosmicKOTHPlugin.get_(), 20L, 20L);
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
-    public void onEntityDeath(EntityDeathEvent event) {
-        if (event.getEntity().getWorld().getName().equals("world")) {
-            Board.getInstance();
-            Faction in = Board.getFactionAt((FLocation)new FLocation(event.getEntity().getLocation()));
-            if (in != null && in.isNormal() && HCFOutpostAPI.isControllingOutpost(in, OutpostType.THE_GREAT_HALL)) {
-                event.setDroppedExp(event.getDroppedExp() * 2);
-            }
-        }
-    }
-
-    @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
-    public void onEntitySpawn(CreatureSpawnEvent event) {
-        if (event.getEntity().getWorld().getName().equals("world")) {
-            Board.getInstance();
-            Faction spawningIn = Board.getFactionAt((FLocation)new FLocation(event.getEntity().getLocation()));
-            if (spawningIn != null && spawningIn.isNormal() && HCFOutpostAPI.isControllingOutpost(spawningIn, OutpostType.COURTYARD) && Math.random() <= 0.5) {
-                event.getEntity().setMetadata("monsterAmount", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)(event.getEntity().hasMetadata("monsterAmount") ? ((MetadataValue)event.getEntity().getMetadata("monsterAmount").get(0)).asInt() + 2 : 2)));
-            }
-        }
-    }
 
 
     @EventHandler
@@ -178,7 +157,7 @@ implements Listener {
         if (!(e.getEntity() instanceof Player)) return;
         Player p = ((Player) e.getDamager());
         if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(p), OutpostType.COURTYARD)) {
-            e.setDamage(e.getDamage()*1.20);
+            e.setDamage(e.getDamage()*1.1);
         }
     }
 
@@ -189,7 +168,7 @@ implements Listener {
         if (!(e.getEntity() instanceof Player)) return;
         Player p = ((Player) e.getEntity()).getPlayer();
         if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(p), OutpostType.THE_GREAT_HALL)) {
-            e.setDamage(e.getDamage()*0.75);
+            e.setDamage(e.getDamage()*0.85);
         }
     }
 

@@ -64,7 +64,7 @@ public class Bleed extends CustomEnchantment {
         final int bleedStack = getBleedStack(le) / 2;
         if (le instanceof Player) {
             final Player p = (Player) le;
-            p.setWalkSpeed((float) (0.20000000298023224 - 0.005 * bleedStack));
+            //p.setWalkSpeed((float) (0.20000000298023224 - 0.005 * bleedStack));
             for (final Entity ent : p.getNearbyEntities(7.0, 7.0, 7.0)) {
                 if (ent.getEntityId() == leDamager.getEntityId()) {
                     continue;

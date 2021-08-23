@@ -9,6 +9,7 @@ import lombok.SneakyThrows;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
+import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.SkullUtils;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicPersistentItem;
 import me.ifamasssxd.cosmicskycustoms.struct.PlayerInteractable;
@@ -161,12 +162,12 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
 
             if (!WorldGuardUtils.isPvPEnabled(player.getLocation())) {
                 playerInteractEvent.setCancelled(true);
-                throw new PrefixedException(CC.Red + "You cannot use that pet here (Safezone)!");
+                throw new PrefixedPetException(CC.Red + "You cannot use that pet here (Safezone)!");
             }
 
             if (player.getItemInHand().getAmount() > 1) {
                 playerInteractEvent.setCancelled(true);
-                throw new PrefixedException(CC.Red + "You cannot use stacked pets!");
+                throw new PrefixedPetException(CC.Red + "You cannot use stacked pets!");
 
             }
 
