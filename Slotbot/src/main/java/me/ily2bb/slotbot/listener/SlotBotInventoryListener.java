@@ -127,16 +127,14 @@ public class SlotBotInventoryListener implements Listener {
                     player.sendMessage("");
                     player.sendMessage(CC.translate("&c&l** INFERNAL STRONGHOLD BONUS &7Saved &dSlotbot Tickets &c&l**"));
                     player.sendMessage("");
-                }
+                } else
 
                 if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.COSMIC_CITIZEN_HELMET_CG) && Math.random() < 0.05) {
                     returnTickets(tickets, player);
                     player.sendMessage("");
                     player.sendMessage(CC.translate("&b&lCosmicGames Hat: &fHas returned your SlotBot Tickets!"));
                     player.sendMessage("");
-                }
-
-                if (CustomBlockUtil.chunkHasCertainBlock(player, "COSMIC_TROPHY")) {
+                } else if (CustomBlockUtil.chunkHasCertainBlock(player, "COSMIC_TROPHY")) {
                     FPlayer killer = FactionUtils.getFPlayer(player);
                     for (AbilityData data : CustomBlockUtil.getBlockDatasInChunk(player)) {
                         FPlayer owner = FactionUtils.getFPlayer(Bukkit.getPlayer(data.getOwner()));

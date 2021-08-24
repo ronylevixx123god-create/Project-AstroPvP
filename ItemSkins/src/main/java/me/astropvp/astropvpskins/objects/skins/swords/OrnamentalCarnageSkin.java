@@ -14,7 +14,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 public class OrnamentalCarnageSkin extends ItemSkin {
 
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
-        new HeroicTrap().applyEffect(damager, (LivingEntity) damaged, 5, event);
         if(damaged.hasMetadata("titantrap"))
             event.setDamage(event.getDamage() * 1.1);
         if(Math.random() > 0.02) {

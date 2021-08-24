@@ -35,8 +35,6 @@ public class HeroicTrap extends HeroicCustomEnchantment {
         if (!(target instanceof Player))
             return;
 
-        if (((Player) player).getWalkSpeed() < 0.2F)
-            return;
         double random = Math.random();
         double chance = 0.01D * level;
         double durationTicks = (35 + level * 10);
@@ -49,6 +47,10 @@ public class HeroicTrap extends HeroicCustomEnchantment {
         if (random < chance) {
             if (AstroItemSkinsAPI.hasSkinEquipped(ptarget, SkinType.FLAMING_HALO) && Math.random() < 0.50) {
                 ptarget.sendMessage(CC.translate("&6&l* FLAMING HALO BLOCKED &7[Titan Trap] &6&l*"));
+                return;
+            }
+
+            if (AstroItemSkinsAPI.hasSkinEquipped(ptarget, SkinType.CHRISTMAS_AMULET_SNOWFLAKE)) {
                 return;
             }
 

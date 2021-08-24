@@ -67,7 +67,11 @@ public class ItemSkinListener implements Listener {
             } else {
                 event.setCurrentItem(((SkinType) typeList.get(0)).apply(clicked, typeList.get(1)));
             }
-            event.setCursor(null);
+            if (event.getCursor().getAmount() >1) {
+                event.getCursor().setAmount(event.getCursor().getAmount()-1);
+            } else {
+                event.setCursor(null);
+            }
             event.setCancelled(true);
             ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.BAT_TAKEOFF, 1.0F, 10.0F);
             cooldownPlayers.put((Player) event.getWhoClicked(), event.getWhoClicked().getUniqueId());
