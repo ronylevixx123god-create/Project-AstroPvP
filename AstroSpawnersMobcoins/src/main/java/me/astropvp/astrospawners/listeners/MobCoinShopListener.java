@@ -30,7 +30,7 @@ public class MobCoinShopListener implements Listener {
             if (!wrapper.hasKey("shopData"))
                 return;
             NBTTagCompoundBuilder builder = new NBTTagCompoundBuilder(wrapper.getNBTBase("shopData"));
-            int price = builder.getInt("cost").intValue();
+            int price = builder.getInt("cost");
             PlayerDataManager manager = AstroSpawners.getInstance().getManager();
             PlayerData data = manager.getPlayerData(player);
             double balance = ((data == null) ? 0 : data.getCoins());
@@ -43,7 +43,8 @@ public class MobCoinShopListener implements Listener {
             data.setCoins(data.getCoins() - price);
             manager.savePlayerData(data);
             player.sendMessage(String.valueOf(CC.GreenB) + "- " + NumberUtils.formatMoney(price) + " Mob Coins");
-            item = item.clone();
+            wrapper.remove("shopData");
+            item = wrapper.build();
             ItemMeta meta = item.getItemMeta();
             List<String> lore = meta.getLore();
             lore.remove(lore.size() - 1);
@@ -54,7 +55,7 @@ public class MobCoinShopListener implements Listener {
                 player.sendMessage(CC.translate("&cYou inventory is full. Clear some space."));
                 return;
             }
-            player.getInventory().addItem(new ItemStack[] { item });
+            player.getInventory().addItem(item);
         }
     }
 

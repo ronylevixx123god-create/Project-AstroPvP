@@ -70,7 +70,9 @@ public class AtlasRune extends Rune implements Listener {
         if (WorldGuardUtils.isPvPEnabled(damager.getLocation())) {
             try {
                 if(e.getEntity() instanceof Player) {
-                    if(AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.THANKSGIVING_HELMET_WITCH));
+                    if(AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.THANKSGIVING_HELMET_WITCH)) {
+                        return;
+                    }
                 }
                 if (atlases.containsKey(damager)) {
                     double amt = 1 + (atlases.get(damager) / 100);
