@@ -1,6 +1,8 @@
 package me.astropvp.astropvpskins.objects.skins.axes;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.massivecraft.factions.P;
 import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
@@ -59,7 +61,8 @@ public class Snowflake extends ItemSkin {
             List<Entity> entityList = damager.getNearbyEntities(5, 5, 5);
             entityList.removeIf(entity -> !(entity instanceof Player));
             for(Entity player : entityList) {
-                player.setMetadata("soulTrap", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) (System.currentTimeMillis() + 2000)));
+                if(GeneralUtil.isAtleastTruce((Player) player, damager))
+                    return;
                 grapplePlayer((Player) player, damager);
             }
         }

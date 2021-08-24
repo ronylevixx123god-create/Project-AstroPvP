@@ -43,8 +43,10 @@ public class MobCoinShopListener implements Listener {
             data.setCoins(data.getCoins() - price);
             manager.savePlayerData(data);
             player.sendMessage(String.valueOf(CC.GreenB) + "- " + NumberUtils.formatMoney(price) + " Mob Coins");
-            wrapper.remove("shopData");
-            item = wrapper.build();
+            item = item.clone();
+            NBTWrapper wrapper1 = new NBTWrapper(item);
+            wrapper1.remove("shopData");
+            item = wrapper1.build();
             ItemMeta meta = item.getItemMeta();
             List<String> lore = meta.getLore();
             lore.remove(lore.size() - 1);
