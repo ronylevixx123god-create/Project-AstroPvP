@@ -126,7 +126,6 @@ public class EntityStackerListener implements Listener {
 
             if (((Player) e.getDamager()).getPlayer().getItemInHand().getType() == Material.DIAMOND_SWORD && ((Player) e.getDamager()).getPlayer().getItemInHand().getItemMeta().hasLore()) {
                 exp = exp + 100;
-                playRageEffect(e.getEntity().getLocation(), 6);
             }
 
             if (isOnCosmicClient) {
@@ -154,14 +153,8 @@ public class EntityStackerListener implements Listener {
 
     }
 
-    private void playRageEffect(Location loc, int level) {
-        sendWorldEffect(loc.getBlock(), Material.REDSTONE_BLOCK.getId(), 2001);
-    }
 
-    public static void sendWorldEffect(Block b, int materialID, int effectID) {
-        PacketPlayOutWorldEvent particles = new PacketPlayOutWorldEvent(effectID, new BlockPosition(b.getX(), b.getY(), b.getZ()), materialID, false);
-        ParticleEffect.sendWorldEventPacket(particles, b.getLocation());
-    }
+
 
     @EventHandler
     public void onMobDeath(EntityDamageByEntityEvent e) {

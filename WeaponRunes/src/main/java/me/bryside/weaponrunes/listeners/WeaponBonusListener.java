@@ -1,8 +1,10 @@
 package me.bryside.weaponrunes.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.earth2me.essentials.api.NoLoanPermittedException;
 import com.earth2me.essentials.api.UserDoesNotExistException;
+import com.massivecraft.factions.FPlayer;
 import me.bryside.weaponrunes.enums.WeaponBonusType;
 import me.bryside.weaponrunes.utils.WeaponBonusUtils;
 import org.bukkit.Material;
@@ -32,11 +34,19 @@ public class WeaponBonusListener implements Listener {
         if (damager instanceof Player) {
             WeaponBonusType weaponBonusType = WeaponBonusUtils.getWeaponBonusByItem(((Player)damager).getItemInHand());
             if (weaponBonusType == null) return;
+            if (FactionUtils.getFPlayer((Player) damager) == null)return;
+            if (FactionUtils.getFPlayer((Player) damaged) == null)return;
+
+            if (FactionUtils.getFaction((FPlayer) damager) == FactionUtils.getFaction((FPlayer) damaged) || FactionUtils.isInAllyFaction((Player) damager, (Player) damaged)) return;
             weaponBonusType.getInstance().onAttack((Player)damager, damaged, e);
         }
         if (damaged instanceof Player) {
             WeaponBonusType weaponBonusType = WeaponBonusUtils.getWeaponBonusByItem(((Player)damaged).getItemInHand());
             if (weaponBonusType == null) return;
+            if (FactionUtils.getFPlayer((Player) damager) == null)return;
+            if (FactionUtils.getFPlayer((Player) damaged) == null)return;
+
+            if (FactionUtils.getFaction((FPlayer) damager) == FactionUtils.getFaction((FPlayer) damaged) || FactionUtils.isInAllyFaction((Player) damager, (Player) damaged)) return;
             weaponBonusType.getInstance().onAttacked((Player)damaged, damager, e);
         }
     }
@@ -53,12 +63,13 @@ public class WeaponBonusListener implements Listener {
             WeaponBonusType weaponBonusType = WeaponBonusUtils.getWeaponBonusByItem(cursor);
             if (weaponBonusType == null || !WeaponBonusUtils.isHeroicWeapon(clicked))
                 return;
-            if(cursor.getAmount() > 1) {
-                e.getWhoClicked().sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot apply stacked weapon bonuses!");
-            }
             e.setCurrentItem(weaponBonusType.getInstance().applyBonus(clicked, weaponBonusType));
             e.getWhoClicked().sendMessage(CC.translate("&a&l(!)&a Successfully Applied " + weaponBonusType.getName() + " Weapon Rune&a to your sword!"));
-            e.setCursor(null);
+            if (cursor.getAmount() > 1) {
+                cursor.setAmount(cursor.getAmount()-1);
+            } else {
+                e.setCursor(null);
+            }
             e.setCancelled(true);
             ((Player)e.getWhoClicked()).playSound(e.getWhoClicked().getLocation(), Sound.LEVEL_UP, 1.0F, 10.0F);
         }
