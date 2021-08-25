@@ -1,4 +1,4 @@
-package me.astropvp.hotfixplugin;
+package me.astropvp.hotfixplugin.listeners;
 
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
@@ -12,8 +12,8 @@ public class DamageListener implements Listener {
     @EventHandler
     public void onAttack(EntityDamageByEntityEvent e) {
         if(e.getEntity() instanceof Player) {
-            if(((Player) e.getDamager()).getItemInHand().getType().toString().endsWith("_AXE"))
-                e.setDamage(e.getDamage() * 1.4);
+            if(((Player) e.getDamager()).getItemInHand().getType().name().endsWith("_AXE"))
+                e.setDamage(e.getDamage() * 1.55);
         }
     }
 }

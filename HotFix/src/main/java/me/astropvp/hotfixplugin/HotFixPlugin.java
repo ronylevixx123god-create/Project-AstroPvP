@@ -1,5 +1,6 @@
 package me.astropvp.hotfixplugin;
 
+import me.astropvp.hotfixplugin.listeners.DamageListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
