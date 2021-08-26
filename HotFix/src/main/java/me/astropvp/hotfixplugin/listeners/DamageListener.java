@@ -6,6 +6,7 @@ import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -26,21 +27,23 @@ public class DamageListener implements Listener {
     }
 
 
-    @EventHandler
+/*    @EventHandler
     public void fixSlots(InventoryClickEvent e) {
         if (e.getWhoClicked() instanceof Player) {
-            if (e.getCursor() != null && e.getCursor().getType() != null) {
-                NBTWrapper wrapper = new NBTWrapper(e.getCursor());
-                if (wrapper.hasKey("xpShopPrice")) {
-                    wrapper.remove("xpShopPrice");
-                    NBTTagCompoundBuilder builder = new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData"));
+            if (e.getCursor() != null) {
+                if (e.getCursor().getType() != null && e.getCursor().getType() == Material.PAPER) {
+                    NBTWrapper wrapper = new NBTWrapper(e.getCursor());
+                    if (wrapper.hasKey("xpShopPrice")) {
+                        wrapper.remove("xpShopPrice");
+                        NBTTagCompoundBuilder builder = new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData"));
 
 
-                    e.setCursor(wrapper.setNBTBase("cosmicData", builder.get()).build());
+                        e.setCursor(wrapper.setNBTBase("cosmicData", builder.get()).build());
+                    }
+
                 }
-
             }
         }
-    }
+    }*/
 }
 
