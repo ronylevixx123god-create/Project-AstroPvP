@@ -48,7 +48,6 @@ public class CustomPearlListener implements Listener {
                     player.sendMessage((Object) ChatColor.RED + "" + (Object)ChatColor.BOLD + " *** NOT ENOUGH SOULS " + (Object)ChatColor.RED + "(REQ: 5)" + (Object)ChatColor.BOLD + " ***");
                     event.setCancelled(true);
                     player.updateInventory();
-
                     return;
                 } else {
                     KillTrackerAPI.removeSoulsFromGems((Player)player, (int)5);

@@ -39,7 +39,7 @@ final class LeadershipTask extends BukkitRunnable {
                     continue;
                 }
                 ParticleEffect.SNOWBALL.sendToPlayer(p.getPlayer(),l, 0,0, 0,1.5f,10);
-                //WorldUtil.sendWorldEffect(l.getBlock(), Material.SNOW_BLOCK.getId(), 2001);
+                WorldUtil.sendWorldEffect(l.getBlock(), Material.SNOW_BLOCK.getId(), 2001);
             }
         }
     }
