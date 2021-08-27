@@ -19,6 +19,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.tasks.BleedTask;
+import me.ifamasssxd.cosmicsky.inventorypets.utils.CageCooldownUtils;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.PetUtils;
 import org.bukkit.*;
@@ -130,6 +131,10 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
             target.sendMessage(CC.translate("&d&l* CHAD SUNGLASSES &7[&cBlocked World Destroyer&7] &d&l*"));
             return true;
         }
+        if (CageCooldownUtils.isOnCageCooldown(target)) {
+            player.sendMessage(CC.translate("&c&lPET: &c" + target.getName() + "&c is still on &nCage Cooldown&c, this lasts for 60s!"));
+            return false;
+        }
         Player p = test;
         Location location = p.getLocation();
         int minX = location.getBlockX() - 1;
@@ -180,6 +185,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         player.sendMessage(CC.translate("&e&l* WORLD DESTROYER &7[&f" + target.getName() + "&7] &e&l*")
         );
         target.sendMessage(CC.translate("&c&l* WORLD DESTROYER &7[&f" + player.getName() + "&7] &c&l*"));
+        CageCooldownUtils.enterCageCooldown(target);
 
         petItem.setLastUsed(System.currentTimeMillis());
         if (playerHasApollo(player)) {
