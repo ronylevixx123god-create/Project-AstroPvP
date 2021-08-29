@@ -77,7 +77,7 @@ public class SlotBotManager {
                 int x2 = 0;
                 for (int j = 2; j <= 6; ++j) {
                     if (player.hasMetadata("slot_rolling_" + j)) {
-                        ++x2;
+                        ++x2;1
                     }
                 }
                 if (x2 == 0) {

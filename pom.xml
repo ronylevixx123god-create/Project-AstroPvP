@@ -48,6 +48,11 @@
         <module>AstroRevive</module>
         <module>HotFix</module>
         <module>FactionBanners</module>
+        <module>Collect</module>
+        <module>Collect</module>
+        <module>Collect</module>
+        <module>Test</module>
+        <module>AstroCollect</module>
     </modules>
 
     <build>

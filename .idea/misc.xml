@@ -18,10 +18,12 @@
         <option value="$PROJECT_DIR$/AstroClientComms/pom.xml" />
         <option value="$PROJECT_DIR$/Backpacks/pom.xml" />
         <option value="$PROJECT_DIR$/ClientComms/pom.xml" />
+        <option value="$PROJECT_DIR$/Collect/pom.xml" />
         <option value="$PROJECT_DIR$/Comms/pom.xml" />
         <option value="$PROJECT_DIR$/ItemFilter/pom.xml" />
         <option value="$PROJECT_DIR$/MoneyNotes/pom.xml" />
         <option value="$PROJECT_DIR$/Permissions/pom.xml" />
+        <option value="$PROJECT_DIR$/Test/pom.xml" />
         <option value="$PROJECT_DIR$/VaultsX/pom.xml" />
       </set>
     </option>

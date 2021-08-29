@@ -7,6 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="AstroCollect" />
         <module name="ItemFlip" />
         <module name="CustomBlocks" />
         <module name="SpaceChests" />
@@ -54,6 +55,7 @@
       <module name="AstroSpawners" target="1.8" />
       <module name="Backpacks" target="8" />
       <module name="ClientComms" target="8" />
+      <module name="Collect" target="1.8" />
       <module name="Comms" target="8" />
       <module name="CrateBoxes" target="8" />
       <module name="Disguises (1)" target="8" />
@@ -64,6 +66,7 @@
       <module name="PlayerVaultsX" target="8" />
       <module name="SpaceChests (1)" target="1.8" />
       <module name="SpawnersMobcoins" target="8" />
+      <module name="Test" target="1.8" />
       <module name="VaultsX" target="1.8" />
     </bytecodeTargetLevel>
   </component>

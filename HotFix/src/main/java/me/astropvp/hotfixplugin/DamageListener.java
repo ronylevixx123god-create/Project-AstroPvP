@@ -11,9 +11,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 public class DamageListener implements Listener {
     @EventHandler
     public void onAttack(EntityDamageByEntityEvent e) {
-        if(e.getEntity() instanceof Player) {
-            if(((Player) e.getDamager()).getItemInHand().getType().toString().endsWith("_AXE"))
-                e.setDamage(e.getDamage() * 1.4);
-        }
+        e.setDamage(e.getDamage() * 1.1);
     }
 }
