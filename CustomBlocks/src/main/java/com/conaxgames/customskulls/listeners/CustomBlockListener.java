@@ -58,7 +58,7 @@ public class CustomBlockListener implements Listener {
         if (event.getDamager().getType() != EntityType.PLAYER) {
             return;
         }
-        final Player player = (Player)event.getDamager();
+        final Player player = (Player) event.getDamager();
         if (player.getItemInHand() == null || player.getItemInHand().getType() == Material.AIR) {
             return;
         }
@@ -84,6 +84,10 @@ public class CustomBlockListener implements Listener {
         }
 
         customBlock.breakBlockAction(player, event, event.getBlock(), item, customBlock, data);
+        Bukkit.broadcastMessage(ChatColor.RED+AbilityData.getAbilityDataMap().toString());
+
+
+
     }
 
     @EventHandler(priority = EventPriority.HIGH)
@@ -126,12 +130,6 @@ public class CustomBlockListener implements Listener {
             compound.setString("type", CustomBlockUtil.getCustomItem(item).getIdentifier());*/
 
 
-
-
-
-
-
-
             NBTCompound entBlock = NBTInjector.getNbtData(event.getBlock().getState());
             entBlock.addCompound("tag").addCompound("customBlockData").setString("type", CustomBlockUtil.getCustomItem(item).getIdentifier());
             NBTCompound tag = entBlock.getCompound("tag");
@@ -140,7 +138,9 @@ public class CustomBlockListener implements Listener {
 
             //event.setCancelled(true);
 
+
             (CustomBlockUtil.getCustomItem(item)).placeBlockAction(player, event, event.getBlock(), item);
+
         }
 
 

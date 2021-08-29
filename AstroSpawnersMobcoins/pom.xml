@@ -162,7 +162,7 @@
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>ccv</artifactId>
+            <artifactId>cgcv</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/CCVerify-1.0 (13).jar</systemPath>

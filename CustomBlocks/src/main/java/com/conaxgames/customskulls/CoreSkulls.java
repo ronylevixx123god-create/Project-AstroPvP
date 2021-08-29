@@ -1,17 +1,22 @@
 package com.conaxgames.customskulls;
 
+import com.conaxgames.customskulls.ability.AbilityData;
 import com.conaxgames.customskulls.blocks.CustomBlock;
 import com.conaxgames.customskulls.blocks.impl.*;
 import com.conaxgames.customskulls.commands.AbilityBlocksCommand;
 import com.conaxgames.customskulls.data.LoadCustomBlocks;
+import com.conaxgames.customskulls.enums.AbilityType;
 import com.conaxgames.customskulls.listeners.CustomAbilityListener;
 import com.conaxgames.customskulls.listeners.CustomBlockListener;
+import com.conaxgames.customskulls.struct.MobGrinderCollection;
 import com.conaxgames.customskulls.util.CC;
+import com.conaxgames.customskulls.util.CustomBlockUtil;
 import com.conaxgames.customskulls.util.inventoryui.UIListener;
 import de.tr7zw.nbtinjector.NBTInjector;
 import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -19,16 +24,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.lang.reflect.Field;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class CoreSkulls extends JavaPlugin {
 
     @Getter public static CoreSkulls instance;
     public static Map<String, CustomBlock> customBlocks = new HashMap<>();
+    public static Map<String, AbilityData> mobGrinderCustomBlocks;
     private static Field bukkitCommand;
     @Getter private static Economy economy = null;
+    private static List<MobGrinderCollection> mobGrinderCollections = new ArrayList<>();
 
     @Override
     public void onEnable() {
@@ -49,11 +54,39 @@ public class CoreSkulls extends JavaPlugin {
 
         registerCustomBlocks();
         Collections.singletonList(new AbilityBlocksCommand()).forEach(this:: registerCommand);
+
+
         getServer().getPluginManager().registerEvents(new UIListener(), this);
         getServer().getPluginManager().registerEvents(new CustomBlockListener(), this);
         getServer().getPluginManager().registerEvents(new CustomAbilityListener(), this);
         LoadCustomBlocks.load();
-        info("CoreSkulls!");
+
+        mobGrinderCustomBlocks = new HashMap<>();
+
+        for (Map.Entry<String, AbilityData> entry : AbilityData.getAbilityDataMap().entrySet()) {
+            String uuid = entry.getKey();
+            AbilityData data = entry.getValue();
+
+            if (data.getAbilityType() == AbilityType.TRIALS_FAME_AND_FORTUNE) {
+                mobGrinderCustomBlocks.put(data.getUuid(), data);
+                mobGrinderCollections.add(new MobGrinderCollection());
+                info("Loaded all the Mob Grinder CustomBlocks in memory!");
+            }
+        }
+
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, ()-> {
+            Bukkit.broadcastMessage(mobGrinderCustomBlocks.toString());
+            for (Map.Entry<String, AbilityData> entry : mobGrinderCustomBlocks.entrySet()) {
+                String uuid = entry.getKey();
+                AbilityData data = entry.getValue();
+
+                data.getCollectedLoot().addExp(200);
+                data.getCollectedLoot().addLootboxes(1);
+                Bukkit.broadcastMessage(String.valueOf("EXP: " + data.getCollectedLoot().exp));
+                Bukkit.broadcastMessage(String.valueOf("Lootboxes: " + data.getCollectedLoot().lootboxes));
+
+            }
+        }, 15*20, 10*20);
     }
 
     private void registerCommand(Command cmd) {
@@ -72,6 +105,7 @@ public class CoreSkulls extends JavaPlugin {
         customBlocks.put("COSMIC_TROPHY", new AstroTrophy());
         customBlocks.put("LEVIATHAN_TOTEM", new LeviathanTotem());
         customBlocks.put("HALLOWEEN_CANDLES", new HalloweenCandle());
+        customBlocks.put("TRIALS_FAME_AND_FORTUNE", new MobGrinder());
     }
 
     public void info(String string) {

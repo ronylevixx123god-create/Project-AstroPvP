@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class CustomBlockUtil {
 
@@ -35,6 +36,14 @@ public class CustomBlockUtil {
         NBTItem nbtItem = new NBTItem(itemStack);
         return nbtItem.hasKey("cosmicType") && nbtItem.getString("cosmicType").equals("custom_block");
     }
+
+    public static Map<String, AbilityData> getCustomBlocksInWorld() {
+        return AbilityData.getAbilityDataMap();
+    }
+
+
+
+
 
     public static List<AbilityData> getBlockDatasInChunk(Player player) {
         List<AbilityData> abilityDataList = new ArrayList<>();
