@@ -53,12 +53,12 @@ public class EscapistPearlEntity extends EntityEnderPearl {
             if (location.getBlock().getType().isSolid() && !toCheck.add(0.0D, 1.0D, 0.0D).getBlock().getType().isSolid())
                 location.setY(location.getY() + 1.0D);
             toCheck = getCheckableLocation(location);
-            for (int i = 1; i < 2; i++) {
+            /*for (int i = 1; i < 2; i++) {
                 if (toCheck.add(i, i, i).getBlock().getType().isSolid() && !passableBlock(block, movingObjectPosition) && !this.passedThroughFence && !this.passedThroughSlabOrStair) {
                     this.dead = true;
                     return;
                 }
-            }
+            }*/
             if (location.getBlock().getType().isSolid()) {
                 this.dead = true;
                 return;

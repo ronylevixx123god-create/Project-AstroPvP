@@ -121,12 +121,12 @@ public class ApolloSet extends ArmorSetInfo
 
     @Override
     public void onEquip(Player player) {
-        EnchantmentAPI.getEnchantment("Gears").applyEquipEffect(player, 4);
+        //EnchantmentAPI.getEnchantment("Gears").applyEquipEffect(player, 4);
     }
 
     @Override
     public void onUnequip(Player player) {
-        EnchantmentAPI.getEnchantment("Gears").applyUnequipEffect(player, 4);
+        //EnchantmentAPI.getEnchantment("Gears").applyUnequipEffect(player, 4);
     }
 
 

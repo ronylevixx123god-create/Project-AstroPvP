@@ -27,7 +27,7 @@ public class ChampionWeaponBonus extends WeaponBonus {
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
         if (!(damager instanceof Player)) return;
         if (!(damaged instanceof Player)) return;
-        if (Math.random() > 0.05) return;
+        if (Math.random() > 0.005) return;
         Random rn = new Random();
 
 

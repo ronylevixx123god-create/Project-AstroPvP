@@ -13,10 +13,14 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.tasks.BleedTask;
 import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public final class CosmicSkyInventoryPets extends JavaPlugin implements Listener {
    private static CosmicSkyInventoryPets instance;
@@ -25,6 +29,9 @@ public final class CosmicSkyInventoryPets extends JavaPlugin implements Listener
    private MysteryPetBoxItem mysteryPetBoxItem;
    private RareCandyItem rareCandyItem;
    private PetLeashItem petLeashItem;
+   public static Map<UUID, Player> cageCooldown;
+   public static Map<UUID, Player> skrrtCooldown;
+
 
 
    public void onEnable() {
@@ -48,6 +55,9 @@ public final class CosmicSkyInventoryPets extends JavaPlugin implements Listener
       InventoryPets[] inventoryPets = InventoryPets.values();
       int length = inventoryPets.length;
 
+      this.cageCooldown = new HashMap<UUID, Player>();
+      this.skrrtCooldown = new HashMap<UUID, Player>();
+
       for(int i = 0; i < length; ++i) {
          InventoryPets pet = inventoryPets[i];
          pet.getInternalClass().onEnable(this);
@@ -57,6 +67,13 @@ public final class CosmicSkyInventoryPets extends JavaPlugin implements Listener
       this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new BleedTask(), 0L, 10L);
    }
 
+   public static Map<UUID, Player> getCageCooldownMap() {
+      return cageCooldown;
+   }
+
+   public static Map<UUID, Player> getSkrrtCooldownMap() {
+      return skrrtCooldown;
+   }
    private void registerListeners() {
       Bukkit.getPluginManager().registerEvents(new AbominalSnowmanListener(), this);
       Bukkit.getPluginManager().registerEvents(new BansheeListener(), this);

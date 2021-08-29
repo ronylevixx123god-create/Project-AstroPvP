@@ -49,7 +49,7 @@ implements Listener {
 
     public CreeperListener() {
         this.coreProtectEnabled = new File("plugins/CoreProtect.jar").exists();
-        this.nonSolidBlocks = new ArrayList<Material>(Arrays.asList(Material.AIR, Material.CHEST));
+        this.nonSolidBlocks = new ArrayList<Material>(Arrays.asList(Material.AIR, Material.CHEST, Material.OBSIDIAN));
     }
 
     @EventHandler(priority=EventPriority.HIGHEST)
@@ -345,7 +345,7 @@ implements Listener {
     }
 
     private void spawnFastExplosion(Location l) {
-        if (!this.nonSolidBlocks.contains(l.getBlock().getType())) {
+        if (this.nonSolidBlocks.contains(l.getBlock().getType())) {
             return;
         }
         TNTPrimed tnt = (TNTPrimed)l.getWorld().spawnEntity(l, EntityType.PRIMED_TNT);

@@ -64,7 +64,9 @@ public class MauiHookListener implements Listener {
                                 if (this.count >= 20)
                                     cancel();
                                 this.count++;
-                                target.damage(4.0D);
+                                if (WorldGuardUtils.isPvPEnabled(target.getLocation())) {
+                                    target.damage(4.0D);
+                                }
                             }
                         }).runTaskTimer((Plugin) AstroItemSkinsPlugin.getInstance(), 0L, 10L);
                         Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin) AstroItemSkinsPlugin.getInstance(), () -> {

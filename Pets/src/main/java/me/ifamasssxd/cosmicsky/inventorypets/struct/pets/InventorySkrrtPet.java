@@ -23,6 +23,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.PetUtils;
+import me.ifamasssxd.cosmicsky.inventorypets.utils.SkrrtCooldownUtils;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -118,10 +119,10 @@ public class InventorySkrrtPet extends InventoryPet {
 
             FPlayer castingPlayer = (FPlayer) FPlayers.i.get(player);
             FPlayer surroundingPlayer = (FPlayer) FPlayers.i.get(p);
-            /*if (SkrrtCooldown.isOnSkrrtCooldown(p)) {
-                player.sendMessage(CC.translate("&c" + p.getName() + " is still on Skrrt Cooldown! This lasts 240 seconds."));
+            if (SkrrtCooldownUtils.isOnSkrrtCooldown(p)) {
+                player.sendMessage(CC.translate("&c&lPET: &c" + p.getName() + "&c is still on &nSkrrt Cooldown&c, this lasts for 60s!"));
                 return;
-            }*/
+            }
             if (!WorldGuardUtils.isPvPEnabled(p.getLocation())) {
                 player.sendMessage(CC.translate("&c" + p.getName() + " is in a non-pvp enabled region."));
                 return;
@@ -133,6 +134,8 @@ public class InventorySkrrtPet extends InventoryPet {
                 DamageIndicatorUtils.sendDamageIndicator(p, CC.translate("&4&l* SKRRT PET *"), "SKRRT");
 
                 //SkrrtCooldown.enterSkrrtCooldown(p);
+                SkrrtCooldownUtils.enterSkrrtCooldown(p);
+
                 CombatLog.flagCombat(p);
                 this.freezeThePlayer(p);
                 player.setMetadata("frozenSkrrt", new FixedMetadataValue(CosmicSkyInventoryPets.get(), System.currentTimeMillis()));

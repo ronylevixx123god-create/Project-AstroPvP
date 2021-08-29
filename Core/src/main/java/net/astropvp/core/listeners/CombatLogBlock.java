@@ -33,13 +33,35 @@ public class CombatLogBlock implements Listener {
     }
 
     @EventHandler
+    public void printer(final PlayerCommandPreprocessEvent event) {
+        final Player player = event.getPlayer();
+        final String msg = event.getMessage().toLowerCase();
+        if (CombatLog.inCombat(player) && msg.startsWith("/pvsearch")) {
+            event.setCancelled(true);
+            player.sendMessage(ChatColor.RED + "You cannot use /pvsearch while in combat!");
+        }
+    }
+
+    @EventHandler
+    public void pv(final PlayerCommandPreprocessEvent event) {
+        final Player player = event.getPlayer();
+        final String msg = event.getMessage().toLowerCase();
+        if (CombatLog.inCombat(player) && msg.startsWith("/printer")) {
+            event.setCancelled(true);
+            player.sendMessage(ChatColor.RED + "You cannot use /printer while in combat!");
+        }
+    }
+
+    @EventHandler
     public void duelfix(final PlayerCommandPreprocessEvent event) {
         final Player player = event.getPlayer();
         final String msg = event.getMessage().toLowerCase();
-        if (player.getLocation().getWorld().getName().equals("world_duels") && !player.isOp() && !msg.equalsIgnoreCase("/fix")) {
-            event.setCancelled(true);
-            event.setMessage("/null");
-            player.sendMessage(ChatColor.RED + "You cannot use commands during a duel!");
+        if (player.getLocation().getWorld().getName().equals("world_duels") && !msg.equalsIgnoreCase("/fix")) {
+            if (!player.isOp()) {
+                event.setCancelled(true);
+                event.setMessage("/null");
+                player.sendMessage(ChatColor.RED + "You cannot use commands during a duel!");
+            }
         }
     }
 

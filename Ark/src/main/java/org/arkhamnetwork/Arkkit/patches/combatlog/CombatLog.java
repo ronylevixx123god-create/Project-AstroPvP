@@ -193,7 +193,7 @@ public class CombatLog
                 pl.sendMessage(CC.translate("&e&l* AUTUMN AMULET &7ItemSkin &e&l**"));
                 pl.sendMessage(CC.translate("&a+ Absorbtion &7(20s)"));
                 pl.sendMessage(CC.translate("&a-15% Incoming Damage &7(15s)"));
-                pl.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 20 * 20, 5));
+                pl.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 5 * 20, 4));
             }
         }
         pl.setAllowFlight(false);

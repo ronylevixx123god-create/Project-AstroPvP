@@ -114,6 +114,7 @@ public class InventoryWitcherPet extends InventoryPet {
             p.setMetadata("witcher_ability", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
             if(!AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.CHRISTMAS_BOOTS_SLIPPERS)) {
                 p.setMetadata("teleblock", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), Long.valueOf(System.currentTimeMillis() + (level * 2000))));
+                p.sendMessage(CC.translate("&c&lSNOWFLAKE SLIPPERS: &7Blocked &cTeleblock!"));
             }
             //WitcherCooldown.enterWitcherCooldown(p);
             players.add(p);
