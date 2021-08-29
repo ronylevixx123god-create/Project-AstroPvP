@@ -84,6 +84,7 @@ public class CoreSkulls extends JavaPlugin {
                 data.getCollectedLoot().addLootboxes(1);
                 Bukkit.broadcastMessage(String.valueOf("EXP: " + data.getCollectedLoot().exp));
                 Bukkit.broadcastMessage(String.valueOf("Lootboxes: " + data.getCollectedLoot().lootboxes));
+                //TODO Reduce mob stack by 1
 
             }
         }, 15*20, 10*20);
