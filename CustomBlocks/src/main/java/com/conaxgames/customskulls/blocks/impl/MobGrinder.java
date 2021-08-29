@@ -51,10 +51,10 @@ public class MobGrinder extends CustomBlock {
                 CC.translate("&7the gold mines, this custom block is"),
                 CC.translate("&7essential for grinding Blazes."),
                 "",
-                CC.translate("&f&lNOTE: &cPlace a Chest that is connected to the"),
-                CC.translate("&cCustom Block to receive grinding lootboxes and EXP in it."),
+                CC.translate("&c&lNOTE: &cRight-Click the Custom Block"),
+                CC.translate("&cto claim grinding lootboxes and EXP in it."),
                 CC.translate("&cAlso, a player &lMUST&c be in the chunk for"),
-                CC.translate("&cBlazes to be grinded."),
+                CC.translate("&cBlazes to be automatically grinded."),
                 "",
                 CC.translate("&7Place custom block to use!")
         );
