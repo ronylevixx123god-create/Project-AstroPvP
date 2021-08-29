@@ -11,7 +11,7 @@ public class MobGrinderCollection {
 
 
     public MobGrinderCollection() {
-        this.exp = 0;
+        this.exp =0;
         this.lootboxes = 0;
         //TODO: here you would load the amount from the config instead of putting 0
     }
@@ -19,10 +19,10 @@ public class MobGrinderCollection {
 
 
     public void addLootboxes(int amount) {
-        this.lootboxes +=amount;
+        this.lootboxes+=amount;
     }
 
     public void addExp(double amount) {
-        this.exp +=amount;
+       this.exp+=amount;
     }
 }

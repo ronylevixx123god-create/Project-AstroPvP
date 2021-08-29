@@ -8,6 +8,7 @@ import com.conaxgames.customskulls.data.LoadCustomBlocks;
 import com.conaxgames.customskulls.enums.AbilityType;
 import com.conaxgames.customskulls.listeners.CustomAbilityListener;
 import com.conaxgames.customskulls.listeners.CustomBlockListener;
+import com.conaxgames.customskulls.listeners.MobGrinderGUIListener;
 import com.conaxgames.customskulls.struct.MobGrinderCollection;
 import com.conaxgames.customskulls.util.CC;
 import com.conaxgames.customskulls.util.CustomBlockUtil;
@@ -17,8 +18,11 @@ import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Chest;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -59,6 +63,7 @@ public class CoreSkulls extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new UIListener(), this);
         getServer().getPluginManager().registerEvents(new CustomBlockListener(), this);
         getServer().getPluginManager().registerEvents(new CustomAbilityListener(), this);
+        //getServer().getPluginManager().registerEvents(new MobGrinderGUIListener(), this);
         LoadCustomBlocks.load();
 
         mobGrinderCustomBlocks = new HashMap<>();
@@ -84,7 +89,16 @@ public class CoreSkulls extends JavaPlugin {
                 data.getCollectedLoot().addLootboxes(1);
                 Bukkit.broadcastMessage(String.valueOf("EXP: " + data.getCollectedLoot().exp));
                 Bukkit.broadcastMessage(String.valueOf("Lootboxes: " + data.getCollectedLoot().lootboxes));
-                //TODO Reduce mob stack by 1
+
+
+                if (CustomBlockUtil.getClosestChestLocation(data.getLocation()) != null) {
+
+                    //TODO getClosestChestSendsNullpointer!
+
+                    Location chestLocation = CustomBlockUtil.getClosestChestLocation(data.getLocation());
+                    Chest chest = (Chest)chestLocation.getBlock().getState();
+                    chest.getInventory().addItem(new ItemStack(Material.DIAMOND));
+                }
 
             }
         }, 15*20, 10*20);

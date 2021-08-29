@@ -74,18 +74,6 @@ public class MobGrinder extends CustomBlock {
 
     @Override
     public void rightClickBlockAction(Player p0, PlayerInteractEvent p1, Block p2, ItemStack p3) {
-        Inventory inventory = Bukkit.createInventory(null, 27, "Mob Grinder Collect");
-
-        ItemStack grindingLootboxItem = new ItemStack(Material.CHEST);
-        //add lore here with amount of lb's
-        ItemStack expBottleItem = new ItemStack(Material.EXP_BOTTLE);
-        //same here but for exp collected
-
-
-        inventory.setItem(11, grindingLootboxItem);
-        inventory.setItem(15, expBottleItem);
-
-        p0.openInventory(inventory);
     }
 
     @Override
