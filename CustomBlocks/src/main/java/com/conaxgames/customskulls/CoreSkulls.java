@@ -13,9 +13,13 @@ import com.conaxgames.customskulls.struct.MobGrinderCollection;
 import com.conaxgames.customskulls.util.CC;
 import com.conaxgames.customskulls.util.CustomBlockUtil;
 import com.conaxgames.customskulls.util.inventoryui.UIListener;
+import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import de.tr7zw.nbtinjector.NBTInjector;
 import lombok.Getter;
+import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
+import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
 import net.milkbowl.vault.economy.Economy;
+import org.arkhamnetwork.Arkkit.patches.ExpBottles;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -32,11 +36,13 @@ import java.util.*;
 
 public class CoreSkulls extends JavaPlugin {
 
-    @Getter public static CoreSkulls instance;
+    @Getter
+    public static CoreSkulls instance;
     public static Map<String, CustomBlock> customBlocks = new HashMap<>();
     public static Map<String, AbilityData> mobGrinderCustomBlocks;
     private static Field bukkitCommand;
-    @Getter private static Economy economy = null;
+    @Getter
+    private static Economy economy = null;
     private static List<MobGrinderCollection> mobGrinderCollections = new ArrayList<>();
 
     @Override
@@ -44,21 +50,21 @@ public class CoreSkulls extends JavaPlugin {
         instance = this;
         getConfig().options().copyDefaults(true);
         saveConfig();
-        NBTInjector.inject();
         File file = new File(this.getDataFolder() + File.separator + "data");
-        if(!file.exists()) {
+        if (!file.exists()) {
             file.mkdir();
             info("Successfully made directory /data/ :)");
         }
 
-        if (!setupEconomy() ) {
+        if (!setupEconomy()) {
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
 
         registerCustomBlocks();
-        Collections.singletonList(new AbilityBlocksCommand()).forEach(this:: registerCommand);
+        Collections.singletonList(new AbilityBlocksCommand()).forEach(this::registerCommand);
 
+        ItemStack grinderLootbox = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("GrindingLootbox").createClaimableItem(false);
 
         getServer().getPluginManager().registerEvents(new UIListener(), this);
         getServer().getPluginManager().registerEvents(new CustomBlockListener(), this);
@@ -79,13 +85,12 @@ public class CoreSkulls extends JavaPlugin {
             }
         }
 
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, ()-> {
-            Bukkit.broadcastMessage(mobGrinderCustomBlocks.toString());
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
             for (Map.Entry<String, AbilityData> entry : mobGrinderCustomBlocks.entrySet()) {
                 String uuid = entry.getKey();
                 AbilityData data = entry.getValue();
 
-                data.getCollectedLoot().addExp(200);
+                data.getCollectedLoot().addExp(500);
                 data.getCollectedLoot().addLootboxes(1);
                 Bukkit.broadcastMessage(String.valueOf("EXP: " + data.getCollectedLoot().exp));
                 Bukkit.broadcastMessage(String.valueOf("Lootboxes: " + data.getCollectedLoot().lootboxes));
@@ -93,15 +98,26 @@ public class CoreSkulls extends JavaPlugin {
 
                 if (CustomBlockUtil.getClosestChestLocation(data.getLocation()) != null) {
 
-                    //TODO getClosestChestSendsNullpointer!
 
                     Location chestLocation = CustomBlockUtil.getClosestChestLocation(data.getLocation());
-                    Chest chest = (Chest)chestLocation.getBlock().getState();
-                    chest.getInventory().addItem(new ItemStack(Material.DIAMOND));
+                    Chest chest = (Chest) chestLocation.getBlock().getState();
+                    chest.getInventory().addItem(grinderLootbox);
+                    if (!chest.getInventory().contains(Material.EXP_BOTTLE)) {
+                        chest.getInventory().addItem(ExpBottles.getXpBottle(500, "Mob Grinder"));
+                        return;
+                    }
+                    for (int i = 0; i < chest.getInventory().getSize(); i++) {
+                        if (chest.getInventory().getItem(i) == null) {
+                            continue;
+                        } else if (ExpBottles.isXpBottle(chest.getInventory().getItem(i))) {
+                            chest.getInventory().setItem(i, ExpBottles.getXpBottle(ExpBottles.getXpAmount(chest.getInventory().getItem(i)) + 500, "Mob Grinder"));
+                            break;
+                        }
+                    }
                 }
-
             }
-        }, 15*20, 10*20);
+
+        }, 15 * 20, 10 * 20);
     }
 
     private void registerCommand(Command cmd) {
@@ -135,7 +151,7 @@ public class CoreSkulls extends JavaPlugin {
             }
             CommandMap commandMap = (CommandMap) bukkitCommand.get(Bukkit.getServer());
             commandMap.register(cmd.getName(), fallback, cmd);
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
 
         }

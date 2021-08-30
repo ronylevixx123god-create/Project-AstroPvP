@@ -6,6 +6,7 @@ import com.conaxgames.customskulls.blocks.CustomBlock;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import de.tr7zw.nbtapi.NBTItem;
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -68,8 +69,8 @@ public class CustomBlockUtil {
     }
 
     public static Location getClosestChestLocation(Location location) {
-        int radius = 1;
-        final Block block = location.getBlock(); //placed block
+        int radius = 2;
+        Block block = location.getBlock(); //placed block
         for (int x = -(radius); x <= radius; x++) {
             for (int y = -(radius); y <= radius; y++) {
                 for (int z = -(radius); z <= radius; z++) {

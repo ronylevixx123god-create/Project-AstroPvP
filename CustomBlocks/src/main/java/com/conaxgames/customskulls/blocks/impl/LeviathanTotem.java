@@ -127,6 +127,7 @@ public class LeviathanTotem extends CustomBlock {
                 //p2.breakNaturally(new ItemBuilderUtils(Material.AIR).toItemStack()); // break the block
                 p1.getBlock().setType(Material.AIR);
                 p2.getWorld().dropItemNaturally(p2.getLocation(), item.toItemStack()); // dropping our item stack
+
                 DeleteCustomBlocks.func(p2.getLocation()); // delete file and memory.
             } else {
                 breaker.sendMessage(CC.RED + "You do not have the required $" + AbilityType.LEVIATHAN_TOTEM.getPickupPrice() + " to pick this block up.");
