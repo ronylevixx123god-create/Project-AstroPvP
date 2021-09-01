@@ -66,7 +66,8 @@ public class PlayerCollect {
         }
         this.loading = true;
         try {
-            PreparedStatement statement = CollectPlugin.getInstance().getSqlDatabase().getConnection().prepareStatement("SELECT items FROM collect_userdata WHERE uuid = '" + this.player.getUniqueId() + "'");
+            PreparedStatement statement = CollectPlugin.getInstance().getSqlDatabase().getConnection().prepareStatement("SELECT items FROM 'collect_userdata' WHERE uuid = ?");
+            statement.setString(1, this.player.getUniqueId().toString());
             ResultSet set = statement.executeQuery();
             if(set.first()) {
                 PlayerCollect collect = new PlayerCollect(this.player);

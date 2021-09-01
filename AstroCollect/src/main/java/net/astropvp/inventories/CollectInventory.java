@@ -24,6 +24,7 @@ public class CollectInventory extends CosmicGUI {
         int i = 0;
         for(CollectCategory cat : categories) {
             setItem(i, getCategoryItem(player, cat));
+            i++;
         }
     }
 

@@ -21,7 +21,7 @@ public class Database {
         this.username = instance.getConfig().getString("username");
         this.password = instance.getConfig().getString("password");
         this.database = instance.getConfig().getString("database");
-        this.url = "jdbc:mysql://" + this.host + ":3308/" + this.database + "?autoReconnect=true";
+        this.url = "jdbc:mysql://" + this.host + ":3306/" + this.database + "?autoReconnect=true";
     }
 
     public void executeUpdate(String update, boolean async) {
@@ -32,7 +32,6 @@ public class Database {
         } else {
             try {
                 PreparedStatement pst = this.getConnection().prepareStatement(update);
-
                 try {
                     pst.executeUpdate();
                 } finally {
