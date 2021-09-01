@@ -13,8 +13,8 @@ import java.util.List;
 public class CollectPlugin extends JavaPlugin {
     private static CollectPlugin instance;
     private Database sqlDatabase;
-    private SQLQueryCustomThread sqlQueryThread = new SQLQueryCustomThread();
     private CollectManager collectManager;
+    private SQLQueryCustomThread sqlQueryCustomThread = new SQLQueryCustomThread();
 
     public void onEnable() {
         instance = this;
@@ -27,8 +27,8 @@ public class CollectPlugin extends JavaPlugin {
             Bukkit.getPluginManager().disablePlugin(this);
         } else {
             this.sqlDatabase.executeUpdate("CREATE TABLE IF NOT EXISTS collect_userdata(player_uuid varchar(64) PRIMARY KEY, items char);", false);
-            this.sqlQueryThread = new SQLQueryCustomThread();
-            this.sqlQueryThread.start();
+            this.sqlQueryCustomThread = new SQLQueryCustomThread();
+            this.sqlQueryCustomThread.start();
         }
         this.collectManager = new CollectManager();
     }
@@ -45,9 +45,9 @@ public class CollectPlugin extends JavaPlugin {
         return this.sqlDatabase;
     }
 
+    public CollectManager getCollectManager()  { return this.collectManager; }
 
     private void registerCommands() {
         getCommand("collect").setExecutor(new CollectCommand());
     }
-
 }
