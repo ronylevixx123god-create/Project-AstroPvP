@@ -2,4 +2,4 @@ name: CustomSkullBlocks
 version: ${project.version}
 main: com.conaxgames.customskulls.CoreSkulls
 description: CoreSkulls
-depend: [Vault, Factions]
+depend: [Vault, Factions, CosmicMysteryChest]

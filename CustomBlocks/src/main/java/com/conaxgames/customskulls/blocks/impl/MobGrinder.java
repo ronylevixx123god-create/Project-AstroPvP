@@ -117,7 +117,6 @@ public class MobGrinder extends CustomBlock {
 
                 CoreSkulls.mobGrinderCustomBlocks.put(this.getIdentifier(), AbilityData.getByUUID(this.getIdentifier()));
 
-            Bukkit.broadcastMessage(ChatColor.GREEN+AbilityData.getAbilityDataMap().toString());
 
         } else {
             p0.sendMessage(CC.RED + "You must be in your own claim to place a block of this type");
@@ -145,7 +144,7 @@ public class MobGrinder extends CustomBlock {
                 //p2.breakNaturally(new ItemBuilderUtils(Material.AIR).toItemStack()); // break the block
                 p1.getBlock().setType(Material.AIR);
                 p2.getWorld().dropItemNaturally(p2.getLocation(), item.toItemStack()); // dropping our item stack
-
+                DeleteCustomBlocks.func(p2.getLocation()); // delete file and memory.
                 CoreSkulls.mobGrinderCustomBlocks.remove(data.getUuid());
 
             } else {
