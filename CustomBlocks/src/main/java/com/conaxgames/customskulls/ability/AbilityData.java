@@ -35,9 +35,7 @@ public class AbilityData {
     public AbilityData(String uuid) {
         this.uuid = uuid;
         abilityDataMap.put(uuid, this);
-            collectedLoot = new MobGrinderCollection();
-        }
-
+    }
 
 
     public static AbilityData getByUUID(String uuid) {
@@ -48,9 +46,6 @@ public class AbilityData {
         return location.getBlockX() + "_" + location.getBlockY() + "_" + location.getBlockZ();
     }
 
-    public MobGrinderCollection getCollectedLoot() {
-        return collectedLoot;
-    }
 }
 
 

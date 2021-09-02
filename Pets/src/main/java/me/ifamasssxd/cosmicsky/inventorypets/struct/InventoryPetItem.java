@@ -192,8 +192,8 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
                 ItemStack finalItem = item.build();
 
                 String skinTexture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmVlOWU2NTY3NDk2NzVlNTYzZGE3MTM1N2MxZjg0OTY3MjQ0YzQyMDUwNDY5NzI5M2NlODc4Y2RiOGEzNiJ9fX0=";
-                //player.getInventory().setItemInHand(SkullUtils.buildSkullNative(finalItem, skinTexture));
-                player.getInventory().setItemInHand(finalItem);
+                player.getInventory().setItemInHand(SkullUtils.buildSkullNative(finalItem, skinTexture));
+                //player.getInventory().setItemInHand(finalItem);
 
             }
         }

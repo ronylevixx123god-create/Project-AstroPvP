@@ -114,15 +114,13 @@ public class MobGrinder extends CustomBlock {
         if (fPlayer.getRelationToLocation().isMember()) {
             MakeCustomBlocks.newFileItem(p0, AbilityType.TRIALS_FAME_AND_FORTUNE, p1.getBlock(), this);
 
-
-                CoreSkulls.mobGrinderCustomBlocks.put(this.getIdentifier(), AbilityData.getByUUID(this.getIdentifier()));
-
-
         } else {
             p0.sendMessage(CC.RED + "You must be in your own claim to place a block of this type");
             p1.setCancelled(true);
         }
     }
+
+
 
     @Override
     public void breakBlockAction(Player player, BlockBreakEvent p1, Block p2, ItemStack p3, CustomBlock cb, AbilityData data) {
@@ -144,8 +142,8 @@ public class MobGrinder extends CustomBlock {
                 //p2.breakNaturally(new ItemBuilderUtils(Material.AIR).toItemStack()); // break the block
                 p1.getBlock().setType(Material.AIR);
                 p2.getWorld().dropItemNaturally(p2.getLocation(), item.toItemStack()); // dropping our item stack
-                DeleteCustomBlocks.func(p2.getLocation()); // delete file and memory.
                 CoreSkulls.mobGrinderCustomBlocks.remove(data.getUuid());
+                DeleteCustomBlocks.func(p2.getLocation()); // delete file and memory.
 
             } else {
                 breaker.sendMessage(CC.RED + "You do not have the required $" + AbilityType.TRIALS_FAME_AND_FORTUNE.getPickupPrice() + " to pick this block up.");

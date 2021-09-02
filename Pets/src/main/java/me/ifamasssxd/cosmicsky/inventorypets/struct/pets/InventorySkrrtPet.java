@@ -66,11 +66,21 @@ public class InventorySkrrtPet extends InventoryPet {
 
     public boolean onPetItemInteract(Player player, ItemStack itemStack, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
 
-        if (PetUtils.isOnCooldown(player, petItem.getPetType()) && (!player.isOp() || !player.isSneaking()))
+        /*if (PetUtils.isOnCooldown(player, petItem.getPetType()) && (!player.isOp() || !player.isSneaking()))
             throw new PrefixedPetException(CC.Red + "Ability on cooldown: " + CC.RedU +
-                    TimeUtils.formatSeconds(PetUtils.getSecondsOnCooldown(player, petItem.getPetType())));
+                    TimeUtils.formatSeconds(PetUtils.getSecondsOnCooldown(player, petItem.getPetType())));*/
 
-        PetUtils.addPetCooldown(player, petItem.getPetType(), (getCooldown(5) * 1000));
+        long lastUse = petItem.getLastUsed();
+        long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown(5));
+        long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
+
+        if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
+            throw new PrefixedPetException("Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
+
+        //PetUtils.addPetCooldown(player, petItem.getPetType(), (getCooldown(5) * 1000));
+
+        petItem.setLastUsed(System.currentTimeMillis());
+
 
 
         this.petLevel = 5;

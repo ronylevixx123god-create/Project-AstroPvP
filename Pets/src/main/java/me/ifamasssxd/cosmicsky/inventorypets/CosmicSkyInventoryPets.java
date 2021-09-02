@@ -30,6 +30,7 @@ public final class CosmicSkyInventoryPets extends JavaPlugin implements Listener
    private RareCandyItem rareCandyItem;
    private PetLeashItem petLeashItem;
    public static Map<UUID, Player> cageCooldown;
+   public static Map<UUID, Player> witcherCooldown;
    public static Map<UUID, Player> skrrtCooldown;
 
 
@@ -57,6 +58,7 @@ public final class CosmicSkyInventoryPets extends JavaPlugin implements Listener
 
       this.cageCooldown = new HashMap<UUID, Player>();
       this.skrrtCooldown = new HashMap<UUID, Player>();
+      this.witcherCooldown = new HashMap<UUID, Player>();
 
       for(int i = 0; i < length; ++i) {
          InventoryPets pet = inventoryPets[i];
@@ -74,10 +76,14 @@ public final class CosmicSkyInventoryPets extends JavaPlugin implements Listener
    public static Map<UUID, Player> getSkrrtCooldownMap() {
       return skrrtCooldown;
    }
+
+   public static Map<UUID, Player> getWitcherCooldownMap() {
+      return witcherCooldown;
+   }
    private void registerListeners() {
       Bukkit.getPluginManager().registerEvents(new AbominalSnowmanListener(), this);
       Bukkit.getPluginManager().registerEvents(new BansheeListener(), this);
-      //Bukkit.getPluginManager().registerEvents(new PetCooldownListener(), this);
+      Bukkit.getPluginManager().registerEvents(new PetCooldownListener(), this);
       Bukkit.getPluginManager().registerEvents(new TitanListener(), this);
       Bukkit.getPluginManager().registerEvents(new BloodhoundListener(), this);
       Bukkit.getPluginManager().registerEvents(new SkrrtListener(), this);

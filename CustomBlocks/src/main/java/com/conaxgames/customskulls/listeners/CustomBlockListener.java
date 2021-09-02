@@ -83,7 +83,7 @@ public class CustomBlockListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void onBlockPlace(final BlockPlaceEvent event) {
+    public void onBlockPlace(BlockPlaceEvent event) {
         final Player player = event.getPlayer();
         final ItemStack item = player.getItemInHand();
         if (event.getPlayer().getItemInHand() == null || event.getPlayer().getItemInHand().getType() == Material.AIR) {
