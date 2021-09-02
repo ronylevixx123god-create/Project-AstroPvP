@@ -24,8 +24,8 @@ public class MobCoinShopListener implements Listener {
             return;
         if (event.getInventory().getTitle().contentEquals(String.valueOf(CC.DarkGray) + "Mob Coin Shop")) {
             Player player = (Player)event.getWhoClicked();
-            event.setCancelled(true);
             ItemStack item = event.getCurrentItem();
+            event.setCancelled(true);
             NBTWrapper wrapper = new NBTWrapper(item);
             if (!wrapper.hasKey("shopData"))
                 return;

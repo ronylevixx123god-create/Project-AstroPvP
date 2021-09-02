@@ -51,7 +51,6 @@ public abstract class WeaponBonus {
     public ItemStack applyBonus(ItemStack i, WeaponBonusType bonusType) {
         ItemMeta meta = i.getItemMeta();
         List<String> lore = (meta.getLore() == null) ? new ArrayList<>() : meta.getLore();
-        lore.add("");
         lore.add(getType().getColor() + "(" + CC.translate("&f&l!") + getType().getColor() + ") " + getType().getName() + " Weapon Bonuses");
         for (String s : bonusType.getInstance().getLore()) {
             lore.add(s);
