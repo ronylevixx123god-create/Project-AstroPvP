@@ -100,8 +100,8 @@ public class CoreSkulls extends JavaPlugin {
 
         }, 17 * 20, 200L);
 
-        int delay = 2; //every x seconds it will kill a blaze and add shit to the chest
-        int amountOfExpPerBlaze = 300;
+        int delay = 1; //every x seconds it will kill a blaze and add shit to the chest
+        int amountOfExpPerBlaze = 200;
 
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
             for (Map.Entry<String, AbilityData> entry : mobGrinderCustomBlocks.entrySet()) {
