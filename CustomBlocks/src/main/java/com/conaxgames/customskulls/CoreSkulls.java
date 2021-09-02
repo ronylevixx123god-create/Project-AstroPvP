@@ -10,6 +10,8 @@ import com.conaxgames.customskulls.listeners.CustomAbilityListener;
 import com.conaxgames.customskulls.listeners.CustomBlockListener;
 import com.conaxgames.customskulls.listeners.MobGrinderGUIListener;
 import com.conaxgames.customskulls.struct.MobGrinderCollection;
+import com.conaxgames.customskulls.tasks.GrinderBlockCheckRunnable;
+import com.conaxgames.customskulls.tasks.MobGrinderRunnable;
 import com.conaxgames.customskulls.util.CC;
 import com.conaxgames.customskulls.util.CustomBlockUtil;
 import com.conaxgames.customskulls.util.inventoryui.UIListener;
@@ -47,7 +49,7 @@ public class CoreSkulls extends JavaPlugin {
     private static Field bukkitCommand;
     @Getter
     private static Economy economy = null;
-    private MobStackerUtils mobStackerUtils;
+    public static MobStackerUtils mobStackerUtils;
 
     @Override
     public void onEnable() {
@@ -68,7 +70,6 @@ public class CoreSkulls extends JavaPlugin {
         registerCustomBlocks();
         Collections.singletonList(new AbilityBlocksCommand()).forEach(this::registerCommand);
 
-        ItemStack grinderLootbox = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("GrindingLootbox").createClaimableItem(false);
 
         getServer().getPluginManager().registerEvents(new UIListener(), this);
         getServer().getPluginManager().registerEvents(new CustomBlockListener(), this);
@@ -77,7 +78,9 @@ public class CoreSkulls extends JavaPlugin {
         LoadCustomBlocks.load();
 
         mobGrinderCustomBlocks = new HashMap<>();
+
         this.mobStackerUtils = AstroSpawners.astroSpawners.getMobStackerUtils();
+        registerTasks();
 
         for (Map.Entry<String, AbilityData> entry : AbilityData.getAbilityDataMap().entrySet()) {
             String uuid = entry.getKey();
@@ -87,70 +90,6 @@ public class CoreSkulls extends JavaPlugin {
                 mobGrinderCustomBlocks.put(data.getUuid(), data);
             }
         }
-
-        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
-            for (Map.Entry<String, AbilityData> entry : AbilityData.getAbilityDataMap().entrySet()) {
-                AbilityData data = entry.getValue();
-
-                if (data.getAbilityType() == AbilityType.TRIALS_FAME_AND_FORTUNE) {
-                    mobGrinderCustomBlocks.put(data.getUuid(), data);
-                }
-            }
-
-
-        }, 17 * 20, 200L);
-
-        int delay = 1; //every x seconds it will kill a blaze and add shit to the chest
-        int amountOfExpPerBlaze = 200;
-
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
-            for (Map.Entry<String, AbilityData> entry : mobGrinderCustomBlocks.entrySet()) {
-                String uuid = entry.getKey();
-                AbilityData data = entry.getValue();
-
-
-                if (CustomBlockUtil.getClosestChestLocation(data.getLocation()) != null) {
-
-                    Location chestLocation = CustomBlockUtil.getClosestChestLocation(data.getLocation());
-                    assert chestLocation != null;
-                    if (chestLocation.getChunk().getEntities().length == 0) continue;
-                    Chest chest = (Chest) chestLocation.getBlock().getState();
-
-                    //KILL NEARBY STACKED MOB
-                    boolean stackedBlazesFound = false;
-                    for (Entity entity : chestLocation.getChunk().getEntities()) {
-                        if (entity.getType() == EntityType.BLAZE) {
-                            if (mobStackerUtils.isStackedMob(entity)) {
-                                stackedBlazesFound = true;
-                                mobStackerUtils.setStackSize(entity, mobStackerUtils.getStackSize(entity) - 1);
-                                break;
-                            }
-                        }
-                    }
-
-                    if (!stackedBlazesFound) continue;
-
-
-                    //ADD LOOT TO THE CHEST
-                    if (Math.random() < 0.1) {
-                        chest.getInventory().addItem(grinderLootbox);
-                    }
-                    if (!chest.getInventory().contains(Material.EXP_BOTTLE)) {
-                        chest.getInventory().addItem(ExpBottles.getXpBottle(amountOfExpPerBlaze, "Mob Grinder"));
-                        continue;
-                    }
-                    for (int i = 0; i < chest.getInventory().getSize(); i++) {
-                        if (chest.getInventory().getItem(i) == null) {
-                            continue;
-                        } else if (ExpBottles.isXpBottle(chest.getInventory().getItem(i))) {
-                            chest.getInventory().setItem(i, ExpBottles.getXpBottle(ExpBottles.getXpAmount(chest.getInventory().getItem(i)) + amountOfExpPerBlaze, "Mob Grinder"));
-                            break;
-                        }
-                    }
-                }
-            }
-
-        }, 15 * 20, delay * 20);
     }
 
     private void registerCommand(Command cmd) {
@@ -160,6 +99,11 @@ public class CoreSkulls extends JavaPlugin {
     @Override
     public void onDisable() {
 
+    }
+
+    private void registerTasks() {
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, new GrinderBlockCheckRunnable(), 17 * 20, 100L);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MobGrinderRunnable(), 15*20, 20);
     }
 
     private void registerCustomBlocks() {
