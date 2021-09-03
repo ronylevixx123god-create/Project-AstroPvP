@@ -3,6 +3,7 @@ package me.ily2bb.slotbot;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import me.ily2bb.slotbot.utils.Utils;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -18,5 +19,12 @@ public class CosmicSlotBotAPI {
         meta.setLore((List) lore);
         item.setItemMeta(meta);
         return Utils.addSkin("SLOT_BOT_TICKET", item);
+    }
+
+
+    public static ItemStack getRandomSlotBotLootItem(Player p) {
+        final Object[] objects = Utils.getMap();
+        final ItemStack item = Utils.getRandomItemFromLootTable(objects);
+        return item;
     }
 }

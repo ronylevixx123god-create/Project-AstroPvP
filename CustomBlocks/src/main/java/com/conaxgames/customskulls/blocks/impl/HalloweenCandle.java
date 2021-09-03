@@ -30,7 +30,7 @@ import java.util.List;
 public class HalloweenCandle extends CustomBlock {
 
     public HalloweenCandle() {
-        super("HALLOWEEN_CANDLES", CC.translate("&6&lHalloween Candle"), Material.NOTE_BLOCK, AbilityType.HALLOWEEN_CANDLES);
+        super("HALLOWEEN_CANDLES", CC.translate("&6&lHalloween Candle"), Material.SKULL, AbilityType.HALLOWEEN_CANDLES);
     }
 
     @Override

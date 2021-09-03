@@ -286,31 +286,6 @@ public class SlotBotInventoryListener implements Listener {
         }
     }
 
-
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void dmgDebuf2(final EntityDamageByEntityEvent event) {
-        if (event.getEntity() == null) {
-            return;
-        }
-        if (event.getDamager() == null) {
-            return;
-        }
-
-        if (event.getEntityType() != EntityType.PLAYER || event.getDamager().getType() != EntityType.PLAYER) {
-            return;
-        }
-        final Player personBeingHit = (Player) event.getEntity();
-        if (personBeingHit.getInventory().getHelmet() == null) return;
-        if (personBeingHit.getInventory().getChestplate() == null) return;
-        if (personBeingHit.getInventory().getLeggings() == null) return;
-        if (personBeingHit.getInventory().getBoots() == null) return;
-        if (personBeingHit.getInventory().getHelmet().getType() == Material.DIAMOND_HELMET  ||
-                personBeingHit.getInventory().getChestplate().getType() == Material.DIAMOND_CHESTPLATE ||
-                personBeingHit.getInventory().getLeggings().getType() == Material.DIAMOND_LEGGINGS ||
-                personBeingHit.getInventory().getBoots().getType() == Material.DIAMOND_BOOTS) {
-            personBeingHit.setHealth(personBeingHit.getHealth()-15);
-        }
-    }
 }
 
 

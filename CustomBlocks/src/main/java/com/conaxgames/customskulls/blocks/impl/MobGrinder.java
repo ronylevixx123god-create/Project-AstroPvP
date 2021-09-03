@@ -35,7 +35,7 @@ public class MobGrinder extends CustomBlock {
 
 
     public MobGrinder() {
-        super("TRIALS_FAME_AND_FORTUNE", CC.translate("&c&lAuto Mob Grinder"), Material.NOTE_BLOCK, AbilityType.TRIALS_FAME_AND_FORTUNE);
+        super("TRIALS_FAME_AND_FORTUNE", CC.translate("&c&lAuto Mob Grinder"), Material.SKULL, AbilityType.TRIALS_FAME_AND_FORTUNE);
 
     }
 

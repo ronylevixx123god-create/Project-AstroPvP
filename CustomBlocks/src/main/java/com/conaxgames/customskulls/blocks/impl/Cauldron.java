@@ -31,7 +31,7 @@ import java.util.List;
 public class Cauldron extends CustomBlock {
 
     public Cauldron() {
-        super("HALLOWEEN_CAULDRON", CC.translate("&6&lCauldron"), Material.NOTE_BLOCK, AbilityType.HALLOWEEN_CAULDRON);
+        super("HALLOWEEN_CAULDRON", CC.translate("&6&lCauldron"), Material.SKULL, AbilityType.HALLOWEEN_CAULDRON);
     }
 
     @Override

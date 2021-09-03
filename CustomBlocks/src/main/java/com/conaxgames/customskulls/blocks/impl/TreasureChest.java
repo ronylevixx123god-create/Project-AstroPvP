@@ -29,7 +29,7 @@ import java.util.List;
 public class TreasureChest extends CustomBlock {
 
     public TreasureChest() {
-        super("TREASURE_CHEST", CC.translate("&6&lTreasure Chest"), Material.NOTE_BLOCK, AbilityType.TREASURE_CHEST);
+        super("TREASURE_CHEST", CC.translate("&6&lTreasure Chest"), Material.SKULL, AbilityType.TREASURE_CHEST);
     }
 
     @Override
