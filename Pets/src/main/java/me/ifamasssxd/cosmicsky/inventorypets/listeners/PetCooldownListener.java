@@ -51,17 +51,22 @@ public class PetCooldownListener implements Listener {
                 String petType = wrapper.getCompound("cosmicData").getString("petType");
 
 
-                InventoryPet petItem = InventoryPets.valueOf(petType).getInternalClass();
+                try {
+                    InventoryPet petItem = InventoryPets.valueOf(petType).getInternalClass();
 
-                //InventoryPetItem.constructItem(itemStackEntry.getValue(), wrapper, InventoryPetItem.class);
 
-                long lastUse = wrapper.getCompound("cosmicData").getLong("lastUsed");
-                long delay = TimeUnit.SECONDS.toMillis((long) petItem.getCooldown(5));
-                long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
+                    //InventoryPetItem.constructItem(itemStackEntry.getValue(), wrapper, InventoryPetItem.class);
 
-                if (!(lastUse > 0L && timeTillCanUse > 0L) && itemStackEntry.getValue().getAmount() <=1) {
-                    e.getPlayer().getInventory().setItem(itemStackEntry.getKey(), InventoryPetItem.constructItem(itemStackEntry.getValue(), wrapper, InventoryPetItem.class).build());
-                    //InventoryPetItem.constructItem(itemStackEntry.getValue(), wrapper, InventoryPetItem.class).build()
+                    long lastUse = wrapper.getCompound("cosmicData").getLong("lastUsed");
+                    long delay = TimeUnit.SECONDS.toMillis((long) petItem.getCooldown(5));
+                    long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
+
+                    if (!(lastUse > 0L && timeTillCanUse > 0L) && itemStackEntry.getValue().getAmount() <= 1) {
+                        e.getPlayer().getInventory().setItem(itemStackEntry.getKey(), InventoryPetItem.constructItem(itemStackEntry.getValue(), wrapper, InventoryPetItem.class).build());
+                        //InventoryPetItem.constructItem(itemStackEntry.getValue(), wrapper, InventoryPetItem.class).build()
+                    }
+                } catch (Exception ex) {
+
                 }
             }
 

@@ -6,6 +6,7 @@ package com.conaxgames.customskulls.blocks;
 import com.conaxgames.customskulls.ability.AbilityData;
 import com.conaxgames.customskulls.enums.AbilityType;
 import com.conaxgames.customskulls.util.ItemBuilderUtils;
+import com.conaxgames.customskulls.util.SkullUtils;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.mojang.authlib.GameProfile;
@@ -14,6 +15,7 @@ import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.Skull;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -56,7 +58,6 @@ public abstract class CustomBlock {
         ItemBuilderUtils item = new ItemBuilderUtils(material).setDurability((short) 3).setName(name).setLore();
 
 
-
         NBTWrapper nbtItem = new NBTWrapper(item.toItemStack());
 
 
@@ -73,17 +74,6 @@ public abstract class CustomBlock {
         nbtItem.setNBTBase("cosmicData", cosmicData.get());
 
 
-        //SkullMeta meta = (SkullMeta) nbtItem.getItem().getItemMeta();
-        //GameProfile profile = new GameProfile(UUID.randomUUID(), "");
-        //profile.getProperties().put("textures", new Property("textures", abilityType.getSkinTexture()));
-        /*try {
-            Field profileField = meta.getClass().getDeclaredField("profile");
-            profileField.setAccessible(true);
-            profileField.set(meta, profile);
-        } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
-            e.printStackTrace();
-        }*/
-        //nbtItem.getItem().setItemMeta(meta);
 
         return nbtItem.build();
     }

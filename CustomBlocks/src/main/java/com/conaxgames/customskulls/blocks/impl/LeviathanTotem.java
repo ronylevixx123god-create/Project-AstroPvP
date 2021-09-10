@@ -30,7 +30,7 @@ import java.util.List;
 public class LeviathanTotem extends CustomBlock {
 
     public LeviathanTotem() {
-        super("LEVIATHAN_TOTEM", CC.translate("&3&lLeviathan Totem"), Material.SKULL, AbilityType.LEVIATHAN_TOTEM);
+        super("LEVIATHAN_TOTEM", CC.translate("&3&lLeviathan Totem"), Material.NOTE_BLOCK, AbilityType.LEVIATHAN_TOTEM);
     }
 
     @Override
