@@ -8,7 +8,7 @@ package org.arkhamnetwork.Arkkit;
 
 import org.bukkit.Material;
 
-class CustomPV {
+public class CustomPV {
     String customName;
     Material icon = Material.EMERALD;
 

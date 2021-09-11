@@ -30,7 +30,6 @@
         <module name="Kits" />
         <module name="Core" />
         <module name="AstroEndGrinding" />
-        <module name="GUIShop" />
         <module name="Lootboxes" />
         <module name="AstroSpawnersMobcoins" />
         <module name="AuctionHouse" />
@@ -60,6 +59,8 @@
       <module name="Comms" target="8" />
       <module name="CrateBoxes" target="8" />
       <module name="Disguises (1)" target="8" />
+      <module name="FactionFights" target="8" />
+      <module name="GUIShop" target="8" />
       <module name="ItemFilter" target="8" />
       <module name="MoneyNotes" target="1.8" />
       <module name="Permissions" target="8" />

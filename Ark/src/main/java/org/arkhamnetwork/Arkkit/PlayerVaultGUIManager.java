@@ -117,7 +117,7 @@ class PlayerVaultGUIManager {
     }
 
     public int getPlayerVaults(Player player) {
-        for (int i = 27; i > 0; --i) {
+        for (int i = 54; i > 0; --i) {
             if (!player.hasPermission("playervaults.amount." + i)) continue;
             return i;
         }

@@ -40,6 +40,11 @@ public class CommandArmorSet
         implements CommandExecutor {
     @SneakyThrows
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        if (sender instanceof Player && !sender.isOp()) {
+            new ArmorSetHelpMenu((Player) sender).openGUI(CosmicArmorSetsPlugin.get_());
+            return true;
+        }
+
         if (args.length == 1 && args[0].equalsIgnoreCase("help") && sender instanceof Player) {
             new ArmorSetHelpMenu((Player) sender).openGUI(CosmicArmorSetsPlugin.get_());
             return true;
