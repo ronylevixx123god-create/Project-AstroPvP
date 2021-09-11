@@ -27,6 +27,11 @@
       <option name="url" value="http://repo.ess3.net/content/groups/essentials" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="repo" />
+      <option name="name" value="repo" />
+      <option name="url" value="https://repo.mattstudios.me/artifactory/public/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="ess-repo" />
       <option name="name" value="ess-repo" />
       <option name="url" value="https://ci.ender.zone/plugin/repository/everything/" />

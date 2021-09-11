@@ -13,15 +13,45 @@
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
 
+
+
     <build>
         <defaultGoal>clean install</defaultGoal>
         <finalName>CosmicShop</finalName>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.1.1</version>
+                <configuration>
+                    <relocations>
+                        <relocation>
+                            <pattern>dev.triumphteam.gui</pattern>
+                            <shadedPattern>me.ifamasssxd.cosmicguishop.gui</shadedPattern> <!-- Replace package here here -->
+                        </relocation>
+                    </relocations>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 
     <repositories>
         <repository>
             <id>ess-repo</id>
             <url>https://ci.ender.zone/plugin/repository/everything/</url>
+        </repository>
+        <repository>
+            <id>repo</id>
+            <url>https://repo.mattstudios.me/artifactory/public/</url>
         </repository>
         <repository>
             <id>paper-repo</id>
@@ -37,6 +67,10 @@
         </repository>
     </repositories>
 
+
+
+
+
     <dependencies>
         <!-- ConaxGames repos -->
         <dependency>
@@ -45,6 +79,7 @@
             <version>1.8.8-R0.2-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>net.ess3</groupId>
             <artifactId>EssentialsX</artifactId>
@@ -55,6 +90,11 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.10</version>
+        </dependency>
+        <dependency>
+            <groupId>dev.triumphteam</groupId>
+            <artifactId>triumph-gui</artifactId>
+            <version>3.0.3</version> <!-- replace version here -->
         </dependency>
         <dependency>
             <groupId>com.github.MilkBowl</groupId>
