@@ -53,7 +53,11 @@ public class CosmicGUIShop extends JavaPlugin {
 
         economy = this.getServer().getServicesManager().getRegistration(Economy.class).getProvider();
         this.shopManager = new ShopManager();
-        this.shopManager.loadAllShopItems();
+        try {
+            this.shopManager.loadAllShopItems();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
         this.getServer().getPluginManager().registerEvents(new MenuListener(), this);
         this.getServer().getPluginManager().registerEvents(new XPShopMenuListener(), this);

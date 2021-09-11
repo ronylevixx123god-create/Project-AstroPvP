@@ -47,8 +47,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class XpShopMenu{
 
-    @Getter
     private final PaginatedGui expShopUI;
+
+    public PaginatedGui getExpShopUI() {
+        return this.expShopUI;
+    }
 
     //private Inventory inventory = Bukkit.createInventory(this, 54, "Astro XP Shop");
 

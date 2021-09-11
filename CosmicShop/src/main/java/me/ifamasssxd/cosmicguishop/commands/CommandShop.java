@@ -23,6 +23,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 public class CommandShop
@@ -32,7 +33,12 @@ public class CommandShop
         if (sender.isOp()) {
             if (args.length == 1) {
                 if (args[0].equalsIgnoreCase("reload")) {
-                    CosmicGUIShop.get().getShopManager().loadAllShopItems();
+                    try {
+                        CosmicGUIShop.get().getShopManager().loadAllShopItems();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     sender.sendMessage((Object) ChatColor.RED + "Shop reloaded");
                     return true;
                 }
@@ -94,7 +100,11 @@ public class CommandShop
                     manager.getPriceConfig().set("prices." + cat.name() + "." + itemString + ".buy", (Object) price);
                     manager.getPriceConfig().set("prices." + cat.name() + "." + itemString + ".sell", (Object) sellPrice);
                 }
-                manager.saveFile();
+                try {
+                    manager.saveFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 return true;
             }
         }

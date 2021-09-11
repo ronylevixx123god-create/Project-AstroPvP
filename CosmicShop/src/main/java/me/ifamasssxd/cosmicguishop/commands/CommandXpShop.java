@@ -33,8 +33,7 @@ implements CommandExecutor {
         }
         Player player = (Player)sender;
         if (!player.isOp() || args.length == 0) {
-            XpShopMenu xpShopMenu = new XpShopMenu(player);
-            xpShopMenu.getExpShopUI().open(player);
+            new XpShopMenu(player).getExpShopUI().open(player);
             return true;
         }
         if (args[0].equalsIgnoreCase("additem") && args.length == 2) {
