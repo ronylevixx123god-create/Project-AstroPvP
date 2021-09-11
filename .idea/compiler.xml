@@ -19,6 +19,7 @@
         <module name="AstroItemFlip" />
         <module name="Bosses" />
         <module name="AstroRevive" />
+        <module name="CosmicShop" />
         <module name="Masks" />
         <module name="AstroScoreboard" />
         <module name="Explosive" />

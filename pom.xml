@@ -53,6 +53,7 @@
         <module>Collect</module>
         <module>Test</module>
         <module>AstroCollect</module>
+        <module>CosmicShop</module>
     </modules>
 
     <build>

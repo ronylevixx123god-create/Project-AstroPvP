@@ -18,6 +18,7 @@
  */
 package me.ifamasssxd.cosmicguishop.menus;
 
+import com.conaxgames.banana.utils.Utils;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.google.common.collect.Lists;
@@ -26,8 +27,12 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
 import me.ifamasssxd.cosmicguishop.CosmicGUIShop;
 import me.ifamasssxd.cosmicguishop.utils.Base64Utils;
+import me.mattstudios.mfgui.gui.components.util.ItemBuilder;
+import me.mattstudios.mfgui.gui.guis.GuiItem;
+import me.mattstudios.mfgui.gui.guis.PaginatedGui;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -40,15 +45,18 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 
-public class XpShopMenu implements Menu{
+public class XpShopMenu{
 
-    private Inventory inventory = Bukkit.createInventory(this, 54, "Astro XP Shop");
+    @Getter
+    private final PaginatedGui expShopUI;
+
+    //private Inventory inventory = Bukkit.createInventory(this, 54, "Astro XP Shop");
 
     List<String> itemList = CosmicGUIShop.getInstance().getConfig().getStringList("items");
 
 
     public XpShopMenu(Player player) {
-        inventory.setItem(49, createGUIItem(player));
+/*        inventory.setItem(49, createGUIItem(player));
         inventory.setItem(50, createFillerItem());
         inventory.setItem(51, createFillerItem());
         inventory.setItem(52, createFillerItem());
@@ -70,15 +78,72 @@ public class XpShopMenu implements Menu{
             NBTWrapper wrapper = new NBTWrapper(item);
             wrapper.setFloat("xpShopPrice", Base64Utils.getCost(s));
             inventory.setItem(i, wrapper.build());
+        }*/
+
+        this.expShopUI = new PaginatedGui(6, 28, "XpShop Menu");
+        expShopUI.setDefaultClickAction(event -> {
+            event.setCancelled(true);
+        });
+
+        expShopUI.getFiller().fillBorder(new GuiItem(createFillerItem()));
+
+        expShopUI.setItem(6, 1, ItemBuilder.from(Material.PAPER).setName(CC.translate("&c&l<- Previous Page")).asGuiItem(event -> {
+            expShopUI.previous();
+            event.setCancelled(true);
+        }));
+
+        expShopUI.setItem(6, 9, ItemBuilder.from(Material.PAPER).setName(CC.translate("&a&lNext Page ->")).asGuiItem(event -> {
+            expShopUI.next();
+            event.setCancelled(true);
+        }));
+
+        expShopUI.setItem(6, 5, new GuiItem(createGUIItem(player)));
+
+
+        for (String s : itemList) {
+            ItemStack item = Base64Utils.getItem(s);
+            ItemMeta meta = item.getItemMeta();
+            List<String> lore = meta.hasLore() ? meta.getLore() : new ArrayList<>();
+            lore.add(CC.translate("&f&l&c&b"));
+            lore.add(CC.translate("&a&l* COST: " + CC.White + NumberFormat.getInstance().format((int) Base64Utils.getCost(s)) + CC.GreenB + " XP"));
+            lore.add(CC.translate("&f&l&c&b"));
+            meta.setLore(lore);
+            item.setItemMeta(meta);
+            NBTWrapper wrapper = new NBTWrapper(item);
+            wrapper.setFloat("xpShopPrice", Base64Utils.getCost(s));
+            expShopUI.addItem(new GuiItem(wrapper.build(), event -> {
+                int cost = (int) getCostFromItem(item);
+                if (cost == 0)
+                    return;
+                if (player.getTotalExperience() < cost) {
+                    player.sendMessage(CC.Red + "You do not have enough exp to purchase this item.");
+                } else {
+                    int exp = player.getTotalExperience() - cost;
+                    player.setTotalExperience(0);
+                    player.setExp(0);
+                    player.setLevel(0);
+                    player.giveExp(exp);
+                    ItemStack itemStack = event.getCurrentItem().clone();
+                    ItemMeta meta2 = itemStack.getItemMeta();
+                    List<String> lore2 = meta.getLore();
+                    lore2.remove(lore.size() - 1);
+                    lore2.remove(lore.size() - 1);
+                    lore2.remove(lore.size() - 1);
+                    meta2.setLore(lore2);
+                    itemStack.setItemMeta(meta2);
+                    player.getInventory().addItem(itemStack);
+                    player.updateInventory();
+                    player.sendMessage(CC.Green + "Purchased " + meta2.getDisplayName() + CC.Green + " for " + NumberFormat.getInstance().format((int) cost) + "XP!");
+                }
+            }));
         }
+
+
+
     }
 
-    @Override
-    public Inventory getInventory() {
-        return this.inventory;
-    }
 
-    @Override
+/*    @Override
     public void onClick(Player player, int slot, ClickType type, InventoryClickEvent e) {
         e.setCancelled(true);
         ItemStack item = e.getCurrentItem();
@@ -121,7 +186,7 @@ public class XpShopMenu implements Menu{
             player.updateInventory();
             player.sendMessage(CC.Green + "Purchased " + meta.getDisplayName() + CC.Green + " for " + NumberFormat.getInstance().format((int) cost) + "XP!");
         }
-    }
+    }*/
 
     public static float getCostFromItem(ItemStack item) {
         NBTWrapper wrapper = new NBTWrapper(item);

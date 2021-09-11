@@ -5,11 +5,13 @@ import com.conaxgames.customskulls.ability.AbilityData;
 import com.conaxgames.customskulls.util.CustomBlockUtil;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import org.arkhamnetwork.Arkkit.patches.ExpBottles;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -28,6 +30,8 @@ public class MobGrinderRunnable extends BukkitRunnable {
 
 
             if (CustomBlockUtil.getClosestChestLocation(data.getLocation()) != null) {
+                if (!chunkContainsPlayer(data.getLocation().getChunk())) continue;
+
 
                 Location chestLocation = CustomBlockUtil.getClosestChestLocation(data.getLocation());
                 assert chestLocation != null;
@@ -67,5 +71,14 @@ public class MobGrinderRunnable extends BukkitRunnable {
                 }
             }
         }
+    }
+
+    public boolean chunkContainsPlayer(Chunk chunk) {
+        for (Entity entity : chunk.getEntities()) {
+            if (entity instanceof Player) {
+                return true;
+            }
+        }
+        return false;
     }
 }
