@@ -111,7 +111,7 @@ public class XpShopMenu{
             event.setCancelled(true);
         }));
 
-        expShopUI.setItem(6, 1, new GuiItem(nextPage, event -> {
+        expShopUI.setItem(6, 9, new GuiItem(nextPage, event -> {
             expShopUI.next();
             event.setCancelled(true);
         }));
