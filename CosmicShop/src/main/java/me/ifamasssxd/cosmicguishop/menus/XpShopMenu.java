@@ -92,7 +92,7 @@ public class XpShopMenu{
 
         ItemStack prevPage = new ItemStack(Material.ARROW);
         ItemMeta prevMeta = prevPage.getItemMeta();
-        prevMeta.setDisplayName(CC.translate("&c<-Previous Page"));
+        prevMeta.setDisplayName(CC.translate("&c<- Previous Page"));
         List<String> prevLore = new ArrayList<>();
         prevLore.add(CC.translate("&7Right-Click&7 to go to the previous page."));
         prevMeta.setLore(prevLore);
