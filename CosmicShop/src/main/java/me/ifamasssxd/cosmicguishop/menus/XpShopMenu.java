@@ -90,12 +90,28 @@ public class XpShopMenu{
 
         expShopUI.getFiller().fillBorder(new GuiItem(createFillerItem()));
 
-        expShopUI.setItem(6, 1, ItemBuilder.from(Material.PAPER).setName(CC.translate("&c&l<- Previous Page")).asGuiItem(event -> {
+        ItemStack prevPage = new ItemStack(Material.ARROW);
+        ItemMeta prevMeta = prevPage.getItemMeta();
+        prevMeta.setDisplayName(CC.translate("&c<-Previous Page"));
+        List<String> prevLore = new ArrayList<>();
+        prevLore.add(CC.translate("&7Right-Click&7 to go to the previous page."));
+        prevMeta.setLore(prevLore);
+        prevPage.setItemMeta(prevMeta);
+
+        ItemStack nextPage = new ItemStack(Material.ARROW);
+        ItemMeta nextMeta = nextPage.getItemMeta();
+        nextMeta.setDisplayName(CC.translate("&aNext Page ->"));
+        List<String> nextLore = new ArrayList<>();
+        nextLore.add(CC.translate("&7Right-Click&7 to go to the next page."));
+        nextMeta.setLore(nextLore);
+        nextPage.setItemMeta(nextMeta);
+
+        expShopUI.setItem(6, 1, new GuiItem(prevPage, event -> {
             expShopUI.previous();
             event.setCancelled(true);
         }));
 
-        expShopUI.setItem(6, 9, ItemBuilder.from(Material.PAPER).setName(CC.translate("&a&lNext Page ->")).asGuiItem(event -> {
+        expShopUI.setItem(6, 1, new GuiItem(nextPage, event -> {
             expShopUI.next();
             event.setCancelled(true);
         }));
@@ -129,9 +145,9 @@ public class XpShopMenu{
                     ItemStack itemStack = event.getCurrentItem().clone();
                     ItemMeta meta2 = itemStack.getItemMeta();
                     List<String> lore2 = meta.getLore();
-                    lore2.remove(lore.size() - 1);
-                    lore2.remove(lore.size() - 1);
-                    lore2.remove(lore.size() - 1);
+                    lore2.remove(lore2.size() - 1);
+                    lore2.remove(lore2.size() - 1);
+                    lore2.remove(lore2.size() - 1);
                     meta2.setLore(lore2);
                     itemStack.setItemMeta(meta2);
                     player.getInventory().addItem(itemStack);
