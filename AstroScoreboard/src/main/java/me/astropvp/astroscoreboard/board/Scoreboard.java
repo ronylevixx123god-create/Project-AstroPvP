@@ -81,9 +81,9 @@ public class Scoreboard implements BoardAdapter {
             return CC.translate("&d&lPrinter Mode&7 " + getDateSuffix());
         }
 
-        if (player.hasMetadata("cageMatch")) {
+        /*if (player.hasMetadata("cageMatch")) {
             return CC.translate("&a&lCage Match &7" + getDateSuffix());
-        }
+        }*/
 
         if (WorldGuardUtils.inRegion(player.getLocation(), "infernalfull")) {
             return CC.translate("&c&lInfernal Stronghold &7" + getDateSuffix());
@@ -122,7 +122,7 @@ public class Scoreboard implements BoardAdapter {
             return board;
         }
 
-        if (player.hasMetadata("cageMatch")) {
+        /*if (player.hasMetadata("cageMatch")) {
             List<String> board = new LinkedList<>();
             CageMatch pvpMatch = WildPvPPlugin.getInstance().getMatchManager().getMatchFromPlayer(player);
 
@@ -149,7 +149,7 @@ public class Scoreboard implements BoardAdapter {
             board.add(player.getName());
 
             return board;
-        }
+        }*/
 
         if (WorldGuardUtils.inRegion(player.getLocation(), "frozen")) {
             List<String> board = new LinkedList<>();

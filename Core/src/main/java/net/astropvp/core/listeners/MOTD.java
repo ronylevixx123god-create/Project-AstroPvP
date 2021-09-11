@@ -1,8 +1,10 @@
 package net.astropvp.core.listeners;
 
 import com.astropvp.cc.CCVerify;
+import com.astropvp.cc.packet.type.out.PacketOutTeamVoiceStatus;
 import com.astropvp.cc.player.CosmicPlayer;
 import com.astropvp.cc.player.CosmicPlayers;
+import com.astropvp.cc.voice.EnumChannel;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.massivecraft.factions.Conf;
@@ -10,6 +12,7 @@ import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.Factions;
 import net.astropvp.core.AstroCore;
 import net.astropvp.core.utils.ChatManager;
+import net.minecraft.server.v1_8_R3.Packet;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -17,6 +20,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.github.paperspigot.Title;
+
+import java.util.HashSet;
 
 public class MOTD implements Listener {
     @EventHandler
@@ -90,6 +95,10 @@ public class MOTD implements Listener {
                 player.sendMessage(CC.translate("&7With this client you will be able to see &fItemSkins&7, &fRoam&7, &fFaction Ping&7 and so much more..."));
                 player.sendMessage(CC.translate("&eYou now have 1.5x EXP and 1.5x Grinding Lootboxes chance."));
                 player.sendMessage("");
+
+                CosmicPlayer wrapped = CosmicPlayers.get().getCosmicPlayer(e.getPlayer());
+                wrapped.setCurrentChannel(EnumChannel.PROXIMITY);
+                wrapped.sendPacket((com.astropvp.cc.packet.type.Packet) new PacketOutTeamVoiceStatus(new HashSet(), new HashSet()));
             } else {
                 player.sendMessage("");
                 player.sendMessage(CC.translate("&a&l[!]&a Hello &f" + player.getName() + "&a, you are not on the supported version of &f&nCosmicClient&a."));
@@ -100,6 +109,11 @@ public class MOTD implements Listener {
                 player.sendMessage("");
             }
         }, 80L);
+
+
     }
+
+
+
 
 }
