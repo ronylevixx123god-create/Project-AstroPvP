@@ -8,31 +8,18 @@ import com.conaxgames.customskulls.data.LoadCustomBlocks;
 import com.conaxgames.customskulls.enums.AbilityType;
 import com.conaxgames.customskulls.listeners.CustomAbilityListener;
 import com.conaxgames.customskulls.listeners.CustomBlockListener;
-import com.conaxgames.customskulls.listeners.MobGrinderGUIListener;
-import com.conaxgames.customskulls.struct.MobGrinderCollection;
+import com.conaxgames.customskulls.listeners.SlotbotMachineGUIListener;
 import com.conaxgames.customskulls.tasks.GrinderBlockCheckRunnable;
 import com.conaxgames.customskulls.tasks.MobGrinderRunnable;
 import com.conaxgames.customskulls.util.CC;
-import com.conaxgames.customskulls.util.CustomBlockUtil;
 import com.conaxgames.customskulls.util.inventoryui.UIListener;
-import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
-import de.tr7zw.nbtinjector.NBTInjector;
 import lombok.Getter;
 import me.astropvp.astrospawners.AstroSpawners;
 import me.astropvp.astrospawners.utils.MobStackerUtils;
-import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
-import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
 import net.milkbowl.vault.economy.Economy;
-import org.arkhamnetwork.Arkkit.patches.ExpBottles;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.block.Chest;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -50,6 +37,9 @@ public class CoreSkulls extends JavaPlugin {
     @Getter
     private static Economy economy = null;
     public static MobStackerUtils mobStackerUtils;
+
+    public static Map<UUID, AbilityData> inSlotbotMachine;
+
 
     @Override
     public void onEnable() {
@@ -74,12 +64,13 @@ public class CoreSkulls extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new UIListener(), this);
         getServer().getPluginManager().registerEvents(new CustomBlockListener(), this);
         getServer().getPluginManager().registerEvents(new CustomAbilityListener(), this);
-        //getServer().getPluginManager().registerEvents(new MobGrinderGUIListener(), this);
+        getServer().getPluginManager().registerEvents(new SlotbotMachineGUIListener(), this);
         LoadCustomBlocks.load();
 
         mobGrinderCustomBlocks = new HashMap<>();
 
         this.mobStackerUtils = AstroSpawners.astroSpawners.getMobStackerUtils();
+        this.inSlotbotMachine = new HashMap<>();
         registerTasks();
 
         for (Map.Entry<String, AbilityData> entry : AbilityData.getAbilityDataMap().entrySet()) {
@@ -114,6 +105,7 @@ public class CoreSkulls extends JavaPlugin {
         customBlocks.put("LEVIATHAN_TOTEM", new LeviathanTotem());
         customBlocks.put("HALLOWEEN_CANDLES", new HalloweenCandle());
         customBlocks.put("TRIALS_FAME_AND_FORTUNE", new MobGrinder());
+        customBlocks.put("COSMIC_TOKEN_GENERATOR", new SlotbotMachine());
     }
 
     public void info(String string) {
@@ -132,6 +124,10 @@ public class CoreSkulls extends JavaPlugin {
             e.printStackTrace();
 
         }
+    }
+
+    public static Map<UUID, AbilityData> getInSlotbotMachine() {
+        return inSlotbotMachine;
     }
 
     private boolean setupEconomy() {

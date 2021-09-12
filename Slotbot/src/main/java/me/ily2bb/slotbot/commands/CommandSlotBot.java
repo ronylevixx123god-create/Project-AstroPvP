@@ -48,9 +48,9 @@ public class CommandSlotBot implements CommandExecutor {
                     list.set(list.size() - 1, i);
                 }
                 String i = list.get(list.size() - 1);
-                double percentage = 0;
+                int percentage = 0;
                 try {
-                    percentage = Double.parseDouble(args[1]);
+                    percentage = Integer.parseInt(args[1]);
                 } catch (NumberFormatException e) {
                     percentage = 1;
                 }

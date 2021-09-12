@@ -1,9 +1,11 @@
 package me.ily2bb.slotbot;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import me.ily2bb.slotbot.utils.Utils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -22,9 +24,27 @@ public class CosmicSlotBotAPI {
     }
 
 
-    public static ItemStack getRandomSlotBotLootItem(Player p) {
+    public static ItemStack getRandomSlotBotLootItem() {
+
         final Object[] objects = Utils.getMap();
-        final ItemStack item = Utils.getRandomItemFromLootTable(objects);
-        return item;
+        return Utils.getRandomItemFromLootTable(objects);
+    }
+
+    public static boolean isSlotbotTicket(ItemStack itemStack) {
+        if (itemStack == null) return false;
+        if (itemStack.getType() == Material.AIR) return false;
+
+        return itemStack.getItemMeta().equals(CosmicSlotBotAPI.createSlotBotItem().getItemMeta());
+    }
+
+
+    public static int getSlotsInInventory(Player p) {
+        int i=0;
+        for (ItemStack itemStack : p.getInventory()) {
+            if (isSlotbotTicket(itemStack)) {
+                i+=itemStack.getAmount();
+            }
+        }
+        return i;
     }
 }

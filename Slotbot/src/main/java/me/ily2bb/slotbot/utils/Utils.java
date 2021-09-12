@@ -84,9 +84,9 @@ public class Utils {
         return fromBase64(line.split(":")[0]).getContents()[0];
     }
 
-    public static double getPercentage(final String line) {
+    public static int getPercentage(final String line) {
         final String[] split = line.split(":");
-        return Double.parseDouble(split[split.length - 1]);
+        return Integer.parseInt(split[split.length - 1]);
     }
 
     public static boolean isShowing(final String line) {
@@ -113,9 +113,9 @@ public class Utils {
         return false;
     }
 
-    public static double getTotalPercentage() {
+    public static int getTotalPercentage() {
         final List<String> list = (List<String>) SlotBotPlugin.getInstance().getConfig().get("items");
-        double total = 0;
+        int total = 0;
         for (final String l : list) {
             total += getPercentage(l);
         }
@@ -123,25 +123,25 @@ public class Utils {
     }
 
     public static Object[] getMap() {
-        final HashMap<Double[], ItemStack> items = new HashMap<Double[], ItemStack>();
+        final HashMap<Integer[], ItemStack> items = new HashMap<Integer[], ItemStack>();
         final List<String> list = (List<String>) SlotBotPlugin.getInstance().getConfig().get("items");
-        double start = 0;
+        int start = 0;
         for (final String l : list) {
-            final double percentage = getPercentage(l);
+            final int percentage = getPercentage(l);
             final ItemStack x = getItem(l);
-            items.put(new Double[]{start + 1, start + percentage}, x);
+            items.put(new Integer[]{start + 1, start + percentage}, x);
             start += percentage;
         }
         return new Object[]{items, start + 1};
     }
 
     public static ItemStack getRandomItemFromLootTable(final Object[] objects) {
-        final HashMap<Double[], ItemStack> map = (HashMap<Double[], ItemStack>) objects[0];
-        final double random = ThreadLocalRandom.current().nextDouble(1, (double) objects[1]);
-        for (final Map.Entry<Double[], ItemStack> entry : map.entrySet()) {
-            final Double[] values = entry.getKey();
-            final double from = values[0];
-            final double to = values[1];
+        final HashMap<Integer[], ItemStack> map = (HashMap<Integer[], ItemStack>) objects[0];
+        final int random = ThreadLocalRandom.current().nextInt(1, (int) objects[1]);
+        for (final Map.Entry<Integer[], ItemStack> entry : map.entrySet()) {
+            final Integer[] values = entry.getKey();
+            final int from = values[0];
+            final int to = values[1];
             if (from <= random && to >= random) {
                 return entry.getValue();
             }

@@ -274,7 +274,6 @@ public class AstroCore extends JavaPlugin {
         this.getCommand("corechunkfinder").setExecutor(new CoreChunkFinderCommand());
         this.getCommand("spawnershop").setExecutor(new SpawnerShopCommand());
 
-        this.getServer().getPluginManager().registerEvents(new NoPotDrop(), this);
         this.getServer().getPluginManager().registerEvents(new KillTitleSound(), this);
 
         this.getCommand("givesoulpearl").setExecutor(new SoulPearlCommand());
