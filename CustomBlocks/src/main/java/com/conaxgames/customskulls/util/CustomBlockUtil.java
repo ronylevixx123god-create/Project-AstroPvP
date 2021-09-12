@@ -78,6 +78,7 @@ public class CustomBlockUtil {
                 for (int z = -(radius); z <= radius; z++) {
                     if (block.getRelative(x, y, z).getType() == Material.CHEST) {
                         return block.getRelative(x, y, z).getLocation();
+
                     }
                 }
             }
