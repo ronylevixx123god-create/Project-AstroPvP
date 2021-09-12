@@ -71,20 +71,34 @@ public class CustomBlockUtil {
     }
 
     public static Location getClosestChestLocation(Location location) {
-        int radius = 2;
-        Block block = location.getBlock(); //placed block
-        for (int x = -(radius); x <= radius; x++) {
-            for (int y = -(radius); y <= radius; y++) {
-                for (int z = -(radius); z <= radius; z++) {
-                    if (block.getRelative(x, y, z).getType() == Material.CHEST) {
-                        return block.getRelative(x, y, z).getLocation();
+        List<Block> nearbyChests = getNearbyChests(location.getBlock(), 2);
 
-                    }
-                }
+        for (Block block : nearbyChests) {
+            Chest chest = (Chest) block.getLocation().getBlock().getState();
+            if (isInvEmpty(chest.getInventory())) {
+                return block.getLocation();
             }
         }
         return null;
 
+    }
+
+    public static List<Block> getNearbyChests(Block start, int radius){
+        if (radius < 0) {
+            return new ArrayList<Block>(0);
+        }
+        int iterations = (radius * 2) + 1;
+        List<Block> blocks = new ArrayList<Block>(iterations * iterations * iterations);
+        for (int x = -radius; x <= radius; x++) {
+            for (int y = -radius; y <= radius; y++) {
+                for (int z = -radius; z <= radius; z++) {
+                    if (start.getRelative(x,y,z).getType() == Material.CHEST) {
+                        blocks.add(start.getRelative(x, y, z));
+                    }
+                }
+            }
+        }
+        return blocks;
     }
 
     public static boolean isInvEmpty(Inventory inv) {

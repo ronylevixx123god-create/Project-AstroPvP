@@ -115,13 +115,13 @@ public class SlotbotMachineGUIListener implements Listener {
 
                 Location chestLocation = CustomBlockUtil.getClosestChestLocation(block.getLocation());
                 if (chestLocation == null) {
-                    p.sendMessage(CC.translate("&c&l(!)&c There are no nearby available chests!"));
+                    p.sendMessage(CC.translate("&c&l(!)&c There are no nearby &nfully empty&c chests!"));
                     return;
                 }
                 Chest chest = (Chest) chestLocation.getBlock().getState();
 
                 if (!CustomBlockUtil.isInvEmpty(chest.getInventory())) {
-                    p.sendMessage(CC.translate("&c&l(!)&c You need to &nempty&c the chest before opening Slotbot Tickets!"));
+                    p.sendMessage(CC.translate("&c&l(!)&c You need to &nfully empty&c the chest before opening Slotbot Tickets!"));
                     return;
                 }
 
@@ -144,6 +144,7 @@ public class SlotbotMachineGUIListener implements Listener {
                 BalanceTop.getEconomy().withdrawPlayer(p, price);
                 p.sendMessage(CC.translate("&c&l- $" +NumberUtils.formatMoney(price)));
                 p.closeInventory();
+                p.playSound(p.getLocation(), Sound.VILLAGER_YES, 5,5);
             }
         }
     }
