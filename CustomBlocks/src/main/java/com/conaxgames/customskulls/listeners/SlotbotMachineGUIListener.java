@@ -65,7 +65,7 @@ public class SlotbotMachineGUIListener implements Listener {
                 List<String> lore = new ArrayList<>();
                 lore.add(CC.translate("&7&nRight-Click&7 to open &f" + tickets + "&7 Slotbot tickets"));
                 lore.add("");
-                lore.add(CC.translate("&a&lPrice: &f$" + NumberUtils.formatMoney(price) + " &7($1,000 x &n" + tickets + "&7)"));
+                lore.add(CC.translate("&a&lPrice: &f$" + NumberUtils.formatMoney(price) + " &7($10,000 x &n" + tickets + "&7)"));
                 meta.setLore(lore);
                 confirmButton.setItemMeta(meta);
                 inventory.setItem(4, confirmButton);

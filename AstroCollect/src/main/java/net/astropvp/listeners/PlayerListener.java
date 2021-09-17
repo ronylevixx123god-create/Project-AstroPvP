@@ -24,7 +24,8 @@ public class PlayerListener implements Listener {
             return;
         Player killer = e.getEntity().getKiller();
         Player killed = e.getEntity();
-        e.getDrops().clear();
         CollectPlugin.getInstance().getCollectManager().getPlayerCollect(killer).add(new CollectCategory(CollectType.DEATH_INVENTORY, e.getDrops(), CC.RedB + killed.getName() + "'s Death Inventory"));
+        e.getDrops().clear();
+
     }
 }

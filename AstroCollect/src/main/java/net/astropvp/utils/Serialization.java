@@ -17,7 +17,7 @@ public class Serialization {
             for (Object object : items) {
                 output.writeObject(object);
             }
-            output.close();;
+            output.close();
             return Base64Coder.encodeLines(os.toByteArray());
         } catch(IOException e) {
             e.printStackTrace();

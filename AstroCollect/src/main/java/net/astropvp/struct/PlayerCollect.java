@@ -48,7 +48,8 @@ public class PlayerCollect {
             try {
                 statement.setString(1, this.player.getUniqueId().toString());
                 statement.setString(2, getAsString(this.getCategories()));
-                statement.executeQuery();
+                statement.setString(3, getAsString(this.getCategories()));
+                statement.executeUpdate();
             } finally {
                 if (Collections.singletonList(statement).get(0) != null)
                     statement.close();
@@ -66,7 +67,7 @@ public class PlayerCollect {
         }
         this.loading = true;
         try {
-            PreparedStatement statement = CollectPlugin.getInstance().getSqlDatabase().getConnection().prepareStatement("SELECT items FROM collect_userdata WHERE uuid = '" + player.getUniqueId().toString() + "'");
+            PreparedStatement statement = CollectPlugin.getInstance().getSqlDatabase().getConnection().prepareStatement("SELECT items FROM collect_userdata WHERE uuid = ?");
             statement.setString(1, this.player.getUniqueId().toString());
             ResultSet set = statement.executeQuery();
             if(set.first()) {
