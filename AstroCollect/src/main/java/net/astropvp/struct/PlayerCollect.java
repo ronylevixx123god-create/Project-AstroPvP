@@ -44,13 +44,13 @@ public class PlayerCollect {
             return;
         }
         try {
-            PreparedStatement statement = CollectPlugin.getInstance().getSqlDatabase().getConnection().prepareStatement("INSERT IGNORE INTO collect_userdata(uuid, items) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE items = ?;");
+            PreparedStatement statement = CollectPlugin.getInstance().getSqlDatabase().getConnection().prepareStatement("INSERT IGNORE INTO collect_userdata(uuid, items) VALUES (?, ?) ON DUPLICATE KEY UPDATE items = ?;");
             try {
                 statement.setString(1, this.player.getUniqueId().toString());
                 statement.setString(2, getAsString(this.getCategories()));
                 statement.executeQuery();
             } finally {
-                if (Collections.<PreparedStatement>singletonList(statement).get(0) != null)
+                if (Collections.singletonList(statement).get(0) != null)
                     statement.close();
             }
         } catch (SQLException e) {
@@ -59,14 +59,14 @@ public class PlayerCollect {
 
     }
 
-    public void load(boolean async) {
+    public void load(boolean async, Player player) {
         if (async && Bukkit.isPrimaryThread()) {
-            Bukkit.getScheduler().scheduleAsyncDelayedTask(CollectPlugin.getInstance(), () -> load(false));
+            Bukkit.getScheduler().scheduleAsyncDelayedTask(CollectPlugin.getInstance(), () -> load(false, player));
             return;
         }
         this.loading = true;
         try {
-            PreparedStatement statement = CollectPlugin.getInstance().getSqlDatabase().getConnection().prepareStatement("SELECT items FROM 'collect_userdata' WHERE uuid = ?");
+            PreparedStatement statement = CollectPlugin.getInstance().getSqlDatabase().getConnection().prepareStatement("SELECT items FROM collect_userdata WHERE uuid = '" + player.getUniqueId().toString() + "'");
             statement.setString(1, this.player.getUniqueId().toString());
             ResultSet set = statement.executeQuery();
             if(set.first()) {

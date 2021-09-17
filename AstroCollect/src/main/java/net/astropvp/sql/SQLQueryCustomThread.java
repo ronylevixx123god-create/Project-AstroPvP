@@ -19,7 +19,7 @@ public class SQLQueryCustomThread extends Thread {
         while(true) {
             try {
                 Thread.sleep(250L);
-            } catch (Exception var2) {
+            } catch (Exception ignored) {
             }
 
             this.execute();
@@ -29,26 +29,19 @@ public class SQLQueryCustomThread extends Thread {
     public void execute() {
         if (!this.querys.isEmpty()) {
             StringBuilder executed = new StringBuilder();
-
             try {
                 PreparedStatement statement = CollectPlugin.getInstance().getSqlDatabase().getConnection().prepareStatement("");
-
                 try {
-                    Iterator var3 = this.querys.iterator();
-
-                    while(var3.hasNext()) {
-                        String query = (String)var3.next();
+                    for (String query : this.querys) {
                         statement.addBatch(query);
                         executed.append(query).append(", ");
                         this.querys.remove(query);
                     }
-
                     statement.executeBatch();
                 } finally {
                     if (Collections.singletonList(statement).get(0) != null) {
                         statement.close();
                     }
-
                 }
             } catch (Exception var9) {
                 Bukkit.getLogger().info("Error while executing queries: " + executed.toString());

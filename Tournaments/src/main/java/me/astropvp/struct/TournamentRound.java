@@ -6,6 +6,6 @@ import java.util.List;
 public class TournamentRound {
     List<TournamentMatch> matches = new ArrayList<>();
 
-    public TournamentRound(int matches) {
+    public TournamentRound(double matches) {
     }
 }

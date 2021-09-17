@@ -38,7 +38,7 @@ public class CommandAdminTournament implements CommandExecutor {
         }
 
 
-        String string[] = Base64Utils.playerInventoryToBase64(player.getInventory());
+        String[] string = Base64Utils.playerInventoryToBase64(player.getInventory());
         Bukkit.broadcastMessage(string[0]);
         Bukkit.broadcastMessage(CC.Red + string[1]);
         player.getInventory().clear();

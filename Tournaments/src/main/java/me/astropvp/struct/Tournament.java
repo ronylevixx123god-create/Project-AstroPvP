@@ -54,7 +54,6 @@ public class Tournament {
 
     public void start() {
         Bukkit.getScheduler().cancelTask(this.waitingTaskId);
-        this.tournamentRounds = BracketUtils.createTournamentRounds();
     }
 
 

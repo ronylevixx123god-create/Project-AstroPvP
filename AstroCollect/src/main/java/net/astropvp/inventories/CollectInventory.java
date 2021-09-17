@@ -3,9 +3,11 @@ package net.astropvp.inventories;
 import com.cosmicpvp.cosmicutils.gui.CosmicGUI;
 import com.cosmicpvp.cosmicutils.gui.InventoryItem;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import me.ifamasssxd.factionupgrades.utils.SlotUtils;
 import net.astropvp.CollectPlugin;
 import net.astropvp.struct.CollectCategory;
 import net.astropvp.struct.PlayerCollect;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -15,7 +17,7 @@ import java.util.List;
 
 public class CollectInventory extends CosmicGUI {
     public CollectInventory(Player player) {
-        super(player, player.getName() + "'s Collect", 54);
+        super(player, player.getName() + "'s Collect", SlotUtils.fitSlots(CollectPlugin.getInstance().getCollectManager().getPlayerCollect(player).getCategories().size()));
     }
 
     public void redraw() {
@@ -40,5 +42,13 @@ public class CollectInventory extends CosmicGUI {
             player.closeInventory();
             player.openInventory(cat.getInventory());
         });
+    }
+
+    private InventoryItem getFillerItem() {
+        ItemStack item = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 3);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(CC.Gray);
+        item.setItemMeta(meta);
+        return new InventoryItem(item);
     }
 }

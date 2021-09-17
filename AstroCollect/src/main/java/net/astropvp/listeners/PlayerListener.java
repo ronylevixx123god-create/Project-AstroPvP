@@ -18,7 +18,7 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onDeath(PlayerDeathEvent e) {
-        if(!(e.getEntity().getKiller() instanceof Player))
+        if(e.getEntity().getKiller() == null)
             return;
         if(e.getKeepInventory())
             return;
