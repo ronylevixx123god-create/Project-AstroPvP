@@ -9,6 +9,7 @@ import com.conaxgames.customskulls.enums.AbilityType;
 import com.conaxgames.customskulls.util.CC;
 import com.conaxgames.customskulls.util.ItemBuilderUtils;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import org.bukkit.Chunk;
@@ -116,8 +117,8 @@ public class AstroTrophy extends CustomBlock {
         if (FactionUtils.isWilderness(p2.getLocation()) || (fPlayer.getRelationToLocation().isMember())) {
             if (CoreSkulls.getEconomy().has(breaker, AbilityType.COSMIC_TROPHY.getPickupPrice())) {
                 CoreSkulls.getEconomy().withdrawPlayer(breaker, AbilityType.COSMIC_TROPHY.getPickupPrice());
-                breaker.sendMessage(CC.B_RED + "-$" + AbilityType.COSMIC_TROPHY.getPickupPrice());
-                breaker.sendMessage(CC.GREEN + "You broke a " + AbilityType.COSMIC_TROPHY.getName() + CC.GREEN + "!");
+                breaker.sendMessage(CC.B_RED + "-$" + NumberUtils.formatMoney(AbilityType.COSMIC_TROPHY.getPickupPrice()));
+                breaker.sendMessage(CC.translate("&a&l(!)&a You broke a " + AbilityType.COSMIC_TROPHY.getName() + " Custom Block"));
 
                 ItemBuilderUtils item = new ItemBuilderUtils(this.getItem()).setLore(this.addLore());
                 p1.getBlock().getDrops().clear(); // clears the events item stack

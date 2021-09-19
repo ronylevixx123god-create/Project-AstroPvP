@@ -8,6 +8,7 @@ import com.conaxgames.customskulls.data.MakeCustomBlocks;
 import com.conaxgames.customskulls.enums.AbilityType;
 import com.conaxgames.customskulls.util.CC;
 import com.conaxgames.customskulls.util.ItemBuilderUtils;
+import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import org.bukkit.Chunk;
@@ -115,8 +116,8 @@ public class TreasureChest extends CustomBlock {
         }
         if (CoreSkulls.getEconomy().has(breaker, AbilityType.TREASURE_CHEST.getPickupPrice())) {
             CoreSkulls.getEconomy().withdrawPlayer(breaker, AbilityType.TREASURE_CHEST.getPickupPrice());
-            breaker.sendMessage(CC.B_RED + "-$" + AbilityType.TREASURE_CHEST.getPickupPrice());
-            breaker.sendMessage(CC.GREEN + "You broke a " + AbilityType.TREASURE_CHEST.getName() + CC.GREEN + "!");
+            breaker.sendMessage(CC.B_RED + "-$" + NumberUtils.formatMoney(AbilityType.TREASURE_CHEST.getPickupPrice()));
+            breaker.sendMessage(CC.translate("&a&l(!)&a You broke a " + AbilityType.TREASURE_CHEST.getName() + " Custom Block"));
 
             ItemBuilderUtils item = new ItemBuilderUtils(this.getItem()).setLore(this.addLore());
             p1.getBlock().getDrops().clear(); // clears the events item stack
