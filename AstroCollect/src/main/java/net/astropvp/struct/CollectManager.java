@@ -4,7 +4,7 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 
 public class CollectManager {
-    private HashMap<Player, PlayerCollect> collectList;
+    public static HashMap<Player, PlayerCollect> collectList;
 
     public CollectManager() {
         collectList = new HashMap<>();
@@ -14,9 +14,11 @@ public class CollectManager {
         if(collectList.containsKey(player))
             return collectList.get(player);
         PlayerCollect collect = new PlayerCollect(player);
-        collect.load(false, player);
         collectList.put(player, collect);
         return collect;
     }
 
+    public static HashMap<Player, PlayerCollect> getCollectList() {
+        return collectList;
+    }
 }

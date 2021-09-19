@@ -1,6 +1,7 @@
 package net.astropvp.struct;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -9,14 +10,17 @@ import java.util.List;
 public class CollectCategory {
     private CollectType type;
 
-    private List<ItemStack> items;
+    private ItemStack[] items;
 
     private String name;
 
-    public CollectCategory(CollectType type, List<ItemStack> items, String name) {
+    private String killedName;
+
+    public CollectCategory(CollectType type, ItemStack[] items, String name, String killedName) {
         this.type = type;
         this.items = items;
         this.name = name;
+        this.killedName = killedName;
     }
 
     public CollectType getType() {
@@ -33,5 +37,13 @@ public class CollectCategory {
             inventory.addItem(item);
         }
         return inventory;
+    }
+
+    public ItemStack[] getItems() {
+        return items;
+    }
+
+    public String getKilledName() {
+        return killedName;
     }
 }
