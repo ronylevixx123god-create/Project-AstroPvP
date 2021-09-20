@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import static net.astropvp.utils.Serialization.*;
 
@@ -42,9 +43,12 @@ public class PlayerCollect {
     public void save(boolean async) {
         if (this.loading)
             return;
-        if (async && Bukkit.isPrimaryThread()) {
-            Bukkit.getScheduler().scheduleAsyncDelayedTask(CollectPlugin.getInstance(), () -> save(false));
-            return;
+        try {
+            PreparedStatement statement = CollectPlugin.getInstance().getSqlDatabase().getConnection().prepareStatement("DELETE FROM collect_userdata WHERE uuid = ?");
+            statement.setString(1, this.player.getUniqueId().toString());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         try {
             for (CollectCategory category : this.categories) {
