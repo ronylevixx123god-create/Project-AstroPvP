@@ -19,9 +19,8 @@ public class CollectManager {
         }
         Bukkit.broadcastMessage("not found player");
         PlayerCollect collect = new PlayerCollect(player);
-        List<CollectCategory> categories = collect.load(false);
-        categories.forEach(collect::add);
         collectList.put(player, collect);
+        collect.load(false);
         return collect;
     }
 

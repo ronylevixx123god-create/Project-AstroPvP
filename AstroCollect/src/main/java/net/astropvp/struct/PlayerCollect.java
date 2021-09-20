@@ -68,27 +68,23 @@ public class PlayerCollect {
 
     }
 
-    public List<CollectCategory> load(boolean async) {
+    public void load(boolean async) {
         this.loading = true;
         try {
             PreparedStatement statement = CollectPlugin.getInstance().getSqlDatabase().getConnection().prepareStatement("SELECT * FROM collect_userdata WHERE uuid = ?");
             statement.setString(1, this.player.getUniqueId().toString());
             ResultSet set = statement.executeQuery();
-            List<CollectCategory> categories = new ArrayList<>();
-            if(set.first()) {
-                while(set.next()) {
-                    ItemStack[] items = Serialization.deserialize(set.getString("items"));
-                    String name = set.getString("name");
-                    String type = set.getString("type");
-                    CollectCategory category = new CollectCategory(CollectType.valueOf(type), items, name);
-                    categories.add(category);
-                }
+            while(set.next()) {
+                ItemStack[] items = Serialization.deserialize(set.getString("items"));
+                String name = set.getString("name");
+                String type = set.getString("type");
+                CollectCategory category = new CollectCategory(CollectType.valueOf(type), items, name);
+                CollectPlugin.getInstance().getCollectManager().getPlayerCollect(player).add(category);
             }
             this.loading = false;
             statement.close();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        return categories;
     }
 }
