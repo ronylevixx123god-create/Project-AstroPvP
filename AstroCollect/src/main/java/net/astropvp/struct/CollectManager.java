@@ -13,11 +13,8 @@ public class CollectManager {
     }
 
     public PlayerCollect getPlayerCollect(Player player) {
-        if(collectList.containsKey(player)) {
-            Bukkit.broadcastMessage("found player");
+        if(collectList.containsKey(player))
             return collectList.get(player);
-        }
-        Bukkit.broadcastMessage("not found player");
         PlayerCollect collect = new PlayerCollect(player);
         collectList.put(player, collect);
         collect.load(false);
