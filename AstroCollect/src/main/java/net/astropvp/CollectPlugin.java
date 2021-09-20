@@ -7,6 +7,7 @@ import net.astropvp.sql.SQLQueryCustomThread;
 import net.astropvp.struct.CollectManager;
 import net.astropvp.struct.PlayerCollect;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
@@ -37,6 +38,9 @@ public class CollectPlugin extends JavaPlugin {
     }
 
     public void onDisable() {
+        for(Player player : Bukkit.getOnlinePlayers()) {
+            CollectPlugin.getInstance().getCollectManager().getPlayerCollect(player).save(false);
+        }
         instance = null;
     }
 
