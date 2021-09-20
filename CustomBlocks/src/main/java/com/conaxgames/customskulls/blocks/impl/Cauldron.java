@@ -9,6 +9,7 @@ import com.conaxgames.customskulls.enums.AbilityType;
 import com.conaxgames.customskulls.util.CC;
 import com.conaxgames.customskulls.util.ItemBuilderUtils;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import org.bukkit.Bukkit;
@@ -117,8 +118,8 @@ public class Cauldron extends CustomBlock {
         }
         if (CoreSkulls.getEconomy().has(breaker, AbilityType.HALLOWEEN_CAULDRON.getPickupPrice())) {
             CoreSkulls.getEconomy().withdrawPlayer(breaker, AbilityType.HALLOWEEN_CAULDRON.getPickupPrice());
-            breaker.sendMessage(CC.B_RED + "-$" + AbilityType.HALLOWEEN_CAULDRON.getPickupPrice());
-            breaker.sendMessage(CC.GREEN + "You broke a " + AbilityType.HALLOWEEN_CAULDRON.getName() + CC.GREEN + "!");
+            breaker.sendMessage(CC.B_RED + "-$" + NumberUtils.formatMoney(AbilityType.HALLOWEEN_CAULDRON.getPickupPrice()));
+            breaker.sendMessage(CC.translate("&a&l(!)&a You broke a " + AbilityType.HALLOWEEN_CAULDRON.getName() + " Custom Block"));
 
             ItemBuilderUtils item = new ItemBuilderUtils(this.getItem()).setLore(this.addLore());
             p1.getBlock().getDrops().clear(); // clears the events item stack

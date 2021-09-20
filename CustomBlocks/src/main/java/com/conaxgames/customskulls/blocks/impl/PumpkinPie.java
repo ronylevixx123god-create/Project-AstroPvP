@@ -9,6 +9,7 @@ import com.conaxgames.customskulls.enums.AbilityType;
 import com.conaxgames.customskulls.util.CC;
 import com.conaxgames.customskulls.util.ItemBuilderUtils;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import org.bukkit.Bukkit;
@@ -117,8 +118,8 @@ public class PumpkinPie extends CustomBlock {
         }
         if (CoreSkulls.getEconomy().has(breaker, AbilityType.THANKSGIVING_PIE.getPickupPrice())) {
             CoreSkulls.getEconomy().withdrawPlayer(breaker, AbilityType.THANKSGIVING_PIE.getPickupPrice());
-            breaker.sendMessage(CC.B_RED + "-$" + AbilityType.THANKSGIVING_PIE.getPickupPrice());
-            breaker.sendMessage(CC.GREEN + "You broke a " + AbilityType.THANKSGIVING_PIE.getName() + CC.GREEN + "!");
+            breaker.sendMessage(CC.B_RED + "-$" + NumberUtils.formatMoney(AbilityType.THANKSGIVING_PIE.getPickupPrice()));
+            breaker.sendMessage(CC.translate("&a&l(!)&a You broke a " + AbilityType.THANKSGIVING_PIE.getName() + " Custom Block"));
 
             ItemBuilderUtils item = new ItemBuilderUtils(this.getItem()).setLore(this.addLore());
             p1.getBlock().getDrops().clear(); // clears the events item stack

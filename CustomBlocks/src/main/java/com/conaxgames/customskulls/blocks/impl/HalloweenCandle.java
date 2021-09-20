@@ -9,6 +9,7 @@ import com.conaxgames.customskulls.enums.AbilityType;
 import com.conaxgames.customskulls.util.CC;
 import com.conaxgames.customskulls.util.ItemBuilderUtils;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import org.bukkit.Chunk;
@@ -120,8 +121,8 @@ public class HalloweenCandle extends CustomBlock {
         if (FactionUtils.isWilderness(p2.getLocation()) || (fPlayer.getRelationToLocation().isMember())) {
             if (CoreSkulls.getEconomy().has(breaker, AbilityType.HALLOWEEN_CANDLES.getPickupPrice())) {
                 CoreSkulls.getEconomy().withdrawPlayer(breaker, AbilityType.HALLOWEEN_CANDLES.getPickupPrice());
-                breaker.sendMessage(CC.B_RED + "-$" + AbilityType.HALLOWEEN_CANDLES.getPickupPrice());
-                breaker.sendMessage(CC.GREEN + "You broke a " + AbilityType.HALLOWEEN_CANDLES.getName() + CC.GREEN + "!");
+                breaker.sendMessage(CC.B_RED + "-$" + NumberUtils.formatMoney(AbilityType.HALLOWEEN_CANDLES.getPickupPrice()));
+                breaker.sendMessage(CC.translate("&a&l(!)&a You broke a " + AbilityType.HALLOWEEN_CANDLES.getName() + " Custom Block"));
 
                 ItemBuilderUtils item = new ItemBuilderUtils(this.getItem()).setLore(this.addLore());
                 p1.getBlock().getDrops().clear(); // clears the events item stack
