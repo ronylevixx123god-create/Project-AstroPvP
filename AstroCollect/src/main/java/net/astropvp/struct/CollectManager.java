@@ -1,24 +1,31 @@
 package net.astropvp.struct;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import java.util.HashMap;
+import java.util.List;
 
 public class CollectManager {
-    public static HashMap<Player, PlayerCollect> collectList;
+    private HashMap<Player, PlayerCollect> collectList;
 
     public CollectManager() {
         collectList = new HashMap<>();
     }
 
     public PlayerCollect getPlayerCollect(Player player) {
-        if(collectList.containsKey(player))
+        if(collectList.containsKey(player)) {
+            Bukkit.broadcastMessage("found player");
             return collectList.get(player);
+        }
+        Bukkit.broadcastMessage("not found player");
         PlayerCollect collect = new PlayerCollect(player);
+        List<CollectCategory> categories = collect.load(false);
+        categories.forEach(collect::add);
         collectList.put(player, collect);
         return collect;
     }
 
-    public static HashMap<Player, PlayerCollect> getCollectList() {
-        return collectList;
+    public void remove(Player player) {
+        collectList.remove(player);
     }
 }

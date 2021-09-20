@@ -5,22 +5,22 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import javax.persistence.Transient;
+import java.io.*;
 import java.util.List;
 
-public class CollectCategory {
+public class CollectCategory implements Serializable {
     private CollectType type;
 
-    private ItemStack[] items;
+    private transient ItemStack[] items;
 
     private String name;
 
-    private String killedName;
 
-    public CollectCategory(CollectType type, ItemStack[] items, String name, String killedName) {
+    public CollectCategory(CollectType type, ItemStack[] items, String name) {
         this.type = type;
         this.items = items;
         this.name = name;
-        this.killedName = killedName;
     }
 
     public CollectType getType() {
@@ -43,7 +43,4 @@ public class CollectCategory {
         return items;
     }
 
-    public String getKilledName() {
-        return killedName;
-    }
 }

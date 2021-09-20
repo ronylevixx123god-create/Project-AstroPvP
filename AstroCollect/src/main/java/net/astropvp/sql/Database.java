@@ -14,6 +14,7 @@ public class Database {
     private String username;
     private String password;
     private String database;
+    private String port;
     private String url;
 
     public Database(CollectPlugin instance) {
@@ -21,7 +22,8 @@ public class Database {
         this.username = instance.getConfig().getString("username");
         this.password = instance.getConfig().getString("password");
         this.database = instance.getConfig().getString("database");
-        this.url = "jdbc:mysql://" + this.host + ":3308/" + this.database + "?autoReconnect=true";
+        this.port = instance.getConfig().getString("port");
+        this.url = "jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database + "?autoReconnect=true";
     }
 
     public void executeUpdate(String update, boolean async) {
