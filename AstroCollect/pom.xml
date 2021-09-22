@@ -331,6 +331,12 @@
             <version>1.16.18</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>me.mattstudios.utils</groupId>
+            <artifactId>matt-framework-gui</artifactId>
+            <version>2.0.3.3</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
 

@@ -1,5 +1,6 @@
 package net.astropvp.struct;
 
+import net.astropvp.inventories.CategoryInventory;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -12,7 +13,7 @@ import java.util.List;
 public class CollectCategory implements Serializable {
     private CollectType type;
 
-    private transient ItemStack[] items;
+    private ItemStack[] items;
 
     private String name;
 
@@ -29,14 +30,6 @@ public class CollectCategory implements Serializable {
 
     public String getName() {
         return name;
-    }
-
-    public Inventory getInventory() {
-        Inventory inventory = Bukkit.createInventory(null, 54, name);
-        for(ItemStack item : this.items) {
-            inventory.addItem(item);
-        }
-        return inventory;
     }
 
     public ItemStack[] getItems() {

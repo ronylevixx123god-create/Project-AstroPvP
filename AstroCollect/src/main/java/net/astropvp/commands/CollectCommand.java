@@ -15,7 +15,7 @@ public class CollectCommand implements CommandExecutor {
         if(!(sender instanceof Player))
             return true;
         Player player = (Player) sender;
-        new CollectInventory(player).openGUI(CollectPlugin.getInstance());
+        new CollectInventory(player).getCollectUI().open(player);
         return false;
     }
 }

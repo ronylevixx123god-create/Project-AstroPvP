@@ -40,6 +40,8 @@ public class PlayerCollect {
 
     public List<CollectCategory> getCategories() { return this.categories; }
 
+    public void remove(CollectCategory category) { this.categories.remove(category); }
+
     public void save(boolean async) {
         if (this.loading)
             return;
