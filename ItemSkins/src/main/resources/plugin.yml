@@ -5,3 +5,4 @@ commands:
   itemskin:
     aliases: [skin, skins, itemskins]
   multiskin:
+  removeskin:

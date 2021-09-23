@@ -1,5 +1,0 @@
-name: Collect
-main: net.astropvp.CollectPlugin
-version: 1.0
-commands:
-  collect:
