@@ -53,7 +53,7 @@ implements CommandExecutor {
                 }
                 MasteryKits kits = MasteryKits.getFromName(args[2].toUpperCase());
                 if (kits == null) {
-                    sender.sendMessage(CC.Red + "Invalid Mastery Kit: " + Arrays.toString((Object[])MasteryKits.values()));
+                    sender.sendMessage(CC.Red + "Invalid Mastery Kit: " + Arrays.toString(MasteryKits.values()));
                     return true;
                 }
                 PlayerUtil.giveOrDropProtectedItem((Player)player, (ItemStack)CosmicGlobalKitsAPI.createMasteryKitItem(kits, true), (int)-1);

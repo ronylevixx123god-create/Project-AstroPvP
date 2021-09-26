@@ -119,7 +119,7 @@ public class PermFacMenu
                 lore.add(ChatColor.GRAY + ChatColor.ITALIC.toString() + "been set for this " + (player ? "player" : "faction") + " in this chunk");
                 lore.add("");
             }
-            lore.addAll(player ? Lists.newArrayList((Object[]) new String[]{ChatColor.GREEN + "Left-Click" + ChatColor.GRAY + " to view player permissions", ChatColor.GRAY + "for this chunk.", "", ChatColor.GREEN + "Right-Click" + ChatColor.GRAY + " to clear player permissions", ChatColor.GRAY + "for this chunk."}) : Lists.newArrayList((Object[]) new String[]{ChatColor.GREEN + "Click" + ChatColor.GRAY + " to view Chunk Faction Permissions"}));
+            lore.addAll(player ? Lists.newArrayList( new String[]{ChatColor.GREEN + "Left-Click" + ChatColor.GRAY + " to view player permissions", ChatColor.GRAY + "for this chunk.", "", ChatColor.GREEN + "Right-Click" + ChatColor.GRAY + " to clear player permissions", ChatColor.GRAY + "for this chunk."}) : Lists.newArrayList( new String[]{ChatColor.GREEN + "Click" + ChatColor.GRAY + " to view Chunk Faction Permissions"}));
             this.setItem(slot++, new ClickableItemStack(player ? ItemUtil.createPlayerHead(playerInstead.getNameAsync()) : new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) relation.getDyeColor().getWoolData())).setDisplayName(ChatColor.GREEN.toString() + ChatColor.BOLD + (player ? "Player: " : "Faction: ") + relation.getColor() + (playerInstead != null ? playerInstead.getNameAsync() : fac.getTag())).setLore(lore).setClickCallback(e -> {
                 if (player) {
                     if (e.getClick() == ClickType.RIGHT) {

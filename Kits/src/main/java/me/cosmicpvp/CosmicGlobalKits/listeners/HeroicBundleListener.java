@@ -55,8 +55,8 @@ implements Listener {
                     p.setItemInHand(null);
                 }
                 if (vkitBundle) {
-                    ArrayList highChances = Lists.newArrayList((Object[])new EvolutionKits[]{EvolutionKits.TROLL, EvolutionKits.PHOENIX, EvolutionKits.ALCHEMIST, EvolutionKits.OGRE});
-                    ArrayList lowChances = Lists.newArrayList((Object[])new EvolutionKits[]{EvolutionKits.JUDGEMENT, EvolutionKits.SLAYER, EvolutionKits.MIMIC});
+                    ArrayList highChances = Lists.newArrayList(new EvolutionKits[]{EvolutionKits.TROLL, EvolutionKits.PHOENIX, EvolutionKits.ALCHEMIST, EvolutionKits.OGRE});
+                    ArrayList lowChances = Lists.newArrayList(new EvolutionKits[]{EvolutionKits.JUDGEMENT, EvolutionKits.SLAYER, EvolutionKits.MIMIC});
                     for (int i = 0; i < 4; ++i) {
                         EvolutionKits random = Math.random() <= 0.65 ? (EvolutionKits)highChances.get(ThreadLocalRandom.current().nextInt(highChances.size())) : (EvolutionKits)lowChances.get(ThreadLocalRandom.current().nextInt(lowChances.size()));
                         ItemStack item = FallenHero.getFallenHeroItem(random.getKit());

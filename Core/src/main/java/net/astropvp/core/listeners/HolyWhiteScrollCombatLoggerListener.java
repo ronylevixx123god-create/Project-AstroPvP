@@ -48,7 +48,7 @@ public class HolyWhiteScrollCombatLoggerListener implements Listener {
                             HolyWhiteScrollUtils.removeHolyWhitescroll(item);
                             try {
                                 (new ItemStack[1])[0] = item;
-                                Bukkit.getPluginManager().callEvent((Event)new CustomCosmicPlayerEvent(UUID.fromString(event.getPlayerUUIDString()), "HOLY_WHITESCROLL_DEATH", new Object[] { Lists.newArrayList((Object[])new ItemStack[1]) }));
+                                Bukkit.getPluginManager().callEvent((Event)new CustomCosmicPlayerEvent(UUID.fromString(event.getPlayerUUIDString()), "HOLY_WHITESCROLL_DEATH", new Object[] { Lists.newArrayList(new ItemStack[1]) }));
                             } catch (Exception e2) {
                                 e2.printStackTrace();
                             }
@@ -65,7 +65,7 @@ public class HolyWhiteScrollCombatLoggerListener implements Listener {
                     if (savedItems.size() <= 0)
                         continue;
                     AstroCore.getInstance().getHolyWhiteScrollListener().getSavedItems().put(event.getPlayerUUIDString(), savedItems);
-                    Bukkit.getLogger().info("Storing " + Arrays.toString(savedItems.toArray((Object[])new ItemStack[savedItems.size()])) + " holy whitescroll'd items for " + event.getPlayerName() + " due to combat logger death!");
+                    Bukkit.getLogger().info("Storing " + Arrays.toString(savedItems.toArray(new ItemStack[savedItems.size()])) + " holy whitescroll'd items for " + event.getPlayerName() + " due to combat logger death!");
                 }
             }
         }

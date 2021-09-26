@@ -148,7 +148,7 @@ public class DeathKnightAbilitySet
     }
 
     public ItemStack addRandomMasteryEnchants(ItemStack item, int count) {
-        ArrayList enchants = Lists.newArrayList((Object[]) new String[]{"Chain Lifesteal", "Death Pact", "Tombstone", "Permafrost"});
+        ArrayList enchants = Lists.newArrayList( new String[]{"Chain Lifesteal", "Death Pact", "Tombstone", "Permafrost"});
         for (int i = 0; i < count && !enchants.isEmpty(); ++i) {
             String random = (String) enchants.get(ThreadLocalRandom.current().nextInt(enchants.size()));
             if (random != null) {

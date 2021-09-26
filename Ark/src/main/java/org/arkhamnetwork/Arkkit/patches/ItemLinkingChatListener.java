@@ -95,7 +95,7 @@ final class ItemLinkingChatListener
             String id = msg.split("/brag ")[1].trim();
             event.setCancelled(true);
             event.setMessage("/null");
-            this.itemLinking.viewBrag.onCommand(event.getPlayer(), null, "/brag", Lists.newArrayList((Object[]) new String[]{id}).toArray(new String[1]));
+            this.itemLinking.viewBrag.onCommand(event.getPlayer(), null, "/brag", Lists.newArrayList( new String[]{id}).toArray(new String[1]));
         }
     }
 

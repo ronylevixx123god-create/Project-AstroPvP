@@ -159,7 +159,7 @@ public class GhostAbilitySet
     }
 
     public ItemStack addRandomMasteryEnchants(ItemStack item, int count) {
-        ArrayList enchants = Lists.newArrayList((Object[]) new String[]{"Horrify", "Feign Death", "Poltergeist", "Mark of the Beast"});
+        ArrayList enchants = Lists.newArrayList( new String[]{"Horrify", "Feign Death", "Poltergeist", "Mark of the Beast"});
         for (int i = 0; i < count && !enchants.isEmpty(); ++i) {
             String random = (String) enchants.get(ThreadLocalRandom.current().nextInt(enchants.size()));
             if (random != null) {

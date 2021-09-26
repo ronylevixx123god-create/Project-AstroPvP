@@ -183,7 +183,7 @@ public class ShopManager {
                 int potionBundleCount = isPotionBundle ? data.getData() - 100 : 0;
                 ArrayList lore = Lists.newArrayList();
                 if (isCollectionChest) {
-                    lore.addAll(Lists.newArrayList((Object[]) new String[]{ ChatColor.GRAY + "Create a chest that will",  ChatColor.GRAY + "automatically collect specified",  ChatColor.GRAY + "mob drops when a creature dies",  ChatColor.GRAY + "within the same chunk.", ""}));
+                    lore.addAll(Lists.newArrayList( new String[]{ ChatColor.GRAY + "Create a chest that will",  ChatColor.GRAY + "automatically collect specified",  ChatColor.GRAY + "mob drops when a creature dies",  ChatColor.GRAY + "within the same chunk.", ""}));
                 } else {
                     lore.add("");
                 }
@@ -373,7 +373,7 @@ public class ShopManager {
             }
         if (data.getType() == Material.POTION && data.getSellCount() > 1) {
             ItemMeta im = toGive.getItemMeta();
-            ArrayList lore = Lists.newArrayList((Object[]) new String[]{CC.Gray + "Stackable (" + data.getSellCount() + ")"});
+            ArrayList lore = Lists.newArrayList( new String[]{CC.Gray + "Stackable (" + data.getSellCount() + ")"});
             im.setLore((List) lore);
             toGive.setItemMeta(im);
             toGive = new NBTWrapper(toGive).setString("cosmicType", "stackable").setNBTBase("conaxData", (NBTBase) new NBTTagCompoundBuilder().setInt("maxStackSize", Integer.valueOf(data.getSellCount())).setLong("uniquePots", Long.valueOf(System.nanoTime())).get()).build();

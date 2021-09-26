@@ -116,7 +116,7 @@ public enum FactionUpgrade {
         lore.add((Object)tierColor + ChatColor.BOLD.toString() + "Perks");
         ArrayList perkLore = (ArrayList) upgrade.getPerkList(tier);
         if (perkLore == null) {
-            perkLore = Lists.newArrayList((Object[])new String[]{ChatColor.GRAY.toString() + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Vaq pls fill me in.", ChatColor.GRAY.toString() + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Good faction upgrades.", ChatColor.GRAY.toString() + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "All allies can fly."});
+            perkLore = Lists.newArrayList(new String[]{ChatColor.GRAY.toString() + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Vaq pls fill me in.", ChatColor.GRAY.toString() + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Good faction upgrades.", ChatColor.GRAY.toString() + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "All allies can fly."});
         }
         lore.addAll(perkLore);
         lore.add("");

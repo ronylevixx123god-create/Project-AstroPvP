@@ -155,7 +155,7 @@ public class CustomGodSet {
         HashMap<EnchantSlots, List<CustomEnchantment>> getSortedEnchants = this.getSortedEnchants();
         int index = 2;
         for (EnchantSlots slot : EnchantSlots.values()) {
-            ArrayList lore = Lists.newArrayList((Object[])new String[]{(Object)ChatColor.GRAY + "Each Enchantment of this rarity", (Object)ChatColor.GRAY + "costs " + (Object)slot.getNameColor() + ChatColor.UNDERLINE.toString() + slot.getSlotCost() + (Object)ChatColor.GRAY + " Enchant Slots"});
+            ArrayList lore = Lists.newArrayList(new String[]{(Object)ChatColor.GRAY + "Each Enchantment of this rarity", (Object)ChatColor.GRAY + "costs " + (Object)slot.getNameColor() + ChatColor.UNDERLINE.toString() + slot.getSlotCost() + (Object)ChatColor.GRAY + " Enchant Slots"});
             if (getSortedEnchants.size() > 0 && getSortedEnchants.containsKey((Object)slot)) {
                 lore.add("");
                 lore.add((Object)slot.getNameColor() + ChatColor.BOLD.toString() + "Applied Enchants:");

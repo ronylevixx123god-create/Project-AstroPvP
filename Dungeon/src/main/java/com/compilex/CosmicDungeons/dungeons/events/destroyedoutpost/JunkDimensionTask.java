@@ -113,7 +113,7 @@ extends BukkitRunnable {
             event.setUseItemInHand(Event.Result.DENY);
             player.getInventory().remove(event.getItem());
             player.updateInventory();
-            if (!WorldGuardUtils.isInRegionsContainsFast((Location)player.getLocation(), (List)Lists.newArrayList((Object[])new String[]{"junk_realm"}))) {
+            if (!WorldGuardUtils.isInRegionsContainsFast((Location)player.getLocation(), (List)Lists.newArrayList(new String[]{"junk_realm"}))) {
                 player.sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot use this item outside of the Junk Dimension!");
                 player.playSound(player.getLocation(), Sound.GHAST_SCREAM, 1.0f, 0.9f);
                 return;

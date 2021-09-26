@@ -120,7 +120,7 @@ public class EquipmentLootboxes
     }
 
     public ItemStack getRandomMkitItem() {
-        ArrayList kits = Lists.newArrayList((Object[]) new MasteryKits[]{MasteryKits.DEATH_KNIGHT, MasteryKits.GHOST, MasteryKits.NECROMANCER});
+        ArrayList kits = Lists.newArrayList( new MasteryKits[]{MasteryKits.DEATH_KNIGHT, MasteryKits.GHOST, MasteryKits.NECROMANCER});
         MasteryKits random = (MasteryKits) kits.get(ThreadLocalRandom.current().nextInt(kits.size()));
         List items = random.getKit().getMasteryItems(null, random, true);
         items.removeIf(item -> item == null || !GeneralUtil.isArmor((ItemStack) item));

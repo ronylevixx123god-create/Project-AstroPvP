@@ -189,7 +189,7 @@ public class CommandHelp {
 
     public boolean onCommand(Player player, int page) {
         int startIndex;
-        ArrayList rainbow = Lists.newArrayList((Object[])new ChatColor[]{ChatColor.RED, ChatColor.GOLD, ChatColor.YELLOW, ChatColor.GREEN, ChatColor.AQUA, ChatColor.DARK_AQUA, ChatColor.BLUE, ChatColor.DARK_PURPLE, ChatColor.LIGHT_PURPLE});
+        ArrayList rainbow = Lists.newArrayList(new ChatColor[]{ChatColor.RED, ChatColor.GOLD, ChatColor.YELLOW, ChatColor.GREEN, ChatColor.AQUA, ChatColor.DARK_AQUA, ChatColor.BLUE, ChatColor.DARK_PURPLE, ChatColor.LIGHT_PURPLE});
         int perPage = this.castle ? 8 : 9;
         int maxPages = (int)Math.ceil(Double.valueOf(this.helpList.size()) / Double.valueOf(perPage));
         if (page > maxPages) {

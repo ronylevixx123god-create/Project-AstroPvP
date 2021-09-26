@@ -63,7 +63,7 @@ public enum EvolutionKits {
     private static final Material levelUpMaterial;
 
     public static ItemStack getLuckyBox(int level, boolean applyIID) {
-        ArrayList lore = Lists.newArrayList((Object[])new String[]{"", CC.Gray + "A magical box that has a chance to contain " + CC.GoldU + "1-5x", CC.Gray + "increasingly epic items the higher its level.", ""});
+        ArrayList lore = Lists.newArrayList(new String[]{"", CC.Gray + "A magical box that has a chance to contain " + CC.GoldU + "1-5x", CC.Gray + "increasingly epic items the higher its level.", ""});
         EvolutionKits.addLore(lore, level, 1, "Item Nametag", "Lore Crystal", "Transmog Scroll", "Showcase Expansion", "Home Increaser", "Black Scroll", "Evolution Gem", "Kill Tracker", "XP Bottle");
         EvolutionKits.addLore(lore, level, 2, "Legendary Space Flare", "White Scroll", "mcMMO Skill Voucher", "Faction mcMMO Booster", "Reset Tool Kit");
         EvolutionKits.addLore(lore, level, 3, "Legendary Randomization Scroll", "Random /gkit Fallen Hero", "Faction XP Booster");

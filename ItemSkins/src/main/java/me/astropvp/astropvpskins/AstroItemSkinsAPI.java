@@ -167,7 +167,7 @@ public class AstroItemSkinsAPI {
 
         if (skinsCopy.size() != 0) {
             String[] remaining = skinsCopy.<String>toArray(new String[0]);
-            String s = Arrays.toString((Object[]) remaining);
+            String s = Arrays.toString( remaining);
             s = s.replaceAll(" ", "");
             s = s.replace("[", "");
             s = s.replace("]", "");
@@ -195,7 +195,7 @@ public class AstroItemSkinsAPI {
         skins.remove(stringArray[0]);
         if (skins.size() != 0) {
             String[] remaining = skins.<String>toArray(new String[0]);
-            String s = Arrays.toString((Object[]) remaining);
+            String s = Arrays.toString( remaining);
             s = s.replaceAll(" ", "");
             s = s.replace("[", "");
             s = s.replace("]", "");

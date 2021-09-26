@@ -33,7 +33,7 @@ public class InventoryFairyPet extends InventoryPet {
     }
 
     public List getPetDescription(int level) {
-        return Lists.newArrayList((Object[])new String[] {
+        return Lists.newArrayList(new String[] {
                 CC.Gray + "A tranquil pixie ready to protect the",
                 CC.Gray + "beholder from the comfort of the oasis",
                 CC.Gray, CC.WhiteB + "Ability",

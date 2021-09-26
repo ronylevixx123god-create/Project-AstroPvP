@@ -105,7 +105,7 @@ implements CommandExecutor {
                     }
                     EvolutionKits kit = EvolutionKits.getFromName(args[2]);
                     if (kit == null) {
-                        sender.sendMessage((Object)ChatColor.RED + "Invalid Evolution Kit given: " + Arrays.toString((Object[])EvolutionKits.values()));
+                        sender.sendMessage((Object)ChatColor.RED + "Invalid Evolution Kit given: " + Arrays.toString(EvolutionKits.values()));
                         return true;
                     }
                     sender.sendMessage((Object)ChatColor.RED + "Level Up Gem given to " + pl.getName());

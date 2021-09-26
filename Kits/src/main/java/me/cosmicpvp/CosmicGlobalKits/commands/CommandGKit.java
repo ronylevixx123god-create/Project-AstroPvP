@@ -77,7 +77,7 @@ implements CommandExecutor {
                         sender.sendMessage(CC.Red + "Please enter a valid level between 0 - 3");
                         return true;
                     }
-                    sender.sendMessage("Please enter a valid global kit: " + Arrays.toString((Object[])GlobalKits.values()));
+                    sender.sendMessage("Please enter a valid global kit: " + Arrays.toString(GlobalKits.values()));
                     return true;
                 }
             }
@@ -99,7 +99,7 @@ implements CommandExecutor {
                 return true;
             }
             catch (Exception e) {
-                sender.sendMessage("Please enter a valid global kit: " + Arrays.toString((Object[])GlobalKits.values()));
+                sender.sendMessage("Please enter a valid global kit: " + Arrays.toString(GlobalKits.values()));
                 return true;
             }
         }

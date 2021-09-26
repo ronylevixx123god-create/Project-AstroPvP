@@ -61,7 +61,7 @@ extends EvolutionKit {
     }
 
     public EvolutionKits getRandomEvolutionKit() {
-        ArrayList kits = Lists.newArrayList((Object[])EvolutionKits.values());
+        ArrayList kits = Lists.newArrayList(EvolutionKits.values());
         kits.remove((Object)EvolutionKits.MIMIC);
         return (EvolutionKits)((Object)kits.get(this.random.nextInt(kits.size())));
     }

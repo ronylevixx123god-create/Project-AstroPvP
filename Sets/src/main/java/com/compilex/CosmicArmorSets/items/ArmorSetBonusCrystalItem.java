@@ -119,7 +119,7 @@ public class ArmorSetBonusCrystalItem
         if (set.isEmpty() || chance == null) {
             return null;
         }
-        ArrayList lore = Lists.newArrayList((Object[]) new String[]{CC.Green + chance.intValue() + "% Success Rate", CC.Gray + "Can be applied to any non", CC.Gray + "armor set that is not", CC.Gray + "already equipped with a", CC.Gray + "bonus crystal to gain", CC.Gray + "a passive advantage!", ""});
+        ArrayList lore = Lists.newArrayList( new String[]{CC.Green + chance.intValue() + "% Success Rate", CC.Gray + "Can be applied to any non", CC.Gray + "armor set that is not", CC.Gray + "already equipped with a", CC.Gray + "bonus crystal to gain", CC.Gray + "a passive advantage!", ""});
         lore.add(CC.GoldB + "Crystal Bonus:");
         NBTTagListBuilder list = new NBTTagListBuilder();
         for (ArmorSet s : set) {

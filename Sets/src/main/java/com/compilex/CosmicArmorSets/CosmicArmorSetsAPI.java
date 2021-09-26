@@ -74,7 +74,7 @@ public class CosmicArmorSetsAPI {
     }
 
     public static ArmorSet getRandomArmorSetFromUpgrade() {
-        ArrayList avail = Math.random() <= 0.7 ? Lists.newArrayList((Object[]) new ArmorSet[]{ArmorSet.YETI, ArmorSet.SUPREME, ArmorSet.RANGER}) : Lists.newArrayList((Object[]) new ArmorSet[]{ArmorSet.PHANTOM, ArmorSet.MOTHER_OF_YIJKI, ArmorSet.DIMENSIONAL_TRAVELER});
+        ArrayList avail = Math.random() <= 0.7 ? Lists.newArrayList( new ArmorSet[]{ArmorSet.YETI, ArmorSet.SUPREME, ArmorSet.RANGER}) : Lists.newArrayList( new ArmorSet[]{ArmorSet.PHANTOM, ArmorSet.MOTHER_OF_YIJKI, ArmorSet.DIMENSIONAL_TRAVELER});
         return (ArmorSet) avail.get(ThreadLocalRandom.current().nextInt(avail.size()));
     }
 
@@ -411,7 +411,7 @@ public class CosmicArmorSetsAPI {
         if (name == null) {
             name = CC.DarkRedB + "Heroic " + StringUtils.capitaliseAllWords(type.name().split("_")[1].toLowerCase());
         }
-        if ((im = (item = new ItemBuilder(type, name).lore(lore = Lists.newArrayList((Object[]) new String[]{"", CC.Gray + "+" + armorModifier + " Armor Value", CC.Gray + durability + " Durability", CC.DarkRed + "This armor is stronger than diamond."})).build()).getItemMeta()) instanceof LeatherArmorMeta) {
+        if ((im = (item = new ItemBuilder(type, name).lore(lore = Lists.newArrayList( new String[]{"", CC.Gray + "+" + armorModifier + " Armor Value", CC.Gray + durability + " Durability", CC.DarkRed + "This armor is stronger than diamond."})).build()).getItemMeta()) instanceof LeatherArmorMeta) {
             LeatherArmorMeta lm = (LeatherArmorMeta) im;
             lm.setColor(Color.RED);
             item.setItemMeta(lm);

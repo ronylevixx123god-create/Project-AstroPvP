@@ -168,9 +168,9 @@ implements Listener {
             }
             if ((atSlot = inv.getItem(dungeon.getDungeonKeyMenuSlot())) != null && atSlot.getType() != Material.AIR) continue;
             if (dungeon.getDungeonType() != DungeonType.DESTROYED_OUTPOST) {
-                locked = Lists.newArrayList((Object[])new String[]{(Object)ChatColor.GRAY + "In order to enter a dungeon portal,", (Object)ChatColor.GRAY + "you must have the key to that dungeon", (Object)ChatColor.GRAY + "inside of your inventory.", "", (Object)ChatColor.GRAY + "Unlock access from the " + (Object)ChatColor.RED + "Dungeon Master", (Object)ChatColor.GRAY + "at /spawn, or using /dungeonmaster!"});
+                locked = Lists.newArrayList(new String[]{(Object)ChatColor.GRAY + "In order to enter a dungeon portal,", (Object)ChatColor.GRAY + "you must have the key to that dungeon", (Object)ChatColor.GRAY + "inside of your inventory.", "", (Object)ChatColor.GRAY + "Unlock access from the " + (Object)ChatColor.RED + "Dungeon Master", (Object)ChatColor.GRAY + "at /spawn, or using /dungeonmaster!"});
             } else {
-                locked = Lists.newArrayList((Object[])new String[]{(Object)ChatColor.GRAY + "In order to enter a dungeon portal,", (Object)ChatColor.GRAY + "you must have the following:"});
+                locked = Lists.newArrayList(new String[]{(Object)ChatColor.GRAY + "In order to enter a dungeon portal,", (Object)ChatColor.GRAY + "you must have the following:"});
                 locked.add(CC.WhiteB + " * " + CC.White + (hasKeyPermission || hasKey ? CC.Strike : "") + "Dungeon Key in Inventory");
                 locked.add(CC.WhiteB + " * " + CC.White + (hasCompletedPreviousRecently ? CC.Strike : "") + "Teleportation Coordinates");
                 locked.add("    " + CC.Gray + (hasCompletedPreviousRecently ? CC.Strike : "") + "(Defeat Abandoned Spaceship within 24 hours)");

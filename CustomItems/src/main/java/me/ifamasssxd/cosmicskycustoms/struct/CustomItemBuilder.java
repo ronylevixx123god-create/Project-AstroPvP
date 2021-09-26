@@ -18,14 +18,14 @@ extends CosmicItemBuilder {
     public CustomItemBuilder(String customItem, Object ... data) {
         super(Material.PAPER);
         this.item = customItem;
-        this.data = Lists.newArrayList((Object[])data);
+        this.data = Lists.newArrayList(data);
     }
 
     public CustomItemBuilder(CosmicItems item, Object ... data) {
         super(Material.PAPER);
         this.item = item.getInternalName();
         this.cosmicItem = item.getItem();
-        this.data = Lists.newArrayList((Object[])data);
+        this.data = Lists.newArrayList(data);
     }
 
     public ItemStack build() {

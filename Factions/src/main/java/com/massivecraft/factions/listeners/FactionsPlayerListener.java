@@ -298,7 +298,7 @@ public class FactionsPlayerListener implements Listener {
                     }
                     if (FactionPermissions.debug)
                         Bukkit.getLogger().info("Denying block permission item: " + event.useItemInHand() + " for " + handData + " : " + desiredBlockPermission + " KeyS: " +
-                                Arrays.toString(playerOrFactionPermissions.toArray((Object[])new FactionPermission[playerOrFactionPermissions.size()])));
+                                Arrays.toString(playerOrFactionPermissions.toArray(new FactionPermission[playerOrFactionPermissions.size()])));
                     sendTargetBlockUpdate(player);
                 }
             if (event.useItemInHand() == Event.Result.DENY && !allowedToOpen && desiredBlockPermission != FactionPermission.OTHER) {

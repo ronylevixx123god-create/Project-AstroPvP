@@ -207,7 +207,7 @@ public enum GlobalKits {
         if (kitData != null && (globalKitData = kitData.get((Object)this)) != null) {
             kitTier = globalKitData.getKitTier();
         }
-        ArrayList lore = Lists.newArrayList((Object[])new String[]{CC.YellowB + "Kit Tier: " + CC.Yellow + JSONMessage.getNumber((int)kitTier) + CC.YellowB + " / " + CC.Yellow + "III"});
+        ArrayList lore = Lists.newArrayList(new String[]{CC.YellowB + "Kit Tier: " + CC.Yellow + JSONMessage.getNumber((int)kitTier) + CC.YellowB + " / " + CC.Yellow + "III"});
         List<String> gkitLore = this.getItemLore();
         if (gkitLore.size() == 0 || !gkitLore.get(0).trim().isEmpty()) {
             lore.add("");

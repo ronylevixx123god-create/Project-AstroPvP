@@ -327,7 +327,7 @@ extends DungeonEvents {
             PortalPuzzle puzzle = this.portalPuzzleLocations.get(5);
             if (puzzle != null && puzzle.getSpawnLocation() != null) {
                 for (Player pl : this.dungeon.getPlayers()) {
-                    if (!WorldGuardUtils.isInRegionsContainsFast(pl.getLocation(), (List)Lists.newArrayList((Object[])new String[]{"yijki_realm"}))) continue;
+                    if (!WorldGuardUtils.isInRegionsContainsFast(pl.getLocation(), (List)Lists.newArrayList(new String[]{"yijki_realm"}))) continue;
                     this.dungeon.teleportPlayer(puzzle.getSpawnLocation(), pl, true);
                 }
             }
@@ -1140,7 +1140,7 @@ extends DungeonEvents {
                         int maxBreaks = 10;
                         double percentLeft = (double)this.health * 1.0 / 5.0;
                         int breaks = (int)Math.min(10.0, Math.floor(10.0 - percentLeft * 10.0));
-                        ArrayList pls = Lists.newArrayList((Object[])new Player[]{damager});
+                        ArrayList pls = Lists.newArrayList(new Player[]{damager});
                         damager.getNearbyEntities(64.0, 64.0, 64.0).forEach(ent -> {
                             if (ent instanceof Player) {
                                 pls.add(ent);

@@ -86,7 +86,7 @@ public class CoinFlipMatch {
         ItemStack skull = defaultSkill.clone();
         ItemMeta im = skull.getItemMeta();
         im.setDisplayName(FactionUtils.getFactionTag(other, player.getUniqueId()) + ChatColor.BOLD.toString() + player.getName());
-        im.setLore((List)Lists.newArrayList((Object[])new String[]{ChatColor.GREEN + "Balance: " + ChatColor.GREEN + ChatColor.BOLD + "$" + ChatColor.GREEN + this.format.format(AstroCore.getInstance().getEcon().getBalance(player))}));
+        im.setLore((List)Lists.newArrayList(new String[]{ChatColor.GREEN + "Balance: " + ChatColor.GREEN + ChatColor.BOLD + "$" + ChatColor.GREEN + this.format.format(AstroCore.getInstance().getEcon().getBalance(player))}));
         skull.setItemMeta(im);
         return skull;
     }

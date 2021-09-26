@@ -62,7 +62,7 @@ public class FAuditMenu
             if ((recentLogs = logs.getMostRecentLogs().get(type)) == null) {
                 recentLogs = Lists.newLinkedList();
             }
-            ArrayList lore = Lists.newArrayList((Object[]) new String[]{"", CC.GreenB + "Recent Logs " + CC.Green + "(" + CC.GreenB + recentLogs.size() + CC.Green + ")"});
+            ArrayList lore = Lists.newArrayList( new String[]{"", CC.GreenB + "Recent Logs " + CC.Green + "(" + CC.GreenB + recentLogs.size() + CC.Green + ")"});
             int added = 0;
             Iterator backwars = recentLogs.descendingIterator();
             while (backwars.hasNext()) {
@@ -139,7 +139,7 @@ public class FAuditMenu
                     if (startIndex >= log.size()) {
                         startIndex = log.size() - 1;
                     }
-                    ArrayList lore = Lists.newArrayList((Object[]) new String[]{"", CC.GreenB + "Logs"});
+                    ArrayList lore = Lists.newArrayList( new String[]{"", CC.GreenB + "Logs"});
                     for (int i = startIndex; i > startIndex - perPage; --i) {
                         if (i >= log.size()) continue;
                         if (i < 0) break;

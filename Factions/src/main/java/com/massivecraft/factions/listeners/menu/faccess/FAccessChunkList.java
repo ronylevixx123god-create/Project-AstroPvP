@@ -87,7 +87,7 @@ public class FAccessChunkList
             Faction fac = !player ? (Faction) ent : null;
             ArrayList lore = Lists.newArrayList();
             if (player) {
-                lore = Lists.newArrayList((Object[]) new String[]{ChatColor.GREEN + "Left-Click" + ChatColor.GRAY + " to view their chunk permissions", ChatColor.GREEN + "Right-Click" + ChatColor.GRAY + " to remove their access to this chunk"});
+                lore = Lists.newArrayList( new String[]{ChatColor.GREEN + "Left-Click" + ChatColor.GRAY + " to view their chunk permissions", ChatColor.GREEN + "Right-Click" + ChatColor.GRAY + " to remove their access to this chunk"});
             } else {
                 lore.add(ChatColor.GREEN + "Right-Click" + ChatColor.GRAY + " to remove Faction /f access.");
             }

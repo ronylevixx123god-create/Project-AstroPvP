@@ -26,7 +26,7 @@ implements Runnable {
     long lastPortalSpawnedTick = 0L;
     public static int spawnHour9AM = 9;
     public static int spawnHour7PM = 19;
-    public static LinkedList<Integer> spawnHours = Lists.newLinkedList((Iterable)Lists.newArrayList((Object[])new Integer[]{spawnHour9AM, spawnHour7PM}));
+    public static LinkedList<Integer> spawnHours = Lists.newLinkedList((Iterable)Lists.newArrayList(new Integer[]{spawnHour9AM, spawnHour7PM}));
     private static boolean forceSpawn = false;
     private static Block portalBlockA = null;
     private static Block portalBlockB = null;

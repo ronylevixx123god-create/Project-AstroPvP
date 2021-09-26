@@ -101,7 +101,7 @@ implements Listener {
     public Inventory getDungeonMasterMenu() {
         Inventory i = Bukkit.createInventory((InventoryHolder)null, (int)9, (String)"Dungeon Master");
         for (Dungeon d : DungeonsAPI.get().getDungeons()) {
-            ArrayList lore = Lists.newArrayList((Object[])new String[]{"", (Object)ChatColor.GRAY + "Purchase this key to unlock access", (Object)ChatColor.GRAY + "to the associated dungeon.", "", (Object)ChatColor.GRAY + "Please note that you will still", (Object)ChatColor.GRAY + "need to craft/find a " + (Object)ChatColor.UNDERLINE + "dungeon portal", (Object)ChatColor.GRAY + "each time you wish to run this dungeon.", "", (Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "COST" + (Object)ChatColor.WHITE + " $" + NumberUtils.formatMoney((double)d.getDungeonType().getPortalCost())});
+            ArrayList lore = Lists.newArrayList(new String[]{"", (Object)ChatColor.GRAY + "Purchase this key to unlock access", (Object)ChatColor.GRAY + "to the associated dungeon.", "", (Object)ChatColor.GRAY + "Please note that you will still", (Object)ChatColor.GRAY + "need to craft/find a " + (Object)ChatColor.UNDERLINE + "dungeon portal", (Object)ChatColor.GRAY + "each time you wish to run this dungeon.", "", (Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "COST" + (Object)ChatColor.WHITE + " $" + NumberUtils.formatMoney((double)d.getDungeonType().getPortalCost())});
             if (CosmicDungeonsPlugin.get().getDisabledDungeons().contains((Object)d.getDungeonType())) {
                 lore.add("");
                 lore.add(CC.RedB + "COMING SOON");

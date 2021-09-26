@@ -44,7 +44,7 @@ public class FactionPermissions {
         if (perms != null && perms.size() > 0) {
             Set<FactionPermission> found = perms.get(uuid);
             if (debug) {
-                //System.out.println("Returning playerMap: " + (found != null ? Arrays.toString((Object[])found.toArray((T[])new FactionPermission[found.size()])) : null) + " Size: " + perms.size() + " Key: " + Arrays.toString(perms.keySet().toArray(new UUID[perms.keySet().size()])));
+                //System.out.println("Returning playerMap: " + (found != null ? Arrays.toString(found.toArray((T[])new FactionPermission[found.size()])) : null) + " Size: " + perms.size() + " Key: " + Arrays.toString(perms.keySet().toArray(new UUID[perms.keySet().size()])));
             }
             if (found != null) {
                 return found;
@@ -68,7 +68,7 @@ public class FactionPermissions {
                 return new HashSet<>();
             }
             if (debug) {
-                //System.out.println("Returning fac chunk perm: " + (factionPerms != null ? Arrays.toString((Object[])factionPerms.toArray((T[])new FactionPermission[factionPerms.size()])) : null) + " Size: " + factionPermissions.size());
+                //System.out.println("Returning fac chunk perm: " + (factionPerms != null ? Arrays.toString(factionPerms.toArray((T[])new FactionPermission[factionPerms.size()])) : null) + " Size: " + factionPermissions.size());
             }
             if (factionPerms != null) {
                 return factionPerms;

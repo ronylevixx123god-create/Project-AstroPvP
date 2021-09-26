@@ -63,7 +63,7 @@ public class MysteryLootboxItem
     }
 
     public ItemStack createItem(Player player, Object... objects) {
-        ArrayList lore = Lists.newArrayList((Object[]) new String[]{CC.Gray + "Click to receive one of the", CC.Gray + "following random lootboxes:"});
+        ArrayList lore = Lists.newArrayList( new String[]{CC.Gray + "Click to receive one of the", CC.Gray + "following random lootboxes:"});
         for (MysteryChest chest : this.availableChests.getLoot()) {
             lore.add(CC.GoldB + " * " + CC.Gray + chest.getDisplayName());
         }

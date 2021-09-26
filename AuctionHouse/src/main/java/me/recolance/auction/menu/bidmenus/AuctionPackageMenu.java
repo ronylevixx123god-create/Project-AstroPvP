@@ -107,7 +107,7 @@ public class AuctionPackageMenu
                 this.redraw();
             }));
         }
-        ArrayList lore = Lists.newArrayList((Object[]) new String[]{"", CC.Gray + "Confirm to auction " + CC.GrayB + this.toReturn.size() + "x" + CC.Gray + " Items:"});
+        ArrayList lore = Lists.newArrayList( new String[]{"", CC.Gray + "Confirm to auction " + CC.GrayB + this.toReturn.size() + "x" + CC.Gray + " Items:"});
         for (ItemStack item3 : this.toReturn) {
             lore.add(CC.GoldB + "* " + CC.White + Util.getItemName(item3));
         }

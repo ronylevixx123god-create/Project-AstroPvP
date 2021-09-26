@@ -83,7 +83,7 @@ implements CommandExecutor {
         }
         if (args[0].equalsIgnoreCase("givekey")) {
             if (args.length != 2) {
-                sender.sendMessage(CC.Red + "Please provide a dungeon type: " + Arrays.toString((Object[])DungeonType.values()));
+                sender.sendMessage(CC.Red + "Please provide a dungeon type: " + Arrays.toString(DungeonType.values()));
                 return true;
             }
             try {
@@ -94,7 +94,7 @@ implements CommandExecutor {
             }
             catch (Exception e) {
                 e.printStackTrace();
-                sender.sendMessage(CC.Red + "Unable to find dungeon of that type: " + Arrays.toString((Object[])DungeonType.values()));
+                sender.sendMessage(CC.Red + "Unable to find dungeon of that type: " + Arrays.toString(DungeonType.values()));
                 sender.sendMessage(CC.RedB + "/adungeon givekey <dungeonType>");
                 return true;
             }
@@ -110,7 +110,7 @@ implements CommandExecutor {
             }
             DungeonType type2 = DungeonType.getFromName(dungeon2);
             if (type2 == null) {
-                sender.sendMessage(CC.Red + "Dungeon Type invalid! Valid: " + Arrays.toString((Object[])DungeonType.values()));
+                sender.sendMessage(CC.Red + "Dungeon Type invalid! Valid: " + Arrays.toString(DungeonType.values()));
                 return true;
             }
             ItemStack key = args.length == 4 && (val = NumberUtils.parseLongOrNull((String)args[3])) != null ? new DungeonKeyItem(type2, val).build() : new DungeonKeyItem(type2, -1L).build();
@@ -176,7 +176,7 @@ implements CommandExecutor {
         if (args[0].equalsIgnoreCase("setfastestdungeonrun") && args.length == 3) {
             DungeonType type = DungeonType.getFromName(args[1]);
             if (type == null) {
-                sender.sendMessage(CC.Red + "Invalid dungeon type: " + Arrays.toString((Object[])DungeonType.values()));
+                sender.sendMessage(CC.Red + "Invalid dungeon type: " + Arrays.toString(DungeonType.values()));
                 return true;
             }
             Integer completed = NumberUtils.parseIntOrNull((String)args[2]);
@@ -195,7 +195,7 @@ implements CommandExecutor {
                 DungeonPlayer pl = CosmicDungeonsPlugin.get().getApi().getPlayerDungeonData(player);
                 DungeonType type3 = DungeonType.getFromName(args[2]);
                 if (type3 == null) {
-                    sender.sendMessage(CC.Red + "Invalid dungeon type: " + Arrays.toString((Object[])DungeonType.values()));
+                    sender.sendMessage(CC.Red + "Invalid dungeon type: " + Arrays.toString(DungeonType.values()));
                     return true;
                 }
                 if (pl != null) {
@@ -357,7 +357,7 @@ implements CommandExecutor {
         if (args[0].equals("togglekeybuy") || args[0].equalsIgnoreCase("togglebuy")) {
             DungeonType type = DungeonType.getFromName(args[1]);
             if (type == null) {
-                sender.sendMessage(CC.Red + "Invalid dungeon type, valid: " + Arrays.toString((Object[])DungeonType.values()));
+                sender.sendMessage(CC.Red + "Invalid dungeon type, valid: " + Arrays.toString(DungeonType.values()));
                 return true;
             }
             if (CosmicDungeonsPlugin.get().getDisabledDungeons().contains((Object)type)) {

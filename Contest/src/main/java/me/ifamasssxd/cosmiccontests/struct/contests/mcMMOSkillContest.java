@@ -68,7 +68,7 @@ implements Rerollable {
     @Override
     public void reroll() {
         if (CosmicContests.get().isMcMMOEnabled()) {
-            ArrayList possibleSkills = Lists.newArrayList((Object[])SkillType.values());
+            ArrayList possibleSkills = Lists.newArrayList(SkillType.values());
             Collections.shuffle(possibleSkills);
             possibleSkills.remove((Object)SkillType.SALVAGE);
             possibleSkills.remove((Object)SkillType.SMELTING);

@@ -71,7 +71,7 @@ extends CosmicGUI {
             DungeonKeyItem item = new DungeonKeyItem(dungeonType);
             ItemBuilder builder = new ItemBuilder(item.build());
             String resetString = DungeonMasterKeyMenu.getResetString(dungeonType);
-            ArrayList toAdd = Lists.newArrayList((Object[])new String[]{"", (resetString != null ? CC.RedB + CC.Strike : CC.RedB) + "COST " + (resetString != null ? CC.White + CC.Strike : CC.White) + "$" + NumberUtils.formatMoney((double)dungeonType.getPortalCost())});
+            ArrayList toAdd = Lists.newArrayList(new String[]{"", (resetString != null ? CC.RedB + CC.Strike : CC.RedB) + "COST " + (resetString != null ? CC.White + CC.Strike : CC.White) + "$" + NumberUtils.formatMoney((double)dungeonType.getPortalCost())});
             if (resetString != null) {
                 toAdd.add(CC.Red + "Available in " + CC.RedB + resetString + CC.Red + "...");
             }

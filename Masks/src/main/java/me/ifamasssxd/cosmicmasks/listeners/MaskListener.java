@@ -276,7 +276,7 @@ public class MaskListener implements Listener {
             event.setCancelled(true);
             if (type2 == MaskType.MULTI_MASK) {
                 String[] masks = MultiMaskItem.listToString(MultiMaskItem.getMasks(clickedWrapper)).split(",");
-                player.setItemOnCursor(new CustomItemBuilder("multi_mask", (Object[])masks).build());
+                player.setItemOnCursor(new CustomItemBuilder("multi_mask", masks).build());
             } else {
                 player.setItemOnCursor(type2.createMask(true));
             }

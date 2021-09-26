@@ -315,7 +315,7 @@ public class DuelPlayer {
             ArrayList enchant = Lists.newArrayList();
             if (splits.length > 1) {
                 String enchants = item.split(CUSTOM_KIT_SEPERATOR)[1];
-                enchant = Lists.newArrayList((Object[])enchants.split(KIT_TYPE_SEPERATOR));
+                enchant = Lists.newArrayList(enchants.split(KIT_TYPE_SEPERATOR));
             }
             if ((material = Material.getMaterial((String)mat)) == null) continue;
             set.getCustomEnchants().put(material, enchant);

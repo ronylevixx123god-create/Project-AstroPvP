@@ -63,7 +63,7 @@ public class FAccessFactionMenu
             Faction fac = entry.getKey();
             Set<FLocation> found = entry.getValue();
             int shown = 0;
-            ArrayList lore = Lists.newArrayList((Object[]) new String[]{"", ChatColor.YELLOW + ChatColor.BOLD.toString() + "Chunk Access (" + found.size() + ")"});
+            ArrayList lore = Lists.newArrayList( new String[]{"", ChatColor.YELLOW + ChatColor.BOLD.toString() + "Chunk Access (" + found.size() + ")"});
             for (FLocation loc2 : found) {
                 if (shown >= 10) {
                     lore.add(ChatColor.YELLOW.toString() + ChatColor.BOLD + " * " + ChatColor.WHITE + (found.size() - shown) + " more...");

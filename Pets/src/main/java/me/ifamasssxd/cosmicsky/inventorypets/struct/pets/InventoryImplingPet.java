@@ -33,7 +33,7 @@ public class InventoryImplingPet extends InventoryPet {
     }
 
     public List getPetDescription(int level) {
-        return Lists.newArrayList((Object[])new String[] {
+        return Lists.newArrayList(new String[] {
                 CC.Gray + "An angry troll-like creature primed",
                 CC.Gray + "to unleash fire and fury, the likes",
                 CC.Gray + "of which the world has never seen",

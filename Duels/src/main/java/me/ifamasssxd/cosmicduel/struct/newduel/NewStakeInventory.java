@@ -91,7 +91,7 @@ public class NewStakeInventory {
         this.playerTypes.put(p1.getName(), PlayerType.ONE);
         this.playerTypes.put(p2.getName(), PlayerType.TWO);
         this.inventory = Bukkit.createInventory(null, 54, NewStakeInventory.getTradeInventoryTitle(p1.getName(), p2.getName()));
-        ArrayList lore = Lists.newArrayList((Object[])new String[]{"", ChatColor.YELLOW + ChatColor.BOLD.toString() + "Settings"});
+        ArrayList lore = Lists.newArrayList(new String[]{"", ChatColor.YELLOW + ChatColor.BOLD.toString() + "Settings"});
         for (Setting setting : Setting.values()) {
             if (duel.getSettings().hasSetting(setting)) {
                 lore.add(ChatColor.YELLOW + setting.getName() + ": " + ChatColor.GREEN + ChatColor.BOLD.toString() + "ON");

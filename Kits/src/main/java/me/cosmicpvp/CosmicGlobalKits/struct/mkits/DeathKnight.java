@@ -38,7 +38,7 @@ extends MasteryGlobalKit {
         ArrayList<ItemStack> armor = Lists.newArrayList(helmet, chestplate, leggings, boots);
         EnchantmentAPI.getEnchantment((String)"Chain Lifesteal").addToItem(helmet, ThreadLocalRandom.current().nextInt(EnchantmentAPI.getEnchantment((String)"Chain Lifesteal").getMaxLevel()) + 1);
         EnchantmentAPI.getEnchantment((String)"Tombstone").addToItem(leggings, ThreadLocalRandom.current().nextInt(EnchantmentAPI.getEnchantment((String)"Tombstone").getMaxLevel()) + 1);
-        ArrayList enchants = Lists.newArrayList((Object[])new String[]{"Death Pact", "Permafrost"});
+        ArrayList enchants = Lists.newArrayList(new String[]{"Death Pact", "Permafrost"});
         while (!enchants.isEmpty()) {
             String random = (String)enchants.get(ThreadLocalRandom.current().nextInt(enchants.size()));
             enchants.remove(random);

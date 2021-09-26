@@ -51,7 +51,7 @@ implements Listener {
                 p.sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "You cannot summon a Fallen Hero outside the Warzone.");
                 return;
             }
-            if (com.cosmicpvp.cosmicutils.utils.WorldGuardUtils.isInRegionsContainsFast((Location)p.getLocation(), (List)Lists.newArrayList((Object[])new String[]{"sell_room"}))) {
+            if (com.cosmicpvp.cosmicutils.utils.WorldGuardUtils.isInRegionsContainsFast((Location)p.getLocation(), (List)Lists.newArrayList(new String[]{"sell_room"}))) {
                 p.sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "You cannot summon a Fallen Hero at this location.");
                 return;
             }

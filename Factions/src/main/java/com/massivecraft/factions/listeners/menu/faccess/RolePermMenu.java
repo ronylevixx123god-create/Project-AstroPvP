@@ -51,7 +51,7 @@ public class RolePermMenu
         for (Role role : roles) {
             if (role == Role.ADMIN) continue;
             Set<RolePerm> activePermissions = this.faction.getRolePerms(role);
-            ArrayList lore = Lists.newArrayList((Object[]) new String[]{"", CC.GoldB + "Permissions:"});
+            ArrayList lore = Lists.newArrayList( new String[]{"", CC.GoldB + "Permissions:"});
             RolePerm[] arrrolePerm = RolePerm.values();
             int n = arrrolePerm.length;
             for (RolePerm rolePerm : arrrolePerm) {

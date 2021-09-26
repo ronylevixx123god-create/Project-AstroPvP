@@ -49,7 +49,7 @@ implements CommandExecutor {
         if (args[0].equalsIgnoreCase("give")) {
             MaskType type = MaskType.getFromName(args[2].toUpperCase());
             if (type == null) {
-                sender.sendMessage(CC.Red + "Invalid Mask given! Valid Masks: " + Arrays.toString((Object[])MaskType.values()));
+                sender.sendMessage(CC.Red + "Invalid Mask given! Valid Masks: " + Arrays.toString(MaskType.values()));
                 return true;
             }
             PlayerUtil.giveOrDropProtectedItem((Player)pl, (ItemStack)type.createMask(true), (int)-1, (String)null, (String)(CC.RedB + "(!) " + CC.Red + "Your mask has been dropped on the floor!"));

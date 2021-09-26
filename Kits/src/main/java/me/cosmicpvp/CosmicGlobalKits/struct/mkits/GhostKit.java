@@ -38,7 +38,7 @@ extends MasteryGlobalKit {
         EnchantmentAPI.getEnchantment((String)"Mark of the Beast").addToItem(helmet, ThreadLocalRandom.current().nextInt(EnchantmentAPI.getEnchantment((String)"Mark of the Beast").getMaxLevel()) + 1);
         EnchantmentAPI.getEnchantment((String)"Horrify").addToItem(leggings, ThreadLocalRandom.current().nextInt(EnchantmentAPI.getEnchantment((String)"Horrify").getMaxLevel()) + 1);
         ArrayList<ItemStack> armor = Lists.newArrayList(helmet, chestplate, leggings, boots);
-        ArrayList enchants = Lists.newArrayList((Object[])new String[]{"Feign Death", "Poltergeist"});
+        ArrayList enchants = Lists.newArrayList(new String[]{"Feign Death", "Poltergeist"});
         while (!enchants.isEmpty()) {
             String random = (String)enchants.get(ThreadLocalRandom.current().nextInt(enchants.size()));
             enchants.remove(random);

@@ -208,7 +208,7 @@ extends CustomInventory {
 
     public CustomInventoryItem getReadyItem(Player p, int index) {
         Object[] arrstring = new String[]{(Object)ChatColor.GRAY + "Click to accept the " + (this.duel.isRanked() ? "ranked" : "globally queued") + " duel.", "", (Object)ChatColor.YELLOW + ChatColor.BOLD.toString() + "Settings"};
-        ArrayList lore = Lists.newArrayList((Object[])arrstring);
+        ArrayList lore = Lists.newArrayList(arrstring);
         for (Setting setting : Setting.values()) {
             if (this.duel.getSettings().hasSetting(setting)) {
                 lore.add((Object)ChatColor.YELLOW + setting.getName() + ": " + (Object)ChatColor.GREEN + ChatColor.BOLD.toString() + "ON");
