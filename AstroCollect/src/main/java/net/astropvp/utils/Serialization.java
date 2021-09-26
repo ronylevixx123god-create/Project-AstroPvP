@@ -14,13 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Serialization {
-    public static String serialize(ItemStack[] items) {
+    public static String serialize(List<ItemStack> items) {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         try {
             BukkitObjectOutputStream output = new BukkitObjectOutputStream(os);
-            output.writeInt(items.length);
-            for(int i = 0; i < items.length; i++) {
-                output.writeObject(items[i]);
+            output.writeInt(items.size());
+            for(ItemStack item : items) {
+                output.writeObject(item);
             }
             output.close();
             return Base64Coder.encodeLines(os.toByteArray());
@@ -30,16 +30,16 @@ public class Serialization {
         return null;
     }
 
-    public static ItemStack[] deserialize(String string) {
+    public static List<ItemStack> deserialize(String string) {
         ByteArrayInputStream is = new ByteArrayInputStream(Base64Coder.decodeLines(string));
         try {
             BukkitObjectInputStream in = new BukkitObjectInputStream(is);
-            ItemStack[] items = new ItemStack[in.readInt()];
-            for (int i = 0; i < items.length; i++) {
-                items[i] = (ItemStack) in.readObject();
+            List<ItemStack> list = new ArrayList<>();
+            for (int i = 0; i < in.readInt(); i++) {
+                list.add((ItemStack) in.readObject());
             }
             in.close();
-            return items;
+            return list;
         } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }

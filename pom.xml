@@ -55,6 +55,7 @@
         <module>AstroCollect</module>
         <module>CosmicShop</module>
         <module>FactionFights</module>
+        <module>CosmicCrate</module>
     </modules>
 
     <build>

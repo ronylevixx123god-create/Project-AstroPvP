@@ -43,6 +43,7 @@
         <module name="Duels" />
         <module name="Pets" />
         <module name="Utils" />
+        <module name="CosmicCrate" />
         <module name="WeaponRunes" />
         <module name="Ark" />
         <module name="EnchantmentsAPI" />
