@@ -116,6 +116,8 @@ public class AstroCore extends JavaPlugin {
 
     public static Map<UUID, Player> grindingMessages;
 
+    public static HashMap<Player, ChatColor> cachedColors;
+
 
     // ItemFilter
     @Getter private FilterManager filterManager;
@@ -240,6 +242,8 @@ public class AstroCore extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new GrindingMessagesToggleListener(), this);
         this.getServer().getPluginManager().registerEvents(new DupePatch(), this);
         this.getServer().getPluginManager().registerEvents(new CustomPearlListener(), this);
+        this.getServer().getPluginManager().registerEvents(new ChatListener(), this);
+
 
         //This used to be sync!
         this.getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
@@ -283,6 +287,7 @@ public class AstroCore extends JavaPlugin {
         this.getCommand("list").setExecutor(new ListCommand());
         this.getCommand("grinding").setExecutor((CommandExecutor)new ToggleGrindingMessages());
         this.getCommand("jackpot").setExecutor(new CommandJackpot());
+        getCommand("chatcolor").setExecutor(new ChatColorCommand());
         this.getServer().getPluginManager().registerEvents(new InventoryListener(), this);
         this.getServer().getPluginManager().registerEvents(new me.ifamasssxd.cosmiccoinflip.listeners.PlayerListener(), this);
 

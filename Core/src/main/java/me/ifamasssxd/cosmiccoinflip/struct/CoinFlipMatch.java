@@ -240,7 +240,7 @@ public class CoinFlipMatch {
         if (HCFOutpostUtils.doesControlOutpost(player, "frozen")) {
             taxRate = 0.0;
         }
-        if (player.hasPermission("astrocore.apollo")) {
+        if (player.hasPermission("astrocore.apollo") || player.hasPermission("astrocore.nebula")) {
             win = totalWines;
             player.sendMessage(CC.translate("&b&lAPOLLO: &fNo CF tax!"));
         } else {
