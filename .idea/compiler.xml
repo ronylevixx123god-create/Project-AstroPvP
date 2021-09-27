@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="AstroCollect" />
         <module name="ItemFlip" />
+        <module name="SandBots" />
         <module name="CustomBlocks" />
         <module name="SpaceChests" />
         <module name="Collect" />
