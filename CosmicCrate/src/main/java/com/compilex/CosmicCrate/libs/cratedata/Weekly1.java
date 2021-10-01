@@ -37,4 +37,6 @@ public class Weekly1 extends CosmicCrateData {
     public List<Color> getConclusionFireworkColors() {
         return null;
     }
+
+    
 }

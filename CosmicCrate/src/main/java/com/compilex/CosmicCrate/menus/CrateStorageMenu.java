@@ -33,7 +33,7 @@ public class CrateStorageMenu extends CosmicGUI
     public void redraw() {
         final AtomicInteger slot = new AtomicInteger(0);
         int startIndex = 18;
-        for (final Version version : CrateCategory.WEEKLY_CRATES.getCrates()) {
+        for (Version version : CrateCategory.WEEKLY_CRATES.getCrates()) {
             this.setItem(startIndex++, version.getDisplayItem(this.player), () -> {
                 if (!version.hasPermission(this.player)) {
                     this.player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You do not have access to this Cosmic Crate! Purchase it (when available) at " + ChatColor.UNDERLINE + "buy.cosmicpvp.com");
