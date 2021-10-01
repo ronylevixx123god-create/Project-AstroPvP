@@ -22,6 +22,7 @@ import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.ifamasssxd.cosmicmysterychest.exceptions.MysteryChestException;
 import me.ifamasssxd.cosmicmysterychest.exceptions.MysteryChestSuccessException;
 import me.ifamasssxd.cosmicmysterychest.guis.ActiveMysteryChestGUI;
+import me.ifamasssxd.cosmicmysterychest.guis.LootboxesMenu;
 import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
 import net.astropvp.core.utils.GrindingMessagesUtil;
 import org.bukkit.Bukkit;
@@ -116,9 +117,8 @@ public class CommandMysteryChest
                 }
                 if (operation.equalsIgnoreCase("list")) {
                     sender.sendMessage(CC.DarkAquaB + "(!) " + CC.DarkAqua + "Listing created Mystery Chests..");
-                    for (MysteryChest chest2 : this.plugin.getChestManager().getMysteryChestMap().values()) {
-                        sender.sendMessage(CC.Aqua + chest2.getInternalName() + " - " + (chest2.getHandDisplay() != null ? ItemUtils.getDisplayName((ItemStack) chest2.getHandDisplay()) : "N/A") + CC.Yellow + " (" + chest2.getItemBundleSize() + ")");
-                    }
+                    LootboxesMenu menu = new LootboxesMenu((Player) sender);
+                    menu.getExpShopUI().open((Player)sender);
                     return true;
                 }
                 if (operation.equalsIgnoreCase("give") && args.length >= 3) {

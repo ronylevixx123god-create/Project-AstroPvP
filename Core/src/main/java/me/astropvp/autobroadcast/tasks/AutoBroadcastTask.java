@@ -10,7 +10,9 @@ package me.astropvp.autobroadcast.tasks;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.google.common.collect.Lists;
 import me.astropvp.autobroadcast.struct.BroadcastMessages;
+import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatUtils;
 import org.bukkit.Bukkit;
+import sun.misc.MessageUtils;
 
 import java.util.List;
 
