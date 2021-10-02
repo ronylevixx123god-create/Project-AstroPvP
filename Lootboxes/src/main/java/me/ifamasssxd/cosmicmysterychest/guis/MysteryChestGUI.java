@@ -135,7 +135,7 @@ public class MysteryChestGUI
         }.runTaskTimer((Plugin) CosmicMysteryChest.get(), 20L, 1L);
     }
 
-    private void givePrize(boolean announce) {
+    public void givePrize(boolean announce) {
         if (this.finished) {
             return;
         }
