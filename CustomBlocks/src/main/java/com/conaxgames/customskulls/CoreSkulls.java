@@ -77,9 +77,9 @@ public class CoreSkulls extends JavaPlugin {
             String uuid = entry.getKey();
             AbilityData data = entry.getValue();
 
-            if (data.getAbilityType() == AbilityType.TRIALS_FAME_AND_FORTUNE) {
+            /*if (data.getAbilityType() == AbilityType.TRIALS_FAME_AND_FORTUNE) {
                 mobGrinderCustomBlocks.put(data.getUuid(), data);
-            }
+            }*/
         }
     }
 
@@ -93,8 +93,8 @@ public class CoreSkulls extends JavaPlugin {
     }
 
     private void registerTasks() {
-        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, new GrinderBlockCheckRunnable(), 17 * 20, 100L);
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MobGrinderRunnable(), 15*20, 20);
+        //Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, new GrinderBlockCheckRunnable(), 17 * 20, 100L);
+        //Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MobGrinderRunnable(), 15*20, 20);
     }
 
     private void registerCustomBlocks() {
@@ -104,7 +104,7 @@ public class CoreSkulls extends JavaPlugin {
         customBlocks.put("COSMIC_TROPHY", new AstroTrophy());
         customBlocks.put("LEVIATHAN_TOTEM", new LeviathanTotem());
         customBlocks.put("HALLOWEEN_CANDLES", new HalloweenCandle());
-        customBlocks.put("TRIALS_FAME_AND_FORTUNE", new MobGrinder());
+        //customBlocks.put("TRIALS_FAME_AND_FORTUNE", new MobGrinder());
         customBlocks.put("COSMIC_TOKEN_GENERATOR", new SlotbotMachine());
     }
 

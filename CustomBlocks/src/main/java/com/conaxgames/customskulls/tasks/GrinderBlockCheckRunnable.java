@@ -13,9 +13,9 @@ public class GrinderBlockCheckRunnable extends BukkitRunnable {
         for (Map.Entry<String, AbilityData> entry : AbilityData.getAbilityDataMap().entrySet()) {
             AbilityData data = entry.getValue();
 
-            if (data.getAbilityType() == AbilityType.TRIALS_FAME_AND_FORTUNE) {
+            /*if (data.getAbilityType() == AbilityType.TRIALS_FAME_AND_FORTUNE) {
                 CoreSkulls.mobGrinderCustomBlocks.put(data.getUuid(), data);
-            }
+            }*/
         }
     }
 }

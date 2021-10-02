@@ -179,24 +179,6 @@ public class MysteryChestListener
                     player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0f, 3.0f);
 
 
-                    if (CustomBlockUtil.chunkHasCertainBlock(player, "HALLOWEEN_CANDLES") && Math.random() < 0.075) {
-                        FPlayer killer = FactionUtils.getFPlayer(player);
-                        for (AbilityData data : CustomBlockUtil.getBlockDatasInChunk(player)) {
-                            FPlayer owner = FactionUtils.getFPlayer(Bukkit.getPlayer(data.getOwner()));
-                            CustomBlock customBlock = CoreSkulls.customBlocks.get(data.getAbilityType().getName());
-                            if (killer.getFaction() == null) return;
-                            if (customBlock == null) return;
-                            if (owner.getFaction() == null) return;
-                            if (killer.getFaction() == owner.getFaction() && customBlock.getIdentifier().equals("HALLOWEEN_CANDLES")) {
-                                player.getInventory().addItem(chest.createClaimableItem(false));
-                                player.sendMessage("");
-                                player.sendMessage(CC.translate("&6&l* HALLOWEEN CANDLE CUSTOM BLOCK BONUS *"));
-                                player.sendMessage(CC.translate("&a&l+ " + chest.getHandDisplay().getItemMeta().getDisplayName()));
-                                player.sendMessage("");
-                                player.playSound(player.getLocation(), Sound.BLAZE_DEATH, 10, 10);
-                            }
-                        }
-                    }
 
                     new MysteryChestGUI(player, chest, 0L).skipGUI(CosmicMysteryChest.get());
 
