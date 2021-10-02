@@ -8,6 +8,7 @@ import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
 import me.ifamasssxd.cosmichcf.struct.OutpostType;
 import me.ifamasssxd.cosmicmasks.MaskType;
+import net.astropvp.CollectPlugin;
 import net.astropvp.core.AstroCore;
 import net.astropvp.core.utils.HolyWhiteScrollUtils;
 import com.cosmicpvp.cosmicutils.CosmicUtils;
@@ -22,6 +23,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import net.astropvp.struct.CollectCategory;
+import net.astropvp.struct.CollectType;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -63,11 +66,13 @@ public class HolyWhiteScrollListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerDeath(PlayerDeathEvent e) {
-        if (e.getEntity().getWorld().getName().contains("world_duel"))
+        if(e.getEntity().getKiller() == null)
             return;
-        if (e.getEntity().getWorld().getName().contains("world_the_end"))
+        if(e.getKeepInventory())
             return;
-        if (e.getEntity().getWorld().getName().toLowerCase().contains("dungeon"))
+        if (!e.getEntity().getLocation().getWorld().getName().equals("world"))
+            return;
+        if (!e.getEntity().getKiller().getLocation().getWorld().getName().equals("world"))
             return;
         //if ((e.getEntity() != null && e.getEntity() == null) || (e.getEntity().getKiller() != null && e.getEntity().getKiller() == null))
             //return;
@@ -154,6 +159,14 @@ public class HolyWhiteScrollListener implements Listener {
             e.getDrops().remove(i);
         if (savedItems.size() > 0)
             this.savedItems.put(e.getEntity().getUniqueId().toString(), savedItems);
+
+
+        Player killed = e.getEntity();
+        CollectPlugin.getInstance().getCollectManager().getPlayerCollect(killer).add(new CollectCategory(CollectType.DEATH_INVENTORY, e.getDrops().toArray(new ItemStack[e.getDrops().size() - 1]), CC.RedB + killed.getName() + "'s Death Inventory"));
+        e.getDrops().clear();
+        killer.sendMessage("");
+        killer.sendMessage(CC.translate("&3&l(&b&lCOLLECT&3&l)&b The Death Loot from &f" + killed.getName() + " has been put into your &f/collect&b."));
+        killer.sendMessage("");
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

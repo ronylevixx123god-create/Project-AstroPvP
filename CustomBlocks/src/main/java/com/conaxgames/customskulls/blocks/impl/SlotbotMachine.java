@@ -43,10 +43,8 @@ public class SlotbotMachine extends CustomBlock {
                 CC.translate("&7Right-Click and click confirm"),
                 CC.translate("&7to mass open your Slotbot tickets."),
                 "",
-                CC.translate("&c&lNOTE: &cYou must place a chest next to"),
-                CC.translate("&cthe slotbot machine for it to deposit"),
-                CC.translate("&cthe loot into the chests."),
-                CC.translate("&cThis chest needs to be EMPTY."),
+                CC.translate("&c&lNOTE: &cAll the loot received from the"),
+                CC.translate("&cslotbot machine will be put into your /collect."),
                 "",
                 CC.translate("&7Place custom block to use!")
         );

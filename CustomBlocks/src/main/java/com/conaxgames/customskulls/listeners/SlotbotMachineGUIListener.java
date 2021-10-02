@@ -14,6 +14,9 @@ import me.ily2bb.slotbot.SlotBotPlugin;
 import me.ily2bb.slotbot.managers.SlotBotManager;
 import me.ily2bb.slotbot.objects.ItemListCacher;
 import me.ily2bb.slotbot.utils.Utils;
+import net.astropvp.CollectPlugin;
+import net.astropvp.struct.CollectCategory;
+import net.astropvp.struct.CollectType;
 import org.arkhamnetwork.Arkkit.patches.balancetop.BalanceTop;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -111,27 +114,25 @@ public class SlotbotMachineGUIListener implements Listener {
                     return;
                 }
 
-                AbilityData block = CoreSkulls.getInSlotbotMachine().get(e.getWhoClicked().getUniqueId());
 
-                Location chestLocation = CustomBlockUtil.getClosestChestLocation(block.getLocation());
-                if (chestLocation == null) {
-                    p.sendMessage(CC.translate("&c&l(!)&c There are no nearby &nfully empty&c chests!"));
-                    return;
-                }
-                Chest chest = (Chest) chestLocation.getBlock().getState();
 
-                if (!CustomBlockUtil.isInvEmpty(chest.getInventory())) {
-                    p.sendMessage(CC.translate("&c&l(!)&c You need to &nfully empty&c the chest before opening Slotbot Tickets!"));
-                    return;
-                }
+
+
 
 
                 int a = tickets;
+                List<ItemStack> loot = new ArrayList<>();
                 while (a != 0) {
                     final ItemStack itemStack = CosmicSlotBotAPI.getRandomSlotBotLootItem();
-                    chest.getInventory().addItem(itemStack);
+                    loot.add(itemStack);
+                    //chest.getInventory().addItem(itemStack);
                     a--;
                 }
+
+                CollectPlugin.getInstance().getCollectManager().getPlayerCollect(p).add(new CollectCategory(CollectType.SLOTBOT, loot.toArray(new ItemStack[0]), com.cosmicpvp.cosmicutils.utils.CC.GreenB + "Personal Slotbot Machine Loot"));
+                p.sendMessage("");
+                p.sendMessage(CC.translate("&3&l(&b&lCOLLECT&3&l)&b The SlotBot Loot has been put into your &f/collect&b."));
+                p.sendMessage("");
 
                 //remove slots from player inv
                 Inventory inventory = e.getWhoClicked().getInventory();
