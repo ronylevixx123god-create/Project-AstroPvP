@@ -74,10 +74,9 @@ public class CategoryInventory {
 
         for(ItemStack item : category.getItems()) {
             categoryInventory.addItem(new GuiItem(item, event -> {
+                category.removeItem(item.clone());
                 player.getInventory().addItem(event.getCurrentItem());
                 categoryInventory.getInventory().remove(event.getCurrentItem());
-                category.removeItem(event.getCurrentItem());
-
                 if (isInvEmpty(categoryInventory.getInventory())) {
                     categoryInventory.close(player);
                     CollectPlugin.getInstance().getCollectManager().getPlayerCollect(player).remove(category);

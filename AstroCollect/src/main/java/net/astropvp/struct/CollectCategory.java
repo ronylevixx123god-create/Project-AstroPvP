@@ -1,6 +1,7 @@
 package net.astropvp.struct;
 
 import net.astropvp.inventories.CategoryInventory;
+import org.apache.commons.lang3.ArrayUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -36,12 +37,14 @@ public class CollectCategory implements Serializable {
         return items;
     }
 
-    public void removeItem(ItemStack item) {
+    public boolean removeItem(ItemStack item) {
         for (int i = 0; i < items.length; i++) {
             if (items[i] == item) {
-                items[i] = null;
+                ArrayUtils.remove(items, i);
+                return true;
             }
         }
+        return false;
     }
 
 }
