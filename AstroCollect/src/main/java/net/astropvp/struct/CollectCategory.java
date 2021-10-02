@@ -3,6 +3,7 @@ package net.astropvp.struct;
 import net.astropvp.inventories.CategoryInventory;
 import org.apache.commons.lang3.ArrayUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -13,6 +14,14 @@ import java.util.List;
 
 public class CollectCategory implements Serializable {
     private CollectType type;
+
+    public void setItems(ItemStack[] items) {
+        this.items = items;
+    }
+
+    public ItemStack[] getItems() {
+        return items;
+    }
 
     private ItemStack[] items;
 
@@ -33,18 +42,26 @@ public class CollectCategory implements Serializable {
         return name;
     }
 
-    public ItemStack[] getItems() {
+
+
+
+    public ItemStack[] removeItem(ItemStack item) {
+        for (int i = 0; i < items.length; i++) {
+            if (items[i] == item) {
+                items[i]=new ItemStack(Material.AIR);
+                return items;
+            }
+        }
         return items;
     }
 
-    public boolean removeItem(ItemStack item) {
-        for (int i = 0; i < items.length; i++) {
-            if (items[i] == item) {
-                ArrayUtils.remove(items, i);
-                return true;
+    public boolean onlyContainsAir() {
+        for (ItemStack item : items) {
+            if (item.getType() != Material.AIR) {
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
 }

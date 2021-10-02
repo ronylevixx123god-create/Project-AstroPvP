@@ -3,7 +3,8 @@ package net.astropvp.struct;
 import org.bukkit.Material;
 
 public enum CollectType {
-    DEATH_INVENTORY(Material.DIAMOND_SWORD),
+    DEATH_INVENTORY(Material.ENDER_CHEST),
+    SLOTBOT(Material.PAPER),
     GIVEALL(Material.GOLD_NUGGET);
 
     Material material;

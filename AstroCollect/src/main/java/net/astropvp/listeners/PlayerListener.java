@@ -19,15 +19,4 @@ public class PlayerListener implements Listener {
         CollectPlugin.getInstance().getCollectManager().getPlayerCollect(e.getPlayer()).save(false);
     }
 
-    @EventHandler
-    public void onDeath(PlayerDeathEvent e) {
-        if(e.getEntity().getKiller() == null)
-            return;
-        if(e.getKeepInventory())
-            return;
-        Player killer = e.getEntity().getKiller();
-        Player killed = e.getEntity();
-        CollectPlugin.getInstance().getCollectManager().getPlayerCollect(killer).add(new CollectCategory(CollectType.DEATH_INVENTORY, e.getDrops().toArray(new ItemStack[e.getDrops().size() - 1]), CC.RedB + killed.getName() + "'s Death Inventory"));
-        e.getDrops().clear();
-    }
 }

@@ -1,6 +1,7 @@
 package net.astropvp.inventories;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.google.common.collect.Lists;
 import me.mattstudios.mfgui.gui.guis.GuiItem;
 import me.mattstudios.mfgui.gui.guis.PaginatedGui;
@@ -9,7 +10,9 @@ import net.astropvp.struct.CollectCategory;
 import net.astropvp.struct.PlayerCollect;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -59,34 +62,20 @@ public class CollectInventory {
         List<CollectCategory> categories = collect.getCategories();
         for (CollectCategory cat : categories) {
             collectUI.addItem(new GuiItem(getCategoryItem(player, cat), event -> {
-                new CategoryInventory(player, cat).getCollectUI().open(player);
+                if (event.getClick() == ClickType.SHIFT_RIGHT) {
+                    CollectPlugin.getInstance().getCollectManager().getPlayerCollect(player).remove(cat);
+                    player.playSound(player.getLocation(), Sound.ANVIL_BREAK, 1f, 1f);
+                    new CategoryInventory(player, cat).getCollectUI().open(player);
+                } else {
+                    new CategoryInventory(player, cat).getCollectUI().open(player);
+                }
             }));
         }
     }
 
     private ItemStack getCategoryItem(Player player, CollectCategory cat) {
-        ItemStack item = new ItemStack(cat.getType().getMaterial());
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(cat.getName());
-        List<String> lore = new ArrayList<>();
-        lore.add("");
-        lore.add(CC.WhiteB + "Contains (" + CC.Gray + cat.getItems().length + " items" + CC.WhiteB + ")");
-        for(ItemStack i : cat.getItems()) {
-            for(String string : allowedList) {
-                if(i.getType().toString().contains(string)) {
-                    lore.add(CC.WhiteB + " * " + i.getItemMeta().getDisplayName());
-                }
-            }
-        }
-        lore.add("");
-        lore.add(CC.Gray + "Click to view...");
-        meta.setLore(lore);
-        item.setItemMeta(meta);
-
-        return item;
+        return new ItemBuilder(cat.getType().getMaterial(), CC.translate(cat.getName()), CC.translate(""), CC.translate("&a&lLeft-Click&7 to open inventory"), CC.translate("&c&lSHIFT Right-Click&7 to remove inventory")).build();
     }
-
-    List<String> allowedList = Lists.newArrayList("_CHESTPLATE", "_LEGGINGS", "_BOOTS", "_HELMET", "_SWORD", "_AXE", "_PICKAXE", "HEAD", "EMERALD", "_ENDER", "_PEARL", "BOTTLE", "_STAR", "PAPER");
 
 
     public ItemStack createFillerItem() {

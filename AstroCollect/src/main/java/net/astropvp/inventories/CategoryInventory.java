@@ -7,8 +7,11 @@ import me.mattstudios.mfgui.gui.guis.PaginatedGui;
 import net.astropvp.CollectPlugin;
 import net.astropvp.struct.CollectCategory;
 import net.astropvp.struct.PlayerCollect;
+import org.apache.commons.lang3.ArrayUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -16,6 +19,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class CategoryInventory {
@@ -49,9 +54,9 @@ public class CategoryInventory {
         ItemMeta meta = removeCategory.getItemMeta();
         meta.setDisplayName(CC.RedB + "REMOVE CATEGORY");
         List<String> lore = new ArrayList<>();
-        lore.add("");
         lore.add(CC.Gray + "Use this button to remove this category");
-        lore.add(CC.RedB + "WARNING: This Cannot Be Undone");
+        lore.add("");
+        lore.add(CC.translate("&c&lWARNING: &7This cannot be undone."));
         meta.setLore(lore);
         removeCategory.setItemMeta(meta);
 
@@ -70,18 +75,26 @@ public class CategoryInventory {
             CollectPlugin.getInstance().getCollectManager().getPlayerCollect(player).remove(category);
             new CollectInventory(player).getCollectUI().open(player);
             event.setCancelled(true);
+            player.playSound(player.getLocation(), Sound.ANVIL_BREAK, 1f, 1f);
         }));
 
-        for(ItemStack item : category.getItems()) {
+        for (ItemStack item : category.getItems()) {
             categoryInventory.addItem(new GuiItem(item, event -> {
-                category.removeItem(item.clone());
-                player.getInventory().addItem(event.getCurrentItem());
+
+                category.setItems(category.removeItem(item));
+
+
+                player.getInventory().addItem(item);
                 categoryInventory.getInventory().remove(event.getCurrentItem());
-                if (isInvEmpty(categoryInventory.getInventory())) {
+
+                if (category.onlyContainsAir()) {
                     categoryInventory.close(player);
                     CollectPlugin.getInstance().getCollectManager().getPlayerCollect(player).remove(category);
+                    player.playSound(player.getLocation(), Sound.ANVIL_BREAK, 1f, 1f);
+                    new CollectInventory(player).getCollectUI().open(player);
                 }
                 event.setCancelled(true);
+                player.playSound(player.getLocation(), Sound.NOTE_PLING, 1f, 1f);
 
             }));
         }

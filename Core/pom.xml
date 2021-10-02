@@ -230,6 +230,13 @@
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
+            <artifactId>Collect</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/Collect.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
             <artifactId>Skins</artifactId>
             <version>0.1</version>
             <scope>system</scope>
