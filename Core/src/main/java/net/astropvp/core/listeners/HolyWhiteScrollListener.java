@@ -165,7 +165,7 @@ public class HolyWhiteScrollListener implements Listener {
         CollectPlugin.getInstance().getCollectManager().getPlayerCollect(killer).add(new CollectCategory(CollectType.DEATH_INVENTORY, e.getDrops().toArray(new ItemStack[e.getDrops().size() - 1]), CC.RedB + killed.getName() + "'s Death Inventory"));
         e.getDrops().clear();
         killer.sendMessage("");
-        killer.sendMessage(CC.translate("&3&l(&b&lCOLLECT&3&l)&b The Death Loot from &f" + killed.getName() + " has been put into your &f/collect&b."));
+        killer.sendMessage(CC.translate("&3&l(&b&lCOLLECT&3&l)&b The Death Loot from &f" + killed.getName() + "&b has been put into your &f/collect&b."));
         killer.sendMessage("");
     }
 
