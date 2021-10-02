@@ -16,30 +16,6 @@
     <build>
         <defaultGoal>clean install</defaultGoal>
         <finalName>SandBots</finalName>
-
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.1.1</version>
-                <configuration>
-                    <relocations>
-                        <relocation>
-                            <pattern>dev.triumphteam.gui</pattern>
-                            <shadedPattern>me.ifamasssxd.cosmicguishop.gui</shadedPattern> &lt;!&ndash; Replace package here here &ndash;&gt;
-                        </relocation>
-                    </relocations>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
     </build>
 
     <repositories>
@@ -98,11 +74,6 @@
             <version>2.0.3.3</version>
         </dependency>
 
-        <dependency>
-            <groupId>fr.minuskube.inv</groupId>
-            <artifactId>smart-invs</artifactId>
-            <version>1.2.7</version>
-        </dependency>
 
 
         <!-- New Cosmic Repos -->
@@ -372,6 +343,12 @@
             <groupId>me.mattstudios.utils</groupId>
             <artifactId>matt-framework-gui</artifactId>
             <version>2.0.3.3</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>CosmicShop</artifactId>
+            <version>0.1</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

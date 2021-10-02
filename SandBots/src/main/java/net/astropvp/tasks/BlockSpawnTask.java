@@ -25,7 +25,9 @@ public class BlockSpawnTask implements Runnable
     
     @Override
     public void run() {
-        for (final SandBotManager bot : SandBots.sandBots) {
+        if(SandBots.sandBots.isEmpty())
+            return;
+        for (SandBotManager bot : SandBots.sandBots) {
             if (!bot.isActivated()) {
                 continue;
             }

@@ -6,9 +6,13 @@ package net.astropvp.utils;
 
 import java.util.List;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
+import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
+import com.massivecraft.factions.Factions;
+import net.astropvp.inventories.MenuManager;
 import org.bukkit.World;
 import org.bukkit.Bukkit;
 import java.util.UUID;
@@ -66,15 +70,15 @@ public class Utils
     
     public static void spawnBot(final Player player, final Location loc) {
         if (FactionUtils.getFactionId(player) == null) {
-            player.sendMessage(color(Utils.plugin.getConfig().getString("no-faction")));
+            player.sendMessage(CC.RedB + "(!) " + CC.Red + "You must be in a faction to use sandbots");
             return;
         }
         if (FactionUtils.getFactionAt(loc).getId() == null || !FactionUtils.getFactionAt(loc).getId().equals(FactionUtils.getFactionId(player))) {
-            player.sendMessage(color(Utils.plugin.getConfig().getString("no-claim")));
+            player.sendMessage(CC.RedB + "(!) " + CC.Red + "You must be in your factions claim to place a sand bot.");
             return;
         }
-        if (getFactionAliveBotsCount(FactionUtils.getFactionId(player)) >= Utils.plugin.getConfig().getInt("faction-bot-limit")) {
-            player.sendMessage(color(Utils.plugin.getConfig().getString("faction-bot-full")));
+        if (getFactionAliveBotsCount(FactionUtils.getFactionId(player)) >= 2) {
+            player.sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot place more than 2 bots in your faction.");
             return;
         }
         for (final SandBotManager bot : SandBots.sandBots) {
@@ -126,7 +130,7 @@ public class Utils
         stand.setRightLegPose(newrleg);
         stand.setLeftLegPose(newlleg);
         stand.setCustomNameVisible(true);
-        stand.setCustomName(color(Utils.plugin.getConfig().getString("bot-custom-name").replace("%faction%", FactionUtils.getFactionTag(player))));
+        stand.setCustomName(color("&8&l[&b&l!&8&l] &a%faction% &7SandBot".replace("%faction%", FactionUtils.getFactionTag(player))));
         final SandBotManager bot2 = new SandBotManager(stand, player);
         SandBots.sandBots.add(bot2);
         final ConcurrentHashMap<GuiType, MenuManager> menus = new ConcurrentHashMap<GuiType, MenuManager>();
@@ -162,7 +166,6 @@ public class Utils
     
     public static void setupConfigFiles(final FilesManager manager) {
         manager.folderSetup("Data");
-        manager.fileSetup("config");
         manager.fileSetup("sandbots", "Data");
     }
     
@@ -255,9 +258,9 @@ public class Utils
     
     public static ArrayList<Block> getNearbyBlocks(final SandBotManager s) {
         final ArrayList<Block> blocks = new ArrayList<Block>();
-        final Integer offsetX = Utils.plugin.getConfig().getInt("bot-fill-radius");
-        final Integer offsetY = Utils.plugin.getConfig().getInt("bot-fill-radius");
-        final Integer offsetZ = Utils.plugin.getConfig().getInt("bot-fill-radius");
+        final Integer offsetX = 10;
+        final Integer offsetY = 10;
+        final Integer offsetZ = 10;
         for (int x = s.getLocation().getBlockX() - offsetX; x <= s.getLocation().getBlockX() + offsetX; ++x) {
             for (int y = s.getLocation().getBlockY() - offsetY; y <= s.getLocation().getBlockY() + offsetY; ++y) {
                 for (int z = s.getLocation().getBlockZ() - offsetZ; z <= s.getLocation().getBlockZ() + offsetZ; ++z) {
@@ -301,7 +304,7 @@ public class Utils
     }
     
     public static boolean getArmorAnimateBoolean() {
-        return Utils.plugin.getConfig().getBoolean("bot-animate-armor");
+        return true;
     }
     
     public static void logToServer(final String text, final Boolean prefix) {
@@ -310,7 +313,7 @@ public class Utils
     
     static {
         Utils.plugin = (SandBots) SandBots.getPlugin((Class) SandBots.class);
-        Utils.enabledArmorColor = Color.fromRGB(Utils.plugin.getConfig().getInt("bot-enabled-red"), Utils.plugin.getConfig().getInt("bot-enabled-green"), Utils.plugin.getConfig().getInt("bot-enabled-blue"));
-        Utils.disabledArmorColor = Color.fromRGB(Utils.plugin.getConfig().getInt("bot-disabled-red"), Utils.plugin.getConfig().getInt("bot-disabled-green"), Utils.plugin.getConfig().getInt("bot-disabled-blue"));
+        Utils.enabledArmorColor = Color.fromRGB(25, 120, 50);
+        Utils.disabledArmorColor = Color.fromRGB(186, 0, 0);
     }
 }

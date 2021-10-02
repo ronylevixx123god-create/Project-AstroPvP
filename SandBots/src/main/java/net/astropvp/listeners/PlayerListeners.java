@@ -47,7 +47,7 @@ public class PlayerListeners implements Listener
     public void onPlaceSandBot(final PlayerInteractEvent e) {
         final Player player = e.getPlayer();
         final ItemStack item = player.getInventory().getItemInHand();
-        if (e.getAction().equals((Object)Action.RIGHT_CLICK_BLOCK) && item.getType().equals(Material.MONSTER_EGG) && item.hasItemMeta() && item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().equals(Utils.color(this.plugin.getConfig().getString("bot-spawn-item-name")))) {
+        if (e.getAction().equals((Object)Action.RIGHT_CLICK_BLOCK) && item.getType().equals(Material.MONSTER_EGG) && item.hasItemMeta() && item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().equals(SandBotItem.get().getItemMeta().getDisplayName())) {
             e.setCancelled(true);
             final Block blockclick = e.getClickedBlock();
             final Location loc = blockclick.getLocation();
@@ -100,7 +100,7 @@ public class PlayerListeners implements Listener
     @EventHandler
     public void onExplode(final EntityExplodeEvent e) {
         final Collection<Entity> entities = e.getLocation().getWorld().getNearbyEntities(e.getLocation(), 10.0, 10.0, 10.0);
-        if (this.plugin.getConfig().getBoolean("sandbot-explosion-destroy") && entities.stream().anyMatch(entity -> entity.getType().equals((Object)EntityType.ARMOR_STAND))) {
+        if (entities.stream().anyMatch(entity -> entity.getType().equals((Object)EntityType.ARMOR_STAND))) {
             SandBotManager bot = null;
             for (final SandBotManager bottmp : SandBots.sandBots) {
                 if (entities.stream().anyMatch(entity -> entity.getUniqueId().equals(bottmp.getSandbotUUID()))) {
@@ -165,7 +165,7 @@ public class PlayerListeners implements Listener
                     new FactionManageGui(this.plugin).open(player);
                 }
                 else {
-                    e.getPlayer().sendMessage(Utils.color(this.plugin.getConfig().getString("no-faction")));
+                    e.getPlayer().sendMessage(CC.RedB + "(!) " + CC.Red + "You are not in a faction.");
                 }
                 e.setCancelled(true);
             }
