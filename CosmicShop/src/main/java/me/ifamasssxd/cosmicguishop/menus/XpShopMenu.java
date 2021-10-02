@@ -59,12 +59,12 @@ public class XpShopMenu{
 
     public XpShopMenu(Player player) {
 
-        this.expShopUI = new PaginatedGui(6, 28, "XpShop Menu");
+        this.expShopUI = new PaginatedGui(6, 45, "XpShop Menu");
         expShopUI.setDefaultClickAction(event -> {
             event.setCancelled(true);
         });
 
-        expShopUI.getFiller().fillBorder(new GuiItem(createFillerItem()));
+        expShopUI.getFiller().fillBottom(new GuiItem(createFillerItem()));
 
         ItemStack prevPage = new ItemStack(Material.ARROW);
         ItemMeta prevMeta = prevPage.getItemMeta();

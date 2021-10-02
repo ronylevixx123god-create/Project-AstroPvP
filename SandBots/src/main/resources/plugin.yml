@@ -1,0 +1,5 @@
+name: SandBots
+version: 1.0
+main: net.astropvp.SandBots
+commands:
+  sandbot:
