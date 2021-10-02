@@ -26,7 +26,7 @@
                     <relocations>
                         <relocation>
                             <pattern>dev.triumphteam.gui</pattern>
-                            <shadedPattern>me.ifamasssxd.cosmicguishop.gui</shadedPattern> <!-- Replace package here here -->
+                            <shadedPattern>me.ifamasssxd.cosmicguishop.gui</shadedPattern> &lt;!&ndash; Replace package here here &ndash;&gt;
                         </relocation>
                     </relocations>
                 </configuration>
@@ -96,6 +96,12 @@
             <groupId>me.mattstudios.utils</groupId>
             <artifactId>matt-framework-gui</artifactId>
             <version>2.0.3.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>fr.minuskube.inv</groupId>
+            <artifactId>smart-invs</artifactId>
+            <version>1.2.7</version>
         </dependency>
 
 

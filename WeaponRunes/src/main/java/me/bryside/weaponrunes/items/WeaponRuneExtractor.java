@@ -59,8 +59,7 @@ public class WeaponRuneExtractor extends CosmicItem
 
 
         if (!WeaponBonusUtils.hasWeaponBonus(clicked)) {
-            throw new PrefixedException("This item does not have a Weapon Bonus on it.");
-
+            return;
         }
 
         int chance = wrapper.getCompound("astroData").getInt("success");

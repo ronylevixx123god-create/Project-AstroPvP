@@ -65,6 +65,8 @@ public class CommandMobCoinShop implements CommandExecutor {
                 values.put(((MysteryChest)chests.get("GrinderCache")).createClaimableItem(false), Integer.valueOf(400));
             if (chests.containsKey("CustomBlock"))
                 values.put(((MysteryChest)chests.get("CustomBlock")).createClaimableItem(false), Integer.valueOf(800));
+            if (chests.containsKey("PremadeOmni"))
+                values.put(((MysteryChest)chests.get("PremadeOmni")).createClaimableItem(false), Integer.valueOf(2000));
         } else {
             if (chests.containsKey("OmniCrystal"))
                 values.put(((MysteryChest)chests.get("OmniCrystal")).createClaimableItem(false), Integer.valueOf(250));
@@ -88,6 +90,8 @@ public class CommandMobCoinShop implements CommandExecutor {
                 values.put(((MysteryChest)chests.get("GrinderCache")).createClaimableItem(false), Integer.valueOf(500));
             if (chests.containsKey("CustomBlock"))
                 values.put(((MysteryChest)chests.get("CustomBlock")).createClaimableItem(false), Integer.valueOf(1000));
+            if (chests.containsKey("PremadeOmni"))
+                values.put(((MysteryChest)chests.get("PremadeOmni")).createClaimableItem(false), Integer.valueOf(2500));
         }
 
 
