@@ -11,6 +11,7 @@ import com.massivecraft.factions.Conf;
 import java.util.Collections;
 
 public class FCmdRoot extends FCommand {
+    public CmdSandBot cmdSandBot = new CmdSandBot();
     public CmdRoles cmdRoles = new CmdRoles();
     public CmdAdmin cmdAdmin = new CmdAdmin();
     public CmdAutoClaim cmdAutoClaim = new CmdAutoClaim();
@@ -105,6 +106,7 @@ public class FCmdRoot extends FCommand {
         this.addSubCommand(this.cmdAdmin);
         this.addSubCommand(this.cmdAutoClaim);
         this.addSubCommand(this.cmdClaimFill);
+        this.addSubCommand(this.cmdSandBot);
 
       //  this.addSubCommand(this.cmdInviteBot);
        // this.addSubCommand(this.cmdSetGuild);

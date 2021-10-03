@@ -10,6 +10,7 @@ import net.astropvp.commands.CommandSandbot;
 import net.astropvp.config.FilesManager;
 import net.astropvp.enums.GuiType;
 import net.astropvp.inventories.MenuManager;
+import net.astropvp.inventories.SandBotGui;
 import net.astropvp.listeners.AntiDupeListener;
 import net.astropvp.managers.SandBotManager;
 import net.astropvp.utils.Utils;
@@ -29,6 +30,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class SandBots extends JavaPlugin
 {
+    private static SandBots instance;
     public static Set<SandBotManager> sandBots = ConcurrentHashMap.newKeySet();
     private static InventoryManager invManager;
     public static ConcurrentHashMap<SandBotManager, ConcurrentHashMap<GuiType, MenuManager>> botGuis = new ConcurrentHashMap<>();
@@ -40,6 +42,7 @@ public final class SandBots extends JavaPlugin
     }
 
     public void onEnable() {
+        instance = this;
         invManager = new InventoryManager(this);
         invManager.init();
         new AntiDupeListener(this);
@@ -66,5 +69,7 @@ public final class SandBots extends JavaPlugin
     public static InventoryManager getInvManager() {
         return invManager;
     }
+
+    public static SandBots get() { return instance; }
 
 }

@@ -47,7 +47,7 @@ public final class ArrayWrapper<E> {
             for (T element : list)
                 size++;
         }
-        Object[] result = Array.newInstance(c, size);
+        Object[] result = (Object[]) Array.newInstance(c, size);
         int i = 0;
         for (T element : list)
             result[i++] = element;

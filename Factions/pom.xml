@@ -305,6 +305,13 @@
             <systemPath>${project.basedir}/lib/Utils-0.1.jar</systemPath>
         </dependency>
 
+        <dependency>
+            <groupId>net.astropvp</groupId>
+            <artifactId>SandBots</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/SandBots.jar</systemPath>
+        </dependency>
 
     </dependencies>
 </project>

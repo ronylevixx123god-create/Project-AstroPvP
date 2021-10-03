@@ -7,6 +7,8 @@ package net.astropvp.listeners;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import net.astropvp.inventories.FactionManageGui;
+import net.astropvp.inventories.RemoveGUI;
+import net.astropvp.inventories.SandBotGui;
 import net.astropvp.items.SandBotItem;
 import net.astropvp.SandBots;
 import net.astropvp.enums.GuiType;
@@ -47,7 +49,7 @@ public class PlayerListeners implements Listener
     public void onPlaceSandBot(final PlayerInteractEvent e) {
         final Player player = e.getPlayer();
         final ItemStack item = player.getInventory().getItemInHand();
-        if (e.getAction().equals((Object)Action.RIGHT_CLICK_BLOCK) && item.getType().equals(Material.MONSTER_EGG) && item.hasItemMeta() && item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().equals(SandBotItem.get().getItemMeta().getDisplayName())) {
+        if (e.getAction().equals((Object)Action.RIGHT_CLICK_BLOCK) && SandBotItem.isSandBot(item)) {
             e.setCancelled(true);
             final Block blockclick = e.getClickedBlock();
             final Location loc = blockclick.getLocation();
@@ -131,44 +133,22 @@ public class PlayerListeners implements Listener
             }
             if (bot != null) {
                 event.setCancelled(true);
-                if (!player.hasPermission("sandbot.bypass")) {
+                if (!player.isOp()) {
                     if (!bot.getFactionID().equals(FactionUtils.getFactionId(player))) {
-                        player.sendMessage(CC.translate("&8&l[&c&l!&8&l] &7You cant edit other factions sandbots"));
+                        player.sendMessage(CC.RedB + "(!) " + CC.Red + "You cant edit other factions sandbots");
                     }
                     else if (!bot.getFactionID().equals(FactionUtils.getFactionId(player))) {
-                        SandBots.botGuis.get(bot).get(GuiType.REMOVEGUI).open(player);
+                        ((RemoveGUI)SandBots.botGuis.get(bot).get(GuiType.REMOVEGUI)).open(player);
                     }
                     else {
-                        SandBots.botGuis.get(bot).get(GuiType.SANDBOTGUI).open(player);
+                        ((SandBotGui)SandBots.botGuis.get(bot).get(GuiType.SANDBOTGUI)).open(player);
                     }
                 }
                 else {
-                    SandBots.botGuis.get(bot).get(GuiType.SANDBOTGUI).open(player);
+                    ((SandBotGui)SandBots.botGuis.get(bot).get(GuiType.SANDBOTGUI)).open(player);
                 }
             }
         }
     }
-    
-    @EventHandler
-    public void onPlayerCommand(final PlayerCommandPreprocessEvent e) {
-        final String[] kati = e.getMessage().split(" ");
-        if (kati.length < 1) {
-            return;
-        }
-        if (kati[0].equalsIgnoreCase("/f") && e.getPlayer() != null) {
-            final Player player = e.getPlayer();
-            if (kati.length < 2) {
-                return;
-            }
-            if (kati[1].equalsIgnoreCase("sandbots") || kati[1].equalsIgnoreCase("sandbot")) {
-                if (FactionUtils.getFactionId(player) != null) {
-                    new FactionManageGui(this.plugin).open(player);
-                }
-                else {
-                    e.getPlayer().sendMessage(CC.RedB + "(!) " + CC.Red + "You are not in a faction.");
-                }
-                e.setCancelled(true);
-            }
-        }
-    }
+
 }
