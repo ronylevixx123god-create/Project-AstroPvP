@@ -57,6 +57,10 @@ public class PlayerListeners implements Listener
             loc.setZ(loc.getZ() + 0.5);
             loc.setX(loc.getX() + 0.5);
             Utils.spawnBot(player, loc);
+            player.sendMessage("");
+            player.sendMessage(CC.translate("&a&l(!)&a You have placed a &e&lSandbot&a."));
+            player.sendMessage(CC.translate("&7&o(( You can manage the bot by clicking it or typing &f/f sandbot&7&o. ))"));
+            player.sendMessage("");
         }
     }
     

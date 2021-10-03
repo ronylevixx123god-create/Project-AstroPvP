@@ -130,7 +130,7 @@ public class Utils
         stand.setRightLegPose(newrleg);
         stand.setLeftLegPose(newlleg);
         stand.setCustomNameVisible(true);
-        stand.setCustomName(color("&8&l[&b&l!&8&l] &a%faction% &7SandBot".replace("%faction%", FactionUtils.getFactionTag(player))));
+        stand.setCustomName(color("&a&l[!]&a &f&n%faction%&r &e&lSandBot".replace("%faction%", FactionUtils.getFactionTag(player))));
         final SandBotManager bot2 = new SandBotManager(stand, player);
         SandBots.sandBots.add(bot2);
         final ConcurrentHashMap<GuiType, MenuManager> menus = new ConcurrentHashMap<GuiType, MenuManager>();
@@ -313,7 +313,7 @@ public class Utils
     
     static {
         Utils.plugin = (SandBots) SandBots.getPlugin((Class) SandBots.class);
-        Utils.enabledArmorColor = Color.fromRGB(25, 120, 50);
-        Utils.disabledArmorColor = Color.fromRGB(186, 0, 0);
+        Utils.enabledArmorColor = Color.fromRGB(0, 255, 0);
+        Utils.disabledArmorColor = Color.fromRGB(25, 120, 50);
     }
 }

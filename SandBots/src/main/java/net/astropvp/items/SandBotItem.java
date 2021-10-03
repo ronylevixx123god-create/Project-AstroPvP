@@ -20,7 +20,7 @@ public class SandBotItem {
         lore.add(CC.Gray + "Place this bot down to spawn a sandbot.");
         lore.add("");
         lore.add(CC.YellowB + "Information");
-        lore.add(CC.Gray + "After placing down this bot, yopu are able to");
+        lore.add(CC.Gray + "After placing down this bot, you are able to");
         lore.add(CC.Gray + "place Lapis blocks on a radius of 10x5x10 and");
         lore.add(CC.Gray + "the bot will start placing sand under them");
         lore.add(CC.Gray + "You can also use " + CC.Yellow + "/f sandbots " + CC.Gray + "to check how");

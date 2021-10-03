@@ -107,7 +107,7 @@ public class SandBotGui extends MenuManager implements InventoryProvider {
     }
 
     private void updateGold(Player player, InventoryContents contents, SandBotManager bot) {
-        ItemStack gold = Utils.botItem(CC.YellowB + "Balance", Lists.newArrayList(CC.translate("&7Click to add balance."), CC.translate(""), CC.YellowB + " * " + CC.Green + "Balance: " + CC.Gray + bot.getBalance()), bot, Skull.getCustomSkull("http://textures.minecraft.net/texture/" + "54bf893fc6defad218f7836efefbe636f1c2cc1bb650c82fccd99f2c1ee6"));
+        ItemStack gold = Utils.botItem(CC.YellowB + "Balance", Lists.newArrayList(CC.translate("&7Click to add balance."), CC.translate(""), CC.YellowB + " * " + CC.Green + "Balance: " + CC.Gray + "$" + bot.getBalance()), bot, Skull.getCustomSkull("http://textures.minecraft.net/texture/" + "54bf893fc6defad218f7836efefbe636f1c2cc1bb650c82fccd99f2c1ee6"));
         contents.set(2, 5, ClickableItem.of(gold, e -> {
             Player invplayer = (Player)e.getWhoClicked();
             double balanceplayer = CosmicGUIShop.getEconomy().getBalance((OfflinePlayer)player);

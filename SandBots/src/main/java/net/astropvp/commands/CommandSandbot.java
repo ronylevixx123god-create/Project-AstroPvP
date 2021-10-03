@@ -32,6 +32,10 @@ public class CommandSandbot implements CommandExecutor
         if (cmd.getName().equalsIgnoreCase(this.sandbot)) {
             if(!(sender.isOp()))
                 return true;
+            if (args.length == 0) {
+                sender.sendMessage(CC.translate("&a&l(!)&a You can manage your &e&lSandbots &aby typing &f/f sandbots&a."));
+                return true;
+            }
             if (args[0].equalsIgnoreCase("reload") && sender.isOp()) {
                     this.plugin.reloadConfig();
                     Utils.saveDataOfSandbots(this.plugin.getManager());
