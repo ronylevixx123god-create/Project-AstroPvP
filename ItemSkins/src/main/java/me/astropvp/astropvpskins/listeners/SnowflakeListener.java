@@ -34,7 +34,7 @@ public class SnowflakeListener implements Listener {
     }
     @EventHandler
     public void onRightClick(PlayerInteractEvent e) {
-        if(e.getAction() == Action.RIGHT_CLICK_AIR && e.getPlayer().getItemInHand().getType().name().contains("AXE") && !Snowflake.getSnowflakeCooldown().contains(e.getPlayer())) {
+        if(e.getAction() == Action.RIGHT_CLICK_AIR && e.getPlayer().getItemInHand() != null && e.getPlayer().getItemInHand().getType().name().contains("AXE") && !Snowflake.getSnowflakeCooldown().contains(e.getPlayer())) {
             if (AstroItemSkinsAPI.hasSkinEquipped(e.getPlayer(), SkinType.CHRISTMAS_AXE_SNOWFLAKE)) {
                 Snowflake.addSnowflakeCooldown(e.getPlayer());
                 Snowball snowball = e.getPlayer().launchProjectile(Snowball.class);
