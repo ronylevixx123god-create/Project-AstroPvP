@@ -5,17 +5,12 @@ import com.conaxgames.customskulls.blocks.CustomBlock;
 import com.conaxgames.customskulls.blocks.impl.*;
 import com.conaxgames.customskulls.commands.AbilityBlocksCommand;
 import com.conaxgames.customskulls.data.LoadCustomBlocks;
-import com.conaxgames.customskulls.enums.AbilityType;
 import com.conaxgames.customskulls.listeners.CustomAbilityListener;
 import com.conaxgames.customskulls.listeners.CustomBlockListener;
 import com.conaxgames.customskulls.listeners.SlotbotMachineGUIListener;
-import com.conaxgames.customskulls.tasks.GrinderBlockCheckRunnable;
-import com.conaxgames.customskulls.tasks.MobGrinderRunnable;
 import com.conaxgames.customskulls.util.CC;
 import com.conaxgames.customskulls.util.inventoryui.UIListener;
 import lombok.Getter;
-import me.astropvp.astrospawners.AstroSpawners;
-import me.astropvp.astrospawners.utils.MobStackerUtils;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -25,18 +20,17 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class CoreSkulls extends JavaPlugin {
 
-    @Getter
-    public static CoreSkulls instance;
+    @Getter public static CoreSkulls instance;
     public static Map<String, CustomBlock> customBlocks = new HashMap<>();
-    public static Map<String, AbilityData> mobGrinderCustomBlocks;
     private static Field bukkitCommand;
-    @Getter
-    private static Economy economy = null;
-    public static MobStackerUtils mobStackerUtils;
+    @Getter private static Economy economy = null;
 
     public static Map<UUID, AbilityData> inSlotbotMachine;
 
@@ -47,40 +41,25 @@ public class CoreSkulls extends JavaPlugin {
         getConfig().options().copyDefaults(true);
         saveConfig();
         File file = new File(this.getDataFolder() + File.separator + "data");
-        if (!file.exists()) {
+        if(!file.exists()) {
             file.mkdir();
             info("Successfully made directory /data/ :)");
         }
 
-        if (!setupEconomy()) {
+        if (!setupEconomy() ) {
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
 
         registerCustomBlocks();
-        Collections.singletonList(new AbilityBlocksCommand()).forEach(this::registerCommand);
-
-
+        Collections.singletonList(new AbilityBlocksCommand()).forEach(this:: registerCommand);
         getServer().getPluginManager().registerEvents(new UIListener(), this);
         getServer().getPluginManager().registerEvents(new CustomBlockListener(), this);
         getServer().getPluginManager().registerEvents(new CustomAbilityListener(), this);
         getServer().getPluginManager().registerEvents(new SlotbotMachineGUIListener(), this);
         LoadCustomBlocks.load();
-
-        mobGrinderCustomBlocks = new HashMap<>();
-
-        this.mobStackerUtils = AstroSpawners.astroSpawners.getMobStackerUtils();
+        info("CoreSkulls!");
         this.inSlotbotMachine = new HashMap<>();
-        registerTasks();
-
-        for (Map.Entry<String, AbilityData> entry : AbilityData.getAbilityDataMap().entrySet()) {
-            String uuid = entry.getKey();
-            AbilityData data = entry.getValue();
-
-            /*if (data.getAbilityType() == AbilityType.TRIALS_FAME_AND_FORTUNE) {
-                mobGrinderCustomBlocks.put(data.getUuid(), data);
-            }*/
-        }
     }
 
     private void registerCommand(Command cmd) {
@@ -92,11 +71,6 @@ public class CoreSkulls extends JavaPlugin {
 
     }
 
-    private void registerTasks() {
-        //Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, new GrinderBlockCheckRunnable(), 17 * 20, 100L);
-        //Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MobGrinderRunnable(), 15*20, 20);
-    }
-
     private void registerCustomBlocks() {
         customBlocks.put("HALLOWEEN_CAULDRON", new Cauldron());
         customBlocks.put("THANKSGIVING_PIE", new PumpkinPie());
@@ -104,7 +78,6 @@ public class CoreSkulls extends JavaPlugin {
         customBlocks.put("COSMIC_TROPHY", new AstroTrophy());
         customBlocks.put("LEVIATHAN_TOTEM", new LeviathanTotem());
         customBlocks.put("HALLOWEEN_CANDLES", new HalloweenCandle());
-        //customBlocks.put("TRIALS_FAME_AND_FORTUNE", new MobGrinder());
         customBlocks.put("COSMIC_TOKEN_GENERATOR", new SlotbotMachine());
     }
 
@@ -120,15 +93,13 @@ public class CoreSkulls extends JavaPlugin {
             }
             CommandMap commandMap = (CommandMap) bukkitCommand.get(Bukkit.getServer());
             commandMap.register(cmd.getName(), fallback, cmd);
-        } catch (Exception e) {
+        } catch(Exception e){
             e.printStackTrace();
 
         }
     }
 
-    public static Map<UUID, AbilityData> getInSlotbotMachine() {
-        return inSlotbotMachine;
-    }
+
 
     private boolean setupEconomy() {
         if (getServer().getPluginManager().getPlugin("Vault") == null) {
@@ -142,4 +113,8 @@ public class CoreSkulls extends JavaPlugin {
         return economy != null;
     }
 
+
+    public static Map<UUID, AbilityData> getInSlotbotMachine() {
+        return inSlotbotMachine;
+    }
 }

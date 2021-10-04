@@ -6,7 +6,14 @@ import com.conaxgames.customskulls.blocks.CustomBlock;
 import com.conaxgames.customskulls.enums.AbilityType;
 import com.conaxgames.customskulls.util.CC;
 import com.conaxgames.customskulls.util.CustomBlockUtil;
-
+import de.tr7zw.nbtapi.NBTCompound;
+import de.tr7zw.nbtapi.NBTTileEntity;
+import de.tr7zw.nbtinjector.NBTInjector;
+import net.minecraft.server.v1_8_R3.NBTTagCompound;
+import net.minecraft.server.v1_8_R3.NBTTagInt;
+import net.minecraft.server.v1_8_R3.TileEntity;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
@@ -51,7 +58,7 @@ public class CustomBlockListener implements Listener {
         if (event.getDamager().getType() != EntityType.PLAYER) {
             return;
         }
-        final Player player = (Player) event.getDamager();
+        final Player player = (Player)event.getDamager();
         if (player.getItemInHand() == null || player.getItemInHand().getType() == Material.AIR) {
             return;
         }
@@ -77,13 +84,10 @@ public class CustomBlockListener implements Listener {
         }
 
         customBlock.breakBlockAction(player, event, event.getBlock(), item, customBlock, data);
-
-
-
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void onBlockPlace(BlockPlaceEvent event) {
+    public void onBlockPlace(final BlockPlaceEvent event) {
         final Player player = event.getPlayer();
         final ItemStack item = player.getItemInHand();
         if (event.getPlayer().getItemInHand() == null || event.getPlayer().getItemInHand().getType() == Material.AIR) {
@@ -122,17 +126,21 @@ public class CustomBlockListener implements Listener {
             compound.setString("type", CustomBlockUtil.getCustomItem(item).getIdentifier());*/
 
 
-            /*NBTCompound entBlock = NBTInjector.getNbtData(event.getBlock().getState());
+
+
+
+
+
+
+            NBTCompound entBlock = NBTInjector.getNbtData(event.getBlock().getState());
             entBlock.addCompound("tag").addCompound("customBlockData").setString("type", CustomBlockUtil.getCustomItem(item).getIdentifier());
             NBTCompound tag = entBlock.getCompound("tag");
             NBTCompound customBlockData = tag.addCompound("customBlockData");
-            customBlockData.setString("type", CustomBlockUtil.getCustomItem(item).getName());*/
+            customBlockData.setString("type", CustomBlockUtil.getCustomItem(item).getName());
 
             //event.setCancelled(true);
 
-
             (CustomBlockUtil.getCustomItem(item)).placeBlockAction(player, event, event.getBlock(), item);
-
         }
 
 

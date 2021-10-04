@@ -103,7 +103,7 @@
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>arkkit</artifactId>
+            <artifactId>arkgkit</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/Arkkit-0.1.jar</systemPath>
