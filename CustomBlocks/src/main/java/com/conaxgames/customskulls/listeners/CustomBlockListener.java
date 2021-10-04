@@ -3,20 +3,9 @@ package com.conaxgames.customskulls.listeners;
 import com.conaxgames.customskulls.CoreSkulls;
 import com.conaxgames.customskulls.ability.AbilityData;
 import com.conaxgames.customskulls.blocks.CustomBlock;
-import com.conaxgames.customskulls.enums.AbilityType;
 import com.conaxgames.customskulls.util.CC;
 import com.conaxgames.customskulls.util.CustomBlockUtil;
-import de.tr7zw.nbtapi.NBTCompound;
-import de.tr7zw.nbtapi.NBTTileEntity;
-import de.tr7zw.nbtinjector.NBTInjector;
-import net.minecraft.server.v1_8_R3.NBTTagCompound;
-import net.minecraft.server.v1_8_R3.NBTTagInt;
-import net.minecraft.server.v1_8_R3.TileEntity;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -124,20 +113,6 @@ public class CustomBlockListener implements Listener {
             compound.setString("type", CustomBlockUtil.getCustomItem(item).getIdentifier());
             compound.setString("customBlockData", CustomBlockUtil.getCustomItem(item).getIdentifier());
             compound.setString("type", CustomBlockUtil.getCustomItem(item).getIdentifier());*/
-
-
-
-
-
-
-
-
-            NBTCompound entBlock = NBTInjector.getNbtData(event.getBlock().getState());
-            entBlock.addCompound("tag").addCompound("customBlockData").setString("type", CustomBlockUtil.getCustomItem(item).getIdentifier());
-            NBTCompound tag = entBlock.getCompound("tag");
-            NBTCompound customBlockData = tag.addCompound("customBlockData");
-            customBlockData.setString("type", CustomBlockUtil.getCustomItem(item).getName());
-
             //event.setCancelled(true);
 
             (CustomBlockUtil.getCustomItem(item)).placeBlockAction(player, event, event.getBlock(), item);

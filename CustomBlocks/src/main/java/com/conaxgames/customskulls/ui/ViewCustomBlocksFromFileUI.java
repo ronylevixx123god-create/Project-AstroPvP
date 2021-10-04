@@ -14,7 +14,12 @@ public class ViewCustomBlocksFromFileUI {
 
         InventoryUI inventoryUI = new InventoryUI("Custom Blocks", 6);
         for (String key : AbilityData.getAbilityDataMap().keySet()) {
+            if (key == null) continue;
+            if (AbilityData.getByUUID(key) == null) continue;
             AbilityData data = AbilityData.getByUUID(key);
+            if (data == null) continue;
+            if (data.getAbilityType() == null) continue;
+            if (CoreSkulls.customBlocks.get(data.getAbilityType().getName()) == null) continue;
             CustomBlock customBlock = CoreSkulls.customBlocks.get(data.getAbilityType().getName());
             inventoryUI.addItem(new InventoryUI.AbstractClickableItem(
                     new ItemBuilderUtils(customBlock.getItem())

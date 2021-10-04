@@ -1,5 +1,6 @@
 package com.conaxgames.customskulls.commands;
 
+import com.conaxgames.customskulls.ability.AbilityData;
 import com.conaxgames.customskulls.ui.CustomBlocksAdminUI;
 import com.conaxgames.customskulls.ui.ViewCustomBlocksFromFileUI;
 import com.conaxgames.customskulls.util.CC;
@@ -10,6 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.Collections;
+import java.util.Map;
 
 public class AbilityBlocksCommand extends Command {
 
@@ -35,6 +37,15 @@ public class AbilityBlocksCommand extends Command {
         if (strings[0].equals("view")) {
             CustomBlocksAdminUI.open(player);
             return true;
+        }
+
+        if (strings[0].equals("test")) {
+            if (!player.isOp()) return false;
+            for (Map.Entry<String, AbilityData> key : AbilityData.getAbilityDataMap().entrySet()) {
+                player.sendMessage(CC.GREEN + key.getKey());
+                player.sendMessage(CC.RED + key.getValue());
+                player.sendMessage("");
+            }
         }
 
         if (strings[0].equals("list")) {

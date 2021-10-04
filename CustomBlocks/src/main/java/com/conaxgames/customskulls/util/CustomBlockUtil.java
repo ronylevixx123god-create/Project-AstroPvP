@@ -39,7 +39,11 @@ public class CustomBlockUtil {
     public static List<AbilityData> getBlockDatasInChunk(Player player) {
         List<AbilityData> abilityDataList = new ArrayList<>();
         Chunk chunk = player.getLocation().getChunk();
+
         for (AbilityData data : AbilityData.getAbilityDataMap().values()) {
+            if (data == null || data.getLocation() == null) continue;
+            if (data.getAbilityType() == null) continue;
+            if (chunk == null) continue;
             if (chunk == data.getLocation().getChunk()) { // The chunk the player is in has a CustomBlock in it!
                 abilityDataList.add(data);
             }
@@ -47,9 +51,11 @@ public class CustomBlockUtil {
         return abilityDataList;
     }
 
-    public static Boolean chunkContainsABlock(Player player) {
+    public static boolean chunkContainsABlock(Player player) {
         Chunk chunk = player.getLocation().getChunk();
         for (AbilityData data : AbilityData.getAbilityDataMap().values()) {
+            if (data == null || data.getLocation() == null) continue;
+            if (chunk == null) continue;
             if (chunk == data.getLocation().getChunk()) { // The chunk the player is in has a CustomBlock in it!
                 return true;
             }
@@ -63,6 +69,7 @@ public class CustomBlockUtil {
             if (abilityData2 == null) {
                 return false;
             }
+            if (abilityData2.getAbilityType() == null) continue;
 
             CustomBlock customBlock = CoreSkulls.customBlocks.get(abilityData2.getAbilityType().getName());
 
@@ -82,6 +89,8 @@ public class CustomBlockUtil {
         List<AbilityData> abilityDataList = new ArrayList<>();
         Chunk chunk = l.getChunk();
         for (AbilityData data : AbilityData.getAbilityDataMap().values()) {
+            if (data == null) continue;
+            if (data.getAbilityType() == null) continue;
             if (chunk == data.getLocation().getChunk()) { // The chunk the player is in has a CustomBlock in it!
                 abilityDataList.add(data);
             }
@@ -98,7 +107,7 @@ public class CustomBlockUtil {
             }
 
             CustomBlock customBlock = CoreSkulls.customBlocks.get(abilityData2.getAbilityType().getName());
-
+        if (CoreSkulls.customBlocks.get(abilityData2.getAbilityType().getName()) == null) continue;
 
             if (customBlock == null) {
                 return false;
