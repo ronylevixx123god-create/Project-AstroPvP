@@ -61,12 +61,17 @@ public class CategoryInventory {
         removeCategory.setItemMeta(meta);
 
         categoryInventory.setItem(6, 1, new GuiItem(prevPage, event -> {
-            categoryInventory.previous();
+            PaginatedGui inventory= new CategoryInventory(player, category).getCollectUI();
+            inventory.open(player);
+            inventory.previous();
             event.setCancelled(true);
         }));
 
         categoryInventory.setItem(6, 9, new GuiItem(nextPage, event -> {
-            categoryInventory.next();
+            PaginatedGui inventory= new CategoryInventory(player, category).getCollectUI();
+            inventory.open(player);
+            inventory.next();
+
             event.setCancelled(true);
         }));
 
@@ -81,11 +86,12 @@ public class CategoryInventory {
         for (ItemStack item : category.getItems()) {
             categoryInventory.addItem(new GuiItem(item, event -> {
 
-                category.setItems(category.removeItem(item));
 
 
                 player.getInventory().addItem(item);
                 categoryInventory.getInventory().remove(event.getCurrentItem());
+                category.setItems(category.removeItem(item));
+
 
                 if (category.onlyContainsAir()) {
                     categoryInventory.close(player);
@@ -101,7 +107,7 @@ public class CategoryInventory {
     }
 
     public ItemStack createFillerItem() {
-        ItemStack item = new ItemStack(Material.STAINED_GLASS_PANE, 1, DyeColor.LIME.getData());
+        ItemStack item = new ItemStack(Material.STAINED_GLASS_PANE, 1, DyeColor.LIGHT_BLUE.getData());
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(CC.translate("&f"));
         item.setItemMeta(meta);

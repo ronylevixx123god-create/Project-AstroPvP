@@ -118,7 +118,11 @@ public class AstroItemSkinsAPI {
             string = string.replace("[", "");
             string = string.replace("]", "");
             string = string.replace(" ", "");
-            skins.add(SkinType.valueOf(string));
+            try {
+                skins.add(SkinType.valueOf(string));
+            } catch (Exception e) {
+
+            }
         }
         return skins;
     }

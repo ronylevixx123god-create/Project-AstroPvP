@@ -40,20 +40,14 @@
         <module>AstroEndGrinding</module>
         <module>Tournaments</module>
         <module>AstroSpawnersMobcoins</module>
-        <module>AstroSpawnersMobcoins</module>
         <module>AstroScoreboard</module>
         <module>WeaponRunes</module>
         <module>ItemFlip</module>
         <module>AstroRevive</module>
         <module>HotFix</module>
         <module>FactionBanners</module>
-        <module>Collect</module>
-        <module>Collect</module>
-        <module>Collect</module>
-        <module>Test</module>
         <module>AstroCollect</module>
         <module>CosmicShop</module>
-        <module>FactionFights</module>
         <module>CosmicCrate</module>
         <module>SandBots</module>
     </modules>
