@@ -63,6 +63,8 @@ public class CustomPearlListener implements Listener {
                 } else {
                     item.setAmount(item.getAmount() - 1);
                 }
+            } else if (OmniPearlItem.isOmniPearl(item)) {
+                item.setAmount(item.getAmount()+1);
             }
             player.updateInventory();
             //event.setCancelled(true);
