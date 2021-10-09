@@ -7,7 +7,6 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="AstroCollect" />
         <module name="ItemFlip" />
         <module name="SandBots" />
         <module name="CustomBlocks" />
@@ -23,6 +22,7 @@
         <module name="CosmicShop" />
         <module name="Masks" />
         <module name="AstroScoreboard" />
+        <module name="AstroUtils" />
         <module name="Explosive" />
         <module name="Sets" />
         <module name="Dungeon" />
@@ -59,6 +59,7 @@
       <module name="AstroSpawners" target="1.8" />
       <module name="Backpacks" target="8" />
       <module name="ClientComms" target="8" />
+      <module name="Collect" target="8" />
       <module name="Comms" target="8" />
       <module name="CrateBoxes" target="8" />
       <module name="Disguises (1)" target="8" />

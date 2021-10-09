@@ -7,6 +7,7 @@ import net.astropvp.inventories.FactionManageGui;
 public class CmdSandBot extends FCommand{
     public CmdSandBot() {
         this.aliases.add("sandbots");
+        this.aliases.add("sandbot");
         this.disableOnLock = false;
         this.senderMustBePlayer = true;
         this.senderMustBeMember = true;

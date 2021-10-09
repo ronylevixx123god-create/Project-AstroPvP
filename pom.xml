@@ -50,6 +50,7 @@
         <module>CosmicShop</module>
         <module>CosmicCrate</module>
         <module>SandBots</module>
+        <module>AstroUtils</module>
     </modules>
 
     <build>
