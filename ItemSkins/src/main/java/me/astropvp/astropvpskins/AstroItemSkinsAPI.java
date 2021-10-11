@@ -98,6 +98,9 @@ public class AstroItemSkinsAPI {
 
     public static boolean hasItemSkin(ItemStack item) {
         NBTWrapper wrapper = new NBTWrapper(item);
+
+
+
         if (!wrapper.hasKey("cosmicData"))
             return false;
         if (wrapper.hasKey("cosmicType") && wrapper.getString("cosmicType").equals("item_skin"))
