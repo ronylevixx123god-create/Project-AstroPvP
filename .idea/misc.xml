@@ -21,6 +21,7 @@
         <option value="$PROJECT_DIR$/ClientComms/pom.xml" />
         <option value="$PROJECT_DIR$/Collect/pom.xml" />
         <option value="$PROJECT_DIR$/Comms/pom.xml" />
+        <option value="$PROJECT_DIR$/DiscordAPI/pom.xml" />
         <option value="$PROJECT_DIR$/FactionFights/pom.xml" />
         <option value="$PROJECT_DIR$/GUIShop/pom.xml" />
         <option value="$PROJECT_DIR$/ItemFilter/pom.xml" />

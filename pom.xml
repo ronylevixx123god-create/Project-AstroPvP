@@ -51,6 +51,7 @@
         <module>CosmicCrate</module>
         <module>SandBots</module>
         <module>AstroUtils</module>
+        <module>DiscordAPI</module>
     </modules>
 
     <build>

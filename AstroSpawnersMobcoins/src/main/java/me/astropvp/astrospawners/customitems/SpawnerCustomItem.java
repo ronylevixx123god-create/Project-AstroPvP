@@ -24,7 +24,7 @@ public class SpawnerCustomItem extends CustomItem {
             sender.sendMessage(getUnknownUsage());
             return;
         }
-        int amount = Integer.valueOf(args[1]);
+        int amount = Integer.parseInt(args[1]);
 
         ItemStack item = ItemSpawner.getItem(EntityType.valueOf(args[2].toUpperCase()), amount);
         player.getInventory().addItem(item);

@@ -11,7 +11,6 @@
         <module name="SandBots" />
         <module name="CustomBlocks" />
         <module name="SpaceChests" />
-        <module name="Collect" />
         <module name="ItemSkins" />
         <module name="HotFix" />
         <module name="Enchantments" />
@@ -62,6 +61,7 @@
       <module name="Collect" target="8" />
       <module name="Comms" target="8" />
       <module name="CrateBoxes" target="8" />
+      <module name="DiscordAPI" target="8" />
       <module name="Disguises (1)" target="8" />
       <module name="FactionFights" target="8" />
       <module name="GUIShop" target="8" />
