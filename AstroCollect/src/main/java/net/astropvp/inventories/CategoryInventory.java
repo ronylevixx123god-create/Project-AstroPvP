@@ -61,15 +61,17 @@ public class CategoryInventory {
         removeCategory.setItemMeta(meta);
 
         categoryInventory.setItem(6, 1, new GuiItem(prevPage, event -> {
+            int pageNum = categoryInventory.getCurrentPageNum();
             PaginatedGui inventory= new CategoryInventory(player, category).getCollectUI();
-            inventory.open(player);
+            inventory.open(player, pageNum);
             inventory.previous();
             event.setCancelled(true);
         }));
 
         categoryInventory.setItem(6, 9, new GuiItem(nextPage, event -> {
+            int pageNum = categoryInventory.getCurrentPageNum();
             PaginatedGui inventory= new CategoryInventory(player, category).getCollectUI();
-            inventory.open(player);
+            inventory.open(player, pageNum);
             inventory.next();
 
             event.setCancelled(true);
