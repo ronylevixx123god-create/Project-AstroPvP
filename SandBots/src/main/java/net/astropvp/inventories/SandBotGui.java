@@ -112,7 +112,7 @@ public class SandBotGui extends MenuManager implements InventoryProvider {
             Player invplayer = (Player)e.getWhoClicked();
             double balanceplayer = CosmicGUIShop.getEconomy().getBalance((OfflinePlayer)player);
             double balancebot = bot.getBalance();
-            double howmanytotake = 1000;
+            double howmanytotake = 100;
             if (SandBots.botGuis.containsKey(bot)) {
                 if (e.isLeftClick()) {
                     if (balanceplayer >= howmanytotake) {
