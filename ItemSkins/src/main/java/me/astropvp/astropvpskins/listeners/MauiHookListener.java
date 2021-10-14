@@ -3,13 +3,13 @@ package me.astropvp.astropvpskins.listeners;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import java.util.List;
 
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.swords.MauisHookSkin;
-import me.ifamasssxd.cosmicfactionboosters.utils.FactionUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -48,6 +48,8 @@ public class MauiHookListener implements Listener {
                             continue;
                         final Player target = ((Player) entity).getPlayer();
                         if (GeneralUtil.isAtleastTruce(target, e.getPlayer()))
+                            continue;
+                        if (FactionUtils.inSameFaction(target, e.getPlayer()))
                             continue;
                         if (!WorldGuardUtils.isPvPEnabled(target.getLocation()))
                             continue;
