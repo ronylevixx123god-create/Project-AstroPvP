@@ -3,6 +3,7 @@ package me.astropvp.astrospawners.commands;
 import com.compilex.CompilexPermissions.PermissionsAPI;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.google.common.collect.Lists;
@@ -14,6 +15,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import me.astropvp.astrospawners.AstroSpawners;
+import me.astropvp.astrospawners.utils.PlayerData;
+import me.astropvp.astrospawners.utils.PlayerDataManager;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
@@ -36,9 +40,12 @@ public class CommandMobCoinShop implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command arg1, String arg2, String[] args) {
         if (!(sender instanceof Player))
             return false;
-        Inventory inventory = Bukkit.createInventory(null, 18, String.valueOf(CC.DarkGray) + "Mob Coin Shop");
+        Inventory inventory = Bukkit.createInventory(null, 27, String.valueOf(CC.DarkGray) + "Mob Coin Shop");
         Map<String, MysteryChest> chests = CosmicMysteryChest.get().getChestManager().getMysteryChestMap();
         LinkedHashMap<ItemStack, Integer> values = new LinkedHashMap<>();
+        PlayerDataManager manager = AstroSpawners.getInstance().getManager();
+        PlayerData data = manager.getPlayerData((Player) sender);
+        double balance = ((data == null) ? 0 : data.getCoins());
 
         String rank = PermissionsAPI.getPermissionUser(((Player) sender).getPlayer().getUniqueId()).getGroup();
 
@@ -51,6 +58,8 @@ public class CommandMobCoinShop implements CommandExecutor {
                 values.put(((MysteryChest)chests.get("HeroicPet")).createClaimableItem(false), Integer.valueOf(200));
             if (chests.containsKey("AdminWeapon"))
                 values.put(((MysteryChest)chests.get("AdminWeapon")).createClaimableItem(false), Integer.valueOf(320));
+            if (chests.containsKey("Slotbot"))
+                values.put(((MysteryChest)chests.get("Slotbot")).createClaimableItem(false), Integer.valueOf(1600));
             if (chests.containsKey("SkinBundle"))
                 values.put(((MysteryChest)chests.get("SkinBundle")).createClaimableItem(false), Integer.valueOf(160));
             if (chests.containsKey("ArmorCache"))
@@ -65,6 +74,10 @@ public class CommandMobCoinShop implements CommandExecutor {
                 values.put(((MysteryChest)chests.get("CustomBlock")).createClaimableItem(false), Integer.valueOf(800));
             if (chests.containsKey("PremadeOmni"))
                 values.put(((MysteryChest)chests.get("PremadeOmni")).createClaimableItem(false), Integer.valueOf(2000));
+            if (chests.containsKey("ChampionCrystal"))
+                values.put(((MysteryChest)chests.get("ChampionCrystal")).createClaimableItem(false), Integer.valueOf(6000));
+            if (chests.containsKey("UltraCrystal"))
+                values.put(((MysteryChest)chests.get("UltraCrystal")).createClaimableItem(false), Integer.valueOf(12000));
         } else {
             if (chests.containsKey("OmniCrystal"))
                 values.put(((MysteryChest)chests.get("OmniCrystal")).createClaimableItem(false), Integer.valueOf(250));
@@ -74,6 +87,8 @@ public class CommandMobCoinShop implements CommandExecutor {
                 values.put(((MysteryChest)chests.get("HeroicPet")).createClaimableItem(false), Integer.valueOf(250));
             if (chests.containsKey("AdminWeapon"))
                 values.put(((MysteryChest)chests.get("AdminWeapon")).createClaimableItem(false), Integer.valueOf(400));
+            if (chests.containsKey("Slotbot"))
+                values.put(((MysteryChest)chests.get("Slotbot")).createClaimableItem(false), Integer.valueOf(2000));
             if (chests.containsKey("SkinBundle"))
                 values.put(((MysteryChest)chests.get("SkinBundle")).createClaimableItem(false), Integer.valueOf(200));
             if (chests.containsKey("ArmorCache"))
@@ -88,6 +103,11 @@ public class CommandMobCoinShop implements CommandExecutor {
                 values.put(((MysteryChest)chests.get("CustomBlock")).createClaimableItem(false), Integer.valueOf(1000));
             if (chests.containsKey("PremadeOmni"))
                 values.put(((MysteryChest)chests.get("PremadeOmni")).createClaimableItem(false), Integer.valueOf(2500));
+            if (chests.containsKey("ChampionCrystal"))
+                values.put(((MysteryChest)chests.get("ChampionCrystal")).createClaimableItem(false), Integer.valueOf(7500));
+            if (chests.containsKey("UltraCrystal"))
+                values.put(((MysteryChest)chests.get("UltraCrystal")).createClaimableItem(false), Integer.valueOf(15000));
+
         }
 
 
@@ -120,6 +140,14 @@ public class CommandMobCoinShop implements CommandExecutor {
             inventory.setItem(x, item);
             x++;
         }
+
+
+
+        ItemStack coinsItem = new ItemBuilder(Material.DOUBLE_PLANT).name(CC.translate("&e&lMobcoins Shop")).addLoreLine(CC.translate("&7Welcome to the mobcoins shop."))
+                .addLoreLine(CC.translate("&7Here you can spend all your mobcoins.")).addLoreLine("")
+                .addLoreLine(CC.translate(CC.GreenB) + "* TOTAL: " + CC.White + NumberUtils.formatMoney(balance) + " Mob Coins").build();
+
+        inventory.setItem(22, coinsItem);
 
         ((Player)sender).openInventory(inventory);
         return false;
