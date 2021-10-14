@@ -100,7 +100,7 @@ public class AstroSpawners extends JavaPlugin {
         registerListener(new MobSpawnerListener());
         registerListener(new MobCoinShopListener());
         registerListener(new PlayerDataOnJoin());
-        registerListener(new CreeperEggFix());
+        //registerListener(new CreeperEggFix());
     }
 
     public void registerCommands() {
