@@ -51,8 +51,6 @@ public class CommandMobCoinShop implements CommandExecutor {
                 values.put(((MysteryChest)chests.get("HeroicPet")).createClaimableItem(false), Integer.valueOf(200));
             if (chests.containsKey("AdminWeapon"))
                 values.put(((MysteryChest)chests.get("AdminWeapon")).createClaimableItem(false), Integer.valueOf(320));
-            if (chests.containsKey("Slotbot"))
-                values.put(((MysteryChest)chests.get("Slotbot")).createClaimableItem(false), Integer.valueOf(800));
             if (chests.containsKey("SkinBundle"))
                 values.put(((MysteryChest)chests.get("SkinBundle")).createClaimableItem(false), Integer.valueOf(160));
             if (chests.containsKey("ArmorCache"))
@@ -76,8 +74,6 @@ public class CommandMobCoinShop implements CommandExecutor {
                 values.put(((MysteryChest)chests.get("HeroicPet")).createClaimableItem(false), Integer.valueOf(250));
             if (chests.containsKey("AdminWeapon"))
                 values.put(((MysteryChest)chests.get("AdminWeapon")).createClaimableItem(false), Integer.valueOf(400));
-            if (chests.containsKey("Slotbot"))
-                values.put(((MysteryChest)chests.get("Slotbot")).createClaimableItem(false), Integer.valueOf(1000));
             if (chests.containsKey("SkinBundle"))
                 values.put(((MysteryChest)chests.get("SkinBundle")).createClaimableItem(false), Integer.valueOf(200));
             if (chests.containsKey("ArmorCache"))
