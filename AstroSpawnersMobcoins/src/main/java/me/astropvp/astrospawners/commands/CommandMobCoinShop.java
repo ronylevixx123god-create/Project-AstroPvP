@@ -27,6 +27,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.pets.InventoryBansheePet;
 import net.minecraft.server.v1_8_R3.NBTBase;
 import org.bukkit.Bukkit;
+import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -40,7 +41,7 @@ public class CommandMobCoinShop implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command arg1, String arg2, String[] args) {
         if (!(sender instanceof Player))
             return false;
-        Inventory inventory = Bukkit.createInventory(null, 27, String.valueOf(CC.DarkGray) + "Mob Coin Shop");
+        Inventory inventory = Bukkit.createInventory(null, 36, String.valueOf(CC.DarkGray) + "Mob Coin Shop");
         Map<String, MysteryChest> chests = CosmicMysteryChest.get().getChestManager().getMysteryChestMap();
         LinkedHashMap<ItemStack, Integer> values = new LinkedHashMap<>();
         PlayerDataManager manager = AstroSpawners.getInstance().getManager();
@@ -147,7 +148,12 @@ public class CommandMobCoinShop implements CommandExecutor {
                 .addLoreLine(CC.translate("&7Here you can spend all your mobcoins.")).addLoreLine("")
                 .addLoreLine(CC.translate(CC.GreenB) + "* TOTAL: " + CC.White + NumberUtils.formatMoney(balance) + " Mob Coins").build();
 
-        inventory.setItem(22, coinsItem);
+        inventory.setItem(31, coinsItem);
+        for (int i = 27; i<inventory.getSize(); i++) {
+            if (inventory.getItem(i) == null) {
+                inventory.setItem(i, getFillerItem());
+            }
+        }
 
         ((Player)sender).openInventory(inventory);
         return false;
@@ -156,5 +162,10 @@ public class CommandMobCoinShop implements CommandExecutor {
     public static ItemStack setAmount(ItemStack item, int amount) {
         item.setAmount(amount);
         return item;
+    }
+
+    public ItemStack getFillerItem() {
+        ItemStack itemStack = new ItemBuilder(new ItemStack(Material.STAINED_GLASS_PANE, 1, DyeColor.LIME.getData())).name(CC.translate("")).build();
+        return itemStack;
     }
 }

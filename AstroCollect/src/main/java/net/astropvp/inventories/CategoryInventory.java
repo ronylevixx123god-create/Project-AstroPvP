@@ -109,7 +109,7 @@ public class CategoryInventory {
     }
 
     public ItemStack createFillerItem() {
-        ItemStack item = new ItemStack(Material.STAINED_GLASS_PANE, 1, DyeColor.LIGHT_BLUE.getData());
+        ItemStack item = new ItemStack(Material.STAINED_GLASS_PANE, 1, DyeColor.LIME.getData());
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(CC.translate("&f"));
         item.setItemMeta(meta);
