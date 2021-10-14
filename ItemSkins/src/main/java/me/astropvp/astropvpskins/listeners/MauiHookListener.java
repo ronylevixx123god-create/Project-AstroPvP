@@ -30,6 +30,7 @@ public class MauiHookListener implements Listener {
 
     @EventHandler
     public void sneakMauiEffect(PlayerToggleSneakEvent e) {
+        if (!e.getPlayer().getWorld().getName().equals("world")) return;
         if (e.getPlayer().getItemInHand() != null) {
         if (e.getPlayer().getItemInHand().getType().name().contains("SWORD")) {
             if (e.isSneaking() && MauisHookSkin.mauiEffect.containsKey(e.getPlayer()) && (

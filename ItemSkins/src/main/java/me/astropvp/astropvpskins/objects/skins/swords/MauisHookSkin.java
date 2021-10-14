@@ -23,6 +23,8 @@ public class MauisHookSkin extends ItemSkin {
     }
 
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
+        if (!damager.getWorld().getName().equals("world")) return;
+
         if (!(damaged instanceof Player))
             return;
         if (Math.random() > 0.06D)
