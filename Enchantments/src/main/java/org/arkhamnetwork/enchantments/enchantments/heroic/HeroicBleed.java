@@ -76,6 +76,7 @@ public class HeroicBleed extends HeroicCustomEnchantment {
     }
 
     private void addBleedStack(LivingEntity leDamager, LivingEntity le) throws Exception {
+        if (!(leDamager instanceof Player)) return;
         le.setMetadata("bleedStack", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), Integer.valueOf(getBleedStack(le) + 1)));
         int bleedStack = Math.max(1, getBleedStack(le) / 2);
         if (le instanceof Player) {

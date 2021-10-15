@@ -45,7 +45,7 @@ public class MasteryBlackout extends CustomEnchantment {
             enchantLevel = 5;
         }
 
-        if (Math.random() <= 0.002D * enchantLevel) {
+        if (Math.random() <= 0.004D * enchantLevel) {
             int multi = AstroItemSkinsAPI.hasSkinEquipped((Player) user, SkinType.CORRUPT_SWORD) ? 2 : 1;
             if (AstroItemSkinsAPI.hasSkinEquipped(pTarget.getPlayer(), SkinType.CHRISTMAS_HELMET_STAR)) {
                 multi = 1;
