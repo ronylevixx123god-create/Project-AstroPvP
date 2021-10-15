@@ -61,12 +61,19 @@ public class CategoryInventory {
         removeCategory.setItemMeta(meta);
 
         categoryInventory.setItem(6, 1, new GuiItem(prevPage, event -> {
-            categoryInventory.previous();
+            int pageNum = categoryInventory.getCurrentPageNum();
+            PaginatedGui inventory= new CategoryInventory(player, category).getCollectUI();
+            inventory.open(player, pageNum);
+            inventory.previous();
             event.setCancelled(true);
         }));
 
         categoryInventory.setItem(6, 9, new GuiItem(nextPage, event -> {
-            categoryInventory.next();
+            int pageNum = categoryInventory.getCurrentPageNum();
+            PaginatedGui inventory= new CategoryInventory(player, category).getCollectUI();
+            inventory.open(player, pageNum);
+            inventory.next();
+
             event.setCancelled(true);
         }));
 
@@ -81,11 +88,12 @@ public class CategoryInventory {
         for (ItemStack item : category.getItems()) {
             categoryInventory.addItem(new GuiItem(item, event -> {
 
-                category.setItems(category.removeItem(item));
 
 
                 player.getInventory().addItem(item);
                 categoryInventory.getInventory().remove(event.getCurrentItem());
+                category.setItems(category.removeItem(item));
+
 
                 if (category.onlyContainsAir()) {
                     categoryInventory.close(player);

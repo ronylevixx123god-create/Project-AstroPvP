@@ -45,13 +45,13 @@ public class InventoryWitcherPet extends InventoryPet {
 
     public List<String> getPetDescription(int level) {
         return Lists.newArrayList(String.valueOf(CC.Gray) + "Call upon the deadly screaming Banshee.", "",
-                String.valueOf(CC.YellowB) + "Ability", String.valueOf(CC.Gray) + "Activates " + CC.DarkRedB + "[Witcher]:",
+                String.valueOf(CC.WhiteB) + "Ability", String.valueOf(CC.Gray) + "Activates " + CC.DarkRedB + "[Witcher]:",
                 String.valueOf(CC.DarkRedB) + "* " + CC.Gray + "Immune to almost all knockback (" + (5 * 2) + "s)",
                 String.valueOf(CC.DarkRedB) + "* " + CC.Gray + "Teleblocks enemies in a 8x8 radius for (" + (5 * 2) + "s)",
                 String.valueOf(CC.DarkRedB) + "* " + CC.Gray + "Negates enemy ragdoll in a 8x8 radius for (" + (5 * 2) + "s)",
                 String.valueOf(CC.DarkRedB) + "* " + CC.Gray + "Silences enemy soul enchantments in a 8x8 radius for (" + (5 * 2) + "s)",
                 String.valueOf(CC.DarkRedB) + "* " + CC.Gray + "Freezes enemies in a 8x8 radius for 1s", "",
-                String.valueOf(CC.YellowB) + "Cooldown",
+                String.valueOf(CC.WhiteB) + "Cooldown",
                 String.valueOf(CC.Gray) + (getCooldown(5) / 60) + " Minutes");
     }
 

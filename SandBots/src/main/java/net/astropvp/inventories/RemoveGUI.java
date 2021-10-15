@@ -13,6 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import me.ifamasssxd.cosmicguishop.CosmicGUIShop;
 import net.astropvp.SandBots;
 import net.astropvp.enums.GuiType;
+import net.astropvp.items.SandBotItem;
 import net.astropvp.managers.SandBotManager;
 import net.astropvp.utils.Utils;
 import net.astropvp.utils.inventory.ClickableItem;
@@ -34,7 +35,7 @@ public class RemoveGUI extends MenuManager implements InventoryProvider {
     public RemoveGUI(SandBots plugin, SandBotManager bot) {
         this.plugin = plugin;
         this.bot = bot;
-        this.sandbtsinv = SmartInventory.builder().id("confirm").provider(this).size(3, 9).manager(SandBots.getInvManager()).title(Utils.color(plugin.getConfig().getString("confirm-gui-title"))).build();
+        this.sandbtsinv = SmartInventory.builder().id("confirm").provider(this).size(3, 9).manager(SandBots.getInvManager()).title(CC.YellowB + "Confirm").build();
     }
 
     public RemoveGUI open(Player player) {
@@ -43,7 +44,7 @@ public class RemoveGUI extends MenuManager implements InventoryProvider {
     }
 
     public void init(Player player, InventoryContents contents) {
-        ItemStack purpleglass = (new ItemBuilder(Material.STAINED_GLASS_PANE).name(" ").data((short)1).build());
+        ItemStack purpleglass = (new ItemBuilder(Material.STAINED_GLASS_PANE).name(" ").data((short)4).build());
         int[] purplec = new int[]{1, 3, 5, 7};
         int[] purpler = new int[]{1, 1, 1, 1};
 
@@ -58,20 +59,20 @@ public class RemoveGUI extends MenuManager implements InventoryProvider {
         contents.newIterator("iter4", SlotIterator.Type.HORIZONTAL, 0, 4);
         ItemStack glass = (new ItemBuilder(Material.STAINED_GLASS_PANE).name(" ").build());
         contents.fillBorders(ClickableItem.empty(glass));
-        ItemStack mainhead = Utils.botItem(CC.YellowB + "SandBot", Lists.newArrayList(CC.translate("&d* &2&lOwner: &5%botowner%"), CC.translate("&d* &2&lFaction &d%botfaction%"), CC.translate("&d* &2&lBalance &d%balance%"), CC.translate("&d* &2&lActivated &d%isActivated%"), CC.translate("&d* &2&lLapisBlocks &d%blocksd%"), CC.translate("&d* &2&lLocation: &eX: &d%botlocationx%&e Y: &d%botlocationy%&e Z: &d%botlocationz%")), this.bot);
+        ItemStack mainhead = Utils.botItem(CC.YellowB + "SandBot", Lists.newArrayList(CC.YellowB + " * " + CC.Green +  "Owner: " + CC.Gray + bot.getOwnerName() , CC.YellowB + " * " + CC.Green + "Faction: " + CC.Gray + bot.getFactionID(), CC.YellowB + " * " + CC.Green + "Balance: " + CC.Gray + bot.getBalance(), CC.YellowB + " * " + CC.Green + "Activated: " + CC.Gray + (bot.isActivated() ? "True" : "False"), CC.YellowB + " * " + CC.Green + "Lapis Blocks " + CC.Gray + bot.getLapisBlocks().size(), CC.YellowB + " * " + CC.Green + "Location: " + CC.YellowB + "X: " + CC.Gray + bot.getLocation().getBlockX() + CC.YellowB + " Y: " + CC.Gray + bot.getLocation().getBlockY() + CC.YellowB + " Z: " + CC.Gray + bot.getLocation().getBlockZ()), bot);
         contents.set(1, 4, ClickableItem.empty(mainhead));
         ItemStack accept = Utils.botItem(CC.GreenB + "Confirm", Lists.newArrayList(CC.Gray + "Click here to cancel the process."), this.bot, Skull.getCustomSkull("http://textures.minecraft.net/texture/" + "a92e31ffb59c90ab08fc9dc1fe26802035a3a47c42fee63423bcdb4262ecb9b6"));
         contents.set(1, 2, ClickableItem.of(accept, (e) -> {
             Player invplayer = (Player)e.getWhoClicked();
             if (e.isLeftClick() || e.isRightClick()) {
                 if (SandBots.botGuis.containsKey(this.bot)) {
-                    ItemStack botdropItem = (new ItemBuilder(Material.MONSTER_EGG).name(CC.YellowB + "Sandbot").lore(this.plugin.getConfig().getStringList("bot-spawn-item-lore")).build());
+                    ItemStack botdropItem = SandBotItem.get();
                         double balanceplayer = CosmicGUIShop.getEconomy().getBalance(player);
                         double howmanytotake = 2000;
                         if (balanceplayer >= howmanytotake) {
                             CosmicGUIShop.getEconomy().withdrawPlayer(player, howmanytotake);
                             Utils.dropitem(invplayer, this.bot.getLocation(), botdropItem);
-                            invplayer.sendMessage(Utils.color("&5SandBot removed successfully you paid %fee% fees.".replace("%fee%", String.valueOf(howmanytotake))));
+                            invplayer.sendMessage(CC.GreenB + "(!) " + CC.Green + "Successfully removed sandbot costing " + howmanytotake + ".");
                             Utils.removeBot(this.bot);
                         } else {
                             player.sendMessage(CC.RedB + "(!) " + CC.Red + "You do not have the sufficient funds for this.");
@@ -94,7 +95,7 @@ public class RemoveGUI extends MenuManager implements InventoryProvider {
                     player.closeInventory();
                 }
 
-                invplayer.sendMessage(Utils.color("&8&l[&2&l!&8&l] &7Remove canceled successfully."));
+                invplayer.sendMessage(CC.RedB + "(!) " + CC.Red + "Remove canceled successfully.");
             }
 
         }));
@@ -103,7 +104,7 @@ public class RemoveGUI extends MenuManager implements InventoryProvider {
     public void update(Player player, InventoryContents contents) {
         int state = (Integer)contents.property("state", 0);
         contents.setProperty("state", state + 1);
-        ItemStack glasstmp = (new ItemBuilder(Material.STAINED_GLASS_PANE).name("").data((short) 1).build());
+        ItemStack glasstmp = (new ItemBuilder(Material.STAINED_GLASS_PANE).name("").data((short) 5).build());
         if (state % 5 == 0) {
             ItemStack mainhead = Utils.botItem(CC.YellowB + "SandBot", Lists.newArrayList(), this.bot);
             contents.set(1, 4, ClickableItem.empty(mainhead));

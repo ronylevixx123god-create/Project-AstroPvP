@@ -116,29 +116,24 @@ public class LeviathanTotem extends CustomBlock {
             // The block must be in the land to remove it.
             return;
         }
-        if (FactionUtils.isWilderness(p2.getLocation()) || (fPlayer.getRelationToLocation().isMember())) {
-            if (CoreSkulls.getEconomy().has(breaker, AbilityType.LEVIATHAN_TOTEM.getPickupPrice())) {
-                CoreSkulls.getEconomy().withdrawPlayer(breaker, AbilityType.LEVIATHAN_TOTEM.getPickupPrice());
-                breaker.sendMessage(CC.B_RED + "-$" + NumberUtils.formatMoney(AbilityType.LEVIATHAN_TOTEM.getPickupPrice()));
-                breaker.sendMessage(CC.translate("&a&l(!)&a You broke a " + AbilityType.LEVIATHAN_TOTEM.getName() + " Custom Block"));
+        if (CoreSkulls.getEconomy().has(breaker, AbilityType.LEVIATHAN_TOTEM.getPickupPrice())) {
+            CoreSkulls.getEconomy().withdrawPlayer(breaker, AbilityType.LEVIATHAN_TOTEM.getPickupPrice());
+            breaker.sendMessage(CC.B_RED + "-$" + NumberUtils.formatMoney(AbilityType.LEVIATHAN_TOTEM.getPickupPrice()));
+            breaker.sendMessage(CC.translate("&a&l(!)&a You broke a " + AbilityType.LEVIATHAN_TOTEM.getName() + " Custom Block"));
 
-                ItemBuilderUtils item = new ItemBuilderUtils(this.getItem()).setLore(this.addLore());
-                p1.getBlock().getDrops().clear(); // clears the events item stack
+            ItemBuilderUtils item = new ItemBuilderUtils(this.getItem()).setLore(this.addLore());
+            p1.getBlock().getDrops().clear(); // clears the events item stack
 
-                //p2.breakNaturally(new ItemBuilderUtils(Material.AIR).toItemStack()); // break the block
-                p1.getBlock().setType(Material.AIR);
-                p2.getWorld().dropItemNaturally(p2.getLocation(), item.toItemStack()); // dropping our item stack
-
-                DeleteCustomBlocks.func(p2.getLocation()); // delete file and memory.
-            } else {
-                breaker.sendMessage(CC.RED + "You do not have the required $" + AbilityType.LEVIATHAN_TOTEM.getPickupPrice() + " to pick this block up.");
-                p1.setCancelled(true);
-            }
+            //p2.breakNaturally(new ItemBuilderUtils(Material.AIR).toItemStack()); // break the block
+            p1.getBlock().setType(Material.AIR);
+            p2.getWorld().dropItemNaturally(p2.getLocation(), item.toItemStack()); // dropping our item stack
+            DeleteCustomBlocks.func(p2.getLocation()); // delete file and memory.
         } else {
-            breaker.sendMessage(CC.RED + "You can not break this block as it is not in your claim or wilderness.");
+            breaker.sendMessage(CC.RED + "You do not have the required $" + AbilityType.LEVIATHAN_TOTEM.getPickupPrice() + " to pick this block up.");
             p1.setCancelled(true);
         }
     }
+
 
     @Override
     public void clickedInInventoryAction(Player p0, InventoryClickEvent p1) {

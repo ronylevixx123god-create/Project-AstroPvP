@@ -53,11 +53,11 @@ public class EngineerSet extends ArmorSetInfo implements Listener, WeaponedArmor
     }
 
     public void onEquip(Player player) {
-        EnchantmentAPI.getEnchantment("Gears").applyEquipEffect(player, 4);
+        //EnchantmentAPI.getEnchantment("Gears").applyEquipEffect(player, 4);
     }
 
     public void onUnequip(Player player) {
-        EnchantmentAPI.getEnchantment("Gears").applyUnequipEffect(player, 4);
+        //EnchantmentAPI.getEnchantment("Gears").applyUnequipEffect(player, 4);
     }
 
     public ItemStack getHelmet(boolean applyTransmog) {

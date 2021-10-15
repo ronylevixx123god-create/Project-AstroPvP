@@ -1,5 +1,6 @@
 package org.arkhamnetwork.enchantments.mastery;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.MasteryCustomEnchantment;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -31,10 +32,9 @@ public class MasteryRevoke extends MasteryCustomEnchantment {
                 return;
             user.setMetadata("RevokeCooldown", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), Long.valueOf(System.currentTimeMillis())));
             target.setMetadata("revoked", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), ((Player) user).getName()));
-            ((Player) user).sendMessage("");
-            ((Player) user).sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "** REVOKED " + ((Player) target).getName() + "'s ANTI M-KITS **");
-            ((Player) user).sendMessage("");
-            Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), () -> target.removeMetadata("revoked", (Plugin) Enchantments.getInstance()), 20L * time);
+            user.sendMessage(CC.translate("&4&l** &cRevoked &7" + target.getName() + " &c[&75s&c] &4&l**"));
+            target.sendMessage(CC.translate("&4&l** &cRevoked by &7" + user.getName() + "&c[&75s&c] &4&l**"));
+            Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin) Enchantments.getInstance(), () -> target.removeMetadata("revoked", (Plugin) Enchantments.getInstance()), 20L * time);
         }
     }
 }

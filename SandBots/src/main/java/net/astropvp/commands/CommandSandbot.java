@@ -30,12 +30,13 @@ public class CommandSandbot implements CommandExecutor
     
     public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
         if (cmd.getName().equalsIgnoreCase(this.sandbot)) {
-            if (args.length < 1) {
-                sender.sendMessage(CC.translate("&8&l[&2&l!&8&l] &7Usage: &5/sandbot give &d<player> <amount>"));
+            if(!(sender.isOp()))
+                return true;
+            if (args.length == 0) {
+                sender.sendMessage(CC.translate("&a&l(!)&a You can manage your &e&lSandbots &aby typing &f/f sandbots&a."));
                 return true;
             }
-            if (args[0].equalsIgnoreCase("reload")) {
-                if (sender.hasPermission("sandbot.reload")) {
+            if (args[0].equalsIgnoreCase("reload") && sender.isOp()) {
                     this.plugin.reloadConfig();
                     Utils.saveDataOfSandbots(this.plugin.getManager());
                     Utils.setupConfigFiles(this.plugin.getManager());
@@ -46,24 +47,17 @@ public class CommandSandbot implements CommandExecutor
                         SandBots.spawnSandBlocks.cancel();
                     }
                     SandBots.spawnSandBlocks = Bukkit.getScheduler().runTaskTimerAsynchronously((Plugin)this.plugin, () -> Bukkit.getScheduler().runTask((Plugin)this.plugin, (Runnable)new BlockSpawnTask(this.plugin)), 0L, 5L);
-                    sender.sendMessage(CC.translate("&8&l[&5&l!&8&l] &7Plugin config and data reloaded successfully!"));
+                    sender.sendMessage(CC.Green + "Successfully reloaded SandBots");
                     return true;
-                }
-                sender.sendMessage(CC.translate("&8&l[&c&l!&8&l] &7Insufficient permission!"));
             }
-            if (args[0].equalsIgnoreCase("give")) {
-                if (sender.hasPermission("sandbot.give")) {
+            if (args[0].equalsIgnoreCase("give") && sender.isOp()) {
                     if (args.length < 2) {
-                        sender.sendMessage(CC.translate("&8&l[&2&l!&8&l] &7Usage: &5/sandbot give &d<player> <amount>"));
+                        sender.sendMessage(CC.Red + "Correct Usage: /sandbot give <player> <amount>");
                         return true;
                     }
                     final Player p = Bukkit.getPlayer(args[1]);
                     if (p == null) {
-                        sender.sendMessage(CC.translate("&8&l[&c&l!&8&l] &7Cant find player."));
-                        return true;
-                    }
-                    if (args.length < 3) {
-                        sender.sendMessage(CC.translate("&8&l[&2&l!&8&l] &7Usage: &5/sandbot give &d<player> <amount>"));
+                        sender.sendMessage(CC.RedB + "(!) " + CC.Red + "Player not found.");
                         return true;
                     }
                     try {
@@ -71,19 +65,11 @@ public class CommandSandbot implements CommandExecutor
                             final ItemStack bot = SandBotItem.get();
                             bot.setAmount((int)howmany);
                             p.getInventory().addItem(bot);
-                            p.sendMessage(CC.translate("&8&l[&2&l!&8&l] &7You successfully gave &5%player% &ex%amount% &7sandbot item.").replace("%player%", args[1]).replace("%amount%", howmany.toString()));
 
                     }
                     catch (NumberFormatException e) {
-                        sender.sendMessage(CC.translate("&8&l[&c&l!&8&l] &7Please use numerical values."));
+                        sender.sendMessage(CC.RedB + "(!) " + CC.Red + "Please use numerical values");
                     }
-                }
-                else {
-                    sender.sendMessage(CC.translate("&8&l[&c&l!&8&l] &7Insufficient permission!"));
-                }
-            }
-            else {
-                    sender.sendMessage(CC.translate("&8&l[&c&l!&8&l] &7Insufficient permission!"));
             }
         }
         return true;

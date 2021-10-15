@@ -6,10 +6,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.astrospawners.AstroSpawners;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -59,7 +56,7 @@ public class EntityUtils {
     public static void clearAllEntities() {
         for (World world : Bukkit.getWorlds()) {
             for (Entity entity : world.getEntities()) {
-                if (!(entity instanceof Player)) {
+                if (!(entity instanceof Player) && !(entity instanceof ArmorStand)) {
                     entity.remove();
                 }
             }

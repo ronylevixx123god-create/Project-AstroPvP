@@ -6,7 +6,6 @@ import com.conaxgames.customskulls.blocks.CustomBlock;
 import com.conaxgames.customskulls.util.CC;
 import com.conaxgames.customskulls.util.ItemBuilderUtils;
 import com.conaxgames.customskulls.util.inventoryui.InventoryUI;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
@@ -15,7 +14,12 @@ public class ViewCustomBlocksFromFileUI {
 
         InventoryUI inventoryUI = new InventoryUI("Custom Blocks", 6);
         for (String key : AbilityData.getAbilityDataMap().keySet()) {
+            if (key == null) continue;
+            if (AbilityData.getByUUID(key) == null) continue;
             AbilityData data = AbilityData.getByUUID(key);
+            if (data == null) continue;
+            if (data.getAbilityType() == null) continue;
+            if (CoreSkulls.customBlocks.get(data.getAbilityType().getName()) == null) continue;
             CustomBlock customBlock = CoreSkulls.customBlocks.get(data.getAbilityType().getName());
             inventoryUI.addItem(new InventoryUI.AbstractClickableItem(
                     new ItemBuilderUtils(customBlock.getItem())

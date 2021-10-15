@@ -80,7 +80,7 @@ public class ItemSkinListener implements Listener {
                 cooldownPlayers.remove(event.getWhoClicked());
             },20L);
 
-        } else if (event.getClick().isRightClick() && AstroItemSkinsAPI.hasItemSkin(clicked)) {
+        } else if (event.getClick().isRightClick() && AstroItemSkinsAPI.hasItemSkin(clicked) && isArmorOrWeapon(clicked)) {
 
 
             List<SkinType> skinTypes = AstroItemSkinsAPI.getItemSkinByItem(clicked);
@@ -133,6 +133,12 @@ public class ItemSkinListener implements Listener {
         }
 
 
+    }
+
+    public boolean isArmorOrWeapon(ItemStack item) {
+        String type = item.getType().name();
+        return type.endsWith("_HELMET") || type.endsWith("_LEGGINGS") || type.endsWith("_CHESTPLATE")|| type.endsWith("_BOOTS")
+                || type.endsWith("_SWORD") || type.endsWith("AXE");
     }
 
     @EventHandler

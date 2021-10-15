@@ -235,7 +235,7 @@ public class Scoreboard implements BoardAdapter {
             }
             board.add(CC.translate("&a Location&7: &7X37, Y52, Z-28"));
             board.add("");
-            board.add(CC.Yellow + "play.astropvp.net");
+            board.add(CC.White + "play.astropvp.net");
             return board;
         }
 
@@ -292,7 +292,7 @@ public class Scoreboard implements BoardAdapter {
                 board.add(CC.translate("&c Status&7: &f") + vanillaOutpost.getCapStatus());
             }
             board.add("");
-            board.add(CC.Yellow + "play.astropvp.net");
+            board.add(CC.White + "play.astropvp.net");
             return board;
         }
 
@@ -314,7 +314,7 @@ public class Scoreboard implements BoardAdapter {
                 board.add(CC.translate("&7 Status&7: &f") + vanillaOutpost.getCapStatus());
             }
             board.add("");
-            board.add(CC.Yellow + "play.astropvp.net");
+            board.add(CC.White + "play.astropvp.net");
             return board;
         }
 
@@ -336,7 +336,7 @@ public class Scoreboard implements BoardAdapter {
                 board.add(CC.translate("&b Status&7: &f") + vanillaOutpost.getCapStatus());
             }
             board.add("");
-            board.add(CC.Yellow + "play.astropvp.net");
+            board.add(CC.White + "play.astropvp.net");
             return board;
         }
 
@@ -358,7 +358,7 @@ public class Scoreboard implements BoardAdapter {
                 board.add(CC.translate("&6 Status&7: &f") + vanillaOutpost.getCapStatus());
             }
             board.add("");
-            board.add(CC.Yellow + "play.astropvp.net");
+            board.add(CC.White + "play.astropvp.net");
             return board;
         }
 
@@ -385,7 +385,7 @@ public class Scoreboard implements BoardAdapter {
             board.add(CC.translate("&d Mobcoins&7:&f " + NumberFormat.getIntegerInstance().format(dataCoins.getCoins()) + "⛁"));
 
             board.add("");
-            board.add(CC.Yellow + "play.astropvp.net");
+            board.add(CC.White + "play.astropvp.net");
             return board;
         }
 /*
@@ -424,25 +424,25 @@ public class Scoreboard implements BoardAdapter {
         board.add(" ");
         if (fplayer != null)
             if (fplayer.hasFaction()) {
-                board.add(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Faction");
+                board.add(ChatColor.White + ChatColor.BOLD.toString() + "Faction");
                 board.add(ChatColor.GREEN.toString() + fplayer.getFaction().getOnlinePlayers().size() + ChatColor.GRAY + " / " + fplayer.getFaction().getFPlayers().size());
             } else {
-                board.add(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Server");
+                board.add(ChatColor.White + ChatColor.BOLD.toString() + "Server");
                 board.add(ChatColor.WHITE.toString() + "astropvp.net");
             }*/
 
         board.add("");
-        board.add(CC.White + "➥ " + ChatColor.GREEN + ChatColor.BOLD + player.getName());
-        board.add(CC.Green + " XP" + CC.Gray + ": " + CC.White + NumberFormat.getIntegerInstance().format(player.getTotalExperience()));
-        board.add(CC.Green + " Ping" + CC.Gray + ": " + CC.LightPurple + getPing() + "ms");
-        board.add(CC.Green + " Balance" + CC.Gray + ": " + CC.White + "$" + formatIntoShortMoney((long) Econ.econ.getBalance(player)));
-        board.add(CC.Green + " Mobcoins" + CC.Gray + ": " + CC.White + NumberFormat.getIntegerInstance().format(data.getCoins()) + "⛁");
+        board.add(CC.GreenB + player.getName());
+        board.add(CC.White + " ● " + CC.Green + "XP" + CC.Gray + ": " + CC.White + NumberFormat.getIntegerInstance().format(player.getTotalExperience()));
+        board.add(CC.White + " ● "+ CC.Green + "Ping" + CC.Gray + ": " + CC.LightPurple + getPing() + "ms");
+        board.add(CC.White + " ● "+ CC.Green + "Balance" + CC.Gray + ": " + CC.White + "$" + formatIntoShortMoney((long) Econ.econ.getBalance(player)));
+        board.add(CC.White + " ● "+ CC.Green + "Mobcoins" + CC.Gray + ": " + CC.White + NumberFormat.getIntegerInstance().format(data.getCoins()) + "⛁");
         board.add(" ");
         if (fplayer != null) {
             if (fplayer.hasFaction()) {
-                board.add(CC.White + "➥ " + ChatColor.GREEN + ChatColor.BOLD + fplayer.getFaction().getTag());
-                board.add(CC.Green + " Power" + CC.Gray + ": " + CC.White + fplayer.getPowerRounded() + CC.Gray + "/" + CC.White + fplayer.getPowerMaxRounded());
-                board.add(CC.Green + " Online" + CC.Gray + ": " + CC.Green + fplayer.getFaction().getOnlinePlayers().size() + CC.Gray + "/" + CC.White + fplayer.getFaction().getFPlayers().size());
+                board.add(CC.GreenB + fplayer.getFaction().getTag());
+                board.add(CC.White + " ● " + CC.Green + "Power" + CC.Gray + ": " + CC.White + fplayer.getPowerRounded() + CC.Gray + "/" + CC.White + fplayer.getPowerMaxRounded());
+                board.add(CC.White + " ● "+ CC.Green + "Online" + CC.Gray + ": " + CC.Green + fplayer.getFaction().getOnlinePlayers().size() + CC.Gray + "/" + CC.White + fplayer.getFaction().getFPlayers().size());
                 board.add("");
             }
         }

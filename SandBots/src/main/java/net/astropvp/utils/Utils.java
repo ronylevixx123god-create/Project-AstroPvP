@@ -50,8 +50,8 @@ public class Utils
     public static Color enabledArmorColor;
     public static Color disabledArmorColor;
     
-    public static String color(final String s) {
-        return ChatColor.translateAlternateColorCodes('&', s);
+    public static String color(String s) {
+        return CC.translate(s);
     }
     
     public static void dropitem(final Player player, final Location loc, final ItemStack item) {
@@ -100,14 +100,14 @@ public class Utils
         else {
             player.getItemInHand().setAmount(item.getAmount() - 1);
         }
-        final ArmorStand stand = (ArmorStand)loc.getWorld().spawn(loc, (Class)ArmorStand.class);
+        final ArmorStand stand = loc.getWorld().spawn(loc, ArmorStand.class);
         stand.setVisible(true);
         stand.setArms(true);
         stand.setGravity(false);
         stand.setSmall(false);
         stand.setBasePlate(false);
         stand.setItemInHand(new ItemStack(Material.SAND));
-        final ItemStack playerhead = new ItemStack(Material.SKULL_ITEM, 1, (short)3);
+        ItemStack playerhead = new ItemStack(Material.SKULL_ITEM, 1, (short)3);
         final SkullMeta meta = (SkullMeta)playerhead.getItemMeta();
         meta.setOwner(player.getName());
         meta.setDisplayName(player.getName());
@@ -130,7 +130,7 @@ public class Utils
         stand.setRightLegPose(newrleg);
         stand.setLeftLegPose(newlleg);
         stand.setCustomNameVisible(true);
-        stand.setCustomName(color("&8&l[&b&l!&8&l] &a%faction% &7SandBot".replace("%faction%", FactionUtils.getFactionTag(player))));
+        stand.setCustomName(color("&a&l[!]&a &f&n%faction%&r &e&lSandBot".replace("%faction%", FactionUtils.getFactionTag(player))));
         final SandBotManager bot2 = new SandBotManager(stand, player);
         SandBots.sandBots.add(bot2);
         final ConcurrentHashMap<GuiType, MenuManager> menus = new ConcurrentHashMap<GuiType, MenuManager>();
@@ -204,17 +204,17 @@ public class Utils
         Integer counter = 0;
         final ConfigFile data = manager.getFile("default/Data/sandbots.yml");
         if (data.getConfig().isConfigurationSection("SandBots")) {
-            for (final String sandBotsUUIDS : data.getConfig().getConfigurationSection("SandBots").getKeys(false)) {
-                final ArrayList<Block> lapisBlocks = new ArrayList<Block>();
-                for (final String locstring : data.getConfig().getStringList("SandBots." + sandBotsUUIDS + ".lapisBlocks")) {
+            for (String sandBotsUUIDS : data.getConfig().getConfigurationSection("SandBots").getKeys(false)) {
+                ArrayList<Block> lapisBlocks = new ArrayList<Block>();
+                for (String locstring : data.getConfig().getStringList("SandBots." + sandBotsUUIDS + ".lapisBlocks")) {
                     lapisBlocks.add(stringToLocation(locstring).getBlock());
                 }
-                final SandBotManager bot = new SandBotManager(UUID.fromString(data.getConfig().getString("SandBots." + sandBotsUUIDS + ".sandBotUuid")), UUID.fromString(data.getConfig().getString("SandBots." + sandBotsUUIDS + ".ownerUuid")), data.getConfig().getString("SandBots." + sandBotsUUIDS + ".ownerName"), lapisBlocks, data.getConfig().getDouble("SandBots." + sandBotsUUIDS + ".balance"), stringToLocation(data.getConfig().getString("SandBots." + sandBotsUUIDS + ".location")), data.getConfig().getBoolean("SandBots." + sandBotsUUIDS + ".isActivated"), data.getConfig().getString("SandBots." + sandBotsUUIDS + ".factionID"), data.getConfig().getBoolean("SandBots." + sandBotsUUIDS + ".animate"));
+                SandBotManager bot = new SandBotManager(UUID.fromString(data.getConfig().getString("SandBots." + sandBotsUUIDS + ".sandBotUuid")), UUID.fromString(data.getConfig().getString("SandBots." + sandBotsUUIDS + ".ownerUuid")), data.getConfig().getString("SandBots." + sandBotsUUIDS + ".ownerName"), lapisBlocks, data.getConfig().getDouble("SandBots." + sandBotsUUIDS + ".balance"), stringToLocation(data.getConfig().getString("SandBots." + sandBotsUUIDS + ".location")), data.getConfig().getBoolean("SandBots." + sandBotsUUIDS + ".isActivated"), data.getConfig().getString("SandBots." + sandBotsUUIDS + ".factionID"), data.getConfig().getBoolean("SandBots." + sandBotsUUIDS + ".animate"));
                 SandBots.sandBots.add(bot);
                 if (bot.getLocation() != null && bot.getLocation().getWorld() != null) {
                     bot.getLocation().getWorld().loadChunk(bot.getLocation().getChunk());
                 }
-                final ConcurrentHashMap<GuiType, MenuManager> menus = new ConcurrentHashMap<GuiType, MenuManager>();
+                ConcurrentHashMap<GuiType, MenuManager> menus = new ConcurrentHashMap<GuiType, MenuManager>();
                 menus.put(GuiType.REMOVEGUI, new RemoveGUI(Utils.plugin, bot));
                 menus.put(GuiType.FACTIONGUI, new FactionManageGui(Utils.plugin));
                 menus.put(GuiType.SANDBOTGUI, new SandBotGui(Utils.plugin, bot));
@@ -275,17 +275,17 @@ public class Utils
     }
     
     public static ItemStack botItem(final String name, final List<String> lore, final SandBotManager bot) {
-        final ArrayList<String> updatedPlaceholdersLore = new ArrayList<String>();
-        for (final String s : lore) {
-            updatedPlaceholdersLore.add(s.replace("%botowner%", bot.getOwnerName()).replace("%botfaction%", FactionUtils.getFaction(FPlayers.i.get(Bukkit.getServer().getOfflinePlayer(bot.getOwnerUUID()))).getTag().replace("%balance%", bot.getBalance().toString()).replace("%isActivated%", bot.isActivated() ? Utils.plugin.getConfig().getString("bot-core-enabled-placeholder") : Utils.plugin.getConfig().getString("bot-core-disabled-placeholder")).replace("%blocksd%", String.valueOf(bot.getLapisBlocks().size())).replace("%botlocationx%", String.valueOf(bot.getLocation().getX())).replace("%botlocationy%", String.valueOf(bot.getLocation().getY())).replace("%botlocationz%", String.valueOf(bot.getLocation().getZ()))));
+        final ArrayList<String> updatedPlaceholdersLore = new ArrayList<>();
+        for (String s : lore) {
+            updatedPlaceholdersLore.add(s.replace("%botowner%", bot.getOwnerName()).replace("%botfaction%", FactionUtils.getFaction(FPlayers.i.get(Bukkit.getServer().getOfflinePlayer(bot.getOwnerUUID()))).getTag().replace("%balance%", bot.getBalance().toString()).replace("%isActivated%", bot.isActivated() ? "True" : "False").replace("%blocksd%", String.valueOf(bot.getLapisBlocks().size())).replace("%botlocationx%", String.valueOf(bot.getLocation().getX())).replace("%botlocationy%", String.valueOf(bot.getLocation().getY())).replace("%botlocationz%", String.valueOf(bot.getLocation().getZ()))));
         }
-        return new ItemBuilder(Material.SKULL).setSkullOwner(bot.getOwnerName()).name(name).lore(updatedPlaceholdersLore).build();
+        return new ItemBuilder(Material.SKULL_ITEM).data((short)3).setSkullOwner(bot.getOwnerName()).name(name).lore(updatedPlaceholdersLore).build();
     }
     
     public static ItemStack botItem(final String name, final List<String> lore, final SandBotManager bot, final ItemStack item) {
         final ArrayList<String> updatedPlaceholdersLore = new ArrayList<String>();
         for (final String s : lore) {
-            updatedPlaceholdersLore.add(s.replace("%botowner%", bot.getOwnerName()).replace("%botfaction%", FactionUtils.getFaction(FPlayers.i.get(Bukkit.getServer().getOfflinePlayer(bot.getOwnerUUID()))).getTag().replace("%balance%", bot.getBalance().toString()).replace("%isActivated%", bot.isActivated() ? Utils.plugin.getConfig().getString("bot-core-enabled-placeholder") : Utils.plugin.getConfig().getString("bot-core-disabled-placeholder")).replace("%blocksd%", String.valueOf(bot.getLapisBlocks().size())).replace("%botlocationx%", String.valueOf(bot.getLocation().getX())).replace("%botlocationy%", String.valueOf(bot.getLocation().getY())).replace("%botlocationz%", String.valueOf(bot.getLocation().getZ()))));
+            updatedPlaceholdersLore.add(s.replace("%botowner%", bot.getOwnerName()).replace("%botfaction%", FactionUtils.getFaction(FPlayers.i.get(Bukkit.getServer().getOfflinePlayer(bot.getOwnerUUID()))).getTag().replace("%balance%", bot.getBalance().toString()).replace("%isActivated%", bot.isActivated() ? "True" : "False").replace("%blocksd%", String.valueOf(bot.getLapisBlocks().size())).replace("%botlocationx%", String.valueOf(bot.getLocation().getX())).replace("%botlocationy%", String.valueOf(bot.getLocation().getY())).replace("%botlocationz%", String.valueOf(bot.getLocation().getZ()))));
         }
         return new ItemBuilder(item).name(name).lore(updatedPlaceholdersLore).build();
     }
@@ -313,7 +313,7 @@ public class Utils
     
     static {
         Utils.plugin = (SandBots) SandBots.getPlugin((Class) SandBots.class);
-        Utils.enabledArmorColor = Color.fromRGB(25, 120, 50);
-        Utils.disabledArmorColor = Color.fromRGB(186, 0, 0);
+        Utils.enabledArmorColor = Color.fromRGB(0, 255, 0);
+        Utils.disabledArmorColor = Color.fromRGB(25, 120, 50);
     }
 }

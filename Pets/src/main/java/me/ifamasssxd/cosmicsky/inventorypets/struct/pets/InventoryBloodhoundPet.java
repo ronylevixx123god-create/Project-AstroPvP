@@ -62,7 +62,7 @@ public class InventoryBloodhoundPet extends InventoryPet {
    }
 
    public List getPetDescription(int level) {
-      return Lists.newArrayList(CC.Gray + "Mark your target for assured destruction.", CC.Gray, CC.YellowB + "Ability", CC.Gray + "Affects target player with " + CC.DarkRedB + "[TAG]:", CC.DarkRed + "* " + CC.Gray + "Auto-/f focus target player ", CC.DarkRed + "* " + CC.Gray + "Anti-Bless Slowness I (10s) ", CC.DarkRed + "* " + CC.Gray + "Silence target player (10s) ", CC.DarkRed + "* " + CC.Gray + "1.5x DMG to target players (10s) ", CC.DarkRed + "* " + CC.Gray + "Target is visable on /near for (30s) ", CC.Gray, CC.YellowB + "Cooldown", CC.Gray + " " + TimeUtils.formatSeconds((long) this.getCooldown(5)));
+      return Lists.newArrayList(CC.Gray + "Mark your target for assured destruction.", CC.Gray, CC.WhiteB + "Ability", CC.Gray + "Affects target player with " + CC.DarkRedB + "[TAG]:", CC.DarkRed + "* " + CC.Gray + "Auto-/f focus target player ", CC.DarkRed + "* " + CC.Gray + "Anti-Bless Slowness I (10s) ", CC.DarkRed + "* " + CC.Gray + "Silence target player (10s) ", CC.DarkRed + "* " + CC.Gray + "1.5x DMG to target players (10s) ", CC.DarkRed + "* " + CC.Gray + "Target is visable on /near for (30s) ", CC.Gray, CC.WhiteB + "Cooldown", CC.Gray + " " + TimeUtils.formatSeconds((long) this.getCooldown(5)));
    }
 
    public int getCooldown(int level) {

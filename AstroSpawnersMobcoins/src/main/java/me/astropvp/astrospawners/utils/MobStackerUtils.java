@@ -40,7 +40,7 @@ public class MobStackerUtils {
     public static void onDisable() {
         for (World world : Bukkit.getWorlds()) {
             for (Entity entity : world.getEntities()) {
-                if (!(entity instanceof Player)) {
+                if (!(entity instanceof Player) && !(entity instanceof ArmorStand)) {
                     entity.remove();
                 }
             }

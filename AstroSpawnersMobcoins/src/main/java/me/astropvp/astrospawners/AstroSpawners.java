@@ -100,7 +100,7 @@ public class AstroSpawners extends JavaPlugin {
         registerListener(new MobSpawnerListener());
         registerListener(new MobCoinShopListener());
         registerListener(new PlayerDataOnJoin());
-        registerListener(new CreeperEggFix());
+        //registerListener(new CreeperEggFix());
     }
 
     public void registerCommands() {
@@ -109,6 +109,7 @@ public class AstroSpawners extends JavaPlugin {
         getCommand("clearmobs").setExecutor(new CommandClearHashMap());
         getCommand("checkmobs").setExecutor(new CommandCheckHashMap());
         getCommand("savemobcoins").setExecutor(new SaveMobCoinsCommand());
+        getCommand("addmobcoins").setExecutor(new CommandAddMobcoins());
 
         getCommand("stopspawnersplace").setExecutor(new CommandStopSpawnersPlace());
 

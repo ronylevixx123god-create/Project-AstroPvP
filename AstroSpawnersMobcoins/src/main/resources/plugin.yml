@@ -24,3 +24,5 @@ commands:
   savemobcoins:
     description: Save mobcoi,s
     aliases: [savemc, smc]
+  addmobcoins:
+    description: Adds mobcoins
