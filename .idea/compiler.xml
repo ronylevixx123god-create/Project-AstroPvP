@@ -59,6 +59,7 @@
       <module name="AstroSpawners" target="1.8" />
       <module name="Backpacks" target="8" />
       <module name="ClientComms" target="8" />
+      <module name="Collect" target="8" />
       <module name="Comms" target="8" />
       <module name="CrateBoxes" target="8" />
       <module name="Disguises (1)" target="8" />
