@@ -70,7 +70,7 @@ public class HeroicRocketEscape extends HeroicCustomEnchantment {
                 if (((Player) player).getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.HALLOWEEN_BACKPACK)) {
                     pl.playSound(pl.getLocation(), Sound.ANVIL_BREAK, 5, 5);
                     if (target != null) {
-                        pl.sendMessage(CC.translate("&6&l* CURSED WINGS BLOCKED &nROCKET ESCAPE&r &7[") + target.getKiller().getName() + CC.translate("&7] &6&l*"));
+                        target.sendMessage(CC.translate("&6&l* CURSED WINGS BLOCKED &nROCKET ESCAPE&r &7[") + pl.getName() + CC.translate("&7] &6&l*"));
                     }
                     return;
                 }
@@ -78,9 +78,8 @@ public class HeroicRocketEscape extends HeroicCustomEnchantment {
                 if (AstroItemSkinsAPI.hasSkinEquipped(pl, SkinType.CHRISTMAS_HELMET_STAR)) {
 
                     pl.playSound(pl.getLocation(), Sound.ANVIL_BREAK, 5, 5);
-                    if (target.getKiller() != null) {
-
-                        pl.sendMessage(CC.translate("&a&l* NORTH STAR BLOCKED &nROCKET ESCAPE&r &7[") + target.getKiller().getName() + CC.translate("&7] &a&l*"));
+                    if (target != null) {
+                        target.sendMessage(CC.translate("&a&l* NORTH STAR BLOCKED &nROCKET ESCAPE&r &7[") + pl.getName() + CC.translate("&7] &a&l*"));
                     }
                     return;
                 }

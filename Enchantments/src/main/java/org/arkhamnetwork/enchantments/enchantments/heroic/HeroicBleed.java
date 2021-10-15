@@ -111,8 +111,10 @@ public class HeroicBleed extends HeroicCustomEnchantment {
                 pEnt.playSound(pEnt.getLocation(), Sound.EAT, 0.4F, 0.6F);
             }
         } else {
-            if(!MaskType.hasEquipped((Player) le, "HOLY")) {
-                le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, bleedStack * 10, Math.max(1, bleedStack / 3)));
+            if (le instanceof Player) {
+                if (!MaskType.hasEquipped((Player) le, "HOLY")) {
+                    le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, bleedStack * 10, Math.max(1, bleedStack / 3)));
+                }
             }
         }
 
