@@ -4,7 +4,7 @@
 
 package com.compilex.CosmicCrate.libs;
 
-import com.compilex.CosmicCrate.libs.cratedata.Weekly1;
+import com.compilex.CosmicCrate.libs.cratedata.SOTW;
 import org.bukkit.Material;
 import com.compilex.CosmicCrate.api.CCAPI;
 import com.compilex.CosmicCrate.utils.LocalItemUtils;
@@ -14,7 +14,7 @@ import org.bukkit.ChatColor;
 
 public enum Version
 {
-    WEEKLY_1("&c&l*&f&l*&9&l* &c&lCOSMIC CRATE: &f&l&nJULY &9&l&n2019&r &c&l*&f&l*&9&l*", new Weekly1(), CrateCategory.WEEKLY_CRATES);
+    WEEKLY_1("&c&l*&f&l*&9&l* &c&lCOSMIC CRATE: &f&l&nJULY &9&l&n2019&r &c&l*&f&l*&9&l*", new SOTW(), CrateCategory.WEEKLY_CRATES);
     
     public String crateName;
     public String rawName;
