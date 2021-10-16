@@ -22,7 +22,7 @@ public class StackedMobDeathEvent  extends Event implements Cancellable {
         this.entity = entity;
         this.damager = damager;
         drops = new EnumMap<>(EntityType.class);
-        drops.put(EntityType.VILLAGER, new ItemStack(Material.EMERALD_BLOCK, 1));
+        drops.put(EntityType.VILLAGER, new ItemStack(Material.EMERALD, 1));
         drops.put(EntityType.CREEPER, new ItemStack(Material.TNT, 1));
         drops.put(EntityType.WITCH, new ItemStack(Material.DIAMOND,1));
         drops.put(EntityType.IRON_GOLEM, new ItemStack(Material.IRON_INGOT,1));
