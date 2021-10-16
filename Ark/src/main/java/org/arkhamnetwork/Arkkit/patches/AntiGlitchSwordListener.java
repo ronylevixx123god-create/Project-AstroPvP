@@ -40,10 +40,8 @@ final class AntiGlitchSwordListener
                 Entity eAttacker = ((EntityDamageByEntityEvent) e).getDamager();
                 if (eAttacker instanceof Player) {
                     Player pAttacker = (Player) eAttacker;
-                    Bukkit.getLogger().info("[CombatMonitor] Player " + pAttacker.getName() + " has dealt " + e.getDamage() + " damage to " + p.getName() + " (silenced: " + p.hasMetadata("noDefenseProcs") + ") with " + pAttacker.getItemInHand() + " at " + p.getLocation());
                 }
             } else {
-                Bukkit.getLogger().info("[CombatMonitor] Player " + p.getName() + " has taken " + e.getDamage() + " damage from " + e.getCause().name() + " at " + p.getLocation());
             }
         }
     }

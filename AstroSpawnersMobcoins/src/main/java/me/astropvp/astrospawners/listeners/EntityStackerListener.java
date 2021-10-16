@@ -116,9 +116,9 @@ public class EntityStackerListener implements Listener {
             }
 
             if (isOnCosmicClient) {
-                blazeLoot(entity, (Player) e.getDamager(), 0.1);
+                blazeLoot(entity, (Player) e.getDamager(), 0.15);
             } else {
-                blazeLoot(entity, (Player) e.getDamager(), 0.06);
+                blazeLoot(entity, (Player) e.getDamager(), 0.12);
 
 
             }
@@ -136,9 +136,9 @@ public class EntityStackerListener implements Listener {
                 exp = exp * 2;
             }
 
-/*            if (CustomBlockUtil.chunkHasCertainBlock(p, "TREASURE_CHEST")) {
+            if (CustomBlockUtil.chunkHasCertainBlock(p, "TREASURE_CHEST")) {
                 exp = exp * 1.5;
-            }*/
+            }
 
             if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(p), OutpostType.COURTYARD) && Math.random() < 0.1) {
                 exp = exp * 1.75;

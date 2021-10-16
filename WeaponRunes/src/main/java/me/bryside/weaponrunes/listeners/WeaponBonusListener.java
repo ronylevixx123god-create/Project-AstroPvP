@@ -27,27 +27,33 @@ public class WeaponBonusListener implements Listener {
         if (!(damaged instanceof Player)) return;
         if (damager == null) return;
         if (damaged == null) return;
-        if (((Player) damager).getItemInHand() == null && ((Player) damager).getItemInHand().getType() == Material.AIR) return;
+        if (((Player) damager).getItemInHand() == null && ((Player) damager).getItemInHand().getType() == Material.AIR)
+            return;
 
         if (e.isCancelled()) return;
+        try {
+            if (damager instanceof Player) {
+                WeaponBonusType weaponBonusType = WeaponBonusUtils.getWeaponBonusByItem(((Player) damager).getItemInHand());
+                if (weaponBonusType == null) return;
+                if (FactionUtils.getFPlayer((Player) damager) == null) return;
+                if (FactionUtils.getFPlayer((Player) damaged) == null) return;
 
-        if (damager instanceof Player) {
-            WeaponBonusType weaponBonusType = WeaponBonusUtils.getWeaponBonusByItem(((Player)damager).getItemInHand());
-            if (weaponBonusType == null) return;
-            if (FactionUtils.getFPlayer((Player) damager) == null)return;
-            if (FactionUtils.getFPlayer((Player) damaged) == null)return;
+                if (FactionUtils.getFaction((FPlayer) damager) == FactionUtils.getFaction((FPlayer) damaged) || FactionUtils.isInAllyFaction((Player) damager, (Player) damaged))
+                    return;
+                weaponBonusType.getInstance().onAttack((Player) damager, damaged, e);
+            }
+            if (damaged instanceof Player) {
+                WeaponBonusType weaponBonusType = WeaponBonusUtils.getWeaponBonusByItem(((Player) damaged).getItemInHand());
+                if (weaponBonusType == null) return;
+                if (FactionUtils.getFPlayer((Player) damager) == null) return;
+                if (FactionUtils.getFPlayer((Player) damaged) == null) return;
 
-            if (FactionUtils.getFaction((FPlayer) damager) == FactionUtils.getFaction((FPlayer) damaged) || FactionUtils.isInAllyFaction((Player) damager, (Player) damaged)) return;
-            weaponBonusType.getInstance().onAttack((Player)damager, damaged, e);
-        }
-        if (damaged instanceof Player) {
-            WeaponBonusType weaponBonusType = WeaponBonusUtils.getWeaponBonusByItem(((Player)damaged).getItemInHand());
-            if (weaponBonusType == null) return;
-            if (FactionUtils.getFPlayer((Player) damager) == null)return;
-            if (FactionUtils.getFPlayer((Player) damaged) == null)return;
+                if (FactionUtils.getFaction((FPlayer) damager) == FactionUtils.getFaction((FPlayer) damaged) || FactionUtils.isInAllyFaction((Player) damager, (Player) damaged))
+                    return;
+                weaponBonusType.getInstance().onAttacked((Player) damaged, damager, e);
+            }
+        } catch (Exception exx) {
 
-            if (FactionUtils.getFaction((FPlayer) damager) == FactionUtils.getFaction((FPlayer) damaged) || FactionUtils.isInAllyFaction((Player) damager, (Player) damaged)) return;
-            weaponBonusType.getInstance().onAttacked((Player)damaged, damager, e);
         }
     }
 
@@ -66,12 +72,12 @@ public class WeaponBonusListener implements Listener {
             e.setCurrentItem(weaponBonusType.getInstance().applyBonus(clicked, weaponBonusType));
             e.getWhoClicked().sendMessage(CC.translate("&a&l(!)&a Successfully Applied " + weaponBonusType.getName() + " Weapon Rune&a to your sword!"));
             if (cursor.getAmount() > 1) {
-                cursor.setAmount(cursor.getAmount()-1);
+                cursor.setAmount(cursor.getAmount() - 1);
             } else {
                 e.setCursor(null);
             }
             e.setCancelled(true);
-            ((Player)e.getWhoClicked()).playSound(e.getWhoClicked().getLocation(), Sound.LEVEL_UP, 1.0F, 10.0F);
+            ((Player) e.getWhoClicked()).playSound(e.getWhoClicked().getLocation(), Sound.LEVEL_UP, 1.0F, 10.0F);
         }
     }
 

@@ -38,7 +38,7 @@ public class InventoryTitanPet extends InventoryPet {
    }
 
    public List getPetDescription(int level) {
-      return Lists.newArrayList(new String[]{CC.Gray + "Mark your target for assured destruction.", CC.Gray, CC.YellowB + "Ability", CC.Gray + "Activates " + CC.DarkRedB + "[Unbreakable]:", CC.DarkRed + "* " + CC.Gray + "Immune to Freezes(10s) ", CC.DarkRed + "* " + CC.Gray + "Immune to Teleblock (10s) ", CC.DarkRed + "* " + CC.Gray + "-50% Incoming damage (10s) ", CC.DarkRed + "* " + CC.Gray + "1.25x DMG to all players (10s) ", CC.DarkRed + "* " + CC.Gray + "Gears IV (20s) ", CC.DarkRed + "* " + CC.Gray + "Shockwave II effect ", CC.DarkRed + "* " + CC.Gray + "Clears all freezes ", CC.DarkRed + "* " + CC.Gray + "Automatic /fix all ", CC.Gray, CC.YellowB + "Cooldown", CC.Gray + " " + TimeUtils.formatSeconds((long)this.getCooldown(level))});
+      return Lists.newArrayList(new String[]{CC.Gray + "Mark your target for assured destruction.", CC.Gray, CC.WhiteB + "Ability", CC.Gray + "Activates " + CC.DarkRedB + "[Unbreakable]:", CC.DarkRed + "* " + CC.Gray + "Immune to Freezes(10s) ", CC.DarkRed + "* " + CC.Gray + "Immune to Teleblock (10s) ", CC.DarkRed + "* " + CC.Gray + "-50% Incoming damage (10s) ", CC.DarkRed + "* " + CC.Gray + "1.25x DMG to all players (10s) ", CC.DarkRed + "* " + CC.Gray + "Gears IV (20s) ", CC.DarkRed + "* " + CC.Gray + "Shockwave II effect ", CC.DarkRed + "* " + CC.Gray + "Clears all freezes ", CC.DarkRed + "* " + CC.Gray + "Automatic /fix all ", CC.Gray, CC.WhiteB + "Cooldown", CC.Gray + " " + TimeUtils.formatSeconds((long)this.getCooldown(level))});
    }
 
    public int getExpForLevel(int level) {

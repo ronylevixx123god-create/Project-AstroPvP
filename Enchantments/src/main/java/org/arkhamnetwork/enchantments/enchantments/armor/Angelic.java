@@ -56,7 +56,7 @@ public class Angelic extends CustomEnchantment {
                 @Override
                 public void run() {
                     Bukkit.getScheduler().cancelTask(taskID);
-                    Bukkit.getScheduler().runTask((Plugin) Enchantments.getInstance(), () -> player.removeMetadata("angelicTaskID", (Plugin) Enchantments.getInstance()));
+                    Bukkit.getScheduler().runTaskAsynchronously((Plugin) Enchantments.getInstance(), () -> player.removeMetadata("angelicTaskID", (Plugin) Enchantments.getInstance()));
                 }
             }, healDuration);
             player.setMetadata("angelicTaskID", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) taskID));

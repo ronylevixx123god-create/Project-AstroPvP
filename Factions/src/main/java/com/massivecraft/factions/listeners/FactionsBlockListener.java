@@ -355,7 +355,6 @@ public class FactionsBlockListener
     @EventHandler
     public void onBreak(EntityExplodeEvent e) {
 
-        if (e.getEntity() != null && e.getEntity().getType() == EntityType.CREEPER) return;
         if (!Conf.gracePeriod) return;
 
         e.setCancelled(true);
@@ -381,7 +380,7 @@ public class FactionsBlockListener
             if (e1.getBlock().getType().equals(Material.TNT)) {
                 e1.setCancelled(true);
 
-                fp.sendMessage(P.color("&c&l[!] &7You may not place explosives while grace is active!"));
+                fp.sendMessage(P.color("&c&l[!] &cYou may not place explosives while grace is active!"));
             }
         }
     }

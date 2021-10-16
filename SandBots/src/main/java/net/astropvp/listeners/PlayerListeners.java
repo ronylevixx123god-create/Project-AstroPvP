@@ -49,7 +49,7 @@ public class PlayerListeners implements Listener
     public void onPlaceSandBot(final PlayerInteractEvent e) {
         final Player player = e.getPlayer();
         final ItemStack item = player.getInventory().getItemInHand();
-        if (e.getAction().equals((Object)Action.RIGHT_CLICK_BLOCK) && SandBotItem.isSandBot(item)) {
+        if (e.getAction().equals((Object)Action.RIGHT_CLICK_BLOCK) && SandBotItem.isSandBot(item) && !e.isCancelled()) {
             e.setCancelled(true);
             final Block blockclick = e.getClickedBlock();
             final Location loc = blockclick.getLocation();

@@ -69,13 +69,18 @@ public class HeroicRocketEscape extends HeroicCustomEnchantment {
 
                 if (((Player) player).getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.HALLOWEEN_BACKPACK)) {
                     pl.playSound(pl.getLocation(), Sound.ANVIL_BREAK, 5, 5);
-                    pl.sendMessage(CC.translate("&6&l* CURSED WINGS BLOCKED &nROCKET ESCAPE&r &7[") + target.getKiller().getName() + CC.translate("&7] &6&l*"));
+                    if (target != null) {
+                        target.sendMessage(CC.translate("&6&l* CURSED WINGS BLOCKED &nROCKET ESCAPE&r &7[") + pl.getName() + CC.translate("&7] &6&l*"));
+                    }
                     return;
                 }
 
                 if (AstroItemSkinsAPI.hasSkinEquipped(pl, SkinType.CHRISTMAS_HELMET_STAR)) {
+
                     pl.playSound(pl.getLocation(), Sound.ANVIL_BREAK, 5, 5);
-                    pl.sendMessage(CC.translate("&a&l* NORTH STAR BLOCKED &nROCKET ESCAPE&r &7[") + target.getKiller().getName() + CC.translate("&7] &a&l*"));
+                    if (target != null) {
+                        target.sendMessage(CC.translate("&a&l* NORTH STAR BLOCKED &nROCKET ESCAPE&r &7[") + pl.getName() + CC.translate("&7] &a&l*"));
+                    }
                     return;
                 }
                 event.setCancelled(true);
@@ -95,7 +100,7 @@ public class HeroicRocketEscape extends HeroicCustomEnchantment {
                 RocketEscape.rocket_escapists.add(uuid);
                 Location loc = pl.getLocation();
                 try {
-                    de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(),  loc, (float) Math.random() * 2.0F, (float) Math.random() * 2.0F, (float) Math.random() * 2.0F, 1.25F, 69);
+                    de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), loc, (float) Math.random() * 2.0F, (float) Math.random() * 2.0F, (float) Math.random() * 2.0F, 1.25F, 69);
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
@@ -113,11 +118,11 @@ public class HeroicRocketEscape extends HeroicCustomEnchantment {
                 Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), () -> {
                     Player onlinePlayer = Bukkit.getPlayer(uuid);
                     if (onlinePlayer != null)
-                    try {
-                        de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), onlinePlayer.getLocation(), (float) Math.random() * 2.0F, (float) Math.random() * 2.0F, (float) Math.random() * 2.0F, 1.25F, 69);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                        try {
+                            de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), onlinePlayer.getLocation(), (float) Math.random() * 2.0F, (float) Math.random() * 2.0F, (float) Math.random() * 2.0F, 1.25F, 69);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
                     RocketEscape.rocket_escapists.remove(uuid);
                 }, (20 * (level + 2) + 5));

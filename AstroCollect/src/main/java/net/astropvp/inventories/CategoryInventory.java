@@ -61,15 +61,17 @@ public class CategoryInventory {
         removeCategory.setItemMeta(meta);
 
         categoryInventory.setItem(6, 1, new GuiItem(prevPage, event -> {
+            int pageNum = categoryInventory.getCurrentPageNum();
             PaginatedGui inventory= new CategoryInventory(player, category).getCollectUI();
-            inventory.open(player);
+            inventory.open(player, pageNum);
             inventory.previous();
             event.setCancelled(true);
         }));
 
         categoryInventory.setItem(6, 9, new GuiItem(nextPage, event -> {
+            int pageNum = categoryInventory.getCurrentPageNum();
             PaginatedGui inventory= new CategoryInventory(player, category).getCollectUI();
-            inventory.open(player);
+            inventory.open(player, pageNum);
             inventory.next();
 
             event.setCancelled(true);
@@ -107,7 +109,7 @@ public class CategoryInventory {
     }
 
     public ItemStack createFillerItem() {
-        ItemStack item = new ItemStack(Material.STAINED_GLASS_PANE, 1, DyeColor.LIGHT_BLUE.getData());
+        ItemStack item = new ItemStack(Material.STAINED_GLASS_PANE, 1, DyeColor.LIME.getData());
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(CC.translate("&f"));
         item.setItemMeta(meta);
