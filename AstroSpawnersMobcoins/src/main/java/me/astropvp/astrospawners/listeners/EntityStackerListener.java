@@ -2,6 +2,7 @@ package me.astropvp.astrospawners.listeners;
 
 import com.astropvp.cc.CCVerify;
 import com.astropvp.cc.player.CosmicPlayers;
+import com.compilex.CompilexPermissions.CompilexPermissions;
 import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
 import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.conaxgames.customskulls.util.CustomBlockUtil;
@@ -16,6 +17,8 @@ import me.astropvp.astrospawners.utils.*;
 import me.ifamasssxd.cosmiccoinflip.struct.CoinFlipManager;
 import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
 import me.ifamasssxd.cosmichcf.struct.OutpostType;
+import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
+import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
 import net.astropvp.core.utils.GrindingMessagesUtil;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
@@ -31,6 +34,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.SpawnerSpawnEvent;
 import org.github.paperspigot.Title;
+
+import java.util.Map;
 
 public class EntityStackerListener implements Listener {
 
@@ -101,17 +106,17 @@ public class EntityStackerListener implements Listener {
 
                 if (Math.random() < 0.05) {
                     data.setCoins(data.getCoins() + 2);
-                    ActionBarMessageUtils.sendMessage((Player) e.getDamager(), CC.translate("&6+2 Mobcoins &7(Total: &f&n") + data.getCoins() + CC.Gray + ")");
+                    //ActionBarMessageUtils.sendMessage((Player) e.getDamager(), CC.translate("&6+2 Mobcoins &7(Total: &f&n") + data.getCoins() + CC.Gray + ")");
 
                 } else {
-                    ActionBarMessageUtils.sendMessage((Player) e.getDamager(), CC.translate("&a+1 Mobcoin &7(Total: &f&n") + data.getCoins() + CC.Gray + ")");
+                    //ActionBarMessageUtils.sendMessage((Player) e.getDamager(), CC.translate("&a+1 Mobcoin &7(Total: &f&n") + data.getCoins() + CC.Gray + ")");
                     data.setCoins(data.getCoins() + 1);
 
                 }
 
             } else {
                 data.setCoins(data.getCoins() + 1);
-                ActionBarMessageUtils.sendMessage((Player) e.getDamager(), CC.translate("&a+1 Mobcoin &7(Total: &f&n") + data.getCoins() + CC.Gray + ")");
+                //ActionBarMessageUtils.sendMessage((Player) e.getDamager(), CC.translate("&a+1 Mobcoin &7(Total: &f&n") + data.getCoins() + CC.Gray + ")");
 
             }
 
@@ -136,8 +141,12 @@ public class EntityStackerListener implements Listener {
                 exp = exp * 2;
             }
 
-            if (CustomBlockUtil.chunkHasCertainBlock(p, "TREASURE_CHEST")) {
-                exp = exp * 1.5;
+            try {
+                if (CustomBlockUtil.chunkHasCertainBlock(p, "TREASURE_CHEST")) {
+                    exp = exp * 1.5;
+                }
+            } catch (Exception exxx) {
+
             }
 
             if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(p), OutpostType.COURTYARD) && Math.random() < 0.1) {
