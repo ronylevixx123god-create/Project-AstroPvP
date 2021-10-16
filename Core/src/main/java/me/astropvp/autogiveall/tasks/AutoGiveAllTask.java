@@ -11,8 +11,10 @@ package me.astropvp.autogiveall.tasks;
 
 import com.compilex.CompilexPermissions.PermissionsAPI;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.StringUtils;
 import me.astropvp.autogiveall.struct.GiveAllManager;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -21,23 +23,63 @@ import java.util.List;
 public class AutoGiveAllTask
 implements Runnable {
 
-    @Override
-    public void run() {
-        //GiveAllManager.setNextGiveAll(GiveAllManager.getNextGiveAll() - 1L);
-        long updatedTime = GiveAllManager.getNextGiveAll();
-        if (updatedTime == 0L) {
-            List list = new ArrayList<String>();
-            Bukkit.broadcastMessage("");
-            Bukkit.broadcastMessage(CC.translate("&8[&a&lAstro&e&lPvP&8] &7Online &b&lApollo Rank &7Donators"));
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                String rank = PermissionsAPI.getPermissionUser(player.getUniqueId()).getGroup();
-                if (rank.equals("apollo")) {
-                    list.add(player.getDisplayName());
-                }
+    private static final int CENTER_PX = 154;
+
+    public static void sendCenteredMessage(String message) {
+        message = ChatColor.translateAlternateColorCodes('&', message);
+        int messagePxSize = 0;
+        boolean previousCode = false;
+        boolean isBold = false;
+        for (char c : message.toCharArray()) {
+            if (c == '§') {
+            previousCode = true;
+        } else if (previousCode == true) {
+            previousCode = false;
+            if (c == 'l' || c == 'L') {
+                isBold = true;
+            } else {
+                isBold = false;
             }
-            Bukkit.broadcastMessage(list.toString());
-            Bukkit.broadcastMessage(CC.translate("&7&o(( You can buy the apollo rank at &fbuy.astropvp.net&7 ))"));
+        } else {
+            StringUtils.DefaultFontInfo dFI = StringUtils.DefaultFontInfo.getDefaultFontInfo(c);
+            messagePxSize += isBold ? dFI.getBoldLength() : dFI.getLength();
+            messagePxSize++;
         }
+    }
+    int halvedMessageSize = messagePxSize / 2;
+    int toCompensate = 154 - halvedMessageSize;
+    int spaceLength = StringUtils.DefaultFontInfo.SPACE.getLength() + 1;
+    int compensated = 0;
+    StringBuilder sb = new StringBuilder();
+    while (compensated < toCompensate) {
+        sb.append(" ");
+        compensated += spaceLength;
+    }
+    Bukkit.broadcastMessage(sb.toString() + message);
+}
+
+    public void run() {
+        GiveAllManager.setNextGiveAll(GiveAllManager.getNextGiveAll() - 1L);
+        long updatedTime = GiveAllManager.getNextGiveAll();
+        if (updatedTime == 1200L || updatedTime == 900L || updatedTime == 600L || updatedTime == 300L || updatedTime == 180L || updatedTime == 60L) {
+            announceGiveAll(updatedTime / 60L, true);
+        } else if (updatedTime == 30L || updatedTime == 20L || updatedTime == 10L || updatedTime == 5L || updatedTime == 3L || updatedTime == 2L || updatedTime == 1L) {
+            announceGiveAll(updatedTime, false);
+        } else if (updatedTime == 0L) {
+            GiveAllManager.doGiveAll();
+        }
+    }
+
+    private void announceGiveAll(long time, boolean minutes) {
+        sendCenteredMessage("");
+        sendCenteredMessage(CC.GreenB + "AUTO GIVE ALL");
+        if (minutes) {
+            sendCenteredMessage(CC.Green + "Time Remaining: " + CC.White + time + "m");
+        } else {
+            sendCenteredMessage(CC.Green + "Time Remaining: " + CC.White + time + "s");
+        }
+        sendCenteredMessage(CC.Green + "Use the command /nextgiveall to stay updated!");
+        sendCenteredMessage("");
     }
 
 }

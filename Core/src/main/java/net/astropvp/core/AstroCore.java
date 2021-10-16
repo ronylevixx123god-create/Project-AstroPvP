@@ -20,6 +20,7 @@ import io.puharesource.mc.titlemanager.api.v2.TitleManagerAPI;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
+import me.astropvp.autogiveall.tasks.AutoGiveAllTask;
 import me.ifamasssxd.betterpay.PayListener;
 import me.ifamasssxd.betterpay.PayToggle;
 import me.ifamasssxd.betterpay.commands.CommandTogglePay;
@@ -354,7 +355,6 @@ public class AstroCore extends JavaPlugin {
         this.getCommand("givesoulgem").setExecutor(new CommandGiveSoulGem());
         this.getCommand("title").setExecutor(new CommandTitle());
         this.getCommand("titleset").setExecutor(new CommandTitleSet());
-        this.getCommand("claim").setExecutor(new me.astropvp.autogiveall.commands.CommandClaim());
         this.getCommand("forcegiveall").setExecutor(new me.astropvp.autogiveall.commands.CommandForceGiveAll());
         this.getCommand("nextgiveall").setExecutor(new me.astropvp.autogiveall.commands.CommandNextGiveAll());
 
@@ -387,6 +387,8 @@ public class AstroCore extends JavaPlugin {
         Bukkit.getServer().getPluginManager().registerEvents(new PermissionListener(this.dataManager), this);
 
         this.getServer().getPluginManager().registerEvents(new EnvoyListener(), this);
+
+        Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)this, (Runnable)new AutoGiveAllTask(), 20L, 20L);
 
         freezeCommand = new Freeze();
 
