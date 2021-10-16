@@ -32,14 +32,12 @@ public class CosmicCrate extends JavaPlugin
     public static HashMap<String, List<Version>> claimedCosmicCrates;
     private static CosmicCrate plugin;
     private static SQLQueryThread sqlWorker;
-    private static Map<String, MysteryChest> chests;
 
     public void onEnable() {
         (CosmicCrate.plugin = this).registerSQL();
         this.registerListeners();
         this.registerCommands();
         this.loadDatabase();
-        chests =  CosmicMysteryChest.get().getChestManager().getMysteryChestMap();
     }
     
     public void onDisable() {
@@ -57,9 +55,6 @@ public class CosmicCrate extends JavaPlugin
         Bukkit.getPluginManager().registerEvents((Listener)new BlockListener(), (Plugin)this);
     }
 
-    public static Map<String, MysteryChest> getChests() {
-        return chests;
-    }
 
     private void registerCommands() {
         this.getCommand("cosmiccrate").setExecutor((CommandExecutor)new CommandCosmicCrate());
@@ -94,10 +89,10 @@ public class CosmicCrate extends JavaPlugin
                 }
             }
             rs.close();
-            Bukkit.getLogger().info("[CosmicCrate] Loaded " + x + " claimed Cosmic Crate metadata values!");
+            Bukkit.getLogger().info("[CosmicCrate] Loaded " + x + " claimed Astro Crate metadata values!");
         }
         catch (Exception e) {
-            Bukkit.getLogger().info("Failed to download Cosmic Crate data. Stack trace:");
+            Bukkit.getLogger().info("Failed to download Astro Crate data. Stack trace:");
             e.printStackTrace();
             Bukkit.getPluginManager().disablePlugin((Plugin)this);
         }

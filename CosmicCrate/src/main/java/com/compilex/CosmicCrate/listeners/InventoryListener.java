@@ -24,7 +24,7 @@ public class InventoryListener implements Listener
 {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onCosmicCrateRewardClaim(final InventoryClickEvent e) {
-        if (e.getInventory().getTitle().startsWith("Cosmic Crate: ")) {
+        if (e.getInventory().getTitle().startsWith("Astro Crate: ")) {
             e.setCancelled(true);
             e.setResult(Event.Result.DENY);
             final Player p = (Player)e.getWhoClicked();
@@ -68,7 +68,7 @@ public class InventoryListener implements Listener
     
     @EventHandler
     public void onCosmicCrateRedeemInventoryClose(final InventoryCloseEvent e) {
-        if (e.getInventory().getTitle().startsWith("Cosmic Crate: ") && e.getPlayer().hasMetadata("ccrate_loot_selector")) {
+        if (e.getInventory().getTitle().startsWith("Astro Crate: ") && e.getPlayer().hasMetadata("ccrate_loot_selector")) {
             final Player p = (Player)e.getPlayer();
             final CosmicCrateLootSelector ccls = (CosmicCrateLootSelector)p.getMetadata("ccrate_loot_selector").get(0).value();
             ccls.conclude();

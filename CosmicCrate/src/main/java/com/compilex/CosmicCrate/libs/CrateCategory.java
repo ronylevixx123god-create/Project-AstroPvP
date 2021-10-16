@@ -13,7 +13,7 @@ import org.bukkit.ChatColor;
 
 public enum CrateCategory
 {
-    WEEKLY_CRATES("WEEKLY_CRATES", ChatColor.YELLOW);
+    MONTHLY_CRATES("MONTHLY_CRATES", ChatColor.YELLOW);
     
     private String type;
     private ChatColor color;
@@ -22,7 +22,7 @@ public enum CrateCategory
     private CrateCategory(final String type, final ChatColor color) {
         this.type = type;
         this.color = color;
-        this.displayName = this.color + CC.Bold + CC.Underline + this.type + this.color + CC.Bold + " Cosmic Crates";
+        this.displayName = this.color + CC.Bold + CC.Underline + this.type + this.color + CC.Bold + " Astro Crates";
     }
     
     public List<Version> getCrates() {

@@ -4,7 +4,6 @@
 
 package com.compilex.CosmicCrate.listeners;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import org.bukkit.util.Vector;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.LivingEntity;
@@ -117,7 +116,6 @@ public class PlayerListener implements Listener
                 if ((v != null && v.getCrateData() != null)) {
                     final Player p = e.getPlayer();
                     final Location l = p.getEyeLocation();
-                    ParticleEffect.playEffect(ParticleEffect.FIREWORKS_SPARK, l, 0.44f, 100);
                     p.playSound(p.getLocation(), Sound.BAT_TAKEOFF, 1.0f, 2.0f);
                     final CosmicCrateLootSelector ccls = new CosmicCrateLootSelector(e.getPlayer(), v);
                     e.getPlayer().setMetadata("ccrate_loot_selector", (MetadataValue)new FixedMetadataValue((Plugin)CosmicCrate.get(), (Object)ccls));
@@ -129,7 +127,7 @@ public class PlayerListener implements Listener
     
     @EventHandler(priority = EventPriority.LOW)
     public void onPlayerPickupItem(final PlayerPickupItemEvent e) {
-        if (e.getPlayer().getOpenInventory() != null && e.getPlayer().getOpenInventory().getTitle().startsWith("Cosmic Crate: ")) {
+        if (e.getPlayer().getOpenInventory() != null && e.getPlayer().getOpenInventory().getTitle().startsWith("Astro Crate: ")) {
             e.setCancelled(true);
         }
     }
@@ -174,9 +172,6 @@ public class PlayerListener implements Listener
             }
             silverfish.remove();
             final Location l = e.getEntity().getLocation().add(0.0, 1.0, 0.0);
-            ParticleEffect.playEffect(ParticleEffect.SPELL, l, 0.1f, 50);
-            ParticleEffect.playEffect(ParticleEffect.FIREWORKS_SPARK, l, 0.33f, 40);
-            ParticleEffect.playEffect(ParticleEffect.LARGE_EXPLODE, l, 0.2f, 5);
             l.getWorld().playSound(l, Sound.EXPLODE, 0.8f, 0.5f);
             l.getWorld().playSound(l, Sound.EAT, 1.0f, 0.77f);
         }

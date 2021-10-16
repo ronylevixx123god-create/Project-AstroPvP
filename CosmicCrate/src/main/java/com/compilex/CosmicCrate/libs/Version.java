@@ -14,7 +14,7 @@ import org.bukkit.ChatColor;
 
 public enum Version
 {
-    WEEKLY_1("&c&l*&f&l*&9&l* &c&lCOSMIC CRATE: &f&l&nJULY &9&l&n2019&r &c&l*&f&l*&9&l*", new SOTW(), CrateCategory.WEEKLY_CRATES);
+    SOTW("&a&l*&6&l*&a&l* &6&lASTRO CRATE: &f&l&nSOTW&r &2&l&n2021&r &a&l*&6&l*&a&l*", new SOTW(), CrateCategory.MONTHLY_CRATES);
     
     public String crateName;
     public String rawName;
@@ -27,7 +27,7 @@ public enum Version
         this.category = category;
         this.crateName = ChatColor.translateAlternateColorCodes('&', crateName);
         this.rawName = this.crateName;
-        this.rawName = this.rawName.replace("COSMIC CRATE: ", "").replace("***", "");
+        this.rawName = this.rawName.replace("ASTRO CRATE: ", "").replace("***", "");
     }
     
     private Version(final String crateName, final CosmicCrateData data, final CrateCategory category) {

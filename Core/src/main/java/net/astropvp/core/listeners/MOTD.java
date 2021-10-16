@@ -97,7 +97,7 @@ public class MOTD implements Listener {
                 player.sendMessage(CC.translate("&7With this client you will be able to see &fItemSkins&7, &fRoam&7, &fFaction Ping&7 and so much more..."));
                 player.sendMessage(CC.translate("&eYou now have 1.5x EXP and 1.5x Grinding Lootboxes chance."));
                 player.sendMessage("");
-                player.performCommand("vc proximity");
+                //player.performCommand("vc proximity");
             } else {
                 player.sendMessage("");
                 player.sendMessage(CC.translate("&a&l[!]&a Hello &f" + player.getName() + "&a, you are not on the supported version of &f&nCosmicClient&a."));

@@ -59,7 +59,7 @@ public class CCAPI
     }
     
     public static Inventory getCosmicCrateClaimMenu(final Player p) {
-        final Inventory inv = Bukkit.createInventory((InventoryHolder)null, 54, "Cosmic Crate Storage");
+        final Inventory inv = Bukkit.createInventory((InventoryHolder)null, 54, "Astro Crate Storage");
         for (final Version v : Version.values()) {
             ItemStack item;
             if (p.hasPermission(v.getPermissionNode())) {

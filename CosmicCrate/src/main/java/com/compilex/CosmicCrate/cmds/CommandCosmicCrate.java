@@ -44,8 +44,8 @@ public class CommandCosmicCrate implements CommandExecutor
                 final Player pGive2 = Bukkit.getPlayer(playerName);
                 try {
                     Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), "pex user " + pGive2.getName() + " add " + v.getPermissionNode() + " " + CosmicSpaceChestsPlugin.serverName);
-                    pGive2.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "(!) You've UNLOCKED the " + ChatColor.UNDERLINE + v.name() + ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + " Cosmic Crate!");
-                    pGive2.sendMessage(ChatColor.GRAY + "Redeem your new Cosmic Crate with /cc");
+                    pGive2.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "(!) You've UNLOCKED the " + ChatColor.UNDERLINE + v.name() + ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + " Astro Crate!");
+                    pGive2.sendMessage(ChatColor.GRAY + "Redeem your new Astro Crate with /cc");
                     pGive2.playSound(pGive2.getLocation(), Sound.LEVEL_UP, 1.0f, 0.72f);
                     Bukkit.getScheduler().runTaskLater((Plugin)CosmicSpaceChestsPlugin.plugin, (Runnable)new Runnable() {
                         @Override
@@ -59,7 +59,7 @@ public class CommandCosmicCrate implements CommandExecutor
                 }
             }
             else {
-                Bukkit.getLogger().info("[CosmicCrate] Could not find user " + playerName + " to give " + v.name() + " Cosmic Crate to!");
+                Bukkit.getLogger().info("[CosmicCrate] Could not find user " + playerName + " to give " + v.name() + " Astro Crate to!");
             }
             return true;
         }
