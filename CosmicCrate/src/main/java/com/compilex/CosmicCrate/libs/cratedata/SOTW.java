@@ -43,8 +43,7 @@ public class SOTW extends CosmicCrateData {
             chests.get("PremadeOmni").createClaimableItem(false);
         }
 
-        return ItemUtils.setAmount(chests.get("Slotbot").createClaimableItem(false), 8);
-
+        return ItemUtils.setAmount(CosmicSlotBotAPI.createSlotBotItem(), 8 + (new Random()).nextInt(16));
     }
 
     @Override
@@ -78,15 +77,20 @@ public class SOTW extends CosmicCrateData {
         List<ItemStack> items = Lists.newArrayList();
         Map<String, MysteryChest> chests = CosmicMysteryChest.get().getChestManager().getMysteryChestMap();
 
-        items.add(ItemUtils.setAmount(chests.get("Spawner").createClaimableItem(false), 8 + (new Random()).nextInt(16)));
+         items.add(ItemUtils.setAmount(chests.get("Spawner").createClaimableItem(false), 8 + (new Random()).nextInt(16)));
         items.add(ItemUtils.setAmount(chests.get("AdminWeapon").createClaimableItem(false), 2 + (new Random()).nextInt(4)));
         items.add(ItemUtils.setAmount(chests.get("AstroNote").createClaimableItem(false), 1 + (new Random()).nextInt(3)));
-        items.add(ItemUtils.setAmount(chests.get("HeroicProtVI").createClaimableItem(false), 4 + (new Random()).nextInt(6)));
-        items.add(ItemUtils.setAmount(chests.get("OPCache").createClaimableItem(false), 1 + (new Random()).nextInt(2)));
-        ItemUtils.setAmount(chests.get("Slotbot").createClaimableItem(false), 4 + (new Random()).nextInt(6));
-        items.add(ItemUtils.setAmount(chests.get("SkinBundle").createClaimableItem(false), 6 + (new Random()).nextInt(8)));
-        items.add(ItemUtils.setAmount(chests.get("Backpack").createClaimableItem(false), 1 + (new Random()).nextInt(3)));
+         items.add(ItemUtils.setAmount(chests.get("HeroicProtVI").createClaimableItem(false), 4 + (new Random()).nextInt(6)));
+         items.add(ItemUtils.setAmount(chests.get("OPCache").createClaimableItem(false), 1 + (new Random()).nextInt(2)));
+        items.add(ItemUtils.setAmount(CosmicSlotBotAPI.createSlotBotItem(), 4 + (new Random()).nextInt(6)));
+         items.add(ItemUtils.setAmount(chests.get("SkinBundle").createClaimableItem(false), 6 + (new Random()).nextInt(8)));
+         items.add(ItemUtils.setAmount(chests.get("Backpack").createClaimableItem(false), 1 + (new Random()).nextInt(3)));
         items.add(ItemUtils.setAmount(chests.get("OmniCrystal").createClaimableItem(false), 4 + (new Random()).nextInt(8)));
+
+
+
+
+
 
 
         return items;
@@ -99,12 +103,12 @@ public class SOTW extends CosmicCrateData {
 
     @Override
     public short getColorPane() {
-        return (short) DyeColor.ORANGE.getWoolData();
+        return (short)DyeColor.ORANGE.getWoolData();
     }
 
     @Override
     public List<Color> getConclusionFireworkColors() {
-        return Lists.newArrayList(new Color[]{Color.ORANGE, Color.GREEN});
+        return Lists.newArrayList(new Color[] { Color.ORANGE, Color.GREEN });
     }
 
 

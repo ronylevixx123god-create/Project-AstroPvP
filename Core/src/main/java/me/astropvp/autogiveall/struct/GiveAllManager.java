@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.CC
  *  com.google.common.collect.Lists
@@ -45,28 +45,30 @@ public class GiveAllManager {
     public static void doGiveAll() {
         for (Player p : Bukkit.getServer().getOnlinePlayers()) {
             PlayerCollect collect = CollectPlugin.getInstance().getCollectManager().getPlayerCollect(p);
-                boolean b = false;
-                CollectCategory giveall = null;
-                for(CollectCategory cat : collect.getCategories()) {
-                    if(cat.getType() == CollectType.GIVEALL) {
-                        b = true;
-                        giveall = cat;
-                        break;
-                    }
+            boolean b = false;
+            CollectCategory giveall = null;
+            for (CollectCategory cat : collect.getCategories()) {
+                if (cat.getType() == CollectType.GIVEALL) {
+                    b = true;
+                    giveall = cat;
+                    break;
                 }
-                if(b) {
-                    ItemStack[] items = giveall.getItems();
-                    ItemStack[] newarray = new ItemStack[items.length];
-                    for(int i = 0; i < items.length; i++) {
-                        newarray[i] = items[i];
-                    }
-                    newarray[newarray.length - 1] = giveAllItem.createClaimableItem(true);
-                    giveall.setItems(newarray);
-                } else {
-                    ItemStack[] items = new ItemStack[0];
-                    items[0] = giveAllItem.createClaimableItem(false);
-                    collect.add(new CollectCategory(CollectType.GIVEALL, items, CC.YellowB + "Giveall Lootboxes"));
-                }
+            }
+            p.sendMessage("");
+            p.sendMessage(CC.translate("&3&l(&b&lCOLLECT&3&l)&b The Auto Giveall Lootbox has been put into your &f/collect&b."));
+            p.sendMessage("");
+            if (b) {
+                ItemStack[] items = giveall.getItems();
+                ItemStack[] newarray = new ItemStack[items.length + 1];
+                System.arraycopy(items, 0, newarray, 0, items.length);
+                newarray[newarray.length - 1] = giveAllItem.createClaimableItem(true);
+                giveall.setItems(newarray);
+            } else {
+
+                ItemStack[] items = new ItemStack[1];
+                items[0] = giveAllItem.createClaimableItem(false);
+                collect.add(new CollectCategory(CollectType.GIVEALL, items, CC.YellowB + "Auto Giveall Lootboxes"));
+            }
             nextGiveAll = 2400;
         }
     }
