@@ -72,7 +72,7 @@ public class EntityStackerListener implements Listener {
                 if (e.getEntity().getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.FIRE_TICK) return;
             }
 
-            //Bukkit.getScheduler().runTaskLaterAsynchronously(AstroSpawners.getInstance(), () -> {
+            Bukkit.getScheduler().runTaskLaterAsynchronously(AstroSpawners.getInstance(), () -> {
             int amount = mobStackerUtils.getStackSize(entity);
             if (amount <= 1) {
                 mobStackerUtils.removeStackedMob(entity);
@@ -82,7 +82,7 @@ public class EntityStackerListener implements Listener {
             mobStackerUtils.setStackSize(entity, amount);
 
 
-            //}, 5L);
+            }, 5L);
 
             Player p = (Player) e.getDamager();
 
@@ -120,16 +120,18 @@ public class EntityStackerListener implements Listener {
 
             }
 
-            if (isOnCosmicClient) {
-                blazeLoot(entity, (Player) e.getDamager(), 0.15);
-            } else {
-                blazeLoot(entity, (Player) e.getDamager(), 0.12);
+            if (p.getInventory().firstEmpty() != -1) {
+                if (isOnCosmicClient) {
+                    blazeLoot(entity, p, 0.15);
+                } else {
+                    blazeLoot(entity, p, 0.12);
 
 
+                }
             }
 
 
-            if (((Player) e.getDamager()).getPlayer().getItemInHand().getType() == Material.DIAMOND_SWORD && ((Player) e.getDamager()).getPlayer().getItemInHand().getItemMeta().hasLore()) {
+            if (p.getItemInHand().getType() == Material.DIAMOND_SWORD && p.getItemInHand().getItemMeta().hasLore()) {
                 exp = exp + 100;
             }
 
@@ -203,7 +205,6 @@ public class EntityStackerListener implements Listener {
                     }
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mc give " + player + " GrindingLootbox");
 
-                    return;
                 }
 
                 /*else if (num >= 0 && num <= 0.15) {
