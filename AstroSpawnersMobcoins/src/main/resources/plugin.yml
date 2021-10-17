@@ -1,6 +1,8 @@
 main: me.astropvp.astrospawners.AstroSpawners
 name: AstroSpawners
 version: 1.0
+depend: [CosmicMysteryChest]
+
 commands:
   splitspawners:
     description: /splitspawners

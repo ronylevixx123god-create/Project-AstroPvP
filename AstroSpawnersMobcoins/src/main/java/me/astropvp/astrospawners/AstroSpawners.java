@@ -8,6 +8,8 @@ import me.astropvp.astrospawners.utils.PlayerDataManager;
 import me.astropvp.astrospawners.data.SpawnerDataHelper;
 import me.astropvp.astrospawners.listeners.*;
 import me.astropvp.astrospawners.utils.*;
+import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
+import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.CreatureSpawner;
@@ -16,6 +18,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.Map;
 
 public class AstroSpawners extends JavaPlugin {
     public static AstroSpawners astroSpawners;
@@ -87,6 +91,7 @@ public class AstroSpawners extends JavaPlugin {
 
         astroSpawners = null;
     }
+
 
     public static AstroSpawners getInstance() {
         return astroSpawners;

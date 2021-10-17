@@ -33,6 +33,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.SpawnerSpawnEvent;
+import org.bukkit.inventory.ItemStack;
 import org.github.paperspigot.Title;
 
 import java.util.Map;
@@ -43,6 +44,7 @@ public class EntityStackerListener implements Listener {
     private final MobStackerUtils mobStackerUtils;
     private final PlayerDataManager manager;
     private final AstroSpawners plugin;
+    private final ItemStack grindingLootbox = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("GrindingLootbox").createClaimableItem(false);
 
 
     public EntityStackerListener(AstroSpawners plugin) {
@@ -122,9 +124,9 @@ public class EntityStackerListener implements Listener {
 
             if (p.getInventory().firstEmpty() != -1) {
                 if (isOnCosmicClient) {
-                    blazeLoot(entity, p, 0.15);
+                    blazeLoot(p, 0.15);
                 } else {
-                    blazeLoot(entity, p, 0.12);
+                    blazeLoot(p, 0.12);
 
 
                 }
@@ -193,9 +195,8 @@ public class EntityStackerListener implements Listener {
         e.setCancelled(true);
     }
 
-    public void blazeLoot(Entity e, Player p, double chance) {
-        if (p instanceof Player) {
-            String player = p.getName();
+    public void blazeLoot(Player p, double chance) {
+        if (p != null) {
             double num = Math.random();
             try {
 
@@ -203,8 +204,8 @@ public class EntityStackerListener implements Listener {
                     if (GrindingMessagesUtil.isPlayerIndicating(p)) {
                         p.sendMessage(CC.translate("&b&lGrinding &f&l➥ &a+ Grinding Lootbox"));
                     }
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mc give " + player + " GrindingLootbox");
-
+                    //Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mc give " + player + " GrindingLootbox");
+                    p.getInventory().addItem(grindingLootbox);
                 }
 
                 /*else if (num >= 0 && num <= 0.15) {
