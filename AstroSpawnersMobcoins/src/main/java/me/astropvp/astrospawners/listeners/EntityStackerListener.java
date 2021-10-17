@@ -84,7 +84,7 @@ public class EntityStackerListener implements Listener {
             mobStackerUtils.setStackSize(entity, amount);
 
 
-            }, 5L);
+            }, 8L);
 
             Player p = (Player) e.getDamager();
 
@@ -99,7 +99,7 @@ public class EntityStackerListener implements Listener {
             double exp = 300;
 
             //PlayerDataManager manager = AstroSpawners.getPlayerDataManager();
-            PlayerData data = manager.getPlayerData((Player) e.getDamager());
+            PlayerData data = manager.getPlayerData(p);
 
 
             if (CosmicArmorSetsAPI.getArmorSet(p) != null && CosmicArmorSetsAPI.getArmorSet(p) == ArmorSet.GRINDER) {
