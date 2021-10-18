@@ -36,7 +36,10 @@ import org.bukkit.event.entity.SpawnerSpawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.github.paperspigot.Title;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class EntityStackerListener implements Listener {
 
@@ -45,13 +48,13 @@ public class EntityStackerListener implements Listener {
     private final PlayerDataManager manager;
     private final AstroSpawners plugin;
     private final ItemStack grindingLootbox = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("GrindingLootbox").createClaimableItem(false);
-
+    private List<UUID> coolDownPlayers;
 
     public EntityStackerListener(AstroSpawners plugin) {
         this.plugin = plugin;
         this.mobStackerUtils = plugin.getMobStackerUtils();
         this.manager = plugin.getManager();
-
+        this.coolDownPlayers = new ArrayList<>();
 
     }
 
@@ -74,7 +77,13 @@ public class EntityStackerListener implements Listener {
                 if (e.getEntity().getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.FIRE_TICK) return;
             }
 
-            Bukkit.getScheduler().runTaskLaterAsynchronously(AstroSpawners.getInstance(), () -> {
+            if (coolDownPlayers.contains(e.getDamager().getUniqueId())) {
+                e.getDamager().sendMessage(CC.translate("&c&l(!) Please slow down, you are clicking over 15 cps!"));
+                e.setCancelled(true);
+                return;
+            }
+
+            //Bukkit.getScheduler().runTaskLaterAsynchronously(AstroSpawners.getInstance(), () -> {
             int amount = mobStackerUtils.getStackSize(entity);
             if (amount <= 1) {
                 mobStackerUtils.removeStackedMob(entity);
@@ -82,9 +91,13 @@ public class EntityStackerListener implements Listener {
             }
             amount--;
             mobStackerUtils.setStackSize(entity, amount);
+            coolDownPlayers.add(e.getDamager().getUniqueId());
 
+            Bukkit.getScheduler().runTaskLaterAsynchronously(AstroSpawners.getInstance(), ()-> {
+                coolDownPlayers.remove(e.getDamager().getUniqueId());
+            }, 1L);
 
-            }, 8L);
+            //}, 8L);
 
             Player p = (Player) e.getDamager();
 

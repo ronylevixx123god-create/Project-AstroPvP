@@ -79,6 +79,8 @@ public class CommandMobCoinShop implements CommandExecutor {
                 values.put(((MysteryChest)chests.get("ChampionCrystal")).createClaimableItem(false), Integer.valueOf(6000));
             if (chests.containsKey("UltraCrystal"))
                 values.put(((MysteryChest)chests.get("UltraCrystal")).createClaimableItem(false), Integer.valueOf(12000));
+            if (chests.containsKey("AstroNote"))
+                values.put(((MysteryChest)chests.get("AstroNote")).createClaimableItem(false), Integer.valueOf(1600));
         } else {
             if (chests.containsKey("OmniCrystal"))
                 values.put(((MysteryChest)chests.get("OmniCrystal")).createClaimableItem(false), Integer.valueOf(250));
@@ -108,6 +110,8 @@ public class CommandMobCoinShop implements CommandExecutor {
                 values.put(((MysteryChest)chests.get("ChampionCrystal")).createClaimableItem(false), Integer.valueOf(7500));
             if (chests.containsKey("UltraCrystal"))
                 values.put(((MysteryChest)chests.get("UltraCrystal")).createClaimableItem(false), Integer.valueOf(15000));
+            if (chests.containsKey("AstroNote"))
+                values.put(((MysteryChest)chests.get("AstroNote")).createClaimableItem(false), Integer.valueOf(2000));
 
         }
 
