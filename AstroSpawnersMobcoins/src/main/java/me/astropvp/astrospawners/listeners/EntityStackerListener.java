@@ -78,7 +78,6 @@ public class EntityStackerListener implements Listener {
             }
 
             if (coolDownPlayers.contains(e.getDamager().getUniqueId())) {
-                e.getDamager().sendMessage(CC.translate("&c&l(!) Please slow down, you are clicking over 15 cps!"));
                 e.setCancelled(true);
                 return;
             }
