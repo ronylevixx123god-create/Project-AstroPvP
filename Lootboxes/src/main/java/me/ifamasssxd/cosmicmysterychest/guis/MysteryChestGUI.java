@@ -35,7 +35,9 @@ import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.ifamasssxd.cosmicmysterychest.struct.CustomLoot;
+import me.ifamasssxd.cosmicmysterychest.struct.Filter;
 import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
+import me.ifamasssxd.cosmicmysterychest.utils.FilterUtils;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.*;
@@ -160,7 +162,10 @@ public class MysteryChestGUI
             }
         }
         this.player.playSound(this.player.getLocation(), Sound.LEVEL_UP, 1.1f, 0.9f);
+        Filter filter = CosmicMysteryChest.get().getFilterManager().getPlayerFilter(this.player).getFilter(FilterUtils.getItems(this.chest));
         for (CustomLoot loot : this.lastPrizesShown) {
+            if(!filter.getFilters().get(loot.getItem()))
+                continue;
             long id;
             ItemStack item3 = loot.getItem().clone();
             if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning() && ((id = ItemID.getItemID((ItemStack) item3)) > 0L || ItemID.needsItemID((ItemStack) item3))) {

@@ -18,6 +18,7 @@ import me.ifamasssxd.cosmicmysterychest.halflootbox.CommandHalfLootbox;
 import me.ifamasssxd.cosmicmysterychest.halflootbox.HalfLootboxApplyListener;
 import me.ifamasssxd.cosmicmysterychest.items.MysteryLootboxItem;
 import me.ifamasssxd.cosmicmysterychest.listeners.MysteryChestListener;
+import me.ifamasssxd.cosmicmysterychest.managers.FilterManager;
 import me.ifamasssxd.cosmicmysterychest.managers.MysteryChestManager;
 import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
 import org.bukkit.Bukkit;
@@ -29,6 +30,7 @@ public class CosmicMysteryChest
     private ShardAnimations toggle;
     private MysteryChestManager chestManager;
     private MysteryLootboxItem mysteryLootboxItem;
+    private FilterManager filterManager;
 
     public ShardAnimations getShardAnimations() {
         return this.toggle;
@@ -46,6 +48,7 @@ public class CosmicMysteryChest
         this.getCommand("givehalflootbox").setExecutor(new CommandHalfLootbox());
         this.getServer().getPluginManager().registerEvents(new MysteryChestListener(), this);
         this.getServer().getPluginManager().registerEvents(new HalfLootboxApplyListener(), this);
+        this.filterManager = new FilterManager();
         if (Bukkit.getPluginManager().isPluginEnabled("CosmicSkyCustomItems")) {
             this.mysteryLootboxItem = new MysteryLootboxItem();
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem(this.mysteryLootboxItem);
@@ -70,5 +73,7 @@ public class CosmicMysteryChest
     public MysteryLootboxItem getMysteryLootboxItem() {
         return this.mysteryLootboxItem;
     }
+
+    public FilterManager getFilterManager() { return this.filterManager; }
 }
 
