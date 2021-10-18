@@ -69,7 +69,7 @@ public class MasteryFeignDeath extends MasteryCustomEnchantment {
         DamageIndicatorUtils.sendDamageIndicator((Player) damaged, CC.DarkRedB + "* Feign Death - VANISHED [" + NumberUtils.formatSeconds(seconds) + "s] *", "SHACKLED_GOLEM");
 
         damaged.setMetadata("feign_vanish", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), Double.valueOf(System.currentTimeMillis() + seconds * 1000.0D)));
-        damaged.setMetadata("feign_hits_max", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), Integer.valueOf(enchantLevel)));
+        damaged.setMetadata("feign_hits_max", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), 1));
         deathCooldown.put(damaged.getUniqueId(), Long.valueOf(System.currentTimeMillis() + 10000L));
         EntityPlayer player = ((CraftPlayer)damaged).getHandle();
         EntityPlayer fake = new EntityPlayer(player.server, (WorldServer)player.world, player.getProfile(), new PlayerInteractManager(player.world));

@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import com.compilex.CosmicCrate.database.SQLConnectionThread;
 import com.compilex.CosmicCrate.cmds.CommandGiveCC;
+import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
+import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
 import org.bukkit.command.CommandExecutor;
 import com.compilex.CosmicCrate.cmds.CommandCosmicCrate;
 import com.compilex.CosmicCrate.listeners.BlockListener;
@@ -20,6 +22,7 @@ import com.compilex.CosmicCrate.database.SQLQueryThread;
 import com.compilex.CosmicCrate.libs.Version;
 import java.util.List;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -29,7 +32,7 @@ public class CosmicCrate extends JavaPlugin
     public static HashMap<String, List<Version>> claimedCosmicCrates;
     private static CosmicCrate plugin;
     private static SQLQueryThread sqlWorker;
-    
+
     public void onEnable() {
         (CosmicCrate.plugin = this).registerSQL();
         this.registerListeners();
@@ -51,7 +54,8 @@ public class CosmicCrate extends JavaPlugin
         Bukkit.getPluginManager().registerEvents((Listener)new InventoryListener(), (Plugin)this);
         Bukkit.getPluginManager().registerEvents((Listener)new BlockListener(), (Plugin)this);
     }
-    
+
+
     private void registerCommands() {
         this.getCommand("cosmiccrate").setExecutor((CommandExecutor)new CommandCosmicCrate());
         this.getCommand("givecc").setExecutor((CommandExecutor)new CommandGiveCC());
@@ -85,10 +89,10 @@ public class CosmicCrate extends JavaPlugin
                 }
             }
             rs.close();
-            Bukkit.getLogger().info("[CosmicCrate] Loaded " + x + " claimed Cosmic Crate metadata values!");
+            Bukkit.getLogger().info("[CosmicCrate] Loaded " + x + " claimed Astro Crate metadata values!");
         }
         catch (Exception e) {
-            Bukkit.getLogger().info("Failed to download Cosmic Crate data. Stack trace:");
+            Bukkit.getLogger().info("Failed to download Astro Crate data. Stack trace:");
             e.printStackTrace();
             Bukkit.getPluginManager().disablePlugin((Plugin)this);
         }

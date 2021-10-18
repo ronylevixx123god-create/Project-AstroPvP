@@ -2,6 +2,7 @@ package me.astropvp.astrospawners.listeners;
 
 import com.astropvp.cc.CCVerify;
 import com.astropvp.cc.player.CosmicPlayers;
+import com.compilex.CompilexPermissions.CompilexPermissions;
 import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
 import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.conaxgames.customskulls.util.CustomBlockUtil;
@@ -16,6 +17,8 @@ import me.astropvp.astrospawners.utils.*;
 import me.ifamasssxd.cosmiccoinflip.struct.CoinFlipManager;
 import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
 import me.ifamasssxd.cosmichcf.struct.OutpostType;
+import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
+import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
 import net.astropvp.core.utils.GrindingMessagesUtil;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
@@ -30,7 +33,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.SpawnerSpawnEvent;
+import org.bukkit.inventory.ItemStack;
 import org.github.paperspigot.Title;
+
+import java.util.Map;
 
 public class EntityStackerListener implements Listener {
 
@@ -38,6 +44,7 @@ public class EntityStackerListener implements Listener {
     private final MobStackerUtils mobStackerUtils;
     private final PlayerDataManager manager;
     private final AstroSpawners plugin;
+    private final ItemStack grindingLootbox = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("GrindingLootbox").createClaimableItem(false);
 
 
     public EntityStackerListener(AstroSpawners plugin) {
@@ -67,7 +74,7 @@ public class EntityStackerListener implements Listener {
                 if (e.getEntity().getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.FIRE_TICK) return;
             }
 
-            //Bukkit.getScheduler().runTaskLaterAsynchronously(AstroSpawners.getInstance(), () -> {
+            Bukkit.getScheduler().runTaskLaterAsynchronously(AstroSpawners.getInstance(), () -> {
             int amount = mobStackerUtils.getStackSize(entity);
             if (amount <= 1) {
                 mobStackerUtils.removeStackedMob(entity);
@@ -77,7 +84,7 @@ public class EntityStackerListener implements Listener {
             mobStackerUtils.setStackSize(entity, amount);
 
 
-            //}, 5L);
+            }, 8L);
 
             Player p = (Player) e.getDamager();
 
@@ -92,7 +99,7 @@ public class EntityStackerListener implements Listener {
             double exp = 300;
 
             //PlayerDataManager manager = AstroSpawners.getPlayerDataManager();
-            PlayerData data = manager.getPlayerData((Player) e.getDamager());
+            PlayerData data = manager.getPlayerData(p);
 
 
             if (CosmicArmorSetsAPI.getArmorSet(p) != null && CosmicArmorSetsAPI.getArmorSet(p) == ArmorSet.GRINDER) {
@@ -101,30 +108,32 @@ public class EntityStackerListener implements Listener {
 
                 if (Math.random() < 0.05) {
                     data.setCoins(data.getCoins() + 2);
-                    ActionBarMessageUtils.sendMessage((Player) e.getDamager(), CC.translate("&6+2 Mobcoins &7(Total: &f&n") + data.getCoins() + CC.Gray + ")");
+                    //ActionBarMessageUtils.sendMessage((Player) e.getDamager(), CC.translate("&6+2 Mobcoins &7(Total: &f&n") + data.getCoins() + CC.Gray + ")");
 
                 } else {
-                    ActionBarMessageUtils.sendMessage((Player) e.getDamager(), CC.translate("&a+1 Mobcoin &7(Total: &f&n") + data.getCoins() + CC.Gray + ")");
+                    //ActionBarMessageUtils.sendMessage((Player) e.getDamager(), CC.translate("&a+1 Mobcoin &7(Total: &f&n") + data.getCoins() + CC.Gray + ")");
                     data.setCoins(data.getCoins() + 1);
 
                 }
 
             } else {
                 data.setCoins(data.getCoins() + 1);
-                ActionBarMessageUtils.sendMessage((Player) e.getDamager(), CC.translate("&a+1 Mobcoin &7(Total: &f&n") + data.getCoins() + CC.Gray + ")");
+                //ActionBarMessageUtils.sendMessage((Player) e.getDamager(), CC.translate("&a+1 Mobcoin &7(Total: &f&n") + data.getCoins() + CC.Gray + ")");
 
             }
 
-            if (isOnCosmicClient) {
-                blazeLoot(entity, (Player) e.getDamager(), 0.1);
-            } else {
-                blazeLoot(entity, (Player) e.getDamager(), 0.06);
+            if (p.getInventory().firstEmpty() != -1) {
+                if (isOnCosmicClient) {
+                    blazeLoot(p, 0.15);
+                } else {
+                    blazeLoot(p, 0.12);
 
 
+                }
             }
 
 
-            if (((Player) e.getDamager()).getPlayer().getItemInHand().getType() == Material.DIAMOND_SWORD && ((Player) e.getDamager()).getPlayer().getItemInHand().getItemMeta().hasLore()) {
+            if (p.getItemInHand().getType() == Material.DIAMOND_SWORD && p.getItemInHand().getItemMeta().hasLore()) {
                 exp = exp + 100;
             }
 
@@ -136,8 +145,12 @@ public class EntityStackerListener implements Listener {
                 exp = exp * 2;
             }
 
-            if (CustomBlockUtil.chunkHasCertainBlock(p, "TREASURE_CHEST")) {
-                exp = exp * 1.5;
+            try {
+                if (CustomBlockUtil.chunkHasCertainBlock(p, "TREASURE_CHEST")) {
+                    exp = exp * 1.5;
+                }
+            } catch (Exception exxx) {
+
             }
 
             if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(p), OutpostType.COURTYARD) && Math.random() < 0.1) {
@@ -182,9 +195,8 @@ public class EntityStackerListener implements Listener {
         e.setCancelled(true);
     }
 
-    public void blazeLoot(Entity e, Player p, double chance) {
-        if (p instanceof Player) {
-            String player = p.getName();
+    public void blazeLoot(Player p, double chance) {
+        if (p != null) {
             double num = Math.random();
             try {
 
@@ -192,9 +204,8 @@ public class EntityStackerListener implements Listener {
                     if (GrindingMessagesUtil.isPlayerIndicating(p)) {
                         p.sendMessage(CC.translate("&b&lGrinding &f&l➥ &a+ Grinding Lootbox"));
                     }
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mc give " + player + " GrindingLootbox");
-
-                    return;
+                    //Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mc give " + player + " GrindingLootbox");
+                    p.getInventory().addItem(grindingLootbox);
                 }
 
                 /*else if (num >= 0 && num <= 0.15) {

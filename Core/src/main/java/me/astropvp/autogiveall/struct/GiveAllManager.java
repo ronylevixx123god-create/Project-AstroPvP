@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.CC
  *  com.google.common.collect.Lists
@@ -17,6 +17,10 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.google.common.collect.Lists;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
+import net.astropvp.CollectPlugin;
+import net.astropvp.struct.CollectCategory;
+import net.astropvp.struct.CollectType;
+import net.astropvp.struct.PlayerCollect;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -27,8 +31,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GiveAllManager {
-    public static HashMap<Player, Integer> lootboxes = new HashMap();
-    private static long nextGiveAll = 1800L;
+    private static long nextGiveAll = 2400;
     private static MysteryChest giveAllItem = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("MysteryLootbox");
 
     public static long getNextGiveAll() {
@@ -40,48 +43,34 @@ public class GiveAllManager {
     }
 
     public static void doGiveAll() {
-        ArrayList<InetSocketAddress> ipList = Lists.newArrayList();
         for (Player p : Bukkit.getServer().getOnlinePlayers()) {
-            InetSocketAddress ip = p.getAddress();
-            if (ipList.contains(ip)) {
-                p.sendMessage(CC.Red + "You have already claimed a giveall lootbox on this ip");
-                continue;
-            }
-            ipList.add(ip);
-            if (CombatLog.inCombat((Player)p)) {
-                if (lootboxes.containsKey((Object)p)) {
-                    lootboxes.put(p, lootboxes.get((Object)p) + 1);
-                } else {
-                    lootboxes.put(p, 1);
+            PlayerCollect collect = CollectPlugin.getInstance().getCollectManager().getPlayerCollect(p);
+            boolean b = false;
+            CollectCategory giveall = null;
+            for (CollectCategory cat : collect.getCategories()) {
+                if (cat.getType() == CollectType.GIVEALL) {
+                    b = true;
+                    giveall = cat;
+                    break;
                 }
-                p.sendMessage(CC.Green + "Since you were in combat, your giveall lootbox has been transferred to your /claim until the next reboot!");
-                continue;
             }
-            if (p.getInventory().firstEmpty() == -1) {
-                if (lootboxes.containsKey((Object)p)) {
-                    lootboxes.put(p, lootboxes.get((Object)p) + 1);
-                } else {
-                    lootboxes.put(p, 1);
-                }
-                p.sendMessage(CC.Green + "Your inventory was full, so your lootbox has been transferred to your /claim until the next reboot!");
-                continue;
+            p.sendMessage("");
+            p.sendMessage(CC.translate("&3&l(&b&lCOLLECT&3&l)&b The Auto Giveall Lootbox has been put into your &f/collect&b."));
+            p.sendMessage("");
+            if (b) {
+                ItemStack[] items = giveall.getItems();
+                ItemStack[] newarray = new ItemStack[items.length + 1];
+                System.arraycopy(items, 0, newarray, 0, items.length);
+                newarray[newarray.length - 1] = giveAllItem.createClaimableItem(true);
+                giveall.setItems(newarray);
+            } else {
+
+                ItemStack[] items = new ItemStack[1];
+                items[0] = giveAllItem.createClaimableItem(false);
+                collect.add(new CollectCategory(CollectType.GIVEALL, items, CC.YellowB + "Auto Giveall Lootboxes"));
             }
-            p.sendMessage(CC.Green + "You received a lootbox from the give all!");
-            p.getInventory().addItem(giveAllItem.createClaimableItem(true));
-            nextGiveAll = 1800L;
+            nextGiveAll = 2400;
         }
-    }
-
-    public static int getAvailableLootboxes(Player player) {
-        return lootboxes.get((Object)player);
-    }
-
-    public static boolean hasAvailableLootboxes(Player player) {
-        return lootboxes.containsKey((Object)player);
-    }
-
-    public static void setAvailableLootboxes(Player player, int amount) {
-        lootboxes.put(player, amount);
     }
 
     public static ItemStack getGiveAllItem() {

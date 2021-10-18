@@ -32,6 +32,11 @@
       <option name="url" value="https://repo.mattstudios.me/artifactory/public/" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="dv8tion" />
+      <option name="name" value="m2-dv8tion" />
+      <option name="url" value="https://m2.dv8tion.net/releases" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="ess-repo" />
       <option name="name" value="ess-repo" />
       <option name="url" value="https://ci.ender.zone/plugin/repository/everything/" />

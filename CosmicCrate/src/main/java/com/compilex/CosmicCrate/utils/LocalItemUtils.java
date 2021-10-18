@@ -55,7 +55,7 @@ public class LocalItemUtils
         crateItem.setType(Material.STAINED_GLASS_PANE);
         crateItem.setDurability((short)14);
         final ItemMeta im = crateItem.getItemMeta();
-        im.setDisplayName(ChatColor.DARK_RED.toString() + ChatColor.BOLD.toString() + "LOCKED: " + v.crateName.replace("*", "").replace("COSMIC CRATE: ", ""));
+        im.setDisplayName(ChatColor.DARK_RED.toString() + ChatColor.BOLD.toString() + "LOCKED: " + v.crateName.replace("*", "").replace("ASTRO CRATE: ", ""));
         final List<String> lore = (List<String>)im.getLore();
         lore.set(0, ChatColor.GRAY + "Unlock at " + ChatColor.UNDERLINE + "buy.cosmicpvp.com");
         im.setLore((List)lore);

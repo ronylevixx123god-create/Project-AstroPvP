@@ -27,21 +27,21 @@ import com.cosmicpvp.cosmicutils.gui.CosmicGUI;
 public class CrateStorageMenu extends CosmicGUI
 {
     public CrateStorageMenu(final Player player) {
-        super(player, "Cosmic Crate Storage", 27);
+        super(player, "Astro Crate Storage", 27);
     }
     
     public void redraw() {
         final AtomicInteger slot = new AtomicInteger(0);
         int startIndex = 18;
-        for (Version version : CrateCategory.WEEKLY_CRATES.getCrates()) {
+        for (Version version : CrateCategory.MONTHLY_CRATES.getCrates()) {
             this.setItem(startIndex++, version.getDisplayItem(this.player), () -> {
                 if (!version.hasPermission(this.player)) {
-                    this.player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You do not have access to this Cosmic Crate! Purchase it (when available) at " + ChatColor.UNDERLINE + "buy.cosmicpvp.com");
+                    this.player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You do not have access to this Astro Crate! Purchase it (when available) at " + ChatColor.UNDERLINE + "buy.astropvp.net");
                     return;
                 }
                 else {
                     if (CCAPI.hasClaimedCosmicCrate(this.player, version)) {
-                        this.player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You already claimed the " + ChatColor.UNDERLINE.toString() + ChatColor.BOLD.toString() + version.name() + ChatColor.RED + " Cosmic Crate!");
+                        this.player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You already claimed the " + ChatColor.UNDERLINE.toString() + ChatColor.BOLD.toString() + version.name() + ChatColor.RED + " Astro Crate!");
                     }
                     else {
                         if (this.player.getInventory().firstEmpty() != -1) {

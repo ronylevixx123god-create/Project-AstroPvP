@@ -63,7 +63,7 @@ public class HeroicMetaphysical extends HeroicCustomEnchantment {
                     if (Math.random() < chance) {
                         event.setCancelled(true);
                         if (event.getTarget() instanceof Player) {
-                            DamageIndicatorUtils.sendDamageIndicator((Player) event.getTarget(), CC.LightPurpleB + "* POLYMORPHIC METAPHYSICAL " + CC.Gray + "[Ice Aspect blocked]" + CC.LightPurpleB + " *", "METAPHYSICAL");
+                            DamageIndicatorUtils.sendDamageIndicator((Player) event.getTarget(), CC.LightPurpleB + "* POLYMORPHIC METAPHYSICAL *", "METAPHYSICAL");
                             //CHANGE IF GAY
                             ((Player) event.getTarget()).sendMessage(CC.LightPurpleB + "** POLYMORPHIC METAPHYSICAL (" + CC.Gray + "Ice Aspect blocked!" + CC.LightPurpleB + ") **");
                         }

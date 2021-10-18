@@ -5,7 +5,6 @@
 package com.compilex.CosmicCrate.libs;
 
 import com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils;
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import org.bukkit.plugin.Plugin;
 import com.compilex.CosmicCrate.api.CCAPI;
 import com.compilex.CosmicCrate.CosmicCrate;
@@ -42,8 +41,6 @@ public abstract class CosmicCrateData
     public void playConclusion(final Player player) {
         final Location l = player.getEyeLocation();
         this.launchFireworks(player);
-        ParticleEffect.playEffect(ParticleEffect.SPELL, l, 0.44f, 50);
-        ParticleEffect.playEffect(ParticleEffect.FIREWORKS_SPARK, l, 0.44f, 75);
         player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0f, 2.0f);
     }
     

@@ -51,7 +51,7 @@ public class CosmicCrateLootSelector
         this.phase = CosmicCratePhase.GENERATING;
         this.rewards = CCAPI.getCosmicCrateLoot(p, v);
         this.displayRewards = new ArrayList<ItemStack>(this.rewards);
-        this.crateInventoryName = "Cosmic Crate: " + WordUtils.capitalize(v.name());
+        this.crateInventoryName = "Astro Crate: " + WordUtils.capitalize(v.name());
         if (this.crateVersion.getCrateData() != null) {
             this.metaItem = this.crateVersion.getCrateData().getRandomMetaItem(p);
         }
@@ -59,7 +59,7 @@ public class CosmicCrateLootSelector
     
     public void open() {
         this.lootInventory = Bukkit.createInventory((InventoryHolder)null, 54, this.crateInventoryName);
-        final ItemStack hiddenItem = LocalItemUtils.buildItem(Material.ENDER_CHEST, (short)0, ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "???", ChatColor.GRAY + "Click to redeem an item from", ChatColor.GRAY + "your " + ChatColor.UNDERLINE + this.crateVersion.name() + ChatColor.GRAY + " Cosmic Crate!");
+        final ItemStack hiddenItem = LocalItemUtils.buildItem(Material.ENDER_CHEST, (short)0, ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "???", ChatColor.GRAY + "Click to redeem an item from", ChatColor.GRAY + "your " + ChatColor.UNDERLINE + this.crateVersion.name() + ChatColor.GRAY + " Astro Crate!");
         final ItemStack lockedItem = LocalItemUtils.buildItem(Material.STAINED_GLASS_PANE, (short)14, ChatColor.RED.toString() + ChatColor.BOLD.toString() + "???", ChatColor.GRAY + "Redeem all your other rewards to", ChatColor.GRAY + "unlock this special \"META\" item.");
         final ItemStack placeholderItem = LocalItemUtils.buildItem(Material.STAINED_GLASS_PANE, (short)7, ChatColor.DARK_GRAY.toString() + ChatColor.BOLD.toString() + "...", new String[0]);
         this.lootInventory.setItem(12, hiddenItem.clone());
@@ -196,7 +196,7 @@ public class CosmicCrateLootSelector
             this.intervals = 0;
             this.cls = cls;
             this.crateVersion = v;
-            this.metaItem = LocalItemUtils.buildItem(Material.ENDER_CHEST, (short)0, ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "???", ChatColor.GRAY + "Click to redeem an item from", ChatColor.GRAY + "your " + ChatColor.UNDERLINE + this.crateVersion.name() + ChatColor.GRAY + " Cosmic Crate!");
+            this.metaItem = LocalItemUtils.buildItem(Material.ENDER_CHEST, (short)0, ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "???", ChatColor.GRAY + "Click to redeem an item from", ChatColor.GRAY + "your " + ChatColor.UNDERLINE + this.crateVersion.name() + ChatColor.GRAY + " Astro Crate!");
         }
         
         public void run() {

@@ -28,7 +28,7 @@ public class CrateCategoryMenu extends CosmicGUI
     private CrateCategory category;
     
     public CrateCategoryMenu(final Player player, final CrateCategory category) {
-        super(player, category.getType() + " Cosmic Crates", InventoryUtils.fitSize(category.getCrates().size() + 1));
+        super(player, category.getType() + " Astro Crates", InventoryUtils.fitSize(category.getCrates().size() + 1));
         this.category = category;
     }
     
@@ -36,11 +36,11 @@ public class CrateCategoryMenu extends CosmicGUI
         final AtomicInteger slot = new AtomicInteger(0);
         Arrays.stream(Version.values()).filter(ver -> ver.getCategory() == this.category).forEach(ver -> this.setItem(slot.getAndIncrement(), new ItemBuilder(ver.getDisplayItem(this.player)).build(), () -> {
             if (!ver.hasPermission(this.player)) {
-                this.player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You do not have access to this Cosmic Crate! Purchase it (when available) at " + ChatColor.UNDERLINE + "buy.cosmicpvp.com");
+                this.player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You do not have access to this Astro Crate! Purchase it (when available) at " + ChatColor.UNDERLINE + "buy.cosmicpvp.com");
             }
             else {
                 if (CCAPI.hasClaimedCosmicCrate(this.player, ver)) {
-                    this.player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You already claimed the " + ChatColor.UNDERLINE.toString() + ChatColor.BOLD.toString() + ver.name() + ChatColor.RED + " Cosmic Crate!");
+                    this.player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You already claimed the " + ChatColor.UNDERLINE.toString() + ChatColor.BOLD.toString() + ver.name() + ChatColor.RED + " Astro Crate!");
                 }
                 else if (this.player.getInventory().firstEmpty() != -1) {
                     CCAPI.claimCosmicCrate(this.player, ver);
@@ -52,7 +52,7 @@ public class CrateCategoryMenu extends CosmicGUI
                 this.closeWithDelay();
             }
         }));
-        this.setItem(this.size - 1, new ItemBuilder(Material.ARROW, CC.Red + "Main Menu", CC.Gray + "Click to view main Cosmic Crate category!").build(), () -> {
+        this.setItem(this.size - 1, new ItemBuilder(Material.ARROW, CC.Red + "Main Menu", CC.Gray + "Click to view main Astro Crate category!").build(), () -> {
             this.parentGUI.openGUI((JavaPlugin)CosmicCrate.get());
             this.parentGUI.redraw();
             return;
