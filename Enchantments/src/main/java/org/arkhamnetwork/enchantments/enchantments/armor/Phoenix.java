@@ -172,7 +172,7 @@ public class Phoenix extends CustomEnchantment {
             }
         }
         player.setMetadata("phoenixCd", new FixedMetadataValue(Enchantments.getInstance(), ""));
-        last_phoenix.put(player.getUniqueId().toString(), Long.valueOf(System.currentTimeMillis()));
+        last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
         Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
             @Override
             public void run() {
@@ -182,7 +182,7 @@ public class Phoenix extends CustomEnchantment {
     }
 
     public static boolean canUsePhoenix(Player pl, int enchantLevel) {
-        return (!last_phoenix.containsKey(pl.getUniqueId().toString()) || System.currentTimeMillis() - ((Long) last_phoenix.get(pl.getUniqueId().toString())).longValue() > ((4 - enchantLevel) * 60000));
+        return (!last_phoenix.containsKey(pl.getUniqueId().toString()) || System.currentTimeMillis() - last_phoenix.get(pl.getUniqueId().toString()) > ((4 - enchantLevel) * 60000));
     }
 
     public static int getPhoenixProcSoulCost(Player player) {
@@ -237,5 +237,14 @@ public class Phoenix extends CustomEnchantment {
                 exception.printStackTrace();
             }
         }
+    }
+
+    public static long getPhoenixCooldown(Player player) {
+        if(!player.hasMetadata("phoenixCd"))
+            return 0;
+        if(!last_phoenix.containsKey(player.getUniqueId().toString()))
+            return 0;
+        long cooldown = System.currentTimeMillis() - last_phoenix.get(player.getUniqueId().toString());
+        return cooldown/1000;
     }
 }

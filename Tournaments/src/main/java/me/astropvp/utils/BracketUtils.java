@@ -7,16 +7,11 @@ import java.util.HashMap;
 public class BracketUtils {
     public static HashMap<TournamentRound, Integer> createTournamentRounds(double amount) {
         HashMap<TournamentRound, Integer> map = new HashMap<>();
-        boolean b = hasRemainder(amount);
-        if(amount%2 != 0) {
-            b = true;
-        }
-        amount = Math.floor(amount/2);
-        TournamentRound round1 = new TournamentRound(amount);
-        map.put(round1, 1);
-        if(b) {
-            if(amount%2)
-        }
+        if(!confirmBracket())
+            amount =- 1;
+        map.put(new TournamentRound(amount), 1);
+        map.put(new TournamentRound(amount/2), 2);
+        map.put(new To)
         return map;
     }
 
@@ -25,8 +20,11 @@ public class BracketUtils {
     }
 
     private static TournamentRound createRound(double amount) {
-        TournamentRound round = new TournamentRound(amount);
-        return round;
+        return new TournamentRound(amount);
+    }
+
+    private static boolean confirmBracket(int i) {
+        return i%2 == 0;
     }
 
 }

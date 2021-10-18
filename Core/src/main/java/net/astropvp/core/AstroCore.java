@@ -371,7 +371,7 @@ public class AstroCore extends JavaPlugin {
         this.getCommand("trash").setExecutor(new TrashCommand());
         this.getCommand("lastmanstanding").setExecutor(new LastManStandingCommand());
         this.getCommand("togglepay").setExecutor(new CommandTogglePay());
-
+        getCommand("phoenix").setExecutor(new PhoenixCommand());
         Arrays.asList(new Broadcast(), new FreezeCommand(), new StaffChatCommand(), new ManualGiveAllCommand()).forEach(this:: registerCommand);
 
         this.getServer().getPluginManager().registerEvents(new StaffListeners(), this);
