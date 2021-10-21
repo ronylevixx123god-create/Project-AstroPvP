@@ -90,9 +90,11 @@ public class Scoreboard implements BoardAdapter {
         } else if (DuelAPI.getDuel(player) != null && (DuelAPI.getDuel(player).getDuelState() == DuelState.STARTING || DuelAPI.getDuel(player).getDuelState() == DuelState.PLAYING)) {
             return CC.translate("&6&l1v1 Duel &7" + getDateSuffix());
 
+        } else if(!fplayer.getFaction().isWilderness()) {
+            return CC.translate("&a&l" + fplayer.getFaction().getTag() + " &7" + getDateSuffix());
         }
 
-        return CC.translate("&a&lAstro&e&lPvP &7" + getDateSuffix());
+        return CC.translate("&a&lAstro&f&lPvP &7" + getDateSuffix());
     }
 
 
@@ -407,10 +409,9 @@ public class Scoreboard implements BoardAdapter {
 
         PlayerDataManager manager = AstroSpawners.getInstance().getManager();
         PlayerData data = manager.getPlayerData(player);
-        FPlayer fplayer = FactionUtils.getFPlayer(player);
         List<String> board = new LinkedList<>();
-        /*board.add(" ");
-        board.add(ChatColor.GREEN + ChatColor.BOLD.toString() + "Account");
+        board.add(" ");
+        board.add(ChatColor.AQUA + ChatColor.BOLD.toString() + "Account");
         board.add(ChatColor.WHITE + player.getName());
         board.add(" ");
         board.add(ChatColor.GOLD + ChatColor.BOLD.toString() + "Balance");
@@ -421,17 +422,8 @@ public class Scoreboard implements BoardAdapter {
         board.add(" ");
         board.add(ChatColor.LIGHT_PURPLE + ChatColor.BOLD.toString() + "Mobcoins");
         board.add(CC.White + NumberFormat.getIntegerInstance().format(data.getCoins()) + "⛁");
-        board.add(" ");
-        if (fplayer != null)
-            if (fplayer.hasFaction()) {
-                board.add(ChatColor.White + ChatColor.BOLD.toString() + "Faction");
-                board.add(ChatColor.GREEN.toString() + fplayer.getFaction().getOnlinePlayers().size() + ChatColor.GRAY + " / " + fplayer.getFaction().getFPlayers().size());
-            } else {
-                board.add(ChatColor.White + ChatColor.BOLD.toString() + "Server");
-                board.add(ChatColor.WHITE.toString() + "astropvp.net");
-            }*/
 
-        board.add("");
+        /*board.add("");
         board.add(CC.GreenB + player.getName());
         board.add(CC.White + " ● " + CC.Green + "XP" + CC.Gray + ": " + CC.White + NumberFormat.getIntegerInstance().format(player.getTotalExperience()));
         board.add(CC.White + " ● "+ CC.Green + "Ping" + CC.Gray + ": " + CC.LightPurple + getPing() + "ms");
@@ -446,7 +438,7 @@ public class Scoreboard implements BoardAdapter {
                 board.add("");
             }
         }
-        board.add(CC.Yellow + "play.astropvp.net");
+        board.add(CC.Yellow + "play.astropvp.net");*/
 
         return board;
     }
