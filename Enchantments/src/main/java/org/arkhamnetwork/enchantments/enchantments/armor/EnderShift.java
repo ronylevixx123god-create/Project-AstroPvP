@@ -51,9 +51,11 @@ public class EnderShift extends CustomEnchantment {
     @SneakyThrows
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         if (player instanceof Player) {
+            if (player.hasMetadata("neutralized"))
+                return;
             double dmg = e.getDamage(EntityDamageEvent.DamageModifier.BASE);
             dmg *= ArmorUtil.getArmorDamageNullificationPercent((float) ArmorUtil.getArmorValue((Player) player));
-            if (player.getHealth() - dmg <= 0.0 && this.canEnderShift((Player) player) && Math.random() < 0.1) {
+            if (player.getHealth() - dmg <= 0.0 && this.canEnderShift((Player) player) && Math.random() < 0.03) {
                 final Player pl = (Player) player;
                 EnderShift.last_ender_shift.put(pl.getUniqueId().toString(), System.currentTimeMillis());
                 e.setCancelled(true);
