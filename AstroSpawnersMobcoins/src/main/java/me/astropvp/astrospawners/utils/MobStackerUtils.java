@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import me.astropvp.astrospawners.AstroSpawners;
 import me.astropvp.astrospawners.data.SpawnerData;
 import me.astropvp.astrospawners.data.SpawnerManager;
 import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
@@ -67,7 +68,7 @@ public class MobStackerUtils {
         int entityStack = 0;
         Entity entity = event.getEntity();
         Location location = event.getSpawner().getLocation();
-        SpawnerData data = SpawnerManager.findSpawnerData(location);
+        SpawnerData data = AstroSpawners.getInstance().getSpawnerManager().findSpawnerData(location);
 
         int size = 0;
 
