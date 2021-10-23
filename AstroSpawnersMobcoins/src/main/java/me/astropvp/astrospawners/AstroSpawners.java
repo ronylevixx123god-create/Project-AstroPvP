@@ -1,8 +1,8 @@
 package me.astropvp.astrospawners;
 
-import com.cosmicpvp.cosmicutils.sql.Database;
 import me.astropvp.astrospawners.commands.*;
 import me.astropvp.astrospawners.customitems.SpawnerCustomItem;
+import me.astropvp.astrospawners.sql.Database;
 import me.astropvp.astrospawners.sql.SQLQueryCustomThread;
 import me.astropvp.astrospawners.utils.PlayerData;
 import me.astropvp.astrospawners.utils.PlayerDataManager;
@@ -85,15 +85,16 @@ public class AstroSpawners extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        Bukkit.getConsoleSender().sendMessage("Started Saving Spawner Data");
+
+        getSpawnerManager().save();
         for (Player p : Bukkit.getOnlinePlayers()) {
             PlayerData data = AstroSpawners.getInstance().getManager().getPlayerData(p);
             AstroSpawners.getInstance().getManager().savePlayerDataAsync(data);
         }
         MobStackerUtils.onDisable();
         EntityUtils.clearAllEntities();
-        Bukkit.getConsoleSender().sendMessage("Started Saving Spawner Data");
 
-        getSpawnerManager().save();
         astroSpawners = null;
     }
 

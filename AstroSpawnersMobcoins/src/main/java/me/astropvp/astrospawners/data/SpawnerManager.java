@@ -37,6 +37,12 @@ public class SpawnerManager {
         if (this.loading)
             return;
         try {
+            PreparedStatement statement = AstroSpawners.getInstance().getSqlDatabase().getConnection().prepareStatement("DELETE FROM spawner_data");
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
             for (Map.Entry<Location, SpawnerData> entry : spawnersMap.entrySet()) {
                 Location location = entry.getKey();
                 SpawnerData spawnerData = entry.getValue();
