@@ -3,14 +3,13 @@ package me.astropvp.astrospawners.listeners;
 import com.compilex.CosmicCustomCreepers.enums.CreeperTypes;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.astrospawners.data.SpawnerData;
-import me.astropvp.astrospawners.data.SpawnerDataHelper;
+import me.astropvp.astrospawners.data.SpawnerManager;
 import me.astropvp.astrospawners.items.ItemSpawner;
 import me.astropvp.astrospawners.utils.EntityUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.TNTPrimed;
@@ -53,7 +52,7 @@ public class SpawnerBreakListener implements Listener {
         for (int i = blocks.size() - 1; i >= 0; i--) {
             Block block = blocks.get(i);
             if (block.getType() == Material.MOB_SPAWNER) {
-                SpawnerData data = SpawnerDataHelper.findSpawnerData(block.getLocation());
+                SpawnerData data = SpawnerManager.findSpawnerData(block.getLocation());
                 if (data != null) {
                     EntityType type = data.getEntityType();
                     int amount = data.getSpawnerAmount();
@@ -80,7 +79,7 @@ public class SpawnerBreakListener implements Listener {
         if (event.getBlock().getType() == Material.MOB_SPAWNER) {
             ItemStack item = event.getPlayer().getItemInHand();
             Block block = event.getBlock();
-            SpawnerData data = SpawnerDataHelper.findSpawnerData(block.getLocation());
+            SpawnerData data = SpawnerManager.findSpawnerData(block.getLocation());
             if (data != null) {
                 EntityType type = data.getEntityType();
                 int amount = data.getSpawnerAmount();
@@ -89,7 +88,7 @@ public class SpawnerBreakListener implements Listener {
                 block.getWorld().dropItem(block.getLocation(), ItemSpawner.getItem(type, amount));
                 event.getPlayer().sendMessage(CC.translate("&a&l(!)&a You have mined a &f" + EntityUtils.getEntityName(type) + "&a Spawner!"));
                 event.getPlayer().sendMessage(CC.translate("&7The spawner has been dropped on the ground!"));
-                SpawnerDataHelper.removeSpawnerData(data);
+                SpawnerManager.removeSpawnerData(data);
                 block.setType(Material.AIR);
                 event.setCancelled(true);
             }

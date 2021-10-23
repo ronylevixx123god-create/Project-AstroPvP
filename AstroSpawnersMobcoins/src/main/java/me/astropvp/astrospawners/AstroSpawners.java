@@ -1,32 +1,31 @@
 package me.astropvp.astrospawners;
 
+import com.cosmicpvp.cosmicutils.sql.Database;
 import com.earth2me.essentials.Essentials;
 import me.astropvp.astrospawners.commands.*;
 import me.astropvp.astrospawners.customitems.SpawnerCustomItem;
+import me.astropvp.astrospawners.sql.SQLQueryCustomThread;
 import me.astropvp.astrospawners.utils.PlayerData;
 import me.astropvp.astrospawners.utils.PlayerDataManager;
-import me.astropvp.astrospawners.data.SpawnerDataHelper;
+import me.astropvp.astrospawners.data.SpawnerManager;
 import me.astropvp.astrospawners.listeners.*;
 import me.astropvp.astrospawners.utils.*;
-import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
-import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.block.CreatureSpawner;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.Map;
-
 public class AstroSpawners extends JavaPlugin {
     public static AstroSpawners astroSpawners;
     private PlayerDataManager manager;
-    private Essentials essentials;
     private MobStackerUtils mobStackerUtils;
     private static PlayerDataManager manager2;
+
+    private Database sqlDatabase;
+    private SpawnerManager spawnerManager;
+    private SQLQueryCustomThread sqlQueryCustomThread = new SQLQueryCustomThread();
 
 
     public MobStackerUtils getMobStackerUtils() {
@@ -58,23 +57,27 @@ public class AstroSpawners extends JavaPlugin {
         }, 100L);
         System.out.println("Done saving mobcoins data!");
         EntityUtils.onEnable();
-        SpawnerDataHelper.init();
         new SpawnerCustomItem("spawner", "<amount> <entity>");
-        this.manager2 = new PlayerDataManager(this);
+        manager2 = new PlayerDataManager(this);
 
-        /*Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, SpawnerDataHelper::onDisable, 1000L, 6000L
-        );
-        Doesn't work async, if you do it sync, server would jusr crash cuz so many spawners
-        */
+        this.sqlDatabase = new Database(this);
+        if(this.sqlDatabase.isConnected())
+            Bukkit.getConsoleSender().sendMessage("SQL Database for AstroSpawners Connected");
+        if (!this.sqlDatabase.isConnected()) {
+            Bukkit.getLogger().severe("Unable to connect to sql database! Please ensure the sql credentials are correct");
+            Bukkit.getPluginManager().disablePlugin(this);
+        } else {
+            this.sqlDatabase.executeUpdate("CREATE TABLE IF NOT EXISTS spawner_data(location varchar(256), type varchar(64), amount int);", false);
+            this.sqlQueryCustomThread = new SQLQueryCustomThread();
+            this.sqlQueryCustomThread.start();
+        }
+        this.spawnerManager = new SpawnerManager();
+
     }
 
     public void loadConfig() {
         getConfig().options().copyDefaults(true);
         saveConfig();
-    }
-
-    public Essentials getEssentials() {
-        return essentials;
     }
 
     @Override
@@ -84,11 +87,7 @@ public class AstroSpawners extends JavaPlugin {
             AstroSpawners.getInstance().getManager().savePlayerDataAsync(data);
         }
         MobStackerUtils.onDisable();
-        SpawnerDataHelper.onDisable();
         EntityUtils.clearAllEntities();
-
-
-
         astroSpawners = null;
     }
 
@@ -105,7 +104,6 @@ public class AstroSpawners extends JavaPlugin {
         registerListener(new MobSpawnerListener());
         registerListener(new MobCoinShopListener());
         registerListener(new PlayerDataOnJoin());
-        //registerListener(new CreeperEggFix());
     }
 
     public void registerCommands() {
@@ -136,5 +134,9 @@ public class AstroSpawners extends JavaPlugin {
         return manager2;
     }
 
+    public Database getSqlDatabase() {
+        return this.sqlDatabase;
+    }
 
+    public SpawnerManager getCollectManager()  { return this.spawnerManager; }
 }

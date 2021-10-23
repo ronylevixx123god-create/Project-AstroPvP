@@ -1,3 +1,7 @@
-#Version 1.0
 version: 1.0
 allow-spawner-placement: true
+hostname: ""
+username: ""
+password: ""
+database: ""
+port: ""

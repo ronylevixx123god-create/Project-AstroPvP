@@ -3,7 +3,7 @@ package me.astropvp.astrospawners.listeners;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.astrospawners.AstroSpawners;
 import me.astropvp.astrospawners.data.SpawnerData;
-import me.astropvp.astrospawners.data.SpawnerDataHelper;
+import me.astropvp.astrospawners.data.SpawnerManager;
 import me.astropvp.astrospawners.items.ItemSpawner;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -50,7 +50,7 @@ public class MobSpawnerListener implements Listener {
 
         EntityType type = ItemSpawner.getEntityTypeFromItem(item);
 
-       if (!SpawnerDataHelper.canPlaceStackedSpawnerInThisChunk(event.getBlockAgainst().getChunk(), type)) {
+       if (!SpawnerManager.canPlaceStackedSpawnerInThisChunk(event.getBlockAgainst().getChunk(), type)) {
            event.getPlayer().sendMessage(CC.translate("&c&l(!)&c This chunk already contains this spawner type."));
            event.getPlayer().sendMessage(CC.translate("&cPlease stack it on the existing spawner."));
            event.setCancelled(true);
@@ -78,7 +78,7 @@ public class MobSpawnerListener implements Listener {
                     @Override
                     public void run() {
                         SpawnerData data = new SpawnerData(event.getBlock().getLocation(), type, math);
-                        new SpawnerDataHelper(data, false);
+                        new SpawnerManager(data, false);
                     }
                 });
         event.getPlayer().setItemInHand(spawnersLeft <= 0 ? null : ItemSpawner.getItem(type, spawnersLeft));
@@ -114,7 +114,7 @@ public class MobSpawnerListener implements Listener {
                                 @Override
                                 public void run() {
                                     SpawnerData data = new SpawnerData(event.getBlockAgainst().getLocation(), type, 1);
-                                    SpawnerData found = SpawnerDataHelper.findSpawnerData(data);
+                                    SpawnerData found = SpawnerManager.findSpawnerData(data);
                                     if (found != null) {
                                         if (found.getSpawnerAmount() >= ItemSpawner.getSpawnerLimit()) {
                                             player.sendMessage(CC.RedB + "(!) " + CC.Red + "You can not have more than "
@@ -152,7 +152,7 @@ public class MobSpawnerListener implements Listener {
 
                                         player.setItemInHand(
                                                 spawnersLeft <= 0 ? null : ItemSpawner.getItem(type, spawnersLeft));
-                                        new SpawnerDataHelper(data, false);
+                                        new SpawnerManager(data, false);
                                     }
                                     player.updateInventory();
                                 }
@@ -182,7 +182,7 @@ public class MobSpawnerListener implements Listener {
                             @Override
                             public void run() {
                                 SpawnerData data = new SpawnerData(block.getLocation(), type, 1);
-                                SpawnerData found = SpawnerDataHelper.findSpawnerData(data);
+                                SpawnerData found = SpawnerManager.findSpawnerData(data);
                                 Player player = event.getPlayer();
                                 player.sendMessage("");
                                 player.sendMessage(CC.GreenB + "Spawner Information");

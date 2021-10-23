@@ -1,31 +1,20 @@
 package me.astropvp.astrospawners.utils;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
-import com.massivecraft.factions.Board;
-import com.massivecraft.factions.FPlayer;
-import com.massivecraft.factions.Faction;
-import me.astropvp.astrospawners.AstroSpawners;
 import me.astropvp.astrospawners.data.SpawnerData;
-import me.astropvp.astrospawners.data.SpawnerDataHelper;
+import me.astropvp.astrospawners.data.SpawnerManager;
 import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
 import me.ifamasssxd.cosmichcf.struct.OutpostType;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.SpawnerSpawnEvent;
-import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.scheduler.BukkitRunnable;
-
-import com.google.common.collect.Lists;
 
 
 public class MobStackerUtils {
@@ -78,7 +67,7 @@ public class MobStackerUtils {
         int entityStack = 0;
         Entity entity = event.getEntity();
         Location location = event.getSpawner().getLocation();
-        SpawnerData data = SpawnerDataHelper.findSpawnerData(location);
+        SpawnerData data = SpawnerManager.findSpawnerData(location);
 
         int size = 0;
 
