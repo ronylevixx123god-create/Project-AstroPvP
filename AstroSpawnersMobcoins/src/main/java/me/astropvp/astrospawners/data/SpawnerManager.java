@@ -1,32 +1,15 @@
 package me.astropvp.astrospawners.data;
 
-import java.io.File;
-import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.astrospawners.AstroSpawners;
-import net.minecraft.server.v1_8_R3.BlockPosition;
-import net.minecraft.server.v1_8_R3.ChunkSnapshot;
-import net.minecraft.server.v1_8_R3.TileEntity;
-import net.minecraft.server.v1_8_R3.TileEntityMobSpawner;
-import org.apache.commons.lang.mutable.MutableInt;
 import org.bukkit.*;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.craftbukkit.v1_8_R3.CraftChunk;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.metadata.FixedMetadataValue;
 
-import com.google.common.collect.Lists;
 import me.astropvp.astrospawners.utils.LocationUtils;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class SpawnerManager {
     private boolean loading = false;
@@ -50,7 +33,7 @@ public class SpawnerManager {
         this.spawnersMap.remove(location);
     }
 
-    public void save(boolean async) {
+    public void save() {
         if (this.loading)
             return;
         try {
@@ -76,7 +59,7 @@ public class SpawnerManager {
 
     }
 
-    public void load(boolean async) {
+    public void load() {
         this.loading = true;
         try {
             PreparedStatement statement = AstroSpawners.getInstance().getSqlDatabase().getConnection().prepareStatement("SELECT * FROM spawner_data");
@@ -85,14 +68,19 @@ public class SpawnerManager {
                 Location location = LocationUtils.fromStringLocation(set.getString("location"));
                 EntityType type = EntityType.valueOf(set.getString("type"));
                 int amount = Integer.parseInt(set.getString("amount"));
-                SpawnerData spawnerData = new SpawnerData(location, type, amount);
-                AstroSpawners.getInstance().getCollectManager().getSpawnersMap().put(location, spawnerData);
+                SpawnerData spawnerData = new SpawnerData(type, amount);
+                AstroSpawners.getInstance().getSpawnerManager().getSpawnersMap().put(location, spawnerData);
             }
             this.loading = false;
             statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public SpawnerData findSpawnerData(Location location) {
+        return this.spawnersMap.get(location);
     }
 }
 

@@ -24,6 +24,7 @@ import me.astropvp.astrospawners.utils.EntityUtils;
 
 public class MobSpawnerListener implements Listener {
 
+    //This is when you place a new spawner
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlace(BlockPlaceEvent event) {
         if (event.getBlockPlaced().getType() != Material.MOB_SPAWNER) {
@@ -50,12 +51,12 @@ public class MobSpawnerListener implements Listener {
 
         EntityType type = ItemSpawner.getEntityTypeFromItem(item);
 
-       if (!SpawnerManager.canPlaceStackedSpawnerInThisChunk(event.getBlockAgainst().getChunk(), type)) {
-           event.getPlayer().sendMessage(CC.translate("&c&l(!)&c This chunk already contains this spawner type."));
-           event.getPlayer().sendMessage(CC.translate("&cPlease stack it on the existing spawner."));
-           event.setCancelled(true);
-           return;
-       }
+        /*if (!SpawnerManager.canPlaceStackedSpawnerInThisChunk(event.getBlockAgainst().getChunk(), type)) {
+            event.getPlayer().sendMessage(CC.translate("&c&l(!)&c This chunk already contains this spawner type."));
+            event.getPlayer().sendMessage(CC.translate("&cPlease stack it on the existing spawner."));
+            event.setCancelled(true);
+            return;
+        }*/
 
         if (type == null) {
             event.setCancelled(true);
@@ -66,19 +67,18 @@ public class MobSpawnerListener implements Listener {
             event.setCancelled(true);
             return;
         }
-        int math = amount >= ItemSpawner.getSpawnerLimit() ? ItemSpawner.getSpawnerLimit() : amount;
+        int math = Math.min(amount, ItemSpawner.getSpawnerLimit());
         int spawnersLeft = amount - math;
         event.getPlayer().sendMessage(CC.translate("&c&l- " + amount + " &c&l" + EntityUtils.getEntityName(type) + "&c&l Spawners"));
         event.getPlayer().sendMessage(CC.translate("&7There are now " + spawnersLeft + "&7 spawners left in your hand."));
 
 
-        //THIS USED TO BE ASYNC
         Bukkit.getScheduler().runTask(AstroSpawners.getInstance(),
                 (Runnable) new BukkitRunnable() {
                     @Override
                     public void run() {
-                        SpawnerData data = new SpawnerData(event.getBlock().getLocation(), type, math);
-                        new SpawnerManager(data, false);
+                        SpawnerData spawnerData = new SpawnerData(type, math);
+                        AstroSpawners.getInstance().getSpawnerManager().add(event.getBlock().getLocation(), spawnerData);
                     }
                 });
         event.getPlayer().setItemInHand(spawnersLeft <= 0 ? null : ItemSpawner.getItem(type, spawnersLeft));
@@ -87,15 +87,16 @@ public class MobSpawnerListener implements Listener {
             @Override
             public void run() {
                 location.getBlock().setType(Material.MOB_SPAWNER);
-                ((CreatureSpawner)location.getBlock().getState()).setSpawnedType(type);
+                ((CreatureSpawner) location.getBlock().getState()).setSpawnedType(type);
             }
         }, 1);
-        //CHANGED
         event.setCancelled(true);
     }
 
+
+    //This is when you place a spawner on a different spawner
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onSpawnerPlace(BlockPlaceEvent event) {
+    public void onSpawnerPlaceOnSpawner(BlockPlaceEvent event) {
         Block block = event.getBlock();
         if (block.getType() == Material.MOB_SPAWNER) {
             if (event.getBlockAgainst().getType() == Material.MOB_SPAWNER) {
@@ -109,12 +110,11 @@ public class MobSpawnerListener implements Listener {
                     //CHANGED
                     event.setCancelled(true);
                     Player player = event.getPlayer();
-                    Bukkit.getScheduler().runTaskAsynchronously(AstroSpawners.getInstance(),
+                    Bukkit.getScheduler().runTask(AstroSpawners.getInstance(),
                             (Runnable) new BukkitRunnable() {
                                 @Override
                                 public void run() {
-                                    SpawnerData data = new SpawnerData(event.getBlockAgainst().getLocation(), type, 1);
-                                    SpawnerData found = SpawnerManager.findSpawnerData(data);
+                                    SpawnerData found = AstroSpawners.getInstance().getSpawnerManager().findSpawnerData(event.getBlockAgainst().getLocation());
                                     if (found != null) {
                                         if (found.getSpawnerAmount() >= ItemSpawner.getSpawnerLimit()) {
                                             player.sendMessage(CC.RedB + "(!) " + CC.Red + "You can not have more than "
@@ -138,21 +138,13 @@ public class MobSpawnerListener implements Listener {
                                                 : amount;
                                         int spawnersLeft = amount - math;
                                         found.setSpawnerAmount(found.getSpawnerAmount() + math);
-                                        if (found.isNullSpawner()) {
-                                            found.setNullSpawner(false);
-                                        }
-                                        player.setItemInHand(
-                                                spawnersLeft <= 0 ? null : ItemSpawner.getItem(type, spawnersLeft));
-                                    } else {
-                                        int math = amount >= ItemSpawner.getSpawnerLimit()
-                                                ? ItemSpawner.getSpawnerLimit()
-                                                : amount;
-                                        int spawnersLeft = amount - math;
-                                        data.setSpawnerAmount(math);
 
                                         player.setItemInHand(
                                                 spawnersLeft <= 0 ? null : ItemSpawner.getItem(type, spawnersLeft));
-                                        new SpawnerManager(data, false);
+                                    } else {
+                                        player.sendMessage(CC.translate("&c&l(!)&c This is not a valid stacked spawner. Contact an administrator if you think this is an issue."));
+                                        event.setCancelled(true);
+                                        return;
                                     }
                                     player.updateInventory();
                                 }
@@ -181,8 +173,7 @@ public class MobSpawnerListener implements Listener {
                         (Runnable) new BukkitRunnable() {
                             @Override
                             public void run() {
-                                SpawnerData data = new SpawnerData(block.getLocation(), type, 1);
-                                SpawnerData found = SpawnerManager.findSpawnerData(data);
+                                SpawnerData found = AstroSpawners.getInstance().getSpawnerManager().findSpawnerData(block.getLocation());
                                 Player player = event.getPlayer();
                                 player.sendMessage("");
                                 player.sendMessage(CC.GreenB + "Spawner Information");

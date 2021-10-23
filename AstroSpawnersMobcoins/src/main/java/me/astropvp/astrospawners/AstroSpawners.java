@@ -1,7 +1,6 @@
 package me.astropvp.astrospawners;
 
 import com.cosmicpvp.cosmicutils.sql.Database;
-import com.earth2me.essentials.Essentials;
 import me.astropvp.astrospawners.commands.*;
 import me.astropvp.astrospawners.customitems.SpawnerCustomItem;
 import me.astropvp.astrospawners.sql.SQLQueryCustomThread;
@@ -73,6 +72,10 @@ public class AstroSpawners extends JavaPlugin {
         }
         this.spawnerManager = new SpawnerManager();
 
+
+        Bukkit.getConsoleSender().sendMessage("Started Loading Spawner Data");
+        getSpawnerManager().load();
+
     }
 
     public void loadConfig() {
@@ -88,6 +91,9 @@ public class AstroSpawners extends JavaPlugin {
         }
         MobStackerUtils.onDisable();
         EntityUtils.clearAllEntities();
+        Bukkit.getConsoleSender().sendMessage("Started Saving Spawner Data");
+
+        getSpawnerManager().save();
         astroSpawners = null;
     }
 
@@ -99,7 +105,7 @@ public class AstroSpawners extends JavaPlugin {
 
     public void registerListeners() {
         registerListener(new SpawnerBreakListener());
-        registerListener(new CombineSpawnersListener());
+        registerListener(new CombineSpawnersInventoryListener());
         registerListener(new EntityStackerListener(this));
         registerListener(new MobSpawnerListener());
         registerListener(new MobCoinShopListener());
@@ -138,5 +144,5 @@ public class AstroSpawners extends JavaPlugin {
         return this.sqlDatabase;
     }
 
-    public SpawnerManager getCollectManager()  { return this.spawnerManager; }
+    public SpawnerManager getSpawnerManager()  { return this.spawnerManager; }
 }
