@@ -2,6 +2,10 @@ package me.astropvp.astrospawners;
 
 import me.astropvp.astrospawners.commands.*;
 import me.astropvp.astrospawners.customitems.SpawnerCustomItem;
+import me.astropvp.astrospawners.ftop.CommandAdminFactionsTop;
+import me.astropvp.astrospawners.ftop.CommandFactionsTop;
+import me.astropvp.astrospawners.ftop.FactionsTopAPI;
+import me.astropvp.astrospawners.ftop.RecalculationTask;
 import me.astropvp.astrospawners.sql.Database;
 import me.astropvp.astrospawners.sql.SQLQueryCustomThread;
 import me.astropvp.astrospawners.utils.PlayerData;
@@ -13,6 +17,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -75,6 +80,8 @@ public class AstroSpawners extends JavaPlugin {
 
         Bukkit.getConsoleSender().sendMessage("Started Loading Spawner Data");
         getSpawnerManager().load();
+        runTasks();
+        Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin)this, FactionsTopAPI::recalculateFactionsTop, 100L);
 
     }
 
@@ -126,6 +133,12 @@ public class AstroSpawners extends JavaPlugin {
 
         getCommand("mobcoinshop").setExecutor((CommandExecutor) new CommandMobCoinShop());
         getCommand("mobcoins").setExecutor((CommandExecutor) new CommandMobCoins());
+        getCommand("factionstop").setExecutor((CommandExecutor)new CommandFactionsTop());
+        getCommand("adminfactionstop").setExecutor((CommandExecutor)new CommandAdminFactionsTop());
+    }
+
+    public void runTasks() {
+        (new RecalculationTask()).runTaskTimerAsynchronously(this, 18000L, 18000L);
     }
 
 
