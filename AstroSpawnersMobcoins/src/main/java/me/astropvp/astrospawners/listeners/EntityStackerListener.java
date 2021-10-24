@@ -48,13 +48,11 @@ public class EntityStackerListener implements Listener {
     private final PlayerDataManager manager;
     private final AstroSpawners plugin;
     private final ItemStack grindingLootbox = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("GrindingLootbox").createClaimableItem(false);
-    private List<UUID> coolDownPlayers;
 
     public EntityStackerListener(AstroSpawners plugin) {
         this.plugin = plugin;
         this.mobStackerUtils = plugin.getMobStackerUtils();
         this.manager = plugin.getManager();
-        this.coolDownPlayers = new ArrayList<>();
 
     }
 
@@ -77,10 +75,7 @@ public class EntityStackerListener implements Listener {
                 if (e.getEntity().getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.FIRE_TICK) return;
             }
 
-            if (coolDownPlayers.contains(e.getDamager().getUniqueId())) {
-                e.setCancelled(true);
-                return;
-            }
+
 
             //Bukkit.getScheduler().runTaskLaterAsynchronously(AstroSpawners.getInstance(), () -> {
             int amount = mobStackerUtils.getStackSize(entity);
@@ -90,11 +85,8 @@ public class EntityStackerListener implements Listener {
             }
             amount--;
             mobStackerUtils.setStackSize(entity, amount);
-            coolDownPlayers.add(e.getDamager().getUniqueId());
 
-            Bukkit.getScheduler().runTaskLaterAsynchronously(AstroSpawners.getInstance(), ()-> {
-                coolDownPlayers.remove(e.getDamager().getUniqueId());
-            }, 1L);
+
 
             //}, 8L);
 
