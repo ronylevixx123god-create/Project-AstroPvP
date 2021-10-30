@@ -12,17 +12,23 @@
  */
 package me.ifamasssxd.cosmicmysterychest;
 
+import me.ifamasssxd.cosmicmysterychest.commands.CommandLootboxFilter;
 import me.ifamasssxd.cosmicmysterychest.commands.CommandLootboxToggle;
 import me.ifamasssxd.cosmicmysterychest.commands.CommandMysteryChest;
+import me.ifamasssxd.cosmicmysterychest.data.Filter;
 import me.ifamasssxd.cosmicmysterychest.halflootbox.CommandHalfLootbox;
 import me.ifamasssxd.cosmicmysterychest.halflootbox.HalfLootboxApplyListener;
 import me.ifamasssxd.cosmicmysterychest.items.MysteryLootboxItem;
 import me.ifamasssxd.cosmicmysterychest.listeners.MysteryChestListener;
 import me.ifamasssxd.cosmicmysterychest.managers.FilterManager;
 import me.ifamasssxd.cosmicmysterychest.managers.MysteryChestManager;
+import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
 import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 public class CosmicMysteryChest
         extends JavaPlugin {
@@ -31,6 +37,7 @@ public class CosmicMysteryChest
     private MysteryChestManager chestManager;
     private MysteryLootboxItem mysteryLootboxItem;
     private FilterManager filterManager;
+    private HashMap<UUID, HashMap<MysteryChest, Filter>> filters;
 
     public ShardAnimations getShardAnimations() {
         return this.toggle;
@@ -46,6 +53,7 @@ public class CosmicMysteryChest
         this.getCommand("mysterychest").setExecutor(new CommandMysteryChest(this));
         this.getCommand("lbtoggle").setExecutor(new CommandLootboxToggle());
         this.getCommand("givehalflootbox").setExecutor(new CommandHalfLootbox());
+        this.getCommand("lbfilter").setExecutor(new CommandLootboxFilter());
         this.getServer().getPluginManager().registerEvents(new MysteryChestListener(), this);
         this.getServer().getPluginManager().registerEvents(new HalfLootboxApplyListener(), this);
         this.filterManager = new FilterManager();
@@ -53,6 +61,14 @@ public class CosmicMysteryChest
             this.mysteryLootboxItem = new MysteryLootboxItem();
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem(this.mysteryLootboxItem);
         }
+
+        this.filters = new HashMap<>();
+        //filterManager.load();
+
+    }
+
+    public HashMap<UUID, HashMap<MysteryChest, Filter>> getFilters() {
+        return filters;
     }
 
     public void onDisable() {
@@ -60,6 +76,7 @@ public class CosmicMysteryChest
         if (this.chestManager != null) {
             this.chestManager.onDisable(this);
         }
+        //filterManager.save();
     }
 
     public static CosmicMysteryChest get() {

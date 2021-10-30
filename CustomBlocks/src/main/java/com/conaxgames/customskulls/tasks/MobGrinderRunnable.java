@@ -11,9 +11,11 @@ import org.bukkit.Material;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.Arrays;
 import java.util.Map;
 
 public class MobGrinderRunnable extends BukkitRunnable {
@@ -35,8 +37,16 @@ public class MobGrinderRunnable extends BukkitRunnable {
             if (CustomBlockUtil.getClosestChestLocation(data.getLocation()) != null) {
 
                 Location chestLocation = CustomBlockUtil.getClosestChestLocation(data.getLocation());
+                boolean playerFound = false;
                 assert chestLocation != null;
                 if (chestLocation.getChunk().getEntities().length == 0) continue;
+                for (Entity entity : chestLocation.getWorld().getNearbyEntities(chestLocation, 16, 16, 16)) {
+                    if (entity instanceof Player) {
+                        playerFound = true;
+                        break;
+                    }
+                }
+                if (!playerFound) continue;
                 Chest chest = (Chest) chestLocation.getBlock().getState();
 
                 //KILL NEARBY STACKED MOB

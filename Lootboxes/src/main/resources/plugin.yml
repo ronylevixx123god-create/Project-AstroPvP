@@ -21,3 +21,6 @@ commands:
   givehalflootbox:
     description: Gives a half lootbox
     aliases: [halflootbox]
+  lbfilter:
+    description: filter loot
+    aliases: [lootboxfilter, lootfilter, filterlootbox, filterloot]

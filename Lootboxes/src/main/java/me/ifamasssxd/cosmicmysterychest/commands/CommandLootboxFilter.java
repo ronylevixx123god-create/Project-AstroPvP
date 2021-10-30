@@ -5,9 +5,9 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.ifamasssxd.cosmicmysterychest.guis.FilterGUI;
-import me.ifamasssxd.cosmicmysterychest.struct.Filter;
+import me.ifamasssxd.cosmicmysterychest.data.Filter;
+import me.ifamasssxd.cosmicmysterychest.managers.FilterManager;
 import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
-import me.ifamasssxd.cosmicmysterychest.utils.FilterUtils;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -15,7 +15,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class CommandFilter implements CommandExecutor {
+import java.util.ArrayList;
+
+public class CommandLootboxFilter implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if(!(commandSender instanceof Player))
@@ -40,9 +42,15 @@ public class CommandFilter implements CommandExecutor {
             }
         }
         if (builder != null && builder.hasKey("mysteryChest")) {
+            Filter filter;
             MysteryChest chest = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get(builder.getString("mysteryChest"));
-            Filter filter = CosmicMysteryChest.get().getFilterManager().getPlayerFilter(player).getFilter(FilterUtils.getItems(chest));
-            new FilterGUI(player, filter).openGUI(CosmicMysteryChest.get());
+            if (CosmicMysteryChest.get().getFilters().containsKey(player.getUniqueId()) && CosmicMysteryChest.get().getFilters().get(player.getUniqueId()).containsKey(chest)) {
+                filter = CosmicMysteryChest.get().getFilters().get(player.getUniqueId()).get(chest);
+            } else {
+                filter = new Filter(chest, new ArrayList<>());
+                CosmicMysteryChest.get().getFilterManager().addFilterToUser(player.getUniqueId(), filter);
+            }
+            new FilterGUI(player, filter.getMysteryChest()).getFilterGUI().open(player);
         } else {
             player.sendMessage(CC.RedB + "(!) " + CC.Red + "You must be holding a lootbox to do this!");
         }
