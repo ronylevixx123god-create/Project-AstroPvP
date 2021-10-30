@@ -8,10 +8,7 @@ import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
 import net.astropvp.core.utils.ChatManager;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -23,6 +20,7 @@ import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.*;
 import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 
 public class ServerFixes implements Listener {
 
@@ -59,6 +57,29 @@ public class ServerFixes implements Listener {
                 clicker.sendMessage("You cannot use anvils.");
             }
         }
+    }
+
+    @EventHandler
+    public void preventBlockGlitch(BlockPlaceEvent event) {
+        if (!event.isCancelled()) return;
+
+        Player player = event.getPlayer();
+        Location location = player.getLocation();
+        Location blockLocation = event.getBlock().getLocation();
+
+        blockLocation.setX(getAccurateCoord(blockLocation.getX()));
+        blockLocation.setZ(getAccurateCoord(blockLocation.getZ()));
+
+        if ((int) location.getX() != (int) blockLocation.getX() ) return;
+
+        if ((int) location.getZ() != (int) blockLocation.getZ()) return;
+
+        player.setVelocity(new Vector(0, -1, 0));
+    }
+
+    private double getAccurateCoord(double coord) {
+        if (coord < 0) return coord + 1.0;
+        return coord;
     }
 
 

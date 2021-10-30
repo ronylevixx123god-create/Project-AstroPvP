@@ -131,10 +131,6 @@ public class MysteryChestListener
                 event.setCancelled(true);
                 Player player = event.getPlayer();
                 try {
-                    if (!player.getWorld().getName().equals(((World) Bukkit.getWorlds().get(0)).getName())) {
-                        throw new MysteryChestException("You must open this Lootbox in the Overworld!");
-                    }
-
                     MysteryChest chest = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get(builder.getString("mysteryChest"));
                     int bundleSize = chest.getItemBundleSize();
                     if (bundleSize == 0) {
