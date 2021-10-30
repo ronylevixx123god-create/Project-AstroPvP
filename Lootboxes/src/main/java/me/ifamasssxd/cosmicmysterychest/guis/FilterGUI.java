@@ -8,6 +8,8 @@ import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.ifamasssxd.cosmicmysterychest.data.Filter;
 import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
 import me.ifamasssxd.cosmicmysterychest.utils.FilterUtils;
+import org.arkhamnetwork.Arkkit.patches.Balance;
+import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -26,7 +28,6 @@ public class FilterGUI {
     private final Filter filter;
 
     private final PaginatedGui lootboxMenu;
-
 
 
     public PaginatedGui getFilterGUI() {
@@ -78,30 +79,40 @@ public class FilterGUI {
             event.setCancelled(true);
         }));
 
-        for(ItemStack item : FilterUtils.getItems(filter.getMysteryChest())) {
-            ItemMeta meta = item.getItemMeta();
-            List<String> lore = meta.getLore();
-            if (lore.get(lore.size()-1).startsWith(CC.translate("&f&l➥ &fFiltered")) && lore.get(lore.size()-2).equals("")) {
-                lore.remove(lore.get(lore.size()-1));
-                lore.remove(lore.get(lore.size()-2));
-            }
-
-                if (filter.isBlockedItem(item)) {
-                    lore.add("");
-                    lore.add(CC.translate("&f&l➥ &fFiltered: &atrue"));
-                } else {
-                    lore.add("");
-                    lore.add(CC.translate("&f&l➥ &fFiltered: &cfalse"));
+        for (ItemStack item : FilterUtils.getItems(filter.getMysteryChest())) {
+            ItemStack copyItem = item.clone();
+            if (filter.isBlockedItem(item)) {
+                ItemMeta meta = copyItem.getItemMeta();
+                List<String> lore = meta.getLore();
+                if (lore.contains(CC.translate("&f&l➥ &f&lFILTERED"))) {
+                    lore.remove(lore.size() - 1);
+                    lore.remove(lore.size() - 1);
                 }
-            meta.setLore(lore);
-            item.setItemMeta(meta);
-            lootboxMenu.addItem(new GuiItem(item, event -> {
+                lore.add("");
+                lore.add(CC.translate("&f&l➥ &f&lFILTERED: &aTrue"));
+                meta.setLore(lore);
+                copyItem.setItemMeta(meta);
+            } else {
+                ItemMeta meta = copyItem.getItemMeta();
+                List<String> lore = meta.getLore();
+                if (lore.contains(CC.translate("&f&l➥ &f&lFILTERED"))) {
+                    lore.remove(lore.size() - 1);
+                    lore.remove(lore.size() - 1);
+                }
+                lore.add("");
+                lore.add(CC.translate("&f&l➥ &f&lFILTERED: &cFalse"));
+                meta.setLore(lore);
+                copyItem.setItemMeta(meta);
+            }
+            lootboxMenu.addItem(new GuiItem(copyItem, event -> {
                 if (filter.isBlockedItem(item)) {
                     filter.removeBlockedLootItem(item);
                 } else {
                     filter.addBlockedLootItem(item);
+
                 }
-                new FilterGUI(player, chest).getFilterGUI().open(player);
+                FilterGUI filterGUI = new FilterGUI(player, chest);
+                filterGUI.getFilterGUI().open(player);
                 player.playSound(player.getLocation(), Sound.NOTE_PLING, 1f, 1f);
             }));
         }

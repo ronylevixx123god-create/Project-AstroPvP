@@ -10,7 +10,7 @@ public class Filter {
 
 
     public MysteryChest mysteryChest;
-    private ArrayList<ItemStack> blockedLoot;
+    private final ArrayList<ItemStack> blockedLoot;
 
     public Filter(MysteryChest mysteryChest, ArrayList<ItemStack> blockedLoot) {
         this.mysteryChest = mysteryChest;
@@ -22,7 +22,7 @@ public class Filter {
     }
 
     public ArrayList<ItemStack> getBlockedLoot() {
-        return blockedLoot;
+        return this.blockedLoot;
     }
 
     public void addBlockedLootItem(ItemStack itemStack) {
@@ -34,7 +34,7 @@ public class Filter {
     }
 
     public boolean isBlockedItem(ItemStack itemStack) {
-        return getBlockedLoot().contains(itemStack);
+        return this.blockedLoot.contains(itemStack);
     }
 
 }

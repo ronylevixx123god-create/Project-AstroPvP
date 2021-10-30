@@ -9,9 +9,12 @@ import java.util.List;
 
 public class FilterUtils {
     public static List<ItemStack> getItems(MysteryChest chest) {
-        List<ItemStack> list = new ArrayList<>(chest.getGarunteedItems());
+        List<ItemStack> list = new ArrayList<>();
+        for (ItemStack itemStack : chest.getGarunteedItems()) {
+            list.add(itemStack.clone());
+        }
         for(CustomLoot item : chest.getLootItems()) {
-            list.add(item.getItem());
+            list.add(item.getItem().clone());
         }
         return list;
     }

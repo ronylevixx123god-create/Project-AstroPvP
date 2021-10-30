@@ -37,8 +37,10 @@ import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.massivecraft.factions.FPlayer;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
+import me.ifamasssxd.cosmicmysterychest.data.Filter;
 import me.ifamasssxd.cosmicmysterychest.exceptions.MysteryChestException;
 import me.ifamasssxd.cosmicmysterychest.guis.ActiveMysteryChestGUI;
+import me.ifamasssxd.cosmicmysterychest.guis.FilterGUI;
 import me.ifamasssxd.cosmicmysterychest.guis.MysteryChestGUI;
 import me.ifamasssxd.cosmicmysterychest.guis.MysteryChestItemViewerGUI;
 import me.ifamasssxd.cosmicmysterychest.struct.GlobalMysteryChest;
@@ -62,6 +64,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+
+import java.util.ArrayList;
 
 public class MysteryChestListener
         implements Listener {
@@ -143,7 +147,14 @@ public class MysteryChestListener
                         throw new MysteryChestException("Unable to determine Lootbox!");
                     }
                     if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
-                        new MysteryChestItemViewerGUI(player, chest).openGUI(CosmicMysteryChest.get());
+                        Filter filter;
+                        if (CosmicMysteryChest.get().getFilters().containsKey(player.getUniqueId()) && CosmicMysteryChest.get().getFilters().get(player.getUniqueId()).containsKey(chest)) {
+                            filter = CosmicMysteryChest.get().getFilters().get(player.getUniqueId()).get(chest);
+                        } else {
+                            filter = new Filter(chest, new ArrayList<>());
+                            CosmicMysteryChest.get().getFilterManager().addFilterToUser(player.getUniqueId(), filter);
+                        }
+                        new FilterGUI(player, filter.getMysteryChest()).getFilterGUI().open(player);
                         return;
                     }
                     int amt = event.getItem().getAmount();
@@ -177,7 +188,6 @@ public class MysteryChestListener
                         return;
                     }*/
                     player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0f, 3.0f);
-
 
 
                     new MysteryChestGUI(player, chest, 0L).skipGUI(CosmicMysteryChest.get());
