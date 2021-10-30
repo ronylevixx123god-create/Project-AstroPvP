@@ -131,6 +131,7 @@ public class AstroSpawners extends JavaPlugin {
         getCommand("stopspawnersplace").setExecutor(new CommandStopSpawnersPlace());
 
 
+
         getCommand("mobcoinshop").setExecutor((CommandExecutor) new CommandMobCoinShop());
         getCommand("mobcoins").setExecutor((CommandExecutor) new CommandMobCoins());
         getCommand("factionstop").setExecutor((CommandExecutor)new CommandFactionsTop());

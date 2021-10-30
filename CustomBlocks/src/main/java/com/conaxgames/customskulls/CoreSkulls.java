@@ -8,9 +8,12 @@ import com.conaxgames.customskulls.data.LoadCustomBlocks;
 import com.conaxgames.customskulls.listeners.CustomAbilityListener;
 import com.conaxgames.customskulls.listeners.CustomBlockListener;
 import com.conaxgames.customskulls.listeners.SlotbotMachineGUIListener;
+import com.conaxgames.customskulls.tasks.MobGrinderRunnable;
 import com.conaxgames.customskulls.util.CC;
 import com.conaxgames.customskulls.util.inventoryui.UIListener;
 import lombok.Getter;
+import me.astropvp.astrospawners.AstroSpawners;
+import me.astropvp.astrospawners.utils.MobStackerUtils;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -33,6 +36,7 @@ public class CoreSkulls extends JavaPlugin {
     @Getter private static Economy economy = null;
 
     public static Map<UUID, AbilityData> inSlotbotMachine;
+    public static MobStackerUtils mobStackerUtils;
 
 
     @Override
@@ -57,9 +61,12 @@ public class CoreSkulls extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new CustomBlockListener(), this);
         getServer().getPluginManager().registerEvents(new CustomAbilityListener(), this);
         getServer().getPluginManager().registerEvents(new SlotbotMachineGUIListener(), this);
+        mobStackerUtils = AstroSpawners.getInstance().getMobStackerUtils();
         LoadCustomBlocks.load();
         info("CoreSkulls!");
-        this.inSlotbotMachine = new HashMap<>();
+        inSlotbotMachine = new HashMap<>();
+        registerTasks();
+
     }
 
     private void registerCommand(Command cmd) {
@@ -79,6 +86,7 @@ public class CoreSkulls extends JavaPlugin {
         customBlocks.put("LEVIATHAN_TOTEM", new LeviathanTotem());
         customBlocks.put("HALLOWEEN_CANDLES", new HalloweenCandle());
         customBlocks.put("COSMIC_TOKEN_GENERATOR", new SlotbotMachine());
+        customBlocks.put("TRIALS_FAME_AND_FORTUNE", new MobGrinder());
     }
 
     public void info(String string) {
@@ -97,6 +105,10 @@ public class CoreSkulls extends JavaPlugin {
             e.printStackTrace();
 
         }
+    }
+
+    private void registerTasks() {
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MobGrinderRunnable(), 15*20, 3);
     }
 
 

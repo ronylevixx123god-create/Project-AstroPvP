@@ -8,6 +8,8 @@ import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -49,6 +51,22 @@ public class CustomBlockUtil {
             }
         }
         return abilityDataList;
+    }
+
+    public static Location getClosestChestLocation(Location location) {
+        int radius = 2;
+        Block block = location.getBlock(); //placed block
+        for (int x = -(radius); x <= radius; x++) {
+            for (int y = -(radius); y <= radius; y++) {
+                for (int z = -(radius); z <= radius; z++) {
+                    if (block.getRelative(x, y, z).getType() == Material.CHEST) {
+                        return block.getRelative(x, y, z).getLocation();
+                    }
+                }
+            }
+        }
+        return null;
+
     }
 
     public static boolean chunkContainsABlock(Player player) {

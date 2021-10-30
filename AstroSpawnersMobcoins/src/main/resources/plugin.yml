@@ -28,3 +28,9 @@ commands:
     aliases: [savemc, smc]
   addmobcoins:
     description: Adds mobcoins
+  factionstop:
+    description: /factionstop
+    aliases: [ftop, ftopp]
+  adminfactionstop:
+    description: /adminfactionstop
+    aliases: [aftop]
