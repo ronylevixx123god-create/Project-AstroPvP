@@ -86,6 +86,8 @@ public class EntityStackerListener implements Listener {
             amount--;
             mobStackerUtils.setStackSize(entity, amount);
 
+
+
             //}, 8L);
 
             Player p = (Player) e.getDamager();

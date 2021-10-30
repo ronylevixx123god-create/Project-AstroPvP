@@ -6,6 +6,7 @@ import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
+import org.arkhamnetwork.enchantments.enchantments.swords.Block;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -26,6 +27,14 @@ public class DamageListener implements Listener {
                 if (((Player) e.getDamager()).getItemInHand().getType().name().endsWith("_AXE"))
                     e.setDamage(e.getDamage() * 1.50);
             }
+        }
+    }
+
+    @EventHandler
+    public void onPlace(BlockPlaceEvent e) {
+        if (e.getBlock().getType() == Material.BEDROCK && !e.getPlayer().isOp()) {
+            e.getPlayer().sendMessage(CC.translate("&cYou are not allowed to place this block!"));
+            e.setCancelled(true);
         }
     }
 
