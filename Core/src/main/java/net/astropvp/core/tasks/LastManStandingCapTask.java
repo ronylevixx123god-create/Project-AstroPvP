@@ -36,7 +36,7 @@ public class LastManStandingCapTask extends BukkitRunnable {
                 } catch (NullPointerException e) {
                     cacher.remove();
                 }
-                if (player.isFlying()) {
+                if (player.isFlying() && !player.isOp()) {
                     cacher.remove();
                     player.sendMessage(String.valueOf(CC.RedB) + "(!) " + CC.Red + "Since you were flying, you lost your LMS Timer.");
                     player.setFlying(false);
@@ -57,13 +57,13 @@ public class LastManStandingCapTask extends BukkitRunnable {
                 if (x.getLMSTime() % 60 == 0 && x.getLMSTime() != 0) {
                     Player player2 = x.getPlayer();
                     if (Math.random() < 0.5D) {
-                        int give = ThreadLocalRandom.current().nextInt(150000, 300001);
+                        int give = ThreadLocalRandom.current().nextInt(250000, 500001);
                         if (HCFOutpostUtils.doesControlOutpost(player2, "frozen"))
                             give *= 1;
                         player2.sendMessage(String.valueOf(CC.WhiteB) + "+ " + StringUtils.formatWithCommas(give) + "XP " + CC.Gray + "(LMS Reward " + CC.White + "#" + (x.getLMSTime() / 60) + CC.Gray + ")");
                         player2.giveExp(give);
                         x.addExperience(give);
-                        if (Math.random() <= 0.09) {
+                        if (Math.random() <= 0.2) {
                             Bukkit.broadcastMessage("");
                             Bukkit.broadcastMessage(CC.translate("&6&l(&e&l/LMS&6&l) &f" + player2.getName() + " &egot lucky and received a &6Slotbot Ticket &7(/warp desert)&e."));
                             Bukkit.broadcastMessage("");
@@ -73,12 +73,12 @@ public class LastManStandingCapTask extends BukkitRunnable {
                         double multiplier = 1.0D;
                         if (HCFOutpostUtils.doesControlOutpost(player2, "frozen"))
                             multiplier += 0.25D;
-                        int give2 = (int) (multiplier * ThreadLocalRandom.current().nextInt(1000000, 3000001));
+                        int give2 = (int) (multiplier * ThreadLocalRandom.current().nextInt(10000000, 30000001));
                         player2.sendMessage(String.valueOf(CC.WhiteB) + "+ $" + StringUtils.formatWithCommas(give2) + " " + CC.Gray + "(LMS Reward " + CC.White + "#" + (x.getLMSTime() / 60) + CC.Gray + ")");
                         EconomyUtils.depositBalance((OfflinePlayer) player2, give2);
                         x.addMoney(give2);
 
-                        if (Math.random() <= 0.09) {
+                        if (Math.random() <= 0.2) {
                             Bukkit.broadcastMessage("");
                             Bukkit.broadcastMessage(CC.translate("&6&l(&e&l/LMS&6&l) &f" + player2.getName() + " &egot lucky and received a &6Slotbot Ticket &7(/warp desert)&e."));
                             Bukkit.broadcastMessage("");
