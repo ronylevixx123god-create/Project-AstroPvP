@@ -65,6 +65,11 @@ public class OmniCrystal
     }
 
     public void onInventoryClick(Player player, ItemStack cursor, NBTWrapper cursorWrapper, NBTWrapper clickedWrapper, ItemStack clicked, InventoryClickEvent event) throws CosmicException {
+        if (1==1) {
+            player.sendMessage(CC.translate("&cOmni Crystals are disabled this season!"));
+            return;
+        }
+
         if (clickedWrapper == null || !GeneralUtil.isArmor(clicked)) {
             return;
         }
@@ -72,6 +77,8 @@ public class OmniCrystal
         if (!cursorWrapper.getconaxData().hasKey("success")) {
             return;
         }
+
+
         if (ArmorSet.getArmorSetFromItem(clicked) != null) {
             return;
         }

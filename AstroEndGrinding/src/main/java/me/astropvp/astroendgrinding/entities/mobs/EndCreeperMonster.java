@@ -49,14 +49,10 @@ public class EndCreeperMonster extends EndMonster {
 	public List<ItemStack> getRewards() {
 		List<ItemStack> rewards = Lists.newArrayList();
 		Random random = new Random();
-		int randomNumber = random.nextInt(1000000 - 500000) + 500000;
-		MysteryChest reward = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("OmniCrystal");
+		int randomNumber = random.nextInt(1000000 - 600000) + 600000;
 
 
 		rewards.add(ArkhamMoneyNotesAPI.getMoneyNote("End Monster", randomNumber));
-		if(Math.random() < 0.25) {
-			rewards.add(reward.createClaimableItem(true));
-		}
 		return rewards;
 	}
 	

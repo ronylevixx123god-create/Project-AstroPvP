@@ -7,12 +7,14 @@ import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import net.astropvp.core.cachers.LastManStandingCacher;
 import net.astropvp.core.enums.CapType;
 import net.astropvp.core.utils.StringUtils;
+import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import sun.misc.MessageUtils;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -61,11 +63,11 @@ public class LastManStandingCapTask extends BukkitRunnable {
                         player2.sendMessage(String.valueOf(CC.WhiteB) + "+ " + StringUtils.formatWithCommas(give) + "XP " + CC.Gray + "(LMS Reward " + CC.White + "#" + (x.getLMSTime() / 60) + CC.Gray + ")");
                         player2.giveExp(give);
                         x.addExperience(give);
-                        if (Math.random() <= 0.07) {
+                        if (Math.random() <= 0.09) {
                             Bukkit.broadcastMessage("");
-                            Bukkit.broadcastMessage(CC.translate("&b&l*** &9&l&n" + player2.getName() + "&3&l GOT LUCKY AND RECEIVED A SLOTBOT TICKET FROM LMS &b&l***"));
+                            Bukkit.broadcastMessage(CC.translate("&6&l(&e&l/LMS&6&l) &f" + player2.getName() + " &egot lucky and received a &6Slotbot Ticket &7(/warp desert)&e."));
                             Bukkit.broadcastMessage("");
-                            Bukkit.dispatchCommand(console, "kit slotbot " + player2.getName());
+                            Bukkit.dispatchCommand(console, "slotbot give " + player2.getName() + " 1");
                         }
                     } else {
                         double multiplier = 1.0D;
@@ -76,11 +78,11 @@ public class LastManStandingCapTask extends BukkitRunnable {
                         EconomyUtils.depositBalance((OfflinePlayer) player2, give2);
                         x.addMoney(give2);
 
-                        if (Math.random() <= 0.07) {
+                        if (Math.random() <= 0.09) {
                             Bukkit.broadcastMessage("");
-                            Bukkit.broadcastMessage(CC.translate("&b&l*** &9&l&n" + player2.getName() + "&3&l GOT LUCKY AND RECEIVED A SLOTBOT TICKET FROM LMS &b&l***"));
+                            Bukkit.broadcastMessage(CC.translate("&6&l(&e&l/LMS&6&l) &f" + player2.getName() + " &egot lucky and received a &6Slotbot Ticket &7(/warp desert)&e."));
                             Bukkit.broadcastMessage("");
-                            Bukkit.dispatchCommand(console, "kit slotbot " + player2.getName());
+                            Bukkit.dispatchCommand(console, "slotbot give " + player2.getName() + " 1");
                         }
                     }
                 }

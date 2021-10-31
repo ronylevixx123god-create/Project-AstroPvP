@@ -2,6 +2,7 @@ main: me.astropvp.astroendgrinding.AstroEndGrindingPlugin
 name: AstroEndGrinding
 author: AstroPvP
 version: 1.0
+depend: [AstroSpawners]
 commands:
   end:
     description: /end
