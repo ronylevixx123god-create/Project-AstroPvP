@@ -3,9 +3,12 @@ package com.conaxgames.customskulls.listeners;
 import com.conaxgames.customskulls.CoreSkulls;
 import com.conaxgames.customskulls.ability.AbilityData;
 import com.conaxgames.customskulls.blocks.CustomBlock;
+import com.conaxgames.customskulls.data.DeleteCustomBlocks;
 import com.conaxgames.customskulls.util.CC;
 import com.conaxgames.customskulls.util.CustomBlockUtil;
+import com.conaxgames.customskulls.util.ItemBuilderUtils;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,11 +16,14 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
 import java.util.Objects;
 
 public class CustomBlockListener implements Listener {
@@ -47,7 +53,7 @@ public class CustomBlockListener implements Listener {
         if (event.getDamager().getType() != EntityType.PLAYER) {
             return;
         }
-        final Player player = (Player)event.getDamager();
+        final Player player = (Player) event.getDamager();
         if (player.getItemInHand() == null || player.getItemInHand().getType() == Material.AIR) {
             return;
         }
@@ -73,6 +79,36 @@ public class CustomBlockListener implements Listener {
         }
 
         customBlock.breakBlockAction(player, event, event.getBlock(), item, customBlock, data);
+    }
+
+    @EventHandler
+    public void onExplode(EntityExplodeEvent event) {
+        List<Block> blockList = event.blockList();
+
+        for (Block block : blockList) {
+            if (block.getType() != Material.NOTE_BLOCK) continue;
+            AbilityData data = AbilityData.getAbilityDataMap().get(AbilityData.getUUID(block.getLocation()));
+            if (data == null) {
+                continue;
+            }
+
+            CustomBlock customBlock = CoreSkulls.customBlocks.get(data.getAbilityType().getName());
+
+            if (customBlock == null) {
+                continue;
+            }
+
+            ItemBuilderUtils item = new ItemBuilderUtils(customBlock.getItem()).setLore(customBlock.addLore());
+
+
+            block.getDrops().clear(); // clears the events item stack
+
+            //p2.breakNaturally(new ItemBuilderUtils(Material.AIR).toItemStack()); // break the block
+            block.setType(Material.AIR);
+            block.getWorld().dropItemNaturally(block.getLocation(), item.toItemStack()); // dropping our item stack
+            DeleteCustomBlocks.func(block.getLocation()); // delete file and memory.
+
+        }
     }
 
     @EventHandler(priority = EventPriority.HIGH)
