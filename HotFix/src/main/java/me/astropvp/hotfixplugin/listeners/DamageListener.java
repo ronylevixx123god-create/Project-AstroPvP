@@ -32,7 +32,7 @@ public class DamageListener implements Listener {
 
     @EventHandler
     public void onPlace(BlockPlaceEvent e) {
-        if (e.getBlock().getType() == Material.BEDROCK && !e.getPlayer().isOp()) {
+        if ((e.getBlock().getType() == Material.BEDROCK || e.getBlock().getType() == Material.ENDER_PORTAL_FRAME) && !e.getPlayer().isOp()) {
             e.getPlayer().sendMessage(CC.translate("&cYou are not allowed to place this block!"));
             e.setCancelled(true);
         }
