@@ -16,7 +16,8 @@ public class GoldenAdmirer extends ItemSkin {
         if(!(damaged instanceof Player))
             return;
         if (!WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
-
+        if(isAdmirerSilenced(((Player) damaged).getPlayer()))
+            return;
         damaged.setMetadata("admirerSilence", (MetadataValue)new FixedMetadataValue((Plugin) AstroItemSkinsPlugin.getInstance(), System.currentTimeMillis() + 10000));
         damager.sendMessage(CC.GoldB + "** GOLDEN ADMIRER " + CC.Gray + "[10s] " + CC.GoldB + "**");
         damaged.sendMessage(CC.GoldB + "** GOLDEN ADMIRER " + CC.Gray + "[" + damager.getName() +  "] " + CC.GoldB + "**");
