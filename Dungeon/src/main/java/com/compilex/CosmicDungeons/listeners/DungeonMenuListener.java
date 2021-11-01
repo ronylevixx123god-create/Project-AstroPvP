@@ -2,9 +2,9 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.utils.TimeUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.TimeUtils
  *  com.google.common.collect.Lists
  *  com.massivecraft.factions.FPlayer
  *  com.massivecraft.factions.FPlayers
@@ -17,11 +17,11 @@
  *  org.bukkit.event.EventHandler
  *  org.bukkit.event.EventPriority
  *  org.bukkit.event.Listener
- *  org.bukkit.event.inventory.ClickType
- *  org.bukkit.event.inventory.InventoryClickEvent
- *  org.bukkit.inventory.Inventory
- *  org.bukkit.inventory.InventoryHolder
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.ClickType
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
+ *  org.bukkit.me.astropvp.cratekeys.inventory.Inventory
+ *  org.bukkit.me.astropvp.cratekeys.inventory.InventoryHolder
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package com.compilex.CosmicDungeons.listeners;
 
@@ -84,12 +84,12 @@ implements Listener {
         ItemStack cursor = event.getCursor();
         if (cursor != null && cursor.getType() != Material.AIR && DungeonsAPI.isDungeonType(cursor)) {
             event.setCancelled(true);
-            player.sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot move this dungeon item out of your inventory!");
+            player.sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot move this dungeon item out of your me.astropvp.cratekeys.inventory!");
             return;
         }
         if (clicked != null && clicked.getType() != Material.AIR && DungeonsAPI.isDungeonType(clicked)) {
             event.setCancelled(true);
-            player.sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot move this dungeon item out of your inventory!");
+            player.sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot move this dungeon item out of your me.astropvp.cratekeys.inventory!");
         }
     }
 
@@ -111,7 +111,7 @@ implements Listener {
         this.getClass();
         Inventory inv = Bukkit.createInventory((InventoryHolder)null, (int)45, (String)"Astro Dungeons");
         inv.setItem(3, ItemUtils.buildItem(Material.BOOK, (short)0, (Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "" + (Object)ChatColor.UNDERLINE + "Astro Dungeons", (Object)ChatColor.GRAY + "Dungeon are " + (Object)ChatColor.UNDERLINE + "top tier PvE instances", (Object)ChatColor.GRAY + "for the most powerful players to conquer.", "", (Object)ChatColor.GRAY + "Filled with " + (Object)ChatColor.RED + "advanced custom AI", (Object)ChatColor.GRAY + "and unique challenges, these maps", (Object)ChatColor.GRAY + "will push any Cosmonaut to the limit.", "", (Object)ChatColor.GRAY + "In order to start a dungeon you", (Object)ChatColor.GRAY + "need to unlock its dungeon key.", (Object)ChatColor.GRAY + "These keys can be purchased", (Object)ChatColor.GRAY + "from the " + (Object)ChatColor.RED + "Dungeon Master at /spawn", (Object)ChatColor.GRAY + "or from using " + (Object)ChatColor.UNDERLINE + "/dungeonmaster", "", (Object)ChatColor.GRAY + "Once you have the key, you will", (Object)ChatColor.GRAY + "need to " + (Object)ChatColor.UNDERLINE + "craft a dungeon portal", (Object)ChatColor.GRAY + "each time you wish to run the dungeon."));
-        inv.setItem(5, ItemUtils.buildItem(Material.IRON_FENCE, (short)0, (Object)ChatColor.YELLOW + "" + (Object)ChatColor.BOLD + "" + (Object)ChatColor.UNDERLINE + "Dungeon Tips", (Object)ChatColor.GRAY + "Fallout Dungeons operate differently than", (Object)ChatColor.GRAY + "the normal of CosmicPvP gameplay.", "", (Object)ChatColor.YELLOW + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "You do " + (Object)ChatColor.UNDERLINE + "NOT" + (Object)ChatColor.GRAY + " lose your inventory.", (Object)ChatColor.YELLOW + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Every boss has custom mechanics.", (Object)ChatColor.YELLOW + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "If you do not strategize, you die.", (Object)ChatColor.YELLOW + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Anyone can enter your dungeon portals.", (Object)ChatColor.YELLOW + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Dungeons are PvP-enabled zones.", (Object)ChatColor.YELLOW + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Cosmic Dungeons are end-game", (Object)ChatColor.GRAY + "PvM content, they are HARD."));
+        inv.setItem(5, ItemUtils.buildItem(Material.IRON_FENCE, (short)0, (Object)ChatColor.YELLOW + "" + (Object)ChatColor.BOLD + "" + (Object)ChatColor.UNDERLINE + "Dungeon Tips", (Object)ChatColor.GRAY + "Fallout Dungeons operate differently than", (Object)ChatColor.GRAY + "the normal of CosmicPvP gameplay.", "", (Object)ChatColor.YELLOW + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "You do " + (Object)ChatColor.UNDERLINE + "NOT" + (Object)ChatColor.GRAY + " lose your me.astropvp.cratekeys.inventory.", (Object)ChatColor.YELLOW + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Every boss has custom mechanics.", (Object)ChatColor.YELLOW + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "If you do not strategize, you die.", (Object)ChatColor.YELLOW + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Anyone can enter your dungeon portals.", (Object)ChatColor.YELLOW + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Dungeons are PvP-enabled zones.", (Object)ChatColor.YELLOW + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Cosmic Dungeons are end-game", (Object)ChatColor.GRAY + "PvM content, they are HARD."));
         inv.setItem(4, ItemUtils.buildItem(Material.DIAMOND, (short)0, (Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "" + (Object)ChatColor.UNDERLINE + "Dungeon Rewards", (Object)ChatColor.GRAY + "You can obtain all kinds of", (Object)ChatColor.GRAY + "legendary treasures by defeating", (Object)ChatColor.GRAY + "dungeons, but most importantly", (Object)ChatColor.GRAY + "they allow you to obtain...", "", (Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Heroic Armor", (Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Heroic Blackscrolls", (Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Equipment Lootboxes", (Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Heroic Enchantments", (Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Soul Trinkets", (Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Holy White Scrolls", (Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Dungeon Armor Sets", (Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "Massive $/XP/mcMMO", CC.GoldB + "* " + CC.Gray + "Heroic Armor Upgrades", CC.GoldB + "* " + CC.Gray + "Superior Cosmic Crates"));
         if (CosmicDungeonsPlugin.get_().getConfig().getBoolean("holiday.dailyPortals")) {
             inv.setItem(13, ItemUtils.buildItem(Material.NETHER_STAR, (short)0, (Object)ChatColor.AQUA + "" + (Object)ChatColor.BOLD + "" + (Object)ChatColor.UNDERLINE + "Dungeon Portal Event", "", (Object)ChatColor.AQUA + "Next Dungeon Portal spawns in...", (Object)ChatColor.GRAY + com.compilex.CosmicDungeons.utils.TimeUtils.formatDifference(com.compilex.CosmicDungeons.utils.TimeUtils.getMilliUntilNextPublicPortal()), "", (Object)ChatColor.GRAY + "This portal opens at /spawn", (Object)ChatColor.GRAY + "next to the Dungeon Master."));
@@ -168,7 +168,7 @@ implements Listener {
             }
             if ((atSlot = inv.getItem(dungeon.getDungeonKeyMenuSlot())) != null && atSlot.getType() != Material.AIR) continue;
             if (dungeon.getDungeonType() != DungeonType.DESTROYED_OUTPOST) {
-                locked = Lists.newArrayList(new String[]{(Object)ChatColor.GRAY + "In order to enter a dungeon portal,", (Object)ChatColor.GRAY + "you must have the key to that dungeon", (Object)ChatColor.GRAY + "inside of your inventory.", "", (Object)ChatColor.GRAY + "Unlock access from the " + (Object)ChatColor.RED + "Dungeon Master", (Object)ChatColor.GRAY + "at /spawn, or using /dungeonmaster!"});
+                locked = Lists.newArrayList(new String[]{(Object)ChatColor.GRAY + "In order to enter a dungeon portal,", (Object)ChatColor.GRAY + "you must have the key to that dungeon", (Object)ChatColor.GRAY + "inside of your me.astropvp.cratekeys.inventory.", "", (Object)ChatColor.GRAY + "Unlock access from the " + (Object)ChatColor.RED + "Dungeon Master", (Object)ChatColor.GRAY + "at /spawn, or using /dungeonmaster!"});
             } else {
                 locked = Lists.newArrayList(new String[]{(Object)ChatColor.GRAY + "In order to enter a dungeon portal,", (Object)ChatColor.GRAY + "you must have the following:"});
                 locked.add(CC.WhiteB + " * " + CC.White + (hasKeyPermission || hasKey ? CC.Strike : "") + "Dungeon Key in Inventory");

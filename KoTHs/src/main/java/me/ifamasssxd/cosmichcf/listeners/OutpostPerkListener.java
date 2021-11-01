@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.FactionUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.FactionUtils
  *  com.google.common.collect.Lists
  *  com.google.common.collect.MapMaker
  *  com.massivecraft.factions.Board
@@ -24,8 +24,8 @@
  *  org.bukkit.event.entity.CreatureSpawnEvent
  *  org.bukkit.event.entity.EntityDeathEvent
  *  org.bukkit.event.entity.FoodLevelChangeEvent
- *  org.bukkit.event.inventory.BrewEvent
- *  org.bukkit.event.inventory.FurnaceBurnEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.BrewEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.FurnaceBurnEvent
  *  org.bukkit.event.player.PlayerInteractEvent
  *  org.bukkit.metadata.FixedMetadataValue
  *  org.bukkit.metadata.MetadataValue

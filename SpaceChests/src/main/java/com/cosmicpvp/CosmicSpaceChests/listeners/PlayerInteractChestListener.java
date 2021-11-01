@@ -92,7 +92,7 @@ implements Listener {
             e.setUseItemInHand(Event.Result.DENY);
             e.setUseInteractedBlock(Event.Result.DENY);
             if (this.getEmptySlots(pl) < 5) {
-                pl.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You need 5 empty inventory slots to open a Cosmic Chest.");
+                pl.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You need 5 empty me.astropvp.cratekeys.inventory slots to open a Cosmic Chest.");
                 return;
             }
             if (this.getTarget(e.getPlayer()) != null) {

@@ -5,10 +5,10 @@
  *  org.bukkit.entity.Player
  *  org.bukkit.event.EventHandler
  *  org.bukkit.event.Listener
- *  org.bukkit.event.inventory.InventoryClickEvent
- *  org.bukkit.event.inventory.InventoryCloseEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryCloseEvent
  *  org.bukkit.event.player.PlayerQuitEvent
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.ifamasssxd.cosmicguishop.listeners;
 

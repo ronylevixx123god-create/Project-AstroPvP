@@ -7,8 +7,8 @@
  *  org.bukkit.Material
  *  org.bukkit.Sound
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.Inventory
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.Inventory
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.plugin.Plugin
  *  org.bukkit.scheduler.BukkitRunnable
  */
@@ -55,7 +55,7 @@ public class ChestLootSelector {
                 this.lootInventory.setItem(i, borderItem.clone());
                 continue;
             }
-            ItemStack hiddenItem = ItemUtils.buildItem(Material.STAINED_GLASS, this.getStainedGlassBlockColor(), (Object)CosmicSpaceChestsAPI.getColor(this.chestRarity) + "" + (Object)ChatColor.BOLD + "??? " + (Object)ChatColor.GRAY + "#" + (i + 1 - 10), (Object)ChatColor.GRAY + "Choose " + (Object)CosmicSpaceChestsAPI.getColor(this.chestRarity) + (Object)ChatColor.UNDERLINE + "5 mystery items" + (Object)ChatColor.GRAY + " and,", (Object)ChatColor.GRAY + "your " + (Object)CosmicSpaceChestsAPI.getColor(this.chestRarity) + (Object)ChatColor.BOLD + this.chestRarity.name + (Object)ChatColor.GRAY + " loot will be revealed.");
+            ItemStack hiddenItem = ItemUtils.buildItem(Material.STAINED_GLASS, this.getStainedGlassBlockColor(), (Object)CosmicSpaceChestsAPI.getColor(this.chestRarity) + "" + (Object)ChatColor.BOLD + "??? " + (Object)ChatColor.GRAY + "#" + (i + 1 - 10), (Object)ChatColor.GRAY + "Choose " + (Object)CosmicSpaceChestsAPI.getColor(this.chestRarity) + (Object)ChatColor.UNDERLINE + "5 mystery me.astropvp.cratekeys.items" + (Object)ChatColor.GRAY + " and,", (Object)ChatColor.GRAY + "your " + (Object)CosmicSpaceChestsAPI.getColor(this.chestRarity) + (Object)ChatColor.BOLD + this.chestRarity.name + (Object)ChatColor.GRAY + " loot will be revealed.");
             this.lootInventory.setItem(i, hiddenItem);
         }
         this.phase = LootSelectorPhase.PICKING_PANELS;

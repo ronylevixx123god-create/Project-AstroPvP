@@ -4,9 +4,9 @@
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
  *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
- *  com.cosmicpvp.cosmicutils.utils.RandomFireworks
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.RandomFireworks
  *  org.arkhamnetwork.Arkkit.patches.ItemID
  *  org.arkhamnetwork.Arkkit.plugins.ArkPlugins
  *  org.bukkit.Bukkit
@@ -20,7 +20,7 @@
  *  org.bukkit.event.Listener
  *  org.bukkit.event.block.Action
  *  org.bukkit.event.player.PlayerInteractEvent
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.cosmicpvp.CosmicGlobalKits.listeners;
 

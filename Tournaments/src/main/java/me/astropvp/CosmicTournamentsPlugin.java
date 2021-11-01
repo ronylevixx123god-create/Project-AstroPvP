@@ -29,7 +29,7 @@ public class CosmicTournamentsPlugin extends JavaPlugin {
             Bukkit.getLogger().severe("Unable to connect to sql database! Please ensure the sql credentials are correct");
             Bukkit.getPluginManager().disablePlugin(this);
         } else {
-            this.sqlDatabase.executeUpdate("CREATE TABLE IF NOT EXISTS tournament_userdata(player_uuid varchar(64) PRIMARY KEY, inventory varchar(4000), tournamentwins int, tournamentlosses int, matchwins int, matchlosses int, kills int, deaths int, elo int, points int);", false);
+            this.sqlDatabase.executeUpdate("CREATE TABLE IF NOT EXISTS tournament_userdata(player_uuid varchar(64) PRIMARY KEY, me.astropvp.cratekeys.inventory varchar(4000), tournamentwins int, tournamentlosses int, matchwins int, matchlosses int, kills int, deaths int, elo int, points int);", false);
             this.sqlQueryThread = new SQLQueryCustomThread();
             this.sqlQueryThread.start();
         }

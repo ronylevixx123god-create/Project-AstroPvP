@@ -32,7 +32,7 @@ final class ItemIDListener
                 ItemID.assignItemID(e, e.getCurrentItem());
             } else if (ItemID.blacklist_iid.contains(iid)) {
                 Bukkit.getLogger().info("[ItemID] Blacklisted IID #" + iid + " found on player " + e.getWhoClicked().getName() + " at " + e.getWhoClicked().getLocation() + ", item: " + e.getCurrentItem());
-                e.getWhoClicked().sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "An item in your inventory, with IID " + iid + ", has been flagged as a duplicated item, and has been removed.");
+                e.getWhoClicked().sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "An item in your me.astropvp.cratekeys.inventory, with IID " + iid + ", has been flagged as a duplicated item, and has been removed.");
                 e.setCurrentItem(null);
             } else if (iid > ItemID.next_iid) {
                 Bukkit.getLogger().info("[ItemID] Found item with IID " + iid + ", which is > next_iid value of " + ItemID.next_iid + ", rerolling iid.");

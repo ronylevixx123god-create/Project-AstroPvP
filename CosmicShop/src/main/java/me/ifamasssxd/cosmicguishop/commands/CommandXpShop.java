@@ -2,13 +2,13 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
  *  org.bukkit.Material
  *  org.bukkit.command.Command
  *  org.bukkit.command.CommandExecutor
  *  org.bukkit.command.CommandSender
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.ifamasssxd.cosmicguishop.commands;
 
@@ -42,7 +42,7 @@ implements CommandExecutor {
                 player.sendMessage(CC.Red + "You must be holding an item in your hand");
                 return true;
             }
-            List<String> list = CosmicGUIShop.getInstance().getConfig().getStringList("items");
+            List<String> list = CosmicGUIShop.getInstance().getConfig().getStringList("me.astropvp.cratekeys.items");
             for (String string : list) {
                 ItemStack stack = Base64Utils.getItem(string);
                 if (!item.equals(stack)) continue;
@@ -60,7 +60,7 @@ implements CommandExecutor {
             }
             i = i + ":" + cost;
             list.set(list.size() - 1, i);
-            CosmicGUIShop.getInstance().getConfig().set("items", list);
+            CosmicGUIShop.getInstance().getConfig().set("me.astropvp.cratekeys.items", list);
             CosmicGUIShop.getInstance().saveConfig();
             CosmicGUIShop.getInstance().loadConfig();
             player.sendMessage(CC.Green + "Added item " + item.getAmount() + "x " + item.getItemMeta().getDisplayName() + CC.Green + " costing " + cost + "xp");
@@ -71,7 +71,7 @@ implements CommandExecutor {
                 player.sendMessage(CC.Red + "You must be holding an item in your hand");
                 return true;
             }
-            List<String> list = CosmicGUIShop.getInstance().getConfig().getStringList("items");
+            List<String> list = CosmicGUIShop.getInstance().getConfig().getStringList("me.astropvp.cratekeys.items");
             ItemStack[] items = new ItemStack[list.size()];
             for (i = 0; i < list.size(); ++i) {
                 String l = list.get(i);
@@ -81,7 +81,7 @@ implements CommandExecutor {
                 ItemStack x = items[i];
                 if (!x.equals((Object)item)) continue;
                 list.remove(i);
-                CosmicGUIShop.getInstance().getConfig().set("items", (Object)list);
+                CosmicGUIShop.getInstance().getConfig().set("me.astropvp.cratekeys.items", (Object)list);
                 CosmicGUIShop.getInstance().saveConfig();
                 CosmicGUIShop.getInstance().loadConfig();
                 player.sendMessage(CC.Green + "Removed item + " + item.getItemMeta().getDisplayName() + CC.Green + " from the xp shop!");

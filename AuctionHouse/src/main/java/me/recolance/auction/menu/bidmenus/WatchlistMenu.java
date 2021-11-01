@@ -3,13 +3,13 @@
  *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.gui.InventoryItem
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
  *  net.minecraft.util.io.netty.util.internal.ConcurrentSet
  *  org.bukkit.Bukkit
  *  org.bukkit.Material
  *  org.bukkit.entity.Player
- *  org.bukkit.event.inventory.ClickType
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.ClickType
  *  org.bukkit.plugin.Plugin
  */
 package me.recolance.auction.menu.bidmenus;

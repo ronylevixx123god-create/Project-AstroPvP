@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.145.
  *
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
  *  org.bukkit.Server
@@ -298,7 +298,7 @@ public class P extends MPlugin {
         this.includeBank = this.getConfig().getBoolean("includeBank");
         this.gradualSpawnerValues = this.getConfig().getBoolean("gradualSpawnerValue");
         this.includeHoppers = this.getConfig().getBoolean("includeHoppers", true);
-        //this.getServer().getPluginManager().registerEvents(new me.ifamasssxd.factionstop.listeners.CommandListener(), this);
+        //this.getServer().getPluginManager().registerEvents(new me.ifamasssxd.factionstop.me.astropvp.cratekeys.listeners.CommandListener(), this);
 
 
     }

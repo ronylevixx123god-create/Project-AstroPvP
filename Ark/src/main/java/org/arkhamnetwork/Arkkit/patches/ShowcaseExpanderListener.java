@@ -14,7 +14,7 @@
  *  org.bukkit.event.block.Action
  *  org.bukkit.event.hanging.HangingPlaceEvent
  *  org.bukkit.event.player.PlayerInteractEvent
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package org.arkhamnetwork.Arkkit.patches;
 

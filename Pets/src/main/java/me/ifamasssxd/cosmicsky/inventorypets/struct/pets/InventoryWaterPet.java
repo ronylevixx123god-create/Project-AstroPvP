@@ -24,7 +24,7 @@ public class InventoryWaterPet extends InventoryPet {
    }
 
    public List getPetDescription(int level) {
-      return Lists.newArrayList(new String[]{CC.Gray + "A watery pet that is", CC.Gray + "capable of extracting water", CC.Gray + "from the air and condensing it.", "", CC.WhiteB + "Ability", CC.Gray + "Fills up to " + (level == this.getMaxLevel() ? "ALL" : this.getMaxFill(level) + "x"), CC.Gray + "empty buckets in your", CC.Gray + "inventory into water!", "", CC.WhiteB + "Cooldown", CC.Gray + " 5 Minutes"});
+      return Lists.newArrayList(new String[]{CC.Gray + "A watery pet that is", CC.Gray + "capable of extracting water", CC.Gray + "from the air and condensing it.", "", CC.WhiteB + "Ability", CC.Gray + "Fills up to " + (level == this.getMaxLevel() ? "ALL" : this.getMaxFill(level) + "x"), CC.Gray + "empty buckets in your", CC.Gray + "me.astropvp.cratekeys.inventory into water!", "", CC.WhiteB + "Cooldown", CC.Gray + " 5 Minutes"});
    }
 
    public int getMaxFill(int level) {
@@ -82,7 +82,7 @@ public class InventoryWaterPet extends InventoryPet {
             player.updateInventory();
          } else {
             petItem.setLastUsed(System.currentTimeMillis() - (delay - 10000L));
-            petItem.getPetType().sendMsg(player, "No empty buckets in your inventory!");
+            petItem.getPetType().sendMsg(player, "No empty buckets in your me.astropvp.cratekeys.inventory!");
             player.playSound(player.getLocation(), Sound.VILLAGER_NO, 3.0F, 0.7F);
          }
 

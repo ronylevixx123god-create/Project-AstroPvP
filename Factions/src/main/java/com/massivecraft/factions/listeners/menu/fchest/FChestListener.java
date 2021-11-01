@@ -2,8 +2,8 @@
  * Decompiled with CFR 0.145.
  *
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
  *  org.apache.commons.lang.StringUtils
  *  org.bukkit.Bukkit
  *  org.bukkit.Material
@@ -13,13 +13,13 @@
  *  org.bukkit.event.EventHandler
  *  org.bukkit.event.EventPriority
  *  org.bukkit.event.Listener
- *  org.bukkit.event.inventory.ClickType
- *  org.bukkit.event.inventory.InventoryClickEvent
- *  org.bukkit.event.inventory.InventoryDragEvent
- *  org.bukkit.inventory.Inventory
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.PlayerInventory
- *  org.bukkit.inventory.meta.ItemMeta
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.ClickType
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryDragEvent
+ *  org.bukkit.me.astropvp.cratekeys.inventory.Inventory
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.PlayerInventory
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
  */
 package com.massivecraft.factions.listeners.menu.fchest;
 
@@ -52,7 +52,7 @@ public class FChestListener
         if (event.getInventory() != null && event.getInventory().getName().startsWith("/f chest")) {
             event.setCancelled(true);
             Player p = (Player) event.getWhoClicked();
-            p.sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot drag items while viewing a /f chest!");
+            p.sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot drag me.astropvp.cratekeys.items while viewing a /f chest!");
         }
     }
 

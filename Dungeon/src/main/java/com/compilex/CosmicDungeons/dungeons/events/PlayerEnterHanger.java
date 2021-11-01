@@ -4,7 +4,7 @@
  * Could not load the following classes:
  *  me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijki
  *  me.ifamasssxd.cosmicbosses.struct.Boss
- *  me.ifamasssxd.cosmicbosses.utils.BossUtils
+ *  me.ifamasssxd.cosmicbosses.me.astropvp.cratekeys.utils.BossUtils
  *  org.bukkit.ChatColor
  *  org.bukkit.Location
  *  org.bukkit.block.Block

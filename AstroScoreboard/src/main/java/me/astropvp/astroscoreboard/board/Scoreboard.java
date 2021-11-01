@@ -393,7 +393,7 @@ public class Scoreboard implements BoardAdapter {
 /*
         if (WorldGuardUtils.inRegion(player.getLocation(), "infernalfull")) {
             List<String> board = new LinkedList<>();
-            EndPlayerData data = EndPlayerData.findPlayer(player);
+            EndPlayerData me.astropvp.cratekeys.data = EndPlayerData.findPlayer(player);
             board.add("");
             board.add(CC.translate("&b&lStronghold"));
             board.add(String.valueOf(CosmicHCFOutposts.get().getOutpostManager().getOutpostInside(player.getLocation()).getOutpostState()));
@@ -428,7 +428,7 @@ public class Scoreboard implements BoardAdapter {
         board.add(CC.White + " ● " + CC.Green + "XP" + CC.Gray + ": " + CC.White + NumberFormat.getIntegerInstance().format(player.getTotalExperience()));
         board.add(CC.White + " ● "+ CC.Green + "Ping" + CC.Gray + ": " + CC.LightPurple + getPing() + "ms");
         board.add(CC.White + " ● "+ CC.Green + "Balance" + CC.Gray + ": " + CC.White + "$" + formatIntoShortMoney((long) Econ.econ.getBalance(player)));
-        board.add(CC.White + " ● "+ CC.Green + "Mobcoins" + CC.Gray + ": " + CC.White + NumberFormat.getIntegerInstance().format(data.getCoins()) + "⛁");
+        board.add(CC.White + " ● "+ CC.Green + "Mobcoins" + CC.Gray + ": " + CC.White + NumberFormat.getIntegerInstance().format(me.astropvp.cratekeys.data.getCoins()) + "⛁");
         board.add(" ");
         if (fplayer != null) {
             if (fplayer.hasFaction()) {

@@ -3,7 +3,7 @@
  * 
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils
- *  com.cosmicpvp.cosmicutils.utils.WorldGuardUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.WorldGuardUtils
  *  org.bukkit.Bukkit
  *  org.bukkit.Location
  *  org.bukkit.event.Event

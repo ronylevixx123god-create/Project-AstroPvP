@@ -6,8 +6,8 @@
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.Inventory
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.Inventory
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package com.cosmicpvp.titles.utils;
 

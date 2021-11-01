@@ -4,9 +4,9 @@
  * Could not load the following classes:
  *  org.bukkit.Material
  *  org.bukkit.enchantments.Enchantment
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.EnchantmentStorageMeta
- *  org.bukkit.inventory.meta.ItemMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.EnchantmentStorageMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
  */
 package com.rit.sucy.enchanting;
 

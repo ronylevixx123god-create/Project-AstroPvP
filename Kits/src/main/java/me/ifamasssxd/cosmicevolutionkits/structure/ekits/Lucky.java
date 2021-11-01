@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.compilex.CosmicCustomCreepers.enums.CreeperTypes
+ *  com.compilex.CosmicCustomCreepers.me.astropvp.cratekeys.enums.CreeperTypes
  *  com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity
  *  com.cosmicpvp.cosmicutils.itembuilder.BlackScrollBuilder
  *  com.cosmicpvp.cosmicutils.itembuilder.BoosterBuilder
@@ -27,21 +27,21 @@
  *  com.cosmicpvp.cosmicutils.itembuilder.YijkiStaffBuilder
  *  com.cosmicpvp.cosmicutils.struct.ItemTier
  *  com.cosmicpvp.cosmicutils.struct.LootTable
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.CustomItemUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CustomItemUtils
  *  com.google.common.collect.Lists
  *  me.ifamasssxd.cosmicskycustoms.struct.CustomItemBuilder
  *  me.ifamasssxd.killtracker.KillTrackerAPI
- *  me.ifamasssxd.killtracker.listeners.Tracker
+ *  me.ifamasssxd.killtracker.me.astropvp.cratekeys.listeners.Tracker
  *  org.arkhamnetwork.Arkkit.patches.ExpBottles
  *  org.arkhamnetwork.Arkkit.patches.ItemID
- *  org.arkhamnetwork.enchantments.items.EMPPulseItem
+ *  org.arkhamnetwork.enchantments.me.astropvp.cratekeys.items.EMPPulseItem
  *  org.arkhamnetwork.enchantments.libs.OrbType
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.ifamasssxd.cosmicevolutionkits.structure.ekits;
 

@@ -4,12 +4,12 @@
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.gui.CosmicGUI
  *  com.cosmicpvp.cosmicutils.gui.InventoryItem
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.InventoryUtils
- *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.InventoryUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
  *  org.bukkit.Material
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.plugin.java.JavaPlugin
  */
 package me.ifamasssxd.cosmicevolutionkits.menu;
@@ -40,7 +40,7 @@ extends CosmicGUI {
     public void redraw() {
         int slot = 0;
         Runnable noBueno = () -> {
-            this.player.sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot withdraw items from the kit preview!");
+            this.player.sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot withdraw me.astropvp.cratekeys.items from the kit preview!");
             this.player.sendMessage(CC.Gray + "Unlock access to this kit with a Fallen Hero from " + CC.GrayU + "buy.astropvp.net");
         };
         for (ItemStack item : this.items) {

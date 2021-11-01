@@ -4,9 +4,9 @@
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.gui.CosmicGUI
  *  com.cosmicpvp.cosmicutils.gui.InventoryItem
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.InventoryUtils
- *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.InventoryUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
  *  com.google.common.collect.Lists
  *  com.massivecraft.factions.FPlayer
  *  com.massivecraft.factions.FPlayers

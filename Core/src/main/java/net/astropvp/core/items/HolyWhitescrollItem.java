@@ -5,9 +5,9 @@
  *  com.cosmicpvp.cosmicutils.exceptions.CosmicException
  *  com.cosmicpvp.cosmicutils.exceptions.PrefixedException
  *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
  *  me.ifamasssxd.cosmicskycustoms.exceptions.ItemDupedException
  *  me.ifamasssxd.cosmicskycustoms.struct.CosmicItem
  *  me.ifamasssxd.cosmicskycustoms.struct.InventoryInteractable
@@ -15,8 +15,8 @@
  *  org.arkhamnetwork.enchantments.EnchantmentBook
  *  org.bukkit.Material
  *  org.bukkit.entity.Player
- *  org.bukkit.event.inventory.InventoryClickEvent
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package net.astropvp.core.items;
 
@@ -68,7 +68,7 @@ implements InventoryInteractable {
         NBTTagCompoundBuilder cosmicData = clickedWrapper.getCompoundOrCreate("conaxData");
         if (cosmicData != null) {
             if (cosmicData.hasKey("abilitySet")) {
-                throw new PrefixedException("You cannot apply a Holy Whitescroll to Mastery Kit items!");
+                throw new PrefixedException("You cannot apply a Holy Whitescroll to Mastery Kit me.astropvp.cratekeys.items!");
             }
             if (cosmicData.hasKey("corrupted")) {
                 throw new PrefixedException("Holy White Scrolls can no longer be applied to this corrupted item!");

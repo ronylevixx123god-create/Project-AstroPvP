@@ -6,7 +6,7 @@
  *  net.minecraft.util.com.google.gson.JsonObject
  *  net.minecraft.util.com.google.gson.JsonSerializationContext
  *  net.minecraft.util.com.google.gson.JsonSerializer
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.recolance.auction.data;
 

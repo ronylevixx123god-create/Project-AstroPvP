@@ -3,7 +3,7 @@
  *
  * Could not load the following classes:
  *  com.cosmicpvp.factionpoints.CosmicFactionPoints
- *  com.cosmicpvp.factionpoints.managers.CoreChunkManager
+ *  com.cosmicpvp.factionpoints.me.astropvp.cratekeys.managers.CoreChunkManager
  *  com.cosmicpvp.factionpoints.struct.ExpiringChunkData
  *  org.bukkit.Bukkit
  *  org.bukkit.Location

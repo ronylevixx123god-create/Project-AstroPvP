@@ -3,11 +3,11 @@
  *
  * Could not load the following classes:
  *  com.compilex.CosmicOutposts.CosmicOutpostsAPI
- *  com.compilex.CosmicOutposts.outpost.enums.OutpostTier
+ *  com.compilex.CosmicOutposts.outpost.me.astropvp.cratekeys.enums.OutpostTier
  *  com.cosmicpvp.cosmicutils.CosmicUtils
  *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
  *  me.ifamasssxd.cosmichcf.api.HCFOutpostAPI
  *  me.ifamasssxd.cosmichcf.struct.OutpostType
  *  net.minecraft.server.v1_7_R4.NBTBase
@@ -20,10 +20,10 @@
  *  org.bukkit.event.Listener
  *  org.bukkit.event.entity.EntityDamageByEntityEvent
  *  org.bukkit.event.entity.EntityDamageEvent$DamageModifier
- *  org.bukkit.event.inventory.CraftItemEvent
- *  org.bukkit.event.inventory.InventoryClickEvent
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.CraftItemEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
  */
 package com.compilex.CosmicArmorSets.listeners;
 

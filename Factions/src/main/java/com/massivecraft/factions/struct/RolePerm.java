@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.145.
  *
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
  *  com.google.common.collect.Lists
  *  org.apache.commons.lang.StringUtils
  *  org.bukkit.ChatColor
@@ -34,9 +34,9 @@ public enum RolePerm {
     DISBAND("Disband", "Grants the ability to DISBAND the faction.", Role.COLEADER),
     UNCLAIMALL("Unclaim All", "Grants the ability to Unclaim ALL\n of your factions land.", Role.COLEADER),
     EDIT_PLAYER_PERMS("Edit /f perms", "Grants the ability to Edit\nFaction Player Permissions", Role.COLEADER),
-    F_TNT_DEPOSIT("/f tnt deposit", "Grants the ability to deposit TNT into the /f tnt inventory.", Role.NORMAL, "deposit TNT"),
-    F_TNT_WITHDRAW("/f tnt withdraw", "Grants the ability to withdraw TNT into the /f tnt inventory.", Role.MODERATOR, "withdraw TNT"),
-    F_CHEST("/f chest", "Grants the ability to access the /f chest inventory.", Role.MODERATOR);
+    F_TNT_DEPOSIT("/f tnt deposit", "Grants the ability to deposit TNT into the /f tnt me.astropvp.cratekeys.inventory.", Role.NORMAL, "deposit TNT"),
+    F_TNT_WITHDRAW("/f tnt withdraw", "Grants the ability to withdraw TNT into the /f tnt me.astropvp.cratekeys.inventory.", Role.MODERATOR, "withdraw TNT"),
+    F_CHEST("/f chest", "Grants the ability to access the /f chest me.astropvp.cratekeys.inventory.", Role.MODERATOR);
 
     private String display;
     private String description;

@@ -180,7 +180,7 @@
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>utils</artifactId>
+            <artifactId>me.astropvp.cratekeys.utils</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/Utils-0.1.jar</systemPath>

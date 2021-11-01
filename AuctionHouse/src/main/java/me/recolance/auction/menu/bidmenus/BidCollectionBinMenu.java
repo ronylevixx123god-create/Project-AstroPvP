@@ -4,17 +4,17 @@
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.gui.CosmicGUI
  *  com.cosmicpvp.cosmicutils.gui.InventoryItem
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.InventoryUtils
- *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.utils.PlayerUtil
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.InventoryUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.PlayerUtil
  *  org.arkhamnetwork.Arkkit.patches.ItemID
  *  org.arkhamnetwork.Arkkit.plugins.ArkPlugins
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.recolance.auction.menu.bidmenus;
 
@@ -57,7 +57,7 @@ public class BidCollectionBinMenu
                         return;
                     }
                     if (this.player.getInventory().firstEmpty() == -1) {
-                        this.player.sendMessage((Object) ChatColor.RED + "You do not have the inventory space for this item!");
+                        this.player.sendMessage((Object) ChatColor.RED + "You do not have the me.astropvp.cratekeys.inventory space for this item!");
                         return;
                     }
                     binItems.remove((Object) toClaim);

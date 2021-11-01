@@ -2,16 +2,16 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.compilex.CosmicArmorSets.enums.HeroicWeaponType
+ *  com.compilex.CosmicArmorSets.me.astropvp.cratekeys.enums.HeroicWeaponType
  *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
  *  com.google.common.collect.Lists
  *  net.minecraft.server.v1_7_R4.NBTBase
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
  *  org.bukkit.plugin.Plugin
  */
 package com.compilex.CosmicKOTH;
@@ -51,7 +51,7 @@ public class CosmicKOTHAPI {
         lore.add("");
         lore.add(ChatColor.translateAlternateColorCodes((char)'&', (String)("&c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH " + CC.WhiteB + "WEAPON BONUS")));
         lore.add(CC.WhiteB + " * " + CC.White + ability);
-        lore.add(CC.GrayI + "(Requires all 4 koth armor items)");
+        lore.add(CC.GrayI + "(Requires all 4 koth armor me.astropvp.cratekeys.items)");
         lore.add("");
         lore.add(CC.AquaB + "(!) " + (Object)ChatColor.AQUA + "Claimed by " + CC.LightPurpleB + winner + (Object)ChatColor.AQUA + " on " + CC.LightPurpleU + KothItemUtils.format.format(new Date()));
         im.setLore(lore);

@@ -4,8 +4,8 @@
  * Could not load the following classes:
  *  com.compilex.CompilexPermissions.manager.CacheManager
  *  com.cosmicpvp.cosmicutils.CosmicUtils
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.TimeUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.TimeUtils
  *  com.google.common.collect.Lists
  *  me.libraryaddict.disguise.DisguiseAPI
  *  me.libraryaddict.disguise.disguisetypes.DisguiseType
@@ -17,7 +17,7 @@
  *  org.bukkit.Material
  *  org.bukkit.entity.Entity
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.metadata.FixedMetadataValue
  *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.plugin.Plugin

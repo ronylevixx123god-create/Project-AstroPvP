@@ -4,15 +4,15 @@
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.gui.CosmicGUI
  *  com.cosmicpvp.cosmicutils.itembuilder.JsonItemSerializer
- *  com.cosmicpvp.cosmicutils.struct.managers.CosmicManager
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.JSONUtils
- *  com.cosmicpvp.cosmicutils.utils.TimeUtils
+ *  com.cosmicpvp.cosmicutils.struct.me.astropvp.cratekeys.managers.CosmicManager
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.JSONUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.TimeUtils
  *  net.minecraft.util.com.google.gson.Gson
  *  net.minecraft.util.com.google.gson.GsonBuilder
  *  net.minecraft.util.com.google.gson.reflect.TypeToken
  *  org.bukkit.Bukkit
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.plugin.Plugin
  */
 package me.ifamasssxd.cosmicmysterychest.managers;
@@ -95,7 +95,7 @@ public class MysteryChestManager
                     MysteryChest chest = (MysteryChest) JSONUtils.fromJson(found, this.token, this.gson);
                     if (chest == null) continue;
                     this.mysteryChestMap.put(chest.getInternalName(), chest);
-                    this.plugin.getLogger().info("Loaded Chest '" + chest.getInternalName() + "' into memory: " + chest.getLootItems().size() + " items");
+                    this.plugin.getLogger().info("Loaded Chest '" + chest.getInternalName() + "' into memory: " + chest.getLootItems().size() + " me.astropvp.cratekeys.items");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

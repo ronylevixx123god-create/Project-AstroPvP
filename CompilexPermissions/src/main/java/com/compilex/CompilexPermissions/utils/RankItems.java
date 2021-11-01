@@ -2,12 +2,12 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils
+ *  com.cosmicpvp.CosmicSpaceChests.me.astropvp.cratekeys.utils.ItemUtils
  *  org.apache.commons.lang.StringUtils
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package com.compilex.CompilexPermissions.utils;
 

@@ -22,7 +22,7 @@
  *  org.bukkit.event.block.BlockPistonExtendEvent
  *  org.bukkit.event.block.BlockPistonRetractEvent
  *  org.bukkit.event.block.BlockPlaceEvent
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.material.MaterialData
  */
 package com.massivecraft.factions.listeners;

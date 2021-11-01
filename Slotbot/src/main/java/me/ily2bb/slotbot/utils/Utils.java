@@ -114,7 +114,7 @@ public class Utils {
     }
 
     public static int getTotalPercentage() {
-        final List<String> list = (List<String>) SlotBotPlugin.getInstance().getConfig().get("items");
+        final List<String> list = (List<String>) SlotBotPlugin.getInstance().getConfig().get("me.astropvp.cratekeys.items");
         int total = 0;
         for (final String l : list) {
             total += getPercentage(l);
@@ -124,7 +124,7 @@ public class Utils {
 
     public static Object[] getMap() {
         final HashMap<Integer[], ItemStack> items = new HashMap<Integer[], ItemStack>();
-        final List<String> list = (List<String>) SlotBotPlugin.getInstance().getConfig().get("items");
+        final List<String> list = (List<String>) SlotBotPlugin.getInstance().getConfig().get("me.astropvp.cratekeys.items");
         int start = 0;
         for (final String l : list) {
             final int percentage = getPercentage(l);

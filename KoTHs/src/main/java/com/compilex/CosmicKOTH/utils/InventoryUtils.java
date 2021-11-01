@@ -2,15 +2,15 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
  *  com.google.common.collect.Lists
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
  *  org.bukkit.DyeColor
  *  org.bukkit.Material
- *  org.bukkit.inventory.Inventory
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.Inventory
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
  */
 package com.compilex.CosmicKOTH.utils;
 

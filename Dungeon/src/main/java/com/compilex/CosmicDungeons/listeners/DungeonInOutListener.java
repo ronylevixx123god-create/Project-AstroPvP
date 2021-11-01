@@ -31,7 +31,7 @@ implements Listener {
         DungeonPlayer dp = DungeonsAPI.get().getPlayerDungeonData(e.getPlayer());
         if (dp.getCurrentDungeon() != null) {
             if (!e.getPlayer().getWorld().equals((Object)dp.getCurrentDungeon().getWorld())) {
-                Logger.debug("Player " + (Object)e.getPlayer() + " is in world " + e.getPlayer().getWorld().getName() + ", but has currentDungeon data set to: " + dp.getCurrentDungeon());
+                Logger.debug("Player " + (Object)e.getPlayer() + " is in world " + e.getPlayer().getWorld().getName() + ", but has currentDungeon me.astropvp.cratekeys.data set to: " + dp.getCurrentDungeon());
             }
             if (Arkkit.get().isRebooting() && dp.getCurrentDungeon().getDungeonStatus() != DungeonState.COMPLETE && e.getPlayer().hasMetadata("dungeonKeyUsed_" + dp.getCurrentDungeon().getDungeonType().getInternalName())) {
                 try {

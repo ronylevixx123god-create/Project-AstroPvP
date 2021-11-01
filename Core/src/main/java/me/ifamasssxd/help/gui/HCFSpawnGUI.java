@@ -3,10 +3,10 @@
  * 
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.gui.CosmicGUI
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.utils.LocationUtils
- *  com.cosmicpvp.cosmicutils.utils.WorldGuardUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.LocationUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.WorldGuardUtils
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
  *  org.bukkit.Location
@@ -49,9 +49,9 @@ extends CosmicGUI {
         String teleString = this.canTeleport ? CC.Gray + "Click to teleport to this location!" : CC.Red + "Visit the spawn area to use this shortcut!";
         Location shop = new Location(world, -50.0, 72.0, 45.0, 148.2f, 5.1f);
         Location spawn = world.getSpawnLocation();
-        this.setItem(11, new ItemBuilder(Material.DIAMOND, CC.GoldB + "Shop", CC.Gray + "Earn money by selling items to the Shop!", "", CC.GoldB + "Coordinates", LocationUtils.printPretty((Location)shop, (ChatColor)ChatColor.GOLD, (boolean)false), "", teleString).build(), this.getTele(shop));
+        this.setItem(11, new ItemBuilder(Material.DIAMOND, CC.GoldB + "Shop", CC.Gray + "Earn money by selling me.astropvp.cratekeys.items to the Shop!", "", CC.GoldB + "Coordinates", LocationUtils.printPretty((Location)shop, (ChatColor)ChatColor.GOLD, (boolean)false), "", teleString).build(), this.getTele(shop));
         Location fishingLocation = new Location(world, 32.0, 68.0, -26.0, -87.2f, 5.9f);
-        this.setItem(15, new ItemBuilder(Material.FISHING_ROD, CC.AquaB + "Fishing Lake", CC.Gray + "A quiet place to fish for food and items!", "", CC.AquaB + "Coordinates", LocationUtils.printPretty((Location)fishingLocation, (ChatColor)ChatColor.AQUA, (boolean)false), "", teleString).build(), this.getTele(fishingLocation));
+        this.setItem(15, new ItemBuilder(Material.FISHING_ROD, CC.AquaB + "Fishing Lake", CC.Gray + "A quiet place to fish for food and me.astropvp.cratekeys.items!", "", CC.AquaB + "Coordinates", LocationUtils.printPretty((Location)fishingLocation, (ChatColor)ChatColor.AQUA, (boolean)false), "", teleString).build(), this.getTele(fishingLocation));
         this.setItem(22, new ItemBuilder(Material.BED, CC.GreenB + "Spawn", CC.Gray + "The center of the world!", "", CC.GreenB + "Coordinates", CC.Green + "x0, z0", "", teleString).build(), this.getTele(spawn));
         Location nether = new Location(world, -43.0, 74.0, -52.0, 91.7f, 2.9f);
         this.setItem(this.size - 16, new ItemBuilder(Material.NETHER_BRICK, CC.LightPurpleB + "Nether Portal", CC.Gray + "A dark and scary place full of treasures.", "", CC.LightPurpleB + "Coordinates", LocationUtils.printPretty((Location)nether, (ChatColor)ChatColor.LIGHT_PURPLE, (boolean)false), "", teleString).build(), this.getTele(nether));

@@ -7,9 +7,9 @@
  *  org.bukkit.Material
  *  org.bukkit.entity.Player
  *  org.bukkit.event.Listener
- *  org.bukkit.inventory.Inventory
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.Inventory
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
  *  org.bukkit.plugin.Plugin
  */
 package com.rit.sucy.Anvil;

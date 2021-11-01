@@ -5,7 +5,7 @@
  *  com.rit.sucy.CustomEnchantment
  *  com.rit.sucy.EnchantmentAPI
  *  org.bukkit.enchantments.Enchantment
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.ifamasssxd.cosmicevolutionkits.utils;
 

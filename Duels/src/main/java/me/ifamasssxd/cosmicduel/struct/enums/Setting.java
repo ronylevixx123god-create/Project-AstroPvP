@@ -3,7 +3,7 @@
  * 
  * Could not load the following classes:
  *  org.bukkit.Material
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.ifamasssxd.cosmicduel.struct.enums;
 

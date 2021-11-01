@@ -9,7 +9,7 @@
  *  org.bukkit.event.EventPriority
  *  org.bukkit.event.Listener
  *  org.bukkit.event.entity.EntityDeathEvent
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package org.arkhamnetwork.Arkkit.patches;
 

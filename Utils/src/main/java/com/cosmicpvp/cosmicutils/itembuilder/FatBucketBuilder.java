@@ -3,7 +3,7 @@
  *
  * Could not load the following classes:
  *  net.minecraft.server.v1_7_R4.NBTBase
- *  org.arkhamnetwork.Arkkit.utils.ItemUtils
+ *  org.arkhamnetwork.Arkkit.me.astropvp.cratekeys.utils.ItemUtils
  */
 package com.cosmicpvp.cosmicutils.itembuilder;
 

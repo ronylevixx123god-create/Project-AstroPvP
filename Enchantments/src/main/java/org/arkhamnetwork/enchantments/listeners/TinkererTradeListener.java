@@ -65,7 +65,7 @@ public class TinkererTradeListener implements Listener {
             }
             if (e.getRawSlot() == 49) {
                 int added = 0;
-                final Inventory inventory = p1.getOpenInventory().getTopInventory();
+                final Inventory me.astropvp.cratekeys.inventory = p1.getOpenInventory().getTopInventory();
                 for (int i = 0; i < p1.getInventory().getSize(); ++i) {
                     final ItemStack item = p1.getInventory().getItem(i);
                     if (item != null) {
@@ -76,7 +76,7 @@ public class TinkererTradeListener implements Listener {
                                 tinker.setCancelled(true);
                             }
                             if (tinker.callEvent()) {
-                                //final int nextOpenSlot = NewTradeListener.getNextOpenTradeSlot(inventory);
+                                //final int nextOpenSlot = NewTradeListener.getNextOpenTradeSlot(me.astropvp.cratekeys.inventory);
                                 if (nextOpenSlot == -1) {
                                     break;
                                 }
@@ -88,10 +88,10 @@ public class TinkererTradeListener implements Listener {
                     }
                 }
                 if (added <= 0) {
-                    p1.sendMessage(CC.RedB + "(!) " + CC.Red + "The Tinkerer is not interested in any of your inventory items!");
+                    p1.sendMessage(CC.RedB + "(!) " + CC.Red + "The Tinkerer is not interested in any of your me.astropvp.cratekeys.inventory me.astropvp.cratekeys.items!");
                     return;
                 }
-                p1.sendMessage(CC.GreenB + "(!) " + CC.Green + "Offering " + CC.GreenB + added + " " + CC.Green + "items to the Tinkerer.");
+                p1.sendMessage(CC.GreenB + "(!) " + CC.Green + "Offering " + CC.GreenB + added + " " + CC.Green + "me.astropvp.cratekeys.items to the Tinkerer.");
             } else if (e.getWhoClicked().getInventory().equals(p1.getOpenInventory().getTopInventory())) {
                 //if (!NewTrade.getValidSlots().contains(e.getRawSlot())) {
                     //return;
@@ -279,9 +279,9 @@ public class TinkererTradeListener implements Listener {
         List<ItemStack> given = new ArrayList<>();
         List<ItemStack> received = new ArrayList<>();
         int xpCount = 0;
-        for (final Map.Entry<Integer, Integer> data : NewTrade.slotConversionMap.entrySet()) {
-            int slot = data.getValue();
-            int traderSlot = data.getKey();
+        for (final Map.Entry<Integer, Integer> me.astropvp.cratekeys.data : NewTrade.slotConversionMap.entrySet()) {
+            int slot = me.astropvp.cratekeys.data.getValue();
+            int traderSlot = me.astropvp.cratekeys.data.getKey();
             ItemStack item = inv1.getItem(slot);
             if (item != null && item.getType() != Material.STAINED_GLASS_PANE) {
                 ItemStack giving = inv1.getItem(traderSlot);

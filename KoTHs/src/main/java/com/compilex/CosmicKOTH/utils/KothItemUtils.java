@@ -3,19 +3,19 @@
  * 
  * Could not load the following classes:
  *  com.compilex.CosmicArmorSets.CosmicArmorSetsAPI
- *  com.compilex.CosmicArmorSets.enums.ArmorSet
- *  com.compilex.CosmicArmorSets.enums.HeroicWeaponType
- *  com.compilex.CosmicArmorSets.enums.armorsets.KothArmorSet
+ *  com.compilex.CosmicArmorSets.me.astropvp.cratekeys.enums.ArmorSet
+ *  com.compilex.CosmicArmorSets.me.astropvp.cratekeys.enums.HeroicWeaponType
+ *  com.compilex.CosmicArmorSets.me.astropvp.cratekeys.enums.armorsets.KothArmorSet
  *  com.rit.sucy.CustomEnchantment
  *  com.rit.sucy.EnchantmentAPI
- *  org.arkhamnetwork.Arkkit.utils.ItemUtils
+ *  org.arkhamnetwork.Arkkit.me.astropvp.cratekeys.utils.ItemUtils
  *  org.arkhamnetwork.enchantments.EnchantmentBook
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
  *  org.bukkit.enchantments.Enchantment
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package com.compilex.CosmicKOTH.utils;
 

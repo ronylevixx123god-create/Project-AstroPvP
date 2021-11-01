@@ -2,17 +2,17 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.FactionUtils
- *  com.cosmicpvp.cosmicutils.utils.PlayerUtil
- *  com.cosmicpvp.cosmicutils.utils.TimeUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.FactionUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.PlayerUtil
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.TimeUtils
  *  com.google.common.collect.Lists
  *  com.massivecraft.factions.Faction
  *  org.bukkit.Bukkit
  *  org.bukkit.configuration.ConfigurationSection
  *  org.bukkit.configuration.file.FileConfiguration
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package com.compilex.CosmicDungeons.dungeons.libs;
 
@@ -115,7 +115,7 @@ public class TopDungeonTime {
                     if (!whoCouldReceiveLoot.contains(pl.getUniqueId())) {
                         pl.sendMessage(CC.RedB + "(!) " + CC.Red + "You qualified for a bonus Dungeon Lootbag because of setting a new runtime record, but you already received this dungeon loot recently!");
                     } else {
-                        PlayerUtil.giveOrDropProtectedItem((Player)pl, (ItemStack)DungeonsRewardsAPI.getDungeonLootBag(pl, dungeon), (int)-1, (String)null, (String)"Your inventory was full, dropped on the ground!");
+                        PlayerUtil.giveOrDropProtectedItem((Player)pl, (ItemStack)DungeonsRewardsAPI.getDungeonLootBag(pl, dungeon), (int)-1, (String)null, (String)"Your me.astropvp.cratekeys.inventory was full, dropped on the ground!");
                     }
                 });
             } else {

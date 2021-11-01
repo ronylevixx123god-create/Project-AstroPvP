@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
  *  me.libraryaddict.disguise.disguisetypes.DisguiseType
  *  org.apache.commons.lang.StringUtils
  *  org.arkhamnetwork.Arkkit.patches.ItemID
@@ -17,7 +17,7 @@
  *  org.bukkit.event.Listener
  *  org.bukkit.event.block.Action
  *  org.bukkit.event.player.PlayerInteractEvent
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.ifamasssxd.cosmicdisguises.listeners;
 
@@ -54,7 +54,7 @@ implements Listener {
                 return;
             }
             if (item.getAmount() > 1) {
-                event.getPlayer().sendMessage(CC.Red + "You cannot claim stacked disguise items!");
+                event.getPlayer().sendMessage(CC.Red + "You cannot claim stacked disguise me.astropvp.cratekeys.items!");
                 return;
             }
             event.setCancelled(true);

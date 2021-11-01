@@ -29,7 +29,7 @@ public class AutoCraftTNT
             return;
         }
         sandPrice = Arkkit.get().getConfig().getDouble("settings.auto_craft_tnt.sandPrice");
-        this.registerCommand(new CommandTNT("tnt", "/<command>", "Automatically crafts all TNT ingredients in inventory."));
+        this.registerCommand(new CommandTNT("tnt", "/<command>", "Automatically crafts all TNT ingredients in me.astropvp.cratekeys.inventory."));
     }
 
     @Override

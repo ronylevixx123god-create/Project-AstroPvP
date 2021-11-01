@@ -5,7 +5,7 @@
  *  org.bukkit.enchantments.Enchantment
  *  org.bukkit.enchantments.EnchantmentTarget
  *  org.bukkit.enchantments.EnchantmentWrapper
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.ifamasssxd.cosmicduel.utils;
 

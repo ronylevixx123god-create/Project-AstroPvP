@@ -5,13 +5,13 @@
  *  com.cosmicpvp.cosmicutils.CosmicUtils
  *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
  *  com.cosmicpvp.cosmicutils.struct.DecimalFormatType
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.HCFOutpostUtils
- *  com.cosmicpvp.cosmicutils.utils.NumberUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.HCFOutpostUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NumberUtils
  *  me.vaqxine.NetworkManager.NetworkManager
  *  net.milkbowl.vault.economy.Economy
  *  org.arkhamnetwork.Arkkit.Arkkit
- *  org.arkhamnetwork.Arkkit.commands.CommandArkReboot
+ *  org.arkhamnetwork.Arkkit.me.astropvp.cratekeys.commands.CommandArkReboot
  *  org.arkhamnetwork.Arkkit.patches.AntiCrash
  *  org.arkhamnetwork.Arkkit.patches.ItemID
  *  org.arkhamnetwork.Arkkit.plugins.ArkPlugins
@@ -21,7 +21,7 @@
  *  org.bukkit.Sound
  *  org.bukkit.entity.Player
  *  org.bukkit.event.Event
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.metadata.FixedMetadataValue
  *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.plugin.Plugin
@@ -249,7 +249,7 @@ public class Controller {
         ArrayList<UnclaimedListing> claim = new ArrayList<UnclaimedListing>();
         for (UnclaimedListing listing : DataHolder.getUnclaimedListings().get(player.getUniqueId())) {
             if (i >= space && !Util.hasInventorySpace(player)) {
-                Util.message(player, "&c&l(!) &cYou don't have enough inventory space.");
+                Util.message(player, "&c&l(!) &cYou don't have enough me.astropvp.cratekeys.inventory space.");
                 break;
             }
             if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
@@ -298,7 +298,7 @@ public class Controller {
         player.sendMessage(CC.Gray + "Create an auction package for others to bid on!");
         player.sendMessage("");
         player.sendMessage(CC.Yellow + "/ah collect");
-        player.sendMessage(CC.Gray + "Collect items from previous bid auctions!");
+        player.sendMessage(CC.Gray + "Collect me.astropvp.cratekeys.items from previous bid auctions!");
         player.sendMessage("");
         player.sendMessage(CC.Yellow + "/ah bids");
         player.sendMessage(CC.Gray + "View all active bid auctions!");

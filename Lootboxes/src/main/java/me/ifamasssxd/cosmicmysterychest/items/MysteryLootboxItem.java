@@ -6,12 +6,12 @@
  *  com.cosmicpvp.cosmicutils.exceptions.CosmicException
  *  com.cosmicpvp.cosmicutils.exceptions.PrefixedException
  *  com.cosmicpvp.cosmicutils.struct.LootTable
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.utils.ItemUtils
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
- *  com.cosmicpvp.cosmicutils.utils.PlayerUtil
- *  com.cosmicpvp.cosmicutils.utils.RandomFireworks
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.PlayerUtil
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.RandomFireworks
  *  com.google.common.collect.Lists
  *  me.ifamasssxd.cosmicskycustoms.exceptions.ItemDupedException
  *  me.ifamasssxd.cosmicskycustoms.struct.CosmicItem
@@ -19,7 +19,7 @@
  *  org.bukkit.Material
  *  org.bukkit.entity.Player
  *  org.bukkit.event.player.PlayerInteractEvent
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.ifamasssxd.cosmicmysterychest.items;
 

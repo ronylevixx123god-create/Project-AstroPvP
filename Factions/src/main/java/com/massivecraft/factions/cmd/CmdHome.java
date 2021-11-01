@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.145.
  *
  * Could not load the following classes:
- *  org.arkhamnetwork.Arkkit.utils.WorldGuardUtils
+ *  org.arkhamnetwork.Arkkit.me.astropvp.cratekeys.utils.WorldGuardUtils
  *  org.bukkit.Location
  *  org.bukkit.OfflinePlayer
  *  org.bukkit.Server

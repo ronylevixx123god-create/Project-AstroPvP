@@ -5,13 +5,13 @@
  *  com.compilex.CosmicDungeons.DungeonsRewardsAPI
  *  com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI
  *  com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity
- *  com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils
+ *  com.cosmicpvp.CosmicSpaceChests.me.astropvp.cratekeys.utils.ItemUtils
  *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.GeneralUtil
- *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.utils.JSONMessage
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.GeneralUtil
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.JSONMessage
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
  *  com.google.common.collect.Lists
  *  com.rit.sucy.CustomEnchantment
  *  com.rit.sucy.EnchantmentAPI
@@ -34,8 +34,8 @@
  *  org.bukkit.command.CommandSender
  *  org.bukkit.enchantments.Enchantment
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
  */
 package me.cosmicpvp.CosmicGlobalKits;
 
@@ -120,7 +120,7 @@ public class CosmicGlobalKitsAPI {
         Map<GlobalKits, GlobalKitData> data = user.getGlobalKits();
         if (!data.containsKey((Object)kit)) {
             data.put(kit, new GlobalKitData(0L, 0));
-            Bukkit.getLogger().info("Registering global kit data for new kit claim for " + playerName + "!");
+            Bukkit.getLogger().info("Registering global kit me.astropvp.cratekeys.data for new kit claim for " + playerName + "!");
         }
     }
 

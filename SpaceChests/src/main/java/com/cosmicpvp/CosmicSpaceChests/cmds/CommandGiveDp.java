@@ -3,7 +3,7 @@
  * 
  * Could not load the following classes:
  *  org.arkhamnetwork.Arkkit.patches.Easter
- *  org.arkhamnetwork.CosmicCustomTNT.enums.TNTTypes
+ *  org.arkhamnetwork.CosmicCustomTNT.me.astropvp.cratekeys.enums.TNTTypes
  *  org.arkhamnetwork.enchantments.EnchantmentBook
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
@@ -11,7 +11,7 @@
  *  org.bukkit.command.CommandExecutor
  *  org.bukkit.command.CommandSender
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package com.cosmicpvp.CosmicSpaceChests.cmds;
 

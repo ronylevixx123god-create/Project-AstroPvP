@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.145.
  *
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
  *  me.ifamasssxd.factionupgrades.FactionUpgradeAPI
  *  me.ifamasssxd.factionupgrades.struct.FactionUpgrade
  *  org.bukkit.Bukkit

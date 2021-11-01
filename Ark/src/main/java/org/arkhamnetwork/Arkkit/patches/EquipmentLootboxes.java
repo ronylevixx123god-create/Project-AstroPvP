@@ -3,18 +3,18 @@
  *
  * Could not load the following classes:
  *  com.compilex.CosmicArmorSets.CosmicArmorSetsAPI
- *  com.compilex.CosmicArmorSets.enums.ArmorSet
- *  com.compilex.CosmicArmorSets.enums.HeroicArmorType
+ *  com.compilex.CosmicArmorSets.me.astropvp.cratekeys.enums.ArmorSet
+ *  com.compilex.CosmicArmorSets.me.astropvp.cratekeys.enums.HeroicArmorType
  *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
  *  com.cosmicpvp.cosmicutils.gui.CosmicGUI
  *  com.cosmicpvp.cosmicutils.gui.InventoryItem
  *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.GeneralUtil
- *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.utils.ItemUtils
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
- *  com.cosmicpvp.cosmicutils.utils.PlayerUtil
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.GeneralUtil
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.PlayerUtil
  *  com.google.common.collect.Lists
  *  me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKitsAPI
  *  me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits
@@ -36,9 +36,9 @@
  *  org.bukkit.event.Listener
  *  org.bukkit.event.block.Action
  *  org.bukkit.event.player.PlayerInteractEvent
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
- *  org.bukkit.inventory.meta.LeatherArmorMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.LeatherArmorMeta
  *  org.bukkit.plugin.Plugin
  *  org.bukkit.plugin.java.JavaPlugin
  *  org.bukkit.scheduler.BukkitRunnable
@@ -162,7 +162,7 @@ public class EquipmentLootboxes
                 public void run() {
                     if (!LootboxOpenMenuAnimation.this.player.isValid() || LootboxOpenMenuAnimation.this.player.getOpenInventory() == null || !LootboxOpenMenuAnimation.this.inventory.equals(LootboxOpenMenuAnimation.this.player.getOpenInventory().getTopInventory())) {
                         this.cancel();
-                        Bukkit.getLogger().info("Cancelling task for " + LootboxOpenMenuAnimation.this.player.getName() + " due to not having inventory open!");
+                        Bukkit.getLogger().info("Cancelling task for " + LootboxOpenMenuAnimation.this.player.getName() + " due to not having me.astropvp.cratekeys.inventory open!");
                         return;
                     }
                     if (LootboxOpenMenuAnimation.this.animationTick > LootboxOpenMenuAnimation.this.MAX_ANIMATION_TICKS) {

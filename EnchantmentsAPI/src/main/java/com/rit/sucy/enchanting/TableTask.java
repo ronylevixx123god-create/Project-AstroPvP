@@ -5,10 +5,10 @@
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.EnchantingInventory
- *  org.bukkit.inventory.InventoryView
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.EnchantingInventory
+ *  org.bukkit.me.astropvp.cratekeys.inventory.InventoryView
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
  *  org.bukkit.permissions.Permissible
  *  org.bukkit.plugin.Plugin
  *  org.bukkit.scheduler.BukkitRunnable

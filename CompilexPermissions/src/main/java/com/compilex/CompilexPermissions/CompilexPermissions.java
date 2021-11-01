@@ -77,7 +77,7 @@ extends JavaPlugin {
         } else {
             Bukkit.getLogger().info("*******************************************************");
             Bukkit.getLogger().info("");
-            Bukkit.getLogger().info("[CompilexPermissions] NOTICE: Running in API_MODE, all listeners and permission checks are disabled.");
+            Bukkit.getLogger().info("[CompilexPermissions] NOTICE: Running in API_MODE, all me.astropvp.cratekeys.listeners and permission checks are disabled.");
             Bukkit.getLogger().info("");
             Bukkit.getLogger().info("*******************************************************");
         }

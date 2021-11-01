@@ -6,7 +6,7 @@
  *  org.bukkit.event.EventHandler
  *  org.bukkit.event.EventPriority
  *  org.bukkit.event.Listener
- *  org.bukkit.event.inventory.InventoryCloseEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryCloseEvent
  *  org.bukkit.metadata.FixedMetadataValue
  *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.plugin.Plugin

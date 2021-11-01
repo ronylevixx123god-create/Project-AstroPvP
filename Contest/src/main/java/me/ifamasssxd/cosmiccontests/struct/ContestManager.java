@@ -14,10 +14,10 @@
  *  org.bukkit.configuration.file.FileConfiguration
  *  org.bukkit.entity.Player
  *  org.bukkit.event.Event
- *  org.bukkit.inventory.Inventory
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
- *  org.bukkit.inventory.meta.SkullMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.Inventory
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.SkullMeta
  *  org.bukkit.plugin.Plugin
  */
 package me.ifamasssxd.cosmiccontests.struct;
@@ -107,7 +107,7 @@ public class ContestManager {
                             user.loadData(rs.getString("contestData"));
                         }
                         catch (Exception e) {
-                            Bukkit.getLogger().info("Error loading data for " + user.getName() + " (" + user.getUuid() + "), exception:");
+                            Bukkit.getLogger().info("Error loading me.astropvp.cratekeys.data for " + user.getName() + " (" + user.getUuid() + "), exception:");
                             e.printStackTrace();
                         }
                         if (!CosmicContests.get().isFactionsEnabled() || (player = FPlayers.i.get(user.getUuid().toString())) == null || !player.hasFaction() || !player.getFaction().isNormal()) continue;
@@ -306,7 +306,7 @@ public class ContestManager {
             ++reset;
         }
         CosmicContests.get().getSqlDatabase().executeUpdate("UPDATE `" + CosmicContests.get().getServerName() + "_contestUsers` SET contestData = NULL;", true);
-        Bukkit.getLogger().info("Cleared " + reset + " loaded contest data.");
+        Bukkit.getLogger().info("Cleared " + reset + " loaded contest me.astropvp.cratekeys.data.");
         Bukkit.getLogger().info("CLEARING ALL CONTEST DATA FROM TABLE...");
         this.lastTopUserScan = 0L;
         this.topUsers.clear();

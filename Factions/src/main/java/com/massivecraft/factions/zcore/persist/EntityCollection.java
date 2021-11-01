@@ -230,7 +230,7 @@ public abstract class EntityCollection<E extends Entity> {
                     e.printStackTrace();
                 }
                 this.saveCore(file, (Map<String, E>) data);
-                Bukkit.getLogger().log(Level.INFO, "Backed up your old data at " + file.getAbsolutePath());
+                Bukkit.getLogger().log(Level.INFO, "Backed up your old me.astropvp.cratekeys.data at " + file.getAbsolutePath());
                 Bukkit.getLogger().log(Level.INFO, "Please wait while Factions converts " + list.size() + " old player names to UUID. This may take a while.");
                 final MojangUUIDFetcher fetcher = new MojangUUIDFetcher(new ArrayList<String>(list));
                 try {
@@ -290,7 +290,7 @@ public abstract class EntityCollection<E extends Entity> {
                 e3.printStackTrace();
             }
             this.saveCore(file2, (Map<String, E>) data2);
-            Bukkit.getLogger().log(Level.INFO, "Backed up your old data at " + file2.getAbsolutePath());
+            Bukkit.getLogger().log(Level.INFO, "Backed up your old me.astropvp.cratekeys.data at " + file2.getAbsolutePath());
             Bukkit.getLogger().log(Level.INFO, "Please wait while Factions converts " + needsUpdate + " old player names to UUID. This may take a while.");
             for (final String string2 : data2.keySet()) {
                 final Faction f2 = data2.get(string2);

@@ -39,7 +39,7 @@ public class CommandBlocker
             if (AbstractCommand.cmap.getCommand(cmd) != null && AbstractCommand.cmap.getCommand(cmd).getAliases() != null && AbstractCommand.cmap.getCommand(cmd).getAliases().size() > 0) {
                 for (String alias : AbstractCommand.cmap.getCommand(cmd).getAliases()) {
                     if (blocked_aliases.contains(alias)) continue;
-                    Bukkit.getLogger().info("(CommandBlocker) Added alias of command, '" + alias + "', to blocked commands list.");
+                    Bukkit.getLogger().info("(CommandBlocker) Added alias of command, '" + alias + "', to blocked me.astropvp.cratekeys.commands list.");
                     blocked_aliases.add(alias);
                 }
             }
@@ -63,7 +63,7 @@ public class CommandBlocker
             if (AbstractCommand.cmap.getCommand(cmd) != null && AbstractCommand.cmap.getCommand(cmd).getAliases() != null && AbstractCommand.cmap.getCommand(cmd).getAliases().size() > 0) {
                 for (String alias : AbstractCommand.cmap.getCommand(cmd).getAliases()) {
                     if (!blocked_aliases.contains(alias)) continue;
-                    Bukkit.getLogger().info("(CommandBlocker) Removed alias of command, '" + alias + "', to blocked commands list.");
+                    Bukkit.getLogger().info("(CommandBlocker) Removed alias of command, '" + alias + "', to blocked me.astropvp.cratekeys.commands list.");
                     blocked_aliases.remove(alias);
                 }
             }
@@ -89,7 +89,7 @@ public class CommandBlocker
         if (Arkkit.get().getConfig().contains("settings.blocked_commands")) {
             for (String s : Arkkit.get().getConfig().getStringList("settings.blocked_commands")) {
                 CommandBlocker.blockCommand(s);
-                Bukkit.getLogger().info("(CommandBlocker) Added command '" + s + "' to blocked commands list.");
+                Bukkit.getLogger().info("(CommandBlocker) Added command '" + s + "' to blocked me.astropvp.cratekeys.commands list.");
             }
         }
         initialized = true;
@@ -150,7 +150,7 @@ public class CommandBlocker
     @Override
     public void disable() {
         if (blocked_commands.size() > 0) {
-            Bukkit.getLogger().info("[CommandBlocker] Saving " + blocked_commands.size() + " blocked commands to file... " + blocked_commands);
+            Bukkit.getLogger().info("[CommandBlocker] Saving " + blocked_commands.size() + " blocked me.astropvp.cratekeys.commands to file... " + blocked_commands);
             Arkkit.get().getConfig().set("settings.blocked_commands", new ArrayList<String>(blocked_commands));
         }
         blocked_commands.clear();

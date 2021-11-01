@@ -3,7 +3,7 @@
  *
  * Could not load the following classes:
  *  com.compilex.CosmicArmorSets.CosmicArmorSetsAPI
- *  com.compilex.CosmicArmorSets.enums.ArmorSet
+ *  com.compilex.CosmicArmorSets.me.astropvp.cratekeys.enums.ArmorSet
  */
 package com.cosmicpvp.cosmicutils.itembuilder;
 

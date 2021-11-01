@@ -2,8 +2,8 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.WorldGuardUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.WorldGuardUtils
  *  com.google.common.collect.Lists
  *  com.google.common.collect.MapMaker
  *  org.bukkit.Location
@@ -16,7 +16,7 @@
  *  org.bukkit.event.block.Action
  *  org.bukkit.event.player.PlayerInteractEvent
  *  org.bukkit.event.player.PlayerTeleportEvent
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.potion.PotionEffect
  *  org.bukkit.potion.PotionEffectType
  *  org.bukkit.scheduler.BukkitRunnable

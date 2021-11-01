@@ -12,10 +12,10 @@
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
  *  org.bukkit.enchantments.Enchantment
- *  org.bukkit.inventory.Inventory
- *  org.bukkit.inventory.InventoryHolder
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.Inventory
+ *  org.bukkit.me.astropvp.cratekeys.inventory.InventoryHolder
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
  */
 package me.ifamasssxd.cosmicduel.godset;
 

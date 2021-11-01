@@ -7,11 +7,11 @@
  *  com.earth2me.essentials.I18n
  *  com.earth2me.essentials.Trade
  *  com.earth2me.essentials.User
- *  com.earth2me.essentials.commands.EssentialsLoopCommand
- *  com.earth2me.essentials.commands.NotEnoughArgumentsException
- *  com.earth2me.essentials.commands.PlayerExemptException
- *  com.earth2me.essentials.commands.PlayerNotFoundException
- *  com.earth2me.essentials.utils.FormatUtil
+ *  com.earth2me.essentials.me.astropvp.cratekeys.commands.EssentialsLoopCommand
+ *  com.earth2me.essentials.me.astropvp.cratekeys.commands.NotEnoughArgumentsException
+ *  com.earth2me.essentials.me.astropvp.cratekeys.commands.PlayerExemptException
+ *  com.earth2me.essentials.me.astropvp.cratekeys.commands.PlayerNotFoundException
+ *  com.earth2me.essentials.me.astropvp.cratekeys.utils.FormatUtil
  *  net.ess3.api.IEssentials
  *  net.ess3.api.MaxMoneyException
  *  org.bukkit.Bukkit

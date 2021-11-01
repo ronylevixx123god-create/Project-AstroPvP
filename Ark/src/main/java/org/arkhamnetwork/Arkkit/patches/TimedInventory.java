@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.150.
  *
  * Could not load the following classes:
- *  org.bukkit.inventory.Inventory
+ *  org.bukkit.me.astropvp.cratekeys.inventory.Inventory
  */
 package org.arkhamnetwork.Arkkit.patches;
 

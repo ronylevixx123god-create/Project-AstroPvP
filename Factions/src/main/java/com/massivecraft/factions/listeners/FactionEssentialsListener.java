@@ -7,7 +7,7 @@
  *  org.bukkit.entity.Player
  *  org.bukkit.event.EventHandler
  *  org.bukkit.event.Listener
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.material.MaterialData
  */
 package com.massivecraft.factions.listeners;
@@ -35,7 +35,7 @@ public class FactionEssentialsListener implements Listener {
     @EventHandler
     public void onPlayerSellItems(PlayerSellEvent event) {
         boolean sellHand = false;
-        if (event.getSellType() != null && (event.getSellType().equals("all") || (sellHand = event.getSellType().equals("hand")) || event.getSellType().equals("inventory") || event.getSellType().equals("invent"))) {
+        if (event.getSellType() != null && (event.getSellType().equals("all") || (sellHand = event.getSellType().equals("hand")) || event.getSellType().equals("me.astropvp.cratekeys.inventory") || event.getSellType().equals("invent"))) {
             FPlayer fplayer = FPlayers.i.get(event.getPlayer());
             if (fplayer == null) {
                 return;

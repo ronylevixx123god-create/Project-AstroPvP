@@ -266,7 +266,7 @@ public class ConquestListener implements Listener {
                 Bukkit.getLogger().info("Removing " + boss.getBossType() + " from bosses that are alive at conquest!");
                 chestData.getBossesTypeSpawn().remove(boss.getBossType());
             } else {
-                Bukkit.getLogger().info("Chest data not found!");
+                Bukkit.getLogger().info("Chest me.astropvp.cratekeys.data not found!");
             }
         }
     }

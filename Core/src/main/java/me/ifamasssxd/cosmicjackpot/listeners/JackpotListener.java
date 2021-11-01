@@ -4,8 +4,8 @@
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.CosmicUtils
  *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.HCFOutpostUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.HCFOutpostUtils
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
  *  org.bukkit.DyeColor
@@ -19,10 +19,10 @@
  *  org.bukkit.event.EventHandler
  *  org.bukkit.event.EventPriority
  *  org.bukkit.event.Listener
- *  org.bukkit.event.inventory.InventoryClickEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
  *  org.bukkit.event.player.AsyncPlayerChatEvent
  *  org.bukkit.event.player.PlayerQuitEvent
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.plugin.Plugin
  */

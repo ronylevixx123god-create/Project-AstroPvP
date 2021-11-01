@@ -4,8 +4,8 @@
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.Material
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
  */
 package com.rit.sucy.Anvil;
 

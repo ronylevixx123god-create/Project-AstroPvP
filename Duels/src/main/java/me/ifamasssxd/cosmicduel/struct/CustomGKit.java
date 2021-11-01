@@ -5,7 +5,7 @@
  *  com.google.common.collect.Lists
  *  me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits
  *  org.bukkit.Material
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.ifamasssxd.cosmicduel.struct;
 

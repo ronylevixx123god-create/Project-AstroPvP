@@ -3,8 +3,8 @@
  *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.compat.ASound
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
  *  com.google.common.collect.Lists
  *  com.google.common.collect.MapMaker
  *  me.ifamasssxd.cosmicskycustoms.struct.CustomItemBuilder
@@ -21,8 +21,8 @@
  *  org.bukkit.event.EventHandler
  *  org.bukkit.event.EventPriority
  *  org.bukkit.event.Listener
- *  org.bukkit.event.inventory.InventoryClickEvent
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package com.compilex.CosmicArmorSets.listeners;
 

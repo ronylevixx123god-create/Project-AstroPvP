@@ -2,8 +2,8 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.UpgradeUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.UpgradeUtils
  *  com.google.common.collect.Lists
  *  com.rit.sucy.EnchantmentAPI
  *  org.arkhamnetwork.Arkkit.patches.ItemID
@@ -12,7 +12,7 @@
  *  org.bukkit.Material
  *  org.bukkit.Sound
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.ifamasssxd.cosmicevolutionkits.structure;
 
@@ -81,7 +81,7 @@ public abstract class EvolutionKit
         final List<ItemStack> items = this.getItems(player, level);
         if (items.size() > this.getEmptySlots(player) && parent != EvolutionKits.MIMIC) {
             player.sendMessage("");
-            player.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "Your inventory was too full to accept all of your kit items, please clear some more slots and try again.");
+            player.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "Your me.astropvp.cratekeys.inventory was too full to accept all of your kit me.astropvp.cratekeys.items, please clear some more slots and try again.");
             return;
         }
         for (final ItemStack item : items) {
@@ -94,7 +94,7 @@ public abstract class EvolutionKit
         }
         if (dropped) {
             player.sendMessage("");
-            player.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "Your inventory was too full to accept all of your kit items, they have been dropped on the ground and are claimable by you for 30 seconds.");
+            player.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "Your me.astropvp.cratekeys.inventory was too full to accept all of your kit me.astropvp.cratekeys.items, they have been dropped on the ground and are claimable by you for 30 seconds.");
         }
         kitPlayer.setAmountClaimed(kitPlayer.getAmountClaimed() + 1);
         final int levelClaimed = level;

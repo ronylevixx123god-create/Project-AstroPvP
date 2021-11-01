@@ -8,7 +8,7 @@
  *  org.bukkit.command.CommandExecutor
  *  org.bukkit.command.CommandSender
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.ifamasssxd.killtracker.commands;
 
@@ -40,7 +40,7 @@ implements CommandExecutor {
                 }
                 ItemStack is = KillTrackerAPI.buildTracker(tr);
                 if (p.getInventory().firstEmpty() == -1) {
-                    p.sendMessage((Object)ChatColor.RED + "Your inventory was full so your tracker was dropped on the ground.");
+                    p.sendMessage((Object)ChatColor.RED + "Your me.astropvp.cratekeys.inventory was full so your tracker was dropped on the ground.");
                     p.getWorld().dropItem(p.getLocation(), is);
                 } else {
                     p.getInventory().addItem(new ItemStack[]{is});

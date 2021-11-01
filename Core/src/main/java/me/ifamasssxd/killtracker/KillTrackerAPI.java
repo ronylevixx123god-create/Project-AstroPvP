@@ -10,7 +10,7 @@
  *  org.bukkit.Material
  *  org.bukkit.Sound
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.ifamasssxd.killtracker;
 

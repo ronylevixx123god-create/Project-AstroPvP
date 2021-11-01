@@ -15,7 +15,7 @@ commands:
   setduelworld:
     description: Sets the duel world.
   viewdeathinventory:
-    description: View death inventory.
+    description: View death me.astropvp.cratekeys.inventory.
   setrankedarena:
     description: Rank arena.
   resetelo:

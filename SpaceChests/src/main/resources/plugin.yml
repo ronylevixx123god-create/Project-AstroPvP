@@ -10,7 +10,7 @@ commands:
     description: Gives drop package to player.
     usage: /<command>
   envoy:
-    description: Envoy tool commands.
+    description: Envoy tool me.astropvp.cratekeys.commands.
     usage: /<command>
   flare:
     description: Gives space flares to player.

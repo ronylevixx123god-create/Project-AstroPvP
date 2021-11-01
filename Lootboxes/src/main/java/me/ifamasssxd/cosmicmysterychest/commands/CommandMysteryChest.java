@@ -2,18 +2,18 @@
  * Decompiled with CFR 0.150.
  *
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.ItemUtils
- *  com.cosmicpvp.cosmicutils.utils.NumberUtils
- *  com.cosmicpvp.cosmicutils.utils.PlayerUtil
- *  com.cosmicpvp.cosmicutils.utils.TimeUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NumberUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.PlayerUtil
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.TimeUtils
  *  org.bukkit.Bukkit
  *  org.bukkit.Material
  *  org.bukkit.command.Command
  *  org.bukkit.command.CommandExecutor
  *  org.bukkit.command.CommandSender
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.ifamasssxd.cosmicmysterychest.commands;
 
@@ -158,10 +158,10 @@ public class CommandMysteryChest
         sender.sendMessage(CC.AquaB + "AstroPvP Lootbox System");
         sender.sendMessage("");
         sender.sendMessage(CC.DarkAqua + "/lootbox create <internalName> <amount>");
-        sender.sendMessage(CC.DarkAqua + "/lootbox setlootboxitem <internalName>" + CC.Gray + " Sets the display items to your held item.");
+        sender.sendMessage(CC.DarkAqua + "/lootbox setlootboxitem <internalName>" + CC.Gray + " Sets the display me.astropvp.cratekeys.items to your held item.");
         sender.sendMessage(CC.DarkAqua + "/lootbox addloot <internalName> <chance> [jackpotItem]" + CC.Gray + " Add the item in your hand to the loot table.");
         sender.sendMessage(CC.DarkAqua + "/lootbox addpermloot <internalName>" + CC.Gray + " Adds the item in your hand to the loot table.");
-        sender.sendMessage(CC.DarkAqua + "/lootbox clear <internalName>" + CC.Gray + " Clear the Lootbox of all its loot items.");
+        sender.sendMessage(CC.DarkAqua + "/lootbox clear <internalName>" + CC.Gray + " Clear the Lootbox of all its loot me.astropvp.cratekeys.items.");
         sender.sendMessage(CC.DarkAqua + "/lootbox delete <internalName>" + CC.Gray + " Delete the Lootbox FOREVER, and its file");
         sender.sendMessage(CC.DarkAqua + "/lootbox list" + CC.Gray + " List all the created Lootboxes");
         sender.sendMessage(CC.DarkAqua + "/lootbox give <player> <internalName> [amount] [expiration]");

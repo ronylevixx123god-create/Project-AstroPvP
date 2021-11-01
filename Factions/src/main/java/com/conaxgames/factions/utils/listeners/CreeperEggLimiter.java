@@ -21,7 +21,7 @@
  *  org.bukkit.event.entity.EntityDamageEvent
  *  org.bukkit.event.entity.EntityDamageEvent$DamageCause
  *  org.bukkit.event.player.PlayerInteractEvent
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.metadata.FixedMetadataValue
  *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.plugin.Plugin

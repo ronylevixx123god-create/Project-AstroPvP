@@ -17,12 +17,12 @@
  *  org.bukkit.event.Event$Result
  *  org.bukkit.event.EventHandler
  *  org.bukkit.event.Listener
- *  org.bukkit.event.inventory.InventoryAction
- *  org.bukkit.event.inventory.InventoryClickEvent
- *  org.bukkit.event.inventory.InventoryCloseEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryAction
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryCloseEvent
  *  org.bukkit.event.player.PlayerPickupItemEvent
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.FireworkMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.FireworkMeta
  *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.plugin.Plugin
  */
@@ -208,7 +208,7 @@ implements Listener {
     }
 
     private void deselectSlot(ChestLootSelector cls, int slot, ItemRarity chestRarity) {
-        cls.lootInventory.setItem(slot, ItemUtils.setAmount(ItemUtils.buildItem(Material.STAINED_GLASS, cls.getStainedGlassBlockColor(), (Object)CosmicSpaceChestsAPI.getColor(chestRarity) + "" + (Object)ChatColor.BOLD + "??? " + (Object)ChatColor.GRAY + "#" + (slot + 1 - 10), (Object)ChatColor.GRAY + "Choose " + (Object)CosmicSpaceChestsAPI.getColor(chestRarity) + (Object)ChatColor.UNDERLINE + "5 mystery items", (Object)ChatColor.GRAY + "and your " + (Object)CosmicSpaceChestsAPI.getColor(chestRarity) + (Object)ChatColor.BOLD + chestRarity.name + (Object)ChatColor.GRAY + " loot", (Object)ChatColor.GRAY + "will be revealed."), 1));
+        cls.lootInventory.setItem(slot, ItemUtils.setAmount(ItemUtils.buildItem(Material.STAINED_GLASS, cls.getStainedGlassBlockColor(), (Object)CosmicSpaceChestsAPI.getColor(chestRarity) + "" + (Object)ChatColor.BOLD + "??? " + (Object)ChatColor.GRAY + "#" + (slot + 1 - 10), (Object)ChatColor.GRAY + "Choose " + (Object)CosmicSpaceChestsAPI.getColor(chestRarity) + (Object)ChatColor.UNDERLINE + "5 mystery me.astropvp.cratekeys.items", (Object)ChatColor.GRAY + "and your " + (Object)CosmicSpaceChestsAPI.getColor(chestRarity) + (Object)ChatColor.BOLD + chestRarity.name + (Object)ChatColor.GRAY + " loot", (Object)ChatColor.GRAY + "will be revealed."), 1));
     }
 }
 

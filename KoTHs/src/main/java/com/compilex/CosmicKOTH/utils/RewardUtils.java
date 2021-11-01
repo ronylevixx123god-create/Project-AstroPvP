@@ -2,12 +2,12 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.compilex.CosmicCustomCreepers.enums.CreeperTypes
+ *  com.compilex.CosmicCustomCreepers.me.astropvp.cratekeys.enums.CreeperTypes
  *  com.compilex.CosmicDungeons.DungeonsAPI
  *  com.cosmicpvp.CosmicRankQuests.CosmicRankQuestsAPI
  *  com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI
  *  com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity
- *  com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils
+ *  com.cosmicpvp.CosmicSpaceChests.me.astropvp.cratekeys.utils.ItemUtils
  *  com.cosmicpvp.cosmicutils.itembuilder.BoosterBuilder
  *  com.cosmicpvp.cosmicutils.itembuilder.CustomCrateType
  *  com.cosmicpvp.cosmicutils.itembuilder.CustomItemBuilder
@@ -17,20 +17,20 @@
  *  com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder
  *  com.cosmicpvp.cosmicutils.itembuilder.KitGemBuilder
  *  com.cosmicpvp.cosmicutils.itembuilder.SpawnerItemBuilder
- *  com.cosmicpvp.cosmicutils.utils.CustomItemUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CustomItemUtils
  *  com.gmail.nossr50.datatypes.skills.SkillType
  *  com.google.common.collect.Lists
  *  me.ifamasssxd.cosmicconquest.CosmicConquestAPI
  *  me.ifamasssxd.cosmicskycustoms.struct.CustomItemBuilder
  *  me.ifamasssxd.killtracker.KillTrackerAPI
- *  me.ifamasssxd.killtracker.listeners.Tracker
+ *  me.ifamasssxd.killtracker.me.astropvp.cratekeys.listeners.Tracker
  *  org.arkhamnetwork.Arkkit.patches.EquipmentLootboxes
  *  org.arkhamnetwork.Arkkit.patches.EssentialsAddHomes
  *  org.arkhamnetwork.Arkkit.patches.ItemID
  *  org.arkhamnetwork.Arkkit.patches.McmmoCredits
  *  org.arkhamnetwork.Arkkit.patches.ShowcaseExpander
  *  org.arkhamnetwork.Arkkit.plugins.ArkPlugins
- *  org.arkhamnetwork.Arkkit.utils.ItemUtils
+ *  org.arkhamnetwork.Arkkit.me.astropvp.cratekeys.utils.ItemUtils
  *  org.arkhamnetwork.enchantments.EnchantmentOrb
  *  org.arkhamnetwork.enchantments.libs.OrbType
  *  org.arkhamnetwork.enchantments.util.TieredEnchantments
@@ -39,9 +39,9 @@
  *  org.bukkit.enchantments.Enchantment
  *  org.bukkit.entity.EntityType
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.EnchantmentStorageMeta
- *  org.bukkit.inventory.meta.ItemMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.EnchantmentStorageMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
  */
 package com.compilex.CosmicKOTH.utils;
 

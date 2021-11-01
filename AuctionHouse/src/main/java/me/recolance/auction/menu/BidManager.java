@@ -3,7 +3,7 @@
  *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.gui.CosmicGUI
- *  com.cosmicpvp.cosmicutils.utils.JSONUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.JSONUtils
  *  com.google.common.collect.Lists
  *  net.minecraft.util.com.google.common.reflect.TypeToken
  *  net.minecraft.util.com.google.gson.Gson
@@ -18,7 +18,7 @@
  *  net.minecraft.util.io.netty.util.internal.ConcurrentSet
  *  org.bukkit.Bukkit
  *  org.bukkit.Material
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.plugin.Plugin
  *  org.bukkit.plugin.java.JavaPlugin
  *  org.bukkit.scheduler.BukkitRunnable

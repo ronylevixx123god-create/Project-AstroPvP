@@ -3,9 +3,9 @@
  * 
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.CosmicUtils
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.NumberUtils
- *  com.cosmicpvp.cosmicutils.utils.StringUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NumberUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.StringUtils
  *  com.google.common.collect.Lists
  *  org.bukkit.ChatColor
  *  org.bukkit.entity.Player
@@ -62,12 +62,12 @@ public class CommandListener implements Listener {
                 }
                 if (pageNumber.equalsIgnoreCase("itemlinking")) {
                     player.sendMessage(" " + CC.LightPurpleB + "Item Linking");
-                    player.sendMessage("  " + CC.Aqua + "Ranked players may link an item they are holding with " + CC.LightPurple + "[item]" + CC.Aqua + ", or their entire inventory with " + CC.LightPurple + "[brag]" + CC.Aqua + "!");
+                    player.sendMessage("  " + CC.Aqua + "Ranked players may link an item they are holding with " + CC.LightPurple + "[item]" + CC.Aqua + ", or their entire me.astropvp.cratekeys.inventory with " + CC.LightPurple + "[brag]" + CC.Aqua + "!");
                     event.setCancelled(true);
                     return;
                 }
                 if (pageNumber.equalsIgnoreCase("lootbox")) {
-                    ArrayList msg = Lists.newArrayList(new String[]{"", "&b&lAstro Lootbox", CC.Gray + "Astro Lootboxes are special items that are released on a weekly basis. They are displayed by the " + CC.Aqua + "Lootbox Merchant at /spawn" + CC.Gray + " or in the " + CC.Aqua + "/lootbox" + CC.Gray + " menu.", "", CC.Gray + "Lootboxes are " + CC.Aqua + "only available for a specific amount of time " + CC.Gray + "before they sell out, expire, and are gone forever.", "", CC.Gray + "Lootboxes contain " + CC.Aqua + "random combination" + CC.Gray + " of extremely rare, typically otherwise unobtainable items. Don't miss your chance, collect every " + CC.Aqua + "/lootbox" + CC.Gray + " you can!", ""});
+                    ArrayList msg = Lists.newArrayList(new String[]{"", "&b&lAstro Lootbox", CC.Gray + "Astro Lootboxes are special me.astropvp.cratekeys.items that are released on a weekly basis. They are displayed by the " + CC.Aqua + "Lootbox Merchant at /spawn" + CC.Gray + " or in the " + CC.Aqua + "/lootbox" + CC.Gray + " menu.", "", CC.Gray + "Lootboxes are " + CC.Aqua + "only available for a specific amount of time " + CC.Gray + "before they sell out, expire, and are gone forever.", "", CC.Gray + "Lootboxes contain " + CC.Aqua + "random combination" + CC.Gray + " of extremely rare, typically otherwise unobtainable me.astropvp.cratekeys.items. Don't miss your chance, collect every " + CC.Aqua + "/lootbox" + CC.Gray + " you can!", ""});
                     msg.forEach(pl -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', (String)pl)));
                     event.setCancelled(true);
                     return;

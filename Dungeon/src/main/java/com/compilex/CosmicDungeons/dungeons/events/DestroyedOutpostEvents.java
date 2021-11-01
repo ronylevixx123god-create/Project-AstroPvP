@@ -6,21 +6,21 @@
  *  com.cosmicpvp.cosmicutils.nms.EntityAttribute
  *  com.cosmicpvp.cosmicutils.nms.EntityUtils
  *  com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.EssentialsUtils
- *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
- *  com.cosmicpvp.cosmicutils.utils.WorldGuardUtils
- *  com.cosmicpvp.cosmicutils.utils.WorldUtil
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.EssentialsUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.WorldGuardUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.WorldUtil
  *  com.gmail.filoghost.holograms.api.HolographicDisplaysAPI
  *  com.google.common.collect.Lists
  *  com.google.common.collect.MapMaker
  *  me.astropvp.astropvpskins.AstroItemSkinsAPI
- *  me.astropvp.astropvpskins.enums.SkinType
+ *  me.astropvp.astropvpskins.me.astropvp.cratekeys.enums.SkinType
  *  me.ifamasssxd.cosmicbosses.CosmicBosses
  *  me.ifamasssxd.cosmicbosses.struct.Boss
  *  me.ifamasssxd.cosmicbosses.struct.BossDespawnEvent
- *  me.ifamasssxd.cosmicbosses.struct.enums.BossType
+ *  me.ifamasssxd.cosmicbosses.struct.me.astropvp.cratekeys.enums.BossType
  *  net.minecraft.server.v1_7_R4.MinecraftServer
  *  net.minecraft.server.v1_7_R4.NBTBase
  *  org.bukkit.Bukkit
@@ -64,8 +64,8 @@
  *  org.bukkit.event.player.PlayerTeleportEvent
  *  org.bukkit.event.player.PlayerTeleportEvent$TeleportCause
  *  org.bukkit.event.player.PlayerVelocityEvent
- *  org.bukkit.inventory.InventoryHolder
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.InventoryHolder
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.metadata.FixedMetadataValue
  *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.plugin.Plugin
@@ -599,7 +599,7 @@ extends DungeonEvents {
                     this.dungeon.broadcastMessage(ChatColor.RED + "ERROR: Invalid, too many inputs! Correct inputs detected: " + CC.RedB + correctPressed);
                     block.getWorld().playSound(block.getLocation(), Sound.FIZZ, 1.0f, 1.0f);
                 } else if (this.pressurePlatesToActivate.size() != correctPressed) {
-                    this.dungeon.broadcastMessage(ChatColor.RED + "ERROR: Invalid input data, correct inputs detected: " + CC.RedB + correctPressed);
+                    this.dungeon.broadcastMessage(ChatColor.RED + "ERROR: Invalid input me.astropvp.cratekeys.data, correct inputs detected: " + CC.RedB + correctPressed);
                     block.getWorld().playSound(block.getLocation(), Sound.FIZZ, 1.0f, 1.0f);
                 } else {
                     this.activateRegion("airlock_b");

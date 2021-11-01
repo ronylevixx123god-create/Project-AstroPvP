@@ -4,10 +4,10 @@
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.gui.CosmicGUI
  *  com.cosmicpvp.cosmicutils.gui.InventoryItem
- *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
  *  org.bukkit.ChatColor
  *  org.bukkit.entity.Player
- *  org.bukkit.event.inventory.ClickType
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.ClickType
  *  org.bukkit.plugin.java.JavaPlugin
  */
 package me.ifamasssxd.cosmicevolutionkits.menu;
@@ -46,7 +46,7 @@ extends CosmicGUI {
                 this.closeWithDelay(pl -> previewMenu.openGUI(CosmicGlobalKits.getPlugin()));
             }).click(ClickType.LEFT, () -> {
                 if (kitPlayer.isLoadingData()) {
-                    this.player.sendMessage(CC.RedB + "(!) " + CC.Red + "Please wait while your /vkit data is loaded!");
+                    this.player.sendMessage(CC.RedB + "(!) " + CC.Red + "Please wait while your /vkit me.astropvp.cratekeys.data is loaded!");
                     this.closeWithDelay();
                     return;
                 }

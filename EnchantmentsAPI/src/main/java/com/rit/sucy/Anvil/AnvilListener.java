@@ -7,11 +7,11 @@
  *  org.bukkit.entity.Player
  *  org.bukkit.event.EventHandler
  *  org.bukkit.event.Listener
- *  org.bukkit.event.inventory.InventoryClickEvent
- *  org.bukkit.event.inventory.InventoryCloseEvent
- *  org.bukkit.event.inventory.InventoryOpenEvent
- *  org.bukkit.event.inventory.InventoryType
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryCloseEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryOpenEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryType
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.plugin.Plugin
  */
 package com.rit.sucy.Anvil;

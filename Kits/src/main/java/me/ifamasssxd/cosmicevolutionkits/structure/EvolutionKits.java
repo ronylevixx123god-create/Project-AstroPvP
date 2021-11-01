@@ -5,11 +5,11 @@
  *  com.compilex.CosmicFund.CosmicFundAPI
  *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
  *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.utils.ItemUtils
- *  com.cosmicpvp.cosmicutils.utils.NBTTagCompoundBuilder
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTTagCompoundBuilder
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
  *  com.google.common.collect.Lists
  *  net.minecraft.server.v1_7_R4.NBTBase
  *  org.arkhamnetwork.Arkkit.patches.ItemID
@@ -22,7 +22,7 @@
  *  org.bukkit.command.CommandSender
  *  org.bukkit.entity.Player
  *  org.bukkit.event.Event
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.ifamasssxd.cosmicevolutionkits.structure;
 
@@ -63,7 +63,7 @@ public enum EvolutionKits {
     private static final Material levelUpMaterial;
 
     public static ItemStack getLuckyBox(int level, boolean applyIID) {
-        ArrayList lore = Lists.newArrayList(new String[]{"", CC.Gray + "A magical box that has a chance to contain " + CC.GoldU + "1-5x", CC.Gray + "increasingly epic items the higher its level.", ""});
+        ArrayList lore = Lists.newArrayList(new String[]{"", CC.Gray + "A magical box that has a chance to contain " + CC.GoldU + "1-5x", CC.Gray + "increasingly epic me.astropvp.cratekeys.items the higher its level.", ""});
         EvolutionKits.addLore(lore, level, 1, "Item Nametag", "Lore Crystal", "Transmog Scroll", "Showcase Expansion", "Home Increaser", "Black Scroll", "Evolution Gem", "Kill Tracker", "XP Bottle");
         EvolutionKits.addLore(lore, level, 2, "Legendary Space Flare", "White Scroll", "mcMMO Skill Voucher", "Faction mcMMO Booster", "Reset Tool Kit");
         EvolutionKits.addLore(lore, level, 3, "Legendary Randomization Scroll", "Random /gkit Fallen Hero", "Faction XP Booster");

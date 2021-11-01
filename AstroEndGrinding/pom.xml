@@ -146,7 +146,7 @@
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>items</artifactId>
+            <artifactId>me.astropvp.cratekeys.items</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/CosmicSkyCustomItems.jar</systemPath>

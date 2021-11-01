@@ -5,18 +5,18 @@
  *  com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsPlugin
  *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
  *  com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils
- *  com.cosmicpvp.cosmicutils.utils.VanishUtils
- *  com.cosmicpvp.cosmicutils.utils.WorldGuardUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.VanishUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.WorldGuardUtils
  *  com.gmail.nossr50.api.PartyAPI
  *  com.gmail.nossr50.runnables.skills.BleedTimerTask
  *  com.gmail.nossr50.util.StringUtils
  *  com.google.common.collect.Lists
  *  com.rit.sucy.EnchantmentAPI
- *  me.ifamasssxd.factionupgrades.utils.ItemBuilder
+ *  me.ifamasssxd.factionupgrades.me.astropvp.cratekeys.utils.ItemBuilder
  *  org.arkhamnetwork.Arkkit.Arkkit
  *  org.arkhamnetwork.Arkkit.patches.CombatLog
  *  org.arkhamnetwork.enchantments.EnchantmentBook
- *  org.arkhamnetwork.enchantments.listeners.PlayerPotionEffectListener
+ *  org.arkhamnetwork.enchantments.me.astropvp.cratekeys.listeners.PlayerPotionEffectListener
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
  *  org.bukkit.Instrument
@@ -29,9 +29,9 @@
  *  org.bukkit.entity.LivingEntity
  *  org.bukkit.entity.Player
  *  org.bukkit.event.Event
- *  org.bukkit.inventory.Inventory
- *  org.bukkit.inventory.InventoryHolder
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.Inventory
+ *  org.bukkit.me.astropvp.cratekeys.inventory.InventoryHolder
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.metadata.FixedMetadataValue
  *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.plugin.Plugin
@@ -212,7 +212,7 @@ extends NewDuel {
                     if (index++ == this.getEndingInventoryCache().size() - 1) {
                         includeComma = false;
                     }
-                    jsonMessage.addRunCommand(invs.getKey() + (includeComma ? ", " : ""), winner.getName().equals(invs.getKey()) ? ChatColor.GREEN : ChatColor.RED, "/viewdeathinventory " + this.getEndingInventoryCache().get(invs.getKey()).toString(), ChatColor.GRAY + "Click to view duel inventory.");
+                    jsonMessage.addRunCommand(invs.getKey() + (includeComma ? ", " : ""), winner.getName().equals(invs.getKey()) ? ChatColor.GREEN : ChatColor.RED, "/viewdeathinventory " + this.getEndingInventoryCache().get(invs.getKey()).toString(), ChatColor.GRAY + "Click to view duel me.astropvp.cratekeys.inventory.");
                 }
                 this.sendJsonMessage(jsonMessage, true);
                 this.sendMessage("", true);
@@ -631,7 +631,7 @@ extends NewDuel {
                 p.updateInventory();
             }
             if (hadDisabledItems) {
-                p.sendMessage(this.getColoredMessage("&c&l(!) &cYou had items that were disabled in this duel."));
+                p.sendMessage(this.getColoredMessage("&c&l(!) &cYou had me.astropvp.cratekeys.items that were disabled in this duel."));
                 p.sendMessage(ChatColor.GRAY + "They will be returned to you once the duel is over.");
             }
         }
@@ -699,7 +699,7 @@ extends NewDuel {
         }
         p.updateInventory();
         if (hadDisabledItems) {
-            p.sendMessage(this.getColoredMessage("&e&l(!) &eYour kit contained some items that were &e&ndisabled&e in this duel."));
+            p.sendMessage(this.getColoredMessage("&e&l(!) &eYour kit contained some me.astropvp.cratekeys.items that were &e&ndisabled&e in this duel."));
         }
     }
 
@@ -775,7 +775,7 @@ extends NewDuel {
         this.stakes.clear();
         winner.updateInventory();
         if (collectionBin) {
-            winner.sendMessage(this.getColoredMessage("&e&l(!) &eYour inventory was full and the stakes have been placed in your &a&n/duel collect&e bin."));
+            winner.sendMessage(this.getColoredMessage("&e&l(!) &eYour me.astropvp.cratekeys.inventory was full and the stakes have been placed in your &a&n/duel collect&e bin."));
         }
     }
 
@@ -793,7 +793,7 @@ extends NewDuel {
                 p.getInventory().addItem(is);
             }
             if (!collectionBinUsed) continue;
-            p.sendMessage("&e&l(!) &eYour inventory was full and the stakes have been placed in your &e&n/duel collect&e bin.");
+            p.sendMessage("&e&l(!) &eYour me.astropvp.cratekeys.inventory was full and the stakes have been placed in your &e&n/duel collect&e bin.");
         }
         this.stakes.clear();
     }

@@ -38,7 +38,7 @@ implements CommandExecutor {
             return true;
         }
         ItemUtils.giveItemToPlayer(p, CosmicSpaceChestsAPI.getSpaceFlare(ir));
-        sender.sendMessage((Object)ChatColor.YELLOW + "Added " + ir.name + " Space Flare to " + p.getName() + "'s inventory.");
+        sender.sendMessage((Object)ChatColor.YELLOW + "Added " + ir.name + " Space Flare to " + p.getName() + "'s me.astropvp.cratekeys.inventory.");
         return true;
     }
 }

@@ -4,11 +4,11 @@
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.gui.CosmicGUI
  *  com.cosmicpvp.cosmicutils.gui.InventoryItem
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
  *  org.bukkit.Material
  *  org.bukkit.entity.Player
- *  org.bukkit.event.inventory.ClickType
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.ClickType
  */
 package me.recolance.auction.menu.categories;
 
@@ -82,7 +82,7 @@ public abstract class AuctionMenu
     public InventoryItem getCollectionBinItem() {
         List<UnclaimedListing> itemsSelling = DataHolder.getUnclaimedListings().get(this.player.getUniqueId());
         int emptyItems = itemsSelling != null ? (int) itemsSelling.stream().filter(item -> !item.isExpired()).count() : 0;
-        return new InventoryItem(new ItemBuilder(Material.ENDER_CHEST, CC.YellowB + "Collection Bin", new String[]{CC.Gray + "Click to view and collect", CC.Gray + "all of your active, cancelled", CC.Gray + "or expired Auction items.", "", CC.YellowB + emptyItems + " Item" + (emptyItems != 1 ? "s" : "")}).build()).click(() -> this.closeWithDelay(pl -> MenuRenderer.expired(this.player)));
+        return new InventoryItem(new ItemBuilder(Material.ENDER_CHEST, CC.YellowB + "Collection Bin", new String[]{CC.Gray + "Click to view and collect", CC.Gray + "all of your active, cancelled", CC.Gray + "or expired Auction me.astropvp.cratekeys.items.", "", CC.YellowB + emptyItems + " Item" + (emptyItems != 1 ? "s" : "")}).build()).click(() -> this.closeWithDelay(pl -> MenuRenderer.expired(this.player)));
     }
 
     public boolean canClick() {

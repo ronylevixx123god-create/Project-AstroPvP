@@ -71,7 +71,7 @@ public class TournamentMainInventory {
          lore.add("");
          lore.add(CC.Gray + "The winner of each tournament will not be permitted to");
          lore.add(CC.Gray + "participate in any following tournaments for the rest");
-         lore.add(CC.Gray + "of the week but with the " + CC.White + "following items and perks");
+         lore.add(CC.Gray + "of the week but with the " + CC.White + "following me.astropvp.cratekeys.items and perks");
          lore.add(CC.White + "unlocked until next week's tournament, " + CC.Gray + "why would");
          lore.add(CC.Gray + "they even want to?");
          lore.add("");
@@ -98,12 +98,12 @@ public class TournamentMainInventory {
          ItemMeta meta = item.getItemMeta();
          meta.setDisplayName(CC.GoldB + "Profiles");
          List<String> lore = new ArrayList<>();
-         lore.add(CC.Gray + "Customize your inventory layout and");
+         lore.add(CC.Gray + "Customize your me.astropvp.cratekeys.inventory layout and");
          lore.add(CC.Gray + "select your custom masks, item skins");
-         lore.add(CC.Gray + "and inventory pets.");
+         lore.add(CC.Gray + "and me.astropvp.cratekeys.inventory pets.");
          lore.add("");
          lore.add(CC.RedB + "NOTE: " + CC.Red + "Every week, a random selection");
-         lore.add(CC.Red + "of masks, item skins and inventory pets");
+         lore.add(CC.Red + "of masks, item skins and me.astropvp.cratekeys.inventory pets");
          lore.add(CC.Red + "are restricted for use.");
          lore.add("");
          lore.add(CC.Gray + "Click to view profiles.");
@@ -133,7 +133,7 @@ public class TournamentMainInventory {
         lore.add(CC.Gray + "ELO Points in the Point Shop will not affect your");
         lore.add(CC.Gray + "ELO rating nor your standings in /tournaments");
         lore.add("");
-        lore.add(CC.Gray + "Filled with a random selection of items and only");
+        lore.add(CC.Gray + "Filled with a random selection of me.astropvp.cratekeys.items and only");
         lore.add(CC.Gray + "available for " + CC.White + "24 hours" + CC.Gray + ", spent your points on any");
         lore.add(CC.Gray + "item in this shop!");
         lore.add("");

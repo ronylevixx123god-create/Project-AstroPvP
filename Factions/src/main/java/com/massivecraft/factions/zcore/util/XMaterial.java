@@ -1036,7 +1036,7 @@ public enum XMaterial {
             "CARROT_ON_A_STICK", "CARROT_STICK"
     };
     /**
-     * A list of duplicated items in 1.13 and 1.12 with different purpose.
+     * A list of duplicated me.astropvp.cratekeys.items in 1.13 and 1.12 with different purpose.
      * Values are the new material names.
      * Duplicates are only checked by keys not values.
      * Checked with {@link String#equals}
@@ -1090,7 +1090,7 @@ public enum XMaterial {
 
     /**
      * When using newer versions of Minecraft {@link #isNewVersion()} this helps
-     * to find the old material name with its data using a cached search for optimization.
+     * to find the old material name with its me.astropvp.cratekeys.data using a cached search for optimization.
      *
      * @see #matchXMaterial(String, byte)
      */
@@ -1143,23 +1143,23 @@ public enum XMaterial {
      * @see #matchXMaterial(String, byte)
      */
     public static XMaterial matchXMaterial(String name) {
-        // -1 Determines whether the item's data is unknown and only the name is given.
-        // Checking if the item is damageable won't do anything as the data is not going to be checked in requestOldMaterial anyway.
+        // -1 Determines whether the item's me.astropvp.cratekeys.data is unknown and only the name is given.
+        // Checking if the item is damageable won't do anything as the me.astropvp.cratekeys.data is not going to be checked in requestOldMaterial anyway.
         return matchXMaterial(name, (byte) -1);
     }
 
     /**
-     * Parses the material name and data argument as a {@link Material}.
+     * Parses the material name and me.astropvp.cratekeys.data argument as a {@link Material}.
      *
      * @param name name of the material
-     * @param data data of the material
+     * @param data me.astropvp.cratekeys.data of the material
      */
     public static Material parseMaterial(String name, byte data) {
         return matchXMaterial(name, data).parseMaterial();
     }
 
     /**
-     * @param item the ItemStack to match its material and data.
+     * @param item the ItemStack to match its material and me.astropvp.cratekeys.data.
      * @see #matchXMaterial(String, byte)
      */
     @SuppressWarnings("deprecation")
@@ -1169,11 +1169,11 @@ public enum XMaterial {
     }
 
     /**
-     * Matches the argument string and its data with a XMaterial.
+     * Matches the argument string and its me.astropvp.cratekeys.data with a XMaterial.
      *
      * @param name the name of the material
-     * @param data the data byte of the material
-     * @return a XMaterial from the enum (with the same legacy name and data if in older versions.)
+     * @param data the me.astropvp.cratekeys.data byte of the material
+     * @return a XMaterial from the enum (with the same legacy name and me.astropvp.cratekeys.data if in older versions.)
      */
     public static XMaterial matchXMaterial(String name, byte data) {
         Validate.notEmpty(name, "Material name cannot be null or empty");
@@ -1190,11 +1190,11 @@ public enum XMaterial {
     }
 
     /**
-     * Gets the XMaterial based on the Material's ID and data.
+     * Gets the XMaterial based on the Material's ID and me.astropvp.cratekeys.data.
      * You should avoid using this for performance reasons.
      *
      * @param id   the ID (Magic value) of the material.
-     * @param data the data of the material.
+     * @param data the me.astropvp.cratekeys.data of the material.
      * @return some XMaterial, or null.
      */
     public static XMaterial matchXMaterial(int id, byte data) {
@@ -1414,11 +1414,11 @@ public enum XMaterial {
     }
 
     /**
-     * Get the {@link ItemStack} data of this material in older versions.
+     * Get the {@link ItemStack} me.astropvp.cratekeys.data of this material in older versions.
      * Which can be accessed with {@link ItemStack#getData()} then MaterialData#getData()
      * or {@link ItemStack#getDurability()} if not damageable.
      *
-     * @return data of this material.
+     * @return me.astropvp.cratekeys.data of this material.
      */
     public int getData() {
         return this.data;
@@ -1436,7 +1436,7 @@ public enum XMaterial {
     /**
      * Parses the XMaterial as an {@link ItemStack}.
      *
-     * @return an ItemStack with the same material (and data if in older versions.)
+     * @return an ItemStack with the same material (and me.astropvp.cratekeys.data if in older versions.)
      */
     public ItemStack parseItem() {
         return parseItem(false);
@@ -1446,7 +1446,7 @@ public enum XMaterial {
      * Parses the XMaterial as an {@link ItemStack}.
      *
      * @param suggest if true {@link #parseMaterial(boolean)}
-     * @return an ItemStack with the same material (and data if in older versions.)
+     * @return an ItemStack with the same material (and me.astropvp.cratekeys.data if in older versions.)
      */
     @SuppressWarnings("deprecation")
     public ItemStack parseItem(boolean suggest) {
@@ -1513,10 +1513,10 @@ public enum XMaterial {
     }
 
     /**
-     * Checks if an item is similar to the material and its data (if in older versions.)
+     * Checks if an item is similar to the material and its me.astropvp.cratekeys.data (if in older versions.)
      *
      * @param item item to check.
-     * @return true if the material is the same as the item's material (and data if in older versions.)
+     * @return true if the material is the same as the item's material (and me.astropvp.cratekeys.data if in older versions.)
      */
     @SuppressWarnings("deprecation")
     public boolean isSimilar(ItemStack item) {

@@ -2,20 +2,20 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.GeneralUtil
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.GeneralUtil
  *  org.bukkit.entity.Player
  *  org.bukkit.event.EventHandler
  *  org.bukkit.event.EventPriority
  *  org.bukkit.event.Listener
  *  org.bukkit.event.entity.EntityDamageEvent
- *  org.bukkit.event.inventory.InventoryClickEvent
- *  org.bukkit.event.inventory.InventoryType
- *  org.bukkit.event.inventory.InventoryType$SlotType
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryType
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryType$SlotType
  *  org.bukkit.event.player.PlayerChangedWorldEvent
  *  org.bukkit.event.player.PlayerInteractEvent
  *  org.bukkit.event.player.PlayerJoinEvent
  *  org.bukkit.event.player.PlayerQuitEvent
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.ifamasssxd.cosmicmasks.listeners;
 

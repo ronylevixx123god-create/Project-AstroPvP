@@ -9,8 +9,8 @@
  *  org.bukkit.command.Command
  *  org.bukkit.command.CommandSender
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.PlayerInventory
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.PlayerInventory
  */
 package org.arkhamnetwork.Arkkit.patches;
 

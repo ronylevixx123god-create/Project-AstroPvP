@@ -26,7 +26,7 @@
  *  org.bukkit.event.entity.PlayerDeathEvent
  *  org.bukkit.event.player.PlayerFishEvent
  *  org.bukkit.event.player.PlayerFishEvent$State
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.ifamasssxd.cosmiccontests.listeners;
 

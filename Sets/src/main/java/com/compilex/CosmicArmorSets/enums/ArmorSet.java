@@ -4,9 +4,9 @@
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
  *  com.cosmicpvp.cosmicutils.nbt.NBTTagListBuilder
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
  *  com.google.common.collect.Lists
  *  com.rit.sucy.CustomEnchantment
  *  com.rit.sucy.EnchantmentAPI
@@ -16,8 +16,8 @@
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
  *  org.bukkit.enchantments.Enchantment
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
  */
 package com.compilex.CosmicArmorSets.enums;
 
@@ -97,7 +97,7 @@ public enum ArmorSet {
     }
 
     public static ItemStack createRangerBow(boolean transmog) {
-        ItemStack item = new ItemBuilder(Material.BOW, CC.GreenB + "Ranger Bow", CC.Green + "A finely crafted bow imbued", CC.Green + "with the energy of the Sun.", "", CC.GreenB + "RANGER WEAPON BONUS", CC.GreenB + "* " + CC.Green + "Ranger Bow grants 30% increased bow damage.", CC.GreenB + "* " + CC.Green + "Enemies deal 25% less damage to you.", CC.GrayI + "(Requires all 4 ranger armor items.)").build();
+        ItemStack item = new ItemBuilder(Material.BOW, CC.GreenB + "Ranger Bow", CC.Green + "A finely crafted bow imbued", CC.Green + "with the energy of the Sun.", "", CC.GreenB + "RANGER WEAPON BONUS", CC.GreenB + "* " + CC.Green + "Ranger Bow grants 30% increased bow damage.", CC.GreenB + "* " + CC.Green + "Enemies deal 25% less damage to you.", CC.GrayI + "(Requires all 4 ranger armor me.astropvp.cratekeys.items.)").build();
         item.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 5);
         item.addUnsafeEnchantment(Enchantment.DURABILITY, 3);
         item.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 2);

@@ -53,6 +53,7 @@
         <module>AstroUtils</module>
         <module>DiscordAPI</module>
         <module>Collectors</module>
+        <module>AstroCrateKeys</module>
     </modules>
 
     <build>

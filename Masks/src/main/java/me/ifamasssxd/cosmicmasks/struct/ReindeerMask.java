@@ -3,7 +3,7 @@
  * 
  * Could not load the following classes:
  *  com.compilex.CosmicOutposts.CosmicOutpostsAPI
- *  com.compilex.CosmicOutposts.outpost.enums.OutpostTier
+ *  com.compilex.CosmicOutposts.outpost.me.astropvp.cratekeys.enums.OutpostTier
  *  org.arkhamnetwork.enchantments.libs.AbstractPotionEffect
  *  org.arkhamnetwork.enchantments.libs.PlayerPotionEffects
  *  org.bukkit.Bukkit

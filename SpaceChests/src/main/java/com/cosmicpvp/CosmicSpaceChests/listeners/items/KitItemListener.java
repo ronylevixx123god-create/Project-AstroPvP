@@ -3,7 +3,7 @@
  * 
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
- *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
  *  me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKits
  *  me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKitsAPI
  *  me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits
@@ -22,7 +22,7 @@
  *  org.bukkit.event.Listener
  *  org.bukkit.event.block.Action
  *  org.bukkit.event.player.PlayerInteractEvent
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.metadata.FixedMetadataValue
  *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.plugin.Plugin

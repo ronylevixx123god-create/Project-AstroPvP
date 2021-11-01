@@ -2,14 +2,14 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.compilex.CosmicArmorSets.enums.AbilityArmorSet
+ *  com.compilex.CosmicArmorSets.me.astropvp.cratekeys.enums.AbilityArmorSet
  *  com.cosmicpvp.cosmicutils.itembuilder.MaskBuilder
  *  com.google.common.collect.Lists
  *  com.rit.sucy.CustomEnchantment
  *  com.rit.sucy.EnchantmentAPI
  *  org.arkhamnetwork.enchantments.EnchantmentBook
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.cosmicpvp.CosmicGlobalKits.struct.mkits;
 

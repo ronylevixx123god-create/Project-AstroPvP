@@ -9,7 +9,7 @@
  *  org.bukkit.Material
  *  org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.util.Vector
  */

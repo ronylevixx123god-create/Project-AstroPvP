@@ -4,7 +4,7 @@
  * Could not load the following classes:
  *  org.bukkit.Material
  *  org.bukkit.enchantments.Enchantment
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.ifamasssxd.cosmicduel.struct;
 

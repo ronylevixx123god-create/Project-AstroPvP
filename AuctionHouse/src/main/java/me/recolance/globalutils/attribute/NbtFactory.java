@@ -14,7 +14,7 @@
  *  org.bukkit.Bukkit
  *  org.bukkit.Material
  *  org.bukkit.Server
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.recolance.globalutils.attribute;
 
@@ -69,7 +69,7 @@ public class NbtFactory {
                 this.BASE_CLASS = this.COMPOUND_CLASS.getSuperclass();
                 this.NBT_GET_TYPE = NbtFactory.getMethod(0, 8, this.BASE_CLASS, "getTypeId", new Class[0]);
                 this.NBT_CREATE_TAG = NbtFactory.getMethod(8, 0, this.BASE_CLASS, "createTag", Byte.TYPE);
-                this.CRAFT_STACK = loader.loadClass(packageName + ".inventory.CraftItemStack");
+                this.CRAFT_STACK = loader.loadClass(packageName + ".me.astropvp.cratekeys.inventory.CraftItemStack");
                 this.CRAFT_HANDLE = NbtFactory.getField(null, this.CRAFT_STACK, "handle");
                 this.STACK_TAG = NbtFactory.getField(null, this.CRAFT_HANDLE.getType(), "tag");
                 String nmsPackage = this.BASE_CLASS.getPackage().getName();
@@ -410,7 +410,7 @@ public class NbtFactory {
             if (this == TAG_LIST) {
                 return "list";
             }
-            return "data";
+            return "me.astropvp.cratekeys.data";
         }
     }
 

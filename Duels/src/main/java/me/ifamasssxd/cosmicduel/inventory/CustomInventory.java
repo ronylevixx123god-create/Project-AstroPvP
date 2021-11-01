@@ -5,10 +5,10 @@
  *  org.bukkit.Bukkit
  *  org.bukkit.Material
  *  org.bukkit.entity.Player
- *  org.bukkit.event.inventory.InventoryType
- *  org.bukkit.inventory.Inventory
- *  org.bukkit.inventory.InventoryHolder
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryType
+ *  org.bukkit.me.astropvp.cratekeys.inventory.Inventory
+ *  org.bukkit.me.astropvp.cratekeys.inventory.InventoryHolder
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.ifamasssxd.cosmicduel.inventory;
 

@@ -6,7 +6,7 @@
  *  com.gmail.filoghost.holograms.api.HolographicDisplaysAPI
  *  me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijki
  *  me.ifamasssxd.cosmicbosses.struct.Boss
- *  me.ifamasssxd.cosmicbosses.utils.BossUtils
+ *  me.ifamasssxd.cosmicbosses.me.astropvp.cratekeys.utils.BossUtils
  *  org.arkhamnetwork.enchantments.Enchantments
  *  org.bukkit.ChatColor
  *  org.bukkit.Location

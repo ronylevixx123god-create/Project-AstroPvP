@@ -5,7 +5,7 @@
  *  org.bukkit.Bukkit
  *  org.bukkit.event.EventHandler
  *  org.bukkit.event.Listener
- *  org.bukkit.event.inventory.InventoryOpenEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryOpenEvent
  */
 package org.arkhamnetwork.Arkkit.patches;
 

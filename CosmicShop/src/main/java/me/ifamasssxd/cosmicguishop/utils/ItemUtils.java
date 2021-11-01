@@ -3,7 +3,7 @@
  *
  * Could not load the following classes:
  *  com.earth2me.essentials.Essentials
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.plugin.java.JavaPlugin
  */
 package me.ifamasssxd.cosmicguishop.utils;

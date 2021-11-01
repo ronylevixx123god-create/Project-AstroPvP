@@ -3,10 +3,10 @@
  *
  * Could not load the following classes:
  *  com.compilex.CosmicOutposts.CosmicOutpostsAPI
- *  com.compilex.CosmicOutposts.outpost.enums.OutpostTier
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
+ *  com.compilex.CosmicOutposts.outpost.me.astropvp.cratekeys.enums.OutpostTier
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
  *  com.google.common.collect.Lists
  *  com.rit.sucy.CustomEnchantment
  *  com.rit.sucy.EnchantmentAPI
@@ -25,7 +25,7 @@
  *  org.bukkit.event.entity.EntityDamageEvent$DamageModifier
  *  org.bukkit.event.entity.FoodLevelChangeEvent
  *  org.bukkit.event.player.PlayerChangedWorldEvent
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.plugin.Plugin
  */
 package com.compilex.CosmicArmorSets.enums.armorsets;
@@ -76,12 +76,12 @@ public class SupremeArmorSet
         } else {
             enchants.add(this.getEnchantment("Marksman"));
         }
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_HELMET, (short) 0, "&4&lSupreme Headgear", "&4&oA lightweight headpiece", "&4&ofit for take off.", "", "&4&lSUPREME SET BONUS", "&4&l* &4Gears IV", "&4&l* &4No Fall Damage / Food Loss", "&4&l* &4Deal +15% damage to all enemies", "&4&l* &4Enemy arrows deal 10% more damage to you.", "&4&l* &4+200% Clout", "&7(&oRequires all 4 supreme items.&7)"), enchants));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_HELMET, (short) 0, "&4&lSupreme Headgear", "&4&oA lightweight headpiece", "&4&ofit for take off.", "", "&4&lSUPREME SET BONUS", "&4&l* &4Gears IV", "&4&l* &4No Fall Damage / Food Loss", "&4&l* &4Deal +15% damage to all enemies", "&4&l* &4Enemy arrows deal 10% more damage to you.", "&4&l* &4+200% Clout", "&7(&oRequires all 4 supreme me.astropvp.cratekeys.items.&7)"), enchants));
     }
 
     @Override
     public ItemStack getChestplate(boolean applyTransmog) {
-        ItemStack item = ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_CHESTPLATE, (short) 0, "&4&lSupreme Vest", "&4&oAn aerodynamic vest that", "&4&ois capable of sustaining flight.", "", "&4&lSUPREME SET BONUS", "&4&l* &4Gears IV", "&4&l* &4No Fall Damage / Food Loss", "&4&l* &4Deal +15% damage to all enemies", "&4&l* &4Enemy arrows deal 10% more damage to you.", "&4&l* &4+200% Clout", "&7(&oRequires all 4 supreme items.&7)"), new LinkedList(Arrays.asList(EnchantmentAPI.getEnchantment("Aegis"), EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Blood Lust"), EnchantmentAPI.getEnchantment("Diminish"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Overload"), EnchantmentAPI.getEnchantment("Leadership"), EnchantmentAPI.getEnchantment("Blood Link"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Marksman"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Repair Guard"))));
+        ItemStack item = ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_CHESTPLATE, (short) 0, "&4&lSupreme Vest", "&4&oAn aerodynamic vest that", "&4&ois capable of sustaining flight.", "", "&4&lSUPREME SET BONUS", "&4&l* &4Gears IV", "&4&l* &4No Fall Damage / Food Loss", "&4&l* &4Deal +15% damage to all enemies", "&4&l* &4Enemy arrows deal 10% more damage to you.", "&4&l* &4+200% Clout", "&7(&oRequires all 4 supreme me.astropvp.cratekeys.items.&7)"), new LinkedList(Arrays.asList(EnchantmentAPI.getEnchantment("Aegis"), EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Blood Lust"), EnchantmentAPI.getEnchantment("Diminish"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Overload"), EnchantmentAPI.getEnchantment("Leadership"), EnchantmentAPI.getEnchantment("Blood Link"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Marksman"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Repair Guard"))));
         if (Math.random() <= 0.1) {
             this.addEnchantment("Enlighted", this.getMaxEnchantLevel("Enlighted"), item);
             this.addEnchantment("Divine Enlighted", ItemUtils.getRandomArmorSetEnchantLevel("Divine Enlighted"), item);
@@ -93,7 +93,7 @@ public class SupremeArmorSet
 
     @Override
     public ItemStack getLeggings(boolean applyTransmog) {
-        ItemStack item = ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_LEGGINGS, (short) 0, "&4&lSupreme Chaps", "&4&oLightweight and clout powered,", "&4&oprovides enough thrust to boost", "&4&oeven the most feeble into the skies.", "", "&4&lSUPREME SET BONUS", "&4&l* &4Gears IV", "&4&l* &4No Fall Damage / Food Loss", "&4&l* &4Deal +15% damage to all enemies", "&4&l* &4Enemy arrows deal 10% more damage to you.", "&4&l* &4+200% Clout", "&7(&oRequires all 4 supreme items.&7)"), new LinkedList(Arrays.asList(EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Clarity"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Lucky"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Guardians"), EnchantmentAPI.getEnchantment("Obsidianshield"), EnchantmentAPI.getEnchantment("Valor"), EnchantmentAPI.getEnchantment("Sticky"), EnchantmentAPI.getEnchantment("Cactus"))));
+        ItemStack item = ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_LEGGINGS, (short) 0, "&4&lSupreme Chaps", "&4&oLightweight and clout powered,", "&4&oprovides enough thrust to boost", "&4&oeven the most feeble into the skies.", "", "&4&lSUPREME SET BONUS", "&4&l* &4Gears IV", "&4&l* &4No Fall Damage / Food Loss", "&4&l* &4Deal +15% damage to all enemies", "&4&l* &4Enemy arrows deal 10% more damage to you.", "&4&l* &4+200% Clout", "&7(&oRequires all 4 supreme me.astropvp.cratekeys.items.&7)"), new LinkedList(Arrays.asList(EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Clarity"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Lucky"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Guardians"), EnchantmentAPI.getEnchantment("Obsidianshield"), EnchantmentAPI.getEnchantment("Valor"), EnchantmentAPI.getEnchantment("Sticky"), EnchantmentAPI.getEnchantment("Cactus"))));
         if (Math.random() <= 0.1) {
             this.addEnchantment("Nature Wrath", ItemUtils.getRandomArmorSetEnchantLevel("Nature Wrath"), item);
         } else {
@@ -104,7 +104,7 @@ public class SupremeArmorSet
 
     @Override
     public ItemStack getBoots(boolean applyTransmog) {
-        ItemStack item = ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_BOOTS, (short) 0, "&4&lSupreme Thruster Boots", "&4&oSupreme boots capable of", "&4&oconverting clout into flight.", "", "&4&lSUPREME SET BONUS", "&4&l* &4Gears IV", "&4&l* &4No Fall Damage / Food Loss", "&4&l* &4Deal +15% damage to all enemies", "&4&l* &4Enemy arrows deal 10% more damage to you.", "&4&l* &4+200% Clout", "&7(&oRequires all 4 supreme items.&7)"), new LinkedList(Arrays.asList(EnchantmentAPI.getEnchantment("Gears"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Marksman"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Heavy"), EnchantmentAPI.getEnchantment("Ender Walker"), EnchantmentAPI.getEnchantment("Hardened"), EnchantmentAPI.getEnchantment("Rocket Escape"))));
+        ItemStack item = ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_BOOTS, (short) 0, "&4&lSupreme Thruster Boots", "&4&oSupreme boots capable of", "&4&oconverting clout into flight.", "", "&4&lSUPREME SET BONUS", "&4&l* &4Gears IV", "&4&l* &4No Fall Damage / Food Loss", "&4&l* &4Deal +15% damage to all enemies", "&4&l* &4Enemy arrows deal 10% more damage to you.", "&4&l* &4+200% Clout", "&7(&oRequires all 4 supreme me.astropvp.cratekeys.items.&7)"), new LinkedList(Arrays.asList(EnchantmentAPI.getEnchantment("Gears"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Marksman"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Heavy"), EnchantmentAPI.getEnchantment("Ender Walker"), EnchantmentAPI.getEnchantment("Hardened"), EnchantmentAPI.getEnchantment("Rocket Escape"))));
         item = this.addEnchantment("Springs", 2, item);
         if (Math.random() <= 0.1) {
             item = this.addEnchantment("Deathbringer", this.getMaxEnchantLevel("Deathbringer"), item);
@@ -203,7 +203,7 @@ public class SupremeArmorSet
 
     @Override
     public ItemStack getWeapon(boolean applyTransmog) {
-        ItemStack item = new NBTWrapper(new ItemBuilder(Material.DIAMOND_SWORD, CC.DarkRedB + "Supreme Fanny Pack", CC.Gray + "They laughed at you, they", CC.Gray + "told you a fanny pack is not", CC.Gray + "a practical piece of clothing...", CC.Gray + "now they will pay for their ignorance!", "", CC.DarkRedB + "SUPREME WEAPON BONUS", CC.DarkRed + "Deal +20% damage to all enemies", CC.DarkRed + "Enemies deal 10% less damage to you.", CC.Gray + "(" + CC.GrayI + "Requires all 4 supreme items." + CC.Gray + ")").enchant(Enchantment.DAMAGE_ALL, 5).enchant(Enchantment.DURABILITY, 3).build()).setString("cosmicType", "SUPREME_SWORD").build();
+        ItemStack item = new NBTWrapper(new ItemBuilder(Material.DIAMOND_SWORD, CC.DarkRedB + "Supreme Fanny Pack", CC.Gray + "They laughed at you, they", CC.Gray + "told you a fanny pack is not", CC.Gray + "a practical piece of clothing...", CC.Gray + "now they will pay for their ignorance!", "", CC.DarkRedB + "SUPREME WEAPON BONUS", CC.DarkRed + "Deal +20% damage to all enemies", CC.DarkRed + "Enemies deal 10% less damage to you.", CC.Gray + "(" + CC.GrayI + "Requires all 4 supreme me.astropvp.cratekeys.items." + CC.Gray + ")").enchant(Enchantment.DAMAGE_ALL, 5).enchant(Enchantment.DURABILITY, 3).build()).setString("cosmicType", "SUPREME_SWORD").build();
         this.addEnchantment("Block", this.getMaxEnchantLevel("Block"), item);
         this.addEnchantment("Reflective Block", this.getMaxEnchantLevel("Reflective Block"), item);
         return item;

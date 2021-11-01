@@ -3,14 +3,14 @@
  * 
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.FactionUtils
- *  com.cosmicpvp.cosmicutils.utils.WorldGuardUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.FactionUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.WorldGuardUtils
  *  com.earth2me.essentials.User
  *  com.google.common.collect.Lists
  *  com.google.common.collect.MapMaker
  *  org.arkhamnetwork.Arkkit.patches.CombatLog
- *  org.arkhamnetwork.Arkkit.utils.EssentialsUtils
+ *  org.arkhamnetwork.Arkkit.me.astropvp.cratekeys.utils.EssentialsUtils
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
  *  org.bukkit.Location

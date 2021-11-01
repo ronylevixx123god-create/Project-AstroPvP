@@ -74,7 +74,7 @@ public class CollectInventory {
     }
 
     private ItemStack getCategoryItem(Player player, CollectCategory cat) {
-        return new ItemBuilder(cat.getType().getMaterial(), CC.translate(cat.getName()), CC.translate(""), CC.translate("&a&lLeft-Click&7 to open inventory"), CC.translate("&c&lSHIFT Right-Click&7 to remove inventory")).build();
+        return new ItemBuilder(cat.getType().getMaterial(), CC.translate(cat.getName()), CC.translate(""), CC.translate("&a&lLeft-Click&7 to open me.astropvp.cratekeys.inventory"), CC.translate("&c&lSHIFT Right-Click&7 to remove me.astropvp.cratekeys.inventory")).build();
     }
 
 

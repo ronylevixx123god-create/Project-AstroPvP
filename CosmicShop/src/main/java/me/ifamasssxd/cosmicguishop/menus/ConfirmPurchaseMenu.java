@@ -5,9 +5,9 @@
  *  org.bukkit.ChatColor
  *  org.bukkit.DyeColor
  *  org.bukkit.Material
- *  org.bukkit.event.inventory.InventoryClickEvent
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
  */
 package me.ifamasssxd.cosmicguishop.menus;
 

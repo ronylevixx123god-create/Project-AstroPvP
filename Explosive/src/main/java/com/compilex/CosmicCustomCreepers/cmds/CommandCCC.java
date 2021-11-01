@@ -8,7 +8,7 @@
  *  org.bukkit.command.CommandExecutor
  *  org.bukkit.command.CommandSender
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package com.compilex.CosmicCustomCreepers.cmds;
 
@@ -42,7 +42,7 @@ implements CommandExecutor {
             } else {
                 p.getWorld().dropItem(p.getLocation(), i);
             }
-            sender.sendMessage(ChatColor.YELLOW + "Added 1x " + ct.name() + " Creeper to " + p.getName() + "'s inventory.");
+            sender.sendMessage(ChatColor.YELLOW + "Added 1x " + ct.name() + " Creeper to " + p.getName() + "'s me.astropvp.cratekeys.inventory.");
         }
         return true;
     }

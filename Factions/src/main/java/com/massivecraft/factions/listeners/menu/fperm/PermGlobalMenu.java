@@ -7,9 +7,9 @@
  *  org.bukkit.DyeColor
  *  org.bukkit.Material
  *  org.bukkit.entity.Player
- *  org.bukkit.event.inventory.ClickType
- *  org.bukkit.event.inventory.InventoryClickEvent
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.ClickType
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.material.MaterialData
  */
 package com.massivecraft.factions.listeners.menu.fperm;

@@ -6,9 +6,9 @@
  *  org.bukkit.Color
  *  org.bukkit.Material
  *  org.bukkit.enchantments.Enchantment
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
- *  org.bukkit.inventory.meta.LeatherArmorMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.LeatherArmorMeta
  *  org.bukkit.potion.Potion
  */
 package com.cosmicpvp.CosmicSpaceChests.utils;

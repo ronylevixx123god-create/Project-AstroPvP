@@ -2,8 +2,8 @@
  * Decompiled with CFR 0.150.
  *
  * Could not load the following classes:
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
  */
 package me.ifamasssxd.cosmicguishop.menus;
 

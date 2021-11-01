@@ -7,7 +7,7 @@
  *  org.bukkit.command.Command
  *  org.bukkit.command.CommandSender
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package org.arkhamnetwork.Arkkit.patches.createtitle;
 

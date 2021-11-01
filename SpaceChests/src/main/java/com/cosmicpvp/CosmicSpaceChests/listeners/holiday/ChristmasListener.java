@@ -117,7 +117,7 @@ implements Listener {
             });
             if (data != -1 && (newData = blockBelow.getData()) != data) {
                 blockBelow.setData(data);
-                Bukkit.getLogger().info("Reapplying data " + data + " to slab FROM " + newData + " underneath envoy chest at " + blockBelow.getLocation().toString());
+                Bukkit.getLogger().info("Reapplying me.astropvp.cratekeys.data " + data + " to slab FROM " + newData + " underneath envoy chest at " + blockBelow.getLocation().toString());
             }
         }
     }

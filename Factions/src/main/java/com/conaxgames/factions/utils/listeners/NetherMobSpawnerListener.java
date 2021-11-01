@@ -20,7 +20,7 @@
  *  org.bukkit.event.entity.EntityDeathEvent
  *  org.bukkit.event.entity.SlimeSplitEvent
  *  org.bukkit.event.player.PlayerShearEntityEvent
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.metadata.FixedMetadataValue
  *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.plugin.Plugin

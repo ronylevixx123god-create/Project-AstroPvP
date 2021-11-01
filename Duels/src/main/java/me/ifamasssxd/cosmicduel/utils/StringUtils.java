@@ -6,7 +6,7 @@
  *  org.apache.commons.lang.StringUtils
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.ifamasssxd.cosmicduel.utils;
 

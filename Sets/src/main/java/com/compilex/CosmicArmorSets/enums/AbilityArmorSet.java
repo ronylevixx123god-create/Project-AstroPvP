@@ -4,9 +4,9 @@
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
  *  com.cosmicpvp.cosmicutils.nbt.NBTTagListBuilder
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
  *  me.ifamasssxd.cosmicskycustoms.struct.CustomItemBuilder
  *  net.minecraft.server.v1_7_R4.NBTBase
  *  org.arkhamnetwork.Arkkit.patches.ItemID
@@ -15,8 +15,8 @@
  *  org.bukkit.DyeColor
  *  org.bukkit.Material
  *  org.bukkit.craftbukkit.libs.com.google.gson.internal.Pair
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
  *  org.bukkit.material.MaterialData
  */
 package com.compilex.CosmicArmorSets.enums;
@@ -187,7 +187,7 @@ public enum AbilityArmorSet {
                 String.valueOf(String.valueOf(CC.GoldB)) + "Mastery Shard " + CC.Gold + "(" + this.displayName + CC.Gold + ")",
                 new String[] { String.valueOf(String.valueOf(CC.Gray)) + "Apply to an enchantment book",
                         String.valueOf(String.valueOf(CC.Gray)) + "to imbue it with the power to",
-                        String.valueOf(String.valueOf(CC.Gray)) + "affect " + this.displayName + CC.Gray + " Mastery Kit items." })).data(this.masteryShardItem.getData()).build())).setString("cosmicType", "MASTERY_SHARD")
+                        String.valueOf(String.valueOf(CC.Gray)) + "affect " + this.displayName + CC.Gray + " Mastery Kit me.astropvp.cratekeys.items." })).data(this.masteryShardItem.getData()).build())).setString("cosmicType", "MASTERY_SHARD")
                 .setNBTBase("conaxData", (NBTBase)(new NBTTagCompoundBuilder())
                         .setString("masteryShard", name()).get())
                 .build();

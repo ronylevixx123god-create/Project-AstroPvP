@@ -767,7 +767,7 @@ public class ItemBuilder {
                 String ver = Bukkit.getServer().getClass().getPackage().getName().split(".")[3];
 
                 try {
-                    return Class.forName("org.bukkit.craftbukkit." + ver + ".inventory.CraftItemStack");
+                    return Class.forName("org.bukkit.craftbukkit." + ver + ".me.astropvp.cratekeys.inventory.CraftItemStack");
                 } catch (ClassNotFoundException var3) {
                     var3.printStackTrace();
                     return null;

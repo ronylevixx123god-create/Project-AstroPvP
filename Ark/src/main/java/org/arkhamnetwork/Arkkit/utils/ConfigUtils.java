@@ -26,7 +26,7 @@ public class ConfigUtils {
             try {
                 data.put(line.split("=")[0], line.split("=")[1]);
             } catch (Exception err) {
-                Bukkit.getLogger().warning("Failed to parse configuration data for line: " + line);
+                Bukkit.getLogger().warning("Failed to parse configuration me.astropvp.cratekeys.data for line: " + line);
                 err.printStackTrace();
             }
         }

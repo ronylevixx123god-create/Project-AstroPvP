@@ -32,7 +32,7 @@ public class CommandBanner implements CommandExecutor
             return true;
         }
         if (player.getInventory().firstEmpty() == -1) {
-            sender.sendMessage(CC.RedB + "(!) " + CC.Red + "Your inventory is full!");
+            sender.sendMessage(CC.RedB + "(!) " + CC.Red + "Your me.astropvp.cratekeys.inventory is full!");
             return true;
         }
         final BannerDesign design = CosmicFactionBanners.get().getBannerManager().getBannerDesignMap().get(faction.getId());

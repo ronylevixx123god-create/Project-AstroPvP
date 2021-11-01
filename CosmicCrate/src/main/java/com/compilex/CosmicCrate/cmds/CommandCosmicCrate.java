@@ -70,7 +70,7 @@ public class CommandCosmicCrate implements CommandExecutor
             if (uuid != null) {
                 CosmicCrate.claimedCosmicCrates.remove(uuid);
                 CosmicCrate.sql_query.add("DELETE FROM ccrates WHERE username='" + pName + "'");
-                sender.sendMessage("Reset all claimedCosmicCrates data for " + pName + " (" + uuid + ")");
+                sender.sendMessage("Reset all claimedCosmicCrates me.astropvp.cratekeys.data for " + pName + " (" + uuid + ")");
             }
             else {
                 sender.sendMessage("Cannot /cc clear offline players.");

@@ -2,8 +2,8 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.TimeUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.TimeUtils
  *  com.google.common.cache.Cache
  *  com.google.common.cache.CacheBuilder
  *  com.google.common.cache.CacheLoader
@@ -25,7 +25,7 @@
  *  org.bukkit.event.entity.EntityDamageEvent$DamageCause
  *  org.bukkit.event.entity.EntityDamageEvent$DamageModifier
  *  org.bukkit.event.entity.PlayerDeathEvent
- *  org.bukkit.event.inventory.InventoryClickEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
  *  org.bukkit.event.player.PlayerCommandPreprocessEvent
  *  org.bukkit.event.player.PlayerDropItemEvent
  *  org.bukkit.event.player.PlayerInteractEvent
@@ -33,7 +33,7 @@
  *  org.bukkit.event.player.PlayerPickupItemEvent
  *  org.bukkit.event.player.PlayerQuitEvent
  *  org.bukkit.event.player.PlayerTeleportEvent
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.metadata.FixedMetadataValue
  *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.plugin.Plugin

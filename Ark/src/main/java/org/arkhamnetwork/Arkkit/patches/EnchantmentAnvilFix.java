@@ -6,7 +6,7 @@
  *  org.bukkit.event.block.BlockPhysicsEvent
  *  org.bukkit.event.enchantment.EnchantItemEvent
  *  org.bukkit.event.enchantment.PrepareItemEnchantEvent
- *  org.bukkit.event.inventory.InventoryOpenEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryOpenEvent
  *  org.bukkit.plugin.Plugin
  */
 package org.arkhamnetwork.Arkkit.patches;

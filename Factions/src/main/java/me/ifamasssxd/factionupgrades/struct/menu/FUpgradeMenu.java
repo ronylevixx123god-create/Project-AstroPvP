@@ -5,11 +5,11 @@
  *  com.cosmicpvp.cosmicutils.gui.CosmicGUI
  *  com.cosmicpvp.cosmicutils.gui.InventoryItem
  *  com.cosmicpvp.cosmicutils.struct.factions.points.FactionPointUtils
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.FactionUtils
- *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.utils.JSONMessage
- *  com.cosmicpvp.cosmicutils.utils.NumberUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.FactionUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.JSONMessage
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NumberUtils
  *  com.massivecraft.factions.FPlayer
  *  com.massivecraft.factions.Faction
  *  com.massivecraft.factions.iface.RelationParticipator
@@ -27,9 +27,9 @@
  *  org.bukkit.OfflinePlayer
  *  org.bukkit.Sound
  *  org.bukkit.command.CommandSender
- *  org.bukkit.craftbukkit.v1_7_R4.inventory.CraftItemStack
+ *  org.bukkit.craftbukkit.v1_7_R4.me.astropvp.cratekeys.inventory.CraftItemStack
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.ifamasssxd.factionupgrades.struct.menu;
 

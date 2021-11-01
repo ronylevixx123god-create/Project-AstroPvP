@@ -2,16 +2,16 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.NumberUtils
- *  com.cosmicpvp.cosmicutils.utils.PlayerUtil
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NumberUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.PlayerUtil
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
  *  org.bukkit.command.Command
  *  org.bukkit.command.CommandExecutor
  *  org.bukkit.command.CommandSender
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.ifamasssxd.cosmicevolutionkits.commands;
 
@@ -64,7 +64,7 @@ implements CommandExecutor {
                 }
                 KitPlayer kitplayer = KitPlayer.kitPlayerMap.get(pl.getUniqueId());
                 if (kitplayer.isLoadingData()) {
-                    sender.sendMessage(CC.Red + "Please wait while their data is loaded!");
+                    sender.sendMessage(CC.Red + "Please wait while their me.astropvp.cratekeys.data is loaded!");
                     return true;
                 }
                 if (action.equalsIgnoreCase("resetlevels")) {
@@ -121,7 +121,7 @@ implements CommandExecutor {
         Player player = (Player)sender;
         KitPlayer kitplayer = KitPlayer.kitPlayerMap.get(player.getUniqueId());
         if (kitplayer == null || kitplayer.isLoadingData()) {
-            player.sendMessage(CC.RedB + "(!) " + CC.Red + "Please wait while your /vkit data is loaded!");
+            player.sendMessage(CC.RedB + "(!) " + CC.Red + "Please wait while your /vkit me.astropvp.cratekeys.data is loaded!");
             return true;
         }
         new EvolutionKitMenu(player).openGUI(CosmicGlobalKits.getPlugin());

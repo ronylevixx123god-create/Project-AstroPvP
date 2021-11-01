@@ -3,7 +3,7 @@
  *
  * Could not load the following classes:
  *  me.ifamasssxd.killtracker.KillTrackerAPI
- *  me.ifamasssxd.killtracker.listeners.Tracker
+ *  me.ifamasssxd.killtracker.me.astropvp.cratekeys.listeners.Tracker
  */
 package com.cosmicpvp.cosmicutils.itembuilder;
 

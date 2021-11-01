@@ -86,7 +86,7 @@ public class InventoryBannerPet extends InventoryPet {
 
                PlayerUtil.giveOrDropProtectedItem(player, banner, -1);
                ASound.ITEM_PICKUP.play(player, 1.1F);
-               petItem.getPetType().sendMsg(player, CC.Green, "Banner added to inventory!");
+               petItem.getPetType().sendMsg(player, CC.Green, "Banner added to me.astropvp.cratekeys.inventory!");
                return true;
             }
          }

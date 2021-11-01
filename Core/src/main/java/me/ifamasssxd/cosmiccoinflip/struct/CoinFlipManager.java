@@ -14,11 +14,11 @@
  *  org.bukkit.command.CommandSender
  *  org.bukkit.craftbukkit.libs.com.google.gson.Gson
  *  org.bukkit.craftbukkit.libs.com.google.gson.GsonBuilder
- *  org.bukkit.craftbukkit.v1_7_R4.inventory.CraftItemStack
+ *  org.bukkit.craftbukkit.v1_7_R4.me.astropvp.cratekeys.inventory.CraftItemStack
  *  org.bukkit.entity.Player
  *  org.bukkit.event.Event
- *  org.bukkit.inventory.Inventory
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.Inventory
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.ifamasssxd.cosmiccoinflip.struct;
 

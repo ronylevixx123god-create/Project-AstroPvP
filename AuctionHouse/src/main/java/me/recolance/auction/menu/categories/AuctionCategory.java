@@ -6,7 +6,7 @@
  *  org.arkhamnetwork.Arkkit.patches.ExpBottles
  *  org.arkhamnetwork.Arkkit.plugins.ArkPlugins
  *  org.bukkit.Material
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.recolance.auction.menu.categories;
 

@@ -3,8 +3,8 @@
  * 
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.struct.factions.points.FactionPointUtils
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.FactionUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.FactionUtils
  *  com.massivecraft.factions.Faction
  *  net.minecraft.util.com.google.common.util.concurrent.AtomicDouble
  *  org.bukkit.Bukkit

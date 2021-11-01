@@ -10,12 +10,12 @@
  *  org.bukkit.event.EventHandler
  *  org.bukkit.event.EventPriority
  *  org.bukkit.event.Listener
- *  org.bukkit.event.inventory.InventoryClickEvent
- *  org.bukkit.event.inventory.InventoryCloseEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryCloseEvent
  *  org.bukkit.event.player.PlayerCommandPreprocessEvent
  *  org.bukkit.event.player.PlayerPickupItemEvent
  *  org.bukkit.event.player.PlayerQuitEvent
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.metadata.FixedMetadataValue
  *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.plugin.Plugin
@@ -145,7 +145,7 @@ implements Listener {
         if (filter != null && filter.isEnabled() && !filter.canPickupItem(item, type)) {
             if (!this.alerted.contains(player.getUniqueId())) {
                 player.sendMessage("");
-                player.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "You cannot pickup some items because you have an Item /filter enabled!");
+                player.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "You cannot pickup some me.astropvp.cratekeys.items because you have an Item /filter enabled!");
                 player.sendMessage(ChatColor.GRAY + "Use" + ChatColor.WHITE + "/ft " + ChatColor.GRAY + "to disable your active /filter");
                 player.sendMessage("");
                 this.alerted.add(player.getUniqueId());

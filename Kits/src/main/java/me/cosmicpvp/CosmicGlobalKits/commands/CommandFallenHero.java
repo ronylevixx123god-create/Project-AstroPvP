@@ -3,9 +3,9 @@
  * 
  * Could not load the following classes:
  *  com.cosmicpvp.CosmicSpaceChests.libs.KitItems
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
- *  com.cosmicpvp.cosmicutils.utils.PlayerUtil
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.PlayerUtil
  *  me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKit
  *  me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKits
  *  org.arkhamnetwork.Arkkit.patches.ItemID
@@ -17,7 +17,7 @@
  *  org.bukkit.command.CommandExecutor
  *  org.bukkit.command.CommandSender
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.cosmicpvp.CosmicGlobalKits.commands;
 
@@ -137,7 +137,7 @@ implements CommandExecutor {
             ItemStack bundle;
             Player player = Bukkit.getPlayer((String)args[1]);
             if (player != null && !PlayerUtil.giveOrDropProtectedItem((Player)player, (ItemStack)(bundle = CommandFallenHero.getHeroicVKitHeroBundle()), (int)-1)) {
-                Bukkit.getLogger().info("[CosmicGlobalKits] Dropping vkit item on ground for " + player.getName() + " due to full inventory!");
+                Bukkit.getLogger().info("[CosmicGlobalKits] Dropping vkit item on ground for " + player.getName() + " due to full me.astropvp.cratekeys.inventory!");
             }
             return true;
         }
@@ -178,7 +178,7 @@ implements CommandExecutor {
     }
 
     public static ItemStack getHeroicVKitHeroBundle() {
-        return new NBTWrapper(ItemUtils.buildItem(Material.CHEST, (short)0, (Object)ChatColor.DARK_GREEN + "" + (Object)ChatColor.BOLD + "Evolution Kit Fallen Hero Bundle", (Object)ChatColor.GRAY + "Right-click to reveal " + (Object)ChatColor.UNDERLINE + "4 random", (Object)ChatColor.GRAY + "evolution kit fallen hero items!", "", (Object)ChatColor.GOLD + "Contains 4 of the following...", (Object)ChatColor.GRAY + "* " + CC.DarkPurpleB + "Phoenix", (Object)ChatColor.GRAY + "* " + CC.DarkAquaB + "Troll", (Object)ChatColor.GRAY + "* " + CC.GoldB + "Alchemist", (Object)ChatColor.GRAY + "* " + CC.DarkGreenB + "Ogre", (Object)ChatColor.GRAY + "* " + CC.DarkRedB + "Slayer", (Object)ChatColor.GRAY + "* " + CC.DarkGrayB + "Judgement", (Object)ChatColor.GRAY + "* " + CC.YellowB + "Mimic")).setString("cosmicType", "vkitFHBundle").build();
+        return new NBTWrapper(ItemUtils.buildItem(Material.CHEST, (short)0, (Object)ChatColor.DARK_GREEN + "" + (Object)ChatColor.BOLD + "Evolution Kit Fallen Hero Bundle", (Object)ChatColor.GRAY + "Right-click to reveal " + (Object)ChatColor.UNDERLINE + "4 random", (Object)ChatColor.GRAY + "evolution kit fallen hero me.astropvp.cratekeys.items!", "", (Object)ChatColor.GOLD + "Contains 4 of the following...", (Object)ChatColor.GRAY + "* " + CC.DarkPurpleB + "Phoenix", (Object)ChatColor.GRAY + "* " + CC.DarkAquaB + "Troll", (Object)ChatColor.GRAY + "* " + CC.GoldB + "Alchemist", (Object)ChatColor.GRAY + "* " + CC.DarkGreenB + "Ogre", (Object)ChatColor.GRAY + "* " + CC.DarkRedB + "Slayer", (Object)ChatColor.GRAY + "* " + CC.DarkGrayB + "Judgement", (Object)ChatColor.GRAY + "* " + CC.YellowB + "Mimic")).setString("cosmicType", "vkitFHBundle").build();
     }
 
     public static ItemStack getGhostMasteryKitBundle() {
@@ -194,7 +194,7 @@ implements CommandExecutor {
     }
 
     public static ItemStack getHeroicFallenHeroBundle() {
-        return ItemUtils.buildItem(Material.CHEST, (short)0, (Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "Heroic Fallen Hero Bundle", (Object)ChatColor.GRAY + "Right-click to reveal " + (Object)ChatColor.UNDERLINE + "10 random", (Object)ChatColor.GRAY + "heroic fallen hero items!", "", (Object)ChatColor.GOLD + "Contains 10 of the following...", (Object)ChatColor.GRAY + "* Heroic Butcher", (Object)ChatColor.GRAY + "* Heroic Warlock", (Object)ChatColor.GRAY + "* Heroic Independence", (Object)ChatColor.GRAY + "* Heroic Paladin", (Object)ChatColor.GRAY + "* Heroic Spooky", (Object)ChatColor.GRAY + "* Heroic Hyperdrive", (Object)ChatColor.GRAY + "* Heroic Destroyer", (Object)ChatColor.GRAY + "* Heroic Guardian", (Object)ChatColor.GRAY + "* Heroic Diablo", (Object)ChatColor.GRAY + "* Heroic Valentine", (Object)ChatColor.GRAY + "* Heroic Arcane", (Object)ChatColor.GRAY + "* Heroic Gladiator", (Object)ChatColor.GRAY + "* Heroic Trickster", (Object)ChatColor.GRAY + "* Heroic Templar", (Object)ChatColor.GRAY + "* Heroic Viking", (Object)ChatColor.GRAY + "* Heroic Tinkermaster", (Object)ChatColor.GRAY + "* Heroic Admiral", (Object)ChatColor.GRAY + "* Heroic Party Animal", (Object)ChatColor.GRAY + "* Heroic Enchantment", (Object)ChatColor.GRAY + "* Heroic Grand Master", (Object)ChatColor.GRAY + "* Heroic Void Walker", (Object)ChatColor.GRAY + "* Heroic Master Builder");
+        return ItemUtils.buildItem(Material.CHEST, (short)0, (Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "Heroic Fallen Hero Bundle", (Object)ChatColor.GRAY + "Right-click to reveal " + (Object)ChatColor.UNDERLINE + "10 random", (Object)ChatColor.GRAY + "heroic fallen hero me.astropvp.cratekeys.items!", "", (Object)ChatColor.GOLD + "Contains 10 of the following...", (Object)ChatColor.GRAY + "* Heroic Butcher", (Object)ChatColor.GRAY + "* Heroic Warlock", (Object)ChatColor.GRAY + "* Heroic Independence", (Object)ChatColor.GRAY + "* Heroic Paladin", (Object)ChatColor.GRAY + "* Heroic Spooky", (Object)ChatColor.GRAY + "* Heroic Hyperdrive", (Object)ChatColor.GRAY + "* Heroic Destroyer", (Object)ChatColor.GRAY + "* Heroic Guardian", (Object)ChatColor.GRAY + "* Heroic Diablo", (Object)ChatColor.GRAY + "* Heroic Valentine", (Object)ChatColor.GRAY + "* Heroic Arcane", (Object)ChatColor.GRAY + "* Heroic Gladiator", (Object)ChatColor.GRAY + "* Heroic Trickster", (Object)ChatColor.GRAY + "* Heroic Templar", (Object)ChatColor.GRAY + "* Heroic Viking", (Object)ChatColor.GRAY + "* Heroic Tinkermaster", (Object)ChatColor.GRAY + "* Heroic Admiral", (Object)ChatColor.GRAY + "* Heroic Party Animal", (Object)ChatColor.GRAY + "* Heroic Enchantment", (Object)ChatColor.GRAY + "* Heroic Grand Master", (Object)ChatColor.GRAY + "* Heroic Void Walker", (Object)ChatColor.GRAY + "* Heroic Master Builder");
     }
 }
 

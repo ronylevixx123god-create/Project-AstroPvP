@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.145.
  *
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CoreProtectUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CoreProtectUtils
  *  org.bukkit.Server
  *  org.bukkit.command.CommandSender
  *  org.bukkit.entity.Player

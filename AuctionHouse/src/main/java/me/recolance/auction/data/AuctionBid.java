@@ -3,9 +3,9 @@
  *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.gui.CosmicGUI
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.JSONMessage
- *  com.cosmicpvp.cosmicutils.utils.TimeUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.JSONMessage
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.TimeUtils
  *  com.google.common.collect.Lists
  *  org.apache.commons.lang.builder.HashCodeBuilder
  *  org.arkhamnetwork.Arkkit.patches.ItemID
@@ -16,8 +16,8 @@
  *  org.bukkit.OfflinePlayer
  *  org.bukkit.Sound
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
  *  org.bukkit.metadata.FixedMetadataValue
  *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.plugin.Plugin
@@ -253,7 +253,7 @@ public class AuctionBid {
                 return;
             }
             if (this.isSeller(player)) {
-                player.sendMessage(CC.RedB + "You cannot bid on your own items!");
+                player.sendMessage(CC.RedB + "You cannot bid on your own me.astropvp.cratekeys.items!");
                 return;
             }
             if (this.getCurrentHighestBidder() != null && this.getCurrentHighestBidder().equals(player.getUniqueId())) {
@@ -291,7 +291,7 @@ public class AuctionBid {
                 return;
             }
             if (this.isSeller(player)) {
-                player.sendMessage(CC.RedB + "You cannot bid on your own items!");
+                player.sendMessage(CC.RedB + "You cannot bid on your own me.astropvp.cratekeys.items!");
                 return;
             }
             if (this.isExpired()) {
@@ -311,7 +311,7 @@ public class AuctionBid {
     public Runnable getMiddleClickLogic(CosmicGUI menuViewing, Player player) {
         return () -> {
             if (this.isSeller(player)) {
-                player.sendMessage(CC.RedB + "You cannot bid on your own items!");
+                player.sendMessage(CC.RedB + "You cannot bid on your own me.astropvp.cratekeys.items!");
                 return;
             }
             if (this.isExpired()) {
@@ -337,7 +337,7 @@ public class AuctionBid {
                 Bukkit.getLogger().info("Expiring bid for " + this.getSellerUUID() + " due to noone placing a bid: " + this.getSellingItems());
                 if (seller != null) {
                     seller.sendMessage(CC.RedB + "(AH) " + CC.Red + "Auction Bid expired for '" + this.getBidSellDisplayName() + CC.Red + "'!");
-                    seller.sendMessage(CC.Gray + "You can access your expired bid auction items in " + CC.GrayU + "/ah collect" + CC.Gray + "!");
+                    seller.sendMessage(CC.Gray + "You can access your expired bid auction me.astropvp.cratekeys.items in " + CC.GrayU + "/ah collect" + CC.Gray + "!");
                 }
                 this.expire();
             } else if (System.currentTimeMillis() - this.lastBidTime <= ANTI_SNIPE_TIME) {
@@ -403,7 +403,7 @@ public class AuctionBid {
             }
             binItems.add(withoutID);
         }
-        Bukkit.getLogger().info("Transfering " + binItems.size() + " items to " + owner + "'s bid bin from " + this.sellerName + "'s Auction: " + this.sellingItems);
+        Bukkit.getLogger().info("Transfering " + binItems.size() + " me.astropvp.cratekeys.items to " + owner + "'s bid bin from " + this.sellerName + "'s Auction: " + this.sellingItems);
     }
 
     public String getBidSellDisplayName() {

@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.145.
  *
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.JSONUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.JSONUtils
  *  net.minecraft.util.com.google.common.reflect.TypeToken
  *  org.bukkit.Bukkit
  *  org.bukkit.plugin.Plugin

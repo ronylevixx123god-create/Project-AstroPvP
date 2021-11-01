@@ -63,7 +63,7 @@ import org.spout.nbt.Tag;
  */
 public final class NBTInputStream implements Closeable {
 	/**
-	 * The data input stream.
+	 * The me.astropvp.cratekeys.data input stream.
 	 */
 	private final DataInputStream is;
 
@@ -73,7 +73,7 @@ public final class NBTInputStream implements Closeable {
 	private final boolean littleEndian;
 
 	/**
-	 * Creates a new {@link NBTInputStream}, which will source its data
+	 * Creates a new {@link NBTInputStream}, which will source its me.astropvp.cratekeys.data
 	 * from the specified input stream. This assumes the stream is compressed.
 	 * @param is The input stream.
 	 * @throws java.io.IOException if an I/O error occurs.
@@ -83,7 +83,7 @@ public final class NBTInputStream implements Closeable {
 	}
 
 	/**
-	 * Creates a new {@link NBTInputStream}, which sources its data from the
+	 * Creates a new {@link NBTInputStream}, which sources its me.astropvp.cratekeys.data from the
 	 * specified input stream. A flag must be passed which indicates if the
 	 * stream is compressed with GZIP or not. This assumes the stream
 	 * uses big endian encoding.
@@ -96,7 +96,7 @@ public final class NBTInputStream implements Closeable {
 	}
 
 	/**
-	 * Creates a new {@link NBTInputStream}, which sources its data from the
+	 * Creates a new {@link NBTInputStream}, which sources its me.astropvp.cratekeys.data from the
 	 * specified input stream. A flag must be passed which indicates if the
 	 * stream is compressed with GZIP or not.
 	 * @param is The input stream.

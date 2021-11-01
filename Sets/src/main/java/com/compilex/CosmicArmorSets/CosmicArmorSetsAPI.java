@@ -3,12 +3,12 @@
  *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
  *  com.google.common.collect.Lists
  *  me.astropvp.astropvpskins.AstroItemSkinsAPI
- *  me.astropvp.astropvpskins.enums.SkinType
+ *  me.astropvp.astropvpskins.me.astropvp.cratekeys.enums.SkinType
  *  net.minecraft.server.v1_7_R4.NBTBase
  *  net.minecraft.util.io.netty.util.internal.ThreadLocalRandom
  *  org.apache.commons.lang.StringUtils
@@ -22,9 +22,9 @@
  *  org.bukkit.enchantments.Enchantment
  *  org.bukkit.entity.Entity
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
- *  org.bukkit.inventory.meta.LeatherArmorMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.LeatherArmorMeta
  *  org.bukkit.metadata.FixedMetadataValue
  *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.plugin.Plugin

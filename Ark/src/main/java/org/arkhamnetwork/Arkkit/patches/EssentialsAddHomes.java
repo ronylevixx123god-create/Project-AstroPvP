@@ -8,7 +8,7 @@
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
  *  org.bukkit.configuration.file.FileConfiguration
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.plugin.Plugin
  *  org.bukkit.plugin.RegisteredServiceProvider
  */

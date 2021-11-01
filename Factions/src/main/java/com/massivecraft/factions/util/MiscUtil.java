@@ -2,12 +2,12 @@
  * Decompiled with CFR 0.145.
  *
  * Could not load the following classes:
- *  me.ifamasssxd.cosmicbosses.utils.BossEggUtils
+ *  me.ifamasssxd.cosmicbosses.me.astropvp.cratekeys.utils.BossEggUtils
  *  org.bukkit.ChatColor
  *  org.bukkit.entity.Creature
  *  org.bukkit.entity.Entity
  *  org.bukkit.entity.EntityType
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package com.massivecraft.factions.util;
 

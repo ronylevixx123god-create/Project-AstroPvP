@@ -2,8 +2,8 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.PlayerUtil
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.PlayerUtil
  *  me.libraryaddict.disguise.DisguiseAPI
  *  me.libraryaddict.disguise.disguisetypes.DisguiseType
  *  org.apache.commons.lang.StringUtils
@@ -14,7 +14,7 @@
  *  org.bukkit.command.CommandSender
  *  org.bukkit.entity.Entity
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.ifamasssxd.cosmicdisguises.commands;
 
@@ -95,7 +95,7 @@ implements CommandExecutor {
             return true;
         }
         if (PlayerUtil.giveOrDropProtectedItem(pl, CosmicDisguiseAPI.createRedeemableDisguise(type), -1)) {
-            sender.sendMessage(CC.Red + "Disguise added into " + pl.getName() + "'s inventory!");
+            sender.sendMessage(CC.Red + "Disguise added into " + pl.getName() + "'s me.astropvp.cratekeys.inventory!");
         } else {
             sender.sendMessage(CC.Red + "Disguise dropped on floor for " + pl.getName() + "!");
         }

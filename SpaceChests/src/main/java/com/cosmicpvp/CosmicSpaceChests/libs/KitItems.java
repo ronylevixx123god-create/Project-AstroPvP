@@ -2,11 +2,11 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
  *  me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package com.cosmicpvp.CosmicSpaceChests.libs;
 
@@ -19,7 +19,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class KitItems {
     public static ItemStack getKitItem(GlobalKits kit) {
-        return ItemUtils.buildItem(Material.DIAMOND, (short)0, ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "KIT \"" + (Object)ChatColor.GOLD + kit.getItemName() + ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "\"", (Object)ChatColor.GRAY + "Right-click this gem to unlock ", (Object)ChatColor.GRAY + "the " + kit.getItemName() + (Object)ChatColor.GRAY + " /gkit on this planet.", "", (Object)ChatColor.GRAY + "If you already have this /gkit unlocked,", (Object)ChatColor.GRAY + "you can redeem this gem to increase", (Object)ChatColor.GRAY + "the " + CC.YellowB + "Kit Tier" + CC.Gray + " which will increase", (Object)ChatColor.GRAY + "the enchantment levels on the /gkit", (Object)ChatColor.GRAY + "items each time you claim it.");
+        return ItemUtils.buildItem(Material.DIAMOND, (short)0, ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "KIT \"" + (Object)ChatColor.GOLD + kit.getItemName() + ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "\"", (Object)ChatColor.GRAY + "Right-click this gem to unlock ", (Object)ChatColor.GRAY + "the " + kit.getItemName() + (Object)ChatColor.GRAY + " /gkit on this planet.", "", (Object)ChatColor.GRAY + "If you already have this /gkit unlocked,", (Object)ChatColor.GRAY + "you can redeem this gem to increase", (Object)ChatColor.GRAY + "the " + CC.YellowB + "Kit Tier" + CC.Gray + " which will increase", (Object)ChatColor.GRAY + "the enchantment levels on the /gkit", (Object)ChatColor.GRAY + "me.astropvp.cratekeys.items each time you claim it.");
     }
 
     public static GlobalKits getKitFromItemstack(ItemStack i) {

@@ -5,11 +5,11 @@
  *  com.cosmicpvp.cosmicutils.compat.ASound
  *  com.cosmicpvp.cosmicutils.exceptions.CosmicException
  *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.GeneralUtil
- *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
- *  com.cosmicpvp.cosmicutils.utils.NumberUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.GeneralUtil
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NumberUtils
  *  me.ifamasssxd.cosmicskycustoms.struct.CosmicItem
  *  me.ifamasssxd.cosmicskycustoms.struct.InventoryInteractable
  *  me.ifamasssxd.cosmicskycustoms.struct.InventoryItemType
@@ -17,9 +17,9 @@
  *  org.bukkit.Material
  *  org.bukkit.Sound
  *  org.bukkit.entity.Player
- *  org.bukkit.event.inventory.InventoryClickEvent
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
  */
 package com.compilex.CosmicArmorSets.items;
 
@@ -57,7 +57,7 @@ public class OmniCrystal
         if (chance == null) {
             chance = 1;
         }
-        return this.applyItemData(new ItemBuilder(Material.SNOW_BALL).lore(CC.translate("&7Apply to any non-specialty"), CC.translate("&7armor piece to"), CC.translate("&7transform it into an &3Omni Item:"), CC.translate("&7An item that acts as any"), CC.translate("&7unique /help armorset piece."), "", CC.translate("&3EX: &71 Omni item, 3 Phantom items equipped"), CC.translate("&7would apply the Phantom Set Bonus to the player")).name(CC.translate(String.format("&3&lOmni Crystal (&7%d%%&3&l)", chance))).build()).setNBTBase("conaxData", new NBTTagCompoundBuilder().setInt("success", chance).get()).build();
+        return this.applyItemData(new ItemBuilder(Material.SNOW_BALL).lore(CC.translate("&7Apply to any non-specialty"), CC.translate("&7armor piece to"), CC.translate("&7transform it into an &3Omni Item:"), CC.translate("&7An item that acts as any"), CC.translate("&7unique /help armorset piece."), "", CC.translate("&3EX: &71 Omni item, 3 Phantom me.astropvp.cratekeys.items equipped"), CC.translate("&7would apply the Phantom Set Bonus to the player")).name(CC.translate(String.format("&3&lOmni Crystal (&7%d%%&3&l)", chance))).build()).setNBTBase("conaxData", new NBTTagCompoundBuilder().setInt("success", chance).get()).build();
     }
 
     public boolean acceptsInventoryClickType(InventoryItemType inventoryItemType) {

@@ -95,7 +95,7 @@ public class EnchantmentBookListener implements Listener {
                     }
                 }
                 if (to_enchant.getAmount() > to_enchant.getMaxStackSize() && to_enchant.getAmount() > 1) {
-                    pl.sendMessage(ChatColor.RED + "You cannot apply enchantments to stacked items!");
+                    pl.sendMessage(ChatColor.RED + "You cannot apply enchantments to stacked me.astropvp.cratekeys.items!");
                     return;
                 }
                 if (!EnchantmentAPI.itemHasEnchantment(to_enchant, ce.name()) && ce.heroicEnchantment && ce.nonHeroicVersion != null) {
@@ -466,7 +466,7 @@ public class EnchantmentBookListener implements Listener {
         final Player pl = e.getPlayer();
         if ((e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && e.hasItem() && EnchantmentBook.isSecretDust(e.getItem())) {
             if (pl.getInventory().firstEmpty() == -1) {
-                pl.sendMessage(ChatColor.RED + "You need an empty inventory slot to examine secret dust.");
+                pl.sendMessage(ChatColor.RED + "You need an empty me.astropvp.cratekeys.inventory slot to examine secret dust.");
                 return;
             }
             e.setCancelled(true);
@@ -563,7 +563,7 @@ public class EnchantmentBookListener implements Listener {
             if (e.getItem().getDurability() != 0) {
                 e.getItem().setDurability((short) 0);
             }
-            pl.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "To apply this enchantment to an item, simply drag n' drop the book onto the item you'd like to enchant in your inventory!");
+            pl.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "To apply this enchantment to an item, simply drag n' drop the book onto the item you'd like to enchant in your me.astropvp.cratekeys.inventory!");
             pl.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7The &bSuccess Rate&7 is the chance of the book successfully being applied to your equipment. The &bDestruction Chance&7 is the percent chance of your piece of equipment being &nDESTROYED&7 if the book fails to apply."));
             pl.updateInventory();
         }
@@ -571,7 +571,7 @@ public class EnchantmentBookListener implements Listener {
             e.setCancelled(true);
             e.setUseInteractedBlock(Event.Result.DENY);
             e.setUseItemInHand(Event.Result.DENY);
-            pl.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "To apply this White Scroll to an item, simply drag n' drop the scroll onto the item you'd like to protect in your inventory!");
+            pl.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "To apply this White Scroll to an item, simply drag n' drop the scroll onto the item you'd like to protect in your me.astropvp.cratekeys.inventory!");
             pl.updateInventory();
         }
     }

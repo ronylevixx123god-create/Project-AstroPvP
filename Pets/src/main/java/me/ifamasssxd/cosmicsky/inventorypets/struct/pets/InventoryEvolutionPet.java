@@ -91,7 +91,7 @@ public class InventoryEvolutionPet extends InventoryPet {
 
       KitPlayer ekitPlayer = (KitPlayer)KitPlayer.kitPlayerMap.get(player.getUniqueId());
       if (ekitPlayer == null) {
-         throw new NoPetException("Invalid player data!");
+         throw new NoPetException("Invalid player me.astropvp.cratekeys.data!");
       } else {
          EvolutionKits lowestKit = null;
          int lowestLevel = -1;

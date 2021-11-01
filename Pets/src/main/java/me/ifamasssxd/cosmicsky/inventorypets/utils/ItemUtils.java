@@ -64,7 +64,7 @@ public class ItemUtils {
       if (p.getInventory().firstEmpty() != -1) {
          p.getInventory().addItem(new ItemStack[]{i});
       } else {
-         Bukkit.getLogger().info("[CosmicDungeons] " + p.getName() + " did not have inventory space for " + i + ", dropping on ground!");
+         Bukkit.getLogger().info("[CosmicDungeons] " + p.getName() + " did not have me.astropvp.cratekeys.inventory space for " + i + ", dropping on ground!");
          p.getWorld().dropItem(p.getLocation(), i);
       }
 

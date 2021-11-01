@@ -5,8 +5,8 @@
  *  org.bukkit.Bukkit
  *  org.bukkit.Material
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
  */
 package me.cosmicpvp.CosmicGlobalKits.utils;
 
@@ -40,7 +40,7 @@ public class ItemUtils {
         if (p.getInventory().firstEmpty() != -1) {
             p.getInventory().addItem(new ItemStack[]{i});
         } else {
-            Bukkit.getLogger().info("[CosmicGlobalKits] " + p.getName() + " did not have inventory space for " + (Object)i + ", dropping on ground!");
+            Bukkit.getLogger().info("[CosmicGlobalKits] " + p.getName() + " did not have me.astropvp.cratekeys.inventory space for " + (Object)i + ", dropping on ground!");
             p.getWorld().dropItem(p.getLocation(), i);
         }
     }

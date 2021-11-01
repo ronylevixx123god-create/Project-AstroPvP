@@ -13,7 +13,7 @@
  *  org.bukkit.event.entity.EntityRegainHealthEvent
  *  org.bukkit.event.entity.EntityShootBowEvent
  *  org.bukkit.event.entity.FoodLevelChangeEvent
- *  org.bukkit.event.inventory.InventoryClickEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
  *  org.bukkit.event.player.PlayerDropItemEvent
  *  org.bukkit.event.player.PlayerExpChangeEvent
  *  org.bukkit.event.player.PlayerInteractEvent

@@ -8,12 +8,12 @@
  *  net.minecraft.server.v1_7_R4.NBTReadLimiter
  *  net.minecraft.server.v1_7_R4.NBTTagCompound
  *  net.minecraft.server.v1_7_R4.NBTTagList
- *  org.bukkit.craftbukkit.v1_7_R4.inventory.CraftInventoryCustom
- *  org.bukkit.craftbukkit.v1_7_R4.inventory.CraftItemStack
- *  org.bukkit.inventory.Inventory
- *  org.bukkit.inventory.InventoryHolder
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.PlayerInventory
+ *  org.bukkit.craftbukkit.v1_7_R4.me.astropvp.cratekeys.inventory.CraftInventoryCustom
+ *  org.bukkit.craftbukkit.v1_7_R4.me.astropvp.cratekeys.inventory.CraftItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.Inventory
+ *  org.bukkit.me.astropvp.cratekeys.inventory.InventoryHolder
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.PlayerInventory
  *  org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder
  */
 package me.ifamasssxd.cosmicduel.utils;
@@ -37,7 +37,7 @@ public class ItemSerialization {
     private static final String INVENTORY_PLAYER = "player";
     private static final int NBT_TYPE_COMPOUND = 10;
     private static final String NBT_TYPE = "type";
-    private static final String NBT_ITEMS = "items";
+    private static final String NBT_ITEMS = "me.astropvp.cratekeys.items";
     private static final String NBT_VERSION = "version";
     private static final String NBT_PLAYER_HELD_INDEX = "player_held_index";
     private static final String NBT_PLAYER_NAME = "player_name";

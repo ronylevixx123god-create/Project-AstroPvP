@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.150.
  *
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
  *  org.bukkit.block.BrewingStand
@@ -11,13 +11,13 @@
  *  org.bukkit.event.EventHandler
  *  org.bukkit.event.EventPriority
  *  org.bukkit.event.Listener
- *  org.bukkit.event.inventory.BrewEvent
- *  org.bukkit.event.inventory.InventoryAction
- *  org.bukkit.event.inventory.InventoryClickEvent
- *  org.bukkit.event.inventory.InventoryMoveItemEvent
- *  org.bukkit.event.inventory.InventoryType
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.BrewEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryAction
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryMoveItemEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryType
  *  org.bukkit.event.player.PlayerInteractEvent
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package org.arkhamnetwork.Arkkit.patches;
 
@@ -73,7 +73,7 @@ final class PotionStackListener
                     break;
                 }
                 pl.getWorld().dropItem(pl.getLocation(), is_remainder);
-                pl.sendMessage(ChatColor.GRAY + "Your extra illegally stacked potions have been dropped on the ground as you did not have enough inventory space for them to be automatically unstacked.");
+                pl.sendMessage(ChatColor.GRAY + "Your extra illegally stacked potions have been dropped on the ground as you did not have enough me.astropvp.cratekeys.inventory space for them to be automatically unstacked.");
                 break;
             }
             pl.updateInventory();

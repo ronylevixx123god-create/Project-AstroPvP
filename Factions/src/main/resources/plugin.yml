@@ -244,9 +244,9 @@ permissions:
   factions.relation:
     description: set relation wish to another faction
   factions.reload:
-    description: reload data file(s) from disk
+    description: reload me.astropvp.cratekeys.data file(s) from disk
   factions.save:
-    description: save all data to disk
+    description: save all me.astropvp.cratekeys.data to disk
   factions.sethome:
     description: set the faction home
   factions.sethome.any:

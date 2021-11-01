@@ -2,14 +2,14 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.PlayerUtil
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.PlayerUtil
  *  org.bukkit.Bukkit
  *  org.bukkit.command.Command
  *  org.bukkit.command.CommandExecutor
  *  org.bukkit.command.CommandSender
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.cosmicpvp.CosmicGlobalKits.commands;
 
@@ -35,7 +35,7 @@ implements CommandExecutor {
             Player pl = (Player)sender;
             GlobalKitUser kitUser = CosmicGlobalKits.getPlugin().getGlobalKitUser(pl.getUniqueId());
             if (kitUser == null || kitUser.isLoadingData()) {
-                pl.sendMessage(CC.RedB + "(!) " + CC.Red + "Please wait while your Mastery Kit data is loaded!");
+                pl.sendMessage(CC.RedB + "(!) " + CC.Red + "Please wait while your Mastery Kit me.astropvp.cratekeys.data is loaded!");
                 pl.sendMessage(CC.Gray + "Allow up to 15 seconds before attempting to relog.");
                 return true;
             }

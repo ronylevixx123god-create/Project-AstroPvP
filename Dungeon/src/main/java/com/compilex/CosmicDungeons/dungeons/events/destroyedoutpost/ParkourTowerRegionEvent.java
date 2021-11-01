@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
  *  com.gmail.filoghost.holograms.api.HolographicDisplaysAPI
  *  kotlin.jvm.internal.Intrinsics
  *  org.bukkit.Bukkit

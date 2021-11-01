@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.UpgradeUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.UpgradeUtils
  *  org.bukkit.configuration.file.YamlConfiguration
  *  org.bukkit.entity.Player
  */

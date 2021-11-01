@@ -3,7 +3,7 @@
  * 
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.struct.factions.points.FactionPointUtils
- *  com.cosmicpvp.cosmicutils.utils.WorldGuardUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.WorldGuardUtils
  *  com.rit.sucy.CustomEnchantment
  *  org.arkhamnetwork.Arkkit.patches.ItemID
  *  org.arkhamnetwork.Arkkit.plugins.ArkPlugins
@@ -14,9 +14,9 @@
  *  org.bukkit.block.Block
  *  org.bukkit.entity.FallingBlock
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.Inventory
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.Inventory
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
  *  org.bukkit.metadata.FixedMetadataValue
  *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.plugin.Plugin
@@ -71,7 +71,7 @@ public class CosmicSpaceChestsAPI {
         ItemStack is = new ItemStack(Material.CHEST, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(cc + ChatColor.BOLD.toString() + ir.name + " Cosmic Chest" + ChatColor.GRAY + " (Right Click)");
-        ArrayList<String> lore = new ArrayList<String>(Arrays.asList(ChatColor.GRAY + "A cache of equipment packaged by", ChatColor.GRAY + "the Intergalactic Cosmonaut Station.", "", ChatColor.GRAY + "Contains " + cc + ChatColor.UNDERLINE + "5 " + ir.name + " rarity" + ChatColor.GRAY + " items..."));
+        ArrayList<String> lore = new ArrayList<String>(Arrays.asList(ChatColor.GRAY + "A cache of equipment packaged by", ChatColor.GRAY + "the Intergalactic Cosmonaut Station.", "", ChatColor.GRAY + "Contains " + cc + ChatColor.UNDERLINE + "5 " + ir.name + " rarity" + ChatColor.GRAY + " me.astropvp.cratekeys.items..."));
         if (ir == ItemRarity.SIMPLE) {
             lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Vanilla Equipment");
             lore.add(cc + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Vanilla Potions");

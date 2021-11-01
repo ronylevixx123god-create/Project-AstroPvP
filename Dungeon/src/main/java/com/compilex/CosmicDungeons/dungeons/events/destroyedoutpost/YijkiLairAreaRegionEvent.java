@@ -2,14 +2,14 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.WorldGuardUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.WorldGuardUtils
  *  kotlin.TypeCastException
  *  kotlin.jvm.internal.Intrinsics
  *  me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost.MotherOfYijki
  *  me.ifamasssxd.cosmicbosses.struct.Boss
- *  me.ifamasssxd.cosmicbosses.struct.enums.BossType
- *  me.ifamasssxd.cosmicbosses.utils.BossUtils
+ *  me.ifamasssxd.cosmicbosses.struct.me.astropvp.cratekeys.enums.BossType
+ *  me.ifamasssxd.cosmicbosses.me.astropvp.cratekeys.utils.BossUtils
  *  org.bukkit.Location
  *  org.bukkit.entity.Player
  *  org.bukkit.event.player.PlayerTeleportEvent$TeleportCause

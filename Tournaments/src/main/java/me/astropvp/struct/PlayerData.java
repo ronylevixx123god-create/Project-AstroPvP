@@ -167,8 +167,8 @@ public class PlayerData {
                 statement.setString(1, this.uuid.toString());
                 ResultSet results = statement.executeQuery();
                 while(results.next()) {
-                    Bukkit.broadcastMessage(results.getString("inventory"));
-                    this.inventory = Base64Utils.fromBase64(results.getString("inventory"));
+                    Bukkit.broadcastMessage(results.getString("me.astropvp.cratekeys.inventory"));
+                    this.inventory = Base64Utils.fromBase64(results.getString("me.astropvp.cratekeys.inventory"));
                     this.tournamentlosses = results.getInt("tournamentlosses");
                     this.matchwins = results.getInt("matchwins");
                     this.matchlosses = results.getInt("matchlosses");
@@ -204,7 +204,7 @@ public class PlayerData {
 
     public void unloadData(boolean async) {
         if (this.loading) {
-            Bukkit.getLogger().info("Not saving duel data since we couldnt finish loading in time.");
+            Bukkit.getLogger().info("Not saving duel me.astropvp.cratekeys.data since we couldnt finish loading in time.");
             return;
         }
         if (async && Bukkit.isPrimaryThread()) {

@@ -2,12 +2,12 @@
  * Decompiled with CFR 0.150.
  *
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
  *  org.bukkit.Bukkit
  *  org.bukkit.Material
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
  */
 package net.astropvp.core.utils;
 
@@ -73,7 +73,7 @@ public class ItemUtils {
         if (p.getInventory().firstEmpty() != -1) {
             p.getInventory().addItem(new ItemStack[]{i});
         } else {
-            Bukkit.getLogger().info("[CosmicDungeons] " + p.getName() + " did not have inventory space for " + (Object) i + ", dropping on ground!");
+            Bukkit.getLogger().info("[CosmicDungeons] " + p.getName() + " did not have me.astropvp.cratekeys.inventory space for " + (Object) i + ", dropping on ground!");
             p.getWorld().dropItem(p.getLocation(), i);
         }
     }

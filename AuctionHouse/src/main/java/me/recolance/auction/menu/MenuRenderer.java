@@ -2,17 +2,17 @@
  * Decompiled with CFR 0.150.
  *
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.utils.NumberUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NumberUtils
  *  com.google.common.collect.Lists
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
  *  org.bukkit.Sound
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.Inventory
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.Inventory
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.metadata.FixedMetadataValue
  *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.plugin.Plugin
@@ -89,7 +89,7 @@ public class MenuRenderer {
         }
         hTS.lore("", CC.Gray + "To list an item in a Bid Auction use", CC.Yellow + "/ah startbid <startPrice> <bidIncrement>", "", CC.Gray + "To toggle alerts when you are outbid", CC.Gray + "use " + CC.Yellow + "/ah aucnotify");
         String wITPN = plugin.getConfig().getString("menuText.bookButton.name");
-        ArrayList<String> wITPL = Lists.newArrayList("&7This is the auction house, here you can", "&7list items for sale and purchase items", "&7that others have listed for sale.", "", "&7The auction is also a great way to make", "&7money by selling farmable items other", "&7players may be interested in buying.", "", "&7All sell listings last for a max of &e15 minutes", "&7unsold items are sent to your collection bin.", "", "&7You can also list items up for auction", "&7where players can outbid each other to", "&7be the highest bidder using &e/bids&7.", "", "&7For more help, use &e/ah help!");
+        ArrayList<String> wITPL = Lists.newArrayList("&7This is the auction house, here you can", "&7list me.astropvp.cratekeys.items for sale and purchase me.astropvp.cratekeys.items", "&7that others have listed for sale.", "", "&7The auction is also a great way to make", "&7money by selling farmable me.astropvp.cratekeys.items other", "&7players may be interested in buying.", "", "&7All sell listings last for a max of &e15 minutes", "&7unsold me.astropvp.cratekeys.items are sent to your collection bin.", "", "&7You can also list me.astropvp.cratekeys.items up for auction", "&7where players can outbid each other to", "&7be the highest bidder using &e/bids&7.", "", "&7For more help, use &e/ah help!");
         wITP = new MenuButton().type(Material.BOOK).name(wITPN);
         for (String lore : wITPL) {
             wITP.lore(lore.replace("15 minute", "60 minute"));
@@ -115,7 +115,7 @@ public class MenuRenderer {
         BidManager bidManager = Auction.getPlugin().getBidManager();
         List<ItemStack> claimMenu = bidManager.getBidCollectionBin().get(player.getUniqueId());
         if (claimMenu != null && !claimMenu.isEmpty()) {
-            inventory.setItem(47, new ItemBuilder(Material.ENDER_CHEST).name(CC.YellowB + "Bid Collection Bin").lore(CC.Gray + "Click to view all items won from bid auctions", CC.Gray + "or expired bids you attempted to sell.", "", CC.YellowB + claimMenu.size() + " Item(s)").build());
+            inventory.setItem(47, new ItemBuilder(Material.ENDER_CHEST).name(CC.YellowB + "Bid Collection Bin").lore(CC.Gray + "Click to view all me.astropvp.cratekeys.items won from bid auctions", CC.Gray + "or expired bids you attempted to sell.", "", CC.YellowB + claimMenu.size() + " Item(s)").build());
         } else {
             inventory.setItem(47, new ItemBuilder(Material.BOOK_AND_QUILL).name(CC.YellowB + "Auction Bids").lore(CC.Gray + "Click here to view all current Auction Biddings!", "", CC.YellowB + bidManager.getActiveAuctionBids().size() + " Auction(s)").build());
         }
@@ -190,7 +190,7 @@ public class MenuRenderer {
         Inventory inventory = Bukkit.createInventory(null, (int) 54, (String) "Your Current Listings");
         MenuRenderer.renderSelling(player, inventory);
         MenuButton back = new MenuButton().type(Material.CHEST).name("&e&lReturn to Auction House").lore("&7Click here to return to the", "&7auction house main menu.");
-        MenuButton wITP = new MenuButton().type(Material.BOOK).name("&e&lTutorial").lore("&7These are your current listings, all of", "&7the items you currently have listed on", "&7the auction house are displayed here.", "", "&7You can cancel and view your listing's", "&7expire time here.");
+        MenuButton wITP = new MenuButton().type(Material.BOOK).name("&e&lTutorial").lore("&7These are your current listings, all of", "&7the me.astropvp.cratekeys.items you currently have listed on", "&7the auction house are displayed here.", "", "&7You can cancel and view your listing's", "&7expire time here.");
         inventory.setItem(45, back.get());
         inventory.setItem(53, wITP.get());
         player.openInventory(inventory);
@@ -235,9 +235,9 @@ public class MenuRenderer {
         MenuRenderer.renderExpired(1, inventory, player);
         MenuButton back = new MenuButton().type(Material.CHEST).name("&e&lReturn to Auction House").lore("&7Click here to return to the", "&7auction house main menu.");
         MenuButton previous = new MenuButton().type(Material.PAPER).name("&e&l<- Previous Page");
-        MenuButton all = new MenuButton().type(Material.ENDER_CHEST).name("&e&lClaim All").lore("&7Click here to claim all", "&7your Collection Bin items.");
+        MenuButton all = new MenuButton().type(Material.ENDER_CHEST).name("&e&lClaim All").lore("&7Click here to claim all", "&7your Collection Bin me.astropvp.cratekeys.items.");
         MenuButton next = new MenuButton().type(Material.PAPER).name("&e&lNext Page ->");
-        MenuButton wITP = new MenuButton().type(Material.BOOK).name("&e&lTutorial").lore("&7This page houses all of your cancelled and", "&7expired items, when a listings is cancelled", "&7or expires you will be able to return that", "&7item back to you from this menu.", "", "&7Just click on the item and if you have enough", "&7inventory space you will recieve the item.");
+        MenuButton wITP = new MenuButton().type(Material.BOOK).name("&e&lTutorial").lore("&7This page houses all of your cancelled and", "&7expired me.astropvp.cratekeys.items, when a listings is cancelled", "&7or expires you will be able to return that", "&7item back to you from this menu.", "", "&7Just click on the item and if you have enough", "&7inventory space you will recieve the item.");
         inventory.setItem(45, back.get());
         inventory.setItem(48, previous.get());
         inventory.setItem(49, all.get());

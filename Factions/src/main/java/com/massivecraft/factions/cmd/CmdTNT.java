@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.145.
  *
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
  *  org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog
  *  org.arkhamnetwork.Arkkit.plugins.ArkPlugin
  *  org.arkhamnetwork.Arkkit.plugins.ArkPlugins
@@ -12,9 +12,9 @@
  *  org.bukkit.block.Chest
  *  org.bukkit.command.CommandSender
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.Inventory
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.PlayerInventory
+ *  org.bukkit.me.astropvp.cratekeys.inventory.Inventory
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.PlayerInventory
  */
 package com.massivecraft.factions.cmd;
 
@@ -68,7 +68,7 @@ public class CmdTNT
             this.sender.sendMessage(CC.YellowB + "/f tnt: " + CC.White + this.bigNumber.format(fac.tnt / 64) + "x stacks " + CC.Gray + "(" + this.bigNumber.format(fac.tnt) + " total)");
             this.sender.sendMessage(CC.Yellow + "Usage: " + CC.Gray + "/f tnt [w/d] [#/all]");
             this.sender.sendMessage(CC.Gray + "(w = withdraw, d = deposit, # = stacks)");
-            this.sender.sendMessage(CC.Gray + "The \"deposit\" option defaults to your own inventory, but will execute on any target chest you have access to.");
+            this.sender.sendMessage(CC.Gray + "The \"deposit\" option defaults to your own me.astropvp.cratekeys.inventory, but will execute on any target chest you have access to.");
             return;
         }
         if (this.args.size() >= 1) {

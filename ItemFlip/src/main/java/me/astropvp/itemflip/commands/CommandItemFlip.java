@@ -79,7 +79,7 @@ public class CommandItemFlip
         player.sendMessage(CC.Gold + "/itemflip <player>");
         player.sendMessage(CC.Gray + "Sends an item flip request to the specified <player>.");
         player.sendMessage(CC.Gray + "Item Flips are similar to Coin Flips (/cf) but instead of money,");
-        player.sendMessage(CC.Gray + "you're wagering items.");
+        player.sendMessage(CC.Gray + "you're wagering me.astropvp.cratekeys.items.");
         return false;
     }
 }

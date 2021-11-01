@@ -28,7 +28,7 @@ public class RewardInventory {
         if (maps != null) {
             maps.forEach((uuid, rewardSave) -> {
                 if (rewardSave.getExpiration() > 0L && System.currentTimeMillis() >= rewardSave.getExpiration()) {
-                    Bukkit.getLogger().info("Expiring items for " + uuid.toString() + " Expiration: " + rewardSave.getExpiration());
+                    Bukkit.getLogger().info("Expiring me.astropvp.cratekeys.items for " + uuid.toString() + " Expiration: " + rewardSave.getExpiration());
                     return;
                 } else {
                     RewardInventory inventory = new RewardInventory(uuid);
@@ -85,7 +85,7 @@ public class RewardInventory {
         final RewardInventory inventory = RewardInventory.bossRewards.computeIfAbsent(player.getUniqueId(), e -> new RewardInventory(player));
         final boolean expired = inventory.getExpirationTime() > 0L && inventory.getExpirationTime() < System.currentTimeMillis();
         if (expired) {
-            Bukkit.getLogger().info("Expiring previous collect items for " + player.getName() + "!");
+            Bukkit.getLogger().info("Expiring previous collect me.astropvp.cratekeys.items for " + player.getName() + "!");
             inventory.getItems().clear();
         }
         if (inventory.getExpirationTime() <= 0L || expired) {

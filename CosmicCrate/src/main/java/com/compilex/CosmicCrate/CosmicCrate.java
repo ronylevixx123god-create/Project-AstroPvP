@@ -92,7 +92,7 @@ public class CosmicCrate extends JavaPlugin
             Bukkit.getLogger().info("[CosmicCrate] Loaded " + x + " claimed Astro Crate metadata values!");
         }
         catch (Exception e) {
-            Bukkit.getLogger().info("Failed to download Astro Crate data. Stack trace:");
+            Bukkit.getLogger().info("Failed to download Astro Crate me.astropvp.cratekeys.data. Stack trace:");
             e.printStackTrace();
             Bukkit.getPluginManager().disablePlugin((Plugin)this);
         }

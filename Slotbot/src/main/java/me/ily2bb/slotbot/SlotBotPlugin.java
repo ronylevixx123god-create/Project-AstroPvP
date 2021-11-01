@@ -45,7 +45,7 @@ public class SlotBotPlugin extends JavaPlugin {
         } else {
             final String l = Utils.toBase64(new ItemStack[]{new ItemStack(Material.EMERALD)}, 9) + ":show:1";
             final List<String> list = Arrays.asList(l);
-            this.getConfig().addDefault("items", list);
+            this.getConfig().addDefault("me.astropvp.cratekeys.items", list);
             this.getConfig().addDefault("slot-bot-enabled", true);
             this.getLogger().info(ChatColor.translateAlternateColorCodes('&', "&aSuccessfully created config for Slot Bots..."));
         }

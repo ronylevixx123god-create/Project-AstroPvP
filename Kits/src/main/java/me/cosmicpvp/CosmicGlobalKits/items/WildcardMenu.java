@@ -4,15 +4,15 @@
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.compat.ASound
  *  com.cosmicpvp.cosmicutils.gui.CosmicGUI
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.InventoryUtils
- *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
- *  com.cosmicpvp.cosmicutils.utils.PlayerUtil
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.InventoryUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.PlayerUtil
  *  me.ifamasssxd.cosmicevolutionkits.CosmicEvolutionKits
  *  org.bukkit.Bukkit
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.plugin.Plugin
  */
 package me.cosmicpvp.CosmicGlobalKits.items;
@@ -60,7 +60,7 @@ extends CosmicGUI {
                 if (this.itemWrapper.isBlacklistedIID()) {
                     this.unlocked = true;
                     this.close();
-                    this.player.sendMessage(CC.RedB + "(!) " + CC.Red + "Item has been claimed since you're inventory was opened!");
+                    this.player.sendMessage(CC.RedB + "(!) " + CC.Red + "Item has been claimed since you're me.astropvp.cratekeys.inventory was opened!");
                     return;
                 }
                 if (kit.unlockOrLevelUp(this.player)) {

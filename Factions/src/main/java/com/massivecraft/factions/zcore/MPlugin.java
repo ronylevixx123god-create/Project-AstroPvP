@@ -83,11 +83,11 @@ public abstract class MPlugin
         }
         if (this.loadSuccessful) {
             if (EM.saveAllToDisc(true)) {
-                Bukkit.getLogger().info("Successfully saved data to disk..");
+                Bukkit.getLogger().info("Successfully saved me.astropvp.cratekeys.data to disk..");
             } else {
                 Bukkit.getLogger().info("Unable to successfully saveAllToDisc!");
             }
-            Bukkit.getLogger().info("Finished saving data to disk..");
+            Bukkit.getLogger().info("Finished saving me.astropvp.cratekeys.data to disk..");
         } else {
             Bukkit.getLogger().info("loadSuccessful = false, not saving players!");
         }

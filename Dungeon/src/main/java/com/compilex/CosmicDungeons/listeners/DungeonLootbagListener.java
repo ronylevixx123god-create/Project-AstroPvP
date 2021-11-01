@@ -67,7 +67,7 @@ implements Listener {
                 bagType = foundType;
             }
             if (this.getEmptyInventorySlots(p) < 4 && !CosmicDungeonsPlugin.get().isDevplanet()) {
-                p.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "You do not have enough empty inventory slots to open a Dungeon Lootbag.");
+                p.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "You do not have enough empty me.astropvp.cratekeys.inventory slots to open a Dungeon Lootbag.");
                 p.sendMessage(ChatColor.RED + "REQ: " + ChatColor.GRAY + (bagType.equals(DungeonType.ABANDONED_SHIP) ? 4 : 6) + " slots");
                 return;
             }
@@ -139,13 +139,13 @@ implements Listener {
                 dropped = true;
             }
             if (dropped) {
-                p.sendMessage(CC.RedB + "(!) " + CC.Red + "Your inventory was full and some Lootbag items have been dropped on the ground!");
+                p.sendMessage(CC.RedB + "(!) " + CC.Red + "Your me.astropvp.cratekeys.inventory was full and some Lootbag me.astropvp.cratekeys.items have been dropped on the ground!");
             }
             de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(),p.getLocation(), 0f,1f,0f,0.6f,50);
 
 
             p.playSound(p.getLocation(), Sound.CHEST_OPEN, 1.0f, 0.3f);
-            Bukkit.getLogger().info(new StringBuilder().append("[CosmicDungeons] Giving ").append(p.getName()).append(loot.size()).append(" items: ").append(Arrays.toString(loot.toArray(new Object[0]))).append(" from lootbag: ").append(bagType.name()).toString());
+            Bukkit.getLogger().info(new StringBuilder().append("[CosmicDungeons] Giving ").append(p.getName()).append(loot.size()).append(" me.astropvp.cratekeys.items: ").append(Arrays.toString(loot.toArray(new Object[0]))).append(" from lootbag: ").append(bagType.name()).toString());
             p.updateInventory();
         }
     }

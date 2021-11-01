@@ -7,7 +7,7 @@
  *  org.bukkit.Location
  *  org.bukkit.entity.Player
  *  org.bukkit.event.player.PlayerTeleportEvent$TeleportCause
- *  org.bukkit.inventory.Inventory
+ *  org.bukkit.me.astropvp.cratekeys.inventory.Inventory
  *  org.bukkit.metadata.FixedMetadataValue
  *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.plugin.Plugin

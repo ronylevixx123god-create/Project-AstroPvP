@@ -2,10 +2,10 @@
  * Decompiled with CFR 0.150.
  *
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.GeneralUtil
- *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.utils.ItemUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.GeneralUtil
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemUtils
  *  com.google.common.collect.Lists
  *  net.minecraft.server.v1_8_R3.ItemStack
  *  net.minecraft.server.v1_8_R3.NBTCompressedStreamTools
@@ -14,8 +14,8 @@
  *  org.apache.commons.lang.StringUtils
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
- *  org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.craftbukkit.v1_8_R3.me.astropvp.cratekeys.inventory.CraftItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.material.MaterialData
  *  org.bukkit.plugin.Plugin
  *  org.bukkit.scheduler.BukkitRunnable

@@ -2,14 +2,14 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.FactionUtils
- *  com.cosmicpvp.cosmicutils.utils.MaskUtils
- *  com.cosmicpvp.cosmicutils.utils.ParticleEffect
- *  com.cosmicpvp.cosmicutils.utils.TimeUtils
- *  com.cosmicpvp.cosmicutils.utils.UpgradeUtils
- *  com.cosmicpvp.cosmicutils.utils.WorldGuardUtils
- *  com.cosmicpvp.cosmicutils.utils.WorldUtil
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.FactionUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.MaskUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ParticleEffect
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.TimeUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.UpgradeUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.WorldGuardUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.WorldUtil
  *  com.gmail.filoghost.holograms.api.Hologram
  *  com.gmail.filoghost.holograms.api.HolographicDisplaysAPI
  *  com.google.common.collect.Lists
@@ -17,7 +17,7 @@
  *  com.massivecraft.factions.iface.RelationParticipator
  *  com.massivecraft.factions.struct.Relation
  *  me.astropvp.astropvpskins.AstroItemSkinsAPI
- *  me.astropvp.astropvpskins.enums.SkinType
+ *  me.astropvp.astropvpskins.me.astropvp.cratekeys.enums.SkinType
  *  me.ifamasssxd.cosmichcf.api.HCFOutpostAPI
  *  me.ifamasssxd.cosmichcf.struct.OutpostType
  *  org.bukkit.Bukkit
@@ -39,7 +39,7 @@
  *  org.bukkit.event.player.PlayerInteractEvent
  *  org.bukkit.event.player.PlayerPortalEvent
  *  org.bukkit.event.player.PlayerTeleportEvent$TeleportCause
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.metadata.FixedMetadataValue
  *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.plugin.Plugin
@@ -105,7 +105,7 @@ implements Listener {
                 e.setCancelled(true);
                 if (dungeon.isKeyRequired() && !dungeon.playerHasKey(e.getPlayer())) {
                     e.getPlayer().sendMessage("");
-                    e.getPlayer().sendMessage(CC.RedB + "(!) " + CC.Red + "You do not have the required key in your inventory to the " + dungeon.getDungeonName() + CC.Red + " dungeon. Purchase it from the Dungeon Master at /spawn!");
+                    e.getPlayer().sendMessage(CC.RedB + "(!) " + CC.Red + "You do not have the required key in your me.astropvp.cratekeys.inventory to the " + dungeon.getDungeonName() + CC.Red + " dungeon. Purchase it from the Dungeon Master at /spawn!");
                     e.getPlayer().sendMessage("");
                     return;
                 }
@@ -144,7 +144,7 @@ implements Listener {
                         e.getPlayer().sendMessage(CC.GreenB + "(!) " + CC.Green + "Dungeon Portal Key saved! " + CC.GreenB + "(SRC: " + CC.Red + "Rainbow Slides" + CC.GreenB + ")");
                     } else {
                         if (!dungeon.removePlayerKey(e.getPlayer())) {
-                            e.getPlayer().sendMessage(CC.RedB + "(!) " + CC.Red + "Unable to find and remove dungeon key from your inventory!");
+                            e.getPlayer().sendMessage(CC.RedB + "(!) " + CC.Red + "Unable to find and remove dungeon key from your me.astropvp.cratekeys.inventory!");
                             return;
                         }
                         e.getPlayer().setMetadata("dungeonKeyUsed_" + dungeon.getDungeonType().getInternalName(), new FixedMetadataValue(CosmicDungeonsPlugin.get(), System.currentTimeMillis()));

@@ -7,7 +7,7 @@
  *  com.earth2me.essentials.MetaItemStack
  *  com.earth2me.essentials.textreader.SimpleTextInput
  *  net.ess3.api.IEssentials
- *  org.bukkit.craftbukkit.v1_7_R4.inventory.CraftItemStack
+ *  org.bukkit.craftbukkit.v1_7_R4.me.astropvp.cratekeys.inventory.CraftItemStack
  */
 package com.cosmicpvp.cosmicutils.utils;
 

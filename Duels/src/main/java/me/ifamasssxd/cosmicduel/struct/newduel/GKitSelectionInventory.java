@@ -5,7 +5,7 @@
  *  me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits
  *  org.bukkit.Sound
  *  org.bukkit.entity.Player
- *  org.bukkit.event.inventory.InventoryClickEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
  *  org.bukkit.metadata.FixedMetadataValue
  *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.plugin.Plugin

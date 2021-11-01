@@ -35,9 +35,9 @@ commands:
   givetracker:
     description: Gives a player a kill tracker.
   astroitem:
-    description: Custom items for astro
+    description: Custom me.astropvp.cratekeys.items for astro
   withdrawsouls:
-    description: Take souls from items.
+    description: Take souls from me.astropvp.cratekeys.items.
     aliases: [takesouls, removesouls, withdraws, splitsouls, ws, withdrawsoul]
   givesoulgem:
     description: Give soul gem with the given amount.
@@ -60,7 +60,7 @@ commands:
   togglepay:
     description: Toggle payments.
   filter:
-    description: Filter items.
+    description: Filter me.astropvp.cratekeys.items.
     aliases: [itemfilter, filters]
   title:
     description: Open title selection UI. If used from console, all titles are listed.

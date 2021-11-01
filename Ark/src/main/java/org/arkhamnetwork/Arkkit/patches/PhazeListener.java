@@ -4,8 +4,8 @@
  * Could not load the following classes:
  *  com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI
  *  com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity
- *  com.cosmicpvp.cosmicutils.utils.FactionUtils
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.FactionUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
  *  com.google.common.collect.Lists
  *  com.massivecraft.factions.FPlayer
  *  com.rit.sucy.EnchantmentAPI
@@ -30,8 +30,8 @@
  *  org.bukkit.event.entity.EntityDamageEvent
  *  org.bukkit.event.entity.EntityDamageEvent$DamageCause
  *  org.bukkit.event.entity.EntityShootBowEvent
- *  org.bukkit.event.inventory.InventoryClickEvent
- *  org.bukkit.event.inventory.InventoryType
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryType
  *  org.bukkit.event.player.PlayerCommandPreprocessEvent
  *  org.bukkit.event.player.PlayerGameModeChangeEvent
  *  org.bukkit.event.player.PlayerJoinEvent
@@ -40,8 +40,8 @@
  *  org.bukkit.event.player.PlayerTeleportEvent
  *  org.bukkit.event.player.PlayerTeleportEvent$TeleportCause
  *  org.bukkit.event.world.StructureGrowEvent
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
  *  org.bukkit.metadata.FixedMetadataValue
  *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.plugin.Plugin

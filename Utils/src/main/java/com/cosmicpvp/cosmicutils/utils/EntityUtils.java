@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.150.
  *
  * Could not load the following classes:
- *  me.ifamasssxd.cosmicbosses.utils.BossUtils
+ *  me.ifamasssxd.cosmicbosses.me.astropvp.cratekeys.utils.BossUtils
  *  net.minecraft.server.v1_7_R4.Entity
  *  net.minecraft.server.v1_7_R4.EntityGhast
  *  net.minecraft.server.v1_7_R4.EntityLiving

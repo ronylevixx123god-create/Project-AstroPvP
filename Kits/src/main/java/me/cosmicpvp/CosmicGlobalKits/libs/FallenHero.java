@@ -12,7 +12,7 @@
  *  org.bukkit.entity.PigZombie
  *  org.bukkit.entity.Skeleton
  *  org.bukkit.entity.Skeleton$SkeletonType
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.metadata.FixedMetadataValue
  *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.plugin.Plugin

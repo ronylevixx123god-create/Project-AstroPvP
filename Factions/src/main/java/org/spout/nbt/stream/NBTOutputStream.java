@@ -71,7 +71,7 @@ public final class NBTOutputStream implements Closeable {
 	private final boolean littleEndian;
 
 	/**
-	 * Creates a new {@link NBTOutputStream}, which will write data to the
+	 * Creates a new {@link NBTOutputStream}, which will write me.astropvp.cratekeys.data to the
 	 * specified underlying output stream. This assumes the output stream should
 	 * be compressed with GZIP.
 	 * 
@@ -83,7 +83,7 @@ public final class NBTOutputStream implements Closeable {
 	}
 
 	/**
-	 * Creates a new {@link NBTOutputStream}, which will write data to the
+	 * Creates a new {@link NBTOutputStream}, which will write me.astropvp.cratekeys.data to the
 	 * specified underlying output stream. A flag indicates if the output should
 	 * be compressed with GZIP or not.
 	 * 
@@ -96,7 +96,7 @@ public final class NBTOutputStream implements Closeable {
 	}
 
 	/**
-	 * Creates a new {@link NBTOutputStream}, which will write data to the
+	 * Creates a new {@link NBTOutputStream}, which will write me.astropvp.cratekeys.data to the
 	 * specified underlying output stream. A flag indicates if the output should
 	 * be compressed with GZIP or not.
 	 * 

@@ -3,13 +3,13 @@
  * 
  * Could not load the following classes:
  *  com.compilex.CosmicArmorSets.CosmicArmorSetsAPI
- *  com.compilex.CosmicArmorSets.enums.ArmorSet
+ *  com.compilex.CosmicArmorSets.me.astropvp.cratekeys.enums.ArmorSet
  *  com.cosmicpvp.cosmicutils.CosmicUtils
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.EntityUtils
- *  com.cosmicpvp.cosmicutils.utils.HCFOutpostUtils
- *  com.cosmicpvp.cosmicutils.utils.MaskUtils
- *  com.cosmicpvp.cosmicutils.utils.WorldGuardUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.EntityUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.HCFOutpostUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.MaskUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.WorldGuardUtils
  *  com.massivecraft.factions.Board
  *  com.massivecraft.factions.FLocation
  *  com.massivecraft.factions.FPlayer

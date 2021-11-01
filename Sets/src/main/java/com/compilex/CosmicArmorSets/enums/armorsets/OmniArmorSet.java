@@ -3,7 +3,7 @@
  *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
  *  com.google.common.collect.Lists
  *  com.rit.sucy.CustomEnchantment
  *  com.rit.sucy.EnchantmentAPI
@@ -14,7 +14,7 @@
  *  org.bukkit.entity.Player
  *  org.bukkit.event.entity.EntityDamageByEntityEvent
  *  org.bukkit.event.entity.EntityDamageEvent$DamageModifier
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package com.compilex.CosmicArmorSets.enums.armorsets;
 

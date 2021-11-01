@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils
+ *  com.cosmicpvp.CosmicSpaceChests.me.astropvp.cratekeys.utils.ItemUtils
  *  com.google.common.collect.Lists
  *  com.rit.sucy.EnchantmentAPI
  *  me.ifamasssxd.cosmicconquest.CosmicConquestAPI
@@ -11,9 +11,9 @@
  *  org.bukkit.Material
  *  org.bukkit.enchantments.Enchantment
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
- *  org.bukkit.inventory.meta.PotionMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.PotionMeta
  *  org.bukkit.potion.PotionEffect
  *  org.bukkit.potion.PotionEffectType
  */

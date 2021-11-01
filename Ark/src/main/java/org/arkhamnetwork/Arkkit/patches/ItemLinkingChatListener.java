@@ -24,11 +24,11 @@
  *  org.bukkit.event.EventHandler
  *  org.bukkit.event.EventPriority
  *  org.bukkit.event.Listener
- *  org.bukkit.event.inventory.InventoryClickEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
  *  org.bukkit.event.player.AsyncPlayerChatEvent
  *  org.bukkit.event.player.PlayerCommandPreprocessEvent
- *  org.bukkit.inventory.Inventory
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.Inventory
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.metadata.FixedMetadataValue
  *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.plugin.Plugin
@@ -109,7 +109,7 @@ final class ItemLinkingChatListener
             Object title = null;
             Player pl = e.getPlayer();
             if (!(pl.hasPermission("itemlinking.senditem") || pl.hasPermission("arkhamjsonitem.senditem") || pl.hasPermission("cosmicpvp.senditem"))) {
-                pl.sendMessage(ChatColor.RED + "You do not have permission to link items in chat with " + (bragShow ? "[BRAG]" : "[ITEM]") + "!");
+                pl.sendMessage(ChatColor.RED + "You do not have permission to link me.astropvp.cratekeys.items in chat with " + (bragShow ? "[BRAG]" : "[ITEM]") + "!");
                 pl.sendMessage(ChatColor.GRAY + "Purchase a rank at " + ChatColor.UNDERLINE + "buy.astropvp.net" + ChatColor.GRAY + " and try again!");
                 return;
             }

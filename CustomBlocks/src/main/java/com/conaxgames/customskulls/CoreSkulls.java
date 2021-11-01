@@ -44,10 +44,10 @@ public class CoreSkulls extends JavaPlugin {
         instance = this;
         getConfig().options().copyDefaults(true);
         saveConfig();
-        File file = new File(this.getDataFolder() + File.separator + "data");
+        File file = new File(this.getDataFolder() + File.separator + "me.astropvp.cratekeys.data");
         if(!file.exists()) {
             file.mkdir();
-            info("Successfully made directory /data/ :)");
+            info("Successfully made directory /me.astropvp.cratekeys.data/ :)");
         }
 
         if (!setupEconomy() ) {

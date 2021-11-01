@@ -28,7 +28,7 @@ public class InventoryAlchemistPet extends InventoryPet {
    }
 
    public List getPetDescription(int level) {
-      return Lists.newArrayList(new String[]{CC.Gray + "A mystical little imp creature", CC.Gray + "that pulls random items out of", CC.Gray + "other dimensions and gives them", CC.Gray + "to its owner!", "", CC.WhiteB + "Ability", CC.Gray + "Spawns up to " + CC.Gold + this.getItemsToGive(level) + "x items" + CC.Gray + " from the", CC.Gold + "Alchemist /vkit (LVL: " + level + ")" + CC.Gray + " loot table", "", CC.WhiteB + "Cooldown", CC.Gray + " " + TimeUtils.formatSeconds((long)this.getCooldown(level))});
+      return Lists.newArrayList(new String[]{CC.Gray + "A mystical little imp creature", CC.Gray + "that pulls random me.astropvp.cratekeys.items out of", CC.Gray + "other dimensions and gives them", CC.Gray + "to its owner!", "", CC.WhiteB + "Ability", CC.Gray + "Spawns up to " + CC.Gold + this.getItemsToGive(level) + "x me.astropvp.cratekeys.items" + CC.Gray + " from the", CC.Gold + "Alchemist /vkit (LVL: " + level + ")" + CC.Gray + " loot table", "", CC.WhiteB + "Cooldown", CC.Gray + " " + TimeUtils.formatSeconds((long)this.getCooldown(level))});
    }
 
    public int getCooldown(int level) {
@@ -58,7 +58,7 @@ public class InventoryAlchemistPet extends InventoryPet {
       }
       if (lastUse <= 0L || timeTillCanUse <= 0L || player.isOp() && player.isSneaking()) {
          if (this.getEmptySlots(player) < 3) {
-            throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Not enough space (3 slots) in inventory!");
+            throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Not enough space (3 slots) in me.astropvp.cratekeys.inventory!");
          } else {
             petItem.setLastUsed(System.currentTimeMillis());
             boolean xp = true;

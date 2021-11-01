@@ -12,14 +12,14 @@
  *  org.bukkit.event.EventPriority
  *  org.bukkit.event.Listener
  *  org.bukkit.event.block.BlockPlaceEvent
- *  org.bukkit.event.inventory.CraftItemEvent
- *  org.bukkit.event.inventory.PrepareItemCraftEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.CraftItemEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.PrepareItemCraftEvent
  *  org.bukkit.event.player.PlayerDropItemEvent
  *  org.bukkit.event.player.PlayerInteractEvent
  *  org.bukkit.event.player.PlayerPickupItemEvent
  *  org.bukkit.event.world.ChunkLoadEvent
  *  org.bukkit.event.world.ChunkUnloadEvent
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package org.arkhamnetwork.Arkkit.patches;
 

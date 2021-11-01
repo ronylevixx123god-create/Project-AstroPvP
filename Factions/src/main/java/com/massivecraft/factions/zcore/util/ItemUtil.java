@@ -7,11 +7,11 @@
  *  net.minecraft.server.v1_7_R4.NBTTagCompound
  *  net.minecraft.server.v1_7_R4.NBTTagList
  *  org.bukkit.Material
- *  org.bukkit.craftbukkit.v1_7_R4.inventory.CraftItemStack
- *  org.bukkit.inventory.Inventory
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
- *  org.bukkit.inventory.meta.SkullMeta
+ *  org.bukkit.craftbukkit.v1_7_R4.me.astropvp.cratekeys.inventory.CraftItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.Inventory
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.SkullMeta
  */
 package com.massivecraft.factions.zcore.util;
 

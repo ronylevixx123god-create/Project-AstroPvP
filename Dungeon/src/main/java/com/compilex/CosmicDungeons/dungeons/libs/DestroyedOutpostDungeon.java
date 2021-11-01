@@ -2,16 +2,16 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.compilex.CosmicArmorSets.enums.ArmorSet
+ *  com.compilex.CosmicArmorSets.me.astropvp.cratekeys.enums.ArmorSet
  *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.FactionUtils
- *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.utils.ItemUtils
- *  com.cosmicpvp.cosmicutils.utils.JSONMessage
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
- *  com.cosmicpvp.cosmicutils.utils.PlayerUtil
- *  com.cosmicpvp.cosmicutils.utils.TimeUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.FactionUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.JSONMessage
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.PlayerUtil
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.TimeUtils
  *  com.massivecraft.factions.Faction
  *  me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost.MotherOfYijki
  *  org.bukkit.Bukkit
@@ -22,7 +22,7 @@
  *  org.bukkit.command.CommandSender
  *  org.bukkit.entity.Player
  *  org.bukkit.event.Event
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.plugin.Plugin
  */
 package com.compilex.CosmicDungeons.dungeons.libs;
@@ -129,7 +129,7 @@ extends Dungeon {
                 p.getInventory().addItem(new ItemStack[]{DungeonsRewardsAPI.getDungeonLootBag(p, this)});
             } else {
                 p.getWorld().dropItem(p.getLocation(), DungeonsRewardsAPI.getDungeonLootBag(p, this));
-                p.sendMessage((Object)ChatColor.GRAY + "(No room in inventory, dropped on ground.)");
+                p.sendMessage((Object)ChatColor.GRAY + "(No room in me.astropvp.cratekeys.inventory, dropped on ground.)");
             }
             if (firstToComplete && armorSetsEnabled && (reward = ArmorSet.DIMENSIONAL_TRAVELER.getRandomPeice(true)) != null) {
                 PlayerUtil.giveOrDropProtectedItem((Player)p, (ItemStack)reward, (int)-1, null, null);

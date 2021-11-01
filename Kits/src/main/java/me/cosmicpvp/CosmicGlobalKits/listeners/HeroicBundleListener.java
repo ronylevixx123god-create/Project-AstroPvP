@@ -43,7 +43,7 @@ implements Listener {
                 e.setUseItemInHand(Event.Result.DENY);
                 int n = toGive = vkitBundle || ghostBundle || necroBundle || deathKnightBundle ? 3 : 10;
                 if (this.getEmptySlots(p) < toGive) {
-                    p.sendMessage((Object)ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You do not have enough empty inventory slots.");
+                    p.sendMessage((Object)ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You do not have enough empty me.astropvp.cratekeys.inventory slots.");
                     p.sendMessage((Object)ChatColor.GRAY + ChatColor.ITALIC.toString() + "REQ: " + toGive + "+ slots");
                     return;
                 }

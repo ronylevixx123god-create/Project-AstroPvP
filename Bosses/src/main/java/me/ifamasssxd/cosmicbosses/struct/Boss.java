@@ -579,7 +579,7 @@ public abstract class Boss extends Equipable implements Healable {
                 new BukkitRunnable() {
                     public void run() {
                         if (player.isValid()) {
-                            player.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "You have new items in your " + ChatColor.YELLOW + ChatColor.BOLD.toString() + ChatColor.UNDERLINE.toString() + "/collect" + ChatColor.YELLOW + " stash!");
+                            player.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "You have new me.astropvp.cratekeys.items in your " + ChatColor.YELLOW + ChatColor.BOLD.toString() + ChatColor.UNDERLINE.toString() + "/collect" + ChatColor.YELLOW + " stash!");
                         }
                     }
                 }.runTaskLater((Plugin) CosmicBosses.getInstance(), 5L);
@@ -605,7 +605,7 @@ public abstract class Boss extends Equipable implements Healable {
                     new BukkitRunnable() {
                         public void run() {
                             if (pl.isValid()) {
-                                pl.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "You have new items in your " + ChatColor.YELLOW + ChatColor.BOLD.toString() + ChatColor.UNDERLINE.toString() + "/collect" + ChatColor.YELLOW + " stash!");
+                                pl.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "You have new me.astropvp.cratekeys.items in your " + ChatColor.YELLOW + ChatColor.BOLD.toString() + ChatColor.UNDERLINE.toString() + "/collect" + ChatColor.YELLOW + " stash!");
                             }
                         }
                     }.runTaskLater((Plugin) CosmicBosses.getInstance(), 5L);

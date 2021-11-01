@@ -7,7 +7,7 @@
  *  net.minecraft.server.v1_7_R4.NBTTagCompound
  *  org.arkhamnetwork.Arkkit.patches.ItemID
  *  org.arkhamnetwork.Arkkit.plugins.ArkPlugins
- *  org.bukkit.craftbukkit.v1_7_R4.inventory.CraftItemStack
+ *  org.bukkit.craftbukkit.v1_7_R4.me.astropvp.cratekeys.inventory.CraftItemStack
  */
 package com.cosmicpvp.cosmicutils.utils;
 

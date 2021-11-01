@@ -28,7 +28,7 @@ public class RareCandyItem extends CosmicItem implements InventoryInteractable {
 
    public ItemStack createItem(Player player, Object... objects) {
       String displayName = CC.RedB + "Rare Candy";
-      List lore = Lists.newArrayList(new String[]{CC.Gray + "Magical candy imbued with", CC.Gray + "powerful growth hormones", CC.Gray + "for inventory pets.", "", CC.RedB + "Ability", CC.Gray + "Apply to any inventory pet to instantly", CC.Gray + "increase its level by +1 and trigger its", CC.Gray + "ability cooldown."});
+      List lore = Lists.newArrayList(new String[]{CC.Gray + "Magical candy imbued with", CC.Gray + "powerful growth hormones", CC.Gray + "for me.astropvp.cratekeys.inventory pets.", "", CC.RedB + "Ability", CC.Gray + "Apply to any me.astropvp.cratekeys.inventory pet to instantly", CC.Gray + "increase its level by +1 and trigger its", CC.Gray + "ability cooldown."});
       return this.applyItemData((new ItemBuilder(Material.RED_MUSHROOM, displayName, new String[0])).lore(lore).build()).assignIID().build();
    }
 

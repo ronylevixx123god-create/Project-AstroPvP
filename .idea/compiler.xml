@@ -25,6 +25,7 @@
         <module name="AstroScoreboard" />
         <module name="AstroUtils" />
         <module name="Explosive" />
+        <module name="AstroCrateKeys" />
         <module name="Sets" />
         <module name="Dungeon" />
         <module name="Tournaments" />

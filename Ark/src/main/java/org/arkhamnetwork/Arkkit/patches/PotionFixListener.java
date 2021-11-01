@@ -23,8 +23,8 @@
  *  org.bukkit.event.entity.EntityRegainHealthEvent$RegainReason
  *  org.bukkit.event.entity.PotionSplashEvent
  *  org.bukkit.event.player.PlayerItemConsumeEvent
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.PotionMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.PotionMeta
  *  org.bukkit.plugin.Plugin
  *  org.bukkit.potion.Potion
  *  org.bukkit.potion.PotionEffect

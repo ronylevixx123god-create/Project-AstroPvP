@@ -7,7 +7,7 @@
  *  org.bukkit.command.CommandExecutor
  *  org.bukkit.command.CommandSender
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.Inventory
+ *  org.bukkit.me.astropvp.cratekeys.inventory.Inventory
  */
 package me.ifamasssxd.cosmicduel.commands;
 

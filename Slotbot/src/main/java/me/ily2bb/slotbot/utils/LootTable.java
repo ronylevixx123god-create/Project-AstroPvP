@@ -12,7 +12,7 @@ import java.util.*;
 
 public class LootTable {
     public static ItemStack[] getLootTableItems() {
-        final List<String> iteration = (List<String>) SlotBotPlugin.getInstance().getConfig().getList("items");
+        final List<String> iteration = (List<String>) SlotBotPlugin.getInstance().getConfig().getList("me.astropvp.cratekeys.items");
         final ItemStack[] items = new ItemStack[iteration.size()];
         for (int i = 0; i < iteration.size(); ++i) {
             final String l = iteration.get(i);
@@ -22,7 +22,7 @@ public class LootTable {
     }
 
     public static List<ItemStack> getShowItems() {
-        final List<String> iteration = (List<String>) SlotBotPlugin.getInstance().getConfig().getList("items");
+        final List<String> iteration = (List<String>) SlotBotPlugin.getInstance().getConfig().getList("me.astropvp.cratekeys.items");
         final ArrayList<ItemStack> list = new ArrayList<ItemStack>();
         for (int i = 0; i < iteration.size(); ++i) {
             final String l = iteration.get(i);
@@ -34,7 +34,7 @@ public class LootTable {
     }
 
     public static List<ItemStack> getBroadcastItems() {
-        final List<String> iteration = (List<String>) SlotBotPlugin.getInstance().getConfig().getList("items");
+        final List<String> iteration = (List<String>) SlotBotPlugin.getInstance().getConfig().getList("me.astropvp.cratekeys.items");
         final ArrayList<ItemStack> list = new ArrayList<ItemStack>();
         for (int i = 0; i < iteration.size(); ++i) {
             final String l = iteration.get(i);
@@ -50,7 +50,7 @@ public class LootTable {
         final ItemMeta meta = lootbox.getItemMeta();
         meta.setDisplayName(String.valueOf(CC.AquaB) + "Loot Table");
         final AbstractList<String> lore = new ArrayList<String>();
-        lore.addAll(Arrays.asList(CC.Gray + "The Slot Bot contains the items", CC.Gray + "from the following Lootboxes,", CC.Gray + "which will randomize every week:", ""));
+        lore.addAll(Arrays.asList(CC.Gray + "The Slot Bot contains the me.astropvp.cratekeys.items", CC.Gray + "from the following Lootboxes,", CC.Gray + "which will randomize every week:", ""));
         final List<ItemStack> items = getShowItems();
         for (final ItemStack x : items) {
             final String display = Utils.getDisplayName(x);
@@ -102,7 +102,7 @@ public class LootTable {
         final ItemStack item = new ItemStack(Material.BOOK);
         final ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(CC.AquaB + "How to Play");
-        final List<String> lore = Arrays.asList(CC.LightPurpleB + "1. " + CC.Gray + "Insert up to 3 Slot Bot Tickets", CC.Gray + "into the bot from your inventory.", "", CC.LightPurpleB + "2. " + CC.Gray + "Click ''Spin'' (on the right) to roll", String.valueOf(CC.Gray) + "the bot or, click ''Return'' (on the left)", String.valueOf(CC.Gray) + "to withdraw all inserted tickets.", "", String.valueOf(CC.LightPurpleB) + "3. " + CC.Gray + "When the bot finishes spinning", String.valueOf(CC.Gray) + "the item which lands on the Reward Slot", String.valueOf(CC.Gray) + "will be the item you receive.", "", String.valueOf(CC.WhiteB) + "TIP: " + CC.Gray + "Closing the bot while spinning will", String.valueOf(CC.Gray) + "give the rewards you would have", String.valueOf(CC.Gray) + "received, otherwise your inserted", String.valueOf(CC.Gray) + "tickets will be refunded.");
+        final List<String> lore = Arrays.asList(CC.LightPurpleB + "1. " + CC.Gray + "Insert up to 3 Slot Bot Tickets", CC.Gray + "into the bot from your me.astropvp.cratekeys.inventory.", "", CC.LightPurpleB + "2. " + CC.Gray + "Click ''Spin'' (on the right) to roll", String.valueOf(CC.Gray) + "the bot or, click ''Return'' (on the left)", String.valueOf(CC.Gray) + "to withdraw all inserted tickets.", "", String.valueOf(CC.LightPurpleB) + "3. " + CC.Gray + "When the bot finishes spinning", String.valueOf(CC.Gray) + "the item which lands on the Reward Slot", String.valueOf(CC.Gray) + "will be the item you receive.", "", String.valueOf(CC.WhiteB) + "TIP: " + CC.Gray + "Closing the bot while spinning will", String.valueOf(CC.Gray) + "give the rewards you would have", String.valueOf(CC.Gray) + "received, otherwise your inserted", String.valueOf(CC.Gray) + "tickets will be refunded.");
         meta.setLore((List) lore);
         item.setItemMeta(meta);
         return item;

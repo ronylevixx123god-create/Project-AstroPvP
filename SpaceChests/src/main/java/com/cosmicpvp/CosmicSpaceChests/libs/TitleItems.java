@@ -4,7 +4,7 @@
  * Could not load the following classes:
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package com.cosmicpvp.CosmicSpaceChests.libs;
 

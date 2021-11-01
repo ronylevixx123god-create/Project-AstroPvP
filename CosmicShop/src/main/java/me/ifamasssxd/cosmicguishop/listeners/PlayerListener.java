@@ -107,7 +107,7 @@ public class PlayerListener implements Listener {
             }
             if (pl.getWorld().getEnvironment() == World.Environment.THE_END) {
                 pl.sendMessage((Object)ChatColor.RED + "You cannot deposit money notes in The End dimension.");
-                pl.sendMessage((Object)ChatColor.GRAY + "You can still combine them by stacking them in your inventory!");
+                pl.sendMessage((Object)ChatColor.GRAY + "You can still combine them by stacking them in your me.astropvp.cratekeys.inventory!");
                 return;
             }
             long note_val = ArkhamMoneyNotesAPI.getMoneyNoteVal(e.getItem());

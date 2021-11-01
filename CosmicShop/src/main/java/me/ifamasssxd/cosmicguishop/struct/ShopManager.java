@@ -204,7 +204,7 @@ public class ShopManager {
                     lore.add( ChatColor.YELLOW + "Left-Click " +  ChatColor.GRAY + "to buy " +  ChatColor.YELLOW + "1x");
                         lore.add( ChatColor.YELLOW + "Shift Left-Click " +  ChatColor.GRAY + "to buy " +  ChatColor.YELLOW + data.getType().getMaxStackSize() + "x");
                         if (emptySlots > 1) {
-                            lore.add( ChatColor.YELLOW + "Middle-Click" +  ChatColor.GRAY + " to buy inventory " +  ChatColor.YELLOW + data.getType().getMaxStackSize() * emptySlots + "x");
+                            lore.add( ChatColor.YELLOW + "Middle-Click" +  ChatColor.GRAY + " to buy me.astropvp.cratekeys.inventory " +  ChatColor.YELLOW + data.getType().getMaxStackSize() * emptySlots + "x");
                         }
                     }
 
@@ -273,7 +273,7 @@ public class ShopManager {
                                 return;
                             }
                             if (player.getInventory().firstEmpty() == -1) {
-                                player.sendMessage( ChatColor.RED + "You do not have enough inventory space!");
+                                player.sendMessage( ChatColor.RED + "You do not have enough me.astropvp.cratekeys.inventory space!");
                                 return;
                             }
                             if (fillInventory) {
@@ -286,12 +286,12 @@ public class ShopManager {
                                             return;
                                         }
                                         if (player.getInventory().firstEmpty() == -1) {
-                                            player.sendMessage(ChatColor.RED + "You do not have enough inventory space!");
+                                            player.sendMessage(ChatColor.RED + "You do not have enough me.astropvp.cratekeys.inventory space!");
                                             return;
                                         }
                                         int slots = SlotUtils.getEmptySlots(player);
                                         if (slots < emptySlots) {
-                                            player.sendMessage(ChatColor.RED + "You do not have the inventory space needed!");
+                                            player.sendMessage(ChatColor.RED + "You do not have the me.astropvp.cratekeys.inventory space needed!");
                                             return;
                                         }
                                         ShopManager.this.finishPurchase(player, data, totalPrice, buyAmount);

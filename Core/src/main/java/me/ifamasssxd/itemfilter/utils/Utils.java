@@ -8,8 +8,8 @@
  *  net.minecraft.server.v1_7_R4.NBTTagList
  *  org.apache.commons.lang.StringUtils
  *  org.bukkit.Material
- *  org.bukkit.craftbukkit.v1_7_R4.inventory.CraftItemStack
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.craftbukkit.v1_7_R4.me.astropvp.cratekeys.inventory.CraftItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.ifamasssxd.itemfilter.utils;
 

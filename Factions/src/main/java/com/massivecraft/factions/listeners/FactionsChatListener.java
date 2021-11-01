@@ -3,9 +3,9 @@
  *
  * Could not load the following classes:
  *  com.compilex.CosmicReputation.ReputationAPI
- *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
  *  com.earth2me.essentials.User
- *  com.earth2me.essentials.utils.DateUtil
+ *  com.earth2me.essentials.me.astropvp.cratekeys.utils.DateUtil
  *  com.google.common.collect.Lists
  *  me.ifamasssxd.cosmicduel.struct.DuelPlayer
  *  net.milkbowl.vault.economy.Economy
@@ -25,7 +25,7 @@
  *  org.bukkit.event.EventPriority
  *  org.bukkit.event.Listener
  *  org.bukkit.event.player.AsyncPlayerChatEvent
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.metadata.MetadataValue
  */
 package com.massivecraft.factions.listeners;

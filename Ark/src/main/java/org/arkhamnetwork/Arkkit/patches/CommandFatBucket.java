@@ -7,7 +7,7 @@
  *  org.bukkit.command.Command
  *  org.bukkit.command.CommandSender
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package org.arkhamnetwork.Arkkit.patches;
 
@@ -36,7 +36,7 @@ final class CommandFatBucket
         Player p = Bukkit.getPlayer(args[0]);
         if (p != null) {
             p.getInventory().addItem(new FatBucketBuilder().build());
-            sender.sendMessage("Fat bucket added to " + p.getName() + "'s inventory");
+            sender.sendMessage("Fat bucket added to " + p.getName() + "'s me.astropvp.cratekeys.inventory");
         }
         return false;
     }

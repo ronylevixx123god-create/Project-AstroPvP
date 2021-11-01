@@ -41,7 +41,7 @@ public class FilterManager {
                 PreparedStatement statement = AstroSpawners.getInstance().getSqlDatabase().getConnection().prepareStatement("INSERT IGNORE INTO lootboxfilter_data(uuid, mysteryChest, blockedLoot) VALUES (?, ?, ?);");
                 statement.setString(1, uuid.toString());
                 statement.setString(2, mysteryChest.getInternalName());
-                statement.setString(3, Serialization.serialize((org.bukkit.inventory.ItemStack[]) blockedLoot.toArray()));
+                statement.setString(3, Serialization.serialize((org.bukkit.me.astropvp.cratekeys.inventory.ItemStack[]) blockedLoot.toArray()));
                 statement.executeUpdate();
 
             }

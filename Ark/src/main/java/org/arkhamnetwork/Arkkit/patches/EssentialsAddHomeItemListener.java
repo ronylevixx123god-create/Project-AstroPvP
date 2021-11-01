@@ -3,7 +3,7 @@
  *
  * Could not load the following classes:
  *  com.compilex.CompilexPermissions.event.PermissionGroupAddEvent
- *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
  *  com.google.common.collect.MapMaker
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
@@ -16,7 +16,7 @@
  *  org.bukkit.event.Listener
  *  org.bukkit.event.block.Action
  *  org.bukkit.event.player.PlayerInteractEvent
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package org.arkhamnetwork.Arkkit.patches;
 

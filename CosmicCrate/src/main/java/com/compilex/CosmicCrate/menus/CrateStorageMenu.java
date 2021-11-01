@@ -48,7 +48,7 @@ public class CrateStorageMenu extends CosmicGUI
                             CCAPI.claimCosmicCrate(this.player, version);
                         }
                         else {
-                            this.player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "Your inventory is full!");
+                            this.player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "Your me.astropvp.cratekeys.inventory is full!");
                             this.player.playSound(this.player.getLocation(), Sound.VILLAGER_NO, 1.0f, 0.6f);
                         }
                         this.closeWithDelay();

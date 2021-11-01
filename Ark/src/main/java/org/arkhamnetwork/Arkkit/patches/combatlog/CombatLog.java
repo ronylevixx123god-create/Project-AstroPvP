@@ -3,9 +3,9 @@
  *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.struct.DecimalFormatType
- *  com.cosmicpvp.cosmicutils.utils.MaskUtils
- *  com.cosmicpvp.cosmicutils.utils.NumberUtils
- *  com.cosmicpvp.cosmicutils.utils.UpgradeUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.MaskUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NumberUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.UpgradeUtils
  *  com.sk89q.worldedit.Vector
  *  com.sk89q.worldguard.bukkit.WorldGuardPlugin
  *  com.sk89q.worldguard.protection.flags.DefaultFlag

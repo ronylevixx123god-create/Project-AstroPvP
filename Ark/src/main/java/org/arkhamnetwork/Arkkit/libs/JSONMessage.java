@@ -14,11 +14,11 @@
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
  *  org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer
- *  org.bukkit.craftbukkit.v1_7_R4.inventory.CraftItemStack
+ *  org.bukkit.craftbukkit.v1_7_R4.me.astropvp.cratekeys.inventory.CraftItemStack
  *  org.bukkit.enchantments.Enchantment
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
  *  org.json.simple.JSONArray
  */
 package org.arkhamnetwork.Arkkit.libs;

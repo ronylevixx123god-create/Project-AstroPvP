@@ -17,7 +17,7 @@
  *  org.bukkit.event.entity.EntityDeathEvent
  *  org.bukkit.event.entity.EntityShootBowEvent
  *  org.bukkit.event.entity.PlayerDeathEvent
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.metadata.FixedMetadataValue
  *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.plugin.Plugin

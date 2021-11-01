@@ -3,7 +3,7 @@
  * 
  * Could not load the following classes:
  *  me.ifamasssxd.cosmicbosses.struct.Boss
- *  me.ifamasssxd.cosmicbosses.struct.enums.BossType
+ *  me.ifamasssxd.cosmicbosses.struct.me.astropvp.cratekeys.enums.BossType
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
  *  org.bukkit.command.Command

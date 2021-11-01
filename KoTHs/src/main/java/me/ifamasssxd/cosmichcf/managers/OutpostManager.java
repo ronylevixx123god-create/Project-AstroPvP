@@ -3,13 +3,13 @@
  * 
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.CosmicUtils
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.EconomyUtils
- *  com.cosmicpvp.cosmicutils.utils.FactionUtils
- *  com.cosmicpvp.cosmicutils.utils.LocationUtils
- *  com.cosmicpvp.cosmicutils.utils.NumberUtils
- *  com.cosmicpvp.cosmicutils.utils.PlayerUtil
- *  com.cosmicpvp.cosmicutils.utils.WorldGuardUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.EconomyUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.FactionUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.LocationUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NumberUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.PlayerUtil
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.WorldGuardUtils
  *  com.massivecraft.factions.FPlayer
  *  com.massivecraft.factions.Faction
  *  com.massivecraft.factions.P
@@ -29,7 +29,7 @@
  *  org.bukkit.event.player.PlayerJoinEvent
  *  org.bukkit.event.player.PlayerQuitEvent
  *  org.bukkit.event.player.PlayerTeleportEvent$TeleportCause
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.plugin.Plugin
  *  org.bukkit.plugin.java.JavaPlugin
@@ -94,7 +94,7 @@ public class OutpostManager {
 
     public void sellStronghold(Player player) {
         if (!HCFOutpostAPI.isControllingOutpost(player, OutpostType.THE_GREAT_HALL) && !this.playerHasStrongholdPetAbility(player)) {
-            player.sendMessage(CC.Red + "You must be controlling the " + CC.AquaB + "Frozen" + CC.Red + " Stronghold to sell items!");
+            player.sendMessage(CC.Red + "You must be controlling the " + CC.AquaB + "Frozen" + CC.Red + " Stronghold to sell me.astropvp.cratekeys.items!");
             return;
         }
         HashMap<Material, Integer> sellCount = new HashMap<Material, Integer>();
@@ -142,7 +142,7 @@ public class OutpostManager {
                 e.printStackTrace();
             }
         } else {
-            player.sendMessage(CC.RedB + "(!) " + CC.Red + "No valid items found to sell!");
+            player.sendMessage(CC.RedB + "(!) " + CC.Red + "No valid me.astropvp.cratekeys.items found to sell!");
         }
     }
 

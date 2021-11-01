@@ -51,7 +51,7 @@ public class AstroSpawners extends JavaPlugin {
         registerCommands();
 
 
-        System.out.println("Started Saving mobcoins data...");
+        System.out.println("Started Saving mobcoins me.astropvp.cratekeys.data...");
 
         Bukkit.getScheduler().runTaskLater(AstroSpawners.getInstance(), (Runnable) new BukkitRunnable() {
             @Override
@@ -59,7 +59,7 @@ public class AstroSpawners extends JavaPlugin {
                 EntityUtils.clearAllEntities();
             }
         }, 100L);
-        System.out.println("Done saving mobcoins data!");
+        System.out.println("Done saving mobcoins me.astropvp.cratekeys.data!");
         EntityUtils.onEnable();
         new SpawnerCustomItem("spawner", "<amount> <entity>");
         manager2 = new PlayerDataManager(this);

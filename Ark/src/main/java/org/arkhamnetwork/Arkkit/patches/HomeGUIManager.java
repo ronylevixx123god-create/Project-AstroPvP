@@ -13,8 +13,8 @@
  *  org.bukkit.craftbukkit.libs.com.google.gson.GsonBuilder
  *  org.bukkit.craftbukkit.libs.com.google.gson.reflect.TypeToken
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.Inventory
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.Inventory
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package org.arkhamnetwork.Arkkit.patches;
 

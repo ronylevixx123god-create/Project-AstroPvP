@@ -11,11 +11,11 @@
  *  org.bukkit.entity.Player
  *  org.bukkit.event.EventHandler
  *  org.bukkit.event.Listener
- *  org.bukkit.event.inventory.InventoryClickEvent
- *  org.bukkit.event.inventory.InventoryCloseEvent
- *  org.bukkit.inventory.Inventory
- *  org.bukkit.inventory.InventoryHolder
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryCloseEvent
+ *  org.bukkit.me.astropvp.cratekeys.inventory.Inventory
+ *  org.bukkit.me.astropvp.cratekeys.inventory.InventoryHolder
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.ifamasssxd.cosmicduel.utils;
 
@@ -111,7 +111,7 @@ implements Listener {
     public static void showCollectionBin(Player p) {
         List<ItemStack> items = CollectionBin.getCollectionItems(p);
         if (items.size() <= 0) {
-            p.sendMessage(ChatColor.RED + "You do not have any items in your stake collection bin.");
+            p.sendMessage(ChatColor.RED + "You do not have any me.astropvp.cratekeys.items in your stake collection bin.");
             return;
         }
         Inventory inv = Bukkit.createInventory(null, 54, INVENTORY_NAME);

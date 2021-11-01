@@ -3,7 +3,7 @@
  *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
- *  com.cosmicpvp.cosmicutils.utils.ItemUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemUtils
  *  com.google.common.collect.Lists
  *  org.apache.commons.lang.StringEscapeUtils
  *  org.apache.commons.lang.StringUtils
@@ -17,7 +17,7 @@
  *  org.bukkit.event.EventHandler
  *  org.bukkit.event.EventPriority
  *  org.bukkit.event.Listener
- *  org.bukkit.event.inventory.InventoryClickEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
  *  org.bukkit.event.player.AsyncPlayerChatEvent
  *  org.bukkit.event.player.PlayerDropItemEvent
  *  org.bukkit.event.player.PlayerInteractEntityEvent
@@ -25,8 +25,8 @@
  *  org.bukkit.event.player.PlayerItemHeldEvent
  *  org.bukkit.event.player.PlayerPickupItemEvent
  *  org.bukkit.event.player.PlayerQuitEvent
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
  *  org.bukkit.metadata.FixedMetadataValue
  *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.plugin.Plugin
@@ -204,7 +204,7 @@ public class LoreTag
                     if (pl.getInventory().firstEmpty() != -1) {
                         pl.getInventory().addItem(LoreTag.getLoreTagItem());
                     } else {
-                        pl.sendMessage(ChatColor.RED + "(!) You had no room in your inventory, the loretag has been dropped at your feet.");
+                        pl.sendMessage(ChatColor.RED + "(!) You had no room in your me.astropvp.cratekeys.inventory, the loretag has been dropped at your feet.");
                         pl.getWorld().dropItem(pl.getLocation(), LoreTag.getLoreTagItem());
                     }
                 } else if (pl.getItemInHand() != null) {
@@ -281,7 +281,7 @@ public class LoreTag
                 if (pl.getInventory().firstEmpty() != -1) {
                     pl.getInventory().addItem(LoreTag.getLoreTagItem());
                 } else {
-                    pl.sendMessage(ChatColor.RED + "(!) You had no room in your inventory, the Lore Crystal has been dropped at your feet.");
+                    pl.sendMessage(ChatColor.RED + "(!) You had no room in your me.astropvp.cratekeys.inventory, the Lore Crystal has been dropped at your feet.");
                     pl.getWorld().dropItem(pl.getLocation(), LoreTag.getLoreTagItem());
                 }
                 pl.removeMetadata(lore_confirm_metadata, Arkkit.get());
@@ -297,7 +297,7 @@ public class LoreTag
                 if (pl.getInventory().firstEmpty() != -1) {
                     pl.getInventory().addItem(LoreTag.getLoreTagItem());
                 } else {
-                    pl.sendMessage(ChatColor.RED + "(!) You had no room in your inventory, the Lore Crystal has been dropped at your feet.");
+                    pl.sendMessage(ChatColor.RED + "(!) You had no room in your me.astropvp.cratekeys.inventory, the Lore Crystal has been dropped at your feet.");
                     pl.getWorld().dropItem(pl.getLocation(), LoreTag.getLoreTagItem());
                 }
                 pl.removeMetadata(lore_confirm_metadata, Arkkit.get());
@@ -313,7 +313,7 @@ public class LoreTag
                 if (pl.getInventory().firstEmpty() != -1) {
                     pl.getInventory().addItem(LoreTag.getLoreTagItem());
                 } else {
-                    pl.sendMessage(ChatColor.RED + "(!) You had no room in your inventory, the Lore Crystal has been dropped at your feet.");
+                    pl.sendMessage(ChatColor.RED + "(!) You had no room in your me.astropvp.cratekeys.inventory, the Lore Crystal has been dropped at your feet.");
                     pl.getWorld().dropItem(pl.getLocation(), LoreTag.getLoreTagItem());
                 }
                 pl.removeMetadata(lore_confirm_metadata, Arkkit.get());
@@ -329,7 +329,7 @@ public class LoreTag
                 if (pl.getInventory().firstEmpty() != -1) {
                     pl.getInventory().addItem(LoreTag.getLoreTagItem());
                 } else {
-                    pl.sendMessage(ChatColor.RED + "(!) You had no room in your inventory, the Lore Crystal has been dropped at your feet.");
+                    pl.sendMessage(ChatColor.RED + "(!) You had no room in your me.astropvp.cratekeys.inventory, the Lore Crystal has been dropped at your feet.");
                     pl.getWorld().dropItem(pl.getLocation(), LoreTag.getLoreTagItem());
                 }
                 pl.removeMetadata(lore_confirm_metadata, Arkkit.get());

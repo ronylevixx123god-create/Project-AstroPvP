@@ -2,9 +2,9 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.utils.NBTTagCompoundBuilder
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTTagCompoundBuilder
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
  *  com.google.common.collect.Lists
  *  com.rit.sucy.CustomEnchantment
  *  com.rit.sucy.EnchantmentAPI
@@ -17,8 +17,8 @@
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
  *  org.bukkit.entity.Player
- *  org.bukkit.event.inventory.InventoryClickEvent
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package com.compilex.CosmicDungeons;
 
@@ -73,7 +73,7 @@ public class DungeonsRewardsAPI {
 
     public static ItemStack getDungeonLootBag(Player p, Dungeon d) {
         ArrayList lore = Lists.newArrayList(new String[]{(Object)ChatColor.GRAY + "A bag of dungeon loot obtained", (Object)ChatColor.GRAY + "by " + (Object)ChatColor.GOLD + p.getName() + (Object)ChatColor.GRAY + " from defeating the", d.getDungeonName() + (Object)ChatColor.GRAY + " dungeon!", ""});
-        lore.add((Object)ChatColor.GRAY + "Contains " + (Object)ChatColor.GOLD + "??? Dungeon" + (Object)ChatColor.GRAY + " items...");
+        lore.add((Object)ChatColor.GRAY + "Contains " + (Object)ChatColor.GOLD + "??? Dungeon" + (Object)ChatColor.GRAY + " me.astropvp.cratekeys.items...");
         if (d.isAbandondedSpaceship()) {
             lore.addAll(Lists.newArrayList(new String[]{(Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GOLD + "$$,$$$,$$$+ Money Notes", (Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GOLD + "100+ Level mcMMO Vouchers", (Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GOLD + "Soul Enderpearl", (Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GOLD + "Soul Anvil", (Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GOLD + "Soul Dust", (Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GOLD + "Holy White Scroll", (Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GOLD + "Mother of Yijki Armor", (Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GOLD + "Planetary Deathbringer", (Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GOLD + "Master Inquisitive", (Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GOLD + "Divine Enlighted"}));
             return ((MysteryChest)CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("FirstDungeonLootbag")).createClaimableItem(false);

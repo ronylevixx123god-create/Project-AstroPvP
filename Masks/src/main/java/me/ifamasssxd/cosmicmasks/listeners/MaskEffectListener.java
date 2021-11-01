@@ -3,7 +3,7 @@
  * 
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.math.LongHash
- *  com.cosmicpvp.cosmicutils.utils.MaskUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.MaskUtils
  *  com.google.common.collect.MapMaker
  *  org.arkhamnetwork.Arkkit.Arkkit
  *  org.bukkit.Chunk

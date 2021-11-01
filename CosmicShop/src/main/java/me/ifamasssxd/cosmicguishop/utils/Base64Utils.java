@@ -3,9 +3,9 @@
  * 
  * Could not load the following classes:
  *  org.bukkit.Bukkit
- *  org.bukkit.inventory.Inventory
- *  org.bukkit.inventory.InventoryHolder
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.Inventory
+ *  org.bukkit.me.astropvp.cratekeys.inventory.InventoryHolder
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.util.io.BukkitObjectInputStream
  *  org.bukkit.util.io.BukkitObjectOutputStream
  *  org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder

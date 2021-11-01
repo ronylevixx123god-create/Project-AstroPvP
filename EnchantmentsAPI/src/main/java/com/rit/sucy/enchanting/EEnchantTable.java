@@ -4,7 +4,7 @@
  * Could not load the following classes:
  *  org.bukkit.Material
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.permissions.Permissible
  */
 package com.rit.sucy.enchanting;

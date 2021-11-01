@@ -2,19 +2,19 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
  *  com.google.common.collect.Lists
  *  org.bukkit.Bukkit
  *  org.bukkit.DyeColor
  *  org.bukkit.Material
  *  org.bukkit.entity.Player
- *  org.bukkit.event.inventory.ClickType
- *  org.bukkit.event.inventory.InventoryClickEvent
- *  org.bukkit.inventory.Inventory
- *  org.bukkit.inventory.InventoryHolder
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.ClickType
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
+ *  org.bukkit.me.astropvp.cratekeys.inventory.Inventory
+ *  org.bukkit.me.astropvp.cratekeys.inventory.InventoryHolder
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
  */
 package me.ifamasssxd.cosmicguishop.menus;
 
@@ -54,7 +54,7 @@ public class XpShopMenu{
     }
 
 
-    List<String> itemList = CosmicGUIShop.getInstance().getConfig().getStringList("items");
+    List<String> itemList = CosmicGUIShop.getInstance().getConfig().getStringList("me.astropvp.cratekeys.items");
 
 
     public XpShopMenu(Player player) {
@@ -148,7 +148,7 @@ public class XpShopMenu{
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(CC.GreenB + "Astro Xp Shop");
         List<String> lore = Lists.newArrayList();
-        lore.add(CC.Gray + "This shop contains various items that will help");
+        lore.add(CC.Gray + "This shop contains various me.astropvp.cratekeys.items that will help");
         lore.add(CC.Gray + "you set up on AstroPvP");
         lore.add("");
         lore.add(CC.Green + "Your XP: " + CC.White + NumberFormat.getInstance().format(player.getTotalExperience()));

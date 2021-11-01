@@ -7,9 +7,9 @@
  *  net.minecraft.server.v1_7_R4.NBTTagCompound
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
- *  org.bukkit.craftbukkit.v1_7_R4.inventory.CraftItemStack
+ *  org.bukkit.craftbukkit.v1_7_R4.me.astropvp.cratekeys.inventory.CraftItemStack
  *  org.bukkit.entity.EntityType
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.material.MaterialData
  */
 package me.ifamasssxd.cosmiccontests.struct.contests;

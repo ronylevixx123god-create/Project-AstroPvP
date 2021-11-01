@@ -38,7 +38,7 @@ public class PotionsCommand implements CommandExecutor {
         }
 
         if (amount == 0) {
-            p.sendMessage(ChatColor.RED + "Your inventory is full. Please try again.");
+            p.sendMessage(ChatColor.RED + "Your me.astropvp.cratekeys.inventory is full. Please try again.");
             return true;
         }
 

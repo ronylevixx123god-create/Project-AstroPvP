@@ -11,9 +11,9 @@
  *  com.comphenix.protocol.events.PacketEvent
  *  com.comphenix.protocol.events.PacketListener
  *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
- *  com.cosmicpvp.cosmicutils.utils.NumberUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NumberUtils
  *  com.google.common.collect.Lists
  *  net.minecraft.server.v1_7_R4.Container
  *  net.minecraft.server.v1_7_R4.Entity
@@ -25,8 +25,8 @@
  *  org.bukkit.craftbukkit.v1_7_R4.CraftWorld
  *  org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
  *  org.bukkit.plugin.Plugin
  */
 package me.ifamasssxd.cosmicmasks.managers;

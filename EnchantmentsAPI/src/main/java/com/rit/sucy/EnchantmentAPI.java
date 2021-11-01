@@ -11,9 +11,9 @@
  *  org.bukkit.enchantments.Enchantment
  *  org.bukkit.entity.Player
  *  org.bukkit.event.HandlerList
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.EnchantmentStorageMeta
- *  org.bukkit.inventory.meta.ItemMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.EnchantmentStorageMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
  *  org.bukkit.permissions.Permissible
  *  org.bukkit.plugin.Plugin
  *  org.bukkit.plugin.java.JavaPlugin

@@ -28,7 +28,7 @@ public class EnchantmentOrbListener implements Listener {
             e.setCancelled(true);
             e.setUseItemInHand(Event.Result.DENY);
             e.setUseInteractedBlock(Event.Result.DENY);
-            e.getPlayer().sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "(!)" + ChatColor.YELLOW + " To apply this enchantment orb to an item, simply drag n' drop the orb onto the piece of equipment you'd like to increase the enchantment slots of in your inventory!");
+            e.getPlayer().sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "(!)" + ChatColor.YELLOW + " To apply this enchantment orb to an item, simply drag n' drop the orb onto the piece of equipment you'd like to increase the enchantment slots of in your me.astropvp.cratekeys.inventory!");
         }
     }
 

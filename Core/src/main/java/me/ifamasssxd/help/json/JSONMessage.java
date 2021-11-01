@@ -13,8 +13,8 @@
  *  org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer
  *  org.bukkit.enchantments.Enchantment
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
  *  org.json.simple.JSONArray
  */
 package me.ifamasssxd.help.json;

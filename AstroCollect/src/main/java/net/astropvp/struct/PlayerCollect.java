@@ -54,7 +54,7 @@ public class PlayerCollect {
         }
         try {
             for (CollectCategory category : this.categories) {
-                PreparedStatement statement = CollectPlugin.getInstance().getSqlDatabase().getConnection().prepareStatement("INSERT IGNORE INTO collect_userdata(uuid, items, name, type) VALUES (?, ?, ?, ?);");
+                PreparedStatement statement = CollectPlugin.getInstance().getSqlDatabase().getConnection().prepareStatement("INSERT IGNORE INTO collect_userdata(uuid, me.astropvp.cratekeys.items, name, type) VALUES (?, ?, ?, ?);");
                 try {
                     statement.setString(1, this.player.getUniqueId().toString());
                     statement.setString(2, Serialization.serialize(category.getItems()));
@@ -81,7 +81,7 @@ public class PlayerCollect {
             statement.setString(1, this.player.getUniqueId().toString());
             ResultSet set = statement.executeQuery();
             while(set.next()) {
-                ItemStack[] items = Serialization.deserialize(set.getString("items"));
+                ItemStack[] items = Serialization.deserialize(set.getString("me.astropvp.cratekeys.items"));
                 String name = set.getString("name");
                 String type = set.getString("type");
                 CollectCategory category = new CollectCategory(CollectType.valueOf(type), items, name);

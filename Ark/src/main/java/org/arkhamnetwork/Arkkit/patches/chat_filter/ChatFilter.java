@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.150.
  *
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.JSONUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.JSONUtils
  *  com.google.common.collect.Lists
  *  lilypad.libs.io.netty.util.internal.ConcurrentSet
  *  net.minecraft.util.com.google.gson.reflect.TypeToken
@@ -67,7 +67,7 @@ public class ChatFilter
         for (String s : Arkkit.get().getConfig().getDefaults().getStringList("settings.chat_filter.bad_words")) {
             if (bad_words.contains(s)) continue;
             bad_words.add(s);
-            Bukkit.getLogger().info("(CommandBlocker) Added command '" + s + "' to blocked commands list (default).");
+            Bukkit.getLogger().info("(CommandBlocker) Added command '" + s + "' to blocked me.astropvp.cratekeys.commands list (default).");
         }
         bad_words.remove("fu");
         bad_words.remove("fk");

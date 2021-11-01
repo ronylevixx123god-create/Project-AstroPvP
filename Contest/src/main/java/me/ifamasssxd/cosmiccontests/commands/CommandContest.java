@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
  *  org.bukkit.command.Command
@@ -51,7 +51,7 @@ implements CommandExecutor {
                 ContestManager manager = CosmicContests.get().getContestManager();
                 manager.loadTopUsers(true);
                 manager.clearUsersAndContests();
-                sender.sendMessage((Object)ChatColor.RED + "Cleared current contests and active data...");
+                sender.sendMessage((Object)ChatColor.RED + "Cleared current contests and active me.astropvp.cratekeys.data...");
                 return true;
             }
             if (args[0].equalsIgnoreCase("list") && sender.isOp()) {
@@ -171,10 +171,10 @@ implements CommandExecutor {
             }
             ContestData data = user.getContestData().get((Object)found);
             if (data == null || data.getData().isEmpty()) {
-                sender.sendMessage((Object)ChatColor.RED + "No data found for " + found.getContest().getName() + "!");
+                sender.sendMessage((Object)ChatColor.RED + "No me.astropvp.cratekeys.data found for " + found.getContest().getName() + "!");
                 return true;
             }
-            sender.sendMessage((Object)ChatColor.GREEN + "Listing all data for " + pl.getName() + "'s " + found.getContest().getName() + " Challenges");
+            sender.sendMessage((Object)ChatColor.GREEN + "Listing all me.astropvp.cratekeys.data for " + pl.getName() + "'s " + found.getContest().getName() + " Challenges");
             data.getData().forEach((key, obj) -> sender.sendMessage((Object)ChatColor.GRAY + "Key: " + key + " Data: " + obj));
             return true;
         }

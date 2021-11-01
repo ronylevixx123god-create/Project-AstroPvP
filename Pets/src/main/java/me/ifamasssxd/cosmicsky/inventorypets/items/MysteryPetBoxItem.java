@@ -36,7 +36,7 @@ public class MysteryPetBoxItem extends CosmicItem implements PlayerInteractable 
 
    public ItemStack createItem(Player player, Object... objects) {
       String displayName = CC.GoldB + "Mystery Pet Box " + CC.Gray + "(Right Click)";
-      List lore = Lists.newArrayList(new String[]{CC.Gray + "A mysterious, magical box", CC.Gray + "that contains one of the", CC.Gray + "following inventory pets:"});
+      List lore = Lists.newArrayList(new String[]{CC.Gray + "A mysterious, magical box", CC.Gray + "that contains one of the", CC.Gray + "following me.astropvp.cratekeys.inventory pets:"});
       InventoryPets[] var5 = InventoryPets.values();
       InventoryPets[] array = var5;
       int length = var5.length;

@@ -3,9 +3,9 @@
  * 
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
- *  com.cosmicpvp.cosmicutils.utils.ParticleEffect
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ParticleEffect
  *  com.google.common.collect.Lists
  *  me.ifamasssxd.cosmicskycustoms.struct.CustomItemBuilder
  *  org.arkhamnetwork.Arkkit.patches.ItemID
@@ -26,12 +26,12 @@
  *  org.bukkit.event.entity.EntityDamageEvent$DamageCause
  *  org.bukkit.event.entity.EntityDeathEvent
  *  org.bukkit.event.entity.FoodLevelChangeEvent
- *  org.bukkit.event.inventory.ClickType
- *  org.bukkit.event.inventory.InventoryClickEvent
- *  org.bukkit.event.inventory.InventoryType$SlotType
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.ClickType
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryType$SlotType
  *  org.bukkit.event.player.PlayerGameModeChangeEvent
  *  org.bukkit.event.player.PlayerInteractEvent
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.plugin.Plugin
  */
 package me.ifamasssxd.cosmicmasks.listeners;
@@ -99,7 +99,7 @@ public class MaskListener implements Listener {
             if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
                 long id = ItemID.getItemID((ItemStack)item);
                 if (id != -1L && ItemID.blacklist_iid.contains(id)) {
-                    player.sendMessage(CC.RedB + "(!) " + CC.Red + "It seems you tried to claim a duplicate Random Mask, it has been removed from your inventory.");
+                    player.sendMessage(CC.RedB + "(!) " + CC.Red + "It seems you tried to claim a duplicate Random Mask, it has been removed from your me.astropvp.cratekeys.inventory.");
                     player.setItemInHand((ItemStack)null);
                     player.updateInventory();
                     return;
@@ -241,7 +241,7 @@ public class MaskListener implements Listener {
             }
             if (clicked.getAmount() > 1) {
                 event.setCancelled(true);
-                player.sendMessage(CC.RedB + "(!)" + CC.Red + " You cannot equip a mask on stacked items!");
+                player.sendMessage(CC.RedB + "(!)" + CC.Red + " You cannot equip a mask on stacked me.astropvp.cratekeys.items!");
                 return;
             }
             if (!this.isValidWorld(player.getWorld().getName())) {

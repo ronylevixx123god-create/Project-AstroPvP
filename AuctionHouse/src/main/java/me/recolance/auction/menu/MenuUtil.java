@@ -3,9 +3,9 @@
  *
  * Could not load the following classes:
  *  org.bukkit.Material
- *  org.bukkit.event.inventory.ClickType
- *  org.bukkit.inventory.Inventory
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.ClickType
+ *  org.bukkit.me.astropvp.cratekeys.inventory.Inventory
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.plugin.Plugin
  *  org.bukkit.scheduler.BukkitRunnable
  */

@@ -2,8 +2,8 @@
  * Decompiled with CFR 0.150.
  *
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
  *  com.earth2me.essentials.User
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
@@ -15,11 +15,11 @@
  *  org.bukkit.event.EventHandler
  *  org.bukkit.event.EventPriority
  *  org.bukkit.event.Listener
- *  org.bukkit.event.inventory.InventoryClickEvent
- *  org.bukkit.event.inventory.InventoryOpenEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryOpenEvent
  *  org.bukkit.event.player.PlayerCommandPreprocessEvent
- *  org.bukkit.inventory.Inventory
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.Inventory
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.plugin.Plugin
  */
 package org.arkhamnetwork.Arkkit.patches;
@@ -120,7 +120,7 @@ final class EssentialsKitViewerListener
         if (Bukkit.getPluginManager().isPluginEnabled("CosmicEvolutionKits")) {
             this.kitMenuSelector.setItem(4, ItemUtils.buildItem(Material.BLAZE_POWDER, (short) 0, ChatColor.DARK_PURPLE.toString() + ChatColor.BOLD.toString() + "Evolution Kits", ChatColor.GRAY + "Powerful kits that have a chance to", ChatColor.GRAY + "evolve each time you redeem them.", "", ChatColor.DARK_PURPLE.toString() + ChatColor.UNDERLINE.toString() + "buy.astropvp.net"));
         }
-        this.kitMenuSelector.setItem(5, ItemUtils.buildItem(Material.NETHER_STAR, (short) 0, ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "Cosmic Kits", ChatColor.GRAY + "Limited edition kits containing some", ChatColor.GRAY + "of the rarest items in the game.", "", ChatColor.GOLD + ChatColor.UNDERLINE.toString() + "buy.astropvp.net"));
+        this.kitMenuSelector.setItem(5, ItemUtils.buildItem(Material.NETHER_STAR, (short) 0, ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "Cosmic Kits", ChatColor.GRAY + "Limited edition kits containing some", ChatColor.GRAY + "of the rarest me.astropvp.cratekeys.items in the game.", "", ChatColor.GOLD + ChatColor.UNDERLINE.toString() + "buy.astropvp.net"));
         if (masteryKits) {
             this.kitMenuSelector.setItem(13, ItemUtils.buildItem(Material.DIAMOND, (short) 0, CC.RedB + "Mastery Kits", ChatColor.GRAY + "Godly kits only the most skilled", ChatColor.GRAY + "players are capable of unlocking.", "", ChatColor.RED + ChatColor.UNDERLINE.toString() + "buy.astropvp.net"));
         }

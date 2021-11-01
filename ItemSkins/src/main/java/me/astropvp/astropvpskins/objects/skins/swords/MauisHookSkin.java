@@ -44,7 +44,7 @@ public class MauisHookSkin extends ItemSkin {
         damager.sendMessage(CC.translate("&c&l* MAUI'S HOOK &7[&fStack x" + mauiEffect.get(damager) + "&7] &c&l*"));
     }
 
-    //Sneka listener is in the listeners package
+    //Sneka listener is in the me.astropvp.cratekeys.listeners package
 
 
 

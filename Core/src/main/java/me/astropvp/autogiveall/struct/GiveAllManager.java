@@ -2,14 +2,14 @@
  * Decompiled with CFR 0.150.
  *
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
  *  com.google.common.collect.Lists
  *  me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest
  *  me.ifamasssxd.cosmicmysterychest.struct.MysteryChest
  *  org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog
  *  org.bukkit.Bukkit
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.astropvp.autogiveall.struct;
 

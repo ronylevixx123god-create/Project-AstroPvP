@@ -3,8 +3,8 @@
  *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.struct.DecimalFormatType
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.NumberUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NumberUtils
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
  *  org.bukkit.entity.EnderPearl

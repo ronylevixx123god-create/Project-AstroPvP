@@ -196,7 +196,7 @@ public final class MinionsAbility extends BossAbility<MotherOfYijki> implements 
         //   130: iconst_2
 
 
-        //   131: invokestatic    org/arkhamnetwork/Arkkit/utils/LocationUtils.getNearbyLocation:(Lorg/bukkit/Location;II)Lorg/bukkit/Location;
+        //   131: invokestatic    org/arkhamnetwork/Arkkit/me.astropvp.cratekeys.utils/LocationUtils.getNearbyLocation:(Lorg/bukkit/Location;II)Lorg/bukkit/Location;
         //   134: astore          nearbyLocation
         //   136: aload           nearbyLocation
         //   138: dup

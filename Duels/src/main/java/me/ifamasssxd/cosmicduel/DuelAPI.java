@@ -387,8 +387,8 @@ public class DuelAPI {
             return false;
         }
         if (CollectionBin.getCollectionItems(player).size() > 0) {
-            player.sendMessage(red + ChatColor.RED + "You have items in your collection bin and cannot duel.");
-            player.sendMessage(ChatColor.GRAY + "Use " + ChatColor.RED + "/duel collect" + ChatColor.GRAY + " to collect your items.");
+            player.sendMessage(red + ChatColor.RED + "You have me.astropvp.cratekeys.items in your collection bin and cannot duel.");
+            player.sendMessage(ChatColor.GRAY + "Use " + ChatColor.RED + "/duel collect" + ChatColor.GRAY + " to collect your me.astropvp.cratekeys.items.");
             return false;
         }
         if (PlayerUtils.inCombat(player)) {
@@ -459,7 +459,7 @@ public class DuelAPI {
             return false;
         }
         if (CollectionBin.getCollectionItems(target).size() > 0) {
-            player.sendMessage(red + ChatColor.RED + "That player has items in their collection bin and cannot duel.");
+            player.sendMessage(red + ChatColor.RED + "That player has me.astropvp.cratekeys.items in their collection bin and cannot duel.");
             return false;
         }
         if (CosmicDuel.mcMMOEnabled && PartyAPI.inSameParty(player, target)) {

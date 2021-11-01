@@ -3,7 +3,7 @@
  * 
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
- *  com.cosmicpvp.cosmicutils.utils.JSONUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.JSONUtils
  *  com.google.common.collect.Lists
  *  com.google.gson.Gson
  *  com.google.gson.GsonBuilder
@@ -16,7 +16,7 @@
  *  org.bukkit.command.CommandSender
  *  org.bukkit.entity.Player
  *  org.bukkit.event.Event
- *  org.bukkit.inventory.Inventory
+ *  org.bukkit.me.astropvp.cratekeys.inventory.Inventory
  *  org.bukkit.plugin.java.JavaPlugin
  */
 package me.ifamasssxd.cosmicjackpot.struct;

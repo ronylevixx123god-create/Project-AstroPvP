@@ -151,7 +151,7 @@ public class CommandBoss implements CommandExecutor {
             }
             final Boss instance = BossEggUtils.getBossInstance(targetType);
             if (p != null) {
-                p.sendMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + ChatColor.GREEN + "A " + instance.getColor(true) + instance.getName() + ChatColor.GREEN + " Boss Egg has been added to your inventory.");
+                p.sendMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + ChatColor.GREEN + "A " + instance.getColor(true) + instance.getName() + ChatColor.GREEN + " Boss Egg has been added to your me.astropvp.cratekeys.inventory.");
                 if (p.getInventory().firstEmpty() == -1) {
                     p.getWorld().dropItem(p.getLocation(), is);
                 } else {

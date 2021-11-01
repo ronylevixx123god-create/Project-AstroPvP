@@ -2,13 +2,13 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
  *  com.google.common.collect.Lists
  *  org.arkhamnetwork.enchantments.util.TieredEnchantments
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.ifamasssxd.cosmicevolutionkits.structure.ekits;
 
@@ -73,7 +73,7 @@ extends EvolutionKit {
 
     @Override
     public List<String> getLore() {
-        return Lists.newArrayList("", (Object)this.mainColor + ChatColor.BOLD.toString() + "* " + (Object)this.mainColor + (Object)ChatColor.BOLD + "Random Evolution Kit Items", (Object)this.mainColor + ChatColor.BOLD.toString() + "* " + (Object)this.mainColor + (Object)ChatColor.BOLD + "A chance of...", (Object)this.mainColor + ChatColor.BOLD.toString() + "   - " + (Object)this.mainColor + "Random Soul Enchantment Book", "", CC.Gray + "Receive items from a random /vkit", CC.Gray + "equivalent to this Kit Level!", (Object)ChatColor.GOLD + "* Summer 2018");
+        return Lists.newArrayList("", (Object)this.mainColor + ChatColor.BOLD.toString() + "* " + (Object)this.mainColor + (Object)ChatColor.BOLD + "Random Evolution Kit Items", (Object)this.mainColor + ChatColor.BOLD.toString() + "* " + (Object)this.mainColor + (Object)ChatColor.BOLD + "A chance of...", (Object)this.mainColor + ChatColor.BOLD.toString() + "   - " + (Object)this.mainColor + "Random Soul Enchantment Book", "", CC.Gray + "Receive me.astropvp.cratekeys.items from a random /vkit", CC.Gray + "equivalent to this Kit Level!", (Object)ChatColor.GOLD + "* Summer 2018");
     }
 
     @Override

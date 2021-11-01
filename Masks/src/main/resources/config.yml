@@ -19,8 +19,8 @@ HearSelfDisguise: false
 # This is the only thing allowing the mobs to fly without glitching out.
 SendVelocity: true
 # For self disguises, they need to have the armor and the held item removed
-# Else they see floating armor, floating held items.
-# This turns the items invisible in the disguised players inventory. It does not actually remove them!
+# Else they see floating armor, floating held me.astropvp.cratekeys.items.
+# This turns the me.astropvp.cratekeys.items invisible in the disguised players me.astropvp.cratekeys.inventory. It does not actually remove them!
 RemoveArmor: true
 RemoveHeldItem: false
 # If you set a disguise to burning, it will no longer be able to be shown as sneaking or invisible.
@@ -33,7 +33,7 @@ AddEntityAnimations: true
 # Please note that this will not remove the dye from their hands. This also does not check if the disguised entity is actually a sheep/wolf and wants a say in its color.
 DyeableSheep: false
 DyeableWolf: false
-# This is only called into action when the disguise is constructed using the commands.
+# This is only called into action when the disguise is constructed using the me.astropvp.cratekeys.commands.
 # And when the disguise supports that. This will not be used at all for plugins constructing the disguises for instance.
 # Such as prophunt. Its also false because its kind of a retarded feature.
 # This is pretty simple. It shows the players displayname (Name as it appears in chat) above their head.
@@ -102,12 +102,12 @@ PacketsEnabled:
   # This disguises the collect packet. If a living entity disguised as a non-living entity picks up a item. People will crash. This fixes it
   # This also fixes people crashing if a item disguised as a sleeping player is picked up - Only true if Bed is enabled as well
   Collect: true
-  # This disables a fix for when a disguised entity wearing armor dies, if the disguise can wear armor. It drops unpickupable items to anyone watching.
+  # This disables a fix for when a disguised entity wearing armor dies, if the disguise can wear armor. It drops unpickupable me.astropvp.cratekeys.items to anyone watching.
   EntityStatus: true
   # Entity equipment is the packets that are sent to ensure that a disguise has or doesn't have armor, and their held item.
-  # Disabling this means that any disguises which can wear armor or hold items will show the armor/held item that the disguised is wearing.
+  # Disabling this means that any disguises which can wear armor or hold me.astropvp.cratekeys.items will show the armor/held item that the disguised is wearing.
   Equipment: true
-  # This doesn't actually disable the packet. It would introduce problems. Instead it does the next best thing and caches the data.
+  # This doesn't actually disable the packet. It would introduce problems. Instead it does the next best thing and caches the me.astropvp.cratekeys.data.
   # This means that entity metadata will not change, and will only be sent in the spawn packet.
   # This is good if performance is extremely in need.
   # This is bad to disable unless you are ONLY going to use the disguises for decorations.

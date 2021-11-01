@@ -9,7 +9,7 @@
  *  com.google.common.collect.Maps
  *  javax.annotation.Nonnull
  *  javax.annotation.Nullable
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.recolance.globalutils.attribute;
 

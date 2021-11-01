@@ -10,7 +10,7 @@
  *  org.bukkit.command.CommandSender
  *  org.bukkit.entity.Entity
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.ifamasssxd.cosmicguishop.commands;
 
@@ -61,7 +61,7 @@ public class CommandBankNote implements CommandExecutor {
             return true;
         }
         if (pl.getInventory().firstEmpty() == -1) {
-            pl.sendMessage((Object)ChatColor.RED + "You do not have enough room in your inventory.");
+            pl.sendMessage((Object)ChatColor.RED + "You do not have enough room in your me.astropvp.cratekeys.inventory.");
             return true;
         }
         CosmicGUIShop.getEconomy().withdrawPlayer((OfflinePlayer)pl, (double)withdraw_val);

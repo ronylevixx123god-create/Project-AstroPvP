@@ -3,10 +3,10 @@
  * 
  * Could not load the following classes:
  *  com.compilex.CosmicArmorSets.CosmicArmorSetsAPI
- *  com.compilex.CosmicArmorSets.enums.ArmorSet
+ *  com.compilex.CosmicArmorSets.me.astropvp.cratekeys.enums.ArmorSet
  *  com.compilex.CosmicDungeons.DungeonsAPI
  *  com.compilex.CosmicDungeons.DungeonsRewardsAPI
- *  com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils
+ *  com.cosmicpvp.CosmicSpaceChests.me.astropvp.cratekeys.utils.ItemUtils
  *  com.google.common.collect.Lists
  *  me.ifamasssxd.killtracker.KillTrackerAPI
  *  org.arkhamnetwork.Arkkit.patches.Halloween
@@ -14,7 +14,7 @@
  *  org.bukkit.Material
  *  org.bukkit.enchantments.Enchantment
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.cosmicpvp.CosmicGlobalKits.struct.gkits;
 

@@ -51,16 +51,16 @@ patches:
   # Prevent annoying spam bots.
   anti_spam_bot: false
 
-  # Prevents destruction of entities and blocks that have an inventory actively being viewed, Fixes a dupe exploit on Factions.
+  # Prevents destruction of entities and blocks that have an me.astropvp.cratekeys.inventory actively being viewed, Fixes a dupe exploit on Factions.
   anti_inventory_hijack: true
 
-  # Adds a number of custom aliases/hooks and commands for ArkhamNetwork such as /sidekick and /powers.
+  # Adds a number of custom aliases/hooks and me.astropvp.cratekeys.commands for ArkhamNetwork such as /sidekick and /powers.
   arkham_commands: false
 
   # Global cross-server alert system. Supports LilyPad only.
   alert_system: false
 
-  # Enables /tnt - Automatically crafts all tnt ingredients in inventory.
+  # Enables /tnt - Automatically crafts all tnt ingredients in me.astropvp.cratekeys.inventory.
   auto_craft_tnt: false
 
   # Reboots servers after 12h of uptime.
@@ -135,7 +135,7 @@ patches:
   # Enables /cmotd command along with a custom, configurable, delayed MOTD.
   custom_motd: false
 
-  # Enables /createtitle and /addcreatetitle commands to purchase and create custom player titles.
+  # Enables /createtitle and /addcreatetitle me.astropvp.cratekeys.commands to purchase and create custom player titles.
   create_title: false
 
   # Multiplies vanilla xp drops by specified amount, default 2x.
@@ -147,7 +147,7 @@ patches:
   # Enables /deathpoint (/back alternative) that allows players to return to previous location of death.
   deathpoint: false
 
-  # Prevents droppers from dispensing items, stopping throwable item dupe exploit on Factions.
+  # Prevents droppers from dispensing me.astropvp.cratekeys.items, stopping throwable item dupe exploit on Factions.
   dropper_blocker: false
 
   # Enables /setmaxplayers to set the server slots dynamically.
@@ -168,13 +168,13 @@ patches:
   # Disables EnchantmentAPI anvil and enchantment table mechanics.
   enchantment_anvil_fix: false
 
-  # Enables per-warp /aliase commands. So /warp test will become /test, useful in prison server configurations.
+  # Enables per-warp /aliase me.astropvp.cratekeys.commands. So /warp test will become /test, useful in prison server configurations.
   essentials_warp_aliases: false
 
   # Enables /addhomes to add extra essentials /homes to players.
   essentials_add_homes: false
 
-  # Enables a /warp inventory menu. Warps to be displayed can be configurred.
+  # Enables a /warp me.astropvp.cratekeys.inventory menu. Warps to be displayed can be configurred.
   essentials_warp_ui: false
 
   # Enables ability to use /xpbottle to withdraw vanilla levels into exp bottles.
@@ -186,7 +186,7 @@ patches:
   # Send players back to lobbies when a server shuts down. Supports LilyPad only.
   fallback_servers: false
 
-  # Enables /fill which automatically fills dispensers with TNT from inventory.
+  # Enables /fill which automatically fills dispensers with TNT from me.astropvp.cratekeys.inventory.
   fill_command: false
 
   # Enables a bunch of silly modifications for Rob/Preston end of season 3.
@@ -204,7 +204,7 @@ patches:
   # Enables some goofy 4th of July celebrations
   july_freedom: false
 
-  # Enables player gambling commands such as /roll.
+  # Enables player gambling me.astropvp.cratekeys.commands such as /roll.
   gamble: false
 
   # Makes creative gamemode persist between worlds.
@@ -234,7 +234,7 @@ patches:
   # Enables golden apple sickness.
   golden_apple_sickness: true
 
-  # Enables /senditem command and ability to link items in chat by typing [ITEM]. Requires permission node, itemlinking.senditem.
+  # Enables /senditem command and ability to link me.astropvp.cratekeys.items in chat by typing [ITEM]. Requires permission node, itemlinking.senditem.
   item_linking: false
 
   # Adds capability for sponges to absorb lava.
@@ -264,13 +264,13 @@ patches:
   # Prevents players from building above nether, and creating portals in nether.
   nether_glitch_fix: false
 
-  # Enables New Year specifical special items.
+  # Enables New Year specifical special me.astropvp.cratekeys.items.
   new_years: false
 
   # Automatically despawns monsters in pvp disabled regions when hit.
   no_safezone_mobs: false
 
-  # Prevents users from losing item being held on cursor on inventory close.
+  # Prevents users from losing item being held on cursor on me.astropvp.cratekeys.inventory close.
   no_cursor_drop: false
 
   # Fixes WorldGuard's lava-flow flag.
@@ -320,7 +320,7 @@ patches:
 
   # A very safe patch that fixes a slew of known bugs in 3rd party plugins.
   # a.) Fixes double spaces caused by EssentialsChat.
-  # b.) Fixes inventory exploit with UltimateParticles.
+  # b.) Fixes me.astropvp.cratekeys.inventory exploit with UltimateParticles.
   plugin_fixes: true
 
   # Nerfs vanilla potion behavior to prevent crazy OP effects like STR III.
@@ -422,7 +422,7 @@ patches:
   # Enables special party login listener.
   party: false
 
-  # Adds limitations to amount of stackable physics items.
+  # Adds limitations to amount of stackable physics me.astropvp.cratekeys.items.
   sand_stack_limiter: false
 
   # Prevents /tpaccept exploitation into enemy faction bases.
@@ -458,7 +458,7 @@ patches:
   # Adds random Thanksgiving Turkey spawns.
   thanksgiving: false
 
-  # Enables /trade and ability to trade items with other players through GUI.
+  # Enables /trade and ability to trade me.astropvp.cratekeys.items with other players through GUI.
   trading: false
 
   # Enables TP warmup times based on player EXP levels.
@@ -470,10 +470,10 @@ patches:
   # Enables voting rewards and tracking.
   voting: false
 
-  # Enables some VIP youtuber commands.
+  # Enables some VIP youtuber me.astropvp.cratekeys.commands.
   youtubers: false
 
-  # Enables showcase expander items.
+  # Enables showcase expander me.astropvp.cratekeys.items.
   showcase_expander: false
 
   # Disables weather events on all worlds on local server.
@@ -820,7 +820,7 @@ settings:
     - 'me'
     - 'baltop'
 
-  # List all warps you want displayed in the /warp inventory UI with the following format:
+  # List all warps you want displayed in the /warp me.astropvp.cratekeys.inventory UI with the following format:
   # - essentials_warp_name=MATERIAL_NAME
   # The warp will only display in the menu if defined here and the player has the appropriate permission.
   essentials_warp_ui: [ ]

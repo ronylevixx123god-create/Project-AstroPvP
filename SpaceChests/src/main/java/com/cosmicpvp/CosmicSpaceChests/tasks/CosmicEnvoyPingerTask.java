@@ -9,7 +9,7 @@
  *  org.bukkit.Location
  *  org.bukkit.entity.EntityType
  *  org.bukkit.entity.Firework
- *  org.bukkit.inventory.meta.FireworkMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.FireworkMeta
  */
 package com.cosmicpvp.CosmicSpaceChests.tasks;
 

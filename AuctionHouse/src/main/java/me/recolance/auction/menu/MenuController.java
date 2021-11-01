@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.150.
  *
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
  *  net.milkbowl.vault.economy.Economy
  *  org.bukkit.Bukkit
  *  org.bukkit.Material
@@ -11,12 +11,12 @@
  *  org.bukkit.event.EventHandler
  *  org.bukkit.event.EventPriority
  *  org.bukkit.event.Listener
- *  org.bukkit.event.inventory.ClickType
- *  org.bukkit.event.inventory.InventoryClickEvent
- *  org.bukkit.event.inventory.InventoryCloseEvent
- *  org.bukkit.event.inventory.InventoryDragEvent
- *  org.bukkit.inventory.Inventory
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.ClickType
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryCloseEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryDragEvent
+ *  org.bukkit.me.astropvp.cratekeys.inventory.Inventory
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.plugin.Plugin
  *  org.bukkit.scheduler.BukkitRunnable
  */
@@ -99,7 +99,7 @@ public class MenuController
                 if (slot < 45 && slot >= 0) {
                     List<Listing> vL = MenuHelper.getViewingListings(player);
                     if (vL == null) {
-                        Bukkit.getLogger().info("[AuctionHouse] Player " + player.getName() + " has a null vL object, closing inventory.");
+                        Bukkit.getLogger().info("[AuctionHouse] Player " + player.getName() + " has a null vL object, closing me.astropvp.cratekeys.inventory.");
                         player.closeInventory();
                         return;
                     }
@@ -118,7 +118,7 @@ public class MenuController
                         break;
                     }
                     if (!Util.hasInventorySpace(player)) {
-                        MenuUtil.displayMenuInvalidity(slot, inventory, item, "You do not have enough inventory space!");
+                        MenuUtil.displayMenuInvalidity(slot, inventory, item, "You do not have enough me.astropvp.cratekeys.inventory space!");
                         break;
                     }
                     if (!economy.has(Bukkit.getOfflinePlayer((UUID) player.getUniqueId()), (double) l.getPrice())) {
@@ -197,11 +197,11 @@ public class MenuController
                     if (!Util.hasInventorySpace(player)) {
                         if (viewingCategories) {
                             player.closeInventory();
-                            player.sendMessage(CC.RedB + "(!) " + CC.Red + "You dont have enough inventory space to purchase that item!");
+                            player.sendMessage(CC.RedB + "(!) " + CC.Red + "You dont have enough me.astropvp.cratekeys.inventory space to purchase that item!");
                             Bukkit.getScheduler().runTaskLater((Plugin) Auction.getPlugin(), () -> new CategoryMainMenu(player).openGUI(Auction.getPlugin()), 1L);
                             return;
                         }
-                        MenuUtil.displayMenuInvalidity(slot, inventory, item, "You do not have enough inventory space!");
+                        MenuUtil.displayMenuInvalidity(slot, inventory, item, "You do not have enough me.astropvp.cratekeys.inventory space!");
                         break;
                     }
                     if (!economy.has(Bukkit.getOfflinePlayer((UUID) player.getUniqueId()), (double) l.getPrice())) {
@@ -254,7 +254,7 @@ public class MenuController
                         break;
                     }
                     if (!Util.hasInventorySpace(player)) {
-                        MenuUtil.displayMenuInvalidity(slot, inventory, item, "You do not have enough inventory space!");
+                        MenuUtil.displayMenuInvalidity(slot, inventory, item, "You do not have enough me.astropvp.cratekeys.inventory space!");
                         break;
                     }
                     Controller.claim(player, listing);
@@ -276,7 +276,7 @@ public class MenuController
                         break;
                     }
                     if (!Util.hasInventorySpace(player)) {
-                        MenuUtil.displayMenuInvalidity(slot, inventory, item, "You do not have enough inventory space!");
+                        MenuUtil.displayMenuInvalidity(slot, inventory, item, "You do not have enough me.astropvp.cratekeys.inventory space!");
                         break;
                     }
                     Controller.claimAll(player);

@@ -12,7 +12,7 @@
  *  org.bukkit.command.Command
  *  org.bukkit.command.CommandSender
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.metadata.FixedMetadataValue
  *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.plugin.Plugin
@@ -112,7 +112,7 @@ final class ExpBottlesCommand
             return true;
         }
         if (p.getInventory().firstEmpty() == -1) {
-            p.sendMessage(ChatColor.RED + "You do not have any inventory space.");
+            p.sendMessage(ChatColor.RED + "You do not have any me.astropvp.cratekeys.inventory space.");
             return true;
         }
         FLocation pLoc = new FLocation(p.getLocation());

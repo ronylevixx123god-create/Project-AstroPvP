@@ -25,7 +25,7 @@ public class InventoryLavaPet extends InventoryPet {
    }
 
    public List getPetDescription(int level) {
-      return Lists.newArrayList(new String[]{CC.Gray + "A fiery pet that is", CC.Gray + "capable of conjuring lava", CC.Gray + "and giving it to its owner.", "", CC.WhiteB + "Ability", CC.Gray + "Fills up to " + (level == this.getMaxLevel() ? "ALL" : this.getMaxFill(level) + "x"), CC.Gray + "empty buckets in your", CC.Gray + "inventory into lava!", CC.WhiteB + "      +", CC.Gray + "Adds " + this.getFatBucketFill(level) + "x Fat Bucket", CC.Gray + "charges to all Fat Buckets!", "", CC.WhiteB + "Cooldown", CC.Gray + " 5 Minutes"});
+      return Lists.newArrayList(new String[]{CC.Gray + "A fiery pet that is", CC.Gray + "capable of conjuring lava", CC.Gray + "and giving it to its owner.", "", CC.WhiteB + "Ability", CC.Gray + "Fills up to " + (level == this.getMaxLevel() ? "ALL" : this.getMaxFill(level) + "x"), CC.Gray + "empty buckets in your", CC.Gray + "me.astropvp.cratekeys.inventory into lava!", CC.WhiteB + "      +", CC.Gray + "Adds " + this.getFatBucketFill(level) + "x Fat Bucket", CC.Gray + "charges to all Fat Buckets!", "", CC.WhiteB + "Cooldown", CC.Gray + " 5 Minutes"});
    }
 
    public int getMaxFill(int level) {
@@ -105,7 +105,7 @@ public class InventoryLavaPet extends InventoryPet {
             player.updateInventory();
          } else {
             petItem.setLastUsed(System.currentTimeMillis() - (delay - 10000L));
-            petItem.getPetType().sendMsg(player, "No empty buckets in your inventory!");
+            petItem.getPetType().sendMsg(player, "No empty buckets in your me.astropvp.cratekeys.inventory!");
             player.playSound(player.getLocation(), Sound.VILLAGER_NO, 3.0F, 0.7F);
          }
 

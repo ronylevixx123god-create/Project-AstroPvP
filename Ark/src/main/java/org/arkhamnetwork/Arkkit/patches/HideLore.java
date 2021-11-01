@@ -19,9 +19,9 @@
  *  org.arkhamnetwork.enchantments.util.GeneralUtil
  *  org.bukkit.Bukkit
  *  org.bukkit.GameMode
- *  org.bukkit.craftbukkit.v1_7_R4.inventory.CraftItemStack
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
+ *  org.bukkit.craftbukkit.v1_7_R4.me.astropvp.cratekeys.inventory.CraftItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
  *  org.bukkit.plugin.Plugin
  */
 package org.arkhamnetwork.Arkkit.patches;

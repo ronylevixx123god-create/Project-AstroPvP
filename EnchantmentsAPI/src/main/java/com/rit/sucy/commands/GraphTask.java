@@ -5,7 +5,7 @@
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
  *  org.bukkit.command.CommandSender
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.scheduler.BukkitRunnable
  */
 package com.rit.sucy.commands;

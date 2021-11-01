@@ -3,8 +3,8 @@
  *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.compat.ParamBuilder
- *  com.cosmicpvp.cosmicutils.utils.FactionUtils
- *  com.cosmicpvp.cosmicutils.utils.ReflectionUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.FactionUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ReflectionUtils
  *  com.massivecraft.factions.Faction
  *  com.massivecraft.factions.iface.RelationParticipator
  *  com.massivecraft.factions.struct.Relation

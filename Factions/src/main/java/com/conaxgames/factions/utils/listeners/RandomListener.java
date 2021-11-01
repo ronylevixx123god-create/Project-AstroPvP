@@ -8,7 +8,7 @@
  *  com.sk89q.worldguard.protection.flags.DefaultFlag
  *  com.sk89q.worldguard.protection.flags.Flag
  *  org.arkhamnetwork.Arkkit.patches.ItemNametag
- *  org.arkhamnetwork.Arkkit.utils.WorldGuardUtils
+ *  org.arkhamnetwork.Arkkit.me.astropvp.cratekeys.utils.WorldGuardUtils
  *  org.bukkit.ChatColor
  *  org.bukkit.Location
  *  org.bukkit.Material
@@ -30,15 +30,15 @@
  *  org.bukkit.event.entity.EntityDeathEvent
  *  org.bukkit.event.entity.EntityShootBowEvent
  *  org.bukkit.event.entity.SlimeSplitEvent
- *  org.bukkit.event.inventory.InventoryAction
- *  org.bukkit.event.inventory.InventoryClickEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryAction
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
  *  org.bukkit.event.player.AsyncPlayerChatEvent
  *  org.bukkit.event.player.PlayerInteractEntityEvent
  *  org.bukkit.event.player.PlayerInteractEvent
  *  org.bukkit.event.player.PlayerItemConsumeEvent
  *  org.bukkit.event.player.PlayerTeleportEvent
  *  org.bukkit.event.world.StructureGrowEvent
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package com.conaxgames.factions.utils.listeners;
 

@@ -18,7 +18,7 @@ import org.bukkit.entity.Player;
 class CommandToggleClearInventoryConfirm
         extends ArkPluginCommand<ClearInventoryConfirm> {
     CommandToggleClearInventoryConfirm(ClearInventoryConfirm patch) {
-        super(patch, "toggleciconfirm", "/<command>", "Clear inventory confirm.");
+        super(patch, "toggleciconfirm", "/<command>", "Clear me.astropvp.cratekeys.inventory confirm.");
     }
 
     @Override

@@ -5,9 +5,9 @@
  *  com.compilex.CosmicFund.CosmicFundAPI
  *  com.cosmicpvp.cosmicutils.gui.CosmicGUI
  *  com.cosmicpvp.cosmicutils.gui.InventoryItem
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.InventoryUtils
- *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.InventoryUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
  *  com.google.common.collect.Lists
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
@@ -15,8 +15,8 @@
  *  org.bukkit.Material
  *  org.bukkit.Sound
  *  org.bukkit.entity.Player
- *  org.bukkit.event.inventory.ClickType
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.ClickType
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.material.MaterialData
  */
 package me.cosmicpvp.CosmicGlobalKits.menu;
@@ -72,7 +72,7 @@ extends CosmicGUI {
                 unlocked = true;
                 if (cooldownString == null) {
                     lore.add(CC.GreenB + "UNLOCKED");
-                    lore.add(CC.Gray + "Left-Click to receive mastery kit items.");
+                    lore.add(CC.Gray + "Left-Click to receive mastery kit me.astropvp.cratekeys.items.");
                 } else {
                     lore.add(CC.Yellow + "Cooldown over in .. " + CC.YellowB + cooldownString);
                 }
@@ -80,7 +80,7 @@ extends CosmicGUI {
                 lore.add(CC.RedB + "LOCKED");
                 lore.add(CC.Gray + "Unlock at " + CC.GrayU + "buy.astropvp.net");
             }
-            lore.add(CC.Gray + "Right-Click to preview kit items.");
+            lore.add(CC.Gray + "Right-Click to preview kit me.astropvp.cratekeys.items.");
             MaterialData icon = null;
             icon = unlocked && cooldownString == null ? kits.getData() : (cooldownString != null && unlocked ? new MaterialData(Material.STAINED_GLASS_PANE, DyeColor.YELLOW.getWoolData()) : new MaterialData(Material.STAINED_GLASS_PANE, DyeColor.RED.getWoolData()));
             this.setItem(kits.getSlot(), new InventoryItem(new ItemBuilder(icon.getItemType()).name((cooldownString != null ? CC.YellowB : (unlocked ? CC.GreenB : CC.RedB)) + kits.getName() + " Mastery Kit").lore((List)lore).data((short)icon.getData()).build()).click(ClickType.RIGHT, () -> this.closeWithDelay(pl -> new MKitPreviewMenu((Player)pl, kits, kits.getKit().getMasteryItems((Player)pl, kits, false)).openGUI(CosmicGlobalKits.getPlugin()))).click(ClickType.LEFT, () -> {

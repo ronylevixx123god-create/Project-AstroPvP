@@ -8,7 +8,7 @@
  *  org.bukkit.event.Event
  *  org.bukkit.event.HandlerList
  *  org.bukkit.event.entity.EntityDamageEvent
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package org.arkhamnetwork.Arkkit.patches.combatlog;
 

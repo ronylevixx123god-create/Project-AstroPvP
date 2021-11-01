@@ -3,15 +3,15 @@
  * 
  * Could not load the following classes:
  *  com.compilex.CosmicOutposts.CosmicOutpostsAPI
- *  com.compilex.CosmicOutposts.outpost.enums.OutpostTier
+ *  com.compilex.CosmicOutposts.outpost.me.astropvp.cratekeys.enums.OutpostTier
  *  org.arkhamnetwork.Arkkit.Arkkit
  *  org.arkhamnetwork.enchantments.util.TieredEnchantments
  *  org.bukkit.Material
  *  org.bukkit.World$Environment
  *  org.bukkit.entity.LivingEntity
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
  *  org.bukkit.plugin.Plugin
  *  org.bukkit.scheduler.BukkitRunnable
  */

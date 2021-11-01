@@ -7,7 +7,7 @@
  *  org.bukkit.command.Command
  *  org.bukkit.command.CommandSender
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package org.arkhamnetwork.Arkkit.patches;
 
@@ -44,7 +44,7 @@ final class CommandGiveItemNametag
             pl.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "You have recieved an Item Nametag!");
         } else {
             pl.getWorld().dropItem(pl.getLocation(), ItemNametag.getNametagItem());
-            pl.sendMessage(ChatColor.RED + "(!) You had no room in your inventory, an item nametag has been dropped at your feet.");
+            pl.sendMessage(ChatColor.RED + "(!) You had no room in your me.astropvp.cratekeys.inventory, an item nametag has been dropped at your feet.");
         }
         sender.sendMessage(ChatColor.GRAY.toString() + ChatColor.ITALIC.toString() + "Gave 1x Item Nametag to " + pl.getName() + "!");
         return true;

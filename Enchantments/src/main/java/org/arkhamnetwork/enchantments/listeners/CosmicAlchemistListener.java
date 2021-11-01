@@ -90,7 +90,7 @@ public class CosmicAlchemistListener implements Listener {
                     wizardInv.setItem(wizardInv.firstEmpty(), itemToDeposit);
                     p.playSound(p.getLocation(), Sound.ORB_PICKUP, 1.0f, 1.5f);
                 } else {
-                    p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You may only combine up to TWO (2) items at once.");
+                    p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You may only combine up to TWO (2) me.astropvp.cratekeys.items at once.");
                 }
                 if (wizardInv.firstEmpty() == -1) {
                     wizardInv.setItem(22, CosmicAlchemist.getAcceptItem(p, this.getAlchemistItems(wizardInv)));
@@ -110,13 +110,13 @@ public class CosmicAlchemistListener implements Listener {
                 final List<ItemStack> items = this.getAlchemistItems(wizardInv);
                 final int cost = CosmicAlchemist.getAlchemistCost(p, items);
                 if (ExpUtils.getTotalExperience(p) < cost) {
-                    p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You do not have enough EXP to combine these items.");
+                    p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You do not have enough EXP to combine these me.astropvp.cratekeys.items.");
                     p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "COST " + ChatColor.GRAY + cost + ChatColor.RED + "XP");
                     p.sendMessage(ChatColor.GRAY + "Use /xp to view your EXP points.");
                     return;
                 }
                 if (p.getInventory().firstEmpty() == -1) {
-                    p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "Your inventory is full.");
+                    p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "Your me.astropvp.cratekeys.inventory is full.");
                     return;
                 }
                 final List<ItemStack> finalOffer = new ArrayList<ItemStack>();

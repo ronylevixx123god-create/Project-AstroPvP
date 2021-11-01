@@ -9,7 +9,7 @@
  *  org.bukkit.event.EventHandler
  *  org.bukkit.event.Listener
  *  org.bukkit.event.enchantment.EnchantItemEvent
- *  org.bukkit.event.inventory.InventoryClickEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
  */
 package org.arkhamnetwork.Arkkit.patches;
 

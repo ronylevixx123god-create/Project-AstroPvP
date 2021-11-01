@@ -139,7 +139,7 @@ implements Listener {
                     } else if (itemType == InventoryItemType.CLICKED) {
                         event.setCurrentItem(null);
                     }
-                    DiscordAPI.sendMessage((CosmicDiscordChannels)CosmicDiscordChannels.ADMIN_LOGS, (String)(event.getWhoClicked().getName() + " tried to use duped item from inventory click " + (Object)((Object)itemType) + ": " + customItem.getClass().getSimpleName() + " world: " + event.getWhoClicked().getWorld().getName() + " on " + CosmicUtils.get().getServerName()));
+                    DiscordAPI.sendMessage((CosmicDiscordChannels)CosmicDiscordChannels.ADMIN_LOGS, (String)(event.getWhoClicked().getName() + " tried to use duped item from me.astropvp.cratekeys.inventory click " + (Object)((Object)itemType) + ": " + customItem.getClass().getSimpleName() + " world: " + event.getWhoClicked().getWorld().getName() + " on " + CosmicUtils.get().getServerName()));
                 }
             }
         }

@@ -12,7 +12,7 @@
  *  com.massivecraft.factions.Faction
  *  com.massivecraft.factions.FactionChunkOwnershipCache
  *  me.ifamasssxd.cosmicfactionboosters.BoosterAPI
- *  me.ifamasssxd.cosmicfactionboosters.enums.BoosterType
+ *  me.ifamasssxd.cosmicfactionboosters.me.astropvp.cratekeys.enums.BoosterType
  *  me.ifamasssxd.killtracker.KillTrackerAPI
  *  org.arkhamnetwork.Arkkit.Arkkit
  *  org.arkhamnetwork.enchantments.EnchantmentBook
@@ -27,7 +27,7 @@
  *  org.bukkit.event.entity.CreatureSpawnEvent
  *  org.bukkit.event.entity.CreatureSpawnEvent$SpawnReason
  *  org.bukkit.event.entity.EntityDeathEvent
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.metadata.FixedMetadataValue
  *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.plugin.Plugin

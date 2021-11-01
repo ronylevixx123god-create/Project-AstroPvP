@@ -64,7 +64,7 @@ public class AstroRevivePlugin extends JavaPlugin {
         section.set("player", inv.getPlayer().toString());
         section.set("ID", inv.getID());
         section.set("armor", armor);
-        section.set("items", items);
+        section.set("me.astropvp.cratekeys.items", items);
         section.set("killer", inv.getKiller());
         section.set("damage", inv.getDamage());
         section.set("revived", inv.isRevived());
@@ -73,7 +73,7 @@ public class AstroRevivePlugin extends JavaPlugin {
 
     public void load(String ID) {
         ConfigurationSection section = getConfig().getConfigurationSection(ID);
-        String items = section.getString("items");
+        String items = section.getString("me.astropvp.cratekeys.items");
         String armor = section.getString("armor");
         DeathInventory inv = new DeathInventory(this, section.getString("player"), section.getLong("time"), armor, items, section.getString("killer"), section.getString("damage"));
         inv.setID(section.getInt("ID"));

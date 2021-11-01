@@ -89,7 +89,7 @@ public class SoulReaperEnderman extends EntityMonster {
     */
 
     private boolean f(final EntityHuman entityhuman) {
-        /*final ItemStack itemstack = entityhuman.inventory.armor[3];
+        /*final ItemStack itemstack = entityhuman.me.astropvp.cratekeys.inventory.armor[3];
         if (itemstack != null && itemstack.getItem() == Item.getItemOf(Blocks.PUMPKIN)) {
             return false;
         }

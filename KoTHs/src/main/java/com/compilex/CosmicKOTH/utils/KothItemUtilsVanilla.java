@@ -4,12 +4,12 @@
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.itembuilder.EssentialsItemBuilder
  *  com.google.common.collect.Lists
- *  org.arkhamnetwork.Arkkit.utils.ItemUtils
+ *  org.arkhamnetwork.Arkkit.me.astropvp.cratekeys.utils.ItemUtils
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
  *  org.bukkit.enchantments.Enchantment
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package com.compilex.CosmicKOTH.utils;
 

@@ -7,8 +7,8 @@
  *  com.rit.sucy.EnchantmentAPI
  *  org.bukkit.Bukkit
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
  */
 package me.cosmicpvp.CosmicGlobalKits.struct;
 

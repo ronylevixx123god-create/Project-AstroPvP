@@ -3,7 +3,7 @@
  * 
  * Could not load the following classes:
  *  com.compilex.CosmicFund.CosmicFundAPI
- *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
@@ -12,10 +12,10 @@
  *  org.bukkit.event.Event$Result
  *  org.bukkit.event.EventHandler
  *  org.bukkit.event.Listener
- *  org.bukkit.event.inventory.ClickType
- *  org.bukkit.event.inventory.InventoryClickEvent
- *  org.bukkit.inventory.Inventory
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.ClickType
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
+ *  org.bukkit.me.astropvp.cratekeys.inventory.Inventory
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.plugin.Plugin
  */
 package me.cosmicpvp.CosmicGlobalKits.listeners;
@@ -58,7 +58,7 @@ implements Listener {
             if (e.getCurrentItem() != null) {
                 GlobalKitUser user = CosmicGlobalKits.getPlugin().getGlobalKitUser(pl.getUniqueId());
                 if (user == null || user.isLoadingData()) {
-                    pl.sendMessage(CC.Red + "Please wait while your Global Kit data loads...");
+                    pl.sendMessage(CC.Red + "Please wait while your Global Kit me.astropvp.cratekeys.data loads...");
                     pl.closeInventory();
                     return;
                 }
@@ -108,7 +108,7 @@ implements Listener {
             pl = (Player)e.getWhoClicked();
             e.setCancelled(true);
             e.setResult(Event.Result.DENY);
-            pl.sendMessage(ChatColor.RED.toString() + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "You cannot withdraw items from a kit preview.");
+            pl.sendMessage(ChatColor.RED.toString() + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "You cannot withdraw me.astropvp.cratekeys.items from a kit preview.");
             pl.sendMessage((Object)ChatColor.GRAY + "Unlock access by defeating a Fallen Hero purchased at:");
             pl.sendMessage((Object)ChatColor.GRAY + "" + (Object)ChatColor.UNDERLINE + CosmicGlobalKits.getPlugin().getConfig().getString("store_url"));
             pl.closeInventory();

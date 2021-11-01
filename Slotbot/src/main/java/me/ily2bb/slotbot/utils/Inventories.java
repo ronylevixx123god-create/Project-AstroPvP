@@ -18,7 +18,7 @@ import java.util.List;
 
 public class Inventories {
     public static Inventory createLootboxInventory(final boolean showPercentage) {
-        final List<String> list = (List<String>) SlotBotPlugin.getInstance().getConfig().getList("items");
+        final List<String> list = (List<String>) SlotBotPlugin.getInstance().getConfig().getList("me.astropvp.cratekeys.items");
         final int len = list.size() + 9;
         final int size = (len <= 9) ? 9 : ((len <= 18) ? 18 : ((len <= 27) ? 27 : ((len <= 36) ? 36 : ((len <= 45) ? 45 : ((len <= 54) ? 54 : 54)))));
         final Inventory inventory = Bukkit.createInventory(null, size, CC.DarkGray + "Astro Slot Bot Loot");

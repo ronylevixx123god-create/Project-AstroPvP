@@ -18,6 +18,6 @@ public class AutoSaveTask implements Runnable
     @Override
     public void run() {
         Utils.saveDataOfSandbots(this.plugin.getManager());
-        Utils.logToServer("SandBots data saved successfully", true);
+        Utils.logToServer("SandBots me.astropvp.cratekeys.data saved successfully", true);
     }
 }

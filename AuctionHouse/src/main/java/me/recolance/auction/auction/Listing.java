@@ -4,15 +4,15 @@
  * Could not load the following classes:
  *  com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI
  *  com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.NumberUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NumberUtils
  *  com.rit.sucy.CustomEnchantment
  *  org.arkhamnetwork.Arkkit.patches.ExpBottles
  *  org.arkhamnetwork.enchantments.EnchantmentBook
  *  org.arkhamnetwork.enchantments.util.TieredEnchantments
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.recolance.auction.auction;
 

@@ -5,9 +5,9 @@
  *  com.google.common.collect.Lists
  *  org.apache.commons.lang.StringUtils
  *  org.bukkit.Material
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
- *  org.bukkit.inventory.meta.SkullMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.SkullMeta
  */
 package me.ifamasssxd.factionupgrades.utils;
 

@@ -6,9 +6,9 @@
  *  net.minecraft.server.v1_8_R3.NBTBase
  *  net.minecraft.server.v1_8_R3.NBTTagCompound
  *  org.bukkit.Material
- *  org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
+ *  org.bukkit.craftbukkit.v1_8_R3.me.astropvp.cratekeys.inventory.CraftItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
  */
 package me.recolance.auction.util;
 

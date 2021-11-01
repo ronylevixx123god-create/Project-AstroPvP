@@ -28,7 +28,7 @@ public class CommandSlotBot implements CommandExecutor {
                     player.sendMessage(String.valueOf(CC.Red) + "Item can not be null.");
                     return false;
                 }
-                final List<String> list = (List<String>) SlotBotPlugin.getInstance().getConfig().getList("items");
+                final List<String> list = (List<String>) SlotBotPlugin.getInstance().getConfig().getList("me.astropvp.cratekeys.items");
                 for (final String l : list) {
                     final ItemStack x = Utils.getItem(l);
                     if (item.equals((Object) x)) {
@@ -56,7 +56,7 @@ public class CommandSlotBot implements CommandExecutor {
                 }
                 i = String.valueOf(i) + ":" + percentage;
                 list.set(list.size() - 1, i);
-                SlotBotPlugin.getInstance().getConfig().set("items", (Object) list);
+                SlotBotPlugin.getInstance().getConfig().set("me.astropvp.cratekeys.items", (Object) list);
                 SlotBotPlugin.getInstance().saveConfig();
                 SlotBotPlugin.getInstance().loadConfig();
                 player.sendMessage(String.valueOf(CC.Green) + "Added item... " + item.getAmount() + "x " + Utils.getDisplayName(item) + ", " + CC.White + percentage + "%");
@@ -70,18 +70,18 @@ public class CommandSlotBot implements CommandExecutor {
                 }
                 final String display = Utils.getDisplayName(item);
                 final ItemStack[] items = LootTable.getLootTableItems();
-                final List<String> list2 = (List<String>) SlotBotPlugin.getInstance().getConfig().getList("items");
+                final List<String> list2 = (List<String>) SlotBotPlugin.getInstance().getConfig().getList("me.astropvp.cratekeys.items");
                 for (int j = list2.size() - 1; j >= 0; --j) {
                     final ItemStack x2 = items[j];
                     if (x2 == null || x2.getType() == Material.AIR) {
                         list2.remove(j);
-                        SlotBotPlugin.getInstance().getConfig().set("items", (Object) list2);
+                        SlotBotPlugin.getInstance().getConfig().set("me.astropvp.cratekeys.items", (Object) list2);
                         SlotBotPlugin.getInstance().saveConfig();
                         SlotBotPlugin.getInstance().loadConfig();
                         player.sendMessage(String.valueOf(CC.Green) + "Found null item... DELETING");
                     } else if (x2.equals((Object) item)) {
                         list2.remove(j);
-                        SlotBotPlugin.getInstance().getConfig().set("items", (Object) list2);
+                        SlotBotPlugin.getInstance().getConfig().set("me.astropvp.cratekeys.items", (Object) list2);
                         SlotBotPlugin.getInstance().saveConfig();
                         SlotBotPlugin.getInstance().loadConfig();
                         player.sendMessage(String.valueOf(CC.Green) + "Found item... Deleting " + item.getAmount() + " " + display);
@@ -93,7 +93,7 @@ public class CommandSlotBot implements CommandExecutor {
             } else {
                 if (args[0].contentEquals("clearitems")) {
                     final List<String> list3 = new ArrayList<String>();
-                    SlotBotPlugin.getInstance().getConfig().set("items", (Object) list3);
+                    SlotBotPlugin.getInstance().getConfig().set("me.astropvp.cratekeys.items", (Object) list3);
                     SlotBotPlugin.getInstance().saveConfig();
                     SlotBotPlugin.getInstance().loadConfig();
                     ((Player) sender).sendMessage(String.valueOf(CC.Green) + "Cleared all slot bot rewards...");

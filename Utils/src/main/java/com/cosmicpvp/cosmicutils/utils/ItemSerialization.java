@@ -8,8 +8,8 @@
  *  net.minecraft.server.v1_7_R4.NBTReadLimiter
  *  net.minecraft.server.v1_7_R4.NBTTagCompound
  *  net.minecraft.server.v1_7_R4.NBTTagList
- *  org.bukkit.craftbukkit.v1_7_R4.inventory.CraftInventoryCustom
- *  org.bukkit.craftbukkit.v1_7_R4.inventory.CraftItemStack
+ *  org.bukkit.craftbukkit.v1_7_R4.me.astropvp.cratekeys.inventory.CraftInventoryCustom
+ *  org.bukkit.craftbukkit.v1_7_R4.me.astropvp.cratekeys.inventory.CraftItemStack
  */
 package com.cosmicpvp.cosmicutils.utils;
 
@@ -32,7 +32,7 @@ public class ItemSerialization {
     private static final String INVENTORY_PLAYER = "player";
     private static final int NBT_TYPE_COMPOUND = 10;
     private static final String NBT_TYPE = "type";
-    private static final String NBT_ITEMS = "items";
+    private static final String NBT_ITEMS = "me.astropvp.cratekeys.items";
     private static final String NBT_VERSION = "version";
     private static final String NBT_PLAYER_HELD_INDEX = "player_held_index";
     private static final String NBT_PLAYER_NAME = "player_name";

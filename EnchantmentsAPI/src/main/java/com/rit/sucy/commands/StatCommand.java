@@ -6,7 +6,7 @@
  *  org.bukkit.Material
  *  org.bukkit.command.Command
  *  org.bukkit.command.CommandSender
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.plugin.Plugin
  *  org.bukkit.scheduler.BukkitRunnable
  */

@@ -7,7 +7,7 @@
  *  org.bukkit.FireworkEffect$Type
  *  org.bukkit.Location
  *  org.bukkit.entity.Firework
- *  org.bukkit.inventory.meta.FireworkMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.FireworkMeta
  */
 package org.arkhamnetwork.Arkkit.utils;
 

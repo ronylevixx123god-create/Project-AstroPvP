@@ -2,16 +2,16 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.compilex.CosmicArmorSets.enums.ArmorSet
- *  com.compilex.CosmicArmorSets.enums.WeaponedArmorSet
- *  com.compilex.CosmicCustomCreepers.enums.CreeperTypes
+ *  com.compilex.CosmicArmorSets.me.astropvp.cratekeys.enums.ArmorSet
+ *  com.compilex.CosmicArmorSets.me.astropvp.cratekeys.enums.WeaponedArmorSet
+ *  com.compilex.CosmicCustomCreepers.me.astropvp.cratekeys.enums.CreeperTypes
  *  com.google.common.collect.Lists
- *  org.arkhamnetwork.CosmicCustomTNT.enums.TNTTypes
+ *  org.arkhamnetwork.CosmicCustomTNT.me.astropvp.cratekeys.enums.TNTTypes
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
  *  org.bukkit.enchantments.Enchantment
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.cosmicpvp.CosmicGlobalKits.struct.gkits;
 

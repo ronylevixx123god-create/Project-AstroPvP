@@ -6,7 +6,7 @@
  *  org.bukkit.event.EventHandler
  *  org.bukkit.event.EventPriority
  *  org.bukkit.event.Listener
- *  org.bukkit.event.inventory.InventoryPickupItemEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryPickupItemEvent
  *  org.bukkit.event.player.PlayerPickupItemEvent
  *  org.bukkit.metadata.MetadataValue
  */

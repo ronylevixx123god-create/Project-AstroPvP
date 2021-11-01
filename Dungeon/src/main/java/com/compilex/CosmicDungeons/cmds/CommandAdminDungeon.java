@@ -5,9 +5,9 @@
  *  com.cosmicpvp.cosmicutils.itembuilder.PhoenixFeatherBuilder
  *  com.cosmicpvp.cosmicutils.itembuilder.SpeedTrinketBuilder
  *  com.cosmicpvp.cosmicutils.itembuilder.YijkiStaffBuilder
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.NumberUtils
- *  com.cosmicpvp.cosmicutils.utils.PlayerUtil
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NumberUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.PlayerUtil
  *  com.google.common.collect.Lists
  *  org.bukkit.Bukkit
  *  org.bukkit.Location
@@ -15,7 +15,7 @@
  *  org.bukkit.command.CommandExecutor
  *  org.bukkit.command.CommandSender
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package com.compilex.CosmicDungeons.cmds;
 
@@ -116,7 +116,7 @@ implements CommandExecutor {
             ItemStack key = args.length == 4 && (val = NumberUtils.parseLongOrNull((String)args[3])) != null ? new DungeonKeyItem(type2, val).build() : new DungeonKeyItem(type2, -1L).build();
             if (key != null) {
                 PlayerUtil.giveOrDropProtectedItem((Player)p, (ItemStack)key, (int)-1);
-                p.sendMessage(CC.YellowB + "(!) " + CC.Yellow + type2.getDungeonName() + " Dungeon Portal Key" + CC.Yellow + " added to your inventory!");
+                p.sendMessage(CC.YellowB + "(!) " + CC.Yellow + type2.getDungeonName() + " Dungeon Portal Key" + CC.Yellow + " added to your me.astropvp.cratekeys.inventory!");
                 sender.sendMessage(CC.Red + "Key added!");
             }
             return true;
@@ -148,7 +148,7 @@ implements CommandExecutor {
             }
             DungeonPlayer dp = CosmicDungeonsPlugin.get_().getApi().getPlayerDungeonData(player);
             if (dp == null || dp.getCurrentDungeon() == null || dp.getCurrentDungeon().getDungeonType() != DungeonType.DESTROYED_OUTPOST) {
-                sender.sendMessage(CC.Red + "Player '" + player.getName() + "' needs to be inside an active Destroyed Outpost dungeon to have the proper Dungeon data.");
+                sender.sendMessage(CC.Red + "Player '" + player.getName() + "' needs to be inside an active Destroyed Outpost dungeon to have the proper Dungeon me.astropvp.cratekeys.data.");
                 return true;
             }
             DestroyedOutpostDungeon dungeon3 = (DestroyedOutpostDungeon)dp.getCurrentDungeon();
@@ -170,7 +170,7 @@ implements CommandExecutor {
             }
             ItemStack item = dungeon3.getDungeonEvents().createDimensionalMap();
             player.getInventory().addItem(item);
-            sender.sendMessage(CC.Red + "Dimensional Map added to " + player.getName() + "'s inventory!");
+            sender.sendMessage(CC.Red + "Dimensional Map added to " + player.getName() + "'s me.astropvp.cratekeys.inventory!");
             return true;
         }
         if (args[0].equalsIgnoreCase("setfastestdungeonrun") && args.length == 3) {

@@ -37,18 +37,18 @@
  *  org.bukkit.event.entity.EntityDamageEvent
  *  org.bukkit.event.entity.EntityDamageEvent$DamageCause
  *  org.bukkit.event.entity.EntityPortalEvent
- *  org.bukkit.event.inventory.CraftItemEvent
- *  org.bukkit.event.inventory.InventoryClickEvent
- *  org.bukkit.event.inventory.InventoryMoveItemEvent
- *  org.bukkit.event.inventory.InventoryType
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.CraftItemEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryMoveItemEvent
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryType
  *  org.bukkit.event.player.PlayerDropItemEvent
  *  org.bukkit.event.player.PlayerInteractEvent
  *  org.bukkit.event.player.PlayerJoinEvent
  *  org.bukkit.event.player.PlayerPickupItemEvent
  *  org.bukkit.event.player.PlayerTeleportEvent
  *  org.bukkit.event.player.PlayerTeleportEvent$TeleportCause
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
  *  org.bukkit.metadata.FixedMetadataValue
  *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.plugin.Plugin
@@ -255,7 +255,7 @@ final class AntiDupeListener
         if (p.hasMetadata("lastTeleportEvent") && System.currentTimeMillis() - p.getMetadata("lastTeleportEvent").get(0).asLong() < 250L) {
             e.setCancelled(true);
             e.setResult(Event.Result.DENY);
-            p.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "You cannot perform inventory edits so quickly after teleporting.");
+            p.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "You cannot perform me.astropvp.cratekeys.inventory edits so quickly after teleporting.");
         }
     }
 

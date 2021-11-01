@@ -3,8 +3,8 @@
  * 
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.JSONMessage
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.JSONMessage
  *  org.apache.commons.lang.StringUtils
  *  org.bukkit.Bukkit
  *  org.bukkit.Sound
@@ -13,8 +13,8 @@
  *  org.bukkit.command.CommandSender
  *  org.bukkit.entity.Player
  *  org.bukkit.event.Event
- *  org.bukkit.inventory.Inventory
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.Inventory
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  */
 package me.cosmicpvp.CosmicGlobalKits.commands;
 
@@ -110,7 +110,7 @@ implements CommandExecutor {
         Player pl = (Player)sender;
         GlobalKitUser kitUser = CosmicGlobalKits.getPlugin().getGlobalKitUser(pl.getUniqueId());
         if (kitUser == null || kitUser.isLoadingData()) {
-            pl.sendMessage(CC.RedB + "(!) " + CC.Red + "Please wait while your Global Kit data is loaded!");
+            pl.sendMessage(CC.RedB + "(!) " + CC.Red + "Please wait while your Global Kit me.astropvp.cratekeys.data is loaded!");
             pl.sendMessage(CC.Gray + "Allow up to 15 seconds before attempting to relog.");
             return true;
         }

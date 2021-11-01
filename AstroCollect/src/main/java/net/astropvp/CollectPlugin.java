@@ -30,7 +30,7 @@ public class CollectPlugin extends JavaPlugin {
             Bukkit.getLogger().severe("Unable to connect to sql database! Please ensure the sql credentials are correct");
             Bukkit.getPluginManager().disablePlugin(this);
         } else {
-            this.sqlDatabase.executeUpdate("CREATE TABLE IF NOT EXISTS collect_userdata(uuid varchar(64), items longblob, name varchar(64), type varchar(32));", false);
+            this.sqlDatabase.executeUpdate("CREATE TABLE IF NOT EXISTS collect_userdata(uuid varchar(64), me.astropvp.cratekeys.items longblob, name varchar(64), type varchar(32));", false);
             this.sqlQueryCustomThread = new SQLQueryCustomThread();
             this.sqlQueryCustomThread.start();
         }

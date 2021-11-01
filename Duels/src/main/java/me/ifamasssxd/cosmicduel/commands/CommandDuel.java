@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.VanishUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.VanishUtils
  *  com.gmail.nossr50.runnables.skills.BleedTimerTask
  *  com.google.common.collect.Lists
  *  org.apache.commons.lang.StringUtils
@@ -69,7 +69,7 @@ implements CommandExecutor {
         }
         Player p = (Player)sender;
         if (CosmicDuel.get().isShuttingDown()) {
-            p.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot use duel commands while the server is rebooting.");
+            p.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot use duel me.astropvp.cratekeys.commands while the server is rebooting.");
             return true;
         }
         QueueManager manager = CosmicDuel.get().getQueueManager();
@@ -156,7 +156,7 @@ implements CommandExecutor {
                         if (spectating != null) {
                             spectating.removeSpectator(p);
                         } else {
-                            p.sendMessage(this.red + ChatColor.RED + "You are not spectating a duel.. resetting player data.");
+                            p.sendMessage(this.red + ChatColor.RED + "You are not spectating a duel.. resetting player me.astropvp.cratekeys.data.");
                             p.removeMetadata("spectator", CosmicDuel.get());
                             PlayerUtils.setCollides(p, true);
                             BleedTimerTask.remove(p);
@@ -193,7 +193,7 @@ implements CommandExecutor {
                     return true;
                 }
                 p.removeMetadata("in_ranked_queue_menu", CosmicDuel.get());
-                p.sendMessage(ChatColor.RED + "Your duel queue menu data has been cleared!");
+                p.sendMessage(ChatColor.RED + "Your duel queue menu me.astropvp.cratekeys.data has been cleared!");
                 return true;
             }
             if (args[0].equalsIgnoreCase("top")) {
@@ -219,7 +219,7 @@ implements CommandExecutor {
             }
             if (args[0].equalsIgnoreCase("customize") || args[0].equalsIgnoreCase("custom")) {
                 if (!PlayerUtils.isInventoryEmpty(p)) {
-                    p.sendMessage(ChatColor.RED + "Your inventory must be empty to customize your duel kits!");
+                    p.sendMessage(ChatColor.RED + "Your me.astropvp.cratekeys.inventory must be empty to customize your duel kits!");
                     return true;
                 }
                 if (PlayerUtils.inCombat(p)) {

@@ -3,9 +3,9 @@
  * 
  * Could not load the following classes:
  *  org.bukkit.entity.Player
- *  org.bukkit.event.inventory.ClickType
- *  org.bukkit.event.inventory.InventoryClickEvent
- *  org.bukkit.inventory.InventoryHolder
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.ClickType
+ *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
+ *  org.bukkit.me.astropvp.cratekeys.inventory.InventoryHolder
  */
 package me.ifamasssxd.cosmicguishop.menus;
 

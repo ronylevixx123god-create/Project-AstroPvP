@@ -14,7 +14,7 @@
  *  org.bukkit.block.Chest
  *  org.bukkit.entity.LivingEntity
  *  org.bukkit.entity.Player
- *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
  *  org.bukkit.plugin.Plugin
  *  org.bukkit.potion.PotionEffect
  *  org.bukkit.scheduler.BukkitRunnable

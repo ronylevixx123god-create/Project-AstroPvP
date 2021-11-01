@@ -102,7 +102,7 @@ implements Listener {
                                     long id = ItemID.getItemID((ItemStack)item);
                                     if (id != -1L && ItemID.blacklist_iid.contains(id)) {
                                         player.sendMessage(CC.RedB + "(!) " + CC.Red + "It appears you tried to claim an already claimed Evolution Gem.");
-                                        player.sendMessage(CC.Gray + "It has been removed from your inventory.");
+                                        player.sendMessage(CC.Gray + "It has been removed from your me.astropvp.cratekeys.inventory.");
                                         player.getInventory().removeItem(new ItemStack[]{item});
                                         player.updateInventory();
                                         Bukkit.getLogger().info("[CosmicEvolutionKits] " + player.getName() + " attempted to claim an already claimed Evolution Gem, IID: " + id);
@@ -138,7 +138,7 @@ implements Listener {
                         return;
                     }
                     if (player.getInventory().firstEmpty() == -1) {
-                        player.sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot open a Lucky Box with a full inventory!");
+                        player.sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot open a Lucky Box with a full me.astropvp.cratekeys.inventory!");
                         return;
                     }
                     if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {

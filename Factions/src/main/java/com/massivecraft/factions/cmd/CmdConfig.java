@@ -150,7 +150,7 @@ public class CmdConfig
                     ParameterizedType targSet = (ParameterizedType) target.getGenericType();
                     Type innerType = targSet.getActualTypeArguments()[0];
                     if (targSet.getRawType() != Set.class) {
-                        this.sendMessage("\"" + fieldName + "\" is not a data collection type which can be modified with this command.");
+                        this.sendMessage("\"" + fieldName + "\" is not a me.astropvp.cratekeys.data collection type which can be modified with this command.");
                         return;
                     }
                     if (innerType == Material.class) {
@@ -189,10 +189,10 @@ public class CmdConfig
                         }
                         break block42;
                     }
-                    this.sendMessage("\"" + fieldName + "\" is not a data type set which can be modified with this command.");
+                    this.sendMessage("\"" + fieldName + "\" is not a me.astropvp.cratekeys.data type set which can be modified with this command.");
                     return;
                 }
-                this.sendMessage("\"" + fieldName + "\" is not a data type which can be modified with this command.");
+                this.sendMessage("\"" + fieldName + "\" is not a me.astropvp.cratekeys.data type which can be modified with this command.");
                 return;
             } catch (NoSuchFieldException ex) {
                 this.sendMessage("Configuration setting \"" + fieldName + "\" couldn't be matched, though it should be... please report this error.");
