@@ -6,6 +6,7 @@ import me.astropvp.cratekeys.AstroCrateKeysAPI;
 import me.astropvp.cratekeys.AstroCrateKeysPlugin;
 import me.astropvp.cratekeys.data.CrateData;
 import me.astropvp.cratekeys.enums.CrateType;
+import me.astropvp.cratekeys.inventory.LootPreviewGUI;
 import me.astropvp.cratekeys.items.CratePlacementItem;
 import me.astropvp.cratekeys.managers.CrateDataManager;
 import org.bukkit.Bukkit;
@@ -70,7 +71,8 @@ public class CrateLogicListener implements Listener {
         event.setCancelled(true);
 
 
-        //Open crate preview
+        LootPreviewGUI lootPreviewGUI = new LootPreviewGUI(player, data.getCrateType());
+        lootPreviewGUI.getLootGUI().open(player);
     }
 
 }

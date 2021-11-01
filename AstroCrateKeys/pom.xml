@@ -295,10 +295,10 @@
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>DamageIndicators</artifactId>
+            <artifactId>ccollect</artifactId>
             <version>0.1</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/DamageIndicators.jar</systemPath>
+            <systemPath>${project.basedir}/lib/Collect.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
