@@ -67,10 +67,7 @@ public class CommandAdminCrate implements CommandExecutor {
             player.openInventory(inventory);
             return false;
         }
-        if (args.length >= 1 && args[0].equalsIgnoreCase("resetkeys")) {
-            AstroCrateKeysAPI.resetAllKeys();
-            return false;
-        }
+
         player.sendMessage("");
         player.sendMessage(String.valueOf(CC.RedB) + "Admin Crate Commands");
         player.sendMessage(String.valueOf(CC.Red) + "/achestcrate additem <percentage> <rarity>");

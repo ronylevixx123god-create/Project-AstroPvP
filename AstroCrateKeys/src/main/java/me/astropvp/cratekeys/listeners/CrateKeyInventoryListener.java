@@ -26,36 +26,40 @@ public class CrateKeyInventoryListener implements Listener {
             return;
         Player player = event.getPlayer();
         Block block = event.getClickedBlock();
-        if (!AstroCrateKeysAPI.isCrateKey(player.getItemInHand())) {
-            return;
-        }
-        if (!(block.getState() instanceof Chest)) {
-            player.sendMessage(CC.translate("&c(!)&c This is not a valid crate. Type /warp crates."));
-            event.setCancelled(true);
-            return;
-        }
-        Chest chest = (Chest) block.getState();
-        CrateData data = AstroCrateKeysAPI.findCrate(chest.getLocation());
-        if (data == null) {
-            player.sendMessage(CC.translate("&c(!)&c This is not a valid crate. Type /warp crates."));
-            event.setCancelled(true);
-            return;
-        }
-        if (CrateKeyItem.getCrateType(player.getItemInHand()) != data.getCrateType()) {
-            player.sendMessage(CC.translate("&c&l(!)&c This is not the correct crate type. You need to click the " + CrateKeyItem.getCrateType(player.getItemInHand()).getPrefix() +
-                    CrateKeyItem.getCrateType(player.getItemInHand()).getName() + CC.Bold + "&c crate."));
-            event.setCancelled(true);
-            return;
-        }
-        if (player.getItemInHand().getAmount() == 1) {
-            player.getItemInHand().setType(Material.AIR);
-        } else {
-            player.getItemInHand().setAmount(player.getItemInHand().getAmount() - 1);
-        }
-        addItemToPlayer(player, ConfigUtils.getRandomItem(AstroCrateKeysAPI.getItems(CrateKeyItem.getCrateType(player.getItemInHand()))));
 
 
-        event.setCancelled(true);
+        if ((block.getState() instanceof Chest)) {
+            Chest chest = (Chest) block.getState();
+            CrateData data = AstroCrateKeysAPI.findCrate(chest.getLocation());
+            if (data == null) {
+                return;
+            }
+
+            if (!AstroCrateKeysAPI.isCrateKey(player.getItemInHand())) {
+                player.sendMessage(CC.translate("&c&l(!)&c Please hold a " + data.getCrateType().getPrefix() + CC.Bold +
+                        data.getCrateType().getName() + "&f&l Crate Key&c to open this crate."));
+                event.setCancelled(true);
+                return;
+            }
+
+
+            if (CrateKeyItem.getCrateType(player.getItemInHand()) != data.getCrateType()) {
+                player.sendMessage(CC.translate("&c&l(!)&c This is not the correct crate type. You need to click the " + CrateKeyItem.getCrateType(player.getItemInHand()).getPrefix() +
+                        CC.Bold +       CrateKeyItem.getCrateType(player.getItemInHand()).getName() + CC.Bold + "&f&l Crate&c to open this key."));
+                event.setCancelled(true);
+                return;
+            }
+            addItemToPlayer(player, ConfigUtils.getRandomItem(AstroCrateKeysAPI.getItems(CrateKeyItem.getCrateType(player.getItemInHand()))));
+
+            if(player.getItemInHand().getAmount() > 1) {
+                player.getItemInHand().setAmount(player.getItemInHand().getAmount() - 1);
+            } else {
+                player.setItemInHand((ItemStack) null);
+            }
+
+
+            event.setCancelled(true);
+        }
 
     }
 

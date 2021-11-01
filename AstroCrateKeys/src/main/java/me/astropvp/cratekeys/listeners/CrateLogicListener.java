@@ -64,6 +64,9 @@ public class CrateLogicListener implements Listener {
         CrateData data = AstroCrateKeysAPI.findCrate(chest.getLocation());
         if (data == null)
             return;
+
+        if (player.isSneaking() && player.isOp()) return;
+
         event.setCancelled(true);
 
 

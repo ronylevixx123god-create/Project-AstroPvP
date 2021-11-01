@@ -3,7 +3,6 @@ package me.astropvp.cratekeys;
 import me.astropvp.cratekeys.commands.*;
 import me.astropvp.cratekeys.listeners.CrateKeyInventoryListener;
 import me.astropvp.cratekeys.listeners.CrateLogicListener;
-import me.astropvp.cratekeys.listeners.ItemRedeemCrateListener;
 import me.astropvp.cratekeys.managers.CrateDataManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
@@ -27,7 +26,6 @@ public class AstroCrateKeysPlugin extends JavaPlugin {
     }
 
     private void registerListeners() {
-        registerListener((Listener)new ItemRedeemCrateListener());
         registerListener((Listener)new CrateLogicListener());
         registerListener((Listener)new CrateKeyInventoryListener());
     }
