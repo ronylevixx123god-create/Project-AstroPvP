@@ -2,14 +2,14 @@
  * Decompiled with CFR 0.150.
  *
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.utils.CC
  *  com.google.common.collect.MapMaker
  *  net.milkbowl.vault.economy.Economy
  *  org.apache.commons.lang.StringUtils
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
  *  org.bukkit.entity.Player
- *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.inventory.ItemStack
  *  org.bukkit.plugin.Plugin
  *  org.bukkit.plugin.RegisteredServiceProvider
  */
@@ -86,7 +86,7 @@ public class ItemLinking
             JSONMessage message = new JSONMessage(before.trim(), ChatColor.WHITE);
             UUID uuid = recentlyAssignedIds.asMap().computeIfAbsent(sender.getUniqueId(), e -> new UUIDStorage()).getUUID();
             ChatColor color = ChatColor.GREEN;
-            message.addRunCommand(color + ChatColor.ITALIC.toString() + sender.getName() + "'s Inventory", color, "/brag " + uuid, ChatColor.GRAY + "Click to view " + CC.GrayU + sender.getName() + CC.Gray + "'s me.astropvp.cratekeys.inventory!");
+            message.addRunCommand(color + ChatColor.ITALIC.toString() + sender.getName() + "'s Inventory", color, "/brag " + uuid, ChatColor.GRAY + "Click to view " + CC.GrayU + sender.getName() + CC.Gray + "'s inventory!");
             message.addText(after);
             message.sendToPlayer(p);
         } else {
@@ -163,11 +163,11 @@ public class ItemLinking
         ItemLinkingChatListener listener = new ItemLinkingChatListener(this);
         this.registerListener(listener);
         if (bragEnabled) {
-            this.viewBrag = new CommandViewBrag("brag", "/<command> [args]", "Sends a link to a bragable me.astropvp.cratekeys.inventory.");
+            this.viewBrag = new CommandViewBrag("brag", "/<command> [args]", "Sends a link to a bragable inventory.");
             this.registerCommand(this.viewBrag);
         }
         this.registerCommand(new CommandSendItem("senditem", "/<command> [args]", "Sends a link of the item in your character's hand.", new ArrayList<String>(Arrays.asList("showitem", "send"))));
-        this.registerCommand(new CommandSendBrag("sendbrag", "/<command> [args]", "Sends a link to your me.astropvp.cratekeys.inventory.", new ArrayList<String>(Arrays.asList("showbrag")), listener));
+        this.registerCommand(new CommandSendBrag("sendbrag", "/<command> [args]", "Sends a link to your inventory.", new ArrayList<String>(Arrays.asList("showbrag")), listener));
     }
 
     @Override

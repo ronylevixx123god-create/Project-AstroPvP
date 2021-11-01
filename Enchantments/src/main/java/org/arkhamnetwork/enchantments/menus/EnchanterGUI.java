@@ -50,7 +50,7 @@ public class EnchanterGUI extends CosmicGUI {
                     return;
                 }
                 if (this.player.getInventory().firstEmpty() == -1) {
-                    this.player.sendMessage(ChatColor.RED + "You do not have any room in your me.astropvp.cratekeys.inventory.");
+                    this.player.sendMessage(ChatColor.RED + "You do not have any room in your inventory.");
                     this.player.closeInventory();
                     return;
                 }

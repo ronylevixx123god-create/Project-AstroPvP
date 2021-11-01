@@ -5,11 +5,11 @@
  *  com.cosmicpvp.cosmicutils.gui.CosmicGUI
  *  com.cosmicpvp.cosmicutils.gui.InventoryItem
  *  com.cosmicpvp.cosmicutils.struct.factions.points.FactionPointUtils
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NumberUtils
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.PlayerUtil
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.TimeUtils
+ *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.utils.NumberUtils
+ *  com.cosmicpvp.cosmicutils.utils.PlayerUtil
+ *  com.cosmicpvp.cosmicutils.utils.TimeUtils
  *  com.google.common.collect.Lists
  *  org.bukkit.ChatColor
  *  org.bukkit.DyeColor
@@ -17,7 +17,7 @@
  *  org.bukkit.OfflinePlayer
  *  org.bukkit.Sound
  *  org.bukkit.entity.Player
- *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.inventory.ItemStack
  */
 package com.compilex.CosmicDungeons.menus;
 
@@ -87,7 +87,7 @@ extends CosmicGUI {
                     return;
                 }
                 if (this.player.getInventory().firstEmpty() == -1) {
-                    this.player.sendMessage(CC.RedB + "(!) " + CC.Red + "Your me.astropvp.cratekeys.inventory is currently full!");
+                    this.player.sendMessage(CC.RedB + "(!) " + CC.Red + "Your inventory is currently full!");
                     return;
                 }
                 if (CosmicDungeonsPlugin.get_().getEconomy().withdrawPlayer((OfflinePlayer)this.player, dungeonType.getPortalCost()).transactionSuccess()) {

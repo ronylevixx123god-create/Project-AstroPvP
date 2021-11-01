@@ -3,17 +3,17 @@
  *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
  *  com.google.common.collect.Lists
  *  me.vaqxine.NetworkManager.NetworkManager
  *  net.milkbowl.vault.economy.Economy
  *  org.arkhamnetwork.Arkkit.Arkkit
- *  org.arkhamnetwork.Arkkit.me.astropvp.cratekeys.commands.CommandArkReboot
+ *  org.arkhamnetwork.Arkkit.commands.CommandArkReboot
  *  org.arkhamnetwork.Arkkit.patches.AntiCrash
  *  org.arkhamnetwork.Arkkit.patches.ItemID
  *  org.arkhamnetwork.Arkkit.plugins.ArkPlugins
- *  org.arkhamnetwork.Arkkit.me.astropvp.cratekeys.utils.TimeUtils
+ *  org.arkhamnetwork.Arkkit.utils.TimeUtils
  *  org.arkhamnetwork.CosmicMoneyNotes.ArkhamMoneyNotesAPI
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
@@ -24,7 +24,7 @@
  *  org.bukkit.command.CommandSender
  *  org.bukkit.enchantments.Enchantment
  *  org.bukkit.entity.Player
- *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.inventory.ItemStack
  */
 package me.recolance.auction.command;
 
@@ -159,7 +159,7 @@ public class CommandHandler
         NBTTagCompoundBuilder builder = wrapper.getCompound("conaxData");
         if (builder != null && builder.hasKey("expiration") && (expires = builder.getLong("expiration")) != null && expires > 0L && expires < System.currentTimeMillis()) {
             if (player != null) {
-                player.sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot sell expired me.astropvp.cratekeys.items!");
+                player.sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot sell expired items!");
                 player.sendMessage(CC.Gray + "This item expired " + CC.GrayU + TimeUtils.formatDifference((long) ((System.currentTimeMillis() - expires) / 1000L)) + CC.GrayU + " ago!");
             }
             return true;
@@ -209,7 +209,7 @@ public class CommandHandler
         NBTWrapper wrapper = new NBTWrapper(item);
         NBTTagCompoundBuilder builder = wrapper.getCompound("conaxData");
         if (builder != null && builder.hasKey("expiration") && (expires = builder.getLong("expiration")) != null && expires > 0L && expires < System.currentTimeMillis()) {
-            player.sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot sell expired me.astropvp.cratekeys.items!");
+            player.sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot sell expired items!");
             player.sendMessage(CC.Gray + "This item expired " + CC.GrayU + TimeUtils.formatDifference((long) ((System.currentTimeMillis() - expires) / 1000L)) + CC.GrayU + " ago!");
             return false;
         }
@@ -226,13 +226,13 @@ public class CommandHandler
             return true;
         }
         if (Auction.plugin.getConfig().getBoolean("auction.preventCreativeSale") && player.getGameMode() == GameMode.CREATIVE) {
-            Util.message(player, "&cYou cannot sell me.astropvp.cratekeys.items while in creative.");
+            Util.message(player, "&cYou cannot sell items while in creative.");
         } else if (!AuctionUtil.canSellItemPermission(player)) {
             Util.message(player, "&cYou cannot list more than " + AuctionUtil.getCurrentlySellingAmount(player) + " item(s) at once.");
-            Util.message(player, "&7Purchase ranks with &c/buy&7 to list more me.astropvp.cratekeys.items concurrently.");
+            Util.message(player, "&7Purchase ranks with &c/buy&7 to list more items concurrently.");
         } else if (AuctionUtil.getItemsToCollectAmount(player) >= 6) {
-            Util.message(player, "&cYou have too many me.astropvp.cratekeys.items in your Collection Bin.");
-            Util.message(player, "&7Claim those me.astropvp.cratekeys.items before they vanish, &c/ah expired");
+            Util.message(player, "&cYou have too many items in your Collection Bin.");
+            Util.message(player, "&7Claim those items before they vanish, &c/ah expired");
         } else if (!Util.stringIsNumerical(price) && !CommandHandler.isValidAlternatePrice(price)) {
             Util.message(player, "&cThat is not a valid price.");
         } else if (price.length() > 9) {
@@ -287,7 +287,7 @@ public class CommandHandler
             return true;
         }
         if (Events.isLoading(player)) {
-            player.sendMessage(CC.RedB + "(!) " + CC.Red + "Please wait while your Auction me.astropvp.cratekeys.data loads before using /ah!");
+            player.sendMessage(CC.RedB + "(!) " + CC.Red + "Please wait while your Auction data loads before using /ah!");
             return true;
         }
         switch (commandLabel.toLowerCase()) {
@@ -318,7 +318,7 @@ public class CommandHandler
                         return CommandHandler.handleSelling(player);
                     }
                     case "help":
-                    case "me.astropvp.cratekeys.commands": {
+                    case "commands": {
                         if (length != 1) {
                             return CommandHandler.sendNonArg(player, Command.HELP);
                         }
@@ -363,7 +363,7 @@ public class CommandHandler
                         return true;
                     }
                 }
-                Util.message(player, "&cType /ah help to list auction me.astropvp.cratekeys.commands.");
+                Util.message(player, "&cType /ah help to list auction commands.");
             }
             case "bid":
             case "bids":
@@ -393,7 +393,7 @@ public class CommandHandler
     public void handleOpenBids(Player player) {
         List<ItemStack> toCollect = Auction.getPlugin().getBidManager().getBidCollectionBin().get(player.getUniqueId());
         if (toCollect != null && !toCollect.isEmpty()) {
-            player.sendMessage((Object) ChatColor.GRAY + "You have me.astropvp.cratekeys.items awaiting collection in your " + CC.Green + "/ah collect!");
+            player.sendMessage((Object) ChatColor.GRAY + "You have items awaiting collection in your " + CC.Green + "/ah collect!");
             return;
         }
         new BidMenu(player).openGUI(Auction.getPlugin());
@@ -407,7 +407,7 @@ public class CommandHandler
         }
         List<ItemStack> toCollect = Auction.getPlugin().getBidManager().getBidCollectionBin().get(player.getUniqueId());
         if (toCollect != null && !toCollect.isEmpty()) {
-            player.sendMessage((Object) ChatColor.GRAY + "You have me.astropvp.cratekeys.items awaiting collection in your " + CC.Green + "/ah collect!");
+            player.sendMessage((Object) ChatColor.GRAY + "You have items awaiting collection in your " + CC.Green + "/ah collect!");
             return;
         }
         Set<AuctionBid> currentids = Auction.getPlugin().getBidManager().getCurrentBids().get(player.getUniqueId());

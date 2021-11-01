@@ -40,7 +40,7 @@ public class FPlayers
         P.getP().getServer().getScheduler().runTaskAsynchronously(this.p, () -> {
             for (FPlayer fplayer : FPlayers.this.get()) {
                 if (Factions.i.exists(fplayer.getFactionId())) continue;
-                FPlayers.this.p.log("Reset faction me.astropvp.cratekeys.data (invalid faction) for player " + fplayer.getNameAsync());
+                FPlayers.this.p.log("Reset faction data (invalid faction) for player " + fplayer.getNameAsync());
                 fplayer.resetFactionData();
             }
         });
@@ -49,7 +49,7 @@ public class FPlayers
     public void cleanSync() {
         for (FPlayer fplayer : this.get()) {
             if (Factions.i.exists(fplayer.getFactionId())) continue;
-            this.p.log("Reset faction me.astropvp.cratekeys.data (invalid faction) for player " + fplayer.getNameAsync());
+            this.p.log("Reset faction data (invalid faction) for player " + fplayer.getNameAsync());
             fplayer.resetFactionData();
         }
     }

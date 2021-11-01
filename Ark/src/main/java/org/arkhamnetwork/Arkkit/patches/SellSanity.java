@@ -13,7 +13,7 @@
  *  org.bukkit.event.player.PlayerCommandPreprocessEvent
  *  org.bukkit.event.player.PlayerDropItemEvent
  *  org.bukkit.event.player.PlayerItemHeldEvent
- *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.inventory.ItemStack
  *  org.bukkit.metadata.FixedMetadataValue
  *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.plugin.Plugin
@@ -94,7 +94,7 @@ final class SellSanity
                 String sellCmd = e.getMessage().replace("/", "");
                 e.setCancelled(true);
                 e.setMessage("/null");
-                p.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "Are you sure you wish to /sell the following me.astropvp.cratekeys.items?");
+                p.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "Are you sure you wish to /sell the following items?");
                 for (ItemStack i : uniqueItems) {
                     p.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "* " + (i.getItemMeta().hasDisplayName() ? i.getItemMeta().getDisplayName() : i.getType().name()));
                 }

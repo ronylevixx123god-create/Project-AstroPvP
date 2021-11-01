@@ -162,7 +162,7 @@ public class EquipmentLootboxes
                 public void run() {
                     if (!LootboxOpenMenuAnimation.this.player.isValid() || LootboxOpenMenuAnimation.this.player.getOpenInventory() == null || !LootboxOpenMenuAnimation.this.inventory.equals(LootboxOpenMenuAnimation.this.player.getOpenInventory().getTopInventory())) {
                         this.cancel();
-                        Bukkit.getLogger().info("Cancelling task for " + LootboxOpenMenuAnimation.this.player.getName() + " due to not having me.astropvp.cratekeys.inventory open!");
+                        Bukkit.getLogger().info("Cancelling task for " + LootboxOpenMenuAnimation.this.player.getName() + " due to not having inventory open!");
                         return;
                     }
                     if (LootboxOpenMenuAnimation.this.animationTick > LootboxOpenMenuAnimation.this.MAX_ANIMATION_TICKS) {

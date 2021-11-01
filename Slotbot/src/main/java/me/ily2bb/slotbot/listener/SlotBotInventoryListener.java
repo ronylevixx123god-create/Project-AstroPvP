@@ -42,7 +42,7 @@ import java.util.List;
 
 public class SlotBotInventoryListener implements Listener {
     public static void returnTickets(int tickets, Player player) {
-        player.sendMessage(String.valueOf(CC.GreenB) + "(!) " + CC.Green + "The bot has returned " + tickets + " " + ((tickets > 1) ? "tickets" : "ticket") + " to your me.astropvp.cratekeys.inventory.");
+        player.sendMessage(String.valueOf(CC.GreenB) + "(!) " + CC.Green + "The bot has returned " + tickets + " " + ((tickets > 1) ? "tickets" : "ticket") + " to your inventory.");
         for (int i = 0; i < tickets; i++) {
             if (!Utils.isInventoryFull(player)) {
                 player.getInventory().addItem(new ItemStack[]{CosmicSlotBotAPI.createSlotBotItem()});

@@ -4,8 +4,8 @@
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.compat.ASound
  *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
  *  org.arkhamnetwork.Arkkit.patches.ItemID
  *  org.arkhamnetwork.Arkkit.plugins.ArkPlugins
  *  org.bukkit.Bukkit
@@ -22,7 +22,7 @@
  *  org.bukkit.event.player.PlayerInteractEntityEvent
  *  org.bukkit.event.player.PlayerInteractEvent
  *  org.bukkit.event.player.PlayerJoinEvent
- *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.inventory.ItemStack
  */
 package me.ifamasssxd.cosmicmysterychest.listeners;
 
@@ -137,7 +137,7 @@ public class MysteryChestListener
                         bundleSize = chest.getGarunteedItems().size();
                     }
                     if (getEmptySlots(player) < bundleSize) {
-                        throw new MysteryChestException(CC.translate("&c&l(!)&c Please clear some me.astropvp.cratekeys.inventory slots before opening this lootbox!"));
+                        throw new MysteryChestException(CC.translate("&c&l(!)&c Please clear some inventory slots before opening this lootbox!"));
                     }
                     if (chest == null) {
                         throw new MysteryChestException("Unable to determine Lootbox!");
@@ -173,8 +173,8 @@ public class MysteryChestListener
                     }
                     NBTWrapper nbtWrapper = new NBTWrapper(item);
                     /*long expiration = 0L;
-                    NBTTagCompoundBuilder me.astropvp.cratekeys.data = nbtWrapper.getconaxData();
-                    expiration = me.astropvp.cratekeys.data.getLong("expiration");
+                    NBTTagCompoundBuilder data = nbtWrapper.getconaxData();
+                    expiration = data.getLong("expiration");
                     if (expiration > 0L && expiration < System.currentTimeMillis()) {
                         String since = TimeUtil.formatTimeSincePastTime(expiration, true);
                         player.sendMessage("");

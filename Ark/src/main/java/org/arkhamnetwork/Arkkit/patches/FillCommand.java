@@ -19,7 +19,7 @@ public class FillCommand
 
     @Override
     public void enable() {
-        this.registerCommand(new CommandFill("fill", "/<command> [args]", "Automatically fill nearby dispensers with me.astropvp.cratekeys.items from me.astropvp.cratekeys.inventory.", Arrays.asList("tntfill")));
+        this.registerCommand(new CommandFill("fill", "/<command> [args]", "Automatically fill nearby dispensers with items from inventory.", Arrays.asList("tntfill")));
     }
 
     @Override

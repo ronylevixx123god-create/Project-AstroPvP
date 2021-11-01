@@ -54,7 +54,7 @@ public class MobCoinShopListener implements Listener {
             meta.setLore(lore);
             item.setItemMeta(meta);
             if (isInventoryFull(player)) {
-                player.sendMessage(CC.translate("&cYou me.astropvp.cratekeys.inventory is full. Clear some space."));
+                player.sendMessage(CC.translate("&cYou inventory is full. Clear some space."));
                 return;
             }
             player.getInventory().addItem(item);

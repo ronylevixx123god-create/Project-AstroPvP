@@ -2,9 +2,9 @@
  * Decompiled with CFR 0.150.
  *
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
  *  com.google.common.collect.Lists
  *  com.rit.sucy.CustomEnchantment
  *  com.rit.sucy.EnchantmentAPI
@@ -18,7 +18,7 @@
  *  org.bukkit.entity.Player
  *  org.bukkit.event.entity.EntityDamageByEntityEvent
  *  org.bukkit.event.entity.EntityDamageEvent$DamageModifier
- *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.inventory.ItemStack
  */
 package com.compilex.CosmicArmorSets.enums.armorsets;
 
@@ -54,22 +54,22 @@ public class YetiArmorSet
         implements WeaponedArmorSet {
     @Override
     public ItemStack getHelmet(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_HELMET, (short) 0, "&b&lYeti Facemask", "&bThe savage mask of the Yeti.", "", "&b&lYETI SET BONUS", "&b&l* &bDeal +10% damage to all enemies.", "&b&l* &bEnemies deal 10% less damage to you.", "&7(&oRequires all 4 yeti me.astropvp.cratekeys.items.&7)"), Arrays.asList(EnchantmentAPI.getEnchantment("Drunk"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Hardened"), EnchantmentAPI.getEnchantment("Implants"), EnchantmentAPI.getEnchantment("Valor"), EnchantmentAPI.getEnchantment("Protection"), EnchantmentAPI.getEnchantment("Ender Shift"), EnchantmentAPI.getEnchantment("Arrow Deflect"), EnchantmentAPI.getEnchantment("Death God"), EnchantmentAPI.getEnchantment("Angelic"))));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_HELMET, (short) 0, "&b&lYeti Facemask", "&bThe savage mask of the Yeti.", "", "&b&lYETI SET BONUS", "&b&l* &bDeal +10% damage to all enemies.", "&b&l* &bEnemies deal 10% less damage to you.", "&7(&oRequires all 4 yeti items.&7)"), Arrays.asList(EnchantmentAPI.getEnchantment("Drunk"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Hardened"), EnchantmentAPI.getEnchantment("Implants"), EnchantmentAPI.getEnchantment("Valor"), EnchantmentAPI.getEnchantment("Protection"), EnchantmentAPI.getEnchantment("Ender Shift"), EnchantmentAPI.getEnchantment("Arrow Deflect"), EnchantmentAPI.getEnchantment("Death God"), EnchantmentAPI.getEnchantment("Angelic"))));
     }
 
     @Override
     public ItemStack getChestplate(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, EnchantmentBook.applyTransmogScroll(ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_CHESTPLATE, (short) 0, "&b&lBloody Yeti Torso", "&bThe impermeable chestplate of the Yeti.", "", "&b&lYETI SET BONUS", "&b&l* &bDeal +10% damage to all enemies.", "&b&l* &bEnemies deal 10% less damage to you.", "&7(&oRequires all 4 yeti me.astropvp.cratekeys.items.&7)"), Arrays.asList(EnchantmentAPI.getEnchantment("Godly Overload"), EnchantmentAPI.getEnchantment("Blood Lust"), EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Leadership"), EnchantmentAPI.getEnchantment("Spirit Link"), EnchantmentAPI.getEnchantment("Aegis"), EnchantmentAPI.getEnchantment("Blood Link"), EnchantmentAPI.getEnchantment("Guardians"), EnchantmentAPI.getEnchantment("Angelic")))));
+        return this.getWithTransmog(applyTransmog, EnchantmentBook.applyTransmogScroll(ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_CHESTPLATE, (short) 0, "&b&lBloody Yeti Torso", "&bThe impermeable chestplate of the Yeti.", "", "&b&lYETI SET BONUS", "&b&l* &bDeal +10% damage to all enemies.", "&b&l* &bEnemies deal 10% less damage to you.", "&7(&oRequires all 4 yeti items.&7)"), Arrays.asList(EnchantmentAPI.getEnchantment("Godly Overload"), EnchantmentAPI.getEnchantment("Blood Lust"), EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Leadership"), EnchantmentAPI.getEnchantment("Spirit Link"), EnchantmentAPI.getEnchantment("Aegis"), EnchantmentAPI.getEnchantment("Blood Link"), EnchantmentAPI.getEnchantment("Guardians"), EnchantmentAPI.getEnchantment("Angelic")))));
     }
 
     @Override
     public ItemStack getLeggings(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, EnchantmentBook.applyTransmogScroll(ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_LEGGINGS, (short) 0, "&b&lFuzzy Yeti Leggings", "&bThe cozy yet monstrous legs of the Yeti.", "", "&b&lYETI SET BONUS", "&b&l* &bDeal +10% damage to all enemies.", "&b&l* &bEnemies deal 10% less damage to you.", "&7(&oRequires all 4 yeti me.astropvp.cratekeys.items.&7)"), Arrays.asList(EnchantmentAPI.getEnchantment("Clarity"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Obsidianshield"), EnchantmentAPI.getEnchantment("Dodge"), EnchantmentAPI.getEnchantment("Sticky"), EnchantmentAPI.getEnchantment("Repair Guard"), EnchantmentAPI.getEnchantment("Valor"), EnchantmentAPI.getEnchantment("Lucky"), EnchantmentAPI.getEnchantment("Cactus")))));
+        return this.getWithTransmog(applyTransmog, EnchantmentBook.applyTransmogScroll(ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_LEGGINGS, (short) 0, "&b&lFuzzy Yeti Leggings", "&bThe cozy yet monstrous legs of the Yeti.", "", "&b&lYETI SET BONUS", "&b&l* &bDeal +10% damage to all enemies.", "&b&l* &bEnemies deal 10% less damage to you.", "&7(&oRequires all 4 yeti items.&7)"), Arrays.asList(EnchantmentAPI.getEnchantment("Clarity"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Obsidianshield"), EnchantmentAPI.getEnchantment("Dodge"), EnchantmentAPI.getEnchantment("Sticky"), EnchantmentAPI.getEnchantment("Repair Guard"), EnchantmentAPI.getEnchantment("Valor"), EnchantmentAPI.getEnchantment("Lucky"), EnchantmentAPI.getEnchantment("Cactus")))));
     }
 
     @Override
     public ItemStack getBoots(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, EnchantmentBook.applyTransmogScroll(ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_BOOTS, (short) 0, "&b&lBig-Yeti Boots", "&bBigfoot has nothing on these boots.", "", "&b&lYETI SET BONUS", "&b&l* &bDeal +10% damage to all enemies.", "&b&l* &bEnemies deal 10% less damage to you.", "&7(&oRequires all 4 yeti me.astropvp.cratekeys.items.&7)"), Arrays.asList(EnchantmentAPI.getEnchantment("Gears"), EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Springs"), EnchantmentAPI.getEnchantment("Rocket Escape"), EnchantmentAPI.getEnchantment("Ender Walker"), EnchantmentAPI.getEnchantment("Hardened"), EnchantmentAPI.getEnchantment("Metaphysical"), EnchantmentAPI.getEnchantment("Repair Guard"), EnchantmentAPI.getEnchantment("Valor"), EnchantmentAPI.getEnchantment("Tank")))));
+        return this.getWithTransmog(applyTransmog, EnchantmentBook.applyTransmogScroll(ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_BOOTS, (short) 0, "&b&lBig-Yeti Boots", "&bBigfoot has nothing on these boots.", "", "&b&lYETI SET BONUS", "&b&l* &bDeal +10% damage to all enemies.", "&b&l* &bEnemies deal 10% less damage to you.", "&7(&oRequires all 4 yeti items.&7)"), Arrays.asList(EnchantmentAPI.getEnchantment("Gears"), EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Springs"), EnchantmentAPI.getEnchantment("Rocket Escape"), EnchantmentAPI.getEnchantment("Ender Walker"), EnchantmentAPI.getEnchantment("Hardened"), EnchantmentAPI.getEnchantment("Metaphysical"), EnchantmentAPI.getEnchantment("Repair Guard"), EnchantmentAPI.getEnchantment("Valor"), EnchantmentAPI.getEnchantment("Tank")))));
     }
 
     @Override
@@ -135,7 +135,7 @@ public class YetiArmorSet
 
     @Override
     public ItemStack getWeapon(boolean applyTransmog) {
-        ItemStack item = new NBTWrapper(new ItemBuilder(Material.DIAMOND_AXE, CC.AquaB + "Yeti Maul", CC.Gray + "A penetrating axe used by a Yeti.", "", CC.AquaB + "YETI WEAPON BONUS", CC.Aqua + "Deal +75% Durability Damage.", CC.Aqua + "Deal +7.5% DMG to enemies", CC.Aqua + "Bypass 50% of Heroic Armor", CC.Gray + "(" + CC.GrayI + "Requires all 4 yeti me.astropvp.cratekeys.items." + CC.Gray + ")").enchant(Enchantment.DAMAGE_ALL, 5).enchant(Enchantment.DURABILITY, 3).build()).setString("cosmicType", "YETI_AXE").build();
+        ItemStack item = new NBTWrapper(new ItemBuilder(Material.DIAMOND_AXE, CC.AquaB + "Yeti Maul", CC.Gray + "A penetrating axe used by a Yeti.", "", CC.AquaB + "YETI WEAPON BONUS", CC.Aqua + "Deal +75% Durability Damage.", CC.Aqua + "Deal +7.5% DMG to enemies", CC.Aqua + "Bypass 50% of Heroic Armor", CC.Gray + "(" + CC.GrayI + "Requires all 4 yeti items." + CC.Gray + ")").enchant(Enchantment.DAMAGE_ALL, 5).enchant(Enchantment.DURABILITY, 3).build()).setString("cosmicType", "YETI_AXE").build();
         this.addEnchantment("Silence", this.getMaxEnchantLevel("Silence"), item);
         this.addEnchantment("Lifesteal", this.getMaxEnchantLevel("Lifesteal"), item);
         if (Math.random() <= 0.25) {

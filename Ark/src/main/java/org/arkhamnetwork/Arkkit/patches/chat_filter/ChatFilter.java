@@ -67,7 +67,7 @@ public class ChatFilter
         for (String s : Arkkit.get().getConfig().getDefaults().getStringList("settings.chat_filter.bad_words")) {
             if (bad_words.contains(s)) continue;
             bad_words.add(s);
-            Bukkit.getLogger().info("(CommandBlocker) Added command '" + s + "' to blocked me.astropvp.cratekeys.commands list (default).");
+            Bukkit.getLogger().info("(CommandBlocker) Added command '" + s + "' to blocked commands list (default).");
         }
         bad_words.remove("fu");
         bad_words.remove("fk");

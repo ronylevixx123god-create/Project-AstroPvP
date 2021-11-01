@@ -68,7 +68,7 @@ public class CmdTNT
             this.sender.sendMessage(CC.YellowB + "/f tnt: " + CC.White + this.bigNumber.format(fac.tnt / 64) + "x stacks " + CC.Gray + "(" + this.bigNumber.format(fac.tnt) + " total)");
             this.sender.sendMessage(CC.Yellow + "Usage: " + CC.Gray + "/f tnt [w/d] [#/all]");
             this.sender.sendMessage(CC.Gray + "(w = withdraw, d = deposit, # = stacks)");
-            this.sender.sendMessage(CC.Gray + "The \"deposit\" option defaults to your own me.astropvp.cratekeys.inventory, but will execute on any target chest you have access to.");
+            this.sender.sendMessage(CC.Gray + "The \"deposit\" option defaults to your own inventory, but will execute on any target chest you have access to.");
             return;
         }
         if (this.args.size() >= 1) {

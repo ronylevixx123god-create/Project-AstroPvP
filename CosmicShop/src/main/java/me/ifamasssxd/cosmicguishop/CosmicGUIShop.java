@@ -72,7 +72,7 @@ public class CosmicGUIShop extends JavaPlugin {
         } else {
             String l = Base64Utils.toBase64(new ItemStack[]{new ItemStack(Material.EMERALD_ORE)}, 9) + ":10";
             ArrayList<String> list = Lists.newArrayList(l);
-            this.getConfig().addDefault("me.astropvp.cratekeys.items", list);
+            this.getConfig().addDefault("items", list);
             this.getLogger().info("Created XP Shop Config");
         }
     }

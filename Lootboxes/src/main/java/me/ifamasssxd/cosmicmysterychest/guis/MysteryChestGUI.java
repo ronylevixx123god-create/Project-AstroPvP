@@ -5,11 +5,11 @@
  *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
  *  com.cosmicpvp.cosmicutils.gui.CosmicGUI
  *  com.cosmicpvp.cosmicutils.gui.InventoryItem
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemUtils
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.PlayerUtil
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.WorldGuardUtils
+ *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.utils.ItemUtils
+ *  com.cosmicpvp.cosmicutils.utils.PlayerUtil
+ *  com.cosmicpvp.cosmicutils.utils.WorldGuardUtils
  *  com.google.common.collect.Lists
  *  org.arkhamnetwork.Arkkit.patches.ItemID
  *  org.arkhamnetwork.Arkkit.plugins.ArkPlugins
@@ -20,7 +20,7 @@
  *  org.bukkit.Sound
  *  org.bukkit.entity.Player
  *  org.bukkit.event.Event
- *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.inventory.ItemStack
  *  org.bukkit.plugin.Plugin
  *  org.bukkit.plugin.java.JavaPlugin
  *  org.bukkit.scheduler.BukkitRunnable
@@ -92,7 +92,7 @@ public class MysteryChestGUI
             public void run() {
                 if (!MysteryChestGUI.this.player.isValid() || MysteryChestGUI.this.player.getOpenInventory() == null || !MysteryChestGUI.this.inventory.equals((Object) MysteryChestGUI.this.player.getOpenInventory().getTopInventory())) {
                     this.cancel();
-                    Bukkit.getLogger().info("Cancelling task for " + MysteryChestGUI.this.player.getName() + " due to not having me.astropvp.cratekeys.inventory open!");
+                    Bukkit.getLogger().info("Cancelling task for " + MysteryChestGUI.this.player.getName() + " due to not having inventory open!");
                     return;
                 }
                 if (MysteryChestGUI.this.animationTick > MysteryChestGUI.this.MAX_ANIMATION_TICKS) {
@@ -202,7 +202,7 @@ public class MysteryChestGUI
         } else if (!this.finished) {
             this.finished = true;
             if (!PlayerUtil.giveOrDropProtectedItem((Player) this.player, (ItemStack) this.chest.createClaimableItem(true, this.expiration), (int) -1)) {
-                this.player.sendMessage(CC.Red + "Your me.astropvp.cratekeys.inventory was full so your Lootbox has been dropped at your feet!");
+                this.player.sendMessage(CC.Red + "Your inventory was full so your Lootbox has been dropped at your feet!");
             }
         }
         super.onInventoryClose();

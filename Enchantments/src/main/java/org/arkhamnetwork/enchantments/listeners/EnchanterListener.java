@@ -101,7 +101,7 @@ public class EnchanterListener implements Listener {
                 return;
             }
             if (p.getInventory().firstEmpty() == -1) {
-                p.sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot examine a book with a full me.astropvp.cratekeys.inventory!");
+                p.sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot examine a book with a full inventory!");
                 return;
             }
             if (i.getAmount() > 1) {
@@ -151,7 +151,7 @@ public class EnchanterListener implements Listener {
             e.setCancelled(true);
             if (e.getClickedInventory() == p.getOpenInventory().getTopInventory()) {
                 if (p.getInventory().firstEmpty() == -1) {
-                    p.sendMessage(CC.translate("&c&l(!)&c You cannot buy this with a full me.astropvp.cratekeys.inventory"));
+                    p.sendMessage(CC.translate("&c&l(!)&c You cannot buy this with a full inventory"));
                     return;
                 }
                 if (e.getSlot() == 9 ) {

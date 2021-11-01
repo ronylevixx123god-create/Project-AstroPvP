@@ -27,7 +27,7 @@ public class PlayerDataManager {
 
 
     public void createPlayerData(Player player) {
-        File configFile = new File(this.instance.getDataFolder().toString() + "/player-me.astropvp.cratekeys.data", player.getUniqueId().toString() + ".yml");
+        File configFile = new File(this.instance.getDataFolder().toString() + "/player-data", player.getUniqueId().toString() + ".yml");
         int coins = 0;
         if (configFile.exists())
             coins = YamlConfiguration.loadConfiguration(configFile).getInt("Coins");
@@ -43,7 +43,7 @@ public class PlayerDataManager {
     }
 
     public void savePlayerData(PlayerData playerData) {
-        File configFile = new File(String.valueOf(String.valueOf(this.instance.getDataFolder().toString())) + "/player-me.astropvp.cratekeys.data", playerData.getUUID().toString() + ".yml");
+        File configFile = new File(String.valueOf(String.valueOf(this.instance.getDataFolder().toString())) + "/player-data", playerData.getUUID().toString() + ".yml");
         YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(configFile);
         yamlConfiguration.set("Coins", Integer.valueOf(playerData.getCoins()));
         try {

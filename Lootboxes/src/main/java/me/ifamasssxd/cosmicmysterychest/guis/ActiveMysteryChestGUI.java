@@ -4,16 +4,16 @@
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.gui.CosmicGUI
  *  com.cosmicpvp.cosmicutils.gui.InventoryItem
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
  *  com.google.common.collect.Lists
  *  org.bukkit.DyeColor
  *  org.bukkit.Material
  *  org.bukkit.entity.Player
- *  org.bukkit.event.me.astropvp.cratekeys.inventory.ClickType
- *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryType
- *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
- *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
+ *  org.bukkit.event.inventory.ClickType
+ *  org.bukkit.event.inventory.InventoryType
+ *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.inventory.meta.ItemMeta
  */
 package me.ifamasssxd.cosmicmysterychest.guis;
 
@@ -57,7 +57,7 @@ public class ActiveMysteryChestGUI
         }
         lore.add("");
         lore.add(this.globalMysteryChest.getExpirationString());
-        lore.add(CC.Gray + "Right-Click to view lootbox me.astropvp.cratekeys.items");
+        lore.add(CC.Gray + "Right-Click to view lootbox items");
         im.setLore(lore);
         item.setItemMeta(im);
         this.setItem(4, new InventoryItem(item).click(ClickType.LEFT, () -> {

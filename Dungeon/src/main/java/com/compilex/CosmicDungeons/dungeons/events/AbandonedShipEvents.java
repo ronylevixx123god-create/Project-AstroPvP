@@ -3,12 +3,12 @@
  * 
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.FactionUtils
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.RandomFireworks
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.TimeUtils
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.WorldGuardUtils
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.WorldUtil
+ *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.utils.FactionUtils
+ *  com.cosmicpvp.cosmicutils.utils.RandomFireworks
+ *  com.cosmicpvp.cosmicutils.utils.TimeUtils
+ *  com.cosmicpvp.cosmicutils.utils.WorldGuardUtils
+ *  com.cosmicpvp.cosmicutils.utils.WorldUtil
  *  com.gmail.filoghost.holograms.api.Hologram
  *  com.gmail.filoghost.holograms.api.HolographicDisplaysAPI
  *  com.massivecraft.factions.Faction
@@ -16,7 +16,7 @@
  *  me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijki$BossPhase
  *  me.ifamasssxd.cosmicbosses.struct.Boss
  *  me.ifamasssxd.cosmicbosses.struct.DamageTracker
- *  me.ifamasssxd.cosmicbosses.me.astropvp.cratekeys.utils.BossUtils
+ *  me.ifamasssxd.cosmicbosses.utils.BossUtils
  *  net.minecraft.util.com.google.common.collect.Lists
  *  org.arkhamnetwork.enchantments.libs.PlayerPotionEffects
  *  org.bukkit.Bukkit
@@ -39,7 +39,7 @@
  *  org.bukkit.event.player.PlayerInteractEvent
  *  org.bukkit.event.player.PlayerMoveEvent
  *  org.bukkit.event.player.PlayerPortalEvent
- *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.inventory.ItemStack
  *  org.bukkit.metadata.FixedMetadataValue
  *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.plugin.Plugin
@@ -264,7 +264,7 @@ extends DungeonEvents {
                         p2.getInventory().addItem(DungeonsRewardsAPI.getDungeonLootBag(p2, e.getDungeon()));
                     } else {
                         p2.getWorld().dropItem(p2.getLocation(), DungeonsRewardsAPI.getDungeonLootBag(p2, e.getDungeon()));
-                        p2.sendMessage(ChatColor.GRAY + "(No room in me.astropvp.cratekeys.inventory, dropped on ground.)");
+                        p2.sendMessage(ChatColor.GRAY + "(No room in inventory, dropped on ground.)");
                     }
                     playerList = playerList + p2.getName() + ", ";
                     long bonusCD = dp2.getCooldowns().addDungeonCooldown(this.dungeon, 300000L);
@@ -290,7 +290,7 @@ extends DungeonEvents {
                 if (this.dungeon.getDungeonChallengesCompleted().size() > 0) {
                     Bukkit.broadcastMessage(ChatColor.GOLD + ChatColor.BOLD.toString() + "(!) " + ChatColor.GOLD + "Their team has completed " + ChatColor.GOLD + ChatColor.BOLD + ChatColor.UNDERLINE.toString() + this.dungeon.getDungeonChallengesCompleted().size() + ChatColor.GOLD + " Dungeon Challenges:");
                     this.dungeon.getDungeonChallengesCompleted().forEach(challenge -> Bukkit.broadcastMessage(" " + ChatColor.GOLD + ChatColor.BOLD + "* " + ChatColor.GREEN + challenge.getName()));
-                    Bukkit.broadcastMessage(ChatColor.GRAY + "Loot the challenge chests for bonus dungeon me.astropvp.cratekeys.items!");
+                    Bukkit.broadcastMessage(ChatColor.GRAY + "Loot the challenge chests for bonus dungeon items!");
                     Bukkit.broadcastMessage("");
                     this.dungeon.getPlayers().forEach(pl -> pl.playSound(pl.getLocation(), Sound.LEVEL_UP, 8.0f, 0.6f));
                     if (this.dungeon.getDungeonChallengesCompleted().contains(DungeonChallenge.NIMBLE_FEET)) {
@@ -455,7 +455,7 @@ extends DungeonEvents {
             this.dungeon.broadcastMessage("Loading teleportation matrix...");
             for (int x = 0; x < buttonLocations.size(); ++x) {
                 if (x >= ((PlayerEnterTeleportationRoom)this.regionEvents.get("teleportation_room")).currentButtons.size()) {
-                    this.dungeon.broadcastMessage(ChatColor.RED + "ERROR: Not enough input me.astropvp.cratekeys.data!");
+                    this.dungeon.broadcastMessage(ChatColor.RED + "ERROR: Not enough input data!");
                     return;
                 }
                 if (!((PlayerEnterTeleportationRoom)this.regionEvents.get("teleportation_room")).currentButtons.get(x).equals(buttonLocations.get(x)) && !devInstance) {

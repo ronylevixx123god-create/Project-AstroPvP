@@ -92,7 +92,7 @@ public class Arkkit
     }
 
     private void registerCommands() {
-        Bukkit.getConsoleSender().sendMessage(CC.Gold + "[Arkkit] Beginning loading me.astropvp.cratekeys.commands...");
+        Bukkit.getConsoleSender().sendMessage(CC.Gold + "[Arkkit] Beginning loading commands...");
         getCommand("arkhamreload").setExecutor(new CommandArkReload(this));
         Bukkit.getConsoleSender().sendMessage(CC.Green + "[Arkkit] ArkReload registered");
         getCommand("arkregister").setExecutor(new CommandArkRegister(this));
@@ -107,7 +107,7 @@ public class Arkkit
         Bukkit.getConsoleSender().sendMessage(CC.Green + "[Arkkit] ArkReboot registered");
         getCommand("arkdebug").setExecutor(new CommandArkDebug());
         Bukkit.getConsoleSender().sendMessage(CC.Green + "[Arkkit] ArkDebug registered");
-        Bukkit.getConsoleSender().sendMessage(CC.Gold + "[Arkkit] Finished loading me.astropvp.cratekeys.commands...");
+        Bukkit.getConsoleSender().sendMessage(CC.Gold + "[Arkkit] Finished loading commands...");
     }
 
     private boolean setupEconomy() {

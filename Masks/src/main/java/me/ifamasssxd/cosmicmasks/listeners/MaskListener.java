@@ -99,7 +99,7 @@ public class MaskListener implements Listener {
             if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
                 long id = ItemID.getItemID((ItemStack)item);
                 if (id != -1L && ItemID.blacklist_iid.contains(id)) {
-                    player.sendMessage(CC.RedB + "(!) " + CC.Red + "It seems you tried to claim a duplicate Random Mask, it has been removed from your me.astropvp.cratekeys.inventory.");
+                    player.sendMessage(CC.RedB + "(!) " + CC.Red + "It seems you tried to claim a duplicate Random Mask, it has been removed from your inventory.");
                     player.setItemInHand((ItemStack)null);
                     player.updateInventory();
                     return;
@@ -241,7 +241,7 @@ public class MaskListener implements Listener {
             }
             if (clicked.getAmount() > 1) {
                 event.setCancelled(true);
-                player.sendMessage(CC.RedB + "(!)" + CC.Red + " You cannot equip a mask on stacked me.astropvp.cratekeys.items!");
+                player.sendMessage(CC.RedB + "(!)" + CC.Red + " You cannot equip a mask on stacked items!");
                 return;
             }
             if (!this.isValidWorld(player.getWorld().getName())) {

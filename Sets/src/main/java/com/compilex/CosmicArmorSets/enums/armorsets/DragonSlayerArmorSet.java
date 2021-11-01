@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.150.
  *
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.utils.CC
  *  com.google.common.collect.Lists
  *  com.rit.sucy.CustomEnchantment
  *  com.rit.sucy.EnchantmentAPI
@@ -16,7 +16,7 @@
  *  org.bukkit.event.Event
  *  org.bukkit.event.entity.EntityDamageByEntityEvent
  *  org.bukkit.event.player.PlayerQuitEvent
- *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.inventory.ItemStack
  *  org.bukkit.metadata.FixedMetadataValue
  *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.plugin.Plugin
@@ -191,7 +191,7 @@ public class DragonSlayerArmorSet
 
     public ItemStack createArmor(Material material, String itemName, String loreType) {
         String bold = this.color + CC.Bold + "* " + this.color;
-        ItemStack armor = ItemUtils.buildItem(material, (short) 0, this.color + CC.Bold + itemName + CC.Reset, this.color + CC.Italic + "The mythical " + loreType + " of a Slayer of Dragons.", "", this.color + CC.Bold + "DRAGON SLAYER SET BONUS", bold + "+15% PvP Damage", bold + "-20% Incoming Damage", bold + "Immune to Freezes", bold + "Mastery Enchant Reflect X", bold + "Negate 75% of Enemy Silence", bold + "25% Mastery Enchant Negation", CC.Gray + "(" + CC.GrayI + "Requires all 4 dragon slayer me.astropvp.cratekeys.items" + CC.Gray + ")");
+        ItemStack armor = ItemUtils.buildItem(material, (short) 0, this.color + CC.Bold + itemName + CC.Reset, this.color + CC.Italic + "The mythical " + loreType + " of a Slayer of Dragons.", "", this.color + CC.Bold + "DRAGON SLAYER SET BONUS", bold + "+15% PvP Damage", bold + "-20% Incoming Damage", bold + "Immune to Freezes", bold + "Mastery Enchant Reflect X", bold + "Negate 75% of Enemy Silence", bold + "25% Mastery Enchant Negation", CC.Gray + "(" + CC.GrayI + "Requires all 4 dragon slayer items" + CC.Gray + ")");
         armor.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5);
         armor.addUnsafeEnchantment(Enchantment.DURABILITY, 3);
         return armor;

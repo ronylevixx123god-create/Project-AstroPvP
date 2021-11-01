@@ -110,7 +110,7 @@ public class GlobalKitUser {
                 }
             }
         }
-        CosmicGlobalKits.log("Loaded " + this.getGlobalKits().size() + " global kit tier me.astropvp.cratekeys.data for " + uuidString + " in " + (System.currentTimeMillis() - start) + "ms");
+        CosmicGlobalKits.log("Loaded " + this.getGlobalKits().size() + " global kit tier data for " + uuidString + " in " + (System.currentTimeMillis() - start) + "ms");
         if (callback != null) {
             Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)CosmicGlobalKits.getPlugin(), () -> callback.accept(this));
         }

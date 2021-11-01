@@ -112,7 +112,7 @@ final class ExpBottlesCommand
             return true;
         }
         if (p.getInventory().firstEmpty() == -1) {
-            p.sendMessage(ChatColor.RED + "You do not have any me.astropvp.cratekeys.inventory space.");
+            p.sendMessage(ChatColor.RED + "You do not have any inventory space.");
             return true;
         }
         FLocation pLoc = new FLocation(p.getLocation());

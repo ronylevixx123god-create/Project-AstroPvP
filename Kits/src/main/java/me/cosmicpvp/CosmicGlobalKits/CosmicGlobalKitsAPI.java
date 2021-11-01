@@ -120,7 +120,7 @@ public class CosmicGlobalKitsAPI {
         Map<GlobalKits, GlobalKitData> data = user.getGlobalKits();
         if (!data.containsKey((Object)kit)) {
             data.put(kit, new GlobalKitData(0L, 0));
-            Bukkit.getLogger().info("Registering global kit me.astropvp.cratekeys.data for new kit claim for " + playerName + "!");
+            Bukkit.getLogger().info("Registering global kit data for new kit claim for " + playerName + "!");
         }
     }
 

@@ -119,12 +119,12 @@ public class ItemDeleter {
         ItemDeleter.deleters.remove(this);
         final Player player = this.getPlayer();
         if (this.item != null) {
-            final List<String> list = (List<String>) SlotBotPlugin.getInstance().getConfig().getList("me.astropvp.cratekeys.items");
+            final List<String> list = (List<String>) SlotBotPlugin.getInstance().getConfig().getList("items");
             for (int i = list.size() - 1; i >= 0; --i) {
                 final String l = list.get(i);
                 if (Utils.getItem(l).equals((Object) this.item)) {
                     list.remove(i);
-                    SlotBotPlugin.getInstance().getConfig().set("me.astropvp.cratekeys.items", (Object) list);
+                    SlotBotPlugin.getInstance().getConfig().set("items", (Object) list);
                     SlotBotPlugin.getInstance().saveConfig();
                     SlotBotPlugin.getInstance().loadConfig();
                     player.sendMessage(String.valueOf(CC.Red) + "You have deleted the item: " + CC.Green + Utils.getDisplayName(Utils.getItem(l)) + ", Percentage: " + Utils.getPercentage(l) + "%");

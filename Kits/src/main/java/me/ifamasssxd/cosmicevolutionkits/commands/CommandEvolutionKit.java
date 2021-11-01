@@ -64,7 +64,7 @@ implements CommandExecutor {
                 }
                 KitPlayer kitplayer = KitPlayer.kitPlayerMap.get(pl.getUniqueId());
                 if (kitplayer.isLoadingData()) {
-                    sender.sendMessage(CC.Red + "Please wait while their me.astropvp.cratekeys.data is loaded!");
+                    sender.sendMessage(CC.Red + "Please wait while their data is loaded!");
                     return true;
                 }
                 if (action.equalsIgnoreCase("resetlevels")) {
@@ -121,7 +121,7 @@ implements CommandExecutor {
         Player player = (Player)sender;
         KitPlayer kitplayer = KitPlayer.kitPlayerMap.get(player.getUniqueId());
         if (kitplayer == null || kitplayer.isLoadingData()) {
-            player.sendMessage(CC.RedB + "(!) " + CC.Red + "Please wait while your /vkit me.astropvp.cratekeys.data is loaded!");
+            player.sendMessage(CC.RedB + "(!) " + CC.Red + "Please wait while your /vkit data is loaded!");
             return true;
         }
         new EvolutionKitMenu(player).openGUI(CosmicGlobalKits.getPlugin());

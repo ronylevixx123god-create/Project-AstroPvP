@@ -99,7 +99,7 @@ public class CommandBalanceTop
                 BalanceManager.balanceMap.put(pUUID, new NameDouble(pName, d));
                 sender.sendMessage("Set /baltop cache value for " + pName + " (" + pUUID + ") to $" + d);
             } else {
-                sender.sendMessage("Failed to locate cached /baltop me.astropvp.cratekeys.data for " + pName + "!");
+                sender.sendMessage("Failed to locate cached /baltop data for " + pName + "!");
             }
             return true;
         }

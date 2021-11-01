@@ -4,9 +4,9 @@
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
  *  com.cosmicpvp.cosmicutils.nbt.NBTTagListBuilder
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemUtils
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.utils.ItemUtils
+ *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
  *  com.google.common.collect.Lists
  *  net.minecraft.server.v1_7_R4.NBTBase
  *  org.arkhamnetwork.enchantments.EnchantmentBook
@@ -17,9 +17,9 @@
  *  org.bukkit.event.EventHandler
  *  org.bukkit.event.EventPriority
  *  org.bukkit.event.Listener
- *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
- *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
- *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
+ *  org.bukkit.event.inventory.InventoryClickEvent
+ *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.inventory.meta.ItemMeta
  */
 package com.compilex.CosmicArmorSets.listeners;
 
@@ -90,7 +90,7 @@ public class MasteryShardListener
                 player.setItemOnCursor(null);
                 event.setCurrentItem(newBook);
                 player.sendMessage(CC.GoldB + "(!) " + CC.GoldU + ChatColor.stripColor(set.getDisplayName()) + " Mastery Shard" + CC.Gold + " applied to your " + ItemUtils.getDisplayName(clicked) + CC.Gold + "!");
-                player.sendMessage(CC.Gray + "This book is now powerful enough to attempt to apply to the " + set.getDisplayName() + CC.Gray + " /mkit me.astropvp.cratekeys.items!");
+                player.sendMessage(CC.Gray + "This book is now powerful enough to attempt to apply to the " + set.getDisplayName() + CC.Gray + " /mkit items!");
                 player.playSound(player.getLocation(), Sound.BAT_TAKEOFF, 1.0f, 1.1f);
                 return;
             }

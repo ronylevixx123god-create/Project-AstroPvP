@@ -13,7 +13,7 @@
  *  org.bukkit.event.EventHandler
  *  org.bukkit.event.EventPriority
  *  org.bukkit.event.Listener
- *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
+ *  org.bukkit.event.inventory.InventoryClickEvent
  *  org.bukkit.event.player.AsyncPlayerChatEvent
  *  org.bukkit.event.player.PlayerDropItemEvent
  *  org.bukkit.event.player.PlayerInteractEntityEvent
@@ -21,8 +21,8 @@
  *  org.bukkit.event.player.PlayerItemHeldEvent
  *  org.bukkit.event.player.PlayerPickupItemEvent
  *  org.bukkit.event.player.PlayerQuitEvent
- *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
- *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
+ *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.inventory.meta.ItemMeta
  *  org.bukkit.metadata.FixedMetadataValue
  *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.plugin.Plugin
@@ -164,7 +164,7 @@ final class ItemNametagListener
                     Bukkit.getScheduler().runTask(Arkkit.get(), () -> pl.getInventory().addItem(new ItemStack[]{ItemNametag.getNametagItem()}));
                 } else {
                     Bukkit.getScheduler().runTask(Arkkit.get(), () -> {
-                        pl.sendMessage(ChatColor.RED + "(!) You had no room in your me.astropvp.cratekeys.inventory, the nametag has been dropped at your feet.");
+                        pl.sendMessage(ChatColor.RED + "(!) You had no room in your inventory, the nametag has been dropped at your feet.");
                         pl.getWorld().dropItem(pl.getLocation(), ItemNametag.getNametagItem());
                     });
                 }
@@ -240,7 +240,7 @@ final class ItemNametagListener
             if (pl.getInventory().firstEmpty() != -1) {
                 pl.getInventory().addItem(ItemNametag.getNametagItem());
             } else {
-                pl.sendMessage(ChatColor.RED + "(!) You had no room in your me.astropvp.cratekeys.inventory, the nametag has been dropped at your feet.");
+                pl.sendMessage(ChatColor.RED + "(!) You had no room in your inventory, the nametag has been dropped at your feet.");
                 pl.getWorld().dropItem(pl.getLocation(), ItemNametag.getNametagItem());
             }
             pl.removeMetadata(ItemNametag.itemtag_confirm_metadata, Arkkit.get());
@@ -256,7 +256,7 @@ final class ItemNametagListener
             if (pl.getInventory().firstEmpty() != -1) {
                 pl.getInventory().addItem(ItemNametag.getNametagItem());
             } else {
-                pl.sendMessage(ChatColor.RED + "(!) You had no room in your me.astropvp.cratekeys.inventory, the nametag has been dropped at your feet.");
+                pl.sendMessage(ChatColor.RED + "(!) You had no room in your inventory, the nametag has been dropped at your feet.");
                 pl.getWorld().dropItem(pl.getLocation(), ItemNametag.getNametagItem());
             }
             pl.removeMetadata(ItemNametag.itemtag_confirm_metadata, Arkkit.get());
@@ -272,7 +272,7 @@ final class ItemNametagListener
             if (pl.getInventory().firstEmpty() != -1) {
                 pl.getInventory().addItem(ItemNametag.getNametagItem());
             } else {
-                pl.sendMessage(ChatColor.RED + "(!) You had no room in your me.astropvp.cratekeys.inventory, the nametag has been dropped at your feet.");
+                pl.sendMessage(ChatColor.RED + "(!) You had no room in your inventory, the nametag has been dropped at your feet.");
                 pl.getWorld().dropItem(pl.getLocation(), ItemNametag.getNametagItem());
             }
             pl.removeMetadata(ItemNametag.itemtag_confirm_metadata, Arkkit.get());
@@ -288,7 +288,7 @@ final class ItemNametagListener
             if (pl.getInventory().firstEmpty() != -1) {
                 pl.getInventory().addItem(ItemNametag.getNametagItem());
             } else {
-                pl.sendMessage(ChatColor.RED + "(!) You had no room in your me.astropvp.cratekeys.inventory, the nametag has been dropped at your feet.");
+                pl.sendMessage(ChatColor.RED + "(!) You had no room in your inventory, the nametag has been dropped at your feet.");
                 pl.getWorld().dropItem(pl.getLocation(), ItemNametag.getNametagItem());
             }
             pl.removeMetadata(ItemNametag.itemtag_confirm_metadata, Arkkit.get());

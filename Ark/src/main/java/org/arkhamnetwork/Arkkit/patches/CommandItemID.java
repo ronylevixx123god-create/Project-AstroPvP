@@ -84,7 +84,7 @@ final class CommandItemID
             if (opp.equalsIgnoreCase("add")) {
                 iid = Long.parseLong(args[2]);
                 ItemID.blacklistIID(iid, "manualAdd");
-                sender.sendMessage(ChatColor.RED + "Added iid " + iid + " to ItemID blacklist. Any me.astropvp.cratekeys.items found with this IID will be automatically deleted.");
+                sender.sendMessage(ChatColor.RED + "Added iid " + iid + " to ItemID blacklist. Any items found with this IID will be automatically deleted.");
                 if (iid > ItemID.next_iid) {
                     sender.sendMessage(ChatColor.RED + "** IID " + iid + " is < next_iid value of " + ItemID.next_iid + ", meaning this item may not yet exist!");
                 }

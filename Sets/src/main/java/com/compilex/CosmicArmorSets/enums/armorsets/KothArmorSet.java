@@ -3,8 +3,8 @@
  *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
  *  com.google.common.collect.Lists
  *  com.rit.sucy.CustomEnchantment
  *  com.rit.sucy.EnchantmentAPI
@@ -24,7 +24,7 @@
  *  org.bukkit.event.entity.EntityDamageEvent$DamageCause
  *  org.bukkit.event.entity.EntityDamageEvent$DamageModifier
  *  org.bukkit.event.player.PlayerQuitEvent
- *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.inventory.ItemStack
  *  org.bukkit.potion.PotionEffectType
  */
 package com.compilex.CosmicArmorSets.enums.armorsets;
@@ -148,7 +148,7 @@ public class KothArmorSet
 
     public ItemStack createKothItem(Material material, String itemName, String playerName) {
         String bold = this.color + CC.Bold + "* " + this.color;
-        ItemStack kothItem = ItemUtils.buildItem(material, (short) 0, this.getKothName() + " " + CC.WhiteB + CC.Underline + itemName + CC.Reset, "", this.color + CC.Bold + "KOTH SET BONUS", bold + "+20% PvP Damage", bold + "+50% PvE Damage", bold + "Auto Bless", bold + "No Fall Damage", CC.Gray + "(" + CC.GrayI + "Requires all 4 koth me.astropvp.cratekeys.items" + CC.Gray + ")", "", ChatColor.AQUA.toString() + ChatColor.UNDERLINE.toString() + this.format.format(new Date()));
+        ItemStack kothItem = ItemUtils.buildItem(material, (short) 0, this.getKothName() + " " + CC.WhiteB + CC.Underline + itemName + CC.Reset, "", this.color + CC.Bold + "KOTH SET BONUS", bold + "+20% PvP Damage", bold + "+50% PvE Damage", bold + "Auto Bless", bold + "No Fall Damage", CC.Gray + "(" + CC.GrayI + "Requires all 4 koth items" + CC.Gray + ")", "", ChatColor.AQUA.toString() + ChatColor.UNDERLINE.toString() + this.format.format(new Date()));
         kothItem.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5);
         kothItem.addUnsafeEnchantment(Enchantment.DURABILITY, 3);
         return CosmicArmorSetsAPI.convertItemToHeroic(kothItem, Objects.requireNonNull(HeroicArmorType.getFromMaterial(material)), true);

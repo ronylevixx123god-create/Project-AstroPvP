@@ -28,7 +28,7 @@
  *  org.bukkit.event.player.PlayerRespawnEvent
  *  org.bukkit.event.player.PlayerTeleportEvent
  *  org.bukkit.event.player.PlayerTeleportEvent$TeleportCause
- *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.inventory.ItemStack
  *  org.bukkit.metadata.FixedMetadataValue
  *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.plugin.Plugin
@@ -87,7 +87,7 @@ implements Listener {
                 public void run() {
                     if (e.getPlayer() != null && e.getPlayer().isOnline()) {
                         e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.LEVEL_UP, 1.0f, 0.4f);
-                        e.getPlayer().sendMessage((Object)ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.GREEN + "You have me.astropvp.cratekeys.items inside of your " + (Object)ChatColor.YELLOW + "/duel collect" + (Object)ChatColor.GREEN + " bin.");
+                        e.getPlayer().sendMessage((Object)ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.GREEN + "You have items inside of your " + (Object)ChatColor.YELLOW + "/duel collect" + (Object)ChatColor.GREEN + " bin.");
                     }
                 }
             }.runTaskLater((Plugin)CosmicDuel.get(), 60L);
@@ -102,7 +102,7 @@ implements Listener {
         e.setQuitMessage((String)null);
         if (e.getPlayer().getOpenInventory() != null && e.getPlayer().getOpenInventory().getTopInventory() != null && e.getPlayer().getOpenInventory().getTopInventory().getName().endsWith("'s Death Loot")) {
             e.getPlayer().getOpenInventory().getTopInventory().clear();
-            Bukkit.getLogger().info("Cleared the exploited duel me.astropvp.cratekeys.inventory for " + e.getPlayer().getName());
+            Bukkit.getLogger().info("Cleared the exploited duel inventory for " + e.getPlayer().getName());
         }
         if ((player = e.getPlayer()).hasMetadata("in_ranked_queue_menu") && player.getMetadata("in_ranked_queue_menu").size() > 0) {
             GlobalQueuePopInventory queue = (GlobalQueuePopInventory)((MetadataValue)player.getMetadata("in_ranked_queue_menu").get(0)).value();
@@ -110,7 +110,7 @@ implements Listener {
                 queue.declineDuel(player, true, true);
             } else {
                 player.removeMetadata("in_ranked_queue_menu", (Plugin)CosmicDuel.get());
-                player.sendMessage((Object)ChatColor.RED + "Your duel queue menu me.astropvp.cratekeys.data has been cleared!");
+                player.sendMessage((Object)ChatColor.RED + "Your duel queue menu data has been cleared!");
             }
         }
         if ((duel = DuelAPI.getDuel(player)) != null) {

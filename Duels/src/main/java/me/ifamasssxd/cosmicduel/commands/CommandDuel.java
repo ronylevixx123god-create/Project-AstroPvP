@@ -69,7 +69,7 @@ implements CommandExecutor {
         }
         Player p = (Player)sender;
         if (CosmicDuel.get().isShuttingDown()) {
-            p.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot use duel me.astropvp.cratekeys.commands while the server is rebooting.");
+            p.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot use duel commands while the server is rebooting.");
             return true;
         }
         QueueManager manager = CosmicDuel.get().getQueueManager();
@@ -156,7 +156,7 @@ implements CommandExecutor {
                         if (spectating != null) {
                             spectating.removeSpectator(p);
                         } else {
-                            p.sendMessage(this.red + ChatColor.RED + "You are not spectating a duel.. resetting player me.astropvp.cratekeys.data.");
+                            p.sendMessage(this.red + ChatColor.RED + "You are not spectating a duel.. resetting player data.");
                             p.removeMetadata("spectator", CosmicDuel.get());
                             PlayerUtils.setCollides(p, true);
                             BleedTimerTask.remove(p);

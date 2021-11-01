@@ -44,7 +44,7 @@ final class CommandGiveLoreTag
             pl.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "You have received an Item Lore Crystal!");
         } else {
             pl.getWorld().dropItem(pl.getLocation(), LoreTag.getLoreTagItem());
-            pl.sendMessage(ChatColor.RED + "(!) You had no room in your me.astropvp.cratekeys.inventory, a lore crystal has been dropped at your feet.");
+            pl.sendMessage(ChatColor.RED + "(!) You had no room in your inventory, a lore crystal has been dropped at your feet.");
         }
         sender.sendMessage(ChatColor.GRAY.toString() + ChatColor.ITALIC.toString() + "Gave 1x Lore Crystal to " + pl.getName() + "!");
         return true;

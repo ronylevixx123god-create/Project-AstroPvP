@@ -35,7 +35,7 @@ commands:
   givetracker:
     description: Gives a player a kill tracker.
   astroitem:
-    description: Custom me.astropvp.cratekeys.items for astro
+    description: Custom items for astro
   withdrawsouls:
     description: Take souls from items.
     aliases: [takesouls, removesouls, withdraws, splitsouls, ws, withdrawsoul]

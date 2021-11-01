@@ -2,11 +2,11 @@
  * Decompiled with CFR 0.145.
  *
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemSerialization
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.JSONUtils
+ *  com.cosmicpvp.cosmicutils.utils.ItemSerialization
+ *  com.cosmicpvp.cosmicutils.utils.JSONUtils
  *  org.bukkit.Bukkit
  *  org.bukkit.craftbukkit.libs.com.google.gson.reflect.TypeToken
- *  org.bukkit.me.astropvp.cratekeys.inventory.Inventory
+ *  org.bukkit.inventory.Inventory
  */
 package com.massivecraft.factions.struct.managers;
 
@@ -41,7 +41,7 @@ public class FChestManager {
                     return;
                 }
                 catch (Exception e) {
-                    Bukkit.getLogger().info("Unable to load me.astropvp.cratekeys.items for " + factionId + " itemString: " + serializedItems);
+                    Bukkit.getLogger().info("Unable to load items for " + factionId + " itemString: " + serializedItems);
                     e.printStackTrace();
                 }
             });
@@ -70,7 +70,7 @@ public class FChestManager {
                 return;
             }
             catch (Exception ex) {
-                Bukkit.getLogger().info("[Factions] Unable to serialize me.astropvp.cratekeys.inventory me.astropvp.cratekeys.items from " + fId + " me.astropvp.cratekeys.items=" + items);
+                Bukkit.getLogger().info("[Factions] Unable to serialize inventory items from " + fId + " items=" + items);
                 ex.printStackTrace();
             }
         });

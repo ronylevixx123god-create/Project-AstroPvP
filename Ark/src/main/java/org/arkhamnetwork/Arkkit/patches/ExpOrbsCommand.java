@@ -9,7 +9,7 @@
  *  org.bukkit.command.Command
  *  org.bukkit.command.CommandSender
  *  org.bukkit.entity.Player
- *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.inventory.ItemStack
  */
 package org.arkhamnetwork.Arkkit.patches;
 
@@ -63,7 +63,7 @@ final class ExpOrbsCommand
             return true;
         }
         if (p.getInventory().firstEmpty() == -1) {
-            p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You do not have any me.astropvp.cratekeys.inventory space.");
+            p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You do not have any inventory space.");
             return true;
         }
         FLocation pLoc = new FLocation(p.getLocation());
