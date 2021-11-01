@@ -42,7 +42,7 @@ implements CommandExecutor {
         player.sendMessage(ChatColor.GRAY + "Toggle item pickup filter.");
         player.sendMessage("");
         player.sendMessage(ChatColor.WHITE + "/filter edit (alias /fe)");
-        player.sendMessage(ChatColor.GRAY + "Edit me.astropvp.cratekeys.items you pickup while the item filter is enabled.");
+        player.sendMessage(ChatColor.GRAY + "Edit items you pickup while the item filter is enabled.");
         player.sendMessage("");
         return true;
     }

@@ -82,7 +82,7 @@ implements CommandExecutor {
                 }
                 CoreChunkData data = FactionsCoreChunkAPI.getChunkData((Faction)faction);
                 if (data == null) {
-                    sender.sendMessage(CC.Red + "No core chunk me.astropvp.cratekeys.data stored for " + faction.getTag());
+                    sender.sendMessage(CC.Red + "No core chunk data stored for " + faction.getTag());
                     return true;
                 }
                 if (data.getMasterChunk() == null) {
@@ -105,7 +105,7 @@ implements CommandExecutor {
             }
             ExpiringChunkData data = CosmicFactionPoints.get().getChunkManager().getChunksToExpire().get(new FLocation((Player)sender));
             if (data == null) {
-                sender.sendMessage(CC.Red + "No chunk me.astropvp.cratekeys.data stored at your location!");
+                sender.sendMessage(CC.Red + "No chunk data stored at your location!");
                 return true;
             }
             long claimed = data.getTimeClaimed();

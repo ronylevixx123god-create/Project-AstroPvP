@@ -74,7 +74,7 @@ public class PlayerData {
 	public YamlConfiguration getConfiguration() {
 		return YamlConfiguration
 				.loadConfiguration(new File(AstroCore.getInstance().getDataFolder().toString()
-						+ "/player-me.astropvp.cratekeys.data/" + uuid.toString() + ".yml"));
+						+ "/player-data/" + uuid.toString() + ".yml"));
 	}
 
 	public void setDefaultPath(String path, Object value) {
@@ -105,7 +105,7 @@ public class PlayerData {
 			return;
 		}
 		this.saving = true;
-		File file = new File(AstroCore.getInstance().getDataFolder().toString() + "/player-me.astropvp.cratekeys.data/"
+		File file = new File(AstroCore.getInstance().getDataFolder().toString() + "/player-data/"
 				+ uuid.toString() + ".yml");
 		YamlConfiguration configuration = YamlConfiguration.loadConfiguration(file);
 		Bukkit.getLogger().info("[PlayerData] Saving " + this.getPlayerName() + "'s Data to the disk");

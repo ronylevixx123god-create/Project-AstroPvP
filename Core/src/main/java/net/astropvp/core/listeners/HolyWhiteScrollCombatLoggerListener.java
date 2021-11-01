@@ -65,7 +65,7 @@ public class HolyWhiteScrollCombatLoggerListener implements Listener {
                     if (savedItems.size() <= 0)
                         continue;
                     AstroCore.getInstance().getHolyWhiteScrollListener().getSavedItems().put(event.getPlayerUUIDString(), savedItems);
-                    Bukkit.getLogger().info("Storing " + Arrays.toString(savedItems.toArray(new ItemStack[savedItems.size()])) + " holy whitescroll'd me.astropvp.cratekeys.items for " + event.getPlayerName() + " due to combat logger death!");
+                    Bukkit.getLogger().info("Storing " + Arrays.toString(savedItems.toArray(new ItemStack[savedItems.size()])) + " holy whitescroll'd items for " + event.getPlayerName() + " due to combat logger death!");
                 }
             }
         }

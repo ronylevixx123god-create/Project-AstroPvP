@@ -21,7 +21,7 @@ public class PlayerDataHelper {
 
 	public static void init() {
 		data = Lists.newArrayList();
-		File file = new File(AstroCore.getInstance().getDataFolder().toString() + "/player-me.astropvp.cratekeys.data");
+		File file = new File(AstroCore.getInstance().getDataFolder().toString() + "/player-data");
 		if (!file.exists()) {
 			file.mkdir();
 		}
@@ -39,7 +39,7 @@ public class PlayerDataHelper {
 	}
 
 	public static void createConfiguration(Player player) {
-		File file = new File(AstroCore.getInstance().getDataFolder().toString() + "/player-me.astropvp.cratekeys.data/"
+		File file = new File(AstroCore.getInstance().getDataFolder().toString() + "/player-data/"
 				+ player.getUniqueId().toString() + ".yml");
 		try {
 			file.createNewFile();
@@ -49,7 +49,7 @@ public class PlayerDataHelper {
 	}
 	
 	public static void setConfigValue(OfflinePlayer player, String key, Object value) {
-		File file = new File(AstroCore.getInstance().getDataFolder().toString() + "/player-me.astropvp.cratekeys.data/"
+		File file = new File(AstroCore.getInstance().getDataFolder().toString() + "/player-data/"
 				+ player.getUniqueId().toString() + ".yml");
 		YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
 		config.set(key, value);
@@ -61,7 +61,7 @@ public class PlayerDataHelper {
 	}
 
 	public static YamlConfiguration getConfiguration(OfflinePlayer player) {
-		File file = new File(AstroCore.getInstance().getDataFolder().toString() + "/player-me.astropvp.cratekeys.data/"
+		File file = new File(AstroCore.getInstance().getDataFolder().toString() + "/player-data/"
 				+ player.getUniqueId().toString() + ".yml");
 		if (!file.exists()) {
 			return null;
@@ -71,7 +71,7 @@ public class PlayerDataHelper {
 
 	public static List<File> getAllPlayerFiles() {
 		List<File> files = Lists.newArrayList();
-		for (File file : new File(AstroCore.getInstance().getDataFolder().toString() + "/player-me.astropvp.cratekeys.data/")
+		for (File file : new File(AstroCore.getInstance().getDataFolder().toString() + "/player-data/")
 				.listFiles()) {
 			files.add(file);
 		}
@@ -80,7 +80,7 @@ public class PlayerDataHelper {
 
 	public static int removeDataFromFiles(String path) {
 		int count = 0;
-		for (File file : new File(AstroCore.getInstance().getDataFolder().toString() + "/player-me.astropvp.cratekeys.data/")
+		for (File file : new File(AstroCore.getInstance().getDataFolder().toString() + "/player-data/")
 				.listFiles()) {
 			YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
 			config.set(path, null);
@@ -95,7 +95,7 @@ public class PlayerDataHelper {
 	}
 
 	public static File getFile(OfflinePlayer player) {
-		File file = new File(AstroCore.getInstance().getDataFolder().toString() + "/player-me.astropvp.cratekeys.data/"
+		File file = new File(AstroCore.getInstance().getDataFolder().toString() + "/player-data/"
 				+ player.getUniqueId().toString() + ".yml");
 		if (!file.exists()) {
 			return null;
@@ -104,7 +104,7 @@ public class PlayerDataHelper {
 	}
 
 	public static boolean doesConfigurationExist(Player player) {
-		File file = new File(AstroCore.getInstance().getDataFolder().toString() + "/player-me.astropvp.cratekeys.data/"
+		File file = new File(AstroCore.getInstance().getDataFolder().toString() + "/player-data/"
 				+ player.getUniqueId().toString() + ".yml");
 		return file.exists();
 	}

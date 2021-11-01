@@ -67,7 +67,7 @@ implements CommandExecutor {
                         return true;
                     }
                     if (p.getInventory().firstEmpty() == -1) {
-                        p.sendMessage((Object)ChatColor.RED + "You do not have enough me.astropvp.cratekeys.inventory space to withdraw souls!");
+                        p.sendMessage((Object)ChatColor.RED + "You do not have enough inventory space to withdraw souls!");
                         return true;
                     }
                     int newSouls = souls - amount;
@@ -120,7 +120,7 @@ implements CommandExecutor {
             }
             int n = shards = tracker.trackMobKills() ? amount : amount * tracker.getRank() * AstroCore.getInstance().getConfig().getInt("soulMultiplier", 5);
             if (p.getInventory().firstEmpty() == -1) {
-                p.sendMessage((Object)ChatColor.RED + "You do not have enough me.astropvp.cratekeys.inventory space for the Soul Gem.");
+                p.sendMessage((Object)ChatColor.RED + "You do not have enough inventory space for the Soul Gem.");
                 return true;
             }
         } else {

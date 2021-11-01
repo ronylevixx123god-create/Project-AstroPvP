@@ -40,7 +40,7 @@ implements CommandExecutor {
                 }
                 ItemStack is = KillTrackerAPI.buildTracker(tr);
                 if (p.getInventory().firstEmpty() == -1) {
-                    p.sendMessage((Object)ChatColor.RED + "Your me.astropvp.cratekeys.inventory was full so your tracker was dropped on the ground.");
+                    p.sendMessage((Object)ChatColor.RED + "Your inventory was full so your tracker was dropped on the ground.");
                     p.getWorld().dropItem(p.getLocation(), is);
                 } else {
                     p.getInventory().addItem(new ItemStack[]{is});

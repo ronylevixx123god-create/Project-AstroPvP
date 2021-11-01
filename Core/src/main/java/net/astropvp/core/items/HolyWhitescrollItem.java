@@ -57,9 +57,9 @@ implements InventoryInteractable {
         if (clicked == null || clicked.getType() == Material.AIR || clickedWrapper == null) {
             return;
         }
+
         if (!EnchantmentBook.hasWhitescroll((ItemStack)clicked)) {
             player.sendMessage(CC.RedB + "(!) " + CC.Red + "This item must contain a White Scroll before you can apply a Holy White Scroll!");
-            e.setCancelled(true);
             return;
         }
 //        if (cursor.getAmount() > 1) {
@@ -68,7 +68,7 @@ implements InventoryInteractable {
         NBTTagCompoundBuilder cosmicData = clickedWrapper.getCompoundOrCreate("conaxData");
         if (cosmicData != null) {
             if (cosmicData.hasKey("abilitySet")) {
-                throw new PrefixedException("You cannot apply a Holy Whitescroll to Mastery Kit me.astropvp.cratekeys.items!");
+                throw new PrefixedException("You cannot apply a Holy Whitescroll to Mastery Kit items!");
             }
             if (cosmicData.hasKey("corrupted")) {
                 throw new PrefixedException("Holy White Scrolls can no longer be applied to this corrupted item!");
