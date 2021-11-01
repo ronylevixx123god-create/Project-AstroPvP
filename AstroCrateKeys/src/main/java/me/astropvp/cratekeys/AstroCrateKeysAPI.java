@@ -94,27 +94,29 @@ public class AstroCrateKeysAPI {
         return null;
     }
 
+    public static String toStringLocation(Location location) {
+        double x = location.getX();
+        double y = location.getY();
+        double z = location.getZ();
+        float yaw = location.getYaw();
+        float pitch = location.getPitch();
+        String world = location.getWorld().getName();
+        String result = String.valueOf(world) + " " + x + " " + y + " " + z + " " + yaw + " " + pitch;
+        return result;
+    }
+
     public static Location fromStringLocation(String location) {
         String[] list = location.split(" ");
         World world = Bukkit.getWorld(list[0]);
-        double x = Double.valueOf(list[1]);
-        double y = Double.valueOf(list[2]);
-        double z = Double.valueOf(list[3]);
-        float pitch = Float.valueOf(list[4]);
-        float yaw = Float.valueOf(list[5]);
-        Location loc = new Location(world, x, y, z);
-        loc.setPitch(pitch);
-        loc.setYaw(yaw);
-        return loc;
-    }
-
-    public static String toStringLocation(Location location) {
-        int x = (int) location.getX();
-        int y = (int) location.getY();
-        int z = (int) location.getZ();
-        String world = location.getWorld().getName();
-        String result = String.valueOf(world) + " " + x + " " + y + " " + z;
-        return result;
+        double x = Double.parseDouble(list[1]);
+        double y = Double.parseDouble(list[2]);
+        double z = Double.parseDouble(list[3]);
+        float yaw = Float.valueOf(list[4]).floatValue();
+        float pitch = Float.valueOf(list[5]).floatValue();
+        Location l = new Location(world, x, y, z);
+        l.setPitch(pitch);
+        l.setYaw(yaw);
+        return l;
     }
 
     public static void setItems(CrateType type, Map<ItemStack, Double> items) {
