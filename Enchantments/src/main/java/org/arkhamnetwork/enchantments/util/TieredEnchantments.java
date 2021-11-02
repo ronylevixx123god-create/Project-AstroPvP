@@ -231,6 +231,9 @@ public enum TieredEnchantments {
     overwhelm(5),
     righteousantigank(7),
     divinelight(8),
+    soulmaster(8),
+    openingcombo(8),
+    bitteroverwhelm(7),
     aquatic(1);
 
     private static List<CustomEnchantment> commonEnchants;

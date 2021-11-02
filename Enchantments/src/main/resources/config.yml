@@ -216,3 +216,6 @@ descriptions:
   - Overwhelm=Chance to disable enemy's ability to inflict Reflective Block on you for 6s with every hit.
   - Righteous Anti Gank=Heroic Enchantment. If more than 2 enemies hit you in a large period, your outgoing damage will be multiplied by up to 1.6x, or up to 2x if they are wielding a sword.
   - Divine Light=When the user is inflicted with the Blackout effect, instead of disabling their defensive armor crystal bonuses for a brief period of time, all enemies you hit have a chance (up to 100% at max level) to disable theirs instead.
+  - Soul Master=Soul Enchants deal +(2 * level)% Outgoing Damage but cost +(10 * level)% more souls.
+  - Opening Combo=Deal +(2 * level)% Outgoing Damage for 5 seconds when entering combat. This effect has a 60 second cooldown between procs.
+  - Bitter Overwhelm=Heroic Enchantment. Chance to disable enemy's ability to inflict Reflective Block on you for 6s with every hit. Upon disabling you will deal +level% Outgoing damage.

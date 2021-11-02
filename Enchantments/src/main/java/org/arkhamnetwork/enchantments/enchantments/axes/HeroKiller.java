@@ -74,6 +74,10 @@ public class HeroKiller extends CustomEnchantment {
                         increase*=1.3;
                     }
                 }
+                if (EnchantmentAPI.getEnchantments(((Player) e.getEntity()).getKiller().getEquipment().getItemInHand()).containsKey(EnchantmentAPI.getEnchantment("Soul Master"))) {
+                    double soulMasterLevel = EnchantmentAPI.getEnchantments(((Player) e.getEntity()).getKiller().getEquipment().getItemInHand()).get(EnchantmentAPI.getEnchantment("Soul Master"));
+                    increase*=(((2 * soulMasterLevel)/100) + 1);
+                }
             }
                 e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1 + increase));
         }

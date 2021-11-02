@@ -1,6 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.rit.sucy.EnchantmentAPI;
 import de.inventivegames.particle.ParticleEffect;
 import me.astropvp.astroparticles.utils.ParticleUtils;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
@@ -60,6 +61,11 @@ public class DivineImmolationListener implements Listener {
 
                 if (AstroItemSkinsAPI.hasSkinEquipped((Player) ((Player) e.getEntity()).getKiller(), SkinType.SUMMER_2021_SWORD)) {
                     damage = 2;
+                }
+
+                if (EnchantmentAPI.getEnchantments(((Player) e.getEntity()).getKiller().getEquipment().getItemInHand()).containsKey(EnchantmentAPI.getEnchantment("Soul Master"))) {
+                    double solitudeLevel = EnchantmentAPI.getEnchantments(((Player) e.getEntity()).getKiller().getEquipment().getItemInHand()).get(EnchantmentAPI.getEnchantment("Soul Master"));
+                    damage = 2 * (((2 * solitudeLevel)/100) + 1);
                 }
 
                 le.damage((double) damage);
