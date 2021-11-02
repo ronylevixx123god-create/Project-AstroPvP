@@ -23,7 +23,7 @@ public class CommandArkDebug implements CommandExecutor {
             return true;
         }
         sender.sendMessage(CC.Gray + CC.Strike + "---------------------------------");
-        sender.sendMessage(CC.Gold + "Arkkit is loaded and me.astropvp.cratekeys.commands should be available.");
+        sender.sendMessage(CC.Gold + "Arkkit is loaded and commands should be available.");
         sender.sendMessage(CC.Gold + "Ensure the user has 'arkkit.command.admin'");
         sender.sendMessage(CC.Gray + CC.Strike + "---------------------------------");
         return true;

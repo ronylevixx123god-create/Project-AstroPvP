@@ -9,8 +9,8 @@
  *  org.bukkit.event.EventHandler
  *  org.bukkit.event.EventPriority
  *  org.bukkit.event.Listener
- *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryAction
- *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
+ *  org.bukkit.event.inventory.InventoryAction
+ *  org.bukkit.event.inventory.InventoryClickEvent
  *  org.bukkit.plugin.Plugin
  */
 package org.arkhamnetwork.Arkkit.patches;
@@ -66,7 +66,7 @@ public class VaultDisable
                     }
                     event.setCancelled(true);
                     Player player = (Player) event.getWhoClicked();
-                    player.sendMessage(ChatColor.RED + "You can only withdraw me.astropvp.cratekeys.items from this Player Vault.");
+                    player.sendMessage(ChatColor.RED + "You can only withdraw items from this Player Vault.");
                 }
             }
         }

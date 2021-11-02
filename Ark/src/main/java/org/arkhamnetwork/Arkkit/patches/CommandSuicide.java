@@ -3,8 +3,8 @@
  *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.gui.ConfirmGUI
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
  *  net.minecraft.server.v1_7_R4.MinecraftServer
  *  org.bukkit.ChatColor
  *  org.bukkit.DyeColor
@@ -55,11 +55,11 @@ final class CommandSuicide
                 return true;
             }
             if (args.length > 0) {
-                p.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "/suicide: " + ChatColor.RED + "Instantly kills your player, dropping all me.astropvp.cratekeys.items and sending you to spawn.");
+                p.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "/suicide: " + ChatColor.RED + "Instantly kills your player, dropping all items and sending you to spawn.");
                 return true;
             }
             if (!p.hasMetadata("suicideCommandConfirm")) {
-                new ConfirmGUI(p, "Confirm /suicide", 9, new ItemBuilder(Material.STAINED_GLASS_PANE, CC.GreenB + "Confirm /suicide?", CC.Gray + "Are you sure you want to " + CC.Red + "KILL YOURSELF" + CC.Gray + "?", "", CC.Gray + "You will lose " + CC.RedU + "ALL" + CC.Gray + " of your me.astropvp.cratekeys.items on death!").data(DyeColor.LIME.getWoolData()).build(), new ItemBuilder(Material.STAINED_GLASS_PANE, CC.RedB + "Cancel Suicide", CC.Gray + "Click to cancel this action.").data(DyeColor.RED.getWoolData()).build(), new ItemBuilder(Material.STAINED_GLASS_PANE).name(" ").data(DyeColor.GRAY.getWoolData()).build(), () -> {
+                new ConfirmGUI(p, "Confirm /suicide", 9, new ItemBuilder(Material.STAINED_GLASS_PANE, CC.GreenB + "Confirm /suicide?", CC.Gray + "Are you sure you want to " + CC.Red + "KILL YOURSELF" + CC.Gray + "?", "", CC.Gray + "You will lose " + CC.RedU + "ALL" + CC.Gray + " of your items on death!").data(DyeColor.LIME.getWoolData()).build(), new ItemBuilder(Material.STAINED_GLASS_PANE, CC.RedB + "Cancel Suicide", CC.Gray + "Click to cancel this action.").data(DyeColor.RED.getWoolData()).build(), new ItemBuilder(Material.STAINED_GLASS_PANE).name(" ").data(DyeColor.GRAY.getWoolData()).build(), () -> {
                     p.setMetadata("suicideCommandConfirm", new FixedMetadataValue(Arkkit.get(), true));
                     p.chat("/suicide");
                 }, () -> {

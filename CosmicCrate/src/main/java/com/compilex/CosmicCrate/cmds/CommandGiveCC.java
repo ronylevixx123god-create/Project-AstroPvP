@@ -37,7 +37,7 @@ public class CommandGiveCC implements CommandExecutor
             return true;
         }
         p.getWorld().dropItem(p.getLocation(), i);
-        p.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) Your me.astropvp.cratekeys.inventory is full, the /cc has been dropped on the floor!");
+        p.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) Your inventory is full, the /cc has been dropped on the floor!");
         return true;
     }
 }

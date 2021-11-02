@@ -22,6 +22,8 @@ import me.ifamasssxd.cosmicmysterychest.items.MysteryLootboxItem;
 import me.ifamasssxd.cosmicmysterychest.listeners.MysteryChestListener;
 import me.ifamasssxd.cosmicmysterychest.managers.FilterManager;
 import me.ifamasssxd.cosmicmysterychest.managers.MysteryChestManager;
+import me.ifamasssxd.cosmicmysterychest.sql.Database;
+import me.ifamasssxd.cosmicmysterychest.sql.SQLQueryCustomThread;
 import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
 import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
 import org.bukkit.Bukkit;
@@ -38,6 +40,8 @@ public class CosmicMysteryChest
     private MysteryLootboxItem mysteryLootboxItem;
     private FilterManager filterManager;
     private HashMap<UUID, HashMap<MysteryChest, Filter>> filters;
+    private Database sqlDatabase;
+    private SQLQueryCustomThread sqlQueryCustomThread = new SQLQueryCustomThread();
 
     public ShardAnimations getShardAnimations() {
         return this.toggle;
@@ -63,7 +67,18 @@ public class CosmicMysteryChest
         }
 
         this.filters = new HashMap<>();
-        //filterManager.load();
+        this.sqlDatabase = new Database(this);
+        if(this.sqlDatabase.isConnected())
+            Bukkit.getConsoleSender().sendMessage("SQL Database for Collect Connected");
+        if (!this.sqlDatabase.isConnected()) {
+            Bukkit.getLogger().severe("Unable to connect to sql database! Please ensure the sql credentials are correct");
+            Bukkit.getPluginManager().disablePlugin(this);
+        } else {
+            this.sqlDatabase.executeUpdate("CREATE TABLE IF NOT EXISTS lootboxfilter_data(uuid varchar(64), mysteryChest varchar(64), blockedLoot longblob);", false);
+            this.sqlQueryCustomThread = new SQLQueryCustomThread();
+            this.sqlQueryCustomThread.start();
+        }
+        filterManager.load();
 
     }
 
@@ -76,7 +91,7 @@ public class CosmicMysteryChest
         if (this.chestManager != null) {
             this.chestManager.onDisable(this);
         }
-        //filterManager.save();
+        filterManager.save();
     }
 
     public static CosmicMysteryChest get() {
@@ -92,5 +107,13 @@ public class CosmicMysteryChest
     }
 
     public FilterManager getFilterManager() { return this.filterManager; }
+
+    public static CosmicMysteryChest getInstance() {
+        return instance;
+    }
+
+    public Database getSqlDatabase() {
+        return sqlDatabase;
+    }
 }
 

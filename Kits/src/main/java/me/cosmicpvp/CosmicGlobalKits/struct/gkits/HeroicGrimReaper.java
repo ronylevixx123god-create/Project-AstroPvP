@@ -20,13 +20,10 @@ package me.cosmicpvp.CosmicGlobalKits.struct.gkits;
 
 import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
 import com.compilex.CosmicArmorSets.enums.ArmorSet;
-import com.compilex.CosmicDungeons.DungeonsAPI;
-import com.compilex.CosmicDungeons.DungeonsRewardsAPI;
 import com.google.common.collect.Lists;
 import me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits;
 import me.cosmicpvp.CosmicGlobalKits.struct.GlobalKit;
 import me.cosmicpvp.CosmicGlobalKits.utils.ItemUtils;
-import me.ifamasssxd.killtracker.KillTrackerAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -107,15 +104,11 @@ extends GlobalKit {
         if (Math.random() < 0.02) {
             rewards.add(com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils.getTitleVoucher((String)"GrimReaper"));
         }
-        rewards.add(KillTrackerAPI.createSoulShard((int)(100 + random.nextInt(401))));
         if (Math.random() <= 0.001) {
-            rewards.add(DungeonsRewardsAPI.getHolyWhiteScroll());
         }
         if (Math.random() <= 0.001) {
-            rewards.add(DungeonsRewardsAPI.getSoulPearl());
         }
         if (Math.random() <= 0.001) {
-            rewards.add(DungeonsAPI.get().getDungeon(0).getDungeonPortal());
         }
         return rewards;
     }

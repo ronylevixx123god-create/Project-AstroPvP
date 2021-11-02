@@ -91,7 +91,6 @@ public class CCAPI
         final List<Version> claimedCrates = CosmicCrate.claimedCosmicCrates.containsKey(uuid) ? CosmicCrate.claimedCosmicCrates.get(uuid) : new ArrayList<Version>();
         claimedCrates.add(v);
         CosmicCrate.claimedCosmicCrates.put(uuid, claimedCrates);
-        CosmicCrate.sql_query.add("INSERT IGNORE INTO ccrates(uuid, username, version) VALUES('" + uuid + "', '" + p.getName() + "', '" + v.name() + "')");
         p.getInventory().addItem(new ItemStack[] { getCosmicCrate(v, p.getName()) });
         p.playSound(p.getLocation(), Sound.LEVEL_UP, 1.0f, 2.0f);
         RandomFireworks.getManager().launchRandomFirework(p.getLocation());

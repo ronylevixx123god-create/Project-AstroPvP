@@ -36,7 +36,7 @@ final class CommandViewBrag
                 return true;
             }
             if (inv.getExpiration() < System.currentTimeMillis()) {
-                sender.sendMessage(ChatColor.RED + "Brag me.astropvp.cratekeys.inventory expired!");
+                sender.sendMessage(ChatColor.RED + "Brag inventory expired!");
                 ItemLinking.inventoryViews.asMap().remove(uuid);
                 return true;
             }

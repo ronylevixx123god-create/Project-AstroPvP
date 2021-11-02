@@ -32,7 +32,6 @@ import com.cosmicpvp.cosmicutils.utils.RandomFireworks;
 import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKitsAPI;
 import me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits;
 import me.cosmicpvp.CosmicGlobalKits.libs.MasteryKits;
-import net.astropvp.core.utils.TitleUtil;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.Bukkit;
@@ -116,8 +115,6 @@ implements Listener {
                 RandomFireworks.getManager().launchRandomFirework(player.getLocation());
                 player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0f, 1.1f);
 
-                TitleUtil.sendTitle(player, ChatColor.GOLD + ChatColor.BOLD.toString() + kit.getName());
-                TitleUtil.sendSubTitle(player, ChatColor.YELLOW + "Mastery Kit Unlocked!");
 
                 player.sendMessage(ChatColor.GOLD + ChatColor.BOLD.toString() + kit.getName());
                 player.sendMessage(ChatColor.YELLOW + "Mastery Kit Unlocked!");
