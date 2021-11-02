@@ -164,8 +164,8 @@ public class MysteryChestGUI
         this.player.playSound(this.player.getLocation(), Sound.LEVEL_UP, 1.1f, 0.9f);
 
         for (CustomLoot loot : this.lastPrizesShown) {
-            if (CosmicMysteryChest.get().getFilters().containsKey(player.getUniqueId()) && CosmicMysteryChest.get().getFilters().get(player.getUniqueId()).containsKey(chest)) {
-                Filter filter = CosmicMysteryChest.get().getFilters().get(player.getUniqueId()).get(chest);
+            if (CosmicMysteryChest.getFilters().containsKey(player.getUniqueId()) && CosmicMysteryChest.get().getFilters().get(player.getUniqueId()).containsKey(chest)) {
+                Filter filter = CosmicMysteryChest.getFilters().get(player.getUniqueId()).get(chest);
 
                 if (filter.isBlockedItem(loot.getItem())) {
                     player.sendMessage(CC.translate(loot.getItem().getItemMeta().getDisplayName() + "&c has been skipped. &cType \"&7/lbfilter\" &cto edit this filter."));

@@ -17,11 +17,8 @@ public class FilterManager {
     private boolean loading = false;
 
 
-    private final HashMap<UUID, HashMap<MysteryChest, Filter>> filters;
 
-    public FilterManager() {
-        this.filters = CosmicMysteryChest.get().getFilters();
-    }
+
 
 
     public void save() {
@@ -36,18 +33,25 @@ public class FilterManager {
             e.printStackTrace();
         }
         try {
-            System.out.println("(!) Started saving lootbox filters");
-            for (Map.Entry<UUID, HashMap<MysteryChest, Filter>> entry : filters.entrySet()) {
+            for (Map.Entry<UUID, HashMap<MysteryChest, Filter>> entry : CosmicMysteryChest.getFilters().entrySet()) {
                 UUID uuid = entry.getKey();
                 HashMap<MysteryChest, Filter> hash =  entry.getValue();
 
                 for (Map.Entry<MysteryChest, Filter> entry2 : hash.entrySet()) {
                     MysteryChest mysteryChest = entry2.getKey();
                     ArrayList<ItemStack> blockedLoot = entry2.getValue().getBlockedLoot();
+
+                    ItemStack[] blockLootArray = new ItemStack[blockedLoot.size()];
+                    int index = 0;
+                    for (ItemStack itemStack : blockedLoot) {
+                        blockLootArray[index] = itemStack;
+                        index++;
+                    }
+
                     PreparedStatement statement = CosmicMysteryChest.getInstance().getSqlDatabase().getConnection().prepareStatement("INSERT IGNORE INTO lootboxfilter_data(uuid, mysteryChest, blockedLoot) VALUES (?, ?, ?);");
                     statement.setString(1, uuid.toString());
                     statement.setString(2, mysteryChest.getInternalName());
-                    statement.setString(3, Serialization.serialize((ItemStack[]) blockedLoot.toArray()));
+                    statement.setString(3, Serialization.serialize(blockLootArray));
                     statement.executeUpdate();
                 }
 
@@ -77,7 +81,7 @@ public class FilterManager {
                 HashMap<MysteryChest, Filter>  filterHashMap= new HashMap<>();
                 filterHashMap.put(mysteryChest, filter);
 
-                CosmicMysteryChest.get().getFilters().put(uuid, filterHashMap);
+                CosmicMysteryChest.getFilters().put(uuid, filterHashMap);
             }
             this.loading = false;
             statement.close();
@@ -87,12 +91,12 @@ public class FilterManager {
     }
 
     public void addFilterToUser(UUID uuid, Filter filter) {
-        if (CosmicMysteryChest.get().getFilters().containsKey(uuid)) {
-            CosmicMysteryChest.get().getFilters().get(uuid).put(filter.mysteryChest,filter);
+        if (CosmicMysteryChest.getFilters().containsKey(uuid)) {
+            CosmicMysteryChest.getFilters().get(uuid).put(filter.mysteryChest,filter);
         } else {
             HashMap<MysteryChest, Filter> filterHashMap = new HashMap<>();
             filterHashMap.put(filter.mysteryChest, filter);
-            CosmicMysteryChest.get().getFilters().put(uuid, filterHashMap);
+            CosmicMysteryChest.getFilters().put(uuid, filterHashMap);
         }
     }
 

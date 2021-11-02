@@ -36,8 +36,8 @@ public class FilterGUI {
 
     public FilterGUI(Player player, MysteryChest chest) {
         this.player = player;
-        if (CosmicMysteryChest.get().getFilters().containsKey(player.getUniqueId()) && CosmicMysteryChest.get().getFilters().get(player.getUniqueId()).containsKey(chest)) {
-            this.filter = CosmicMysteryChest.get().getFilters().get(player.getUniqueId()).get(chest);
+        if (CosmicMysteryChest.getFilters().containsKey(player.getUniqueId()) && CosmicMysteryChest.getFilters().get(player.getUniqueId()).containsKey(chest)) {
+            this.filter = CosmicMysteryChest.getFilters().get(player.getUniqueId()).get(chest);
             this.lootboxMenu = new PaginatedGui(6, 45, "Loot Filter");
 
         } else {

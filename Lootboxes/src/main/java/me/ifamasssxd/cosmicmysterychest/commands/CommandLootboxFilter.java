@@ -44,8 +44,8 @@ public class CommandLootboxFilter implements CommandExecutor {
         if (builder != null && builder.hasKey("mysteryChest")) {
             Filter filter;
             MysteryChest chest = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get(builder.getString("mysteryChest"));
-            if (CosmicMysteryChest.get().getFilters().containsKey(player.getUniqueId()) && CosmicMysteryChest.get().getFilters().get(player.getUniqueId()).containsKey(chest)) {
-                filter = CosmicMysteryChest.get().getFilters().get(player.getUniqueId()).get(chest);
+            if (CosmicMysteryChest.getFilters().containsKey(player.getUniqueId()) && CosmicMysteryChest.get().getFilters().get(player.getUniqueId()).containsKey(chest)) {
+                filter = CosmicMysteryChest.getFilters().get(player.getUniqueId()).get(chest);
             } else {
                 filter = new Filter(chest, new ArrayList<>());
                 CosmicMysteryChest.get().getFilterManager().addFilterToUser(player.getUniqueId(), filter);

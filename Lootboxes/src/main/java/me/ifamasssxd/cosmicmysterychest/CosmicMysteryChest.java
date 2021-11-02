@@ -39,7 +39,7 @@ public class CosmicMysteryChest
     private MysteryChestManager chestManager;
     private MysteryLootboxItem mysteryLootboxItem;
     private FilterManager filterManager;
-    private HashMap<UUID, HashMap<MysteryChest, Filter>> filters;
+    private static HashMap<UUID, HashMap<MysteryChest, Filter>> filters;
     private Database sqlDatabase;
 
     public ShardAnimations getShardAnimations() {
@@ -65,7 +65,7 @@ public class CosmicMysteryChest
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem(this.mysteryLootboxItem);
         }
 
-        this.filters = new HashMap<>();
+        filters = new HashMap<>();
         this.sqlDatabase = new Database(this);
         if(this.sqlDatabase.isConnected())
             Bukkit.getConsoleSender().sendMessage("SQL Database for Collect Connected");
@@ -83,7 +83,7 @@ public class CosmicMysteryChest
 
     }
 
-    public HashMap<UUID, HashMap<MysteryChest, Filter>> getFilters() {
+    public static HashMap<UUID, HashMap<MysteryChest, Filter>> getFilters() {
         return filters;
     }
 
@@ -91,7 +91,7 @@ public class CosmicMysteryChest
         this.toggle.saveToggles();
         System.out.println("Started Saving Lootboxes Database");
 
-        filterManager.save();
+        this.filterManager.save();
         if (this.chestManager != null) {
             this.chestManager.onDisable(this);
         }

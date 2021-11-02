@@ -144,8 +144,8 @@ public class MysteryChestListener
                     }
                     if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
                         Filter filter;
-                        if (CosmicMysteryChest.get().getFilters().containsKey(player.getUniqueId()) && CosmicMysteryChest.get().getFilters().get(player.getUniqueId()).containsKey(chest)) {
-                            filter = CosmicMysteryChest.get().getFilters().get(player.getUniqueId()).get(chest);
+                        if (CosmicMysteryChest.getFilters().containsKey(player.getUniqueId()) && CosmicMysteryChest.getFilters().get(player.getUniqueId()).containsKey(chest)) {
+                            filter = CosmicMysteryChest.getFilters().get(player.getUniqueId()).get(chest);
                         } else {
                             filter = new Filter(chest, new ArrayList<>());
                             CosmicMysteryChest.get().getFilterManager().addFilterToUser(player.getUniqueId(), filter);
