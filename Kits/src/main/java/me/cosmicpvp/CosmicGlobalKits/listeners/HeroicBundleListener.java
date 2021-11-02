@@ -79,7 +79,6 @@ implements Listener {
                     }
                 }
                 p.updateInventory();
-                de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), p.getEyeLocation(), 0f, 0.0f, 0f, 0.7f, 50);
 
                 p.playSound(p.getLocation(), Sound.CHEST_OPEN, 1.0f, 2.0f);
             }

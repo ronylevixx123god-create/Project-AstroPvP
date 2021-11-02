@@ -15,10 +15,10 @@
  *  org.bukkit.event.Event$Result
  *  org.bukkit.event.EventHandler
  *  org.bukkit.event.Listener
- *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
- *  org.bukkit.me.astropvp.cratekeys.inventory.Inventory
- *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
- *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
+ *  org.bukkit.event.inventory.InventoryClickEvent
+ *  org.bukkit.inventory.Inventory
+ *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.inventory.meta.ItemMeta
  *  org.bukkit.plugin.Plugin
  */
 package org.arkhamnetwork.Arkkit.patches;
@@ -109,7 +109,7 @@ public class RaidShop
                 if (costLine.contains("COST: $")) {
                     double cost = this.getCost(is, true);
                     if (p.getInventory().firstEmpty() == -1) {
-                        p.sendMessage(ChatColor.RED + "Your me.astropvp.cratekeys.inventory is currently full!");
+                        p.sendMessage(ChatColor.RED + "Your inventory is currently full!");
                         return;
                     }
                     if (cost == -1.0 || cost == 0.0) {

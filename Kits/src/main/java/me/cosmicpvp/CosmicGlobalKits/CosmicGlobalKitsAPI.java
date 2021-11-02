@@ -39,7 +39,6 @@
  */
 package me.cosmicpvp.CosmicGlobalKits;
 
-import com.compilex.CosmicDungeons.DungeonsRewardsAPI;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
@@ -792,7 +791,6 @@ public class CosmicGlobalKitsAPI {
                 double f = Math.random();
                 if (f < 0.2) {
                     if (kitTier == 3 && Math.random() < 0.01) {
-                        rewards.add(DungeonsRewardsAPI.getHolyWhiteScroll());
                     } else {
                         rewards.add(EnchantmentBook.getWhiteScroll());
                     }

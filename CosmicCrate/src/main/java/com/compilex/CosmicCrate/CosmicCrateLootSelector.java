@@ -152,7 +152,7 @@ public class CosmicCrateLootSelector
                                     }
                                 }
                                 if (dropped) {
-                                    this.player.sendRawMessage(CC.Red + "Your me.astropvp.cratekeys.inventory was full! Leftover loot has been " + CC.RedU + "dropped" + CC.Red + " as a protected item at your feet.");
+                                    this.player.sendRawMessage(CC.Red + "Your inventory was full! Leftover loot has been " + CC.RedU + "dropped" + CC.Red + " as a protected item at your feet.");
                                 }
                                 Bukkit.getLogger().info("Giving " + this.player.getName() + " " + i.getAmount() + "x " + i + " due to requiring IIDs! Dropped on ground: " + dropped);
                                 continue;
@@ -331,7 +331,7 @@ public class CosmicCrateLootSelector
         
         private ItemStack getRandomLegitItem() {
             if (this.cls.displayRewards.size() <= 0) {
-                Bukkit.getLogger().info("[CosmicCrate] EMPTY displayRewards list! DEBUG: crateVersion:" + this.cls.crateVersion + ", player:" + this.cls.player.getName() + ", me.astropvp.cratekeys.inventory:" + this.cls.lootInventory);
+                Bukkit.getLogger().info("[CosmicCrate] EMPTY displayRewards list! DEBUG: crateVersion:" + this.cls.crateVersion + ", player:" + this.cls.player.getName() + ", inventory:" + this.cls.lootInventory);
                 return new ItemStack(Material.AIR);
             }
             final ItemStack i = this.cls.displayRewards.get(new Random().nextInt(this.cls.displayRewards.size()));

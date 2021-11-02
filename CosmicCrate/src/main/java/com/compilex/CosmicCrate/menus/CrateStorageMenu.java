@@ -40,19 +40,15 @@ public class CrateStorageMenu extends CosmicGUI
                     return;
                 }
                 else {
-                    if (CCAPI.hasClaimedCosmicCrate(this.player, version)) {
-                        this.player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You already claimed the " + ChatColor.UNDERLINE.toString() + ChatColor.BOLD.toString() + version.name() + ChatColor.RED + " Astro Crate!");
-                    }
-                    else {
+
                         if (this.player.getInventory().firstEmpty() != -1) {
                             CCAPI.claimCosmicCrate(this.player, version);
                         }
                         else {
-                            this.player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "Your me.astropvp.cratekeys.inventory is full!");
+                            this.player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "Your inventory is full!");
                             this.player.playSound(this.player.getLocation(), Sound.VILLAGER_NO, 1.0f, 0.6f);
                         }
                         this.closeWithDelay();
-                    }
                     return;
                 }
             });

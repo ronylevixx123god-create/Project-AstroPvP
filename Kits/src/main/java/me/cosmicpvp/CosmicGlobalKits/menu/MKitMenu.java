@@ -33,7 +33,6 @@ import me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits;
 import me.cosmicpvp.CosmicGlobalKits.libs.MasteryKits;
 import me.cosmicpvp.CosmicGlobalKits.struct.GlobalKitData;
 import me.cosmicpvp.CosmicGlobalKits.struct.GlobalKitUser;
-import net.astropvp.core.utils.TitleUtil;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -103,8 +102,6 @@ extends CosmicGUI {
                     this.player.playSound(this.player.getLocation(), Sound.LEVEL_UP, 1.0f, 0.9f);
                     kits.giveToPlayer(this.player);
 
-                    TitleUtil.sendTitle(player, ChatColor.RED + kits.getName());
-                    TitleUtil.sendSubTitle(player, CC.GoldB + "Mastery Kit Claimed!");
 
                     player.sendMessage(ChatColor.RED + kits.getName());
                     player.sendMessage(CC.GoldB + "Mastery Kit Claimed!");

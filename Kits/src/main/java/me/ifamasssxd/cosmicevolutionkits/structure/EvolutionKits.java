@@ -31,7 +31,6 @@ import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
 import me.ifamasssxd.cosmicevolutionkits.structure.ekits.*;
 import me.ifamasssxd.cosmicevolutionkits.utils.RandomFireworks;
-import net.astropvp.core.utils.TitleUtil;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.arkhamnetwork.enchantments.EnchantmentBook;
@@ -129,9 +128,6 @@ public enum EvolutionKits {
             player.playSound(player.getLocation(), Sound.FIREWORK_BLAST, 2.0f, 1.1f);
             player.playSound(player.getLocation(), Sound.LEVEL_UP, 2.0f, 1.1f);
             RandomFireworks.getManager().launchRandomFirework(player.getLocation());
-
-            TitleUtil.sendTitle(player, ChatColor.GOLD + CC.Aqua + kit.getItemName());
-            TitleUtil.sendSubTitle(player, CC.Green + "Evolution Kit Unlocked!");
 
             Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(player, "VKIT_UNLOCK", new Object[]{this.kit}));
             return true;

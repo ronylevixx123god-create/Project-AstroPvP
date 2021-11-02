@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Random;
 import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKit;
 import me.ifamasssxd.cosmicevolutionkits.utils.ItemUtils;
-import me.ifamasssxd.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.enchantments.EnchantmentOrb;
 import org.arkhamnetwork.enchantments.libs.OrbType;
 import org.arkhamnetwork.enchantments.util.TieredEnchantments;
@@ -62,7 +61,6 @@ extends EvolutionKit {
         }
         if (kitLevel >= 2) {
             int soulCount = Math.max((int)((double)(kitLevel * 500) * (Math.random() * 2.0)), kitLevel * 200) / 2;
-            items.add(KillTrackerAPI.createSoulShard((int)soulCount));
         }
         if (kitLevel >= 3) {
             int blackScrollCount = kitLevel / 3;

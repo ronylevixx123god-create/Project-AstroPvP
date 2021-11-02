@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.util.*;
 
 public class FilterManager {
-    /*private boolean loading = false;
+    private boolean loading = false;
 
 
     private final Map<UUID, Filter> filterMap;
@@ -28,7 +28,7 @@ public class FilterManager {
         if (this.loading)
             return;
         try {
-            PreparedStatement statement = AstroSpawners.getInstance().getSqlDatabase().getConnection().prepareStatement("DELETE FROM lootboxfilter_data");
+            PreparedStatement statement = CosmicMysteryChest.getInstance().getSqlDatabase().getConnection().prepareStatement("DELETE FROM lootboxfilter_data");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -38,10 +38,10 @@ public class FilterManager {
                 UUID uuid = entry.getKey();
                 MysteryChest mysteryChest = entry.getValue().getMysteryChest();
                 ArrayList<ItemStack> blockedLoot = entry.getValue().getBlockedLoot();
-                PreparedStatement statement = AstroSpawners.getInstance().getSqlDatabase().getConnection().prepareStatement("INSERT IGNORE INTO lootboxfilter_data(uuid, mysteryChest, blockedLoot) VALUES (?, ?, ?);");
+                PreparedStatement statement = CosmicMysteryChest.getInstance().getSqlDatabase().getConnection().prepareStatement("INSERT IGNORE INTO lootboxfilter_data(uuid, mysteryChest, blockedLoot) VALUES (?, ?, ?);");
                 statement.setString(1, uuid.toString());
                 statement.setString(2, mysteryChest.getInternalName());
-                statement.setString(3, Serialization.serialize((org.bukkit.me.astropvp.cratekeys.inventory.ItemStack[]) blockedLoot.toArray()));
+                statement.setString(3, Serialization.serialize((ItemStack[]) blockedLoot.toArray()));
                 statement.executeUpdate();
 
             }
@@ -55,7 +55,7 @@ public class FilterManager {
     public void load() {
         this.loading = true;
         try {
-            PreparedStatement statement = AstroSpawners.getInstance().getSqlDatabase().getConnection().prepareStatement("SELECT * FROM lootboxfilter_data");
+            PreparedStatement statement = CosmicMysteryChest.getInstance().getSqlDatabase().getConnection().prepareStatement("SELECT * FROM lootboxfilter_data");
             ResultSet set = statement.executeQuery();
             while (set.next()) {
                 UUID uuid = UUID.fromString(set.getString("uuid"));
@@ -76,7 +76,7 @@ public class FilterManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
     public void addFilterToUser(UUID uuid, Filter filter) {
         if (CosmicMysteryChest.get().getFilters().containsKey(uuid)) {

@@ -92,8 +92,6 @@ implements Listener {
                     pNear.sendMessage((Object)ChatColor.GRAY + "Locate and slay the Fallen Hero to steal its loot for yourself!");
                 }
                 p.playSound(p.getLocation(), Sound.WITHER_SPAWN, 1.0f, 1.2f);
-                de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), fallenHero.getLocation(), 0f, 0.5f, 0f, 0.8f, 35);
-                de.inventivegames.particle.ParticleEffect.FIREWORKS_SPARK.sendToPlayers(Bukkit.getOnlinePlayers(), fallenHero.getLocation(), 0f, 0.5f, 0f, 0.8f, 50);
             }
             if (vkit != null) {
                 i = e.getItem();
@@ -118,8 +116,6 @@ implements Listener {
                     pNear.sendMessage((Object)ChatColor.GRAY + "Locate and slay the Fallen Hero to steal its loot for yourself!");
                 }
                 p.playSound(p.getLocation(), Sound.ZOMBIE_PIG_ANGRY, 1.0f, 1.2f);
-                de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), fallenHero.getLocation(), 0f, 0.0f, 0f, 0.8f, 35);
-                de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), fallenHero.getLocation(), 0f, 0.0f, 0f, 0.8f, 35);
 
             }
         }

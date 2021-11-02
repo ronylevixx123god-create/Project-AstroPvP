@@ -54,7 +54,7 @@ public class PlayerCollect {
         }
         try {
             for (CollectCategory category : this.categories) {
-                PreparedStatement statement = CollectPlugin.getInstance().getSqlDatabase().getConnection().prepareStatement("INSERT IGNORE INTO collect_userdata(uuid, me.astropvp.cratekeys.items, name, type) VALUES (?, ?, ?, ?);");
+                PreparedStatement statement = CollectPlugin.getInstance().getSqlDatabase().getConnection().prepareStatement("INSERT IGNORE INTO collect_userdata(uuid, items, name, type) VALUES (?, ?, ?, ?);");
                 try {
                     statement.setString(1, this.player.getUniqueId().toString());
                     statement.setString(2, Serialization.serialize(category.getItems()));

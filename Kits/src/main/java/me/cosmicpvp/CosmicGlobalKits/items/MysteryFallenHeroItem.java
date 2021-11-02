@@ -103,8 +103,6 @@ implements PlayerInteractable {
                     pNear.sendMessage((Object)ChatColor.GRAY + "Locate and slay the Fallen Hero to steal its loot for yourself!");
                 }
                 p.playSound(p.getLocation(), Sound.WITHER_SPAWN, 1.0f, 1.2f);
-                de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), fallenHero.getLocation(), 0f, 1f, 0f, 0.6f, 35);
-                de.inventivegames.particle.ParticleEffect.FIREWORKS_SPARK.sendToPlayers(Bukkit.getOnlinePlayers(), fallenHero.getLocation(), 0f, 1f, 0f, 0.5f, 50);
 
             }
         }

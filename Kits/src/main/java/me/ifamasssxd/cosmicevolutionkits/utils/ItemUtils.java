@@ -1,6 +1,5 @@
 package me.ifamasssxd.cosmicevolutionkits.utils;
 
-import com.compilex.CosmicCustomCreepers.enums.CreeperTypes;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.cosmicpvp.CosmicSpaceChests.libs.RankItems;
@@ -8,9 +7,7 @@ import com.cosmicpvp.CosmicSpaceChests.libs.TitleItems;
 import com.cosmicpvp.CosmicSpaceChests.listeners.EnvoySummonItemListener;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
-import me.ifamasssxd.cosmicguishop.ArkhamMoneyNotesAPI;
 import org.arkhamnetwork.Arkkit.patches.ItemNametag;
-import org.arkhamnetwork.CosmicCustomTNT.enums.TNTTypes;
 import org.arkhamnetwork.enchantments.EnchantmentBook;
 import org.arkhamnetwork.enchantments.util.TieredEnchantments;
 import org.bukkit.Bukkit;
@@ -44,13 +41,7 @@ public class ItemUtils {
         return com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils.buildItem(Material.EXP_BOTTLE, (short)0, ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "Experience Bottle" + (Object)ChatColor.GRAY + " (Throw)", (Object)ChatColor.LIGHT_PURPLE + "Value " + (Object)ChatColor.WHITE + xpAmount + " XP", (Object)ChatColor.LIGHT_PURPLE + "Enchanter " + (Object)ChatColor.WHITE + enchanter);
     }
 
-    public static ItemStack getMoneyNote(String signer, int amount) {
-        return ArkhamMoneyNotesAPI.getMoneyNote((String)signer, (long)amount);
-    }
 
-    public static ItemStack getMoneyNoteNoIID(String string, int i) {
-        return ArkhamMoneyNotesAPI.getMoneyNoteNoIID((String)string, (long)i);
-    }
 
     public static ItemStack getEnchantmentBook(CustomEnchantment ce) {
         return EnchantmentBook.getEnchantmentBook((CustomEnchantment)ce, (int)(new Random().nextInt(ce.getMaxLevel()) + 1));
@@ -104,13 +95,7 @@ public class ItemUtils {
 
 
 
-    public static ItemStack getCustomTNT(TNTTypes tntType) {
-        return TNTTypes.getTNTItem((TNTTypes)tntType);
-    }
 
-    public static ItemStack getCustomCreeperEgg(CreeperTypes creeperType) {
-        return CreeperTypes.getCCItem((CreeperTypes)creeperType);
-    }
 
     public static ItemStack setAmount(ItemStack i, int amount) {
         i.setAmount(amount);

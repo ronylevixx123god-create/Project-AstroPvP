@@ -96,7 +96,7 @@ public class PlayerListener implements Listener
             if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
                 final int required = this.getSlotsRequired(e.getPlayer(), v);
                 if (this.getEmptySlots(e.getPlayer()) < this.getSlotsRequired(e.getPlayer(), v)) {
-                    e.getPlayer().sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You do not have enough empty me.astropvp.cratekeys.inventory slots.");
+                    e.getPlayer().sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You do not have enough empty inventory slots.");
                     e.getPlayer().sendMessage(ChatColor.GRAY + ChatColor.ITALIC.toString() + "REQ: " + required + "+ slots");
                     return;
                 }

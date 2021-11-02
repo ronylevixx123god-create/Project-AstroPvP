@@ -255,7 +255,7 @@ final class AntiDupeListener
         if (p.hasMetadata("lastTeleportEvent") && System.currentTimeMillis() - p.getMetadata("lastTeleportEvent").get(0).asLong() < 250L) {
             e.setCancelled(true);
             e.setResult(Event.Result.DENY);
-            p.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "You cannot perform me.astropvp.cratekeys.inventory edits so quickly after teleporting.");
+            p.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "You cannot perform inventory edits so quickly after teleporting.");
         }
     }
 
