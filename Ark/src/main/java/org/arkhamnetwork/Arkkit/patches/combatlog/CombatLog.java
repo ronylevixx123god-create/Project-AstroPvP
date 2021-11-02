@@ -32,6 +32,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.MaskUtils;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
+import com.rit.sucy.EnchantmentAPI;
 import com.sk89q.worldedit.Vector;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
@@ -46,6 +47,7 @@ import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.arkhamnetwork.enchantments.enchantments.axes.Bleed;
+import org.arkhamnetwork.enchantments.mastery.OpeningCombo;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -194,6 +196,13 @@ public class CombatLog
                 pl.sendMessage(CC.translate("&a+ Absorbtion &7(20s)"));
                 pl.sendMessage(CC.translate("&a-15% Incoming Damage &7(15s)"));
                 pl.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 5 * 20, 4));
+            }
+            if (EnchantmentAPI.getEnchantments(pl.getEquipment().getItemInHand()).containsKey(EnchantmentAPI.getEnchantment("Opening Combo"))) {
+                int openingComboLevel = EnchantmentAPI.getEnchantments(pl.getEquipment().getItemInHand()).get(EnchantmentAPI.getEnchantment("Opening Combo"));
+                if(!OpeningCombo.isOnCooldown(pl)) {
+                    OpeningCombo.proc(pl, openingComboLevel);
+                    pl.sendMessage(CC.DarkRedB + "OPENING COMBO - ACTIVE");
+                }
             }
         }
         pl.setAllowFlight(false);
