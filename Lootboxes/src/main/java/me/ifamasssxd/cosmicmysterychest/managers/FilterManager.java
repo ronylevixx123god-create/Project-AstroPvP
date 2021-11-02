@@ -17,16 +17,18 @@ public class FilterManager {
     private boolean loading = false;
 
 
-    private final Map<UUID, Filter> filterMap;
+    private final HashMap<UUID, HashMap<MysteryChest, Filter>> filters;
 
     public FilterManager() {
-        this.filterMap = new HashMap<>();
+        this.filters = CosmicMysteryChest.get().getFilters();
     }
 
 
     public void save() {
-        if (this.loading)
+        if (this.loading) {
+            System.out.println("(!) Still loading lootboxes, returning");
             return;
+        }
         try {
             PreparedStatement statement = CosmicMysteryChest.getInstance().getSqlDatabase().getConnection().prepareStatement("DELETE FROM lootboxfilter_data");
             statement.executeUpdate();
@@ -34,15 +36,21 @@ public class FilterManager {
             e.printStackTrace();
         }
         try {
-            for (Map.Entry<UUID, Filter> entry : filterMap.entrySet()) {
+            System.out.println("(!) Started saving lootbox filters");
+            for (Map.Entry<UUID, HashMap<MysteryChest, Filter>> entry : filters.entrySet()) {
                 UUID uuid = entry.getKey();
-                MysteryChest mysteryChest = entry.getValue().getMysteryChest();
-                ArrayList<ItemStack> blockedLoot = entry.getValue().getBlockedLoot();
-                PreparedStatement statement = CosmicMysteryChest.getInstance().getSqlDatabase().getConnection().prepareStatement("INSERT IGNORE INTO lootboxfilter_data(uuid, mysteryChest, blockedLoot) VALUES (?, ?, ?);");
-                statement.setString(1, uuid.toString());
-                statement.setString(2, mysteryChest.getInternalName());
-                statement.setString(3, Serialization.serialize((ItemStack[]) blockedLoot.toArray()));
-                statement.executeUpdate();
+                HashMap<MysteryChest, Filter> hash =  entry.getValue();
+
+                for (Map.Entry<MysteryChest, Filter> entry2 : hash.entrySet()) {
+                    MysteryChest mysteryChest = entry2.getKey();
+                    ArrayList<ItemStack> blockedLoot = entry2.getValue().getBlockedLoot();
+                    PreparedStatement statement = CosmicMysteryChest.getInstance().getSqlDatabase().getConnection().prepareStatement("INSERT IGNORE INTO lootboxfilter_data(uuid, mysteryChest, blockedLoot) VALUES (?, ?, ?);");
+                    statement.setString(1, uuid.toString());
+                    statement.setString(2, mysteryChest.getInternalName());
+                    statement.setString(3, Serialization.serialize((ItemStack[]) blockedLoot.toArray()));
+                    statement.executeUpdate();
+                }
+
 
             }
 

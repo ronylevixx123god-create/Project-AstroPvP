@@ -41,7 +41,6 @@ public class CosmicMysteryChest
     private FilterManager filterManager;
     private HashMap<UUID, HashMap<MysteryChest, Filter>> filters;
     private Database sqlDatabase;
-    private SQLQueryCustomThread sqlQueryCustomThread = new SQLQueryCustomThread();
 
     public ShardAnimations getShardAnimations() {
         return this.toggle;
@@ -75,9 +74,11 @@ public class CosmicMysteryChest
             Bukkit.getPluginManager().disablePlugin(this);
         } else {
             this.sqlDatabase.executeUpdate("CREATE TABLE IF NOT EXISTS lootboxfilter_data(uuid varchar(64), mysteryChest varchar(64), blockedLoot longblob);", false);
-            this.sqlQueryCustomThread = new SQLQueryCustomThread();
-            this.sqlQueryCustomThread.start();
+            SQLQueryCustomThread sqlQueryCustomThread = new SQLQueryCustomThread();
+            sqlQueryCustomThread.start();
         }
+        System.out.println("Started Loading Lootboxes Database");
+
         filterManager.load();
 
     }
@@ -88,10 +89,13 @@ public class CosmicMysteryChest
 
     public void onDisable() {
         this.toggle.saveToggles();
+        System.out.println("Started Saving Lootboxes Database");
+
+        filterManager.save();
         if (this.chestManager != null) {
             this.chestManager.onDisable(this);
         }
-        filterManager.save();
+
     }
 
     public static CosmicMysteryChest get() {
