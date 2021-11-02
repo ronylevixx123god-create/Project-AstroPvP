@@ -25,6 +25,7 @@ import java.util.List;
 
 import net.astropvp.struct.CollectCategory;
 import net.astropvp.struct.CollectType;
+import org.arkhamnetwork.Arkkit.patches.ExpBottles;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -159,7 +160,7 @@ public class HolyWhiteScrollListener implements Listener {
             e.getDrops().remove(i);
         if (savedItems.size() > 0)
             this.savedItems.put(e.getEntity().getUniqueId().toString(), savedItems);
-
+        e.getDrops().add(ExpBottles.getXpBottle(e.getDroppedExp(), e.getEntity().getName()));
 
         Player killed = e.getEntity();
         CollectPlugin.getInstance().getCollectManager().getPlayerCollect(killer).add(new CollectCategory(CollectType.DEATH_INVENTORY, e.getDrops().toArray(new ItemStack[e.getDrops().size() - 1]), CC.RedB + killed.getName() + "'s Death Inventory"));
