@@ -42,13 +42,16 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ItemSpawnEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 
@@ -87,6 +90,26 @@ implements Listener {
         chest.getInventory().clear();
         chest.update();
         l.getBlock().setType(Material.AIR);
+    }
+
+    @EventHandler
+    public void onDeath(PlayerDeathEvent e) {
+        if (!e.getEntity().getLocation().getWorld().getName().contains("_duel")) return;
+        new BukkitRunnable(){
+            public void run(){
+                e.getDrops().clear();
+            }
+        }.runTaskLater(CosmicDuel.get(), 40L);
+    }
+
+    @EventHandler
+    public void onDamage(EntityDamageEvent e) {
+        if (e.getEntity() instanceof Player) {
+            Player p = (Player)e.getEntity();
+            if (p.getGameMode() == GameMode.SPECTATOR) {
+                e.setCancelled(true);
+            }
+        }
     }
 
     public NewDuel getDuel(Arena arena) {

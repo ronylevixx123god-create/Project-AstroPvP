@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.VanishUtils
+ *  com.cosmicpvp.cosmicutils.utils.VanishUtils
  *  com.gmail.nossr50.runnables.skills.BleedTimerTask
  *  com.google.common.collect.Lists
  *  org.apache.commons.lang.StringUtils
@@ -193,7 +193,7 @@ implements CommandExecutor {
                     return true;
                 }
                 p.removeMetadata("in_ranked_queue_menu", CosmicDuel.get());
-                p.sendMessage(ChatColor.RED + "Your duel queue menu me.astropvp.cratekeys.data has been cleared!");
+                p.sendMessage(ChatColor.RED + "Your duel queue menu data has been cleared!");
                 return true;
             }
             if (args[0].equalsIgnoreCase("top")) {
@@ -219,7 +219,7 @@ implements CommandExecutor {
             }
             if (args[0].equalsIgnoreCase("customize") || args[0].equalsIgnoreCase("custom")) {
                 if (!PlayerUtils.isInventoryEmpty(p)) {
-                    p.sendMessage(ChatColor.RED + "Your me.astropvp.cratekeys.inventory must be empty to customize your duel kits!");
+                    p.sendMessage(ChatColor.RED + "Your inventory must be empty to customize your duel kits!");
                     return true;
                 }
                 if (PlayerUtils.inCombat(p)) {

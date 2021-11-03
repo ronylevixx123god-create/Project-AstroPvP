@@ -65,7 +65,7 @@ public class Settings {
             if (!duel.isRanked() && !setting.isDefaultSetting() || duel.isRanked() && !setting.isRankedDefault()) continue;
             this.currentSettings.add(setting);
         }
-        this.settings = new ClassInventory("Duel Settings", 6);
+        this.settings = new ClassInventory("Duel Settings", 4);
         this.updateSettingsInventory();
         QueueManager queueManager = CosmicDuel.get().getQueueManager();
         this.settings.setCallback((inventory, event) -> {
@@ -89,7 +89,6 @@ public class Settings {
                 // empty if block
             }
             int n = ++index;
-            ++index;
             this.settings.insertItem(n, ci, true);
         }
         String itemName = (Object)ChatColor.YELLOW + ChatColor.BOLD.toString() + "Kit";
@@ -279,16 +278,8 @@ public class Settings {
                     p.sendMessage((Object)ChatColor.GRAY + "Purchase the rank at " + (Object)ChatColor.RED + ChatColor.UNDERLINE.toString() + "buy.astropvp.net" + (Object)ChatColor.GRAY + ".");
                     return;
                 }
-                if (Settings.this.hasSetting(Setting.ENVOY) && k != Kit.ENVOY) {
-                    return;
-                }
-                if (!Settings.this.hasSetting(Setting.ENVOY) && k == Kit.ENVOY) {
-                    if (!CosmicDuel.envoysEnabled) {
-                        p.sendMessage((Object)ChatColor.RED + "Envoys Duels are disabled.");
-                        return;
-                    }
-                    Settings.this.getCurrentSettings().add(Setting.ENVOY);
-                }
+
+
                 p.playSound(p.getLocation(), Sound.ORB_PICKUP, 1.0f, 1.0f);
                 Settings.this.getDuel().setKit(k);
                 Settings.this.updateSettingsInventory();
@@ -304,25 +295,11 @@ public class Settings {
         if (!CosmicDuel.mcMMOEnabled && s == Setting.MCMMO) {
             return;
         }
-        if (!CosmicDuel.envoysEnabled && s == Setting.ENVOY) {
-            if (this.hasSetting(Setting.ENVOY)) {
-                this.getCurrentSettings().remove((Object)Setting.ENVOY);
-            }
-            return;
-        }
+
         if (this.getDuel().getKit() != Kit.BYOB && s == Setting.DROPITEMS) {
             return;
         }
-        if (CosmicDuel.envoysEnabled && this.getDuel().getKit() != Kit.ENVOY && s == Setting.ENVOY && !this.hasSetting(Setting.ENVOY)) {
-            this.getDuel().setKit(Kit.ENVOY);
-        } else if (s == Setting.ENVOY && this.hasSetting(Setting.ENVOY)) {
-            this.getDuel().setKit(Kit.BYOB);
-        }
-        if (this.hasSetting(Setting.ENVOY) && s == Setting.DROPITEMS) {
-            this.toggleSetting(Setting.ENVOY);
-        } else if (s == Setting.ENVOY && this.hasSetting(Setting.DROPITEMS)) {
-            this.toggleSetting(Setting.DROPITEMS);
-        }
+
         if (this.currentSettings.contains((Object)s)) {
             this.currentSettings.remove((Object)s);
         } else {

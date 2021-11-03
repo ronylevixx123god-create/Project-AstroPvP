@@ -157,7 +157,7 @@
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>votifier</artifactId>
+            <artifactId>votifgier</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/Votifier.jar</systemPath>

@@ -17,6 +17,7 @@
  */
 package me.ifamasssxd.cosmicduel.listeners;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.google.common.collect.Lists;
 import me.ifamasssxd.cosmicduel.DuelAPI;
 import me.ifamasssxd.cosmicduel.struct.Arena;
@@ -44,7 +45,7 @@ implements Listener {
     private static Inventory spectateInventory;
 
     public SpectateInventory() {
-        spectateInventory = Bukkit.createInventory((InventoryHolder)null, 54, (String)"Select an Arena");
+        spectateInventory = Bukkit.createInventory((InventoryHolder)null, 18, (String)"Select an Arena");
         SpectateInventory.updateInventory();
     }
 
@@ -57,29 +58,10 @@ implements Listener {
             if (d != null) {
                 lore.add((Object)ChatColor.YELLOW + ChatColor.BOLD.toString() + d.getName() + " Duel:");
                 lore.add(SpectateInventory.getDuelString(d));
-                if (d.isRanked()) {
-                    lore.add((Object)ChatColor.GREEN + ChatColor.BOLD.toString() + "RANKED");
-                }
-                if (DuelAPI.doesArenaHaveQueue(d.getArena(), false)) {
-                    lore.add("");
-                    lore.add((Object)ChatColor.YELLOW + ChatColor.BOLD.toString() + "Queue");
-                    int duelIndex = 1;
-                    for (NewDuel duel : DuelAPI.getArenaQueue(d.getArena())) {
-                        if (duel.getDuelState() != DuelState.IN_QUEUE) continue;
-                        lore.add((Object)ChatColor.YELLOW + "#" + duelIndex++ + " " + SpectateInventory.getQueueString(duel));
-                    }
-                }
             } else {
-                if (arena.isRankedArena()) {
-                    lore.add("");
-                    lore.add((Object)ChatColor.GREEN + ChatColor.BOLD.toString() + "Ranked Arena");
-                }
-                lore.add((Object)ChatColor.RED + ChatColor.BOLD.toString() + "NO DUEL");
+                lore.add(CC.translate("&c&lNO DUEL"));
             }
             ItemStack is = ItemBuilder.buildItem(arena.getIcon(), 1, (short)0, arena.getName() + " Arena " + (Object)ChatColor.GRAY + "(Click to Spectate)", lore);
-            if (index == 9) {
-                index = 11;
-            }
             spectateInventory.setItem(index++, is);
         }
     }

@@ -7,9 +7,11 @@ import me.astropvp.cratekeys.data.CrateData;
 import me.astropvp.cratekeys.items.CrateKeyItem;
 import me.astropvp.cratekeys.utils.ConfigUtils;
 import net.minecraft.server.v1_8_R3.InventoryUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
-import org.bukkit.block.Chest;
+import org.bukkit.block.Jukebox;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -28,8 +30,8 @@ public class CrateKeyInventoryListener implements Listener {
         Block block = event.getClickedBlock();
 
 
-        if ((block.getState() instanceof Chest)) {
-            Chest chest = (Chest) block.getState();
+        if ((block.getState() instanceof Jukebox)) {
+            Jukebox chest = (Jukebox) block.getState();
             CrateData data = AstroCrateKeysAPI.findCrate(chest.getLocation());
             if (data == null) {
                 return;
@@ -56,6 +58,8 @@ public class CrateKeyInventoryListener implements Listener {
             } else {
                 player.setItemInHand((ItemStack) null);
             }
+
+            player.playSound(player.getLocation(),Sound.NOTE_BASS,1,1 );
 
 
             event.setCancelled(true);

@@ -16,10 +16,10 @@ public class CrateDataManager {
 
     public static void onDisable() {
         AstroCrateKeysAPI.deleteCrates();
-        crates.stream().forEach(crate -> AstroCrateKeysAPI.addCrate(crate.getCrateType(), crate.getLocation()));
+        crates.forEach(crate -> AstroCrateKeysAPI.addCrate(crate.getCrateType(), crate.getLocation()));
         for (int i = crates.size() - 1; i >= 0; i--) {
             CrateData data = crates.get(i);
-            if (data.getLocation().getBlock().getType() != Material.CHEST)
+            if (data.getLocation().getBlock().getType() != Material.JUKEBOX)
                 crates.remove(i);
         }
     }

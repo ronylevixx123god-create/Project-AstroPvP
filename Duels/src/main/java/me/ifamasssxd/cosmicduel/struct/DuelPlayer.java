@@ -8,9 +8,9 @@
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
  *  org.bukkit.entity.Player
- *  org.bukkit.me.astropvp.cratekeys.inventory.Inventory
- *  org.bukkit.me.astropvp.cratekeys.inventory.InventoryHolder
- *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.inventory.Inventory
+ *  org.bukkit.inventory.InventoryHolder
+ *  org.bukkit.inventory.ItemStack
  *  org.bukkit.plugin.Plugin
  */
 package me.ifamasssxd.cosmicduel.struct;
@@ -141,7 +141,7 @@ public class DuelPlayer {
      */
     public void saveData(boolean async) {
         if (this.loading) {
-            Bukkit.getLogger().info("Not saving duel me.astropvp.cratekeys.data since we couldnt finish loading in time.");
+            Bukkit.getLogger().info("Not saving duel data since we couldnt finish loading in time.");
             return;
         }
         if (async && Bukkit.isPrimaryThread()) {

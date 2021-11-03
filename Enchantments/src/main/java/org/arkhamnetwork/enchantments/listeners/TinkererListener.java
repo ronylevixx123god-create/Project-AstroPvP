@@ -36,7 +36,7 @@ public class TinkererListener implements Listener {
         for (int i = 4; i < TradeWindow.getSize(); i += 9) {
             TradeWindow.setItem(i, TinkererListener.divider);
         }
-        TradeWindow.setItem(49, ItemUtils.buildItem(Material.STAINED_GLASS_PANE, (short) DyeColor.YELLOW.getWoolData(), CC.YellowB + "Deposit All", new String[]{CC.Gray + "Click to deposit all tinkerable me.astropvp.cratekeys.items."}));
+        TradeWindow.setItem(49, ItemUtils.buildItem(Material.STAINED_GLASS_PANE, (short) DyeColor.YELLOW.getWoolData(), CC.YellowB + "Deposit All", new String[]{CC.Gray + "Click to deposit all tinkerable items."}));
         TradeWindow.setItem(0, ItemUtils.buildItem(Material.STAINED_GLASS_PANE, (short) 14, ChatColor.YELLOW.toString() + "Click to ACCEPT Trade", new String[]{""}));
         TradeWindow.setItem(8, ItemUtils.buildItem(Material.STAINED_GLASS_PANE, (short) 14, ChatColor.YELLOW.toString() + "Click to ACCEPT Trade", new String[]{""}));
         return TradeWindow;

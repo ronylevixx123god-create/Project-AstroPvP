@@ -24,11 +24,7 @@ public class DuelTask implements Runnable {
                     d.onDuelEnd(EndReason.NO_WINNER, null);
                     continue;
                 }
-                if (d.getGameTimer() < 600 && d.getSettings().hasSetting(Setting.ENVOY)) {
-                    int delay = (d.getGameTimer() < 180) ? 6 : 10;
-                    if (d.getGameTimer() == 1 || d.getGameTimer() % delay == 0)
-                        spawnEnvoy(d);
-                }
+
                 if (d.getGameTimer() == 300) {
                     d.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "All damage is now " + ChatColor.RED + ChatColor.BOLD
                             .toString() + "2X" + ChatColor.RED + "!", true);
