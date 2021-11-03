@@ -14,6 +14,8 @@ import me.astropvp.astrospawners.utils.PlayerData;
 import me.astropvp.astrospawners.utils.PlayerDataManager;
 import me.astropvp.astrospawners.utils.StackedMobDeathEvent;
 import me.astropvp.astrospawners.utils.*;
+import me.astropvp.cratekeys.enums.CrateType;
+import me.astropvp.cratekeys.items.CrateKeyItem;
 import me.ifamasssxd.cosmiccoinflip.struct.CoinFlipManager;
 import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
 import me.ifamasssxd.cosmichcf.struct.OutpostType;
@@ -47,7 +49,9 @@ public class EntityStackerListener implements Listener {
     private final MobStackerUtils mobStackerUtils;
     private final PlayerDataManager manager;
     private final AstroSpawners plugin;
-    private final ItemStack grindingLootbox = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("GrindingLootbox").createClaimableItem(false);
+    private final ItemStack novaKey = CrateKeyItem.getItem(CrateType.NOVA);
+    private final ItemStack stellarKey = CrateKeyItem.getItem(CrateType.STELLAR);
+
 
     public EntityStackerListener(AstroSpawners plugin) {
         this.plugin = plugin;
@@ -100,7 +104,7 @@ public class EntityStackerListener implements Listener {
             //PlayerUtils.neutralizeKnockback((LivingEntity) entity);
 
 
-            double exp = 300;
+            double exp = 200;
 
             //PlayerDataManager manager = AstroSpawners.getPlayerDataManager();
             PlayerData data = manager.getPlayerData(p);
@@ -112,33 +116,27 @@ public class EntityStackerListener implements Listener {
 
                 if (Math.random() < 0.05) {
                     data.setCoins(data.getCoins() + 2);
-                    //ActionBarMessageUtils.sendMessage((Player) e.getDamager(), CC.translate("&6+2 Mobcoins &7(Total: &f&n") + me.astropvp.cratekeys.data.getCoins() + CC.Gray + ")");
+                    ActionBarMessageUtils.sendMessage((Player) e.getDamager(), CC.translate("&6+2 Mobcoins &7(Total: &f&n") + data.getCoins() + CC.Gray + ")");
 
                 } else {
-                    //ActionBarMessageUtils.sendMessage((Player) e.getDamager(), CC.translate("&a+1 Mobcoin &7(Total: &f&n") + me.astropvp.cratekeys.data.getCoins() + CC.Gray + ")");
+                    ActionBarMessageUtils.sendMessage((Player) e.getDamager(), CC.translate("&a+1 Mobcoin &7(Total: &f&n") + data.getCoins() + CC.Gray + ")");
                     data.setCoins(data.getCoins() + 1);
 
                 }
 
             } else {
                 data.setCoins(data.getCoins() + 1);
-                //ActionBarMessageUtils.sendMessage((Player) e.getDamager(), CC.translate("&a+1 Mobcoin &7(Total: &f&n") + me.astropvp.cratekeys.data.getCoins() + CC.Gray + ")");
+                ActionBarMessageUtils.sendMessage((Player) e.getDamager(), CC.translate("&a+1 Mobcoin &7(Total: &f&n") + data.getCoins() + CC.Gray + ")");
 
             }
 
             if (p.getInventory().firstEmpty() != -1) {
-                if (isOnCosmicClient) {
-                    blazeLoot(p, 0.15);
-                } else {
-                    blazeLoot(p, 0.12);
-
-
-                }
+                    blazeLoot(p);
             }
 
 
             if (p.getItemInHand().getType() == Material.DIAMOND_SWORD && p.getItemInHand().getItemMeta().hasLore()) {
-                exp = exp + 100;
+                exp = exp + 50;
             }
 
             if (isOnCosmicClient) {
@@ -199,34 +197,22 @@ public class EntityStackerListener implements Listener {
         e.setCancelled(true);
     }
 
-    public void blazeLoot(Player p, double chance) {
+    public void blazeLoot(Player p) {
         if (p != null) {
             double num = Math.random();
             try {
 
-                if (num >= 0 && num <= chance) {
+                if (num >= 0 && num <= 0.02) {
                     if (GrindingMessagesUtil.isPlayerIndicating(p)) {
-                        p.sendMessage(CC.translate("&b&lGrinding &f&l➥ &a+ Grinding Lootbox"));
+                        p.sendMessage(CC.translate("&b&lGrinding &f&l➥ &a+ &e&lNova &f&lCrate Key"));
                     }
-                    //Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mc give " + player + " GrindingLootbox");
-                    p.getInventory().addItem(grindingLootbox);
+                    p.getInventory().addItem(stellarKey);
+                } else if (num >= 0 && num <= 0.05) {
+                    if (GrindingMessagesUtil.isPlayerIndicating(p)) {
+                        p.sendMessage(CC.translate("&b&lGrinding &f&l➥ &a+ &c&lStellar &f&lCrate Key"));
+                    }
+                    p.getInventory().addItem(novaKey);
                 }
-
-                /*else if (num >= 0 && num <= 0.15) {
-                    if (GrindingMessagesUtil.isPlayerIndicating(p)) {
-                        p.sendMessage(CC.translate("&b&lGrinding &f&l➥ &a+ Grinding Tier II Lootbox"));
-                    }
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mc give " + player + " Grinding2");
-
-                    return;
-                } else if (num >= 0 && num <= 0.20) {
-                    if (GrindingMessagesUtil.isPlayerIndicating(p)) {
-                        p.sendMessage(CC.translate("&b&lGrinding &f&l➥ &a+ Grinding Tier I Lootbox"));
-                    }
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mc give " + player + " Grinding1");
-                    return;
-                }*/
-
             } catch (IllegalArgumentException ex) {
             }
         }
