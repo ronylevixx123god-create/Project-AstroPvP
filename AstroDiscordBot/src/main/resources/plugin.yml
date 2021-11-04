@@ -1,0 +1,5 @@
+name: AstroDiscordBot
+main: me.astropvp.discordbot.AstroDiscordBotMain
+author: AstroPvP
+description: AstroPvP Discord Bot!
+version: 1.0

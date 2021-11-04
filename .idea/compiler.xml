@@ -35,6 +35,7 @@
         <module name="AstroEndGrinding" />
         <module name="Lootboxes" />
         <module name="AstroSpawnersMobcoins" />
+        <module name="AstroDiscordBot" />
         <module name="AuctionHouse" />
         <module name="Factions" />
         <module name="FactionBanners" />
