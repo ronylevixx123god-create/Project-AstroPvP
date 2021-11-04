@@ -64,9 +64,9 @@ public class MobGrinderRunnable extends BukkitRunnable {
 
                 //ADD LOOT TO THE CHEST
                 double chance = Math.random();
-                if (chance < 0.02) {
+                if (chance < 0.01) {
                     chest.getInventory().addItem(CoreSkulls.getStellarKey());
-                } else if (chance < 0.05) {
+                } else if (chance < 0.04) {
                     chest.getInventory().addItem(CoreSkulls.getNovaKey());
 
                 }

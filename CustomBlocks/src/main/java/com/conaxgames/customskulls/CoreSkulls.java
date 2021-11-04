@@ -115,7 +115,7 @@ public class CoreSkulls extends JavaPlugin {
     }
 
     private void registerTasks() {
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MobGrinderRunnable(), 15*20, 3);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MobGrinderRunnable(), 15*20, 4);
     }
 
 
