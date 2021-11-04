@@ -2,6 +2,7 @@ package net.astropvp.core.commands;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import net.astropvp.core.guis.ArmorColorGUI;
+import net.astropvp.core.guis.ChatColorGUI;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -24,8 +25,8 @@ public class ChatColorCommand implements CommandExecutor {
             return false;
         }
 
-        ArmorColorGUI armorColorGUI = new ArmorColorGUI(player);
-        armorColorGUI.open();
+        ChatColorGUI chatColorGUI = new ChatColorGUI(player);
+        chatColorGUI.open();
         player.sendMessage(CC.translate("&aOpening the chat color gui..."));
 
 
