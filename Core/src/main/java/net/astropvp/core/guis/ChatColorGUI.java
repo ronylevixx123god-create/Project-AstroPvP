@@ -22,7 +22,7 @@ public class ChatColorGUI extends GUIBuilder {
 
     @Override
     protected String getName() {
-        return CC.translate("&8Select a Color...");
+        return CC.translate("&7Select a Color...");
     }
 
     @Override
@@ -137,7 +137,7 @@ public class ChatColorGUI extends GUIBuilder {
     }
 
     public void setColor(Player player, ChatColor color) {
-        AstroCore.cachedColors.put(player, color);
+        AstroCore.getInstance().addCachedColor(player, color);
         player.sendMessage(CC.translate("&aYou changed your chat color..."));
     }
 

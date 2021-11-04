@@ -27,10 +27,10 @@ public class NebulaRank extends CosmicItem implements InventoryInteractable {
     }
 
     public ItemStack createItem(Player player, Object ... objects) {
-        ItemStack itemStack = this.applyItemData((new ItemBuilder(Material.NETHER_STAR, CC.translate("&d&l✪ &5&l&o&nN&f&l&o&ne&5&l&n&ob&f&l&n&ou&5&l&n&ol&f&l&n&oa&5&l RANK &f&l&oVoucher &d&l✪ &7(Right Click)")
+        ItemStack itemStack = this.applyItemData((new ItemBuilder(Material.NETHER_STAR, CC.translate("&d&l✪ &5&l&o&nN&d&l&o&ne&5&l&n&ob&d&l&n&ou&5&l&n&ol&d&l&n&oa&5&l RANK &f&l&oVoucher &d&l✪ &7(Right Click)")
                 , CC.Gray + ""
                 , CC.translate("&7&nRight-Click&7 to unlock"),
-                CC.translate("&7the &5N&fe&5o&fl&5l&fo &7rank on this server!"),
+                CC.translate("&7the &5N&de&5b&du&5l&da &7rank on this server!"),
                 CC.Gray + "",
                 CC.translate("&5&lNebula Perks"),
                 CC.translate("&5&l* &dAll Apollo Perks"),
@@ -39,7 +39,7 @@ public class NebulaRank extends CosmicItem implements InventoryInteractable {
                 CC.translate("&5&l* &dAccess to &f/chatcolor"),
                 CC.translate("&5&l* &dx3 Fly Boost"),
                 CC.translate("&5&l* &d1 Time Per Map Kit"),
-                CC.translate("&5&l* &dAccess to &f/chatcolor"),
+                CC.translate("&5&l* &dAccess to private giveaways"),
                 CC.translate("&5&l* &dAccess to &f/armorcolor"),
                 CC.translate("&5&l* &d5% Chance To Keep Lootbox"),
                 CC.translate("&5&l* &dNeblua Prefix"),

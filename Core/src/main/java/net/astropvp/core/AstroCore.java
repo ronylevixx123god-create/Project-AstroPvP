@@ -4,7 +4,6 @@ import com.astropvp.cc.player.CosmicPlayers;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.titles.cmds.CommandTitle;
 import com.cosmicpvp.titles.cmds.CommandTitleSet;
-import com.cosmicpvp.titles.listeners.ChatListener;
 import com.cosmicpvp.titles.listeners.PermissionListener;
 import com.cosmicpvp.titles.listeners.PlayerJoinQuitListener;
 import com.cosmicpvp.titles.listeners.TitleInventoryListener;
@@ -117,7 +116,15 @@ public class AstroCore extends JavaPlugin {
 
     public static Map<UUID, Player> grindingMessages;
 
-    public static HashMap<Player, ChatColor> cachedColors;
+    private HashMap<Player, ChatColor> cachedColors;
+
+    public HashMap<Player, ChatColor> getCachedColors() {
+        return this.cachedColors;
+    }
+
+    public void addCachedColor(Player player, ChatColor color) {
+        cachedColors.put(player, color);
+    }
 
 
     // ItemFilter
@@ -170,6 +177,8 @@ public class AstroCore extends JavaPlugin {
         setupEconomy();
         events();
         new LastManStandingCapTask().runTaskTimer(this, 20L, 20L);
+
+        cachedColors = new HashMap<>();
 
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new HeroicUpgrade());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new RogueScratchCard());
@@ -245,7 +254,6 @@ public class AstroCore extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new GrindingMessagesToggleListener(), this);
         this.getServer().getPluginManager().registerEvents(new DupePatch(), this);
         this.getServer().getPluginManager().registerEvents(new CustomPearlListener(), this);
-        this.getServer().getPluginManager().registerEvents(new ChatListener(), this);
 
 
         //This used to be sync!
@@ -337,7 +345,6 @@ public class AstroCore extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new Freeze(), this);
         this.getServer().getPluginManager().registerEvents(new RogueScratchCardListener(), this);
         this.getServer().getPluginManager().registerEvents(new ArmorColorClickListener(), this);
-        this.getServer().getPluginManager().registerEvents(new ChatListener(), this);
         this.getServer().getPluginManager().registerEvents(new BlockCommand(), this);
 
 
