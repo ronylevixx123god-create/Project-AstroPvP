@@ -104,7 +104,7 @@ public class SlotbotMachineGUIListener implements Listener {
                 int tickets = CosmicSlotBotAPI.getSlotsInInventory(p);
                 if (tickets == 0) {
                     e.setCancelled(true);
-                    p.sendMessage(CC.translate("&c&l(!)&c You have no slots in your me.astropvp.cratekeys.inventory!"));
+                    p.sendMessage(CC.translate("&c&l(!)&c You have no slots in your inventory!"));
                     return;
                 }
                 double price = tickets * 10000;
