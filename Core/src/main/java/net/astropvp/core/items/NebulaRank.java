@@ -27,26 +27,26 @@ public class NebulaRank extends CosmicItem implements InventoryInteractable {
     }
 
     public ItemStack createItem(Player player, Object ... objects) {
-        ItemStack itemStack = this.applyItemData((new ItemBuilder(Material.NETHER_STAR, CC.translate("&3&l✪ &5&l&o&nN&f&l&o&ne&5&l&n&ob&f&l&n&ou&5&l&n&ol&f&l&n&oa&5&l RANK &f&l&oVoucher &3&l✪ &7(Right Click)")
+        ItemStack itemStack = this.applyItemData((new ItemBuilder(Material.NETHER_STAR, CC.translate("&d&l✪ &5&l&o&nN&f&l&o&ne&5&l&n&ob&f&l&n&ou&5&l&n&ol&f&l&n&oa&5&l RANK &f&l&oVoucher &d&l✪ &7(Right Click)")
                 , CC.Gray + ""
                 , CC.translate("&7&nRight-Click&7 to unlock"),
                 CC.translate("&7the &5N&fe&5o&fl&5l&fo &7rank on this server!"),
                 CC.Gray + "",
                 CC.translate("&5&lNebula Perks"),
-                CC.translate("&5&l* &3All Apollo Perks"),
-                CC.translate("&5&l* &3x2 Xp Rates"),
-                CC.translate("&5&l* &3Access to Nebula /kit"),
-                CC.translate("&5&l* &3Access to &f/chatcolor"),
-                CC.translate("&5&l* &3x3 Fly Boost"),
-                CC.translate("&5&l* &31 Time Per Map Kit"),
-                CC.translate("&5&l* &3Access to &f/chatcolor"),
-                CC.translate("&5&l* &3Access to &f/armorcolor"),
-                CC.translate("&5&l* &35% Chance To Keep Lootbox"),
-                CC.translate("&5&l* &3Neblua Prefix"),
-                CC.translate("&5&l* &3Access To Nebula Shop"),
-                CC.translate("&5&l* &3and much more..."),
+                CC.translate("&5&l* &dAll Apollo Perks"),
+                CC.translate("&5&l* &dx2 Xp Rates"),
+                CC.translate("&5&l* &dAccess to Nebula /kit"),
+                CC.translate("&5&l* &dAccess to &f/chatcolor"),
+                CC.translate("&5&l* &dx3 Fly Boost"),
+                CC.translate("&5&l* &d1 Time Per Map Kit"),
+                CC.translate("&5&l* &dAccess to &f/chatcolor"),
+                CC.translate("&5&l* &dAccess to &f/armorcolor"),
+                CC.translate("&5&l* &d5% Chance To Keep Lootbox"),
+                CC.translate("&5&l* &dNeblua Prefix"),
+                CC.translate("&5&l* &dAccess To Nebula Shop"),
+                CC.translate("&5&l* &dand much more..."),
                 "",
-                CC.translate("&8[&3✬&8] &5obtained from &f&nbuy.astropvp.net&7 (&n/buy&7)")
+                CC.translate("&8[&d✬&8] &5obtained from &f&nbuy.astropvp.net&7 (&n/buy&7)")
 
         ).build())).build();
 
