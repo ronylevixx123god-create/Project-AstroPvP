@@ -15,7 +15,6 @@ package com.cosmicpvp.CosmicSpaceChests.tasks;
 
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsPlugin;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
-import org.arkhamnetwork.Arkkit.patches.chunkgc.ChunkAPI;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.Location;
@@ -34,7 +33,7 @@ implements Runnable {
     @Override
     public void run() {
         for (Location loc : CosmicSpaceChestsPlugin.chest_locations.keySet()) {
-            if (!ChunkAPI.isPlayerNearby(loc, 0)) continue;
+            if (loc.getWorld().getNearbyEntities(loc, 4, 4, 4).isEmpty()) continue;
             this.launchFirework(loc, CosmicSpaceChestsPlugin.chest_locations.getChestRarity(loc));
         }
     }

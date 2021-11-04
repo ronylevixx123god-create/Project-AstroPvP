@@ -2,9 +2,9 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.utils.CC
  *  com.google.common.collect.Lists
- *  me.ifamasssxd.factionupgrades.me.astropvp.cratekeys.utils.ItemBuilder
+ *  me.ifamasssxd.factionupgrades.utils.ItemBuilder
  *  org.apache.commons.lang.StringUtils
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
@@ -12,10 +12,10 @@
  *  org.bukkit.Sound
  *  org.bukkit.entity.Player
  *  org.bukkit.event.Event$Result
- *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
- *  org.bukkit.me.astropvp.cratekeys.inventory.Inventory
- *  org.bukkit.me.astropvp.cratekeys.inventory.InventoryHolder
- *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.event.inventory.InventoryClickEvent
+ *  org.bukkit.inventory.Inventory
+ *  org.bukkit.inventory.InventoryHolder
+ *  org.bukkit.inventory.ItemStack
  *  org.bukkit.plugin.Plugin
  *  org.bukkit.scheduler.BukkitRunnable
  *  org.bukkit.scheduler.BukkitTask
@@ -157,7 +157,7 @@ public class NewStakeInventory {
                 return;
             }
             if (p.getInventory().firstEmpty() == -1) {
-                p.sendMessage(ChatColor.RED + "Your me.astropvp.cratekeys.inventory is full.");
+                p.sendMessage(ChatColor.RED + "Your inventory is full.");
                 return;
             }
             this.modified = true;
@@ -173,8 +173,8 @@ public class NewStakeInventory {
                 return;
             }
             if (this.isFull(pt, this.inventory)) {
-                p.sendMessage(ChatColor.RED + "The Stake me.astropvp.cratekeys.inventory is full.");
-                p.sendMessage(ChatColor.RED + "Please remove some stake me.astropvp.cratekeys.items to make room.");
+                p.sendMessage(ChatColor.RED + "The Stake inventory is full.");
+                p.sendMessage(ChatColor.RED + "Please remove some stake items to make room.");
                 return;
             }
             this.modified = true;
@@ -250,7 +250,7 @@ public class NewStakeInventory {
                             duel.setCreateState(DuelCreateState.WAITING);
                             duel.duelState = DuelState.IN_QUEUE;
                             duel.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "This Arena currently has a queue of " + ChatColor.AQUA + ChatColor.BOLD.toString() + DuelAPI.getArenaQueueSize(duel.getArena()) + " Duel(s).", true);
-                            duel.sendMessage(ChatColor.GRAY + "You must wait for the current duels to be over or you can use '/duel leave' to retrieve your me.astropvp.cratekeys.items back.", true);
+                            duel.sendMessage(ChatColor.GRAY + "You must wait for the current duels to be over or you can use '/duel leave' to retrieve your items back.", true);
                             NewStakeInventory.this.p1.closeInventory();
                             NewStakeInventory.this.p2.closeInventory();
                             DuelAPI.queueDuel(duel.getArena(), duel);

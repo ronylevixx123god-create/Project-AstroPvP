@@ -14,7 +14,7 @@ public class LoadCustomBlocks {
     public static void load() {
 
         // Looping through all the files in a directory.
-        File directory = new File(CoreSkulls.getInstance().getDataFolder() + File.separator + "me.astropvp.cratekeys.data");
+        File directory = new File(CoreSkulls.getInstance().getDataFolder() + File.separator + "data");
         File[] files = directory.listFiles();
         if (files == null || files.length == 0) {
             return;

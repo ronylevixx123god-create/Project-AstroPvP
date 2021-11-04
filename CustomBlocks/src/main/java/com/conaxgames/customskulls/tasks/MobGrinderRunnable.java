@@ -19,9 +19,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 public class MobGrinderRunnable extends BukkitRunnable {
-    int delay = 1; //every x seconds it will kill a blaze and add shit to the chest
     int amountOfExpPerBlaze = 200;
-    ItemStack grinderLootbox = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("GrindingLootbox").createClaimableItem(false);
 
     @Override
     public void run() {
@@ -65,8 +63,12 @@ public class MobGrinderRunnable extends BukkitRunnable {
 
 
                 //ADD LOOT TO THE CHEST
-                if (Math.random() < 0.1) {
-                    chest.getInventory().addItem(grinderLootbox);
+                double chance = Math.random();
+                if (chance < 0.02) {
+                    chest.getInventory().addItem(CoreSkulls.getStellarKey());
+                } else if (chance < 0.05) {
+                    chest.getInventory().addItem(CoreSkulls.getNovaKey());
+
                 }
                 if (!chest.getInventory().contains(Material.EXP_BOTTLE)) {
                     chest.getInventory().addItem(ExpBottles.getXpBottle(amountOfExpPerBlaze, "Mob Grinder"));

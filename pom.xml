@@ -54,6 +54,7 @@
         <module>DiscordAPI</module>
         <module>Collectors</module>
         <module>AstroCrateKeys</module>
+        <module>AstroDiscordBot</module>
     </modules>
 
     <build>

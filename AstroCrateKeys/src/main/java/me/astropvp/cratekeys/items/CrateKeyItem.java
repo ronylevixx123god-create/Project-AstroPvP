@@ -7,6 +7,7 @@ import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 
 import me.astropvp.cratekeys.enums.CrateType;
 import net.minecraft.server.v1_8_R3.NBTBase;
+import org.arkhamnetwork.Arkkit.utils.ItemUtils;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -14,7 +15,7 @@ public class CrateKeyItem {
     public static ItemStack getItem(CrateType type) {
         if (type == null)
             return null;
-        ItemBuilder item = new ItemBuilder(Material.TRIPWIRE_HOOK);
+        ItemBuilder item = new ItemBuilder(Material.GOLD_NUGGET);
         item.setName(type.getPrefixedName());
         item.addLoreLine(CC.translate("&7Right-Click on a " + type.getPrefix() +type.getName() + " &7Crate to open."));
         item.addLoreLine("");
@@ -25,7 +26,7 @@ public class CrateKeyItem {
                 new NBTTagCompoundBuilder();
         tag.setString("crate_type", type.name());
         wrapper.setNBTBase("cosmicData", tag.get());
-        return wrapper.build();
+        return addGlow(wrapper.build());
     }
 
     public static CrateType getCrateType(ItemStack item) {
@@ -38,5 +39,9 @@ public class CrateKeyItem {
         if (!tag.hasKey("crate_type"))
             return null;
         return CrateType.valueOf(tag.getString("crate_type"));
+    }
+
+    public static ItemStack addGlow(ItemStack item) {
+        return new NBTWrapper(item).setGlowing().build();
     }
 }

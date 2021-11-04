@@ -15,7 +15,7 @@ import java.io.IOException;
 public class MakeCustomBlocks {
 
     public static void newFileItem(Player player, AbilityType abilityType, Block block, CustomBlock customBlock) {
-        File file = new File(CoreSkulls.getInstance().getDataFolder().toString() + "/me.astropvp.cratekeys.data/" + AbilityData.getUUID(block.getLocation()) + ".yml");
+        File file = new File(CoreSkulls.getInstance().getDataFolder().toString() + "/data/" + AbilityData.getUUID(block.getLocation()) + ".yml");
 
         if (!file.exists()) {
             try {

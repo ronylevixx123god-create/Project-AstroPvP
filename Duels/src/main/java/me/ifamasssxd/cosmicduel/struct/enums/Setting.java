@@ -24,7 +24,6 @@ public enum Setting {
     WEAPONS("Weapons", "%s the use of weapons.", Material.DIAMOND_SWORD, 0, true, true),
     FIX("/fix", "%s the use of /fix", Material.ANVIL, 0, true, false),
     FLY("/fly", "%s the use of /fly", Material.FEATHER, 0, false, false),
-    ENVOY("Cosmic Envoy", "Spawn in Envoys!", Material.FIREWORK, 0, false, false),
     PET("Pets", "Allows pets in the duel", Material.SKULL_ITEM, 0, false, false),
     SOUL_GEM("Soul Gems", "Allows soul gems in the duel.", Material.EMERALD, 0, true, true),
     DEATH_CERT("Death Certificates", "Toggle death certificate drops.", Material.PAPER, 0, true, false);

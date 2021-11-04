@@ -12,7 +12,7 @@ public class CratePlacementItem {
     public static ItemStack getItem(CrateType type) {
         if (type == null)
             return null;
-        ItemBuilder item = new ItemBuilder(Material.CHEST);
+        ItemBuilder item = new ItemBuilder(Material.JUKEBOX);
         item.setName(String.valueOf(type.getPrefixedName()) + " Crate");
         item.addLoreLine(String.valueOf(CC.Gray) + "Right-Click to place crate.");
         ItemStack built = item.build();

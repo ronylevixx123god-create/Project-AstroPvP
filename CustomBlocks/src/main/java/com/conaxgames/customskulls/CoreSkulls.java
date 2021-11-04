@@ -14,10 +14,13 @@ import com.conaxgames.customskulls.util.inventoryui.UIListener;
 import lombok.Getter;
 import me.astropvp.astrospawners.AstroSpawners;
 import me.astropvp.astrospawners.utils.MobStackerUtils;
+import me.astropvp.cratekeys.enums.CrateType;
+import me.astropvp.cratekeys.items.CrateKeyItem;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -34,6 +37,10 @@ public class CoreSkulls extends JavaPlugin {
     public static Map<String, CustomBlock> customBlocks = new HashMap<>();
     private static Field bukkitCommand;
     @Getter private static Economy economy = null;
+    @Getter
+    private static final ItemStack novaKey = CrateKeyItem.getItem(CrateType.NOVA);
+    @Getter
+    private static final ItemStack stellarKey = CrateKeyItem.getItem(CrateType.STELLAR);
 
     public static Map<UUID, AbilityData> inSlotbotMachine;
     public static MobStackerUtils mobStackerUtils;
@@ -44,10 +51,10 @@ public class CoreSkulls extends JavaPlugin {
         instance = this;
         getConfig().options().copyDefaults(true);
         saveConfig();
-        File file = new File(this.getDataFolder() + File.separator + "me.astropvp.cratekeys.data");
+        File file = new File(this.getDataFolder() + File.separator + "data");
         if(!file.exists()) {
             file.mkdir();
-            info("Successfully made directory /me.astropvp.cratekeys.data/ :)");
+            info("Successfully made directory /data/ :)");
         }
 
         if (!setupEconomy() ) {

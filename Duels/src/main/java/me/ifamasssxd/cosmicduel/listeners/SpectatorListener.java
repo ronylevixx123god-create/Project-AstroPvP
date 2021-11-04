@@ -17,13 +17,13 @@
  *  org.bukkit.event.entity.FoodLevelChangeEvent
  *  org.bukkit.event.entity.PotionSplashEvent
  *  org.bukkit.event.entity.ProjectileLaunchEvent
- *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
- *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryType$SlotType
+ *  org.bukkit.event.inventory.InventoryClickEvent
+ *  org.bukkit.event.inventory.InventoryType$SlotType
  *  org.bukkit.event.player.PlayerCommandPreprocessEvent
  *  org.bukkit.event.player.PlayerDropItemEvent
  *  org.bukkit.event.player.PlayerInteractEvent
  *  org.bukkit.event.player.PlayerPickupItemEvent
- *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.inventory.ItemStack
  *  org.bukkit.plugin.Plugin
  *  org.bukkit.potion.PotionEffect
  *  org.bukkit.scheduler.BukkitRunnable
@@ -94,7 +94,7 @@ implements Listener {
             }
             e.setMessage("/null");
             e.setCancelled(true);
-            p.sendMessage((Object)ChatColor.RED + "You cannot use me.astropvp.cratekeys.commands while spectating.");
+            p.sendMessage((Object)ChatColor.RED + "You cannot use commands while spectating.");
             p.sendMessage((Object)ChatColor.GRAY + "You can leave the duel with /duel leave.");
         }
     }

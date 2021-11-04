@@ -12,7 +12,7 @@ import me.astropvp.cratekeys.managers.CrateDataManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.Chest;
+import org.bukkit.block.Jukebox;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -34,7 +34,7 @@ public class CrateLogicListener implements Listener {
         final Block block = event.getBlock();
         Bukkit.getScheduler().runTaskLater((Plugin) AstroCrateKeysPlugin.getInstance(), (Runnable)new BukkitRunnable() {
             public void run() {
-                block.getLocation().getBlock().setType(Material.CHEST);
+                block.getLocation().getBlock().setType(Material.JUKEBOX);
             }
         },  1L);
         CrateDataManager.newInstance(type, block.getLocation());
@@ -44,9 +44,9 @@ public class CrateLogicListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onBreak(BlockBreakEvent event) {
         Block block = event.getBlock();
-        if (!(block.getState() instanceof Chest))
+        if (!(block.getState() instanceof Jukebox))
             return;
-        Chest chest = (Chest)block.getState();
+        Jukebox chest = (Jukebox) block.getState();
         CrateData data = AstroCrateKeysAPI.findCrate(chest.getLocation());
         if (data == null)
             return;
@@ -59,9 +59,9 @@ public class CrateLogicListener implements Listener {
             return;
         Player player = event.getPlayer();
         Block block = event.getClickedBlock();
-        if (!(block.getState() instanceof Chest))
+        if (!(block.getState() instanceof Jukebox))
             return;
-        Chest chest = (Chest)block.getState();
+        Jukebox chest = (Jukebox) block.getState();
         CrateData data = AstroCrateKeysAPI.findCrate(chest.getLocation());
         if (data == null)
             return;

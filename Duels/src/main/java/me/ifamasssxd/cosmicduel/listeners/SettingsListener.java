@@ -137,7 +137,7 @@ implements Listener {
     @EventHandler(priority=EventPriority.HIGH, ignoreCancelled=true)
     public void onPlayerPickup(PlayerPickupItemEvent e) {
         NewDuel d;
-        if (DuelAPI.hasDuel(e.getPlayer()) && DuelAPI.isDuelValid(d = DuelAPI.getDuel(e.getPlayer())) && !d.getSettings().hasSetting(Setting.ENVOY)) {
+        if (DuelAPI.hasDuel(e.getPlayer()) && DuelAPI.isDuelValid(d = DuelAPI.getDuel(e.getPlayer()))) {
             e.setCancelled(true);
         }
     }
@@ -157,7 +157,7 @@ implements Listener {
     public void onPlayerDrop(PlayerDropItemEvent e) {
         NewDuel d;
         Player player = e.getPlayer();
-        if (DuelAPI.hasDuel(player) && DuelAPI.isDuelValid(d = DuelAPI.getDuel(player)) && (!d.getSettings().hasSetting(Setting.ENVOY) || d.getArena() != null && !d.getArena().getSpawnLocations().get(0).getWorld().getName().equals(player.getWorld().getName()))) {
+        if (DuelAPI.hasDuel(player) && DuelAPI.isDuelValid(d = DuelAPI.getDuel(player))  && d.getArena() != null && !d.getArena().getSpawnLocations().get(0).getWorld().getName().equals(player.getWorld().getName())) {
             if (e.getItemDrop().getItemStack().getType() == Material.GLASS_BOTTLE) {
                 e.getItemDrop().remove();
                 return;

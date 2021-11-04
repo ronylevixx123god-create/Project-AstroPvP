@@ -7,6 +7,11 @@
       <option name="url" value="https://jitpack.io" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="jcenter" />
+      <option name="name" value="jcenter-bintray" />
+      <option name="url" value="https://jcenter.bintray.com" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="codemc-repo" />
       <option name="name" value="codemc-repo" />
       <option name="url" value="https://repo.codemc.io/repository/maven-public/" />
