@@ -4,6 +4,7 @@ import com.astropvp.cc.player.CosmicPlayers;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.titles.cmds.CommandTitle;
 import com.cosmicpvp.titles.cmds.CommandTitleSet;
+import com.cosmicpvp.titles.listeners.ChatListener;
 import com.cosmicpvp.titles.listeners.PermissionListener;
 import com.cosmicpvp.titles.listeners.PlayerJoinQuitListener;
 import com.cosmicpvp.titles.listeners.TitleInventoryListener;
@@ -210,6 +211,7 @@ public class AstroCore extends JavaPlugin {
         this.grindingMessages = new HashMap<>();
 
 
+        this.getServer().getPluginManager().registerEvents(new ChatListener(), this);
 
         this.getServer().getPluginManager().registerEvents(new SlotbotScratchCardListener(), this);
         this.getServer().getPluginManager().registerEvents(new TrapBlockListener(), this);
