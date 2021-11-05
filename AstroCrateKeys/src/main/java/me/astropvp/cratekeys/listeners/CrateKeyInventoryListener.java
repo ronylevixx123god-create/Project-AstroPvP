@@ -47,19 +47,24 @@ public class CrateKeyInventoryListener implements Listener {
 
             if (CrateKeyItem.getCrateType(player.getItemInHand()) != data.getCrateType()) {
                 player.sendMessage(CC.translate("&c&l(!)&c This is not the correct crate type. You need to click the " + CrateKeyItem.getCrateType(player.getItemInHand()).getPrefix() +
-                        CC.Bold +       CrateKeyItem.getCrateType(player.getItemInHand()).getName() + CC.Bold + "&f&l Crate&c to open this key."));
+                        CC.Bold + CrateKeyItem.getCrateType(player.getItemInHand()).getName() + CC.Bold + "&f&l Crate&c to open this key."));
+                event.setCancelled(true);
+                return;
+            }
+            if (isPlayerInventoryFull(player)) {
+                player.sendMessage(CC.translate("&cYour inventory is full. Clear some space before opening more keys!"));
                 event.setCancelled(true);
                 return;
             }
             addItemToPlayer(player, ConfigUtils.getRandomItem(AstroCrateKeysAPI.getItems(CrateKeyItem.getCrateType(player.getItemInHand()))));
 
-            if(player.getItemInHand().getAmount() > 1) {
+            if (player.getItemInHand().getAmount() > 1) {
                 player.getItemInHand().setAmount(player.getItemInHand().getAmount() - 1);
             } else {
                 player.setItemInHand((ItemStack) null);
             }
 
-            player.playSound(player.getLocation(),Sound.NOTE_BASS,1,1 );
+            player.playSound(player.getLocation(), Sound.NOTE_BASS, 1, 1);
 
 
             event.setCancelled(true);
@@ -83,11 +88,8 @@ public class CrateKeyInventoryListener implements Listener {
     public static void addItemToPlayer(Player player, ItemStack item) {
         if (item == null || item.getType() == Material.AIR)
             return;
-        if (isPlayerInventoryFull(player)) {
-            player.sendMessage(CC.translate("&cYour inventory is full. Clear some space before opening more keys!"));
-        } else {
-            player.getInventory().addItem(item);
-        }
+        player.getInventory().addItem(item);
     }
 }
+
 
