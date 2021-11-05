@@ -60,6 +60,14 @@ public class ServerFixes implements Listener {
     }
 
     @EventHandler
+    public void onPlayerFall(EntityDamageEvent e) {
+        if (e.getEntity() instanceof Player) {
+            if (e.getCause() == EntityDamageEvent.DamageCause.DROWNING)
+                e.setCancelled(true);
+        }
+    }
+
+    @EventHandler
     public void preventBlockGlitch(BlockPlaceEvent event) {
         if (!event.isCancelled()) return;
 
