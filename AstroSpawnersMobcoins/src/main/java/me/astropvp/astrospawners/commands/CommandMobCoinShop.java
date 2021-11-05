@@ -57,6 +57,10 @@ public class CommandMobCoinShop implements CommandExecutor {
                 values.put(((MysteryChest)chests.get("Slotbot")).createClaimableItem(false), Integer.valueOf(2000));
             if (chests.containsKey("CrateKeyBundle"))
                 values.put(((MysteryChest)chests.get("CrateKeyBundle")).createClaimableItem(false), Integer.valueOf(800));
+            if (chests.containsKey("NewGenSkin"))
+                values.put(((MysteryChest)chests.get("NewGenSkin")).createClaimableItem(false), Integer.valueOf(800));
+            if (chests.containsKey("Backpack"))
+                values.put(((MysteryChest)chests.get("Backpack")).createClaimableItem(false), Integer.valueOf(800));
         } else {
             if (chests.containsKey("PremadeMeta"))
                 values.put(((MysteryChest)chests.get("PremadeMeta")).createClaimableItem(false), Integer.valueOf(2500));
@@ -64,6 +68,10 @@ public class CommandMobCoinShop implements CommandExecutor {
                 values.put(((MysteryChest)chests.get("Slotbot")).createClaimableItem(false), Integer.valueOf(2500));
             if (chests.containsKey("CrateKeyBundle"))
                 values.put(((MysteryChest)chests.get("CrateKeyBundle")).createClaimableItem(false), Integer.valueOf(1000));
+            if (chests.containsKey("NewGenSkin"))
+                values.put(((MysteryChest)chests.get("NewGenSkin")).createClaimableItem(false), Integer.valueOf(1000));
+            if (chests.containsKey("Backpack"))
+                values.put(((MysteryChest)chests.get("Backpack")).createClaimableItem(false), Integer.valueOf(1000));
 
         }
 

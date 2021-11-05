@@ -32,7 +32,7 @@ import java.util.HashMap;
 
 public class GiveAllManager {
     private static long nextGiveAll = 2400;
-    private static MysteryChest giveAllItem = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("MysteryLootbox");
+    private static MysteryChest giveAllItem = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("CrateKeyBundle");
 
     public static long getNextGiveAll() {
         return nextGiveAll;
@@ -55,7 +55,7 @@ public class GiveAllManager {
                 }
             }
             p.sendMessage("");
-            p.sendMessage(CC.translate("&3&l(&b&lCOLLECT&3&l)&b The Auto Giveall Lootbox has been put into your &f/collect&b."));
+            p.sendMessage(CC.translate("&3&l(&b&lCOLLECT&3&l)&b The Auto Giveall Loot has been put into your &f/collect&b."));
             p.sendMessage("");
             if (b) {
                 ItemStack[] items = giveall.getItems();
@@ -67,7 +67,7 @@ public class GiveAllManager {
 
                 ItemStack[] items = new ItemStack[1];
                 items[0] = giveAllItem.createClaimableItem(false);
-                collect.add(new CollectCategory(CollectType.GIVEALL, items, CC.YellowB + "Auto Giveall Lootboxes"));
+                collect.add(new CollectCategory(CollectType.GIVEALL, items, CC.YellowB + "Auto Giveall Loot"));
             }
             nextGiveAll = 2400;
         }

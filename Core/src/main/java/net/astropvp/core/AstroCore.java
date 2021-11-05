@@ -230,6 +230,10 @@ public class AstroCore extends JavaPlugin {
             titleManagerAPI = (TitleManagerAPI) Bukkit.getServer().getPluginManager().getPlugin("TitleManager");
         }
 
+        this.getServer().getScheduler().runTaskLater(this, ()-> {
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "citizens reload");
+        },150L);
+
 
         this.commandHelp = new CommandHelp();
         if (commandHelp.isEnchantsEnabled()) {
