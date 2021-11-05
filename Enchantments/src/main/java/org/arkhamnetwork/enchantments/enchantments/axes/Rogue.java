@@ -63,8 +63,10 @@ public class Rogue extends CustomEnchantment {
                 return;
             }
             double damage = e.getDamage();
-            if (EnchantmentAPI.getEnchantments(((Player) e.getEntity()).getKiller().getEquipment().getItemInHand()).containsKey(EnchantmentAPI.getEnchantment("Soul Master"))) {
-                double soulMasterLevel = EnchantmentAPI.getEnchantments(((Player) e.getEntity()).getKiller().getEquipment().getItemInHand()).get(EnchantmentAPI.getEnchantment("Soul Master"));
+            if (!(e.getDamager() instanceof Player)) return;
+            if (((Player) e.getDamager()).getItemInHand() == null) return;
+            if (EnchantmentAPI.getEnchantments(((Player)e.getDamager()).getItemInHand()).containsKey(EnchantmentAPI.getEnchantment("Soul Master"))) {
+                double soulMasterLevel = EnchantmentAPI.getEnchantments(((Player)e.getDamager()).getItemInHand()).get(EnchantmentAPI.getEnchantment("Soul Master"));
                 damage*=(((2 * soulMasterLevel)/100) + 1);
             }
 

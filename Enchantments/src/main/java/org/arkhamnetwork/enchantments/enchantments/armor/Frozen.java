@@ -41,7 +41,7 @@ public class Frozen extends CustomEnchantment {
             }
             DamageIndicatorUtils.sendDamageIndicator((Player) attacker, CC.AquaB + "* FROZEN " + CC.Gray + "[" + time*20 + "s]" + CC.AquaB + " *" + CC.AquaB +  "*", "FROZEN");
 
-            attacker.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, time * 20, amp));
+            //attacker.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, time * 20, amp));
             final Location l = player.getLocation();
         }
     }

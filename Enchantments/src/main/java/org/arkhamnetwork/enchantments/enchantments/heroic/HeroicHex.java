@@ -41,9 +41,6 @@ public class HeroicHex extends HeroicCustomEnchantment {
         if (!(playerHit instanceof Player)) {
             return;
         }
-        if (GeneralCooldown.isOnGeneralCooldown((Player) player)) {
-            return;
-        }
         if (isHexed(playerHit))
             return;
         final double random = Math.random();

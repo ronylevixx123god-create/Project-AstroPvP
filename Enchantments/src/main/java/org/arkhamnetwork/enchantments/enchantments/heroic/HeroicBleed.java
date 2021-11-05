@@ -56,9 +56,7 @@ public class HeroicBleed extends HeroicCustomEnchantment {
 
     @SneakyThrows
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
-        if (GeneralCooldown.isOnGeneralCooldown((Player) user)) {
-            return;
-        }
+
         if (!event.isCancelled() && event.getDamage(EntityDamageEvent.DamageModifier.BASE) > 0.0D && user instanceof Player) {
             double bleedChance = 0.08D * enchantLevel + 0.4D;
             if (Math.random() < bleedChance && getBleedStack(target) < getMaxBleedStack(enchantLevel))

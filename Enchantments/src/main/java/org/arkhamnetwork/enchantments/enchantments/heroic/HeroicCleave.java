@@ -34,9 +34,7 @@ public class HeroicCleave extends HeroicCustomEnchantment {
         if (player.hasMetadata("previous_cleave_use") && System.currentTimeMillis() - player.getMetadata("previous_cleave_use").get(0).asLong() <= 1500L) {
             return;
         }
-        if (GeneralCooldown.isOnGeneralCooldown((Player) player)) {
-            return;
-        }
+
         if (player.hasMetadata("skullSplitterProc") && System.currentTimeMillis() - player.getMetadata("skullSplitterProc").get(0).asLong() <= 1000L) {
             return;
         }

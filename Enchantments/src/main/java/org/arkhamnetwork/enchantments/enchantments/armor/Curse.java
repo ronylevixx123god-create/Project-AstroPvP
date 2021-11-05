@@ -21,7 +21,6 @@ public class Curse extends CustomEnchantment {
         if (random < chance && e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK && attacker != null) {
             player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 30 * level, 1));
             player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 30 * level, 1));
-            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * level, 1));
         }
     }
 }

@@ -33,7 +33,7 @@ public class HeroicArmored extends HeroicCustomEnchantment {
                 Blessed.blessPlayer((Player)player);
             }
         }
-        double damage_negation = level * 0.04D;
+        double damage_negation = level * 0.025D;
         if (attacker instanceof Player) {
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2021_BELT))

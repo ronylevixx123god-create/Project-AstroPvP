@@ -73,13 +73,13 @@ public class RocketEscape extends CustomEnchantment {
                 }
                 if (AstroItemSkinsAPI.hasSkinEquipped(pl, SkinType.HALLOWEEN_BACKPACK) && (!GoldenAdmirer.isAdmirerSilenced(pl))) {
                     pl.playSound(pl.getLocation(), Sound.ANVIL_BREAK, 5, 5);
-                    pl.sendMessage(CC.translate("&6&l* CURSED WINGS BLOCKED &nROCKET ESCAPE&r &7[") + attacker.getKiller().getName() + CC.translate("&7] &6&l*"));
+                    pl.sendMessage(CC.translate("&6&l* CURSED WINGS BLOCKED &nROCKET ESCAPE&r &6&l*"));
                     return;
                 }
 
                 if (AstroItemSkinsAPI.hasSkinEquipped(pl, SkinType.CHRISTMAS_HELMET_STAR)) {
                     pl.playSound(pl.getLocation(), Sound.ANVIL_BREAK, 5, 5);
-                    pl.sendMessage(CC.translate("&a&l* NORTH STAR BLOCKED &nROCKET ESCAPE&r &7[") + attacker.getKiller().getName() + CC.translate("&7] &a&l*"));
+                    pl.sendMessage(CC.translate("&a&l* NORTH STAR BLOCKED &nROCKET ESCAPE&r &a&l*"));
                     return;
                 }
                 e.setCancelled(true);

@@ -37,15 +37,13 @@ public class MasteryBlackout extends CustomEnchantment {
 
         Player pTarget = (Player) target;
 
-        if (GeneralCooldown.isOnGeneralCooldown((Player) user)) {
-            return;
-        }
+
 
         if (AstroItemSkinsAPI.hasSkinEquipped(((Player) user).getPlayer(), SkinType.SUMMER_2021_SWORD)) {
             enchantLevel = 5;
         }
 
-        if (Math.random() <= 0.004D * enchantLevel) {
+        if (Math.random() <= 0.008D * enchantLevel) {
             int multi = AstroItemSkinsAPI.hasSkinEquipped((Player) user, SkinType.CORRUPT_SWORD) ? 2 : 1;
             if (AstroItemSkinsAPI.hasSkinEquipped(pTarget.getPlayer(), SkinType.CHRISTMAS_HELMET_STAR)) {
                 multi = 1;

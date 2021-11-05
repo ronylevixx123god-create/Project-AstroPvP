@@ -9,17 +9,20 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class OpeningCombo extends MasteryCustomEnchantment {
+    private static List<Player> openingComboCooldowns;
+
     public OpeningCombo() {
         super("Opening Combo", GeneralUtil.weapons, 10);
         this.max = 5;
         activePlayers = new HashMap<>();
+        openingComboCooldowns = new ArrayList<>();
     }
 
-    private static List<Player> openingComboCooldowns;
 
     private static HashMap<Player, Integer> activePlayers;
 

@@ -64,7 +64,6 @@ public class Bleed extends CustomEnchantment {
         final int bleedStack = getBleedStack(le) / 2;
         if (le instanceof Player) {
             final Player p = (Player) le;
-            //p.setWalkSpeed((float) (0.20000000298023224 - 0.005 * bleedStack));
             for (final Entity ent : p.getNearbyEntities(7.0, 7.0, 7.0)) {
                 if (ent.getEntityId() == leDamager.getEntityId()) {
                     continue;
@@ -102,7 +101,9 @@ public class Bleed extends CustomEnchantment {
                 le.sendMessage(CC.translate("&c&l* SNOWFLAKE FLIPPERS &7Blocked Slow Effect &c&l*"));
                 return;
             }
-            le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, bleedStack * 20, Math.max(1, bleedStack / 3)));
+            if (Math.random() <0.2) {
+                le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, bleedStack * 20, Math.max(1, bleedStack / 3)));
+            }
         }
         Bleed.playBleedEffect(le.getLocation().add(0.0, 1.0, 0.0), bleedStack);
     }

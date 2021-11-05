@@ -21,9 +21,7 @@ public class HeroicInsanity extends CustomEnchantment {
         if (!enemyHasSword) {
             return;
         }
-        if (GeneralCooldown.isOnGeneralCooldown((Player) player)) {
-            return;
-        }
+
         final double mod = 1.0 + 0.04 * level;
         e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * mod);
         GeneralCooldown.enterCooldown((Player) player);

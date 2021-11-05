@@ -23,7 +23,8 @@ public class Poison extends CustomEnchantment {
         final double random = Math.random();
         final double chance = 0.1 * enchantLevel;
         if (random < chance) {
-            DamageIndicatorUtils.sendDamageIndicator((Player) target, CC.YellowB + "* POISON *", "POISON");
+            if (target instanceof Player)
+                DamageIndicatorUtils.sendDamageIndicator((Player) target, CC.YellowB + "* POISON *", "POISON");
             target.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 3, enchantLevel - 1));
         }
     }

@@ -29,16 +29,14 @@ public class DoubleStrike extends CustomEnchantment {
     @SneakyThrows
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
         double random = Math.random();
-        double chance = 0.02D * level;
+        double chance = 0.05D * level;
         if (random < chance) {
             double dmg = VanillaDamageListener.getLastFinalDamage((Entity) playerHit);
             if (dmg == 0.0D)
                 dmg = e.getDamage(EntityDamageEvent.DamageModifier.BASE);
             final double fdmg = dmg;
             Player pp = (Player) e.getDamager();
-            if (GeneralCooldown.isOnGeneralCooldown(pp)) {
-                return;
-            }
+
             Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), new Runnable() {
                 public void run() {
                     if (!playerHit.isDead() && playerHit.getHealth() > 0.0D) {

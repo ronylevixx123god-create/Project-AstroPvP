@@ -61,9 +61,7 @@ public class HeroicDeathbringer extends CustomEnchantment {
                 return;
             }
             Entity damage = e.getDamager();
-            if (GeneralCooldown.isOnGeneralCooldown((Player) damage)) {
-                return;
-            }
+
             if (doubleDamage.contains(damage)) {
                 double random = Math.random();
                 double chance = 0.025D;

@@ -25,22 +25,22 @@ public class GrinderArmorSet extends ArmorSetInfo
         implements WeaponedArmorSet {
     @Override
     public ItemStack getHelmet(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_HELMET, (short) 0, "&8&lGrinder Helmet", "&8The Old School Grinder Helmet.", "", "&8&lGRINDER SET BONUS", "&8150% Extra Exp.", "&8Chance to gain x2 Mobcoins", "&7(&oRequires all 4 grinder me.astropvp.cratekeys.items.&7)"), Arrays.asList(EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Drunk"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Implants"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Angelic"))));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_HELMET, (short) 0, "&8&lGrinder Helmet", "&8The Old School Grinder Helmet.", "", "&8&lGRINDER SET BONUS", "&8150% Extra Exp.", "&8Chance to gain x2 Mobcoins", "&7(&oRequires all 4 grinder items.&7)"), Arrays.asList(EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Drunk"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Implants"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Angelic"))));
     }
 
     @Override
     public ItemStack getChestplate(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_CHESTPLATE, (short) 0, "&8&lGrinder Chestplate", "&8The Old School Grinder Chestplate.", "", "&8&lGRINDER SET BONUS", "&8150% Extra Exp.", "&8Chance to gain x2 Mobcoins", "&7(&oRequires all 4 grinder me.astropvp.cratekeys.items.&7)"), Arrays.asList(EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Drunk"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Implants"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Angelic"))));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_CHESTPLATE, (short) 0, "&8&lGrinder Chestplate", "&8The Old School Grinder Chestplate.", "", "&8&lGRINDER SET BONUS", "&8150% Extra Exp.", "&8Chance to gain x2 Mobcoins", "&7(&oRequires all 4 grinder items.&7)"), Arrays.asList(EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Drunk"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Implants"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Angelic"))));
     }
 
     @Override
     public ItemStack getLeggings(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_LEGGINGS, (short) 0, "&8&lGrinder Leggings", "&8The Old School Grinder Leggings.", "", "&8&lGRINDER SET BONUS", "&8150% Extra Exp.",  "&8Chance to gain x2 Mobcoins", "&7(&oRequires all 4 grinder me.astropvp.cratekeys.items.&7)"), Arrays.asList(EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Drunk"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Implants"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Angelic"))));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_LEGGINGS, (short) 0, "&8&lGrinder Leggings", "&8The Old School Grinder Leggings.", "", "&8&lGRINDER SET BONUS", "&8150% Extra Exp.",  "&8Chance to gain x2 Mobcoins", "&7(&oRequires all 4 grinder items.&7)"), Arrays.asList(EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Drunk"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Implants"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Angelic"))));
     }
 
     @Override
     public ItemStack getBoots(boolean applyTransmog) {
-        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_BOOTS, (short) 0,  "&8&lGrinder Chestplate", "&8The Old School Grinder Boots.", "", "&8&lGRINDER SET BONUS", "&8150% Extra Exp.", "&8Chance to gain x2 Mobcoins", "&7(&oRequires all 4 grinder me.astropvp.cratekeys.items.&7)"), Arrays.asList(EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Drunk"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Implants"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Angelic"))));
+        return this.getWithTransmog(applyTransmog, ItemUtils.applyCustomEnchantments(ItemUtils.buildItem(Material.DIAMOND_BOOTS, (short) 0,  "&8&lGrinder Chestplate", "&8The Old School Grinder Boots.", "", "&8&lGRINDER SET BONUS", "&8150% Extra Exp.", "&8Chance to gain x2 Mobcoins", "&7(&oRequires all 4 grinder items.&7)"), Arrays.asList(EnchantmentAPI.getEnchantment("Deathbringer"), EnchantmentAPI.getEnchantment("Drunk"), EnchantmentAPI.getEnchantment("Enlighted"), EnchantmentAPI.getEnchantment("Implants"), EnchantmentAPI.getEnchantment("Tank"), EnchantmentAPI.getEnchantment("Armored"), EnchantmentAPI.getEnchantment("Angelic"))));
     }
 
     @Override
@@ -75,7 +75,7 @@ public class GrinderArmorSet extends ArmorSetInfo
 
     @Override
     public ItemStack getWeapon(boolean applyTransmog) {
-        return new NBTWrapper(new ItemBuilder(Material.DIAMOND_SWORD, CC.RedB + "Phantom Scythe", CC.Gray + "An eerie blade designed to", CC.Gray + "cut through the enemies.", "", CC.RedB + "PHANTOM WEAPON BONUS", CC.Red + "Deal +10% damage to all enemies.", CC.Gray + "(" + CC.GrayI + "Requires all 4 phantom me.astropvp.cratekeys.items." + CC.Gray + ")").enchant(Enchantment.DAMAGE_ALL, 5).enchant(Enchantment.DURABILITY, 3).build()).setString("cosmicType", "PHANTOM_SWORD").build();
+        return new NBTWrapper(new ItemBuilder(Material.DIAMOND_SWORD, CC.RedB + "Phantom Scythe", CC.Gray + "An eerie blade designed to", CC.Gray + "cut through the enemies.", "", CC.RedB + "PHANTOM WEAPON BONUS", CC.Red + "Deal +10% damage to all enemies.", CC.Gray + "(" + CC.GrayI + "Requires all 4 phantom items." + CC.Gray + ")").enchant(Enchantment.DAMAGE_ALL, 5).enchant(Enchantment.DURABILITY, 3).build()).setString("cosmicType", "PHANTOM_SWORD").build();
     }
 }
 
