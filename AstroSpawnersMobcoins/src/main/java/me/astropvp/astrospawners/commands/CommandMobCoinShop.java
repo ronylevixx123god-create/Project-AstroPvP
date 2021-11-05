@@ -51,31 +51,19 @@ public class CommandMobCoinShop implements CommandExecutor {
         String rank = PermissionsAPI.getPermissionUser(((Player) sender).getPlayer().getUniqueId()).getGroup();
 
         if (rank.equals("apollo")) {
-            if (chests.containsKey("SPED"))
-                values.put(((MysteryChest)chests.get("SPED")).createClaimableItem(false), Integer.valueOf(1200));
-            if (chests.containsKey("SYKE"))
-                values.put(((MysteryChest)chests.get("SYKE")).createClaimableItem(false), Integer.valueOf(1200));
-            if (chests.containsKey("KDMP"))
-                values.put(((MysteryChest)chests.get("KDMP")).createClaimableItem(false), Integer.valueOf(1200));
-            if (chests.containsKey("PSYD"))
-                values.put(((MysteryChest)chests.get("PSYD")).createClaimableItem(false), Integer.valueOf(1200));
-            if (chests.containsKey("KDDP"))
-                values.put(((MysteryChest)chests.get("KDDP")).createClaimableItem(false), Integer.valueOf(1200));
-            if (chests.containsKey("EDDY"))
-                values.put(((MysteryChest)chests.get("EDDY")).createClaimableItem(false), Integer.valueOf(1200));
+            if (chests.containsKey("PremadeMeta"))
+                values.put(((MysteryChest)chests.get("PremadeMeta")).createClaimableItem(false), Integer.valueOf(2000));
+            if (chests.containsKey("Slotbot"))
+                values.put(((MysteryChest)chests.get("Slotbot")).createClaimableItem(false), Integer.valueOf(2000));
+            if (chests.containsKey("CrateKeyBundle"))
+                values.put(((MysteryChest)chests.get("CrateKeyBundle")).createClaimableItem(false), Integer.valueOf(800));
         } else {
-            if (chests.containsKey("SPED"))
-                values.put(((MysteryChest)chests.get("SPED")).createClaimableItem(false), Integer.valueOf(1500));
-            if (chests.containsKey("SYKE"))
-                values.put(((MysteryChest)chests.get("SYKE")).createClaimableItem(false), Integer.valueOf(1500));
-            if (chests.containsKey("KDMP"))
-                values.put(((MysteryChest)chests.get("KDMP")).createClaimableItem(false), Integer.valueOf(1500));
-            if (chests.containsKey("PSYD"))
-                values.put(((MysteryChest)chests.get("PSYD")).createClaimableItem(false), Integer.valueOf(1500));
-            if (chests.containsKey("KDDP"))
-                values.put(((MysteryChest)chests.get("KDDP")).createClaimableItem(false), Integer.valueOf(1500));
-            if (chests.containsKey("EDDY"))
-                values.put(((MysteryChest)chests.get("EDDY")).createClaimableItem(false), Integer.valueOf(1500));
+            if (chests.containsKey("PremadeMeta"))
+                values.put(((MysteryChest)chests.get("PremadeMeta")).createClaimableItem(false), Integer.valueOf(2500));
+            if (chests.containsKey("Slotbot"))
+                values.put(((MysteryChest)chests.get("Slotbot")).createClaimableItem(false), Integer.valueOf(2500));
+            if (chests.containsKey("CrateKeyBundle"))
+                values.put(((MysteryChest)chests.get("CrateKeyBundle")).createClaimableItem(false), Integer.valueOf(1000));
 
         }
 

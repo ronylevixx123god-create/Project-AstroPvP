@@ -67,7 +67,7 @@ public class AtlasRune extends Rune implements Listener {
 
     @Override
     public void procDamageEvent(final EntityDamageByEntityEvent e, final int level, final Player damager) throws Exception {
-        if (WorldGuardUtils.isPvPEnabled(damager.getLocation())) {
+        if (WorldGuardUtils.isPvPEnabled(damager.getLocation()) && Math.random() < 0.1) {
             try {
                 if(e.getEntity() instanceof Player) {
                     if(AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.THANKSGIVING_HELMET_WITCH)) {
@@ -93,6 +93,7 @@ public class AtlasRune extends Rune implements Listener {
                 }
                 final int amount = (10 * level) < 80 ? 10 * level : 70;
                 damager.sendMessage(CC.translate("&4&l*ATLAS* &cNext attack: +&f" + (100 + amount) + "% &cDMG"));
+                damager.setLastDamage(damager.getLastDamage()*1.25);
                 Bukkit.getScheduler().runTask(DragonRunesPlugin.getInstance(), () -> {
                     atlases.put(damager, amount);
 
