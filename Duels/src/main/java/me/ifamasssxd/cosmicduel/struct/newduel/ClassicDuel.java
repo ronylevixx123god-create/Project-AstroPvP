@@ -44,6 +44,7 @@ package me.ifamasssxd.cosmicduel.struct.newduel;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsPlugin;
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
 import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.VanishUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.gmail.nossr50.api.PartyAPI;
@@ -66,6 +67,7 @@ import net.astropvp.core.utils.TitleUtil;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
 import org.arkhamnetwork.enchantments.EnchantmentBook;
+import org.arkhamnetwork.enchantments.enchantments.axes.Blessed;
 import org.arkhamnetwork.enchantments.listeners.PlayerPotionEffectListener;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
@@ -394,6 +396,8 @@ extends NewDuel {
             p.setHealth(p.getMaxHealth());
             p.playSound(p.getLocation(), Sound.ENDERDRAGON_GROWL, 0.6f, 1.0f);
             p.sendMessage(this.getColoredMessage("&e&lFIGHT!"));
+            Blessed.blessPlayer(p, false);
+            p.sendMessage(CC.translate("&e&l(DUEL)&e You have been auto blessed!"));
 
             RandomFireworks.getManager().launchRandomFirework(p.getLocation());
         }
