@@ -20,12 +20,13 @@ public class ChatListener implements Listener {
             }
         String frm = event.getFormat().replace("ATITLE", CC.translate(title));
 
-        /*if (AstroCore.getInstance().getCachedColors().containsKey(event.getPlayer())) {
-            frm = frm.substring(frm.lastIndexOf(":") + 1);
-            frm = CC.strip(frm);
-            frm = AstroCore.getInstance().getCachedColors().get(event.getPlayer()) + frm;
-        }*/
+        if (AstroCore.getInstance().getCachedColors().containsKey(event.getPlayer())) {
+            String message = event.getMessage();
+            message = AstroCore.getInstance().getCachedColors().get(event.getPlayer()) + message;
+            event.setMessage(message);
+        }
         event.setFormat(frm);
+
     }
 }
 
