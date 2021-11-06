@@ -22,7 +22,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class CrateKeyInventoryListener implements Listener {
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler
     public void onClick(PlayerInteractEvent event) {
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK)
             return;
