@@ -50,7 +50,7 @@ public class CommandMobCoinShop implements CommandExecutor {
 
         String rank = PermissionsAPI.getPermissionUser(((Player) sender).getPlayer().getUniqueId()).getGroup();
 
-        if (rank.equals("apollo")) {
+        if (rank.equals("apollo") || rank.equals("interstellar") || rank.equals("media")) {
             if (chests.containsKey("PremadeMeta"))
                 values.put(((MysteryChest)chests.get("PremadeMeta")).createClaimableItem(false), Integer.valueOf(2000));
             if (chests.containsKey("Slotbot"))
@@ -89,7 +89,7 @@ public class CommandMobCoinShop implements CommandExecutor {
             int price = ((Integer)entry.getValue()).intValue();
             List<String> lore = meta.hasLore() ? meta.getLore() : Lists.newArrayList();
             lore.add("");
-            if (rank.equals("apollo") || rank.equals("helper") || rank.equals("mod") || rank.equals("banteam") || rank.equals("admin")) {
+            if (rank.equals("apollo") || rank.equals("helper") || rank.equals("mod") || rank.equals("banteam") || rank.equals("admin") || rank.equals("interstellar") || rank.equals("media")) {
                 lore.add(String.valueOf(CC.AquaB) + "* PRICE (Apollo Bonus): " + CC.White + NumberUtils.formatMoney(price) + " Mob Coins");
             } else {
                 lore.add(String.valueOf(CC.GreenB) + "* PRICE: " + CC.White + NumberUtils.formatMoney(price) + " Mob Coins");

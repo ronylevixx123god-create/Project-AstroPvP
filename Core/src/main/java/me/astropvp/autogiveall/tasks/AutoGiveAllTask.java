@@ -72,13 +72,13 @@ implements Runnable {
 
     private void announceGiveAll(long time, boolean minutes) {
         sendCenteredMessage("");
-        sendCenteredMessage(CC.translate("&a&m--&7&m--&f&m--&r[ &a&lAuto Giveall &f]&f&m--&7&m--&a&m--"));
+        sendCenteredMessage(CC.translate("&2&m--&8&m--&7&m--&a&m--&r[ &a&lAuto Giveall &f]&a&m--&7&m--&8&m--&2&m--"));
         if (minutes) {
             sendCenteredMessage(CC.Green + "Time Remaining: " + CC.White + time + "m");
         } else {
             sendCenteredMessage(CC.Green + "Time Remaining: " + CC.White + time + "s");
         }
-        sendCenteredMessage(CC.translate("Use the command &7/nextgiveall&a to stay updated!"));
+        sendCenteredMessage(CC.translate("&aUse the command &f/nextgiveall&a to stay updated!"));
         sendCenteredMessage("");
     }
 

@@ -31,9 +31,10 @@ public class AstroScoreboardAPI {
 		rankOrder.put("mod", "6");
 		rankOrder.put("helper", "7");
 		rankOrder.put("media", "8");
-		rankOrder.put("apollo", "9");
-		rankOrder.put("astro+", "a");
-		rankOrder.put("astro", "b");
+		rankOrder.put("interstellar", "9");
+		rankOrder.put("apollo", "a");
+		rankOrder.put("astro+", "b");
+		rankOrder.put("astro", "c");
 	}
 
 	public static String getTeamName(Player player) {
@@ -89,6 +90,9 @@ public class AstroScoreboardAPI {
 				break;
 			case "helper":
 				rankColor = ChatColor.GREEN;
+				break;
+			case "interstellar":
+				rankColor = ChatColor.DARK_PURPLE;
 				break;
 			case "apollo":
 				rankColor = ChatColor.AQUA;

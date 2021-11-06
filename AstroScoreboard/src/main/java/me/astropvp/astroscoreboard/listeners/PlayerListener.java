@@ -39,19 +39,10 @@ public class PlayerListener implements Listener {
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onQuit(PlayerQuitEvent event) {
 		Player player = event.getPlayer();
-		player.removeMetadata("cageMatch", WildPvPPlugin.getInstance());
 		Scoreboard board = player.getScoreboard();
 		if(board != null) {
 			board.getTeams().forEach(team -> team.unregister());
 		}
 		
-	}
-
-	@EventHandler
-	public void onDeath(PlayerDeathEvent e) {
-		if (!e.getEntity().hasMetadata("cageMatch")) return;
-		e.getEntity().removeMetadata("cageMatch", WildPvPPlugin.getInstance());
-		e.getEntity().getKiller().removeMetadata("cageMatch", WildPvPPlugin.getInstance());
-
 	}
 }
