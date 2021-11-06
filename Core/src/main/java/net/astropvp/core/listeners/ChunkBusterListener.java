@@ -4,7 +4,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.massivecraft.factions.struct.Role;
 import me.astropvp.astrospawners.data.SpawnerData;
-import me.astropvp.astrospawners.data.SpawnerDataHelper;
+import me.astropvp.astrospawners.data.SpawnerManager;
 import net.astropvp.core.utils.BlocksUtil;
 import net.astropvp.core.utils.ChunkBusterUtils;
 import org.bukkit.ChatColor;
@@ -48,6 +48,8 @@ public class ChunkBusterListener implements Listener {
                 return;
             }
 
+            SpawnerManager manager = new SpawnerManager();
+
             int X = event.getBlock().getChunk().getX() * 16;
             int Z = event.getBlock().getChunk().getZ() * 16;
             for (int x = 0; x < 16; x++) {
@@ -55,10 +57,9 @@ public class ChunkBusterListener implements Listener {
                     for (int y = 0; y < 256; y++) {
                         Block block = event.getBlock().getWorld().getBlockAt(X + x, y, Z + z);
                         if ((block.getType() == Material.MOB_SPAWNER) && (block.getType() != Material.AIR)) {
-                            SpawnerData data = SpawnerDataHelper.findSpawnerData(block.getLocation());
+                            SpawnerData data = manager.findSpawnerData(block.getLocation());
                             if (data != null) {
                                 data.setSpawnerAmount(0);
-                                data.setNullSpawner(true);
                             }
                         }
                         if ((block.getType() != Material.BEDROCK) && (block.getType() != Material.AIR) && (block.getType() != Material.JUKEBOX)) {
