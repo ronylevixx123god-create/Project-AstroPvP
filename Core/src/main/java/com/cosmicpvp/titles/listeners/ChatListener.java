@@ -23,6 +23,7 @@ public class ChatListener implements Listener {
         if (AstroCore.getInstance().getCachedColors().containsKey(event.getPlayer())) {
             String message = event.getMessage();
             message = AstroCore.getInstance().getCachedColors().get(event.getPlayer()) + message;
+            message = message.replaceAll(" ", " " + AstroCore.getInstance().getCachedColors().get(event.getPlayer()));
             event.setMessage(message);
         }
         event.setFormat(frm);
