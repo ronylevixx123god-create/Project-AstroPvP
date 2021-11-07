@@ -147,7 +147,7 @@ public class SupremeArmorSet
         if (this.isBlockedOutpostWorld(damager)) {
             return false;
         }
-        return this.modifyDamage(damager, event, 3.0, multiplier);
+        return false;
     }
 
     @Override

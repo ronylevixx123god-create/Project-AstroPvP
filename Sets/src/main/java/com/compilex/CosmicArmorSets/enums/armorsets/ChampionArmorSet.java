@@ -114,7 +114,7 @@ public class ChampionArmorSet
             return false;
         }
         this.removeResistance(damaged);
-        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.80);
+        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.75);
         return true;
     }
 
