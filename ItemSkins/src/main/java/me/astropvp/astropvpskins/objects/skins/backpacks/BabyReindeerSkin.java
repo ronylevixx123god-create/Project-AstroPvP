@@ -35,6 +35,8 @@ public class BabyReindeerSkin extends ItemSkin {
             event.setDamage(event.getDamage() * 0.75);
         } else if(Math.random() > 0.5) {
             if(event.getFinalDamage() - damaged.getHealth() < 6) {
+                if(nearby.size() == 0)
+                    return;
                 Player target = (Player) nearby.get(0);
                 target.damage(event.getFinalDamage());
                 event.setDamage(0);
