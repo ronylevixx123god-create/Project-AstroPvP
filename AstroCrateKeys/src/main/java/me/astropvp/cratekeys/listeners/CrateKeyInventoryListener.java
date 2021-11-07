@@ -56,12 +56,23 @@ public class CrateKeyInventoryListener implements Listener {
                 event.setCancelled(true);
                 return;
             }
-            addItemToPlayer(player, ConfigUtils.getRandomItem(AstroCrateKeysAPI.getItems(CrateKeyItem.getCrateType(player.getItemInHand()))));
 
-            if (player.getItemInHand().getAmount() > 1) {
-                player.getItemInHand().setAmount(player.getItemInHand().getAmount() - 1);
-            } else {
+            if (player.isSneaking()) {
+                int amountOfKeys = player.getItemInHand().getAmount();
+                while (amountOfKeys != 0) {
+                    addItemToPlayer(player, ConfigUtils.getRandomItem(AstroCrateKeysAPI.getItems(CrateKeyItem.getCrateType(player.getItemInHand()))));
+                    amountOfKeys--;
+                }
                 player.setItemInHand((ItemStack) null);
+
+            } else {
+                addItemToPlayer(player, ConfigUtils.getRandomItem(AstroCrateKeysAPI.getItems(CrateKeyItem.getCrateType(player.getItemInHand()))));
+
+                if (player.getItemInHand().getAmount() > 1) {
+                    player.getItemInHand().setAmount(player.getItemInHand().getAmount() - 1);
+                } else {
+                    player.setItemInHand((ItemStack) null);
+                }
             }
 
             player.playSound(player.getLocation(), Sound.NOTE_BASS, 1, 1);
