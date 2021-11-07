@@ -83,6 +83,7 @@ public class AstroSpawners extends JavaPlugin {
         runTasks();
         Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin)this, FactionsTopAPI::recalculateFactionsTop, 100L);
 
+
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, ()-> {
             getSpawnerManager().save();
             System.out.println("(!) Started Automaticly Saving Spawners!");
@@ -123,6 +124,7 @@ public class AstroSpawners extends JavaPlugin {
         registerListener(new MobSpawnerListener());
         registerListener(new MobCoinShopListener());
         registerListener(new PlayerDataOnJoin());
+        registerListener(new ClickMobcoinsNoteListener());
     }
 
     public void registerCommands() {
