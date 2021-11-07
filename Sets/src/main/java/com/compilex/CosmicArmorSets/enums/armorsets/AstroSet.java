@@ -114,7 +114,7 @@ public class AstroSet
             return false;
         }
         this.removeResistance(damaged);
-        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.90);
+        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.85);
         return true;
     }
 

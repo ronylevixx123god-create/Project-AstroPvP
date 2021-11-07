@@ -63,10 +63,6 @@ public class CombatLogLogoutListener
             Bukkit.getLogger().info("Skipping combatLog check for " + e.getPlayer().getName() + " because their entity is dead.");
             return;
         }
-        if (e.getPlayer().hasMetadata("lastDeathEvent") && (long) MinecraftServer.currentTick - e.getPlayer().getMetadata("lastDeathEvent").get(0).asLong() < 20L) {
-            Bukkit.getLogger().info("Skipping combatLog check for " + e.getPlayer().getName() + " because they had a death event in last 20 ticks.");
-            return;
-        }
         if (e.getPlayer().getWorld().getName().startsWith("dungeon_")) {
             Bukkit.getLogger().info("Skipping combatLog check for " + e.getPlayer().getName() + " due to worldName: " + e.getPlayer().getWorld().getName());
             return;

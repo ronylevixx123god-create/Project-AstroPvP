@@ -134,10 +134,6 @@ public class BannerListener implements Listener
             event.getPlayer().sendMessage(CC.RedB + "(!) " + CC.Red + "You can only place Faction Banners in PvP-enabled areas!");
             return;
         }
-        if(WildPvPPlugin.getInstance().getMatchManager().getMatchFromPlayer(event.getPlayer()) != null) {
-            event.getPlayer().sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot place Faction Banners in Cage Matches!");
-            return;
-        }
         final Location playerLoc = event.getPlayer().getLocation();
         if (playerLoc.getBlockX() != placedOn.getX() || playerLoc.getBlockZ() != placedOn.getZ() || Math.abs(playerLoc.getBlockY() - placedOn.getY()) > 1) {
             event.getPlayer().sendMessage(CC.RedB + "(!) " + CC.Red + "You must place faction banners directly underneath you.");
