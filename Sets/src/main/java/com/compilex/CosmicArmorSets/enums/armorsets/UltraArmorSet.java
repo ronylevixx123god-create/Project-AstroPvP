@@ -153,7 +153,7 @@ public class UltraArmorSet
             event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE)*1.4);
 
         }
-        this.modifyDamage(damager, event, 10.0, applied);
+        this.modifyDamage(damager, event, 15.0, applied);
         return false;
     }
 

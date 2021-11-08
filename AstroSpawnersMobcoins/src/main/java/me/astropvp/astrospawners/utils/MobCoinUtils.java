@@ -14,8 +14,9 @@ import java.util.UUID;
 public class MobCoinUtils {
     public static ItemStack createCoinsNote(String signer, int amount) {
         ItemBuilder itemBuilder = new ItemBuilder(Material.DOUBLE_PLANT);
-        itemBuilder.addLoreLine("&6Value " + NumberUtils.formatMoney(amount));
-        itemBuilder.addLoreLine("&6Signer " + signer);
+        itemBuilder.name(CC.translate("&e&lMobcoins Voucher&7 (Right-Click)"));
+        itemBuilder.addLoreLine(CC.translate("&6Value &f" + NumberUtils.formatMoney(amount)));
+        itemBuilder.addLoreLine(CC.translate("&6Signer &7" + signer));
 
         NBTWrapper wrapper = new NBTWrapper(itemBuilder.build());
         NBTTagCompoundBuilder builder = new NBTTagCompoundBuilder();
@@ -37,7 +38,7 @@ public class MobCoinUtils {
     }
 
     public static int getCoinsAmountFromNote(ItemStack itemStack) {
-        if (itemStack.getType() == null || itemStack.getType() != Material.DOUBLE_PLANT) {
+        if (itemStack.getType() != null && itemStack.getType() == Material.DOUBLE_PLANT) {
             NBTWrapper wrapper = new NBTWrapper(itemStack);
             if (!wrapper.hasKey("coinsData")) {
                 return 0;

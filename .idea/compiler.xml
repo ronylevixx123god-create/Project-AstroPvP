@@ -20,6 +20,7 @@
         <module name="Bosses" />
         <module name="AstroRevive" />
         <module name="CosmicShop" />
+        <module name="CCVerify" />
         <module name="Masks" />
         <module name="AstroScoreboard" />
         <module name="AstroUtils" />

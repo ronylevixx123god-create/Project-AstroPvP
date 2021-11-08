@@ -52,6 +52,11 @@
       <option name="url" value="https://mvnrepository.com/artifact/org.jetbrains.kotlin.jvm/org.jetbrains.kotlin.jvm.gradle.plugin" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="cubekrowd-repo" />
+      <option name="name" value="cubekrowd-repo" />
+      <option name="url" value="https://mavenrepo.cubekrowd.net/artifactory/repo/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="jboss.community" />
       <option name="name" value="JBoss Community repository" />
       <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />

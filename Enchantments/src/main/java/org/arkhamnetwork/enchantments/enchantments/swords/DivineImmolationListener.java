@@ -47,25 +47,25 @@ public class DivineImmolationListener implements Listener {
                     }
                 }
 
-                double damage = 2;
+                double damage = 3;
 
 
                 if (!(le.getKiller() instanceof Player)) return;
                 if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) le.getKiller(), SkinType.VALENTINES_2021_HELMET)) {
                     if (WeaponBonusUtils.hasWeaponBonus(((Player) e.getEntity()).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player) e.getEntity()).getItemInHand()) == WeaponBonusType.REFORGED && Math.random()<0.5) {
-                        damage = 2;
+                        damage = 4;
                     } else {
-                        damage = 2.5;
+                        damage = 3;
                     }
                 }
 
                 if (AstroItemSkinsAPI.hasSkinEquipped((Player) ((Player) e.getEntity()).getKiller(), SkinType.SUMMER_2021_SWORD)) {
-                    damage = 3;
+                    damage = 3.5;
                 }
 
                 if (EnchantmentAPI.getEnchantments(((Player) e.getEntity()).getKiller().getEquipment().getItemInHand()).containsKey(EnchantmentAPI.getEnchantment("Soul Master"))) {
                     double solitudeLevel = EnchantmentAPI.getEnchantments(((Player) e.getEntity()).getKiller().getEquipment().getItemInHand()).get(EnchantmentAPI.getEnchantment("Soul Master"));
-                    damage = 2 * (((2 * solitudeLevel)/100) + 1);
+                    damage = 1.25 * (((2 * solitudeLevel)/100) + 1);
                 }
 
                 le.damage((double) damage);

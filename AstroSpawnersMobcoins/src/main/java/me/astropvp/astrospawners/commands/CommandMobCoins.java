@@ -25,7 +25,7 @@ public class CommandMobCoins implements CommandExecutor {
             player.sendMessage("");
             return false;
         } else if (args[0].equals("withdraw") || args[0].equals("w")) {
-            if (args[1] == null) {
+            if (args.length == 1) {
                 player.sendMessage(CC.translate("&cUsage: /mobcoins withdraw (amount)"));
                 return false;
             }

@@ -72,17 +72,17 @@ public class Rogue extends CustomEnchantment {
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2021_HELMET)) {
                 if (WeaponBonusUtils.hasWeaponBonus(((Player) e.getEntity()).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player) e.getEntity()).getItemInHand()) == WeaponBonusType.REFORGED && Math.random() < 0.5) {
-                    e.setDamage(damage + (multi * 0.15));
+                    e.setDamage(damage + (multi * 0.17));
 
                 } else {
-                    e.setDamage(damage + (multi * 0.17));
+                    e.setDamage(damage + (multi * 0.19));
                 }
             } else if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.SUMMER_2021_SWORD)) {
-                e.setDamage(damage + (multi * 0.17));
+                e.setDamage(damage + (multi * 0.19));
 
             } else {
 
-                e.setDamage(damage + (multi * 0.15));
+                e.setDamage(damage + (multi * 0.18));
             }
 
 

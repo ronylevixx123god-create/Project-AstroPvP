@@ -13,11 +13,18 @@ public class ClickMobcoinsNoteListener implements Listener {
     @EventHandler
     public void onRightClick(PlayerInteractEvent e) {
         if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            if (e.getPlayer().getItemInHand() == null) return;
             if (MobCoinUtils.isCoinsNote(e.getPlayer().getItemInHand())) {
+                if (e.getPlayer().getItemInHand().getAmount() > 1) {
+                    e.getPlayer().sendMessage(CC.translate("&cYou cannot apply stacked mobcoins."));
+                    e.setCancelled(true);
+                    return;
+                }
                 int amount = MobCoinUtils.getCoinsAmountFromNote(e.getPlayer().getItemInHand());
-                AstroSpawners.getPlayerDataManager().getPlayerData(e.getPlayer()).setCoins(amount + AstroSpawners.getPlayerDataManager().getPlayerData(e.getPlayer()).getCoins());
+                AstroSpawners.getInstance().getManager().getPlayerData(e.getPlayer()).setCoins(amount + AstroSpawners.getInstance().getManager().getPlayerData(e.getPlayer()).getCoins());
                 e.getPlayer().sendMessage(CC.translate("&a&l+ " + amount + "&a&l Mobcoins"));
                 e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.NOTE_PLING, 2, 2);
+                e.getPlayer().setItemInHand(null);
             }
         }
     }

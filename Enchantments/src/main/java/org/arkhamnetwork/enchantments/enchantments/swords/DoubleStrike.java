@@ -31,9 +31,9 @@ public class DoubleStrike extends CustomEnchantment {
         double random = Math.random();
         double chance = 0.025D * level;
         if (random < chance) {
-            double dmg = VanillaDamageListener.getLastFinalDamage((Entity) playerHit);
+            double dmg = e.getFinalDamage();
             if (dmg == 0.0D)
-                dmg = e.getDamage(EntityDamageEvent.DamageModifier.BASE);
+                dmg = e.getFinalDamage();
             final double fdmg = dmg;
             Player pp = (Player) e.getDamager();
 

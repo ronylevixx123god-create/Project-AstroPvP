@@ -55,6 +55,7 @@
         <module>Collectors</module>
         <module>AstroCrateKeys</module>
         <module>AstroDiscordBot</module>
+        <module>CCVerify</module>
     </modules>
 
     <build>

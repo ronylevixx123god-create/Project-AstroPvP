@@ -27,9 +27,11 @@ public final class HexListener implements Listener {
         final LivingEntity damager = (LivingEntity) e.getDamager();
         if (Hex.isHexed(damager) && e.getFinalDamage() > 1.0) {
             final double damage = Math.min(e.getFinalDamage(), 5 + Math.max(0, Hex.getHexLevel(damager) - 2));
-            damager.damage(damage);
-            if (damager instanceof Player) {
-                ((Player) damager).sendMessage(ChatColor.DARK_PURPLE + "* HEX [" + ChatColor.RED + this.df.format(damage) + ChatColor.DARK_PURPLE + " DMG] *");
+            if (Math.random()<0.2) {
+                damager.damage(damage);
+                if (damager instanceof Player) {
+                    ((Player) damager).sendMessage(ChatColor.DARK_PURPLE + "* HEX [" + ChatColor.RED + this.df.format(damage) + ChatColor.DARK_PURPLE + " DMG] *");
+                }
             }
         }
     }
