@@ -12,8 +12,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 public class ClickMobcoinsNoteListener implements Listener {
     @EventHandler
     public void onRightClick(PlayerInteractEvent e) {
+        if (e.getPlayer() == null) return;
+        if (e.getPlayer().getItemInHand() == null) return;
         if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            if (e.getPlayer().getItemInHand() == null) return;
             if (MobCoinUtils.isCoinsNote(e.getPlayer().getItemInHand())) {
                 if (e.getPlayer().getItemInHand().getAmount() > 1) {
                     e.getPlayer().sendMessage(CC.translate("&cYou cannot apply stacked mobcoins."));
