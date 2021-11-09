@@ -3,6 +3,7 @@ package me.astropvp.astrospawners.listeners;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.astrospawners.AstroSpawners;
 import me.astropvp.astrospawners.utils.MobCoinUtils;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,6 +15,7 @@ public class ClickMobcoinsNoteListener implements Listener {
     public void onRightClick(PlayerInteractEvent e) {
         if (e.getPlayer() == null) return;
         if (e.getPlayer().getItemInHand() == null) return;
+        if (e.getPlayer().getItemInHand().getType() == Material.AIR) return;
         if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (MobCoinUtils.isCoinsNote(e.getPlayer().getItemInHand())) {
                 if (e.getPlayer().getItemInHand().getAmount() > 1) {

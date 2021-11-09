@@ -61,6 +61,8 @@ public class CommandMobCoinShop implements CommandExecutor {
                 values.put(((MysteryChest)chests.get("NewGenSkin")).createClaimableItem(false), Integer.valueOf(800));
             if (chests.containsKey("Backpack"))
                 values.put(((MysteryChest)chests.get("Backpack")).createClaimableItem(false), Integer.valueOf(800));
+            if (chests.containsKey("ApolloKey"))
+                values.put(((MysteryChest)chests.get("ApolloKey")).createClaimableItem(false), Integer.valueOf(8000));
         } else {
             if (chests.containsKey("PremadeMeta"))
                 values.put(((MysteryChest)chests.get("PremadeMeta")).createClaimableItem(false), Integer.valueOf(2500));
@@ -72,6 +74,9 @@ public class CommandMobCoinShop implements CommandExecutor {
                 values.put(((MysteryChest)chests.get("NewGenSkin")).createClaimableItem(false), Integer.valueOf(1000));
             if (chests.containsKey("Backpack"))
                 values.put(((MysteryChest)chests.get("Backpack")).createClaimableItem(false), Integer.valueOf(1000));
+            if (chests.containsKey("ApolloKey"))
+                values.put(((MysteryChest)chests.get("ApolloKey")).createClaimableItem(false), Integer.valueOf(10000));
+
 
         }
 

@@ -102,17 +102,16 @@ public class MasteryFeignDeath extends MasteryCustomEnchantment {
                     pl.playerConnection.sendPacket((Packet)destroy);
             }
         },30L);
+
+        damaged.playSound(damaged.getLocation(), Sound.WITHER_SHOOT, 3.0F, 0.9F);
+        damaged.sendMessage(CC.DarkRedB + "* Feign Death - VANISHED [" + NumberUtils.formatSeconds(seconds) + "s] *");
+
         for (Player pl : Bukkit.getServer().getOnlinePlayers()) {
             if (AstroItemSkinsAPI.hasSkinEquipped(pl, SkinType.DOOMSDAY_HELMET)) continue;
             pl.hidePlayer(damaged);
         }
-        damaged.playSound(damaged.getLocation(), Sound.WITHER_SHOOT, 3.0F, 0.9F);
-        damaged.sendMessage(CC.DarkRedB + "* Feign Death - VANISHED [" + NumberUtils.formatSeconds(seconds) + "s] *");
-
-
 
         Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Enchantments.getInstance(), () -> {
-            if (damaged.isValid() && damaged.hasMetadata("feign_vanish"))
                 unvanish(damaged);
         },(long)(seconds * 20.0D));
     }

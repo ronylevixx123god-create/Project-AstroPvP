@@ -235,7 +235,7 @@ public class CommandHandler
             Util.message(player, "&7Claim those items before they vanish, &c/ah expired");
         } else if (!Util.stringIsNumerical(price) && !CommandHandler.isValidAlternatePrice(price)) {
             Util.message(player, "&cThat is not a valid price.");
-        } else if (price.length() > 9) {
+        } else if (price.length() > 11) {
             Util.message(player, "&cYou can only list something for a max of $999,999,999.");
         } else {
             Controller.attemptSell(player, item, CommandHandler.isValidAlternatePrice(price) ? (int) Util.getMoneyValue(price) : Integer.parseInt(price));

@@ -4,6 +4,7 @@ import com.conaxgames.customskulls.CoreSkulls;
 import com.conaxgames.customskulls.ability.AbilityData;
 import com.conaxgames.customskulls.enums.AbilityType;
 import com.conaxgames.customskulls.util.CustomBlockUtil;
+import me.astropvp.astrospawners.utils.MobCoinUtils;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import org.arkhamnetwork.Arkkit.patches.ExpBottles;
 import org.bukkit.Location;
@@ -80,6 +81,10 @@ public class MobGrinderRunnable extends BukkitRunnable {
                     } else if (ExpBottles.isXpBottle(chest.getInventory().getItem(i))) {
                         chest.getInventory().setItem(i, ExpBottles.getXpBottle(ExpBottles.getXpAmount(chest.getInventory().getItem(i)) + amountOfExpPerBlaze, "Mob Grinder"));
                         break;
+                    } else if (MobCoinUtils.isCoinsNote(chest.getInventory().getItem(i))){
+                        chest.getInventory().setItem(i, MobCoinUtils.createCoinsNote("MobGrinder", MobCoinUtils.getCoinsAmountFromNote(chest.getInventory().getItem(i)) + 1));
+                        break;
+
                     }
                 }
             }
