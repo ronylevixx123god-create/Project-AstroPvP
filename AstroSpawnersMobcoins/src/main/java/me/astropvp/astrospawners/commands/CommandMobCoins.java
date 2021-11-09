@@ -22,6 +22,8 @@ public class CommandMobCoins implements CommandExecutor {
             player.sendMessage("");
             player.sendMessage(String.valueOf(CC.White + "❀ " + CC.GreenB) + "Mob Coins: " + CC.White + ((data == null) ? 0 : data.getCoins()));
             player.sendMessage(CC.translate("&7You can buy items in the shop using &f/transfer&7."));
+            player.sendMessage(CC.translate("&7You can withdraw mobcoins using &f/mobcoins withdraw (amount)&7."));
+
             player.sendMessage("");
             return false;
         } else if (args[0].equals("withdraw") || args[0].equals("w")) {

@@ -73,18 +73,20 @@ public class MobGrinderRunnable extends BukkitRunnable {
                 }
                 if (!chest.getInventory().contains(Material.EXP_BOTTLE)) {
                     chest.getInventory().addItem(ExpBottles.getXpBottle(amountOfExpPerBlaze, "Mob Grinder"));
-                    continue;
+                }
+                if (!chest.getInventory().contains(Material.DOUBLE_PLANT)) {
+                    chest.getInventory().addItem(MobCoinUtils.createCoinsNote("Mob Grinder", 1));
                 }
                 for (int i = 0; i < chest.getInventory().getSize(); i++) {
                     if (chest.getInventory().getItem(i) == null) {
                         continue;
-                    } else if (ExpBottles.isXpBottle(chest.getInventory().getItem(i))) {
-                        chest.getInventory().setItem(i, ExpBottles.getXpBottle(ExpBottles.getXpAmount(chest.getInventory().getItem(i)) + amountOfExpPerBlaze, "Mob Grinder"));
-                        break;
-                    } else if (MobCoinUtils.isCoinsNote(chest.getInventory().getItem(i))){
-                        chest.getInventory().setItem(i, MobCoinUtils.createCoinsNote("MobGrinder", MobCoinUtils.getCoinsAmountFromNote(chest.getInventory().getItem(i)) + 1));
-                        break;
-
+                    } else {
+                        if (ExpBottles.isXpBottle(chest.getInventory().getItem(i))) {
+                            chest.getInventory().setItem(i, ExpBottles.getXpBottle(ExpBottles.getXpAmount(chest.getInventory().getItem(i)) + amountOfExpPerBlaze, "Mob Grinder"));
+                        }
+                        if (MobCoinUtils.isCoinsNote(chest.getInventory().getItem(i))) {
+                            chest.getInventory().setItem(i, MobCoinUtils.createCoinsNote("Mob Grinder", MobCoinUtils.getCoinsAmountFromNote(chest.getInventory().getItem(i)) + 1));
+                        }
                     }
                 }
             }
