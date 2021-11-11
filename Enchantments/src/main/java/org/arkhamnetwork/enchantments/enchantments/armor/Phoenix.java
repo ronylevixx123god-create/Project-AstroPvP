@@ -89,6 +89,14 @@ public class Phoenix extends CustomEnchantment {
                 return false;
             }
 
+            if (MaskType.hasEquipped((Player) damager, "CRANKED") && Math.random() < 0.5) {
+                ((Player) damager).playSound(damager.getLocation(), Sound.ANVIL_LAND, 2, 2);
+                ((Player) damager).playSound(player.getLocation(), Sound.ANVIL_LAND, 2, 2);
+                damager.sendMessage(CC.translate("&4&l* CRANKED MASK BLOCKED PHOENIX [&c" + player.getName() + "&4&l] *"));
+                player.sendMessage(CC.translate("&4&l* PHOENIX BLOCKED [&c" + damager.getName() + " Cranked Mask&4&l] *"));
+                return false;
+            }
+
             if ((Player)damager != null && FactionUtils.getFPlayer((Player) damager).getPlayer() != null && HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(FactionUtils.getFPlayer(((Player) damager).getPlayer())), OutpostType.THE_GREAT_HALL) && Math.random() < 0.1) {
                 player.sendMessage(CC.translate("&b&l** ENEMY FROZEN STRONGHOLD BONUS &7Blocked &cPhoenix &b&l**"));
                 ((FPlayer) damager).sendMessage(CC.translate("&b&l** FROZEN STRONGHOLD BONUS &7Blocked &a" + damager.getName() + " &cPhoenix &b&l**"));
@@ -99,13 +107,7 @@ public class Phoenix extends CustomEnchantment {
 
 
 
-            if (MaskUtils.hasMaskEquipped((Player) damager, "CRANKED") && Math.random() < 0.5) {
-                ((Player) damager).playSound(damager.getLocation(), Sound.ANVIL_LAND, 2, 2);
-                ((Player) damager).playSound(player.getLocation(), Sound.ANVIL_LAND, 2, 2);
-                damager.sendMessage(CC.translate("&4&l* CRANKED MASK BLOCKED PHOENIX [&c" + player.getName() + "&4&l] *"));
-                player.sendMessage(CC.translate("&4&l* PHOENIX BLOCKED [&c" + damager.getName() + " Cranked Mask&4&l] *"));
-                return false;
-            }
+
             if (Math.random() <= 0.4D && MaskType.hasEquipped((Player) damager, "DEATH_KNIGHT") && !AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY) && !(FactionUtils.getFPlayer((Player) damager).getPlayer() != null && HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(FactionUtils.getFPlayer(((Player) damager).getPlayer())), OutpostType.THE_GREAT_HALL) && Math.random() < 0.1)) {
                 player.sendMessage(CC.RedB + "* PHOENIX BLOCKED [" + CC.Gray + ((Player) damager).getName() + CC.RedB + "] *");
                 ((Player) damager).sendMessage(CC.RedB + "* DEATH KNIGHT MASK [" + CC.Gray + player.getName() + "'s Phoenix Blocked" + CC.RedB + "] *");
@@ -147,7 +149,7 @@ public class Phoenix extends CustomEnchantment {
                 de.inventivegames.particle.ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(), loc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.75F, 80);
                 de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), loc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.75F, 80);
 
-                return true;
+                return false;
             }
             if (!player.hasMetadata("outOfSoulsMessage") || ((MetadataValue) player.getMetadata("outOfSoulsMessage").get(0)).asLong() < System.currentTimeMillis()) {
                 de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), player.getEyeLocation(), 0f, 0.5f, 0f, 0.4f, 20);
@@ -178,7 +180,7 @@ public class Phoenix extends CustomEnchantment {
             public void run() {
                 player.removeMetadata("phoenixCd", Enchantments.getInstance());
             }
-        }, 2400L);
+        }, 180 *20);
     }
 
     public static boolean canUsePhoenix(Player pl, int enchantLevel) {

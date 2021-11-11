@@ -33,8 +33,8 @@ public class TrapBlockerItem extends CosmicItem
 
     public TrapBlockerItem() {
         super("trap_blocker");
-        this.trappedPlayers = new HashMap<UUID, Player>();
-        this.trapCooldown = new HashMap<UUID, Player>();
+        trappedPlayers = new HashMap<UUID, Player>();
+        trapCooldown = new HashMap<UUID, Player>();
     }
 
     public ItemStack createItem(Player player, Object ... objects) {
@@ -99,7 +99,7 @@ public class TrapBlockerItem extends CosmicItem
 
 
         int amountOfPlayers=0;
-        for (Entity entity : player.getNearbyEntities(8,8,8)) {
+        for (Entity entity : player.getNearbyEntities(10,10,10)) {
             if (!(entity instanceof Player)) return;
             Player p = (Player)entity;
             if (WorldGuardUtils.isPvPEnabled(p.getLocation()) && (FactionUtils.getFaction(p) != FactionUtils.getFaction(player) || FactionUtils.isWilderness(FactionUtils.getFaction(player)) && FactionUtils.isWilderness(FactionUtils.getFaction(p))) && !FactionUtils.isInAllyFaction(player, p)) {
@@ -110,7 +110,7 @@ public class TrapBlockerItem extends CosmicItem
                     amountOfPlayers++;
                 }
 
-                Bukkit.getScheduler().runTaskLater(AstroCore.getInstance(), ()-> {
+                Bukkit.getScheduler().runTaskLaterAsynchronously(AstroCore.getInstance(), ()-> {
                     trappedPlayers.remove(p.getUniqueId());
                     p.sendMessage(CC.translate("&a&l* YOU ARE NO LONGER TRAP BLOCKED *"));
                 }, 300L);

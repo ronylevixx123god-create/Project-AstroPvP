@@ -35,11 +35,10 @@ public class SelfDestruct extends CustomEnchantment {
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         if (player instanceof Player) {
             final Player p = (Player) player;
-            double dmg = e.getDamage(EntityDamageEvent.DamageModifier.BASE);
-            dmg *= ArmorUtil.getArmorDamageNullificationPercent((float) ArmorUtil.getArmorValue(p));
+            double dmg = e.getFinalDamage();
             if (player.getHealth() - dmg <= 0.0) {
 
-                if (p.hasMetadata("SelfDestructing") && System.currentTimeMillis() - p.getMetadata("SelfDestructing").get(0).asLong() <= 10000L) {
+                if (p.hasMetadata("SelfDestructing")) {
                     return;
                 }
 
@@ -56,6 +55,9 @@ public class SelfDestruct extends CustomEnchantment {
                     return;
                 }
                 p.setMetadata("SelfDestructing", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) System.currentTimeMillis()));
+                Bukkit.getScheduler().runTaskLaterAsynchronously(Enchantments.getInstance(), () -> {
+                    p.removeMetadata("SelfDestructing", Enchantments.getInstance());
+                }, 180*20);
                 final int radius = (int) (level * 2.5f);
                 final FPlayer fp = (FPlayer) FPlayers.i.get((OfflinePlayer) p);
                 final List<LivingEntity> victims = new ArrayList<LivingEntity>();
