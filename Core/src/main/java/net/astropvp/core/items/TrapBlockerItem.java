@@ -124,6 +124,9 @@ public class TrapBlockerItem extends CosmicItem
         }
 
         player.sendMessage(CC.translate("&c&l* TRAP BLOCKED &f" + amountOfPlayers + "&7 nearby enemies &c&l*"));
+        for (Player p : trappedPlayers.values()) {
+            player.sendMessage(CC.translate(" &c&l* &7" + p.getName()));
+        }
         trapCooldown.put(player.getUniqueId(),player);
 
         Bukkit.getScheduler().runTaskLater(AstroCore.getInstance(), ()-> {

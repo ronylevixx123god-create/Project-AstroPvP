@@ -26,7 +26,7 @@ public class DamageListener implements Listener {
         if (e.getDamager() instanceof Player) {
             if (((Player) e.getDamager()).getItemInHand() != null) {
                 if (((Player) e.getDamager()).getItemInHand().getType().name().endsWith("_AXE"))
-                    e.setDamage(e.getDamage() * 0.9);
+                    e.setDamage(e.getDamage() * 0.83);
             }
         }
     }

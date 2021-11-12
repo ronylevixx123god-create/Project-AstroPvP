@@ -180,7 +180,7 @@ public class Phoenix extends CustomEnchantment {
             public void run() {
                 player.removeMetadata("phoenixCd", Enchantments.getInstance());
             }
-        }, 180 *20);
+        }, 300 *20);
     }
 
     public static boolean canUsePhoenix(Player pl, int enchantLevel) {
