@@ -82,9 +82,7 @@ public class RevokeScratchCard extends CosmicItem
             throw new PrefixedException("You cannot claim this rank in this world!");
         }
 
-        if (item.getAmount()>1) {
-            throw new PrefixedException("You cannot apply multiple cards at once!");
-        }
+
         NBTTagCompoundBuilder cosmicData = wrapper.getCompoundOrCreate("conaxData");
 
         cosmicData.setInt("revoke_scratchcard", Integer.valueOf(1));
@@ -92,6 +90,12 @@ public class RevokeScratchCard extends CosmicItem
         player.setItemInHand(null);
         wrapper.setNBTBase("conaxData", (NBTBase)cosmicData.get());
         item = wrapper.build();
+
+        if(player.getItemInHand().getAmount() > 1) {
+            player.getItemInHand().setAmount(player.getItemInHand().getAmount()-1);
+        } else {
+            player.setItemInHand((ItemStack) null);
+        }
 
         RevokeScratchCardGUI card = new RevokeScratchCardGUI(player);
         card.open();

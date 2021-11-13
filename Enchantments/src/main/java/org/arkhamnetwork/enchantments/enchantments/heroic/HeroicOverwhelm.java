@@ -3,12 +3,14 @@ package org.arkhamnetwork.enchantments.enchantments.heroic;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
 import com.rit.sucy.CustomEnchantment;
+import com.rit.sucy.EnchantmentAPI;
 import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.plugin.Plugin;
 
 public class HeroicOverwhelm extends CustomEnchantment {
     public HeroicOverwhelm() {
@@ -16,6 +18,13 @@ public class HeroicOverwhelm extends CustomEnchantment {
         this.max = 4;
         this.base = 10.0;
         this.interval = 8.0;
+        Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
+            @Override
+            public void run() {
+                HeroicOverwhelm.this.heroicEnchantment = true;
+                HeroicOverwhelm.this.nonHeroicVersion = EnchantmentAPI.getEnchantment("Overwhelm");
+            }
+        }, 2L);
     }
 
     @SneakyThrows

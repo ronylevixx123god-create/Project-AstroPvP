@@ -82,9 +82,7 @@ public class RogueScratchCard extends CosmicItem
             throw new PrefixedException("You cannot claim this rank in this world!");
         }
 
-        if (item.getAmount()>1) {
-            throw new PrefixedException("You cannot apply multiple cards at once!");
-        }
+
         NBTTagCompoundBuilder cosmicData = wrapper.getCompoundOrCreate("conaxData");
 
         cosmicData.setInt("rogue_scratchcard", Integer.valueOf(1));
@@ -92,6 +90,12 @@ public class RogueScratchCard extends CosmicItem
         player.setItemInHand(null);
         wrapper.setNBTBase("conaxData", (NBTBase)cosmicData.get());
         item = wrapper.build();
+
+        if(player.getItemInHand().getAmount() > 1) {
+            player.getItemInHand().setAmount(player.getItemInHand().getAmount()-1);
+        } else {
+            player.setItemInHand((ItemStack) null);
+        }
 
         RogueScratchCardGUI card = new RogueScratchCardGUI(player);
         card.open();

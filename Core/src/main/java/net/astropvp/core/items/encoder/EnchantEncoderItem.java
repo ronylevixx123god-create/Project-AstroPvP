@@ -2,6 +2,7 @@ package net.astropvp.core.items.encoder;
 
 import com.cosmicpvp.cosmicutils.exceptions.CosmicException;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.google.common.collect.Multimap;
 import com.rit.sucy.CustomEnchantment;
@@ -26,14 +27,11 @@ public class EnchantEncoderItem extends CosmicItem implements InventoryInteracta
     }
 
     public ItemStack createItem(Player player, Object... objects) {
-        ItemStack item = new ItemStack(Material.SLIME_BALL);
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(CC.RedB + "Enchantment Encoder");
-        List<String> lore = new ArrayList<>();
-        lore.add("");
-        meta.setLore(lore);
-        item.setItemMeta(meta);
-        NBTWrapper wrapper = new NBTWrapper(item);
+        ItemBuilder itemBuilder = new ItemBuilder(Material.SLIME_BALL);
+        itemBuilder.name(CC.translate("&c&lEnchant Encoder"));
+        itemBuilder.addLoreLine(CC.translate("&7Add this encoder on an item to"));
+        itemBuilder.addLoreLine(CC.translate("&7max out all enchants on this item."));
+        NBTWrapper wrapper = new NBTWrapper(itemBuilder.build());
         wrapper.setString("cosmicType", "enchant_encoder");
         wrapper.setString("random", UUID.randomUUID().toString());
         return wrapper.build();
@@ -56,6 +54,13 @@ public class EnchantEncoderItem extends CosmicItem implements InventoryInteracta
             EnchantmentAPI.getEnchantment(entry.getKey().name()).addToItem(clicked, entry.getKey().getMaxLevel());
         }
         EnchantmentBook.applyTransmogScroll(clicked);
+        if(cursor.getAmount() > 1) {
+            e.getWhoClicked().getItemOnCursor().setAmount(cursor.getAmount() - 1);
+        } else {
+            e.getWhoClicked().setItemOnCursor((ItemStack) null);
+        }
+
+        e.getWhoClicked().sendMessage(CC.translate("&a&l(!)&a Maxed out all enchants on " + e.getWhoClicked().getItemOnCursor().getItemMeta().getDisplayName()));
     }
 
 }

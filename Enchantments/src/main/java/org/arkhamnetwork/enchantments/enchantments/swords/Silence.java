@@ -31,7 +31,7 @@ import java.util.Arrays;
 
 public class Silence extends CustomEnchantment {
     public Silence() {
-        super("Silence", GeneralUtil.swords_and_bow, 2);
+        super("Silence", GeneralUtil.weapons, 2);
         Bukkit.getServer().getPluginManager().registerEvents((Listener) new SilenceListener(), (Plugin) Enchantments.getInstance());
         this.max = 4;
         this.base = 20.0;
