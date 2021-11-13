@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
+import me.astropvp.utils.BlocksUtil;
 import me.astropvp.utils.KrizzUtil;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -64,6 +65,9 @@ public class GenBucketTask extends BukkitRunnable {
             }
 
             this.currentLocation.getBlock().setType(this.activeBucket.getBucket().getPlacedMaterial());
+
+            BlocksUtil.setBlockFast(this.currentLocation.getBlock(), this.activeBucket.getBucket().getPlacedMaterial().getId(), (byte) 0, false);
+
             ++this.totalBlocks;
             if (this.totalBlocks >= this.maxBlocks || this.currentLocation.getY() >= 256.0D) {
                 this.endTask();
