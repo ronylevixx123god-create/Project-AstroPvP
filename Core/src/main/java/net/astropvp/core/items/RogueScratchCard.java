@@ -87,7 +87,6 @@ public class RogueScratchCard extends CosmicItem
 
         cosmicData.setInt("rogue_scratchcard", Integer.valueOf(1));
         event.setCancelled(true);
-        player.setItemInHand(null);
         wrapper.setNBTBase("conaxData", (NBTBase)cosmicData.get());
         item = wrapper.build();
 

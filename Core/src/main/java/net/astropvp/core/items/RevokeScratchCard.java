@@ -87,7 +87,6 @@ public class RevokeScratchCard extends CosmicItem
 
         cosmicData.setInt("revoke_scratchcard", Integer.valueOf(1));
         event.setCancelled(true);
-        player.setItemInHand(null);
         wrapper.setNBTBase("conaxData", (NBTBase)cosmicData.get());
         item = wrapper.build();
 
