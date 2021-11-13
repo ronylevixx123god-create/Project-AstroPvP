@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-import me.astropvp.utils.BlocksUtil;
 import me.astropvp.utils.KrizzUtil;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -59,15 +58,12 @@ public class GenBucketTask extends BukkitRunnable {
 
     public void run() {
         try {
-            if ((this.currentLocation.getBlock().getType() != Material.AIR || !this.isLocationValid()) && (this.currentLocation.getBlock().getType() != Material.STATIONARY_WATER || !this.isLocationValid()) && (this.currentLocation.getBlock().getType() != Material.WATER || !this.isLocationValid())) {
+            if ((this.currentLocation.getBlock().getType() != Material.AIR || !this.isLocationValid()) && (this.currentLocation.getBlock().getType() != Material.GRASS || !this.isLocationValid()) &&  (this.currentLocation.getBlock().getType() != Material.LONG_GRASS || !this.isLocationValid()) && (this.currentLocation.getBlock().getType() != Material.STATIONARY_WATER || !this.isLocationValid()) && (this.currentLocation.getBlock().getType() != Material.WATER || !this.isLocationValid())) {
                 this.endTask();
                 return;
             }
 
             this.currentLocation.getBlock().setType(this.activeBucket.getBucket().getPlacedMaterial());
-
-            BlocksUtil.setBlockFast(this.currentLocation.getBlock(), this.activeBucket.getBucket().getPlacedMaterial().getId(), (byte) 0, false);
-
             ++this.totalBlocks;
             if (this.totalBlocks >= this.maxBlocks || this.currentLocation.getY() >= 256.0D) {
                 this.endTask();
