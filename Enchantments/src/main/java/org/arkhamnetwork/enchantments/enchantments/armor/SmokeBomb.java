@@ -37,13 +37,15 @@ public class SmokeBomb extends CustomEnchantment {
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         if (player instanceof Player) {
             final Player p = (Player) player;
-            double dmg = e.getDamage(EntityDamageEvent.DamageModifier.BASE);
-            dmg *= ArmorUtil.getArmorDamageNullificationPercent((float) ArmorUtil.getArmorValue(p));
+            double dmg = e.getFinalDamage();
             if (player.getHealth() - dmg <= 0.0) {
-                if (p.hasMetadata("SmokeBomb") && System.currentTimeMillis() - p.getMetadata("SmokeBomb").get(0).asLong() <= 15000L) {
+                if (p.hasMetadata("SmokeBomb")) {
                     return;
                 }
                 p.setMetadata("SmokeBomb", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) System.currentTimeMillis()));
+                Bukkit.getScheduler().runTaskLaterAsynchronously(Enchantments.getInstance(), () -> {
+                    p.removeMetadata("SmokeBomb", Enchantments.getInstance());
+                }, 180*20);
                 final int radius = Math.round(level * 1.5f);
                 final List<LivingEntity> victims = new ArrayList<LivingEntity>();
                 final FPlayer fp = (FPlayer) FPlayers.i.get((OfflinePlayer) p);

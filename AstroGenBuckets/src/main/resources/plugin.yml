@@ -1,0 +1,10 @@
+name: AstroGenBuckets
+main: me.astropvp.genbuckets.GenBucketPlugin
+version: 1.0
+description: GenBuckets plugin made for DecimateMC/FantasyCloud
+commands:
+  genbucket:
+    description: Genbucket command
+    aliases: [gen, genshop]
+  gentask:
+    description: Gentask command

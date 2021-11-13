@@ -31,6 +31,7 @@
  */
 package com.compilex.CosmicArmorSets.items;
 
+import com.compilex.CompilexPermissions.PermissionsAPI;
 import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.cosmicpvp.cosmicutils.compat.ASound;
 import com.cosmicpvp.cosmicutils.exceptions.CosmicException;
@@ -119,7 +120,7 @@ public class ArmorSetBonusCrystalItem
         if (set.isEmpty() || chance == null) {
             return null;
         }
-        ArrayList lore = Lists.newArrayList( new String[]{CC.Green + chance.intValue() + "% Success Rate", CC.Gray + "Can be applied to any non", CC.Gray + "armor set that is not", CC.Gray + "already equipped with a", CC.Gray + "bonus crystal to gain", CC.Gray + "a passive advantage!", ""});
+        ArrayList lore = Lists.newArrayList(new String[]{CC.Green + chance.intValue() + "% Success Rate", CC.Gray + "Can be applied to any non", CC.Gray + "armor set that is not", CC.Gray + "already equipped with a", CC.Gray + "bonus crystal to gain", CC.Gray + "a passive advantage!", ""});
         lore.add(CC.GoldB + "Crystal Bonus:");
         NBTTagListBuilder list = new NBTTagListBuilder();
         for (ArmorSet s : set) {
@@ -192,6 +193,19 @@ public class ArmorSetBonusCrystalItem
                 ItemID.blacklistIID(cursorWrapper.getIID(), String.valueOf(player.getName()) + " bonus crystal");
             }
             double d = chanceToApply = data.hasKey("bonusChance") ? data.getDouble("bonusChance") : 20.0;
+            String rank = PermissionsAPI.getPermissionUser(player.getUniqueId()).getGroup();
+
+            if (rank.equals("interstellar")) {
+                chanceToApply += 25;
+                player.sendMessage(CC.translate("&a&l+25% APPLY CHANCE &7(Nebula Perk)"));
+            } else if (rank.equals("apollo") || rank.equals("media")) {
+                chanceToApply += 10;
+                player.sendMessage(CC.translate("&a&l+10% APPLY CHANCE &7(Apollo Perk)"));
+
+            }
+
+
+
             if (Math.random() > chanceToApply * 0.01) {
                 ASound.GLASS.play(player, 1.1f, 0.8f);
                 Bukkit.getLogger().info(String.valueOf(player.getName()) + " failed to apply " + sets.toString() + " armor set crystal!");

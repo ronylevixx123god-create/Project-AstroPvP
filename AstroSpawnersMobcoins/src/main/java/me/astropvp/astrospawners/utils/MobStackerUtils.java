@@ -81,7 +81,7 @@ public class MobStackerUtils {
 
 
         } else {
-            size = entityStack + (data != null ? data.getSpawnerAmount()+data.getSpawnerAmount()/2 : 100);
+            size = entityStack + (data != null ? data.getSpawnerAmount() : 100);
             if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFactionAt(event.getLocation()), OutpostType.THE_GREAT_HALL)) {
                 size += size *1.5;
             }

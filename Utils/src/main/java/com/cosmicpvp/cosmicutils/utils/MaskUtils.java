@@ -12,14 +12,11 @@ import org.bukkit.entity.Player;
 
 public class MaskUtils {
     public static boolean hasMaskEquipped(Player player, String maskName) {
-        if (!CosmicUtils.get().isMasksEnabled()) {
+        if (maskName == null) {
             return false;
         }
-        MaskType found = MaskType.getFromName((String) maskName);
-        if (found == null) {
-            return false;
-        }
-        return found.hasEquipped(player);
+        MaskType type = MaskType.getFromName(maskName.toUpperCase());
+        return type != null && type.hasEquipped(player);
     }
 }
 

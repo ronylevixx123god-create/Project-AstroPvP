@@ -81,7 +81,7 @@ public class AstroPlusRank extends CosmicItem
 
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + player.getName() + " group add astro+");
         player.sendMessage("");
-        player.sendMessage(CC.translate("&b&l(!)&b Congratulations on redeeming the apollo rank!"));
+        player.sendMessage(CC.translate("&b&l(!)&b Congratulations on redeeming the astro+ rank!"));
         player.sendMessage(CC.translate("&7You now have access to all the apollo perks."));
         player.sendMessage("");
     }

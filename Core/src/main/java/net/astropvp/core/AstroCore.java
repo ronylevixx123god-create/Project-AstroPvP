@@ -215,6 +215,9 @@ public class AstroCore extends JavaPlugin {
 
         this.getServer().getPluginManager().registerEvents(new SlotbotScratchCardListener(), this);
         this.getServer().getPluginManager().registerEvents(new TrapBlockListener(), this);
+
+        this.getServer().getPluginManager().registerEvents(new MagicalLavaBucket(), this);
+        this.getServer().getPluginManager().registerEvents(new MagicalWaterBucket(), this);
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, new AutoBroadcastTask(), 20L, 6000L);
 
         Bukkit.getScheduler().runTaskLater(this, ()->
@@ -294,6 +297,7 @@ public class AstroCore extends JavaPlugin {
 
         this.getCommand("corechunkfinder").setExecutor(new CoreChunkFinderCommand());
         this.getCommand("spawnershop").setExecutor(new SpawnerShopCommand());
+        this.getCommand("givebucket").setExecutor(new CommandGiveMagicBucket());
 
         this.getServer().getPluginManager().registerEvents(new KillTitleSound(), this);
 

@@ -21,6 +21,8 @@ commands:
     aliases: ['bin']
   lastmanstanding:
     aliases: ['lms']
+  givebucket:
+    description: gives magic bucket
   grinding:
     aliases: ['grind']
   list:

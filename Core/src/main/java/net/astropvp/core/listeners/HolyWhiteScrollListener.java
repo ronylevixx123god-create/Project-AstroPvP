@@ -160,9 +160,10 @@ public class HolyWhiteScrollListener implements Listener {
             e.getDrops().remove(i);
         if (savedItems.size() > 0)
             this.savedItems.put(e.getEntity().getUniqueId().toString(), savedItems);
-        e.getDrops().add(ExpBottles.getXpBottle(e.getDroppedExp(), e.getEntity().getName()));
 
         Player killed = e.getEntity();
+        e.getDrops().add(ExpBottles.getXpBottle(killed.getTotalExperience(), killed.getName()));
+
         CollectPlugin.getInstance().getCollectManager().getPlayerCollect(killer).add(new CollectCategory(CollectType.DEATH_INVENTORY, e.getDrops().toArray(new ItemStack[e.getDrops().size() - 1]), CC.RedB + killed.getName() + "'s Death Inventory"));
         e.getDrops().clear();
         killer.sendMessage("");

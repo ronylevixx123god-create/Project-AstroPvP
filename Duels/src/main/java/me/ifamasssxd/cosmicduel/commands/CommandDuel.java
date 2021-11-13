@@ -196,15 +196,6 @@ implements CommandExecutor {
                 p.sendMessage(ChatColor.RED + "Your duel queue menu data has been cleared!");
                 return true;
             }
-            if (args[0].equalsIgnoreCase("top")) {
-                RankedTopManager rankedTop = CosmicDuel.get().getTopManager();
-                if (rankedTop.isLoading()) {
-                    p.sendMessage(ChatColor.RED + "Please wait while the top players are being loaded...");
-                    return true;
-                }
-                rankedTop.showTop(p, 1);
-                return true;
-            }
             if (args[0].equalsIgnoreCase("toggle")) {
                 p.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "Duels have been toggled " + (CosmicDuel.get().getDuelToggles().togglePlayer(p) ? ChatColor.RED + ChatColor.BOLD.toString() + "OFF" : ChatColor.GREEN + ChatColor.BOLD.toString() + "ON"));
                 return true;
@@ -215,60 +206,6 @@ implements CommandExecutor {
             }
             if (args[0].equalsIgnoreCase("spectate")) {
                 p.performCommand("spectate");
-                return true;
-            }
-            if (args[0].equalsIgnoreCase("customize") || args[0].equalsIgnoreCase("custom")) {
-                if (!PlayerUtils.isInventoryEmpty(p)) {
-                    p.sendMessage(ChatColor.RED + "Your inventory must be empty to customize your duel kits!");
-                    return true;
-                }
-                if (PlayerUtils.inCombat(p)) {
-                    p.sendMessage(ChatColor.RED + "You cannot use this command while in combat.");
-                    return true;
-                }
-                if (DuelAPI.getDuel(p) != null) {
-                    p.sendMessage(ChatColor.RED + "You cannot customize your kits in a duel!");
-                    return true;
-                }
-                DuelPlayer dPlayer = DuelPlayer.getDuelPlayer(p);
-                if (dPlayer.getCurrentlyModifying() == null) {
-                    p.openInventory(dPlayer.createCustomInventory());
-                }
-                return true;
-            }
-            if (args[0].equalsIgnoreCase("godset")) {
-                if (PlayerUtils.inCombat(p)) {
-                    p.sendMessage(ChatColor.RED + "You cannot edit a Duel Godset in combat!");
-                    return true;
-                }
-                if (DuelAPI.hasDuel(p)) {
-                    p.sendMessage(ChatColor.RED + "You are already involved in a duel!");
-                    return true;
-                }
-                QueueManager queueManager = CosmicDuel.get().getQueueManager();
-                if (queueManager.isInQueue(p) || queueManager.isSearching(p) || queueManager.getRankedQueue().isInRankedQueue(p)) {
-                    p.sendMessage(ChatColor.RED + "You cannot edit your duel godset in queue.");
-                    return true;
-                }
-                DuelPlayer player = DuelPlayer.getDuelPlayer(p);
-                if (player.getCustomGodSet() == null) {
-                    player.setCustomGodSet(new CustomGodSet());
-                }
-                p.openInventory(player.getCustomGodSet().getEditInventory());
-                p.playSound(p.getLocation(), Sound.BLAZE_DEATH, 1.0f, 1.3f);
-                return true;
-            }
-            if (args[0].equalsIgnoreCase("ranked")) {
-                Player player2 = (Player)sender;
-                DuelPlayer pl4 = DuelPlayer.getDuelPlayer(player2);
-                if (!DuelMenu.checkCanQueue(pl4, player2)) {
-                    return true;
-                }
-                player2.sendMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + ChatColor.GREEN + "You have been placed in the " + ChatColor.GREEN + ChatColor.BOLD.toString() + "RANKED" + ChatColor.GREEN + " duel queue!");
-                player2.sendMessage(ChatColor.GREEN + "Use " + ChatColor.GREEN + ChatColor.UNDERLINE.toString() + "/duel leave" + ChatColor.GREEN + " to leave the queue.");
-                player2.sendMessage(ChatColor.GRAY + "Searching for an opponent...");
-                CosmicDuel.get().getQueueManager().getRankedQueue().addPlayerToQueue(player2);
-                player2.closeInventory();
                 return true;
             }
             Player pl5 = Bukkit.getPlayer(args[0]);
@@ -348,22 +285,12 @@ implements CommandExecutor {
         p.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + ChatColor.UNDERLINE.toString() + "Duel Commands");
         p.sendMessage(ChatColor.YELLOW + "/duel <name>");
         p.sendMessage(ChatColor.GRAY + "Invite a player to a settings specific duel.");
-        p.sendMessage(ChatColor.YELLOW + "/duel ranked");
-        p.sendMessage(ChatColor.GRAY + "Enter the duel ranked queue.");
-        p.sendMessage(ChatColor.YELLOW + "/duel godset");
-        p.sendMessage(ChatColor.GRAY + "Access the Duel Godset edit menu.");
-        p.sendMessage(ChatColor.YELLOW + "/duel top");
-        p.sendMessage(ChatColor.GRAY + "View top Duel ELO players.");
         p.sendMessage(ChatColor.YELLOW + "/duel toggle");
         p.sendMessage(ChatColor.GRAY + "Toggle duel invites from other players.");
         p.sendMessage(ChatColor.YELLOW + "/duel collect");
         p.sendMessage(ChatColor.GRAY + "Access your Stake Collection Bin.");
         p.sendMessage(ChatColor.YELLOW + "/duel spectate");
         p.sendMessage(ChatColor.GRAY + "Access the duel spectate menu.");
-        p.sendMessage(ChatColor.YELLOW + "/duel unranked");
-        p.sendMessage(ChatColor.GRAY + "Enter the Global Duel Queue to duel a random opponent.");
-        p.sendMessage(ChatColor.YELLOW + "/duel custom");
-        p.sendMessage(ChatColor.GRAY + "Customize your duel kit loadouts.");
         p.sendMessage("");
     }
 }

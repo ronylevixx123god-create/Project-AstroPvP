@@ -77,14 +77,16 @@ public class SlotbotScratchCard extends CosmicItem
             throw new PrefixedException("You cannot claim this rank in this world!");
         }
 
-        if (item.getAmount()>1) {
-            throw new PrefixedException("You cannot apply multiple cards at once!");
-        }
+
         NBTTagCompoundBuilder cosmicData = wrapper.getCompoundOrCreate("conaxData");
 
         cosmicData.setInt("slotbot_scratchcard", Integer.valueOf(1));
         event.setCancelled(true);
-        player.setItemInHand(null);
+        if(player.getItemInHand().getAmount() > 1) {
+            player.getItemInHand().setAmount(player.getItemInHand().getAmount()-1);
+        } else {
+            player.setItemInHand((ItemStack) null);
+        }
         wrapper.setNBTBase("conaxData", (NBTBase)cosmicData.get());
         item = wrapper.build();
 

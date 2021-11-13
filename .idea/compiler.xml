@@ -29,6 +29,7 @@
         <module name="Sets" />
         <module name="Dungeon" />
         <module name="Tournaments" />
+        <module name="AstroGenBuckets" />
         <module name="Contest" />
         <module name="Kits" />
         <module name="Core" />
@@ -53,11 +54,13 @@
         <module name="EnchantmentsAPI" />
         <module name="Arkkit" />
         <module name="CompilexPermissions" />
+        <module name="GenBuckets" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="ArmorSets" target="1.8" />
       <module name="AstroClientComms" target="8" />
+      <module name="AstroPvPGenBuckets" target="1.8" />
       <module name="AstroSpawners" target="1.8" />
       <module name="Backpacks" target="8" />
       <module name="ClientComms" target="8" />

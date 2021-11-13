@@ -84,7 +84,7 @@ public class MobGrinderRunnable extends BukkitRunnable {
                         if (ExpBottles.isXpBottle(chest.getInventory().getItem(i))) {
                             chest.getInventory().setItem(i, ExpBottles.getXpBottle(ExpBottles.getXpAmount(chest.getInventory().getItem(i)) + amountOfExpPerBlaze, "Mob Grinder"));
                         }
-                        if (MobCoinUtils.isCoinsNote(chest.getInventory().getItem(i))) {
+                        if (MobCoinUtils.isCoinsNote(chest.getInventory().getItem(i)) && Math.random() < 0.3) {
                             chest.getInventory().setItem(i, MobCoinUtils.createCoinsNote("Mob Grinder", MobCoinUtils.getCoinsAmountFromNote(chest.getInventory().getItem(i)) + 1));
                         }
                     }
