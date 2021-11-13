@@ -51,11 +51,12 @@
         <module>CosmicCrate</module>
         <module>SandBots</module>
         <module>AstroUtils</module>
-        <module>DiscordAPI</module>
-        <module>Collectors</module>
         <module>AstroCrateKeys</module>
         <module>AstroDiscordBot</module>
         <module>CCVerify</module>
+        <module>AstroGenBuckets</module>
+        <module>AstroPvPGenBuckets</module>
+        <module>GenBuckets</module>
     </modules>
 
     <build>
