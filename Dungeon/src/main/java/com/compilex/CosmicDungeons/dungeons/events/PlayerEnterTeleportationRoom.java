@@ -12,17 +12,18 @@
 package com.compilex.CosmicDungeons.dungeons.events;
 
 import com.compilex.CosmicDungeons.CosmicDungeonsPlugin;
+import com.compilex.CosmicDungeons.dungeons.events.RegionEvent;
 import com.compilex.CosmicDungeons.dungeons.libs.Dungeon;
 import com.compilex.CosmicDungeons.utils.Logger;
-import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
+import com.gmail.filoghost.holograms.api.HolographicDisplaysAPI;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
+import org.bukkit.plugin.Plugin;
 
 class PlayerEnterTeleportationRoom
 extends RegionEvent {
@@ -61,16 +62,15 @@ extends RegionEvent {
 
     @Override
     public void run() {
-        this.dungeon.broadcastMessage(ChatColor.WHITE + "Yijki is not here! He must have beamed down to the planet. Opperate the teleportation device and escape the ship before it falls apart!");
-        this.dungeon.updateTimeRestrictionTask(System.currentTimeMillis() + 300000L, "Solve Teleportation Room Puzzle");
-        this.dungeon.broadcastMessage(ChatColor.WHITE + "To use the teleportor, you must operate all 10 buttons in the correct order, then pull the lever in the center of the room.");
-        this.dungeon.setObjectiveHologram(HologramsAPI.createHologram(CosmicDungeonsPlugin.get_(), this.teleportLever.getLocation().add(0.0, 2.0, 0.5)));
-        this.dungeon.getObjectiveHologram().appendTextLine(ChatColor.RED + "" + ChatColor.BOLD + "LOCKED! " + ChatColor.GRAY + "Solve puzzle to complete dungeon.");
+        this.dungeon.broadcastMessage((Object)ChatColor.WHITE + "Yijki is not here! He must have beamed down to the planet. Opperate the teleportation device and escape the ship before it falls apart!");
+        this.dungeon.updateTimeRestrictionTask(System.currentTimeMillis() + 300000L / (long)(this.dungeon.isHalfTime() ? 2 : 1), "Solve Teleportation Room Puzzle");
+        this.dungeon.broadcastMessage((Object)ChatColor.WHITE + "To use the teleportor, you must operate all 10 buttons in the correct order, then pull the lever in the center of the room.");
+        this.dungeon.setObjectiveHologram(HolographicDisplaysAPI.createHologram((Plugin)CosmicDungeonsPlugin.get_(), (Location)this.teleportLever.getLocation().add(0.0, 2.0, 0.5), (String[])new String[]{(Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "LOCKED", (Object)ChatColor.GRAY + "Solve puzzle to complete dungeon."}));
         int x = 0;
         for (Location l : this.buttonLocations) {
-            Logger.debug("Button #" + ++x + ": " + l + " (" + this.buttonColors.get(l).getChar() + ")");
+            Logger.debug("Button #" + ++x + ": " + (Object)l + " (" + this.buttonColors.get((Object)l).getChar() + ")");
         }
-        Logger.debug("teleport_lever: " + this.teleportLever.getLocation());
+        Logger.debug("teleport_lever: " + (Object)this.teleportLever.getLocation());
         this.teleportLever.setTypeIdAndData(Material.LEVER.getId(), (byte)5, false);
     }
 }

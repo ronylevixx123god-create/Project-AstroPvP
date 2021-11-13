@@ -19,7 +19,7 @@ extends RegionEvent {
     @Override
     public void run() {
         this.dungeon.broadcastMessage((Object)ChatColor.WHITE + "Reach the Teleportation Room before the ship collapses. There is something profoundly different about this Yijki, it must be contained and neutralized at all costs!");
-        this.dungeon.updateTimeRestrictionTask(System.currentTimeMillis() + 480000L, "Complete Cargo Bay");
+        this.dungeon.updateTimeRestrictionTask(System.currentTimeMillis() + 480000L / (long)(this.dungeon.isHalfTime() ? 2 : 1), "Complete Cargo Bay");
     }
 }
 

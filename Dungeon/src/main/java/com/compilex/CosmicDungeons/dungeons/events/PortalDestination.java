@@ -39,9 +39,9 @@ public class PortalDestination {
         this.portalBlocks = Lists.newArrayList();
         int radius = 3;
         Block at = location.getBlock();
-        for (int x = -3; x < 3; ++x) {
-            for (int z = -3; z < 3; ++z) {
-                for (int y = -3; y < 3; ++y) {
+        for (int x = -radius; x < radius; ++x) {
+            for (int z = -radius; z < radius; ++z) {
+                for (int y = -radius; y < radius; ++y) {
                     Block block = at.getRelative(x, y, z);
                     if (block.getType() != Material.PORTAL) continue;
                     this.portalBlocks.add(block);
