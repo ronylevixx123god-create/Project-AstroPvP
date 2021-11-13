@@ -19,7 +19,7 @@ extends RegionEvent {
     @Override
     public void run() {
         this.dungeon.broadcastMessage((Object)ChatColor.WHITE + "Do not allow Yijki to escape! Move quickly, the ship is collapsing under the strain of the battle!");
-        this.dungeon.updateTimeRestrictionTask(System.currentTimeMillis() + 540000L, "Complete Ventilation Shaft");
+        this.dungeon.updateTimeRestrictionTask(System.currentTimeMillis() + 540000L / (long)(this.dungeon.isHalfTime() ? 2 : 1), "Complete Ventilation Shaft");
     }
 }
 

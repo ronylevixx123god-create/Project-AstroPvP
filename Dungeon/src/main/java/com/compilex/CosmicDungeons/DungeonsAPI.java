@@ -1,10 +1,41 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.utils.ItemUtils
+ *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.utils.ReflectionUtils
+ *  com.cosmicpvp.cosmicutils.utils.WorldUtil
+ *  org.arkhamnetwork.Arkkit.patches.chunkgc.ChunkGCTask
+ *  org.arkhamnetwork.Arkkit.plugins.ArkPlugins
+ *  org.bukkit.Bukkit
+ *  org.bukkit.ChatColor
+ *  org.bukkit.Location
+ *  org.bukkit.Material
+ *  org.bukkit.World
+ *  org.bukkit.World$Environment
+ *  org.bukkit.WorldCreator
+ *  org.bukkit.command.CommandSender
+ *  org.bukkit.craftbukkit.libs.org.apache.commons.io.FileUtils
+ *  org.bukkit.entity.Entity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.player.PlayerTeleportEvent$TeleportCause
+ *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.metadata.FixedMetadataValue
+ *  org.bukkit.metadata.MetadataValue
+ *  org.bukkit.plugin.Plugin
+ */
 package com.compilex.CosmicDungeons;
 
+import com.compilex.CosmicDungeons.CosmicDungeonsPlugin;
 import com.compilex.CosmicDungeons.dungeons.libs.Dungeon;
 import com.compilex.CosmicDungeons.dungeons.libs.DungeonPlayer;
 import com.compilex.CosmicDungeons.dungeons.libs.DungeonType;
 import com.compilex.CosmicDungeons.listeners.DungeonPortalCraftListener;
+import com.compilex.CosmicDungeons.struct.DungeonDebuff;
 import com.compilex.CosmicDungeons.utils.Logger;
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.cosmicpvp.cosmicutils.utils.ReflectionUtils;
@@ -16,12 +47,15 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.apache.commons.io.FileUtils;
+import org.arkhamnetwork.Arkkit.patches.chunkgc.ChunkGCTask;
+import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -68,7 +102,7 @@ public class DungeonsAPI {
 
     public Dungeon getDungeonByName(String dungeonName) {
         for (Dungeon d : this.dungeons) {
-            if (!d.getDungeonName().equals(dungeonName)) continue;
+            if (!d.getRealDungeonName().equals(dungeonName)) continue;
             return d;
         }
         return null;
@@ -93,31 +127,63 @@ public class DungeonsAPI {
         }
     }
 
+    public static boolean hasDungeonDebuff(Player player, DungeonDebuff debuff) {
+        DungeonPlayer dp = DungeonsAPI.get().getPlayerDungeonData(player);
+        if (dp == null || dp.getCurrentDungeon() == null) {
+            return false;
+        }
+        return dp.getCurrentDungeon().getDungeonDebuffs().contains((Object)debuff);
+    }
+
+    private void tryDeleteWorld(String name) {
+        try {
+            FileUtils.deleteDirectory((File)new File(name));
+        }
+        catch (IOException e) {
+            Bukkit.getLogger().warning("Failed to delete " + name + " directory in `tryDeleteWorld`, retrying!");
+            e.printStackTrace();
+            this.tryDeleteWorld(name);
+        }
+    }
+
     public void resetDungeonWorldIO(Dungeon dungeon) throws IOException {
         if (this.resetting) {
             return;
         }
         this.resetting = true;
         World w = dungeon.getWorld();
-        Location exit = dungeon.getPortalLocation() != null ? dungeon.getPortalLocation() : Bukkit.getWorld((String)"world").getSpawnLocation();
-        for (Player p : w.getPlayers()) {
-            p.setMetadata("bypassCombatTeleport", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get_(), (Object)exit.clone()));
-            p.teleport(exit, PlayerTeleportEvent.TeleportCause.UNKNOWN);
+        boolean hasCopied = false;
+        while (!hasCopied) {
+            Location exit = dungeon.getPortalLocation() != null ? dungeon.getPortalLocation() : Bukkit.getWorld((String)"world").getSpawnLocation();
+            for (Player p : w.getPlayers()) {
+                p.setMetadata("bypassCombatTeleport", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get_(), (Object)exit.clone()));
+                p.teleport(exit, PlayerTeleportEvent.TeleportCause.UNKNOWN);
+            }
+            for (Entity e : w.getEntities()) {
+                e.remove();
+            }
+            if (!Bukkit.unloadWorld((World)w, (boolean)false)) {
+                Bukkit.getLogger().info("UNABLE TO UNLOAD WORLD!");
+            }
+            Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)("mv unload " + dungeon.getWorldName()));
+            try {
+                WorldUtil.forceUnloadWorld((World)w, (boolean)false);
+            }
+            catch (Exception e) {
+                System.out.println("failed to force unload world:");
+                e.printStackTrace();
+                continue;
+            }
+            this.tryDeleteWorld(dungeon.getWorldName());
+            try {
+                FileUtils.copyDirectory((File)new File(dungeon.getWorldName() + ".template"), (File)new File(dungeon.getWorldName()));
+                hasCopied = true;
+            }
+            catch (IOException e) {
+                Bukkit.getLogger().info("Failed copying world, trying again!");
+                e.printStackTrace();
+            }
         }
-        for (Entity e : w.getEntities()) {
-            e.remove();
-        }
-        if (!Bukkit.unloadWorld((World)w, (boolean)false)) {
-            Bukkit.getLogger().info("[CosmicDungeons] UNABLE TO UNLOAD WORLD!");
-        }
-        try {
-            WorldUtil.forceUnloadWorld((World)w, (boolean)false);
-        }
-        catch (Exception e2) {
-            e2.printStackTrace();
-        }
-        FileUtils.deleteDirectory(new File(dungeon.getWorldName()));
-        FileUtils.copyDirectory(new File(dungeon.getWorldName() + ".template"), (File)new File(dungeon.getWorldName()));
         WorldCreator wc = new WorldCreator(dungeon.getWorldName()).generateStructures(false).generator("VoidGenerator");
         if (dungeon.isDestroyedOutpost()) {
             wc.environment(World.Environment.NETHER);
@@ -126,10 +192,12 @@ public class DungeonsAPI {
         if (dungeon.isDestroyedOutpost()) {
             w.setKeepSpawnInMemory(false);
         }
-        if (dungeon.getDungeonType() == DungeonType.ABANDONED_SHIP || dungeon.getDungeonType() == DungeonType.DESTROYED_OUTPOST) {
-            w.setFullTime(18000L);
-            w.setGameRuleValue("doDaylightCycle", "false");
-            w.setGameRuleValue("keepInventory", "true");
+        w.setFullTime(18000L);
+        w.setGameRuleValue("doDaylightCycle", "false");
+        w.setGameRuleValue("doMobSpawning", "false");
+        w.setGameRuleValue("keepInventory", "true");
+        if (dungeon.getDungeonType() == DungeonType.PLANET_NUL) {
+            w.setGameRuleValue("randomTickSpeed", "125");
         }
         this.resetting = false;
     }
@@ -206,10 +274,18 @@ public class DungeonsAPI {
 
     public Dungeon getDungeonFromPortalItem(ItemStack i) {
         if (this.isDungeonPortal(i)) {
-            String dungeonName = i.getItemMeta().getDisplayName().split(": ")[1];
+            String displayName = i.getItemMeta().getDisplayName();
+            if (displayName.contains("Heroic")) {
+                displayName = displayName.replace(CC.translate((String)"&b&k!!!&f&l&nHeroic&5&k!!!&r "), "");
+            }
+            String dungeonName = displayName.split(": ")[1];
             return DungeonsAPI.get().getDungeonByName(dungeonName);
         }
         return null;
+    }
+
+    public boolean isHeroicPortal(ItemStack i) {
+        return this.isDungeonPortal(i) && i.getItemMeta().getDisplayName().contains("Heroic");
     }
 }
 

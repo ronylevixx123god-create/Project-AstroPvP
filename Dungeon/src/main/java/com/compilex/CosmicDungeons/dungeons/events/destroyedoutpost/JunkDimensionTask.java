@@ -2,8 +2,8 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.WorldGuardUtils
+ *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.utils.WorldGuardUtils
  *  com.google.common.collect.Lists
  *  com.google.common.collect.MapMaker
  *  org.bukkit.Location
@@ -16,7 +16,7 @@
  *  org.bukkit.event.block.Action
  *  org.bukkit.event.player.PlayerInteractEvent
  *  org.bukkit.event.player.PlayerTeleportEvent
- *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.inventory.ItemStack
  *  org.bukkit.potion.PotionEffect
  *  org.bukkit.potion.PotionEffectType
  *  org.bukkit.scheduler.BukkitRunnable
@@ -58,25 +58,26 @@ extends BukkitRunnable {
     public JunkDimensionTask(DestroyedOutpostDungeon dungeon) {
         this.dungeon = dungeon;
         this.junkChestLocations = this.getLocations(this.dungeon, Lists.newArrayList());
-        this.junkDimensionLocation = new Location(dungeon.getWorld(), -674.0, 60.0, -295.0);
+        this.junkDimensionLocation = new Location(dungeon.getWorld(), -442.0, 69.0, 14.0);
     }
 
     public void run() {
         this.junkDimensionPlayerTimers.forEach((player, timeLeft) -> {
             if (!player.isValid() || player.isDead() || !player.getWorld().getName().equals(this.dungeon.getWorldName())) {
                 this.junkDimensionPlayerTimers.remove(player);
-            } else if (timeLeft <= 0) {
+                return;
+            }
+            if (timeLeft <= 0) {
                 this.dungeon.broadcastMessage(CC.White + player.getName() + "'s couldn't escape the Junk Dimension in time, they have been lost in the void!");
                 player.setHealth(0.0);
                 this.junkDimensionPlayerTimers.remove(player);
             } else {
                 if (timeLeft % 15 == 0 || timeLeft <= 10) {
-                    player.sendMessage(CC.RedB + "(!) " + CC.Red + "You will must escape this dimension in " + timeLeft + "s or you will be lost forever!");
+                    player.sendMessage(CC.RedB + "(!) " + CC.Red + "You must escape this dimension in " + timeLeft + "s or you will be lost forever!");
                     player.playSound(player.getLocation(), Sound.NOTE_PIANO, 1.0f, 1.4f);
                 }
-                Map<Player, Integer> junkDimensionPlayerTimers = this.junkDimensionPlayerTimers;
                 timeLeft = timeLeft - 1;
-                junkDimensionPlayerTimers.put((Player)player, (Integer)timeLeft);
+                this.junkDimensionPlayerTimers.put((Player)player, (Integer)timeLeft);
             }
         });
     }
@@ -113,7 +114,7 @@ extends BukkitRunnable {
             event.setUseItemInHand(Event.Result.DENY);
             player.getInventory().remove(event.getItem());
             player.updateInventory();
-            if (!WorldGuardUtils.isInRegionsContainsFast((Location)player.getLocation(), (List)Lists.newArrayList(new String[]{"junk_realm"}))) {
+            if (!WorldGuardUtils.isInRegionsContainsFast((Location)player.getLocation(), (List)Lists.newArrayList((Object[])new String[]{"junk_realm"}))) {
                 player.sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot use this item outside of the Junk Dimension!");
                 player.playSound(player.getLocation(), Sound.GHAST_SCREAM, 1.0f, 0.9f);
                 return;
@@ -128,15 +129,15 @@ extends BukkitRunnable {
             player.playSound(player.getLocation(), Sound.AMBIENCE_CAVE, 4.0f, 1.1f);
             player.playSound(player.getLocation(), Sound.GHAST_MOAN, 1.0f, 1.1f);
             player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 40, 0));
-        } else {
-            Block block = event.getClickedBlock();
-            if (block == null) {
-                return;
-            }
-            if (event.getAction() == Action.RIGHT_CLICK_BLOCK && this.chestsWithKeys.remove((Object)block.getLocation())) {
-                event.getPlayer().sendMessage(CC.GreenB + "(!) " + CC.Green + "You have located the Clock of Returning!");
-                event.getPlayer().sendMessage(CC.Gray + "Right-Click it to return to the Portal Dimension!");
-            }
+            return;
+        }
+        Block block = event.getClickedBlock();
+        if (block == null) {
+            return;
+        }
+        if (event.getAction() == Action.RIGHT_CLICK_BLOCK && this.chestsWithKeys.remove((Object)block.getLocation())) {
+            event.getPlayer().sendMessage(CC.GreenB + "(!) " + CC.Green + "You have located the Clock of Returning!");
+            event.getPlayer().sendMessage(CC.Gray + "Right-Click it to return to the Portal Dimension!");
         }
     }
 
@@ -144,57 +145,54 @@ extends BukkitRunnable {
     }
 
     public List<Location> getLocations(Dungeon d, List<Location> list) {
-        list.add(new Location(d.getWorld(), -679.0, 60.0, -294.0));
-        list.add(new Location(d.getWorld(), -685.0, 60.0, -293.0));
-        list.add(new Location(d.getWorld(), -682.0, 60.0, -300.0));
-        list.add(new Location(d.getWorld(), -681.0, 60.0, -301.0));
-        list.add(new Location(d.getWorld(), -680.0, 60.0, -302.0));
-        list.add(new Location(d.getWorld(), -679.0, 60.0, -303.0));
-        list.add(new Location(d.getWorld(), -678.0, 60.0, -302.0));
-        list.add(new Location(d.getWorld(), -677.0, 60.0, -300.0));
-        list.add(new Location(d.getWorld(), -675.0, 60.0, -300.0));
-        list.add(new Location(d.getWorld(), -673.0, 60.0, -300.0));
-        list.add(new Location(d.getWorld(), -677.0, 60.0, -305.0));
-        list.add(new Location(d.getWorld(), -675.0, 60.0, -305.0));
-        list.add(new Location(d.getWorld(), -673.0, 60.0, -305.0));
-        list.add(new Location(d.getWorld(), -672.0, 60.0, -302.0));
-        list.add(new Location(d.getWorld(), -671.0, 60.0, -303.0));
-        list.add(new Location(d.getWorld(), -670.0, 60.0, -302.0));
-        list.add(new Location(d.getWorld(), -669.0, 60.0, -301.0));
-        list.add(new Location(d.getWorld(), -668.0, 60.0, -300.0));
-        list.add(new Location(d.getWorld(), -667.0, 60.0, -299.0));
-        list.add(new Location(d.getWorld(), -668.0, 60.0, -298.0));
-        list.add(new Location(d.getWorld(), -670.0, 60.0, -297.0));
-        list.add(new Location(d.getWorld(), -665.0, 60.0, -297.0));
-        list.add(new Location(d.getWorld(), -665.0, 60.0, -295.0));
-        list.add(new Location(d.getWorld(), -665.0, 60.0, -293.0));
-        list.add(new Location(d.getWorld(), -670.0, 60.0, -293.0));
-        list.add(new Location(d.getWorld(), -668.0, 60.0, -292.0));
-        list.add(new Location(d.getWorld(), -667.0, 60.0, -291.0));
-        list.add(new Location(d.getWorld(), -668.0, 60.0, -290.0));
-        list.add(new Location(d.getWorld(), -669.0, 60.0, -289.0));
-        list.add(new Location(d.getWorld(), -670.0, 60.0, -288.0));
-        list.add(new Location(d.getWorld(), -671.0, 60.0, -287.0));
-        list.add(new Location(d.getWorld(), -672.0, 60.0, -288.0));
-        list.add(new Location(d.getWorld(), -673.0, 60.0, -290.0));
-        list.add(new Location(d.getWorld(), -675.0, 60.0, -290.0));
-        list.add(new Location(d.getWorld(), -677.0, 60.0, -290.0));
-        list.add(new Location(d.getWorld(), -673.0, 60.0, -285.0));
-        list.add(new Location(d.getWorld(), -675.0, 60.0, -285.0));
-        list.add(new Location(d.getWorld(), -677.0, 60.0, -285.0));
-        list.add(new Location(d.getWorld(), -678.0, 60.0, -288.0));
-        list.add(new Location(d.getWorld(), -679.0, 60.0, -287.0));
-        list.add(new Location(d.getWorld(), -680.0, 60.0, -288.0));
-        list.add(new Location(d.getWorld(), -681.0, 60.0, -289.0));
-        list.add(new Location(d.getWorld(), -682.0, 60.0, -290.0));
-        list.add(new Location(d.getWorld(), -683.0, 60.0, -291.0));
-        list.add(new Location(d.getWorld(), -682.0, 60.0, -292.0));
-        list.add(new Location(d.getWorld(), -685.0, 60.0, -295.0));
-        list.add(new Location(d.getWorld(), -685.0, 60.0, -297.0));
-        list.add(new Location(d.getWorld(), -682.0, 60.0, -298.0));
-        list.add(new Location(d.getWorld(), -680.0, 60.0, -297.0));
-        list.add(new Location(d.getWorld(), -680.0, 60.0, -293.0));
-        list.add(new Location(d.getWorld(), -682.0, 60.0, -298.0));
+        list.add(new Location(d.getWorld(), -446.0, 69.0, 7.0));
+        list.add(new Location(d.getWorld(), -445.0, 69.0, 9.0));
+        list.add(new Location(d.getWorld(), -443.0, 69.0, 9.0));
+        list.add(new Location(d.getWorld(), -441.0, 69.0, 9.0));
+        list.add(new Location(d.getWorld(), -441.0, 69.0, 9.0));
+        list.add(new Location(d.getWorld(), -440.0, 69.0, 7.0));
+        list.add(new Location(d.getWorld(), -440.0, 69.0, 7.0));
+        list.add(new Location(d.getWorld(), -450.0, 69.0, 17.0));
+        list.add(new Location(d.getWorld(), -448.0, 69.0, 12.0));
+        list.add(new Location(d.getWorld(), -450.0, 69.0, 11.0));
+        list.add(new Location(d.getWorld(), -446.0, 69.0, 21.0));
+        list.add(new Location(d.getWorld(), -445.0, 69.0, 19.0));
+        list.add(new Location(d.getWorld(), -443.0, 69.0, 19.0));
+        list.add(new Location(d.getWorld(), -441.0, 69.0, 19.0));
+        list.add(new Location(d.getWorld(), -440.0, 69.0, 21.0));
+        list.add(new Location(d.getWorld(), -438.0, 69.0, 16.0));
+        list.add(new Location(d.getWorld(), -436.0, 69.0, 17.0));
+        list.add(new Location(d.getWorld(), -445.0, 69.0, 24.0));
+        list.add(new Location(d.getWorld(), -443.0, 69.0, 24.0));
+        list.add(new Location(d.getWorld(), -441.0, 69.0, 24.0));
+        list.add(new Location(d.getWorld(), -439.0, 69.0, 22.0));
+        list.add(new Location(d.getWorld(), -438.0, 69.0, 21.0));
+        list.add(new Location(d.getWorld(), -437.0, 69.0, 20.0));
+        list.add(new Location(d.getWorld(), -436.0, 69.0, 19.0));
+        list.add(new Location(d.getWorld(), -435.0, 69.0, 18.0));
+        list.add(new Location(d.getWorld(), -433.0, 69.0, 16.0));
+        list.add(new Location(d.getWorld(), -433.0, 69.0, 14.0));
+        list.add(new Location(d.getWorld(), -433.0, 69.0, 12.0));
+        list.add(new Location(d.getWorld(), -435.0, 69.0, 10.0));
+        list.add(new Location(d.getWorld(), -436.0, 69.0, 9.0));
+        list.add(new Location(d.getWorld(), -437.0, 69.0, 8.0));
+        list.add(new Location(d.getWorld(), -438.0, 69.0, 7.0));
+        list.add(new Location(d.getWorld(), -439.0, 69.0, 6.0));
+        list.add(new Location(d.getWorld(), -441.0, 69.0, 4.0));
+        list.add(new Location(d.getWorld(), -443.0, 69.0, 4.0));
+        list.add(new Location(d.getWorld(), -445.0, 69.0, 4.0));
+        list.add(new Location(d.getWorld(), -447.0, 69.0, 6.0));
+        list.add(new Location(d.getWorld(), -448.0, 69.0, 7.0));
+        list.add(new Location(d.getWorld(), -449.0, 69.0, 8.0));
+        list.add(new Location(d.getWorld(), -450.0, 69.0, 6.0));
+        list.add(new Location(d.getWorld(), -453.0, 69.0, 12.0));
+        list.add(new Location(d.getWorld(), -453.0, 69.0, 14.0));
+        list.add(new Location(d.getWorld(), -453.0, 69.0, 16.0));
+        list.add(new Location(d.getWorld(), -451.0, 69.0, 18.0));
+        list.add(new Location(d.getWorld(), -450.0, 69.0, 19.0));
+        list.add(new Location(d.getWorld(), -449.0, 69.0, 20.0));
+        list.add(new Location(d.getWorld(), -448.0, 69.0, 21.0));
+        list.add(new Location(d.getWorld(), -447.0, 69.0, 22.0));
         return list;
     }
 }

@@ -3,11 +3,12 @@
  * 
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
- *  net.minecraft.server.v1_7_R4.NBTBase
- *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
- *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
+ *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
+ *  net.minecraft.server.v1_8_R3.NBTBase
+ *  org.bukkit.ChatColor
+ *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.inventory.meta.ItemMeta
  */
 package com.compilex.CosmicDungeons.utils;
 
@@ -17,6 +18,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import java.util.List;
 import net.minecraft.server.v1_8_R3.NBTBase;
+import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -26,13 +28,13 @@ public class PortalTrinketUtils {
             return false;
         }
         NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder data = wrapper.getCompoundOrCreate("conaxData");
+        NBTTagCompoundBuilder data = wrapper.getCompoundOrCreate("cosmicData");
         return data.getString("dungeonTrinket").equals(trinket);
     }
 
     public static boolean portalHasTrinket(ItemStack item) {
         NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder data = wrapper.getCompoundOrCreate("conaxData");
+        NBTTagCompoundBuilder data = wrapper.getCompoundOrCreate("cosmicData");
         return data.hasKey("dungeonTrinket");
     }
 
@@ -41,15 +43,21 @@ public class PortalTrinketUtils {
             return;
         }
         NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder data = wrapper.getCompoundOrCreate("conaxData");
+        NBTTagCompoundBuilder data = wrapper.getCompoundOrCreate("cosmicData");
         data.setString("dungeonTrinket", trinket);
-        wrapper.setNBTBase("conaxData", (NBTBase)data.get());
+        wrapper.setNBTBase("cosmicData", (NBTBase)data.get());
         item = wrapper.build();
         ItemMeta meta = item.getItemMeta();
         List lore = meta.getLore();
         lore.add(CC.GoldB + "TRINKET: " + CC.Gold + displayName);
         meta.setLore(lore);
         item.setItemMeta(meta);
+    }
+
+    public static int getTierFromName(String name) {
+        String last = ChatColor.stripColor((String)name.split(" ")[name.split(" ").length - 1]);
+        String sub = last.substring(1, last.length() - 1);
+        return sub.equals("I") ? 1 : (sub.equals("II") ? 2 : 3);
     }
 }
 

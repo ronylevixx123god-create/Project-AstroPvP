@@ -4,18 +4,19 @@
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder
  *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.TimeUtils
+ *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.utils.TimeUtils
  *  com.google.common.collect.Lists
- *  net.minecraft.server.v1_7_R4.NBTBase
+ *  net.minecraft.server.v1_8_R3.NBTBase
  *  org.bukkit.Material
- *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.inventory.ItemStack
  */
 package com.compilex.CosmicDungeons.items;
 
 import com.compilex.CosmicDungeons.dungeons.libs.DungeonType;
-import net.astropvp.core.utils.ItemUtils;
+import com.compilex.CosmicDungeons.items.KeyPair;
+import com.compilex.CosmicDungeons.utils.ItemUtils;
 import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
@@ -24,7 +25,7 @@ import com.cosmicpvp.cosmicutils.utils.TimeUtils;
 import com.google.common.collect.Lists;
 import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
-
+import net.minecraft.server.v1_8_R3.NBTBase;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -47,7 +48,7 @@ extends ItemBuilder {
         String type;
         NBTTagCompoundBuilder builder;
         NBTWrapper wrapper = new NBTWrapper(item);
-        if (wrapper.getString("cosmicType").equals("DUNGEON_KEY") && (builder = wrapper.getCompound("conaxData")) != null && (type = builder.getString("dungeonType")) != null && !type.isEmpty()) {
+        if (wrapper.getString("cosmicType").equals("DUNGEON_KEY") && (builder = wrapper.getCompound("cosmicData")) != null && (type = builder.getString("dungeonType")) != null && !type.isEmpty()) {
             return DungeonType.getFromName(type);
         }
         return null;
@@ -60,7 +61,7 @@ extends ItemBuilder {
         if (wrapper == null) {
             return null;
         }
-        if (wrapper.getString("cosmicType").equals("DUNGEON_KEY") && (builder = wrapper.getCompound("conaxData")) != null && (type = builder.getString("dungeonType")) != null && !type.isEmpty() && (dungeonType = DungeonType.getFromName(type)) != null) {
+        if (wrapper.getString("cosmicType").equals("DUNGEON_KEY") && (builder = wrapper.getCompound("cosmicData")) != null && (type = builder.getString("dungeonType")) != null && !type.isEmpty() && (dungeonType = DungeonType.getFromName(type)) != null) {
             return new KeyPair(dungeonType, builder.getLong("expiration"));
         }
         return null;
@@ -80,9 +81,9 @@ extends ItemBuilder {
         wrapper.setString("cosmicType", "DUNGEON_KEY");
         NBTTagCompoundBuilder builder = new NBTTagCompoundBuilder();
         if (this.expiration != 0L) {
-            builder.setLong("expiration", this.expiration);
+            builder.setLong("expiration", Long.valueOf(this.expiration));
         }
-        wrapper.setNBTBase("conaxData", builder.setString("dungeonType", this.dungeonType.name()).get());
+        wrapper.setNBTBase("cosmicData", (NBTBase)builder.setString("dungeonType", this.dungeonType.name()).get());
         wrapper.assignIID();
         return wrapper.build();
     }

@@ -63,6 +63,9 @@ public class LocationUtils {
         boolean badMaterial;
         Random rand = new Random();
         Location rand_loc = l.clone();
+        if (!l.getChunk().isLoaded()) {
+            l.getChunk().load();
+        }
         rand_loc.add((double)((rand.nextBoolean() ? 1 : -1) * (rand.nextInt(maxDistance) + minDistance)), 0.0, (double)((rand.nextBoolean() ? 1 : -1) * (rand.nextInt(maxDistance) + minDistance)));
         rand_loc.add(0.5, 0.0, 0.5);
         Block b = rand_loc.getWorld().getHighestBlockAt(rand_loc).getLocation().subtract(0.0, 1.0, 0.0).getBlock();

@@ -2,7 +2,10 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
+ *  me.libraryaddict.disguise.DisguiseAPI
  *  org.bukkit.Bukkit
+ *  org.bukkit.GameMode
+ *  org.bukkit.entity.Entity
  *  org.bukkit.entity.Player
  *  org.bukkit.event.EventHandler
  *  org.bukkit.event.EventPriority
@@ -19,7 +22,10 @@ import com.compilex.CosmicDungeons.DungeonsAPI;
 import com.compilex.CosmicDungeons.dungeons.libs.Dungeon;
 import com.compilex.CosmicDungeons.dungeons.libs.DungeonPlayer;
 import java.util.List;
+import me.libraryaddict.disguise.DisguiseAPI;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -37,6 +43,10 @@ implements Listener {
         if (e.getEntity().hasMetadata("inDungeonParkour")) {
             e.getEntity().removeMetadata("inDungeonParkour", (Plugin)CosmicDungeonsPlugin.get_());
         }
+        if (e.getEntity().hasMetadata("inInvisibleMaze")) {
+            e.getEntity().removeMetadata("inInvisibleMaze", (Plugin)CosmicDungeonsPlugin.get_());
+            e.getEntity().setGameMode(GameMode.SURVIVAL);
+        }
         if (dp != null && dp.getCurrentDungeon() != null) {
             DungeonsAPI.clearDungeonItemsFromInventory(e.getEntity());
             if (!e.getEntity().getWorld().equals((Object)dp.getCurrentDungeon().getWorld())) {
@@ -45,6 +55,11 @@ implements Listener {
                 if (e.getEntity().hasMetadata("inDungeonParkour")) {
                     e.getEntity().removeMetadata("inDungeonParkour", (Plugin)CosmicDungeonsPlugin.get_());
                 }
+                if (e.getEntity().hasMetadata("inInvisibleMaze")) {
+                    e.getEntity().removeMetadata("inInvisibleMaze", (Plugin)CosmicDungeonsPlugin.get_());
+                    e.getEntity().setGameMode(GameMode.SURVIVAL);
+                }
+                DisguiseAPI.undisguiseToAll((Entity)e.getEntity());
                 return;
             }
             e.setKeepInventory(true);
@@ -59,6 +74,11 @@ implements Listener {
             if (e.getEntity().hasMetadata("inDungeonParkour")) {
                 e.getEntity().removeMetadata("inDungeonParkour", (Plugin)CosmicDungeonsPlugin.get_());
             }
+            if (e.getEntity().hasMetadata("inInvisibleMaze")) {
+                e.getEntity().removeMetadata("inInvisibleMaze", (Plugin)CosmicDungeonsPlugin.get_());
+                e.getEntity().setGameMode(GameMode.SURVIVAL);
+            }
+            DisguiseAPI.undisguiseToAll((Entity)e.getEntity());
             List<Player> players = dungeon.getPlayers();
             players.remove((Object)e.getEntity());
             if (players.isEmpty()) {

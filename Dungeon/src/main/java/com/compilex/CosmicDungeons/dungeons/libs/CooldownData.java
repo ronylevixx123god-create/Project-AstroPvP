@@ -2,7 +2,6 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.UpgradeUtils
  *  org.bukkit.configuration.file.YamlConfiguration
  *  org.bukkit.entity.Player
  */
@@ -11,7 +10,6 @@ package com.compilex.CosmicDungeons.dungeons.libs;
 import com.compilex.CosmicDungeons.DungeonsAPI;
 import com.compilex.CosmicDungeons.dungeons.libs.Dungeon;
 import com.compilex.CosmicDungeons.utils.Logger;
-import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -36,7 +34,7 @@ extends HashMap<Dungeon, Long> {
     }
 
     public long addDungeonCooldown(Dungeon d, long cooldownDuration) {
-        int level = UpgradeUtils.getUpgradeLevel((Player)this.cooldownPlayer, (String)"HEROIC_DUNGEON_LOOT");
+        int level = 1;
         long toReduce = TimeUnit.HOURS.toMillis(level == 1 ? 4L : (level == 2 ? 8L : (level == 3 ? 12L : (level == 4 ? 18L : (level == 5 ? 24L : (level == 6 ? 36L : 0L))))));
         long l = System.currentTimeMillis() + (cooldownDuration -= toReduce);
         Long previous = this.put(d, l);

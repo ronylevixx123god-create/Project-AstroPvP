@@ -2,20 +2,23 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.utils.TitleManager$TitleColor
  *  org.bukkit.ChatColor
  *  org.bukkit.scheduler.BukkitRunnable
  */
 package com.compilex.CosmicDungeons.dungeons.libs;
 
+import com.compilex.CosmicDungeons.dungeons.libs.Dungeon;
+import com.compilex.CosmicDungeons.dungeons.libs.DungeonEndReason;
+import com.compilex.CosmicDungeons.dungeons.libs.DungeonState;
 import com.compilex.CosmicDungeons.utils.TimeUtils;
 import com.cosmicpvp.cosmicutils.utils.CC;
-import net.astropvp.core.utils.TitleUtil;
-import org.bukkit.ChatColor;
-import org.bukkit.scheduler.BukkitRunnable;
-
+import com.cosmicpvp.cosmicutils.utils.TitleManager;
 import java.util.Arrays;
 import java.util.concurrent.CopyOnWriteArrayList;
+import org.bukkit.ChatColor;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class TimeRestrictionTask
 extends BukkitRunnable {
@@ -56,8 +59,7 @@ extends BukkitRunnable {
 
     public void setObjectiveName(String newObjective) {
         this.objectiveName = newObjective;
-
-        TitleUtil.sendTitleList(dungeon.getPlayers(), CC.Yellow + "Time Limit: " + ChatColor.GRAY + TimeUtils.formatDifference(this.expireTime - System.currentTimeMillis()));
+        this.dungeon.broadcastTitle(this.getObjectiveString(newObjective), (Object)ChatColor.YELLOW + "Time Limit: " + (Object)ChatColor.GRAY + TimeUtils.formatDifference(this.expireTime - System.currentTimeMillis()), TitleManager.TitleColor.GOLD, TitleManager.TitleColor.GRAY);
     }
 
     private String getObjectiveString(String newObjective) {
@@ -73,11 +75,12 @@ extends BukkitRunnable {
             return;
         }
         if (System.currentTimeMillis() >= this.expireTime) {
-            if (this.dungeon.getDungeonStatus() != DungeonState.COMPLETE) {
+            if (this.dungeon.getDungeonStatus() == DungeonState.COMPLETE) {
+                this.dungeon.endDungeon(DungeonEndReason.DUNGEON_CLEARED);
+            } else {
                 this.dungeon.endDungeon(DungeonEndReason.TIME_EXPIRE);
                 return;
             }
-            this.dungeon.endDungeon(DungeonEndReason.DUNGEON_CLEARED);
         }
         if (this.dungeon.getDungeonStatus() == DungeonState.COMPLETE) {
             return;
@@ -85,9 +88,9 @@ extends BukkitRunnable {
         long millisLeft = this.expireTime - System.currentTimeMillis();
         for (long l : this.notifcationThresholds) {
             if (millisLeft >= l || this.initialDifference <= l + 1000L) continue;
-            this.dungeon.broadcastMessage("You have " + ChatColor.UNDERLINE + TimeUtils.formatDifference(millisLeft) + ChatColor.WHITE + " left to complete objective:");
-            this.dungeon.broadcastMessage(ChatColor.YELLOW + this.objectiveName + ChatColor.WHITE + " or you will fail the dungeon!");
-            TitleUtil.sendTitleList(this.dungeon.getPlayers(), CC.Yellow + "Time Left: " + ChatColor.GRAY + TimeUtils.formatDifference(millisLeft));
+            this.dungeon.broadcastMessage("You have " + (Object)ChatColor.UNDERLINE + TimeUtils.formatDifference(millisLeft) + (Object)ChatColor.WHITE + " left to complete objective:");
+            this.dungeon.broadcastMessage((Object)ChatColor.YELLOW + this.objectiveName + (Object)ChatColor.WHITE + " or you will fail the dungeon!");
+            this.dungeon.broadcastTitle(this.getObjectiveString(this.getObjectiveName()), "Time Left: " + (Object)ChatColor.GRAY + TimeUtils.formatDifference(millisLeft), TitleManager.TitleColor.GOLD, TitleManager.TitleColor.YELLOW);
             this.notifcationThresholds.remove(l);
         }
     }

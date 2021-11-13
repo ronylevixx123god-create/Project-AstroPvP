@@ -5,9 +5,9 @@
  *  com.cosmicpvp.cosmicutils.itembuilder.PhoenixFeatherBuilder
  *  com.cosmicpvp.cosmicutils.itembuilder.SpeedTrinketBuilder
  *  com.cosmicpvp.cosmicutils.itembuilder.YijkiStaffBuilder
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NumberUtils
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.PlayerUtil
+ *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.utils.NumberUtils
+ *  com.cosmicpvp.cosmicutils.utils.PlayerUtil
  *  com.google.common.collect.Lists
  *  org.bukkit.Bukkit
  *  org.bukkit.Location
@@ -15,7 +15,7 @@
  *  org.bukkit.command.CommandExecutor
  *  org.bukkit.command.CommandSender
  *  org.bukkit.entity.Player
- *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.inventory.ItemStack
  */
 package com.compilex.CosmicDungeons.cmds;
 
@@ -26,10 +26,11 @@ import com.compilex.CosmicDungeons.dungeons.libs.DestroyedOutpostDungeon;
 import com.compilex.CosmicDungeons.dungeons.libs.Dungeon;
 import com.compilex.CosmicDungeons.dungeons.libs.DungeonPlayer;
 import com.compilex.CosmicDungeons.dungeons.libs.DungeonType;
+import com.compilex.CosmicDungeons.dungeons.libs.PlanetNulDungeon;
 import com.compilex.CosmicDungeons.items.DungeonKeyItem;
 import com.compilex.CosmicDungeons.struct.PortalLog;
 import com.compilex.CosmicDungeons.tasks.HolidayPortalTask;
-import net.astropvp.core.utils.ItemUtils;
+import com.compilex.CosmicDungeons.utils.ItemUtils;
 import com.compilex.CosmicDungeons.utils.LocationUtils;
 import com.compilex.CosmicDungeons.utils.Logger;
 import com.compilex.CosmicDungeons.utils.TimeUtils;
@@ -42,8 +43,7 @@ import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
 import com.google.common.collect.Lists;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.List;
-
+import java.util.LinkedList;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -54,12 +54,18 @@ import org.bukkit.inventory.ItemStack;
 
 public class CommandAdminDungeon
 implements CommandExecutor {
+    /*
+     * WARNING - void declaration
+     */
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        DungeonType dungeonType2;
+        DungeonPlayer dungeonPlayer;
         if (!sender.isOp()) {
             return true;
         }
         if (args.length == 0) {
             sender.sendMessage("/adungeon <debug/reloadconfig/setcooldown/givekey/saveplayers/givecoords/givemap/findmap/setspawn/materials/soulpearl/soulanvil/reset/lootbag/setholidayportal/togglekey/destroyedoutpostcomplete>");
+            sender.sendMessage("/adungeon giveportalkey <player> <dungeonname: ABANDONED_SHIP, other>");
             return true;
         }
         if (args.length == 1 && args[0].equals("reloadconfig")) {
@@ -69,62 +75,69 @@ implements CommandExecutor {
         }
         if (args[0].equalsIgnoreCase("destroyedoutpostcomplete")) {
             boolean newValue;
-            DestroyedOutpostDungeon dungeon = (DestroyedOutpostDungeon)DungeonType.DESTROYED_OUTPOST.getDungeonInstance();
-            dungeon.hasBeenDefeated = newValue = !dungeon.hasBeenDefeated;
+            DestroyedOutpostDungeon destroyedOutpostDungeon = (DestroyedOutpostDungeon)DungeonType.DESTROYED_OUTPOST.getDungeonInstance();
+            destroyedOutpostDungeon.hasBeenDefeated = newValue = !destroyedOutpostDungeon.hasBeenDefeated;
             CosmicDungeonsPlugin.get().getConfig().set("destroyedOutpostDefeated", (Object)newValue);
             CosmicDungeonsPlugin.get().saveConfig();
             sender.sendMessage(CC.Red + "Destroyed Outpost been defeated set to: " + newValue);
             return true;
         }
         if (args[0].equalsIgnoreCase("giveclock")) {
-            ((Player)sender).getInventory().addItem(((DestroyedOutpostDungeon)DungeonType.DESTROYED_OUTPOST.getDungeonInstance()).createReturningClock());
+            ((Player)sender).getInventory().addItem(new ItemStack[]{((DestroyedOutpostDungeon)DungeonType.DESTROYED_OUTPOST.getDungeonInstance()).createReturningClock()});
             sender.sendMessage(CC.Red + "clock received!");
             return true;
         }
         if (args[0].equalsIgnoreCase("givekey")) {
-            if (args.length != 2) {
-                sender.sendMessage(CC.Red + "Please provide a dungeon type: " + Arrays.toString(DungeonType.values()));
+            if (args.length < 2) {
+                sender.sendMessage(CC.Red + "Please provide a dungeon type: " + Arrays.toString((Object[])DungeonType.values()));
                 return true;
             }
             try {
-                DungeonType type = DungeonType.valueOf(args[1]);
-                ((Player)sender).getInventory().addItem(type.getDungeonInstance().getDungeonPortal());
+                DungeonType dungeonType3 = DungeonType.valueOf(args[1]);
+                if (args.length == 3) {
+                    Bukkit.getPlayer((String)args[2]).getInventory().addItem(new ItemStack[]{dungeonType3.getDungeonInstance().getDungeonPortal()});
+                } else {
+                    ((Player)sender).getInventory().addItem(new ItemStack[]{dungeonType3.getDungeonInstance().getDungeonPortal()});
+                }
                 sender.sendMessage(CC.Red + " Portal Added!");
                 return true;
             }
-            catch (Exception e) {
-                e.printStackTrace();
-                sender.sendMessage(CC.Red + "Unable to find dungeon of that type: " + Arrays.toString(DungeonType.values()));
+            catch (Exception exception) {
+                exception.printStackTrace();
+                sender.sendMessage(CC.Red + "Unable to find dungeon of that type: " + Arrays.toString((Object[])DungeonType.values()));
                 sender.sendMessage(CC.RedB + "/adungeon givekey <dungeonType>");
                 return true;
             }
         }
         if (args[0].equalsIgnoreCase("giveportalkey")) {
-            Long val;
-            String pName = args[1];
-            String dungeon2 = args[2];
-            Player p = Bukkit.getPlayer((String)pName);
-            if (p == null) {
-                sender.sendMessage(CC.Red + "Player not online!");
+            String string = args[1];
+            String dungeon = args[2];
+            Player p = Bukkit.getPlayer((String)string);
+            if (p != null) {
+                Long val;
+                DungeonType type3 = DungeonType.getFromName(dungeon);
+                if (type3 == null) {
+                    sender.sendMessage(CC.Red + "Dungeon Type invalid! Valid: " + Arrays.toString((Object[])DungeonType.values()));
+                    return true;
+                }
+                ItemStack key = args.length == 4 && (val = NumberUtils.parseLongOrNull((String)args[3])) != null ? new DungeonKeyItem(type3, val).build() : new DungeonKeyItem(type3, -1L).build();
+                if (key != null) {
+                    PlayerUtil.giveOrDropProtectedItem((Player)p, (ItemStack)key, (int)-1);
+                    p.sendMessage(CC.YellowB + "(!) " + CC.Yellow + type3.getDungeonName() + " Dungeon Portal Key" + CC.Yellow + " added to your inventory!");
+                    sender.sendMessage(CC.Red + "Key added!");
+                }
                 return true;
             }
-            DungeonType type2 = DungeonType.getFromName(dungeon2);
-            if (type2 == null) {
-                sender.sendMessage(CC.Red + "Dungeon Type invalid! Valid: " + Arrays.toString(DungeonType.values()));
-                return true;
-            }
-            ItemStack key = args.length == 4 && (val = NumberUtils.parseLongOrNull((String)args[3])) != null ? new DungeonKeyItem(type2, val).build() : new DungeonKeyItem(type2, -1L).build();
-            if (key != null) {
-                PlayerUtil.giveOrDropProtectedItem((Player)p, (ItemStack)key, (int)-1);
-                p.sendMessage(CC.YellowB + "(!) " + CC.Yellow + type2.getDungeonName() + " Dungeon Portal Key" + CC.Yellow + " added to your me.astropvp.cratekeys.inventory!");
-                sender.sendMessage(CC.Red + "Key added!");
-            }
+            sender.sendMessage(CC.Red + "Player not online!");
             return true;
         }
         if (args[0].equals("debug")) {
             Logger.debug = !Logger.debug;
             sender.sendMessage("CosmicDungeons debug => " + Logger.debug);
             return true;
+        }
+        if (args[0].equals("getchestlocs") && (dungeonPlayer = CosmicDungeonsPlugin.get_().getApi().getPlayerDungeonData((Player)sender)) != null && dungeonPlayer.getCurrentDungeon() != null && dungeonPlayer.getCurrentDungeon().getDungeonType() == DungeonType.PLANET_NUL) {
+            ((PlanetNulDungeon)dungeonPlayer.getCurrentDungeon()).getDungeonEvents().chestLocations.forEach(l -> sender.sendMessage(CC.translate((String)("&c&lLocation: " + l.getX() + ", " + l.getY() + ", " + l.getZ()))));
         }
         if (args[0].equals("disable")) {
             CosmicDungeonsPlugin.get_().setDisableDungeons(true);
@@ -137,46 +150,45 @@ implements CommandExecutor {
             return true;
         }
         if (args[0].equalsIgnoreCase("givemap") || args[0].equalsIgnoreCase("findmap") || args[0].equalsIgnoreCase("map")) {
-            Player player;
-            Player player2 = player = sender instanceof Player ? (Player)sender : null;
+            Player player2 = sender instanceof Player ? (Player)sender : null;
             if (args.length >= 2) {
-                player = Bukkit.getPlayer((String)args[1]);
+                Player player3 = Bukkit.getPlayer((String)args[1]);
             }
-            if (player == null) {
+            if (player2 == null) {
                 sender.sendMessage(CC.Red + "Invalid player given!");
                 return true;
             }
-            DungeonPlayer dp = CosmicDungeonsPlugin.get_().getApi().getPlayerDungeonData(player);
-            if (dp == null || dp.getCurrentDungeon() == null || dp.getCurrentDungeon().getDungeonType() != DungeonType.DESTROYED_OUTPOST) {
-                sender.sendMessage(CC.Red + "Player '" + player.getName() + "' needs to be inside an active Destroyed Outpost dungeon to have the proper Dungeon me.astropvp.cratekeys.data.");
+            DungeonPlayer dp2 = CosmicDungeonsPlugin.get_().getApi().getPlayerDungeonData((Player)player2);
+            if (dp2 == null || dp2.getCurrentDungeon() == null || dp2.getCurrentDungeon().getDungeonType() != DungeonType.DESTROYED_OUTPOST) {
+                sender.sendMessage(CC.Red + "Player '" + player2.getName() + "' needs to be inside an active Destroyed Outpost dungeon to have the proper Dungeon data.");
                 return true;
             }
-            DestroyedOutpostDungeon dungeon3 = (DestroyedOutpostDungeon)dp.getCurrentDungeon();
+            DestroyedOutpostDungeon dungeon = (DestroyedOutpostDungeon)dp2.getCurrentDungeon();
             if (args[0].equalsIgnoreCase("findmap")) {
-                Location mapChest = dungeon3.getDungeonEvents().getDimensionalMapChest();
+                Location mapChest = dungeon.getDungeonEvents().getDimensionalMapChest();
                 if (mapChest == null) {
                     sender.sendMessage(CC.Red + "Unable to find a chest that stored the map, didnt spawn?");
                     return true;
                 }
                 sender.sendMessage(CC.Red + "Chest containing map: " + LocationUtils.convertLocationToString(mapChest));
-                sender.sendMessage(CC.Red + " hasBeenOpened: " + dungeon3.getDungeonEvents().getLootedChestBlocks().contains((Object)mapChest));
-                player.teleport(mapChest);
+                sender.sendMessage(CC.Red + " hasBeenOpened: " + dungeon.getDungeonEvents().getLootedChestBlocks().contains((Object)mapChest));
+                player2.teleport(mapChest);
                 return true;
             }
             if (args[0].equalsIgnoreCase("map")) {
                 sender.sendMessage(CC.Red + "Active Directions:");
-                dungeon3.getDungeonEvents().getActivePortalDestinations().forEach((value, direction) -> sender.sendMessage(CC.Red + "#" + (value + 1) + " - " + (Object)direction));
+                dungeon.getDungeonEvents().getActivePortalDestinations().forEach((value, direction) -> sender.sendMessage(CC.Red + "#" + (value + 1) + " - " + (Object)direction));
                 return true;
             }
-            ItemStack item = dungeon3.getDungeonEvents().createDimensionalMap();
-            player.getInventory().addItem(item);
-            sender.sendMessage(CC.Red + "Dimensional Map added to " + player.getName() + "'s me.astropvp.cratekeys.inventory!");
+            ItemStack item = dungeon.getDungeonEvents().createDimensionalMap();
+            player2.getInventory().addItem(new ItemStack[]{item});
+            sender.sendMessage(CC.Red + "Dimensional Map added to " + player2.getName() + "'s inventory!");
             return true;
         }
         if (args[0].equalsIgnoreCase("setfastestdungeonrun") && args.length == 3) {
-            DungeonType type = DungeonType.getFromName(args[1]);
-            if (type == null) {
-                sender.sendMessage(CC.Red + "Invalid dungeon type: " + Arrays.toString(DungeonType.values()));
+            DungeonType dungeonType4 = DungeonType.getFromName(args[1]);
+            if (dungeonType4 == null) {
+                sender.sendMessage(CC.Red + "Invalid dungeon type: " + Arrays.toString((Object[])DungeonType.values()));
                 return true;
             }
             Integer completed = NumberUtils.parseIntOrNull((String)args[2]);
@@ -184,8 +196,8 @@ implements CommandExecutor {
                 sender.sendMessage(CC.RedB + " (!) " + CC.Red + "Invalid time given!");
                 return true;
             }
-            type.getDungeonInstance().getTopDungeonTime().setSecondsCompletedIn(completed);
-            type.getDungeonInstance().getTopDungeonTime().saveData();
+            dungeonType4.getDungeonInstance().getTopDungeonTime().setSecondsCompletedIn(completed);
+            dungeonType4.getDungeonInstance().getTopDungeonTime().saveData();
             sender.sendMessage(CC.Red + "Dungeon time set to: " + completed);
             return true;
         }
@@ -193,14 +205,14 @@ implements CommandExecutor {
             if (args.length == 3) {
                 Player player = Bukkit.getPlayer((String)args[1]);
                 DungeonPlayer pl = CosmicDungeonsPlugin.get().getApi().getPlayerDungeonData(player);
-                DungeonType type3 = DungeonType.getFromName(args[2]);
-                if (type3 == null) {
-                    sender.sendMessage(CC.Red + "Invalid dungeon type: " + Arrays.toString(DungeonType.values()));
+                DungeonType type4 = DungeonType.getFromName(args[2]);
+                if (type4 == null) {
+                    sender.sendMessage(CC.Red + "Invalid dungeon type: " + Arrays.toString((Object[])DungeonType.values()));
                     return true;
                 }
                 if (pl != null) {
-                    pl.getLastCompleted().put(type3, System.currentTimeMillis());
-                    pl.getPlayerConfig().set("dungeons.stats." + type3.getInternalName() + ".lastComplete", (Object)System.currentTimeMillis());
+                    pl.getLastCompleted().put(type4, System.currentTimeMillis());
+                    pl.getPlayerConfig().set("dungeons.stats." + type4.getInternalName() + ".lastComplete", (Object)System.currentTimeMillis());
                     sender.sendMessage(CC.Red + "Last Complete time set to current time!");
                     return true;
                 }
@@ -210,15 +222,15 @@ implements CommandExecutor {
         }
         if (args[0].equals("setcooldown")) {
             if (args.length == 4) {
-                String pName = args[1];
-                String dungeon2 = args[2];
+                String string = args[1];
+                String dungeon = args[2];
                 long duration = Long.parseLong(args[3]);
-                Player p2 = Bukkit.getPlayer((String)pName);
-                if (p2 != null) {
-                    DungeonPlayer dp2 = CosmicDungeonsPlugin.get_().getApi().getPlayerDungeonData(p2);
-                    Dungeon d = CosmicDungeonsPlugin.get_().getApi().getDungeonByWorldName(dungeon2);
-                    dp2.getCooldowns().setDungeonCooldown(d, duration);
-                    sender.sendMessage("set cooldown of " + d.toString() + " for " + dp2.getBukkitPlayer().getName() + " to +" + duration);
+                Player p = Bukkit.getPlayer((String)string);
+                if (p != null) {
+                    DungeonPlayer dp3 = CosmicDungeonsPlugin.get_().getApi().getPlayerDungeonData(p);
+                    Dungeon d = CosmicDungeonsPlugin.get_().getApi().getDungeonByWorldName(dungeon);
+                    dp3.getCooldowns().setDungeonCooldown(d, duration);
+                    sender.sendMessage("set cooldown of " + d.toString() + " for " + dp3.getBukkitPlayer().getName() + " to +" + duration);
                     return true;
                 }
             } else {
@@ -228,13 +240,13 @@ implements CommandExecutor {
         }
         if (args[0].equals("resetcooldowns")) {
             if (args.length == 2) {
-                String dungeon4 = args[1];
-                for (Player p2 : Bukkit.getServer().getOnlinePlayers()) {
-                    if (p2 == null) continue;
-                    DungeonPlayer dp2 = CosmicDungeonsPlugin.get_().getApi().getPlayerDungeonData(p2);
-                    Dungeon d = CosmicDungeonsPlugin.get_().getApi().getDungeonByWorldName(dungeon4);
-                    dp2.getCooldowns().removeDungeonCooldown(d);
-                    sender.sendMessage("set cooldown of " + d.toString() + " for " + dp2.getBukkitPlayer().getName() + " to +" + '\u0000');
+                String string = args[1];
+                for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+                    if (p == null) continue;
+                    DungeonPlayer dp4 = CosmicDungeonsPlugin.get_().getApi().getPlayerDungeonData(p);
+                    Dungeon d = CosmicDungeonsPlugin.get_().getApi().getDungeonByWorldName(string);
+                    dp4.getCooldowns().removeDungeonCooldown(d);
+                    sender.sendMessage("set cooldown of " + d.toString() + " for " + dp4.getBukkitPlayer().getName() + " to +" + '\u0000');
                 }
                 return true;
             }
@@ -242,90 +254,94 @@ implements CommandExecutor {
             return true;
         }
         if (args[0].equals("setspawn") && sender instanceof Player) {
-            Player pSender = (Player)sender;
-            Dungeon dungeon5 = DungeonsAPI.get().getDungeonByWorldName(pSender.getWorld().getName());
-            if (dungeon5 != null) {
-                dungeon5.setSpawnLocation(pSender.getLocation());
-                dungeon5.getWorld().setSpawnLocation(pSender.getLocation().getBlockX(), pSender.getLocation().getBlockY(), pSender.getLocation().getBlockZ());
-                CosmicDungeonsPlugin.get_().getConfig().set("dungeons." + dungeon5.getWorldName() + ".spawnLocation", (Object)LocationUtils.convertLocationToString(pSender.getLocation()));
+            Player player = (Player)sender;
+            Dungeon dungeon = DungeonsAPI.get().getDungeonByWorldName(player.getWorld().getName());
+            if (dungeon != null) {
+                dungeon.setSpawnLocation(player.getLocation());
+                dungeon.getWorld().setSpawnLocation(player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ());
+                CosmicDungeonsPlugin.get_().getConfig().set("dungeons." + dungeon.getWorldName() + ".spawnLocation", (Object)LocationUtils.convertLocationToString(player.getLocation()));
                 CosmicDungeonsPlugin.get_().saveConfig();
-                pSender.sendMessage("Spawn for " + dungeon5.getDungeonName() + "(id: " + dungeon5.getDungeonID() + ") has been set to " + (Object)pSender.getLocation());
+                player.sendMessage("Spawn for " + dungeon.getDungeonName() + "(id: " + dungeon.getDungeonID() + ") has been set to " + (Object)player.getLocation());
                 return true;
             }
-            pSender.sendMessage("ERROR: dungeon = null");
+            player.sendMessage("ERROR: dungeon = null");
             return true;
         }
         if (args[0].equals("materials") && sender instanceof Player) {
-            Player pSender = (Player)sender;
-            pSender.getInventory().addItem(new ItemStack[]{ItemUtils.setAmount(DungeonsAPI.get().getEnchantedObsidian().clone(), 10)});
-            pSender.getInventory().addItem(new ItemStack[]{DungeonsAPI.get().getDimensionWeb()});
-            pSender.getInventory().addItem(new ItemStack[]{DungeonsAPI.get().getCosmonautFuel()});
-            pSender.getInventory().addItem(new ItemStack[]{DungeonsAPI.get().getTeleportationCrystal()});
-            pSender.getInventory().addItem(new ItemStack[]{DungeonsAPI.get().getInterdimensionalCore()});
+            Player player = (Player)sender;
+            player.getInventory().addItem(new ItemStack[]{ItemUtils.setAmount(DungeonsAPI.get().getEnchantedObsidian().clone(), 10)});
+            player.getInventory().addItem(new ItemStack[]{DungeonsAPI.get().getDimensionWeb()});
+            player.getInventory().addItem(new ItemStack[]{DungeonsAPI.get().getCosmonautFuel()});
+            player.getInventory().addItem(new ItemStack[]{DungeonsAPI.get().getTeleportationCrystal()});
+            player.getInventory().addItem(new ItemStack[]{DungeonsAPI.get().getInterdimensionalCore()});
             return true;
         }
         if (args[0].equals("soulpearl") && sender instanceof Player) {
-            Player pSender = (Player)sender;
-            pSender.getInventory().addItem(new ItemStack[]{DungeonsRewardsAPI.getSoulPearl()});
+            if (args.length == 2) {
+                Bukkit.getPlayer((String)args[1]).getInventory().addItem(new ItemStack[]{DungeonsRewardsAPI.getSoulPearl()});
+                return true;
+            }
+            Player player = (Player)sender;
+            player.getInventory().addItem(new ItemStack[]{DungeonsRewardsAPI.getSoulPearl()});
             return true;
         }
         if (args[0].equals("soulanvil") && sender instanceof Player) {
-            Player pSender = (Player)sender;
-            pSender.getInventory().addItem(new ItemStack[]{DungeonsRewardsAPI.getSoulAnvil()});
+            Player player = (Player)sender;
+            player.getInventory().addItem(new ItemStack[]{DungeonsRewardsAPI.getSoulAnvil()});
             return true;
         }
         if (args[0].equals("speedtrinket") && sender instanceof Player) {
-            Player pSender = (Player)sender;
-            pSender.getInventory().addItem(new ItemStack[]{new SpeedTrinketBuilder().build()});
+            Player player = (Player)sender;
+            player.getInventory().addItem(new ItemStack[]{new SpeedTrinketBuilder().build()});
             return true;
         }
         if (args[0].equals("yijkistaff") && sender instanceof Player) {
-            Player pSender = (Player)sender;
-            pSender.getInventory().addItem(new ItemStack[]{new YijkiStaffBuilder().build()});
+            Player player = (Player)sender;
+            player.getInventory().addItem(new ItemStack[]{new YijkiStaffBuilder().build()});
             return true;
         }
         if (args[0].equals("phoenixfeather") && sender instanceof Player) {
-            Player pSender = (Player)sender;
-            pSender.getInventory().addItem(new ItemStack[]{new PhoenixFeatherBuilder().build()});
+            Player player = args.length > 1 ? Bukkit.getPlayer((String)args[1]) : (Player)sender;
+            player.getInventory().addItem(new ItemStack[]{new PhoenixFeatherBuilder().build()});
             return true;
         }
         if (args[0].equals("holywhite") && sender instanceof Player) {
-            Player pSender = (Player)sender;
-            pSender.getInventory().addItem(new ItemStack[]{DungeonsRewardsAPI.getHolyWhiteScroll()});
+            Player player = (Player)sender;
+            player.getInventory().addItem(new ItemStack[]{DungeonsRewardsAPI.getHolyWhiteScroll()});
             return true;
         }
         if (args[0].equals("reset")) {
-            int id = Integer.parseInt(args[1]);
-            Dungeon d2 = DungeonsAPI.get().getDungeon(id);
-            d2.reset();
-            sender.sendMessage("Executed reset() for: " + d2);
+            int n = Integer.parseInt(args[1]);
+            Dungeon d = DungeonsAPI.get().getDungeon(n);
+            d.reset();
+            sender.sendMessage("Executed reset() for: " + d);
             return true;
         }
         if (args[0].equals("lootbag") && sender instanceof Player) {
-            Player pSender = (Player)sender;
-            pSender.getInventory().addItem(new ItemStack[]{DungeonsRewardsAPI.getDungeonLootBag(pSender, DungeonsAPI.get().getDungeon(0))});
-            pSender.getInventory().addItem(new ItemStack[]{DungeonsRewardsAPI.getDungeonLootBag(pSender, DungeonsAPI.get().getDungeon(1))});
+            Player player = (Player)sender;
+            player.getInventory().addItem(new ItemStack[]{DungeonsRewardsAPI.getDungeonLootBag(player, DungeonsAPI.get().getDungeon(0))});
+            player.getInventory().addItem(new ItemStack[]{DungeonsRewardsAPI.getDungeonLootBag(player, DungeonsAPI.get().getDungeon(1))});
             return true;
         }
         if (args[0].equals("saveplayers")) {
-            for (DungeonPlayer player2 : CosmicDungeonsPlugin.get_().getApi().getPlayers().values()) {
-                player2.save();
+            for (DungeonPlayer player3 : CosmicDungeonsPlugin.get_().getApi().getPlayers().values()) {
+                player3.save();
             }
             sender.sendMessage("saved " + CosmicDungeonsPlugin.get_().getApi().getPlayers().size() + " DungeonPlayers");
             return true;
         }
         if (args[0].equals("setholidayportal") && sender instanceof Player) {
-            Player pSender = (Player)sender;
-            Location l1 = pSender.getLocation();
-            Location l2 = pSender.getLocation().add(0.0, 1.0, 0.0);
+            Player player = (Player)sender;
+            Location l1 = player.getLocation();
+            Location l2 = player.getLocation().add(0.0, 1.0, 0.0);
             CosmicDungeonsPlugin.get_().getConfig().set("holiday.portalBlockA", (Object)LocationUtils.convertLocationToString(l1));
             CosmicDungeonsPlugin.get_().getConfig().set("holiday.portalBlockB", (Object)LocationUtils.convertLocationToString(l2));
             CosmicDungeonsPlugin.get_().saveConfig();
             HolidayPortalTask.setPortalBlockA(l1.getBlock());
             HolidayPortalTask.setPortalBlockB(l2.getBlock());
-            pSender.sendMessage("Set locations of Holiday Portal to...");
-            pSender.sendMessage("l1: " + (Object)l1.getBlock().getLocation());
-            pSender.sendMessage("l2: " + (Object)l2.getBlock().getLocation());
+            player.sendMessage("Set locations of Holiday Portal to...");
+            player.sendMessage("l1: " + (Object)l1.getBlock().getLocation());
+            player.sendMessage("l2: " + (Object)l2.getBlock().getLocation());
             return true;
         }
         if (args[0].equals("spawnholidayportal")) {
@@ -340,66 +356,75 @@ implements CommandExecutor {
             return true;
         }
         if (args[0].equalsIgnoreCase("togglecheapkeys")) {
-            boolean current = !CosmicDungeonsPlugin.get().isLowCostKeys();
-            CosmicDungeonsPlugin.get().setLowCostKeys(current);
-            CosmicDungeonsPlugin.get().getConfig().set("lowCostKeys", (Object)current);
+            boolean bl = !CosmicDungeonsPlugin.get().isLowCostKeys();
+            CosmicDungeonsPlugin.get().setLowCostKeys(bl);
+            CosmicDungeonsPlugin.get().getConfig().set("lowCostKeys", (Object)bl);
             CosmicDungeonsPlugin.get().saveConfig();
-            sender.sendMessage(CC.Red + "Low Cost Keys: " + current);
+            sender.sendMessage(CC.Red + "Low Cost Keys: " + bl);
             return true;
         }
         if (args[0].equals("togglekey")) {
             String dungeonName = args[1];
-            Dungeon d2 = DungeonsAPI.get().getDungeonByWorldName(dungeonName);
-            d2.setKeyRequired(!d2.isKeyRequired());
-            sender.sendMessage("key requirement for next " + d2.toString() + " dungeon portal: " + d2.isKeyRequired());
+            Dungeon d = DungeonsAPI.get().getDungeonByWorldName(dungeonName);
+            d.setKeyRequired(!(d.isKeyRequired()));
+            sender.sendMessage("key requirement for next " + d.toString() + " dungeon portal: " + d.isKeyRequired());
             return true;
         }
         if (args[0].equals("togglekeybuy") || args[0].equalsIgnoreCase("togglebuy")) {
-            DungeonType type = DungeonType.getFromName(args[1]);
-            if (type == null) {
-                sender.sendMessage(CC.Red + "Invalid dungeon type, valid: " + Arrays.toString(DungeonType.values()));
+            DungeonType dungeonType5 = DungeonType.getFromName(args[1]);
+            if (dungeonType5 == null) {
+                sender.sendMessage(CC.Red + "Invalid dungeon type, valid: " + Arrays.toString((Object[])DungeonType.values()));
                 return true;
             }
-            if (CosmicDungeonsPlugin.get().getDisabledDungeons().contains((Object)type)) {
-                CosmicDungeonsPlugin.get().getDisabledDungeons().remove((Object)type);
-                CosmicDungeonsPlugin.get().getConfig().set("dungeons.disabled." + type.name(), (Object)false);
+            if (CosmicDungeonsPlugin.get().getDisabledDungeons().contains((Object)dungeonType5)) {
+                CosmicDungeonsPlugin.get().getDisabledDungeons().remove((Object)dungeonType5);
+                CosmicDungeonsPlugin.get().getConfig().set("dungeons.disabled." + dungeonType5.name(), (Object)false);
             } else {
-                CosmicDungeonsPlugin.get().getDisabledDungeons().add(type);
-                CosmicDungeonsPlugin.get().getConfig().set("dungeons.disabled." + type.name(), (Object)true);
+                CosmicDungeonsPlugin.get().getDisabledDungeons().add(dungeonType5);
+                CosmicDungeonsPlugin.get().getConfig().set("dungeons.disabled." + dungeonType5.name(), (Object)true);
             }
             CosmicDungeonsPlugin.get().saveConfig();
-            sender.sendMessage(CC.Red + "Keys toggled from Dungeon Master, disabled: " + CosmicDungeonsPlugin.get().getDisabledDungeons().contains((Object)type));
+            sender.sendMessage(CC.Red + "Keys toggled from Dungeon Master, disabled: " + CosmicDungeonsPlugin.get().getDisabledDungeons().contains((Object)dungeonType5));
             return true;
         }
         if (args[0].equalsIgnoreCase("cleartoptimes")) {
-            for (DungeonType type4 : DungeonType.values()) {
-                type4.getDungeonInstance().getTopDungeonTime().clear();
-                type4.getDungeonInstance().getTopDungeonTime().save(CosmicDungeonsPlugin.get().getConfig());
+            for (DungeonType type5 : DungeonType.values()) {
+                type5.getDungeonInstance().getTopDungeonTime().clear();
+                type5.getDungeonInstance().getTopDungeonTime().save(CosmicDungeonsPlugin.get().getConfig());
+                type5.getDungeonInstance().getTopHeroicDungeonTime().clear();
+                type5.getDungeonInstance().getTopHeroicDungeonTime().save(CosmicDungeonsPlugin.get().getConfig());
             }
             CosmicDungeonsPlugin.get().saveConfig();
             sender.sendMessage(CC.Red + "Top times cleared!");
             return true;
         }
         if (args[0].equalsIgnoreCase("toggletelecoords")) {
-            DungeonType type = DungeonType.DESTROYED_OUTPOST;
-            if (type.getDungeonInstance() != null) {
-                type.getDungeonInstance().setGlobalPortal(!type.getDungeonInstance().isGlobalPortal());
-                sender.sendMessage(CC.RedB + "Set Destroyed Outpost Portal to Global: " + type.getDungeonInstance().isGlobalPortal());
+            DungeonType dungeonType6 = DungeonType.DESTROYED_OUTPOST;
+            if (dungeonType6.getDungeonInstance() != null) {
+                dungeonType6.getDungeonInstance().setGlobalPortal(!dungeonType6.getDungeonInstance().isGlobalPortal());
+                sender.sendMessage(CC.RedB + "Set Destroyed Outpost Portal to Global: " + dungeonType6.getDungeonInstance().isGlobalPortal());
                 sender.sendMessage(CC.Gray + "This will be reset the next time the dungeon is reset!");
             }
             return true;
         }
+        if (args[0].equalsIgnoreCase("toggleplanetnulglobal") && (dungeonType2 = DungeonType.PLANET_NUL).getDungeonInstance() != null) {
+            dungeonType2.getDungeonInstance().setGlobalPortal(!dungeonType2.getDungeonInstance().isGlobalPortal());
+            sender.sendMessage(CC.RedB + "Set Planet Nul Portal to Global: " + dungeonType2.getDungeonInstance().isGlobalPortal());
+            sender.sendMessage(CC.Gray + "This will be reset the next time the dungeon is reset!");
+        }
         if (args[0].equalsIgnoreCase("portalhistory")) {
             sender.sendMessage(CC.Red + "Viewing all logs...");
             CosmicDungeonsPlugin.get().getPortalLogs().forEach((dungeonType, logs) -> {
-                List<PortalLog> logList = Lists.newLinkedList(logs);
+                LinkedList<PortalLog> logList = Lists.newLinkedList((Iterable)logs);
                 logList.sort(Comparator.comparingLong(PortalLog::getPlacetime));
                 sender.sendMessage(CC.Red + " " + dungeonType.getDungeonName() + " Portal Log:");
-                for (PortalLog log : logList)
+                for (PortalLog log : logList) {
                     sender.sendMessage(" " + log.getPlacer() + " placed at " + log.getX() + "x, " + log.getY() + "y, " + log.getZ() + "z " + TimeUtils.formatDifference(System.currentTimeMillis() - log.getPlacetime()) + " ago");
+                }
             });
             return true;
         }
         return true;
     }
 }
+

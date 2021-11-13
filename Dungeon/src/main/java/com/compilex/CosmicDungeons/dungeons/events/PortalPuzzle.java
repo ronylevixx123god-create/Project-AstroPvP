@@ -44,7 +44,9 @@ public class PortalPuzzle {
 
     public PortalDirection findDirection(Location containingLocation) {
         for (Map.Entry<PortalDirection, List<Location>> entry : this.portalBlocks.entrySet()) {
+            System.out.println("[DEBUG] in loop size: " + entry.getValue().size());
             if (!entry.getValue().contains((Object)containingLocation)) continue;
+            System.out.println("[DEBUG] returned direction: " + (Object)((Object)entry.getKey()));
             return entry.getKey();
         }
         return null;
@@ -52,6 +54,7 @@ public class PortalPuzzle {
 
     private List<Location> registerNearbyPortal(Location center, int radius, Material type) {
         ArrayList loc = Lists.newArrayList();
+        ArrayList list = Lists.newArrayList();
         LocationUtils.getNearbyBlocks(center, radius).forEach(l -> {
             if (l.getBlock().getType() == type) {
                 loc.add(l);
