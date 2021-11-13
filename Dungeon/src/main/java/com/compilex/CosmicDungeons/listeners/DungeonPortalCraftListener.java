@@ -3,9 +3,9 @@
  * 
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
@@ -17,11 +17,11 @@
  *  org.bukkit.event.EventPriority
  *  org.bukkit.event.Listener
  *  org.bukkit.event.block.BlockPlaceEvent
- *  org.bukkit.event.me.astropvp.cratekeys.inventory.CraftItemEvent
- *  org.bukkit.me.astropvp.cratekeys.inventory.CraftingInventory
- *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
- *  org.bukkit.me.astropvp.cratekeys.inventory.Recipe
- *  org.bukkit.me.astropvp.cratekeys.inventory.ShapedRecipe
+ *  org.bukkit.event.inventory.CraftItemEvent
+ *  org.bukkit.inventory.CraftingInventory
+ *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.inventory.Recipe
+ *  org.bukkit.inventory.ShapedRecipe
  */
 package com.compilex.CosmicDungeons.listeners;
 
@@ -29,7 +29,7 @@ import com.compilex.CosmicDungeons.DungeonsAPI;
 import com.compilex.CosmicDungeons.dungeons.libs.Dungeon;
 import com.compilex.CosmicDungeons.dungeons.libs.DungeonType;
 import com.compilex.CosmicDungeons.items.DungeonKeyItem;
-import net.astropvp.core.utils.ItemUtils;
+import com.compilex.CosmicDungeons.utils.ItemUtils;
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;

@@ -8,6 +8,8 @@
  *  org.bukkit.configuration.file.YamlConfiguration
  *  org.bukkit.entity.Player
  *  org.bukkit.event.player.PlayerTeleportEvent$TeleportCause
+ *  org.bukkit.metadata.FixedMetadataValue
+ *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.plugin.Plugin
  */
 package com.compilex.CosmicDungeons.dungeons.libs;
@@ -28,6 +30,8 @@ import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
 public class DungeonPlayer {
@@ -113,11 +117,24 @@ public class DungeonPlayer {
         }
         this.bukkitPlayer.removeMetadata("dungeonKeyUsed_" + this.currentDungeon.getDungeonType().getInternalName(), (Plugin)CosmicDungeonsPlugin.get());
         Location location = exit = this.currentDungeon.getPortalLocation() != null ? this.currentDungeon.getPortalLocation() : ((World)Bukkit.getWorlds().get(0)).getSpawnLocation();
-        if (this.bukkitPlayer.teleport(exit, PlayerTeleportEvent.TeleportCause.UNKNOWN)) {
-            this.currentDungeon = null;
-        } else {
+        if (!this.bukkitPlayer.teleport(exit, PlayerTeleportEvent.TeleportCause.UNKNOWN)) {
             Bukkit.getLogger().info("[CosmicDungeons] Failed to execute .leaveDungeon() for player " + (Object)this.bukkitPlayer + " due to cancelled teleport event.");
         }
+        this.currentDungeon = null;
+    }
+
+    public void leaveDungeon(boolean f) {
+        if (this.currentDungeon == null) {
+            return;
+        }
+        this.bukkitPlayer.removeMetadata("dungeonKeyUsed_" + this.currentDungeon.getDungeonType().getInternalName(), (Plugin)CosmicDungeonsPlugin.get());
+        Location exit = this.currentDungeon.getPortalLocation() != null ? this.currentDungeon.getPortalLocation() : ((World)Bukkit.getWorlds().get(0)).getSpawnLocation();
+        this.bukkitPlayer.setMetadata("bypassCombatTeleport", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get(), (Object)exit));
+        if (!this.bukkitPlayer.teleport(exit, PlayerTeleportEvent.TeleportCause.UNKNOWN)) {
+            Bukkit.getLogger().info("[CosmicDungeons] Failed to execute .leaveDungeon() for player " + (Object)this.bukkitPlayer + " due to cancelled teleport event.");
+        }
+        this.currentDungeon.getPlayers().remove((Object)this.bukkitPlayer);
+        this.currentDungeon = null;
     }
 
     public void logDungeonAttempt(Dungeon d) {

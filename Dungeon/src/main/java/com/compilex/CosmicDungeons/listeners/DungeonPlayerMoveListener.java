@@ -3,14 +3,17 @@
  * 
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.WorldGuardUtils
+ *  com.cosmicpvp.cosmicutils.utils.WorldGuardUtils
  *  org.bukkit.Bukkit
  *  org.bukkit.Location
  *  org.bukkit.event.Event
  *  org.bukkit.event.EventHandler
  *  org.bukkit.event.EventPriority
  *  org.bukkit.event.Listener
+ *  org.bukkit.event.entity.EntityDamageEvent
+ *  org.bukkit.event.entity.EntityDamageEvent$DamageCause
  *  org.bukkit.event.player.PlayerMoveEvent
+ *  org.bukkit.event.player.PlayerTeleportEvent
  *  org.bukkit.metadata.FixedMetadataValue
  *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.plugin.Plugin
@@ -30,15 +33,25 @@ import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
 public class DungeonPlayerMoveListener
 implements Listener {
-    /*@EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority=EventPriority.LOWEST)
+    public void onDamage(EntityDamageEvent e) {
+        if (e.getCause() == EntityDamageEvent.DamageCause.FALL && e.getEntity().getWorld().getName().startsWith("dungeon_")) {
+            e.setCancelled(true);
+        }
+    }
+
+    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
     public void onPlayerMove(PlayerMoveEvent e) {
+        Event event;
         if (e.getFrom().getBlockX() == e.getTo().getBlockX() && e.getFrom().getBlockY() == e.getTo().getBlockY() && e.getFrom().getBlockZ() == e.getTo().getBlockZ()) {
             return;
         }
@@ -53,16 +66,44 @@ implements Listener {
         String lastRegion = dp.getBukkitPlayer().hasMetadata("lastRegionName") ? ((MetadataValue)dp.getBukkitPlayer().getMetadata("lastRegionName").get(0)).asString() : null;
         String currentRegion = WorldGuardUtils.getRegionName((Location)e.getTo());
         if (!(lastRegion == null || lastRegion.isEmpty() || currentRegion != null && currentRegion.equals(lastRegion))) {
-            PlayerLeaveRegionEvent event = new PlayerLeaveRegionEvent(dp.getBukkitPlayer(), currentRegion);
-            Bukkit.getPluginManager().callEvent((Event)event);
+            event = new PlayerLeaveRegionEvent(dp.getBukkitPlayer(), currentRegion);
+            Bukkit.getPluginManager().callEvent(event);
         }
         if (!(lastRegion != null && lastRegion.equals(currentRegion) || currentRegion == null || currentRegion.length() <= 0)) {
             dp.getBukkitPlayer().setMetadata("lastRegionName", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get_(), (Object)currentRegion));
-            PlayerEnterRegionEvent event2 = new PlayerEnterRegionEvent(dp.getBukkitPlayer(), currentRegion);
-            Bukkit.getPluginManager().callEvent((Event)event2);
+            event = new PlayerEnterRegionEvent(dp.getBukkitPlayer(), currentRegion);
+            Bukkit.getPluginManager().callEvent(event);
         } else if (currentRegion == null || currentRegion.isEmpty()) {
             dp.getBukkitPlayer().removeMetadata("lastRegionName", (Plugin)CosmicDungeonsPlugin.get_());
         }
-    }*/
+    }
+
+    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    public void onPlayerTeleport(PlayerTeleportEvent e) {
+        Event event;
+        if (e.isCancelled()) {
+            return;
+        }
+        if (e.getFrom().getBlockX() == e.getTo().getBlockX() && e.getFrom().getBlockY() == e.getTo().getBlockY() && e.getFrom().getBlockZ() == e.getTo().getBlockZ()) {
+            return;
+        }
+        if (!e.getTo().getWorld().getName().startsWith("dungeon_")) {
+            return;
+        }
+        DungeonPlayer dp = DungeonsAPI.get().getPlayerDungeonData(e.getPlayer());
+        String lastRegion = dp.getBukkitPlayer().hasMetadata("lastRegionName") ? ((MetadataValue)dp.getBukkitPlayer().getMetadata("lastRegionName").get(0)).asString() : null;
+        String currentRegion = WorldGuardUtils.getRegionName((Location)e.getTo());
+        if (!(lastRegion == null || lastRegion.isEmpty() || currentRegion != null && currentRegion.equals(lastRegion))) {
+            event = new PlayerLeaveRegionEvent(dp.getBukkitPlayer(), currentRegion);
+            Bukkit.getPluginManager().callEvent(event);
+        }
+        if (!(lastRegion != null && lastRegion.equals(currentRegion) || currentRegion == null || currentRegion.length() <= 0)) {
+            dp.getBukkitPlayer().setMetadata("lastRegionName", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get_(), (Object)currentRegion));
+            event = new PlayerEnterRegionEvent(dp.getBukkitPlayer(), currentRegion);
+            Bukkit.getPluginManager().callEvent(event);
+        } else if (currentRegion == null || currentRegion.isEmpty()) {
+            dp.getBukkitPlayer().removeMetadata("lastRegionName", (Plugin)CosmicDungeonsPlugin.get_());
+        }
+    }
 }
 

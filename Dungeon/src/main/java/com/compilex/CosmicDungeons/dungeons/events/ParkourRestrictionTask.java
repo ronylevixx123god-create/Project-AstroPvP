@@ -2,9 +2,12 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.WorldGuardUtils
+ *  com.cosmicpvp.cosmicutils.utils.WorldGuardUtils
+ *  me.quantiom.itemskin.skins.boots.ItemSkinRainbowSlides
+ *  me.quantiom.util.ItemSkinUtils
  *  org.bukkit.Location
  *  org.bukkit.entity.Player
+ *  org.bukkit.inventory.ItemStack
  *  org.bukkit.metadata.FixedMetadataValue
  *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.plugin.Plugin
@@ -18,10 +21,14 @@ import com.compilex.CosmicDungeons.CosmicDungeonsPlugin;
 import com.compilex.CosmicDungeons.DungeonsAPI;
 import com.compilex.CosmicDungeons.dungeons.libs.Dungeon;
 import com.compilex.CosmicDungeons.dungeons.libs.DungeonPlayer;
+import com.compilex.CosmicDungeons.struct.DungeonDebuff;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import java.util.List;
+import me.quantiom.itemskin.skins.boots.ItemSkinRainbowSlides;
+import me.quantiom.util.ItemSkinUtils;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
@@ -41,6 +48,7 @@ extends BukkitRunnable {
 
     public void run() {
         for (Player p : this.dungeon.getPlayers()) {
+            boolean hasBoots;
             DungeonPlayer dp = DungeonsAPI.get().getPlayerDungeonData(p);
             if (dp.getCurrentDungeon() == null || !dp.getCurrentDungeon().equals(this.dungeon)) continue;
             if (p.getAllowFlight() && !p.isOp()) {
@@ -50,15 +58,24 @@ extends BukkitRunnable {
                 p.setFlying(false);
             }
             String region = WorldGuardUtils.getRegionName((Location)p.getLocation());
+            boolean bl = hasBoots = !DungeonsAPI.hasDungeonDebuff(p, DungeonDebuff.NO_ITEM_SKINS) && p.getInventory().getBoots() != null && ItemSkinUtils.hasItemSkin((ItemStack)p.getInventory().getBoots()) && ItemSkinUtils.getItemSkinByItem((ItemStack)p.getInventory().getBoots()) instanceof ItemSkinRainbowSlides;
             if (p.hasMetadata("inDungeonParkour")) {
-                for (PotionEffect pe : p.getActivePotionEffects()) {
-                    if (!pe.getType().equals((Object)PotionEffectType.JUMP)) continue;
-                    p.removePotionEffect(pe.getType());
+                if (hasBoots) {
+                    for (PotionEffect pe : p.getActivePotionEffects()) {
+                        if (!pe.getType().getName().equals("JUMP") || pe.getAmplifier() <= 0) continue;
+                        p.removePotionEffect(pe.getType());
+                    }
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, 0));
+                } else {
+                    for (PotionEffect pe : p.getActivePotionEffects()) {
+                        if (!pe.getType().getName().equals("JUMP")) continue;
+                        p.removePotionEffect(pe.getType());
+                    }
                 }
             }
             if (this.regions.contains(region)) {
                 for (PotionEffect pe : p.getActivePotionEffects()) {
-                    if (pe.getType().equals((Object)PotionEffectType.JUMP)) continue;
+                    if (pe.getType().getName().equals("JUMP")) continue;
                     p.removePotionEffect(pe.getType());
                 }
                 p.setMetadata("inDungeonParkour", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get(), (Object)region));

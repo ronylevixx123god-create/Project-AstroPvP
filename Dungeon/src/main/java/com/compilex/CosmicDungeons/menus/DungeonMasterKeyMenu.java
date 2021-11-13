@@ -26,6 +26,7 @@ import com.compilex.CosmicDungeons.dungeons.libs.DungeonType;
 import com.compilex.CosmicDungeons.items.DungeonKeyItem;
 import com.cosmicpvp.cosmicutils.gui.CosmicGUI;
 import com.cosmicpvp.cosmicutils.gui.InventoryItem;
+import com.cosmicpvp.cosmicutils.struct.factions.points.FactionPointUtils;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
@@ -54,8 +55,7 @@ extends CosmicGUI {
 
     public static String getResetString(DungeonType type) {
         boolean notAvailable;
-       // long timeSinceStart = FactionPointUtils.getStartOfTheMapEpoch();
-        long timeSinceStart = 1;
+        long timeSinceStart = FactionPointUtils.getStartOfTheMapEpoch();
         long timeIsUnlocked = timeSinceStart + type.getDungeonStartOffset();
         boolean bl = notAvailable = timeIsUnlocked > System.currentTimeMillis() && timeSinceStart > 0L;
         if (notAvailable) {
@@ -71,7 +71,7 @@ extends CosmicGUI {
             DungeonKeyItem item = new DungeonKeyItem(dungeonType);
             ItemBuilder builder = new ItemBuilder(item.build());
             String resetString = DungeonMasterKeyMenu.getResetString(dungeonType);
-            ArrayList toAdd = Lists.newArrayList(new String[]{"", (resetString != null ? CC.RedB + CC.Strike : CC.RedB) + "COST " + (resetString != null ? CC.White + CC.Strike : CC.White) + "$" + NumberUtils.formatMoney((double)dungeonType.getPortalCost())});
+            ArrayList toAdd = Lists.newArrayList((Object[])new String[]{"", (resetString != null ? CC.RedB + CC.Strike : CC.RedB) + "COST " + (resetString != null ? CC.White + CC.Strike : CC.White) + "$" + NumberUtils.formatMoney((double)dungeonType.getPortalCost())});
             if (resetString != null) {
                 toAdd.add(CC.Red + "Available in " + CC.RedB + resetString + CC.Red + "...");
             }

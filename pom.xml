@@ -56,6 +56,8 @@
         <module>AstroCrateKeys</module>
         <module>AstroDiscordBot</module>
         <module>CCVerify</module>
+        <module>GenBuckets</module>
+        <module>GenBuckets</module>
     </modules>
 
     <build>

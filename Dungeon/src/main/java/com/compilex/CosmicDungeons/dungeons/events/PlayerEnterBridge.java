@@ -6,7 +6,7 @@
  *  com.gmail.filoghost.holograms.api.HolographicDisplaysAPI
  *  me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijki
  *  me.ifamasssxd.cosmicbosses.struct.Boss
- *  me.ifamasssxd.cosmicbosses.me.astropvp.cratekeys.utils.BossUtils
+ *  me.ifamasssxd.cosmicbosses.utils.BossUtils
  *  org.arkhamnetwork.enchantments.Enchantments
  *  org.bukkit.ChatColor
  *  org.bukkit.Location
@@ -22,9 +22,10 @@
 package com.compilex.CosmicDungeons.dungeons.events;
 
 import com.compilex.CosmicDungeons.CosmicDungeonsPlugin;
+import com.compilex.CosmicDungeons.dungeons.events.RegionEvent;
 import com.compilex.CosmicDungeons.dungeons.libs.Dungeon;
 import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
-import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
+import com.gmail.filoghost.holograms.api.HolographicDisplaysAPI;
 import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijki;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.cosmicbosses.utils.BossUtils;
@@ -36,6 +37,8 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
 class PlayerEnterBridge
@@ -47,21 +50,19 @@ extends RegionEvent {
     @Override
     public void run() {
         Boss yijki;
-        this.dungeon.broadcastMessage(ChatColor.WHITE + "You have discovered the ship's bridge, perhaps now you can finally find some answers...");
-        this.dungeon.broadcastMessage(ChatColor.RED + "No! Yijki has destroyed the ship's main computer - defeat it!");
-        this.dungeon.updateTimeRestrictionTask(System.currentTimeMillis() + 720000L, "Defeat Yijki Phase #2");
+        this.dungeon.broadcastMessage((Object)ChatColor.WHITE + "You have discovered the ship's bridge, perhaps now you can finally find some answers...");
+        this.dungeon.broadcastMessage((Object)ChatColor.RED + "No! Yijki has destroyed the ship's main computer - defeat it!");
+        this.dungeon.updateTimeRestrictionTask(System.currentTimeMillis() + 720000L / (long)(this.dungeon.isHalfTime() ? 2 : 1), "Defeat Yijki Phase #2");
         this.dungeon.getWorld().getBlockAt(-75, 79, 172).setTypeIdAndData(95, (byte)20, true);
         this.dungeon.getWorld().getBlockAt(-75, 80, 172).setTypeIdAndData(95, (byte)20, true);
         Location yijkiSpawnLocation = new Location(this.dungeon.getWorld(), -137.0, 92.0, 172.0);
-        Entity spawned = BossUtils.spawnDungeonBoss(yijkiSpawnLocation, 2);
-        if (spawned != null && (yijki = Boss.bosses.get(spawned.getUniqueId())) instanceof DungeonYijki) {
+        Entity spawned = BossUtils.spawnDungeonBoss((Location)yijkiSpawnLocation, (int)2);
+        if (spawned != null && (yijki = (Boss)Boss.bosses.get(spawned.getUniqueId())) instanceof DungeonYijki) {
             ((DungeonYijki)yijki).getSpawnLocations().add(new Location(this.dungeon.getWorld(), -136.0, 80.0, 210.0));
             ((DungeonYijki)yijki).getSpawnLocations().add(new Location(this.dungeon.getWorld(), -138.0, 80.0, 189.0));
         }
         this.dungeon.setBossSpawnTime(System.currentTimeMillis());
-        this.dungeon.setObjectiveHologram(HologramsAPI.createHologram(CosmicDungeonsPlugin.get_(), new Location(this.dungeon.getWorld(), -129.0, 82.0, 165.0)));
-        this.dungeon.getObjectiveHologram().appendTextLine(ChatColor.RED + ChatColor.BOLD.toString() + "LOCKED");
-        this.dungeon.getObjectiveHologram().appendTextLine(ChatColor.GRAY + "Defeat boss to proceed.");
+        this.dungeon.setObjectiveHologram(HolographicDisplaysAPI.createHologram((Plugin)CosmicDungeonsPlugin.get_(), (Location)new Location(this.dungeon.getWorld(), -129.0, 82.0, 165.0), (String[])new String[]{(Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "LOCKED", (Object)ChatColor.GRAY + "Defeat boss to proceed."}));
         for (int x = -128; x <= -113; ++x) {
             for (int z = 189; z <= 202; ++z) {
                 for (int y = 80; y <= 97; ++y) {
@@ -71,14 +72,14 @@ extends RegionEvent {
                     b.setType(Material.AIR);
                     FallingBlock fb = this.dungeon.getWorld().spawnFallingBlock(b.getLocation(), m, data);
                     fb.setDropItem(false);
-                    PlayerEnterBridge.pushAwayEntity(yijkiSpawnLocation, fb, 2.0);
+                    PlayerEnterBridge.pushAwayEntity(yijkiSpawnLocation, (Entity)fb, 2.0);
                 }
             }
         }
     }
 
     public static void pushAwayEntity(Location center, Entity entity, double speed) {
-        entity.setMetadata("pushAwayEntityEvent", new FixedMetadataValue(Enchantments.getInstance(), MinecraftServerUtils.getCurrentServerTick()));
+        entity.setMetadata("pushAwayEntityEvent", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)MinecraftServerUtils.getCurrentServerTick()));
         Vector unitVector = entity.getLocation().toVector().subtract(center.toVector()).normalize();
         entity.setVelocity(unitVector.multiply(speed));
     }

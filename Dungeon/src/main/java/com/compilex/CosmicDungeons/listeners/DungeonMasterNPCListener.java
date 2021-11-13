@@ -3,9 +3,9 @@
  * 
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.struct.DecimalFormatType
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NumberUtils
+ *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.utils.NumberUtils
  *  com.google.common.collect.Lists
  *  net.citizensnpcs.api.event.NPCRightClickEvent
  *  org.bukkit.Bukkit
@@ -18,10 +18,9 @@
  *  org.bukkit.event.Event$Result
  *  org.bukkit.event.EventHandler
  *  org.bukkit.event.Listener
- *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
- *  org.bukkit.me.astropvp.cratekeys.inventory.Inventory
- *  org.bukkit.me.astropvp.cratekeys.inventory.InventoryHolder
- *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.event.inventory.InventoryClickEvent
+ *  org.bukkit.inventory.Inventory
+ *  org.bukkit.inventory.ItemStack
  */
 package com.compilex.CosmicDungeons.listeners;
 
@@ -29,7 +28,7 @@ import com.compilex.CosmicDungeons.CosmicDungeonsPlugin;
 import com.compilex.CosmicDungeons.DungeonsAPI;
 import com.compilex.CosmicDungeons.dungeons.libs.Dungeon;
 import com.compilex.CosmicDungeons.menus.DungeonMasterKeyMenu;
-import net.astropvp.core.utils.ItemUtils;
+import com.compilex.CosmicDungeons.utils.ItemUtils;
 import com.cosmicpvp.cosmicutils.struct.DecimalFormatType;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
@@ -50,7 +49,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 public class DungeonMasterNPCListener
@@ -99,9 +97,9 @@ implements Listener {
     }
 
     public Inventory getDungeonMasterMenu() {
-        Inventory i = Bukkit.createInventory((InventoryHolder)null, (int)9, (String)"Dungeon Master");
+        Inventory i = Bukkit.createInventory(null, (int)9, (String)"Dungeon Master");
         for (Dungeon d : DungeonsAPI.get().getDungeons()) {
-            ArrayList lore = Lists.newArrayList(new String[]{"", (Object)ChatColor.GRAY + "Purchase this key to unlock access", (Object)ChatColor.GRAY + "to the associated dungeon.", "", (Object)ChatColor.GRAY + "Please note that you will still", (Object)ChatColor.GRAY + "need to craft/find a " + (Object)ChatColor.UNDERLINE + "dungeon portal", (Object)ChatColor.GRAY + "each time you wish to run this dungeon.", "", (Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "COST" + (Object)ChatColor.WHITE + " $" + NumberUtils.formatMoney((double)d.getDungeonType().getPortalCost())});
+            ArrayList lore = Lists.newArrayList((Object[])new String[]{"", (Object)ChatColor.GRAY + "Purchase this key to unlock access", (Object)ChatColor.GRAY + "to the associated dungeon.", "", (Object)ChatColor.GRAY + "Please note that you will still", (Object)ChatColor.GRAY + "need to craft/find a " + (Object)ChatColor.UNDERLINE + "dungeon portal", (Object)ChatColor.GRAY + "each time you wish to run this dungeon.", "", (Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "COST" + (Object)ChatColor.WHITE + " $" + NumberUtils.formatMoney((double)d.getDungeonType().getPortalCost())});
             if (CosmicDungeonsPlugin.get().getDisabledDungeons().contains((Object)d.getDungeonType())) {
                 lore.add("");
                 lore.add(CC.RedB + "COMING SOON");

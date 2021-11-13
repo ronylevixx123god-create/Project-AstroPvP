@@ -4,7 +4,7 @@
  * Could not load the following classes:
  *  me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijki
  *  me.ifamasssxd.cosmicbosses.struct.Boss
- *  me.ifamasssxd.cosmicbosses.me.astropvp.cratekeys.utils.BossUtils
+ *  me.ifamasssxd.cosmicbosses.utils.BossUtils
  *  org.bukkit.ChatColor
  *  org.bukkit.Location
  *  org.bukkit.block.Block
@@ -50,7 +50,7 @@ extends RegionEvent {
         this.dungeon.setBossSpawnTime(System.currentTimeMillis());
         this.dungeon.broadcastMessage((Object)ChatColor.RED + "A dark energy engulfs the ship hanger...");
         this.dungeon.broadcastMessage((Object)ChatColor.RED + "Yijki?! Here?! Impossible! Defeat it, quickly!");
-        this.dungeon.updateTimeRestrictionTask(System.currentTimeMillis() + 600000L, "Defeat Yijki Phase #1");
+        this.dungeon.updateTimeRestrictionTask(System.currentTimeMillis() + 600000L / (long)(this.dungeon.isHalfTime() ? 2 : 1), "Defeat Yijki Phase #1");
     }
 }
 

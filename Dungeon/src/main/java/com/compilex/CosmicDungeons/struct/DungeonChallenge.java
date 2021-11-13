@@ -13,7 +13,16 @@ public enum DungeonChallenge {
     WELL_OILED_MACHINE("Well Oiled Machine"),
     ON_A_ROLL("On a Roll"),
     UP_CLOSE_AND_PERSONAL("Up Close and Personal"),
-    PLATINUM_PACKAGE("Platinum Package");
+    PLATINUM_PACKAGE("Platinum Package"),
+    PARKOUR_EXPERT("Parkour Expert"),
+    LUCKY("Lucky"),
+    PETLESS("Petless"),
+    TWINKE_TOES("Twinkle Toes"),
+    PATH_FINDER("Path Finder"),
+    APESTOS("Apestos"),
+    CRUSADER("Crusader"),
+    DUNGEON_WHISPERER("Dungeon Whisperer"),
+    HALF_HEART_WARRIOR("Half a heart warrior");
 
     private String name;
 

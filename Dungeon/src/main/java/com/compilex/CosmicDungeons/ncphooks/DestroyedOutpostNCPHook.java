@@ -1,3 +1,15 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  fr.neatmonster.nocheatplus.checks.CheckType
+ *  fr.neatmonster.nocheatplus.checks.ViolationData
+ *  fr.neatmonster.nocheatplus.checks.access.IViolationInfo
+ *  fr.neatmonster.nocheatplus.hooks.NCPHook
+ *  org.bukkit.Bukkit
+ *  org.bukkit.entity.Player
+ *  org.bukkit.metadata.MetadataValue
+ */
 package com.compilex.CosmicDungeons.ncphooks;
 
 import fr.neatmonster.nocheatplus.checks.CheckType;

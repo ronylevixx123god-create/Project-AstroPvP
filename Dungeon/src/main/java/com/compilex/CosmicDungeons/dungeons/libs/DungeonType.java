@@ -11,14 +11,17 @@ import com.compilex.CosmicDungeons.CosmicDungeonsPlugin;
 import com.compilex.CosmicDungeons.dungeons.events.AbandonedShipEvents;
 import com.compilex.CosmicDungeons.dungeons.events.DestroyedOutpostEvents;
 import com.compilex.CosmicDungeons.dungeons.events.DungeonEvents;
-import org.bukkit.ChatColor;
-
+import com.compilex.CosmicDungeons.dungeons.events.PlanetNulEvents;
+import com.compilex.CosmicDungeons.dungeons.libs.Dungeon;
+import com.cosmicpvp.cosmicutils.struct.factions.points.FactionPointUtils;
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.TimeUnit;
+import org.bukkit.ChatColor;
 
 public enum DungeonType {
     ABANDONED_SHIP("dungeon_yijki_a", "Abandoned Ship", null, 0, AbandonedShipEvents.class, 2500000.0, -1.0, ChatColor.DARK_PURPLE, TimeUnit.DAYS.toMillis(7L), null, 5000000L),
-    DESTROYED_OUTPOST("dungeon_destroyed_outpost", "Destroyed Outpost", null, 1, DestroyedOutpostEvents.class, 5000000.0, -1.0, ChatColor.DARK_RED, TimeUnit.DAYS.toMillis(14L), null, 25000000L);
+    DESTROYED_OUTPOST("dungeon_destroyed_outpost", "Destroyed Outpost", null, 1, DestroyedOutpostEvents.class, 5000000.0, -1.0, ChatColor.DARK_RED, TimeUnit.DAYS.toMillis(14L), null, 25000000L),
+    PLANET_NUL("dungeon_planet_nul", "Planet Nul", null, 2, PlanetNulEvents.class, 5000000.0, -1.0, ChatColor.DARK_GRAY, TimeUnit.DAYS.toMillis(14L), null, 25000000L);
 
     private double calculatedPrice = -1.0;
     private Integer lastDaysPassed = null;
@@ -91,8 +94,7 @@ public enum DungeonType {
     }
 
     public double getPortalCost() {
-       // int daysSinceDungeonWasAvailable = (int)Math.floor(TimeUnit.MILLISECONDS.toDays(FactionPointUtils.getTimeSinceStartOfMapWithOffset((long)this.dungeonStartOffset)));
-        int daysSinceDungeonWasAvailable = (int)Math.floor(TimeUnit.MILLISECONDS.toDays(1));
+        int daysSinceDungeonWasAvailable = (int)Math.floor(TimeUnit.MILLISECONDS.toDays(FactionPointUtils.getTimeSinceStartOfMapWithOffset((long)this.dungeonStartOffset)));
         if (this.lastDaysPassed == null || daysSinceDungeonWasAvailable != this.lastDaysPassed || this.calculatedPrice == -1.0) {
             this.lastDaysPassed = daysSinceDungeonWasAvailable;
             this.calculatePortalCost();
@@ -105,7 +107,7 @@ public enum DungeonType {
     }
 
     public int getDaysSinceDungeonWasAvailable() {
-        return (int)Math.floor(TimeUnit.MILLISECONDS.toDays(1));
+        return (int)Math.floor(TimeUnit.MILLISECONDS.toDays(FactionPointUtils.getTimeSinceStartOfMapWithOffset((long)this.dungeonStartOffset)));
     }
 
     public double calculatePortalCost() {
@@ -121,8 +123,8 @@ public enum DungeonType {
         try {
             return this.listenerClass.getConstructor(Dungeon.class).newInstance(dungeon);
         }
-        catch (IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException ex2) {
-            ex2.printStackTrace();
+        catch (IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
+            e.printStackTrace();
             return null;
         }
     }

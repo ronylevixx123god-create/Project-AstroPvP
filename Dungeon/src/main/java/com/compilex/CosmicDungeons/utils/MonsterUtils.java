@@ -1,13 +1,45 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
+ *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
+ *  org.bukkit.ChatColor
+ *  org.bukkit.Location
+ *  org.bukkit.Material
+ *  org.bukkit.enchantments.Enchantment
+ *  org.bukkit.entity.EntityType
+ *  org.bukkit.entity.Ghast
+ *  org.bukkit.entity.IronGolem
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.entity.PigZombie
+ *  org.bukkit.entity.Skeleton
+ *  org.bukkit.entity.Skeleton$SkeletonType
+ *  org.bukkit.inventory.EntityEquipment
+ *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.metadata.FixedMetadataValue
+ *  org.bukkit.metadata.MetadataValue
+ *  org.bukkit.plugin.Plugin
+ *  org.bukkit.potion.PotionEffect
+ *  org.bukkit.potion.PotionEffectType
+ */
 package com.compilex.CosmicDungeons.utils;
 
 import com.compilex.CosmicDungeons.CosmicDungeonsPlugin;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
-import org.bukkit.Bukkit;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.*;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Ghast;
+import org.bukkit.entity.IronGolem;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.PigZombie;
+import org.bukkit.entity.Skeleton;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -16,11 +48,8 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
-
 public class MonsterUtils {
-    public static LivingEntity spawnOutpostPirate(Location location) throws Exception {
+    public static LivingEntity spawnOutpostPirate(Location location) {
         ThreadLocalRandom random = ThreadLocalRandom.current();
         LivingEntity ent = (LivingEntity)location.getWorld().spawnEntity(location, EntityType.SKELETON);
         if (((Random)random).nextInt(10) <= 8) {
@@ -45,74 +74,70 @@ public class MonsterUtils {
         ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1));
         ent.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0));
         ent.setMetadata("destroyedSpacePirate", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get_(), (Object)true));
-        de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), ent.getLocation(), 0f, 0.0f, 0f, 0.15f, 25);
-
+        ParticleEffect.playEffect((ParticleEffect)ParticleEffect.WITCH_MAGIC, (Location)ent.getLocation().add(0.0, 1.0, 0.0), (float)0.15f, (int)25);
         return ent;
     }
 
-    public static LivingEntity spawnSpacePirate(Location l) throws Exception {
-        Ghast ghast = null;
+    public static LivingEntity spawnSpacePirate(Location l) {
+        PigZombie b;
+        PigZombie ghast = null;
         EntityType et = null;
         double rand = Math.random();
-        if (rand <= 0.1) {
-            et = EntityType.GHAST;
-        }
-        if (rand <= 0.35) {
-            et = EntityType.IRON_GOLEM;
-        }
         if (rand <= 0.7) {
             et = EntityType.SKELETON;
         }
         if (et == null) {
             et = EntityType.PIG_ZOMBIE;
         }
-        Object le = null;
+        PigZombie le = null;
         if (et == EntityType.PIG_ZOMBIE) {
-            PigZombie b = (PigZombie)l.getWorld().spawnEntity(l, EntityType.PIG_ZOMBIE);
+            b = (PigZombie)l.getWorld().spawnEntity(l, EntityType.PIG_ZOMBIE);
             b.setMaxHealth(b.getMaxHealth() * 2.0);
             b.setHealth(b.getMaxHealth());
             b.setCustomName(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "Space " + ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD.toString() + "Pirate");
             b.setCustomNameVisible(true);
             b.setBaby(true);
             b.setAngry(true);
+            le = b;
         } else if (et == EntityType.IRON_GOLEM) {
-            IronGolem b2 = (IronGolem)l.getWorld().spawnEntity(l, EntityType.IRON_GOLEM);
-            b2.setMaxHealth(b2.getMaxHealth() * 2.0);
-            b2.setHealth(b2.getMaxHealth());
-            b2.setPlayerCreated(false);
-            b2.setCustomName(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "Space " + ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD.toString() + "Golem");
-            b2.setCustomNameVisible(true);
+            b = (IronGolem)l.getWorld().spawnEntity(l, EntityType.IRON_GOLEM);
+            b.setMaxHealth(b.getMaxHealth() * 2.0);
+            b.setHealth(b.getMaxHealth());
+            b.setPlayerCreated(false);
+            b.setCustomName(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "Space " + ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD.toString() + "Golem");
+            b.setCustomNameVisible(true);
+            PigZombie pigZombie = b;
         } else if (et == EntityType.SKELETON) {
-            Skeleton b3 = (Skeleton)l.getWorld().spawnEntity(l, EntityType.SKELETON);
-            b3.setSkeletonType(Skeleton.SkeletonType.WITHER);
-            b3.getEquipment().setItemInHand(new ItemStack(Material.DIAMOND_SWORD));
-            b3.setMaxHealth(b3.getMaxHealth() * 2.0);
-            b3.setHealth(b3.getMaxHealth());
-            b3.setCustomName(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "Space " + ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD.toString() + "Pirate");
-            b3.setCustomNameVisible(true);
+            b = (Skeleton)l.getWorld().spawnEntity(l, EntityType.SKELETON);
+            b.setSkeletonType(Skeleton.SkeletonType.WITHER);
+            b.getEquipment().setItemInHand(new ItemStack(Material.DIAMOND_SWORD));
+            b.setMaxHealth(b.getMaxHealth() * 2.0);
+            b.setHealth(b.getMaxHealth());
+            b.setCustomName(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "Space " + ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD.toString() + "Pirate");
+            b.setCustomNameVisible(true);
+            le = b;
         } else if (et == EntityType.GHAST) {
-            Ghast b4 = (Ghast)l.getWorld().spawnEntity(l, EntityType.GHAST);
-            b4.setMaxHealth(b4.getMaxHealth() * 5.0);
-            b4.setHealth(b4.getMaxHealth());
-            b4.setCustomName(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "Space " + ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD.toString() + "Phantom");
-            b4.setCustomNameVisible(true);
-            ghast = b4;
+            b = (Ghast)l.getWorld().spawnEntity(l, EntityType.GHAST);
+            b.setMaxHealth(b.getMaxHealth() * 5.0);
+            b.setHealth(b.getMaxHealth());
+            b.setCustomName(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "Space " + ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD.toString() + "Phantom");
+            b.setCustomNameVisible(true);
+            ghast = b;
         }
-        ghast.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, Integer.MAX_VALUE, 1));
-        ghast.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, new Random().nextInt(3)));
-        ghast.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, new Random().nextInt(2)));
+        le.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, Integer.MAX_VALUE, 1));
+        le.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, new Random().nextInt(3)));
+        le.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, new Random().nextInt(2)));
         ItemStack i = new ItemStack(Material.DIAMOND_SWORD);
         i.addEnchantment(Enchantment.KNOCKBACK, new Random().nextBoolean() ? 1 : 2);
-        ghast.getEquipment().setItemInHand(i);
-        ghast.getEquipment().setHelmet(new ItemStack(Material.DIAMOND_HELMET));
-        ghast.getEquipment().setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
-        ghast.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
-        ghast.getEquipment().setBoots(new ItemStack(Material.DIAMOND_BOOTS));
-        ghast.setCanPickupItems(false);
-        ghast.setMetadata("spacePirate", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get_(), (Object)true));
-        de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), ghast.getLocation(), 0f, 0.0f, 0f, 0.15f, 25);
-
-        return ghast;
+        le.getEquipment().setItemInHand(i);
+        le.getEquipment().setHelmet(new ItemStack(Material.DIAMOND_HELMET));
+        le.getEquipment().setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
+        le.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
+        le.getEquipment().setBoots(new ItemStack(Material.DIAMOND_BOOTS));
+        le.setCanPickupItems(false);
+        le.setMetadata("spacePirate", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get_(), (Object)true));
+        ParticleEffect.playEffect((ParticleEffect)ParticleEffect.WITCH_MAGIC, (Location)le.getLocation().add(0.0, 1.0, 0.0), (float)0.15f, (int)25);
+        return le;
     }
 }
 
