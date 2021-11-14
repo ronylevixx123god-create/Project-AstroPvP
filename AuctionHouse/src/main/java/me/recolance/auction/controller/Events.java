@@ -50,7 +50,7 @@ public class Events
             return;
         }
         if (loadingUUIDs.contains(player.getUniqueId())) {
-            Bukkit.getLogger().info("[AuctionHouse] Skipping loading of me.astropvp.cratekeys.data for " + player.getUniqueId() + " since there is a pending thread already handling it.");
+            Bukkit.getLogger().info("[AuctionHouse] Skipping loading of data for " + player.getUniqueId() + " since there is a pending thread already handling it.");
             return;
         }
         loadingUUIDs.add(player.getUniqueId());

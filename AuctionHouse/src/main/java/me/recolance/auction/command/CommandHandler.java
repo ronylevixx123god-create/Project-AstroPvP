@@ -31,6 +31,7 @@ package me.recolance.auction.command;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.google.common.collect.Lists;
 import me.ifamasssxd.cosmicguishop.ArkhamMoneyNotesAPI;
 import me.recolance.auction.Auction;
@@ -236,9 +237,9 @@ public class CommandHandler
         } else if (!Util.stringIsNumerical(price) && !CommandHandler.isValidAlternatePrice(price)) {
             Util.message(player, "&cThat is not a valid price.");
         } else if (price.length() > 11) {
-            Util.message(player, "&cYou can only list something for a max of $999,999,999.");
+            Util.message(player, "&cYou can only list something for a max of $" + NumberUtils.formatMoney(Double.MAX_VALUE) + ".");
         } else {
-            Controller.attemptSell(player, item, CommandHandler.isValidAlternatePrice(price) ? (int) Util.getMoneyValue(price) : Integer.parseInt(price));
+            Controller.attemptSell(player, item, CommandHandler.isValidAlternatePrice(price) ? (int) Util.getMoneyValue(price) : Double.parseDouble(price));
         }
         return true;
     }

@@ -5,13 +5,13 @@
  *  com.cosmicpvp.cosmicutils.CosmicUtils
  *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
  *  com.cosmicpvp.cosmicutils.struct.DecimalFormatType
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.HCFOutpostUtils
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NumberUtils
+ *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.utils.HCFOutpostUtils
+ *  com.cosmicpvp.cosmicutils.utils.NumberUtils
  *  me.vaqxine.NetworkManager.NetworkManager
  *  net.milkbowl.vault.economy.Economy
  *  org.arkhamnetwork.Arkkit.Arkkit
- *  org.arkhamnetwork.Arkkit.me.astropvp.cratekeys.commands.CommandArkReboot
+ *  org.arkhamnetwork.Arkkit.commands.CommandArkReboot
  *  org.arkhamnetwork.Arkkit.patches.AntiCrash
  *  org.arkhamnetwork.Arkkit.patches.ItemID
  *  org.arkhamnetwork.Arkkit.plugins.ArkPlugins
@@ -21,7 +21,7 @@
  *  org.bukkit.Sound
  *  org.bukkit.entity.Player
  *  org.bukkit.event.Event
- *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.inventory.ItemStack
  *  org.bukkit.metadata.FixedMetadataValue
  *  org.bukkit.metadata.MetadataValue
  *  org.bukkit.plugin.Plugin
@@ -68,7 +68,7 @@ public class Controller {
     private static Economy economy = Auction.economy;
 
     public static void purchase(Player player, Listing listing) {
-        int price = listing.getPrice();
+        double price = listing.getPrice();
         ItemStack item = listing.getItem();
         economy.withdrawPlayer(Bukkit.getOfflinePlayer((UUID) player.getUniqueId()), (double) price);
         economy.depositPlayer(Bukkit.getOfflinePlayer((UUID) listing.getWhoListed()), (double) price);
@@ -107,8 +107,8 @@ public class Controller {
         DataHandler.deleteListing(listing, true);
     }
 
-    public static void attemptSell(Player player, ItemStack item, int price) {
-        if (price > 999999999) {
+    public static void attemptSell(Player player, ItemStack item, double price) {
+        if (price > Double.MAX_VALUE) {
             player.sendMessage((Object) ChatColor.RED + "You cannot list for this amount.");
             return;
         }
@@ -163,7 +163,7 @@ public class Controller {
         return 0.015;
     }
 
-    public static void sell(Player player, ItemStack item, int price, double fee, boolean removeItem) {
+    public static void sell(Player player, ItemStack item, double price, double fee, boolean removeItem) {
         Listing listing = new Listing(UUID.randomUUID(), AuctionUtil.getEndTime(), player.getUniqueId(), item, price);
         if (removeItem) {
             player.setItemInHand(null);
@@ -249,7 +249,7 @@ public class Controller {
         ArrayList<UnclaimedListing> claim = new ArrayList<UnclaimedListing>();
         for (UnclaimedListing listing : DataHolder.getUnclaimedListings().get(player.getUniqueId())) {
             if (i >= space && !Util.hasInventorySpace(player)) {
-                Util.message(player, "&c&l(!) &cYou don't have enough me.astropvp.cratekeys.inventory space.");
+                Util.message(player, "&c&l(!) &cYou don't have enough inventory space.");
                 break;
             }
             if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
@@ -298,7 +298,7 @@ public class Controller {
         player.sendMessage(CC.Gray + "Create an auction package for others to bid on!");
         player.sendMessage("");
         player.sendMessage(CC.Yellow + "/ah collect");
-        player.sendMessage(CC.Gray + "Collect me.astropvp.cratekeys.items from previous bid auctions!");
+        player.sendMessage(CC.Gray + "Collect items from previous bid auctions!");
         player.sendMessage("");
         player.sendMessage(CC.Yellow + "/ah bids");
         player.sendMessage(CC.Gray + "View all active bid auctions!");

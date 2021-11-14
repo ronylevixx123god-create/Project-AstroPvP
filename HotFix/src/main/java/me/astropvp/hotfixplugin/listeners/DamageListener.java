@@ -81,13 +81,6 @@ public class DamageListener implements Listener {
         if (faction.isWarZone() || faction.isSafeZone()) event.setCancelled(true);
     }
 
-    @EventHandler (ignoreCancelled = true)
-    public void onIllegalCannoning(ExplosionPrimeEvent event) {
-        if (event.getEntityType() != EntityType.PRIMED_TNT) return;
-        Faction faction = Board.getInstance().getFactionAt(new FLocation(event.getEntity().getLocation()));
-        if (faction.isWarZone() || faction.isSafeZone()) event.setCancelled(true);
-    }
-
     @EventHandler
     public void onPvPInInvis(EntityDamageByEntityEvent e) {
         if (!(e.getEntity() instanceof Player)) return;

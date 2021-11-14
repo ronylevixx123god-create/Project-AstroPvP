@@ -217,7 +217,7 @@ public class DataHandler {
                 statement.setString(1, l.getId().toString());
                 statement.setString(2, l.getWhoListed().toString());
                 statement.setString(3, DataHandler.toString(l.getItem()));
-                statement.setInt(4, l.getPrice());
+                statement.setDouble(4, l.getPrice());
                 statement.setLong(5, l.getEndTime());
                 statement.addBatch();
             }
@@ -239,7 +239,7 @@ public class DataHandler {
             statement.setString(1, listing.getId().toString());
             statement.setString(2, listing.getWhoListed().toString());
             statement.setString(3, DataHandler.toString(listing.getItem()));
-            statement.setInt(4, listing.getPrice());
+            statement.setDouble(4, listing.getPrice());
             statement.setLong(5, listing.getEndTime());
             if (async) {
                 DataHandler.asyncExecute(statement);

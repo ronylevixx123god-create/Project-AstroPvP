@@ -53,9 +53,11 @@ public class OmniBlackscroll extends CosmicItem implements InventoryInteractable
     }
 
     public void onInventoryClick(Player player, ItemStack cursor, NBTWrapper wrapper, NBTWrapper clickedWrapper, ItemStack clicked, InventoryClickEvent e) throws CosmicException {
-        Material type = clicked.getType();
-        if (type == null)
+        if (clicked == null || clicked.getType() == Material.AIR || clickedWrapper == null) {
             return;
+        }
+        Material type = clicked.getType();
+
         Map<CustomEnchantment, Integer> enchants = EnchantmentAPI.getEnchantments(clicked);
         if (enchants.keySet() == null) {
             player.sendMessage(CC.translate("&c&l(!) &cThis item does not have any enchantments on it!"));
@@ -96,7 +98,7 @@ public class OmniBlackscroll extends CosmicItem implements InventoryInteractable
     private Inventory getInventory(List<ItemStack> enchantmentBooks) {
         Inventory inventory = Bukkit.createInventory(null, 27, CC.translate("&8Select an enchantment to remove."));
         for (ItemStack item : enchantmentBooks) {
-            inventory.addItem(new ItemStack[]{item});
+            inventory.addItem(item);
         }
         fillInventory(inventory);
         return inventory;

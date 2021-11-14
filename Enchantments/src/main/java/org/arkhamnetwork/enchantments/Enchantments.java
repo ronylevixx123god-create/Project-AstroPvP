@@ -114,7 +114,7 @@ public class Enchantments extends EnchantPlugin {
         this.armorsetEnabled = (new File("plugins/Enchantments.jar")).exists();
         if (Bukkit.getPluginManager().isPluginEnabled("CosmicSkyCustomItems")) {
             EMPPulseItem empPulseItem = new EMPPulseItem();
-            CosmicSkyCustomItems.get().getItemManager().registerCustomItem((CosmicItem)new OmniBlackscroll());
+            CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new OmniBlackscroll());
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem(empPulseItem);
             Bukkit.getPluginManager().registerEvents(empPulseItem, this);
         }
@@ -145,6 +145,7 @@ public class Enchantments extends EnchantPlugin {
         getServer().getPluginManager().registerEvents(new VanillaDamageListener(), this);
         getServer().getPluginManager().registerEvents(new ExploitListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerPotionEffectListener(), this);
+        getServer().getPluginManager().registerEvents(new OmniBlackScrollListener(), this);
         Bukkit.getPluginManager().registerEvents(new DivineImmolationListener(), (Plugin) Enchantments.getInstance());
 
     }

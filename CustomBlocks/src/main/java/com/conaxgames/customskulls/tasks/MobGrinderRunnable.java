@@ -77,15 +77,20 @@ public class MobGrinderRunnable extends BukkitRunnable {
                 if (!chest.getInventory().contains(Material.DOUBLE_PLANT)) {
                     chest.getInventory().addItem(MobCoinUtils.createCoinsNote("Mob Grinder", 1));
                 }
+                boolean xpBottleFound = false;
+                boolean mobCoinsFound = false;
                 for (int i = 0; i < chest.getInventory().getSize(); i++) {
+
                     if (chest.getInventory().getItem(i) == null) {
                         continue;
                     } else {
-                        if (ExpBottles.isXpBottle(chest.getInventory().getItem(i))) {
+                        if (ExpBottles.isXpBottle(chest.getInventory().getItem(i)) && !xpBottleFound) {
                             chest.getInventory().setItem(i, ExpBottles.getXpBottle(ExpBottles.getXpAmount(chest.getInventory().getItem(i)) + amountOfExpPerBlaze, "Mob Grinder"));
+                            xpBottleFound = true;
                         }
-                        if (MobCoinUtils.isCoinsNote(chest.getInventory().getItem(i)) && Math.random() < 0.3) {
+                        if (MobCoinUtils.isCoinsNote(chest.getInventory().getItem(i)) && Math.random() < 0.3 && !mobCoinsFound) {
                             chest.getInventory().setItem(i, MobCoinUtils.createCoinsNote("Mob Grinder", MobCoinUtils.getCoinsAmountFromNote(chest.getInventory().getItem(i)) + 1));
+                            mobCoinsFound = true;
                         }
                     }
                 }

@@ -3,8 +3,8 @@
  *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.gui.InventoryItem
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
  *  com.google.common.collect.Lists
  *  net.minecraft.util.io.netty.util.internal.ConcurrentSet
  *  org.bukkit.Bukkit
@@ -13,7 +13,7 @@
  *  org.bukkit.OfflinePlayer
  *  org.bukkit.Sound
  *  org.bukkit.entity.Player
- *  org.bukkit.event.me.astropvp.cratekeys.inventory.ClickType
+ *  org.bukkit.event.inventory.ClickType
  *  org.bukkit.plugin.Plugin
  */
 package me.recolance.auction.menu.bidmenus;
@@ -145,7 +145,7 @@ public class BidMenu
             }
             player.sendMessage(CC.Red + "Returned " + auctionBid.getCurrentBidderName() + " $" + auctionBid.getCurrentBid());
         }
-        player.sendMessage(CC.RedB + "Auction Bid force expired and me.astropvp.cratekeys.items have been returned to seller!");
+        player.sendMessage(CC.RedB + "Auction Bid force expired and items have been returned to seller!");
         this.redraw();
     }
 }
