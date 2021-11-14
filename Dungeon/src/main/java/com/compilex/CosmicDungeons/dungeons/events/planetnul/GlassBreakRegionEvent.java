@@ -17,13 +17,37 @@ import com.compilex.CosmicDungeons.utils.WorldUtils;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.gmail.filoghost.holograms.api.HolographicDisplaysAPI;
 import java.util.ArrayList;
+
+import com.sun.istack.internal.NotNull;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
+import kotlin.jvm.internal.Intrinsics;
+import org.bukkit.Effect;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.plugin.Plugin;
 
-public class GlassBreakRegionEvent
-extends RegionEvent {
+public class GlassBreakRegionEvent extends RegionEvent {
     public GlassBreakRegionEvent(Dungeon d, String regionName) {
         super(d, regionName);
+    }
+
+    static final class GlassBreakRegionEvent$run$1 implements Function1<Block, Unit> {
+        public static final GlassBreakRegionEvent$run$1 INSTANCE = new GlassBreakRegionEvent$run$1();
+
+        private boolean playedSound = false;
+
+        public Unit invoke(@NotNull Block block) {
+            Intrinsics.checkParameterIsNotNull(block, "block");
+            if (block.getType() == Material.STAINED_GLASS) {
+                block.setType(Material.AIR);
+                if (!this.playedSound)
+                    block.getWorld().playEffect(block.getLocation().add(0.5D, 0.5D, 0.5D), Effect.STEP_SOUND, Material.STAINED_GLASS);
+                this.playedSound = true;
+            }
+            return Unit.INSTANCE;
+        }
     }
 
     private void fillGlass() {
@@ -55,8 +79,8 @@ extends RegionEvent {
     @Override
     public void run() {
         this.fillGlass();
-        WorldUtils.Companion.scanBlocks(new Location(this.dungeon.world, 1.0, 222.0, 85.0), 70, GlassBreakRegionEvent.run.1.INSTANCE);
-        WorldUtils.Companion.scanBlocks(new Location(this.dungeon.world, -6.0, 224.0, 2.0), 5, GlassBreakRegionEvent.run.1.INSTANCE);
+        WorldUtils.Companion.scanBlocks(new Location(this.dungeon.world, 1.0, 222.0, 85.0), 70, GlassBreakRegionEvent$run$1.INSTANCE);
+        WorldUtils.Companion.scanBlocks(new Location(this.dungeon.world, -6.0, 224.0, 2.0), 5, GlassBreakRegionEvent$run$1.INSTANCE);
         this.dungeon.setObjectiveHologram(HolographicDisplaysAPI.createHologram((Plugin)CosmicDungeonsPlugin.get(), (Location)new Location(this.dungeon.world, 37.5, 206.5, -18.0), (String[])new String[]{CC.RedB + "LOCKED", CC.Gray + "Requires a key", CC.Gray + "to unlock door."}));
         this.dungeon.updateTimeRestrictionTask(System.currentTimeMillis() + (this.dungeon.isHalfTime() ? 390000L : 600000L), "Locate Vault Airlock");
     }

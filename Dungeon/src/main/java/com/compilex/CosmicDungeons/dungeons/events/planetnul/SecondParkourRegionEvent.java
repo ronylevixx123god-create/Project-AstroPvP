@@ -47,7 +47,7 @@ extends RegionEvent {
                     this.cancel();
                     return;
                 }
-                for (Vector pt : new FastIterator((Iterable)new CuboidRegion(new Vector(766, this.currentY, 603), new Vector(756, this.currentY, 506)), editSession)) {
+                for (Vector pt : new FastIterator(new CuboidRegion(new Vector(766, this.currentY, 603), new Vector(756, this.currentY, 506)), editSession)) {
                     Block block = SecondParkourRegionEvent.this.dungeon.getWorld().getBlockAt(pt.getBlockX(), pt.getBlockY(), pt.getBlockZ());
                     if (block.getType() != Material.AIR) continue;
                     block.setType(Material.STATIONARY_LAVA);

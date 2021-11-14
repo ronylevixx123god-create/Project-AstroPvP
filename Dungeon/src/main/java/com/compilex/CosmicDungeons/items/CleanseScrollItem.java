@@ -21,14 +21,13 @@
  */
 package com.compilex.CosmicDungeons.items;
 
-import com.compilex.CosmicDungeons.utils.HolyWhiteScrollUtils;
 import com.compilex.CosmicDungeons.utils.ItemUtils;
+import com.conaxgames.factions.boosters.utils.TimeUtil;
 import com.cosmicpvp.cosmicutils.exceptions.CosmicException;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
-import com.decimatemc.decimatecommons.util.TimeUtil;
 import java.util.concurrent.TimeUnit;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
 import me.ifamasssxd.cosmicskycustoms.struct.InventoryInteractable;
@@ -69,7 +68,7 @@ implements InventoryInteractable {
             return;
         }
         if (!player.isOp() && cosmicData.hasKey("nextCleanseScroll") && cosmicData.getLong("nextCleanseScroll") > System.currentTimeMillis()) {
-            player.sendMessage(CC.translate((String)("&c&l(!) &cYou cannot apply another Cleanse Scroll to this item for " + TimeUtil.formatTimeAbbreviated((long)((cosmicData.getLong("nextCleanseScroll") - System.currentTimeMillis()) / 1000L)))) + ".");
+            player.sendMessage(CC.translate((String)("&c&l(!) &cYou cannot apply another Cleanse Scroll to this item for " + TimeUtil.formatTime((long)((cosmicData.getLong("nextCleanseScroll") - System.currentTimeMillis()) / 1000L)))) + ".");
             e.setCancelled(true);
             return;
         }

@@ -57,7 +57,7 @@ extends Dungeon {
     public List<PanelColor> getRandomColorsForPanel() {
         ArrayList<PanelColor> allColors = new ArrayList<PanelColor>(Arrays.asList(PanelColor.values()));
         Collections.shuffle(allColors);
-        return Lists.newArrayList((Object[])new PanelColor[]{(PanelColor)((Object)allColors.get(0)), (PanelColor)((Object)allColors.get(1)), (PanelColor)((Object)allColors.get(2))});
+        return Lists.newArrayList((PanelColor)((Object)allColors.get(0)), (PanelColor)((Object)allColors.get(1)), (PanelColor)((Object)allColors.get(2)));
     }
 
     @Override

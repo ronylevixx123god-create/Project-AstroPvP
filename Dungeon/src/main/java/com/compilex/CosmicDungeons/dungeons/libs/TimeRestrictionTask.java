@@ -9,12 +9,8 @@
  */
 package com.compilex.CosmicDungeons.dungeons.libs;
 
-import com.compilex.CosmicDungeons.dungeons.libs.Dungeon;
-import com.compilex.CosmicDungeons.dungeons.libs.DungeonEndReason;
-import com.compilex.CosmicDungeons.dungeons.libs.DungeonState;
 import com.compilex.CosmicDungeons.utils.TimeUtils;
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.TitleManager;
 import java.util.Arrays;
 import java.util.concurrent.CopyOnWriteArrayList;
 import org.bukkit.ChatColor;
@@ -59,7 +55,7 @@ extends BukkitRunnable {
 
     public void setObjectiveName(String newObjective) {
         this.objectiveName = newObjective;
-        this.dungeon.broadcastTitle(this.getObjectiveString(newObjective), (Object)ChatColor.YELLOW + "Time Limit: " + (Object)ChatColor.GRAY + TimeUtils.formatDifference(this.expireTime - System.currentTimeMillis()), TitleManager.TitleColor.GOLD, TitleManager.TitleColor.GRAY);
+        this.dungeon.broadcastTitle(this.getObjectiveString(newObjective), (Object)ChatColor.YELLOW + "Time Limit: " + (Object)ChatColor.GRAY + TimeUtils.formatDifference(this.expireTime - System.currentTimeMillis()), ChatColor.GOLD, ChatColor.GRAY);
     }
 
     private String getObjectiveString(String newObjective) {
@@ -90,7 +86,7 @@ extends BukkitRunnable {
             if (millisLeft >= l || this.initialDifference <= l + 1000L) continue;
             this.dungeon.broadcastMessage("You have " + (Object)ChatColor.UNDERLINE + TimeUtils.formatDifference(millisLeft) + (Object)ChatColor.WHITE + " left to complete objective:");
             this.dungeon.broadcastMessage((Object)ChatColor.YELLOW + this.objectiveName + (Object)ChatColor.WHITE + " or you will fail the dungeon!");
-            this.dungeon.broadcastTitle(this.getObjectiveString(this.getObjectiveName()), "Time Left: " + (Object)ChatColor.GRAY + TimeUtils.formatDifference(millisLeft), TitleManager.TitleColor.GOLD, TitleManager.TitleColor.YELLOW);
+            this.dungeon.broadcastTitle(this.getObjectiveString(this.getObjectiveName()), "Time Left: " + (Object)ChatColor.GRAY + TimeUtils.formatDifference(millisLeft), ChatColor.GOLD, ChatColor.YELLOW);
             this.notifcationThresholds.remove(l);
         }
     }

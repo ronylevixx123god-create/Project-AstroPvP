@@ -31,8 +31,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.ItemStack;
@@ -82,8 +84,7 @@ extends RegionEvent {
                 dontAdd.add(new Location(this.dungeon.world, (double)x, 0.0, (double)z));
             }
         }
-        List allLocations = this.getXZLocationsIn(pointOne, pointTwo, dontAdd).stream().map(l -> new Location(l.getWorld(), l.getX(), 199.0, l.getZ()).getBlock()).filter(b -> b.getType() == Material.AIR).collect(Collectors.toList());
-        Collections.shuffle(allLocations);
+        List<Block> allLocations = this.getXZLocationsIn(pointOne, pointTwo, dontAdd).stream().map(l -> new Location(l.getWorld(), l.getX(), 199.0, l.getZ()).getBlock()).filter(b -> b.getType() == Material.AIR).collect(Collectors.toList());
         this.mazeZombies = Lists.newArrayList();
         allLocations.stream().limit(40 + new Random().nextInt(5)).forEach(b -> this.spawnMazeZombie(b.getLocation()));
         this.setSouth(false);

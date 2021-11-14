@@ -79,18 +79,6 @@ package com.compilex.CosmicDungeons.dungeons.events;
 
 import com.compilex.CosmicDungeons.CosmicDungeonsPlugin;
 import com.compilex.CosmicDungeons.DungeonsAPI;
-import com.compilex.CosmicDungeons.dungeons.events.DungeonEvents;
-import com.compilex.CosmicDungeons.dungeons.events.PortalDirection;
-import com.compilex.CosmicDungeons.dungeons.events.PortalPuzzle;
-import com.compilex.CosmicDungeons.dungeons.events.RegionEvent;
-import com.compilex.CosmicDungeons.dungeons.events.destroyedoutpost.AirLockBRegionEvent;
-import com.compilex.CosmicDungeons.dungeons.events.destroyedoutpost.AirlockARegionEvent;
-import com.compilex.CosmicDungeons.dungeons.events.destroyedoutpost.JunkDimensionTask;
-import com.compilex.CosmicDungeons.dungeons.events.destroyedoutpost.ParkourARegionEvent;
-import com.compilex.CosmicDungeons.dungeons.events.destroyedoutpost.ParkourTowerRegionEvent;
-import com.compilex.CosmicDungeons.dungeons.events.destroyedoutpost.PortalRegionEvent;
-import com.compilex.CosmicDungeons.dungeons.events.destroyedoutpost.YijkiLairAreaRegionEvent;
-import com.compilex.CosmicDungeons.dungeons.events.destroyedoutpost.YijkiLairSpawnRegionEvent;
 import com.compilex.CosmicDungeons.dungeons.libs.DestroyedOutpostDungeon;
 import com.compilex.CosmicDungeons.dungeons.libs.Dungeon;
 import com.compilex.CosmicDungeons.dungeons.libs.DungeonPlayer;
@@ -132,9 +120,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.google.common.collect.MapMaker;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
-import me.astropvp.astropvpskins.enums.ItemSkinType;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import me.ifamasssxd.cosmicbosses.struct.Boss;

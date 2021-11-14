@@ -56,7 +56,6 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.ItemUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
-import com.cosmicpvp.cosmicutils.utils.TitleManager;
 import com.gmail.filoghost.holograms.api.Hologram;
 import com.massivecraft.factions.Faction;
 import java.io.IOException;
@@ -68,8 +67,6 @@ import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
-import me.ifamasssxd.cosmictoggles.CosmicToggles;
-import me.ifamasssxd.cosmictoggles.toggles.RegisteredToggle;
 import org.apache.commons.lang.Validate;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.bukkit.Bukkit;
@@ -86,6 +83,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
+import org.github.paperspigot.Title;
 
 public class Dungeon {
     public World world;
@@ -438,15 +436,15 @@ public class Dungeon {
         }
     }
 
-    public void broadcastTitle(String title, String subTitle, TitleManager.TitleColor titleColor, TitleManager.TitleColor subColor) {
-        RegisteredToggle toggle = CosmicToggles.get().getTogglesManager().getRegisteredToggle("dungeonobjective");
+    public void broadcastTitle(String title, String subTitle, ChatColor titleColor, ChatColor subColor) {
+//        RegisteredToggle toggle = CosmicToggles.get().getTogglesManager().getRegisteredToggle("dungeonobjective");
         for (Player p : this.getPlayers()) {
-            if (!CosmicToggles.get().getTogglesManager().isToggleEnabled(p, toggle)) continue;
-            if (title != null) {
-                TitleManager.sendTitle((Player)p, (String)title, (TitleManager.TitleColor)titleColor, (int)10, (int)40, (int)10);
+//            if (!CosmicToggles.get().getTogglesManager().isToggleEnabled(p, toggle)) continue;
+            if (title != null && subTitle == null) {
+                p.sendTitle(new Title(titleColor + title, "", 10, 40, 10));
             }
-            if (subTitle == null) continue;
-            TitleManager.sendSubtitle((Player)p, (String)subTitle, (TitleManager.TitleColor)subColor, (int)10, (int)40, (int)10);
+            if (title != null && subTitle != null) continue;
+            p.sendTitle(new Title(titleColor + title, subColor + subTitle, 10, 40, 10));
         }
     }
 

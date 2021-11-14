@@ -1,24 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.WorldGuardUtils
- *  kotlin.Metadata
- *  kotlin.TypeCastException
- *  kotlin.jvm.internal.Intrinsics
- *  me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost.MotherOfYijki
- *  me.ifamasssxd.cosmicbosses.struct.Boss
- *  me.ifamasssxd.cosmicbosses.struct.enums.BossType
- *  me.ifamasssxd.cosmicbosses.utils.BossUtils
- *  org.bukkit.Location
- *  org.bukkit.entity.Player
- *  org.bukkit.event.player.PlayerTeleportEvent$TeleportCause
- *  org.bukkit.metadata.FixedMetadataValue
- *  org.bukkit.metadata.MetadataValue
- *  org.bukkit.plugin.Plugin
- *  org.jetbrains.annotations.NotNull
- */
 package com.compilex.CosmicDungeons.dungeons.events.destroyedoutpost;
 
 import com.compilex.CosmicDungeons.CosmicDungeonsPlugin;
@@ -42,43 +21,38 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
-@Metadata(mv={1, 1, 10}, bv={1, 0, 2}, k=1, d1={"\u0000\u001e\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0010\u000e\n\u0002\b\u0002\n\u0002\u0010\u0002\n\u0000\u0018\u00002\u00020\u0001B\u0015\u0012\u0006\u0010\u0002\u001a\u00020\u0003\u0012\u0006\u0010\u0004\u001a\u00020\u0005\u00a2\u0006\u0002\u0010\u0006J\b\u0010\u0007\u001a\u00020\bH\u0016\u00a8\u0006\t"}, d2={"Lcom/compilex/CosmicDungeons/dungeons/events/destroyedoutpost/YijkiLairAreaRegionEvent;", "Lcom/compilex/CosmicDungeons/dungeons/events/RegionEvent;", "d", "Lcom/compilex/CosmicDungeons/dungeons/libs/Dungeon;", "regionName", "", "(Lcom/compilex/CosmicDungeons/dungeons/libs/Dungeon;Ljava/lang/String;)V", "run", "", "CosmicDungeons"})
-public final class YijkiLairAreaRegionEvent
-extends RegionEvent {
+@Metadata(mv = {1, 1, 10}, bv = {1, 0, 2}, k = 1, d1 = {"\000\036\n\002\030\002\n\002\030\002\n\000\n\002\030\002\n\000\n\002\020\016\n\002\b\002\n\002\020\002\n\000\030\0002\0020\001B\025\022\006\020\002\032\0020\003\022\006\020\004\032\0020\005\006\002\020\006J\b\020\007\032\0020\bH\026\006\t"}, d2 = {"Lcom/compilex/CosmicDungeons/dungeons/events/destroyedoutpost/YijkiLairAreaRegionEvent;", "Lcom/compilex/CosmicDungeons/dungeons/events/RegionEvent;", "d", "Lcom/compilex/CosmicDungeons/dungeons/libs/Dungeon;", "regionName", "", "(Lcom/compilex/CosmicDungeons/dungeons/libs/Dungeon;Ljava/lang/String;)V", "run", "", "CosmicDungeons"})
+public final class YijkiLairAreaRegionEvent extends RegionEvent {
     public YijkiLairAreaRegionEvent(@NotNull Dungeon d, @NotNull String regionName) {
         super(d, regionName);
     }
 
-    @Override
     public void run() {
-        if (this.dungeon == null) {
+        if (this.dungeon == null)
             throw new TypeCastException("null cannot be cast to non-null type com.compilex.CosmicDungeons.dungeons.libs.DestroyedOutpostDungeon");
-        }
-        ((DestroyedOutpostDungeon)this.dungeon).boss = (MotherOfYijki)Boss.bosses.get(BossUtils.spawnDungeonBoss((Location)new Location(this.dungeon.world, -96.0, 78.0, -643.0), (int)3, (BossType)BossType.MOTHER_OF_YIJKI).getUniqueId());
-        Intrinsics.checkExpressionValueIsNotNull((Object)this.dungeon, (String)"this.dungeon");
+        ((DestroyedOutpostDungeon)this.dungeon).boss = (MotherOfYijki)Boss.bosses.get(BossUtils.spawnDungeonBoss(new Location(this.dungeon.world, -96.0D, 78.0D, -643.0D), 3, BossType.MOTHER_OF_YIJKI).getUniqueId());
+        Intrinsics.checkExpressionValueIsNotNull(this.dungeon, "this.dungeon");
         for (Player player : this.dungeon.getPlayers()) {
             Location location = player.getLocation();
-            Intrinsics.checkExpressionValueIsNotNull((Object)location, (String)"location");
+            Intrinsics.checkExpressionValueIsNotNull(location, "location");
             double x = location.getX();
             double z = location.getZ();
-            if (x > 400.0 && x < 540.0 && z > -2050.0 && z < -623.0) {
+            if (x > 400.0D && x < 540.0D && z > -2050.0D && z < -623.0D) {
                 player.sendMessage(CC.RedB + "The Mother of Yijki has been summoned, you have been forcibly teleported into its dimension!");
-                if (this.dungeon == null) {
+                if (this.dungeon == null)
                     throw new TypeCastException("null cannot be cast to non-null type com.compilex.CosmicDungeons.dungeons.libs.DestroyedOutpostDungeon");
-                }
-                player.setMetadata("ignore_combat_tag", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get(), (Object)((DestroyedOutpostDungeon)this.dungeon).getDungeonEvents().mainYijkiCave));
-                if (this.dungeon == null) {
+                player.setMetadata("ignore_combat_tag", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get(), (((DestroyedOutpostDungeon)this.dungeon).getDungeonEvents()).mainYijkiCave));
+                if (this.dungeon == null)
                     throw new TypeCastException("null cannot be cast to non-null type com.compilex.CosmicDungeons.dungeons.libs.DestroyedOutpostDungeon");
-                }
-                player.teleport(((DestroyedOutpostDungeon)this.dungeon).getDungeonEvents().mainYijkiCave, PlayerTeleportEvent.TeleportCause.UNKNOWN);
+                player.teleport((((DestroyedOutpostDungeon)this.dungeon).getDungeonEvents()).mainYijkiCave, PlayerTeleportEvent.TeleportCause.UNKNOWN);
                 player.removeMetadata("ignore_combat_tag", (Plugin)CosmicDungeonsPlugin.get());
                 continue;
             }
-            if (WorldGuardUtils.inRegion((Location)location, (String)"yijki_realm") || WorldGuardUtils.inRegion((Location)location, (String)"yijki_portal_exit")) continue;
+            if (WorldGuardUtils.inRegion(location, "yijki_realm") || WorldGuardUtils.inRegion(location, "yijki_portal_exit"))
+                continue;
             player.sendMessage(CC.RedB + "You were not protected by the Interdimensional Portals at the time the Mother of Yijki was spawned, so you were killed instantly by her planet ending ability.");
-            Intrinsics.checkExpressionValueIsNotNull((Object)player, (String)"player");
-            player.damage(player.getMaxHealth() + 99.0);
+            Intrinsics.checkExpressionValueIsNotNull(player, "player");
+            player.damage(player.getMaxHealth() + 99.0D);
         }
     }
 }
-

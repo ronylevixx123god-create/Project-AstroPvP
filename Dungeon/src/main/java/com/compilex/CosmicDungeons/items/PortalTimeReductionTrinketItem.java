@@ -48,8 +48,7 @@ implements InventoryInteractable {
     }
 
     public ItemStack createItem(Player player, Object ... objects) {
-        int tier;
-        int n = objects[0].equals("1") ? 1 : (tier = objects[0].equals("2") ? 2 : 3);
+        int tier = objects[0].equals("1") ? 1 : (tier = objects[0].equals("2") ? 2 : 3);
         String romanNumeral = tier == 1 ? "I" : (tier == 2 ? "II" : "III");
         return new NBTWrapper(this.applyItemData(ItemUtils.addGlow(new ItemBuilder(Material.FLINT_AND_STEEL, CC.GoldB + "Portal Time Reduction Trinket " + CC.GrayB + "[" + CC.GoldB + romanNumeral + CC.GrayB + "]", new String[]{CC.Gray + "Apply to a /dungeon portal item", CC.Gray + "that, when placed, will reduce the", CC.Gray + "portal close time by " + PortalTimeReductionTrinketItem.getSecondsFromTier(tier) + "s.", "", CC.Gray + "Drag n' drop onto item to apply."}).build())).build()).setString("random", UUID.randomUUID().toString()).build();
     }

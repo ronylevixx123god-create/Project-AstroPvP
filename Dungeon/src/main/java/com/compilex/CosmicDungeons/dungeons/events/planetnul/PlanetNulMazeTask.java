@@ -18,7 +18,6 @@ import com.compilex.CosmicDungeons.DungeonsAPI;
 import com.compilex.CosmicDungeons.dungeons.libs.DungeonPlayer;
 import com.compilex.CosmicDungeons.dungeons.libs.PlanetNulDungeon;
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.TitleManager;
 import java.util.ArrayList;
 import java.util.List;
 import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
@@ -27,6 +26,7 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.github.paperspigot.Title;
 
 public class PlanetNulMazeTask
 extends BukkitRunnable {
@@ -52,8 +52,7 @@ extends BukkitRunnable {
             if (p2.getLocation().add(0.0, -1.0, 0.0).getBlock().getType() == Material.MYCEL || p2.getLocation().add(0.0, -1.0, 0.0).getBlock().getType() == Material.AIR && p2.getLocation().add(0.0, -2.0, 0.0).getBlock().getType() == Material.MYCEL || p2.getLocation().add(0.0, -1.0, 0.0).getBlock().getType() == Material.AIR && p2.getLocation().add(0.0, -2.0, 0.0).getBlock().getType() == Material.AIR && p2.getLocation().add(0.0, -3.0, 0.0).getBlock().getType() == Material.MYCEL || p2.getLocation().add(0.0, -1.0, 0.0).getBlock().getType() == Material.AIR && p2.getLocation().add(0.0, -2.0, 0.0).getBlock().getType() == Material.AIR && p2.getLocation().add(0.0, -3.0, 0.0).getBlock().getType() == Material.AIR && p2.getLocation().add(0.0, -4.0, 0.0).getBlock().getType() == Material.MYCEL) {
                 if (this.affectedPlayers.contains((Object)p2)) continue;
                 this.affectedPlayers.add(p2);
-                TitleManager.sendTitle((Player)p2, (String)(CC.Red + "Poisonous Gas"), (TitleManager.TitleColor)TitleManager.TitleColor.RED, (int)20, (int)65, (int)20);
-                TitleManager.sendSubtitle((Player)p2, (String)(CC.Gray + "Will this be your last breath?"), (TitleManager.TitleColor)TitleManager.TitleColor.GRAY, (int)20, (int)65, (int)20);
+                p2.sendTitle(new Title(CC.Red + "Poisonous Gas", CC.Gray + "Will this be your last breath?", 20, 65, 20));
                 continue;
             }
             this.affectedPlayers.remove((Object)p2);

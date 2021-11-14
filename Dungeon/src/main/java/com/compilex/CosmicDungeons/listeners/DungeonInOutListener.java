@@ -114,9 +114,6 @@ implements Listener {
                     Logger.debug("Resetting dungeon " + d + " due to no players left and state=IN_PROGRESS...");
                     d.setPortalPlaceCooldown(System.currentTimeMillis() + 120000L);
                     DungeonState status = d.getDungeonStatus();
-                    if (ArkPlugins.CHUNK_GC.getArkPlugin().isRunning()) {
-                        ChunkGCTask.loaded_chunks.remove(d.getWorldName());
-                    }
                     Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)CosmicDungeonsPlugin.get_(), () -> {
                         if (d.getPlayers().isEmpty() && status == d.getDungeonStatus()) {
                             d.reset();

@@ -181,7 +181,7 @@ implements Runnable {
                                 @Override
                                 public void run() {
                                     dungeon.broadcastMessage("The dungeon portal will close in 60s...");
-                                    dungeon.broadcastTitle("Dungeon Portal", "The dungeon portal will close in 60s...", TitleManager.TitleColor.GOLD, TitleManager.TitleColor.YELLOW);
+                                    dungeon.broadcastTitle("Dungeon Portal", "The dungeon portal will close in 60s...", ChatColor.GOLD, ChatColor.YELLOW);
                                     Bukkit.broadcastMessage((String)"");
                                     Bukkit.broadcastMessage((String)((Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "*** DUNGEON PORTAL ***"));
                                     Bukkit.broadcastMessage((String)((Object)ChatColor.YELLOW + "The dungeon portal to "));
@@ -194,7 +194,7 @@ implements Runnable {
                                 @Override
                                 public void run() {
                                     dungeon.broadcastMessage("The dungeon portal will close in 30s...");
-                                    dungeon.broadcastTitle("Dungeon Portal", "The dungeon portal will close in 30s...", TitleManager.TitleColor.GOLD, TitleManager.TitleColor.YELLOW);
+                                    dungeon.broadcastTitle("Dungeon Portal", "The dungeon portal will close in 30s...", ChatColor.GOLD, ChatColor.YELLOW);
                                 }
                             }, 1200L);
                             Bukkit.getScheduler().runTaskLater((Plugin)CosmicDungeonsPlugin.get_(), new Runnable(){
@@ -216,7 +216,7 @@ implements Runnable {
                                 @Override
                                 public void run() {
                                     dungeon.broadcastMessage("The dungeon portal will close in 5s...");
-                                    dungeon.broadcastTitle("Dungeon Portal", "The dungeon portal will close in 5s...", TitleManager.TitleColor.GOLD, TitleManager.TitleColor.YELLOW);
+                                    dungeon.broadcastTitle("Dungeon Portal", "The dungeon portal will close in 5s...", ChatColor.GOLD, ChatColor.YELLOW);
                                 }
                             }, 1900L);
                             Bukkit.getScheduler().runTaskLater((Plugin)CosmicDungeonsPlugin.get_(), new Runnable(){
