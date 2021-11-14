@@ -95,26 +95,25 @@ public class WorldGuardUtils {
 
     public static void updateAllPlayerRegions() {
         CosmicUtils.get().getAsyncPlayerMap().values().forEach(player -> {
-            LinkedList sorted;
-            LinkedList retr;
             List<ProtectedRegion> regionsList = cachedWorldRegions.get(player.getWorld().getName());
-            HashMap<String, Integer> regionsInside = null;
+            Map<String, Integer> regionsInside = null;
             Location loc = player.getLocation();
             if (regionsList != null) {
-                for (ProtectedRegion region : regionsList) {
-                    if (!region.contains(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ())) continue;
-                    if (regionsInside == null) {
-                        regionsInside = new HashMap<String, Integer>();
+                Iterator<ProtectedRegion> var4 = regionsList.iterator();
+                while (var4.hasNext()) {
+                    ProtectedRegion region = var4.next();
+                    if (region.contains(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ())) {
+                        if (regionsInside == null)
+                            regionsInside = new HashMap<>();
+                        regionsInside.put(region.getId(), region.getPriority());
                     }
-                    regionsInside.put(region.getId(), region.getPriority());
                 }
             }
-            LinkedList linkedList = retr = regionsInside != null ? new LinkedList(regionsInside.entrySet()) : null;
-            if (retr != null) {
-                retr.sort(Comparator.comparing(Map.Entry::getValue));
-            }
-            LinkedList linkedList2 = sorted = retr != null ? new LinkedList() : null;
-            if (sorted != null) {
+            LinkedList<Map.Entry<String, Integer>> retr = (regionsInside != null) ? new LinkedList<>(regionsInside.entrySet()) : null;
+            if (retr != null)
+                retr.sort(Map.Entry.comparingByValue());
+            LinkedList<String> sorted = (retr != null) ? new LinkedList<>() : null;
+            if (sorted != null && sorted != null) {
                 retr.forEach(ent -> sorted.add(ent.getKey()));
                 if (!sorted.isEmpty()) {
                     lastKnownPlayerRegions.put(player.getUniqueId(), sorted);
@@ -168,7 +167,7 @@ public class WorldGuardUtils {
     }
 
     public static boolean isInRegionsFast(Location location, String ... regionNames) {
-        return WorldGuardUtils.isInRegionsFast(location, Lists.newArrayList((Object[])regionNames));
+        return WorldGuardUtils.isInRegionsFast(location, Lists.newArrayList(regionNames));
     }
 
     public static boolean isInRegionsContainsFast(Location location, List<String> regionNames) {
@@ -228,7 +227,7 @@ public class WorldGuardUtils {
             Class<?> bukkitUtil = wg.getClass().getClassLoader().loadClass("com.sk89q.worldguard.bukkit.BukkitUtil");
             Method toVector = bukkitUtil.getMethod("toVector", Block.class);
             Vector blockVector = (Vector)toVector.invoke(null, new Object[]{l.getBlock()});
-            List regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs(blockVector);
+            List<String> regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs(blockVector);
             if (regionSet.size() < 0) {
                 return "";
             }
@@ -330,7 +329,7 @@ public class WorldGuardUtils {
     public static boolean isLavaFlowDisabled(Location l) {
         try {
             BlockVector blockVector = BukkitUtil.toVector((Block)l.getBlock());
-            List regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs((Vector)blockVector);
+            List<String> regionSet = wg.getGlobalRegionManager().get(l.getWorld()).getApplicableRegionsIDs((Vector)blockVector);
             if (regionSet.size() < 1) {
                 try {
                     return (StateFlag.State)wg.getGlobalRegionManager().get(l.getWorld()).getRegion("__global__").getFlags().get((Object)DefaultFlag.LAVA_FLOW) == StateFlag.State.DENY;

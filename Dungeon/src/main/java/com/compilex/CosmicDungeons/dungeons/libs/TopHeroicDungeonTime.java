@@ -96,9 +96,9 @@ public class TopHeroicDungeonTime {
         this.dungeonType = type;
         this.timeCompleted = section.getLong(type.name() + ".timestamp", 0L);
         this.secondsCompletedIn = section.getInt(type.name() + ".fastest-time", 0);
-        this.factionsWhoCompleted = section.getList(type.name() + ".factions", (List)Lists.newArrayList());
+        this.factionsWhoCompleted = (List<String>) section.getList(type.name() + ".factions", (List)Lists.newArrayList());
         this.completeCount = section.getInt(type.name() + ".times-completed", 0);
-        this.dungeonDebuffs = section.getList(type.name() + ".debuffs", (List)Lists.newArrayList());
+        this.dungeonDebuffs = (List<String>) section.getList(type.name() + ".debuffs", (List)Lists.newArrayList());
     }
 
     public void clear() {

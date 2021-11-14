@@ -323,7 +323,7 @@ extends DungeonEvents {
                 if (playerList.endsWith(", ")) {
                     playerList = playerList.substring(0, playerList.length() - 2);
                 }
-                this.dungeon.broadcastTitle("DUNGEON COMPLETE!", "+1 Dungeon Lootbag", TitleManager.TitleColor.GREEN, TitleManager.TitleColor.GRAY);
+                this.dungeon.broadcastTitle("DUNGEON COMPLETE!", "+1 Dungeon Lootbag", ChatColor.GREEN, ChatColor.GRAY);
                 Bukkit.broadcastMessage((String)"");
                 Bukkit.broadcastMessage((String)((Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "*-*-* DUNGEON COMPLETE! *-*-*"));
                 Bukkit.broadcastMessage((String)((Object)ChatColor.GOLD + "The " + this.dungeon.getDungeonName() + (Object)ChatColor.GOLD + " has been cleared by: " + (Object)ChatColor.GRAY + playerList + (Object)ChatColor.GOLD + " in " + TimeUtils.formatDifference(this.dungeon.getTimeSinceDungeonStart())));
@@ -374,7 +374,7 @@ extends DungeonEvents {
                             block.setType(Material.CHEST);
                             AbandonedShipEvents.this.fillChest(block, itemsPerChest, availableLooters);
                             block.getWorld().playEffect(nextToSet.clone().add(0.5, 0.5, 0.5), Effect.STEP_SOUND, Material.CHEST.getId());
-                            AbandonedShipEvents.this.dungeon.broadcastTitle(nextToAnnounce.getName(), "", TitleManager.TitleColor.GREEN, TitleManager.TitleColor.GOLD);
+                            AbandonedShipEvents.this.dungeon.broadcastTitle(nextToAnnounce.getName(), "", ChatColor.GREEN, ChatColor.GOLD);
                             RandomFireworks.getManager().launchRandomFirework(nextToSet.add(0.5, 1.0, 0.5));
                         }
                     }.runTaskTimer((Plugin)CosmicDungeonsPlugin.get_(), 20L, 20L);

@@ -9,8 +9,8 @@ package com.compilex.CosmicDungeons.dungeons.events;
 import org.bukkit.map.MapPalette;
 
 public enum PortalDirection {
-    LEFT(16, "R"),
-    MIDDLE(28, "G"),
+    LEFT((byte)16, "R"),
+    MIDDLE((byte) 28, "G"),
     RIGHT(MapPalette.matchColor((int)148, (int)0, (int)211), "P");
 
     public byte color;

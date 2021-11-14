@@ -150,8 +150,7 @@ implements Listener {
             ItemStack heroicUpgradeBonusItem = null;
             int level = UpgradeUtils.getUpgradeLevel((Player)p, (String)"HEROIC_DUNGEON_LOOTBAG");
             if (level > 0) {
-                double chance;
-                double d = level == 1 ? 0.05 : (level == 2 ? 0.08 : (level == 3 ? 0.15 : (chance = level == 4 ? 0.25 : 0.0)));
+                double chance = level == 1 ? 0.05 : (level == 2 ? 0.08 : (level == 3 ? 0.15 : (chance = level == 4 ? 0.25 : 0.0)));
                 if (Math.random() <= chance) {
                     List<ItemStack> potentialLoot = this.getCoolDungeonLoot(bagType);
                     potentialLoot.addAll(this.getOtherDungeonLoot(bagType));
@@ -222,7 +221,6 @@ implements Listener {
         ArrayList<ItemStack> loot = new ArrayList<ItemStack>();
         ThreadLocalRandom random = ThreadLocalRandom.current();
         if (Math.random() < 0.04) {
-            loot.add(DungeonsRewardsAPI.getHolyWhiteScroll());
         }
         if (isDestroyed) {
             CustomEnchantment enchantment;
@@ -240,9 +238,7 @@ implements Listener {
                 loot.add(DungeonType.DESTROYED_OUTPOST.getDungeonInstance().getDungeonPortal());
             }
             if (Math.random() <= 0.05 && ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin().isRunning()) {
-                loot.add(((EquipmentLootboxes)ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin()).createLootboxItem(true));
             } else if (Math.random() <= 0.01 && ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin().isRunning()) {
-                loot.add(((EquipmentLootboxes)ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin()).createHeroicLootboxItem(true));
             }
             if (Math.random() <= 0.1) {
                 loot.add(EnchantmentBook.getHeroicBlackscroll((boolean)true));
@@ -266,7 +262,6 @@ implements Listener {
                 loot.add(CosmicDisguiseAPI.createRedeemableDisguise((String)"CHICKEN"));
             }
             if (ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin().isRunning() && Math.random() <= 0.25) {
-                loot.add(((EquipmentLootboxes)ArkPlugins.EQUIPMENT_LOOTBOX.getArkPlugin()).createHeroicGKitGenerator(true));
             }
             if (Math.random() <= 0.1) {
                 loot.add(CosmicArmorSetsAPI.createArmorSetUpgrade((ArmorSet)ArmorSet.values()[((Random)random).nextInt(ArmorSet.values().length)], (double)(50 + ((Random)random).nextInt(51))));
@@ -298,7 +293,6 @@ implements Listener {
             if (Math.random() < 0.3 && !isDestroyed) {
                 loot.add(DungeonsRewardsAPI.getSoulAnvil());
             } else {
-                loot.add(DungeonsRewardsAPI.getSoulPearl());
             }
         }
         if (Math.random() < 0.15) {
@@ -385,7 +379,6 @@ implements Listener {
             mcmmoCredits = Math.min(250, 100 + 10 * daysSinceAvailable);
         }
         loot.add(ItemUtils.getMoneyNote((String)"Decimate Dungeon", (int)moneyToGive));
-        loot.add(ItemUtils.getMCMMOVoucher((int)mcmmoCredits));
         return loot;
     }
 

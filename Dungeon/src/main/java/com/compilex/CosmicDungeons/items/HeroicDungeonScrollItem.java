@@ -92,8 +92,8 @@ implements InventoryInteractable {
         meta.setLore(lore);
         clicked.setItemMeta(meta);
         clickedWrapper = new NBTWrapper(clicked);
-        if (clickedWrapper.getCosmicData().hasKey("dungeonTrinket")) {
-            clickedWrapper.getCosmicData().remove("dungeonTrinket");
+        if (clickedWrapper.getconaxData().hasKey("dungeonTrinket")) {
+            clickedWrapper.getconaxData().remove("dungeonTrinket");
         }
         e.setCurrentItem(clickedWrapper.build());
     }

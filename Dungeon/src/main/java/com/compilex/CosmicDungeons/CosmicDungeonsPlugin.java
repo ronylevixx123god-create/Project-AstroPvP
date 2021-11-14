@@ -36,12 +36,10 @@
  */
 package com.compilex.CosmicDungeons;
 
-import com.compilex.CosmicDungeons.DungeonsAPI;
 import com.compilex.CosmicDungeons.cmds.CommandAdminDungeon;
 import com.compilex.CosmicDungeons.cmds.CommandDungeon;
 import com.compilex.CosmicDungeons.cmds.CommandDungeonGive;
 import com.compilex.CosmicDungeons.cmds.CommandDungeonMaster;
-import com.compilex.CosmicDungeons.cmds.CommandLootboxRefresh;
 import com.compilex.CosmicDungeons.cmds.CommandObjective;
 import com.compilex.CosmicDungeons.dungeons.libs.DestroyedOutpostDungeon;
 import com.compilex.CosmicDungeons.dungeons.libs.Dungeon;
@@ -51,19 +49,9 @@ import com.compilex.CosmicDungeons.dungeons.libs.PlanetNulDungeon;
 import com.compilex.CosmicDungeons.items.BossSlayerTrinketItem;
 import com.compilex.CosmicDungeons.items.ChunkBusterItem;
 import com.compilex.CosmicDungeons.items.CleanseScrollItem;
-import com.compilex.CosmicDungeons.items.EscapistPearlItem;
-import com.compilex.CosmicDungeons.items.FatBucketItem;
-import com.compilex.CosmicDungeons.items.GodlyTransmogScrollItem;
 import com.compilex.CosmicDungeons.items.HeroicDungeonScrollItem;
-import com.compilex.CosmicDungeons.items.HolyWaterItem;
-import com.compilex.CosmicDungeons.items.HolyWhitescrollItem;
-import com.compilex.CosmicDungeons.items.InfiniteLavaFatBucketItem;
-import com.compilex.CosmicDungeons.items.InfiniteWaterFatBucketItem;
-import com.compilex.CosmicDungeons.items.OmniPearlItem;
 import com.compilex.CosmicDungeons.items.PortalProtectionTrinketItem;
 import com.compilex.CosmicDungeons.items.PortalTimeReductionTrinketItem;
-import com.compilex.CosmicDungeons.items.SlowBallItem;
-import com.compilex.CosmicDungeons.items.SuperPearlItem;
 import com.compilex.CosmicDungeons.listeners.BossSlayerTrinketListener;
 import com.compilex.CosmicDungeons.listeners.DungeonChallengeChestListener;
 import com.compilex.CosmicDungeons.listeners.DungeonInOutListener;
@@ -76,17 +64,6 @@ import com.compilex.CosmicDungeons.listeners.DungeonPortalCraftListener;
 import com.compilex.CosmicDungeons.listeners.DungeonPortalListener;
 import com.compilex.CosmicDungeons.listeners.DungeonSanityListener;
 import com.compilex.CosmicDungeons.listeners.PlayerJoinQuitListener;
-import com.compilex.CosmicDungeons.listeners.items.ChunkBusterListener;
-import com.compilex.CosmicDungeons.listeners.items.EscapistPearlListener;
-import com.compilex.CosmicDungeons.listeners.items.FatBucketListener;
-import com.compilex.CosmicDungeons.listeners.items.HolyWhiteScrollCombatLoggerListener;
-import com.compilex.CosmicDungeons.listeners.items.HolyWhiteScrollListener;
-import com.compilex.CosmicDungeons.listeners.items.InfiniteLavaFatBucketItemListener;
-import com.compilex.CosmicDungeons.listeners.items.InfiniteWaterFatBucketItemListener;
-import com.compilex.CosmicDungeons.listeners.items.OmniPearlListener;
-import com.compilex.CosmicDungeons.listeners.items.SlowBallListener;
-import com.compilex.CosmicDungeons.listeners.items.SoulItemListener;
-import com.compilex.CosmicDungeons.listeners.items.SuperPearlListener;
 import com.compilex.CosmicDungeons.menus.DungeonMasterKeyMenu;
 import com.compilex.CosmicDungeons.ncphooks.DestroyedOutpostNCPHook;
 import com.compilex.CosmicDungeons.struct.PortalLog;
@@ -97,11 +74,6 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.JSONUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
-import com.decimatemc.decimatecommons.inventory.InventoryManager;
-import com.decimatemc.decimatelootboxes.DecimateLootboxes;
-import com.decimatemc.decimatelootboxes.api.Lootbox;
-import com.decimatemc.decimatelootboxes.api.PluginLootboxManager;
-import com.decimatemc.decimateserversync.DecimateServerSync;
 import com.earth2me.essentials.IEssentials;
 import com.google.common.collect.Lists;
 import com.google.gson.reflect.TypeToken;
@@ -111,6 +83,8 @@ import fr.neatmonster.nocheatplus.checks.CheckType;
 import fr.neatmonster.nocheatplus.hooks.NCPHook;
 import fr.neatmonster.nocheatplus.hooks.NCPHookManager;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -120,6 +94,7 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
+import net.astropvp.utils.inventory.InventoryManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -132,18 +107,8 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class CosmicDungeonsPlugin
-extends JavaPlugin {
+public class CosmicDungeonsPlugin extends JavaPlugin {
     private DungeonsAPI api;
-    public DecimateLootboxes decimateLootboxes;
-    private PluginLootboxManager lootboxManager;
-    private InventoryManager inventoryManager;
-    private Lootbox abandonedSpaceshipLootbox;
-    private Lootbox destroyedOutpostLootbox;
-    private Lootbox planetNulLootbox;
-    private Lootbox abandonedSpaceshipHeroicLootbox;
-    private Lootbox destroyedOutpostHeroicLootbox;
-    private Lootbox planetNulHeroicLootbox;
     private static CosmicDungeonsPlugin _;
     private Economy economy;
     private EntityHider entityHider;
@@ -170,12 +135,7 @@ extends JavaPlugin {
     private DungeonLootbagListener dungeonLootbagListener;
     private DungeonPlayerMoveListener dungeonPlayerMoveListener;
     private DungeonSanityListener dungeonSanityListener;
-    private SoulItemListener soulItemListener;
-    private OmniPearlListener omniPearlListener;
-    private InfiniteLavaFatBucketItemListener infiniteLavaFatBucketItemListener;
-    private InfiniteWaterFatBucketItemListener infiniteWaterFatBucketItemListener;
-    private HolyWhiteScrollListener holyWhiteScrollListener;
-    private HolyWhitescrollItem holyWhitescrollItem;
+    private InventoryManager inventoryManager;
 
     public DungeonsAPI getApi() {
         return this.api;
@@ -242,22 +202,13 @@ extends JavaPlugin {
     }
 
     public void onEnable() {
-        File orCreateFile;
         _ = this;
         this.ess3 = (IEssentials)Bukkit.getPluginManager().getPlugin("Essentials");
-        this.lootboxManager = DecimateLootboxes.registerExternalManager((JavaPlugin)this, (boolean)true);
-        this.abandonedSpaceshipLootbox = this.lootboxManager.createManagedLootbox("dungeonlootbagabandonedspaceship");
-        this.destroyedOutpostLootbox = this.lootboxManager.createManagedLootbox("dungeonlootbagdestroyedoutpost");
-        this.planetNulLootbox = this.lootboxManager.createManagedLootbox("dungeonlootbagplanetnul");
-        this.abandonedSpaceshipHeroicLootbox = this.lootboxManager.createManagedLootbox("dungeonlootbagheroicabandonedspaceship");
-        this.destroyedOutpostHeroicLootbox = this.lootboxManager.createManagedLootbox("dungeonlootbagheroicdestroyedoutpost");
-        this.planetNulHeroicLootbox = this.lootboxManager.createManagedLootbox("dungeonlootbagheroicplanetnul");
         this.entityHider = new EntityHider((Plugin)this, EntityHider.Policy.BLACKLIST);
         this.mkdirs();
         this.api = new DungeonsAPI();
         this.setupEconomy();
         this.loadDungeons();
-        this.decimateLootboxes = (DecimateLootboxes)Bukkit.getPluginManager().getPlugin("DecimateLootboxes");
         this.registerCommands();
         this.registerListeners();
         this.registerTasks();
@@ -283,7 +234,6 @@ extends JavaPlugin {
                 this.availableDungeonKeysTracked.add(type);
             }
         }
-        this.serverName = DecimateServerSync.getInstance().getCurrentServerName();
         Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)CosmicDungeonsPlugin.get(), () -> {
             for (FPlayer fplayer : FPlayers.i.get()) {
                 try {
@@ -308,8 +258,18 @@ extends JavaPlugin {
         }, 200L, 200L);
         this.inventoryManager = new InventoryManager((JavaPlugin)this);
         Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)CosmicDungeonsPlugin.get(), () -> this.inventoryManager.init(), 20L);
-        this.portalLogFile = orCreateFile = JSONUtils.getOrCreateFile((String)"portalLogs.json");
-        this.portalLogs = (Map)JSONUtils.fromJson((File)orCreateFile, (Type)this.portalLogToken);
+        File orCreateFile = null;
+        try {
+            orCreateFile = JSONUtils.getOrCreateFile("portalLogs.json");
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+        this.portalLogFile = orCreateFile;
+        try {
+            this.portalLogs = (Map)JSONUtils.fromJson((File)orCreateFile, (Type)this.portalLogToken);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         if (this.portalLogs == null) {
             this.portalLogs = new HashMap<DungeonType, List<PortalLog>>();
         }
@@ -317,34 +277,6 @@ extends JavaPlugin {
             this.portalLogs.forEach((dType, logs) -> logs.removeIf(log -> System.currentTimeMillis() - log.getPlacetime() >= TimeUnit.DAYS.toMillis(10L)));
         }
         this.getLogger().info("Loaded " + this.portalLogs.size() + " Portal logs keys..");
-    }
-
-    public PluginLootboxManager getLootboxManager() {
-        return this.lootboxManager;
-    }
-
-    public Lootbox getAbandonedSpaceshipLootbox() {
-        return this.abandonedSpaceshipLootbox;
-    }
-
-    public Lootbox getDestroyedOutpostLootbox() {
-        return this.destroyedOutpostLootbox;
-    }
-
-    public Lootbox getPlanetNulLootbox() {
-        return this.planetNulLootbox;
-    }
-
-    public Lootbox getAbandonedSpaceshipHeroicLootbox() {
-        return this.abandonedSpaceshipHeroicLootbox;
-    }
-
-    public Lootbox getDestroyedOutpostHeroicLootbox() {
-        return this.destroyedOutpostHeroicLootbox;
-    }
-
-    public Lootbox getPlanetNulHeroicLootbox() {
-        return this.planetNulHeroicLootbox;
     }
 
     public boolean isDevplanet() {
@@ -362,7 +294,11 @@ extends JavaPlugin {
             l.getBlock().setType(Material.AIR);
         }
         if (this.portalLogs != null) {
-            JSONUtils.saveJSONToFile((File)this.portalLogFile, this.portalLogs, (Object)this.portalLogToken);
+            try {
+                JSONUtils.saveJSONToFile((File)this.portalLogFile, this.portalLogs, (Object)this.portalLogToken);
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
         }
     }
 
@@ -410,18 +346,6 @@ extends JavaPlugin {
         return this.dungeonSanityListener;
     }
 
-    public SoulItemListener getSoulItemListener() {
-        return this.soulItemListener;
-    }
-
-    public HolyWhiteScrollListener getHolyWhiteScrollListener() {
-        return this.holyWhiteScrollListener;
-    }
-
-    public HolyWhitescrollItem getHolyWhitescrollItem() {
-        return this.holyWhitescrollItem;
-    }
-
     private void registerListeners() {
         this.dungeonMenuListener = new DungeonMenuListener();
         this.playerJoinQuitListener = new PlayerJoinQuitListener();
@@ -433,11 +357,6 @@ extends JavaPlugin {
         this.dungeonPlayerMoveListener = new DungeonPlayerMoveListener();
         this.dungeonLootbagListener = new DungeonLootbagListener();
         this.dungeonSanityListener = new DungeonSanityListener();
-        this.soulItemListener = new SoulItemListener();
-        this.omniPearlListener = new OmniPearlListener();
-        this.infiniteLavaFatBucketItemListener = new InfiniteLavaFatBucketItemListener();
-        this.infiniteWaterFatBucketItemListener = new InfiniteWaterFatBucketItemListener();
-        this.holyWhiteScrollListener = new HolyWhiteScrollListener();
         this.getServer().getPluginManager().registerEvents((Listener)this.dungeonMenuListener, (Plugin)this);
         this.getServer().getPluginManager().registerEvents((Listener)this.playerJoinQuitListener, (Plugin)this);
         this.getServer().getPluginManager().registerEvents((Listener)this.dungeonMasterNPCListener, (Plugin)this);
@@ -448,25 +367,8 @@ extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents((Listener)this.dungeonLootbagListener, (Plugin)this);
         this.getServer().getPluginManager().registerEvents((Listener)this.dungeonPlayerMoveListener, (Plugin)this);
         this.getServer().getPluginManager().registerEvents((Listener)this.dungeonSanityListener, (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)this.soulItemListener, (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)this.omniPearlListener, (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)this.infiniteLavaFatBucketItemListener, (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)this.infiniteWaterFatBucketItemListener, (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)this.holyWhiteScrollListener, (Plugin)this);
         this.getServer().getPluginManager().registerEvents((Listener)new DungeonChallengeChestListener(), (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)new EscapistPearlListener(), (Plugin)this);
         this.getServer().getPluginManager().registerEvents((Listener)new BossSlayerTrinketListener(), (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)new SlowBallListener(), (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)new ChunkBusterListener(), (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)new SuperPearlListener(), (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)new FatBucketListener(), (Plugin)this);
-        try {
-            Class.forName("org.arkhamnetwork.Arkkit.patches.combatlog.CombatLoggerDeathEvent");
-            this.getServer().getPluginManager().registerEvents((Listener)new HolyWhiteScrollCombatLoggerListener(), (Plugin)this);
-        }
-        catch (ClassNotFoundException e) {
-            Bukkit.getLogger().info("Unable to find CombatLoggerDeathEvent");
-        }
         try {
             if (Bukkit.getPluginManager().isPluginEnabled("NoCheatPlus")) {
                 NCPHookManager.addHook((CheckType)CheckType.MOVING_SURVIVALFLY, (NCPHook)new DestroyedOutpostNCPHook());
@@ -477,22 +379,11 @@ extends JavaPlugin {
             e.printStackTrace();
         }
         if (Bukkit.getPluginManager().isPluginEnabled("CosmicSkyCustomItems")) {
-            this.holyWhitescrollItem = new HolyWhitescrollItem();
-            CosmicSkyCustomItems.get().getItemManager().registerCustomItem((CosmicItem)this.holyWhitescrollItem);
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem((CosmicItem)new PortalProtectionTrinketItem());
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem((CosmicItem)new PortalTimeReductionTrinketItem());
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem((CosmicItem)new BossSlayerTrinketItem());
-            CosmicSkyCustomItems.get().getItemManager().registerCustomItem((CosmicItem)new HolyWaterItem());
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem((CosmicItem)new HeroicDungeonScrollItem());
-            CosmicSkyCustomItems.get().getItemManager().registerCustomItem((CosmicItem)new EscapistPearlItem());
-            CosmicSkyCustomItems.get().getItemManager().registerCustomItem((CosmicItem)new SlowBallItem());
-            CosmicSkyCustomItems.get().getItemManager().registerCustomItem((CosmicItem)new SuperPearlItem());
-            CosmicSkyCustomItems.get().getItemManager().registerCustomItem((CosmicItem)new OmniPearlItem());
-            CosmicSkyCustomItems.get().getItemManager().registerCustomItem((CosmicItem)new InfiniteLavaFatBucketItem());
-            CosmicSkyCustomItems.get().getItemManager().registerCustomItem((CosmicItem)new InfiniteWaterFatBucketItem());
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem((CosmicItem)new ChunkBusterItem());
-            CosmicSkyCustomItems.get().getItemManager().registerCustomItem((CosmicItem)new GodlyTransmogScrollItem());
-            CosmicSkyCustomItems.get().getItemManager().registerCustomItem((CosmicItem)new FatBucketItem());
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem((CosmicItem)new CleanseScrollItem());
         }
     }
@@ -502,7 +393,6 @@ extends JavaPlugin {
         this.getCommand("dungeonmaster").setExecutor((CommandExecutor)new CommandDungeonMaster());
         this.getCommand("adungeon").setExecutor((CommandExecutor)new CommandAdminDungeon());
         this.getCommand("objective").setExecutor((CommandExecutor)new CommandObjective());
-        this.getCommand("cosmicdungeonlootboxes").setExecutor((CommandExecutor)new CommandLootboxRefresh());
         this.getCommand("dungeongive").setExecutor((CommandExecutor)new CommandDungeonGive());
     }
 
@@ -515,8 +405,8 @@ extends JavaPlugin {
 
     private void loadDungeons() {
         CosmicDungeonsPlugin.get_().getApi().addDungeon(new Dungeon(Bukkit.getWorld((String)"dungeon_yijki_a"), DungeonType.ABANDONED_SHIP, this.getConfig().getString("dungeons.dungeon_yijki_a.name"), new LinkedList<String>(this.getConfig().getStringList("dungeons.dungeon_yijki_a.description"))));
-        CosmicDungeonsPlugin.get_().getApi().addDungeon(new DestroyedOutpostDungeon(Bukkit.getWorld((String)DungeonType.DESTROYED_OUTPOST.getInternalName()), "&4&l&nDestroyed Outpost", new LinkedList<String>(Lists.newArrayList((Object[])new String[]{"", "&4&lLORE", CC.Gray + "After investigating the source of the", CC.Gray + "distress signal sent from the Abandoned Spaceship", CC.Gray + "and parsing over the recovered Cosmonaut Ship", CC.Gray + "master log files, a chilling series of events", CC.Gray + "has been uncovered.", "", CC.Gray + "With the teleportation matrix solved, the", CC.Gray + "Mother of Yijki\u2019s source location has been traced.", CC.Gray + "There is a rift into its dimension at the", CC.Gray + "core of this destroyed mining outpost.", "", CC.Gray + "You have been chosen to lead the assault", CC.Gray + "onto the hostile planet to rid the Cosmoverse", CC.Gray + "of this demonic entity of destruction."}))));
-        CosmicDungeonsPlugin.get_().getApi().addDungeon(new PlanetNulDungeon(Bukkit.getWorld((String)DungeonType.PLANET_NUL.getInternalName()), "&8&l&nPlanet Nul", new LinkedList<String>(Lists.newArrayList((Object[])new String[]{"", "&8&lLORE", CC.Gray + "Located on the edge of the Cosmoverse,", CC.Gray + "Planet Nul is a mysterious and dark planet", CC.Gray + "that, until recently, held no significance.", CC.Gray + "", CC.Gray + "However, new intel suggests one of the", CC.Gray + "Most infamous criminals in the universe,", CC.Gray + "known only as - " + CC.DarkGray + "The Corrupt Cosmonaut,", CC.Gray + "is hiding deep in an abandoned military bunker", CC.Gray + "that can be accessed from the planet's surface.", CC.Gray + "", CC.Gray + "An elite team has been assembled, and you have", CC.Gray + "been chosen, to launch a tactical assault on", CC.Gray + "the military bunker on Planet Nul with one", CC.Gray + "simple objective: " + CC.DarkGray + "Eliminate the Corrupt Cosmonaut."}))));
+        CosmicDungeonsPlugin.get_().getApi().addDungeon(new DestroyedOutpostDungeon(Bukkit.getWorld((String)DungeonType.DESTROYED_OUTPOST.getInternalName()), "&4&l&nDestroyed Outpost", new LinkedList<String>(Lists.newArrayList(new String[]{"", "&4&lLORE", CC.Gray + "After investigating the source of the", CC.Gray + "distress signal sent from the Abandoned Spaceship", CC.Gray + "and parsing over the recovered Cosmonaut Ship", CC.Gray + "master log files, a chilling series of events", CC.Gray + "has been uncovered.", "", CC.Gray + "With the teleportation matrix solved, the", CC.Gray + "Mother of Yijki\u2019s source location has been traced.", CC.Gray + "There is a rift into its dimension at the", CC.Gray + "core of this destroyed mining outpost.", "", CC.Gray + "You have been chosen to lead the assault", CC.Gray + "onto the hostile planet to rid the Cosmoverse", CC.Gray + "of this demonic entity of destruction."}))));
+        CosmicDungeonsPlugin.get_().getApi().addDungeon(new PlanetNulDungeon(Bukkit.getWorld((String)DungeonType.PLANET_NUL.getInternalName()), "&8&l&nPlanet Nul", new LinkedList<String>(Lists.newArrayList(new String[]{"", "&8&lLORE", CC.Gray + "Located on the edge of the Cosmoverse,", CC.Gray + "Planet Nul is a mysterious and dark planet", CC.Gray + "that, until recently, held no significance.", CC.Gray + "", CC.Gray + "However, new intel suggests one of the", CC.Gray + "Most infamous criminals in the universe,", CC.Gray + "known only as - " + CC.DarkGray + "The Corrupt Cosmonaut,", CC.Gray + "is hiding deep in an abandoned military bunker", CC.Gray + "that can be accessed from the planet's surface.", CC.Gray + "", CC.Gray + "An elite team has been assembled, and you have", CC.Gray + "been chosen, to launch a tactical assault on", CC.Gray + "the military bunker on Planet Nul with one", CC.Gray + "simple objective: " + CC.DarkGray + "Eliminate the Corrupt Cosmonaut."}))));
     }
 
     private void mkdirs() {
@@ -524,7 +414,7 @@ extends JavaPlugin {
     }
 
     public void logPortalPlace(DungeonType type, Player player, Block block) {
-        List logs = this.portalLogs.computeIfAbsent(type, e -> Lists.newLinkedList());
+        List<PortalLog> logs = this.portalLogs.computeIfAbsent(type, e -> Lists.newLinkedList());
         logs.add(new PortalLog(player.getUniqueId(), player.getWorld().getName(), block.getX(), block.getY(), block.getZ(), System.currentTimeMillis()));
     }
 

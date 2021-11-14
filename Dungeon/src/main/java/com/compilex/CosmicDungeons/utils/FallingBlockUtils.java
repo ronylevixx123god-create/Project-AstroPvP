@@ -49,7 +49,7 @@ public class FallingBlockUtils {
                 super.h();
                 if (this.ticksLived >= 3) {
                     Predicate<Entity> predicate = ent -> ent instanceof EntityHuman;
-                    List<Entity> nearby = this.world.getEntities((Entity)this, this.boundingBox);
+                    List<Entity> nearby = this.world.getEntities((Entity)this, this.getBoundingBox());
                     for (Entity ent2 : nearby) {
                         if (!this.isAlive()) break;
                         if (!(ent2 instanceof EntityHuman)) continue;

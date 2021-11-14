@@ -114,8 +114,6 @@ import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.cosmicpvp.cosmicutils.utils.RandomFireworks;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
-import com.decimatemc.decimatelootboxes.api.LootboxManager;
-import com.decimatemc.decimatelootboxes.lootbox.DecimateRewardItem;
 import com.earth2me.essentials.User;
 import com.gmail.filoghost.holograms.api.HolographicDisplaysAPI;
 import com.gmail.nossr50.events.experience.McMMOPlayerXpGainEvent;
@@ -145,7 +143,6 @@ import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
 import net.ess3.api.MaxMoneyException;
 import org.arkhamnetwork.Arkkit.libs.JSONMessage;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
-import org.arkhamnetwork.enchantments.util.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
@@ -175,7 +172,6 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PrePlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.Button;
@@ -188,6 +184,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
+import org.github.paperspigot.Title;
 
 public class PlanetNulEvents
 extends DungeonEvents
@@ -445,7 +442,7 @@ implements CommandExecutor {
     }
 
     private void fillChest(Block block, int lootToFill, Set<UUID> eligible) {
-        List potentialLoot = CosmicDungeonsPlugin.get_().getPlanetNulLootbox().getRandomRewards().stream().map(r -> DecimateRewardItem.removeMetaLines((ItemStack)r.generatePlayerViewableStack((LootboxManager)CosmicDungeonsPlugin.get().getLootboxManager()), (boolean)true)).collect(Collectors.toList());
+        List potentialLoot = null;//CosmicDungeonsPlugin.get_().getPlanetNulLootbox().getRandomRewards().stream().map(r -> DecimateRewardItem.removeMetaLines((ItemStack)r.generatePlayerViewableStack((LootboxManager)CosmicDungeonsPlugin.get().getLootboxManager()), (boolean)true)).collect(Collectors.toList());
         Collections.shuffle(potentialLoot);
         Chest chest = (Chest)block.getState();
         for (int i = 0; i < lootToFill && i < potentialLoot.size(); ++i) {
@@ -510,7 +507,7 @@ implements CommandExecutor {
             if (playerList.endsWith(", ")) {
                 playerList = playerList.substring(0, playerList.length() - 2);
             }
-            this.dungeon.broadcastTitle("DUNGEON COMPLETE!", "+1 Dungeon Lootbag", TitleManager.TitleColor.GREEN, TitleManager.TitleColor.GRAY);
+            this.dungeon.broadcastTitle("DUNGEON COMPLETE!", "+1 Dungeon Lootbag", ChatColor.GREEN, ChatColor.GRAY);
             Bukkit.broadcastMessage((String)"");
             Bukkit.broadcastMessage((String)((Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "*-*-* DUNGEON COMPLETE! *-*-*"));
             Bukkit.broadcastMessage((String)((Object)ChatColor.GOLD + "The " + this.dungeon.getDungeonName() + (Object)ChatColor.GOLD + " has been cleared by: " + (Object)ChatColor.GRAY + playerList + (Object)ChatColor.GOLD + " in " + TimeUtils.formatDifference(this.dungeon.getTimeSinceDungeonStart())));
@@ -554,7 +551,7 @@ implements CommandExecutor {
                         block.setType(Material.CHEST);
                         PlanetNulEvents.this.fillChest(block, itemsPerChest, validLooters);
                         block.getWorld().playEffect(nextToSet.clone().add(0.5, 0.5, 0.5), Effect.STEP_SOUND, Material.CHEST.getId());
-                        PlanetNulEvents.this.dungeon.broadcastTitle(nextToAnnounce.getName(), "", TitleManager.TitleColor.GREEN, TitleManager.TitleColor.GOLD);
+                        PlanetNulEvents.this.dungeon.broadcastTitle(nextToAnnounce.getName(), "", ChatColor.GREEN, ChatColor.GOLD);
                         RandomFireworks.getManager().launchRandomFirework(nextToSet.add(0.5, 1.0, 0.5));
                     }
                 }.runTaskTimer((Plugin)CosmicDungeonsPlugin.get_(), 20L, 20L);
@@ -635,13 +632,7 @@ implements CommandExecutor {
         if (event.getDamager().hasMetadata("invisibleMazeZombie") && event.getEntity() instanceof Player && Math.random() < 0.25) {
             Player player = (Player)event.getEntity();
             if (event.getEntity().hasMetadata("inInvisibleMaze") && this.attemptTakeTotemOfUndying(player)) {
-                Title title = new Title();
-                title.setTimingsToTicks();
-                title.setStayTime(35);
-                title.setFadeInTime(5);
-                title.setFadeOutTime(5);
-                title.setTitle(CC.translate((String)"&6Totem of Undying"));
-                title.send(player);
+                player.sendTitle(new Title(CC.translate("&6Totem of Undying"), "", 5, 35, 5));
                 player.setHealth(player.getMaxHealth());
                 event.setCancelled(true);
             } else {
@@ -661,13 +652,7 @@ implements CommandExecutor {
                 Location tpLocation = new Location(this.dungeon.getWorld(), 8.0, 154.0, -56.0);
                 tpLocation.setPitch(0.0f);
                 tpLocation.setYaw(0.0f);
-                Title title = new Title();
-                title.setTimingsToTicks();
-                title.setStayTime(35);
-                title.setFadeInTime(5);
-                title.setFadeOutTime(5);
-                title.setTitle(CC.translate((String)"&6Clock of Returning"));
-                title.send(event.getPlayer());
+                event.getPlayer().sendTitle(new Title(CC.translate("&6Clock of Returning"), "", 5, 35, 5));
                 this.dungeon.teleportPlayer(tpLocation, event.getPlayer(), true);
             } else {
                 this.dungeon.broadcastMessage(CC.translate((String)("&c" + event.getPlayer().getName() + " fell into the void - everyone in the parkour has been teleported back to the start!")));
@@ -856,18 +841,18 @@ implements CommandExecutor {
     }
 
     @EventHandler
-    private void onPrePlayerDeath(PrePlayerDeathEvent event) {
-        if (event.getPlayer().hasMetadata("inInvisibleMaze") && this.attemptTakeTotemOfUndying(event.getPlayer())) {
-            Title title = new Title();
-            title.setTimingsToTicks();
-            title.setStayTime(35);
-            title.setFadeInTime(5);
-            title.setFadeOutTime(5);
-            title.setTitle(CC.translate((String)"&6Totem of Undying"));
-            title.send(event.getPlayer());
-            event.getPlayer().setHealth(event.getPlayer().getMaxHealth());
+    private void onPrePlayerDeath(EntityDamageByEntityEvent event) {
+        if(!(event.getEntity() instanceof Player))
+            return;
+        if(!(event.getFinalDamage() - ((Player) event.getEntity()).getHealth() <= 0))
+            return;
+        if (event.getEntity().hasMetadata("inInvisibleMaze") && this.attemptTakeTotemOfUndying((Player) event.getEntity())) {
+            ((Player) event.getEntity()).sendTitle(new Title(CC.translate("&6Totem of Undying"), "", 5, 35, 5));
+            ((Player) event.getEntity()).setHealth(((Player) event.getEntity()).getMaxHealth());
             event.setCancelled(true);
         }
+
+        //might not work
     }
 
     @EventHandler
@@ -918,7 +903,7 @@ implements CommandExecutor {
     @EventHandler(priority=EventPriority.LOW)
     public void onCorruptCosmonautDeath(EntityDeathEvent event) {
         Boss boss = (Boss)Boss.bosses.get(event.getEntity().getUniqueId());
-        if (boss != null && boss.getBossType() == BossType.CORRUPT_COSMONAUT && boss.equals((Object)this.dungeon.boss)) {
+        if (boss != null && boss.getBossType() == BossType.getBossType("CORRUPT_COSMONAUT") && boss.equals((Object)this.dungeon.boss)) {
             World world = this.dungeon.getWorld();
             EditSession editSession = new EditSessionBuilder(FaweAPI.getWorld((String)world.getName())).build();
             if (boss.getDamageTracker().size() == 1) {

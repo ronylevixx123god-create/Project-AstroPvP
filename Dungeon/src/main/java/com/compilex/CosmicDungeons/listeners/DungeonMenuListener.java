@@ -158,10 +158,9 @@ implements Listener {
             ItemStack atSlot;
             boolean heroicBeenCompleted;
             boolean beenCompleted;
-            String dungeonColor;
             LinkedList<String> dungeonLore = new LinkedList<String>();
             dungeonLore.add("");
-            String string = dungeon.isDestroyedOutpost() ? CC.DarkRed : (dungeonColor = dungeon.isPlanetNul() ? CC.DarkGray : CC.LightPurple);
+            final String dungeonColor = dungeon.isDestroyedOutpost() ? CC.DarkRed : (dungeon.isPlanetNul() ? CC.DarkGray : CC.LightPurple);
             if (dungeon.isHeroic() && dungeon.getDungeonStatus() == DungeonState.IN_PROGRESS) {
                 dungeonLore.add(dungeonColor + ChatColor.BOLD.toString() + "DEBUFFS");
                 dungeonLore.add(dungeonColor + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GRAY + "-50% Objective Time");

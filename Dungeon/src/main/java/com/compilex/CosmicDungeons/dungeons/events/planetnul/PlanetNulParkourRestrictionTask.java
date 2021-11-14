@@ -26,8 +26,9 @@ import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import me.quantiom.itemskin.skins.boots.ItemSkinRainbowSlides;
-import me.quantiom.util.ItemSkinUtils;
+
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -60,7 +61,7 @@ extends BukkitRunnable {
                 p.setFlying(false);
             }
             String region = WorldGuardUtils.getRegionName((Location)p.getLocation());
-            boolean bl = hasBoots = !DungeonsAPI.hasDungeonDebuff(p, DungeonDebuff.NO_ITEM_SKINS) && p.getInventory().getBoots() != null && ItemSkinUtils.hasItemSkin((ItemStack)p.getInventory().getBoots()) && ItemSkinUtils.getItemSkinByItem((ItemStack)p.getInventory().getBoots()) instanceof ItemSkinRainbowSlides;
+            boolean bl = hasBoots = !DungeonsAPI.hasDungeonDebuff(p, DungeonDebuff.NO_ITEM_SKINS) && p.getInventory().getBoots() != null && AstroItemSkinsAPI.hasItemSkin((ItemStack)p.getInventory().getBoots()) && AstroItemSkinsAPI.getItemSkinByItem((ItemStack)p.getInventory().getBoots()).contains(SkinType.SPRING_2020_BOOTS);
             if (p.hasMetadata("inDungeonParkour")) {
                 if (hasBoots) {
                     for (PotionEffect pe : p.getActivePotionEffects()) {
