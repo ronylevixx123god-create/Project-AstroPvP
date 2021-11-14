@@ -378,7 +378,7 @@ implements Listener {
             moneyToGive = Math.min(10000000, 1000000 + 500000 * daysSinceAvailable);
             mcmmoCredits = Math.min(250, 100 + 10 * daysSinceAvailable);
         }
-        loot.add(ItemUtils.getMoneyNote((String)"Decimate Dungeon", (int)moneyToGive));
+        loot.add(ItemUtils.getMoneyNote((String)"Astro Dungeon", (int)moneyToGive));
         return loot;
     }
 

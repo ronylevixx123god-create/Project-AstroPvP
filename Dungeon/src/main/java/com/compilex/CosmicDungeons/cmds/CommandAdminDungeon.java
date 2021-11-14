@@ -276,15 +276,6 @@ implements CommandExecutor {
             player.getInventory().addItem(new ItemStack[]{DungeonsAPI.get().getInterdimensionalCore()});
             return true;
         }
-        if (args[0].equals("soulpearl") && sender instanceof Player) {
-            if (args.length == 2) {
-                Bukkit.getPlayer((String)args[1]).getInventory().addItem(new ItemStack[]{DungeonsRewardsAPI.getSoulPearl()});
-                return true;
-            }
-            Player player = (Player)sender;
-            player.getInventory().addItem(new ItemStack[]{DungeonsRewardsAPI.getSoulPearl()});
-            return true;
-        }
         if (args[0].equals("soulanvil") && sender instanceof Player) {
             Player player = (Player)sender;
             player.getInventory().addItem(new ItemStack[]{DungeonsRewardsAPI.getSoulAnvil()});
@@ -303,11 +294,6 @@ implements CommandExecutor {
         if (args[0].equals("phoenixfeather") && sender instanceof Player) {
             Player player = args.length > 1 ? Bukkit.getPlayer((String)args[1]) : (Player)sender;
             player.getInventory().addItem(new ItemStack[]{new PhoenixFeatherBuilder().build()});
-            return true;
-        }
-        if (args[0].equals("holywhite") && sender instanceof Player) {
-            Player player = (Player)sender;
-            player.getInventory().addItem(new ItemStack[]{DungeonsRewardsAPI.getHolyWhiteScroll()});
             return true;
         }
         if (args[0].equals("reset")) {

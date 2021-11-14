@@ -84,7 +84,9 @@ extends RegionEvent {
                 dontAdd.add(new Location(this.dungeon.world, (double)x, 0.0, (double)z));
             }
         }
-        List<Block> allLocations = this.getXZLocationsIn(pointOne, pointTwo, dontAdd).stream().map(l -> new Location(l.getWorld(), l.getX(), 199.0, l.getZ()).getBlock()).filter(b -> b.getType() == Material.AIR).collect(Collectors.toList());
+        Set<Location> set = this.getXZLocationsIn(pointOne, pointTwo, dontAdd);
+        set.stream().map(l -> new Location(l.getWorld(), l.getX(), 199.0, l.getZ()).getBlock()).filter(b -> b.getType() == Material.AIR).collect(Collectors.toList());
+        List<Block> allLocations = set.stream().map(l -> new Location(l.getWorld(), l.getX(), 199.0, l.getZ()).getBlock()).filter(b -> b.getType() == Material.AIR).collect(Collectors.toList());
         this.mazeZombies = Lists.newArrayList();
         allLocations.stream().limit(40 + new Random().nextInt(5)).forEach(b -> this.spawnMazeZombie(b.getLocation()));
         this.setSouth(false);
