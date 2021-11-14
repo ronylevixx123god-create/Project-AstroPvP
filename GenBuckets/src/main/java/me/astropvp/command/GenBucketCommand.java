@@ -96,7 +96,7 @@ public class GenBucketCommand implements CommandExecutor {
 
     public void sendHelp(CommandSender sender) {
         List<String> messages = Lists.newArrayList();
-        messages.add("&a&lDecimateGenBuckets &7|&a&l Command Help");
+        messages.add("&a&lAstro &7|&a&l Command Help");
         messages.add("&a/genbucket give <player> <type> <direction> [amount]");
         messages.add("&a/genbucket list");
         messages.add("&a/genbucket gui");

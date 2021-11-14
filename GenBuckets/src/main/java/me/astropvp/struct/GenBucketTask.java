@@ -58,7 +58,7 @@ public class GenBucketTask extends BukkitRunnable {
 
     public void run() {
         try {
-            if ((this.currentLocation.getBlock().getType() != Material.AIR || !this.isLocationValid()) && (this.currentLocation.getBlock().getType() != Material.STATIONARY_WATER || !this.isLocationValid()) && (this.currentLocation.getBlock().getType() != Material.WATER || !this.isLocationValid())) {
+            if ((this.currentLocation.getBlock().getType() != Material.AIR || !this.isLocationValid()) && (this.currentLocation.getBlock().getType() != Material.GRASS || !this.isLocationValid()) &&  (this.currentLocation.getBlock().getType() != Material.LONG_GRASS || !this.isLocationValid()) && (this.currentLocation.getBlock().getType() != Material.STATIONARY_WATER || !this.isLocationValid()) && (this.currentLocation.getBlock().getType() != Material.WATER || !this.isLocationValid())) {
                 this.endTask();
                 return;
             }

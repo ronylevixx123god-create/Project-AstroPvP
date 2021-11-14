@@ -4,9 +4,9 @@
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.compat.ASound
  *  com.cosmicpvp.cosmicutils.gui.InventoryItem
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.PlayerUtil
+ *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.utils.PlayerUtil
  *  com.google.common.collect.Lists
  *  net.minecraft.util.org.apache.commons.lang3.tuple.ImmutablePair
  *  net.minecraft.util.org.apache.commons.lang3.tuple.Pair
@@ -16,9 +16,9 @@
  *  org.bukkit.Material
  *  org.bukkit.Sound
  *  org.bukkit.entity.Player
- *  org.bukkit.event.me.astropvp.cratekeys.inventory.ClickType
- *  org.bukkit.event.me.astropvp.cratekeys.inventory.InventoryClickEvent
- *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.event.inventory.ClickType
+ *  org.bukkit.event.inventory.InventoryClickEvent
+ *  org.bukkit.inventory.ItemStack
  */
 package me.recolance.auction.menu.bidmenus;
 
@@ -78,11 +78,11 @@ public class AuctionPackageMenu
                 this.confirmed = true;
                 return;
             }
-            this.player.sendMessage(CC.Gray + "Your me.astropvp.cratekeys.items have been returned to you.");
+            this.player.sendMessage(CC.Gray + "Your items have been returned to you.");
             this.confirmed = true;
             for (ItemStack retr : this.toReturn) {
                 if (PlayerUtil.giveOrDropProtectedItem((Player) this.player, (ItemStack) retr, (int) -1)) continue;
-                this.player.sendMessage(CC.Green + "No me.astropvp.cratekeys.inventory space available! A protected version of your item has been dropped on the ground!");
+                this.player.sendMessage(CC.Green + "No inventory space available! A protected version of your item has been dropped on the ground!");
             }
             this.toReturn.clear();
         }
@@ -101,7 +101,7 @@ public class AuctionPackageMenu
                     return;
                 }
                 if (!PlayerUtil.giveOrDropProtectedItem((Player) this.player, (ItemStack) itemStack, (int) -1)) {
-                    this.player.sendMessage(CC.Green + "No me.astropvp.cratekeys.inventory space available! A protected version of your item has been dropped on the ground!");
+                    this.player.sendMessage(CC.Green + "No inventory space available! A protected version of your item has been dropped on the ground!");
                 }
                 this.player.playSound(this.player.getLocation(), Sound.LAVA_POP, 1.0f, 1.4f);
                 this.redraw();
@@ -219,7 +219,7 @@ public class AuctionPackageMenu
                 return;
             }
             if (this.toReturn.size() >= 5) {
-                this.player.sendMessage((Object) ChatColor.RED + "You can only sell up to 5 me.astropvp.cratekeys.items in a single Auction Package!");
+                this.player.sendMessage((Object) ChatColor.RED + "You can only sell up to 5 items in a single Auction Package!");
                 return;
             }
             event.getClickedInventory().setItem(event.getSlot(), null);

@@ -147,13 +147,13 @@ public class EntityStackerListener implements Listener {
                 exp = exp * 2;
             }
 
-            try {
+            /*try {
                 if (CustomBlockUtil.chunkHasCertainBlock(p, "TREASURE_CHEST")) {
                     exp = exp * 1.5;
                 }
             } catch (Exception exxx) {
 
-            }
+            }*/
 
             if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(p), OutpostType.COURTYARD) && Math.random() < 0.1) {
                 exp = exp * 1.75;

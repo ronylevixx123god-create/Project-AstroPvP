@@ -82,10 +82,13 @@ public class Phoenix extends CustomEnchantment {
 
             if (player.hasMetadata("witchered") && !AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
                 player.sendMessage(CC.translate("&c&l* PHOENIX BLOCKED [&7Witcher Ability&c&l] *"));
+                enterPhoenixCooldown(player);
                 return false;
             }
             if (player.hasMetadata("noSoulProcs") && !AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.RUINS_HELMET)) {
                 player.sendMessage(CC.translate("&c&l* PHOENIX BLOCKED [&7Leviathan Trophy&c&l] *"));
+                enterPhoenixCooldown(player);
+
                 return false;
             }
 
@@ -94,6 +97,7 @@ public class Phoenix extends CustomEnchantment {
                 ((Player) damager).playSound(player.getLocation(), Sound.ANVIL_LAND, 2, 2);
                 damager.sendMessage(CC.translate("&4&l* CRANKED MASK BLOCKED PHOENIX [&c" + player.getName() + "&4&l] *"));
                 player.sendMessage(CC.translate("&4&l* PHOENIX BLOCKED [&c" + damager.getName() + " Cranked Mask&4&l] *"));
+                enterPhoenixCooldown(player);
                 return false;
             }
 
@@ -102,6 +106,8 @@ public class Phoenix extends CustomEnchantment {
                 ((FPlayer) damager).sendMessage(CC.translate("&b&l** FROZEN STRONGHOLD BONUS &7Blocked &a" + damager.getName() + " &cPhoenix &b&l**"));
                 player.playSound(player.getLocation(), Sound.ANVIL_BREAK, 10, 10);
                 ((Player)damager).playSound(player.getLocation(), Sound.ANVIL_BREAK, 10, 10);
+                enterPhoenixCooldown(player);
+
                 return false;
             }
 
@@ -111,6 +117,7 @@ public class Phoenix extends CustomEnchantment {
             if (Math.random() <= 0.4D && MaskType.hasEquipped((Player) damager, "DEATH_KNIGHT") && !AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY) && !(FactionUtils.getFPlayer((Player) damager).getPlayer() != null && HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(FactionUtils.getFPlayer(((Player) damager).getPlayer())), OutpostType.THE_GREAT_HALL) && Math.random() < 0.1)) {
                 player.sendMessage(CC.RedB + "* PHOENIX BLOCKED [" + CC.Gray + ((Player) damager).getName() + CC.RedB + "] *");
                 ((Player) damager).sendMessage(CC.RedB + "* DEATH KNIGHT MASK [" + CC.Gray + player.getName() + "'s Phoenix Blocked" + CC.RedB + "] *");
+                enterPhoenixCooldown(player);
 
                 Bukkit.getLogger().info("Phoenix blocked from proccing for " + player.getName() + " from damager " + ((Player) damager).getName());
                 return false;
@@ -119,6 +126,8 @@ public class Phoenix extends CustomEnchantment {
                 player.sendMessage(CC.RedB + "* PHOENIX BLOCKED [" + CC.Gray + ((Player) damager).getName() + CC.RedB + "] *");
                 ((Player) damager).sendMessage(CC.RedB + "* THANOS MASK [" + CC.Gray + player.getName() + "'s Phoenix Blocked" + CC.RedB + "] *");
                 last_phoenix.put(player.getUniqueId().toString(), Long.valueOf(System.currentTimeMillis()));
+                enterPhoenixCooldown(player);
+
                 return false;
             }
             int soulCost = getPhoenixProcSoulCost(player);

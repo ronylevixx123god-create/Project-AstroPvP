@@ -41,7 +41,7 @@ public class Listing
     private UUID listedBy;
     private String listedByName;
     private ItemStack item;
-    private int price;
+    private double price;
     private DecimalFormat formatter = new DecimalFormat("#,###");
     private boolean valid = true;
     private boolean checkedBook;
@@ -52,7 +52,7 @@ public class Listing
     private Double expPerDollar;
     private double pricePerItem = 0.0;
 
-    public Listing(UUID id, long endTime, UUID listedBy, ItemStack item, int price) {
+    public Listing(UUID id, long endTime, UUID listedBy, ItemStack item, double price) {
         this.id = id;
         this.endTime = endTime;
         this.listedBy = listedBy;
@@ -175,7 +175,7 @@ public class Listing
         this.item = item;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return this.price;
     }
 

@@ -6,12 +6,12 @@ import org.apache.commons.lang.WordUtils;
 import org.bukkit.block.BlockFace;
 
 public enum GenBucketDirection {
-    HORIZONTAL(BlockFace.NORTH, 100, new BlockFace[]{BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST}),
-    VERTICAL(BlockFace.DOWN, 256, new BlockFace[]{BlockFace.UP, BlockFace.DOWN});
+    HORIZONTAL(BlockFace.NORTH, 100, BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST),
+    VERTICAL(BlockFace.DOWN, 256, BlockFace.UP, BlockFace.DOWN);
 
-    private BlockFace defaultBlockFace;
-    private int maxBlocks;
-    private List<BlockFace> blockFaces;
+    private final BlockFace defaultBlockFace;
+    private final int maxBlocks;
+    private final List<BlockFace> blockFaces;
 
     public BlockFace getDefaultBlockFace() {
         return this.defaultBlockFace;

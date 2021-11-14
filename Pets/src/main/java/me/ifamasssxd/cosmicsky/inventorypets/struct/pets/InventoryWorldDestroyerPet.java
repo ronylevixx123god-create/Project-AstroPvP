@@ -1,5 +1,6 @@
 package me.ifamasssxd.cosmicsky.inventorypets.struct.pets;
 
+import com.avaje.ebean.validation.NotNull;
 import com.compilex.CompilexPermissions.PermissionsAPI;
 import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
 import com.compilex.CosmicArmorSets.enums.ArmorSet;
@@ -8,6 +9,7 @@ import com.google.common.collect.Lists;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.Relation;
+import com.sun.prism.impl.ps.BaseShaderContext;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
@@ -28,11 +30,16 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitScheduler;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -40,6 +47,7 @@ import java.util.stream.Collectors;
 
 public class InventoryWorldDestroyerPet extends InventoryPet {
     public static List<Block> blockList = new ArrayList<Block>();
+    public static ArrayList<Location> locations = new ArrayList<>();
 
     public InventoryPets getOwner() {
         return InventoryPets.WORLD_DESTROYER;
@@ -135,47 +143,6 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
             player.sendMessage(CC.translate("&c&lPET: &c" + target.getName() + "&c is still on &nCage Cooldown&c, this lasts for 60s!"));
             return false;
         }
-        Player p = test;
-        Location location = p.getLocation();
-        int minX = location.getBlockX() - 1;
-        int maxX = location.getBlockX() + 2;
-        int minY = location.getBlockY() - 1;
-        int maxY = location.getBlockY() + 4;
-        int minZ = location.getBlockZ() - 1;
-        int maxZ = location.getBlockZ() + 2;
-        p.playSound(p.getLocation(), Sound.ANVIL_LAND, 1.0F, 1.4F);
-        Location loc = p.getLocation().clone();
-        p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100, 4));
-        BleedTask.bleedPlayer(p, 4);
-        PermissionsAPI.getPermissionUser(test.getUniqueId()).getPermissionNodes().add("verus.bypass");
-        PermissionsAPI.getPermissionUser(player.getUniqueId()).getPermissionNodes().add("verus.bypass");
-
-        for (int x = minX; x < maxX; x++) {
-            for (int y = minY; y < maxY; y++) {
-                for (int z = minZ; z < maxZ; z++) {
-                    loc.setY(y);
-                    loc.setZ(z);
-                    loc.setX(x);
-                    loc = loc.getBlock().getLocation();
-                    if (this.blockModifier == null)
-                        this.blockModifier = new BlockModifier();
-                    if (!getBlockModifier().containsLocation(p.getUniqueId(), loc)) {
-                        Block b = loc.getBlock();
-                        Material mat = Material.IRON_FENCE;
-                        if (b.getType() == Material.AIR) {
-                            if (y == minY || y == maxY - 1)
-                                mat = Material.OBSIDIAN;
-                            if (x == location.getBlockX() && z == location.getBlockZ() && y > minY && y < maxY - 1) {
-                                getBlockModifier().storeBlockToRemove(p.getUniqueId(), b.getLocation());
-                            } else {
-                                getBlockModifier().storeBlockToRemove(p.getUniqueId(), b.getLocation());
-                                b.setType(mat);
-                            }
-                        }
-                    }
-                }
-            }
-        }
 
 
 
@@ -188,13 +155,12 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         CageCooldownUtils.enterCageCooldown(target);
 
         petItem.setLastUsed(System.currentTimeMillis());
+        cagePlayer(player, target);
         if (playerHasApollo(player)) {
             Player finalTarget = target;
-            Bukkit.getScheduler().runTaskLater((Plugin) CosmicSkyInventoryPets.get(), () -> {
-                getBlockModifier();
+            Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin) CosmicSkyInventoryPets.get(), () -> {
                 PermissionsAPI.getPermissionUser(finalTarget.getUniqueId()).getPermissionNodes().remove("verus.bypass");
                 PermissionsAPI.getPermissionUser(player.getUniqueId()).getPermissionNodes().remove("verus.bypass");
-                BlockModifier.removeBlocks(p.getUniqueId(), true, true);
                 DamageIndicatorUtils.sendDamageIndicator(finalTarget, CC.translate("&e&l* WORLD DESTROYER [&77s&e&l] *"), "RKO");
 
             }, (long) (cageDuration(petItem.getLevel()) + cageDuration(petItem.getLevel() / 2)) * 20L);
@@ -202,20 +168,147 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
 
 
             Player finalTarget1 = target;
-            Bukkit.getScheduler().runTaskLater((Plugin) CosmicSkyInventoryPets.get(), () -> {
-                getBlockModifier();
+            Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin) CosmicSkyInventoryPets.get(), () -> {
                 try {
-
                     PermissionsAPI.getPermissionUser(finalTarget1.getUniqueId()).getPermissionNodes().remove("verus.bypass");
                     PermissionsAPI.getPermissionUser(player.getUniqueId()).getPermissionNodes().remove("verus.bypass");
                 } catch (Exception e) {
-                    BlockModifier.removeBlocks(p.getUniqueId(), true, true);
                 }
-                BlockModifier.removeBlocks(p.getUniqueId(), true, true);
 
             }, (long) cageDuration(petItem.getLevel()) * 20L);
         }
         return true;
+    }
+
+    public ArrayList<Player> getPlayersInRadius(Player player, int radius) {
+        ArrayList<Player> list = new ArrayList<>();
+        for (Entity entity : player.getNearbyEntities(radius, radius, radius)) {
+            if (!(entity instanceof Player))
+                continue;
+            Player p = (Player)entity;
+            if (p.hasMetadata("spectator"))
+                continue;
+            list.add(p);
+        }
+        return list;
+    }
+
+
+    private static List<Location> setInside(Location baseLocation, Material material) {
+        List<Location> locs = new ArrayList<>(Arrays.asList(baseLocation, baseLocation
+
+                .clone().add(-1.0D, 0.0D, 0.0D), baseLocation
+                .clone().add(0.0D, 0.0D, 1.0D), baseLocation
+                .clone().add(-1.0D, 0.0D, 1.0D)));
+        return setWithLocations(material, locs);
+    }
+
+    private static List<Location> setOutside(Location baseLocation, Material material) {
+        List<Location> locs = new ArrayList<>(Arrays.asList(baseLocation
+                .clone().add(0.0D, 0.0D, -1.0D), baseLocation
+        .clone().add(1.0D, 0.0D, 0.0D), baseLocation
+        .clone().add(1.0D, 0.0D, -1.0D), baseLocation
+        .clone().add(1.0D, 0.0D, 1.0D), baseLocation
+        .clone().add(1.0D, 0.0D, 2.0D), baseLocation
+        .clone().add(0.0D, 0.0D, 2.0D), baseLocation
+        .clone().add(-1.0D, 0.0D, 2.0D), baseLocation
+        .clone().add(-2.0D, 0.0D, 2.0D), baseLocation
+        .clone().add(-2.0D, 0.0D, 0.0D), baseLocation
+        .clone().add(-2.0D, 0.0D, 1.0D),
+                baseLocation
+                        .clone().add(-2.0D, 0.0D, -1.0D), baseLocation
+                .clone().add(-1.0D, 0.0D, -1.0D)));
+        return setWithLocations(material, locs);
+    }
+
+    @NotNull
+    private static List<Location> setWithLocations(Material material, List<Location> locs) {
+        List<Location> filteredLocations = new ArrayList<>();
+        for (Location loc : locs) {
+            if (loc.getBlock().getType() == Material.AIR) {
+                filteredLocations.add(loc);
+                loc.getBlock().setType(material);
+                loc.getBlock().setMetadata("cage", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSkyInventoryPets.get(), "cage"));
+            }
+        }
+        return filteredLocations;
+    }
+
+    public static void cagePlayer(Player player, final Player affected) {
+        final List<Location> list = new ArrayList<>();
+        List<Location> toPlace = new ArrayList<>();
+        BukkitScheduler scheduler = Bukkit.getScheduler();
+        Block block = affected.getLocation().getBlock();
+        Block current = null;
+        Location baseLocation = affected.getLocation();
+        list.addAll(setInside(baseLocation.clone().add(0.0D, -1.0D, 0.0D), Material.OBSIDIAN));
+        list.addAll(setInside(baseLocation.clone().add(0.0D, 3.0D, 0.0D), Material.OBSIDIAN));
+        list.addAll(setOutside(baseLocation.clone().add(0.0D, -1.0D, 0.0D), Material.OBSIDIAN));
+        list.addAll(setOutside(baseLocation.clone().add(0.0D, 3.0D, 0.0D), Material.OBSIDIAN));
+        list.addAll(setOutside(baseLocation.clone().add(0.0D, 0.0D, 0.0D), Material.IRON_FENCE));
+        list.addAll(setOutside(baseLocation.clone().add(0.0D, 1.0D, 0.0D), Material.IRON_FENCE));
+        list.addAll(setOutside(baseLocation.clone().add(0.0D, 2.0D, 0.0D), Material.IRON_FENCE));
+        player.playSound(player.getLocation(), Sound.ANVIL_LAND, 1.0F, 1.4F);
+        locations.addAll(list);
+
+        scheduler.scheduleSyncDelayedTask((Plugin)CosmicSkyInventoryPets.get(), (Runnable)(new BukkitRunnable() {
+            int count = 0;
+
+            public void run() {
+                if (this.count >= 6) {
+                    InventoryWorldDestroyerPet.removeBlocks(list);
+                    cancel();
+                }
+                int dmg = 2;
+                affected.damage(0.0D);
+                affected.setHealth(affected.getHealth() - 2.5D);
+                if (affected.getHealth() <= 0.0D || affected.isDead()) {
+                    InventoryWorldDestroyerPet.removeBlocks(list);
+                    cancel();
+                }
+                this.count++;
+            }
+        }).runTaskTimer((Plugin)CosmicSkyInventoryPets.get(), 20L, 20L));
+    }
+
+    public static String stringLocation(Location loc) {
+        int x = (int)loc.getX();
+        int y = (int)loc.getY();
+        int z = (int)loc.getZ();
+        String world = loc.getWorld().getName();
+        String result = String.valueOf(world) + " " + x + " " + y + " " + z;
+        return result;
+    }
+
+    public static Location stringLocationConvert(String str) {
+        String[] list = str.split(" ");
+        World world = Bukkit.getWorld(list[0]);
+        int x = Integer.valueOf(list[1]).intValue();
+        int y = Integer.valueOf(list[2]).intValue();
+        int z = Integer.valueOf(list[3]).intValue();
+        return new Location(world, x, y, z);
+    }
+
+    public static Block[] getBlockList(List<String> list) {
+        Block[] blocks = new Block[list.size()];
+        for (int i = 0; i < list.size(); i++)
+            blocks[i] = stringLocationConvert(list.get(i)).getBlock();
+        return blocks;
+    }
+
+    public static void removeBlocks(List<Location> list) {
+        for (int i = 0; i < list.size(); i++) {
+            Location location = list.get(i);
+            Block block = location.getBlock();
+            if (block != null) {
+                block.setType(Material.AIR);
+                locations.remove(location);
+            }
+        }
+    }
+
+    public static ArrayList<Location> getLocations() {
+        return locations;
     }
 
     public boolean onTickInHotBar(Player player, int inventorySlot, InventoryPetItem item) {

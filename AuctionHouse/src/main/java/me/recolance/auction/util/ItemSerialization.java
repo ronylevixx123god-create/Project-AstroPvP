@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.150.
  *
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
  *  net.minecraft.server.v1_8_R3.ItemStack
  *  net.minecraft.server.v1_8_R3.NBTBase
  *  net.minecraft.server.v1_8_R3.NBTCompressedStreamTools
@@ -10,11 +10,11 @@
  *  net.minecraft.server.v1_8_R3.NBTTagCompound
  *  net.minecraft.server.v1_8_R3.NBTTagList
  *  org.bukkit.Material
- *  org.bukkit.craftbukkit.v1_8_R3.me.astropvp.cratekeys.inventory.CraftInventoryCustom
- *  org.bukkit.craftbukkit.v1_8_R3.me.astropvp.cratekeys.inventory.CraftItemStack
- *  org.bukkit.me.astropvp.cratekeys.inventory.Inventory
- *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
- *  org.bukkit.me.astropvp.cratekeys.inventory.PlayerInventory
+ *  org.bukkit.craftbukkit.v1_8_R3.inventory.CraftInventoryCustom
+ *  org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack
+ *  org.bukkit.inventory.Inventory
+ *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.inventory.PlayerInventory
  *  org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder
  */
 package me.recolance.auction.util;
@@ -42,7 +42,7 @@ public class ItemSerialization {
     private static final int NBT_TYPE_COMPOUND = 10;
     private static final String NBT_TYPE = "type";
     private static final String NBT_ITEM = "item";
-    private static final String NBT_ITEMS = "me.astropvp.cratekeys.items";
+    private static final String NBT_ITEMS = "items";
     private static final String NBT_VERSION = "version";
     private static final String NBT_PLAYER_HELD_INDEX = "player_held_index";
     private static final String NBT_PLAYER_NAME = "player_name";

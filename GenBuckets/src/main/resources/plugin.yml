@@ -1,6 +1,7 @@
 name: AstroGenBuckets
 main: me.astropvp.GenBucketPlugin
 version: 1.0
+depend: [CosmicGUIShop]
 description: GenBuckets plugin made for DecimateMC/FantasyCloud
 commands:
   genbucket:

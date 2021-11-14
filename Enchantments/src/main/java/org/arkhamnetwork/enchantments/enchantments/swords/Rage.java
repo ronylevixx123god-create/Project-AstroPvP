@@ -33,7 +33,7 @@ public class Rage extends CustomEnchantment {
         }
         if (!event.isCancelled() && event.getDamage(EntityDamageEvent.DamageModifier.BASE) > 0.0D && user instanceof Player) {
             Player pUser = (Player) user;
-            double mod = enchantLevel * 0.75 * RageUtils.getComboOfPlayer(pUser, target instanceof Player);
+            double mod = enchantLevel * 0.8 * RageUtils.getComboOfPlayer(pUser, target instanceof Player);
             if (ParticleUtils.isPlayerIndicating((Player) user)) {
                 playRageEffect(target.getEyeLocation(), enchantLevel);
             }

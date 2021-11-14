@@ -53,6 +53,8 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.github.paperspigot.Title;
 
 public class MasteryFeignDeath extends MasteryCustomEnchantment {
     public static ConcurrentMap<Object, Object> deathCooldown = CacheBuilder.newBuilder().expireAfterWrite(10L, TimeUnit.SECONDS).build().asMap();
@@ -64,21 +66,17 @@ public class MasteryFeignDeath extends MasteryCustomEnchantment {
         Bukkit.getPluginManager().registerEvents((Listener)new FeignDeathListener(this), (Plugin)Enchantments.getInstance());
     }
 
-    public static void vanishPlayer(Player damaged, int enchantLevel) throws NoSuchFieldException, IllegalAccessException {
-        double seconds = enchantLevel * 1.5D;
-        DamageIndicatorUtils.sendDamageIndicator((Player) damaged, CC.DarkRedB + "* Feign Death - VANISHED [" + NumberUtils.formatSeconds(seconds) + "s] *", "SHACKLED_GOLEM");
-
-        damaged.setMetadata("feign_vanish", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), Double.valueOf(System.currentTimeMillis() + seconds * 1000.0D)));
-        damaged.setMetadata("feign_hits_max", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), 1));
-        deathCooldown.put(damaged.getUniqueId(), Long.valueOf(System.currentTimeMillis() + 10000L));
+    public static void vanishPlayer(final Player damaged, int enchantLevel) throws NoSuchFieldException, IllegalAccessException {
+        final double seconds = enchantLevel;
+        damaged.setMetadata("feign_vanish", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), System.currentTimeMillis() + seconds * 1000.0D));
+        damaged.setMetadata("feign_hits_max", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), enchantLevel));
+        deathCooldown.put(damaged.getUniqueId(), System.currentTimeMillis() + 10000L);
         EntityPlayer player = ((CraftPlayer)damaged).getHandle();
         EntityPlayer fake = new EntityPlayer(player.server, (WorldServer)player.world, player.getProfile(), new PlayerInteractManager(player.world));
-        fake.playerConnection = new PlayerConnection(player.server, new NetworkManager(EnumProtocolDirection.SERVERBOUND), fake) {
+        fake.playerConnection = new PlayerConnection(player.server, new NetworkManager(EnumProtocolDirection.CLIENTBOUND), fake) {
             public void sendPacket(Packet packet) {}
 
-            public NetworkManager a() {
-                return null;
-            }
+            public void c() {}
 
             public void chat(String s, boolean async) {}
         };
@@ -90,28 +88,53 @@ public class MasteryFeignDeath extends MasteryCustomEnchantment {
         PacketPlayOutEntityStatus status = new PacketPlayOutEntityStatus((Entity)fake, (byte)3);
         Set<EntityPlayer> whoReceived = new HashSet<>();
         EntityTrackerEntry entry = (EntityTrackerEntry)(((WorldServer)player.world).getTracker()).trackedEntities.get(player.getId());
+        if (entry != null) {
+            Set<EntityPlayer> trackedPlayers = (Set<EntityPlayer>)ReflectionUtils.getObject(EntityTrackerEntry.class, entry, "trackedPlayers");
+            for (EntityPlayer tracked : trackedPlayers) {
+                if (tracked instanceof EntityPlayer) {
+                    EntityPlayer pl = tracked;
+                    if (pl.playerConnection == null || pl.playerConnection.isDisconnected() ||
+                            AstroItemSkinsAPI.hasSkinEquipped(pl.getBukkitEntity().getPlayer(), SkinType.CHRISTMAS_AMULET_SNOWFLAKE))
+                        continue;
+                    pl.playerConnection.sendPacket((Packet)fakePlayer);
+                    pl.playerConnection.sendPacket((Packet)status);
+                    whoReceived.add(pl);
+                }
+            }
+        }
         player.playerConnection.sendPacket((Packet)fakePlayer);
         player.playerConnection.sendPacket((Packet)status);
         whoReceived.add(player);
-
-
         Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Enchantments.getInstance(), () -> {
             PacketPlayOutEntityDestroy destroy = new PacketPlayOutEntityDestroy(new int[] { entityId });
             for (EntityPlayer pl : whoReceived) {
-                if (pl.playerConnection != null && !pl.playerConnection.isDisconnected())
-                    pl.playerConnection.sendPacket((Packet)destroy);
+                if (pl.playerConnection == null || pl.playerConnection.isDisconnected() || AstroItemSkinsAPI.hasSkinEquipped(pl.getBukkitEntity().getPlayer(), SkinType.CHRISTMAS_AMULET_SNOWFLAKE))
+                    continue;
+                pl.playerConnection.sendPacket((Packet)destroy);
             }
         },30L);
-
+        damaged.sendTitle(new Title(CC.RedB + "Feign Death", CC.Red + NumberUtils.formatSeconds(seconds), 10, 25, 10));
+        for (Player pl : Bukkit.getServer().getOnlinePlayers()) {
+            if (!AstroItemSkinsAPI.hasSkinEquipped(pl, SkinType.CHRISTMAS_AMULET_SNOWFLAKE))
+                pl.hidePlayer(damaged);
+        }
         damaged.playSound(damaged.getLocation(), Sound.WITHER_SHOOT, 3.0F, 0.9F);
         damaged.sendMessage(CC.DarkRedB + "* Feign Death - VANISHED [" + NumberUtils.formatSeconds(seconds) + "s] *");
+        (new BukkitRunnable() {
+            int counter = 0;
 
-        for (Player pl : Bukkit.getServer().getOnlinePlayers()) {
-            if (AstroItemSkinsAPI.hasSkinEquipped(pl, SkinType.DOOMSDAY_HELMET)) continue;
-            pl.hidePlayer(damaged);
-        }
-
+            public void run() {
+                this.counter++;
+                if ((int)seconds - this.counter == 0) {
+                    cancel();
+                } else {
+                    Title title = new Title(CC.RedB + "Feign Death", CC.Red + NumberUtils.formatSeconds(seconds - this.counter), 5, 15, 5);
+                    damaged.sendTitle(title);
+                }
+            }
+        }).runTaskTimer((Plugin)Enchantments.getInstance(), 20L, 20L);
         Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Enchantments.getInstance(), () -> {
+            if (damaged.isValid() && damaged.hasMetadata("feign_vanish"))
                 unvanish(damaged);
         },(long)(seconds * 20.0D));
     }
@@ -125,26 +148,6 @@ public class MasteryFeignDeath extends MasteryCustomEnchantment {
         for (Player pl : Bukkit.getServer().getOnlinePlayers()) {
             if (!player.hasMetadata("spectator"))
                 pl.showPlayer(player);
-        }
-    }
-
-    @SneakyThrows
-    public void applyDefenseEffect(LivingEntity damagedEnt, LivingEntity attacker, int enchantLevel, EntityDamageEvent event) {
-        try {
-            if (!(event instanceof EntityDamageByEntityEvent) || !(attacker instanceof Player) || event.isCancelled())
-                return;
-            Player damaged = (Player)damagedEnt;
-            double percentHealth = damaged.getHealth() / damaged.getMaxHealth();
-            double percent = enchantLevel + (1.0D - percentHealth) * 5.0D;
-            if (Math.random() <= percent * 0.01D && damaged.getHealth() > event.getDamage(EntityDamageEvent.DamageModifier.BASE) && !damaged.isDead() && !deathCooldown.containsKey(damaged.getUniqueId())) {
-                if (damaged.hasMetadata("feign_vanish"))
-                    damaged.removeMetadata("feign_vanish", (Plugin)Enchantments.getInstance());
-                if (!(new CustomEnchantProcOnEntityEvent((LivingEntity)damaged, attacker, (Event)event, (CustomEnchantment)this, enchantLevel)).callEvent())
-                    return;
-                vanishPlayer(damaged, enchantLevel);
-            }
-        } catch (Throwable $ex) {
-            throw $ex;
         }
     }
 
@@ -175,14 +178,14 @@ public class MasteryFeignDeath extends MasteryCustomEnchantment {
                     return;
                 }
                 player.setMetadata("feign_hits", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), Integer.valueOf(hitCount)));
-                if (event.getEntity() instanceof Player && event.getDamage(EntityDamageEvent.DamageModifier.BASE) > 0.0D) {
+                if (event.getEntity() instanceof Player && event.getFinalDamage() > 0.0D) {
                     Faction faction = FactionUtils.getFaction(player, false);
                     Faction other = FactionUtils.getFaction((Player)event.getEntity(), false);
                     String tag = CC.White;
                     if (faction != null && other != null)
                         tag = faction.describeToAsync((RelationParticipator)other) + " ";
-                    Bukkit.getLogger().info(player.getName() + " is damaging " + event.getEntity().getName() + " for " + event.getDamage(EntityDamageEvent.DamageModifier.BASE) + " while invisible! " + hitCount + " / " + max);
-                    event.getEntity().sendMessage(CC.Red + "-" + NumberUtils.formatSeconds(event.getDamage(EntityDamageEvent.DamageModifier.BASE)) + " HP (" + tag + player.getName() + "'s Ghost" + CC.Red + ")");
+                    Bukkit.getLogger().info(player.getName() + " is damaging " + ((Player)event.getEntity()).getName() + " for " + event.getFinalDamage() + " while invisible! " + hitCount + " / " + max);
+                    ((Player)event.getEntity()).sendMessage(CC.Red + "-" + NumberUtils.formatSeconds(event.getFinalDamage()) + " HP (" + tag + player.getName() + "'s Ghost" + CC.Red + ")");
                 }
             }
         }
