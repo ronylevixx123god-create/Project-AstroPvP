@@ -7,6 +7,7 @@ import com.rit.sucy.EnchantmentAPI;
 import lombok.Getter;
 import lombok.Setter;
 import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
+import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
 import org.arkhamnetwork.enchantments.cmds.*;
 import org.arkhamnetwork.enchantments.enchantments.armor.*;
 import org.arkhamnetwork.enchantments.enchantments.axes.*;
@@ -15,6 +16,7 @@ import org.arkhamnetwork.enchantments.enchantments.heroic.*;
 import org.arkhamnetwork.enchantments.enchantments.swords.*;
 import org.arkhamnetwork.enchantments.enchantments.tools.*;
 import org.arkhamnetwork.enchantments.items.EMPPulseItem;
+import org.arkhamnetwork.enchantments.items.OmniBlackscroll;
 import org.arkhamnetwork.enchantments.listeners.*;
 import org.arkhamnetwork.enchantments.mastery.*;
 import org.arkhamnetwork.enchantments.tasks.PlayerPotionEffectPersistTask;
@@ -92,7 +94,7 @@ public class Enchantments extends EnchantPlugin {
         EnchantmentAPI.registerCustomEnchantments(array);
 
 
-        Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
+        Bukkit.getScheduler().runTaskTimer(this, () -> {
             for (Player p : Bukkit.getServer().getOnlinePlayers())
                 Enchantments.playerLocations.put(p, p.getLocation());
         }, 0L, 40L);
@@ -112,6 +114,7 @@ public class Enchantments extends EnchantPlugin {
         this.armorsetEnabled = (new File("plugins/Enchantments.jar")).exists();
         if (Bukkit.getPluginManager().isPluginEnabled("CosmicSkyCustomItems")) {
             EMPPulseItem empPulseItem = new EMPPulseItem();
+            CosmicSkyCustomItems.get().getItemManager().registerCustomItem((CosmicItem)new OmniBlackscroll());
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem(empPulseItem);
             Bukkit.getPluginManager().registerEvents(empPulseItem, this);
         }

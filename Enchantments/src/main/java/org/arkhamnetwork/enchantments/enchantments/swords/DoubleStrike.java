@@ -44,7 +44,9 @@ public class DoubleStrike extends CustomEnchantment {
                         playerHit.damage(fdmg, (Entity) player);
                         pp.sendMessage(CC.translate("&6&l** DOUBLE STRIKE **"));
                         GeneralCooldown.enterCooldown(pp);
-                        DamageIndicatorUtils.sendDamageIndicator((Player) playerHit, CC.RedB + "* DOUBLE STRIKE *", "DOUBLE_STRIKE");
+                        if (playerHit instanceof Player) {
+                            DamageIndicatorUtils.sendDamageIndicator((Player) playerHit, CC.RedB + "* DOUBLE STRIKE *", "DOUBLE_STRIKE");
+                        }
                     }
                 }
             }, 2L);
