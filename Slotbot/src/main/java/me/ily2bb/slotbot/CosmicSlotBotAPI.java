@@ -25,9 +25,7 @@ public class CosmicSlotBotAPI {
 
 
     public static ItemStack getRandomSlotBotLootItem() {
-
-        final Object[] objects = Utils.getMap();
-        return Utils.getRandomItemFromLootTable(objects);
+        return Utils.getRandomItemFromLootTable(SlotBotPlugin.getMap());
     }
 
     public static boolean isSlotbotTicket(ItemStack itemStack) {

@@ -135,7 +135,7 @@ public class Inventories {
 
     public static void startRollingInColumn(final Player player, final Inventory inventory, final int column) {
         player.setMetadata("slot_rolling_" + column, new FixedMetadataValue(SlotBotPlugin.getInstance(), null));
-        final Object[] objects = Utils.getMap();
+        final Object[] objects = SlotBotPlugin.getMap();
         final ItemStack item = Utils.getRandomItemFromLootTable(objects);
         final BukkitScheduler scheduler = Bukkit.getScheduler();
         scheduler.scheduleSyncDelayedTask(SlotBotPlugin.getInstance(), (Runnable) new BukkitRunnable() {
@@ -148,14 +148,12 @@ public class Inventories {
                         this.previousItems[i] = Utils.getRandomItemFromLootTable(objects);
                     }
                 } else {
-                    for (int i = this.previousItems.length - 2; i >= 0; --i) {
-                        this.previousItems[i + 1] = this.previousItems[i];
-                    }
+                    System.arraycopy(this.previousItems, 0, this.previousItems, 1, this.previousItems.length - 2 + 1);
                     this.previousItems[0] = Utils.getRandomItemFromLootTable(objects);
                 }
                 int x = column;
-                for (int j = 0; j < this.previousItems.length; ++j) {
-                    inventory.setItem(x, this.previousItems[j]);
+                for (ItemStack previousItem : this.previousItems) {
+                    inventory.setItem(x, previousItem);
                     x += 9;
                 }
                 player.updateInventory();
