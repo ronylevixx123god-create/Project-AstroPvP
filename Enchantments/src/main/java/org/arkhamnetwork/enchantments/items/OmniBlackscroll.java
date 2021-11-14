@@ -42,10 +42,12 @@ public class OmniBlackscroll extends CosmicItem implements InventoryInteractable
     }
 
     public ItemStack createItem(Player player, Object... objects) {
-        ItemBuilder itemBuilder = new ItemBuilder(Material.INK_SACK, CC.translate("&b&k:&3&k:&3&l Omni &3&k:&b&k:&7 &f&lBlack Scroll"));
-        itemBuilder.addLoreLine(CC.translate("&7Removes a random enchantment of"));
-        itemBuilder.addLoreLine(CC.translate("&3&lYOUR&7 choice at 100% success."));
-        return itemBuilder.build();
+
+
+        return this.applyItemData((new ItemBuilder(Material.INK_SACK, CC.translate("&b&k:&3&k:&3&l Omni &3&k:&b&k:&7 &f&lBlack Scroll")
+                , CC.translate("&7Removes a random enchantment of")
+                , CC.translate("&3&lYOUR&7 choice at 100% success.")).build())).build();
+
     }
 
     public boolean acceptsInventoryClickType(InventoryItemType inventoryItemType) {
@@ -56,8 +58,6 @@ public class OmniBlackscroll extends CosmicItem implements InventoryInteractable
         if (clicked == null || clicked.getType() == Material.AIR || clickedWrapper == null) {
             return;
         }
-        Material type = clicked.getType();
-
         Map<CustomEnchantment, Integer> enchants = EnchantmentAPI.getEnchantments(clicked);
         if (enchants.keySet() == null) {
             player.sendMessage(CC.translate("&c&l(!) &cThis item does not have any enchantments on it!"));
@@ -73,6 +73,14 @@ public class OmniBlackscroll extends CosmicItem implements InventoryInteractable
         }
         if (e.getInventory().getName().equalsIgnoreCase(CC.translate("&8Select an enchantment to remove.")))
             return;
+
+        NBTTagCompoundBuilder cosmicData = clickedWrapper.getCompoundOrCreate("conaxData");
+
+        cosmicData.setInt("omniBlackScrpmm", Integer.valueOf(1));
+        e.setCancelled(true);
+        clickedWrapper.setNBTBase("conaxData", (NBTBase)cosmicData.get());
+        clicked = clickedWrapper.build();
+
         List<ItemStack> items = Lists.newArrayList();
         for (CustomEnchantment enchant : enchants.keySet()) {
             ItemStack enchantmentBook = EnchantmentBook.getEnchantmentBook(enchant, enchant.getMaxLevel(), 100, 0);

@@ -29,6 +29,7 @@ import java.util.List;
 public class SlotBotPlugin extends JavaPlugin {
     public static SlotBotPlugin me;
     FileConfiguration config;
+    public static Object[] objects;
 
     public SlotBotPlugin() {
         this.config = this.getConfig();
@@ -56,11 +57,18 @@ public class SlotBotPlugin extends JavaPlugin {
         this.registerGlow();
 
         SlotBotPlugin.me = this;
+
+        objects = Utils.getMap();
+
     }
 
     public void loadConfig() {
         this.getConfig().options().copyDefaults(true);
         this.saveConfig();
+    }
+
+    public static Object[] getMap() {
+        return objects;
     }
 
     public void onDisable() {

@@ -113,19 +113,11 @@ public class SlotbotMachineGUIListener implements Listener {
                     e.setCancelled(true);
                     return;
                 }
-
-
-
-
-
-
-
                 int a = tickets;
                 List<ItemStack> loot = new ArrayList<>();
                 while (a != 0) {
                     final ItemStack itemStack = CosmicSlotBotAPI.getRandomSlotBotLootItem();
                     loot.add(itemStack);
-                    //chest.getInventory().addItem(itemStack);
                     a--;
                 }
 
