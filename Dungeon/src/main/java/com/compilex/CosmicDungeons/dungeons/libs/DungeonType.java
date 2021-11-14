@@ -13,9 +13,9 @@ import com.compilex.CosmicDungeons.dungeons.events.DestroyedOutpostEvents;
 import com.compilex.CosmicDungeons.dungeons.events.DungeonEvents;
 import com.compilex.CosmicDungeons.dungeons.events.PlanetNulEvents;
 import com.compilex.CosmicDungeons.dungeons.libs.Dungeon;
-import com.cosmicpvp.cosmicutils.struct.factions.points.FactionPointUtils;
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.TimeUnit;
+
 import org.bukkit.ChatColor;
 
 public enum DungeonType {
@@ -94,7 +94,7 @@ public enum DungeonType {
     }
 
     public double getPortalCost() {
-        int daysSinceDungeonWasAvailable = (int)Math.floor(TimeUnit.MILLISECONDS.toDays(FactionPointUtils.getTimeSinceStartOfMapWithOffset((long)this.dungeonStartOffset)));
+/*        int daysSinceDungeonWasAvailable = (int)Math.floor(TimeUnit.MILLISECONDS.toDays(FactionPointUtils.getTimeSinceStartOfMapWithOffset((long)this.dungeonStartOffset)));
         if (this.lastDaysPassed == null || daysSinceDungeonWasAvailable != this.lastDaysPassed || this.calculatedPrice == -1.0) {
             this.lastDaysPassed = daysSinceDungeonWasAvailable;
             this.calculatePortalCost();
@@ -102,13 +102,13 @@ public enum DungeonType {
         double cost = this.calculatedPrice;
         if (CosmicDungeonsPlugin.get().isLowCostKeys()) {
             cost *= 0.1;
-        }
-        return cost;
+        }*/
+        return 1;
     }
 
-    public int getDaysSinceDungeonWasAvailable() {
+/*    public int getDaysSinceDungeonWasAvailable() {
         return (int)Math.floor(TimeUnit.MILLISECONDS.toDays(FactionPointUtils.getTimeSinceStartOfMapWithOffset((long)this.dungeonStartOffset)));
-    }
+    }*/
 
     public double calculatePortalCost() {
         double newCost = this.portalCost;

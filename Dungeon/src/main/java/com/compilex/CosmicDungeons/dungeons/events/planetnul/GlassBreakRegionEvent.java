@@ -17,8 +17,6 @@ import com.compilex.CosmicDungeons.utils.WorldUtils;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.gmail.filoghost.holograms.api.HolographicDisplaysAPI;
 import java.util.ArrayList;
-
-import com.sun.istack.internal.NotNull;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 import kotlin.jvm.internal.Intrinsics;
@@ -27,6 +25,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
 
 public class GlassBreakRegionEvent extends RegionEvent {
     public GlassBreakRegionEvent(Dungeon d, String regionName) {

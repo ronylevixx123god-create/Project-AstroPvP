@@ -29,7 +29,8 @@ import com.compilex.CosmicDungeons.CosmicDungeonsPlugin;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
+
+import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -139,8 +140,7 @@ public class MonsterUtils {
         ghast.getEquipment().setBoots(new ItemStack(Material.DIAMOND_BOOTS));
         ghast.setCanPickupItems(false);
         ghast.setMetadata("spacePirate", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get_(), (Object)true));
-        de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), ghast.getLocation(), 0f, 0.0f, 0f, 0.15f, 25);
-
+        ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, ghast.getLocation().add(0.0D, 1.0D, 0.0D), 0.15F, 25);
         return ghast;
     }
 }

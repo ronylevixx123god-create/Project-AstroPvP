@@ -116,9 +116,6 @@ import com.cosmicpvp.cosmicutils.utils.RandomFireworks;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.earth2me.essentials.User;
 import com.gmail.filoghost.holograms.api.HolographicDisplaysAPI;
-import com.gmail.nossr50.events.experience.McMMOPlayerXpGainEvent;
-import com.gmail.nossr50.events.skills.abilities.McMMOPlayerAbilityActivateEvent;
-import com.gmail.nossr50.events.skills.unarmed.McMMOPlayerDisarmEvent;
 import com.google.common.collect.Lists;
 import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.Vector;
@@ -946,26 +943,7 @@ implements CommandExecutor {
         }
     }
 
-    @EventHandler
-    public void onMCMMOEXP(McMMOPlayerXpGainEvent event) {
-        if (event.getPlayer().hasMetadata("inInvisibleMaze")) {
-            event.setCancelled(true);
-        }
-    }
 
-    @EventHandler
-    public void onMcMMOAbility(McMMOPlayerAbilityActivateEvent event) {
-        if (event.getPlayer().hasMetadata("inInvisibleMaze")) {
-            event.setCancelled(true);
-        }
-    }
-
-    @EventHandler
-    public void onPlayerDisarmed(McMMOPlayerDisarmEvent event) {
-        if (event.getPlayer().hasMetadata("inInvisibleMaze")) {
-            event.setCancelled(true);
-        }
-    }
 
     private void loadTasks() {
         BukkitTask parkourRestrictionTask = new PlanetNulParkourRestrictionTask(this.dungeon).runTaskTimer((Plugin)CosmicDungeonsPlugin.get_(), 10L, 10L);

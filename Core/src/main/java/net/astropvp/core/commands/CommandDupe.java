@@ -51,11 +51,17 @@ public class CommandDupe implements CommandExecutor {
             return false;
         }
 
+        if(display.contains("Omni")) {
+            sender.sendMessage(CC.Red + "You cannot dupe this item.");
+            return false;
+        }
+
         if (isBook) {
             item.setAmount(64);
             player.sendMessage(CC.Green + "You have successfully duplicated your item.");
             return false;
         }
+
 
         if (display.contains(CC.WhiteB + "Black Scroll") && item.getType() == Material.INK_SACK ||
                 display.contains(CC.LightPurpleB + "Heroic Black Scroll") && item.getType() == Material.INK_SACK) {

@@ -2,7 +2,7 @@ name: CosmicDungeons
 main: com.compilex.CosmicDungeons.CosmicDungeonsPlugin
 version: 1.0
 depend: [CosmicSkyCustomItems]
-softdepend: [Vault, WorldGuard, WorldEdit, NoCheatPlus, CosmicFactionPoints]
+softdepend: [Vault, WorldGuard, WorldEdit, NoCheatPlus]
 load: postworld
 author: MattHawkk
 commands:

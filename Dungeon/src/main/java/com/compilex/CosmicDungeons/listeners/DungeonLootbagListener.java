@@ -64,13 +64,7 @@ import com.cosmicpvp.cosmicutils.itembuilder.AbilityArmorSetItemBuilder;
 import com.cosmicpvp.cosmicutils.itembuilder.CustomItemBuilder;
 import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.itembuilder.KitGemBuilder;
-import com.cosmicpvp.cosmicutils.struct.factions.points.FactionPointUtils;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.JSONMessage;
-import com.cosmicpvp.cosmicutils.utils.NBTTagCompoundBuilder;
-import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
-import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
-import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
+import com.cosmicpvp.cosmicutils.utils.*;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import java.util.ArrayList;
@@ -81,8 +75,6 @@ import java.util.concurrent.ThreadLocalRandom;
 import me.ifamasssxd.cosmicconquest.CosmicConquestAPI;
 import me.ifamasssxd.cosmicdisguises.managers.CosmicDisguiseAPI;
 import me.ifamasssxd.killtracker.KillTrackerAPI;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
-import org.arkhamnetwork.Arkkit.patches.EquipmentLootboxes;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.patches.ItemLinking;
 import org.arkhamnetwork.Arkkit.patches.LoreTag;
@@ -163,9 +155,6 @@ implements Listener {
                 potentialLoot.addAll(this.getOtherDungeonLoot(bagType));
                 heroicBonusItem = potentialLoot.get(ThreadLocalRandom.current().nextInt(potentialLoot.size()));
                 loot.add(heroicBonusItem);
-            }
-            if ((pointNote = FactionPointUtils.getFactionPointsItem(null, null, (String)"lootbag", (Object)((Object)bagType))) != null) {
-                loot.add(pointNote);
             }
             if (loot.size() > 0) {
                 for (int ind = 0; ind < loot.size(); ++ind) {
@@ -370,15 +359,6 @@ implements Listener {
                 loot.add(RandomizationScroll.getRandomizationScroll((ItemRarity)ItemRarity.GOD));
             }
         }
-        int daysSinceAvailable = Math.min(30, dungeonType.getDaysSinceDungeonWasAvailable());
-        if (isDestroyedOutpost) {
-            moneyToGive = Math.min(30000000, 5000000 + 1000000 * daysSinceAvailable);
-            mcmmoCredits = Math.min(600, 100 + 20 * daysSinceAvailable);
-        } else {
-            moneyToGive = Math.min(10000000, 1000000 + 500000 * daysSinceAvailable);
-            mcmmoCredits = Math.min(250, 100 + 10 * daysSinceAvailable);
-        }
-        loot.add(ItemUtils.getMoneyNote((String)"Astro Dungeon", (int)moneyToGive));
         return loot;
     }
 

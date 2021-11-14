@@ -35,8 +35,6 @@ import com.compilex.CosmicDungeons.utils.Logger;
 import java.util.concurrent.TimeUnit;
 import me.libraryaddict.disguise.DisguiseAPI;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.arkhamnetwork.Arkkit.patches.chunkgc.ChunkGCTask;
-import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Entity;

@@ -48,7 +48,6 @@ import com.compilex.CosmicDungeons.dungeons.libs.DungeonType;
 import com.compilex.CosmicDungeons.dungeons.libs.PlanetNulDungeon;
 import com.compilex.CosmicDungeons.items.BossSlayerTrinketItem;
 import com.compilex.CosmicDungeons.items.ChunkBusterItem;
-import com.compilex.CosmicDungeons.items.CleanseScrollItem;
 import com.compilex.CosmicDungeons.items.HeroicDungeonScrollItem;
 import com.compilex.CosmicDungeons.items.PortalProtectionTrinketItem;
 import com.compilex.CosmicDungeons.items.PortalTimeReductionTrinketItem;
@@ -94,7 +93,6 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
-import net.astropvp.utils.inventory.InventoryManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -135,7 +133,6 @@ public class CosmicDungeonsPlugin extends JavaPlugin {
     private DungeonLootbagListener dungeonLootbagListener;
     private DungeonPlayerMoveListener dungeonPlayerMoveListener;
     private DungeonSanityListener dungeonSanityListener;
-    private InventoryManager inventoryManager;
 
     public DungeonsAPI getApi() {
         return this.api;
@@ -256,8 +253,6 @@ public class CosmicDungeonsPlugin extends JavaPlugin {
                 Bukkit.broadcastMessage((String)"");
             }
         }, 200L, 200L);
-        this.inventoryManager = new InventoryManager((JavaPlugin)this);
-        Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)CosmicDungeonsPlugin.get(), () -> this.inventoryManager.init(), 20L);
         File orCreateFile = null;
         try {
             orCreateFile = JSONUtils.getOrCreateFile("portalLogs.json");
@@ -302,9 +297,6 @@ public class CosmicDungeonsPlugin extends JavaPlugin {
         }
     }
 
-    public InventoryManager getInventoryManager() {
-        return this.inventoryManager;
-    }
 
     public DungeonMenuListener getDungeonMenuListener() {
         return this.dungeonMenuListener;
@@ -384,7 +376,6 @@ public class CosmicDungeonsPlugin extends JavaPlugin {
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem((CosmicItem)new BossSlayerTrinketItem());
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem((CosmicItem)new HeroicDungeonScrollItem());
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem((CosmicItem)new ChunkBusterItem());
-            CosmicSkyCustomItems.get().getItemManager().registerCustomItem((CosmicItem)new CleanseScrollItem());
         }
     }
 

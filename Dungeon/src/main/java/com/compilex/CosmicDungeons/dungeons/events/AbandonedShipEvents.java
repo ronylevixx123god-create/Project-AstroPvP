@@ -513,7 +513,11 @@ extends DungeonEvents {
                     if (Math.random() < 0.33) {
                         this.dungeon.broadcastMessage("Space monsters are attacking the ship!");
                         for (int i = 5; i > 0; --i) {
-                            MonsterUtils.spawnSpacePirate(new Location(this.dungeon.getWorld(), -226.0, 75.0, 190.0));
+                            try {
+                                MonsterUtils.spawnSpacePirate(new Location(this.dungeon.getWorld(), -226.0, 75.0, 190.0));
+                            } catch (Exception exception) {
+                                exception.printStackTrace();
+                            }
                         }
                     }
                     return;

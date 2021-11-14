@@ -42,7 +42,7 @@ public class GodlyTransmogScrollItem extends CosmicItem implements InventoryInte
             e.setCancelled(true);
             player.setItemOnCursor(null);
             (new GodlyTransmogGUI(player, (new NBTWrapper(clicked)).build().clone())).getInventory().open(player);
-            player.getInventory().removeItem(new ItemStack[] { clicked });
+            player.getInventory().removeItem(clicked);
         }
     }
 }

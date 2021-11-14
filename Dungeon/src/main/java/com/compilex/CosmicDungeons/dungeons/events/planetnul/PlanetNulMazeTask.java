@@ -20,7 +20,8 @@ import com.compilex.CosmicDungeons.dungeons.libs.PlanetNulDungeon;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import java.util.ArrayList;
 import java.util.List;
-import org.arkhamnetwork.Arkkit.libs.ParticleEffect;
+
+import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;

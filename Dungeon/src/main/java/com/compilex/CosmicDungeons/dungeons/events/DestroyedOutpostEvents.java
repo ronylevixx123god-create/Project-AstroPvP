@@ -79,6 +79,7 @@ package com.compilex.CosmicDungeons.dungeons.events;
 
 import com.compilex.CosmicDungeons.CosmicDungeonsPlugin;
 import com.compilex.CosmicDungeons.DungeonsAPI;
+import com.compilex.CosmicDungeons.dungeons.events.destroyedoutpost.*;
 import com.compilex.CosmicDungeons.dungeons.libs.DestroyedOutpostDungeon;
 import com.compilex.CosmicDungeons.dungeons.libs.Dungeon;
 import com.compilex.CosmicDungeons.dungeons.libs.DungeonPlayer;
