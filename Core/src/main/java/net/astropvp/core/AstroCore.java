@@ -59,12 +59,14 @@ import me.astropvp.autogiveall.struct.GiveAllManager;
 import net.astropvp.core.commands.*;
 import net.astropvp.core.conaxgames.giveall.ManualGiveAllCommand;
 import net.astropvp.core.items.*;
-import net.astropvp.core.items.encoder.EnchantEncoderItem;
+import net.astropvp.core.items.coder.EnchantmentCoderItem;
+import net.astropvp.core.items.coder.HeroicEnchantmentCoderItem;
 import net.astropvp.core.listeners.*;
 import net.astropvp.core.conaxgames.staff.Freeze;
 import net.astropvp.core.conaxgames.staff.FreezeCommand;
 import net.astropvp.core.conaxgames.staff.StaffChatCommand;
 import net.astropvp.core.conaxgames.staff.StaffListeners;
+import net.astropvp.core.struct.EnchantmentCoderManager;
 import net.astropvp.core.tasks.LastManStandingCapTask;
 import net.astropvp.core.utils.CleanseScroll;
 import net.astropvp.core.utils.ItemUtils;
@@ -138,6 +140,9 @@ public class AstroCore extends JavaPlugin {
     @Getter private boolean tntDebug = false;
 
     private SoulItemListener soulItemListener;
+
+    @Getter private EnchantmentCoderManager enchantmentCoderManager;
+
     // Heroic Envoys
     @Getter public EnvoyManager envoyManager;
     // Coin Flips
@@ -180,6 +185,9 @@ public class AstroCore extends JavaPlugin {
         new LastManStandingCapTask().runTaskTimer(this, 20L, 20L);
 
         cachedColors = new HashMap<>();
+
+        this.enchantmentCoderManager = new EnchantmentCoderManager(getDataFolder() + "/enchantmentcoderdata.json");
+        this.enchantmentCoderManager.loadData();
 
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new HeroicUpgrade());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new RogueScratchCard());
@@ -349,7 +357,9 @@ public class AstroCore extends JavaPlugin {
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(this.holyWhitescrollItem);
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new HolyWaterItem());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new CleanseScroll());
-        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new EnchantEncoderItem());
+        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new EnchantmentCoderItem());
+        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new HeroicEnchantmentCoderItem());
+
 
 
         this.getServer().getPluginManager().registerEvents(new Freeze(), this);
@@ -365,6 +375,9 @@ public class AstroCore extends JavaPlugin {
         this.getCommand("togglesb").setExecutor(new CommandScoreboard());
         this.getCommand("toggles").setExecutor(new CommandToggles());
         this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
+        this.getServer().getPluginManager().registerEvents(new EnchantmentCoderInventoryListener(), this);
+        this.getServer().getPluginManager().registerEvents(new EnchantmentCoderItemListener(), this);
+
 
         this.getCommand("filter").setExecutor(new CommandFilter());
         this.getCommand("wiki").setExecutor(new CommandWiki());
