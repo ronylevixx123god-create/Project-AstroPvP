@@ -9,21 +9,20 @@
  */
 package org.arkhamnetwork.CosmicCustomTNT;
 
-import com.compilex.CosmicCustomCreepers.cmds.CommandCCC;
-import com.compilex.CosmicCustomCreepers.listeners.CreeperListener;
-import lombok.Getter;
 import org.arkhamnetwork.CosmicCustomTNT.cmds.CommandCTNT;
 import org.arkhamnetwork.CosmicCustomTNT.listeners.TNTListener;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.event.Listener;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class CosmicCustomTNT
 extends JavaPlugin {
-    @Getter private static CosmicCustomTNT plugi = null;
-    @Getter private CreeperListener creeperListener;
+    private static CosmicCustomTNT plugi = null;
 
     public void onEnable() {
         plugi = this;
-        this.registerCommands();
+        plugi.registerCommands();
         this.registerListeners();
     }
 
@@ -35,12 +34,11 @@ extends JavaPlugin {
     }
 
     private void registerListeners() {
-        this.creeperListener = new CreeperListener();
-        this.getServer().getPluginManager().registerEvents(this.creeperListener, this);
+        this.getServer().getPluginManager().registerEvents((Listener)new TNTListener(), (Plugin)this);
     }
 
     private void registerCommands() {
-        this.getCommand("ccc").setExecutor(new CommandCCC());
+        this.getCommand("ctnt").setExecutor((CommandExecutor)new CommandCTNT());
     }
 }
 
