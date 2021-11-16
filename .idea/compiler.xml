@@ -68,6 +68,8 @@
       <module name="ClientComms" target="8" />
       <module name="Comms" target="8" />
       <module name="CrateBoxes" target="8" />
+      <module name="CustomItem" target="1.8" />
+      <module name="CustomTNT" target="1.8" />
       <module name="DiscordAPI" target="8" />
       <module name="Disguises (1)" target="8" />
       <module name="FactionFights" target="8" />
