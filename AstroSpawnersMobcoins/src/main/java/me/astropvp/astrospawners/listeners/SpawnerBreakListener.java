@@ -7,6 +7,7 @@ import me.astropvp.astrospawners.data.SpawnerData;
 import me.astropvp.astrospawners.data.SpawnerManager;
 import me.astropvp.astrospawners.items.ItemSpawner;
 import me.astropvp.astrospawners.utils.EntityUtils;
+import org.arkhamnetwork.CosmicCustomTNT.enums.TNTTypes;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -47,6 +48,16 @@ public class SpawnerBreakListener implements Listener {
                 if (egg_type == CreeperTypes.Lucky) {
                     chance += 1.25;
                 }
+            }
+        }
+        if(event.getEntity() instanceof TNTPrimed) {
+            TNTPrimed tnt = (TNTPrimed) event.getEntity();
+            if(tnt.hasMetadata("custom_tnt")) {
+
+                TNTTypes tntType = TNTTypes.valueOf(tnt.getMetadata("custom_tnt").get(0).asString());
+
+                if(tntType == TNTTypes.Lucky)
+                    chance += 1.25;
             }
         }
         List<Block> blocks = event.blockList();
