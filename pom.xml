@@ -58,6 +58,8 @@
         <module>GenBuckets</module>
         <module>NebulaShop</module>
         <module>bah</module>
+        <module>CustomItem</module>
+        <module>CustomTNT</module>
     </modules>
 
     <build>

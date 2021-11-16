@@ -22,25 +22,30 @@ public class Auction {
 
     private double increment;
 
+    private boolean open;
+
     public Auction(ItemStack item) {
         this.item = item;
         this.increment = BlackAuctionHouse.getInstance().getConfig().getDouble("increment");
         this.topBidder = null;
         this.bid = 0;
         this.endTime = System.currentTimeMillis() + 300000L;
+        this.open = true;
     }
 
     public void close() {
+        this.open = false;
         if(this.topBidder != null) {
             Player winner = Bukkit.getPlayer(this.topBidder);
             Bukkit.broadcastMessage("");
             Bukkit.broadcastMessage(CC.translate("&a&l[/bah] &f&l" + winner.getName() + " &ahas won the bid on " + this.item.getItemMeta().getDisplayName() + "&a for &a&l$&a" + NumberUtils.formatMoney(this.bid) + "!"));
             Bukkit.broadcastMessage("");
-
         }
     }
 
     public void bid(Player player) {
+        if(!this.open)
+            return;
         if(!EconomyUtils.hasBalance(player, this.bid + this.increment)) {
             player.sendMessage(CC.translate("&c&l[/bah] &cYou do not have enough money to bid on this item."));
             return;

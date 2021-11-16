@@ -22,3 +22,8 @@ commands:
     description: Admin command.
     usage: /<command>
     aliases: [adungeons]
+  answer:
+    description: math room command
+  cosmicdungeonlootboxes:
+    description: refresh all lootboxes
+  dungeongive:

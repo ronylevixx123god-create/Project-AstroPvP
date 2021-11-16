@@ -14,6 +14,9 @@ import lombok.SneakyThrows;
 import me.astropvp.astrospawners.items.ItemSpawner;
 import net.coreprotect.CoreProtect;
 import net.coreprotect.CoreProtectAPI;
+import net.minecraft.server.v1_8_R3.EntityCreeper;
+import net.minecraft.server.v1_8_R3.EntityLiving;
+import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.utils.WorldGuardUtils;
 import org.arkhamnetwork.CosmicCustomTNT.CosmicCustomTNT;
@@ -23,6 +26,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftCreeper;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.*;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -348,10 +352,13 @@ implements Listener {
         if (this.nonSolidBlocks.contains(l.getBlock().getType())) {
             return;
         }
-        TNTPrimed tnt = (TNTPrimed)l.getWorld().spawnEntity(l, EntityType.PRIMED_TNT);
-        tnt.setMetadata("ObbyEntity", new FixedMetadataValue(CosmicCustomTNT.get(), true));
-        tnt.setMetadata("fromCreeper", new FixedMetadataValue(CosmicCustomTNT.get(), true));
-        tnt.setFuseTicks(0);
+        CraftCreeper creeper = l.getWorld().spawn(l, CraftCreeper.class);
+        net.minecraft.server.v1_8_R3.Entity nms = ((CraftEntity)creeper).getHandle();
+        NBTTagCompound nbt = new NBTTagCompound();
+        nms.c(nbt);
+        nbt.setInt("Fuse", 0);
+        EntityLiving living = (EntityLiving) nms;
+        living.a(nbt);
     }
 }
 
