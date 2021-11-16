@@ -14,13 +14,17 @@ import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
 import me.ifamasssxd.cosmicskycustoms.struct.InventoryInteractable;
 import me.ifamasssxd.cosmicskycustoms.struct.InventoryItemType;
 import net.astropvp.core.AstroCore;
+import net.astropvp.core.guis.EnchantmentCoderInventory;
 import net.astropvp.core.struct.EnchantmentCoderManager;
 import net.minecraft.server.v1_8_R3.NBTBase;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -51,14 +55,12 @@ public class HeroicEnchantmentCoderItem extends CosmicItem implements InventoryI
         return item;
     }
 
-    @Override
     public boolean acceptsInventoryClickType(InventoryItemType inventoryItemType) {
         return (inventoryItemType == InventoryItemType.CURSOR);
     }
 
-    @Override
     public void onInventoryClick(Player player, ItemStack cursor, NBTWrapper wrapper, NBTWrapper clickedWrapper, ItemStack clicked, InventoryClickEvent e) throws CosmicException {
-        if (clicked == null || clicked.getType() == Material.AIR || clickedWrapper == null || clicked.getType() == null)
+        if (clicked == null || clicked.getType() == Material.AIR || clicked.getType() == null)
             return;
         if (!EnchantmentAPI.getEnchantments(clicked).isEmpty()) {
             player.sendMessage(CC.translate("&c&l(!) &cPlease blackscroll all the enchantments off this item before using this Heroic Enchantment Coder."));
@@ -78,8 +80,7 @@ public class HeroicEnchantmentCoderItem extends CosmicItem implements InventoryI
             e.setCancelled(true);
             return;
         }
-        for (int i = 0; i < enchantments.size(); i++) {
-            CustomEnchantment enchantment = enchantments.get(i);
+        for (CustomEnchantment enchantment : enchantments) {
             if (enchantment.nonHeroicVersion != null)
                 enchantment.nonHeroicVersion.addToItem(clicked, enchantment.nonHeroicVersion.getMaxLevel());
             enchantment.addToItem(clicked, enchantment.getMaxLevel());
@@ -89,5 +90,17 @@ public class HeroicEnchantmentCoderItem extends CosmicItem implements InventoryI
         player.sendMessage(CC.translate("&a&l(!) &aSuccessfully added enchantments to your item!"));
         player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0F, 1.0F);
     }
+
+    public void onItemUse(Player player, ItemStack item, NBTWrapper wrapper, PlayerInteractEvent event) throws CosmicException {
+        if (event.getAction() != Action.RIGHT_CLICK_AIR && event.getAction() != Action.RIGHT_CLICK_BLOCK)
+            return;
+        if (item.getAmount() > 1) {
+            player.sendMessage(CC.translate("&c&l(!) &cYou cannot open stacked Heroic Enchantment Coders."));
+            return;
+        }
+        player.playSound(player.getLocation(), Sound.BAT_TAKEOFF, 0.5F, 0.5F);
+        player.openInventory(EnchantmentCoderInventory.getInstance().getInventory());
+    }
+
 }
 

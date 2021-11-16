@@ -57,6 +57,8 @@
         <module>AstroGenBuckets</module>
         <module>AstroPvPGenBuckets</module>
         <module>GenBuckets</module>
+        <module>BlackAuctionHouse</module>
+        <module>NebulaShop</module>
     </modules>
 
     <build>

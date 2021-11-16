@@ -81,7 +81,7 @@ public class EnchantmentCoderInventory {
     private ItemStack getBackArrow() {
         ItemStack item = new ItemStack(Material.ARROW);
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(CC.translate("&4&lBack"));
+        meta.setDisplayName(CC.translate("&a&lBack"));
         meta.setLore(Collections.singletonList(CC.translate("&7Click to go back.")));
         item.setItemMeta(meta);
         return item;
@@ -90,9 +90,9 @@ public class EnchantmentCoderInventory {
     private ItemStack getInfoItem() {
         ItemStack item = new ItemStack(Material.BOOK);
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(CC.translate("&4&lInformation"));
-        meta.setLore(Arrays.asList(CC.translate("&cLeft-Click&7 a book in your inventory to add it to this inventory."),
-                CC.translate("&cLeft-Click&7 a book in the item's inventory to return it to your inventory.")));
+        meta.setDisplayName(CC.translate("&a&lInformation"));
+        meta.setLore(Arrays.asList(CC.translate("&eLeft-Click&7 a book in your inventory to add it to this inventory."),
+                CC.translate("&eLeft-Click&7 a book in the item's inventory to return it to your inventory.")));
         item.setItemMeta(meta);
         return item;
     }
@@ -101,8 +101,8 @@ public class EnchantmentCoderInventory {
         String name = material.name().split("_")[1];
         ItemStack item = new ItemStack(material);
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(CC.translate("&4&l" + StringUtils.capitalize(name.toLowerCase())));
-        meta.setLore(Collections.singletonList(CC.translate("&cLeft-Click &7to edit &f&n" + name + "&7 enchantments.")));
+        meta.setDisplayName(CC.translate("&a&l" + StringUtils.capitalize(name.toLowerCase())));
+        meta.setLore(Collections.singletonList(CC.translate("&eLeft-Click &7to edit &f&n" + name + "&7 enchantments.")));
         item.setItemMeta(meta);
         return item;
     }

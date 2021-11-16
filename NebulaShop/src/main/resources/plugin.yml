@@ -1,0 +1,6 @@
+name: NebulaShop
+main: net.astropvp.NebulaShop
+version: 1.0
+commands:
+  nebula:
+    aliases: [nebulashop]

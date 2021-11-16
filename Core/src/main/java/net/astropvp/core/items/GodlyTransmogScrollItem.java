@@ -7,7 +7,6 @@ import com.rit.sucy.EnchantmentAPI;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
 import me.ifamasssxd.cosmicskycustoms.struct.InventoryInteractable;
 import me.ifamasssxd.cosmicskycustoms.struct.InventoryItemType;
-import net.astropvp.core.guis.GodlyTransmogGUI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -20,7 +19,7 @@ public class GodlyTransmogScrollItem extends CosmicItem implements InventoryInte
     }
 
     public ItemStack createItem(Player player, Object... objects) {
-        return applyItemData((new ItemBuilder(Material.PAPER, "&6&lGodly Transmog Scroll", new String[] { "&7Apply to equipment to &6&ncustomize", "&7the order of &5custom &denchantments", "&7displayed on the item.", "", "&6&oPlace scroll on item to apply." })).build()).build();
+        return applyItemData((new ItemBuilder(Material.PAPER, "&6&lGodly Transmog Scroll", "&7Apply to equipment to &6&ncustomize", "&7the order of &5custom &denchantments", "&7displayed on the item.", "", "&6&oPlace scroll on item to apply.")).build()).build();
     }
 
     public boolean acceptsInventoryClickType(InventoryItemType inventoryItemType) {
@@ -41,7 +40,6 @@ public class GodlyTransmogScrollItem extends CosmicItem implements InventoryInte
         if (EnchantmentAPI.getEnchantments(clicked).size() > 0) {
             e.setCancelled(true);
             player.setItemOnCursor(null);
-            (new GodlyTransmogGUI(player, (new NBTWrapper(clicked)).build().clone())).getInventory().open(player);
             player.getInventory().removeItem(clicked);
         }
     }
