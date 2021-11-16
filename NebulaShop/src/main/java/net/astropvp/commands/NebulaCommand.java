@@ -26,6 +26,7 @@ public class NebulaCommand implements CommandExecutor {
         if(args[0].equalsIgnoreCase("setitem") && args.length == 2) {
             NebulaShop.getInstance().getNebulaShopManager().setCurrentItem(player.getItemInHand());
             NebulaShop.getInstance().getNebulaShopManager().setCurrentPrice(Double.parseDouble(args[1]));
+            NebulaShop.getInstance().getNebulaShopManager().clearAlreadyBought();
             player.sendMessage(CC.Green + "Success!");
             return true;
         }

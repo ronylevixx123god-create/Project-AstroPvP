@@ -51,6 +51,10 @@ public class NebulaShopManager {
         this.alreadyBought.add(player.getUniqueId().toString());
     }
 
+    public void clearAlreadyBought() {
+        this.alreadyBought.clear();
+    }
+
 
 
 

@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="CustomBlocks" />
+        <module name="BlackAuctionHouse" />
         <module name="ItemSkins" />
         <module name="HotFix" />
         <module name="Enchantments" />
@@ -64,7 +65,6 @@
       <module name="AstroPvPGenBuckets" target="1.8" />
       <module name="AstroSpawners" target="1.8" />
       <module name="Backpacks" target="8" />
-      <module name="BlackAuctionHouse" target="8" />
       <module name="ClientComms" target="8" />
       <module name="Comms" target="8" />
       <module name="CrateBoxes" target="8" />

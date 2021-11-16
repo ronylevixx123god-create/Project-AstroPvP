@@ -55,10 +55,9 @@
         <module>AstroDiscordBot</module>
         <module>CCVerify</module>
         <module>AstroGenBuckets</module>
-        <module>AstroPvPGenBuckets</module>
         <module>GenBuckets</module>
-        <module>BlackAuctionHouse</module>
         <module>NebulaShop</module>
+        <module>bah</module>
     </modules>
 
     <build>
