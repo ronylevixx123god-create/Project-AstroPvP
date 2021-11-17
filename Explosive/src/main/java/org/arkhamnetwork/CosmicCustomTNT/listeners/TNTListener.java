@@ -57,6 +57,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import net.coreprotect.CoreProtect;
 import net.coreprotect.CoreProtectAPI;
 import net.minecraft.server.v1_8_R3.EntityTNTPrimed;
+import net.minecraft.server.v1_8_R3.Explosion;
 import org.arkhamnetwork.CosmicCustomTNT.CosmicCustomTNT;
 import org.arkhamnetwork.CosmicCustomTNT.enums.TNTTypes;
 import org.bukkit.Bukkit;
@@ -67,7 +68,9 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.block.CraftBlock;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftTNTPrimed;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -100,7 +103,7 @@ implements Listener {
     public TNTListener() {
         su = SilkUtil.hookIntoSilkSpanwers();
         this.coreProtectEnabled = new File("plugins/CoreProtect.jar").exists();
-        this.nonSolidBlocks = new ArrayList<Material>(Arrays.asList(new Material[]{Material.AIR, Material.SAND, Material.WATER, Material.LAVA, Material.STATIONARY_LAVA, Material.STATIONARY_WATER}));
+        this.nonSolidBlocks = new ArrayList<Material>(Arrays.asList(Material.AIR, Material.SAND, Material.WATER, Material.LAVA, Material.STATIONARY_LAVA, Material.STATIONARY_WATER));
     }
 
     @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
@@ -219,7 +222,8 @@ implements Listener {
                                         }
                                         break block18;
                                     }
-                                    if (tnt_type != TNTTypes.Lethal) break block21;
+                                    if (tnt_type != TNTTypes.Lethal)
+                                        break block21;
                                     for (int i = 0; i < 4; ++i) {
                                         this.spawnFastExplosion(tnt.getLocation());
                                     }
@@ -297,12 +301,13 @@ implements Listener {
                 }
                 break block18;
             }
-            if (tnt_type != TNTTypes.Silent) break block18;
-            double distance = this.silentTNTSoundRange;
-            for (Entity ent3 : tnt.getNearbyEntities(distance, distance * 2.0, distance)) {
-                if (!(ent3 instanceof Player)) continue;
-                ((Player)ent3).playSound(tnt.getLocation(), Sound.EXPLODE, 1.0f, 1.0f);
-            }
+            if (tnt_type != TNTTypes.Silent)
+                break block18;
+            e.setCancelled(true);
+            CraftWorld world = (CraftWorld) e.getEntity().getWorld();
+            Explosion explosion = new Explosion(world.getHandle(), ((CraftEntity)e.getEntity()).getHandle(), e.getEntity().getLocation().getX(), e.getEntity().getLocation().getY(), e.getEntity().getLocation().getZ(), 4f, false, true);
+            explosion.a();
+            explosion.a(false);
         }
     }
 
