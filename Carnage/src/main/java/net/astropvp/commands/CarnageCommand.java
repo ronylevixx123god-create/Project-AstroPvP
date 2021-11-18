@@ -3,6 +3,7 @@ package net.astropvp.commands;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.cosmicpvp.cosmicutils.utils.StringUtils;
+import com.massivecraft.factions.util.TimeUtil;
 import net.astropvp.Carnage;
 import net.astropvp.inventories.CarnageInventory;
 import org.bukkit.Bukkit;
@@ -20,8 +21,8 @@ public class CarnageCommand implements CommandExecutor {
             return true;
         Player player = (Player) sender;
         if(!sender.isOp() || args.length == 0) {
-            if(Carnage.getInstance().getCarnageManager().isPlayerOnCooldown(player)) {
-                sender.sendMessage(CC.RedB + "(!) " + CC.Red + "You are still on cooldown for " + NumberUtils.formatSeconds(Carnage.getInstance().getCarnageManager().getPlayerCooldown(player)) + ".");
+            if(Carnage.getInstance().getCarnageManager().isPlayerOnCooldown(player) && !player.isOp()) {
+                sender.sendMessage(CC.RedB + "(!) " + CC.Red + "You are still on cooldown for " + TimeUtil.formatSeconds(Carnage.getInstance().getCarnageManager().getPlayerCooldown(player)) + ".");
             } else {
                 player.openInventory(CarnageInventory.get());
                 Carnage.getInstance().getCarnageManager().registerCooldown(player);
@@ -41,7 +42,7 @@ public class CarnageCommand implements CommandExecutor {
                 return true;
             }
             if(Carnage.getInstance().getCarnageManager().removeCarnageItem(player.getItemInHand())) {
-                player.sendMessage(CC.GreenB + "(!) " + CC.Green + "You have successfully added " + player.getItemInHand().getItemMeta().getDisplayName() + CC.Green + " to the carnage loot.");
+                player.sendMessage(CC.GreenB + "(!) " + CC.Green + "You have successfully removed " + player.getItemInHand().getItemMeta().getDisplayName() + CC.Green + " to the carnage loot.");
                 return true;
             } else {
                 player.sendMessage(CC.RedB + "(!) " + CC.Red + "Item not found in carnage loot.");

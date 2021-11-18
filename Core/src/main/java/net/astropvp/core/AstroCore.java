@@ -274,6 +274,7 @@ public class AstroCore extends JavaPlugin {
 
         this.getServer().getPluginManager().registerEvents(new MagicalLavaBucket(), this);
         this.getServer().getPluginManager().registerEvents(new MagicalWaterBucket(), this);
+        getCommand("randomtp").setExecutor(new RandomTpCommand());
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, new AutoBroadcastTask(), 20L, 6000L);
 
         Bukkit.getScheduler().runTaskLater(this, ()->

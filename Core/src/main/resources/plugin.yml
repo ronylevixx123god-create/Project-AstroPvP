@@ -5,6 +5,8 @@ authors: [ Tucker, Bryside ]
 description: AstroCore
 depend: [Vault, CosmicPvPUtils, Essentials, Arkkit, TitleManager]
 commands:
+  randomtp:
+    aliases: ["tprandom"]
   bless:
     aliases: ['blessme']
   heal:

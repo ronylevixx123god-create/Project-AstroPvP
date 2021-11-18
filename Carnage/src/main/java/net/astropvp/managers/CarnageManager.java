@@ -26,14 +26,13 @@ public class CarnageManager {
     }
 
     public boolean isPlayerOnCooldown(Player player) {
-        return playersOnCooldown.get(player) - 300000L <= 0;
+        if(!this.playersOnCooldown.containsKey(player))
+            return false;
+        return this.playersOnCooldown.get(player) + 300000L >= System.currentTimeMillis();
     }
 
     public void registerCooldown(Player player) {
         playersOnCooldown.put(player, System.currentTimeMillis());
-        Bukkit.getScheduler().runTaskLaterAsynchronously(Carnage.getInstance(), () -> {
-            playersOnCooldown.remove(player);
-        }, 6000L);
     }
 
     public void addCarnageItem(ItemStack item) {
@@ -48,7 +47,7 @@ public class CarnageManager {
     }
 
     public long getPlayerCooldown(Player player) {
-        return (playersOnCooldown.get(player) - System.currentTimeMillis()) / 1000L;
+        return ((playersOnCooldown.get(player) + 300000L) - System.currentTimeMillis()) / 1000L;
     }
 
     public void saveConfig() {

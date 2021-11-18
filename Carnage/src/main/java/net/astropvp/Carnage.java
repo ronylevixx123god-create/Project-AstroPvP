@@ -2,6 +2,7 @@ package net.astropvp;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.astropvp.commands.CarnageCommand;
 import net.astropvp.managers.CarnageManager;
 import net.astropvp.utils.ConfigUtils;
 import org.bukkit.Bukkit;
@@ -24,6 +25,7 @@ public class Carnage extends JavaPlugin {
 
     public void onEnable() {
         instance = this;
+        getCommand("carnage").setExecutor(new CarnageCommand());
         File file = new File(this.getDataFolder() + File.separator + "config.yml");
         if (!file.exists()) {
             this.getConfig().addDefault("enabled", false);
@@ -35,6 +37,7 @@ public class Carnage extends JavaPlugin {
 
     public void onDisable() {
         this.carnageManager.saveConfig();
+        saveConfig();
         instance = null;
     }
 }
