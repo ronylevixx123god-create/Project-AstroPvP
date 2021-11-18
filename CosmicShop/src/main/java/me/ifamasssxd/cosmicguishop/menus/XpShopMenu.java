@@ -146,7 +146,7 @@ public class XpShopMenu{
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(CC.GreenB + "Astro Xp Shop");
         List<String> lore = Lists.newArrayList();
-        lore.add(CC.Gray + "This shop contains various me.astropvp.cratekeys.items that will help");
+        lore.add(CC.Gray + "This shop contains various items that will help");
         lore.add(CC.Gray + "you set up on AstroPvP");
         lore.add("");
         lore.add(CC.Green + "Your XP: " + CC.White + NumberFormat.getInstance().format(player.getTotalExperience()));

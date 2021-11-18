@@ -54,7 +54,7 @@ implements Listener {
                 return;
             }
             if (item.getAmount() > 1) {
-                event.getPlayer().sendMessage(CC.Red + "You cannot claim stacked disguise me.astropvp.cratekeys.items!");
+                event.getPlayer().sendMessage(CC.Red + "You cannot claim stacked disguise items!");
                 return;
             }
             event.setCancelled(true);

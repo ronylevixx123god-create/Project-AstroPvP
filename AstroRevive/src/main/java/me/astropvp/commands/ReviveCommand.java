@@ -110,7 +110,7 @@ public class ReviveCommand
         }
         if (args.length == 0) {
             sender.sendMessage("§7USAGE: §c/revive <player>");
-            sender.sendMessage("§7Revive a player with their most recent death me.astropvp.cratekeys.inventory.");
+            sender.sendMessage("§7Revive a player with their most recent death inventory.");
             return true;
         }
         Player player = (Player)((Object)sender);

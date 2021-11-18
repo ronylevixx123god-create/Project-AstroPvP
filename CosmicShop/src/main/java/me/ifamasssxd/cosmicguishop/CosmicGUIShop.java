@@ -57,7 +57,7 @@ public class CosmicGUIShop extends JavaPlugin {
         instance = this;
         plugin = this;
         FileConfiguration config = this.getConfig();
-        itemList = getConfig().getStringList("me.astropvp.cratekeys.items");
+        itemList = getConfig().getStringList("items");
         economy = this.getServer().getServicesManager().getRegistration(Economy.class).getProvider();
         this.shopManager = new ShopManager();
         try {

@@ -58,7 +58,7 @@ implements Listener {
             if (e.getCurrentItem() != null) {
                 GlobalKitUser user = CosmicGlobalKits.getPlugin().getGlobalKitUser(pl.getUniqueId());
                 if (user == null || user.isLoadingData()) {
-                    pl.sendMessage(CC.Red + "Please wait while your Global Kit me.astropvp.cratekeys.data loads...");
+                    pl.sendMessage(CC.Red + "Please wait while your Global Kit data loads...");
                     pl.closeInventory();
                     return;
                 }

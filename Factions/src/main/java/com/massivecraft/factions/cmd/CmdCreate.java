@@ -99,7 +99,7 @@ public class CmdCreate
         this.msg("");
         this.msg(ChatColor.WHITE + "Use " + ChatColor.UNDERLINE + "/f access" + CC.White + " and " + CC.WhiteU + "/f perm" + CC.White + " to edit claim access.");
         this.msg(ChatColor.WHITE + "Use " + ChatColor.UNDERLINE + "/f audit" + ChatColor.WHITE + " to view recent faction activity.");
-        this.msg(ChatColor.WHITE + "Use " + ChatColor.UNDERLINE + "/f help" + ChatColor.WHITE + " to review all faction me.astropvp.cratekeys.commands.");
+        this.msg(ChatColor.WHITE + "Use " + ChatColor.UNDERLINE + "/f help" + ChatColor.WHITE + " to review all faction commands.");
         this.msg("");
         if (Conf.bankEnabled) {
             faction.money = 0.0;

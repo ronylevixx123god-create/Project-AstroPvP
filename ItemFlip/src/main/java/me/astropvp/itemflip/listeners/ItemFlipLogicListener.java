@@ -160,7 +160,7 @@ public class ItemFlipLogicListener implements Listener {
         Player other = (player == ((ItemFlipPlayerData)data.getData().get(0)).getPlayer()) ? ((ItemFlipPlayerData)data.getData().get(1)).getPlayer() : ((ItemFlipPlayerData)data.getData().get(0)).getPlayer();
         data.remove();
         other.sendMessage(CC.RedB + "(!) " + CC.Red + player.getName() + " has closed out of the Item Flip Inventory!");
-        player.sendMessage(CC.RedB + "(!) " + CC.Red + "You have closed out of the item flip me.astropvp.cratekeys.inventory!");
+        player.sendMessage(CC.RedB + "(!) " + CC.Red + "You have closed out of the item flip inventory!");
         other.closeInventory();
         ((ItemFlipPlayerData)data.getData().get(0)).getItems().stream().forEach(item -> ((ItemFlipPlayerData)data.getData().get(0)).getPlayer().getInventory().addItem(new ItemStack[] { item }));
         ((ItemFlipPlayerData)data.getData().get(1)).getItems().stream().forEach(item -> ((ItemFlipPlayerData)data.getData().get(1)).getPlayer().getInventory().addItem(new ItemStack[] { item }));

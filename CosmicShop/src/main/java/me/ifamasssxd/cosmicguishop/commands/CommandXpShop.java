@@ -60,7 +60,7 @@ implements CommandExecutor {
             }
             i = i + ":" + cost;
             list.set(list.size() - 1, i);
-            CosmicGUIShop.getInstance().getConfig().set("me.astropvp.cratekeys.items", list);
+            CosmicGUIShop.getInstance().getConfig().set("items", list);
             CosmicGUIShop.getInstance().saveConfig();
             CosmicGUIShop.getInstance().loadConfig();
             CosmicGUIShop.getInstance().setItemList(list);

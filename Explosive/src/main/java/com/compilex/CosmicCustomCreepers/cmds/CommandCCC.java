@@ -42,7 +42,7 @@ implements CommandExecutor {
             } else {
                 p.getWorld().dropItem(p.getLocation(), i);
             }
-            sender.sendMessage(ChatColor.YELLOW + "Added 1x " + ct.name() + " Creeper to " + p.getName() + "'s me.astropvp.cratekeys.inventory.");
+            sender.sendMessage(ChatColor.YELLOW + "Added 1x " + ct.name() + " Creeper to " + p.getName() + "'s inventory.");
         }
         return true;
     }

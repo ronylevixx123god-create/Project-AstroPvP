@@ -60,6 +60,7 @@
         <module>bah</module>
         <module>CustomItem</module>
         <module>CustomTNT</module>
+        <module>Carnage</module>
     </modules>
 
     <build>

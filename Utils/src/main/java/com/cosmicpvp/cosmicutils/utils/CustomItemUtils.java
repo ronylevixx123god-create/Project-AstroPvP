@@ -250,7 +250,7 @@ public class CustomItemUtils {
         if (p.getInventory().firstEmpty() != -1) {
             p.getInventory().addItem(i);
         } else {
-            Bukkit.getLogger().info("[CosmicDropPackages] " + p.getName() + " did not have me.astropvp.cratekeys.inventory space for " + i + ", dropping on ground!");
+            Bukkit.getLogger().info("[CosmicDropPackages] " + p.getName() + " did not have inventory space for " + i + ", dropping on ground!");
             p.getWorld().dropItem(p.getLocation(), i);
         }
     }

@@ -95,7 +95,7 @@ implements CommandExecutor {
             return true;
         }
         if (PlayerUtil.giveOrDropProtectedItem(pl, CosmicDisguiseAPI.createRedeemableDisguise(type), -1)) {
-            sender.sendMessage(CC.Red + "Disguise added into " + pl.getName() + "'s me.astropvp.cratekeys.inventory!");
+            sender.sendMessage(CC.Red + "Disguise added into " + pl.getName() + "'s inventory!");
         } else {
             sender.sendMessage(CC.Red + "Disguise dropped on floor for " + pl.getName() + "!");
         }

@@ -38,6 +38,7 @@
         <module name="GenBuckets" />
         <module name="ItemFlip" />
         <module name="SandBots" />
+        <module name="Carnage" />
         <module name="SpaceChests" />
         <module name="Collect" />
         <module name="AstroItemFlip" />

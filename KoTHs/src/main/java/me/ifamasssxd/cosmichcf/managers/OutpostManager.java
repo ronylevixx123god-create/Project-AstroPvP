@@ -94,7 +94,7 @@ public class OutpostManager {
 
     public void sellStronghold(Player player) {
         if (!HCFOutpostAPI.isControllingOutpost(player, OutpostType.THE_GREAT_HALL) && !this.playerHasStrongholdPetAbility(player)) {
-            player.sendMessage(CC.Red + "You must be controlling the " + CC.AquaB + "Frozen" + CC.Red + " Stronghold to sell me.astropvp.cratekeys.items!");
+            player.sendMessage(CC.Red + "You must be controlling the " + CC.AquaB + "Frozen" + CC.Red + " Stronghold to sell items!");
             return;
         }
         HashMap<Material, Integer> sellCount = new HashMap<Material, Integer>();
@@ -142,7 +142,7 @@ public class OutpostManager {
                 e.printStackTrace();
             }
         } else {
-            player.sendMessage(CC.RedB + "(!) " + CC.Red + "No valid me.astropvp.cratekeys.items found to sell!");
+            player.sendMessage(CC.RedB + "(!) " + CC.Red + "No valid items found to sell!");
         }
     }
 
