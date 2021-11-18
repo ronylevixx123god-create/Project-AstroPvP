@@ -238,6 +238,10 @@ implements Listener {
         CosmicKOTHPlugin.get_().getOutpostManager().onBlockPlace(event);
     }
 
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)
+    public void onBlockPlaceMONITOR(BlockPlaceEvent event) {
+        CosmicKOTHPlugin.get_().getOutpostManager().onBlockPlaceMONITOR(event);
+    }
 
 }
 

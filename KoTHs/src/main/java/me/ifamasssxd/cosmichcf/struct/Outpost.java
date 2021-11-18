@@ -71,15 +71,17 @@ import com.google.common.collect.Lists;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
-import net.minecraft.server.v1_8_R3.BlockPosition;
-import net.minecraft.server.v1_8_R3.PacketPlayOutBlockBreakAnimation;
+import net.minecraft.server.v1_8_R3.*;
 import org.arkhamnetwork.Arkkit.patches.EquipmentLootboxes;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.*;
+import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -604,25 +606,21 @@ public abstract class Outpost {
         this.blockMiningHolograms.clear();
     }
 
-    /*private void breakBlockNaturally(Player player, Block bukkitBlock) {
+    private void breakBlockNaturally(Player player, Block bukkitBlock) {
         EntityPlayer entityPlayer = ((CraftPlayer)player).getHandle();
         WorldServer server = ((CraftWorld)bukkitBlock.getWorld()).getHandle();
-        net.minecraft.server.v1_8_R3.Block block = (net.minecraft.server.v1_8_R3.Block) server.getType(new BlockPosition(bukkitBlock.getX(), bukkitBlock.getY(), bukkitBlock.getZ());
-        int l = server.getData(bukkitBlock.getX(), bukkitBlock.getY(), bukkitBlock.getZ());
-        server.a((EntityHuman)entityPlayer, 2001, bukkitBlock.getX(), bukkitBlock.getY(), bukkitBlock.getZ(), net.minecraft.server.v1_8_R3.Block.getId((net.minecraft.server.v1_7_R4.Block)block) + (l << 12));
-        ItemStack itemstack = entityPlayer.bF();
-        boolean flag = this.d(server, entityPlayer, bukkitBlock.getX(), bukkitBlock.getY(), bukkitBlock.getZ());
-        boolean flag1 = entityPlayer.a(block);
+        net.minecraft.server.v1_8_R3.Block block =  server.getType(new BlockPosition(bukkitBlock.getX(), bukkitBlock.getY(), bukkitBlock.getZ())).getBlock();
+        server.a((EntityHuman)entityPlayer, new BlockPosition(bukkitBlock.getX(), bukkitBlock.getY(), bukkitBlock.getZ()));
+        net.minecraft.server.v1_8_R3.ItemStack itemstack = entityPlayer.bA();
+        boolean flag = d(server, entityPlayer, bukkitBlock.getX(), bukkitBlock.getY(), bukkitBlock.getZ());
         if (itemstack != null) {
-            itemstack.a((World)server, block, bukkitBlock.getX(), bukkitBlock.getY(), bukkitBlock.getZ(), (EntityHuman)entityPlayer);
-            if (itemstack.count == 0) {
-                entityPlayer.bG();
-            }
+            itemstack.a(server, (net.minecraft.server.v1_8_R3.Block) block, new BlockPosition(bukkitBlock.getX(), bukkitBlock.getY(), bukkitBlock.getZ()), (EntityHuman)entityPlayer);
+            if (itemstack.count == 0)
+                entityPlayer.ca();
         }
-        if (flag && flag1) {
-            block.a((World)server, (EntityHuman)entityPlayer, bukkitBlock.getX(), bukkitBlock.getY(), bukkitBlock.getZ(), l);
-        }
-    }*/
+        if (flag)
+            block.a(server, new BlockPosition(bukkitBlock.getX(), bukkitBlock.getY(), bukkitBlock.getZ()), block.getBlockData(), (EntityHuman)entityPlayer);
+    }
 
     public boolean isInsideSellRoom(Player player, Set<String> regions) {
         return this.contains("sell_room", regions) && (this.contains(this.getInternalOutpostName(), regions) || this.contains(this.getRegionName(), regions));
@@ -674,16 +672,14 @@ public abstract class Outpost {
         return retr;
     }
 
-    /*private boolean d(WorldServer world, EntityPlayer player, int i, int j, int k) {
-        net.minecraft.server.v1_8_R3.Block block = world.getType(i, j, k);
-        int l = world.getData(i, j, k);
-        block.a((World)world, i, j, k, l, (EntityHuman)player);
-        boolean flag = world.setAir(i, j, k);
-        if (flag) {
-            block.postBreak((World)world, i, j, k, l);
-        }
+    private boolean d(WorldServer world, EntityPlayer player, int i, int j, int k) {
+        net.minecraft.server.v1_8_R3.Block block = world.getType(new BlockPosition(i, j, k)).getBlock();
+        block.a((net.minecraft.server.v1_8_R3.World) world, new BlockPosition(i, j, k), block.getBlockData(), (EntityHuman)player);
+        boolean flag = world.setAir(new BlockPosition(i, j, k));
+        if (flag)
+            block.postBreak(world, new BlockPosition(i, j, k), block.getBlockData());
         return flag;
-    }*/
+    }
 
     public String getPrefix() {
         return this.prefix;
