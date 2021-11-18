@@ -20,12 +20,8 @@ public class CarnageCommand implements CommandExecutor {
         if(!(sender instanceof Player))
             return true;
         Player player = (Player) sender;
-        if (sender.isOp() && args.length == 0) {
-            player.openInventory(CarnageInventory.get());
-            return true;
-        }
         if(!sender.isOp() || args.length == 0) {
-            if(!Carnage.getInstance().isCarnageEnabled()) {
+            if(!Carnage.getInstance().isCarnageEnabled() && !player.isOp()) {
                 player.sendMessage(CC.translate("&c&l(!)&c Carnage mode is currently not enabled."));
                 return true;
 
