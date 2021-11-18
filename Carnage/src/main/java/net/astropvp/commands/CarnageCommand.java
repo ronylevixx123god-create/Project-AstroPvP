@@ -20,11 +20,19 @@ public class CarnageCommand implements CommandExecutor {
         if(!(sender instanceof Player))
             return true;
         Player player = (Player) sender;
+        if (sender.isOp() && args.length == 0) {
+            player.openInventory(CarnageInventory.get());
+            return true;
+        }
         if(!sender.isOp() || args.length == 0) {
-            if(!Carnage.getInstance().isCarnageEnabled())
+            if(!Carnage.getInstance().isCarnageEnabled()) {
+                player.sendMessage(CC.translate("&c&l(!)&c Carnage mode is currently not enabled."));
                 return true;
+
+            }
             if(Carnage.getInstance().getCarnageManager().isPlayerOnCooldown(player) && !player.isOp()) {
                 sender.sendMessage(CC.RedB + "(!) " + CC.Red + "You are still on cooldown for " + TimeUtil.formatSeconds(Carnage.getInstance().getCarnageManager().getPlayerCooldown(player)) + ".");
+                return true;
             } else {
                 player.openInventory(CarnageInventory.get());
                 Carnage.getInstance().getCarnageManager().registerCooldown(player);
@@ -54,16 +62,17 @@ public class CarnageCommand implements CommandExecutor {
             if(Carnage.getInstance().isCarnageEnabled()) {
                 Carnage.getInstance().setCarnageEnabled(false);
                 Bukkit.broadcastMessage(StringUtils.getCenteredMessage(""));
-                Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.DarkGray + "[-- " + CC.DarkRedB + "CARNAGE ENABLED " + CC.DarkGray + "--]"));
-                Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.DarkGray + "Use /carnage to access."));
-                Bukkit.broadcastMessage(StringUtils.getCenteredMessage(""));
+                Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&4&lCARNAGE MODE &8- &c&lDISABLED")));
+                Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.DarkGray + "You can no longer use /carnage."));
+
             } else {
                 Carnage.getInstance().setCarnageEnabled(true);
                 Bukkit.broadcastMessage(StringUtils.getCenteredMessage(""));
-                Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.DarkGray + "[-- " + CC.DarkRedB + "CARNAGE DISABLED " + CC.DarkGray + "--]"));
-                Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.DarkGray + "You can no longer use /carnage."));
-                Bukkit.broadcastMessage(StringUtils.getCenteredMessage(""));
+                Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&4&lCARNAGE MODE &8- &a&lENABLED")));
+                Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.DarkGray + "Use /carnage to access."));
+
             }
+            Bukkit.broadcastMessage(StringUtils.getCenteredMessage(""));
 
         }
         return false;
