@@ -87,10 +87,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 @Setter
@@ -143,6 +140,11 @@ public class AstroCore extends JavaPlugin {
     private HashMap<Faction, Integer> claimsOnInfernal;
 
     public int getClaimsOnInfernal(Faction faction) {
+        if(!this.claimsOnInfernal.containsKey(faction)) {
+            if(this.getConfig().contains("infernal-claims." + faction.getTag())) {
+                this.claimsOnInfernal.put(faction, getConfig().getInt("infernal-claims." + faction));
+            }
+        }
         return this.claimsOnInfernal.get(faction);
     }
 
@@ -153,6 +155,11 @@ public class AstroCore extends JavaPlugin {
     private HashMap<Faction, Integer> claimsOnFrozen;
 
     public int getClaimsOnFrozen(Faction faction) {
+        if(!this.claimsOnFrozen.containsKey(faction)) {
+            if(this.getConfig().contains("frozen-claims." + faction.getTag())) {
+                this.claimsOnFrozen.put(faction, getConfig().getInt("frozen-claims." + faction));
+            }
+        }
         return this.claimsOnFrozen.get(faction);
     }
 
@@ -163,6 +170,11 @@ public class AstroCore extends JavaPlugin {
     private HashMap<Faction, Integer> claimsOnDesert;
 
     public int getClaimsOnDesert(Faction faction) {
+        if(!this.claimsOnDesert.containsKey(faction)) {
+            if(this.getConfig().contains("desert-claims." + faction.getTag())) {
+                this.claimsOnDesert.put(faction, getConfig().getInt("desert-claims." + faction));
+            }
+        }
         return this.claimsOnDesert.get(faction);
     }
 
@@ -515,6 +527,32 @@ public class AstroCore extends JavaPlugin {
         this.coinFlipManager.saveToggles();
 
         this.toggleManager.saveToggles();
+
+        Set infernalClaims = this.claimsOnInfernal.entrySet();
+        Iterator infernalIterator = infernalClaims.iterator();
+        while(infernalIterator.hasNext()) {
+            Map.Entry me = (Map.Entry) infernalIterator.next();
+            Faction faction = (Faction) me.getKey();
+            getConfig().set("infernal-claims." + faction.getTag(), me.getValue());
+        }
+
+        Set frozenClaims = this.claimsOnFrozen.entrySet();
+        Iterator frozenIterator = frozenClaims.iterator();
+        while(frozenIterator.hasNext()) {
+            Map.Entry me = (Map.Entry) frozenIterator.next();
+            Faction faction = (Faction) me.getKey();
+            getConfig().set("frozen-claims." + faction.getTag(), me.getValue());
+        }
+
+        Set desertClaims = this.claimsOnDesert.entrySet();
+        Iterator desertIterator = desertClaims.iterator();
+        while(desertIterator.hasNext()) {
+            Map.Entry me = (Map.Entry) desertIterator.next();
+            Faction faction = (Faction) me.getKey();
+            getConfig().set("desert-claims." + faction.getTag(), me.getValue());
+        }
+
+        saveConfig();
 
         instance = null;
     }

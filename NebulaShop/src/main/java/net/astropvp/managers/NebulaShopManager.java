@@ -41,6 +41,7 @@ public class NebulaShopManager {
         NebulaShop.getInstance().getConfig().set("current-price", this.currentPrice);
         NebulaShop.getInstance().getConfig().set("shop-location", ConfigUtils.locationToString(this.shopLocation));
         NebulaShop.getInstance().getConfig().set("already-bought", this.alreadyBought);
+        NebulaShop.getInstance().saveConfig();
     }
 
     public boolean hasAlreadyBought(Player player) {
