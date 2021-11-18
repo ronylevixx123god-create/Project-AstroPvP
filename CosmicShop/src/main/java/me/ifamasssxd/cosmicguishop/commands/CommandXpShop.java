@@ -42,7 +42,7 @@ implements CommandExecutor {
                 player.sendMessage(CC.Red + "You must be holding an item in your hand");
                 return true;
             }
-            List<String> list = CosmicGUIShop.getInstance().getConfig().getStringList("me.astropvp.cratekeys.items");
+            List<String> list = CosmicGUIShop.getInstance().getItemList();
             for (String string : list) {
                 ItemStack stack = Base64Utils.getItem(string);
                 if (!item.equals(stack)) continue;
@@ -63,6 +63,7 @@ implements CommandExecutor {
             CosmicGUIShop.getInstance().getConfig().set("me.astropvp.cratekeys.items", list);
             CosmicGUIShop.getInstance().saveConfig();
             CosmicGUIShop.getInstance().loadConfig();
+            CosmicGUIShop.getInstance().setItemList(list);
             player.sendMessage(CC.Green + "Added item " + item.getAmount() + "x " + item.getItemMeta().getDisplayName() + CC.Green + " costing " + cost + "xp");
         } else if (args[0].equalsIgnoreCase("removeitem") && args.length == 1) {
             int i;
@@ -71,7 +72,7 @@ implements CommandExecutor {
                 player.sendMessage(CC.Red + "You must be holding an item in your hand");
                 return true;
             }
-            List<String> list = CosmicGUIShop.getInstance().getConfig().getStringList("me.astropvp.cratekeys.items");
+            List<String> list = CosmicGUIShop.getInstance().getItemList();
             ItemStack[] items = new ItemStack[list.size()];
             for (i = 0; i < list.size(); ++i) {
                 String l = list.get(i);
@@ -84,6 +85,7 @@ implements CommandExecutor {
                 CosmicGUIShop.getInstance().getConfig().set("me.astropvp.cratekeys.items", (Object)list);
                 CosmicGUIShop.getInstance().saveConfig();
                 CosmicGUIShop.getInstance().loadConfig();
+                CosmicGUIShop.getInstance().setItemList(list);
                 player.sendMessage(CC.Green + "Removed item + " + item.getItemMeta().getDisplayName() + CC.Green + " from the xp shop!");
                 return true;
             }

@@ -11,6 +11,8 @@
 package me.ifamasssxd.cosmicguishop;
 
 import com.google.common.collect.Lists;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.SneakyThrows;
 import me.ifamasssxd.cosmicguishop.commands.CommandBankNote;
 import me.ifamasssxd.cosmicguishop.commands.CommandShop;
@@ -31,12 +33,17 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CosmicGUIShop extends JavaPlugin {
     private static CosmicGUIShop instance;
     private static CosmicGUIShop plugin;
     private static Economy economy;
     private ShopManager shopManager;
+
+    @Setter
+    @Getter
+    List<String> itemList;
 
     public static CosmicGUIShop get() {
         return instance;
@@ -50,7 +57,7 @@ public class CosmicGUIShop extends JavaPlugin {
         instance = this;
         plugin = this;
         FileConfiguration config = this.getConfig();
-
+        itemList = getConfig().getStringList("me.astropvp.cratekeys.items");
         economy = this.getServer().getServicesManager().getRegistration(Economy.class).getProvider();
         this.shopManager = new ShopManager();
         try {

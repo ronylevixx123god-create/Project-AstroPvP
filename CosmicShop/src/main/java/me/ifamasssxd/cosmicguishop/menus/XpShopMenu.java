@@ -54,8 +54,6 @@ public class XpShopMenu{
     }
 
 
-    List<String> itemList = CosmicGUIShop.getInstance().getConfig().getStringList("me.astropvp.cratekeys.items");
-
 
     public XpShopMenu(Player player) {
 
@@ -95,7 +93,7 @@ public class XpShopMenu{
         expShopUI.setItem(6, 5, new GuiItem(createGUIItem(player)));
 
 
-        for (String s : itemList) {
+        for (String s : CosmicGUIShop.getInstance().getItemList()) {
             ItemStack item = Base64Utils.getItem(s);
             ItemMeta meta = item.getItemMeta();
             List<String> lore = meta.hasLore() ? meta.getLore() : new ArrayList<>();

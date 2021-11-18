@@ -20,10 +20,14 @@ public class AuctionManager {
 
     private List<ItemStack> possibleItems;
 
+    @Getter
     private List<PastAuction> pastAuctions;
 
     @Getter
     private Auction currentAuction;
+
+    @Getter
+    private long lastAuction;
 
     public AuctionManager() {
         this.currentAuction = null;
@@ -35,6 +39,7 @@ public class AuctionManager {
         for(String s : possibleItems) {
             this.possibleItems.add(ConfigUtils.getItem(s));
         }
+        this.lastAuction = BlackAuctionHouse.getInstance().getConfig().getLong("last-auction");
     }
 
     public void startAuction() {

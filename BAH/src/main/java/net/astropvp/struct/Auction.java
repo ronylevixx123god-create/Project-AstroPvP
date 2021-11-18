@@ -12,16 +12,22 @@ import org.bukkit.inventory.ItemStack;
 import java.util.UUID;
 
 public class Auction {
+    @Getter
     private ItemStack item;
 
+    @Getter
     private UUID topBidder;
 
+    @Getter
     private long endTime;
 
+    @Getter
     private double bid;
 
+    @Getter
     private double increment;
 
+    @Getter
     private boolean open;
 
     public Auction(ItemStack item) {
