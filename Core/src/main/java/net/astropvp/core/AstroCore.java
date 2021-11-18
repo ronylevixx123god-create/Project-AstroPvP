@@ -15,6 +15,7 @@ import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.I18n;
 import com.earth2me.essentials.api.NoLoanPermittedException;
 import com.earth2me.essentials.api.UserDoesNotExistException;
+import com.massivecraft.factions.Faction;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import io.puharesource.mc.titlemanager.api.v2.TitleManagerAPI;
 import lombok.Getter;
@@ -139,6 +140,36 @@ public class AstroCore extends JavaPlugin {
 // CoreChunkFinder
     @Getter private boolean tntDebug = false;
 
+    private HashMap<Faction, Integer> claimsOnInfernal;
+
+    public int getClaimsOnInfernal(Faction faction) {
+        return this.claimsOnInfernal.get(faction);
+    }
+
+    public void setClaimsOnInfernal(Faction faction, int i) {
+        this.claimsOnInfernal.put(faction, i);
+    }
+
+    private HashMap<Faction, Integer> claimsOnFrozen;
+
+    public int getClaimsOnFrozen(Faction faction) {
+        return this.claimsOnFrozen.get(faction);
+    }
+
+    public void setClaimsOnFrozen(Faction faction, int i) {
+        this.claimsOnFrozen.put(faction, i);
+    }
+
+    private HashMap<Faction, Integer> claimsOnDesert;
+
+    public int getClaimsOnDesert(Faction faction) {
+        return this.claimsOnDesert.get(faction);
+    }
+
+    public void setClaimsOnDesert(Faction faction, int i) {
+        this.claimsOnDesert.put(faction, i);
+    }
+
     private SoulItemListener soulItemListener;
 
     @Getter private EnchantmentCoderManager enchantmentCoderManager;
@@ -217,6 +248,11 @@ public class AstroCore extends JavaPlugin {
 
 
         this.grindingMessages = new HashMap<>();
+        this.claimsOnInfernal = new HashMap<>();
+        this.claimsOnDesert = new HashMap<>();
+        this.claimsOnFrozen = new HashMap<>();
+
+        this.getServer().getPluginManager().registerEvents(new WarzoneClaimListener(), this);
 
 
         this.getServer().getPluginManager().registerEvents(new ChatListener(), this);
