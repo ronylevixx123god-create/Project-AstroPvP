@@ -21,6 +21,8 @@ public class CarnageCommand implements CommandExecutor {
             return true;
         Player player = (Player) sender;
         if(!sender.isOp() || args.length == 0) {
+            if(!Carnage.getInstance().isCarnageEnabled())
+                return true;
             if(Carnage.getInstance().getCarnageManager().isPlayerOnCooldown(player) && !player.isOp()) {
                 sender.sendMessage(CC.RedB + "(!) " + CC.Red + "You are still on cooldown for " + TimeUtil.formatSeconds(Carnage.getInstance().getCarnageManager().getPlayerCooldown(player)) + ".");
             } else {

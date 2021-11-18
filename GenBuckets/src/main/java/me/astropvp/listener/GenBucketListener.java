@@ -1,7 +1,9 @@
 package me.astropvp.listener;
 
+import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.FPlayer;
@@ -93,15 +95,16 @@ public class GenBucketListener implements Listener {
                         }
 
                         double price = bucket.getPrice();
-                        if (!this.plugin.getEconomy().has(player, price)) {
+                        if (!EconomyUtils.hasBalance(player, price)) {
+
                             KrizzUtil.sendMessage((LivingEntity)player, (String)"&c&l(!)&c You do not have enough money to use this bucket.");
                             event.setCancelled(true);
                             player.updateInventory();
                             return;
                         }
 
-                        this.plugin.getEconomy().withdrawPlayer(player, price);
-                        KrizzUtil.sendMessage((LivingEntity)player, (String)("&c&l- " + this.plugin.getEconomy().format(price)));
+                        EconomyUtils.withdrawBalance(player, price);
+                        KrizzUtil.sendMessage((LivingEntity)player, (String)("&c&l- " + NumberUtils.formatMoney(price)));
                         bucket.getBucket().startTask(player, event.getBlockClicked(), blockFace, event.getBlockFace(), bucket);
                         KrizzUtil.playSound(player, Sound.ORB_PICKUP);
                         return;

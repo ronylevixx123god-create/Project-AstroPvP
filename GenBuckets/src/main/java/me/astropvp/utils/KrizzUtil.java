@@ -1,13 +1,6 @@
 package me.astropvp.utils;
 
-// =============================================== //
-// Recompile disabled. Please run Recaf with a JDK //
-// =============================================== //
 
-// Decompiled with: FernFlower
-// Class Version: 8
-
-import com.earth2me.essentials.Essentials;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -68,17 +61,6 @@ public class KrizzUtil {
 
     public static ItemStack createEntitySkull(EntityType entityType, String name, String... lore) {
         return createPlayerSkull("MHF_" + entityType.name(), name, lore);
-    }
-
-    public static ItemStack findEssItem(String itemName) {
-        try {
-            Essentials ess = (Essentials)Bukkit.getPluginManager().getPlugin("Essentials");
-            return ess.getItemDb().get(itemName);
-        } catch (Exception var2) {
-            System.out.println("could not find item: " + itemName);
-            var2.printStackTrace();
-            return null;
-        }
     }
 
     public static List<ItemStack> removeNulls(List<ItemStack> itemStacks) {
