@@ -57,5 +57,6 @@ public class CarnageManager {
             strings.add(ConfigUtils.toBase64(new ItemStack[]{item}, 9));
         }
         Carnage.getInstance().getConfig().set("carnage-items", strings);
+        Carnage.getInstance().getConfig().set("enabled", Carnage.getInstance().isCarnageEnabled());
     }
 }

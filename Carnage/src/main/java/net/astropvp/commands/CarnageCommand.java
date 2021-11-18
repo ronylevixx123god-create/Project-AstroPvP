@@ -2,8 +2,10 @@ package net.astropvp.commands;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
+import com.cosmicpvp.cosmicutils.utils.StringUtils;
 import net.astropvp.Carnage;
 import net.astropvp.inventories.CarnageInventory;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -45,6 +47,21 @@ public class CarnageCommand implements CommandExecutor {
                 player.sendMessage(CC.RedB + "(!) " + CC.Red + "Item not found in carnage loot.");
                 return true;
             }
+        } if(args[0].equalsIgnoreCase("toggle")) {
+            if(Carnage.getInstance().isCarnageEnabled()) {
+                Carnage.getInstance().setCarnageEnabled(false);
+                Bukkit.broadcastMessage(StringUtils.getCenteredMessage(""));
+                Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.DarkGray + "[-- " + CC.DarkRedB + "CARNAGE ENABLED " + CC.DarkGray + "--]"));
+                Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.DarkGray + "Use /carnage to access."));
+                Bukkit.broadcastMessage(StringUtils.getCenteredMessage(""));
+            } else {
+                Carnage.getInstance().setCarnageEnabled(true);
+                Bukkit.broadcastMessage(StringUtils.getCenteredMessage(""));
+                Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.DarkGray + "[-- " + CC.DarkRedB + "CARNAGE DISABLED " + CC.DarkGray + "--]"));
+                Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.DarkGray + "You can no longer use /carnage."));
+                Bukkit.broadcastMessage(StringUtils.getCenteredMessage(""));
+            }
+
         }
         return false;
     }
