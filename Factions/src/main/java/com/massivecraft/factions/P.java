@@ -312,6 +312,8 @@ public class P extends MPlugin {
         this.getServer().getPluginManager().registerEvents(new InvalidDeathFix(), this);
         this.getServer().getPluginManager().registerEvents(new VIPCommandBlocker(), this);
         this.getServer().getPluginManager().registerEvents(new NetherMobSpawnerListener(), this);
+        getServer().getPluginManager().registerEvents(new ShieldInventoryListener(), this);
+        getServer().getPluginManager().registerEvents(new FactionShieldListener(), this);
 
         //getServer().getPluginManager().registerEvents((Listener)new BoosterListener(this.boosterManager), (Plugin)this);
     }

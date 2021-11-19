@@ -36,7 +36,8 @@ public enum RolePerm {
     EDIT_PLAYER_PERMS("Edit /f perms", "Grants the ability to Edit\nFaction Player Permissions", Role.COLEADER),
     F_TNT_DEPOSIT("/f tnt deposit", "Grants the ability to deposit TNT into the /f tnt inventory.", Role.NORMAL, "deposit TNT"),
     F_TNT_WITHDRAW("/f tnt withdraw", "Grants the ability to withdraw TNT into the /f tnt inventory.", Role.MODERATOR, "withdraw TNT"),
-    F_CHEST("/f chest", "Grants the ability to access the /f chest inventory.", Role.MODERATOR);
+    F_CHEST("/f chest", "Grants the ability to access the /f chest inventory.", Role.MODERATOR),
+    F_SHIELD("/f shield", "Grants the ability to edit the /f shield.", Role.COLEADER);
 
     private String display;
     private String description;
