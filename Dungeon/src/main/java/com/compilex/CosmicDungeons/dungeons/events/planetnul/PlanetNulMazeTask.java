@@ -31,8 +31,8 @@ import org.github.paperspigot.Title;
 
 public class PlanetNulMazeTask
 extends BukkitRunnable {
-    private PlanetNulDungeon dungeon;
-    private List<Player> affectedPlayers;
+    private final PlanetNulDungeon dungeon;
+    private final List<Player> affectedPlayers;
     private int loops = 0;
 
     public PlanetNulMazeTask(PlanetNulDungeon dungeon) {
@@ -46,7 +46,7 @@ extends BukkitRunnable {
 
     public void run() {
         ++this.loops;
-        this.dungeon.getDungeonEvents().chestLocations.stream().filter(l -> !this.dungeon.getDungeonEvents().announcedChestLocations.contains(l)).forEach(loc -> ParticleEffect.playEffect((ParticleEffect)ParticleEffect.ENCHANTMENT_TABLE, (Location)loc, (float)1.0f, (int)24));
+        this.dungeon.getDungeonEvents().chestLocations.stream().filter(l -> !this.dungeon.getDungeonEvents().announcedChestLocations.contains(l)).forEach(l -> ParticleEffect.playEffect((ParticleEffect)ParticleEffect.ENCHANTMENT_TABLE, (Location)l, (float)1.0f, (int)24));
         for (Player p2 : this.dungeon.getPlayers()) {
             DungeonPlayer dp = DungeonsAPI.get().getPlayerDungeonData(p2);
             if (dp.getCurrentDungeon() == null || !dp.getCurrentDungeon().equals(this.dungeon)) continue;
