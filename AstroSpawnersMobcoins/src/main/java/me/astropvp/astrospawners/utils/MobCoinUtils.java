@@ -29,9 +29,7 @@ public class MobCoinUtils {
     public static boolean isCoinsNote(ItemStack itemStack) {
         if (itemStack.getType() == null || itemStack.getType() != Material.DOUBLE_PLANT) {
             NBTWrapper wrapper = new NBTWrapper(itemStack);
-            if (!wrapper.hasKey("coinsData")) {
-                return false;
-            }
+            return wrapper.hasKey("coinsData");
         }
         return true;
 
