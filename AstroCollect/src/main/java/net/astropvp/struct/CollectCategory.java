@@ -1,6 +1,5 @@
 package net.astropvp.struct;
 
-import net.astropvp.inventories.CategoryInventory;
 import org.apache.commons.lang3.ArrayUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
