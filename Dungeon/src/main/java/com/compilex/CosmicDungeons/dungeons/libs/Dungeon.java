@@ -450,7 +450,6 @@ public class Dungeon {
 
     public Dungeon(World dungeonWorld, DungeonType type, String dungeonName, LinkedList<String> dungeonDescription) {
         this.world = dungeonWorld;
-        Validate.notNull((Object)this.world);
         this.worldName = this.world.getName();
         this.dungeonName = ChatColor.translateAlternateColorCodes((char)'&', (String)dungeonName);
         this.dungeonID = CosmicDungeonsPlugin.get_().getApi().nextDungeonID++;
