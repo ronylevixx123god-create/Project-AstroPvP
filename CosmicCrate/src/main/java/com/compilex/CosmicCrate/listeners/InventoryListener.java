@@ -4,6 +4,7 @@
 
 package com.compilex.CosmicCrate.listeners;
 
+import com.compilex.CosmicCrate.libs.CosmicCrateData;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.EventHandler;
@@ -12,9 +13,7 @@ import org.bukkit.Material;
 import org.bukkit.plugin.Plugin;
 import com.compilex.CosmicCrate.CosmicCrate;
 import org.bukkit.Bukkit;
-import org.bukkit.metadata.MetadataValue;
 import com.compilex.CosmicCrate.CosmicCrateLootSelector;
-import com.compilex.CosmicCrate.libs.Version;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -31,12 +30,12 @@ public class InventoryListener implements Listener
             if (e.getClickedInventory() == null || !e.getClickedInventory().equals(p.getOpenInventory().getTopInventory())) {
                 return;
             }
-            final Version v = Version.valueOf(e.getInventory().getTitle().split(" ")[2].toUpperCase());
+            CosmicCrateData data = CosmicCrate.get().getCosmicCrateManager().getCosmicCrate(e.getInventory().getTitle().split(" ")[2].toUpperCase());
             if (!p.hasMetadata("ccrate_loot_selector")) {
                 return;
             }
             final CosmicCrateLootSelector ccls = (CosmicCrateLootSelector)p.getMetadata("ccrate_loot_selector").get(0).value();
-            if (e.getCurrentItem() != null) {
+            if (data != null && e.getCurrentItem() != null) {
                 if (ccls.phase == CosmicCrateLootSelector.CosmicCratePhase.LOOTING) {
                     ccls.conclude();
                     Bukkit.getScheduler().runTaskLater((Plugin)CosmicCrate.get(), (Runnable)new Runnable() {

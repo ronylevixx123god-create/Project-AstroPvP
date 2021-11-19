@@ -6,7 +6,7 @@ package com.compilex.CosmicCrate.cmds;
 
 import com.compilex.CosmicCrate.CosmicCrate;
 import com.compilex.CosmicCrate.api.CCAPI;
-import com.compilex.CosmicCrate.libs.Version;
+import com.compilex.CosmicCrate.libs.CosmicCrateData;
 import com.compilex.CosmicCrate.menus.CrateStorageMenu;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsPlugin;
 import org.arkhamnetwork.permissions.ArkhamPermissions;
@@ -32,19 +32,19 @@ public class CommandCosmicCrate implements CommandExecutor
             return true;
         }
         if (args.length == 2 && args[0].equals("give") && sender.isOp()) {
-            final String version = args[1];
-            p.getInventory().addItem(CCAPI.getCosmicCrate(Version.valueOf(version.toUpperCase()), p.getName()));
+            String version = args[1];
+            p.getInventory().addItem(CCAPI.getCosmicCrate(version));
             return true;
         }
         if (args.length == 3 && args[0].equals("unlock") && sender.isOp()) {
             final String playerName = args[1];
             final String versionName = args[2];
-            final Version v = Version.valueOf(versionName.toUpperCase());
+            CosmicCrateData data = CosmicCrate.get().getCosmicCrateManager().getCosmicCrate(versionName);
             if (Bukkit.getPlayer(playerName) != null) {
                 final Player pGive2 = Bukkit.getPlayer(playerName);
                 try {
-                    Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), "pex user " + pGive2.getName() + " add " + v.getPermissionNode() + " " + CosmicSpaceChestsPlugin.serverName);
-                    pGive2.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "(!) You've UNLOCKED the " + ChatColor.UNDERLINE + v.name() + ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + " Astro Crate!");
+                    Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), "pex user " + pGive2.getName() + " add " + CosmicCrate.get().getCosmicCrateManager().getPermissionNode(versionName) + " " + CosmicSpaceChestsPlugin.serverName);
+                    pGive2.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "(!) You've UNLOCKED the " + ChatColor.UNDERLINE + data.getDisplayName() + ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + " Astro Crate!");
                     pGive2.sendMessage(ChatColor.GRAY + "Redeem your new Astro Crate with /cc");
                     pGive2.playSound(pGive2.getLocation(), Sound.LEVEL_UP, 1.0f, 0.72f);
                     Bukkit.getScheduler().runTaskLater((Plugin)CosmicSpaceChestsPlugin.plugin, (Runnable)new Runnable() {
@@ -59,7 +59,7 @@ public class CommandCosmicCrate implements CommandExecutor
                 }
             }
             else {
-                Bukkit.getLogger().info("[CosmicCrate] Could not find user " + playerName + " to give " + v.name() + " Astro Crate to!");
+                Bukkit.getLogger().info("[CosmicCrate] Could not find user " + playerName + " to give " + data.getDisplayName() + " Astro Crate to!");
             }
             return true;
         }

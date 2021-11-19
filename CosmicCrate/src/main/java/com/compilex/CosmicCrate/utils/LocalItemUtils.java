@@ -5,7 +5,6 @@
 package com.compilex.CosmicCrate.utils;
 
 import com.compilex.CosmicCrate.api.CCAPI;
-import com.compilex.CosmicCrate.libs.Version;
 import org.bukkit.entity.Player;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -29,42 +28,30 @@ public class LocalItemUtils
         return is;
     }
     
-    public static ItemStack injectLore(final ItemStack i, final String newLore) {
-        final ItemMeta im = i.getItemMeta();
-        final List<String> lore = (List<String>)im.getLore();
-        lore.add("");
-        lore.add(newLore);
-        im.setLore((List)lore);
-        i.setItemMeta(im);
-        return i;
+    public static ItemStack getMysteryPlaceholder() {
+        return buildItem(Material.STAINED_GLASS_PANE, (short)7, ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "???", new String[0]);
     }
-    
-    public static ItemStack changeType(final ItemStack i, final Material newType, final short newMetadata) {
+
+
+    public static ItemStack changeType(ItemStack i, Material newType, short newMetadata) {
         i.setType(newType);
         i.setDurability(newMetadata);
         return i;
     }
-    
-    public static ItemStack getMysteryPlaceholder() {
-        return buildItem(Material.STAINED_GLASS_PANE, (short)7, ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "???", new String[0]);
-    }
-    
-    public static ItemStack getLockedPlaceholder(final Player p, final Version v) {
-        final String bulletpoint = ChatColor.BOLD.toString() + "* ";
-        final ItemStack crateItem = CCAPI.getCosmicCrate(v, p.getName());
+
+
+    public static ItemStack getLockedPlaceholder(Player p, String s) {
+        String bulletpoint = ChatColor.BOLD.toString() + "* ";
+        ItemStack crateItem = CCAPI.getCosmicCrate(s);
         crateItem.setType(Material.STAINED_GLASS_PANE);
-        crateItem.setDurability((short)14);
-        final ItemMeta im = crateItem.getItemMeta();
-        im.setDisplayName(ChatColor.DARK_RED.toString() + ChatColor.BOLD.toString() + "LOCKED: " + v.crateName.replace("*", "").replace("ASTRO CRATE: ", ""));
-        final List<String> lore = (List<String>)im.getLore();
+        crateItem.setDurability((short) 14);
+        ItemMeta im = crateItem.getItemMeta();
+        im.setDisplayName(ChatColor.DARK_RED.toString() + ChatColor.BOLD.toString() + "LOCKED: " + s.replace("*", "").replace("COSMIC CRATE: ", ""));
+        List<String> lore = im.getLore();
         lore.set(0, ChatColor.GRAY + "Unlock at " + ChatColor.UNDERLINE + "buy.cosmicpvp.com");
-        im.setLore((List)lore);
+        im.setLore(lore);
         crateItem.setItemMeta(im);
         return crateItem;
     }
-    
-    public static ItemStack setAmount(final ItemStack item, final int i) {
-        item.setAmount(i);
-        return item;
-    }
+
 }

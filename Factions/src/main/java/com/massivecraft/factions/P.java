@@ -48,6 +48,7 @@ import com.massivecraft.factions.integration.EssentialsFeatures;
 import com.massivecraft.factions.listeners.*;
 import com.massivecraft.factions.listeners.menu.MenuListener;
 import com.massivecraft.factions.listeners.menu.fchest.FChestListener;
+import com.massivecraft.factions.shield.ShieldManager;
 import com.massivecraft.factions.struct.*;
 import com.massivecraft.factions.struct.managers.FChestManager;
 import com.massivecraft.factions.util.LazyLocation;
@@ -230,6 +231,7 @@ public class P extends MPlugin {
         this.getServer().getPluginManager().registerEvents(this.ownershipCacheListener, this);
         this.getServer().getPluginManager().registerEvents(this.permissionListener, this);
         this.getServer().getPluginManager().registerEvents(new FChestListener(), this);
+        ShieldManager.loadTimes();
         this.getServer().getPluginManager().registerEvents(new MenuListener(), this);
         this.citizensEnabled = this.getServer().getPluginManager().isPluginEnabled("Citizens");
         this.outpostsEnabled = new File("plugins/CosmicOutposts.jar").exists();
