@@ -34,7 +34,7 @@ public class DeathAndTaxesSkin extends ItemSkin {
                 damaged.sendMessage(CC.GoldB + " ** DEATH AND TAXES DEALT " + CC.Gray + "[" + Math.round(markList.get(damaged)) + "]" + CC.GoldB + " **");
             }, 120L);
         }
-        if(damaged instanceof Player && markedPlayers.contains(damaged)) {
+        if(damaged instanceof Player && markList.containsKey(damaged)) {
             markList.put((Player) damaged, markList.get(damaged) + event.getDamage());
         }
     }
