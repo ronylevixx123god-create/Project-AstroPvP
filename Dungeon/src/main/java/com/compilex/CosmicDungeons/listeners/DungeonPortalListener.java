@@ -5,7 +5,6 @@
  *  com.cosmicpvp.cosmicutils.utils.CC
  *  com.cosmicpvp.cosmicutils.utils.FactionUtils
  *  com.cosmicpvp.cosmicutils.utils.MaskUtils
- *  com.cosmicpvp.cosmicutils.utils.ParticleEffect
  *  com.cosmicpvp.cosmicutils.utils.TimeUtils
  *  com.cosmicpvp.cosmicutils.utils.TitleManager
  *  com.cosmicpvp.cosmicutils.utils.TitleManager$TitleColor
@@ -63,7 +62,6 @@ import com.compilex.CosmicDungeons.utils.PortalTrinketUtils;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.MaskUtils;
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.cosmicpvp.cosmicutils.utils.TimeUtils;
 import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
@@ -73,11 +71,10 @@ import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.Relation;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
 
+import java.util.*;
+
+import de.inventivegames.particle.ParticleEffect;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
@@ -357,9 +354,29 @@ implements Listener {
                     dungeon_portalBlockB.setTypeIdAndData(90, (byte)0, false);
                     this.portalBlocks.add(dungeon_portalBlockA.getLocation());
                     this.portalBlocks.add(dungeon_portalBlockB.getLocation());
-                    ParticleEffect.playEffect((ParticleEffect)ParticleEffect.WITCH_MAGIC, (Location)portalBlockA.getLocation(), (float)0.45f, (int)50);
-                    ParticleEffect.playEffect((ParticleEffect)ParticleEffect.PORTAL, (Location)portalBlockA.getLocation(), (float)0.6f, (int)50);
-                    ParticleEffect.playEffect((ParticleEffect)ParticleEffect.PORTAL, (Location)portalBlockB.getLocation(), (float)0.6f, (int)50);
+
+                    try {
+                        de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), portalBlockA.getLocation().add(0, 1, 0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
+
+                    } catch (Exception e2) {
+                        e2.printStackTrace();
+                    }
+
+                    try {
+                        ParticleEffect.PORTAL.sendToPlayers(Bukkit.getOnlinePlayers(), portalBlockA.getLocation().add(0, 1, 0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
+
+                    } catch (Exception e2) {
+                        e2.printStackTrace();
+                    }
+
+                    try {
+                        ParticleEffect.PORTAL.sendToPlayers(Bukkit.getOnlinePlayers(), portalBlockB.getLocation().add(0, 1, 0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
+
+                    } catch (Exception e2) {
+                        e2.printStackTrace();
+                    }
+
+
                     p.getWorld().playSound(portalBlockA.getLocation(), Sound.AMBIENCE_THUNDER, 2.0f, 0.35f);
                     dungeon.setDungeonStatus(DungeonState.LOADING);
                     dungeon.setPortalLocation(portalBlockA.getLocation());
@@ -440,13 +457,47 @@ implements Listener {
                                 holo_a.delete();
                                 holo_b.delete();
                                 portalBlockA.getWorld().playSound(portalBlockA.getLocation(), Sound.AMBIENCE_THUNDER, 2.0f, 0.35f);
-                                ParticleEffect.playEffect((ParticleEffect)ParticleEffect.WITCH_MAGIC, (Location)portalBlockA.getLocation(), (float)0.45f, (int)50);
-                                ParticleEffect.playEffect((ParticleEffect)ParticleEffect.PORTAL, (Location)portalBlockA.getLocation(), (float)0.6f, (int)50);
-                                ParticleEffect.playEffect((ParticleEffect)ParticleEffect.PORTAL, (Location)portalBlockB.getLocation(), (float)0.6f, (int)50);
+                                try {
+                                    de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), portalBlockA.getLocation().add(0, 1, 0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
+
+                                } catch (Exception e2) {
+                                    e2.printStackTrace();
+                                }
+
+                                try {
+                                    ParticleEffect.PORTAL.sendToPlayers(Bukkit.getOnlinePlayers(), portalBlockA.getLocation().add(0, 1, 0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
+
+                                } catch (Exception e2) {
+                                    e2.printStackTrace();
+                                }
+
+                                try {
+                                    ParticleEffect.PORTAL.sendToPlayers(Bukkit.getOnlinePlayers(), portalBlockA.getLocation().add(0, 1, 0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
+
+                                } catch (Exception e2) {
+                                    e2.printStackTrace();
+                                }
                                 dungeon_portalBlockA.getWorld().playSound(portalBlockA.getLocation(), Sound.AMBIENCE_THUNDER, 2.0f, 0.35f);
-                                ParticleEffect.playEffect((ParticleEffect)ParticleEffect.WITCH_MAGIC, (Location)dungeon_portalBlockA.getLocation(), (float)0.45f, (int)50);
-                                ParticleEffect.playEffect((ParticleEffect)ParticleEffect.PORTAL, (Location)dungeon_portalBlockA.getLocation(), (float)0.6f, (int)50);
-                                ParticleEffect.playEffect((ParticleEffect)ParticleEffect.PORTAL, (Location)dungeon_portalBlockB.getLocation(), (float)0.6f, (int)50);
+                                try {
+                                    de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), portalBlockA.getLocation().add(0, 1, 0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
+
+                                } catch (Exception e2) {
+                                    e2.printStackTrace();
+                                }
+
+                                try {
+                                    ParticleEffect.PORTAL.sendToPlayers(Bukkit.getOnlinePlayers(), portalBlockA.getLocation().add(0, 1, 0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
+
+                                } catch (Exception e2) {
+                                    e2.printStackTrace();
+                                }
+
+                                try {
+                                    ParticleEffect.PORTAL.sendToPlayers(Bukkit.getOnlinePlayers(), portalBlockA.getLocation().add(0, 1, 0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
+
+                                } catch (Exception e2) {
+                                    e2.printStackTrace();
+                                }
                                 Bukkit.broadcastMessage((String)"");
                                 Bukkit.broadcastMessage((String)((Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "*** DUNGEON PORTAL ***"));
                                 Bukkit.broadcastMessage((String)((Object)ChatColor.GOLD + "The portal has closed, " + (Object)ChatColor.UNDERLINE + dungeon.getPlayers().size() + (Object)ChatColor.GOLD + " player(s) made it into the"));

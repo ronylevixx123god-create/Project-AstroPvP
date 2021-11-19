@@ -30,7 +30,6 @@ import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -76,7 +75,12 @@ public class MonsterUtils {
         ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1));
         ent.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0));
         ent.setMetadata("destroyedSpacePirate", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get_(), (Object)true));
-        ParticleEffect.playEffect((ParticleEffect)ParticleEffect.WITCH_MAGIC, (Location)ent.getLocation().add(0.0, 1.0, 0.0), (float)0.15f, (int)25);
+        try {
+            de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), ent.getLocation().add(0, 1, 0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
+
+        } catch (Exception e2) {
+            e2.printStackTrace();
+        }
         return ent;
     }
 
@@ -140,8 +144,12 @@ public class MonsterUtils {
         ghast.getEquipment().setBoots(new ItemStack(Material.DIAMOND_BOOTS));
         ghast.setCanPickupItems(false);
         ghast.setMetadata("spacePirate", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get_(), (Object)true));
-        ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, ghast.getLocation().add(0.0D, 1.0D, 0.0D), 0.15F, 25);
-        return ghast;
+        try {
+            de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), ghast.getLocation().add(0, 1, 0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
+
+        } catch (Exception e2) {
+            e2.printStackTrace();
+        }        return ghast;
     }
 }
 

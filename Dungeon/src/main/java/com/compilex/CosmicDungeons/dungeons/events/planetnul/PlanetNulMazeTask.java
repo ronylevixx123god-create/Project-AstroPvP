@@ -1,17 +1,4 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.TitleManager
- *  com.cosmicpvp.cosmicutils.utils.TitleManager$TitleColor
- *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
- *  org.bukkit.Location
- *  org.bukkit.Material
- *  org.bukkit.Sound
- *  org.bukkit.entity.Player
- *  org.bukkit.scheduler.BukkitRunnable
- */
+
 package com.compilex.CosmicDungeons.dungeons.events.planetnul;
 
 import com.compilex.CosmicDungeons.DungeonsAPI;
@@ -20,8 +7,10 @@ import com.compilex.CosmicDungeons.dungeons.libs.PlanetNulDungeon;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
+import de.inventivegames.particle.ParticleEffect;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -46,7 +35,15 @@ extends BukkitRunnable {
 
     public void run() {
         ++this.loops;
-        this.dungeon.getDungeonEvents().chestLocations.stream().filter(l -> !this.dungeon.getDungeonEvents().announcedChestLocations.contains(l)).forEach(loc -> ParticleEffect.playEffect((ParticleEffect)ParticleEffect.ENCHANTMENT_TABLE, (Location)loc, (float)1.0f, (int)24));
+        this.dungeon.getDungeonEvents().chestLocations.stream().filter(l -> !this.dungeon.getDungeonEvents().announcedChestLocations.contains(l)).forEach(loc ->
+        {
+            try {
+                ParticleEffect.ENCHANTMENT_TABLE.sendToPlayers(Bukkit.getOnlinePlayers(), loc.add(0, 1, 0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        });
+
         for (Player p2 : this.dungeon.getPlayers()) {
             DungeonPlayer dp = DungeonsAPI.get().getPlayerDungeonData(p2);
             if (dp.getCurrentDungeon() == null || !dp.getCurrentDungeon().equals(this.dungeon)) continue;
