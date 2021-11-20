@@ -7,6 +7,7 @@ import com.google.common.collect.Maps;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.Faction;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -35,7 +36,7 @@ public class GenBucketTask extends BukkitRunnable {
 
     public GenBucketTask(Player player, Block clickedBlock, BlockFace blockFace, BlockFace originalFace, ActiveBucket activeBucket) {
         this.player = player;
-        this.block = clickedBlock.getLocation().add((double)originalFace.getModX(), (double)originalFace.getModY(), (double)originalFace.getModZ()).getBlock();
+        this.block = clickedBlock.getLocation().add((double) originalFace.getModX(), (double) originalFace.getModY(), (double) originalFace.getModZ()).getBlock();
         this.blockFace = blockFace;
         this.currentLocation = this.block.getLocation();
         this.activeBucket = activeBucket;
@@ -45,7 +46,7 @@ public class GenBucketTask extends BukkitRunnable {
         if (!tasks.containsKey(player.getUniqueId())) {
             tasks.put(player.getUniqueId(), Lists.newArrayList(new GenBucketTask[]{this}));
         } else {
-            List<GenBucketTask> genTasks = (List)tasks.get(player.getUniqueId());
+            List<GenBucketTask> genTasks = (List) tasks.get(player.getUniqueId());
             genTasks.add(this);
             tasks.put(player.getUniqueId(), genTasks);
         }
@@ -58,7 +59,7 @@ public class GenBucketTask extends BukkitRunnable {
 
     public void run() {
         try {
-            if ((this.currentLocation.getBlock().getType() != Material.AIR || !this.isLocationValid()) && (this.currentLocation.getBlock().getType() != Material.GRASS || !this.isLocationValid()) &&  (this.currentLocation.getBlock().getType() != Material.LONG_GRASS || !this.isLocationValid()) && (this.currentLocation.getBlock().getType() != Material.STATIONARY_WATER || !this.isLocationValid()) && (this.currentLocation.getBlock().getType() != Material.WATER || !this.isLocationValid())) {
+            if ((this.currentLocation.getBlock().getType() != Material.AIR || !this.isLocationValid()) && (this.currentLocation.getBlock().getType() != Material.GRASS || !this.isLocationValid()) && (this.currentLocation.getBlock().getType() != Material.LONG_GRASS || !this.isLocationValid()) && (this.currentLocation.getBlock().getType() != Material.STATIONARY_WATER || !this.isLocationValid()) && (this.currentLocation.getBlock().getType() != Material.WATER || !this.isLocationValid())) {
                 this.endTask();
                 return;
             }
@@ -70,7 +71,7 @@ public class GenBucketTask extends BukkitRunnable {
                 return;
             }
 
-            this.currentLocation.add((double)this.blockFace.getModX(), (double)this.blockFace.getModY(), (double)this.blockFace.getModZ());
+            this.currentLocation.add((double) this.blockFace.getModX(), (double) this.blockFace.getModY(), (double) this.blockFace.getModZ());
         } catch (NullPointerException var2) {
             var2.printStackTrace();
         }
@@ -78,7 +79,17 @@ public class GenBucketTask extends BukkitRunnable {
     }
 
     public ItemStack getItem() {
-        Material material = this.activeBucket.getBucket().getPlacedMaterial();
+        Material material;
+        if (this.activeBucket.getBucket() == null) {
+            material = Material.LAVA_BUCKET;
+        } else if (this.activeBucket.getBucket().getPlacedMaterial() == null) {
+
+            material = Material.LAVA_BUCKET;
+
+        } else {
+            material = this.activeBucket.getBucket().getPlacedMaterial();
+        }
+
         int x = this.currentLocation.getBlockX();
         int y = this.currentLocation.getBlockY();
         int z = this.currentLocation.getBlockZ();
@@ -112,7 +123,7 @@ public class GenBucketTask extends BukkitRunnable {
         this.currentLocation = null;
         this.blockFace = null;
         this.activeBucket = null;
-        List<GenBucketTask> genTasks = (List)tasks.get(this.player.getUniqueId());
+        List<GenBucketTask> genTasks = (List) tasks.get(this.player.getUniqueId());
         genTasks.remove(this);
         tasks.put(this.player.getUniqueId(), genTasks);
     }
@@ -122,7 +133,7 @@ public class GenBucketTask extends BukkitRunnable {
     }
 
     public static Optional<GenBucketTask> getTask(Player player, UUID uuid) {
-        return ((List<GenBucketTask>)tasks.getOrDefault(player.getUniqueId(), Lists.newArrayList())).stream()
+        return ((List<GenBucketTask>) tasks.getOrDefault(player.getUniqueId(), Lists.newArrayList())).stream()
                 .filter(task -> task.getUuid().equals(uuid))
                 .findFirst();
     }
