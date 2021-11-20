@@ -74,7 +74,6 @@
       <module name="DiscordAPI" target="8" />
       <module name="Disguises (1)" target="8" />
       <module name="FactionFights" target="8" />
-      <module name="GenBuckets" target="8" />
       <module name="GUIShop" target="8" />
       <module name="ItemFilter" target="8" />
       <module name="MoneyNotes" target="1.8" />
