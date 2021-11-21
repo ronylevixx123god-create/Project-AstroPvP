@@ -44,6 +44,8 @@ final class acenstoralListener implements Listener {
     @EventHandler
     public void onProjectileLaunchEvent(final ProjectileLaunchEvent e) {
         if (e.getEntity() instanceof Fireball) {
+            if (e.getEntity().getShooter() == null) return;
+            if (!(e.getEntity().getShooter() instanceof Entity)) return;
             final Entity shooter = (Entity) e.getEntity().getShooter();
             if (shooter != null && shooter.getType() == EntityType.BLAZE && shooter.hasMetadata("acenstoralSummoner")) {
                 e.setCancelled(true);
