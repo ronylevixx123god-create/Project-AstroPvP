@@ -26,6 +26,10 @@ public class GenBucketShopGui {
         GenBucket sandGenBucket = GenBucketPlugin.getInstance().getBucketHandler().getGenBucket("sand");
         GenBucket obsidianGenBucket = GenBucketPlugin.getInstance().getBucketHandler().getGenBucket("obsidian");
         GenBucket netherrackGenBucket = GenBucketPlugin.getInstance().getBucketHandler().getGenBucket("netherrack");
+        GenBucket lavaGenBucket = GenBucketPlugin.getInstance().getBucketHandler().getGenBucket("lava");
+        GenBucket waterGenBucket = GenBucketPlugin.getInstance().getBucketHandler().getGenBucket("water");
+
+
 
         this.expShopUI = new PaginatedGui(3, 18, "AstroPvP Genbuckets");
         expShopUI.setDefaultClickAction(event -> {
@@ -67,6 +71,14 @@ public class GenBucketShopGui {
         }));
         expShopUI.setItem(2, 4, new GuiItem(netherrackGenBucket.getItem(GenBucketDirection.VERTICAL, 100), event -> {
             player.getInventory().addItem(netherrackGenBucket.getItem(GenBucketDirection.VERTICAL, 100.0D));
+            event.setCancelled(true);
+        }));
+        expShopUI.setItem(2, 5, new GuiItem(lavaGenBucket.getItem(GenBucketDirection.VERTICAL, 100), event -> {
+            player.getInventory().addItem(lavaGenBucket.getItem(GenBucketDirection.VERTICAL, 100.0D));
+            event.setCancelled(true);
+        }));
+        expShopUI.setItem(2, 6, new GuiItem(waterGenBucket.getItem(GenBucketDirection.VERTICAL, 100), event -> {
+            player.getInventory().addItem(waterGenBucket.getItem(GenBucketDirection.VERTICAL, 100.0D));
             event.setCancelled(true);
         }));
 
