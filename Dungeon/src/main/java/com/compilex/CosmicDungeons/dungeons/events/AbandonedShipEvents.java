@@ -1,52 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.FactionUtils
- *  com.cosmicpvp.cosmicutils.utils.RandomFireworks
- *  com.cosmicpvp.cosmicutils.utils.TitleManager$TitleColor
- *  com.cosmicpvp.cosmicutils.utils.WorldGuardUtils
- *  com.cosmicpvp.cosmicutils.utils.WorldUtil
- *  com.gmail.filoghost.holograms.api.Hologram
- *  com.gmail.filoghost.holograms.api.HolographicDisplaysAPI
- *  com.google.common.collect.Lists
- *  com.massivecraft.factions.Faction
- *  me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijki
- *  me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijki$BossPhase
- *  me.ifamasssxd.cosmicbosses.struct.Boss
- *  me.ifamasssxd.cosmicbosses.struct.DamageTracker
- *  me.ifamasssxd.cosmicbosses.utils.BossUtils
- *  org.arkhamnetwork.enchantments.libs.PlayerPotionEffects
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.Effect
- *  org.bukkit.Location
- *  org.bukkit.Material
- *  org.bukkit.Sound
- *  org.bukkit.block.Block
- *  org.bukkit.block.Chest
- *  org.bukkit.command.CommandSender
- *  org.bukkit.entity.Player
- *  org.bukkit.event.Event
- *  org.bukkit.event.EventHandler
- *  org.bukkit.event.EventPriority
- *  org.bukkit.event.block.Action
- *  org.bukkit.event.block.BlockBreakEvent
- *  org.bukkit.event.block.BlockPlaceEvent
- *  org.bukkit.event.entity.EntityDeathEvent
- *  org.bukkit.event.player.PlayerInteractEvent
- *  org.bukkit.event.player.PlayerMoveEvent
- *  org.bukkit.event.player.PlayerPortalEvent
- *  org.bukkit.event.player.PlayerQuitEvent
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.metadata.FixedMetadataValue
- *  org.bukkit.metadata.MetadataValue
- *  org.bukkit.plugin.Plugin
- *  org.bukkit.potion.PotionEffectType
- *  org.bukkit.scheduler.BukkitRunnable
- */
 package com.compilex.CosmicDungeons.dungeons.events;
 
 import com.compilex.CosmicDungeons.CosmicDungeonsPlugin;
@@ -91,6 +42,9 @@ import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import lombok.Getter;
+import lombok.Setter;
 import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijki;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.cosmicbosses.struct.DamageTracker;
@@ -129,6 +83,10 @@ extends DungeonEvents {
     private ParkourRestrictionTask parkourRestrictionTask;
     private List<Block> blessLeverLocations = new ArrayList<Block>();
     private UUID singularDamager = null;
+    @Getter @Setter
+    private UUID firstBossUUID;
+    @Getter @Setter
+    private UUID secondBossUUID;
 
     public AbandonedShipEvents(Dungeon d) {
         super(d);

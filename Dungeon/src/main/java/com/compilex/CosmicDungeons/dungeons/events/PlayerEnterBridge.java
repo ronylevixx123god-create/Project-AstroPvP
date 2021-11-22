@@ -61,6 +61,7 @@ extends RegionEvent {
             ((DungeonYijki)yijki).getSpawnLocations().add(new Location(this.dungeon.getWorld(), -136.0, 80.0, 210.0));
             ((DungeonYijki)yijki).getSpawnLocations().add(new Location(this.dungeon.getWorld(), -138.0, 80.0, 189.0));
         }
+        ((AbandonedShipEvents)this.dungeon.getDungeonEvents()).setSecondBossUUID(spawned.getUniqueId());
         this.dungeon.setBossSpawnTime(System.currentTimeMillis());
         this.dungeon.setObjectiveHologram(HolographicDisplaysAPI.createHologram((Plugin)CosmicDungeonsPlugin.get_(), (Location)new Location(this.dungeon.getWorld(), -129.0, 82.0, 165.0), (String[])new String[]{(Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "LOCKED", (Object)ChatColor.GRAY + "Defeat boss to proceed."}));
         for (int x = -128; x <= -113; ++x) {

@@ -1,13 +1,13 @@
 package me.ifamasssxd.cosmicbosses.dungeonboss;
 
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import java.util.List;
 import me.ifamasssxd.cosmicbosses.dungeonboss.abilities.UnstoppableForce;
 import me.ifamasssxd.cosmicbosses.struct.Phase;
 import me.ifamasssxd.cosmicbosses.utils.BossUtils;
-import me.ifamasssxd.cosmicbosses.utils.WorldGuardUtils;
 import net.minecraft.server.v1_8_R3.Block;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.Blocks;
@@ -270,7 +270,7 @@ public class DungeonYijkiEntity extends EntityMonster implements IRangedEntity {
             Entity entity2 = null;
             if (k > 0)
                 entity2 = this.world.a(k);
-            if (entity2 != null && entity2 instanceof EntityHuman) {
+            if (entity2 instanceof EntityHuman) {
                 double d0 = t(i + 1);
                 double d1 = u(i + 1);
                 double d2 = v(i + 1);

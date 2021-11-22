@@ -427,15 +427,7 @@ public abstract class Boss extends Equipable implements Healable {
         }
     }
 
-    public void updateScoreboard() {
-        if (!CosmicBosses.getInstance().isScoreboardEnabled()) {
-            return;
-        }
-        for (final Entity ent : this.getNearbyEntities(32.0, EntityType.PLAYER)) {
-            final Player p = (Player) ent;
-            ScoreboardUtils.updateBossScoreboard(p, this);
-        }
-    }
+    public void updateScoreboard() { }
 
     public void clearScoreboard() {
         final DamageTracker tracker = this.getDamageTracker();
