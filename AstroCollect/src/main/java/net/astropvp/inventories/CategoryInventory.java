@@ -32,7 +32,7 @@ public class CategoryInventory {
     }
 
     public CategoryInventory(Player player, CollectCategory category) {
-        this.categoryInventory = new PaginatedGui(6, 45, category.getName() + CC.translate("&8 " + getCollectUI().getCurrentPageNum()));
+        this.categoryInventory = new PaginatedGui(6, 45, category.getName());
         categoryInventory.setDefaultClickAction(event -> {
             event.setCancelled(true);
         });
@@ -83,7 +83,6 @@ public class CategoryInventory {
         }));
 
         categoryInventory.setItem(6, 4, new GuiItem(removeCategory, event -> {
-            categoryInventory.close(player);
             CollectPlugin.getInstance().getCollectManager().getPlayerCollect(player).remove(category);
             new CollectInventory(player).getCollectUI().open(player);
             event.setCancelled(true);
