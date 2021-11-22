@@ -1,7 +1,7 @@
-package net.astropvp.commands;
+package net.astropvp.nebulashop.commands;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import net.astropvp.NebulaShop;
+import net.astropvp.nebulashop.NebulaShop;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

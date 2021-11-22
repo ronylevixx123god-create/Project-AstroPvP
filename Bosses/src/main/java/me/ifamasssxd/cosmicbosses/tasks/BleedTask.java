@@ -3,7 +3,8 @@ package me.ifamasssxd.cosmicbosses.tasks;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
-import me.ifamasssxd.cosmicbosses.utils.WorldGuardUtils;
+
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 

@@ -78,21 +78,21 @@ extends BukkitRunnable {
 
     public void run() {
         int i;
-        ArrayList<Location> dispenserLocations = new ArrayList<Location>(this.dungeon.getDungeonEvents().getFireballRegionEvent().dispenserLocations);
+        ArrayList<Location> dispenserLocations = new ArrayList<>(this.dungeon.getDungeonEvents().getFireballRegionEvent().dispenserLocations);
         Collections.shuffle(dispenserLocations);
         for (int i2 = 0; i2 < dispenserLocations.size() / 8; ++i2) {
-            Location loc = (Location)dispenserLocations.get(i2);
+            Location loc = dispenserLocations.get(i2);
             CraftWorld handle = (CraftWorld)loc.getWorld();
-            EntityCustomFireball fireball = new EntityCustomFireball((World)handle.getHandle());
-            handle.getHandle().addEntity((net.minecraft.server.v1_8_R3.Entity)fireball, CreatureSpawnEvent.SpawnReason.CUSTOM);
+            EntityCustomFireball fireball = new EntityCustomFireball(handle.getHandle());
+            handle.getHandle().addEntity(fireball, CreatureSpawnEvent.SpawnReason.CUSTOM);
             fireball.setPosition(loc.getX(), loc.getY(), loc.getZ() - 1.0);
             fireball.setDirection(0.0, 0.0, -0.2);
-            fireball.getBukkitEntity().setMetadata("fireballAlley", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get(), (Object)true));
-            fireball.getBukkitEntity().setMetadata("do_not_clear", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get(), (Object)true));
+            fireball.getBukkitEntity().setMetadata("fireballAlley", new FixedMetadataValue(CosmicDungeonsPlugin.get(), true));
+            fireball.getBukkitEntity().setMetadata("do_not_clear", new FixedMetadataValue(CosmicDungeonsPlugin.get(), true));
         }
-        ArrayList<Location> findCorruptRoomGlass = new ArrayList<Location>();
+        ArrayList<Location> findCorruptRoomGlass = new ArrayList<>();
         boolean removeCorruptRoomGlass = false;
-        ArrayList<Location> secondParkourGlass = new ArrayList<Location>();
+        ArrayList<Location> secondParkourGlass = new ArrayList<>();
         boolean removeSecondParkourGlass = false;
         for (i = 0; i < 5; ++i) {
             findCorruptRoomGlass.add(new Location(this.dungeon.world, 818.0, (double)(143 + i), 633.0));

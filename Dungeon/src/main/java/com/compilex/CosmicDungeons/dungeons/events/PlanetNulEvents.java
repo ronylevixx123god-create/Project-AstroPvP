@@ -206,12 +206,12 @@ implements CommandExecutor {
         super(d);
         CosmicDungeonsPlugin.get().getCommand("answer").setExecutor((CommandExecutor)this);
         this.dungeon = (PlanetNulDungeon)d;
-        this.chestLocations = new ArrayList<Location>();
-        this.announcedChestLocations = new ArrayList<Location>();
-        this.possibleChestLocations = new ArrayList<Location>();
-        this.enderAssassinLocations = new ArrayList<Location>();
-        this.lockedDoorLocations = new ArrayList<Location>();
-        this.lockedPressurePlateLocations = new ArrayList<Location>();
+        this.chestLocations = new ArrayList<>();
+        this.announcedChestLocations = new ArrayList<>();
+        this.possibleChestLocations = new ArrayList<>();
+        this.enderAssassinLocations = new ArrayList<>();
+        this.lockedDoorLocations = new ArrayList<>();
+        this.lockedPressurePlateLocations = new ArrayList<>();
         this.loadTasks();
         this.leftPanelColors = this.dungeon.getRandomColorsForPanel();
         this.middlePanelColors = this.dungeon.getRandomColorsForPanel();
@@ -290,13 +290,13 @@ implements CommandExecutor {
         ItemStack item = new ItemStack(Material.PAPER);
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(CC.translate((String)("&f&lAirlock Hint #" + hintNum + "/7")));
-        meta.setLore((List)Lists.newArrayList((Object[])new String[]{CC.translate((String)"&7Use the following hint to crack"), CC.translate((String)"&7the Vault Airlock combination:"), CC.translate((String)"&f&l* ") + (Object)color.getChatColor() + panel + "-" + colorNum + "-" + color.getName()}));
+        meta.setLore(Lists.newArrayList(CC.translate((String)"&7Use the following hint to crack"), CC.translate((String)"&7the Vault Airlock combination:"), CC.translate((String)"&f&l* ") + (Object)color.getChatColor() + panel + "-" + colorNum + "-" + color.getName()));
         item.setItemMeta(meta);
         return new NBTWrapper(item).setString("cosmicType", "dungeonColorHint").build();
     }
 
     private ItemStack getAirlockKey() {
-        return new NBTWrapper(new ItemBuilder(Material.TRIPWIRE_HOOK, CC.AquaB + "Airlock Key", new String[]{CC.translate((String)"&7Use this key to unlock the"), CC.translate((String)"&7doors to the Vault Airlock.")}).build()).setString("cosmicType", "dungeonAirlockKey").build();
+        return new NBTWrapper(new ItemBuilder(Material.TRIPWIRE_HOOK, CC.AquaB + "Airlock Key", CC.translate((String)"&7Use this key to unlock the"), CC.translate((String)"&7doors to the Vault Airlock.")).build()).setString("cosmicType", "dungeonAirlockKey").build();
     }
 
     private boolean isAirlockKey(ItemStack item) {
@@ -310,19 +310,19 @@ implements CommandExecutor {
         int leftColorNum = 0;
         int middleColorNum = 0;
         int rightColorNum = 0;
-        ArrayList randomPanels = Lists.newArrayList((Object[])new String[]{"LEFT", "LEFT", "MIDDLE", "MIDDLE", "RIGHT", "RIGHT"});
+        ArrayList<String> randomPanels = Lists.newArrayList("LEFT", "LEFT", "MIDDLE", "MIDDLE", "RIGHT", "RIGHT");
         Collections.shuffle(randomPanels);
-        ArrayList randomAdditionPanels = Lists.newArrayList((Object[])new String[]{"LEFT", "MIDDLE", "RIGHT"});
+        ArrayList<String> randomAdditionPanels = Lists.newArrayList("LEFT", "MIDDLE", "RIGHT");
         Collections.shuffle(randomAdditionPanels);
         randomPanels.add(randomAdditionPanels.get(0));
         for (i = 0; i < this.extraChests.entrySet().size(); ++i) {
             Map.Entry<Location, Boolean> entry = new ArrayList<Map.Entry<Location, Boolean>>(this.extraChests.entrySet()).get(i);
             if (i == 0) {
-                ((Chest)entry.getKey().getBlock().getState()).getInventory().addItem(new ItemStack[]{this.getClockOfReturning()});
+                ((Chest)entry.getKey().getBlock().getState()).getInventory().addItem(this.getClockOfReturning());
                 continue;
             }
             if (!(Math.random() < 0.7)) continue;
-            ((Chest)entry.getKey().getBlock().getState()).getInventory().addItem(new ItemStack[]{this.getTotemOfUndying()});
+            ((Chest)entry.getKey().getBlock().getState()).getInventory().addItem(this.getTotemOfUndying());
         }
         for (i = 0; i < 8; ++i) {
             Location chestLocation = (Location)chestLocationsCopy.get(i);
@@ -332,7 +332,7 @@ implements CommandExecutor {
             state.update(true);
             this.chestLocations.add(chestLocation);
             if (i == 7) {
-                ((Chest)chestLocation.getBlock().getState()).getInventory().addItem(new ItemStack[]{this.getAirlockKey()});
+                ((Chest)chestLocation.getBlock().getState()).getInventory().addItem(this.getAirlockKey());
                 continue;
             }
             String panelStr = (String)randomPanels.get(i);
@@ -344,7 +344,7 @@ implements CommandExecutor {
             } else if (panelStr.equals("RIGHT")) {
                 colorNum = ++rightColorNum;
             }
-            ((Chest)chestLocation.getBlock().getState()).getInventory().addItem(new ItemStack[]{this.getColorHintNote(panelStr, colorNum, i + 1)});
+            ((Chest)chestLocation.getBlock().getState()).getInventory().addItem(this.getColorHintNote(panelStr, colorNum, i + 1));
         }
     }
 
@@ -445,7 +445,7 @@ implements CommandExecutor {
         for (int i = 0; i < lootToFill && i < potentialLoot.size(); ++i) {
             ItemStack item = (ItemStack)potentialLoot.get(i);
             if (item == null) continue;
-            chest.getInventory().addItem(new ItemStack[]{item});
+            chest.getInventory().addItem(item);
         }
         chest.update();
         block.setMetadata("dungeonChallengeLootChest", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get_(), eligible));
@@ -857,7 +857,7 @@ implements CommandExecutor {
         Player player = event.getPlayer();
         if (DungeonsAPI.get().getPlayerDungeonData(event.getPlayer()).getCurrentDungeon() != null && DungeonsAPI.get().getPlayerDungeonData(event.getPlayer()).getCurrentDungeon().getDungeonType() == DungeonType.PLANET_NUL && event.getAction() == Action.RIGHT_CLICK_BLOCK && event.hasBlock() && event.getClickedBlock().getType().equals((Object)Material.CHEST)) {
             Location clickedLocation = event.getClickedBlock().getLocation();
-            if (this.chestLocations.contains((Object)clickedLocation) && !this.announcedChestLocations.contains((Object)clickedLocation)) {
+            if (this.chestLocations.contains(clickedLocation) && !this.announcedChestLocations.contains(clickedLocation)) {
                 Chest chest = (Chest)event.getClickedBlock().getState();
                 ItemStack item = chest.getInventory().getContents()[0];
                 JSONMessage message = new JSONMessage(CC.translate((String)"&6&l(DUNGEON) &f"));
@@ -943,13 +943,39 @@ implements CommandExecutor {
         }
     }
 
+    private PlanetNulFireballTask fireballTask;
+    private PlanetNulInvisibleMazeTask invisibleMazeTask;
+    private PlanetNulMazeTask mazeTask;
+    private PlanetNulParkourRestrictionTask parkourRestrictionTask;
 
+    public void unregisterTasks() {
+        if(this.fireballTask != null) {
+            this.fireballTask.cancel();
+            this.fireballTask = null;
+        }
+        if(this.invisibleMazeTask != null) {
+            this.invisibleMazeTask.cancel();
+            this.invisibleMazeTask = null;
+        }
+        if(this.mazeTask != null) {
+            this.mazeTask.cancel();
+            this.mazeTask = null;
+        }
+        if(this.parkourRestrictionTask != null) {
+            this.parkourRestrictionTask.cancel();
+            this.parkourRestrictionTask = null;
+        }
+    }
 
     private void loadTasks() {
-        BukkitTask parkourRestrictionTask = new PlanetNulParkourRestrictionTask(this.dungeon).runTaskTimer((Plugin)CosmicDungeonsPlugin.get_(), 10L, 10L);
-        BukkitTask fireballTask = new PlanetNulFireballTask(this.dungeon).runTaskTimer((Plugin)CosmicDungeonsPlugin.get_(), 0L, 20L);
-        new PlanetNulInvisibleMazeTask(this.dungeon).runTaskTimer((Plugin)CosmicDungeonsPlugin.get_(), 0L, 5L);
-        new PlanetNulMazeTask(this.dungeon).runTaskTimer((Plugin)CosmicDungeonsPlugin.get_(), 0L, 5L);
+        this.parkourRestrictionTask = new PlanetNulParkourRestrictionTask(this.dungeon);
+        this.parkourRestrictionTask.runTaskTimer((Plugin)CosmicDungeonsPlugin.get_(), 10L, 10L);
+        this.fireballTask = new PlanetNulFireballTask(this.dungeon);
+        this.fireballTask.runTaskTimer((Plugin)CosmicDungeonsPlugin.get_(), 0L, 20L);
+        this.invisibleMazeTask = new PlanetNulInvisibleMazeTask(this.dungeon);
+        this.invisibleMazeTask.runTaskTimer((Plugin)CosmicDungeonsPlugin.get_(), 0L, 5L);
+        this.mazeTask = new PlanetNulMazeTask(this.dungeon);
+        this.mazeTask.runTaskTimer((Plugin)CosmicDungeonsPlugin.get_(), 0L, 5L);
     }
 
     private void updateLocations() {
@@ -961,14 +987,11 @@ implements CommandExecutor {
     }
 
     private ItemStack getClockOfReturning() {
-        return new NBTWrapper(new ItemBuilder(Material.WATCH, CC.YellowB + "Clock of Returning", new String[]{CC.translate((String)"&7Upon falling into the void of the"), CC.translate((String)"&7Teleportation Portal Conduit area,"), CC.translate((String)"&7instead of you and your entire team,"), CC.translate((String)"&7only you will be sent back to the"), CC.translate((String)"&7start in exchange for this clock.")}).build()).setString("cosmicType", "dungeonClockOfReturning").build();
+        return new NBTWrapper(new ItemBuilder(Material.WATCH, CC.YellowB + "Clock of Returning", CC.translate("&7Upon falling into the void of the"), CC.translate((String)"&7Teleportation Portal Conduit area,"), CC.translate((String)"&7instead of you and your entire team,"), CC.translate((String)"&7only you will be sent back to the"), CC.translate((String)"&7start in exchange for this clock.")).build()).setString("cosmicType", "dungeonClockOfReturning").build();
     }
 
     private ItemStack getTotemOfUndying() {
-        return new NBTWrapper(new ItemBuilder(Material.BONE, CC.YellowB + "Totem of Undying", new String[]{CC.translate((String)"&7This item will be consumed when you get"), CC.translate((String)"&7sent back or killed on the invisible maze.")}).build()).setString("cosmicType", "dungeonTotemOfUndying").build();
-    }
-
-    public void unregisterTasks() {
+        return new NBTWrapper(new ItemBuilder(Material.BONE, CC.YellowB + "Totem of Undying", CC.translate("&7This item will be consumed when you get"), CC.translate((String)"&7sent back or killed on the invisible maze.")).build()).setString("cosmicType", "dungeonTotemOfUndying").build();
     }
 
     public void restart() {
@@ -979,6 +1002,7 @@ implements CommandExecutor {
         this.dungeon.getDungeonChallengesCompleted().add(DungeonChallenge.TWINKE_TOES);
         this.dungeon.getDungeonChallengesCompleted().add(DungeonChallenge.PATH_FINDER);
         this.dungeon.getDungeonChallengesCompleted().add(DungeonChallenge.APESTOS);
+        this.loadTasks();
         this.updateLocations();
     }
 

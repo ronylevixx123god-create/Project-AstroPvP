@@ -309,7 +309,7 @@ extends DungeonEvents {
                     p2.sendMessage((Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "+1 Dungeon Loot Bag");
                     ItemStack itemStack = lootbag = this.dungeon.isHeroic() ? DungeonsRewardsAPI.getHeroicDungeonLootbag(p2, e.getDungeon()) : DungeonsRewardsAPI.getDungeonLootBag(p2, e.getDungeon());
                     if (p2.getInventory().firstEmpty() != -1) {
-                        p2.getInventory().addItem(new ItemStack[]{lootbag});
+                        p2.getInventory().addItem(lootbag);
                     } else {
                         p2.getWorld().dropItem(p2.getLocation(), lootbag);
                         p2.sendMessage((Object)ChatColor.GRAY + "(No room in inventory, dropped on ground.)");

@@ -281,6 +281,8 @@ public class SlotBotInventoryListener implements Listener {
     @EventHandler
     public void anticrash(ProjectileLaunchEvent e) {
         if (!(e.getEntity().getShooter() instanceof Player)) {
+            if(e.getEntity().getWorld().getName().contains("dungeon"))
+                return;
             e.setCancelled(true);
             return;
         }

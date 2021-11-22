@@ -44,6 +44,8 @@ public class EnderpearlCooldown
         } else if (level == 4) {
             retr -= 2000L;
         }
+        if (pl.getWorld().getName().contains("dungeon"))
+            return 500L;
         return retr;
     }
 

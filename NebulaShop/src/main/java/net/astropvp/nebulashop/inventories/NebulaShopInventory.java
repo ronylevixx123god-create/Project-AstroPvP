@@ -1,7 +1,7 @@
-package net.astropvp.inventories;
+package net.astropvp.nebulashop.inventories;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import net.astropvp.NebulaShop;
+import net.astropvp.nebulashop.NebulaShop;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;

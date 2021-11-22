@@ -336,7 +336,7 @@ extends DungeonEvents {
     }
 
     private void loadTasks() {
-        this.parkourRestrictionTask = new DestroyedDungeonParkourRestrictionTask(this.dungeon, Lists.newArrayList(new String[]{"parkour_tower", "airlock_a"}));
+        this.parkourRestrictionTask = new DestroyedDungeonParkourRestrictionTask(this.dungeon, Lists.newArrayList("parkour_tower", "airlock_a"));
         this.parkourRestrictionTask.runTaskTimer((Plugin)CosmicDungeonsPlugin.get_(), 10L, 10L);
         this.junkTask = new JunkDimensionTask(this.getDungeon());
         this.junkTask.runTaskTimer((Plugin)CosmicDungeonsPlugin.get(), 20L, 20L);
@@ -909,8 +909,8 @@ extends DungeonEvents {
         this.selectRandomPlates();
         this.findNewPortalDirections();
         this.loadTasks();
-        ArrayList locs = Lists.newArrayList(this.chestLocations.keySet());
-        Location chosen = (Location)locs.get(this.random.nextInt(locs.size()));
+        ArrayList<Location> locs = Lists.newArrayList(this.chestLocations.keySet());
+        Location chosen = locs.get(this.random.nextInt(locs.size()));
         Block bl = chosen.getBlock();
         if (!bl.getType().equals((Object)Material.CHEST)) {
             bl.setType(Material.CHEST);

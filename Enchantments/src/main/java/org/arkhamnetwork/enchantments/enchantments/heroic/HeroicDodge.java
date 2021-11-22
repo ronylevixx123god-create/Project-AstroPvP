@@ -24,6 +24,8 @@ public class HeroicDodge extends HeroicCustomEnchantment {
 
     @SneakyThrows
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
+        if (player.getWorld().getName().toLowerCase().contains("dungeon_planet_nul"))
+            return;
         if (e instanceof EntityDamageByEntityEvent) {
             double chance = 0.02 * level;
             final boolean sneaking = ((Player) player).isSneaking();

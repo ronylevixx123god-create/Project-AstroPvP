@@ -83,6 +83,8 @@ public class CustomPearlListener implements Listener {
 
     @EventHandler
     public void onThrow(ProjectileLaunchEvent e) {
+        if(!(e.getEntity().getShooter() instanceof Player))
+            return;
         Player player = (Player) e.getEntity().getShooter();
         if (e.getEntity() instanceof EnderPearl) {
 

@@ -32,7 +32,10 @@ public class HeroicTeleportation extends HeroicCustomEnchantment {
     }
 
     public void applyProjectileEffect(final LivingEntity user, final int enchantLevel, final ProjectileLaunchEvent event) {
+
         if (event.getEntity() instanceof Arrow && !event.isCancelled()) {
+            if (WorldGuardUtils.getRegionsIn(user.getLocation()).contains("second_parkour") && user.getLocation().getWorld().getName().equalsIgnoreCase("dungeon_planet_nul"))
+                return;
             event.getEntity().setMetadata("bi_teleport_arrow", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) enchantLevel));
         }
     }

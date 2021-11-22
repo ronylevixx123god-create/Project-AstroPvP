@@ -1,16 +1,4 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  org.bukkit.Bukkit
- *  org.bukkit.me.astropvp.cratekeys.inventory.Inventory
- *  org.bukkit.me.astropvp.cratekeys.inventory.InventoryHolder
- *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
- *  org.bukkit.util.io.BukkitObjectInputStream
- *  org.bukkit.util.io.BukkitObjectOutputStream
- *  org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder
- */
-package net.astropvp.utils;
+package net.astropvp.nebulashop.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

@@ -1,5 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.bow;
 
+import com.compilex.CosmicDungeons.DungeonsAPI;
+import com.compilex.CosmicDungeons.struct.DungeonDebuff;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
@@ -31,6 +33,14 @@ public class Teleportation extends CustomEnchantment {
     private static class TeleportationEvents implements Listener {
         @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = false)
         public void onArrowHit(final EntityDamageByEntityEvent e) throws Exception {
+            if (!(e.getEntity() instanceof Player))
+                return;
+            if (WorldGuardUtils.getRegionsIn(e.getDamager().getLocation()).contains("second_parkour") && e.getDamager().getLocation().getWorld().getName().equalsIgnoreCase("dungeon_planet_nul"))
+                return;
+            if (WorldGuardUtils.getRegionsIn(e.getEntity().getLocation()).contains("second_parkour") && e.getEntity().getLocation().getWorld().getName().equalsIgnoreCase("dungeon_planet_nul"))
+                return;
+            if (e.getDamager().hasMetadata("inInvisibleMaze") || e.getEntity().hasMetadata("inInvisibleMaze") || DungeonsAPI.hasDungeonDebuff((Player)e.getEntity(), DungeonDebuff.NO_TELEPORTATION_BOWS))
+                return;
             if (e.getDamager() instanceof Projectile && e.getDamager().hasMetadata("teleportation_level")) {
                 Player player = null;
                 Player playerHit = null;

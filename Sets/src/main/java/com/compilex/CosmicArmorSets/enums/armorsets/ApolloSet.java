@@ -5,6 +5,7 @@ import com.compilex.CosmicArmorSets.enums.OtherPlayerEventListenerSet;
 import com.compilex.CosmicArmorSets.utils.ItemUtils;
 import com.compilex.CosmicArmorSets.utils.TranslateList;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.rit.sucy.EnchantmentAPI;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import org.bukkit.ChatColor;
@@ -121,12 +122,15 @@ public class ApolloSet extends ArmorSetInfo
 
     @Override
     public void onEquip(Player player) {
-        //EnchantmentAPI.getEnchantment("Gears").applyEquipEffect(player, 4);
+        String regionName = WorldGuardUtils.getRegionName(player.getLocation());
+        if (regionName.contains("parkour") && !regionName.contains("enchants"))
+            return;
+        EnchantmentAPI.getEnchantment("Gears").applyEquipEffect(player, 4);
     }
 
     @Override
     public void onUnequip(Player player) {
-        //EnchantmentAPI.getEnchantment("Gears").applyUnequipEffect(player, 4);
+        EnchantmentAPI.getEnchantment("Gears").applyUnequipEffect(player, 4);
     }
 
 

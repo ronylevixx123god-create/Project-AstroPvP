@@ -70,6 +70,8 @@ extends RegionEvent {
 
     @Override
     public void run() {
+        if(this.dungeon.getPlayers().isEmpty())
+            return;
         String chosenPath;
         if (this.dungeon.getTimeTask().getExpireTime() - System.currentTimeMillis() > (long)(this.dungeon.isHalfTime() ? 45000 : 75000)) {
             this.dungeon.getDungeonChallengesCompleted().remove((Object)DungeonChallenge.APESTOS);
@@ -109,15 +111,15 @@ extends RegionEvent {
     }
 
     private void setEast(boolean open) {
-        this.setBlocks(new ArrayList<Location>(Arrays.asList(new Location[]{new Location(this.dungeon.getWorld(), 830.0, 199.0, 518.0), new Location(this.dungeon.getWorld(), 829.0, 199.0, 519.0), new Location(this.dungeon.getWorld(), 828.0, 199.0, 520.0)})), open);
+        this.setBlocks(new ArrayList<Location>(Arrays.asList(new Location(this.dungeon.getWorld(), 830.0, 199.0, 518.0), new Location(this.dungeon.getWorld(), 829.0, 199.0, 519.0), new Location(this.dungeon.getWorld(), 828.0, 199.0, 520.0))), open);
     }
 
     private void setSouthWest(boolean open) {
-        this.setBlocks(new ArrayList<Location>(Arrays.asList(new Location[]{new Location(this.dungeon.getWorld(), 838.0, 199.0, 553.0), new Location(this.dungeon.getWorld(), 838.0, 199.0, 552.0), new Location(this.dungeon.getWorld(), 839.0, 199.0, 551.0), new Location(this.dungeon.getWorld(), 811.0, 199.0, 511.0), new Location(this.dungeon.getWorld(), 810.0, 199.0, 511.0), new Location(this.dungeon.getWorld(), 810.0, 199.0, 510.0), new Location(this.dungeon.getWorld(), 809.0, 199.0, 510.0), new Location(this.dungeon.getWorld(), 770.0, 199.0, 537.0), new Location(this.dungeon.getWorld(), 770.0, 199.0, 538.0)})), open);
+        this.setBlocks(new ArrayList<Location>(Arrays.asList(new Location(this.dungeon.getWorld(), 838.0, 199.0, 553.0), new Location(this.dungeon.getWorld(), 838.0, 199.0, 552.0), new Location(this.dungeon.getWorld(), 839.0, 199.0, 551.0), new Location(this.dungeon.getWorld(), 811.0, 199.0, 511.0), new Location(this.dungeon.getWorld(), 810.0, 199.0, 511.0), new Location(this.dungeon.getWorld(), 810.0, 199.0, 510.0), new Location(this.dungeon.getWorld(), 809.0, 199.0, 510.0), new Location(this.dungeon.getWorld(), 770.0, 199.0, 537.0), new Location(this.dungeon.getWorld(), 770.0, 199.0, 538.0))), open);
     }
 
     private void setSouth(boolean open) {
-        ArrayList<Location> inverseBlocks = new ArrayList<Location>(Arrays.asList(new Location[]{new Location(this.dungeon.getWorld(), 839.0, 199.0, 551.0), new Location(this.dungeon.getWorld(), 838.0, 199.0, 552.0), new Location(this.dungeon.getWorld(), 838.0, 199.0, 553.0)}));
+        ArrayList<Location> inverseBlocks = new ArrayList<Location>(Arrays.asList(new Location(this.dungeon.getWorld(), 839.0, 199.0, 551.0), new Location(this.dungeon.getWorld(), 838.0, 199.0, 552.0), new Location(this.dungeon.getWorld(), 838.0, 199.0, 553.0)));
         inverseBlocks.forEach(loc -> {
             loc.getBlock().setType(open ? Material.BARRIER : Material.AIR);
             loc.add(0.0, 1.0, 0.0).getBlock().setType(open ? Material.BARRIER : Material.AIR);
@@ -125,7 +127,7 @@ extends RegionEvent {
             loc.add(0.0, 3.0, 0.0).getBlock().setType(open ? Material.BARRIER : Material.AIR);
             loc.add(0.0, 4.0, 0.0).getBlock().setType(open ? Material.BARRIER : Material.AIR);
         });
-        this.setBlocks(new ArrayList<Location>(Arrays.asList(new Location[]{new Location(this.dungeon.getWorld(), 839.0, 199.0, 534.0), new Location(this.dungeon.getWorld(), 838.0, 199.0, 534.0), new Location(this.dungeon.getWorld(), 820.0, 199.0, 513.0), new Location(this.dungeon.getWorld(), 819.0, 199.0, 513.0), new Location(this.dungeon.getWorld(), 819.0, 199.0, 514.0)})), open);
+        this.setBlocks(new ArrayList<Location>(Arrays.asList(new Location(this.dungeon.getWorld(), 839.0, 199.0, 534.0), new Location(this.dungeon.getWorld(), 838.0, 199.0, 534.0), new Location(this.dungeon.getWorld(), 820.0, 199.0, 513.0), new Location(this.dungeon.getWorld(), 819.0, 199.0, 513.0), new Location(this.dungeon.getWorld(), 819.0, 199.0, 514.0))), open);
     }
 
     private void setBlocks(List<Location> locations, boolean open) {
