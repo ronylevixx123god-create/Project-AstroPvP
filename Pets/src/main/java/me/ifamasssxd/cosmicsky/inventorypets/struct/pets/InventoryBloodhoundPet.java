@@ -12,6 +12,7 @@ import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.cmd.CmdFocus;
+import com.massivecraft.factions.cmd.CmdUnfocus;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.Relation;
 import com.rit.sucy.EnchantmentAPI;
@@ -162,6 +163,7 @@ public class InventoryBloodhoundPet extends InventoryPet {
          public void run() {
             pTarget.removeMetadata("noDefenseProcs", Enchantments.getInstance());
             pTarget.removeMetadata("bloodHoundNoBless", CosmicSkyInventoryPets.get());
+            CmdUnfocus.unfocusPlayer(FactionUtils.getFaction(player), player);
          }
       }).runTaskLater(CosmicSkyInventoryPets.get(), 200L);
    }

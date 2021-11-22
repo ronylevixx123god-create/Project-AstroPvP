@@ -81,7 +81,7 @@ public class PlayerCollect {
             statement.setString(1, this.player.getUniqueId().toString());
             ResultSet set = statement.executeQuery();
             while(set.next()) {
-                ItemStack[] items = Serialization.deserialize(set.getString("me.astropvp.cratekeys.items"));
+                ItemStack[] items = Serialization.deserialize(set.getString("items"));
                 String name = set.getString("name");
                 String type = set.getString("type");
                 CollectCategory category = new CollectCategory(CollectType.valueOf(type), items, name);

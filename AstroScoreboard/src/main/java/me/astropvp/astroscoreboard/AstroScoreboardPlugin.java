@@ -3,6 +3,7 @@ package me.astropvp.astroscoreboard;
 import com.astropvp.cc.player.CosmicPlayers;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import com.cosmicpvp.titles.PlayerTitleAPI;
 import com.massivecraft.factions.FPlayer;
 import me.astropvp.astroscoreboard.board.BoardAdapter;
 import me.astropvp.astroscoreboard.board.Scoreboard;
@@ -70,7 +71,6 @@ public class AstroScoreboardPlugin extends JavaPlugin {
                     for (Player other : Bukkit.getOnlinePlayers()) {
                         try {
                             PlayerDisplayManager.setUserPrefix(player, other, AstroScoreboardAPI.getDefaultPrefix(player, other) + " ");
-                            //PlayerDisplayManager.setUserSuffix(player, other, ((CosmicPlayers.get().getCosmicPlayer(player).isOnCosmicClient()) ? ChatColor.GREEN.toString() + ChatColor.BOLD + " ✓" : ChatColor.RED.toString() + ChatColor.BOLD + " ✗"));
                         } catch (Exception exception) {
                             exception.printStackTrace();
                         }
