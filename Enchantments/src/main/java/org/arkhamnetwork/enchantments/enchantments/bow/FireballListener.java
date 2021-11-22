@@ -68,12 +68,10 @@ final class FireballListener implements Listener {
                 if (!(ent instanceof Player)) {
                     continue;
                 }
-                if (ent instanceof Player) {
-                    final Player pEnt = (Player) ent;
-                    final User u = Hellfire.ess3.getUser(pEnt);
-                    if (u.isGodModeEnabled() || u.isVanished()) {
-                        continue;
-                    }
+                final Player pEnt = (Player) ent;
+                final User u = Hellfire.ess3.getUser(pEnt);
+                if (u.isGodModeEnabled() || u.isVanished()) {
+                    continue;
                 }
                 if (WorldGuardUtils.isPvPDisabled(ent.getLocation())) {
                     continue;
@@ -81,9 +79,7 @@ final class FireballListener implements Listener {
                 if (ent instanceof EnderDragon) {
                     continue;
                 }
-                if (ent instanceof LivingEntity) {
-                    ent.setFireTicks(ent.getFireTicks() + level * 20);
-                }
+                ent.setFireTicks(ent.getFireTicks() + level * 20);
                 final LivingEntity le = (LivingEntity) ent;
                 if (Bukkit.getPlayer(enchantment_owner) != null) {
                     Bukkit.getScheduler().runTaskLater(Enchantments.getInstance(), () -> {

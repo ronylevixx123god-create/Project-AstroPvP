@@ -1,5 +1,6 @@
 package me.ifamasssxd.cosmicbosses.dungeonboss.abilities;
 
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.google.common.collect.Lists;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import com.sk89q.worldguard.protection.flags.Flag;
@@ -8,7 +9,6 @@ import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonAbility;
 import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijki;
 import me.ifamasssxd.cosmicbosses.struct.BlockModifier;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
-import me.ifamasssxd.cosmicbosses.utils.WorldGuardUtils;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

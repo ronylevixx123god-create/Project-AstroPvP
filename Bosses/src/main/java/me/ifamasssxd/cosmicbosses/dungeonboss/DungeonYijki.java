@@ -4,6 +4,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.google.common.collect.Lists;
 import de.inventivegames.particle.ParticleEffect;
+import lombok.Getter;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import me.ifamasssxd.cosmicbosses.bosses.yijki.Yijki;
 import me.ifamasssxd.cosmicbosses.dungeonboss.abilities.*;

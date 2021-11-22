@@ -74,7 +74,8 @@ public enum Permission {
     TITLE("title"),
     UNCLAIM("unclaim"),
     UNCLAIM_ALL("unclaimall"),
-    VERSION("version");
+    VERSION("version"),
+    SHIELD("shield");
 
     public final String node;
 

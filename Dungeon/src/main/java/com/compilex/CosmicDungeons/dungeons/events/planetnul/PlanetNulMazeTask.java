@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.CC
  *  com.cosmicpvp.cosmicutils.utils.TitleManager
@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -31,8 +32,8 @@ import org.github.paperspigot.Title;
 
 public class PlanetNulMazeTask
 extends BukkitRunnable {
-    private PlanetNulDungeon dungeon;
-    private List<Player> affectedPlayers;
+    private final PlanetNulDungeon dungeon;
+    private final List<Player> affectedPlayers;
     private int loops = 0;
 
     public PlanetNulMazeTask(PlanetNulDungeon dungeon) {
@@ -41,24 +42,34 @@ extends BukkitRunnable {
     }
 
     private float clamp(float min, float max, float value) {
-        return value < min ? min : (value > max ? max : value);
+        return value < min ? min : (Math.min(value, max));
     }
 
     public void run() {
         ++this.loops;
-        this.dungeon.getDungeonEvents().chestLocations.stream().filter(l -> !this.dungeon.getDungeonEvents().announcedChestLocations.contains(l)).forEach(loc -> ParticleEffect.playEffect((ParticleEffect)ParticleEffect.ENCHANTMENT_TABLE, (Location)loc, (float)1.0f, (int)24));
+        this.dungeon.getDungeonEvents().chestLocations.stream().filter(l -> !this.dungeon.getDungeonEvents().announcedChestLocations.contains(l)).forEach(l -> {
+            try {
+                Location location = new Location(l.getWorld(), l.getBlockX() + 0.5, l.getBlockY() + 0.5, l.getBlockZ() + 0.5);
+                de.inventivegames.particle.ParticleEffect.ENCHANTMENT_TABLE.sendToPlayers(this.dungeon.getPlayers(), location, 0.2f, 0.2f, 0.2f, 0.0f, 24);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        });
+
         for (Player p2 : this.dungeon.getPlayers()) {
             DungeonPlayer dp = DungeonsAPI.get().getPlayerDungeonData(p2);
-            if (dp.getCurrentDungeon() == null || !dp.getCurrentDungeon().equals(this.dungeon)) continue;
+            if (dp.getCurrentDungeon() == null || !dp.getCurrentDungeon().equals(this.dungeon))
+                continue;
             if (p2.getLocation().add(0.0, -1.0, 0.0).getBlock().getType() == Material.MYCEL || p2.getLocation().add(0.0, -1.0, 0.0).getBlock().getType() == Material.AIR && p2.getLocation().add(0.0, -2.0, 0.0).getBlock().getType() == Material.MYCEL || p2.getLocation().add(0.0, -1.0, 0.0).getBlock().getType() == Material.AIR && p2.getLocation().add(0.0, -2.0, 0.0).getBlock().getType() == Material.AIR && p2.getLocation().add(0.0, -3.0, 0.0).getBlock().getType() == Material.MYCEL || p2.getLocation().add(0.0, -1.0, 0.0).getBlock().getType() == Material.AIR && p2.getLocation().add(0.0, -2.0, 0.0).getBlock().getType() == Material.AIR && p2.getLocation().add(0.0, -3.0, 0.0).getBlock().getType() == Material.AIR && p2.getLocation().add(0.0, -4.0, 0.0).getBlock().getType() == Material.MYCEL) {
-                if (this.affectedPlayers.contains((Object)p2)) continue;
+                if (this.affectedPlayers.contains(p2))
+                    continue;
                 this.affectedPlayers.add(p2);
                 p2.sendTitle(new Title(CC.Red + "Poisonous Gas", CC.Gray + "Will this be your last breath?", 20, 65, 20));
                 continue;
             }
-            this.affectedPlayers.remove((Object)p2);
+            this.affectedPlayers.remove(p2);
         }
-        ArrayList playersToRemove = new ArrayList();
+        ArrayList<Player> playersToRemove = new ArrayList<>();
         this.affectedPlayers.forEach(p -> {
             if (p.getWorld() != this.dungeon.world) {
                 playersToRemove.add(p);

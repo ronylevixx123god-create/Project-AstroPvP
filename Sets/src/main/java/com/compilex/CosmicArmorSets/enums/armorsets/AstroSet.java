@@ -207,6 +207,9 @@ public class AstroSet
 
     @Override
     public void onEquip(Player player) {
+        String regionName = WorldGuardUtils.getRegionName(player.getLocation());
+        if (regionName.contains("parkour") && !regionName.contains("enchants"))
+            return;
         EnchantmentAPI.getEnchantment("Gears").applyEquipEffect(player, 4);
     }
 

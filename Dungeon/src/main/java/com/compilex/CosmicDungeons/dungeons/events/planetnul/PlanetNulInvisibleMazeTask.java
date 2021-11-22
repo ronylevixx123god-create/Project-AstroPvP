@@ -55,6 +55,8 @@ extends BukkitRunnable {
     }
 
     public void run() {
+        if(this.dungeon.getPlayers().isEmpty())
+            return;
         boolean playSound;
         List<Zombie> zombies = this.dungeon.getDungeonEvents().getInvisibleMazeRegionEvent().getZombies();
         ++this.timer;
@@ -74,18 +76,20 @@ extends BukkitRunnable {
             }
             if ((targetedBlock = loc.getBlock()).getType() == Material.STAINED_GLASS) {
                 for (Zombie zombie : zombies) {
-                    if (zombie == null || zombie.isDead()) continue;
+                    if (zombie == null || zombie.isDead())
+                        continue;
                     CosmicDungeonsPlugin.get().getEntityHider().showEntity(p, (Entity)zombie);
                 }
                 continue;
             }
             for (Zombie zombie : zombies) {
-                if (zombie == null || zombie.isDead()) continue;
-                if (p.hasLineOfSight((Entity)zombie)) {
-                    CosmicDungeonsPlugin.get().getEntityHider().showEntity(p, (Entity)zombie);
+                if (zombie == null || zombie.isDead())
+                    continue;
+                if (p.hasLineOfSight(zombie)) {
+                    CosmicDungeonsPlugin.get().getEntityHider().showEntity(p, zombie);
                     continue;
                 }
-                CosmicDungeonsPlugin.get().getEntityHider().hideEntity(p, (Entity)zombie);
+                CosmicDungeonsPlugin.get().getEntityHider().hideEntity(p, zombie);
             }
         }
     }

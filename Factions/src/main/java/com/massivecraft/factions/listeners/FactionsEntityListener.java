@@ -175,7 +175,7 @@ public class FactionsEntityListener
                             event.setCancelled(true);
                             return;
                         }
-                        if (!(boomer instanceof Fireball) && !(boomer instanceof WitherSkull) && !(boomer instanceof Wither))
+                        if (!(boomer instanceof Fireball) && !(boomer instanceof Wither))
                             break block14;
                         if (faction.isNone() && Conf.wildernessBlockFireballs && !Conf.worldsNoWildernessProtection.contains(loc.getWorld().getName()) || faction.isNormal() && (!online ? Conf.territoryBlockFireballsWhenOffline : Conf.territoryBlockFireballs))
                             break block15;

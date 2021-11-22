@@ -46,7 +46,7 @@ extends BukkitRunnable {
 
     public PlanetNulParkourRestrictionTask(PlanetNulDungeon dungeon) {
         this.dungeon = dungeon;
-        this.regions = new ArrayList<String>(Arrays.asList("first_parkour", "second_parkour", "fireball_alley", "invisible_maze", "find_corrupt_room"));
+        this.regions = new ArrayList<>(Arrays.asList("first_parkour", "second_parkour", "fireball_alley", "invisible_maze", "find_corrupt_room"));
     }
 
     public void run() {

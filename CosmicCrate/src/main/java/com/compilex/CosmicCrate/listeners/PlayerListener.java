@@ -4,6 +4,7 @@
 
 package com.compilex.CosmicCrate.listeners;
 
+import com.compilex.CosmicCrate.libs.CosmicCrateData;
 import org.bukkit.util.Vector;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.LivingEntity;
@@ -13,7 +14,6 @@ import org.arkhamnetwork.enchantments.util.WorldGuardUtils;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
-import java.util.ListIterator;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.EventHandler;
@@ -31,10 +31,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerInteractEvent;
-import java.util.Iterator;
+
 import java.util.List;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
-import com.compilex.CosmicCrate.libs.Version;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import com.compilex.CosmicCrate.api.CCAPI;
@@ -59,9 +58,9 @@ public class PlayerListener implements Listener
         return found <= allowed;
     }
     
-    private int getSlotsRequired(final Player player, final Version version) {
+    private int getSlotsRequired(final Player player, CosmicCrateData data) {
         int required = 0;
-        final List<ItemStack> item = CCAPI.getCosmicCrateLoot(player, version);
+        final List<ItemStack> item = data.getCrateLoot();
         if (item != null) {
             for (final ItemStack reward : item) {
                 final long id = ItemID.getItemID(reward);
@@ -79,23 +78,24 @@ public class PlayerListener implements Listener
     @EventHandler(priority = EventPriority.LOW)
     public void onPlayerInteract(final PlayerInteractEvent e) {
         if (e.hasItem() && CCAPI.getCosmicCrateVersion(e.getItem()) != null) {
-            final Version v = CCAPI.getCosmicCrateVersion(e.getItem());
+            CosmicCrateData data = CCAPI.getCosmicCrateVersion(e.getItem());
+            String id = CosmicCrate.get().getCosmicCrateManager().getId(CosmicCrate.get().getCosmicCrateManager().getCosmicCrates(), data);
             final ItemStack i = e.getItem();
             e.setCancelled(true);
             e.setUseInteractedBlock(Event.Result.DENY);
             e.setUseItemInHand(Event.Result.DENY);
             if (e.getPlayer().isOp() && (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK)) {
-                final Inventory previewInventory = Bukkit.createInventory((InventoryHolder)null, 45, v.name());
-                for (final ItemStack is : v.getCrateData().getCrateLoot(e.getPlayer())) {
+                final Inventory previewInventory = Bukkit.createInventory((InventoryHolder)null, 45, id);
+                for (final ItemStack is : data.getCrateLoot()) {
                     previewInventory.addItem(is);
                 }
-                previewInventory.addItem(v.getCrateData().getRandomMetaItem(e.getPlayer()));
+                previewInventory.addItem(data.getRandomMetaItem());
                 e.getPlayer().openInventory(previewInventory);
                 return;
             }
             if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                final int required = this.getSlotsRequired(e.getPlayer(), v);
-                if (this.getEmptySlots(e.getPlayer()) < this.getSlotsRequired(e.getPlayer(), v)) {
+                final int required = this.getSlotsRequired(e.getPlayer(), data);
+                if (this.getEmptySlots(e.getPlayer()) < this.getSlotsRequired(e.getPlayer(), data)) {
                     e.getPlayer().sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You do not have enough empty inventory slots.");
                     e.getPlayer().sendMessage(ChatColor.GRAY + ChatColor.ITALIC.toString() + "REQ: " + required + "+ slots");
                     return;
@@ -109,18 +109,16 @@ public class PlayerListener implements Listener
                     if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
                         final long itemID = ItemID.getItemID(e.getItem());
                         if (itemID != -1L) {
-                            ItemID.blacklistIID(itemID, "ccOpen/" + v.toString() + "/" + e.getPlayer().getName());
+                            ItemID.blacklistIID(itemID, "ccOpen/" + id + "/" + e.getPlayer().getName());
                         }
                     }
                 }
-                if ((v != null && v.getCrateData() != null)) {
-                    final Player p = e.getPlayer();
-                    final Location l = p.getEyeLocation();
-                    p.playSound(p.getLocation(), Sound.BAT_TAKEOFF, 1.0f, 2.0f);
-                    final CosmicCrateLootSelector ccls = new CosmicCrateLootSelector(e.getPlayer(), v);
-                    e.getPlayer().setMetadata("ccrate_loot_selector", (MetadataValue)new FixedMetadataValue((Plugin)CosmicCrate.get(), (Object)ccls));
-                    ccls.open();
-                }
+                final Player p = e.getPlayer();
+                final Location l = p.getEyeLocation();
+                p.playSound(p.getLocation(), Sound.BAT_TAKEOFF, 1.0f, 2.0f);
+                final CosmicCrateLootSelector ccls = new CosmicCrateLootSelector(e.getPlayer(), id);
+                e.getPlayer().setMetadata("ccrate_loot_selector", (MetadataValue)new FixedMetadataValue((Plugin)CosmicCrate.get(), (Object)ccls));
+                ccls.open();
             }
         }
     }

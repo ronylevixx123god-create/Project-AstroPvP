@@ -5,7 +5,7 @@
 package com.compilex.CosmicCrate;
 
 import com.compilex.CosmicCrate.api.CCAPI;
-import com.compilex.CosmicCrate.libs.Version;
+import com.compilex.CosmicCrate.libs.CosmicCrateData;
 import com.compilex.CosmicCrate.utils.LocalItemUtils;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
@@ -32,7 +32,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class CosmicCrateLootSelector
 {
     public Player player;
-    public Version crateVersion;
+    public CosmicCrateData crateVersion;
     public Inventory lootInventory;
     public CosmicCratePhase phase;
     public List<Integer> selectedSlots;
@@ -43,23 +43,23 @@ public class CosmicCrateLootSelector
     public MetaAnimationTask metaAnimation;
     public ItemStack metaItem;
     
-    public CosmicCrateLootSelector(final Player p, final Version v) {
+    public CosmicCrateLootSelector(final Player p, final String v) {
         this.player = p;
-        this.crateVersion = v;
+        this.crateVersion = CosmicCrate.get().getCosmicCrateManager().getCosmicCrate(v);
         this.animationTask = new CopyOnWriteArrayList<SlotAnimationTask>();
         this.selectedSlots = new ArrayList<Integer>();
         this.phase = CosmicCratePhase.GENERATING;
-        this.rewards = CCAPI.getCosmicCrateLoot(p, v);
+        this.rewards = CCAPI.getCosmicCrateLoot(p, CosmicCrate.get().getCosmicCrateManager().getCosmicCrate(v));
         this.displayRewards = new ArrayList<ItemStack>(this.rewards);
-        this.crateInventoryName = "Astro Crate: " + WordUtils.capitalize(v.name());
-        if (this.crateVersion.getCrateData() != null) {
-            this.metaItem = this.crateVersion.getCrateData().getRandomMetaItem(p);
+        this.crateInventoryName = "Astro Crate: " + WordUtils.capitalize(v);
+        if (this.crateVersion != null) {
+            this.metaItem = this.crateVersion.getRandomMetaItem();
         }
     }
     
     public void open() {
         this.lootInventory = Bukkit.createInventory((InventoryHolder)null, 54, this.crateInventoryName);
-        final ItemStack hiddenItem = LocalItemUtils.buildItem(Material.ENDER_CHEST, (short)0, ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "???", ChatColor.GRAY + "Click to redeem an item from", ChatColor.GRAY + "your " + ChatColor.UNDERLINE + this.crateVersion.name() + ChatColor.GRAY + " Astro Crate!");
+        final ItemStack hiddenItem = LocalItemUtils.buildItem(Material.ENDER_CHEST, (short)0, ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "???", ChatColor.GRAY + "Click to redeem an item from", ChatColor.GRAY + "your " + ChatColor.UNDERLINE + this.crateVersion.getDisplayName() + ChatColor.GRAY + " Astro Crate!");
         final ItemStack lockedItem = LocalItemUtils.buildItem(Material.STAINED_GLASS_PANE, (short)14, ChatColor.RED.toString() + ChatColor.BOLD.toString() + "???", ChatColor.GRAY + "Redeem all your other rewards to", ChatColor.GRAY + "unlock this special \"META\" item.");
         final ItemStack placeholderItem = LocalItemUtils.buildItem(Material.STAINED_GLASS_PANE, (short)7, ChatColor.DARK_GRAY.toString() + ChatColor.BOLD.toString() + "...", new String[0]);
         this.lootInventory.setItem(12, hiddenItem.clone());
@@ -168,8 +168,8 @@ public class CosmicCrateLootSelector
         this.endAllAnimations();
         this.phase = CosmicCratePhase.DONE;
         this.player.removeMetadata("ccrate_loot_selector", (Plugin)CosmicCrate.get());
-        if (this.crateVersion.getCrateData() != null) {
-            this.crateVersion.getCrateData().playConclusion(this.player);
+        if (this.crateVersion != null) {
+            this.crateVersion.playConclusion(this.player);
         }
     }
     
@@ -186,17 +186,17 @@ public class CosmicCrateLootSelector
     public class MetaAnimationTask extends BukkitRunnable
     {
         CosmicCrateLootSelector cls;
-        Version crateVersion;
+        CosmicCrateData crateVersion;
         ItemStack metaItem;
         int iterations;
         int intervals;
         
-        MetaAnimationTask(final CosmicCrateLootSelector cls, final Version v) {
+        MetaAnimationTask(final CosmicCrateLootSelector cls, final CosmicCrateData v) {
             this.iterations = 0;
             this.intervals = 0;
             this.cls = cls;
             this.crateVersion = v;
-            this.metaItem = LocalItemUtils.buildItem(Material.ENDER_CHEST, (short)0, ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "???", ChatColor.GRAY + "Click to redeem an item from", ChatColor.GRAY + "your " + ChatColor.UNDERLINE + this.crateVersion.name() + ChatColor.GRAY + " Astro Crate!");
+            this.metaItem = LocalItemUtils.buildItem(Material.ENDER_CHEST, (short)0, ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "???", ChatColor.GRAY + "Click to redeem an item from", ChatColor.GRAY + "your " + ChatColor.UNDERLINE + this.crateVersion.getDisplayName() + ChatColor.GRAY + " Astro Crate!");
         }
         
         public void run() {
@@ -206,13 +206,13 @@ public class CosmicCrateLootSelector
                 for (int i = 0; i < this.cls.lootInventory.getSize(); ++i) {
                     final ItemStack is = this.cls.lootInventory.getItem(i);
                     if (is != null && is.getType() == Material.STAINED_GLASS_PANE) {
-                        if (this.crateVersion.getCrateData() != null) {
+                        if (this.crateVersion != null) {
                             if (color) {
-                                is.setDurability(this.crateVersion.getCrateData().getColorPane());
+                                is.setDurability(this.crateVersion.getColorPane());
                                 color = false;
                             }
                             else {
-                                is.setDurability(this.crateVersion.getCrateData().getNonColorPane());
+                                is.setDurability(this.crateVersion.getNonColorPane());
                                 color = true;
                             }
                         }

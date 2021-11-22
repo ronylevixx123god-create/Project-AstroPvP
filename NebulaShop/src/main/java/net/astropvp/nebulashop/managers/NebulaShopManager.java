@@ -1,17 +1,14 @@
-package net.astropvp.managers;
+package net.astropvp.nebulashop.managers;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.Singular;
-import net.astropvp.NebulaShop;
-import net.astropvp.utils.ConfigUtils;
-import org.bukkit.Bukkit;
+import net.astropvp.nebulashop.NebulaShop;
+import net.astropvp.nebulashop.utils.ConfigUtils;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
-import java.util.UUID;
 
 public class NebulaShopManager {
 

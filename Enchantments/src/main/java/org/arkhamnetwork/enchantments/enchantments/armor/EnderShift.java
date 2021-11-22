@@ -57,7 +57,6 @@ public class EnderShift extends CustomEnchantment {
             if (player.getHealth() - dmg <= 0.0 && this.canEnderShift((Player) player) && Math.random() < 0.10) {
                 final Player pl = (Player) player;
                 EnderShift.last_ender_shift.put(pl.getUniqueId().toString(), System.currentTimeMillis());
-                e.setCancelled(true);
                 e.setDamage(0.0);
                 pl.sendMessage("");
                 pl.sendMessage(ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.LIGHT_PURPLE + "You were about to die, so you have entered the Ender dimension, escape to safety!");

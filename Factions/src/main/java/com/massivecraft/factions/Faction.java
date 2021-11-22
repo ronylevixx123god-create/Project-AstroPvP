@@ -4,17 +4,21 @@ import com.google.common.collect.Lists;
 import com.massivecraft.factions.iface.EconomyParticipator;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.integration.Econ;
+import com.massivecraft.factions.shield.ShieldManager;
 import com.massivecraft.factions.struct.*;
 import com.massivecraft.factions.util.LazyLocation;
 import com.massivecraft.factions.util.MiscUtil;
 import com.massivecraft.factions.util.RelationUtil;
 import com.massivecraft.factions.zcore.persist.Entity;
+import lombok.Getter;
+import lombok.Setter;
 import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import java.time.LocalTime;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -61,7 +65,21 @@ public class Faction extends Entity implements EconomyParticipator {
     private Map<UUID, Integer> playerWallCheckCount = new ConcurrentHashMap<>();
     private Map<UUID, Integer> playerBufferCheckCount = new ConcurrentHashMap<>();
     private boolean weeWoo = false;
+    @Getter @Setter
+    private int shieldTime = 0;
+    @Getter @Setter
+    private long lastChangeTime = 0;
 
+    public boolean isShieldActive() {
+        if(lastChangeTime + 86400000 >= System.currentTimeMillis()) {
+            return false;
+        }
+        return (LocalTime.of(shieldTime, 0).isAfter(LocalTime.now()) && LocalTime.of(shieldTime + 8, 0).isBefore(LocalTime.now()));
+    }
+
+    public void shieldChange() {
+        this.lastChangeTime = System.currentTimeMillis();
+    }
 
     public boolean isWeeWoo() {
         return this.weeWoo;

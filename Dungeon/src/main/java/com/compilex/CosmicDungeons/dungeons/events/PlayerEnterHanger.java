@@ -46,6 +46,7 @@ extends RegionEvent {
             ((DungeonYijki)yijki).getSpawnLocations().add(new Location(this.dungeon.getWorld(), -29.0, 81.0, 167.0));
             ((DungeonYijki)yijki).getSpawnLocations().add(new Location(this.dungeon.getWorld(), 24.0, 80.0, 210.0));
         }
+        ((AbandonedShipEvents)this.dungeon.getDungeonEvents()).setFirstBossUUID(spawned.getUniqueId());
         this.dungeon.setBossSpawned(true);
         this.dungeon.setBossSpawnTime(System.currentTimeMillis());
         this.dungeon.broadcastMessage((Object)ChatColor.RED + "A dark energy engulfs the ship hanger...");

@@ -1,20 +1,6 @@
 package me.ifamasssxd.cosmicbosses.tasks;
 
-import com.google.common.collect.Lists;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 import java.util.Random;
-import me.ifamasssxd.cosmicbosses.CosmicBosses;
-import me.ifamasssxd.cosmicbosses.struct.Boss;
-import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
-import me.ifamasssxd.cosmicbosses.utils.BossUtils;
-import me.ifamasssxd.cosmicbosses.utils.WorldGuardUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 public class BossSpawnTask implements Runnable {
     Random random = new Random();

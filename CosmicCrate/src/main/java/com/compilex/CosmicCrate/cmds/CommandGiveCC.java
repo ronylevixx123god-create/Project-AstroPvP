@@ -9,7 +9,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.Bukkit;
 import com.compilex.CosmicCrate.api.CCAPI;
-import com.compilex.CosmicCrate.libs.Version;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.CommandExecutor;
@@ -26,7 +25,7 @@ public class CommandGiveCC implements CommandExecutor
         }
         final String version = args[0];
         final String playerName = args[1];
-        final ItemStack i = CCAPI.getCosmicCrate(Version.valueOf(version.toUpperCase()), playerName);
+        final ItemStack i = CCAPI.getCosmicCrate(version);
         if (i == null || Bukkit.getPlayer(playerName) == null) {
             return true;
         }

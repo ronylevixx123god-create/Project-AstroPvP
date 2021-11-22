@@ -1,5 +1,9 @@
 package me.astropvp.astroscoreboard.board;
 
+import com.compilex.CosmicDungeons.DungeonsAPI;
+import com.compilex.CosmicDungeons.dungeons.events.AbandonedShipEvents;
+import com.compilex.CosmicDungeons.dungeons.libs.DungeonPlayer;
+import com.compilex.CosmicDungeons.dungeons.libs.DungeonType;
 import com.compilex.CosmicKOTH.CosmicKOTHAPI;
 import com.compilex.CosmicKOTH.CosmicKOTHPlugin;
 import com.compilex.CosmicKOTH.tasks.KothEventTask;
@@ -21,15 +25,23 @@ import me.astropvp.astrospawners.utils.PlayerData;
 import me.astropvp.astrospawners.utils.PlayerDataManager;
 import me.bryside.WildPvPPlugin;
 import me.bryside.match.CageMatch;
+import me.ifamasssxd.cosmicbosses.bosses.yijki.Yijki;
+import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijki;
+import me.ifamasssxd.cosmicbosses.dungeonboss.planetnul.CorruptCosmonaut;
+import me.ifamasssxd.cosmicbosses.struct.Boss;
+import me.ifamasssxd.cosmicbosses.utils.BossUtils;
+import me.ifamasssxd.cosmicbosses.utils.ScoreboardUtils;
 import me.ifamasssxd.cosmicduel.DuelAPI;
 import me.ifamasssxd.cosmicduel.struct.enums.DuelState;
 import me.ifamasssxd.cosmichcf.managers.OutpostManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -76,6 +88,24 @@ public class Scoreboard implements BoardAdapter {
 
     public String getTitle(Player player) {
         FPlayer fplayer = FactionUtils.getFPlayer(player);
+        if(DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon() != null && (DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.ABANDONED_SHIP || DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.DESTROYED_OUTPOST)) {
+            for(Entity entity : player.getNearbyEntities(32, 32, 32)) {
+                if(entity.hasMetadata("boss")) {
+                    if(Boss.bosses.get(entity.getUniqueId()) instanceof DungeonYijki) {
+                        return DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.ABANDONED_SHIP ? CC.GoldB + "Mother Of Yijki" : CC.LightPurpleB + "Mother Of Yijki";
+                    }
+                }
+            }
+        }
+        if(DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon() != null && (DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.PLANET_NUL)) {
+            for(Entity entity : player.getNearbyEntities(32, 32, 32)) {
+                if(entity.hasMetadata("boss")) {
+                    if(Boss.bosses.get(entity.getUniqueId()) instanceof CorruptCosmonaut) {
+                        return CC.GoldB + "The Corrupt Cosmonaut";
+                    }
+                }
+            }
+        }
 
         if (PrinterPlayer.fromPlayer(player) != null && PrinterPlayer.fromPlayer(player).isPrinting()) {
             return CC.translate("&d&lPrinter Mode&7 " + getDateSuffix());
@@ -99,6 +129,82 @@ public class Scoreboard implements BoardAdapter {
 
 
     public List<String> mainBoard(Player player) {
+
+        if(DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon() != null && (DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.DESTROYED_OUTPOST || DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.ABANDONED_SHIP)) {
+            for(Entity entity : player.getNearbyEntities(32, 32, 32)) {
+                if(entity.hasMetadata("boss")) {
+                    if(Boss.bosses.get(entity.getUniqueId()) instanceof DungeonYijki) {
+                        DungeonYijki yijki = (DungeonYijki) Boss.bosses.get(entity.getUniqueId());
+                        List<String> board = new LinkedList<>();
+                        board.add("");
+                        board.add(CC.RedB + "Health");
+                        board.add(CC.Red + Math.round(yijki.getEntity().getHealth()));
+                        board.add("");
+                        board.add(CC.AquaB + "Ability");
+                        board.add(CC.Aqua + yijki.getActiveAbility().getAbilityName());
+                        board.add("");
+                        board.add(CC.GreenB + "Weakness");
+                        board.add(CC.Green + Yijki.WitherPhase.getPhase(yijki.getPhase()).getPhaseName());
+                        board.add("");
+                        board.add(CC.GreenB + "Damage Dealt");
+                        int damage = yijki.getDamageTracker().getOrDefault(player, 0);
+                        int totalDamage = 0;
+                        for (final Integer dmg : (yijki.getDamageTracker()).values()) {
+                            totalDamage += dmg;
+                        }
+                        final double percent = (double) damage / totalDamage * 100.0;
+                        DecimalFormat format = new DecimalFormat("###.#");
+                        String string = ChatColor.GREEN.toString() + damage + ChatColor.GRAY + " [" + format.format(percent) + "%]";
+                        if (string.length() > 16) {
+                            string = string.replace("[", "").replace("]", "");
+                            if (string.length() > 16) {
+                                string = string.substring(0, 16);
+                            }
+                        }
+                        board.add(CC.Green + string);
+                        return board;
+                    }
+                }
+            }
+        }
+
+        if(DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon() != null && (DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.PLANET_NUL)) {
+            for(Entity entity : player.getNearbyEntities(32, 32, 32)) {
+                if(entity.hasMetadata("boss")) {
+                    if(Boss.bosses.get(entity.getUniqueId()) instanceof DungeonYijki) {
+                        CorruptCosmonaut cosmonaut = (CorruptCosmonaut) Boss.bosses.get(entity.getUniqueId());
+                        List<String> board = new LinkedList<>();
+                        board.add("");
+                        board.add(CC.RedB + "Health");
+                        board.add(CC.Red + Math.round(cosmonaut.getEntity().getHealth()));
+                        board.add("");
+                        board.add(CC.AquaB + "Ability");
+                        board.add(CC.Aqua + cosmonaut.getActiveAbility().getAbilityName());
+                        board.add("");
+                        board.add(CC.GreenB + "Damage Dealt");
+                        int damage = cosmonaut.getDamageTracker().getOrDefault(player, 0);
+                        int totalDamage = 0;
+                        for (final Integer dmg : (cosmonaut.getDamageTracker()).values()) {
+                            totalDamage += dmg;
+                        }
+                        final double percent = (double) damage / totalDamage * 100.0;
+                        DecimalFormat format = new DecimalFormat("###.#");
+                        String string = ChatColor.GREEN.toString() + damage + ChatColor.GRAY + " [" + format.format(percent) + "%]";
+                        if (string.length() > 16) {
+                            string = string.replace("[", "").replace("]", "");
+                            if (string.length() > 16) {
+                                string = string.substring(0, 16);
+                            }
+                        }
+                        board.add(CC.Green + string);
+                        return board;
+                    }
+                }
+            }
+        }
+
+
+
 
 
         if (PrinterPlayer.fromPlayer(player) != null && PrinterPlayer.fromPlayer(player).isPrinting()) {

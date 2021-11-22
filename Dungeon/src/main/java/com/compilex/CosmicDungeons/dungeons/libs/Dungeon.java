@@ -67,6 +67,9 @@ import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang.Validate;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.bukkit.Bukkit;
@@ -450,7 +453,6 @@ public class Dungeon {
 
     public Dungeon(World dungeonWorld, DungeonType type, String dungeonName, LinkedList<String> dungeonDescription) {
         this.world = dungeonWorld;
-        Validate.notNull((Object)this.world);
         this.worldName = this.world.getName();
         this.dungeonName = ChatColor.translateAlternateColorCodes((char)'&', (String)dungeonName);
         this.dungeonID = CosmicDungeonsPlugin.get_().getApi().nextDungeonID++;

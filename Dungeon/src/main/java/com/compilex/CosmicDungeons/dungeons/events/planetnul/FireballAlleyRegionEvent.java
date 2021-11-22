@@ -12,8 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.Location;
 
-public class FireballAlleyRegionEvent
-extends RegionEvent {
+public class FireballAlleyRegionEvent extends RegionEvent {
     public List<Location> dispenserLocations = new ArrayList<Location>();
 
     public FireballAlleyRegionEvent(Dungeon d, String regionName) {

@@ -10,7 +10,7 @@
  *  org.bukkit.util.io.BukkitObjectOutputStream
  *  org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder
  */
-package net.astropvp.utils;
+package com.compilex.CosmicCrate.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

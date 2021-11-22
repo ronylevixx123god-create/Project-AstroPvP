@@ -91,18 +91,23 @@ public class TrapBlockerItem extends CosmicItem
 
         NBTTagCompoundBuilder cosmicData = wrapper.getCompoundOrCreate("cosmicData");
 
-        cosmicData.setInt("trap_blocker", Integer.valueOf(1));
+        cosmicData.setInt("trap_blocker", 1);
         event.setCancelled(true);
         wrapper.setNBTBase("cosmicData", (NBTBase)cosmicData.get());
         item = wrapper.build();
 
 
-
+        if (FactionUtils.getFaction(player) == null) {
+            throw new PrefixedException("You cannot use this item when you don't have a faction!");
+        }
         int amountOfPlayers=0;
         for (Entity entity : player.getNearbyEntities(10,10,10)) {
-            if (!(entity instanceof Player)) return;
+            if (!(entity instanceof Player))
+                continue;
+            amountOfPlayers++;
             Player p = (Player)entity;
-            if (WorldGuardUtils.isPvPEnabled(p.getLocation()) && (FactionUtils.getFaction(p) != FactionUtils.getFaction(player) || FactionUtils.isWilderness(FactionUtils.getFaction(player)) && FactionUtils.isWilderness(FactionUtils.getFaction(p))) && !FactionUtils.isInAllyFaction(player, p)) {
+            if (FactionUtils.getFaction(p) == null) continue;
+            if (WorldGuardUtils.isPvPEnabled(p.getLocation()) && (FactionUtils.getFaction(p) != FactionUtils.getFaction(player)) && !FactionUtils.isInAllyFaction(player, p)) {
                 if (!isTrapped(p.getUniqueId())) {
                     trappedPlayers.put(p.getUniqueId(), p);
                     p.sendMessage(CC.translate("&c&l* TRAP BLOCKED &7by &f" + player.getName() + "&c&l *"));

@@ -24,6 +24,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -281,6 +282,8 @@ public class SlotBotInventoryListener implements Listener {
     @EventHandler
     public void anticrash(ProjectileLaunchEvent e) {
         if (!(e.getEntity().getShooter() instanceof Player)) {
+            if(e.getEntity().getWorld().getName().contains("dungeon"))
+                return;
             e.setCancelled(true);
             return;
         }

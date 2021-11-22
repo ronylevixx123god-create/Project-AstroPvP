@@ -25,6 +25,7 @@ import java.util.List;
 
 import net.astropvp.struct.CollectCategory;
 import net.astropvp.struct.CollectType;
+import net.minecraft.server.v1_8_R3.ItemPotion;
 import org.arkhamnetwork.Arkkit.patches.ExpBottles;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -163,9 +164,12 @@ public class HolyWhiteScrollListener implements Listener {
 
         Player killed = e.getEntity();
         e.getDrops().add(ExpBottles.getXpBottle(killed.getTotalExperience(), killed.getName()));
+        List<ItemStack> itemList = e.getDrops();
+        itemList.removeIf(itemStack -> itemStack.getType() == Material.POTION);
 
-        CollectPlugin.getInstance().getCollectManager().getPlayerCollect(killer).add(new CollectCategory(CollectType.DEATH_INVENTORY, e.getDrops().toArray(new ItemStack[e.getDrops().size() - 1]), CC.RedB + killed.getName() + "'s Death Inventory"));
+        CollectPlugin.getInstance().getCollectManager().getPlayerCollect(killer).add(new CollectCategory(CollectType.DEATH_INVENTORY, itemList.toArray(new ItemStack[itemList.size() - 1]), CC.RedB + killed.getName() + "'s Death Inventory"));
         e.getDrops().clear();
+        itemList.clear();
         killer.sendMessage("");
         killer.sendMessage(CC.translate("&3&l(&b&lCOLLECT&3&l)&b The Death Loot from &f" + killed.getName() + "&b has been put into your &f/collect&b."));
         killer.sendMessage("");

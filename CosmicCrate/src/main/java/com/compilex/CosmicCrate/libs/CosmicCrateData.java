@@ -5,6 +5,7 @@
 package com.compilex.CosmicCrate.libs;
 
 import com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils;
+import lombok.Getter;
 import org.bukkit.plugin.Plugin;
 import com.compilex.CosmicCrate.api.CCAPI;
 import com.compilex.CosmicCrate.CosmicCrate;
@@ -12,38 +13,52 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.Color;
+
+import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.entity.Player;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.Random;
 
-public abstract class CosmicCrateData
-{
+public class CosmicCrateData {
     protected Random random;
     
-    public CosmicCrateData() {
+    public CosmicCrateData(String displayName, ItemStack randomMeta, List<String> descriptionLore, List<ItemStack> crateLoot, short nonColorPane, short colorPane) {
+        this.randomMetaItem = randomMeta;
+        this.descriptionLore = descriptionLore;
+        this.crateLoot = crateLoot;
+        this.nonColorPane = nonColorPane;
+        this.colorPane = colorPane;
+        conclusionFireworkColors = new ArrayList<>();
+        this.conclusionFireworkColors.add(Color.BLUE);
         this.random = ThreadLocalRandom.current();
+        this.displayName = displayName;
     }
     
-    public abstract ItemStack getRandomMetaItem(final Player p0);
+//    public ItemStack getRandomMetaItem(final Player p0);
+    @Getter public ItemStack randomMetaItem;
+
+//    @Getter  private List<String> getDescriptionLore(final String p0);
+    @Getter  private List<String> descriptionLore;
+
+//    @Getter private List<ItemStack> getCrateLoot(final Player p0);
+    @Getter private List<ItemStack> crateLoot;
     
-    public abstract List<String> getDescriptionLore(final String p0);
+    @Getter private short nonColorPane;
     
-    public abstract List<ItemStack> getCrateLoot(final Player p0);
+    @Getter private short colorPane;
     
-    public abstract short getNonColorPane();
-    
-    public abstract short getColorPane();
-    
-    public abstract List<Color> getConclusionFireworkColors();
-    
+    @Getter private List<Color> conclusionFireworkColors;
+
+    @Getter private String displayName;
+
     public void playConclusion(final Player player) {
         final Location l = player.getEyeLocation();
         this.launchFireworks(player);
         player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0f, 2.0f);
     }
-    
+
     public void launchFireworks(final Player player) {
         final Location l = player.getEyeLocation();
         final List<Color> fwColors = this.getConclusionFireworkColors();

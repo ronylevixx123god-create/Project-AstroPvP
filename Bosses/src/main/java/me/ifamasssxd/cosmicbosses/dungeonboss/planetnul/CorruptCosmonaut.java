@@ -2,11 +2,14 @@ package me.ifamasssxd.cosmicbosses.dungeonboss.planetnul;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.Tuple;
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.google.common.collect.Lists;
 import com.sk89q.worldedit.BlockVector;
 import com.sk89q.worldedit.bukkit.BukkitWorld;
 import com.sk89q.worldedit.regions.Polygonal2DRegion;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonAbility;
 import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonBoss;
@@ -20,7 +23,6 @@ import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
 import me.ifamasssxd.cosmicbosses.struct.enums.DamageType;
 import me.ifamasssxd.cosmicbosses.struct.enums.Difficulty;
 import me.ifamasssxd.cosmicbosses.utils.BossUtils;
-import me.ifamasssxd.cosmicbosses.utils.WorldGuardUtils;
 import net.minecraft.server.v1_8_R3.Entity;
 import net.minecraft.server.v1_8_R3.EntityInsentient;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -121,18 +123,13 @@ public class CorruptCosmonaut extends Boss implements DungeonBoss {
         e.setMetadata("boss", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
         e.setMaxHealth((double) this.getMaxHealth());
         e.setHealth(e.getMaxHealth());
-        // todo: look into this method
-        //e.getEquipment().setHelmet(ItemSkinManager.getItemSkinByID("CORRUPT_HELMET").applySkin(new ItemStack(Material.DIAMOND_HELMET)));
-
+        e.getEquipment().setHelmet(SkinType.valueOf("CORRUPT_HELMET").apply(new ItemStack(Material.DIAMOND_HELMET)));
         ItemStack fillerSword = new ItemStack(Material.DIAMOND_SWORD);
         fillerSword.addUnsafeEnchantment(Enchantment.DURABILITY, 100);
         fillerSword.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 6);
         fillerSword.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 1);
         e.getEquipment().setItemInHandDropChance(0.0f);
-
-        // todo: look into this method
-        //fillerSword = ItemSkinManager.getItemSkinByID("CORRUPT_SWORD").applySkin(fillerSword);
-
+        fillerSword = SkinType.valueOf("CORRUPT_SWORD").apply(fillerSword);
         e.getEquipment().setItemInHand(fillerSword);
         e.setRemoveWhenFarAway(false);
         e.setCustomName(ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + this.getCustomName());
@@ -417,13 +414,23 @@ public class CorruptCosmonaut extends Boss implements DungeonBoss {
         World bukkitWorld = Bukkit.getWorld("dungeon_planet_nul");
         com.sk89q.worldedit.world.World weWorld = new BukkitWorld(bukkitWorld);
         ;
-        ProtectedRegion wgRegion = WorldGuardUtils.getWorldGuard().getGlobalRegionManager().get(bukkitWorld).getRegion("boss_blocks_remove");
+
+
+        ProtectedRegion wgRegion = getWorldGuard().getGlobalRegionManager().get(bukkitWorld).getRegion("boss_blocks_remove");
         Polygonal2DRegion weRegion = new Polygonal2DRegion(weWorld, wgRegion.getPoints(), wgRegion.getMinimumPoint().getBlockY(), wgRegion.getMaximumPoint().getBlockY());
 
         for (BlockVector block : weRegion) {
             Block bukkitBlock = bukkitWorld.getBlockAt(block.getBlockX(), block.getBlockY(), block.getBlockZ());
             bukkitBlock.setType(Material.AIR);
         }
+    }
+
+    public WorldGuardPlugin getWorldGuard() {
+        Plugin plugin = Bukkit.getPluginManager().getPlugin("WorldGuard");
+        if (plugin == null || !(plugin instanceof WorldGuardPlugin)) {
+            return null;
+        }
+        return (WorldGuardPlugin) plugin;
     }
 
     public boolean hasFloorBroke() {
@@ -531,21 +538,15 @@ public class CorruptCosmonaut extends Boss implements DungeonBoss {
         fillerSword.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 5);
         fillerSword.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 1);
         skeleton.getEquipment().setItemInHandDropChance(0.0f);
-
-        // todo: look into this method
-        // fillerSword = ItemSkinManager.getItemSkinByID("CORRUPT_SWORD").applySkin(fillerSword);
-
+        fillerSword = SkinType.valueOf("CORRUPT_SWORD").apply(fillerSword);
         skeleton.getEquipment().setItemInHand(fillerSword);
         skeleton.setRemoveWhenFarAway(false);
         skeleton.setCustomName(ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "The Corrupt Cosmonaut");
         skeleton.setCustomNameVisible(true);
-
         skeleton.setMetadata("do_not_clear", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
         skeleton.setMetadata("no_drops", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
         skeleton.setMetadata("cosmonaut_minion", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
-
-        // todo: look into this method
-        // skeleton.getEquipment().setHelmet(ItemSkinManager.getItemSkinByID("CORRUPT_HELMET").applySkin(new ItemStack(Material.DIAMOND_HELMET)));
+        skeleton.getEquipment().setHelmet(SkinType.valueOf("CORRUPT_HELMET").apply(new ItemStack(Material.DIAMOND_HELMET)));
         skeleton.getEquipment().setChestplate(null);
         skeleton.getEquipment().setLeggings(null);
         skeleton.getEquipment().setBoots(null);

@@ -1,5 +1,6 @@
 package me.ifamasssxd.cosmicbosses.listeners;
 
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.ifamasssxd.cosmicbosses.bosses.GuardBoss;
 import me.ifamasssxd.cosmicbosses.bosses.skeletonhorse.UndeadAssassin;
 import me.ifamasssxd.cosmicbosses.bosses.yijki.Yijki;
@@ -7,7 +8,6 @@ import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.cosmicbosses.struct.MiniBoss;
 import me.ifamasssxd.cosmicbosses.struct.Phase;
 import me.ifamasssxd.cosmicbosses.utils.BossUtils;
-import me.ifamasssxd.cosmicbosses.utils.WorldGuardUtils;
 import org.bukkit.entity.*;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;

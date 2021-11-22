@@ -5,6 +5,7 @@ import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
@@ -92,11 +93,11 @@ public class BossUtils {
         if (BossUtils.ess != null && (BossUtils.ess.getUser(pl).isVanished() || BossUtils.ess.getUser(pl).isGodModeEnabled())) {
             return false;
         }
-        if (WorldGuardUtils.isPvPEnabled(pl.getLocation())) {
+        if (com.cosmicpvp.cosmicutils.utils.WorldGuardUtils.isPvPEnabled(pl.getLocation())) {
             if (checkEnd && pl.getLocation().getWorld().getEnvironment() == World.Environment.THE_END) {
                 return true;
             }
-            final String regionName = WorldGuardUtils.getRegionName(pl.getLocation());
+            final String regionName = com.cosmicpvp.cosmicutils.utils.WorldGuardUtils.getRegionName(pl.getLocation());
             if (regionName.contains("warzone") || (checkBattlefield && regionName.contains("battlefield"))) {
                 if (BossUtils.factions) {
                     final FLocation ploc = new FLocation(pl.getLocation());
@@ -177,7 +178,7 @@ public class BossUtils {
         if (BossUtils.warzone.containsKey(coords)) {
             return BossUtils.warzone.get(coords);
         }
-        final String regionName = WorldGuardUtils.getRegionName(loc);
+        final String regionName = com.cosmicpvp.cosmicutils.utils.WorldGuardUtils.getRegionName(loc);
         if (regionName.contains("warzone")) {
             if (BossUtils.factions) {
                 final FLocation ploc = new FLocation(loc);
@@ -263,8 +264,16 @@ public class BossUtils {
         return getRandomLocationNearby(l, maxDist, 2, yBoost);
     }
 
+    public static WorldGuardPlugin getWorldGuard() {
+        Plugin plugin = Bukkit.getPluginManager().getPlugin("WorldGuard");
+        if (plugin == null || !(plugin instanceof WorldGuardPlugin)) {
+            return null;
+        }
+        return (WorldGuardPlugin) plugin;
+    }
+
     public static Location getRandomRegionLocation(final String regionName) {
-        final RegionManager regionMan = WorldGuardUtils.getWorldGuard().getGlobalRegionManager().get(Bukkit.getWorld("world"));
+        final RegionManager regionMan = getWorldGuard().getGlobalRegionManager().get(Bukkit.getWorld("world"));
 
         if (regionMan == null) {
             return null;
@@ -292,6 +301,7 @@ public class BossUtils {
         retrLoc.add(0.5, (double) yBoost, 0.5);
         return retrLoc;
     }
+
 
     public static Location getRandomLocationNearby(final Location l, final int maxDist, final int minDistance, final int yBoost, final boolean highestY) {
         final Location retrLoc = l.clone();

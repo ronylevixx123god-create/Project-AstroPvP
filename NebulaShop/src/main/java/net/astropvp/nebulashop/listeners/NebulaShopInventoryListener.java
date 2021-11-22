@@ -1,10 +1,8 @@
-package net.astropvp.listeners;
+package net.astropvp.nebulashop.listeners;
 
-import com.cosmicpvp.cosmicutils.CosmicUtils;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
-import com.massivecraft.factions.P;
-import net.astropvp.NebulaShop;
+import net.astropvp.nebulashop.NebulaShop;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

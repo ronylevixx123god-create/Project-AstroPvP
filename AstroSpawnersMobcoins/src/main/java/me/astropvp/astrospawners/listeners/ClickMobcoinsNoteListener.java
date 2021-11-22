@@ -16,6 +16,8 @@ public class ClickMobcoinsNoteListener implements Listener {
         if (e.getPlayer() == null) return;
         if (e.getPlayer().getItemInHand() == null) return;
         if (e.getPlayer().getItemInHand().getType() == Material.AIR) return;
+        if (e.getPlayer().getItemInHand().getItemMeta() == null) return;
+        if (e.getPlayer().getItemInHand().getItemMeta().getDisplayName() == null) return;
         if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (MobCoinUtils.isCoinsNote(e.getPlayer().getItemInHand())) {
                 if (e.getPlayer().getItemInHand().getAmount() > 1) {

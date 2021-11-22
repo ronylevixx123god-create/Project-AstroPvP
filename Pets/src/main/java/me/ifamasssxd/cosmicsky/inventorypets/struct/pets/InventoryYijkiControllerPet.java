@@ -101,7 +101,7 @@ public class    InventoryYijkiControllerPet extends InventoryPet {
     }
 
     public Phase getRandomPhase(DungeonYijki yijki) {
-        List<Phase> phases = Lists.newArrayList(new Phase[] { Phase.ONE, Phase.TWO, Phase.THREE, Phase.FOUR, Phase.FIVE, Phase.SIX });
+        List<Phase> phases = Lists.newArrayList(Phase.ONE, Phase.TWO, Phase.THREE, Phase.FOUR, Phase.FIVE, Phase.SIX);
         List<Phase> available = (List<Phase>)phases.stream().filter(ph -> (ph != yijki.getPhase())).collect(Collectors.toList());
         if (yijki.entity == null) {
             available.remove(Phase.ONE);

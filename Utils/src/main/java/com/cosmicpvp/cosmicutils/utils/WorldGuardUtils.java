@@ -349,7 +349,7 @@ public class WorldGuardUtils {
         }
     }
 
-    private static WorldGuardPlugin getWorldGuard() {
+    public static WorldGuardPlugin getWorldGuard() {
         Plugin plugin = Bukkit.getPluginManager().getPlugin("WorldGuard");
         if (plugin == null || !(plugin instanceof WorldGuardPlugin)) {
             return null;
