@@ -12,14 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NebulaShopInventory {
-    public Inventory getInventory() {
+    public static Inventory getInventory() {
         Inventory inventory = Bukkit.createInventory(null, 9, "Nebula Shop");
         inventory.setItem(3, getCurrentItem());
         inventory.setItem(5, getInformationBook());
         return inventory;
     }
 
-    private ItemStack getCurrentItem() {
+    private static ItemStack getCurrentItem() {
         ItemStack item = NebulaShop.getInstance().getNebulaShopManager().getCurrentItem();
         ItemMeta meta = item.getItemMeta();
         List<String> lore = meta.hasLore() ? meta.getLore() : new ArrayList<>();
@@ -30,7 +30,7 @@ public class NebulaShopInventory {
         return item;
     }
 
-    private ItemStack getInformationBook() {
+    private static ItemStack getInformationBook() {
         ItemStack item = new ItemStack(Material.BOOK);
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(CC.LightPurpleB + "Nebula Shop");

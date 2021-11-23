@@ -127,10 +127,12 @@ public class EndMobListener implements Listener {
 	
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onDamaged(EntityDamageEvent event) {
-		LivingEntity entity = (LivingEntity) event.getEntity();
-		for(MonsterType type : MonsterType.values()) {
-			if(type.getInstance().isMobType(entity)) {
-				event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE)*0.50);
+		if(event.getEntity() instanceof LivingEntity) {
+			LivingEntity entity = (LivingEntity) event.getEntity();
+			for (MonsterType type : MonsterType.values()) {
+				if (type.getInstance().isMobType(entity)) {
+					event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.50);
+				}
 			}
 		}
 	}

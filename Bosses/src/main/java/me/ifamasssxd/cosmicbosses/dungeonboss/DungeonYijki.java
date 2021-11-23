@@ -290,7 +290,6 @@ public class DungeonYijki extends Boss implements DungeonBoss {
 
     @Override
     public void onPhaseChange(Phase newPhase) {
-        Bukkit.broadcastMessage("PHASE CHANGE");
         if (newPhase.getPhase() > 6) {
             newPhase = Phase.ONE;
         }
