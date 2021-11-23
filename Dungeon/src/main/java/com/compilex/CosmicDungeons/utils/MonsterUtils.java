@@ -111,7 +111,7 @@ public class MonsterUtils {
             b.setCustomName(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "Space " + ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD.toString() + "Golem");
             b.setCustomNameVisible(true);
             IronGolem ironGolem1 = b;
-        } else {
+        } else if (et == EntityType.SKELETON) {
             Skeleton b = (Skeleton)l.getWorld().spawnEntity(l, EntityType.SKELETON);
             b.setSkeletonType(Skeleton.SkeletonType.WITHER);
             b.getEquipment().setItemInHand(new ItemStack(Material.DIAMOND_SWORD));
@@ -120,7 +120,15 @@ public class MonsterUtils {
             b.setCustomName(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "Space " + ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD.toString() + "Pirate");
             b.setCustomNameVisible(true);
             skeleton = b;
+        } else if (et == EntityType.GHAST) {
+            Ghast b = (Ghast)l.getWorld().spawnEntity(l, EntityType.GHAST);
+            b.setMaxHealth(b.getMaxHealth() * 5.0D);
+            b.setHealth(b.getMaxHealth());
+            b.setCustomName(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "Space " + ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD.toString() + "Phantom");
+            b.setCustomNameVisible(true);
+            ghast = b;
         }
+        assert skeleton != null;
         skeleton.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 2147483647, 1));
         skeleton.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 2147483647, (new Random()).nextInt(3)));
         skeleton.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 2147483647, (new Random()).nextInt(2)));

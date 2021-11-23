@@ -31,7 +31,7 @@ public class AntiFarm {
         return this.stuckTicks >= 20;
     }
 
-    public boolean checkStuck() throws Exception {
+    public boolean checkStuck() {
         if (this.lastLocation != null && this.lastLocation.getWorld() == this.getBoss().getEntity().getWorld()) {
             final double distance = this.lastLocation.distanceSquared(this.getBoss().getEntity().getLocation());
             if (distance <= 10.0) {
@@ -54,7 +54,7 @@ public class AntiFarm {
         return true;
     }
 
-    public boolean checkStuck(final Boss boss) throws Exception {
+    public boolean checkStuck(final Boss boss) {
         return boss.checkStuck();
     }
 

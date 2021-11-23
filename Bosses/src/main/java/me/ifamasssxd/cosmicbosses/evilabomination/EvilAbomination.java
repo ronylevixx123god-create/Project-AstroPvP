@@ -136,7 +136,7 @@ public class EvilAbomination extends Boss implements GuardBoss {
     }
 
     @Override
-    public void onUpdate() throws Exception {
+    public void onUpdate() {
         if (this.loops % 12 == 0) {
             if (this.getAntiFarm().checkStuck()) {
                 this.getAntiFarm().unstickBoss();
@@ -198,7 +198,7 @@ public class EvilAbomination extends Boss implements GuardBoss {
     }
 
     @Override
-    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) throws Exception {
+    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) {
         super.onAttackPlayer(event, player);
         if (event.getDamager() instanceof Projectile) {
             event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 3.0);
@@ -223,7 +223,7 @@ public class EvilAbomination extends Boss implements GuardBoss {
     }
 
     @Override
-    public void onDamageTaken(final EntityDamageEvent event) throws Exception {
+    public void onDamageTaken(final EntityDamageEvent event) {
         if (event.getCause() == EntityDamageEvent.DamageCause.SUFFOCATION) {
             event.setCancelled(true);
             if (this.getAntiFarm().checkStuck()) {
@@ -237,7 +237,7 @@ public class EvilAbomination extends Boss implements GuardBoss {
     }
 
     @Override
-    public void onMinionUpdate(final Entity minion, final Event e) throws Exception {
+    public void onMinionUpdate(final Entity minion, final Event e) {
         if (minion.hasMetadata("horse")) {
             if (e instanceof EntityDeathEvent) {
                 this.getEntity().leaveVehicle();
@@ -319,7 +319,7 @@ public class EvilAbomination extends Boss implements GuardBoss {
     }
 
     @Override
-    public void onDeath(final EntityDeathEvent event) throws Exception {
+    public void onDeath(final EntityDeathEvent event) {
         final Entity horse = this.horseEntity.get();
         if (horse != null && horse.isValid()) {
             horse.remove();

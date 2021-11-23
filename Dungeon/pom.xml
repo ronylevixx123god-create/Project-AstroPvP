@@ -211,7 +211,7 @@
 
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>utils</artifactId>
+            <artifactId>util</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/CosmicPvPUtils (1).jar</systemPath>

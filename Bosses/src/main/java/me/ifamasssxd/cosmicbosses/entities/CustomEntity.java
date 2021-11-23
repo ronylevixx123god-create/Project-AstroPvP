@@ -151,7 +151,7 @@ public enum CustomEntity {
         }
     }
 
-    private static Object getPrivateStatic(final Class clazz, final String f) throws Exception {
+    private static Object getPrivateStatic(final Class clazz, final String f) throws NoSuchFieldException, IllegalAccessException {
         final Field field = clazz.getDeclaredField(f);
         field.setAccessible(true);
         return field.get(null);

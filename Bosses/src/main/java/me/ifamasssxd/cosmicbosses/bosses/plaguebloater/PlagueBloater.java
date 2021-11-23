@@ -82,7 +82,7 @@ public class PlagueBloater extends Boss {
     }
 
     @Override
-    public void onUpdate() throws Exception {
+    public void onUpdate() {
         ++this.loops;
         if (this.loops % 24 == 0 && this.getAntiFarm().checkStuck()) {
             this.getAntiFarm().unstickBoss();
@@ -134,7 +134,7 @@ public class PlagueBloater extends Boss {
     }
 
     @Override
-    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) throws Exception {
+    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) {
         if (this.random.nextInt(10) <= 3) {
             player.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 60, 1), false);
         }
@@ -145,7 +145,7 @@ public class PlagueBloater extends Boss {
     }
 
     @Override
-    public void onDamageTaken(final EntityDamageEvent event) throws Exception {
+    public void onDamageTaken(final EntityDamageEvent event) {
         if (event.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION) {
             event.setCancelled(true);
         }
@@ -196,7 +196,7 @@ public class PlagueBloater extends Boss {
     }
 
     @Override
-    public void onMinionUpdate(final Entity minion, final Event e) throws Exception {
+    public void onMinionUpdate(final Entity minion, final Event e) {
         if (e instanceof EntityDamageByEntityEvent) {
             final EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) e;
             if (minion.hasMetadata("plague_ads") && event.getEntity() instanceof Player) {
@@ -209,8 +209,12 @@ public class PlagueBloater extends Boss {
         super.onMinionUpdate(minion, e);
     }
 
-    public void onTNTExplode(final Entity ent) throws Exception {
-        de.inventivegames.particle.ParticleEffect.LARGE_SMOKE.sendToPlayers(Bukkit.getOnlinePlayers(), ent.getLocation(), 1f, 1f, 1f, 0.09f, 20);
+    public void onTNTExplode(final Entity ent) {
+        try {
+            de.inventivegames.particle.ParticleEffect.LARGE_SMOKE.sendToPlayers(Bukkit.getOnlinePlayers(), ent.getLocation(), 1f, 1f, 1f, 0.09f, 20);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
 
         ent.getWorld().playSound(ent.getLocation(), Sound.EXPLODE, 4.0f, 1.0f);
         for (final Entity e : ent.getNearbyEntities(10.0, 10.0, 10.0)) {
@@ -240,7 +244,7 @@ public class PlagueBloater extends Boss {
     }
 
     @Override
-    public void onDeath(final EntityDeathEvent event) throws Exception {
+    public void onDeath(final EntityDeathEvent event) {
         super.onDeath(event);
         this.sendMessage(ChatColor.ITALIC + "Arggh.. I suppose this planets time has not yet come... I will.. return.", Sound.WITHER_DEATH, 1.5f);
     }

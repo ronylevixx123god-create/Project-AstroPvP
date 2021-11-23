@@ -133,7 +133,7 @@ public class EndDragon extends Boss implements GlobalBoss {
     }
 
     @Override
-    public void onUpdate() throws Exception {
+    public void onUpdate() {
         ++this.loops;
         super.onUpdate();
         final long timeSinceChange = System.currentTimeMillis() - this.lastPhaseChange;
@@ -170,7 +170,7 @@ public class EndDragon extends Boss implements GlobalBoss {
     }
 
     @Override
-    public void onDamageTaken(final EntityDamageEvent event) throws Exception {
+    public void onDamageTaken(final EntityDamageEvent event) {
         if (event.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION || event.getCause() == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION) {
             event.setCancelled(true);
             return;
@@ -209,7 +209,7 @@ public class EndDragon extends Boss implements GlobalBoss {
     }
 
     @Override
-    public void onDeath(final EntityDeathEvent event) throws Exception {
+    public void onDeath(final EntityDeathEvent event) {
         super.onDeath(event);
         if (event != null && Math.random() <= 0.1) {
             final ItemStack mask = new MaskBuilder("DRAGON_MASK").build();
@@ -287,7 +287,7 @@ public class EndDragon extends Boss implements GlobalBoss {
     }
 
     @Override
-    public void onMinionUpdate(final org.bukkit.entity.Entity minion, final Event e) throws Exception {
+    public void onMinionUpdate(final org.bukkit.entity.Entity minion, final Event e) {
         if (e instanceof EntityDamageByEntityEvent) {
             final EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) e;
             if (!event.getDamager().equals(minion)) {
@@ -316,7 +316,11 @@ public class EndDragon extends Boss implements GlobalBoss {
                     }
                     entity.playEffect(EntityEffect.HURT);
                     //ParticleEffect.sendToLocation(ParticleEffect.LARGE_SMOKE, entity.getLocation(), 1.0f, 1.0f, 1.0f, 0.01f, 15);
-                    de.inventivegames.particle.ParticleEffect.LARGE_SMOKE.sendToPlayers(Bukkit.getOnlinePlayers(), entity.getLocation(), 1f, 1f, 1f, 0.01f, 15);
+                    try {
+                        de.inventivegames.particle.ParticleEffect.LARGE_SMOKE.sendToPlayers(Bukkit.getOnlinePlayers(), entity.getLocation(), 1f, 1f, 1f, 0.01f, 15);
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
                     Bukkit.getLogger().info("[EnderDragon] Damaging " + entity.getHealth() + " by " + percent + " new health: " + entity.getHealth());
                 }
             } else if (minion instanceof Blaze || minion instanceof Skeleton) {
@@ -336,7 +340,7 @@ public class EndDragon extends Boss implements GlobalBoss {
     }
 
     @Override
-    public void onMiscUpdate(final Event event) throws Exception {
+    public void onMiscUpdate(final Event event) {
         if (event instanceof ProjectileHitEvent) {
             final ProjectileHitEvent hitEvent = (ProjectileHitEvent) event;
             final org.bukkit.entity.Entity projectile = (org.bukkit.entity.Entity) hitEvent.getEntity();
@@ -346,7 +350,11 @@ public class EndDragon extends Boss implements GlobalBoss {
             }
             loc.getWorld().playSound(loc, Sound.EXPLODE, 4.0f, 1.1f);
             //ParticleEffect.sendToLocation(ParticleEffect.HUGE_EXPLOSION, loc.add(0.0, 1.0, 0.0), 2.0f, 2.0f, 2.0f, 0.01f, 10);
-            de.inventivegames.particle.ParticleEffect.HUGE_EXPLOSION.sendToPlayers(Bukkit.getOnlinePlayers(), entity.getLocation(), 1f, 1f, 1f, 0.01f, 15);
+            try {
+                de.inventivegames.particle.ParticleEffect.HUGE_EXPLOSION.sendToPlayers(Bukkit.getOnlinePlayers(), entity.getLocation(), 1f, 1f, 1f, 0.01f, 15);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
 
             hitEvent.getEntity().getNearbyEntities(10.0, 10.0, 10.0).stream().filter(en -> en instanceof Player).map(e -> e).forEach(pl -> {
                 if (!pl.isDead() && BossUtils.dealPercentMaxHealthDamage((Player) pl, 10.0, 10, true, true)) {
@@ -397,7 +405,7 @@ public class EndDragon extends Boss implements GlobalBoss {
     }
 
     @Override
-    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) throws Exception {
+    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) {
         if (event.getDamager() instanceof LargeFireball) {
             this.spawnFireballMinion(event.getDamager().getLocation().add(0.0, 1.0, 0.0), false);
         }

@@ -1,5 +1,6 @@
 package me.ifamasssxd.cosmicbosses.dungeonboss;
 
+import com.compilex.CosmicDungeons.DungeonsAPI;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.google.common.collect.Lists;
@@ -90,9 +91,9 @@ public class DungeonYijki extends Boss implements DungeonBoss {
 
     @Override
     public void onUpdate() {
-        ++this.loops;
+        this.loops++;
         if (this.loops % this.getSeconds((this.getPhase() == Phase.FIVE) ? 28 : 45) == 0) {
-            final Phase next = this.getRandomPhase();
+            Phase next = this.getRandomPhase();
             this.onPhaseChange(next);
             this.lastPhaseSwitch = System.currentTimeMillis();
         }
@@ -108,7 +109,7 @@ public class DungeonYijki extends Boss implements DungeonBoss {
         this.getEntity().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 36000, 1, true));
     }
 
-    public void clearAbilities() throws Exception {
+    public void clearAbilities() {
         if (this.activeAbility != null) {
             this.activeAbility.onAbilityDisable();
             this.activeAbility = null;
@@ -116,14 +117,14 @@ public class DungeonYijki extends Boss implements DungeonBoss {
     }
 
     @Override
-    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) throws Exception {
+    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) {
         if (this.bossPhase != null && event.getEntity() instanceof Projectile) {
             event.setDamage((double) this.bossPhase.getProjectileDamage());
         }
-        /*if (event.getEntity() instanceof WitherSkull && event.getEntity() instanceof Player) {
+        if (event.getEntity() instanceof WitherSkull && event.getEntity() instanceof Player) {
             final Player pl = (Player)event.getEntity();
             pl.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 20, 0));
-        }*/
+        }
         super.onAttackPlayer(event, player);
     }
 
@@ -132,7 +133,7 @@ public class DungeonYijki extends Boss implements DungeonBoss {
     }
 
     @Override
-    public void onDamageTaken(final EntityDamageEvent event) throws Exception {
+    public void onDamageTaken(final EntityDamageEvent event) {
         super.onDamageTaken(event);
         if (!event.isCancelled() && event.getFinalDamage() >= this.getEntity().getHealth()) {
             Bukkit.getPluginManager().callEvent((Event) new PreBossDeathEvent((Entity) this.getEntity(), this, event));
@@ -140,10 +141,14 @@ public class DungeonYijki extends Boss implements DungeonBoss {
     }
 
     @Override
-    public void onDeath(final EntityDeathEvent event) throws Exception {
+    public void onDeath(final EntityDeathEvent event) {
         super.onDeath(event);
         if (event != null && event.getEntity() != null) {
-            ParticleEffect.LARGE_SMOKE.sendToPlayers(Bukkit.getOnlinePlayers(), event.getEntity().getLocation(), 3f, 3f, 3f, 0.09f, 15);
+            try {
+                ParticleEffect.LARGE_SMOKE.sendToPlayers(Bukkit.getOnlinePlayers(), event.getEntity().getLocation(), 3f, 3f, 3f, 0.09f, 15);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
         }
     }
 
@@ -285,6 +290,7 @@ public class DungeonYijki extends Boss implements DungeonBoss {
 
     @Override
     public void onPhaseChange(Phase newPhase) {
+        Bukkit.broadcastMessage("PHASE CHANGE");
         if (newPhase.getPhase() > 6) {
             newPhase = Phase.ONE;
         }
@@ -399,7 +405,7 @@ public class DungeonYijki extends Boss implements DungeonBoss {
     }
 
     @Override
-    public void onMinionUpdate(final Entity minion, final Event e) throws Exception {
+    public void onMinionUpdate(final Entity minion, final Event e) {
         if (this.activeAbility != null) {
             this.activeAbility.onAbilityEvent(e);
         }
@@ -422,12 +428,12 @@ public class DungeonYijki extends Boss implements DungeonBoss {
 
     @Override
     public List<BossMessage> getGeneralMessages() {
-        return Lists.newArrayList(new BossMessage[]{new BossMessage("Now you will truly meet death!", false, -1)});
+        return Lists.newArrayList(new BossMessage("Now you will truly meet death!", false, -1));
     }
 
     @Override
     public net.minecraft.server.v1_8_R3.Entity getNMSEntity() {
-        return (net.minecraft.server.v1_8_R3.Entity) this.bossEntity;
+        return this.bossEntity;
     }
 
     public BossPhase getBossPhase() {
@@ -455,9 +461,9 @@ public class DungeonYijki extends Boss implements DungeonBoss {
     }
 
     public enum BossPhase {
-        PHASE_1(1000, 6, 0.25f, 15.0f, Lists.newArrayList(new Class[]{ChainReaction.class, TemporalRift.class, UnstoppableForce.class})),
-        PHASE_2(1500, 10, 0.25f, 10.0f, Lists.newArrayList(new Class[]{AntiWither.class, AfterImage.class, UnstoppableForce.class, TemporalRift.class, ChainReaction.class})),
-        PHASE_3(2000, 14, 0.1f, 6.0f, Lists.newArrayList(new Class[]{EndOfWorld.class, AfterImage.class, UnstoppableForce.class, TemporalRift.class, ChainReaction.class}));
+        PHASE_1(1000, 6, 0.25f, 15.0f, Lists.newArrayList(ChainReaction.class, TemporalRift.class, UnstoppableForce.class)),
+        PHASE_2(1500, 10, 0.25f, 10.0f, Lists.newArrayList(AntiWither.class, AfterImage.class, UnstoppableForce.class, TemporalRift.class, ChainReaction.class)),
+        PHASE_3(2000, 14, 0.1f, 6.0f, Lists.newArrayList(EndOfWorld.class, AfterImage.class, UnstoppableForce.class, TemporalRift.class, ChainReaction.class));
 
         private int maxHealth;
         private int projectileDamage;
@@ -466,7 +472,7 @@ public class DungeonYijki extends Boss implements DungeonBoss {
         private List<Class<? extends DungeonAbility>> abilityClasses;
 
         public List<Class<? extends DungeonAbility>> getAbilityClasses() {
-            return (List<Class<? extends DungeonAbility>>) Lists.newArrayList((Iterable) this.abilityClasses);
+            return Lists.newArrayList(this.abilityClasses);
         }
 
         private BossPhase(final int maxHealth, final int projectileDamage, final float damageReduction, final float fireRateMultiplier, final List<Class<? extends DungeonAbility>> abilityClasses) {

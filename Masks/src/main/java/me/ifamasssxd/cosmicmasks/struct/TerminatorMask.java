@@ -6,6 +6,8 @@ import com.compilex.CosmicOutposts.outpost.enums.OutpostTier;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.ifamasssxd.cosmicmasks.CosmicMasks;
 import org.arkhamnetwork.enchantments.libs.AbstractPotionEffect;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
@@ -19,6 +21,9 @@ import org.bukkit.potion.PotionEffectType;
 public class TerminatorMask extends CosmicMask {
     public void onEquip(Player player) {
         PlayerPotionEffects effects = PlayerPotionEffects.getTrackedPotionEffects(player);
+        String regionName = WorldGuardUtils.getRegionName(player.getLocation());
+        if(regionName.contains("parkour") && !regionName.contains("enchants"))
+            return;
         if (effects != null)
             effects.getEffects().forEach((enchantment, effect) -> {
                 Iterator<AbstractPotionEffect> iterator = effect.iterator();
@@ -64,8 +69,7 @@ public class TerminatorMask extends CosmicMask {
         if (effects != null)
             for (Collection<AbstractPotionEffect> e : effects.getEffects().values()) {
                 for (AbstractPotionEffect eff : e) {
-                    if (eff.getEffectType().getId() == PotionEffectType.SPEED.getId() &&
-                            eff.getPotionLevel() == eff.getOriginalLevel() && eff.getPotionLevel() != 3) {
+                    if (eff.getEffectType().getId() == PotionEffectType.SPEED.getId() && eff.getPotionLevel() == eff.getOriginalLevel() && eff.getPotionLevel() != 3) {
                         //player.removePotionEffect(PotionEffectType.SPEED);
                         //eff.setPotionLevel(3);
                         //detectedNew = true;
@@ -77,6 +81,9 @@ public class TerminatorMask extends CosmicMask {
                 !detectedNew && !player.hasPotionEffect(PotionEffectType.SPEED))) {
 
         }
-            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 200, 3), true);
+        String regionName = WorldGuardUtils.getRegionName(player.getLocation());
+        if(regionName.contains("parkour") && !regionName.contains("enchants"))
+            return;
+        player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 200, 3), true);
     }
 }

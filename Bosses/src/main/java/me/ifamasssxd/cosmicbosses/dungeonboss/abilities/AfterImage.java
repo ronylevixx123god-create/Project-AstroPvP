@@ -71,10 +71,14 @@ public class AfterImage extends DungeonAbility {
     }
 
     @Override
-    public void onAbilityDisable() throws Exception {
+    public void onAbilityDisable() {
         for (final Entity ent : this.boss.getMinions()) {
             if (ent != null && !ent.isDead()) {
-                de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), ent.getLocation().add(0.0, 1.0, 0.0), 0f, 0f, 0f, 0.1f, 30);
+                try {
+                    de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), ent.getLocation().add(0.0, 1.0, 0.0), 0f, 0f, 0f, 0.1f, 30);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
             }
         }
         this.boss.removeMinions();

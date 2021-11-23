@@ -93,7 +93,7 @@ public class KingSlime extends Boss {
     }
 
     @Override
-    public void onUpdate() throws Exception {
+    public void onUpdate() {
         ++this.loops;
         if (this.loops % 80 == 0) {
             this.onPhaseChange((this.getPhase() == Phase.ONE) ? Phase.TWO : ((this.getPhase() == Phase.TWO) ? Phase.ONE : Phase.ONE));
@@ -160,7 +160,7 @@ public class KingSlime extends Boss {
         super.onUpdate();
     }
 
-    private void updateMinionPath() throws Exception {
+    private void updateMinionPath() {
         final Iterator<Entity> iter = this.getMinions().iterator();
         while (iter.hasNext()) {
             final LivingEntity e = (LivingEntity) iter.next();
@@ -174,7 +174,11 @@ public class KingSlime extends Boss {
                     if (this.random.nextInt(10) != 0) {
                         continue;
                     }
-                    de.inventivegames.particle.ParticleEffect.LARGE_SMOKE.sendToPlayers(Bukkit.getOnlinePlayers(), e.getLocation(), 1f, 1f, 1f, 0.01f, 5);
+                    try {
+                        de.inventivegames.particle.ParticleEffect.LARGE_SMOKE.sendToPlayers(Bukkit.getOnlinePlayers(), e.getLocation(), 1f, 1f, 1f, 0.01f, 5);
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
 
                 } else {
                     final Location loc = this.getEntity().getLocation();
@@ -186,7 +190,11 @@ public class KingSlime extends Boss {
                         this.getEntity().getWorld().playSound(loc, Sound.SLIME_ATTACK, 15.0f, 0.8f);
                         if (this.random.nextInt(10) == 0) {
                             //ParticleEffect.sendToLocation(ParticleEffect.SLIME, e.getLocation(), 0.5f, 0.5f, 0.5f, 0.01f, 20);
-                            de.inventivegames.particle.ParticleEffect.SLIME.sendToPlayers(Bukkit.getOnlinePlayers(), e.getLocation(), 1f, 1f, 1f, 0.01f, 20);
+                            try {
+                                de.inventivegames.particle.ParticleEffect.SLIME.sendToPlayers(Bukkit.getOnlinePlayers(), e.getLocation(), 1f, 1f, 1f, 0.01f, 20);
+                            } catch (Exception exception) {
+                                exception.printStackTrace();
+                            }
                         }
                         e.remove();
                         iter.remove();
@@ -221,7 +229,7 @@ public class KingSlime extends Boss {
     }
 
     @Override
-    public void onMinionUpdate(final Entity minion, final Event e) throws Exception {
+    public void onMinionUpdate(final Entity minion, final Event e) {
         if (e instanceof EntityDamageByEntityEvent) {
             final EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) e;
             if (event.getDamager().equals(minion) && event.getEntity() instanceof Player) {
@@ -233,7 +241,11 @@ public class KingSlime extends Boss {
                 event2.setTarget((Entity) null);
             }
         } else if (e instanceof EntityDeathEvent) {
-            de.inventivegames.particle.ParticleEffect.EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), minion.getLocation(), 1f, 1f, 1f, 0.01f, 20);
+            try {
+                de.inventivegames.particle.ParticleEffect.EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), minion.getLocation(), 1f, 1f, 1f, 0.01f, 20);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
 
             minion.getWorld().playSound(minion.getLocation(), Sound.EXPLODE, 4.0f, 1.0f);
             for (final Entity ent : minion.getNearbyEntities(5.0, 5.0, 5.0)) {
@@ -251,7 +263,7 @@ public class KingSlime extends Boss {
     }
 
     @Override
-    public void onDamageTaken(final EntityDamageEvent event) throws Exception {
+    public void onDamageTaken(final EntityDamageEvent event) {
         final EntityDamageEvent.DamageCause cause = event.getCause();
         if (cause == EntityDamageEvent.DamageCause.DROWNING) {
             event.setCancelled(true);
@@ -263,7 +275,7 @@ public class KingSlime extends Boss {
     }
 
     @Override
-    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) throws Exception {
+    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) {
         if (!event.isCancelled()) {
             if (!BossUtils.canAffectPlayer(player, false)) {
                 return;
@@ -344,7 +356,7 @@ public class KingSlime extends Boss {
     }
 
     @Override
-    public boolean checkStuck() throws Exception {
+    public boolean checkStuck() {
         final Material type = this.getEntity().getLocation().getBlock().getType();
         if (type == Material.WATER || type == Material.STATIONARY_WATER || ((type == Material.STATIONARY_LAVA || type == Material.LAVA) && this.getPhase() == Phase.ONE)) {
             this.getAntiFarm().setStuckTicks(this.getAntiFarm().getStuckTicks() + 1);
@@ -367,7 +379,7 @@ public class KingSlime extends Boss {
     }
 
     @Override
-    public void onDeath(final EntityDeathEvent event) throws Exception {
+    public void onDeath(final EntityDeathEvent event) {
         super.onDeath(event);
         if (event != null) {
             this.sendMessage(ChatColor.ITALIC + "You... have defeated me.");

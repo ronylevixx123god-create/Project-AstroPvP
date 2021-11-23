@@ -205,7 +205,7 @@ public class CorruptCosmonaut extends Boss implements DungeonBoss {
     }
 
     @Override
-    public void onDeath(final EntityDeathEvent event) throws Exception {
+    public void onDeath(final EntityDeathEvent event) {
         if (!this.hasFloorBroke) {
             this.breakFloor();
         }
@@ -214,7 +214,7 @@ public class CorruptCosmonaut extends Boss implements DungeonBoss {
     }
 
     @Override
-    public void onUpdate() throws Exception {
+    public void onUpdate() {
         ++this.loops;
 
         if (this.getEntity().getLocation().getY() < 113 && !this.hasFloorBroke) {
@@ -399,9 +399,13 @@ public class CorruptCosmonaut extends Boss implements DungeonBoss {
         return activeAbility;
     }
 
-    public void clearAbilities() throws Exception {
+    public void clearAbilities() {
         if (this.activeAbility != null) {
-            this.activeAbility.onAbilityDisable();
+            try {
+                this.activeAbility.onAbilityDisable();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
             this.activeAbility = null;
         }
     }
@@ -481,7 +485,7 @@ public class CorruptCosmonaut extends Boss implements DungeonBoss {
     }
 
     @Override
-    public void onAttackPlayer(EntityDamageByEntityEvent event, Player player) throws Exception {
+    public void onAttackPlayer(EntityDamageByEntityEvent event, Player player) {
         if (event.isCancelled()) return;
 
         if (event.getCause() == EntityDamageEvent.DamageCause.PROJECTILE && event.getDamager() instanceof Arrow) {

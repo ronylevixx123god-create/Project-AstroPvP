@@ -1,5 +1,6 @@
 package me.ifamasssxd.cosmicbosses.listeners;
 
+import com.compilex.CosmicDungeons.DungeonsAPI;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.ifamasssxd.cosmicbosses.bosses.GuardBoss;
 import me.ifamasssxd.cosmicbosses.bosses.skeletonhorse.UndeadAssassin;
@@ -28,7 +29,7 @@ public class WitherBossListener implements Listener {
     }
 
     @EventHandler
-    public void onProjectileLaunch(final ProjectileLaunchEvent e) throws Exception {
+    public void onProjectileLaunch(final ProjectileLaunchEvent e) {
         if (e.getEntity() instanceof WitherSkull && e.getEntity().getShooter() != null) {
             final Entity wither = (Entity) e.getEntity().getShooter();
             if (wither.hasMetadata("boss")) {
@@ -42,7 +43,7 @@ public class WitherBossListener implements Listener {
     }
 
     @EventHandler
-    public void onProjectileLand(final ProjectileHitEvent event) throws Exception {
+    public void onProjectileLand(final ProjectileHitEvent event) {
         if (event.getEntity().getShooter() == null) {
             return;
         }
@@ -110,13 +111,13 @@ public class WitherBossListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOW)
-    public void onEntityChangeBlock(final EntityChangeBlockEvent event) throws Exception {
+    public void onEntityChangeBlock(final EntityChangeBlockEvent event) {
         if (event.getEntity().hasMetadata("boss_block")) {
             event.getEntity().remove();
             event.setCancelled(true);
         } else if (event.getEntity().hasMetadata("chainReactionBlock")) {
-            final UUID uuid = (UUID) event.getEntity().getMetadata("chainReactionBlock").get(0).value();
-            final Boss boss = Boss.bosses.get(uuid);
+            UUID uuid = (UUID)(event.getEntity().getMetadata("chainReactionBlock").get(0)).value();
+            Boss boss = (Boss)Boss.bosses.get(uuid);
             if (boss == null) {
                 return;
             }

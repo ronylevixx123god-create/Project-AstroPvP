@@ -14,7 +14,10 @@ import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.cosmicbosses.struct.MiniBoss;
 import me.ifamasssxd.cosmicbosses.struct.RewardInventory;
 import me.ifamasssxd.cosmicbosses.struct.blockmanager.BlockChangeManager;
+import me.ifamasssxd.cosmicbosses.tasks.BleedTask;
 import me.ifamasssxd.cosmicbosses.tasks.BossSpawnTask;
+import me.ifamasssxd.cosmicbosses.tasks.BossTickTask;
+import me.ifamasssxd.cosmicbosses.tasks.BossUpdateTask;
 import me.ifamasssxd.cosmicbosses.utils.MapUtils;
 import me.ifamasssxd.cosmicbosses.utils.ScoreboardUtils;
 import me.ifamasssxd.cosmicbosses.utils.StringUtils;
@@ -115,9 +118,9 @@ public class CosmicBosses extends JavaPlugin {
     }
 
     private void registerTasks() {
-        //this.getServer().getScheduler().scheduleSyncRepeatingTask((Plugin) this, (Runnable) new BossUpdateTask(), 20L, 5L);
-        //this.getServer().getScheduler().scheduleSyncRepeatingTask((Plugin) this, (Runnable) new BossTickTask(), 1L, 1L);
-        //this.getServer().getScheduler().scheduleSyncRepeatingTask((Plugin) this, (Runnable) new BleedTask(), 0L, 10L);
+        this.getServer().getScheduler().scheduleSyncRepeatingTask((Plugin) this, (Runnable) new BossUpdateTask(), 20L, 5L);
+        this.getServer().getScheduler().scheduleSyncRepeatingTask((Plugin) this, (Runnable) new BossTickTask(), 1L, 1L);
+        this.getServer().getScheduler().scheduleSyncRepeatingTask((Plugin) this, (Runnable) new BleedTask(), 0L, 10L);
         this.task = new BossSpawnTask();
         final int delay = 72000;
         this.getServer().getScheduler().scheduleSyncRepeatingTask((Plugin) this, (Runnable) this.task, (long) delay, (long) delay);
@@ -141,7 +144,7 @@ public class CosmicBosses extends JavaPlugin {
         this.saveConfig();
     }
 
-    public void saveBosses() throws Exception {
+    public void saveBosses() {
         final List<String> bossList = Lists.newArrayList();
         for (final Boss boss : Boss.bosses.values()) {
             if (boss.isBossSpawned()) {

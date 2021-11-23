@@ -1,80 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.nbt.NBTTagListBuilder
- *  com.cosmicpvp.cosmicutils.nms.EntityAttribute
- *  com.cosmicpvp.cosmicutils.nms.EntityUtils
- *  com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.EssentialsUtils
- *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
- *  com.cosmicpvp.cosmicutils.utils.WorldGuardUtils
- *  com.cosmicpvp.cosmicutils.utils.WorldUtil
- *  com.gmail.filoghost.holograms.api.HolographicDisplaysAPI
- *  com.google.common.collect.Lists
- *  me.ifamasssxd.cosmicbosses.CosmicBosses
- *  me.ifamasssxd.cosmicbosses.struct.Boss
- *  me.ifamasssxd.cosmicbosses.struct.BossDespawnEvent
- *  me.ifamasssxd.cosmicbosses.struct.DamageTracker
- *  me.ifamasssxd.cosmicbosses.struct.enums.BossType
- *  me.quantiom.itemskin.skins.boots.ItemSkinRainbowSlides
- *  me.quantiom.util.ItemSkinUtils
- *  net.minecraft.server.v1_8_R3.MinecraftServer
- *  net.minecraft.server.v1_8_R3.NBTBase
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.DyeColor
- *  org.bukkit.Effect
- *  org.bukkit.GameMode
- *  org.bukkit.Location
- *  org.bukkit.Material
- *  org.bukkit.Sound
- *  org.bukkit.World
- *  org.bukkit.block.Block
- *  org.bukkit.block.BlockFace
- *  org.bukkit.block.BlockState
- *  org.bukkit.block.Chest
- *  org.bukkit.block.DoubleChest
- *  org.bukkit.craftbukkit.libs.com.google.common.collect.MapMaker
- *  org.bukkit.craftbukkit.v1_8_R3.entity.CraftFallingSand
- *  org.bukkit.enchantments.Enchantment
- *  org.bukkit.entity.Entity
- *  org.bukkit.entity.EntityType
- *  org.bukkit.entity.FallingBlock
- *  org.bukkit.entity.Item
- *  org.bukkit.entity.LivingEntity
- *  org.bukkit.entity.MagmaCube
- *  org.bukkit.entity.Player
- *  org.bukkit.entity.Projectile
- *  org.bukkit.event.Event$Result
- *  org.bukkit.event.EventHandler
- *  org.bukkit.event.EventPriority
- *  org.bukkit.event.block.Action
- *  org.bukkit.event.entity.EntityChangeBlockEvent
- *  org.bukkit.event.entity.EntityDamageByEntityEvent
- *  org.bukkit.event.entity.EntityDamageEvent
- *  org.bukkit.event.entity.EntityDamageEvent$DamageCause
- *  org.bukkit.event.entity.EntityDeathEvent
- *  org.bukkit.event.entity.ExplosionPrimeEvent
- *  org.bukkit.event.player.PlayerInteractEvent
- *  org.bukkit.event.player.PlayerMoveEvent
- *  org.bukkit.event.player.PlayerPortalEvent
- *  org.bukkit.event.player.PlayerQuitEvent
- *  org.bukkit.event.player.PlayerTeleportEvent
- *  org.bukkit.event.player.PlayerTeleportEvent$TeleportCause
- *  org.bukkit.event.player.PlayerVelocityEvent
- *  org.bukkit.inventory.InventoryHolder
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.metadata.FixedMetadataValue
- *  org.bukkit.metadata.MetadataValue
- *  org.bukkit.plugin.Plugin
- *  org.bukkit.potion.PotionEffect
- *  org.bukkit.potion.PotionEffectType
- *  org.bukkit.scheduler.BukkitRunnable
- *  org.bukkit.util.Vector
- */
 package com.compilex.CosmicDungeons.dungeons.events;
 
 import com.compilex.CosmicDungeons.CosmicDungeonsPlugin;
@@ -121,6 +44,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import lombok.Getter;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
@@ -205,6 +129,9 @@ extends DungeonEvents {
     public boolean sentMapNotification;
     private final Cache<UUID, Long> cache = CacheBuilder.newBuilder().expireAfterWrite(1L, TimeUnit.SECONDS).build();
     private int lastExplosionPrimeTick;
+    private List<FallingBlock> fallingBlocks;
+
+    public void addFallingBlock(FallingBlock f) { fallingBlocks.add(f); }
 
     public List<Location> getPortalWorldLocations() {
         return this.portalWorldLocations;
@@ -289,6 +216,9 @@ extends DungeonEvents {
 
     public DestroyedOutpostEvents(Dungeon d) {
         super(d);
+        this.fallingBlocks = new ArrayList<>();
+        this.dungeonLavaBlocks = new ArrayList<>();
+        this.dungeonIceBlocks = new ArrayList<>();
         this.mainYijkiCave = new Location(d.getWorld(), -79.0, 78.0, -644.0);
         this.chestLocations.put(new Location(d.getWorld(), 39.0, 125.0, 204.0), new Location(d.getWorld(), 43.0, 124.0, 204.0));
         this.chestLocations.put(new Location(d.getWorld(), 39.0, 125.0, 205.0), new Location(d.getWorld(), 43.0, 124.0, 204.0));
@@ -484,10 +414,24 @@ extends DungeonEvents {
         return type == Material.QUARTZ_BLOCK || type == Material.DOUBLE_STEP && block.getData() == 7;
     }
 
+    private List<FallingBlock> dungeonLavaBlocks;
+
+    public void addDungeonLavaBlock(FallingBlock f) {
+        dungeonLavaBlocks.add(f);
+    }
+
+    private List<FallingBlock> dungeonIceBlocks;
+
+    public void addDungeonICeBlock(FallingBlock f) {
+        dungeonIceBlocks.add(f);
+    }
+
+
+
     @EventHandler
     public void onEntityChangeBlock(EntityChangeBlockEvent event) {
         if (event.getEntity() instanceof FallingBlock) {
-            if (event.getEntity().hasMetadata("parkourBlock")) {
+            if (this.fallingBlocks.contains(event.getEntity())) {
                 Block fallen = event.getBlock();
                 Material type = fallen.getType();
                 if (type == Material.AIR) {
@@ -497,13 +441,14 @@ extends DungeonEvents {
                     this.parkourRestrictionTask.setToPortal(fallen, null);
                     event.getEntity().getWorld().playSound(event.getEntity().getLocation(), Sound.ENDERMAN_TELEPORT, 5.0f, 1.1f);
                 }
+                this.fallingBlocks.remove(event.getEntity());
                 event.setCancelled(true);
                 event.getEntity().remove();
-            } else if (event.getEntity().hasMetadata("dungeonLavaBlock")) {
-                if (WorldGuardUtils.isInRegionsFast((Location)event.getEntity().getLocation(), (String[])new String[]{"lava_realm_center"})) {
+            } else if (this.dungeonLavaBlocks.contains(event.getEntity())) {
+                if (WorldGuardUtils.isInRegionsFast(event.getEntity().getLocation(), "lava_realm_center")) {
                     return;
                 }
-                Collection<Entity> magmas = event.getEntity().getWorld().getEntitiesByClasses(new Class[]{MagmaCube.class});
+                Collection<Entity> magmas = event.getEntity().getWorld().getEntitiesByClasses(MagmaCube.class);
                 if (magmas.size() >= 10) {
                     boolean foundOldMagmas = false;
                     for (Entity magma : magmas) {
@@ -540,7 +485,7 @@ extends DungeonEvents {
                 cube.setCustomName(CC.RedB + "Lava Minion");
                 cube.setCustomNameVisible(true);
                 this.worldMobs.add((Entity)cube);
-            } else if (event.getEntity().hasMetadata("dungeonIceBlock")) {
+            } else if (this.dungeonIceBlocks.contains(event.getEntity())) {
                 event.setCancelled(true);
                 event.getEntity().getLocation().getWorld().playEffect(event.getEntity().getLocation(), Effect.STEP_SOUND, (Object)Material.ICE);
                 event.getEntity().remove();
@@ -590,7 +535,7 @@ extends DungeonEvents {
 
     @EventHandler(priority=EventPriority.HIGHEST)
     public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof FallingBlock && event.getEntity() instanceof Player && event.getDamager().hasMetadata("parkourBlock")) {
+        if (event.getDamager() instanceof FallingBlock && event.getEntity() instanceof Player && this.fallingBlocks.contains(event.getDamager())) {
             event.setDamage(10.0);
             event.getEntity().setVelocity(new Vector(this.random.nextDouble(), 0.1, this.random.nextDouble()));
         } else if (event.getEntity().hasMetadata("lavaSlime")) {
@@ -660,9 +605,6 @@ extends DungeonEvents {
         }
     }
 
-    /*
-     * Enabled aggressive block sorting
-     */
     @EventHandler(priority=EventPriority.HIGH)
     public void onPlayerInteractClock(PlayerInteractEvent event) {
         ItemStack clicked = event.getItem();
@@ -1214,7 +1156,7 @@ extends DungeonEvents {
                 if (this.lastLavaBlockSpawn <= System.currentTimeMillis()) {
                     Location loc = (Location)DestroyedOutpostEvents.this.lavaSpewLocations.get(DestroyedOutpostEvents.this.random.nextInt(DestroyedOutpostEvents.this.lavaSpewLocations.size()));
                     FallingBlock block = loc.getWorld().spawnFallingBlock(loc.clone().add(0.0, 14.0, 0.0), Material.STAINED_GLASS, DyeColor.ORANGE.getWoolData());
-                    block.setMetadata("dungeonLavaBlock", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get_(), (Object)""));
+                    ((DestroyedOutpostEvents)this.dungeon.getDungeonEvents()).addDungeonLavaBlock(block);
                     Vector vel = DestroyedOutpostEvents.this.lavaRealmCenter.toVector().subtract(loc.toVector());
                     if (vel.length() != 0.0) {
                         vel.normalize();
@@ -1244,7 +1186,7 @@ extends DungeonEvents {
                 Player player = (Player)playersInIceRealm.get(DestroyedOutpostEvents.this.random.nextInt(playersInIceRealm.size()));
                 Location loc = LocationUtils.getNearbyLocation(player.getLocation().add(0.0, 2.0, 0.0), 0, 2);
                 FallingBlock block = FallingBlockUtils.createCustomFallingBlock(loc.clone().add(0.0, 1.0, 0.0), Material.ICE, (byte)0, false);
-                block.setMetadata("dungeonIceBlock", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get_(), (Object)""));
+                ((DestroyedOutpostEvents)this.dungeon.getDungeonEvents()).addDungeonICeBlock(block);
                 loc.getWorld().playSound(loc, Sound.ZOMBIE_WOODBREAK, 0.1f, 1.9f);
                 this.lastIcicleDropped = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(2L);
             }
@@ -1258,7 +1200,7 @@ extends DungeonEvents {
                     this.lastBlockDrop = System.currentTimeMillis();
                     boolean stained = ThreadLocalRandom.current().nextInt(10) == 0;
                     FallingBlock block = toSpawnAt.getWorld().spawnFallingBlock(toSpawnAt, stained ? Material.STAINED_GLASS : Material.QUARTZ_BLOCK, stained ? DyeColor.PURPLE.getWoolData() : (byte)0);
-                    block.setMetadata("parkourBlock", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get_(), (Object)this.dungeon.getDungeonType().name()));
+                    ((DestroyedOutpostEvents)this.dungeon.getDungeonEvents()).addFallingBlock(block);
                     block.setDropItem(false);
                     ((CraftFallingSand)block).getHandle().a(true);
                 }
@@ -1285,10 +1227,10 @@ extends DungeonEvents {
                         int maxBreaks = 10;
                         double percentLeft = (double)this.health * 1.0 / 5.0;
                         int breaks = (int)Math.min((double)maxBreaks, Math.floor((double)maxBreaks - percentLeft * (double)maxBreaks));
-                        ArrayList pls = Lists.newArrayList((Object[])new Player[]{damager});
+                        ArrayList<Player> pls = Lists.newArrayList(damager);
                         damager.getNearbyEntities(64.0, 64.0, 64.0).forEach(ent -> {
                             if (ent instanceof Player) {
-                                pls.add((Player)ent);
+                                pls.add((Player) ent);
                             }
                         });
                         WorldUtil.sendBlockBreakAnimation((Block)block, (int)breaks, (List)pls);

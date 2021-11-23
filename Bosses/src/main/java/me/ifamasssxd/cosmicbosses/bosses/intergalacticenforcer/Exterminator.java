@@ -100,7 +100,7 @@ public class Exterminator extends Boss implements GuardBoss {
     }
 
     @Override
-    public void onUpdate() throws Exception {
+    public void onUpdate() {
         ++this.loops;
         if (this.loops % 10 == 0) {
             this.getPigZombie().setAngry(true);
@@ -136,7 +136,7 @@ public class Exterminator extends Boss implements GuardBoss {
     }
 
     @Override
-    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) throws Exception {
+    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) {
         int percentDamage = ThreadLocalRandom.current().nextInt(10) + 5;
         if (this.random.nextInt(100) < 40) {
             percentDamage += 5;

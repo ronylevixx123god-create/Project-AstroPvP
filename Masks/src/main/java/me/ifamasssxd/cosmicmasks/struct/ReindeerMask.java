@@ -19,6 +19,8 @@ import com.compilex.CosmicOutposts.outpost.enums.OutpostTier;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.ifamasssxd.cosmicmasks.CosmicMasks;
 import org.arkhamnetwork.enchantments.libs.AbstractPotionEffect;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
@@ -34,6 +36,9 @@ public class ReindeerMask extends CosmicMask {
     @Override
     public void onEquip(Player player) {
         PlayerPotionEffects effects = PlayerPotionEffects.getTrackedPotionEffects(player);
+        String regionName = WorldGuardUtils.getRegionName(player.getLocation());
+        if(regionName.contains("parkour") && !regionName.contains("enchants"))
+            return;
         if (effects != null)
             effects.getEffects().forEach((enchantment, effect) -> {
                 Iterator<AbstractPotionEffect> iterator = effect.iterator();
@@ -90,6 +95,9 @@ public class ReindeerMask extends CosmicMask {
                     }
                 }
             }
+        String regionName = WorldGuardUtils.getRegionName(player.getLocation());
+        if(regionName.contains("parkour") && !regionName.contains("enchants"))
+            return;
         if ((!detectedNew && hasEffect(player, PotionEffectType.SPEED, 3, false)) || (
                 !detectedNew && !player.hasPotionEffect(PotionEffectType.SPEED)))
             player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 200, 3), true);

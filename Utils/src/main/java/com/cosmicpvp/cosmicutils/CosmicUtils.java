@@ -112,7 +112,7 @@ public final class CosmicUtils
     }
 
     private boolean doesPluginExist(String name) {
-        return new File("plugins/" + name + ".jar").exists();
+        return Bukkit.getPluginManager().isPluginEnabled(name);
     }
 
     private void registerCommands() {

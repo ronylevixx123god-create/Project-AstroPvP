@@ -117,13 +117,13 @@ public class Marksman extends Boss implements GuardBoss {
     }
 
     @Override
-    public void onDamageTaken(final EntityDamageEvent event) throws Exception {
+    public void onDamageTaken(final EntityDamageEvent event) {
         event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) / 2.0);
         super.onDamageTaken(event);
     }
 
     @Override
-    public void onUpdate() throws Exception {
+    public void onUpdate() {
         ++this.loops;
         if (this.loops % 20 == 0 && this.getAntiFarm().checkStuck()) {
             this.getAntiFarm().unstickBoss();
@@ -147,7 +147,7 @@ public class Marksman extends Boss implements GuardBoss {
     }
 
     @Override
-    public void onAttackPlayer(EntityDamageByEntityEvent event, Player player) throws Exception {
+    public void onAttackPlayer(EntityDamageByEntityEvent event, Player player) {
         int percentDamage = ThreadLocalRandom.current().nextInt(15) + 10;
         if (this.random.nextInt(100) < 30)
             percentDamage += 5;

@@ -43,7 +43,6 @@ public class WorldUtil {
     }
 
     public static boolean allowEnderPortalOutsideOverworld(boolean allowed) {
-        BlockEnderPortal.a = allowed;
         return allowed;
     }
 

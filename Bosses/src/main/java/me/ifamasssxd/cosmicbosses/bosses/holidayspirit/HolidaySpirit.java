@@ -159,7 +159,7 @@ public class HolidaySpirit extends Boss {
     }
 
     @Override
-    public void onMinionUpdate(final org.bukkit.entity.Entity minion, final Event e) throws Exception {
+    public void onMinionUpdate(final org.bukkit.entity.Entity minion, final Event e) {
         if (e instanceof EntityDamageByEntityEvent) {
             final EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) e;
             if (event.getDamager() instanceof Player) {
@@ -208,13 +208,17 @@ public class HolidaySpirit extends Boss {
     }
 
     @Override
-    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) throws Exception {
+    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) {
         if (event.getDamager() instanceof Snowball) {
             event.setDamage((double) (7 + this.random.nextInt(2)));
             if (this.random.nextBoolean()) {
                 player.getWorld().playSound(player.getLocation(), Sound.EXPLODE, 1.0f, 1.1f);
                 //ParticleEffect.sendToLocation(ParticleEffect.LARGE_EXPLODE, player.getLocation().clone(), 1.0f, 1.0f, 1.0f, 0.01f, 5);
-                de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), entity.getLocation(), 1f, 1f, 1f, 0.01f, 5);
+                try {
+                    de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), entity.getLocation(), 1f, 1f, 1f, 0.01f, 5);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
 
             }
             if (!event.isCancelled()) {
@@ -236,7 +240,11 @@ public class HolidaySpirit extends Boss {
             if (this.random.nextBoolean()) {
                 player.getWorld().playSound(player.getLocation(), Sound.EXPLODE, 1.0f, 0.9f);
                 //ParticleEffect.sendToLocation(ParticleEffect.LARGE_EXPLODE, player.getLocation().clone(), 1.0f, 1.0f, 1.0f, 0.01f, 5);
-                de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayer(player, player.getLocation().clone(), 1f, 1f, 1f, 0.01f, 5);
+                try {
+                    de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayer(player, player.getLocation().clone(), 1f, 1f, 1f, 0.01f, 5);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
 
             }
             for (final org.bukkit.entity.Entity ent : event.getDamager().getNearbyEntities(10.0, 10.0, 10.0)) {
@@ -264,11 +272,15 @@ public class HolidaySpirit extends Boss {
     }
 
     @Override
-    public void onDeath(final EntityDeathEvent event) throws Exception {
+    public void onDeath(final EntityDeathEvent event) {
         if (event != null) {
             this.sendMessage(ChatColor.GOLD + "You may have defeated me, but you will never be rid of holiday spirit.", Sound.ENDERDRAGON_DEATH, 1.3f);
             //ParticleEffect.sendToLocation(ParticleEffect.HUGE_EXPLOSION, event.getEntity().getLocation(), 5.0f, 5.0f, 5.0f, 0.01f, 100);
-            de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), event.getEntity().getLocation(), 1f, 1f, 1f, 0.01f, 5);
+            try {
+                de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), event.getEntity().getLocation(), 1f, 1f, 1f, 0.01f, 5);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
 
             event.getEntity().getWorld().playSound(event.getEntity().getLocation(), Sound.EXPLODE, 10.0f, 1.0f);
             event.getEntity().getNearbyEntities(100.0, 50.0, 100.0).stream().filter(ent -> ent instanceof Player).forEach(ent -> {
@@ -310,7 +322,7 @@ public class HolidaySpirit extends Boss {
     }
 
     @Override
-    public void onDamageTaken(final EntityDamageEvent event) throws Exception {
+    public void onDamageTaken(final EntityDamageEvent event) {
         if (event.getCause().name().startsWith("FIRE") || event.getCause() == EntityDamageEvent.DamageCause.DROWNING || event.getCause() == EntityDamageEvent.DamageCause.FALL) {
             event.setCancelled(true);
         }

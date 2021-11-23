@@ -102,7 +102,7 @@ public class Yijki extends Boss implements GlobalBoss {
     }
 
     @Override
-    public void onUpdate() throws Exception {
+    public void onUpdate() {
         ++this.loops;
         if (this.loops % 5 == 0 && this.getAntiFarm().checkStuck()) {
             this.getAntiFarm().unstickBoss();
@@ -172,7 +172,11 @@ public class Yijki extends Boss implements GlobalBoss {
                     ent.removeMetadata("berserk", (Plugin) CosmicBosses.getInstance());
                     return;
                 }
-                ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), ent.getLocation(), 1f, 1f, 1f, 0.09f, 14);
+                try {
+                    ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), ent.getLocation(), 1f, 1f, 1f, 0.09f, 14);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
             }
         }
         if (this.loops % this.getSeconds(4) == 0) {
@@ -351,7 +355,7 @@ public class Yijki extends Boss implements GlobalBoss {
     }
 
     @Override
-    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) throws Exception {
+    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) {
         if (BossUtils.canAffectPlayer(player, true)) {
             final double maxHealth = this.getMaxHealth();
             final int bossMissingHealth = (int) (this.getMaxHealth() / this.getEntity().getHealth());
@@ -419,7 +423,7 @@ public class Yijki extends Boss implements GlobalBoss {
     }
 
     @Override
-    public void onDamageTaken(final EntityDamageEvent event) throws Exception {
+    public void onDamageTaken(final EntityDamageEvent event) {
         if (event.getCause() == EntityDamageEvent.DamageCause.SUFFOCATION) {
             event.setCancelled(true);
             if (this.getAntiFarm().checkStuck()) {
@@ -433,7 +437,7 @@ public class Yijki extends Boss implements GlobalBoss {
     }
 
     @Override
-    public void onDeath(final EntityDeathEvent event) throws Exception {
+    public void onDeath(final EntityDeathEvent event) {
         super.onDeath(event);
         if (event != null) {
             this.sendMessage(ChatColor.ITALIC + "I-Impossible...", Sound.ENDERDRAGON_GROWL, 0.8f);

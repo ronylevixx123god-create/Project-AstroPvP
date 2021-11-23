@@ -1,10 +1,11 @@
 package me.ifamasssxd.cosmicbosses.dungeonboss;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import java.util.List;
+
+import de.inventivegames.particle.ParticleEffect;
 import me.ifamasssxd.cosmicbosses.dungeonboss.abilities.UnstoppableForce;
 import me.ifamasssxd.cosmicbosses.struct.Phase;
 import me.ifamasssxd.cosmicbosses.utils.BossUtils;
@@ -121,7 +122,7 @@ public class DungeonYijkiEntity extends EntityMonster implements IRangedEntity {
         final DungeonYijkiEntity instance = this;
         Predicate<Entity> entSelectorPredicate = new Predicate() {
             public boolean a(Entity entity) {
-                return ((entity instanceof EntityHuman && instance instanceof me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost.MotherOfYijkiEntity) || WorldGuardUtils.isInRegionsFast(new Location(entity.world.getWorld(), entity.locX, entity.locY, entity.locZ), new String[] { "hanger", "bridge" }));
+                return ((entity instanceof EntityHuman && instance instanceof me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost.MotherOfYijkiEntity) || WorldGuardUtils.isInRegionsFast(new Location(entity.world.getWorld(), entity.locX, entity.locY, entity.locZ), "hanger", "bridge"));
             }
 
             public boolean apply(Object object) {
@@ -153,7 +154,7 @@ public class DungeonYijkiEntity extends EntityMonster implements IRangedEntity {
         }
         if (boss != null) {
             boolean isMOY = boss instanceof me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost.MotherOfYijki;
-            this.goalSelector.a(2, (PathfinderGoal)new PathfinderGoalDungeonWitherBossAttack(boss, this, 1.0D, isMOY ? 25 : 40, isMOY ? 50 : 70, isMOY ? 30.0F : 20.0F));
+            this.goalSelector.a(2, new PathfinderGoalDungeonWitherBossAttack(boss, this, 1.0D, isMOY ? 25 : 40, isMOY ? 50 : 70, isMOY ? 30.0F : 20.0F));
         }
     }
 
@@ -162,7 +163,7 @@ public class DungeonYijkiEntity extends EntityMonster implements IRangedEntity {
             if (Math.abs(this.boss.getLocation().getBlockY() - entity.getBukkitEntity().getLocation().getBlockY()) < 4) {
                 if (WorldGuardUtils.getRegionName(entity.getBukkitEntity().getLocation()).equals("start_pearlok") || WorldGuardUtils.getRegionName(entity.getBukkitEntity().getLocation()).equals("bridge_start"))
                     return;
-                ((EntityHuman)entity).lastDamager = (EntityLiving)this;
+                ((EntityHuman)entity).lastDamager = this;
                 ((EntityHuman)entity).setHealth(0.0F);
                 Bukkit.getLogger().info("Killing " + entity.getName() + " with unstoppable force!");
             }
@@ -228,8 +229,13 @@ public class DungeonYijkiEntity extends EntityMonster implements IRangedEntity {
                 }
                 this.motX += dir.getX();
                 this.motZ += dir.getZ();
-                if (this.ticksLived % 2 == 0)
-                    ParticleEffect.sendToLocation(ParticleEffect.WITCH_MAGIC, getBukkitEntity().getLocation(), 0.01F, 0.01F, 0.01F, 0.1F, 20);
+                if (this.ticksLived % 2 == 0) {
+                    try {
+                        ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), getBukkitEntity().getLocation(), 0.01f, 0.01f, 0.01f, 1, 20);
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
+                }
             }
             if (getGoalTarget() != null) {
                 double targetY = (getGoalTarget()).locY;
@@ -242,7 +248,7 @@ public class DungeonYijkiEntity extends EntityMonster implements IRangedEntity {
                 Entity entity = this.world.a(s(0));
                 if (entity != null) {
                     Location entLoc = entity.getBukkitEntity().getLocation();
-                    if (this.ticksLived % 10 == 0 && entLoc.getWorld().getName().endsWith("yijki_a") && !WorldGuardUtils.isInRegionsFast(entLoc, new String[] { "bridge", "hanger" })) {
+                    if (this.ticksLived % 10 == 0 && entLoc.getWorld().getName().endsWith("yijki_a") && !WorldGuardUtils.isInRegionsFast(entLoc, "bridge", "hanger")) {
                         Bukkit.getLogger().info("Untargetting " + entity.getName() + " due to leaving hanger or bridge region!");
                         getBukkitEntity().getLocation().getWorld().playSound(getBukkitEntity().getLocation(), Sound.ITEM_BREAK, 5.0F, 2.5F);
                         setGoalTarget((EntityLiving)null);
@@ -270,7 +276,7 @@ public class DungeonYijkiEntity extends EntityMonster implements IRangedEntity {
             Entity entity2 = null;
             if (k > 0)
                 entity2 = this.world.a(k);
-            if (entity2 instanceof EntityHuman) {
+            if (entity2 != null && entity2 instanceof EntityHuman) {
                 double d0 = t(i + 1);
                 double d1 = u(i + 1);
                 double d2 = v(i + 1);

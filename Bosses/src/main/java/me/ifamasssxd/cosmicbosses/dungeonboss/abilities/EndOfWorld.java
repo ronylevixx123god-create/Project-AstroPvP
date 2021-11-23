@@ -28,11 +28,15 @@ public class EndOfWorld extends DungeonAbility {
     }
 
     @Override
-    public void onTick() throws Exception {
+    public void onTick() {
         ++this.ticks;
         if (this.ticks % 20 == 0 && !this.executed) {
             ++this.secondsCounted;
-            de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), this.getBoss().getEntity().getLocation(), 1f, 1f, 1f, 0.1f, 20);
+            try {
+                de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), this.getBoss().getEntity().getLocation(), 1f, 1f, 1f, 0.1f, 20);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
 
             this.boss.getEntity().getWorld().getPlayers().forEach(pl -> pl.playSound(pl.getLocation(), Sound.NOTE_PLING, 1.0f, 1.1f));
             if (this.secondsCounted >= this.COUNTDOWN_TIME) {

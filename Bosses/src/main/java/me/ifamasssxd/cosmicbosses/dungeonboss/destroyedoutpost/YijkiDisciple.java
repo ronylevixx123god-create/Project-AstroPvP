@@ -112,15 +112,23 @@ public class YijkiDisciple extends Boss implements MiniBoss {
     }
 
     @Override
-    public void onUpdate() throws Exception {
+    public void onUpdate() {
         ++this.loops;
         final LivingEntity entity = this.getEntity();
         if (this.invincible && this.random.nextInt(10) <= 2) {
             //ParticleEffect.sendToLocation(ParticleEffect.LAVA, entity.getLocation(), 1.0f, 1.0f, 1.0f, 0.05f, 50);
             //ParticleEffect.sendToLocation(ParticleEffect.PORTAL, entity.getLocation(), 1.0f, 1.0f, 1.0f, 0.1f, 30);
 
-            de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayer((Player) entity, entity.getLocation(), 1f, 1f, 1f, 0.05f, 50);
-            de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayer((Player) entity, entity.getLocation(), 1f, 1f, 1f, 0.1f, 30);
+            try {
+                ParticleEffect.LAVA.sendToPlayer((Player) entity, entity.getLocation(), 1f, 1f, 1f, 0.05f, 50);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+            try {
+                ParticleEffect.LAVA.sendToPlayer((Player) entity, entity.getLocation(), 1f, 1f, 1f, 0.1f, 30);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
         }
         if (this.loops % 2 == 0) {
             final Creature boss = (Creature) this.getEntity();
@@ -187,7 +195,7 @@ public class YijkiDisciple extends Boss implements MiniBoss {
     }
 
     @Override
-    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) throws Exception {
+    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) {
         if (this.getPhase() == Phase.TWO) {
             event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 3.0);
             player.setFireTicks(600);
@@ -207,8 +215,16 @@ public class YijkiDisciple extends Boss implements MiniBoss {
                 BossUtils.dealPercentMaxHealthDamage(player, 40.0, 10);
             }
             if (this.random.nextInt(10) == 0) {
-                de.inventivegames.particle.ParticleEffect.LARGE_SMOKE.sendToPlayers(Bukkit.getOnlinePlayers(), arrow.getLocation(), 3f, 3f, 3f, 0.09f, 50);
-                de.inventivegames.particle.ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(), arrow.getLocation(), 3f, 3f, 3f, 0.09f, 15);
+                try {
+                    ParticleEffect.LARGE_SMOKE.sendToPlayers(Bukkit.getOnlinePlayers(), arrow.getLocation(), 3f, 3f, 3f, 0.09f, 50);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+                try {
+                    ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(), arrow.getLocation(), 3f, 3f, 3f, 0.09f, 15);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
             }
             for (final Entity ent : player.getNearbyEntities(4.0, 4.0, 4.0)) {
                 if (ent instanceof Player) {
@@ -272,7 +288,7 @@ public class YijkiDisciple extends Boss implements MiniBoss {
     }
 
     @Override
-    public void onDamageTaken(final EntityDamageEvent event) throws Exception {
+    public void onDamageTaken(final EntityDamageEvent event) {
         if (event.getCause() == EntityDamageEvent.DamageCause.SUFFOCATION) {
             event.setCancelled(true);
             if (this.getAntiFarm().checkStuck()) {
@@ -286,7 +302,7 @@ public class YijkiDisciple extends Boss implements MiniBoss {
     }
 
     @Override
-    public void onMinionUpdate(final Entity minion, final Event e) throws Exception {
+    public void onMinionUpdate(final Entity minion, final Event e) {
         if (minion.hasMetadata("horse")) {
             if (e instanceof EntityDeathEvent) {
                 this.getEntity().leaveVehicle();
@@ -352,7 +368,7 @@ public class YijkiDisciple extends Boss implements MiniBoss {
     }
 
     @Override
-    public void onDeath(final EntityDeathEvent event) throws Exception {
+    public void onDeath(final EntityDeathEvent event) {
         super.onDeath(event);
         if (event != null) {
             this.sendMessage(ChatColor.ITALIC + "You should not have come here... you will never leave alive!");

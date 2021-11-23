@@ -138,7 +138,8 @@ public class Scoreboard implements BoardAdapter {
                         List<String> board = new LinkedList<>();
                         board.add("");
                         board.add(CC.RedB + "Health");
-                        board.add(CC.Red + Math.round(yijki.getEntity().getHealth()));
+                        DecimalFormat format = new DecimalFormat("###.#");
+                        board.add(CC.Red + format.format(yijki.getEntity().getHealth()));
                         board.add("");
                         board.add(CC.AquaB + "Ability");
                         board.add(CC.Aqua + yijki.getActiveAbility().getAbilityName());
@@ -147,20 +148,13 @@ public class Scoreboard implements BoardAdapter {
                         board.add(CC.Green + Yijki.WitherPhase.getPhase(yijki.getPhase()).getPhaseName());
                         board.add("");
                         board.add(CC.GreenB + "Damage Dealt");
-                        int damage = yijki.getDamageTracker().getOrDefault(player, 0);
+                        int damage = yijki.getDamageTracker().containsKey(player) ? yijki.getDamageTracker().get(player) : 0;
                         int totalDamage = 0;
-                        for (final Integer dmg : (yijki.getDamageTracker()).values()) {
+                        for (Integer dmg : (yijki.getDamageTracker()).values()) {
                             totalDamage += dmg;
                         }
-                        final double percent = (double) damage / totalDamage * 100.0;
-                        DecimalFormat format = new DecimalFormat("###.#");
+                        double percent = (double) damage / totalDamage * 100.0;
                         String string = ChatColor.GREEN.toString() + damage + ChatColor.GRAY + " [" + format.format(percent) + "%]";
-                        if (string.length() > 16) {
-                            string = string.replace("[", "").replace("]", "");
-                            if (string.length() > 16) {
-                                string = string.substring(0, 16);
-                            }
-                        }
                         board.add(CC.Green + string);
                         return board;
                     }

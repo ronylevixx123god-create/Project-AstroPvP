@@ -130,7 +130,7 @@ public class Enforcer extends Boss implements GuardBoss {
     }
 
     @Override
-    public void onUpdate() throws Exception {
+    public void onUpdate() {
         ++this.loops;
         if (this.loops % 16 == 0) {
             this.updateScoreboard();
@@ -204,7 +204,7 @@ public class Enforcer extends Boss implements GuardBoss {
     }
 
     @Override
-    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) throws Exception {
+    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) {
         int percentDamage = ThreadLocalRandom.current().nextInt(11) + 7;
         if (this.random.nextInt(100) < 30) {
             percentDamage += 5;
@@ -218,7 +218,7 @@ public class Enforcer extends Boss implements GuardBoss {
     }
 
     @Override
-    public void onDamageTaken(final EntityDamageEvent event) throws Exception {
+    public void onDamageTaken(final EntityDamageEvent event) {
         if (event.getCause() == EntityDamageEvent.DamageCause.SUFFOCATION) {
             event.setCancelled(true);
             if (this.getAntiFarm().checkStuck()) {

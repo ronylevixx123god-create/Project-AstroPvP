@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
@@ -51,7 +52,7 @@ public class DungeonBossListener implements Listener {
         }
     }
 
-    /*@EventHandler
+    @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
 
@@ -63,9 +64,9 @@ public class DungeonBossListener implements Listener {
                 }
             }
         }
-    }*/
+    }
 
-    /*@EventHandler
+/*    @EventHandler
     public void onDamage(EntityDamageByEntityEvent event) {
         if (event.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION && event.getDamager().getType() == EntityType.CREEPER) {
             Bukkit.broadcastMessage("1");

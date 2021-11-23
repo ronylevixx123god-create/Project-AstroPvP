@@ -43,6 +43,6 @@ public final class ParkourTowerRegionEvent extends RegionEvent {
         Intrinsics.checkExpressionValueIsNotNull(this.dungeon.world, "dungeon.world");
         Bukkit.getLogger().info("World: " + this.dungeon.world.getName() + " players: " + this.dungeon.world.getPlayers().size());
         WorldUtils.Companion.scanBlocks(new Location(this.dungeon.world, 286.0D, 206.0D, -11.0D), 3, ParkourTowerRegionEvent$run$1.INSTANCE);
-        this.dungeon.setObjectiveHologram(HolographicDisplaysAPI.createHologram((Plugin)CosmicDungeonsPlugin.get(), new Location(this.dungeon.world, 287.0D, 208.0D, -12.0D), new String[] { CC.AquaB + "Parkour Start" }));
+        this.dungeon.setObjectiveHologram(HolographicDisplaysAPI.createHologram((Plugin)CosmicDungeonsPlugin.get(), new Location(this.dungeon.world, 287.0D, 208.0D, -12.0D), CC.AquaB + "Parkour Start"));
     }
 }

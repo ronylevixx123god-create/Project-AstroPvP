@@ -1,5 +1,6 @@
 package me.ifamasssxd.cosmicbosses.dungeonboss.abilities;
 
+import com.compilex.CosmicDungeons.DungeonsAPI;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.google.common.base.Predicate;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
@@ -159,8 +160,7 @@ public class ChainReaction extends DungeonAbility {
                                                             ((CraftWorld) toExplode.getWorld()).getHandle().addEntity((Entity) block, CreatureSpawnEvent.SpawnReason.CUSTOM);
                                                             final FallingBlock fallingBlock = (FallingBlock) block.getBukkitEntity();
                                                             fallingBlock.setVelocity(new Vector((ThreadLocalRandom.current().nextBoolean() ? -1 : 1) * Math.random(), 0.8 + Math.random(), (ThreadLocalRandom.current().nextBoolean() ? -1 : 1) * Math.random()));
-                                                            fallingBlock.setMetadata("chainReactionBlock", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) this.boss.getUuid()));
-                                                            fallingBlock.setDropItem(false);
+                                                            fallingBlock.setMetadata("chainReactionBlock", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), this.boss.getUuid()));                                                            fallingBlock.setDropItem(false);
                                                             ++exploded;
                                                         }
                                                     }

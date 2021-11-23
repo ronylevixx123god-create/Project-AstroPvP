@@ -125,12 +125,20 @@ public class UndeadAssassin extends Boss {
     }
 
     @Override
-    public void onUpdate() throws Exception {
+    public void onUpdate() {
         ++this.loops;
         final LivingEntity entity = this.getEntity();
         if (this.invincible && this.random.nextInt(10) <= 2) {
-            de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), entity.getLocation(), 1f, 1f, 1f, 0.09f, 50);
-            de.inventivegames.particle.ParticleEffect.PORTAL.sendToPlayers(Bukkit.getOnlinePlayers(), entity.getLocation(), 1f, 1f, 1f, 0.09f, 30);
+            try {
+                de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), entity.getLocation(), 1f, 1f, 1f, 0.09f, 50);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+            try {
+                de.inventivegames.particle.ParticleEffect.PORTAL.sendToPlayers(Bukkit.getOnlinePlayers(), entity.getLocation(), 1f, 1f, 1f, 0.09f, 30);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
         }
         if (this.loops % 12 == 0) {
             if (!this.invincible && this.getAntiFarm().checkStuck()) {
@@ -219,7 +227,7 @@ public class UndeadAssassin extends Boss {
     }
 
     @Override
-    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) throws Exception {
+    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) {
         if (this.getPhase() == Phase.TWO) {
             event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 3.0);
             player.setFireTicks(600);
@@ -239,8 +247,16 @@ public class UndeadAssassin extends Boss {
                 BossUtils.dealPercentMaxHealthDamage(player, 40.0, 10);
             }
             if (this.random.nextInt(10) == 0) {
-                de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), arrow.getLocation(), 1f, 1f, 1f, 0.09f, 50);
-                de.inventivegames.particle.ParticleEffect.PORTAL.sendToPlayers(Bukkit.getOnlinePlayers(), arrow.getLocation(), 1f, 1f, 1f, 0.09f, 30);
+                try {
+                    de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), arrow.getLocation(), 1f, 1f, 1f, 0.09f, 50);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+                try {
+                    de.inventivegames.particle.ParticleEffect.PORTAL.sendToPlayers(Bukkit.getOnlinePlayers(), arrow.getLocation(), 1f, 1f, 1f, 0.09f, 30);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
             }
             for (final Entity ent : player.getNearbyEntities(4.0, 4.0, 4.0)) {
                 if (ent instanceof Player) {
@@ -308,7 +324,7 @@ public class UndeadAssassin extends Boss {
     }
 
     @Override
-    public void onDamageTaken(final EntityDamageEvent event) throws Exception {
+    public void onDamageTaken(final EntityDamageEvent event) {
         if (event.getCause() == EntityDamageEvent.DamageCause.SUFFOCATION) {
             event.setCancelled(true);
             if (this.getAntiFarm().checkStuck()) {
@@ -322,7 +338,7 @@ public class UndeadAssassin extends Boss {
     }
 
     @Override
-    public void onMinionUpdate(final Entity minion, final Event e) throws Exception {
+    public void onMinionUpdate(final Entity minion, final Event e) {
         if (minion.hasMetadata("horse")) {
             if (e instanceof EntityDeathEvent) {
                 this.getEntity().leaveVehicle();
@@ -392,7 +408,7 @@ public class UndeadAssassin extends Boss {
     }
 
     @Override
-    public void onDeath(final EntityDeathEvent event) throws Exception {
+    public void onDeath(final EntityDeathEvent event) {
         super.onDeath(event);
         if (event != null) {
             this.sendMessage(ChatColor.ITALIC + "You should not have come here... you will never leave alive!");

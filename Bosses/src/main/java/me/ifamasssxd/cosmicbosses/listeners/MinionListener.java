@@ -17,7 +17,7 @@ import org.bukkit.plugin.Plugin;
 
 public class MinionListener implements Listener {
     @EventHandler
-    public void onEntityTarget(final EntityTargetEvent event) throws Exception {
+    public void onEntityTarget(final EntityTargetEvent event) {
         if (event.getEntity().hasMetadata("minion")) {
             final Boss boss = BossUtils.getBossFromMinion(event.getEntity());
             if (boss == null) {
@@ -28,7 +28,7 @@ public class MinionListener implements Listener {
     }
 
     @EventHandler
-    public void onEntityTarget(final EntityTargetLivingEntityEvent event) throws Exception {
+    public void onEntityTarget(final EntityTargetLivingEntityEvent event) {
         if (event.getEntity().hasMetadata("minion")) {
             final Boss boss = BossUtils.getBossFromMinion(event.getEntity());
             if (boss == null) {
@@ -42,7 +42,7 @@ public class MinionListener implements Listener {
     }
 
     @EventHandler
-    public void onEntityChangeBlockEvent(final EntityChangeBlockEvent event) throws Exception {
+    public void onEntityChangeBlockEvent(final EntityChangeBlockEvent event) {
         if (event.getEntity().hasMetadata("minion")) {
             final Boss boss = BossUtils.getBossFromMinion(event.getEntity());
             if (boss != null) {
@@ -68,7 +68,7 @@ public class MinionListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onMinionDeath(final EntityDeathEvent e) throws Exception {
+    public void onMinionDeath(final EntityDeathEvent e) {
         if (e.getEntity().hasMetadata("minion") || e.getEntity().hasMetadata("no_drops")) {
             e.getDrops().clear();
             e.setDroppedExp(0);

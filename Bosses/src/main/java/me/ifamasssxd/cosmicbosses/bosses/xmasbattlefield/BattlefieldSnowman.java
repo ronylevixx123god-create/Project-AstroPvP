@@ -182,7 +182,7 @@ public class BattlefieldSnowman extends Boss {
     }
 
     @Override
-    public void onMinionUpdate(final org.bukkit.entity.Entity minion, final Event e) throws Exception {
+    public void onMinionUpdate(final org.bukkit.entity.Entity minion, final Event e) {
         if (e instanceof EntityDamageByEntityEvent) {
             final EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) e;
             if (event.getDamager() instanceof Player) {
@@ -200,8 +200,16 @@ public class BattlefieldSnowman extends Boss {
                         }
                         return;
                     });
-                    de.inventivegames.particle.ParticleEffect.PORTAL.sendToPlayers(Bukkit.getOnlinePlayers(), minion.getLocation(), 1f, 1f, 1f, 0.09f, 30);
-                    de.inventivegames.particle.ParticleEffect.EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), minion.getLocation(), 1f, 1f, 1f, 0.09f, 30);
+                    try {
+                        ParticleEffect.PORTAL.sendToPlayers(Bukkit.getOnlinePlayers(), minion.getLocation(), 1f, 1f, 1f, 0.09f, 30);
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
+                    try {
+                        ParticleEffect.EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), minion.getLocation(), 1f, 1f, 1f, 0.09f, 30);
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
 
                     minion.getWorld().playSound(minion.getLocation(), Sound.GHAST_SCREAM2, 1.0f, 1.9f);
                     minion.getWorld().playSound(minion.getLocation(), Sound.EXPLODE, 3.0f, 2.0f);
@@ -249,13 +257,17 @@ public class BattlefieldSnowman extends Boss {
     }
 
     @Override
-    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) throws Exception {
+    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) {
         if (event.getDamager() instanceof Snowball) {
             event.setDamage((double) (7 + this.random.nextInt(2)));
             if (this.random.nextBoolean()) {
                 player.getWorld().playSound(player.getLocation(), Sound.EXPLODE, 1.0f, 1.1f);
                 //ParticleEffect.sendToLocation(ParticleEffect.LARGE_EXPLODE, player.getLocation().clone(), 1.0f, 1.0f, 1.0f, 0.01f, 5);
-                de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 1f, 1f, 1f, 0.09f, 30);
+                try {
+                    ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 1f, 1f, 1f, 0.09f, 30);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
 
             }
             if (!event.isCancelled()) {
@@ -276,7 +288,11 @@ public class BattlefieldSnowman extends Boss {
         } else if (event.getDamager() instanceof WitherSkull) {
             if (this.random.nextBoolean()) {
                 player.getWorld().playSound(player.getLocation(), Sound.EXPLODE, 1.0f, 0.9f);
-                de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 1f, 1f, 1f, 0.09f, 30);
+                try {
+                    ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 1f, 1f, 1f, 0.09f, 30);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
 
             }
             this.shootSkullsNearby(event.getEntity(), 10.0);
@@ -332,10 +348,14 @@ public class BattlefieldSnowman extends Boss {
     }
 
     @Override
-    public void onDeath(final EntityDeathEvent event) throws Exception {
+    public void onDeath(final EntityDeathEvent event) {
         if (event != null) {
             this.sendMessage(ChatColor.GOLD + "You may have defeated me, but you will never be rid of holiday spirit.", Sound.ENDERDRAGON_DEATH, 1.3f);
-            ParticleEffect.HUGE_EXPLOSION.sendToPlayers(Bukkit.getOnlinePlayers(), event.getEntity().getLocation(), 1f, 1f, 1f, 0.09f, 100);
+            try {
+                ParticleEffect.HUGE_EXPLOSION.sendToPlayers(Bukkit.getOnlinePlayers(), event.getEntity().getLocation(), 1f, 1f, 1f, 0.09f, 100);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
 
             event.getEntity().getWorld().playSound(event.getEntity().getLocation(), Sound.EXPLODE, 10.0f, 1.0f);
             event.getEntity().getNearbyEntities(100.0, 50.0, 100.0).stream().filter(ent -> ent instanceof Player).forEach(ent -> {
@@ -372,7 +392,7 @@ public class BattlefieldSnowman extends Boss {
     }
 
     @Override
-    public void onDamageTaken(final EntityDamageEvent event) throws Exception {
+    public void onDamageTaken(final EntityDamageEvent event) {
         if (event.getCause().name().startsWith("FIRE") || event.getCause() == EntityDamageEvent.DamageCause.DROWNING || event.getCause() == EntityDamageEvent.DamageCause.FALL) {
             event.setCancelled(true);
         }

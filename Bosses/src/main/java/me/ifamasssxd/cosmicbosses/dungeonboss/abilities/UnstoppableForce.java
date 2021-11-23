@@ -30,7 +30,7 @@ public class UnstoppableForce extends DungeonAbility {
     }
 
     @Override
-    public void onTick() throws Exception {
+    public void onTick() {
         ++this.ticks;
         final long time = System.currentTimeMillis() - this.initTime;
         if (time >= 5000L && this.direction == null) {
@@ -54,7 +54,11 @@ public class UnstoppableForce extends DungeonAbility {
                 }
             }
             if (this.ticks % 4 == 0) {
-                de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), this.getBoss().getEntity().getLocation(), 1f, 1f, 1f, 0.1f, 20);
+                try {
+                    de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), this.getBoss().getEntity().getLocation(), 1f, 1f, 1f, 0.1f, 20);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
             }
             if (this.ticks % 3 == 0) {
                 drawParticleLineInDirection(this.getBoss().getEntity());

@@ -1,5 +1,6 @@
 package me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost;
 
+import com.compilex.CosmicDungeons.DungeonsAPI;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import me.ifamasssxd.cosmicbosses.bosses.yijki.Yijki;
@@ -187,7 +188,7 @@ public class MotherOfYijki extends DungeonYijki {
     }
 
     @Override
-    public void onDamageTaken(final EntityDamageEvent event) throws Exception {
+    public void onDamageTaken(final EntityDamageEvent event) {
         if (this.inDifferentDimension) {
             event.setCancelled(true);
             return;
@@ -260,7 +261,7 @@ public class MotherOfYijki extends DungeonYijki {
     }
 
     @Override
-    public void onMinionUpdate(final Entity minion, final Event e) throws Exception {
+    public void onMinionUpdate(final Entity minion, final Event e) {
         super.onMinionUpdate(minion, e);
         if (minion instanceof Blaze && e instanceof EntityDamageByEntityEvent) {
             final EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) e;
@@ -271,7 +272,11 @@ public class MotherOfYijki extends DungeonYijki {
                     event.setCancelled(true);
                 }
             } else if (event.getEntity().equals(minion) && event.getDamager() instanceof Player) {
-                de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), event.getEntity().getLocation(), 3f, 3f, 3f, 0.09f, 15);
+                try {
+                    de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), event.getEntity().getLocation(), 3f, 3f, 3f, 0.09f, 15);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
                 for (final Entity ent : event.getEntity().getNearbyEntities(8.0, 8.0, 8.0)) {
                     if (ent instanceof Player) {
                         BossUtils.pushAwayPlayer(minion, (Player) ent, 0.6000000238418579);
@@ -282,7 +287,7 @@ public class MotherOfYijki extends DungeonYijki {
     }
 
     @Override
-    public void onDeath(final EntityDeathEvent event) throws Exception {
+    public void onDeath(final EntityDeathEvent event) {
         super.onDeath(event);
         if (event != null && event.getEntity() != null) {
             event.getEntity().getWorld().playSound(event.getEntity().getLocation(), Sound.ENDERDRAGON_DEATH, 10.0f, 1.1f);

@@ -34,7 +34,7 @@ public class DeathCurse extends DungeonAbility {
     }
 
     @Override
-    public void onTick() throws Exception {
+    public void onTick() {
         ++this.ticks;
         if (this.spawnTime != 0L && System.currentTimeMillis() - this.spawnTime >= 15000L && this.player != null && this.player.getWorld().getName().equals(this.blaze.world.getWorld().getName()) && this.blaze.getBukkitEntity().getLocation().distanceSquared(this.player.getLocation()) <= 10000.0 && !this.player.isDead()) {
             this.player.setHealth(0.0);
@@ -47,7 +47,11 @@ public class DeathCurse extends DungeonAbility {
         }
         if (this.ticks % 5 == 0 && this.blaze != null && this.blaze.isAlive()) {
             //ParticleEffect.sendToLocation(ParticleEffect.LAVA, this.blaze.getBukkitEntity().getLocation(), 1.0f, 1.0f, 1.0f, 0.1f, 10);
-            de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), this.blaze.getBukkitEntity().getLocation(), 1f, 1f, 1f, 0.1f, 10);
+            try {
+                de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), this.blaze.getBukkitEntity().getLocation(), 1f, 1f, 1f, 0.1f, 10);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
         }
         if (this.ticks % 20 == 0 && this.blaze != null && this.blaze.isAlive() && this.player != null && this.player.isValid()) {
             this.blaze.getBukkitEntity().getWorld().playSound(this.blaze.getBukkitEntity().getLocation(), Sound.NOTE_PLING, 10.0f, 1.1f);

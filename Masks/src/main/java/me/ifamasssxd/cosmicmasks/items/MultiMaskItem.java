@@ -42,7 +42,6 @@ extends CosmicItem {
         ArrayList<MaskType> masks = new ArrayList<MaskType>();
         for (int i = 0; i < objects.length; ++i) {
             MaskType maskType = MaskType.valueOf(String.valueOf(objects[i]).toUpperCase());
-            if (maskType == null) continue;
             masks.add(maskType);
         }
         ItemStack baseMask = this.multiMask.createMask(true);

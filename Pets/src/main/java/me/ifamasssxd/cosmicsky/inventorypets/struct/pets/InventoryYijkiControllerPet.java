@@ -13,12 +13,12 @@ import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
+import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-import javax.xml.stream.Location;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -79,7 +79,7 @@ public class    InventoryYijkiControllerPet extends InventoryPet {
             throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int)(timeTillCanUse / 1000L)));
         if (player.hasMetadata("in_duel"))
             return true;
-        Location locationClicked = (Location) player.getLocation();
+        Location locationClicked = player.getLocation();
         if (!player.getWorld().getName().contains("dungeon"))
             throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "You must be in a dungeon to use this pet!");
         Boss yijki = null;

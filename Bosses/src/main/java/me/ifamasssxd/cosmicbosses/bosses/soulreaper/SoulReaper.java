@@ -97,7 +97,7 @@ public class SoulReaper extends Boss {
     }
 
     @Override
-    public void onDeath(final EntityDeathEvent event) throws Exception {
+    public void onDeath(final EntityDeathEvent event) {
         super.onDeath(event);
         if (event != null) {
             this.sendMessage(ChatColor.LIGHT_PURPLE + "You can never truly defeat me, I am the reaper of souls, and I shall return.", Sound.ENDERDRAGON_DEATH, 1.3f);
@@ -142,7 +142,7 @@ public class SoulReaper extends Boss {
     }
 
     @Override
-    public void onUpdate() throws Exception {
+    public void onUpdate() {
         ++this.loops;
         if (this.loops % 20 == 0 && this.getMinions().size() < 3 && this.lastCloneSpawn < System.currentTimeMillis()) {
             final LivingEntity ent = (LivingEntity) this.spawnMinion(EntityType.ENDERMAN, BossUtils.getRandomLocationNearby(this.entity.getLocation(), 3, 1));
@@ -207,7 +207,7 @@ public class SoulReaper extends Boss {
     }
 
     @Override
-    public void onDamageTaken(final EntityDamageEvent event) throws Exception {
+    public void onDamageTaken(final EntityDamageEvent event) {
         if (event.getCause() == EntityDamageEvent.DamageCause.DROWNING) {
             event.setCancelled(true);
         }
@@ -215,7 +215,7 @@ public class SoulReaper extends Boss {
     }
 
     @Override
-    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) throws Exception {
+    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) {
         final AtomicBoolean performedAOE = new AtomicBoolean(false);
         if (this.random.nextInt(100) <= 30) {
             player.setVelocity(player.getLocation().getDirection().multiply(-1).setY(0.7));
@@ -263,11 +263,15 @@ public class SoulReaper extends Boss {
     }
 
     @Override
-    public void onMinionUpdate(final org.bukkit.entity.Entity minion, final Event e) throws Exception {
+    public void onMinionUpdate(final org.bukkit.entity.Entity minion, final Event e) {
         super.onMinionUpdate(minion, e);
         if (e instanceof EntityDeathEvent) {
             if (minion.hasMetadata("explode_death")) {
-                de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), minion.getLocation(), 1f, 1f, 1f, 0.01f, 15);
+                try {
+                    de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), minion.getLocation(), 1f, 1f, 1f, 0.01f, 15);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
 
                 minion.getWorld().playSound(minion.getLocation(), Sound.EXPLODE, 1.0f, 1.0f);
                 for (final org.bukkit.entity.Entity ent : minion.getNearbyEntities(10.0, 10.0, 10.0)) {

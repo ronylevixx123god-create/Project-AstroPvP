@@ -109,7 +109,7 @@ public class BroodMother extends Boss {
     }
 
     @Override
-    public void onUpdate() throws Exception {
+    public void onUpdate() {
         ++this.loops;
         if (this.attack.canUse() && this.random.nextBoolean() && this.loops >= 20) {
             this.attack.onAbility();
@@ -157,7 +157,7 @@ public class BroodMother extends Boss {
     }
 
     @Override
-    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) throws Exception {
+    public void onAttackPlayer(final EntityDamageByEntityEvent event, final Player player) {
         if (event.isCancelled()) {
             return;
         }
@@ -269,7 +269,7 @@ public class BroodMother extends Boss {
     }
 
     @Override
-    public void onDamageTaken(final EntityDamageEvent event) throws Exception {
+    public void onDamageTaken(final EntityDamageEvent event) {
         if (event.getCause() == EntityDamageEvent.DamageCause.SUFFOCATION) {
             event.setCancelled(true);
             if (this.getAntiFarm().checkStuck()) {
@@ -284,7 +284,7 @@ public class BroodMother extends Boss {
     }
 
     @Override
-    public void onDeath(final EntityDeathEvent event) throws Exception {
+    public void onDeath(final EntityDeathEvent event) {
         super.onDeath(event);
         if (event != null) {
             this.sendMessage(ChatColor.ITALIC + "HOW IS THIS POSSIBLE? The Brood Mother, ME, defeated by infidels such as yourselves?!", Sound.SPIDER_DEATH, 0.7f);
