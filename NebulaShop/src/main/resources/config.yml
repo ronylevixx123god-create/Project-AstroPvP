@@ -30,7 +30,7 @@ current-item: "rO0ABXcEAAAACXNyABpvcmcuYnVra2l0LnV0aWwuaW8uV3JhcHBlcvJQR+zxEm8FA
   AFRINHNJQUFBQUFBQUFBT05pWU9CaTRFek96MHVzY0Vrc1NlUmc0TW10TEM1SkxhcDB6a2d0TG1I
   ZzlrMEU4NXp5ODdNWkdBQitnSW0xTFFBQUFBPT1wcHBwcHBwcA=="
 current-price: 1
-shop-location: "world:0:100:0"
+shop-location: "world:0:100:0:0"
 already-bought:
   - "player1"
   - "player2"

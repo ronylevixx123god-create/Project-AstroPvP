@@ -17,8 +17,8 @@ public class NebulaShopListener implements Listener {
         if(e.getEntityType().equals(EntityType.ENDER_CRYSTAL)) {
             e.setCancelled(true);
             Player player = (Player) e.getDamager();
-            player.openInventory(NebulaShopInventory.getInventory());
-            player.sendMessage(CC.DarkPurpleB + "(Nebula Lounge) " + CC.LightPurpleB + "Opening Nebula Shop.");
+            player.openInventory(NebulaShop.getInstance().getInventory().getInventory());
+            player.sendMessage(CC.DarkPurpleB + "(Nebula) " + CC.LightPurple + "Opening Nebula Shop.");
         }
     }
 
@@ -27,7 +27,7 @@ public class NebulaShopListener implements Listener {
         if(e.getRightClicked().getType().equals(EntityType.ENDER_CRYSTAL)) {
             e.setCancelled(true);
             Player player = e.getPlayer();
-            player.openInventory(NebulaShopInventory.getInventory());
+            player.openInventory(NebulaShop.getInstance().getInventory().getInventory());
         }
     }
 

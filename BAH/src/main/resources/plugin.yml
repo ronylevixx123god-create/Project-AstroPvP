@@ -1,0 +1,6 @@
+name: BlackAuctionHouse
+main: net.astropvp.BlackAuctionHouse
+version: 1.0
+commands:
+  blackauctionhouse:
+    aliases: [bah, blackauction]

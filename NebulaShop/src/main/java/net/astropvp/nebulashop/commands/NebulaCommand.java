@@ -1,7 +1,11 @@
 package net.astropvp.nebulashop.commands;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.NumberUtils;
+import com.cosmicpvp.cosmicutils.utils.StringUtils;
 import net.astropvp.nebulashop.NebulaShop;
+import net.astropvp.nebulashop.inventories.NebulaShopInventory;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -27,7 +31,14 @@ public class NebulaCommand implements CommandExecutor {
             NebulaShop.getInstance().getNebulaShopManager().setCurrentItem(player.getItemInHand());
             NebulaShop.getInstance().getNebulaShopManager().setCurrentPrice(Double.parseDouble(args[1]));
             NebulaShop.getInstance().getNebulaShopManager().clearAlreadyBought();
+            NebulaShop.getInstance().setInventory(new NebulaShopInventory());
             player.sendMessage(CC.Green + "Success!");
+            Bukkit.broadcastMessage("");
+            Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.LightPurpleB + CC.Underline + "Nebula Shop"));
+            Bukkit.broadcastMessage("");
+            Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.Gray + "The " + CC.LightPurple + "Nebula Shop " + CC.Gray + "has been " + CC.LightPurple + "restocked"));
+            Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.Gray + "with " + player.getItemInHand().getItemMeta().getDisplayName()) + CC.Gray + "for " + CC.LightPurple + NumberUtils.formatMoney(Double.parseDouble(args[1])));
+            Bukkit.broadcastMessage("");
             return true;
         }
         if(args[0].equalsIgnoreCase("setspawn")) {

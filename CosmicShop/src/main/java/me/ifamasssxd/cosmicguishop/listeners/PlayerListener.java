@@ -105,7 +105,7 @@ public class PlayerListener implements Listener {
                 pl.updateInventory();
                 return;
             }
-            if (pl.getWorld().getEnvironment() == World.Environment.THE_END) {
+            if (pl.getWorld().getEnvironment() == World.Environment.THE_END && !pl.getWorld().getName().equalsIgnoreCase("nebbula")) {
                 pl.sendMessage((Object)ChatColor.RED + "You cannot deposit money notes in The End dimension.");
                 pl.sendMessage((Object)ChatColor.GRAY + "You can still combine them by stacking them in your inventory!");
                 return;

@@ -59,7 +59,7 @@ public class ConfigUtils {
     }
 
     public static String locationToString(Location location) {
-        return location.getWorld().getName() + ":" + location.getBlockX() + ":" + location.getBlockY() + ":" + location.getBlockZ();
+        return location.getWorld().getName() + ":" + location.getBlockX() + ":" + location.getBlockY() + ":" + location.getBlockZ() + ":" + location.getYaw();
     }
 
     public static Location stringToLocation(String s) {
@@ -68,7 +68,8 @@ public class ConfigUtils {
         double x = Double.parseDouble(array[1]);
         double y = Double.parseDouble(array[2]);
         double z = Double.parseDouble(array[3]);
-        return new Location(world, x, y, z);
+        float yaw = Float.parseFloat(array[4]);
+        return new Location(world, x, y, z, yaw, 0);
     }
 }
 

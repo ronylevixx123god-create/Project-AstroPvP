@@ -1,8 +1,11 @@
 package net.astropvp.nebulashop;
 
 import lombok.Getter;
+import lombok.Setter;
 import net.astropvp.nebulashop.commands.NebulaCommand;
+import net.astropvp.nebulashop.inventories.NebulaShopInventory;
 import net.astropvp.nebulashop.listeners.NebulaShopInventoryListener;
+import net.astropvp.nebulashop.listeners.NebulaShopListener;
 import net.astropvp.nebulashop.managers.NebulaShopManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -15,6 +18,10 @@ public class NebulaShop extends JavaPlugin {
     @Getter
     private NebulaShopManager nebulaShopManager;
 
+    @Getter
+    @Setter
+    private NebulaShopInventory inventory;
+
     public void onEnable() {
         instance = this;
         File file = new File(this.getDataFolder() + File.separator + "config.yml");
@@ -24,6 +31,9 @@ public class NebulaShop extends JavaPlugin {
         nebulaShopManager = new NebulaShopManager();
         getCommand("nebula").setExecutor(new NebulaCommand());
         getServer().getPluginManager().registerEvents(new NebulaShopInventoryListener(), this);
+        getServer().getPluginManager().registerEvents(new NebulaShopListener(), this);
+        this.inventory = new NebulaShopInventory();
+
     }
 
 

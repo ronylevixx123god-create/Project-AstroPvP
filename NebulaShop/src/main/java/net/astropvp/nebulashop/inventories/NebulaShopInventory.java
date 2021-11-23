@@ -1,6 +1,7 @@
 package net.astropvp.nebulashop.inventories;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import lombok.Getter;
 import net.astropvp.nebulashop.NebulaShop;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -12,15 +13,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NebulaShopInventory {
-    public static Inventory getInventory() {
+    @Getter
+    private Inventory inventory;
+
+    public NebulaShopInventory() {
         Inventory inventory = Bukkit.createInventory(null, 9, "Nebula Shop");
         inventory.setItem(3, getCurrentItem());
         inventory.setItem(5, getInformationBook());
-        return inventory;
+        this.inventory = inventory;
     }
 
-    private static ItemStack getCurrentItem() {
-        ItemStack item = NebulaShop.getInstance().getNebulaShopManager().getCurrentItem();
+    private ItemStack getCurrentItem() {
+        ItemStack item = NebulaShop.getInstance().getNebulaShopManager().getCurrentItem().clone();
         ItemMeta meta = item.getItemMeta();
         List<String> lore = meta.hasLore() ? meta.getLore() : new ArrayList<>();
         lore.add("");
@@ -30,7 +34,7 @@ public class NebulaShopInventory {
         return item;
     }
 
-    private static ItemStack getInformationBook() {
+    private ItemStack getInformationBook() {
         ItemStack item = new ItemStack(Material.BOOK);
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(CC.LightPurpleB + "Nebula Shop");

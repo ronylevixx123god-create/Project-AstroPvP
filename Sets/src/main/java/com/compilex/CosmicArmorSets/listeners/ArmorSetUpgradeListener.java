@@ -43,7 +43,7 @@ public class ArmorSetUpgradeListener
         if (wrapper.getString("cosmicType").equals("RANDOM_ARMOR_UPGRADE")) {
             long id;
             event.setCancelled(true);
-            if (!player.getWorld().getName().equals(Bukkit.getWorlds().get(0).getName())) {
+            if (!player.getWorld().getName().equals(Bukkit.getWorlds().get(0).getName()) && !player.getWorld().getName().equalsIgnoreCase("nebula")) {
                 player.sendMessage(CC.RedB + "(!) " + CC.Red + "You can only unlock a Armor Upgrade in the Overworld!");
                 return;
             }
@@ -92,7 +92,7 @@ public class ArmorSetUpgradeListener
         String cosmicType = null;
         if (cursor.getType() == Material.INK_SACK && (cosmicType = (cursorWrapper = new NBTWrapper(cursor)).getString("cosmicType")).equals("HEROIC_ARMOR_UPGRADE")) {
             event.setCancelled(true);
-            if (!player.getWorld().getName().equals(Bukkit.getWorlds().get(0).getName()) && !player.getName().equals("world_end")) {
+            if (!player.getWorld().getName().equals(Bukkit.getWorlds().get(0).getName()) && !player.getName().equals("world_end") && !player.getWorld().getName().equalsIgnoreCase("nebula")) {
                 player.sendMessage(CC.Red + "(!) " + CC.Red + "You must apply this Upgrade in the Overworld!");
                 return;
             }

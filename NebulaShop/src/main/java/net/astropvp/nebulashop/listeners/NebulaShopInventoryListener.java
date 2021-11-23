@@ -34,8 +34,8 @@ public class NebulaShopInventoryListener implements Listener {
             }
             EconomyUtils.withdrawBalance(player, price);
             NebulaShop.getInstance().getNebulaShopManager().setAlreadyBought(player);
-            player.getInventory().addItem(NebulaShop.getInstance().getNebulaShopManager().getCurrentItem());
-            Bukkit.broadcastMessage(CC.DarkPurpleB + "(" + CC.LightPurpleB + "Nebula Shop" + CC.DarkPurpleB + ") " + CC.DarkPurple + player.getName() + CC.LightPurple + " has purchased " + NebulaShop.getInstance().getNebulaShopManager().getCurrentItem().getItemMeta().getDisplayName() + CC.LightPurple + "from the " + CC.LightPurpleU + "Nebula Shop!");
+            player.getInventory().addItem(NebulaShop.getInstance().getNebulaShopManager().getCurrentItem().clone());
+            Bukkit.broadcastMessage(CC.DarkPurpleB + "(" + CC.LightPurpleB + "Nebula Shop" + CC.DarkPurpleB + ") " + CC.DarkPurple + player.getName() + CC.LightPurple + " has purchased " + NebulaShop.getInstance().getNebulaShopManager().getCurrentItem().getItemMeta().getDisplayName() + CC.LightPurple + " from the " + CC.LightPurpleU + "Nebula Shop!");
         }
     }
 }
