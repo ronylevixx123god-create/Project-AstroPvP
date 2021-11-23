@@ -20,7 +20,7 @@ public class WarzoneClaimListener implements Listener {
         for(int x : offset) {
             for(int z : offset) {
                 Chunk chunk = e.getLocation().getWorld().getChunkAt(e.getLocation().getChunk().getX() + x, e.getLocation().getChunk().getZ() + z);
-                if(WorldGuardUtils.getRegionName(chunk.getBlock(1, 80, 1).getLocation()).equalsIgnoreCase("infernal")) {
+                if(WorldGuardUtils.getRegionName(chunk.getBlock(1, 80, 1).getLocation()).equalsIgnoreCase("infernalfull")) {
                     if(AstroCore.getInstance().getClaimsOnInfernal(faction) >= 5) {
                         e.getFPlayer().getPlayer().sendMessage(CC.RedB + "(!) " + CC.Red + "You can only have 5 claims on this warzone.");
                         e.setCancelled(true);

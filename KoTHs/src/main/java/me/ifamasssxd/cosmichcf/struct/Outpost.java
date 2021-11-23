@@ -553,18 +553,17 @@ public abstract class Outpost {
         Bukkit.getLogger().info("Spawning " + trophyCount + " trophies in trophy chest at " + this.getOutpostName() + "!");
     }
 
-    public void onBlockPlace(BlockPlaceEvent event) {
-        Block placed = event.getBlockPlaced();
-        Set regionsInside = WorldGuardUtils.getRegionsIn(placed.getLocation());
+    public void onBlockPlace(final BlockPlaceEvent event) {
+        final Block placed = event.getBlockPlaced();
+        final Set<String> regionsInside = (Set<String>)WorldGuardUtils.getRegionsIn(placed.getLocation());
         if (regionsInside != null && regionsInside.contains(this.blockRegionNames) && !regionsInside.contains(this.regionName)) {
-            Material itemInHand;
-            Faction in = FactionUtils.getFaction(event.getPlayer());
+            final Faction in = FactionUtils.getFaction(event.getPlayer());
             if (in == null || !in.isNormal() || this.defendingFaction == null || !in.getTag().equals(this.defendingFaction.getTag())) {
                 event.getPlayer().sendMessage(CC.RedB + "(!) " + CC.Red + "Your faction must control the " + CosmicKOTHPlugin.get_().getBaseName() + " in order to place blocks here!");
                 event.setCancelled(true);
                 return;
             }
-            Material material = itemInHand = event.getItemInHand() != null ? event.getItemInHand().getType() : null;
+            final Material itemInHand = (event.getItemInHand() != null) ? event.getItemInHand().getType() : null;
             if (itemInHand == Material.OBSIDIAN) {
                 event.setCancelled(true);
                 event.getPlayer().sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot place Obsidian in the " + CosmicKOTHPlugin.get_().getBaseName() + " area!");
@@ -580,7 +579,7 @@ public abstract class Outpost {
         }
     }
 
-    public void onBlockPlaceMONITOR(BlockPlaceEvent event) {
+    public void onBlockPlaceMONITOR(final BlockPlaceEvent event) {
         if (event.getPlayer().hasMetadata("allowedBlockPlace")) {
             event.setCancelled(false);
             event.getPlayer().removeMetadata("allowedBlockPlace", CosmicKOTHPlugin.get_());

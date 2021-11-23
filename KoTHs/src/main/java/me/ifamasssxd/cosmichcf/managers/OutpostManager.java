@@ -331,21 +331,25 @@ public class OutpostManager {
         }
     }
 
-    public void onBlockBreak(BlockBreakEvent event) {
+    public void onBlockBreak(final BlockBreakEvent event) {
         this.outposts.forEach(out -> out.onBlockBreak(event));
     }
 
-    public void onBlockPlace(BlockPlaceEvent event) {
-        this.outposts.forEach(out -> out.onBlockPlace(event));
+    public void onBlockPlace(final BlockPlaceEvent event) {
+        final String id = FactionUtils.getFactionId(event.getPlayer());
+        this.outposts.forEach(out -> {
+            if (out.getLastFactionToCap() != null && (out.getLastFactionToCap() == null || out.getLastFactionToCap().equals(id))) {
+                out.onBlockPlace(event);
+            }
+        });
     }
 
-
-    public void onBlockPlaceMONITOR(BlockPlaceEvent event) {
-        String id = FactionUtils.getFactionId(event.getPlayer());
+    public void onBlockPlaceMONITOR(final BlockPlaceEvent event) {
+        final String id = FactionUtils.getFactionId(event.getPlayer());
         this.outposts.forEach(out -> {
-            if (out.getLastFactionToCap() == null || (out.getLastFactionToCap() != null && !out.getLastFactionToCap().equals(id)))
-                return;
-            out.onBlockPlaceMONITOR(event);
+            if (out.getLastFactionToCap() != null && (out.getLastFactionToCap() == null || out.getLastFactionToCap().equals(id))) {
+                out.onBlockPlaceMONITOR(event);
+            }
         });
     }
 

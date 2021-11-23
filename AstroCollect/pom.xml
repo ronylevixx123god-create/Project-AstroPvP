@@ -16,7 +16,6 @@
     <build>
         <defaultGoal>clean install</defaultGoal>
         <finalName>Collect</finalName>
-
     </build>
 
     <repositories>
@@ -55,11 +54,6 @@
             <version>0.1</version>
         </dependency>
         <dependency>
-            <groupId>dev.triumphteam</groupId>
-            <artifactId>triumph-gui</artifactId>
-            <version>3.0.3</version> <!-- replace version here -->
-        </dependency>
-        <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>Factions</artifactId>
             <version>0.1</version>
@@ -69,6 +63,7 @@
             <artifactId>Sets</artifactId>
             <version>0.1</version>
         </dependency>
+
         <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>CompilexPermissions</artifactId>

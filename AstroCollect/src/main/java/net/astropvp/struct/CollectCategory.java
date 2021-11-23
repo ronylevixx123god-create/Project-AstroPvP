@@ -1,20 +1,12 @@
 package net.astropvp.struct;
 
-import net.minecraft.server.v1_8_R3.InventoryUtils;
-import org.apache.commons.lang3.ArrayUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import javax.persistence.Transient;
-import java.io.*;
-import java.lang.reflect.Array;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class CollectCategory implements Serializable {
     private CollectType type;

@@ -12,6 +12,11 @@
       <option name="url" value="https://jcenter.bintray.com" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="jeff-media-public" />
+      <option name="name" value="jeff-media-public" />
+      <option name="url" value="https://hub.jeff-media.com/nexus/repository/jeff-media-public/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="codemc-repo" />
       <option name="name" value="codemc-repo" />
       <option name="url" value="https://repo.codemc.io/repository/maven-public/" />
