@@ -1,6 +1,7 @@
 package net.astropvp.inventories;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.google.common.collect.Lists;
 import me.mattstudios.mfgui.gui.guis.GuiItem;
 import me.mattstudios.mfgui.gui.guis.PaginatedGui;
@@ -60,6 +61,10 @@ public class CategoryInventory {
         meta.setLore(lore);
         removeCategory.setItemMeta(meta);
 
+        ItemBuilder builder = new ItemBuilder(Material.REDSTONE_TORCH_ON, CC.translate("&c&lSort Items"));
+        builder.addLoreLine(CC.translate("&7Click this button to sort all the items."));
+        ItemStack sortCategory = builder.build();
+
         categoryInventory.setItem(6, 1, new GuiItem(prevPage, event -> {
             int pageNum = categoryInventory.getCurrentPageNum();
             PaginatedGui inventory= new CategoryInventory(player, category).getCollectUI();
@@ -77,12 +82,21 @@ public class CategoryInventory {
             event.setCancelled(true);
         }));
 
-        categoryInventory.setItem(6, 5, new GuiItem(removeCategory, event -> {
-            categoryInventory.close(player);
+        categoryInventory.setItem(6, 4, new GuiItem(removeCategory, event -> {
             CollectPlugin.getInstance().getCollectManager().getPlayerCollect(player).remove(category);
             new CollectInventory(player).getCollectUI().open(player);
             event.setCancelled(true);
             player.playSound(player.getLocation(), Sound.ANVIL_BREAK, 1f, 1f);
+        }));
+
+        categoryInventory.setItem(6, 5, new GuiItem(new ItemBuilder(Material.BOOK, CC.translate("&a&lPage: &f&n#" + categoryInventory.getCurrentPageNum())).build())
+        );
+
+        categoryInventory.setItem(6, 6, new GuiItem(sortCategory, event -> {
+            player.playSound(player.getLocation(), Sound.BAT_LOOP, 1f, 1f);
+            category.sort();
+            new CategoryInventory(player, category).getCollectUI().open(player);
+            event.setCancelled(true);
         }));
 
         for (ItemStack item : category.getItems()) {

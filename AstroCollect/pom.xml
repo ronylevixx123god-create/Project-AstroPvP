@@ -16,30 +16,6 @@
     <build>
         <defaultGoal>clean install</defaultGoal>
         <finalName>Collect</finalName>
-
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.1.1</version>
-                <configuration>
-                    <relocations>
-                        <relocation>
-                            <pattern>dev.triumphteam.gui</pattern>
-                            <shadedPattern>me.ifamasssxd.cosmicguishop.gui</shadedPattern> <!-- Replace package here here -->
-                        </relocation>
-                    </relocations>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
     </build>
 
     <repositories>
@@ -78,11 +54,6 @@
             <version>0.1</version>
         </dependency>
         <dependency>
-            <groupId>dev.triumphteam</groupId>
-            <artifactId>triumph-gui</artifactId>
-            <version>3.0.3</version> <!-- replace version here -->
-        </dependency>
-        <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>Factions</artifactId>
             <version>0.1</version>
@@ -92,6 +63,7 @@
             <artifactId>Sets</artifactId>
             <version>0.1</version>
         </dependency>
+
         <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>CompilexPermissions</artifactId>
@@ -168,7 +140,7 @@
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>me.astropvp.cratekeys.items</artifactId>
+            <artifactId>items</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/CosmicSkyCustomItems.jar</systemPath>

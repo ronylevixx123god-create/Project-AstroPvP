@@ -83,11 +83,12 @@ public class AstroSpawners extends JavaPlugin {
         runTasks();
         Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin)this, FactionsTopAPI::recalculateFactionsTop, 100L);
 
+        long minutes = 10;
 
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, ()-> {
             getSpawnerManager().save();
             System.out.println("(!) Started Automaticly Saving Spawners!");
-        },60*20, 900*20);
+        },60*20, minutes*60*20);
 
     }
 

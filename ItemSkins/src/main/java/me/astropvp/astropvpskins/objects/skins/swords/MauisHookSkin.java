@@ -1,6 +1,7 @@
 package me.astropvp.astropvpskins.objects.skins.swords;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.ItemSkin;
@@ -24,6 +25,8 @@ public class MauisHookSkin extends ItemSkin {
 
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
         if (!damager.getWorld().getName().equals("world")) return;
+        if (!WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
+        if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation())) return;
 
         if (!(damaged instanceof Player))
             return;

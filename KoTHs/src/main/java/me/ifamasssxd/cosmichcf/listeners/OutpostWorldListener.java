@@ -233,7 +233,7 @@ implements Listener {
         CosmicKOTHPlugin.get_().getOutpostManager().onBlockBreak(event);
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=false)
+    @EventHandler(priority=EventPriority.LOWEST, ignoreCancelled=false)
     public void onBlockPlace(BlockPlaceEvent event) {
         CosmicKOTHPlugin.get_().getOutpostManager().onBlockPlace(event);
     }

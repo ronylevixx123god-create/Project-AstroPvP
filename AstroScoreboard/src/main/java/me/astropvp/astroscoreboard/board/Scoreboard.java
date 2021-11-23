@@ -111,10 +111,11 @@ public class Scoreboard implements BoardAdapter {
             return CC.translate("&d&lPrinter Mode&7 " + getDateSuffix());
         }
 
-        if (WorldGuardUtils.inRegion(player.getLocation(), "infernalfull")) {
+        if (WorldGuardUtils.getRegionName(player.getLocation()).contains("infernal")) {
             return CC.translate("&c&lInfernal Stronghold &7" + getDateSuffix());
+        }
 
-        } else if (WorldGuardUtils.inRegion(player.getLocation(), "frozen")) {
+            if (WorldGuardUtils.getRegionName(player.getLocation()).contains("frozen")) {
             return CC.translate("&b&lFrozen Stronghold &7" + getDateSuffix());
 
         } else if (DuelAPI.getDuel(player) != null && (DuelAPI.getDuel(player).getDuelState() == DuelState.STARTING || DuelAPI.getDuel(player).getDuelState() == DuelState.PLAYING)) {
@@ -245,7 +246,7 @@ public class Scoreboard implements BoardAdapter {
             return board;
         }*/
 
-        if (WorldGuardUtils.inRegion(player.getLocation(), "frozen")) {
+            if (WorldGuardUtils.getRegionName(player.getLocation()).contains("frozen")) {
             List<String> board = new LinkedList<>();
             OutpostManager outpostManager = CosmicKOTHPlugin.get_().getOutpostManager();
             me.ifamasssxd.cosmichcf.struct.Outpost outpost = outpostManager.getOutpostFromName("great_hall");
@@ -285,7 +286,7 @@ public class Scoreboard implements BoardAdapter {
             return board;
         }
 
-        if (WorldGuardUtils.inRegion(player.getLocation(), "infernalfull")) {
+        if (WorldGuardUtils.getRegionName(player.getLocation()).contains("infernal")) {
             List<String> board = new LinkedList<>();
             OutpostManager outpostManager = CosmicKOTHPlugin.get_().getOutpostManager();
             me.ifamasssxd.cosmichcf.struct.Outpost outpost = outpostManager.getOutpostFromName("courtyard");
