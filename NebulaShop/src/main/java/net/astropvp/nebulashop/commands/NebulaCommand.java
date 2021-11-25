@@ -3,6 +3,7 @@ package net.astropvp.nebulashop.commands;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.cosmicpvp.cosmicutils.utils.StringUtils;
+import me.matthawkk.chat.PrefixedMessage;
 import net.astropvp.nebulashop.NebulaShop;
 import net.astropvp.nebulashop.inventories.NebulaShopInventory;
 import org.bukkit.Bukkit;
@@ -31,8 +32,7 @@ public class NebulaCommand implements CommandExecutor {
             NebulaShop.getInstance().getNebulaShopManager().setCurrentItem(player.getItemInHand());
             NebulaShop.getInstance().getNebulaShopManager().setCurrentPrice(Double.parseDouble(args[1]));
             NebulaShop.getInstance().getNebulaShopManager().clearAlreadyBought();
-            NebulaShop.getInstance().setInventory(new NebulaShopInventory());
-            player.sendMessage(CC.Green + "Success!");
+            player.sendMessage(new PrefixedMessage(NebulaShop.getInstance(), "Success.").get());
             Bukkit.broadcastMessage("");
             Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.LightPurpleB + CC.Underline + "Nebula Shop"));
             Bukkit.broadcastMessage("");
@@ -43,7 +43,7 @@ public class NebulaCommand implements CommandExecutor {
         }
         if(args[0].equalsIgnoreCase("setspawn")) {
             NebulaShop.getInstance().getNebulaShopManager().setShopLocation(player.getLocation());
-            player.sendMessage("Success!");
+            player.sendMessage(new PrefixedMessage(NebulaShop.getInstance(), "Success.").get());
             return true;
         }
 

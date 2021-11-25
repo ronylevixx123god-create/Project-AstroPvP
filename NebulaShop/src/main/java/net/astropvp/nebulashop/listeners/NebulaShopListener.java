@@ -1,6 +1,7 @@
 package net.astropvp.nebulashop.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import me.matthawkk.chat.PrefixedMessage;
 import net.astropvp.nebulashop.NebulaShop;
 import net.astropvp.nebulashop.inventories.NebulaShopInventory;
 import org.bukkit.entity.EntityType;
@@ -17,8 +18,8 @@ public class NebulaShopListener implements Listener {
         if(e.getEntityType().equals(EntityType.ENDER_CRYSTAL)) {
             e.setCancelled(true);
             Player player = (Player) e.getDamager();
-            player.openInventory(NebulaShop.getInstance().getInventory().getInventory());
-            player.sendMessage(CC.DarkPurpleB + "(Nebula) " + CC.LightPurple + "Opening Nebula Shop.");
+            new NebulaShopInventory().open(player);
+            player.sendMessage(new PrefixedMessage(NebulaShop.getInstance(), "Opening Nebula Shop.").get());
         }
     }
 
@@ -27,7 +28,8 @@ public class NebulaShopListener implements Listener {
         if(e.getRightClicked().getType().equals(EntityType.ENDER_CRYSTAL)) {
             e.setCancelled(true);
             Player player = e.getPlayer();
-            player.openInventory(NebulaShop.getInstance().getInventory().getInventory());
+            new NebulaShopInventory().open(player);
+            player.sendMessage(new PrefixedMessage(NebulaShop.getInstance(), "Opening Nebula Shop.").get());
         }
     }
 

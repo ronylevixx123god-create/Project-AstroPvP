@@ -137,7 +137,7 @@ public class InventoryManager {
             if (!inventories.containsKey(p.getUniqueId()))
                 return;
 
-            // Restrict putting me.astropvp.cratekeys.items from the bottom me.astropvp.cratekeys.inventory into the top me.astropvp.cratekeys.inventory
+            // Restrict putting items from the bottom inventory into the top me.inventory
             Inventory clickedInventory = e.getClickedInventory();
             if (clickedInventory == p.getOpenInventory().getBottomInventory()) {
                 if (e.getAction() == InventoryAction.COLLECT_TO_CURSOR || e.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
