@@ -61,6 +61,7 @@
         <module>CustomItem</module>
         <module>CustomTNT</module>
         <module>Carnage</module>
+        <module>FactionShields</module>
     </modules>
 
     <build>

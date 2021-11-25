@@ -38,7 +38,7 @@ extends GlobalKit {
     @Override
     public List<ItemStack> getKitItems(Player player, GlobalKits kits, int kitLevel) {
         ArrayList<ItemStack> rewards = Lists.newArrayList();
-        ItemStack helmet = ItemUtils.buildItem(Material.DIAMOND_HELMET, (short)0, ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "Hood of the Grim Reaper", ChatColor.GOLD.toString() + ChatColor.ITALIC.toString() + "Woven out of nether and ender cloth,", ChatColor.GOLD.toString() + ChatColor.ITALIC.toString() + "echoes of the dead can be heard from within.");
+        ItemStack helmet = ItemUtils.buildItem(Material.DIAMOND_HELMET, (short)0, ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "Hood of the Grim Reaper", ChatColor.GOLD.toString() + ChatColor.ITALIC.toString() + "Woven out of nether and ender com.cloth,", ChatColor.GOLD.toString() + ChatColor.ITALIC.toString() + "echoes of the dead can be heard from within.");
         HeroicGrimReaper.addRandomEnchantLevel(helmet, "Deathbringer");
         HeroicGrimReaper.addRandomEnchantLevel(helmet, "Sticky");
         HeroicGrimReaper.addRandomEnchantLevel(helmet, "Enlighted");
