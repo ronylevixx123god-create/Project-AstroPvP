@@ -24,7 +24,7 @@ public class CommandItemFlip
             return false;
         }
 
-        if (!((Player) sender).getLocation().getWorld().getName().equals("world")) {
+        if (!((Player) sender).getLocation().getWorld().getName().equals("world") && !((Player) sender).getLocation().getWorld().getName().equals("nebula")) {
             sender.sendMessage(CC.translate("&cYou cannot icf in this world."));
             return false;
         }
