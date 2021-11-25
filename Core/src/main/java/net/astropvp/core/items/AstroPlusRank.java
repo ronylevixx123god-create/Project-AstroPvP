@@ -58,7 +58,7 @@ public class AstroPlusRank extends CosmicItem
             return;
         }
 
-        if (!(player.getWorld().getName().equals("world"))) {
+        if (!(player.getWorld().getName().equals("world")) && !(player.getWorld().getName().equals("flat"))) {
             throw new PrefixedException("You cannot claim this rank in this world!");
         }
 

@@ -76,7 +76,7 @@ public class NebulaRank extends CosmicItem implements InventoryInteractable {
             return;
         }
 
-        if (!player.getLocation().getWorld().getName().equals("world")) {
+        if (!player.getLocation().getWorld().getName().equals("world") && !player.getLocation().getWorld().getName().equals("flat")) {
             throw new PrefixedException("You cannot claim this rank in this world!");
         }
 
