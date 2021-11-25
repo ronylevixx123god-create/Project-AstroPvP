@@ -19,7 +19,7 @@ public class CommandTournament implements CommandExecutor {
             CosmicTournamentsPlugin.getInstance().getPlayerDataManager().registerData(player, new PlayerData(player));
         }
         if(args.length == 0) {
-            TournamentMainInventory.openInventory(player);
+            new TournamentMainInventory().open(player);
             return true;
         }
 

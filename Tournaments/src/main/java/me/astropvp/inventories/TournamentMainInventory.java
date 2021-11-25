@@ -3,9 +3,13 @@ package me.astropvp.inventories;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.CosmicTournamentsPlugin;
 import me.astropvp.struct.PlayerData;
+import me.matthawkk.gui.CommonGUI;
+import me.matthawkk.gui.GUIItem;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -14,17 +18,16 @@ import org.bukkit.inventory.meta.SkullMeta;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TournamentMainInventory {
-     public static void openInventory(Player player) {
-        Inventory inv = Bukkit.createInventory(player, 27, "Tournaments");
-        inv.setItem(0, getStatsItem(player));
-        inv.setItem(8, getInfoItem());
-        inv.setItem(26, getProfilesItem());
-        inv.setItem(18, getShopItem(player));
-        player.openInventory(inv);
-     }
+public class TournamentMainInventory extends CommonGUI {
+    public TournamentMainInventory() {
+        super("Tournaments", 27);
+        setItem(0, getStatsItem(player));
+        setItem(8, getInfoItem());
+        setItem(26, getProfilesItem());
+        setItem(18, getShopItem(player));
+    }
 
-     private static ItemStack getStatsItem(Player player) {
+     private GUIItem getStatsItem(Player player) {
          PlayerData data = CosmicTournamentsPlugin.getInstance().getPlayerDataManager().getData(player);
          ItemStack item = new ItemStack(Material.SKULL_ITEM, 1 , (short)3);
          SkullMeta skullMeta = (SkullMeta) item.getItemMeta();
@@ -50,10 +53,13 @@ public class TournamentMainInventory {
          lore.add(CC.Gray + "Click to view leaderboards.");
          skullMeta.setLore(lore);
          item.setItemMeta(skullMeta);
-         return item;
+         return new GUIItem(item) {
+             public void onClick(Player player, ClickType clickType, InventoryClickEvent event) {
+             }
+         };
      }
 
-     private static ItemStack getInfoItem() {
+     private GUIItem getInfoItem() {
          ItemStack item = new ItemStack(Material.BOOK);
          ItemMeta meta = item.getItemMeta();
          meta.setDisplayName(CC.translate("&a&lAstro Tournaments"));
@@ -90,10 +96,13 @@ public class TournamentMainInventory {
          lore.add(CC.DarkAquaB + "* " + CC.White + "Salty CosmicClient Emote");
          meta.setLore(lore);
          item.setItemMeta(meta);
-         return item;
+         return new GUIItem(item) {
+             public void onClick(Player player, ClickType clickType, InventoryClickEvent event) {
+             }
+         };
      }
 
-     private static ItemStack getProfilesItem() {
+     private GUIItem getProfilesItem() {
          ItemStack item = new ItemStack(Material.DIAMOND_HELMET);
          ItemMeta meta = item.getItemMeta();
          meta.setDisplayName(CC.GoldB + "Profiles");
@@ -109,12 +118,15 @@ public class TournamentMainInventory {
          lore.add(CC.Gray + "Click to view profiles.");
          meta.setLore(lore);
          item.setItemMeta(meta);
-         return item;
+         return new GUIItem(item) {
+             public void onClick(Player player, ClickType clickType, InventoryClickEvent event) {
+             }
+         };
      }
 
-     private static ItemStack getShopItem(Player player) {
-         PlayerData data = CosmicTournamentsPlugin.getInstance().getPlayerDataManager().getData(player);
-         ItemStack item = new ItemStack(Material.CHEST);
+     private GUIItem getShopItem(Player player) {
+        PlayerData data = CosmicTournamentsPlugin.getInstance().getPlayerDataManager().getData(player);
+        ItemStack item = new ItemStack(Material.CHEST);
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(CC.YellowB + "Tournament ELO Point Shop");
         List<String> lore = new ArrayList<>();
@@ -140,6 +152,9 @@ public class TournamentMainInventory {
         lore.add(CC.Gray + "Click to open the point shop.");
         meta.setLore(lore);
         item.setItemMeta(meta);
-        return item;
+        return new GUIItem(item) {
+            public void onClick(Player player, ClickType clickType, InventoryClickEvent event) {
+            }
+        };
      }
 }

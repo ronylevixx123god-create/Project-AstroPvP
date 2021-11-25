@@ -4,6 +4,7 @@
 
 package net.astropvp.inventory;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import net.astropvp.shield.ShieldHandler;
 import org.bukkit.DyeColor;
 import org.bukkit.event.EventHandler;
@@ -37,7 +38,7 @@ public class ListInventory extends ConfigInventory implements Listener
     
     public ListInventory(final String configName) {
         super(configName);
-        this.shields = new HashMap<Integer, FactionShield>();
+        this.shields = new HashMap<>();
         FactionShieldsPlugin.getInstance().registerListener((Listener)this);
         this.update();
     }
@@ -95,8 +96,8 @@ public class ListInventory extends ConfigInventory implements Listener
         if (this.inventory == null)
             return;
         this.inventory.setItem(this.inventory.getSize() - 5, (new ItemBuilder(Material.BOOK))
-                .setName("Back")
-                .setLore("to return to the previous page.")
+                .setName(CC.GreenB + "Back")
+                .setLore(CC.Gray + "to return to the previous page.")
                 .build());
         String name;
         List<String> lore;
@@ -108,7 +109,7 @@ public class ListInventory extends ConfigInventory implements Listener
                     while (emptySlot < lastRow && this.inventory.getItem(emptySlot) != null)
                         emptySlot++;
                     if (shield.getLastElapsedString() != null && emptySlot < this.inventory.getSize() - 1) {
-                        ItemBuilder item = (new ItemBuilder(Material.getMaterial(ShieldConfig.ITEM_TYPES))).setName(name.replaceAll("%faction%", shield.getFaction().getTag())).setLore(lore, (List)ImmutableList.of(Pair.of("%status%", shield.getLastElapsedString())));
+                        ItemBuilder item = (new ItemBuilder(Material.getMaterial(ShieldConfig.ITEM_TYPES))).setName(name.replaceAll("%faction%", shield.getFaction().getTag())).setLore(lore, ImmutableList.of(Pair.of("%status%", shield.getLastElapsedString())));
                         this.inventory.setItem(emptySlot, item.build());
                         this.shields.put(emptySlot, shield);
                     }

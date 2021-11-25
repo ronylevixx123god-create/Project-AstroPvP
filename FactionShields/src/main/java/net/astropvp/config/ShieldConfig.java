@@ -114,7 +114,7 @@ public class ShieldConfig
     }
     
     public Set<String> getSection(final String path) {
-        return (Set<String>)FactionShieldsPlugin.getInstance().getConfig().getConfigurationSection(path).getKeys(false);
+        return FactionShieldsPlugin.getInstance().getConfig().getConfigurationSection(path).getKeys(false);
     }
     
     public int getInt(final String path) {

@@ -40,6 +40,7 @@ public class PacketCommons {
         packetIDMap.put((short) 70, PacketOutTooltip.class);
         packetIDMap.put((short) 71, PacketOutClearTooltip.class);
         packetIDMap.put((short) 32, PacketOutItemCooldowns.class);
+        packetIDMap.put((short) 20, PacketOutChunkDataList.class);
 
         packetIDMap.put((short) 11, PacketInRequestPermission.class);
         packetIDMap.put((short) 7, PacketInHandshake.class);
@@ -51,6 +52,7 @@ public class PacketCommons {
         packetIDMap.put((short) 16, PacketInStartEmote.class);
         packetIDMap.put((short) 18, PacketInVoice.class);
         packetIDMap.put((short) 1, PacketInChunkDataRequest.class);
+        packetIDMap.put((short) 2, PacketInChunkClaim.class);
     }
 
     public static short getPacketID(Packet packet) {

@@ -9,10 +9,9 @@ import com.astropvp.cc.player.CosmicPlayers;
 import com.astropvp.cc.util.Chat;
 import com.astropvp.cc.voice.EnumChannel;
 import com.astropvp.cc.voice.GlobalChannel;
-import com.massivecraft.factions.FPlayer;
-import com.massivecraft.factions.FPlayers;
-import com.massivecraft.factions.Faction;
-import com.massivecraft.factions.Factions;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import com.google.common.collect.Lists;
+import com.massivecraft.factions.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -102,8 +101,16 @@ public class PacketHandler {
 
     }
 
-    public void handle(PacketInChunkDataRequest chunkDataRequest, Player sender){
+    public void handle(PacketInChunkClaim chunkDataRequest, Player sender){
+        if(FactionUtils.attemptClaim(FPlayers.i.get(sender), FactionUtils.getFaction(sender), new Location(sender.getWorld(), chunkDataRequest.getX(), 0, chunkDataRequest.getZ()), true)) {
+            PacketOutChunkData packetOutChunkData = new PacketOutChunkData(chunkDataRequest.getX(), chunkDataRequest.getZ(), FactionUtils.getFactionId(sender), FactionUtils.getFaction(sender).getTag());
+            PacketOutChunkDataList packet = new PacketOutChunkDataList(Lists.newArrayList(packetOutChunkData));
+            CosmicPlayers.get().getCosmicPlayer(sender).sendPacket(packet);
+        }
 
+    }
+
+    public void handle(PacketInChunkDataRequest packetInChunkDataRequest, Player sender) {
     }
 
     public void handle(PacketInStartEmote startEmote, Player sender){
@@ -156,4 +163,6 @@ public class PacketHandler {
             cp.sendPacket(container);
         }
     }
+
+
 }

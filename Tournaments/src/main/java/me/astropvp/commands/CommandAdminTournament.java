@@ -20,18 +20,6 @@ public class CommandAdminTournament implements CommandExecutor {
         Player player = (Player) sender;
         if(!player.isOp())
             return true;
-//        if(CosmicTournamentsPlugin.getInstance().getActiveTournament() == null)
-//            CosmicTournamentsPlugin.getInstance().createTournament();
-//        Bukkit.broadcastMessage(CosmicTournamentsPlugin.getInstance().getActiveTournament().getState().toString());
-//        CosmicTournamentsPlugin.getInstance().getActiveTournament().registerPlayer(player);
-//        Bukkit.getScheduler().runTaskLater(CosmicTournamentsPlugin.getInstance(), new BukkitRunnable() {
-//            @Override
-//            public void run() {
-//                CosmicTournamentsPlugin.getInstance().getActiveTournament().unregisterPlayer(player);
-//            }
-//        }, 100L);
-//        return false;
-
         if (CosmicTournamentsPlugin.getInstance().getActiveTournament() == null) {
             CosmicTournamentsPlugin.getInstance().createTournament();
             Bukkit.broadcastMessage(Language.CREATE_TOURNAMENT.getMessage());

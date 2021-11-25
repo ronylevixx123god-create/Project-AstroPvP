@@ -8,20 +8,21 @@ import me.astropvp.sql.Database;
 import me.astropvp.sql.SQLQueryCustomThread;
 import me.astropvp.struct.PlayerDataManager;
 import me.astropvp.struct.Tournament;
+import me.matthawkk.plugin.CustomPlugin;
+import me.matthawkk.plugin.Plugins;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class CosmicTournamentsPlugin extends JavaPlugin {
+public class CosmicTournamentsPlugin extends CustomPlugin {
     private static CosmicTournamentsPlugin instance;
     private Database sqlDatabase;
     private SQLQueryCustomThread sqlQueryThread = new SQLQueryCustomThread();
     private PlayerDataManager playerDataManager = new PlayerDataManager();
     private Tournament activeTournament = null;
 
-    public void onEnable() {
+    public void load() {
         instance = this;
-        registerCommands();
-        registerListeners();
+        Plugins.registerListeners(this, new InventoryListener(), new PlayerListener());
         this.sqlDatabase = new Database(this);
         if(this.sqlDatabase.isConnected())
             Bukkit.getConsoleSender().sendMessage("SQL Database for Cosmic Tournaments Connected");
@@ -35,7 +36,7 @@ public class CosmicTournamentsPlugin extends JavaPlugin {
         }
     }
 
-    public void onDisable() {
+    public void unload() {
         instance = null;
     }
 

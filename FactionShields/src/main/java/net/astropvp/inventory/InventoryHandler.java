@@ -58,7 +58,7 @@ public class InventoryHandler
     }
     
     private void build() {
-        this.defaultInventory = Bukkit.createInventory((InventoryHolder)null, ShieldConfig.INVENTORY_SIZE, ShieldConfig.INVENTORY_TITLE);
+        this.defaultInventory = Bukkit.createInventory(null, ShieldConfig.INVENTORY_SIZE, ShieldConfig.INVENTORY_TITLE);
         final Material material = Material.getMaterial(ShieldConfig.ITEM_TYPES);
         final ItemStack borderColor = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)DyeColor.valueOf(ShieldConfig.BORDER_COLOR).ordinal());
         int time = 1;

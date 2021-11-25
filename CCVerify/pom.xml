@@ -82,6 +82,13 @@
             <systemPath>${project.basedir}/libs/BuycraftX.jar</systemPath>
         </dependency>
 
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>utils</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/CosmicPvPUtils.jar</systemPath>
+        </dependency>
     </dependencies>
 
 </project>

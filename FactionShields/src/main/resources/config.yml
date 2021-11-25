@@ -100,7 +100,7 @@ inventory:
   info-button:
     enabled: true
     type: PAPER
-    name: '&d&nShield Information'
+    name: '&a&lShield Information'
     slot: 45
     lore:
       - ''
@@ -115,7 +115,7 @@ inventory:
   shields-button:
     enabled: true
     type: BOOK
-    name: '&d&nActive Shields'
+    name: '&a&lActive Shields'
     slot: 46
     lore:
       - ''
