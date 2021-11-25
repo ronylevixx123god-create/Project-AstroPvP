@@ -77,7 +77,7 @@ public class ApolloRank extends CosmicItem
             return;
         }
 
-        if (!player.getLocation().getWorld().getName().equals("world")) {
+        if (!player.getLocation().getWorld().getName().equals("world") && !(player.getLocation().getWorld().getName().equals("flat"))) {
             throw new PrefixedException("You cannot claim this rank in this world!");
         }
 
@@ -87,7 +87,7 @@ public class ApolloRank extends CosmicItem
 
         String rank = PermissionsAPI.getPermissionUser(player.getUniqueId()).getGroup();
 
-        if (!rank.equalsIgnoreCase("astro") && !rank.equalsIgnoreCase("astro+") && !rank.equalsIgnoreCase("media")) {
+        if (!rank.equalsIgnoreCase("astro") && !rank.equalsIgnoreCase("astro+")) {
             throw new PrefixedException("You cannot redeem lower tier ranks.");
         }
 
