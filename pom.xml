@@ -62,6 +62,7 @@
         <module>CustomTNT</module>
         <module>Carnage</module>
         <module>FactionShields</module>
+        <module>AstroTournaments</module>
     </modules>
 
     <build>

@@ -34,11 +34,11 @@ no-faction: '&cYou must be in a faction to do this.'
 no-faction-permission: '&cYou must be a higher rank to do this.'
 
 # Shield lookup (/f shield <faction>)
-shield-lookup: '&e(%faction%) &7Shield activation hours: &e%start%&f &m--&r> &e%end%&7 (%timezone%)'
+shield-lookup: '&e&l(!)&e (%faction%) &7Shield activation hours: &e%start%&f &m--&r> &e%end%&7 (%timezone%)'
 shield-lookup-failed: '&cThe specified faction has no shield set.'
 
 # Shield title settings.
-shield-title: '&7Faction Shield'
+shield-title: '&8Faction Shield'
 shield-active: '&aYour faction shield is now active.'
 shield-inactive: '&cYour faction shield is no longer active.'
 
@@ -51,11 +51,9 @@ region-already-set: '&cYour shield region is already set.'
 # The region required information message.
 region-required:
   - ''
-  - '&7Now you must set your &a&lshield region&7'
-  - ''
+  - '&a&l(!) &7Now you must set your &a&lshield region&7'
   - '&7Stand in your desired base claims, and type &a&l/f setregion'
-  - ''
-  - '&7All &a&lconnected&7 claimed chunks will be included'
+  - '&7All &a&lconnected&7 claimed chunks will be included.'
   - ''
 
 # How often are faction shields backed up incase of a server crash? (default: every 15 minutes)
@@ -83,13 +81,13 @@ inventory:
   stop-background: 44
 
   # The names and lores of the buttons.
-  names: '&r'
+  names: '&a&lFaction Shield'
   lores:
-    - '&aClick to set your shield activation hours to'
-    - '&e%time%&f &m---&r> &e%end%'
+    - '&7Click to set your shield activation hours to'
+    - '&a%time%&f &m---&r> &c%end%'
     - ''
-    - '&fShield Duration:'
-    - '&f(&e%duration% hours total&f)'
+    - '&a&lShield Duration:'
+    - '&f(&a%duration% hours total&f)'
 
 
   # The start and end of the buttons.
@@ -103,11 +101,10 @@ inventory:
     name: '&a&lShield Information'
     slot: 45
     lore:
-      - ''
-      - '&7Select the time that your &dfaction shield&7 will be'
+      - '&7Select the time that your &afaction shield&7 will be'
       - '&7activated each day.'
       - ''
-      - '&7The shield duration is currently: &d%duration%.'
+      - '&7The shield duration is currently: &a%duration%.'
       - '&7Once you select your shield, you cannot reset it.'
       - ''
       - '%status%'
@@ -118,9 +115,8 @@ inventory:
     name: '&a&lActive Shields'
     slot: 46
     lore:
-      - ''
-      - '&7Click to view all &dactive&7 faction shields.'
-      - '&7Here you can view the &dremaining times&7 for other shields.'
+      - '&7Click to view all &aactive&7 faction shields.'
+      - '&7Here you can view the &aremaining times&7 for other shields.'
 
 #######################################################################
 #                                                                     #
@@ -137,12 +133,12 @@ confirm-menu:
       action: CANCEL
       type: WOOL
       color: RED
-      name: '&7Cancel'
+      name: '&c&lCancel'
       lore:
-        - '&cClick to cancel.'
+        - '&7Click to cancel.'
     13:
       type: PAPER
-      name: '&7Information'
+      name: '&a&lInformation'
       lore:
         - '&aAre you sure you want to lock in &7%time%'
         - '&afor your shield time?'
@@ -153,9 +149,9 @@ confirm-menu:
       action: CONFIRM
       type: WOOL
       color: GREEN
-      name: '&7Confirm'
+      name: '&a&lConfirm'
       lore:
-        - '&aClick to confirm this shield.'
+        - '&7Click to confirm this shield.'
 
 #######################################################################
 #                                                                     #
@@ -167,7 +163,7 @@ list-menu:
   title: 'Faction Shields List'
   size: 54
   fill: true
-  name: '&6Faction: &f%faction%'
+  name: '&a&lFaction: &f%faction%'
   lore:
     - ''
     - '&aACTIVE &8- &r%status%'
