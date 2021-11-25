@@ -20,12 +20,12 @@ public class ClickMobcoinsNoteListener implements Listener {
         if (e.getPlayer().getItemInHand().getItemMeta().getDisplayName() == null) return;
         if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (MobCoinUtils.isCoinsNote(e.getPlayer().getItemInHand())) {
+                int amount;
                 if (e.getPlayer().getItemInHand().getAmount() > 1) {
-                    e.getPlayer().sendMessage(CC.translate("&cYou cannot apply stacked mobcoins."));
-                    e.setCancelled(true);
-                    return;
+                    amount = MobCoinUtils.getCoinsAmountFromNote(e.getPlayer().getItemInHand()) * e.getPlayer().getItemInHand().getAmount();
+                } else {
+                    amount = MobCoinUtils.getCoinsAmountFromNote(e.getPlayer().getItemInHand());
                 }
-                int amount = MobCoinUtils.getCoinsAmountFromNote(e.getPlayer().getItemInHand());
                 AstroSpawners.getInstance().getManager().getPlayerData(e.getPlayer()).setCoins(amount + AstroSpawners.getInstance().getManager().getPlayerData(e.getPlayer()).getCoins());
                 e.getPlayer().sendMessage(CC.translate("&a&l+ " + amount + "&a&l Mobcoins"));
                 e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.NOTE_PLING, 2, 2);

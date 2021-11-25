@@ -27,8 +27,9 @@ public class NebulaShopInventory extends CommonGUI {
 
 
     private GUIItem getCurrentItem() {
-        ItemStack item = new ItemBuilder(NebulaShop.getInstance().getNebulaShopManager().getCurrentItem().clone()).addLore("").addLore(CC.LightPurpleB + " PRICE: " + CC.White + "$" + NebulaShop.getInstance().getNebulaShopManager().getCurrentPrice()).build();
-        return new GUIItem(item) {
+        ItemStack shopItem = NebulaShop.getInstance().getNebulaShopManager().getCurrentItem().clone();
+        ItemStack item = new ItemBuilder(shopItem).addLore("").addLore(CC.LightPurpleB + " * PRICE: " + CC.White + "$" + NebulaShop.getInstance().getNebulaShopManager().getCurrentPrice()).build();
+        return new GUIItem(item.clone()) {
             public void onClick(Player player1, ClickType clickType, InventoryClickEvent inventoryClickEvent) {
                 if(NebulaShop.getInstance().getNebulaShopManager().hasAlreadyBought(player1)) {
                     player1.sendMessage(CC.RedB + "(!) " + CC.Red + "You may only buy this item once per restock.");

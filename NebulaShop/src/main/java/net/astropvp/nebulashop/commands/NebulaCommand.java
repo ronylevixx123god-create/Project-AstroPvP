@@ -37,7 +37,7 @@ public class NebulaCommand implements CommandExecutor {
             Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.LightPurpleB + CC.Underline + "Nebula Shop"));
             Bukkit.broadcastMessage("");
             Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.Gray + "The " + CC.LightPurple + "Nebula Shop " + CC.Gray + "has been " + CC.LightPurple + "restocked"));
-            Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.Gray + "with " + player.getItemInHand().getItemMeta().getDisplayName()) + CC.Gray + "for " + CC.LightPurple + NumberUtils.formatMoney(Double.parseDouble(args[1])));
+            Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.Gray + "with " + player.getItemInHand().getItemMeta().getDisplayName()) + CC.Gray + " for " + CC.LightPurple + NumberUtils.formatMoney(Double.parseDouble(args[1])));
             Bukkit.broadcastMessage("");
             return true;
         }
