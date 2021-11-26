@@ -1,7 +1,5 @@
 package me.astropvp.utils;
 
-import me.astropvp.struct.TournamentRound;
-
 import java.util.HashMap;
 
 public class BracketUtils {

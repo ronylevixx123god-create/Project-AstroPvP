@@ -47,7 +47,7 @@ public class CommandTournament implements CommandExecutor {
                     return false;
                 }
 
-                if (CosmicTournamentsPlugin.getInstance().getActiveTournament().getTournementPlayer(player) != null); {
+                if (CosmicTournamentsPlugin.getInstance().getActiveTournament().getTournamentPlayer(player) != null); {
                     CosmicTournamentsPlugin.getInstance().getActiveTournament().unregisterPlayer(player);
                     player.sendMessage(Language.LEAVE_TOURNAMENT.getMessage());
                     return false;

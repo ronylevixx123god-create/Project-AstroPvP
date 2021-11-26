@@ -1,6 +1,8 @@
 package me.astropvp.struct;
 
 import com.google.common.collect.Lists;
+import lombok.Getter;
+import lombok.Setter;
 import me.astropvp.CosmicTournamentsPlugin;
 import me.astropvp.inventories.LobbyInventory;
 import me.astropvp.enums.TournamentState;
@@ -11,23 +13,29 @@ import me.astropvp.utils.InventoryStorage;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class Tournament {
-    private List<TournamentPlayer> playerList;
-    private HashMap<TournamentRound, Integer> tournamentRounds;
-    private HashMap<Player, String[]> storedInventories;
-    private TournamentState state;
-    private int lobbyTaskId;
-    private int waitingTaskId;
-    private int lobbyWaitingTime;
-    private int startingTime;
+    @Getter private List<TournamentPlayer> playerList;
+    @Getter private List<TournamentPlayer> waitingList;
+    @Getter private HashMap<Player, String[]> storedInventories;
+    @Getter private List<TournamentMatch> currentMatches;
+    @Getter private TournamentState state;
+    @Getter private int lobbyTaskId;
+    @Getter private int waitingTaskId;
+    @Getter @Setter private int lobbyWaitingTime;
+    @Getter @Setter private int startingTime;
+    @Getter private LobbyInventory lobbyInventory;
 
 
     public Tournament() {
-        playerList = Lists.newArrayList();
-        storedInventories = new HashMap<>();
+        this.playerList = Lists.newArrayList();
+        this.storedInventories = new HashMap<>();
+        this.waitingList = new ArrayList<>();
+        this.currentMatches = new ArrayList<>();
+        this.lobbyInventory = new LobbyInventory();
         this.state = TournamentState.OPEN;
         this.lobbyWaitingTime = 60;
         this.lobbyTaskId = Bukkit.getScheduler().scheduleAsyncRepeatingTask(CosmicTournamentsPlugin.getInstance(), new TournamentLobbyTask(this), 20L, 20L);
@@ -54,21 +62,33 @@ public class Tournament {
 
     public void start() {
         Bukkit.getScheduler().cancelTask(this.waitingTaskId);
+        this.waitingList.addAll(this.playerList);
+        for(int i = 0; i < 10; i++) {
+            TournamentPlayer player1 = this.waitingList.get(0);
+            this.waitingList.remove(player1);
+            TournamentPlayer player2 = this.waitingList.get(0);
+            this.waitingList.remove(player2);
+            TournamentMatch match = new TournamentMatch(player1, player2, this);
+            this.currentMatches.add(match);
+        }
+    }
+
+    public void removeMatch(TournamentMatch match) {
+        this.currentMatches.remove(match);
+        this.nextMatch();
+    }
+
+    public void nextMatch() {
+        TournamentPlayer player1 = this.waitingList.get(0);
+        this.waitingList.remove(player1);
+        TournamentPlayer player2 = this.waitingList.get(0);
+        this.waitingList.remove(player2);
+        TournamentMatch match = new TournamentMatch(player1, player2, this);
+        this.currentMatches.add(match);
     }
 
 
-
-/*    public TournamentMatch getActiveTournamentMatch(Player player) {
-        for(TournamentMatch match : tournamentMatches) {
-            if(match.getTournamentPlayer1() == player || match.getTournamentPlayer2() == player) {
-                return match;
-            }
-        }
-        return null;
-    }*/
-
-
-    public TournamentPlayer getTournementPlayer(Player p) {
+    public TournamentPlayer getTournamentPlayer(Player p) {
         for (TournamentPlayer tournamentPlayer : getPlayerList()) {
             if (p == tournamentPlayer.getPlayer()) {
                 return tournamentPlayer;
@@ -76,12 +96,5 @@ public class Tournament {
         }
         return null;
     }
-
-    public int getLobbyWaitingTime() { return this.lobbyWaitingTime; }
-    public void setLobbyWaitingTime(int time) { this.lobbyWaitingTime = time; }
-    public int getStartingTime() { return this.startingTime; }
-    public void setStartingTime(int time) { this.startingTime = time; }
-    public TournamentState getState() { return this.state; }
-    public List<TournamentPlayer> getPlayerList() { return this.playerList; }
 
 }
