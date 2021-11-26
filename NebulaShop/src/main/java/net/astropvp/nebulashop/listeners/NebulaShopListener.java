@@ -1,5 +1,6 @@
 package net.astropvp.nebulashop.listeners;
 
+import com.compilex.CompilexPermissions.PermissionsAPI;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import me.matthawkk.chat.PrefixedMessage;
 import net.astropvp.nebulashop.NebulaShop;
@@ -11,11 +12,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 
 public class NebulaShopListener implements Listener {
     @EventHandler
     public void onHit(EntityDamageByEntityEvent e) {
-        if(e.getEntityType().equals(EntityType.ENDER_CRYSTAL)) {
+        if (e.getEntityType() == EntityType.VILLAGER && e.getEntity().getWorld().getName().contains("nebula")) {
             e.setCancelled(true);
             Player player = (Player) e.getDamager();
             new NebulaShopInventory().open(player);
@@ -25,7 +27,7 @@ public class NebulaShopListener implements Listener {
 
     @EventHandler
     public void onRightClick(PlayerInteractEntityEvent e) {
-        if(e.getRightClicked().getType().equals(EntityType.ENDER_CRYSTAL)) {
+        if (e.getRightClicked().getType() == EntityType.ENDER_CRYSTAL && e.getPlayer().getWorld().getName().contains("nebula")) {
             e.setCancelled(true);
             Player player = e.getPlayer();
             new NebulaShopInventory().open(player);
@@ -35,10 +37,29 @@ public class NebulaShopListener implements Listener {
 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent e) {
-        if(!e.getPlayer().getWorld().getName().equals("nebula"))
+        if (!e.getPlayer().getWorld().getName().equals("nebula"))
             return;
-        if(e.getPlayer().getLocation().getBlockY() < 135) {
+        if (e.getPlayer().getLocation().getBlockY() < 135) {
             e.getPlayer().teleport(NebulaShop.getInstance().getNebulaShopManager().getShopLocation());
         }
+    }
+
+
+    @EventHandler
+    public void teleportCancel(PlayerTeleportEvent e) {
+        if (e.getPlayer() == null) return;
+        if (!e.getTo().getWorld().getName().equals("nebula")) return;
+        if (!PermissionsAPI.getPermissionUser(e.getPlayer().getUniqueId()).getGroup().equals("interstellar") &&
+                !PermissionsAPI.getPermissionUser(e.getPlayer().getUniqueId()).getGroup().equals("mod") &&
+                !PermissionsAPI.getPermissionUser(e.getPlayer().getUniqueId()).getGroup().equals("admin") &&
+                !PermissionsAPI.getPermissionUser(e.getPlayer().getUniqueId()).getGroup().equals("banteam") &&
+                !e.getPlayer().isOp()) {
+            e.getPlayer().sendMessage(CC.translate("&c&l(!)&c You cannot teleport to the nebula lounge."));
+            e.getPlayer().sendMessage(CC.translate("&cThis lounge requires the nebula rank!"));
+            e.setCancelled(true);
+        }
+
+
+
     }
 }

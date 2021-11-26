@@ -26,6 +26,7 @@ public class NebulaCommand implements CommandExecutor {
         }
         if(!player.isOp() || args.length == 0) {
             player.teleport(NebulaShop.getInstance().getNebulaShopManager().getShopLocation());
+            player.sendMessage(CC.translate("&a&l(!)&a Teleporting to Nebula Lounge..."));
             return true;
         }
         if(args[0].equalsIgnoreCase("setitem") && args.length == 2) {

@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 public class MobGrinderRunnable extends BukkitRunnable {
-    int amountOfExpPerBlaze = 200;
+    int amountOfExpPerBlaze = 150;
 
     @Override
     public void run() {
@@ -65,9 +65,9 @@ public class MobGrinderRunnable extends BukkitRunnable {
 
                 //ADD LOOT TO THE CHEST
                 double chance = Math.random();
-                if (chance < 0.01) {
+                if (chance < 0.005) {
                     chest.getInventory().addItem(CoreSkulls.getStellarKey());
-                } else if (chance < 0.04) {
+                } else if (chance < 0.01) {
                     chest.getInventory().addItem(CoreSkulls.getNovaKey());
 
                 }
@@ -89,7 +89,7 @@ public class MobGrinderRunnable extends BukkitRunnable {
 
                             chest.getInventory().setItem(i, ExpBottles.getXpBottle(ExpBottles.getXpAmount(chest.getInventory().getItem(i)) + amountOfExpPerBlaze, "Mob Grinder"));
                         }
-                        if (MobCoinUtils.isCoinsNote(chest.getInventory().getItem(i)) && Math.random() < 0.3 && !mobCoinsFound) {
+                        if (MobCoinUtils.isCoinsNote(chest.getInventory().getItem(i)) && Math.random() < 0.2 && !mobCoinsFound) {
                             mobCoinsFound = true;
                             chest.getInventory().setItem(i, MobCoinUtils.createCoinsNote("Mob Grinder", MobCoinUtils.getCoinsAmountFromNote(chest.getInventory().getItem(i)) + 1));
                         }
