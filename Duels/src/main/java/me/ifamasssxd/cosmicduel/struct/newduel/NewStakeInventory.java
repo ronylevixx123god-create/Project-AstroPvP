@@ -115,6 +115,7 @@ public class NewStakeInventory {
     private void setupInventory(Inventory inventory, Player oppositePlayer) {
         List<String> lore = Lists.newArrayList("", ChatColor.YELLOW + ChatColor.BOLD.toString() + "Settings");
         for (Setting setting : Setting.values()) {
+            if (setting == null) continue;
             if (this.duel.getSettings().hasSetting(setting)) {
                 lore.add(ChatColor.YELLOW + setting.getName() + ": " + ChatColor.GREEN + ChatColor.BOLD.toString() + "ON");
             } else {
@@ -274,7 +275,10 @@ public class NewStakeInventory {
         if (e.getRawSlot() < e.getInventory().getSize()) {
             if (e.getRawSlot() == 0 && pt == PlayerType.ONE) {
                 this.modified = true;
-                if (inventory.getItem(0).equals(this.pendingItem)) {
+                System.out.println(this.pendingItem);
+                System.out.println(inventory);
+                System.out.println(inventory.getItem(0));
+                if (inventory.getItem(0) == (this.pendingItem)) {
                     inventory.setItem(0, this.acceptedItem);
                     inventory2.setItem(0, this.acceptedItem);
                     checkDone();
@@ -284,7 +288,10 @@ public class NewStakeInventory {
                 }
             } else if (e.getRawSlot() == 8 && pt == PlayerType.TWO) {
                 this.modified = true;
-                if (inventory.getItem(8).equals(this.pendingItem)) {
+                System.out.println(this.pendingItem);
+                System.out.println(inventory);
+
+                if (inventory.getItem(8) == (this.pendingItem)) {
                     inventory.setItem(8, this.acceptedItem);
                     inventory2.setItem(8, this.acceptedItem);
                     checkDone();
