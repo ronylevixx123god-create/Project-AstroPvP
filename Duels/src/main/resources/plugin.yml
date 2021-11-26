@@ -20,3 +20,6 @@ commands:
     description: Rank arena.
   resetelo:
     description: Reset all online players elo
+  team:
+    aliases: ['dteam', 'teamduel']
+    description: Base command for creating a team

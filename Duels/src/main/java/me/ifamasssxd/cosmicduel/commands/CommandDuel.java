@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.VanishUtils
  *  com.gmail.nossr50.runnables.skills.BleedTimerTask
@@ -23,50 +23,54 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.VanishUtils;
 import com.gmail.nossr50.runnables.skills.BleedTimerTask;
 import com.google.common.collect.Lists;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
 import me.ifamasssxd.cosmicduel.CosmicDuel;
 import me.ifamasssxd.cosmicduel.DuelAPI;
-import me.ifamasssxd.cosmicduel.godset.CustomGodSet;
 import me.ifamasssxd.cosmicduel.struct.DuelInvite;
-import me.ifamasssxd.cosmicduel.struct.DuelMenu;
 import me.ifamasssxd.cosmicduel.struct.DuelPlayer;
 import me.ifamasssxd.cosmicduel.struct.QueueManager;
+import me.ifamasssxd.cosmicduel.struct.TeamData;
 import me.ifamasssxd.cosmicduel.struct.enums.CancelReason;
 import me.ifamasssxd.cosmicduel.struct.enums.DuelCreateState;
 import me.ifamasssxd.cosmicduel.struct.enums.DuelState;
+import me.ifamasssxd.cosmicduel.struct.enums.EndReason;
 import me.ifamasssxd.cosmicduel.struct.enums.Reason;
 import me.ifamasssxd.cosmicduel.struct.newduel.ClassicDuel;
 import me.ifamasssxd.cosmicduel.struct.newduel.GlobalQueuePopInventory;
 import me.ifamasssxd.cosmicduel.struct.newduel.NewDuel;
+import me.ifamasssxd.cosmicduel.struct.newduel.TeamDuel;
 import me.ifamasssxd.cosmicduel.struct.ranked.RankedTopManager;
 import me.ifamasssxd.cosmicduel.utils.CollectionBin;
 import me.ifamasssxd.cosmicduel.utils.PlayerUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.Map;
-import java.util.UUID;
-
-public class CommandDuel
-implements CommandExecutor {
+public class CommandDuel implements CommandExecutor {
     String red = ChatColor.RED + ChatColor.BOLD.toString() + "(!) ";
 
     public boolean onCommand(CommandSender sender, Command arg1, String arg2, String[] args) {
         if (args.length == 1 && sender.isOp() && args[0].equalsIgnoreCase("togglequeue")) {
             CosmicDuel.queueEnabled = !CosmicDuel.queueEnabled;
-            CosmicDuel.get().getConfig().set("queueEnabled", CosmicDuel.queueEnabled);
+            CosmicDuel.get().getConfig().set("queueEnabled", Boolean.valueOf(CosmicDuel.queueEnabled));
             CosmicDuel.get().saveConfig();
             sender.sendMessage(ChatColor.RED + "Queue Enabled: " + CosmicDuel.queueEnabled);
             return true;
         }
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof Player))
             return true;
-        }
         Player p = (Player)sender;
         if (CosmicDuel.get().isShuttingDown()) {
             p.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot use duel commands while the server is rebooting.");
@@ -75,68 +79,13 @@ implements CommandExecutor {
         QueueManager manager = CosmicDuel.get().getQueueManager();
         if (args.length == 1) {
             if (args[0].equalsIgnoreCase("help")) {
-                this.sendHelp(p);
-                return true;
-            }
-            if (sender.isOp()) {
-                if (args[0].equalsIgnoreCase("listqueue")) {
-                    int index = 0;
-                    p.sendMessage(ChatColor.RED + "Players in Queue:");
-                    for (Map.Entry<UUID, Long> entry : CosmicDuel.get().getQueueManager().getRankedQueue().getSearching().entrySet()) {
-                        Player pl = Bukkit.getPlayer(entry.getKey());
-                        if (pl == null) continue;
-                        p.sendMessage(ChatColor.RED.toString() + index++ + ". " + pl.getName() + " Queue Time: " + (System.currentTimeMillis() - entry.getValue()) + " ms");
-                    }
-                    return true;
-                }
-                if (args[0].equalsIgnoreCase("recalctop")) {
-                    RankedTopManager topManager = CosmicDuel.get().getTopManager();
-                    if (topManager.isLoading()) {
-                        sender.sendMessage(ChatColor.RED + "Please wait for the top to calculate..");
-                        return true;
-                    }
-                    topManager.loadTopPlayers();
-                } else if (args[0].equalsIgnoreCase("list")) {
-                    int index = 1;
-                    for (NewDuel duel : DuelAPI.duels) {
-                        String players = "";
-                        for (Player pl2 : duel.getPlayers()) {
-                            players = players + pl2.getName() + ", ";
-                        }
-                        sender.sendMessage(index++ + ". " + duel.getDuelID() + " State: " + duel.getDuelState().name() + " Create State: " + duel.getCreateState().name() + " players: " + players + " arena: " + (duel.getArena() == null ? "None" : duel.getArena().getName()));
-                    }
-                    return true;
-                }
-            }
-            if (args[0].equalsIgnoreCase("unranked") || args[0].equalsIgnoreCase("queue")) {
-                if (!CosmicDuel.queueEnabled) {
-                    p.sendMessage(ChatColor.RED + "Duel queues are currently disabled.");
-                    return true;
-                }
-                if (PlayerUtils.inCombat(p)) {
-                    p.sendMessage(ChatColor.RED + "You cannot do this while in combat!");
-                    return true;
-                }
-                if (manager.getDuel(p) != null || manager.isSearching(p) || manager.getRankedQueue().isInRankedQueue(p)) {
-                    p.sendMessage(ChatColor.RED + "You are currently in queue.");
-                    return true;
-                }
-                if (manager.getPreparingDuel(p) != null) {
-                    p.sendMessage(ChatColor.RED + "Finish preparing your duel!");
-                    return true;
-                }
-                if (DuelAPI.hasDuel(p)) {
-                    p.sendMessage(ChatColor.RED + "You cannot do this while in a duel.");
-                    return true;
-                }
-                manager.queuePlayer(p);
+                sendHelp(p);
                 return true;
             }
             if (args[0].equalsIgnoreCase("leave")) {
                 if (!p.hasMetadata("in_ranked_queue_menu") || p.getMetadata("in_ranked_queue_menu").size() <= 0) {
-                    NewDuel duel2;
                     if (DuelAPI.hasDuel(p)) {
-                        duel2 = DuelAPI.getDuel(p);
+                        NewDuel duel2 = DuelAPI.getDuel(p);
                         if (DuelAPI.isDuelQueued(duel2)) {
                             duel2.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "Duel was in queue and it has been cancelled by " + p.getName() + ".", true);
                             DuelAPI.cancelDuel(duel2, CancelReason.LEFT_DURING_QUEUE);
@@ -147,10 +96,23 @@ implements CommandExecutor {
                             System.out.println("Declining invite for " + p.getName());
                         }
                         p.sendMessage(this.red + ChatColor.RED + "You left the duel.");
+                        final Player oppositePlayer = duel2.getOppositePlayer(p);
+                        final String pName = p.getName();
+                        (new BukkitRunnable() {
+                            public void run() {
+                                if (Bukkit.getPlayer(oppositePlayer.getName()).hasPotionEffect(PotionEffectType.SPEED)) {
+                                    Bukkit.getPlayer(oppositePlayer.getName()).removePotionEffect(PotionEffectType.SPEED);
+                                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "apply " + oppositePlayer.getName());
+                                }
+                                if (Bukkit.getPlayer(pName).hasPotionEffect(PotionEffectType.SPEED)) {
+                                    Bukkit.getPlayer(pName).removePotionEffect(PotionEffectType.SPEED);
+                                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "apply " + pName);
+                                }
+                            }
+                        }).runTaskLater(CosmicDuel.get(), 20L);
                         duel2.removePlayer(p, Reason.LEFT_DUEL, false);
-                        if (duel2.getPlayers().size() <= 0 && duel2.getDuelState() == DuelState.IN_QUEUE && duel2.getCreateState() == DuelCreateState.PLAYER_SELECT) {
+                        if (duel2.getPlayers().size() <= 0 && duel2.getDuelState() == DuelState.IN_QUEUE && duel2.getCreateState() == DuelCreateState.PLAYER_SELECT)
                             DuelAPI.duels.remove(duel2);
-                        }
                     } else if (p.hasMetadata("spectator")) {
                         NewDuel spectating = DuelAPI.getDuelSpectating(p);
                         if (spectating != null) {
@@ -160,14 +122,12 @@ implements CommandExecutor {
                             p.removeMetadata("spectator", CosmicDuel.get());
                             PlayerUtils.setCollides(p, true);
                             BleedTimerTask.remove(p);
-                            if (!VanishUtils.isVanished(p)) {
-                                for (Player pl3 : Bukkit.getServer().getOnlinePlayers()) {
+                            if (!VanishUtils.isVanished(p))
+                                for (Player pl3 : Bukkit.getOnlinePlayers())
                                     pl3.showPlayer(p);
-                                }
-                            }
                         }
                     } else {
-                        duel2 = manager.getDuel(p);
+                        NewDuel duel2 = manager.getDuel(p);
                         if (duel2 != null) {
                             manager.removeDuelFromQueue(duel2);
                             p.sendMessage(ChatColor.RED + "You have been removed from the Global Duel Queue.");
@@ -197,7 +157,7 @@ implements CommandExecutor {
                 return true;
             }
             if (args[0].equalsIgnoreCase("toggle")) {
-                p.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "Duels have been toggled " + (CosmicDuel.get().getDuelToggles().togglePlayer(p) ? ChatColor.RED + ChatColor.BOLD.toString() + "OFF" : ChatColor.GREEN + ChatColor.BOLD.toString() + "ON"));
+                p.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "Duels have been toggled " + (CosmicDuel.get().getDuelToggles().togglePlayer(p) ? (ChatColor.RED + ChatColor.BOLD.toString() + "OFF") : (ChatColor.GREEN + ChatColor.BOLD.toString() + "ON")));
                 return true;
             }
             if (args[0].equalsIgnoreCase("collect")) {
@@ -209,27 +169,96 @@ implements CommandExecutor {
                 return true;
             }
             Player pl5 = Bukkit.getPlayer(args[0]);
-            if (pl5 == null) {
-                p.sendMessage(ChatColor.RED + "The player '" + args[0] + "' does not exist.");
+            if (pl5 == null || !pl5.isOnline()) {
+                p.sendMessage(ChatColor.RED + "The player '" + args[0] + "' is not online!");
                 return false;
             }
             if (pl5.equals(p)) {
                 p.sendMessage(ChatColor.RED + "You cannot duel yourself.");
                 return true;
             }
-            if (!DuelAPI.checkStatus(p, pl5)) {
+            if (!DuelAPI.checkStatus(p, pl5))
+                return true;
+            TeamData team = CosmicDuel.get().getTeamDataManager().tryFindTeam(p.getUniqueId());
+            TeamData oTeam = CosmicDuel.get().getTeamDataManager().tryFindTeam(pl5.getUniqueId());
+            if (team != null && Bukkit.getPlayer(team.getLeaderUUID()) != p) {
+                p.sendMessage(CC.translate("&c&l(!) &cOnly team leaders can run this command!"));
                 return true;
             }
+            if (team != null && oTeam != null && team == oTeam) {
+                p.sendMessage(CC.translate("&c&l(!) &cYou cannot duel members of your own team!"));
+                return true;
+            }
+            if (team != null && oTeam == null) {
+                p.sendMessage(CC.translate("&c&l(!) &cYou cannot duel &f" + pl5.getName() + " &cbecause they are not apart of a team."));
+                p.sendMessage(CC.translate("&7Please leave your team to duel them or tell them to create a team!"));
+                return true;
+            }
+            if (team != null && oTeam != null && Bukkit.getPlayer(oTeam.getLeaderUUID()) != pl5) {
+                p.sendMessage(CC.translate("&c&l(!) &cThat player is not the leader of that team, please duel the leader, please duel &f" + Bukkit.getPlayer(oTeam.getLeaderUUID()).getName() + "&c."));
+                return true;
+            }
+            if (team != null && oTeam != null && team.getTotalSize() != oTeam.getTotalSize()) {
+                p.sendMessage(CC.translate("&c&l(!) &cMake sure you have the same amount of players on both teams."));
+                return true;
+            }
+            if (team != null && oTeam != null && team.getTotalSize() < 2 && oTeam.getTotalSize() < 2) {
+                p.sendMessage(CC.translate("&c&l(!) &cBoth teams must have atleast 1 teammate to duel."));
+                return true;
+            }
+            if (team != null && oTeam != null) {
+                List<Player> collectionBinPlayers = Lists.newArrayList();
+                for (Player player : getBothTeamPlayers(team, oTeam)) {
+                    if (CollectionBin.getCollectionItems(player.getPlayer()).size() > 0)
+                        collectionBinPlayers.add(player);
+                }
+                if (!collectionBinPlayers.isEmpty()) {
+                    p.sendMessage(CC.translate("&c&l(!) &cPlease tell these players to empty their /duel collect before you can send this duel request."));
+                    for (Player player : collectionBinPlayers) {
+                        if (player != null)
+                            p.sendMessage(CC.translate(" &c&l* &f" + player));
+                    }
+                    return true;
+                }
+            }
+            if (team != null && oTeam != null) {
+                int team1OnlineCount = 0;
+                for (UUID uuid : team.getTeamates()) {
+                    Player player = Bukkit.getPlayer(uuid);
+                    if (player != null && player.isOnline())
+                        team1OnlineCount++;
+                }
+                int team2OnlineCount = 0;
+                for (UUID uuid : oTeam.getTeamates()) {
+                    Player player = Bukkit.getPlayer(uuid);
+                    if (player != null && player.isOnline())
+                        team2OnlineCount++;
+                }
+                if (team1OnlineCount != team2OnlineCount) {
+                    p.sendMessage(CC.translate("&c&l(!) &cMake sure the same amount of players on both team are online."));
+                    return true;
+                }
+            }
+            if (team != null && oTeam != null && team != oTeam) {
+                try {
+                    TeamDuel teamDuel = new TeamDuel(p, Lists.newArrayList(args[0]));
+                    DuelAPI.duels.add(teamDuel);
+                    teamDuel.setCreateState(DuelCreateState.SETTINGS);
+                    teamDuel.getSettings().getSettings().openInventory(p);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    ClassicDuel classicDuel = new ClassicDuel(p, Lists.newArrayList(args[0]));
+                    DuelAPI.duels.add(classicDuel);
+                    classicDuel.setCreateState(DuelCreateState.SETTINGS);
+                    classicDuel.getSettings().getSettings().openInventory(p);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
             CosmicDuel.logMessage("Creating duel for " + p.getName() + " and inviting " + pl5.getName());
-            try {
-                ClassicDuel newDuel = new ClassicDuel(p, Lists.newArrayList(args[0]));
-                DuelAPI.duels.add(newDuel);
-                newDuel.setCreateState(DuelCreateState.SETTINGS);
-                newDuel.getSettings().getSettings().openInventory(p);
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
         } else if (args.length == 2 && (args[0].equalsIgnoreCase("accept") || args[0].equalsIgnoreCase("decline") || args[0].equalsIgnoreCase("settings") || args[0].equalsIgnoreCase("top"))) {
             if (args[0].equalsIgnoreCase("accept")) {
                 if (!DuelAPI.hasPendingInvite(p)) {
@@ -273,11 +302,41 @@ implements CommandExecutor {
                 return true;
             }
         } else if (args.length == 0) {
-            p.sendMessage(CC.translate("&cUsage: /duel <name>"));
+            p.sendMessage(CC.translate("&c&l(!) &cUsage: /duel <player>"));
         } else {
-            this.sendHelp(p);
+            sendHelp(p);
+        }
+        if (args.length == 1) {
+            if (args[0].equalsIgnoreCase("end") && sender.isOp()) {
+                NewDuel d = DuelAPI.getDuel(p);
+                if (d == null) {
+                    p.sendMessage(CC.translate("&c&l(!) &cYou cannot do this because you are not in a duel!"));
+                    return true;
+                }
+                d.onDuelEnd(EndReason.NO_WINNER, null);
+                p.sendMessage(CC.translate("&c&l(!) &cYou have cancelled your duel!"));
+                return true;
+            }
+        } else if (args.length == 2 && args[0].equalsIgnoreCase("end")) {
+            Player target = Bukkit.getPlayer(args[1]);
+            NewDuel d = DuelAPI.getDuel(target);
+            if (d == null) {
+                p.sendMessage(CC.translate("&c&l(!) &cYou cannot do this because they are not in a duel!"));
+                return true;
+            }
+            d.onDuelEnd(EndReason.NO_WINNER, null);
+            p.sendMessage(CC.translate("&c&l(!) &cYou have cancelled their duel!"));
+            return true;
         }
         return false;
+    }
+
+    private List<Player> getBothTeamPlayers(TeamData a, TeamData b) {
+        List<Player> players = Lists.newArrayList();
+        players.add(Bukkit.getPlayer(a.getLeaderUUID()));
+        a.getTeamates().stream().forEach(teammate -> players.add(Bukkit.getPlayer(teammate)));
+        b.getTeamates().stream().forEach(teammate -> players.add(Bukkit.getPlayer(teammate)));
+        return players;
     }
 
     private void sendHelp(Player p) {
@@ -289,9 +348,9 @@ implements CommandExecutor {
         p.sendMessage(ChatColor.GRAY + "Toggle duel invites from other players.");
         p.sendMessage(ChatColor.YELLOW + "/duel collect");
         p.sendMessage(ChatColor.GRAY + "Access your Stake Collection Bin.");
+        p.sendMessage(CC.translate("&7You can use &f/duel collect removepotions &7to remove all potions from your winnings."));
         p.sendMessage(ChatColor.YELLOW + "/duel spectate");
         p.sendMessage(ChatColor.GRAY + "Access the duel spectate menu.");
         p.sendMessage("");
     }
 }
-

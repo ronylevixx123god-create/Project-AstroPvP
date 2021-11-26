@@ -19,8 +19,10 @@ import me.ifamasssxd.cosmicduel.CosmicDuel;
 import me.ifamasssxd.cosmicduel.struct.Arena;
 import me.ifamasssxd.cosmicduel.struct.Kit;
 import me.ifamasssxd.cosmicduel.struct.Settings;
+import me.ifamasssxd.cosmicduel.struct.TeamData;
 import me.ifamasssxd.cosmicduel.struct.enums.*;
 import me.ifamasssxd.cosmicduel.utils.JSONMessage;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -60,6 +62,7 @@ public abstract class NewDuel {
     protected int gameTimer = 0;
     protected int duelID;
     private int pvpTimer = 120;
+    protected List<TeamData> teams;
 
     public NewDuel(Player initiator, List<String> pendingInvites) {
         this.addPlayer(initiator, false);
@@ -240,6 +243,13 @@ public abstract class NewDuel {
 
     public boolean isCancelled() {
         return this.cancelled;
+    }
+
+    public void forceTeleportToSpectator(Player p, Location to) {
+        Bukkit.getScheduler().runTaskLater((Plugin)CosmicDuel.get(), () -> {
+            p.setMetadata("bypassCombatTeleport", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDuel.get(), to));
+            p.teleport(to, PlayerTeleportEvent.TeleportCause.UNKNOWN);
+        },1L);
     }
 
     public boolean isInQueueMenu() {

@@ -26,6 +26,7 @@ public class ServerFixes implements Listener {
 
     @EventHandler
     public void onEntitySpawn2(EntityTargetEvent event) {
+        if (event.getEntity().getWorld().getName().contains("dungeon")) return;
         if (event.getEntity() instanceof org.bukkit.entity.Blaze || event.getEntity() instanceof org.bukkit.entity.Creeper
                 || event.getEntity() instanceof org.bukkit.entity.Skeleton)
             event.setCancelled(true);

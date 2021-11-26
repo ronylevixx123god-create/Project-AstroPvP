@@ -4,7 +4,7 @@
 package me.ifamasssxd.cosmicduel.struct.enums;
 
 public enum DuelType {
-    ONE_VS_ONE, TWO_VS_TWO;
+    ONE_VS_ONE, TEAM_VS_TEAM;
 
 }
 

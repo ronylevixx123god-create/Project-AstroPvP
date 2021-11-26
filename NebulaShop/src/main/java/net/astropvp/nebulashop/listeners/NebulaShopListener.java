@@ -27,7 +27,7 @@ public class NebulaShopListener implements Listener {
 
     @EventHandler
     public void onRightClick(PlayerInteractEntityEvent e) {
-        if (e.getRightClicked().getType() == EntityType.ENDER_CRYSTAL && e.getPlayer().getWorld().getName().contains("nebula")) {
+        if (e.getRightClicked().getType() == EntityType.VILLAGER && e.getPlayer().getWorld().getName().contains("nebula")) {
             e.setCancelled(true);
             Player player = e.getPlayer();
             new NebulaShopInventory().open(player);
