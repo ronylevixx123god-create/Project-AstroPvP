@@ -17,6 +17,7 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onLeave(PlayerQuitEvent e) {
         CollectPlugin.getInstance().getCollectManager().getPlayerCollect(e.getPlayer()).save(false);
+        CollectPlugin.getInstance().getCollectManager().remove(e.getPlayer());
     }
 
 }

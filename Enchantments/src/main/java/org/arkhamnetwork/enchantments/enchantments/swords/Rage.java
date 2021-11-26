@@ -39,8 +39,7 @@ public class Rage extends CustomEnchantment {
             }
             double damage = event.getDamage();
             event.setDamage((damage + mod));
-
-
+            Bukkit.broadcastMessage(String.valueOf(RageUtils.getComboOfPlayer(pUser, target instanceof Player)));
         }
 
     }

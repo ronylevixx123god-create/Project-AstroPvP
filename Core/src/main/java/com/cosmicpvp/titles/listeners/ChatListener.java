@@ -3,6 +3,7 @@ package com.cosmicpvp.titles.listeners;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.titles.PlayerTitleAPI;
 import net.astropvp.core.AstroCore;
+import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -22,8 +23,8 @@ public class ChatListener implements Listener {
 
         if (AstroCore.getInstance().getCachedColors().containsKey(event.getPlayer())) {
             String message = event.getMessage();
-            message = AstroCore.getInstance().getCachedColors().get(event.getPlayer()) + message;
-            message = message.replaceAll(" ", " " + AstroCore.getInstance().getCachedColors().get(event.getPlayer()));
+            message = (event.getPlayer().isOp() ? ChatColor.DARK_RED : AstroCore.getInstance().getCachedColors().get(event.getPlayer())) + message;
+            message = message.replaceAll(" ", " " + (event.getPlayer().isOp() ? ChatColor.DARK_RED : AstroCore.getInstance().getCachedColors().get(event.getPlayer())));
             event.setMessage(message);
         }
         event.setFormat(frm);

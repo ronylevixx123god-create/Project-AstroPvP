@@ -20,13 +20,14 @@ public class TournamentMatch {
         this.player2 = player2;
         this.task = new TournamentMatchTask(this);
         this.tournament = tournament;
-        Bukkit.getScheduler().scheduleAsyncRepeatingTask(CosmicTournamentsPlugin.getInstance(), this.task, 20L, 20L);
         this.tickDmg = true;
         this.running = false;
         start();
     }
 
     private void start() {
+
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(CosmicTournamentsPlugin.getInstance(), this.task, 20L, 20L);
 
     }
 
