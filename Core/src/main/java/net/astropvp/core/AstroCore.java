@@ -221,16 +221,16 @@ public class AstroCore extends JavaPlugin {
     public void onEnable() {
         instance = this;
         getConfig().options().copyDefaults(true);
+
         saveDefaultConfig();
-        saveConfig();
         setupEconomy();
         events();
         new LastManStandingCapTask().runTaskTimer(this, 20L, 20L);
 
         cachedColors = new HashMap<>();
 
-        this.enchantmentCoderManager = new EnchantmentCoderManager(getDataFolder() + "/enchantmentcoderdata.json");
-        this.enchantmentCoderManager.loadData();
+        //this.enchantmentCoderManager = new EnchantmentCoderManager(getDataFolder() + "/enchantmentcoderdata.json");
+        //this.enchantmentCoderManager.loadData();
 
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new HeroicUpgrade());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new RogueScratchCard());
@@ -351,6 +351,7 @@ public class AstroCore extends JavaPlugin {
         this.getCommand("setheroicbossspawn").setExecutor(new CommandSetHeroicBossSpawn());
         getCommand("givepearl").setExecutor(new GivePearlCommand());
         this.getCommand("armorcolor").setExecutor(new ArmorColorCommand());
+        this.getCommand("trailer").setExecutor(new TrailerCommand());
 
         this.getCommand("corechunkfinder").setExecutor(new CoreChunkFinderCommand());
         this.getCommand("spawnershop").setExecutor(new SpawnerShopCommand());

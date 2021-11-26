@@ -17,6 +17,9 @@ commands:
     aliases: ['pot']
   invsee:
     aliases: ['inventorysee']
+  trailer:
+    description: Claim trailer rewards
+    aliases: ['trailerclaim', 'claimtrailer']
   givechunkbuster:
     aliases: ['givecb']
   trash:

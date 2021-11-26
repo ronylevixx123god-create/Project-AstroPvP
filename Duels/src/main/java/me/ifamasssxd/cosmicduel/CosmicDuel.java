@@ -22,10 +22,7 @@ import me.ifamasssxd.cosmicduel.inventory.CustomInventory;
 import me.ifamasssxd.cosmicduel.inventory.CustomInventoryListener;
 import me.ifamasssxd.cosmicduel.listeners.*;
 import me.ifamasssxd.cosmicduel.sql.Database;
-import me.ifamasssxd.cosmicduel.struct.Arena;
-import me.ifamasssxd.cosmicduel.struct.DuelHistoryManager;
-import me.ifamasssxd.cosmicduel.struct.DuelPlayer;
-import me.ifamasssxd.cosmicduel.struct.QueueManager;
+import me.ifamasssxd.cosmicduel.struct.*;
 import me.ifamasssxd.cosmicduel.struct.enums.EndReason;
 import me.ifamasssxd.cosmicduel.struct.newduel.DuelLogFormatter;
 import me.ifamasssxd.cosmicduel.struct.newduel.NewDuel;
@@ -66,6 +63,7 @@ extends JavaPlugin {
     public static boolean envoysEnabled;
     private Database sqlDatabase;
     private String serverName = null;
+    private TeamDataManager teamDataManager;
 
     public void onEnable() {
         instance = this;
@@ -96,6 +94,7 @@ extends JavaPlugin {
         }
         this.topManager.loadTopPlayers();
         this.topManager.checkDepreciation();
+        this.teamDataManager = new TeamDataManager();
     }
 
     public void onDisable() {
@@ -134,10 +133,15 @@ extends JavaPlugin {
             if (p.getOpenInventory().getTopInventory() == null || !p.getOpenInventory().getTopInventory().getName().startsWith("Duel Items: ")) continue;
             p.closeInventory();
         }
+        this.teamDataManager.terminate();
     }
 
     public boolean isShuttingDown() {
         return CommandArkReboot.restart_task_exists;
+    }
+
+    public TeamDataManager getTeamDataManager() {
+        return this.teamDataManager;
     }
 
     public void initPlugin() {
@@ -198,6 +202,7 @@ extends JavaPlugin {
         this.getCommand("viewdeathinventory").setExecutor(new CommandViewDeathInventory());
         this.getCommand("setrankedarena").setExecutor(new CommandSetRankArena());
         this.getCommand("resetelo").setExecutor(new CommandResetELO());
+        this.getCommand("team").setExecutor((CommandExecutor)new CommandTeam());
     }
 
     public void registerListeners() {
@@ -211,6 +216,7 @@ extends JavaPlugin {
         this.registerListener(new PotionListener());
         this.registerListener(new SettingsListener());
         this.registerListener(new CustomKitListener());
+        registerListener((Listener)new TeamDuelListener());
 
         if (enchantsEnabled) {
             this.registerListener(new GodsetCreationListener());

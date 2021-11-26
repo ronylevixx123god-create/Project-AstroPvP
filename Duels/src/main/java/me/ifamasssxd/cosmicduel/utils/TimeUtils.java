@@ -22,99 +22,101 @@ public class TimeUtils {
         int seconds = 0;
         boolean found = false;
         while (m.find()) {
-            if (m.group() == null || m.group().isEmpty()) continue;
-            for (int i = 0; i < m.groupCount(); ++i) {
-                if (m.group(i) == null || m.group(i).isEmpty()) continue;
-                found = true;
-                break;
+            if (m.group() == null ||
+                    m.group().isEmpty())
+                continue;
+            for (int i = 0; i < m.groupCount(); i++) {
+                if (m.group(i) != null && !m.group(i).isEmpty()) {
+                    found = true;
+                    break;
+                }
             }
-            if (!found) continue;
-            if (m.group(1) != null && !m.group(1).isEmpty()) {
+            if (!found)
+                continue;
+            if (m.group(1) != null && !m.group(1).isEmpty())
                 years = Integer.parseInt(m.group(1));
-            }
-            if (m.group(2) != null && !m.group(2).isEmpty()) {
+            if (m.group(2) != null && !m.group(2).isEmpty())
                 months = Integer.parseInt(m.group(2));
-            }
-            if (m.group(3) != null && !m.group(3).isEmpty()) {
+            if (m.group(3) != null && !m.group(3).isEmpty())
                 weeks = Integer.parseInt(m.group(3));
-            }
-            if (m.group(4) != null && !m.group(4).isEmpty()) {
+            if (m.group(4) != null && !m.group(4).isEmpty())
                 days = Integer.parseInt(m.group(4));
-            }
-            if (m.group(5) != null && !m.group(5).isEmpty()) {
+            if (m.group(5) != null && !m.group(5).isEmpty())
                 hours = Integer.parseInt(m.group(5));
-            }
-            if (m.group(6) != null && !m.group(6).isEmpty()) {
+            if (m.group(6) != null && !m.group(6).isEmpty())
                 minutes = Integer.parseInt(m.group(6));
-            }
-            if (m.group(7) == null || m.group(7).isEmpty()) break;
-            seconds = Integer.parseInt(m.group(7));
-            break;
+            if (m.group(7) != null && !m.group(7).isEmpty())
+                seconds = Integer.parseInt(m.group(7));
         }
-        if (!found) {
+        if (!found)
             throw new Exception("Illegal Date");
-        }
-        if (years > 20) {
+        if (years > 20)
             throw new Exception("Illegal Date");
-        }
-        GregorianCalendar c = new GregorianCalendar();
-        if (years > 0) {
-            ((Calendar)c).add(1, years * (future ? 1 : -1));
-        }
-        if (months > 0) {
-            ((Calendar)c).add(2, months * (future ? 1 : -1));
-        }
-        if (weeks > 0) {
-            ((Calendar)c).add(3, weeks * (future ? 1 : -1));
-        }
-        if (days > 0) {
-            ((Calendar)c).add(5, days * (future ? 1 : -1));
-        }
-        if (hours > 0) {
-            ((Calendar)c).add(11, hours * (future ? 1 : -1));
-        }
-        if (minutes > 0) {
-            ((Calendar)c).add(12, minutes * (future ? 1 : -1));
-        }
-        if (seconds > 0) {
-            ((Calendar)c).add(13, seconds * (future ? 1 : -1));
-        }
+        Calendar c = new GregorianCalendar();
+        if (years > 0)
+            c.add(1, years * (future ? 1 : -1));
+        if (months > 0)
+            c.add(2, months * (future ? 1 : -1));
+        if (weeks > 0)
+            c.add(3, weeks * (future ? 1 : -1));
+        if (days > 0)
+            c.add(5, days * (future ? 1 : -1));
+        if (hours > 0)
+            c.add(11, hours * (future ? 1 : -1));
+        if (minutes > 0)
+            c.add(12, minutes * (future ? 1 : -1));
+        if (seconds > 0)
+            c.add(13, seconds * (future ? 1 : -1));
         return c.getTimeInMillis() / 1000L;
     }
 
     public static String formatDifference(long time) {
-        String diff;
-        if (time == 0L) {
+        if (time == 0L)
             return "Never";
-        }
         long day = TimeUnit.SECONDS.toDays(time);
         long hours = TimeUnit.SECONDS.toHours(time) - day * 24L;
         long minutes = TimeUnit.SECONDS.toMinutes(time) - TimeUnit.SECONDS.toHours(time) * 60L;
         long seconds = TimeUnit.SECONDS.toSeconds(time) - TimeUnit.SECONDS.toMinutes(time) * 60L;
         StringBuilder sb = new StringBuilder();
-        if (day > 0L) {
-            sb.append(day).append(" ").append(day == 1L ? "day" : "days").append(" ");
-        }
-        if (hours > 0L) {
-            sb.append(hours).append(" ").append(hours == 1L ? "hour" : "hours").append(" ");
-        }
-        if (minutes > 0L) {
-            sb.append(minutes).append(" ").append(minutes == 1L ? "minute" : "minutes").append(" ");
-        }
-        if (seconds > 0L) {
-            sb.append(seconds).append(" ").append(seconds == 1L ? "second" : "seconds");
-        }
-        return (diff = sb.toString()).isEmpty() ? "Now" : diff;
+        if (day > 0L)
+            sb.append(day).append(" ").append((day == 1L) ? "day" : "days").append(" ");
+        if (hours > 0L)
+            sb.append(hours).append(" ").append((hours == 1L) ? "hour" : "hours").append(" ");
+        if (minutes > 0L)
+            sb.append(minutes).append(" ").append((minutes == 1L) ? "minute" : "minutes").append(" ");
+        if (seconds > 0L)
+            sb.append(seconds).append(" ").append((seconds == 1L) ? "second" : "seconds");
+        String diff = sb.toString();
+        return diff.isEmpty() ? "Now" : diff;
     }
 
     public static String formatTime(long time) {
-        if (time == System.currentTimeMillis()) {
+        if (time == System.currentTimeMillis())
             return "Now";
-        }
-        if (time == -1L) {
+        if (time == -1L)
             return "Never";
+        return formatDifference(time - System.currentTimeMillis() / 1000L);
+    }
+
+    public static String formatSeconds(int seconds) {
+        int minutes = seconds / 60;
+        seconds %= 60;
+        int hours = minutes / 60;
+        minutes %= 60;
+        int days = hours / 24;
+        hours %= 24;
+        StringBuilder sb = new StringBuilder();
+        if (days > 0)
+            sb.append(days + "d, ");
+        if (hours > 0)
+            sb.append(hours + "h, ");
+        if (minutes > 0)
+            sb.append(minutes + "m, ");
+        if (sb.length() == 0 || seconds > 0) {
+            sb.append(seconds + "s");
+            return sb.toString();
         }
-        return TimeUtils.formatDifference(time - System.currentTimeMillis() / 1000L);
+        String value = sb.toString();
+        return (value.length() == 0) ? value : value.substring(0, value.lastIndexOf(","));
     }
 }
-

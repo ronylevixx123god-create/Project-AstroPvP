@@ -248,7 +248,7 @@ implements Listener {
                             d.sendMessage((Object)ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.YELLOW + p.getName() + " closed the " + (Object)ChatColor.YELLOW + ChatColor.UNDERLINE.toString() + "STAKES" + (Object)ChatColor.YELLOW + " selection.", false);
                             d.sendMessage((Object)ChatColor.GRAY + "The duel has been cancelled.", false);
                             d.setCreateState(DuelCreateState.DONE);
-                            d.getStakeInventory().closeInventory();
+                            d.getStakeInventory().closeInventory(d);
                             DuelAPI.cancelDuel(d, CancelReason.CLOSED_INVENTORY);
                         }
                         break block12;

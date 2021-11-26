@@ -66,7 +66,7 @@ public class TrailerCommand implements CommandExecutor {
             player.sendMessage( "&c&l(!) &cPlease wait a little bit before doing that.");
             return true;
         }
-        this.cooldownMap.add(player, 15000L);
+        this.cooldownMap.add(player, Long.valueOf(15000L));
         player.sendMessage( "&aPlease wait while your video is verified...");
         final VideoInfoFetchTask task = new VideoInfoFetchTask(player.getUniqueId(), videoId);
         (new BukkitRunnable() {
