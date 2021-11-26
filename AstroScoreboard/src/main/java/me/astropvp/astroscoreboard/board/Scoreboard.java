@@ -118,8 +118,8 @@ public class Scoreboard implements BoardAdapter {
             if (WorldGuardUtils.getRegionName(player.getLocation()).contains("frozen")) {
             return CC.translate("&b&lFrozen Stronghold &7" + getDateSuffix());
 
-        } else if (DuelAPI.getDuel(player) != null && (DuelAPI.getDuel(player).getDuelState() == DuelState.STARTING || DuelAPI.getDuel(player).getDuelState() == DuelState.PLAYING)) {
-            return CC.translate("&6&l1v1 Duel &7" + getDateSuffix());
+         /* }else if (DuelAPI.getDuel(player) != null && (DuelAPI.getDuel(player).getDuelState() == DuelState.STARTING || DuelAPI.getDuel(player).getDuelState() == DuelState.PLAYING)) {
+            return CC.translate("&6&l1v1 Duel &7" + getDateSuffix());*/
 
         } else if(!fplayer.getFaction().isWilderness()) {
             return CC.translate("&a&l" + fplayer.getFaction().getTag() + " &7" + getDateSuffix());
@@ -342,7 +342,7 @@ public class Scoreboard implements BoardAdapter {
             return board;
         }
 
-        if (DuelAPI.getDuel(player) != null && (DuelAPI.getDuel(player).getDuelState() == DuelState.STARTING || DuelAPI.getDuel(player).getDuelState() == DuelState.PLAYING)) {
+        /*if (DuelAPI.getDuel(player) != null && (DuelAPI.getDuel(player).getDuelState() == DuelState.STARTING || DuelAPI.getDuel(player).getDuelState() == DuelState.PLAYING)) {
             List<String> board = new LinkedList<>();
             int seconds = DuelAPI.getDuel(player).getGameTimer();
             int minutes = seconds / 60;
@@ -375,7 +375,7 @@ public class Scoreboard implements BoardAdapter {
             board.add(CC.translate("&6&lAccount"));
             board.add(CC.translate("&e") + player.getName());
             return board;
-        }
+        }*/
 
         if (player.getLocation().getWorld().getName().equals("cosmic-station-vanilla")) {
             Outpost vanillaOutpost = CosmicKOTHPlugin.get_().getVanillaOutpost();

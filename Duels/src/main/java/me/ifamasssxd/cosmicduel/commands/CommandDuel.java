@@ -23,6 +23,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.VanishUtils;
 import com.gmail.nossr50.runnables.skills.BleedTimerTask;
 import com.google.common.collect.Lists;
+
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -71,7 +72,7 @@ public class CommandDuel implements CommandExecutor {
         }
         if (!(sender instanceof Player))
             return true;
-        Player p = (Player)sender;
+        Player p = (Player) sender;
         if (CosmicDuel.get().isShuttingDown()) {
             p.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot use duel commands while the server is rebooting.");
             return true;
@@ -209,8 +210,13 @@ public class CommandDuel implements CommandExecutor {
             if (team != null && oTeam != null) {
                 List<Player> collectionBinPlayers = Lists.newArrayList();
                 for (Player player : getBothTeamPlayers(team, oTeam)) {
-                    if (CollectionBin.getCollectionItems(player.getPlayer()).size() > 0)
+                    if (!player.isOnline()) {
+                        sender.sendMessage(CC.translate("&cOne of the members of the opponent team isn't online."));
+                        return false;
+                    }
+                    if (CollectionBin.getCollectionItems(player.getPlayer()).size() > 0) {
                         collectionBinPlayers.add(player);
+                    }
                 }
                 if (!collectionBinPlayers.isEmpty()) {
                     p.sendMessage(CC.translate("&c&l(!) &cPlease tell these players to empty their /duel collect before you can send this duel request."));
