@@ -8,16 +8,18 @@ import me.astropvp.inventories.LobbyInventory;
 import me.astropvp.enums.TournamentState;
 import me.astropvp.tasks.TournamentLobbyTask;
 import me.astropvp.tasks.TournamentWaitingTask;
-import me.astropvp.utils.BracketUtils;
 import me.astropvp.utils.InventoryStorage;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class Tournament {
+    //Tournament Startup
+
     @Getter private List<TournamentPlayer> playerList;
     @Getter private List<TournamentPlayer> waitingList;
     @Getter private HashMap<Player, String[]> storedInventories;
@@ -28,7 +30,6 @@ public class Tournament {
     @Getter @Setter private int lobbyWaitingTime;
     @Getter @Setter private int startingTime;
     @Getter private LobbyInventory lobbyInventory;
-
 
     public Tournament() {
         this.playerList = Lists.newArrayList();
@@ -41,6 +42,17 @@ public class Tournament {
         this.lobbyTaskId = Bukkit.getScheduler().scheduleAsyncRepeatingTask(CosmicTournamentsPlugin.getInstance(), new TournamentLobbyTask(this), 20L, 20L);
     }
 
+    public TournamentPlayer getTournamentPlayer(Player p) {
+        for (TournamentPlayer tournamentPlayer : getPlayerList()) {
+            if (p == tournamentPlayer.getPlayer()) {
+                return tournamentPlayer;
+            }
+        }
+        return null;
+    }
+
+    //Tournament Joining/leaving logic
+
     public void registerPlayer(Player player) {
         TournamentPlayer activeTournamentPlayer = new TournamentPlayer(player);
         playerList.add(activeTournamentPlayer);
@@ -52,6 +64,8 @@ public class Tournament {
         playerList.removeIf(atp -> atp.getPlayer() == player);
         InventoryStorage.restoreInventory(player, this.storedInventories.get(player));
     }
+
+    //Tournament Start Logic
 
     public void close() {
         this.state = TournamentState.CLOSED;
@@ -73,7 +87,10 @@ public class Tournament {
         }
     }
 
-    public void removeMatch(TournamentMatch match) {
+    //Active Tournament Logic
+
+    public void endMatch(TournamentMatch match) {
+        match.getTask().cancel();
         this.currentMatches.remove(match);
         this.nextMatch();
     }
@@ -87,12 +104,11 @@ public class Tournament {
         this.currentMatches.add(match);
     }
 
-
-    public TournamentPlayer getTournamentPlayer(Player p) {
-        for (TournamentPlayer tournamentPlayer : getPlayerList()) {
-            if (p == tournamentPlayer.getPlayer()) {
-                return tournamentPlayer;
-            }
+    public TournamentMatch getMatch(TournamentPlayer player) {
+        for(TournamentMatch match : this.currentMatches) {
+            if(match.getPlayer1() == player || match.getPlayer2() == player)
+                return match;
+            continue;
         }
         return null;
     }

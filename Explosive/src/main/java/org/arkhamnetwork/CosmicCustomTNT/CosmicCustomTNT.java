@@ -9,6 +9,9 @@
  */
 package org.arkhamnetwork.CosmicCustomTNT;
 
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
+import lombok.Getter;
 import org.arkhamnetwork.CosmicCustomTNT.cmds.CommandCTNT;
 import org.arkhamnetwork.CosmicCustomTNT.listeners.TNTListener;
 import org.bukkit.command.CommandExecutor;
@@ -20,10 +23,13 @@ public class CosmicCustomTNT
 extends JavaPlugin {
     private static CosmicCustomTNT plugi = null;
 
+    @Getter private ProtocolManager protocolManager;
+
     public void onEnable() {
         plugi = this;
         plugi.registerCommands();
         this.registerListeners();
+        this.protocolManager = ProtocolLibrary.getProtocolManager();
     }
 
     public void onDisable() {

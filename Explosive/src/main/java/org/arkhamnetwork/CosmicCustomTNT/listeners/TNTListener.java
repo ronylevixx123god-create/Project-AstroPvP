@@ -1,52 +1,13 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils
- *  com.massivecraft.factions.Board
- *  com.massivecraft.factions.FLocation
- *  de.dustplanet.util.SilkUtil
- *  net.coreprotect.CoreProtect
- *  net.coreprotect.CoreProtectAPI
- *  net.minecraft.server.v1_8_R3.EntityTNTPrimed
- *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.Effect
- *  org.bukkit.Location
- *  org.bukkit.Material
- *  org.bukkit.Sound
- *  org.bukkit.block.Block
- *  org.bukkit.block.CreatureSpawner
- *  org.bukkit.craftbukkit.v1_8_R3.block.CraftBlock
- *  org.bukkit.craftbukkit.v1_8_R3.entity.CraftTNTPrimed
- *  org.bukkit.entity.Entity
- *  org.bukkit.entity.EntityType
- *  org.bukkit.entity.LivingEntity
- *  org.bukkit.entity.Player
- *  org.bukkit.entity.TNTPrimed
- *  org.bukkit.event.EventHandler
- *  org.bukkit.event.EventPriority
- *  org.bukkit.event.Listener
- *  org.bukkit.event.block.BlockBreakEvent
- *  org.bukkit.event.block.BlockDispenseEvent
- *  org.bukkit.event.block.BlockPlaceEvent
- *  org.bukkit.event.entity.EntityExplodeEvent
- *  org.bukkit.event.entity.ExplosionPrimeEvent
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.metadata.FixedMetadataValue
- *  org.bukkit.metadata.MetadataValue
- *  org.bukkit.plugin.Plugin
- *  org.bukkit.potion.PotionEffect
- *  org.bukkit.potion.PotionEffectType
- */
 package org.arkhamnetwork.CosmicCustomTNT.listeners;
 
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.events.ListenerPriority;
+import com.comphenix.protocol.events.PacketAdapter;
+import com.comphenix.protocol.events.PacketEvent;
 import com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils;
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
-import de.dustplanet.util.SilkUtil;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -95,13 +56,11 @@ import org.bukkit.potion.PotionEffectType;
 public class TNTListener
 implements Listener {
     public static HashMap<Location, TNTTypes> tnt_tracker = new HashMap();
-    private static SilkUtil su = null;
     private List<Material> nonSolidBlocks;
     private int silentTNTSoundRange = 16;
     private boolean coreProtectEnabled = false;
 
     public TNTListener() {
-        su = SilkUtil.hookIntoSilkSpanwers();
         this.coreProtectEnabled = new File("plugins/CoreProtect.jar").exists();
         this.nonSolidBlocks = new ArrayList<Material>(Arrays.asList(Material.AIR, Material.SAND, Material.WATER, Material.LAVA, Material.STATIONARY_LAVA, Material.STATIONARY_WATER));
     }
@@ -173,141 +132,138 @@ implements Listener {
                 public void run() {
                     TNTListener.this.spawnFastExplosion(b.getLocation());
                 }
-            }, (long)(2 + new Random().nextInt(8)));
+            }, 2 + new Random().nextInt(8));
         }
     }
 
-    @EventHandler(priority=EventPriority.LOW, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onTNTExplode(EntityExplodeEvent e) {
-        block18: {
-            TNTTypes tnt_type;
-            TNTPrimed tnt;
-            block26: {
-                block25: {
-                    block24: {
-                        block23: {
-                            block22: {
-                                block21: {
-                                    block20: {
-                                        block19: {
-                                            if (e.getEntity() == null || e.getEntityType() != EntityType.PRIMED_TNT) {
-                                                return;
-                                            }
-                                            tnt = (TNTPrimed)e.getEntity();
-                                            if (!tnt.hasMetadata("custom_tnt")) break block18;
-                                            tnt_type = TNTTypes.valueOf(((MetadataValue)tnt.getMetadata("custom_tnt").get(0)).asString());
-                                            if (tnt_type != TNTTypes.Huge) break block19;
-                                            Location loc = tnt.getLocation();
-                                            this.spawnFastExplosion(loc.clone().add(0.0, 3.0, 0.0), true);
-                                            this.spawnFastExplosion(loc.clone().add(0.0, -3.0, 0.0), true);
-                                            if (ThreadLocalRandom.current().nextBoolean()) {
-                                                this.spawnFastExplosion(loc.clone().add(3.0, 0.0, 0.0), true);
-                                                this.spawnFastExplosion(loc.clone().add(0.0, 0.0, 3.0), true);
-                                            } else {
-                                                this.spawnFastExplosion(loc.clone().add(-3.0, 0.0, 0.0), true);
-                                                this.spawnFastExplosion(loc.clone().add(0.0, 0.0, -3.0), true);
-                                            }
-                                            break block18;
-                                        }
-                                        if (tnt_type != TNTTypes.Chemical) break block20;
-                                        for (Entity ent : tnt.getNearbyEntities(8.0, 8.0, 8.0)) {
-                                            if (!(ent instanceof LivingEntity)) continue;
-                                            LivingEntity le = (LivingEntity)ent;
-                                            le.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 240, 1));
-                                            le.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 360, 1));
-                                            le.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 360, 1));
-                                            le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 360, 2));
-                                            if (!(le instanceof Player)) continue;
-                                            ((Player)le).sendMessage((Object)ChatColor.RED + "You were hit with Chemical TNT!");
-                                        }
-                                        break block18;
-                                    }
-                                    if (tnt_type != TNTTypes.Lethal)
-                                        break block21;
-                                    for (int i = 0; i < 4; ++i) {
-                                        this.spawnFastExplosion(tnt.getLocation());
-                                    }
-                                    break block18;
-                                }
-                                if (tnt_type != TNTTypes.Incindiary) break block22;
-                                Location l = tnt.getLocation();
-                                l.getWorld().playEffect(l, Effect.FLAME, 50);
-                                for (Entity ent2 : tnt.getNearbyEntities(8.0, 8.0, 8.0)) {
-                                    LivingEntity le2;
-                                    if (!(ent2 instanceof LivingEntity) || !((le2 = (LivingEntity)ent2) instanceof Player)) continue;
-                                    ((Player)le2).setFireTicks(180);
-                                    ((Player)le2).sendMessage((Object)ChatColor.RED + "You were hit with Incindiary TNT!");
-                                    ((Player)le2).getWorld().playEffect(le2.getLocation(), Effect.FLAME, 12);
-                                }
-                                break block18;
-                            }
-                            if (tnt_type != TNTTypes.Lucky) break block23;
-                            break block18;
-                        }
-                        if (tnt_type != TNTTypes.Tactical)
-                            break block24;
-                        System.out.println("Block list size: " + e.blockList().size());
-                        for (int i = 0; i < e.blockList().size(); ++i) {
-                            Block b = (Block)e.blockList().get(i);
-                            if (b.getType() != Material.MOB_SPAWNER)
-                                e.blockList().remove(b);
-                            ParticleEffect.playEffect((ParticleEffect)ParticleEffect.INSTANT_SPELL, (Location)b.getLocation(), (float)0.6f, (int)20);
-                        }
-                        break block18;
-                    }
-                    if (tnt_type != TNTTypes.Mimic) break block25;
-                    final Location l = tnt.getLocation();
-                    Bukkit.getScheduler().runTaskLater((Plugin)CosmicCustomTNT.get(), new Runnable(){
+        if (e.getEntity() == null || e.getEntityType() != EntityType.PRIMED_TNT)
+            return;
+        TNTPrimed tnt = (TNTPrimed)e.getEntity();
+        if (tnt.hasMetadata("custom_tnt")) {
+            TNTTypes tnt_type = TNTTypes.valueOf(((MetadataValue)tnt.getMetadata("custom_tnt").get(0)).asString());
 
-                        @Override
-                        public void run() {
-                            TNTListener.this.spawnFastExplosion(l);
-                            ParticleEffect.playEffect((ParticleEffect)ParticleEffect.LARGE_EXPLODE, (Location)l, (float)1.2f, (int)30);
-                        }
-                    }, 100L);
-                    Bukkit.getScheduler().runTaskLater((Plugin)CosmicCustomTNT.get(), new Runnable(){
 
-                        @Override
-                        public void run() {
-                            TNTListener.this.spawnFastExplosion(l);
-                            ParticleEffect.playEffect((ParticleEffect)ParticleEffect.LARGE_EXPLODE, (Location)l, (float)1.2f, (int)30);
-                        }
-                    }, 200L);
-                    Bukkit.getScheduler().runTaskLater((Plugin)CosmicCustomTNT.get(), new Runnable(){
-
-                        @Override
-                        public void run() {
-                            TNTListener.this.spawnFastExplosion(l);
-                            ParticleEffect.playEffect((ParticleEffect)ParticleEffect.LARGE_EXPLODE, (Location)l, (float)1.2f, (int)30);
-                        }
-                    }, 300L);
-                    break block18;
+            if (tnt_type == TNTTypes.Huge) {
+                Location loc = tnt.getLocation();
+                spawnFastExplosion(loc.clone().add(0.0D, 3.0D, 0.0D), true);
+                spawnFastExplosion(loc.clone().add(0.0D, -3.0D, 0.0D), true);
+                if (ThreadLocalRandom.current().nextBoolean()) {
+                    spawnFastExplosion(loc.clone().add(3.0D, 0.0D, 0.0D), true);
+                    spawnFastExplosion(loc.clone().add(0.0D, 0.0D, 3.0D), true);
+                } else {
+                    spawnFastExplosion(loc.clone().add(-3.0D, 0.0D, 0.0D), true);
+                    spawnFastExplosion(loc.clone().add(0.0D, 0.0D, -3.0D), true);
                 }
-                if (tnt_type != TNTTypes.Hex) break block26;
+
+
+            } else if (tnt_type == TNTTypes.Chemical) {
+                for (Entity ent : tnt.getNearbyEntities(8.0D, 8.0D, 8.0D)) {
+                    if (ent instanceof LivingEntity) {
+                        LivingEntity le = (LivingEntity)ent;
+                        le.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 240, 1));
+                        le.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 360, 1));
+                        le.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 360, 1));
+                        le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 360, 2));
+                        if (!(le instanceof Player))
+                            continue;
+                        ((Player)le).sendMessage(ChatColor.RED + "You were hit with Chemical TNT!");
+                    }
+                }
+
+
+            } else if (tnt_type == TNTTypes.Lethal) {
+                for (int i = 0; i < 4; i++)
+                    spawnFastExplosion(tnt.getLocation());
+
+
+            } else if (tnt_type == TNTTypes.Incindiary) {
+                final Location l = tnt.getLocation();
+                l.getWorld().playEffect(l, Effect.FLAME, 50);
+                for (Entity ent2 : tnt.getNearbyEntities(8.0D, 8.0D, 8.0D)) {
+                    if (ent2 instanceof LivingEntity) {
+                        LivingEntity le2 = (LivingEntity)ent2;
+                        if (!(le2 instanceof Player))
+                            continue;
+                        ((Player)le2).setFireTicks(180);
+                        ((Player)le2).sendMessage(ChatColor.RED + "You were hit with Incindiary TNT!");
+                        ((Player)le2).getWorld().playEffect(le2.getLocation(), Effect.FLAME, 12);
+                    }
+                }
+
+
+            } else if (tnt_type == TNTTypes.Lucky) {
+                //Logic in spawners plugin
+
+            } else if (tnt_type == TNTTypes.Tactical) {
+                System.out.println("Block list size: " + e.blockList().size());
+                for (int i = 0; i < e.blockList().size(); ++i) {
+                    Block b = e.blockList().get(i);
+                    if (b.getType() != Material.MOB_SPAWNER)
+                        e.blockList().remove(b);
+                    try {
+                        de.inventivegames.particle.ParticleEffect.INSTANT_SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), b.getLocation(), (float)0.6f, 0.6f, 0.6f, 1f,  (int)20);
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
+                }
+
+
+            } else if (tnt_type == TNTTypes.Mimic) {
+                final Location l = tnt.getLocation();
+                Bukkit.getScheduler().runTaskLater((Plugin)CosmicCustomTNT.get(), new Runnable() {
+                    public void run() {
+                        TNTListener.this.spawnFastExplosion(l);
+                        ParticleEffect.playEffect(ParticleEffect.LARGE_EXPLODE, l, 1.2F, 30);
+                    }
+                },100L);
+                Bukkit.getScheduler().runTaskLater((Plugin)CosmicCustomTNT.get(), new Runnable() {
+                    public void run() {
+                        TNTListener.this.spawnFastExplosion(l);
+                        ParticleEffect.playEffect(ParticleEffect.LARGE_EXPLODE, l, 1.2F, 30);
+                    }
+                },200L);
+                Bukkit.getScheduler().runTaskLater((Plugin)CosmicCustomTNT.get(), new Runnable() {
+                    public void run() {
+                        TNTListener.this.spawnFastExplosion(l);
+                        ParticleEffect.playEffect(ParticleEffect.LARGE_EXPLODE, l, 1.2F, 30);
+                    }
+                },300L);
+
+
+            } else if (tnt_type == TNTTypes.Hex) {
                 final List<Block> blockList = e.blockList();
                 for (Block b2 : blockList) {
-                    if (b2.getType() == Material.AIR || b2.getType() == Material.MOB_SPAWNER) continue;
-                    b2.setMetadata("hexBlocks", (MetadataValue)new FixedMetadataValue((Plugin)CosmicCustomTNT.get(), (Object)System.currentTimeMillis()));
-                    ParticleEffect.playEffect((ParticleEffect)ParticleEffect.WITCH_MAGIC, (Location)b2.getLocation(), (float)1.2f, (int)20);
-                    Bukkit.getScheduler().runTaskLater((Plugin)CosmicCustomTNT.get(), new Runnable(){
-
-                        @Override
+                    if (b2.getType() == Material.AIR ||
+                            b2.getType() == Material.MOB_SPAWNER)
+                        continue;
+                    b2.setMetadata("hexBlocks", (MetadataValue)new FixedMetadataValue((Plugin)CosmicCustomTNT.get(), Long.valueOf(System.currentTimeMillis())));
+                    ParticleEffect.playEffect(ParticleEffect.WITCH_MAGIC, b2.getLocation(), 1.2F, 20);
+                    Bukkit.getScheduler().runTaskLater((Plugin)CosmicCustomTNT.get(), new Runnable() {
                         public void run() {
-                            for (Block b : blockList) {
+                            for (Block b : blockList)
                                 b.removeMetadata("hexBlocks", (Plugin)CosmicCustomTNT.get());
+                        }
+                    },600L);
+                }
+
+
+            } else if (tnt_type == TNTTypes.Silent) {
+                CosmicCustomTNT.get().getProtocolManager().addPacketListener(
+                        new PacketAdapter(CosmicCustomTNT.get(), ListenerPriority.NORMAL, PacketType.Play.Server.NAMED_SOUND_EFFECT) {
+                            @Override
+                            public void onPacketSending(PacketEvent event) {
+                                if(event.getPacketType() == PacketType.Play.Server.NAMED_SOUND_EFFECT) {
+                                    String name = event.getPacket().getStrings().read(0);
+                                    if(!name.equals("random.explode"))
+                                        return;
+                                    event.setCancelled(true);
+                                }
                             }
                         }
-                    }, 600L);
-                }
-                break block18;
+                );
             }
-            if (tnt_type != TNTTypes.Silent)
-                break block18;
-            e.setCancelled(true);
-            CraftWorld world = (CraftWorld) e.getEntity().getWorld();
-            Explosion explosion = new Explosion(world.getHandle(), ((CraftEntity)e.getEntity()).getHandle(), e.getEntity().getLocation().getX(), e.getEntity().getLocation().getY(), e.getEntity().getLocation().getZ(), 4f, false, true);
-            explosion.a();
-            explosion.a(false);
         }
     }
 

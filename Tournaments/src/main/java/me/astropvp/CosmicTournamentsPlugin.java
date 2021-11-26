@@ -2,7 +2,6 @@ package me.astropvp;
 
 import me.astropvp.commands.CommandAdminTournament;
 import me.astropvp.commands.CommandTournament;
-import me.astropvp.listeners.InventoryListener;
 import me.astropvp.listeners.PlayerListener;
 import me.astropvp.sql.Database;
 import me.astropvp.sql.SQLQueryCustomThread;
@@ -11,7 +10,6 @@ import me.astropvp.struct.Tournament;
 import me.matthawkk.plugin.CustomPlugin;
 import me.matthawkk.plugin.Plugins;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
 
 public class CosmicTournamentsPlugin extends CustomPlugin {
     private static CosmicTournamentsPlugin instance;
@@ -22,7 +20,7 @@ public class CosmicTournamentsPlugin extends CustomPlugin {
 
     public void load() {
         instance = this;
-        Plugins.registerListeners(this, new InventoryListener(), new PlayerListener());
+        Plugins.registerListeners(this, new PlayerListener());
         this.sqlDatabase = new Database(this);
         if(this.sqlDatabase.isConnected())
             Bukkit.getConsoleSender().sendMessage("SQL Database for Cosmic Tournaments Connected");
@@ -57,10 +55,5 @@ public class CosmicTournamentsPlugin extends CustomPlugin {
     private void registerCommands() {
         getCommand("tournament").setExecutor(new CommandTournament());
         getCommand("admintournament").setExecutor(new CommandAdminTournament());
-    }
-
-    private void registerListeners() {
-        Bukkit.getPluginManager().registerEvents(new InventoryListener(), this);
-        Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
     }
  }

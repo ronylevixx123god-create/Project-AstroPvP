@@ -1,5 +1,7 @@
 package me.astropvp.struct;
 
+import lombok.Getter;
+import lombok.Setter;
 import me.astropvp.CosmicTournamentsPlugin;
 import me.astropvp.utils.Base64Utils;
 import org.bukkit.Bukkit;
@@ -13,137 +15,25 @@ import java.util.Collections;
 import java.util.UUID;
 
 public class PlayerData {
-    private Player player;
-    private UUID uuid;
+    @Getter @Setter private Player player;
+    @Getter @Setter private UUID uuid;
 
-    private Inventory inventory;
+    @Getter @Setter private Inventory inventory;
 
-    public Player getPlayer() {
-        return player;
-    }
+    @Getter @Setter private int tournamentwins;
+    @Getter @Setter private int tournamentlosses;
 
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
+    @Getter @Setter private int kills;
+    @Getter @Setter private int deaths;
+    @Getter @Setter private int matchwins;
+    @Getter @Setter private int matchlosses;
 
-    public UUID getUuid() {
-        return uuid;
-    }
+    @Getter @Setter private double kd;
+    @Getter @Setter private double twl;
+    @Getter @Setter private double mwl;
 
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
-    }
-
-    public Inventory getInventory() {
-        return inventory;
-    }
-
-    public void setInventory(Inventory inventory) {
-        this.inventory = inventory;
-    }
-
-    public int getTournamentwins() {
-        return tournamentwins;
-    }
-
-    public void setTournamentwins(int tournamentwins) {
-        this.tournamentwins = tournamentwins;
-    }
-
-    public int getTournamentlosses() {
-        return tournamentlosses;
-    }
-
-    public void setTournamentlosses(int tournamentlosses) {
-        this.tournamentlosses = tournamentlosses;
-    }
-
-    public int getKills() {
-        return kills;
-    }
-
-    public void setKills(int kills) {
-        this.kills = kills;
-    }
-
-    public int getDeaths() {
-        return deaths;
-    }
-
-    public void setDeaths(int deaths) {
-        this.deaths = deaths;
-    }
-
-    public int getMatchwins() {
-        return matchwins;
-    }
-
-    public void setMatchwins(int matchwins) {
-        this.matchwins = matchwins;
-    }
-
-    public int getMatchlosses() {
-        return matchlosses;
-    }
-
-    public void setMatchlosses(int matchlosses) {
-        this.matchlosses = matchlosses;
-    }
-
-    public double getKd() {
-        return kd;
-    }
-
-    public void setKd(double kd) {
-        this.kd = kd;
-    }
-
-    public double getTwl() {
-        return twl;
-    }
-
-    public void setTwl(double twl) {
-        this.twl = twl;
-    }
-
-    public double getMwl() {
-        return mwl;
-    }
-
-    public void setMwl(double mwl) {
-        this.mwl = mwl;
-    }
-
-    public int getElo() {
-        return elo;
-    }
-
-    public void setElo(int elo) {
-        this.elo = elo;
-    }
-
-    public int getPoints() {
-        return points;
-    }
-
-    public void setPoints(int points) {
-        this.points = points;
-    }
-
-    private int tournamentwins;
-    private int tournamentlosses;
-
-    private int kills;
-    private int deaths;
-    private int matchwins;
-    private int matchlosses;
-
-    private double kd;
-    private double twl;
-    private double mwl;
-
-    private int elo;
-    private int points;
+    @Getter @Setter private int elo;
+    @Getter @Setter private int points;
 
     public boolean loading = false;
 
