@@ -1,5 +1,7 @@
 package com.massivecraft.factions.cmd;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.TimeUtils;
 import com.cosmicpvp.factionpoints.FactionsCoreChunkAPI;
 import com.cosmicpvp.factionpoints.FactionsPointsAPI;
 import com.earth2me.essentials.User;
@@ -11,6 +13,10 @@ import com.massivecraft.factions.struct.Permission;
 import com.massivecraft.factions.struct.Relation;
 import com.massivecraft.factions.struct.Role;
 import mkremins.fanciful.FancyMessage;
+import net.astropvp.FactionShieldsPlugin;
+import net.astropvp.config.ShieldConfig;
+import net.astropvp.shield.FactionShield;
+import net.astropvp.shield.ShieldHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -49,6 +55,7 @@ public class CmdShow extends FCommand {
         }
 
         double econ = Econ.getFactionBalance(finalFaction);
+        ShieldHandler shieldHandler = FactionShieldsPlugin.getInstance().getShieldHandler();
         if (this.payForCommand(Conf.econCostShow, "to show faction information", "for showing faction information")) {
             Collection<FPlayer> admins = finalFaction.getFPlayersWhereRole(Role.ADMIN);
             Collection<FPlayer> mods = Lists.newArrayList();
@@ -62,6 +69,21 @@ public class CmdShow extends FCommand {
             } else {
                 this.msg(this.p.txt.titleize(finalFaction.getTag(this.fme)));
                 this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&aDescription: <p>&f%s"), finalFaction.getDescription());
+                if (!shieldHandler.hasShield(finalFaction)) {
+                    this.msg(CC.translate("&aShield: &7none"));
+                } else {
+                    FactionShield shield = shieldHandler.getShield(finalFaction);
+                    final String time = shieldHandler.getShield(finalFaction).getItemData().getTime();
+                    final String[] timeInfo = time.split(" ");
+                    final String endTime = shieldHandler.getEndTime(timeInfo[1], Integer.parseInt(timeInfo[0]));
+                    final String timezone = ShieldConfig.TIMEZONE;
+                    if (shield.isEnabled()) {
+                        this.msg(CC.translate("&aShield: &a&lENABLED &7(Ends: &f" + endTime) + "&7)");
+                    } else {
+                        this.msg(CC.translate("&aShield: &c&lDISABLED &7(Enables: &f" + time) + "&7)");
+
+                    }
+                }
             }
 
             if (finalFaction.isNormal()) {

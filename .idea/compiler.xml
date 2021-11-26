@@ -7,6 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="AstroTournaments" />
         <module name="CustomBlocks" />
         <module name="BlackAuctionHouse" />
         <module name="ItemSkins" />
@@ -74,6 +75,7 @@
       <module name="CustomTNT" target="1.8" />
       <module name="DiscordAPI" target="8" />
       <module name="Disguises (1)" target="8" />
+      <module name="Faction" target="8" />
       <module name="FactionFights" target="8" />
       <module name="GUIShop" target="8" />
       <module name="ItemFilter" target="8" />
