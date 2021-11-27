@@ -74,79 +74,12 @@ public class HideLore
 
     @Override
     public void enable() {
-        if (!Bukkit.getPluginManager().isPluginEnabled("ProtocolLib")) {
-            Bukkit.getLogger().info("[Arkkit (HideLore)] ProtocolLib not found, disabling.");
-            this.kill();
-            return;
-        }
-        this.protocolManager = ProtocolLibrary.getProtocolManager();
-        this.packetListener = new PacketAdapter(Arkkit.get(), ListenerPriority.NORMAL, PacketType.Play.Server.SET_SLOT, PacketType.Play.Server.WINDOW_ITEMS) {
 
-            public void onPacketSending(PacketEvent event) {
-                StructureModifier sm;
-                PacketContainer packet;
-                if (event.getPacketType() == PacketType.Play.Server.SET_SLOT) {
-                    packet = event.getPacket();
-                    sm = packet.getItemModifier();
-                    if (event.getPlayer().getGameMode() == GameMode.CREATIVE) {
-                        return;
-                    }
-                    for (int i = 0; i < sm.size(); ++i) {
-                        ItemMeta itemMeta;
-                        boolean editedItem = false;
-                        ItemStack item = (ItemStack) sm.getValues().get(i);
-                        if (item != null && (itemMeta = item.getItemMeta()).hasLore()) {
-                            List lore = itemMeta.getLore();
-                            String toRemove = null;
-                            for (String s : itemMeta.getLore()) {
-                                if (!s.contains("IID")) continue;
-                                toRemove = s;
-                                break;
-                            }
-                            if (toRemove != null) {
-                                lore.remove(toRemove);
-                                itemMeta.setLore(lore);
-                                item.setItemMeta(itemMeta);
-                                editedItem = true;
-                            }
-                        }
-                        if (!editedItem) continue;
-                        event.getPacket().getItemModifier().write(i, item);
-                    }
-                }
-                if (event.getPacketType() == PacketType.Play.Server.WINDOW_ITEMS) {
-                    packet = event.getPacket();
-                    sm = packet.getItemArrayModifier();
-                    for (int j = 0; j < sm.getValues().size(); ++j) {
-                        ItemStack[] iArray = (ItemStack[]) sm.getValues().get(j);
-                        for (int x = 0; x < iArray.length; ++x) {
-                            ItemMeta itemMeta;
-                            ItemStack i = iArray[x];
-                            if (i == null || !(itemMeta = i.getItemMeta()).hasLore()) continue;
-                            List lore = itemMeta.getLore();
-                            String toRemove = null;
-                            for (String s : itemMeta.getLore()) {
-                                if (!s.contains("IID")) continue;
-                                toRemove = s;
-                                break;
-                            }
-                            if (toRemove == null) continue;
-                            lore.remove(toRemove);
-                            itemMeta.setLore(lore);
-                            i.setItemMeta(itemMeta);
-                        }
-                    }
-                }
-            }
-        };
-        this.protocolManager.addPacketListener(this.packetListener);
     }
 
     @Override
     public void disable() {
-        if (this.protocolManager != null) {
-            this.protocolManager.removePacketListener(this.packetListener);
-        }
+
     }
 }
 

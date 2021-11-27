@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.UUID;
 import me.ifamasssxd.cosmicduel.CosmicDuel;
+import me.ifamasssxd.cosmicduel.inventory.teamgui.MainTeamGUI;
 import me.ifamasssxd.cosmicduel.struct.TeamData;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -20,17 +21,20 @@ public class CommandTeam implements CommandExecutor {
             return false;
         Player player = (Player)sender;
         if (args.length == 0) {
+            MainTeamGUI mainTeamGUI = new MainTeamGUI(player);
+            mainTeamGUI.getExpShopUI().open(player);
+
             player.sendMessage("");
-            player.sendMessage(CC.translate("&6&lTeam /duel"));
-            player.sendMessage(CC.translate("&f&l* &6/team create &f- create a team"));
-            player.sendMessage(CC.translate("&f&l* &6/team invite <player> &f- invite a player to your team"));
-            player.sendMessage(CC.translate("&f&l* &6/team deinvite <player> &f- de-invite a player from your team"));
-            player.sendMessage(CC.translate("&f&l* &6/team join <player> &f- join a players team"));
-            player.sendMessage(CC.translate("&f&l* &6/team kick <player> &f- kick a player from your team"));
-            player.sendMessage(CC.translate("&f&l* &6/team leave &f- leave a team"));
-            player.sendMessage(CC.translate("&f&l* &6/team disband &f- disband a team"));
-            player.sendMessage(CC.translate("&f&l* &6/team list &f- see who is apart of your team"));
-            player.sendMessage(CC.translate("&f&l* &6/team who <player> &f- check player's team"));
+            player.sendMessage(CC.translate("&a&lAstro Team Duels"));
+            player.sendMessage(CC.translate("&f&l* &a/team create &f- &7create a team"));
+            player.sendMessage(CC.translate("&f&l* &a/team invite <player> &f- &7invite a player to your team"));
+            player.sendMessage(CC.translate("&f&l* &a/team deinvite <player> &f- &7de-invite a player from your team"));
+            player.sendMessage(CC.translate("&f&l* &a/team join <player> &f- &7join a players team"));
+            player.sendMessage(CC.translate("&f&l* &a/team kick <player> &f- &7kick a player from your team"));
+            player.sendMessage(CC.translate("&f&l* &a/team leave &f- &7leave a team"));
+            player.sendMessage(CC.translate("&f&l* &a/team disband &f- &7disband a team"));
+            player.sendMessage(CC.translate("&f&l* &a/team list &f- &7see who is apart of your team"));
+            player.sendMessage(CC.translate("&f&l* &a/team who <player> &f- &7check player's team"));
             player.sendMessage("");
             return true;
         }

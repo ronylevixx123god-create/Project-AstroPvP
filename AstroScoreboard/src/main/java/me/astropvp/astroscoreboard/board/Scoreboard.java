@@ -33,6 +33,7 @@ import me.ifamasssxd.cosmicbosses.utils.BossUtils;
 import me.ifamasssxd.cosmicbosses.utils.ScoreboardUtils;
 import me.ifamasssxd.cosmicduel.DuelAPI;
 import me.ifamasssxd.cosmicduel.struct.enums.DuelState;
+import me.ifamasssxd.cosmicduel.struct.enums.DuelType;
 import me.ifamasssxd.cosmichcf.managers.OutpostManager;
 import org.arkhamnetwork.enchantments.enchantments.axes.Corrupt;
 import org.bukkit.Bukkit;
@@ -119,8 +120,12 @@ public class Scoreboard implements BoardAdapter {
             if (WorldGuardUtils.getRegionName(player.getLocation()).contains("frozen")) {
             return CC.translate("&b&lFrozen Stronghold &7" + getDateSuffix());
 
-         /* }else if (DuelAPI.getDuel(player) != null && (DuelAPI.getDuel(player).getDuelState() == DuelState.STARTING || DuelAPI.getDuel(player).getDuelState() == DuelState.PLAYING)) {
-            return CC.translate("&6&l1v1 Duel &7" + getDateSuffix());*/
+          }else if (DuelAPI.getDuel(player) != null && (DuelAPI.getDuel(player).getDuelState() == DuelState.STARTING || DuelAPI.getDuel(player).getDuelState() == DuelState.PLAYING)) {
+                if (DuelAPI.getDuel(player).getDuelType() == DuelType.ONE_VS_ONE) {
+                    return CC.translate("&6&l1v1 Duel &7" + getDateSuffix());
+                } else {
+                    return ""; //2v2 duel type title here
+                }
 
         } else if(!fplayer.getFaction().isWilderness()) {
             return CC.translate("&a&l" + fplayer.getFaction().getTag() + " &7" + getDateSuffix());
@@ -377,40 +382,47 @@ public class Scoreboard implements BoardAdapter {
             return board;
         }
 
-        /*if (DuelAPI.getDuel(player) != null && (DuelAPI.getDuel(player).getDuelState() == DuelState.STARTING || DuelAPI.getDuel(player).getDuelState() == DuelState.PLAYING)) {
+        if (DuelAPI.getDuel(player) != null && (DuelAPI.getDuel(player).getDuelState() == DuelState.STARTING || DuelAPI.getDuel(player).getDuelState() == DuelState.PLAYING)) {
             List<String> board = new LinkedList<>();
-            int seconds = DuelAPI.getDuel(player).getGameTimer();
-            int minutes = seconds / 60;
-            seconds = seconds - (minutes * 60);
 
-            board.add("");
-            board.add(CC.translate("&c&lOpponent"));
-            board.add(CC.translate("&f" + DuelAPI.getDuel(player).getOppositePlayer(player).getName()));
-            board.add("");
-            if (DuelAPI.getDuel(player).getGameTimer() != 0) {
-                board.add(CC.translate("&6&lRuntime"));
-                if (minutes > 0) {
-                    board.add(CC.translate("&e") + minutes + "m " + seconds + "s");
+            if (DuelAPI.getDuel(player).getDuelType() == DuelType.ONE_VS_ONE) {
+
+                int seconds = DuelAPI.getDuel(player).getGameTimer();
+                int minutes = seconds / 60;
+                seconds = seconds - (minutes * 60);
+
+                board.add("");
+                board.add(CC.translate("&c&lOpponent"));
+                board.add(CC.translate("&f" + DuelAPI.getDuel(player).getOppositePlayer(player).getName()));
+                board.add("");
+                if (DuelAPI.getDuel(player).getGameTimer() != 0) {
+                    board.add(CC.translate("&6&lRuntime"));
+                    if (minutes > 0) {
+                        board.add(CC.translate("&e") + minutes + "m " + seconds + "s");
+                    } else {
+                        board.add(CC.translate("&e") + seconds + "s");
+
+                    }
+                    board.add("");
+                }
+                board.add(CC.translate("&6&lArena"));
+                board.add(CC.translate("&f&l") + CC.strip(DuelAPI.getDuel(player).getArena().getName()));
+                board.add("");
+                board.add(CC.translate("&6&lDouble DMG"));
+                if (DuelAPI.getDuel(player).getGameTimer() >= 300) {
+                    board.add(CC.translate("&a&lEnabled"));
                 } else {
-                    board.add(CC.translate("&e") + seconds + "s");
-
+                    board.add(CC.translate("&c&lDisabled"));
                 }
                 board.add("");
-            }
-            board.add(CC.translate("&6&lArena"));
-            board.add(CC.translate("&f&l") + CC.strip(DuelAPI.getDuel(player).getArena().getName()));
-            board.add("");
-            board.add(CC.translate("&6&lDouble DMG"));
-            if (DuelAPI.getDuel(player).getGameTimer() >= 300) {
-                board.add(CC.translate("&a&lEnabled"));
+                board.add(CC.translate("&6&lAccount"));
+                board.add(CC.translate("&e") + player.getName());
+                return board;
             } else {
-                board.add(CC.translate("&c&lDisabled"));
+                //team duel code here
+                return board;
             }
-            board.add("");
-            board.add(CC.translate("&6&lAccount"));
-            board.add(CC.translate("&e") + player.getName());
-            return board;
-        }*/
+        }
 
         if (player.getLocation().getWorld().getName().equals("cosmic-station-vanilla")) {
             Outpost vanillaOutpost = CosmicKOTHPlugin.get_().getVanillaOutpost();

@@ -107,11 +107,6 @@
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>Duels</artifactId>
-            <version>0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
             <artifactId>Factions</artifactId>
             <version>0.1</version>
         </dependency>
@@ -176,6 +171,14 @@
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/AstroEndGrinding-0.1.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>duel</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/CosmicDuel.jar</systemPath>
         </dependency>
 
         <dependency>
@@ -308,13 +311,6 @@
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/CompilexPermissions_2_1_1_1.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Duels</artifactId>
-            <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/CosmicDuel (1).jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>

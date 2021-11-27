@@ -354,7 +354,6 @@ public class CommandDuel implements CommandExecutor {
         p.sendMessage(ChatColor.GRAY + "Toggle duel invites from other players.");
         p.sendMessage(ChatColor.YELLOW + "/duel collect");
         p.sendMessage(ChatColor.GRAY + "Access your Stake Collection Bin.");
-        p.sendMessage(CC.translate("&7You can use &f/duel collect removepotions &7to remove all potions from your winnings."));
         p.sendMessage(ChatColor.YELLOW + "/duel spectate");
         p.sendMessage(ChatColor.GRAY + "Access the duel spectate menu.");
         p.sendMessage("");

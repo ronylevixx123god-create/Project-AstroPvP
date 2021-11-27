@@ -24,34 +24,62 @@ package me.ifamasssxd.cosmicduel.struct.newduel;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.google.common.collect.Lists;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 import me.ifamasssxd.cosmicduel.CosmicDuel;
 import me.ifamasssxd.cosmicduel.DuelAPI;
+import me.ifamasssxd.cosmicduel.struct.Kit;
 import me.ifamasssxd.cosmicduel.struct.TeamData;
 import me.ifamasssxd.cosmicduel.struct.enums.CancelReason;
 import me.ifamasssxd.cosmicduel.struct.enums.DuelCreateState;
 import me.ifamasssxd.cosmicduel.struct.enums.DuelState;
 import me.ifamasssxd.cosmicduel.struct.enums.Setting;
 import me.ifamasssxd.cosmicduel.utils.CollectionBin;
+import me.ifamasssxd.cosmicduel.utils.ItemBuilder;
 import me.ifamasssxd.cosmicduel.utils.PlayerUtils;
-import me.ifamasssxd.factionupgrades.utils.ItemBuilder;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
+import org.bukkit.event.Event.Result;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
-
 public class NewStakeInventory {
+    public static String INVENTORY_NAME = "    Host                   Rival";
+    Inventory teamALeaderInventory;
+    Inventory teamBLeaderInventory;
+    Inventory playerOneInventory;
+    Inventory playerTwoInventory;
+    Player p1;
+    Player p2;
+    TeamData teamA;
+    TeamData teamB;
+    NewDuel duel;
+    ItemStack pendingItem;
+    ItemStack acceptedItem;
+    boolean modified = false;
+    HashMap<String, NewStakeInventory.PlayerType> playerTypes = new HashMap();
+    HashMap<String, NewStakeInventory.PlayerType> teamLeaderTypes;
+    HashMap<TeamData, NewStakeInventory.PlayerType> teamTypes;
+    LinkedHashMap<Integer, Integer> validSlots;
+    BukkitTask runnable;
+    private ItemStack selected;
+
     public void setSelected(ItemStack selected) {
         this.selected = selected;
     }
@@ -61,61 +89,88 @@ public class NewStakeInventory {
     }
 
     public Inventory getTeamInventory(Player player) {
-        if (this.p1 == player)
+        if (this.p1 == player) {
             return this.teamALeaderInventory;
-        if (this.p2 == player)
-            return this.teamBLeaderInventory;
-        return null;
+        } else {
+            return this.p2 == player ? this.teamBLeaderInventory : null;
+        }
     }
 
     public NewStakeInventory(NewDuel duel, Player p1, Player p2) {
-        this.modified = false;
-        this.playerTypes = new HashMap<>();
         this.validSlots = new LinkedHashMap<Integer, Integer>() {
             private static final long serialVersionUID = 1L;
+
+            {
+                this.put(1, 5);
+                this.put(2, 6);
+                this.put(3, 7);
+                this.put(9, 14);
+                this.put(10, 15);
+                this.put(11, 16);
+                this.put(12, 17);
+                this.put(18, 23);
+                this.put(19, 24);
+                this.put(20, 25);
+                this.put(21, 26);
+            }
         };
         this.runnable = null;
         this.duel = duel;
         this.p1 = p1;
         this.p2 = p2;
-        this.playerTypes.put(p1.getName(), PlayerType.ONE);
-        this.playerTypes.put(p2.getName(), PlayerType.TWO);
-        this.playerOneInventory = Bukkit.createInventory(null, 81, getTradeInventoryTitle(p1.getName(), p2.getName()));
-        this.playerTwoInventory = Bukkit.createInventory(null, 81, getTradeInventoryTitle(p1.getName(), p2.getName()));
-        setupInventory(this.playerOneInventory, this.p2);
-        setupInventory(this.playerTwoInventory, this.p1);
+        this.playerTypes.put(p1.getName(), NewStakeInventory.PlayerType.ONE);
+        this.playerTypes.put(p2.getName(), NewStakeInventory.PlayerType.TWO);
+        this.playerOneInventory = Bukkit.createInventory((InventoryHolder)null, 81, getTradeInventoryTitle(p1.getName(), p2.getName()));
+        this.playerTwoInventory = Bukkit.createInventory((InventoryHolder)null, 81, getTradeInventoryTitle(p1.getName(), p2.getName()));
+        this.setupInventory(this.playerOneInventory, this.p2);
+        this.setupInventory(this.playerTwoInventory, this.p1);
     }
 
     public NewStakeInventory(TeamDuel duel, TeamData teamA, TeamData teamB, Player teamALeader, Player teamBLeader) {
-        this.modified = false;
-        this.playerTypes = new HashMap<>();
-        this.teamTypes = new HashMap<>();
-        this.teamLeaderTypes = new HashMap<>();
+        this.teamTypes = new HashMap();
+        this.teamLeaderTypes = new HashMap();
         this.validSlots = new LinkedHashMap<Integer, Integer>() {
             private static final long serialVersionUID = 1L;
+
+            {
+                this.put(1, 5);
+                this.put(2, 6);
+                this.put(3, 7);
+                this.put(9, 14);
+                this.put(10, 15);
+                this.put(11, 16);
+                this.put(12, 17);
+                this.put(18, 23);
+                this.put(19, 24);
+                this.put(20, 25);
+                this.put(21, 26);
+            }
         };
         this.runnable = null;
         this.duel = duel;
         this.p1 = teamALeader;
         this.p2 = teamBLeader;
-        this.playerTypes.put(this.p1.getName(), PlayerType.ONE);
-        this.playerTypes.put(this.p2.getName(), PlayerType.TWO);
+        this.playerTypes.put(this.p1.getName(), NewStakeInventory.PlayerType.ONE);
+        this.playerTypes.put(this.p2.getName(), NewStakeInventory.PlayerType.TWO);
         this.teamA = teamA;
         this.teamB = teamB;
-        this.teamTypes.put(teamA, PlayerType.TEAM_A);
-        this.teamTypes.put(teamB, PlayerType.TEAM_B);
-        this.teamLeaderTypes.put(Bukkit.getPlayer(teamA.getLeaderUUID()).getName(), PlayerType.TEAM_A);
-        this.teamLeaderTypes.put(Bukkit.getPlayer(teamB.getLeaderUUID()).getName(), PlayerType.TEAM_B);
-        this.teamALeaderInventory = Bukkit.createInventory(null, 90, getTradeInventoryTitle(Bukkit.getPlayer(teamA.getLeaderUUID()).getName() + "'s Team", Bukkit.getPlayer(teamB.getLeaderUUID()).getName()) + "'s Team");
-        this.teamBLeaderInventory = Bukkit.createInventory(null, 90, getTradeInventoryTitle(Bukkit.getPlayer(teamA.getLeaderUUID()).getName() + "'s Team", Bukkit.getPlayer(teamB.getLeaderUUID()).getName()) + "'s Team");
-        setupTeamInventory(this.teamALeaderInventory, Bukkit.getPlayer(teamB.getLeaderUUID()), teamB);
-        setupTeamInventory(this.teamBLeaderInventory, Bukkit.getPlayer(teamA.getLeaderUUID()), teamA);
+        this.teamTypes.put(teamA, NewStakeInventory.PlayerType.TEAM_A);
+        this.teamTypes.put(teamB, NewStakeInventory.PlayerType.TEAM_B);
+        this.teamLeaderTypes.put(Bukkit.getPlayer(teamA.getLeaderUUID()).getName(), NewStakeInventory.PlayerType.TEAM_A);
+        this.teamLeaderTypes.put(Bukkit.getPlayer(teamB.getLeaderUUID()).getName(), NewStakeInventory.PlayerType.TEAM_B);
+        this.teamALeaderInventory = Bukkit.createInventory((InventoryHolder)null, 90, getTradeInventoryTitle(Bukkit.getPlayer(teamA.getLeaderUUID()).getName() + "'s Team", Bukkit.getPlayer(teamB.getLeaderUUID()).getName()) + "'s Team");
+        this.teamBLeaderInventory = Bukkit.createInventory((InventoryHolder)null, 90, getTradeInventoryTitle(Bukkit.getPlayer(teamA.getLeaderUUID()).getName() + "'s Team", Bukkit.getPlayer(teamB.getLeaderUUID()).getName()) + "'s Team");
+        this.setupTeamInventory(this.teamALeaderInventory, Bukkit.getPlayer(teamB.getLeaderUUID()), teamB);
+        this.setupTeamInventory(this.teamBLeaderInventory, Bukkit.getPlayer(teamA.getLeaderUUID()), teamA);
     }
 
     private void setupInventory(Inventory inventory, Player oppositePlayer) {
-        List<String> lore = Lists.newArrayList("", ChatColor.YELLOW + ChatColor.BOLD.toString() + "Settings");
-        for (Setting setting : Setting.values()) {
-            if (setting == null) continue;
+        List<String> lore = Lists.newArrayList(new String[]{"", ChatColor.YELLOW + ChatColor.BOLD.toString() + "Settings"});
+        Setting[] var4 = Setting.values();
+        int var5 = var4.length;
+
+        for(int var6 = 0; var6 < var5; ++var6) {
+            Setting setting = var4[var6];
             if (this.duel.getSettings().hasSetting(setting)) {
                 lore.add(ChatColor.YELLOW + setting.getName() + ": " + ChatColor.GREEN + ChatColor.BOLD.toString() + "ON");
             } else {
@@ -123,15 +178,19 @@ public class NewStakeInventory {
             }
         }
 
-        lore.add(CC.GreenB + "Arena: " + CC.Green + ((this.duel.getArena() == null) ? "N/A" : this.duel.getArena().getName()));
-        this.pendingItem = ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)14, ChatColor.YELLOW + "Click to ACCEPT Stake", lore);
-        this.acceptedItem = ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)5, ChatColor.YELLOW + "Stake ACCEPTED", lore);
-        prepareStake(inventory, oppositePlayer);
+        lore.add(CC.GreenB + "Arena: " + CC.Green + (this.duel.getArena() == null ? "N/A" : this.duel.getArena().getName()));
+        this.pendingItem = ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)14, ChatColor.YELLOW + "Click to ACCEPT Stake", (List)lore);
+        this.acceptedItem = ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)5, ChatColor.YELLOW + "Stake ACCEPTED", (List)lore);
+        this.prepareStake(inventory, oppositePlayer);
     }
 
     private void setupTeamInventory(Inventory inventory, Player oppositePlayer, TeamData team) {
-        List<String> lore = Lists.newArrayList("", ChatColor.YELLOW + ChatColor.BOLD.toString() + "Settings");
-        for (Setting setting : Setting.values()) {
+        List<String> lore = Lists.newArrayList(new String[]{"", ChatColor.YELLOW + ChatColor.BOLD.toString() + "Settings"});
+        Setting[] var5 = Setting.values();
+        int var6 = var5.length;
+
+        for(int var7 = 0; var7 < var6; ++var7) {
+            Setting setting = var5[var7];
             if (this.duel.getSettings().hasSetting(setting)) {
                 lore.add(ChatColor.YELLOW + setting.getName() + ": " + ChatColor.GREEN + ChatColor.BOLD.toString() + "ON");
             } else {
@@ -139,35 +198,44 @@ public class NewStakeInventory {
             }
         }
 
-        lore.add(CC.GreenB + "Arena: " + CC.Green + ((this.duel.getArena() == null) ? "N/A" : this.duel.getArena().getName()));
-        this.pendingItem = ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)14, ChatColor.YELLOW + "Click to ACCEPT Stake", lore);
-        this.acceptedItem = ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)5, ChatColor.YELLOW + "Stake ACCEPTED", lore);
-        prepareTeamStake(inventory, oppositePlayer, team);
+
+
+        lore.add(CC.GreenB + "Arena: " + CC.Green + (this.duel.getArena() == null ? "N/A" : this.duel.getArena().getName()));
+        this.pendingItem = ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)14, ChatColor.YELLOW + "Click to ACCEPT Stake", (List)lore);
+        this.acceptedItem = ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)5, ChatColor.YELLOW + "Stake ACCEPTED", (List)lore);
+        this.prepareTeamStake(inventory, oppositePlayer, team);
     }
 
     public void prepareStake(Inventory inv, Player oppositePlayer) {
         inv.setItem(0, this.pendingItem);
         inv.setItem(8, this.pendingItem);
+
         int i;
-        for (i = 4; i < inv.getSize() - 45; i += 9) {
-            inv.setItem(i, ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)7, " ", " "));
+        for(i = 4; i < inv.getSize() - 45; i += 9) {
+            inv.setItem(i, ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)7, " ", (" ")));
         }
-        for (i = 0; i < 9; i++) {
-            inv.setItem(27 + i, ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)7, " ", " "));
+
+        for(i = 0; i < 9; ++i) {
+            inv.setItem(27 + i, ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)7, " ", (" ")));
         }
-        inv.setItem(72, ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)7, " ", " "));
-        inv.setItem(73, ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)7, " ", " "));
-        inv.setItem(76, ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)7, " ", " "));
-        inv.setItem(79, ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)7, " ", " "));
-        inv.setItem(80, ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)7, " ", " "));
+
+        inv.setItem(72, ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)7, " ", (" ")));
+        inv.setItem(73, ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)7, " ", (" ")));
+        inv.setItem(76, ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)7, " ", (" ")));
+        inv.setItem(79, ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)7, " ", (" ")));
+        inv.setItem(80, ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)7, " ", (" ")));
         ItemStack[] armor = oppositePlayer.getEquipment().getArmorContents();
         ItemStack[] items = oppositePlayer.getInventory().getContents();
-        for (int j = 0; j < items.length; j++) {
-            ItemStack item = items[j];
-            if (item != null && item.getType() != Material.AIR)
+
+        for(int ii = 0; ii < items.length; ++ii) {
+            ItemStack item = items[ii];
+            if (item != null && item.getType() != Material.AIR) {
                 item = item.clone();
-            inv.setItem(36 + j, item);
+            }
+
+            inv.setItem(36 + ii, item);
         }
+
         inv.setItem(inv.getSize() - 7, armor[3]);
         inv.setItem(inv.getSize() - 6, armor[2]);
         inv.setItem(inv.getSize() - 4, armor[1]);
@@ -177,35 +245,46 @@ public class NewStakeInventory {
     public void prepareTeamStake(Inventory inv, Player oppositePlayer, TeamData team) {
         List<Player> players = Lists.newArrayList();
         players.add(Bukkit.getPlayer(team.getLeaderUUID()));
-        team.getTeamates().forEach(teammate -> players.add(Bukkit.getPlayer(teammate)));
+        team.getTeamates().forEach((teammate) -> {
+            players.add(Bukkit.getPlayer(teammate));
+        });
         inv.setItem(0, this.pendingItem);
         inv.setItem(8, this.pendingItem);
-        int i;
-        for (i = 4; i < inv.getSize() - 45; i += 9) {
-            inv.setItem(i, ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)7, " ", " "));
+
+        int index;
+        for(index = 4; index < inv.getSize() - 45; index += 9) {
+            inv.setItem(index, ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)7, " ", (" ")));
         }
-        for (i = 0; i < 9; i++) {
-            inv.setItem(27 + i, ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)7, " ", " "));
+
+        for(index = 0; index < 9; ++index) {
+            inv.setItem(27 + index, ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)7, " ", (" ")));
         }
-        inv.setItem(72, ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)7, " ", " "));
-        inv.setItem(73, ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)7, " ", " "));
-        inv.setItem(76, ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)7, " ", " "));
-        inv.setItem(79, ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)7, " ", " "));
-        inv.setItem(80, ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)7, " ", " "));
-        for (i = 81; i < 90; i++) {
-            inv.setItem(i, ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)7, " ", " "));
+
+        inv.setItem(72, ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)7, " ", (" ")));
+        inv.setItem(73, ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)7, " ", (" ")));
+        inv.setItem(76, ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)7, " ", (" ")));
+        inv.setItem(79, ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)7, " ", (" ")));
+        inv.setItem(80, ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)7, " ", (" ")));
+
+        for(index = 81; index < 90; ++index) {
+            inv.setItem(index, ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)7, " ", (" ")));
         }
-        setEnemyInventory(inv, oppositePlayer);
-        int index = 10;
-        for (Player player : players) {
-            index--;
-            ItemStack item = getSkullItem(player);
+
+        this.setEnemyInventory(inv, oppositePlayer);
+        index = 10;
+        Iterator var6 = players.iterator();
+
+        while(var6.hasNext()) {
+            Player player = (Player)var6.next();
+            --index;
+            ItemStack item = this.getSkullItem(player);
             if (ChatColor.stripColor(item.getItemMeta().getDisplayName()).equalsIgnoreCase(oppositePlayer.getName())) {
-                inv.setItem(inv.getSize() - index, getSelectedIcon(item));
-                continue;
+                inv.setItem(inv.getSize() - index, this.getSelectedIcon(item));
+            } else {
+                inv.setItem(inv.getSize() - index, item);
             }
-            inv.setItem(inv.getSize() - index, item);
         }
+
     }
 
     public ItemStack getSelectedIcon(ItemStack icon) {
@@ -242,12 +321,16 @@ public class NewStakeInventory {
     public void setEnemyInventory(Inventory inv, Player player) {
         ItemStack[] armor = player.getEquipment().getArmorContents();
         ItemStack[] items = player.getInventory().getContents();
-        for (int i = 0; i < items.length; i++) {
+
+        for(int i = 0; i < items.length; ++i) {
             ItemStack item = items[i];
-            if (item != null && item.getType() != Material.AIR)
+            if (item != null && item.getType() != Material.AIR) {
                 item = item.clone();
+            }
+
             inv.setItem(36 + i, item);
         }
+
         inv.setItem(inv.getSize() - 9 - 7, armor[3]);
         inv.setItem(inv.getSize() - 9 - 6, armor[2]);
         inv.setItem(inv.getSize() - 9 - 4, armor[1]);
@@ -256,176 +339,209 @@ public class NewStakeInventory {
 
     private static String getTradeInventoryTitle(String lPName, String rPName) {
         String title;
-        for (title = lPName; title.length() + rPName.length() < 32; title = title + " ");
+        for(title = lPName; title.length() + rPName.length() < 32; title = title + " ") {
+        }
+
         title = title + rPName;
-        return (title.length() <= 32) ? title : title.substring(0, 32);
+        return title.length() <= 32 ? title : title.substring(0, 32);
     }
 
     public void onInventoryEvent(InventoryClickEvent e) {
         e.setCancelled(true);
-        e.setResult(Event.Result.DENY);
-        if (getDuel().getCreateState() != DuelCreateState.STAKES)
-            return;
-        Player p = (Player)e.getWhoClicked();
-        PlayerType pt = this.playerTypes.get(p.getName());
-        if (e.getCurrentItem() == null || e.getCurrentItem().getType() == Material.AIR)
-            return;
-        Inventory inventory = p.getUniqueId().equals(this.p1.getUniqueId()) ? this.playerOneInventory : this.playerTwoInventory;
-        Inventory inventory2 = p.getUniqueId().equals(this.p1.getUniqueId()) ? this.playerTwoInventory : this.playerOneInventory;
-        if (e.getRawSlot() < e.getInventory().getSize()) {
-            if (e.getRawSlot() == 0 && pt == PlayerType.ONE) {
-                this.modified = true;
-                System.out.println(this.pendingItem);
-                System.out.println(inventory);
-                System.out.println(inventory.getItem(0));
-                if (inventory.getItem(0) == (this.pendingItem)) {
-                    inventory.setItem(0, this.acceptedItem);
-                    inventory2.setItem(0, this.acceptedItem);
-                    checkDone();
-                } else {
-                    inventory.setItem(0, this.pendingItem);
-                    inventory2.setItem(0, this.pendingItem);
-                }
-            } else if (e.getRawSlot() == 8 && pt == PlayerType.TWO) {
-                this.modified = true;
-                System.out.println(this.pendingItem);
-                System.out.println(inventory);
+        e.setResult(Result.DENY);
+        if (this.getDuel().getCreateState() == DuelCreateState.STAKES) {
+            Player p = (Player)e.getWhoClicked();
+            NewStakeInventory.PlayerType pt = (NewStakeInventory.PlayerType)this.playerTypes.get(p.getName());
+            if (e.getCurrentItem() != null && e.getCurrentItem().getType() != Material.AIR) {
+                Inventory inventory = p.getUniqueId().equals(this.p1.getUniqueId()) ? this.playerOneInventory : this.playerTwoInventory;
+                Inventory inventory2 = p.getUniqueId().equals(this.p1.getUniqueId()) ? this.playerTwoInventory : this.playerOneInventory;
+                ItemStack is;
+                if (e.getRawSlot() < e.getInventory().getSize()) {
+                    if (e.getRawSlot() == 0 && pt == NewStakeInventory.PlayerType.ONE) {
+                        this.modified = true;
+                        if (inventory.getItem(0).equals(this.pendingItem)) {
+                            inventory.setItem(0, this.acceptedItem);
+                            inventory2.setItem(0, this.acceptedItem);
+                            this.checkDone();
+                        } else {
+                            inventory.setItem(0, this.pendingItem);
+                            inventory2.setItem(0, this.pendingItem);
+                        }
+                    } else if (e.getRawSlot() == 8 && pt == NewStakeInventory.PlayerType.TWO) {
+                        this.modified = true;
+                        if (inventory.getItem(8).equals(this.pendingItem)) {
+                            inventory.setItem(8, this.acceptedItem);
+                            inventory2.setItem(8, this.acceptedItem);
+                            this.checkDone();
+                        } else {
+                            inventory.setItem(8, this.pendingItem);
+                            inventory2.setItem(8, this.pendingItem);
+                        }
+                    }
 
-                if (inventory.getItem(8) == (this.pendingItem)) {
-                    inventory.setItem(8, this.acceptedItem);
-                    inventory2.setItem(8, this.acceptedItem);
-                    checkDone();
+                    if (!this.validSlots(pt).contains(e.getRawSlot())) {
+                        return;
+                    }
+
+                    if (p.getInventory().firstEmpty() == -1) {
+                        p.sendMessage(ChatColor.RED + "Your inventory is full.");
+                        return;
+                    }
+
+                    this.modified = true;
+                    is = e.getCurrentItem();
+                    this.playerOneInventory.setItem(e.getRawSlot(), (ItemStack)null);
+                    this.playerTwoInventory.setItem(e.getRawSlot(), (ItemStack)null);
+                    p.getInventory().addItem(new ItemStack[]{is});
+                    System.out.println("B");
+                    p.updateInventory();
+                    this.p2.updateInventory();
+                    if (this.isSomeoneReady()) {
+                        System.out.println("C");
+                        this.resetAcceptButtons();
+                    }
                 } else {
-                    inventory.setItem(8, this.pendingItem);
-                    inventory2.setItem(8, this.pendingItem);
+                    if (e.getRawSlot() < e.getInventory().getSize()) {
+                        return;
+                    }
+
+                    if (this.isFull(pt, inventory)) {
+                        p.sendMessage(ChatColor.RED + "The Stake inventory is full.");
+                        p.sendMessage(ChatColor.RED + "Please remove some stake items to make room.");
+                        return;
+                    }
+
+                    this.modified = true;
+                    is = e.getCurrentItem();
+                    p.getInventory().removeItem(new ItemStack[]{is});
+                    p.updateInventory();
+                    int firstEmpty = this.getFirstEmpty(pt, inventory);
+                    if (firstEmpty == -1) {
+                        return;
+                    }
+
+                    inventory.setItem(firstEmpty, is);
+                    inventory2.setItem(firstEmpty, is);
+                    if (is != null) {
+                        CosmicDuel.logMessage("Adding Stake item for " + p.getName() + " -> " + is.toString());
+                    }
+
+                    if (this.isSomeoneReady()) {
+                        this.resetAcceptButtons();
+                    }
                 }
+
             }
-            if (!validSlots(pt).contains(Integer.valueOf(e.getRawSlot())))
-                return;
-            if (p.getInventory().firstEmpty() == -1) {
-                p.sendMessage(ChatColor.RED + "Your inventory is full.");
-                return;
-            }
-            this.modified = true;
-            ItemStack is = e.getCurrentItem();
-            this.playerOneInventory.setItem(e.getRawSlot(), null);
-            this.playerTwoInventory.setItem(e.getRawSlot(), null);
-            p.getInventory().addItem(is);
-            System.out.println("B");
-            p.updateInventory();
-            this.p2.updateInventory();
-            if (isSomeoneReady()) {
-                System.out.println("C");
-                resetAcceptButtons();
-            }
-        } else {
-            if (e.getRawSlot() < e.getInventory().getSize())
-                return;
-            if (isFull(pt, inventory)) {
-                p.sendMessage(ChatColor.RED + "The Stake inventory is full.");
-                p.sendMessage(ChatColor.RED + "Please remove some stake items to make room.");
-                return;
-            }
-            this.modified = true;
-            ItemStack is = e.getCurrentItem();
-            p.getInventory().removeItem(is);
-            p.updateInventory();
-            int firstEmpty = getFirstEmpty(pt, inventory);
-            if (firstEmpty == -1)
-                return;
-            inventory.setItem(firstEmpty, is);
-            inventory2.setItem(firstEmpty, is);
-            if (is != null)
-                CosmicDuel.logMessage("Adding Stake item for " + p.getName() + " -> " + is.toString());
-            if (isSomeoneReady())
-                resetAcceptButtons();
         }
     }
 
     public void onTeamInventoryEvent(InventoryClickEvent e) {
         e.setCancelled(true);
-        e.setResult(Event.Result.DENY);
-        if (getDuel().getCreateState() != DuelCreateState.STAKES)
-            return;
-        Player p = (Player)e.getWhoClicked();
-        PlayerType pt = this.playerTypes.get(p.getName());
-        if (e.getCurrentItem() == null || e.getCurrentItem().getType() == Material.AIR)
-            return;
-        Inventory inventory = p.getUniqueId().equals(this.p1.getUniqueId()) ? this.teamALeaderInventory : this.teamBLeaderInventory;
-        Inventory inventory2 = p.getUniqueId().equals(this.p1.getUniqueId()) ? this.teamBLeaderInventory : this.teamALeaderInventory;
-        if (e.getRawSlot() < e.getInventory().getSize()) {
-            if (e.getRawSlot() == 0 && pt == PlayerType.ONE) {
-                this.modified = true;
-                if (inventory.getItem(0).equals(this.pendingItem)) {
-                    inventory.setItem(0, this.acceptedItem);
-                    inventory2.setItem(0, this.acceptedItem);
-                    checkTeamDone();
+        e.setResult(Result.DENY);
+        if (this.getDuel().getCreateState() == DuelCreateState.STAKES) {
+            Player p = (Player)e.getWhoClicked();
+            NewStakeInventory.PlayerType pt = (NewStakeInventory.PlayerType)this.playerTypes.get(p.getName());
+            if (e.getCurrentItem() != null && e.getCurrentItem().getType() != Material.AIR) {
+                Inventory inventory = p.getUniqueId().equals(this.p1.getUniqueId()) ? this.teamALeaderInventory : this.teamBLeaderInventory;
+                Inventory inventory2 = p.getUniqueId().equals(this.p1.getUniqueId()) ? this.teamBLeaderInventory : this.teamALeaderInventory;
+                ItemStack is;
+                if (e.getRawSlot() < e.getInventory().getSize()) {
+                    if (e.getRawSlot() == 0 && pt == NewStakeInventory.PlayerType.ONE) {
+                        this.modified = true;
+                        if (inventory.getItem(0).equals(this.pendingItem)) {
+                            inventory.setItem(0, this.acceptedItem);
+                            inventory2.setItem(0, this.acceptedItem);
+                            this.checkTeamDone();
+                        } else {
+                            inventory.setItem(0, this.pendingItem);
+                            inventory2.setItem(0, this.pendingItem);
+                        }
+                    } else if (e.getRawSlot() == 8 && pt == NewStakeInventory.PlayerType.TWO) {
+                        this.modified = true;
+                        if (inventory.getItem(8).equals(this.pendingItem)) {
+                            inventory.setItem(8, this.acceptedItem);
+                            inventory2.setItem(8, this.acceptedItem);
+                            this.checkTeamDone();
+                        } else {
+                            inventory.setItem(8, this.pendingItem);
+                            inventory2.setItem(8, this.pendingItem);
+                        }
+                    }
+
+                    if (!this.validSlots(pt).contains(e.getRawSlot())) {
+                        return;
+                    }
+
+                    if (p.getInventory().firstEmpty() == -1) {
+                        p.sendMessage(ChatColor.RED + "Your inventory is full.");
+                        return;
+                    }
+
+                    this.modified = true;
+                    is = e.getCurrentItem();
+                    this.teamALeaderInventory.setItem(e.getRawSlot(), (ItemStack)null);
+                    this.teamBLeaderInventory.setItem(e.getRawSlot(), (ItemStack)null);
+                    p.getInventory().addItem(new ItemStack[]{is});
+                    System.out.println("B");
+                    p.updateInventory();
+                    this.p2.updateInventory();
+                    this.updateInventory(this.teamA, this.teamB);
+                    if (this.isSomeoneReady()) {
+                        System.out.println("C");
+                        this.resetAcceptButtons();
+                    }
                 } else {
-                    inventory.setItem(0, this.pendingItem);
-                    inventory2.setItem(0, this.pendingItem);
+                    if (e.getRawSlot() < e.getInventory().getSize()) {
+                        return;
+                    }
+
+                    if (this.isFull(pt, inventory)) {
+                        p.sendMessage(ChatColor.RED + "The Stake inventory is full.");
+                        p.sendMessage(ChatColor.RED + "Please remove some stake items to make room.");
+                        return;
+                    }
+
+                    this.modified = true;
+                    is = e.getCurrentItem();
+                    p.getInventory().removeItem(new ItemStack[]{is});
+                    p.updateInventory();
+                    int firstEmpty = this.getFirstEmpty(pt, inventory);
+                    if (firstEmpty == -1) {
+                        return;
+                    }
+
+                    inventory.setItem(firstEmpty, is);
+                    inventory2.setItem(firstEmpty, is);
+                    if (is != null) {
+                        CosmicDuel.logMessage("Adding Stake item for " + p.getName() + " -> " + is.toString());
+                    }
+
+                    if (this.isSomeoneReady()) {
+                        this.resetAcceptButtons();
+                    }
                 }
-            } else if (e.getRawSlot() == 8 && pt == PlayerType.TWO) {
-                this.modified = true;
-                if (inventory.getItem(8).equals(this.pendingItem)) {
-                    inventory.setItem(8, this.acceptedItem);
-                    inventory2.setItem(8, this.acceptedItem);
-                    checkTeamDone();
-                } else {
-                    inventory.setItem(8, this.pendingItem);
-                    inventory2.setItem(8, this.pendingItem);
-                }
+
             }
-            if (!validSlots(pt).contains(Integer.valueOf(e.getRawSlot())))
-                return;
-            if (p.getInventory().firstEmpty() == -1) {
-                p.sendMessage(ChatColor.RED + "Your inventory is full.");
-                return;
-            }
-            this.modified = true;
-            ItemStack is = e.getCurrentItem();
-            this.teamALeaderInventory.setItem(e.getRawSlot(), null);
-            this.teamBLeaderInventory.setItem(e.getRawSlot(), null);
-            p.getInventory().addItem(is);
-            System.out.println("B");
-            p.updateInventory();
-            this.p2.updateInventory();
-            updateInventory(this.teamA, this.teamB);
-            if (isSomeoneReady()) {
-                System.out.println("C");
-                resetAcceptButtons();
-            }
-        } else {
-            if (e.getRawSlot() < e.getInventory().getSize())
-                return;
-            if (isFull(pt, inventory)) {
-                p.sendMessage(ChatColor.RED + "The Stake inventory is full.");
-                p.sendMessage(ChatColor.RED + "Please remove some stake items to make room.");
-                return;
-            }
-            this.modified = true;
-            ItemStack is = e.getCurrentItem();
-            p.getInventory().removeItem(is);
-            p.updateInventory();
-            int firstEmpty = getFirstEmpty(pt, inventory);
-            if (firstEmpty == -1)
-                return;
-            inventory.setItem(firstEmpty, is);
-            inventory2.setItem(firstEmpty, is);
-            if (is != null)
-                CosmicDuel.logMessage("Adding Stake item for " + p.getName() + " -> " + is.toString());
-            if (isSomeoneReady())
-                resetAcceptButtons();
         }
     }
 
     private void updateInventory(TeamData teamA, TeamData teamB) {
         List<UUID> players = Lists.newArrayList();
         players.add(teamA.getLeaderUUID());
-        teamA.getTeamates().stream().forEach(teamate -> players.add(teamate));
+        teamA.getTeamates().stream().forEach((teamate) -> {
+            players.add(teamate);
+        });
         players.add(teamB.getLeaderUUID());
-        teamB.getTeamates().stream().forEach(teamate -> players.add(teamate));
-        for (UUID uuid : players)
+        teamB.getTeamates().stream().forEach((teamate) -> {
+            players.add(teamate);
+        });
+        Iterator var4 = players.iterator();
+
+        while(var4.hasNext()) {
+            UUID uuid = (UUID)var4.next();
             Bukkit.getPlayer(uuid).updateInventory();
+        }
+
     }
 
     public void resetAcceptButtons() {
@@ -438,172 +554,192 @@ public class NewStakeInventory {
     }
 
     public boolean isSomeoneReady() {
-        return (this.playerOneInventory.getItem(0).equals(this.acceptedItem) || this.playerOneInventory.getItem(8).equals(this.acceptedItem));
+        return this.playerOneInventory.getItem(0).equals(this.acceptedItem) || this.playerOneInventory.getItem(8).equals(this.acceptedItem);
     }
 
     public void checkDone() {
-        if (this.runnable != null)
-            return;
-        if (this.playerOneInventory.getItem(0).equals(this.acceptedItem) && this.playerOneInventory.getItem(8).equals(this.acceptedItem)) {
-            this.modified = false;
-            this
+        if (this.runnable == null) {
+            if (this.playerOneInventory.getItem(0).equals(this.acceptedItem) && this.playerOneInventory.getItem(8).equals(this.acceptedItem)) {
+                this.modified = false;
+                this.runnable = (new BukkitRunnable() {
+                    AtomicInteger time = new AtomicInteger(6);
 
-                    .runnable = (new BukkitRunnable() {
-                final AtomicInteger time = new AtomicInteger(6);
+                    public void run() {
+                        if (NewStakeInventory.this.runnable.getTaskId() != this.getTaskId()) {
+                            this.cancel();
+                        } else {
+                            NewDuel duel = NewStakeInventory.this.getDuel();
+                            if (duel.isCancelled()) {
+                                this.cancel();
+                                NewStakeInventory.this.runnable = null;
+                            } else if (NewStakeInventory.this.modified) {
+                                NewStakeInventory.this.modified = false;
+                                NewStakeInventory.this.runnable = null;
+                                this.cancel();
+                                NewStakeInventory.this.setMiddle(ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)7, " ", ("")));
+                                NewStakeInventory.this.resetAcceptButtons();
+                            } else {
+                                Iterator var2;
+                                Player p;
+                                if (this.time.decrementAndGet() > 0) {
+                                    var2 = duel.getPlayers().iterator();
 
-                public void run() {
-                    if (NewStakeInventory.this.runnable.getTaskId() != getTaskId()) {
-                        cancel();
-                        return;
-                    }
-                    NewDuel duel = NewStakeInventory.this.getDuel();
-                    if (duel.isCancelled()) {
-                        cancel();
-                        NewStakeInventory.this.runnable = null;
-                        return;
-                    }
-                    if (NewStakeInventory.this.modified) {
-                        NewStakeInventory.this.modified = false;
-                        NewStakeInventory.this.runnable = null;
-                        cancel();
-                        NewStakeInventory.this.setMiddle(ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)7, " ", ""));
-                        NewStakeInventory.this.resetAcceptButtons();
-                        return;
-                    }
-                    if (this.time.decrementAndGet() <= 0) {
-                        cancel();
-                        for (Player p : duel.getPlayers()) {
-                            if (PlayerUtils.inCombat(p)) {
-                                duel.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + p.getName() + " was in combat and cancelled the duel.", false);
-                                DuelAPI.cancelDuel(duel, CancelReason.IN_COMBAT_STAKES);
-                                return;
+                                    while(var2.hasNext()) {
+                                        p = (Player)var2.next();
+                                        p.playSound(p.getLocation(), Sound.ORB_PICKUP, 1.0F, 1.4F);
+                                    }
+
+                                    short data = 13;
+                                    switch(this.time.get()) {
+                                        case 1:
+                                        case 2:
+                                            data = 14;
+                                            break;
+                                        case 3:
+                                        case 4:
+                                            data = 1;
+                                            break;
+                                        case 5:
+                                            data = 4;
+                                    }
+
+                                    ItemStack is = ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, data, ChatColor.YELLOW + ChatColor.BOLD.toString() + this.time.get(), (""));
+                                    is.setAmount(this.time.get());
+                                    NewStakeInventory.this.setMiddle(is);
+                                } else {
+                                    this.cancel();
+                                    var2 = duel.getPlayers().iterator();
+
+                                    while(var2.hasNext()) {
+                                        p = (Player)var2.next();
+                                        if (PlayerUtils.inCombat(p)) {
+                                            duel.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + p.getName() + " was in combat and cancelled the duel.", false);
+                                            DuelAPI.cancelDuel(duel, CancelReason.IN_COMBAT_STAKES);
+                                            return;
+                                        }
+                                    }
+
+                                    List<ItemStack> stakes = NewStakeInventory.this.getStakes(NewStakeInventory.PlayerType.ONE);
+                                    List<ItemStack> stakesTwo = NewStakeInventory.this.getStakes(NewStakeInventory.PlayerType.TWO);
+                                    duel.getStakes().put(NewStakeInventory.this.p1.getUniqueId(), stakes);
+                                    duel.getStakes().put(NewStakeInventory.this.p2.getUniqueId(), stakesTwo);
+                                    if (DuelAPI.getArenaQueueSize(duel.getArena()) > 0 || DuelAPI.getCurrentlyActiveDuel(duel.getArena()) != null) {
+                                        duel.setCreateState(DuelCreateState.WAITING);
+                                        duel.duelState = DuelState.IN_QUEUE;
+                                        duel.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "This Arena currently has a queue of " + ChatColor.AQUA + ChatColor.BOLD.toString() + DuelAPI.getArenaQueueSize(duel.getArena()) + " Duel(s).", true);
+                                        duel.sendMessage(ChatColor.GRAY + "You must wait for the current duels to be over or you can use '/duel leave' to retrieve your items back.", true);
+                                        NewStakeInventory.this.p1.closeInventory();
+                                        NewStakeInventory.this.p2.closeInventory();
+                                        DuelAPI.queueDuel(duel.getArena(), duel);
+                                        return;
+                                    }
+
+                                    duel.setCreateState(DuelCreateState.DONE);
+                                    NewStakeInventory.this.p1.closeInventory();
+                                    NewStakeInventory.this.p2.closeInventory();
+                                    duel.onStart();
+                                    CosmicDuel.logMessage("Starting duel with " + NewStakeInventory.this.p1.getName() + " -> " + stakes.toString() + " " + NewStakeInventory.this.p2.getName() + " stakes -> " + stakesTwo.toString() + "!");
+                                }
+
                             }
                         }
-                        List<ItemStack> stakes = NewStakeInventory.this.getStakes(NewStakeInventory.PlayerType.ONE);
-                        List<ItemStack> stakesTwo = NewStakeInventory.this.getStakes(NewStakeInventory.PlayerType.TWO);
-                        duel.getStakes().put(NewStakeInventory.this.p1.getUniqueId(), stakes);
-                        duel.getStakes().put(NewStakeInventory.this.p2.getUniqueId(), stakesTwo);
-                        if (DuelAPI.getArenaQueueSize(duel.getArena()) > 0 || DuelAPI.getCurrentlyActiveDuel(duel.getArena()) != null) {
-                            duel.setCreateState(DuelCreateState.WAITING);
-                            duel.duelState = DuelState.IN_QUEUE;
-                            duel.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "This Arena currently has a queue of " + ChatColor.AQUA + ChatColor.BOLD.toString() + DuelAPI.getArenaQueueSize(duel.getArena()) + " Duel(s).", true);
-                            duel.sendMessage(ChatColor.GRAY + "You must wait for the current duels to be over or you can use '/duel leave' to retrieve your items back.", true);
-                            NewStakeInventory.this.p1.closeInventory();
-                            NewStakeInventory.this.p2.closeInventory();
-                            DuelAPI.queueDuel(duel.getArena(), duel);
-                            return;
-                        }
-                        duel.setCreateState(DuelCreateState.DONE);
-                        NewStakeInventory.this.p1.closeInventory();
-                        NewStakeInventory.this.p2.closeInventory();
-                        duel.onStart();
-                        CosmicDuel.logMessage("Starting duel with " + NewStakeInventory.this.p1.getName() + " -> " + stakes.toString() + " " + NewStakeInventory.this.p2.getName() + " stakes -> " + stakesTwo.toString() + "!");
-                    } else {
-                        for (Player p : duel.getPlayers())
-                            p.playSound(p.getLocation(), Sound.ORB_PICKUP, 1.0F, 1.4F);
-                        short data = 13;
-                        switch (this.time.get()) {
-                            case 1:
-                            case 2:
-                                data = 14;
-                                break;
-                            case 3:
-                            case 4:
-                                data = 1;
-                                break;
-                            case 5:
-                                data = 4;
-                                break;
-                        }
-                        ItemStack is = ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, data, ChatColor.YELLOW + ChatColor.BOLD.toString() + this.time.get(), "");
-                        is.setAmount(this.time.get());
-                        NewStakeInventory.this.setMiddle(is);
                     }
-                }
-            }).runTaskTimer(CosmicDuel.get(), 20L, 20L);
+                }).runTaskTimer(CosmicDuel.get(), 20L, 20L);
+            }
+
         }
     }
 
     public void checkTeamDone() {
-        if (this.runnable != null)
-            return;
-        if (this.teamALeaderInventory.getItem(0).equals(this.acceptedItem) && this.teamALeaderInventory.getItem(8).equals(this.acceptedItem)) {
-            this.modified = false;
-            this
+        if (this.runnable == null) {
+            if (this.teamALeaderInventory.getItem(0).equals(this.acceptedItem) && this.teamALeaderInventory.getItem(8).equals(this.acceptedItem)) {
+                this.modified = false;
+                this.runnable = (new BukkitRunnable() {
+                    AtomicInteger time = new AtomicInteger(6);
 
-                    .runnable = (new BukkitRunnable() {
-                final AtomicInteger time = new AtomicInteger(6);
+                    public void run() {
+                        if (NewStakeInventory.this.runnable.getTaskId() != this.getTaskId()) {
+                            this.cancel();
+                        } else {
+                            NewDuel duel = NewStakeInventory.this.getDuel();
+                            if (duel.isCancelled()) {
+                                this.cancel();
+                                NewStakeInventory.this.runnable = null;
+                            } else if (NewStakeInventory.this.modified) {
+                                NewStakeInventory.this.modified = false;
+                                NewStakeInventory.this.runnable = null;
+                                this.cancel();
+                                NewStakeInventory.this.setTeamMiddle(ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)7, " ", ("")));
+                                NewStakeInventory.this.resetAcceptButtons();
+                            } else {
+                                Iterator var2;
+                                Player p;
+                                if (this.time.decrementAndGet() > 0) {
+                                    var2 = duel.getPlayers().iterator();
 
-                public void run() {
-                    if (NewStakeInventory.this.runnable.getTaskId() != getTaskId()) {
-                        cancel();
-                        return;
-                    }
-                    NewDuel duel = NewStakeInventory.this.getDuel();
-                    if (duel.isCancelled()) {
-                        cancel();
-                        NewStakeInventory.this.runnable = null;
-                        return;
-                    }
-                    if (NewStakeInventory.this.modified) {
-                        NewStakeInventory.this.modified = false;
-                        NewStakeInventory.this.runnable = null;
-                        cancel();
-                        NewStakeInventory.this.setTeamMiddle(ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, (short)7, " ", ""));
-                        NewStakeInventory.this.resetAcceptButtons();
-                        return;
-                    }
-                    if (this.time.decrementAndGet() <= 0) {
-                        cancel();
-                        for (Player p : duel.getPlayers()) {
-                            if (PlayerUtils.inCombat(p)) {
-                                duel.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + p.getName() + " was in combat and cancelled the duel.", false);
-                                DuelAPI.cancelDuel(duel, CancelReason.IN_COMBAT_STAKES);
-                                return;
+                                    while(var2.hasNext()) {
+                                        p = (Player)var2.next();
+                                        p.playSound(p.getLocation(), Sound.ORB_PICKUP, 1.0F, 1.4F);
+                                    }
+
+                                    short data = 13;
+                                    switch(this.time.get()) {
+                                        case 1:
+                                        case 2:
+                                            data = 14;
+                                            break;
+                                        case 3:
+                                        case 4:
+                                            data = 1;
+                                            break;
+                                        case 5:
+                                            data = 4;
+                                    }
+
+                                    ItemStack is = ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, data, ChatColor.YELLOW + ChatColor.BOLD.toString() + this.time.get(), (""));
+                                    is.setAmount(this.time.get());
+                                    NewStakeInventory.this.setTeamMiddle(is);
+                                } else {
+                                    this.cancel();
+                                    var2 = duel.getPlayers().iterator();
+
+                                    while(var2.hasNext()) {
+                                        p = (Player)var2.next();
+                                        if (PlayerUtils.inCombat(p)) {
+                                            duel.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + p.getName() + " was in combat and cancelled the duel.", false);
+                                            DuelAPI.cancelDuel(duel, CancelReason.IN_COMBAT_STAKES);
+                                            return;
+                                        }
+                                    }
+
+                                    List<ItemStack> stakes = NewStakeInventory.this.getTeamStakes(NewStakeInventory.PlayerType.ONE);
+                                    List<ItemStack> stakesTwo = NewStakeInventory.this.getTeamStakes(NewStakeInventory.PlayerType.TWO);
+                                    duel.getStakes().put(NewStakeInventory.this.p1.getUniqueId(), stakes);
+                                    duel.getStakes().put(NewStakeInventory.this.p2.getUniqueId(), stakesTwo);
+                                    if (DuelAPI.getArenaQueueSize(duel.getArena()) > 0 || DuelAPI.getCurrentlyActiveDuel(duel.getArena()) != null) {
+                                        duel.setCreateState(DuelCreateState.WAITING);
+                                        duel.duelState = DuelState.IN_QUEUE;
+                                        duel.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "This Arena currently has a queue of " + ChatColor.AQUA + ChatColor.BOLD.toString() + DuelAPI.getArenaQueueSize(duel.getArena()) + " Duel(s).", true);
+                                        duel.sendMessage(ChatColor.GRAY + "You must wait for the current duels to be over or you can use '/duel leave' to retrieve your items back.", true);
+                                        NewStakeInventory.this.p1.closeInventory();
+                                        NewStakeInventory.this.p2.closeInventory();
+                                        DuelAPI.queueDuel(duel.getArena(), duel);
+                                        return;
+                                    }
+
+                                    duel.setCreateState(DuelCreateState.DONE);
+                                    NewStakeInventory.this.p1.closeInventory();
+                                    NewStakeInventory.this.p2.closeInventory();
+                                    duel.onStart();
+                                    CosmicDuel.logMessage("Starting duel with " + NewStakeInventory.this.p1.getName() + " -> " + stakes.toString() + " " + NewStakeInventory.this.p2.getName() + " stakes -> " + stakesTwo.toString() + "!");
+                                }
+
                             }
                         }
-                        List<ItemStack> stakes = NewStakeInventory.this.getTeamStakes(NewStakeInventory.PlayerType.ONE);
-                        List<ItemStack> stakesTwo = NewStakeInventory.this.getTeamStakes(NewStakeInventory.PlayerType.TWO);
-                        duel.getStakes().put(NewStakeInventory.this.p1.getUniqueId(), stakes);
-                        duel.getStakes().put(NewStakeInventory.this.p2.getUniqueId(), stakesTwo);
-                        if (DuelAPI.getArenaQueueSize(duel.getArena()) > 0 || DuelAPI.getCurrentlyActiveDuel(duel.getArena()) != null) {
-                            duel.setCreateState(DuelCreateState.WAITING);
-                            duel.duelState = DuelState.IN_QUEUE;
-                            duel.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "This Arena currently has a queue of " + ChatColor.AQUA + ChatColor.BOLD.toString() + DuelAPI.getArenaQueueSize(duel.getArena()) + " Duel(s).", true);
-                            duel.sendMessage(ChatColor.GRAY + "You must wait for the current duels to be over or you can use '/duel leave' to retrieve your items back.", true);
-                            NewStakeInventory.this.p1.closeInventory();
-                            NewStakeInventory.this.p2.closeInventory();
-                            DuelAPI.queueDuel(duel.getArena(), duel);
-                            return;
-                        }
-                        duel.setCreateState(DuelCreateState.DONE);
-                        NewStakeInventory.this.p1.closeInventory();
-                        NewStakeInventory.this.p2.closeInventory();
-                        duel.onStart();
-                        CosmicDuel.logMessage("Starting duel with " + NewStakeInventory.this.p1.getName() + " -> " + stakes.toString() + " " + NewStakeInventory.this.p2.getName() + " stakes -> " + stakesTwo.toString() + "!");
-                    } else {
-                        for (Player p : duel.getPlayers())
-                            p.playSound(p.getLocation(), Sound.ORB_PICKUP, 1.0F, 1.4F);
-                        short data = 13;
-                        switch (this.time.get()) {
-                            case 1:
-                            case 2:
-                                data = 14;
-                                break;
-                            case 3:
-                            case 4:
-                                data = 1;
-                                break;
-                            case 5:
-                                data = 4;
-                                break;
-                        }
-                        ItemStack is = ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, data, ChatColor.YELLOW + ChatColor.BOLD.toString() + this.time.get(), "");
-                        is.setAmount(this.time.get());
-                        NewStakeInventory.this.setTeamMiddle(is);
                     }
-                }
-            }).runTaskTimer(CosmicDuel.get(), 20L, 20L);
+                }).runTaskTimer(CosmicDuel.get(), 20L, 20L);
+            }
+
         }
     }
 
@@ -625,102 +761,150 @@ public class NewStakeInventory {
         this.teamBLeaderInventory.setItem(22, is);
     }
 
-    public List<ItemStack> getStakes(PlayerType pt) {
-        List<ItemStack> items = new ArrayList<>();
-        Inventory inventory = (pt == PlayerType.ONE) ? this.playerOneInventory : this.playerTwoInventory;
-        for (Iterator<Integer> iterator = validSlots(pt).iterator(); iterator.hasNext(); ) {
-            int i = iterator.next().intValue();
-            if (inventory.getItem(i) != null)
+    public List<ItemStack> getStakes(NewStakeInventory.PlayerType pt) {
+        List<ItemStack> items = new ArrayList();
+        Inventory inventory = pt == NewStakeInventory.PlayerType.ONE ? this.playerOneInventory : this.playerTwoInventory;
+        Iterator var4 = this.validSlots(pt).iterator();
+
+        while(var4.hasNext()) {
+            int i = (Integer)var4.next();
+            if (inventory.getItem(i) != null) {
                 items.add(inventory.getItem(i));
+            }
         }
+
         return items;
     }
 
-    public List<ItemStack> getTeamStakes(PlayerType pt) {
-        List<ItemStack> items = new ArrayList<>();
-        Inventory inventory = (pt == PlayerType.ONE) ? this.teamALeaderInventory : this.teamBLeaderInventory;
-        for (Iterator<Integer> iterator = validSlots(pt).iterator(); iterator.hasNext(); ) {
-            int i = iterator.next().intValue();
-            if (inventory.getItem(i) != null)
+    public List<ItemStack> getTeamStakes(NewStakeInventory.PlayerType pt) {
+        List<ItemStack> items = new ArrayList();
+        Inventory inventory = pt == NewStakeInventory.PlayerType.ONE ? this.teamALeaderInventory : this.teamBLeaderInventory;
+        Iterator var4 = this.validSlots(pt).iterator();
+
+        while(var4.hasNext()) {
+            int i = (Integer)var4.next();
+            if (inventory.getItem(i) != null) {
                 items.add(inventory.getItem(i));
+            }
         }
+
         return items;
     }
 
     public void closeInventory(NewDuel duel) {
+        Iterator var2;
+        String p_name;
+        NewStakeInventory.PlayerType pt;
+        Player p;
+        Iterator var6;
+        ItemStack is;
         if (!(duel instanceof TeamDuel)) {
-            for (String p_name : this.playerTypes.keySet()) {
-                PlayerType pt = this.playerTypes.get(p_name);
-                Player p = Bukkit.getPlayer(p_name);
-                if (p == null)
-                    continue;
-                for (ItemStack is : getStakes(pt)) {
+            var2 = this.playerTypes.keySet().iterator();
+
+            while(true) {
+                do {
+                    if (!var2.hasNext()) {
+                        this.playerOneInventory.clear();
+                        this.playerTwoInventory.clear();
+                        return;
+                    }
+
+                    p_name = (String)var2.next();
+                    pt = (NewStakeInventory.PlayerType)this.playerTypes.get(p_name);
+                    p = Bukkit.getPlayer(p_name);
+                } while(p == null);
+
+                for(var6 = this.getStakes(pt).iterator(); var6.hasNext(); p.updateInventory()) {
+                    is = (ItemStack)var6.next();
                     if (p.getInventory().firstEmpty() == -1) {
                         CollectionBin.addItem(p, is);
                     } else {
-                        p.getInventory().addItem(is);
+                        p.getInventory().addItem(new ItemStack[]{is});
                     }
-                    p.updateInventory();
                 }
+
                 p.closeInventory();
             }
-            this.playerOneInventory.clear();
-            this.playerTwoInventory.clear();
         } else {
-            for (String p_name : this.playerTypes.keySet()) {
-                PlayerType pt = this.playerTypes.get(p_name);
-                Player p = Bukkit.getPlayer(p_name);
-                if (p == null)
-                    continue;
-                for (ItemStack is : getTeamStakes(pt)) {
+            var2 = this.playerTypes.keySet().iterator();
+
+            while(true) {
+                do {
+                    if (!var2.hasNext()) {
+                        this.teamALeaderInventory.clear();
+                        this.teamBLeaderInventory.clear();
+                        return;
+                    }
+
+                    p_name = (String)var2.next();
+                    pt = (NewStakeInventory.PlayerType)this.playerTypes.get(p_name);
+                    p = Bukkit.getPlayer(p_name);
+                } while(p == null);
+
+                for(var6 = this.getTeamStakes(pt).iterator(); var6.hasNext(); p.updateInventory()) {
+                    is = (ItemStack)var6.next();
                     if (p.getInventory().firstEmpty() == -1) {
                         CollectionBin.addItem(p, is);
                     } else {
-                        p.getInventory().addItem(is);
+                        p.getInventory().addItem(new ItemStack[]{is});
                     }
-                    p.updateInventory();
                 }
+
                 p.closeInventory();
             }
-            this.teamALeaderInventory.clear();
-            this.teamBLeaderInventory.clear();
         }
     }
 
-    public int getFirstEmpty(PlayerType pt, Inventory inv) {
-        for (Iterator<Integer> iterator = validSlots(pt).iterator(); iterator.hasNext(); ) {
-            int i = iterator.next().intValue();
-            if (inv.getItem(i) == null || inv.getItem(i).getType() == Material.AIR)
-                return i;
-        }
-        return -1;
+    public int getFirstEmpty(NewStakeInventory.PlayerType pt, Inventory inv) {
+        Iterator var3 = this.validSlots(pt).iterator();
+
+        int i;
+        do {
+            if (!var3.hasNext()) {
+                return -1;
+            }
+
+            i = (Integer)var3.next();
+        } while(inv.getItem(i) != null && inv.getItem(i).getType() != Material.AIR);
+
+        return i;
     }
 
-    public boolean isFull(PlayerType pt, Inventory inv) {
+    public boolean isFull(NewStakeInventory.PlayerType pt, Inventory inv) {
         int amount = 0;
-        for (Iterator<Integer> iterator = validSlots(pt).iterator(); iterator.hasNext(); ) {
-            int i = iterator.next().intValue();
-            if (inv.getItem(i) != null && inv.getItem(i).getType() != Material.AIR)
-                amount++;
+        Iterator var4 = this.validSlots(pt).iterator();
+
+        while(var4.hasNext()) {
+            int i = (Integer)var4.next();
+            if (inv.getItem(i) != null && inv.getItem(i).getType() != Material.AIR) {
+                ++amount;
+            }
         }
-        return (amount >= validSlots(pt).size());
+
+        return amount >= this.validSlots(pt).size();
     }
 
     public boolean isEmpty(Inventory inv) {
-        for (ListIterator<ItemStack> listIterator = inv.iterator(); listIterator.hasNext(); ) {
-            ItemStack is = listIterator.next();
-            if (is != null && is.getType() != Material.AIR)
-                return false;
-        }
-        return true;
+        ListIterator var2 = inv.iterator();
+
+        ItemStack is;
+        do {
+            if (!var2.hasNext()) {
+                return true;
+            }
+
+            is = (ItemStack)var2.next();
+        } while(is == null || is.getType() == Material.AIR);
+
+        return false;
     }
 
-    public List<Integer> validSlots(PlayerType pt) {
-        if (pt == PlayerType.ONE)
-            return this.validSlots.keySet().stream().collect(Collectors.toList());
-        if (pt == PlayerType.TWO)
-            return this.validSlots.values().stream().collect(Collectors.toList());
-        return null;
+    public List<Integer> validSlots(NewStakeInventory.PlayerType pt) {
+        if (pt == NewStakeInventory.PlayerType.ONE) {
+            return (List)this.validSlots.keySet().stream().collect(Collectors.toList());
+        } else {
+            return pt == NewStakeInventory.PlayerType.TWO ? (List)this.validSlots.values().stream().collect(Collectors.toList()) : null;
+        }
     }
 
     public Inventory getPlayerOneInventory() {
@@ -759,45 +943,10 @@ public class NewStakeInventory {
         return this.duel;
     }
 
-    public static String INVENTORY_NAME = "    Host                   Rival";
-
-    Inventory teamALeaderInventory;
-
-    Inventory teamBLeaderInventory;
-
-    Inventory playerOneInventory;
-
-    Inventory playerTwoInventory;
-
-    Player p1;
-
-    Player p2;
-
-    TeamData teamA;
-
-    TeamData teamB;
-
-    NewDuel duel;
-
-    ItemStack pendingItem;
-
-    ItemStack acceptedItem;
-
-    boolean modified;
-
-    HashMap<String, PlayerType> playerTypes;
-
-    HashMap<String, PlayerType> teamLeaderTypes;
-
-    HashMap<TeamData, PlayerType> teamTypes;
-
-    LinkedHashMap<Integer, Integer> validSlots;
-
-    BukkitTask runnable;
-
-    private ItemStack selected;
-
-    public enum PlayerType {
-        ONE, TWO, TEAM_A, TEAM_B
+    public static enum PlayerType {
+        ONE,
+        TWO,
+        TEAM_A,
+        TEAM_B;
     }
 }
