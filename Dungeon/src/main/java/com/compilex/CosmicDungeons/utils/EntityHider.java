@@ -1,43 +1,11 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.comphenix.protocol.PacketType
- *  com.comphenix.protocol.PacketType$Play$Server
- *  com.comphenix.protocol.ProtocolLibrary
- *  com.comphenix.protocol.ProtocolManager
- *  com.comphenix.protocol.events.PacketAdapter
- *  com.comphenix.protocol.events.PacketContainer
- *  com.comphenix.protocol.events.PacketEvent
- *  com.comphenix.protocol.events.PacketListener
- *  com.google.common.base.Preconditions
- *  com.google.common.collect.HashBasedTable
- *  com.google.common.collect.Table
- *  org.bukkit.entity.Entity
- *  org.bukkit.entity.Player
- *  org.bukkit.event.EventHandler
- *  org.bukkit.event.HandlerList
- *  org.bukkit.event.Listener
- *  org.bukkit.event.entity.EntityDeathEvent
- *  org.bukkit.event.player.PlayerQuitEvent
- *  org.bukkit.event.world.ChunkUnloadEvent
- *  org.bukkit.plugin.Plugin
- */
 package com.compilex.CosmicDungeons.utils;
 
-import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.ProtocolManager;
-import com.comphenix.protocol.events.PacketAdapter;
-import com.comphenix.protocol.events.PacketContainer;
-import com.comphenix.protocol.events.PacketEvent;
-import com.comphenix.protocol.events.PacketListener;
-import com.google.common.base.Preconditions;
-import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.Table;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
+
+import com.comphenix.protocol.events.PacketListener;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -48,8 +16,17 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.plugin.Plugin;
 
-public class EntityHider
-implements Listener {
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
+import com.comphenix.protocol.events.PacketAdapter;
+import com.comphenix.protocol.events.PacketContainer;
+import com.comphenix.protocol.events.PacketEvent;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Table;
+
+public class EntityHider implements Listener {
     protected Table<Integer, Integer, Boolean> observerEntityMap = HashBasedTable.create();
     private static final PacketType[] ENTITY_PACKETS = new PacketType[]{PacketType.Play.Server.ENTITY_EQUIPMENT, PacketType.Play.Server.BED, PacketType.Play.Server.ANIMATION, PacketType.Play.Server.NAMED_ENTITY_SPAWN, PacketType.Play.Server.COLLECT, PacketType.Play.Server.SPAWN_ENTITY, PacketType.Play.Server.SPAWN_ENTITY_LIVING, PacketType.Play.Server.SPAWN_ENTITY_PAINTING, PacketType.Play.Server.SPAWN_ENTITY_EXPERIENCE_ORB, PacketType.Play.Server.ENTITY_VELOCITY, PacketType.Play.Server.REL_ENTITY_MOVE, PacketType.Play.Server.ENTITY_LOOK, PacketType.Play.Server.ENTITY_MOVE_LOOK, PacketType.Play.Server.ENTITY_MOVE_LOOK, PacketType.Play.Server.ENTITY_TELEPORT, PacketType.Play.Server.ENTITY_HEAD_ROTATION, PacketType.Play.Server.ENTITY_STATUS, PacketType.Play.Server.ATTACH_ENTITY, PacketType.Play.Server.ENTITY_METADATA, PacketType.Play.Server.ENTITY_EFFECT, PacketType.Play.Server.REMOVE_ENTITY_EFFECT, PacketType.Play.Server.BLOCK_BREAK_ANIMATION};
     private ProtocolManager manager;
@@ -58,13 +35,13 @@ implements Listener {
     protected final Policy policy;
 
     public EntityHider(Plugin plugin, Policy policy) {
-        Preconditions.checkNotNull((Object)plugin, (Object)"plugin cannot be NULL.");
+        Preconditions.checkNotNull(plugin, "plugin cannot be NULL.");
         this.policy = policy;
         this.manager = ProtocolLibrary.getProtocolManager();
         this.bukkitListener = this.constructBukkit();
         plugin.getServer().getPluginManager().registerEvents(this.bukkitListener, plugin);
         this.protocolListener = this.constructProtocol(plugin);
-        this.manager.addPacketListener((PacketListener)this.protocolListener);
+        this.manager.addPacketListener(this.protocolListener);
     }
 
     protected boolean setVisibility(Player observer, int entityID, boolean visible) {
@@ -148,11 +125,10 @@ implements Listener {
     }
 
     public final boolean showEntity(Player observer, Entity entity) {
-        boolean hiddenBefore;
-        this.validate(observer, entity);
-        boolean bl = hiddenBefore = !this.setVisibility(observer, entity.getEntityId(), true);
-        if (this.manager != null && hiddenBefore) {
-            this.manager.updateEntity(entity, Arrays.asList(observer));
+        validate(observer, entity);
+        boolean hiddenBefore = !setVisibility(observer, entity.getEntityId(), true);
+        if (manager != null && hiddenBefore) {
+            manager.updateEntity(entity, Arrays.asList(observer));
         }
         return hiddenBefore;
     }
@@ -201,4 +177,5 @@ implements Listener {
 
     }
 }
+
 

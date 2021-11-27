@@ -88,22 +88,22 @@ extends BukkitRunnable {
         Collections.shuffle(dispenserLocations);
         for (int i2 = 0; i2 < dispenserLocations.size() / 8; ++i2) {
             Location loc = dispenserLocations.get(i2);
+
+
             CraftWorld handle = (CraftWorld)loc.getWorld();
             EntityCustomFireball fireball = new EntityCustomFireball(handle.getHandle());
-
-
             EntityFireball nms = ((CraftFireball)fireball.getBukkitEntity()).getHandle();
             Vector dir = new Vector(0.0, 0.0, -0.2);
             double x = dir.getX();
             double y = dir.getY();
             double z = dir.getZ();
             double length = Math.sqrt(x * x + y * y + z * z);
-
             nms.dirX = x / length * 0.1D;
             nms.dirY = y / length * 0.1D;
             nms.dirZ = z / length * 0.1D;
-
             handle.getHandle().addEntity(fireball, CreatureSpawnEvent.SpawnReason.CUSTOM);
+
+
             fireball.setPosition(loc.getX(), loc.getY(), loc.getZ() - 1.0);
             fireball.getBukkitEntity().setMetadata("fireballAlley", new FixedMetadataValue(CosmicDungeonsPlugin.get(), true));
             fireball.getBukkitEntity().setMetadata("do_not_clear", new FixedMetadataValue(CosmicDungeonsPlugin.get(), true));

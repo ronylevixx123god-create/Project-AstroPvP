@@ -136,7 +136,7 @@ extends DungeonEvents {
                 DamageTracker tracker = boss.getDamageTracker();
                 if (tracker.size() == 1) {
                     this.dungeon.getDungeonChallengesCompleted().add(DungeonChallenge.GUARDIAN);
-                    this.singularDamager = UUID.fromString((String)((Map.Entry)tracker.entrySet().stream().findFirst().orElse(null)).getKey());
+                    this.singularDamager = (tracker.entrySet().stream().findFirst().orElse(null)).getKey();
                     Bukkit.getLogger().info("Granting GUARDIAN due to " + this.singularDamager + " being only damager!");
                 }
                 if (this.checkForDamage(tracker)) {

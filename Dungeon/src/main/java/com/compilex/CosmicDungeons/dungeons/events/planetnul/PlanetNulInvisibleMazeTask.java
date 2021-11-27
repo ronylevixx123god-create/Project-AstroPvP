@@ -1,25 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  org.bukkit.Location
- *  org.bukkit.Material
- *  org.bukkit.block.Block
- *  org.bukkit.entity.Entity
- *  org.bukkit.entity.EntityType
- *  org.bukkit.entity.LivingEntity
- *  org.bukkit.entity.Player
- *  org.bukkit.entity.Zombie
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.metadata.FixedMetadataValue
- *  org.bukkit.metadata.MetadataValue
- *  org.bukkit.plugin.Plugin
- *  org.bukkit.potion.PotionEffect
- *  org.bukkit.potion.PotionEffectType
- *  org.bukkit.scheduler.BukkitRunnable
- *  org.bukkit.util.Vector
- */
 package com.compilex.CosmicDungeons.dungeons.events.planetnul;
 
 import com.compilex.CosmicDungeons.CosmicDungeonsPlugin;
@@ -27,23 +5,19 @@ import com.compilex.CosmicDungeons.DungeonsAPI;
 import com.compilex.CosmicDungeons.dungeons.libs.DungeonPlayer;
 import com.compilex.CosmicDungeons.dungeons.libs.PlanetNulDungeon;
 import com.cosmicpvp.cosmicutils.utils.CC;
-import java.util.List;
+import com.cosmicpvp.cosmicutils.utils.VanishUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Zombie;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
+
+import java.util.List;
 
 public class PlanetNulInvisibleMazeTask
 extends BukkitRunnable {
@@ -65,7 +39,6 @@ extends BukkitRunnable {
             this.timer = 0;
         }
         for (Player p : this.dungeon.getPlayers()) {
-            Block targetedBlock;
             DungeonPlayer dp = DungeonsAPI.get().getPlayerDungeonData(p);
             if (dp.getCurrentDungeon() == null || !dp.getCurrentDungeon().equals(this.dungeon) || zombies == null) continue;
             Location loc = p.getEyeLocation();
@@ -74,11 +47,12 @@ extends BukkitRunnable {
                 loc.add(v);
                 if (loc.getBlock().getType() != Material.AIR) break;
             }
-            if ((targetedBlock = loc.getBlock()).getType() == Material.STAINED_GLASS) {
+            if (loc.getBlock().getType() == Material.STAINED_GLASS) {
                 for (Zombie zombie : zombies) {
                     if (zombie == null || zombie.isDead())
                         continue;
-                    CosmicDungeonsPlugin.get().getEntityHider().showEntity(p, (Entity)zombie);
+                    CosmicDungeonsPlugin.get().getEntityHider().showEntity(p, zombie);
+
                 }
                 continue;
             }
@@ -98,7 +72,7 @@ extends BukkitRunnable {
         final Zombie zombie = (Zombie)location.getWorld().spawnEntity(location, EntityType.ZOMBIE);
         zombie.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 2));
         zombie.setCustomNameVisible(true);
-        zombie.setCustomName(CC.translate((String)"&3&lMaze Monster"));
+        zombie.setCustomName(CC.translate("&3&lMaze Monster"));
         zombie.setVillager(false);
         zombie.setBaby(false);
         zombie.getEquipment().setHelmet(new ItemStack(Material.DIAMOND_HELMET));
@@ -111,10 +85,10 @@ extends BukkitRunnable {
         zombie.getEquipment().setChestplateDropChance(0.0f);
         zombie.getEquipment().setLeggingsDropChance(0.0f);
         zombie.getEquipment().setBootsDropChance(0.0f);
-        zombie.setMetadata("inInvisibleMaze", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get(), (Object)true));
-        zombie.setMetadata("invisibleMazeZombie", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get(), (Object)true));
+        zombie.setMetadata("inInvisibleMaze", new FixedMetadataValue(CosmicDungeonsPlugin.get(), true));
+        zombie.setMetadata("invisibleMazeZombie", new FixedMetadataValue(CosmicDungeonsPlugin.get(), true));
         zombie.setHealth(20.0);
-        zombie.setTarget((LivingEntity)target);
+        zombie.setTarget(target);
         new BukkitRunnable(){
             int counter = 0;
 
