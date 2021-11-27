@@ -66,7 +66,7 @@ public class WarzoneClaimListener implements Listener {
                 return;
             }
             event.getPlayer().sendMessage(CC.translate("&a&l(!) &aYou have obtained a &f/f claim&a touching the &f" + rn + " WarZone&a."));
-            event.getFaction().getOnlinePlayers().stream().forEach(p -> {
+            event.getFaction().getOnlinePlayers().forEach(p -> {
                 if (p != event.getPlayer())
                     p.sendMessage(CC.translate("&a&l/F CLAIM: &f" + event.getPlayer().getName() + " &ahas obtained your faction a /f claim touching the &f" + rn + " WarZone&a."));
             });
