@@ -20,6 +20,7 @@ public class PlayerListener implements Listener {
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onEntityDamage(EntityDamageByEntityEvent event){
         if(!(event.getDamager() instanceof Player) || !(event.getEntity() instanceof Player))return;
+        if (event.isCancelled())return;
 
         double finalDamage = event.getFinalDamage();
 

@@ -55,6 +55,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
@@ -289,6 +290,7 @@ public class NewStakeInventory {
         Player player = Bukkit.getPlayer(ChatColor.stripColor(icon.getItemMeta().getDisplayName()));
         ItemStack item = ItemBuilder.createSkull(player.getName(), CC.translate("&c&l" + player.getName()));
         SkullMeta meta = (SkullMeta)Bukkit.getItemFactory().getItemMeta(Material.SKULL_ITEM);
+        meta.setDisplayName(CC.translate("&c&l" + player.getName()));
         List<String> lore = Lists.newArrayList();
         lore.add(CC.translate("&7Only a leader has permission to click on this icon"));
         lore.add(CC.translate("&7and let their team view the enemy's inventory contents."));
@@ -301,16 +303,30 @@ public class NewStakeInventory {
     }
 
     public ItemStack getSkullItem(Player player) {
-        ItemStack item = ItemBuilder.createSkull(player.getName(), CC.translate("&c&l" + player.getName()));
-        SkullMeta meta = (SkullMeta)Bukkit.getItemFactory().getItemMeta(Material.SKULL_ITEM);
-        meta.setDisplayName(CC.translate("&c&l" + player.getName()));
-        List<String> lore = Lists.newArrayList();
-        lore.add(CC.translate("&7Only a leader has permission to click on this icon"));
-        lore.add(CC.translate("&7and let their team view the enemy's inventory contents."));
-        meta.setOwner(player.getName());
-        meta.setLore(lore);
-        item.setItemMeta(meta);
-        return item;
+        if (player == null) {
+            Material type = Material.matchMaterial("SKULL_ITEM");
+            ItemStack item = new ItemStack(type, 1);
+            SkullMeta meta = (SkullMeta)Bukkit.getItemFactory().getItemMeta(Material.SKULL_ITEM);
+            meta.setDisplayName(CC.translate("&c&l" + player.getName()));
+            List<String> lore = Lists.newArrayList();
+            lore.add(CC.translate("&7Only a leader has permission to click on this icon"));
+            lore.add(CC.translate("&7and let their team view the enemy's inventory contents."));
+            meta.setOwner(player.getName());
+            meta.setLore(lore);
+            item.setItemMeta((ItemMeta)meta);
+            return item;
+        } else {
+            ItemStack item = ItemBuilder.createSkull(player.getName(), CC.translate("&c&l" + player.getName()));
+            SkullMeta meta = (SkullMeta) Bukkit.getItemFactory().getItemMeta(Material.SKULL_ITEM);
+            meta.setDisplayName(CC.translate("&c&l" + player.getName()));
+            List<String> lore = Lists.newArrayList();
+            lore.add(CC.translate("&7Only a leader has permission to click on this icon"));
+            lore.add(CC.translate("&7and let their team view the enemy's inventory contents."));
+            meta.setOwner(player.getName());
+            meta.setLore(lore);
+            item.setItemMeta(meta);
+            return item;
+        }
     }
 
     public void setEnemyInventory(Inventory inv, Player player) {
