@@ -34,6 +34,9 @@ import com.compilex.CosmicDungeons.dungeons.libs.DungeonPlayer;
 import com.compilex.CosmicDungeons.dungeons.libs.PlanetNulDungeon;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -42,12 +45,14 @@ import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.Disguise;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MobDisguise;
+import net.minecraft.server.v1_8_R3.EntityFireball;
 import net.minecraft.server.v1_8_R3.World;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftFireball;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -56,6 +61,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 public class PlanetNulFireballTask
 extends BukkitRunnable {
@@ -84,9 +90,21 @@ extends BukkitRunnable {
             Location loc = dispenserLocations.get(i2);
             CraftWorld handle = (CraftWorld)loc.getWorld();
             EntityCustomFireball fireball = new EntityCustomFireball(handle.getHandle());
+
+
+            EntityFireball nms = ((CraftFireball)fireball.getBukkitEntity()).getHandle();
+            Vector dir = new Vector(0.0, 0.0, -0.2);
+            double x = dir.getX();
+            double y = dir.getY();
+            double z = dir.getZ();
+            double length = Math.sqrt(x * x + y * y + z * z);
+
+            nms.dirX = x / length * 0.1D;
+            nms.dirY = y / length * 0.1D;
+            nms.dirZ = z / length * 0.1D;
+
             handle.getHandle().addEntity(fireball, CreatureSpawnEvent.SpawnReason.CUSTOM);
             fireball.setPosition(loc.getX(), loc.getY(), loc.getZ() - 1.0);
-            fireball.setDirection(0.0, 0.0, -0.2);
             fireball.getBukkitEntity().setMetadata("fireballAlley", new FixedMetadataValue(CosmicDungeonsPlugin.get(), true));
             fireball.getBukkitEntity().setMetadata("do_not_clear", new FixedMetadataValue(CosmicDungeonsPlugin.get(), true));
         }

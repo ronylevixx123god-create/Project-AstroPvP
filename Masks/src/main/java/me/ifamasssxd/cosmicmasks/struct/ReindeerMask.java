@@ -37,7 +37,7 @@ public class ReindeerMask extends CosmicMask {
     public void onEquip(Player player) {
         PlayerPotionEffects effects = PlayerPotionEffects.getTrackedPotionEffects(player);
         String regionName = WorldGuardUtils.getRegionName(player.getLocation());
-        if(regionName.contains("parkour") && !regionName.contains("enchants"))
+        if (regionName.contains("parkour") || regionName.contains("find_corrupt_room") || regionName.contains("maze") || regionName.equalsIgnoreCase("fireball_alley"))
             return;
         if (effects != null)
             effects.getEffects().forEach((enchantment, effect) -> {
@@ -96,7 +96,7 @@ public class ReindeerMask extends CosmicMask {
                 }
             }
         String regionName = WorldGuardUtils.getRegionName(player.getLocation());
-        if(regionName.contains("parkour") && !regionName.contains("enchants"))
+        if (regionName.contains("parkour") || regionName.contains("find_corrupt_room") || regionName.contains("maze") || regionName.equalsIgnoreCase("fireball_alley"))
             return;
         if ((!detectedNew && hasEffect(player, PotionEffectType.SPEED, 3, false)) || (
                 !detectedNew && !player.hasPotionEffect(PotionEffectType.SPEED)))

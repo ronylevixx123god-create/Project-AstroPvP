@@ -22,7 +22,7 @@ public class TerminatorMask extends CosmicMask {
     public void onEquip(Player player) {
         PlayerPotionEffects effects = PlayerPotionEffects.getTrackedPotionEffects(player);
         String regionName = WorldGuardUtils.getRegionName(player.getLocation());
-        if(regionName.contains("parkour") && !regionName.contains("enchants"))
+        if (regionName.contains("parkour") || regionName.contains("find_corrupt_room") || regionName.contains("maze") || regionName.equalsIgnoreCase("fireball_alley"))
             return;
         if (effects != null)
             effects.getEffects().forEach((enchantment, effect) -> {
@@ -82,7 +82,7 @@ public class TerminatorMask extends CosmicMask {
 
         }
         String regionName = WorldGuardUtils.getRegionName(player.getLocation());
-        if(regionName.contains("parkour") && !regionName.contains("enchants"))
+        if (regionName.contains("parkour") || regionName.contains("find_corrupt_room") || regionName.contains("maze") || regionName.equalsIgnoreCase("fireball_alley"))
             return;
         player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 200, 3), true);
     }
