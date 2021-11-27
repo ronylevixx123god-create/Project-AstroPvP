@@ -48,7 +48,7 @@ public class WarzoneClaimListener implements Listener {
     public WarzoneClaimListener() {
         this.maxClaims = 5;
         this.regions = new HashMap<>();
-        this.regions.put("warzone", "spawnwarzoneclaimlimiter");
+        this.regions.put("spawnwarzone", "spawnwarzoneclaimlimiter");
         this.regions.put("desertwarzone", "desertwarzoneclaimlimiter");
         this.regions.put("infernalwarzone", "infernalstrongholdclaimlimiter");
         this.regions.put("frozenwarzone", "frozenstrongholdclaimlimiter");
@@ -74,6 +74,7 @@ public class WarzoneClaimListener implements Listener {
     }
 
     private boolean canClaim(Faction faction, String region, World world) {
+        if (faction.isWarZone()) return true;
         if (getClaimsInRadius(faction, region, world) >= this.maxClaims)
             return false;
         return true;
@@ -149,7 +150,7 @@ public class WarzoneClaimListener implements Listener {
         } else {
             regionName = "UNKNOWN";
         }
-        if (regionName.equalsIgnoreCase("warzone"))
+        if (regionName.equalsIgnoreCase("Spa"))
             regionName = "Spawn";
         return regionName;
     }
