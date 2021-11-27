@@ -34,12 +34,14 @@ public class HeroicDodge extends HeroicCustomEnchantment {
             }
             if (Math.random() < chance) {
                 if (attacker == null) return;
-                if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.HALLOWEEN_AXE)) return;
+                if (attacker instanceof Player) {
+                    if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.HALLOWEEN_AXE)) return;
+                }
 
                 e.setCancelled(true);
                 ((Player) player).sendMessage(ChatColor.LIGHT_PURPLE + "*DODGE*");
                 try {
-                    de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(),player.getLocation(), 0,1, 0,0.2f,10);
+                    de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 0, 1, 0, 0.2f, 10);
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }

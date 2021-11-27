@@ -24,7 +24,6 @@ final class RageListener implements Listener {
             Player entity = (Player) event.getEntity();
             if (entity.hasMetadata("combo_pvp")) {
                 if(RuneCacher.isContained((Player) event.getEntity()) && RuneCacher.getRuneCacher((Player) event.getEntity()).getRuneType() == RuneType.KRONOS) {
-                    Bukkit.broadcastMessage("kronos found");
                     if(entity.getMetadata("combo_pvp").get(0).asInt() > 1) {
                         int newRageValue = entity.getMetadata("combo_pvp").get(0).asInt() - 2;
                         entity.setMetadata("combo_pvp", new FixedMetadataValue(Enchantments.getInstance(), newRageValue));
@@ -38,7 +37,6 @@ final class RageListener implements Listener {
             }
             if (entity.hasMetadata("combo_pve")) {
                 if (RuneCacher.isContained((Player) event.getEntity()) && RuneCacher.getRuneCacher((Player) event.getEntity()).getRuneType() == RuneType.KRONOS) {
-                    Bukkit.broadcastMessage("kronos found");
                     if(entity.getMetadata("combo_pve").get(0).asInt() > 1) {
                         int newRageValue = entity.getMetadata("combo_pve").get(0).asInt() - 2;
                         entity.setMetadata("combo_pve", new FixedMetadataValue(Enchantments.getInstance(), newRageValue));
