@@ -61,14 +61,14 @@ public class WarzoneClaimListener implements Listener {
         if (isCloseToWarzone(w.getChunkAt((int)fl.getX(), (int)fl.getZ()))) {
             String rn = getFixedRegionName();
             if (!canClaim(event.getFaction(), getClaimLimiterRegionName(), Bukkit.getWorld("world"))) {
-                event.getPlayer().sendMessage(CC.translate("&c&l(!) &cYou can only claim maximum of " + this.maxClaims + " claims touching the " + rn + " WarZone!"));
+                event.getPlayer().sendMessage(CC.translate("&c&l(!) &cYou can only claim maximum of &n" + this.maxClaims + "&c claims touching the " + rn + " WarZone!"));
                 event.setCancelled(true);
                 return;
             }
-            event.getPlayer().sendMessage(CC.translate("&a&l(!) &aYou have obtained a /f claim touching the " + rn + " WarZone."));
+            event.getPlayer().sendMessage(CC.translate("&a&l(!) &aYou have obtained a &f/f claim&a touching the &f" + rn + " WarZone&a."));
             event.getFaction().getOnlinePlayers().stream().forEach(p -> {
                 if (p != event.getPlayer())
-                    p.sendMessage(CC.translate("&a&l/F CLAIM: &f" + event.getPlayer().getName() + " &ahas obtained your faction a /f claim touching the " + rn + " WarZone."));
+                    p.sendMessage(CC.translate("&a&l/F CLAIM: &f" + event.getPlayer().getName() + " &ahas obtained your faction a /f claim touching the &f" + rn + " WarZone&a."));
             });
         }
     }
