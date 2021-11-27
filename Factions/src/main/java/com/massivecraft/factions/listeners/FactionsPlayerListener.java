@@ -162,13 +162,15 @@ public class FactionsPlayerListener implements Listener {
             if (changedFaction) {
                 me.sendFactionHereMessage();
 
-                if (factionTo.isWilderness()) {
-                    event.getPlayer().sendTitle(new Title(CC.DarkGreen + "Wilderness", CC.Gray + "PvP is enabled in this unclaimed land.", 5, 20, 5));
-                } else if (factionTo.isWarZone()) {
-                    event.getPlayer().sendTitle(new Title(CC.DarkRed + "Warzone", CC.Gray + "Not the safest place to be.", 5, 20, 5));
+                if (!event.getPlayer().getWorld().getName().contains("dungeon") && !event.getPlayer().getWorld().getName().contains("event")) {
+                    if (factionTo.isWilderness()) {
+                        event.getPlayer().sendTitle(new Title(CC.DarkGreen + "Wilderness", CC.Gray + "PvP is enabled in this unclaimed land.", 5, 20, 5));
+                    } else if (factionTo.isWarZone()) {
+                        event.getPlayer().sendTitle(new Title(CC.DarkRed + "Warzone", CC.Gray + "Not the safest place to be.", 5, 20, 5));
 
-                } else {
-                    event.getPlayer().sendTitle(new Title(FactionUtils.getRelationTo(myFaction, factionTo).getColor() + factionTo.getTag(), CC.Gray + factionTo.getDescription(), 5, 20, 5));
+                    } else {
+                        event.getPlayer().sendTitle(new Title(FactionUtils.getRelationTo(myFaction, factionTo).getColor() + factionTo.getTag(), CC.Gray + factionTo.getDescription(), 5, 20, 5));
+                    }
                 }
                 if (Conf.ownedAreasEnabled && Conf.ownedMessageOnBorder && myFaction == factionTo && !ownersTo.isEmpty()) {
                     me.sendMessage(Conf.ownedLandMessage + ownersTo);
