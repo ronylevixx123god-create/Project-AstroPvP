@@ -71,6 +71,11 @@ public class CommandTeam implements CommandExecutor {
                 data = new TeamData(player.getUniqueId());
                 CosmicDuel.get().getTeamDataManager().addTeam(data);
             }
+
+            if (data.getTeamates().size() == 1) {
+                player.sendMessage(CC.translate("&c&l(!)&c The max team size is 2!"));
+                return false;
+            }
             player.sendMessage(CC.translate("&a&l(!) &aYou have sent a team invite to &f" + target.getName() + "&a!"));
             CosmicDuel.get().getTeamDataManager().sendTeamInvite(data, target);
             return false;

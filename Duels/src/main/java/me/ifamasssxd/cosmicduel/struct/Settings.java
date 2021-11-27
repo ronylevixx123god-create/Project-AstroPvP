@@ -20,6 +20,7 @@
  */
 package me.ifamasssxd.cosmicduel.struct;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.google.common.collect.Lists;
 import me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits;
 import me.ifamasssxd.cosmicduel.CosmicDuel;
@@ -29,6 +30,7 @@ import me.ifamasssxd.cosmicduel.inventory.CustomInventoryItem;
 import me.ifamasssxd.cosmicduel.inventory.CustomInventoryItemCallback;
 import me.ifamasssxd.cosmicduel.struct.enums.CancelReason;
 import me.ifamasssxd.cosmicduel.struct.enums.DuelCreateState;
+import me.ifamasssxd.cosmicduel.struct.enums.DuelType;
 import me.ifamasssxd.cosmicduel.struct.enums.Setting;
 import me.ifamasssxd.cosmicduel.struct.newduel.GKitSelectionInventory;
 import me.ifamasssxd.cosmicduel.struct.newduel.NewDuel;
@@ -52,6 +54,7 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Settings {
     NewDuel duel;
@@ -207,6 +210,23 @@ public class Settings {
                 p.sendMessage((Object)ChatColor.RED + "The duel has been cancelled.");
                 DuelAPI.cancelDuel(this.getDuel(), CancelReason.NOT_ENOUGH_PLAYERS);
                 continue;
+            }
+            if (this.getDuel().getDuelType() == DuelType.TEAM_VS_TEAM) {
+                TeamData data = CosmicDuel.get().getTeamDataManager().tryFindTeam(p.getUniqueId());
+                TeamData data2 = CosmicDuel.get().getTeamDataManager().tryFindTeam(invited.getUniqueId());
+
+                for (UUID uuid : data.getTeamates()) {
+                    if (Bukkit.getPlayer(uuid) == null) {
+                        p.sendMessage(CC.translate("You cannot duel a different team when a player on your team is offline!"));
+                        return;
+                    }
+                }
+                for (UUID uuid : data2.getTeamates()) {
+                    if (Bukkit.getPlayer(uuid) == null) {
+                        p.sendMessage(CC.translate("You cannot duel that team since they have an offline player!"));
+                        return;
+                    }
+                }
             }
             DuelAPI.invitePlayer(this.getDuel(), p, invited);
         }

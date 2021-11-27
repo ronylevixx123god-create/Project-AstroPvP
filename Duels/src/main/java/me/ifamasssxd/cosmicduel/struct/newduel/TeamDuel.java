@@ -155,11 +155,6 @@ public class TeamDuel extends NewDuel {
         }
         if (checkStart && this.players.size() == getPlayersToStart()) {
             setCreateState(DuelCreateState.STAKES);
-            System.out.println(this);
-            System.out.println(getTeamA());
-            System.out.println(getTeamB());
-            System.out.println(getTeamA().getLeaderUUID());
-            System.out.println(getTeamB().getLeaderUUID());
             this.stakeInventory = new NewStakeInventory(this, getTeamA(), getTeamB(), Bukkit.getPlayer(getTeamA().getLeaderUUID()), Bukkit.getPlayer(getTeamB().getLeaderUUID()));
             for (Player p : getPlayers()) {
                 p.setMetadata("close_exempt", new FixedMetadataValue(CosmicDuel.get(), ""));

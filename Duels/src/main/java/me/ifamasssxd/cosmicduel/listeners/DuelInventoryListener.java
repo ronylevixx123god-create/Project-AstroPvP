@@ -220,13 +220,14 @@ public class DuelInventoryListener implements Listener {
             ignoreCancelled = true
     )
     public void onInventoryClick(InventoryClickEvent e) {
-        Player p = (Player) e.getWhoClicked();
+        Player p = (Player)e.getWhoClicked();
         if (e.getInventory().getName().startsWith("Duel Items:")) {
             e.setCancelled(true);
             e.setResult(Result.DENY);
             p.closeInventory();
         } else {
             TeamData data = CosmicDuel.get().getTeamDataManager().tryFindTeam(p.getUniqueId());
+
             NewDuel duel;
             if (data != null) {
                 if (e.getInventory().getName().contains(Bukkit.getPlayer(data.getLeaderUUID()).getName()) && e.getInventory().getName().length() >= 32 && !e.getInventory().getName().contains("/")) {
@@ -250,8 +251,8 @@ public class DuelInventoryListener implements Listener {
                                     this.updateSkullIcon(duel.getStakeInventory().getTeamInventory(p), duel, enemy, CosmicDuel.get().getTeamDataManager().tryFindTeam(enemy.getUniqueId()));
                                     Iterator var8 = data.getTeamates().iterator();
 
-                                    while (var8.hasNext()) {
-                                        UUID teamates = (UUID) var8.next();
+                                    while(var8.hasNext()) {
+                                        UUID teamates = (UUID)var8.next();
                                         Bukkit.getPlayer(teamates).updateInventory();
                                         Bukkit.getPlayer(teamates).sendMessage(CC.translate("&a&l(!) &f" + p.getName() + " &ahas changed the inventory view to &c" + enemyName + "'s &ainventory."));
                                         Bukkit.getPlayer(teamates).playSound(Bukkit.getPlayer(teamates).getLocation(), Sound.CLICK, 0.75F, 0.75F);
@@ -270,23 +271,24 @@ public class DuelInventoryListener implements Listener {
                         p.closeInventory();
                     }
                 }
-            }
-            if (e.getInventory().getName().contains(p.getName()) && e.getInventory().getName().length() >= 32 && !e.getInventory().getName().contains("/")) {
+            } else if (e.getInventory().getName().contains(p.getName()) && e.getInventory().getName().length() >= 32 && !e.getInventory().getName().contains("/")) {
                 if (DuelAPI.hasDuel(p)) {
-                    NewDuel newDuel = DuelAPI.getDuel(p);
-                    if (!newDuel.getCreateState().equals((Object) DuelCreateState.STAKES)) {
-                        e.setResult(Event.Result.DENY);
+                    duel = DuelAPI.getDuel(p);
+                    if (!duel.getCreateState().equals(DuelCreateState.STAKES)) {
+                        e.setResult(Result.DENY);
                         e.setCancelled(true);
                         return;
                     }
+
                     e.setCancelled(true);
-                    e.setResult(Event.Result.DENY);
-                    newDuel.getStakeInventory().onInventoryEvent(e);
+                    e.setResult(Result.DENY);
+                    duel.getStakeInventory().onInventoryEvent(e);
                 } else if (!e.getWhoClicked().hasMetadata("close_exempt")) {
                     e.setCancelled(true);
                     p.closeInventory();
                 }
             }
+
         }
     }
 

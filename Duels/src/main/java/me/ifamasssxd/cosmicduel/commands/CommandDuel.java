@@ -210,7 +210,7 @@ public class CommandDuel implements CommandExecutor {
             if (team != null && oTeam != null) {
                 List<Player> collectionBinPlayers = Lists.newArrayList();
                 for (Player player : getBothTeamPlayers(team, oTeam)) {
-                    if (!player.isOnline()) {
+                    if (player == null || !player.isOnline()) {
                         sender.sendMessage(CC.translate("&cOne of the members of the opponent team isn't online."));
                         return false;
                     }

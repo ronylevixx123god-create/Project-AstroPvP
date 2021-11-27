@@ -31,9 +31,12 @@ import me.ifamasssxd.cosmicbosses.dungeonboss.planetnul.CorruptCosmonaut;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.cosmicbosses.utils.BossUtils;
 import me.ifamasssxd.cosmicbosses.utils.ScoreboardUtils;
+import me.ifamasssxd.cosmicduel.CosmicDuel;
 import me.ifamasssxd.cosmicduel.DuelAPI;
+import me.ifamasssxd.cosmicduel.struct.TeamData;
 import me.ifamasssxd.cosmicduel.struct.enums.DuelState;
 import me.ifamasssxd.cosmicduel.struct.enums.DuelType;
+import me.ifamasssxd.cosmicduel.struct.newduel.TeamDuel;
 import me.ifamasssxd.cosmichcf.managers.OutpostManager;
 import org.arkhamnetwork.enchantments.enchantments.axes.Corrupt;
 import org.bukkit.Bukkit;
@@ -123,8 +126,6 @@ public class Scoreboard implements BoardAdapter {
           }else if (DuelAPI.getDuel(player) != null && (DuelAPI.getDuel(player).getDuelState() == DuelState.STARTING || DuelAPI.getDuel(player).getDuelState() == DuelState.PLAYING)) {
                 if (DuelAPI.getDuel(player).getDuelType() == DuelType.ONE_VS_ONE) {
                     return CC.translate("&6&l1v1 Duel &7" + getDateSuffix());
-                } else {
-                    return ""; //2v2 duel type title here
                 }
 
         } else if(!fplayer.getFaction().isWilderness()) {
@@ -417,9 +418,6 @@ public class Scoreboard implements BoardAdapter {
                 board.add("");
                 board.add(CC.translate("&6&lAccount"));
                 board.add(CC.translate("&e") + player.getName());
-                return board;
-            } else {
-                //team duel code here
                 return board;
             }
         }
