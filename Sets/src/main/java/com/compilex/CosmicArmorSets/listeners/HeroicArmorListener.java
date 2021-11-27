@@ -168,8 +168,8 @@ public class HeroicArmorListener
                 damageReduction += 0.045;
             }
             if (damageReduction > 0.0) {
-                double reductionDamage = damageReduction * event.getDamage(EntityDamageEvent.DamageModifier.BASE);
-                event.setDamage(Math.max(0.0, event.getDamage(EntityDamageEvent.DamageModifier.BASE) - reductionDamage));
+                double reductionDamage = damageReduction * event.getDamage();
+                event.setDamage(Math.max(0.0, event.getDamage() - reductionDamage));
             }
         }
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
@@ -199,7 +199,7 @@ public class HeroicArmorListener
                 damageIncrease += damageMod;
             }
             if (damageIncrease > 0.0) {
-                event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1.0 + damageIncrease));
+                event.setDamage(event.getDamage() * (1.0 + damageIncrease));
             }
         }
     }
