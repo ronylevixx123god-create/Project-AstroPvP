@@ -28,8 +28,7 @@ import org.bukkit.entity.Explosive;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.ExplosionPrimeEvent;
 
-public class EntityCustomFireball
-extends EntityLargeFireball {
+public class EntityCustomFireball extends EntityLargeFireball {
     public EntityCustomFireball(World world) {
         super(world);
     }

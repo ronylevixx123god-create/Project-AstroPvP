@@ -25,21 +25,18 @@ public class Cactus extends CustomEnchantment {
         Bukkit.getPluginManager().registerEvents(new CactusListener(), (Plugin) Enchantments.getInstance());
     }
 
-    public void applyEquipEffect(Player player, int enchantLevel) {
-        cactus.put(player.getName(), Integer.valueOf(enchantLevel));
-    }
 
     public void applyUnequipEffect(Player player, int enchantLevel) {
         cactus.remove(player.getName());
     }
 
     public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
+        if (player.hasMetadata("neutralized"))
+            return;
         if (player instanceof Player) {
-            Player p = (Player) player;
-            if (cactus.containsKey(p.getName()) && attacker instanceof Player) {
+            if (attacker instanceof Player) {
                 Player pAttacker = (Player) attacker;
                 pAttacker.damage(0.5D * level);
-                Location l = p.getLocation();
             }
         }
     }

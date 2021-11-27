@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class RuneCacher {
-    public static HashSet caches = new HashSet();
+    public static HashSet<RuneCacher> caches = new HashSet<>();
     private int experience;
     private int level;
     private boolean canLevelUp;
@@ -26,10 +26,8 @@ public class RuneCacher {
         if (item != null && item.hasItemMeta()) {
             ItemMeta meta = item.getItemMeta();
             if (meta.hasLore()) {
-                Iterator var3 = meta.getLore().iterator();
 
-                while (var3.hasNext()) {
-                    String l = (String) var3.next();
+                for (String l : meta.getLore()) {
                     if (l.startsWith(CC.RedB + "TITAN ATTRIBUTE:")) {
                         String name = l.substring(l.indexOf(":") + 6, l.indexOf("(") - 5);
                         int level = Integer.valueOf(l.substring(l.indexOf("Level") + 6, l.indexOf(")") - 4));
@@ -54,17 +52,13 @@ public class RuneCacher {
             if (meta.hasLore()) {
                 if (Utils.isWeapon(item)) {
                     if (!isContained(player)) {
-                        Iterator var4 = meta.getLore().iterator();
-
-                        while (var4.hasNext()) {
-                            String l = (String) var4.next();
+                        for (String l : meta.getLore()) {
                             if (l.startsWith(CC.RedB + "TITAN ATTRIBUTE:")) {
                                 String name = l.substring(l.indexOf(":") + 6, l.indexOf("(") - 5);
-                                int level = Integer.valueOf(l.substring(l.indexOf("Level") + 6, l.indexOf(")") - 4));
-                                this.level = level;
+                                this.level = Integer.parseInt(l.substring(l.indexOf("Level") + 6, l.indexOf(")") - 4));
                                 this.type = RuneType.valueOf(name);
                             } else if (l.startsWith(CC.RedB + "TITAN XP:")) {
-                                int experience = Integer.valueOf(l.substring(l.indexOf(":") + 6, l.indexOf("/") - 1));
+                                int experience = Integer.parseInt(l.substring(l.indexOf(":") + 6, l.indexOf("/") - 1));
                                 this.experience = experience;
                                 if (this.type != null && this.type.getRune().getExpForLevel(this.level) <= experience && this.level < this.type.getRune().getMaxLevel()) {
                                     this.canLevelUp = true;
@@ -118,18 +112,16 @@ public class RuneCacher {
                 return false;
             } else {
                 boolean occured = false;
-                Iterator var4 = meta.getLore().iterator();
 
-                while (var4.hasNext()) {
-                    String l = (String) var4.next();
+                for (String l : meta.getLore()) {
                     if (l.startsWith(CC.RedB + "TITAN ATTRIBUTE:")) {
                         String name = l.substring(l.indexOf(":") + 6, l.indexOf("(") - 5);
-                        int level = Integer.valueOf(l.substring(l.indexOf("Level") + 6, l.indexOf(")") - 4));
+                        int level = Integer.parseInt(l.substring(l.indexOf("Level") + 6, l.indexOf(")") - 4));
                         this.level = level;
                         this.type = RuneType.valueOf(name);
                         occured = true;
                     } else if (l.startsWith(CC.RedB + "TITAN XP:")) {
-                        int experience = Integer.valueOf(l.substring(l.indexOf(":") + 6, l.indexOf("/") - 1));
+                        int experience = Integer.parseInt(l.substring(l.indexOf(":") + 6, l.indexOf("/") - 1));
                         this.experience = experience;
                         if (this.type != null && this.type.getRune().getExpForLevel(this.level) <= experience && this.level < this.type.getRune().getMaxLevel()) {
                             this.canLevelUp = true;
@@ -146,9 +138,7 @@ public class RuneCacher {
         return this.canLevelUp;
     }
 
-    public RuneType getRuneType() {
-        return this.type;
-    }
+    public RuneType getRuneType() { return this.type; }
 
     public int getLevel() {
         return this.level;

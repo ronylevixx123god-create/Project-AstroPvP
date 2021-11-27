@@ -1,6 +1,10 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
+import com.bryside.astroattributes.DragonTitanAttributesAPI;
+import com.bryside.astroattributes.enums.RuneType;
+import com.bryside.astroattributes.objects.RuneCacher;
 import org.arkhamnetwork.enchantments.Enchantments;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,22 +15,40 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
 
+import java.util.Objects;
+
 final class RageListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onDamaged(EntityDamageEvent event) {
-        if (event.getEntity() instanceof Player) {
+    public void onDamaged(EntityDamageByEntityEvent event) {
+        if (event.getEntity() instanceof Player && event.getDamager() instanceof LivingEntity) {
             Player entity = (Player) event.getEntity();
             if (entity.hasMetadata("combo_pvp")) {
-                entity.removeMetadata("combo_pvp", Enchantments.getInstance());
-            }
-            if (entity.hasMetadata("last_combo_pvp")) {
-                entity.removeMetadata("last_combo_pvp", Enchantments.getInstance());
+                if(RuneCacher.isContained((Player) event.getEntity()) && RuneCacher.getRuneCacher((Player) event.getEntity()).getRuneType() == RuneType.KRONOS) {
+                    Bukkit.broadcastMessage("kronos found");
+                    if(entity.getMetadata("combo_pvp").get(0).asInt() > 1) {
+                        int newRageValue = entity.getMetadata("combo_pvp").get(0).asInt() - 2;
+                        entity.setMetadata("combo_pvp", new FixedMetadataValue(Enchantments.getInstance(), newRageValue));
+                    }
+                } else {
+                    entity.removeMetadata("combo_pvp", Enchantments.getInstance());
+                    if (entity.hasMetadata("last_combo_pvp")) {
+                        entity.removeMetadata("last_combo_pvp", Enchantments.getInstance());
+                    }
+                }
             }
             if (entity.hasMetadata("combo_pve")) {
-                entity.removeMetadata("combo_pve", Enchantments.getInstance());
-            }
-            if (entity.hasMetadata("last_combo_pve")) {
-                entity.removeMetadata("last_combo_pve", Enchantments.getInstance());
+                if (RuneCacher.isContained((Player) event.getEntity()) && RuneCacher.getRuneCacher((Player) event.getEntity()).getRuneType() == RuneType.KRONOS) {
+                    Bukkit.broadcastMessage("kronos found");
+                    if(entity.getMetadata("combo_pve").get(0).asInt() > 1) {
+                        int newRageValue = entity.getMetadata("combo_pve").get(0).asInt() - 2;
+                        entity.setMetadata("combo_pve", new FixedMetadataValue(Enchantments.getInstance(), newRageValue));
+                    }
+                } else {
+                    entity.removeMetadata("combo_pve", Enchantments.getInstance());
+                    if (entity.hasMetadata("last_combo_pve")) {
+                        entity.removeMetadata("last_combo_pve", Enchantments.getInstance());
+                    }
+                }
             }
         }
     }
@@ -37,9 +59,7 @@ final class RageListener implements Listener {
             Player damager = (Player) event.getDamager();
             if (event.getEntity() instanceof Player) {
                 int pvp_combo = damager.hasMetadata("combo_pvp") ? damager.getMetadata("combo_pvp").get(0).asInt() : 0;
-                long last_pvp_combo = damager.hasMetadata("last_combo_pvp")
-                        ? damager.getMetadata("last_combo_pvp").get(0).asLong()
-                        : 0;
+                long last_pvp_combo = damager.hasMetadata("last_combo_pvp") ? damager.getMetadata("last_combo_pvp").get(0).asLong() : 0;
                 if (last_pvp_combo != 0 && last_pvp_combo - System.currentTimeMillis() <= -15000) {
                     pvp_combo = 0;
                 }

@@ -6,18 +6,14 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
-import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
 import net.astropvp.core.AstroCore;
 import net.astropvp.core.cooldown.RealtimeUUIDCooldown;
 import org.apache.commons.io.IOUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -25,9 +21,7 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 
 public class TrailerCommand implements CommandExecutor {
@@ -35,17 +29,16 @@ public class TrailerCommand implements CommandExecutor {
 
     public static String API_KEY = "AIzaSyAgSAZGQ2AyoQOGk_IYzGkYJym3LxeLeVc";
 
-    public static List<String> claimedVideoIds = AstroCore.getInstance().getConfig().getStringList("players-trailer");
+    public static Map<String, String> claimedVideoIds = Maps.newHashMap();
 
-    private final Map<UUID, VideoInfoFetchTask> fetcherTaskMap = Maps.newHashMap();
+    private Map<UUID, VideoInfoFetchTask> fetcherTaskMap = Maps.newHashMap();
 
-    private final RealtimeUUIDCooldown cooldownMap = new RealtimeUUIDCooldown("trailer");
-
+    private RealtimeUUIDCooldown cooldownMap = new RealtimeUUIDCooldown("trailer");
 
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         Player player = (Player) sender;
         if (args.length == 0) {
-            player.sendMessage(CC.translate("&c&l(!) &cPlease enter a youtube video url!"));
+            player.sendMessage(CC.translate("&c&l(!) &cPlease enter a video url!"));
             return true;
         }
         final String videoId = getVideoIdFromUrl(args[0]);
@@ -53,24 +46,28 @@ public class TrailerCommand implements CommandExecutor {
             player.sendMessage( "&cPlease wait...");
             return true;
         }
-        if (claimedVideoIds.contains(videoId)) {
-            player.sendMessage( CC.translate("&c&l(!) Rewards Already Claimed"));
-            player.sendMessage( CC.translate("&7You have already claimed your rewards for this video!"));
+        if (claimedVideoIds.containsKey(player.getName())) {
+            player.sendMessage( "&c&l(!) Rewards Already Claimed (!)");
+            player.sendMessage( "&7You have already claimed your rewards!");
             return true;
         }
         if (videoId == null) {
-            player.sendMessage( CC.translate("&c&l(!) Link Invalid"));
-            player.sendMessage( CC.translate("&7You must have a valid youtube video url."));
-            player.sendMessage( CC.translate("&7(It should be in this format: https://www.youtube.com/watch?v=)"));
+            player.sendMessage( "&c&l(!) Link Invalid (!)");
+            player.sendMessage( "&7You must have a valid youtube video url.");
+            player.sendMessage( "&7(It should be in this format: https://www.youtube.com/watch?v=)");
             return true;
         }
-
+        if (claimedVideoIds.containsValue(videoId)) {
+            player.sendMessage( "&c&l(!) Video Already Claimed (!)");
+            player.sendMessage( "&7You must have a valid youtube video url.");
+            return true;
+        }
         if (this.cooldownMap.isOnCooldown(player, "trailer")) {
-            player.sendMessage( CC.translate("&c&l(!) &cPlease wait a little bit before doing that."));
+            player.sendMessage( "&c&l(!) &cPlease wait a little bit before doing that.");
             return true;
         }
         this.cooldownMap.add(player, Long.valueOf(15000L));
-        player.sendMessage( CC.translate("&aPlease wait while your video is verified..."));
+        player.sendMessage( "&aPlease wait while your video is verified...");
         final VideoInfoFetchTask task = new VideoInfoFetchTask(player.getUniqueId(), videoId);
         (new BukkitRunnable() {
             public void run() {
@@ -82,47 +79,43 @@ public class TrailerCommand implements CommandExecutor {
                 String videoTitle = task.getTitle();
                 String videoDescription = task.getDescription();
                 if (videoTitle == null || videoDescription == null) {
-                    player.sendMessage( CC.translate("&c&lERROR&c: Please try again in a bit."));
+                    player.sendMessage( "&c&lERROR&c: Please try again in a bit.");
                     TrailerCommand.this.fetcherTaskMap.remove(player.getUniqueId());
                     cancel();
                     return;
                 }
                 if (!videoTitle.equalsIgnoreCase(TrailerCommand.REQUIRED_VIDEO_TITLE)) {
-                    player.sendMessage( CC.translate("&c&l(!) Invalid Video Title"));
-                    player.sendMessage( CC.translate("&7Your video title doesn't match the required title."));
-                    player.sendMessage( CC.translate(""));
-                    player.sendMessage( CC.translate("&c&lYour Title:"));
-                    player.sendMessage( CC.translate("&7\"&c&m" + videoTitle + "&7\""));
+                    player.sendMessage( "&c&l(!) Invalid Video Title (!)");
+                    player.sendMessage( "&7Your video title doesn't match the required title.");
                     player.sendMessage( "");
-                    player.sendMessage( CC.translate("&a&lRequired Title:"));
-                    player.sendMessage( CC.translate("&7\"&a" + TrailerCommand.REQUIRED_VIDEO_TITLE + "&7\""));
-                    player.sendMessage( CC.translate(""));
-                    player.sendMessage( CC.translate("&7After changing title, allow time to update."));
+                    player.sendMessage( "&c&lYour Title:");
+                    player.sendMessage( "&7\"&c&m" + videoTitle + "&7\"");
+                    player.sendMessage( "");
+                    player.sendMessage( "&a&lRequired Title:");
+                    player.sendMessage( "&7\"&a" + TrailerCommand.REQUIRED_VIDEO_TITLE + "&7\"");
+                    player.sendMessage( "");
+                    player.sendMessage( "&7After changing title, allow time to update.");
                     TrailerCommand.this.fetcherTaskMap.remove(player.getUniqueId());
                     cancel();
                     return;
                 }
                 if (!videoDescription.toLowerCase().contains(sender.getName().toLowerCase())) {
-                    player.sendMessage( CC.translate("&c&l(!) Confirmation Required"));
+                    player.sendMessage( "&c&l(!) Confirmation Required (!)");
                     player.sendMessage( "");
-                    player.sendMessage( CC.translate("&7" + videoDescription));
+                    player.sendMessage( videoDescription);
                     player.sendMessage( "");
-                    player.sendMessage( CC.translate("&7Please insert &f'" + sender.getName() + "'&7 in the description of your video."));
-                    player.sendMessage( CC.translate("&7Then please redo &f/trailer <link> &7to confirm once again."));
+                    player.sendMessage( "&7Please insert &f'" + sender.getName() + "'&7 in the description of your video.");
+                    player.sendMessage( "&7Then please redo &f/claim <link> &7to confirm once again.");
                     TrailerCommand.this.fetcherTaskMap.remove(player.getUniqueId());
                     cancel();
                     return;
                 }
                 player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0F, 1.0F);
-                player.sendMessage( CC.translate("&a&l(!) Rewards Claimed"));
-                player.sendMessage( CC.translate("&7You have successfully claimed your Trailer Lootbox."));
-                TrailerCommand.claimedVideoIds.add(videoId);
+                player.sendMessage( "&a&l(!) Rewards Claimed (!)");
+                player.sendMessage( "&7You have successfully claimed your SOTW rewards.");
+                TrailerCommand.claimedVideoIds.put(player.getName(), videoId);
                 TrailerCommand.this.fetcherTaskMap.remove(player.getUniqueId());
-                Bukkit.broadcastMessage(CC.translate("&4&l(&c&lTrailer&4&l)&4 " + player.getName() + "&c has claimed their &4&lTrailer Lootbox &7(/trailer) &c."));
-                player.getInventory().addItem(CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("TrailerLootbox").createClaimableItem(false));
-                AstroCore.getInstance().getConfig().set("players-trailer", claimedVideoIds);
-                AstroCore.getInstance().saveConfig();
-                AstroCore.getInstance().reloadConfig();
+                //give item here
             }
         }).runTaskLater((Plugin)AstroCore.getInstance(), 100L);
         return false;
@@ -138,9 +131,9 @@ public class TrailerCommand implements CommandExecutor {
     }
 
     public class VideoInfoFetchTask extends BukkitRunnable {
-        private final UUID playerUUID;
+        private UUID playerUUID;
 
-        private final String videoId;
+        private String videoId;
 
         private String title;
 

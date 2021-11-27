@@ -34,6 +34,7 @@ import me.ifamasssxd.cosmicbosses.utils.ScoreboardUtils;
 import me.ifamasssxd.cosmicduel.DuelAPI;
 import me.ifamasssxd.cosmicduel.struct.enums.DuelState;
 import me.ifamasssxd.cosmichcf.managers.OutpostManager;
+import org.arkhamnetwork.enchantments.enchantments.axes.Corrupt;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -130,6 +131,40 @@ public class Scoreboard implements BoardAdapter {
 
 
     public List<String> mainBoard(Player player) {
+
+        if(DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon() != null && DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.PLANET_NUL) {
+            for(Entity entity : player.getNearbyEntities(32, 32, 32)) {
+                if(entity.hasMetadata("boss")) {
+                    if(Boss.bosses.get(entity.getUniqueId()) instanceof CorruptCosmonaut) {
+                        CorruptCosmonaut yijki = (CorruptCosmonaut) Boss.bosses.get(entity.getUniqueId());
+                        List<String> board = new LinkedList<>();
+                        board.add("");
+                        board.add(CC.RedB + "Health");
+                        DecimalFormat format = new DecimalFormat("###.#");
+                        board.add(CC.Red + format.format(yijki.getEntity().getHealth()));
+                        if(yijki.hasMinions()) {
+                            board.add("");
+                            board.add(CC.YellowB + "Minions");
+                            board.add(CC.Yellow + yijki.getMinions().size());
+                        }
+                        board.add("");
+                        board.add(CC.AquaB + "Ability");
+                        board.add(CC.Aqua + yijki.getActiveAbility().getAbilityName());
+                        board.add("");
+                        board.add(CC.GreenB + "Damage Dealt");
+                        int damage = yijki.getDamageTracker().containsKey(player) ? yijki.getDamageTracker().get(player) : 0;
+                        int totalDamage = 0;
+                        for (Integer dmg : (yijki.getDamageTracker()).values()) {
+                            totalDamage += dmg;
+                        }
+                        double percent = (double) damage / totalDamage * 100.0;
+                        String string = ChatColor.GREEN.toString() + damage + ChatColor.GRAY + " [" + format.format(percent) + "%]";
+                        board.add(CC.Green + string);
+                        return board;
+                    }
+                }
+            }
+        }
 
         if(DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon() != null && (DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.DESTROYED_OUTPOST || DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.ABANDONED_SHIP)) {
             for(Entity entity : player.getNearbyEntities(32, 32, 32)) {

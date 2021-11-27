@@ -77,7 +77,7 @@ public class PlayerPotionEffects {
             effects3.put(ce, new CopyOnWriteArrayList<>(Arrays.asList(a)));
         }
         String regionName = WorldGuardUtils.getRegionName(getPlayer().getLocation());
-        if (regionName.contains("parkour") && !regionName.contains("enchants"))
+        if (regionName.contains("parkour") || regionName.contains("find_corrupt_room") || regionName.contains("maze") || regionName.equalsIgnoreCase("fireball_alley"))
             return;
         if (!hasBetterActiveEffect) {
             if (consumer != null)
@@ -189,7 +189,7 @@ public class PlayerPotionEffects {
             if (dp != null && dp.getCurrentDungeon() != null) {
                 if (regionName == null)
                     regionName = WorldGuardUtils.getRegionName(p.getLocation());
-                if (regionName.startsWith("parkour") || regionName.contains("find_corrupt_room") || regionName.contains("parkour") || regionName.contains("maze") || regionName.equals("maze") || regionName.equalsIgnoreCase("fireball_alley"))
+                if (regionName.contains("parkour") || regionName.contains("find_corrupt_room") || regionName.contains("maze") || regionName.equalsIgnoreCase("fireball_alley"))
                     return;
             }
         }

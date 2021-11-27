@@ -229,8 +229,8 @@ public class AstroCore extends JavaPlugin {
 
         cachedColors = new HashMap<>();
 
-        //this.enchantmentCoderManager = new EnchantmentCoderManager(getDataFolder() + "/enchantmentcoderdata.json");
-        //this.enchantmentCoderManager.loadData();
+        this.enchantmentCoderManager = new EnchantmentCoderManager("plugins/AstroCore/enchantmentcoderdata.json");
+        this.enchantmentCoderManager.loadData();
 
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new HeroicUpgrade());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new RogueScratchCard());
@@ -326,9 +326,7 @@ public class AstroCore extends JavaPlugin {
         this.getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
             try {
                 this.jackpotManager.onJackpotTick();
-            } catch (UserDoesNotExistException e) {
-                e.printStackTrace();
-            } catch (NoLoanPermittedException e) {
+            } catch (UserDoesNotExistException | NoLoanPermittedException e) {
                 e.printStackTrace();
             }
         }, 20L, 20L);
@@ -529,6 +527,9 @@ public class AstroCore extends JavaPlugin {
         this.coinFlipManager.saveToggles();
 
         this.toggleManager.saveToggles();
+
+        this.enchantmentCoderManager.saveData();
+        this.enchantmentCoderManager.clearData();
 
         Set infernalClaims = this.claimsOnInfernal.entrySet();
         Iterator infernalIterator = infernalClaims.iterator();

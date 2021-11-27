@@ -28,8 +28,6 @@ public class RuneDamagerListener implements Listener {
                 return;
             }
 
-
-
             RuneCacher cacher = RuneCacher.getRuneCacher(damager);
             if (cacher == null) {
                 cacher = new RuneCacher(item, damager);

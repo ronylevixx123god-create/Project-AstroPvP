@@ -66,7 +66,7 @@ public class AtlasRune extends Rune implements Listener {
     }
 
     @Override
-    public void procDamageEvent(final EntityDamageByEntityEvent e, final int level, final Player damager) throws Exception {
+    public void procDamageEvent(final EntityDamageByEntityEvent e, final int level, final Player damager) {
         if (WorldGuardUtils.isPvPEnabled(damager.getLocation()) && Math.random() < 0.1) {
             try {
                 if(e.getEntity() instanceof Player) {

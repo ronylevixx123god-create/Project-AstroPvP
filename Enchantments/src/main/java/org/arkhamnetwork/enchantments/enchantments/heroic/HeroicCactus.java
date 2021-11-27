@@ -14,17 +14,16 @@ public class HeroicCactus extends HeroicCustomEnchantment {
 
     public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
         if (player instanceof Player) {
-            if (player.hasMetadata("neutralized"))
+            if(player.hasMetadata("neutralized"))
                 return;
-            Player p = (Player) player;
-            if (attacker != null && attacker instanceof Player) {
-                Player pAttacker = (Player) attacker;
-                if (pAttacker != null && Math.random() < 0.05) {
-                    pAttacker.damage(0.5D);
-                    Location l = p.getLocation();
-                }
+            Player p = (Player)player;
+            if (attacker instanceof Player && Math.random() < 0.25) {
+                Player pAttacker = (Player)attacker;
+                pAttacker.damage(0.5D * level);
+                Location l = p.getLocation();
+                WorldUtil.sendWorldEffect(l.getBlock(), 81, 2001);
             }
-            double thornNegateChance = (level == 1) ? 0.2D : 0.5D;
+            double thornNegateChance = (level == 1) ? 0.5D : 1.0D;
             if (e.getCause() == EntityDamageEvent.DamageCause.THORNS && Math.random() < thornNegateChance) {
                 e.setCancelled(true);
                 e.setDamage(0.0D);
