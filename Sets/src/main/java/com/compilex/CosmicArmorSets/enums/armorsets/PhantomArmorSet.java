@@ -102,7 +102,7 @@ public class PhantomArmorSet
         if (this.isBlockedOutpostWorld(damager)) {
             return false;
         }
-        return this.modifyDamage(damager, event, 5.0, applied);
+        return this.modifyDamage(damager, event, 3.0, applied);
     }
 
     @Override

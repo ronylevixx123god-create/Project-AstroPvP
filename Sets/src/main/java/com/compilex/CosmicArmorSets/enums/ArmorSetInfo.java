@@ -91,23 +91,14 @@ public abstract class ArmorSetInfo {
     }
 
     protected boolean modifyDamage(Player player, EntityDamageByEntityEvent event, double multiplierIncrementInHundreds, int multiplier) {
-        double modifier = (multiplierIncrementInHundreds < 0.0 ? Math.abs(multiplierIncrementInHundreds) : multiplierIncrementInHundreds) * 0.01 * (double) multiplier;
-        double starterDamage = event.getDamage(EntityDamageEvent.DamageModifier.BASE);
-        if (multiplierIncrementInHundreds < 0.0) {
-            event.setDamage(Math.max(0.0, event.getDamage(EntityDamageEvent.DamageModifier.BASE) - event.getDamage(EntityDamageEvent.DamageModifier.BASE) * modifier));
+        double modifier = ((multiplierIncrementInHundreds < 0.0D) ? Math.abs(multiplierIncrementInHundreds) : multiplierIncrementInHundreds) * 0.01D * (double) multiplier;
+        double starterDamage = event.getDamage();
+        if (multiplierIncrementInHundreds < 0.0D) {
+            event.setDamage(Math.max(0.0D, event.getDamage() - event.getDamage() * modifier));
         } else {
-            event.setDamage(Math.max(0.0, event.getDamage(EntityDamageEvent.DamageModifier.BASE) + event.getDamage(EntityDamageEvent.DamageModifier.BASE) * modifier));
+            event.setDamage(Math.max(0.0D, event.getDamage() + event.getDamage() * modifier));
         }
-        if (starterDamage != event.getDamage(EntityDamageEvent.DamageModifier.BASE)) {
-            if (CosmicArmorSetsPlugin.get_().isDebugging()) {
-                CosmicArmorSetsPlugin.get_().getLogger().info("(" + this.getClass().getSimpleName() + ") Modifying damage from bonus by " + multiplierIncrementInHundreds + " equipped: " + multiplier + " modifier: " + modifier + " for " + player.getName() + " was " + starterDamage + " -> " + event.getDamage(EntityDamageEvent.DamageModifier.BASE) + " damaged: " + (event.getEntity() instanceof Player ? event.getEntity().getName() : event.getEntity().getType().name()));
-                if (player.isOp()) {
-                    player.sendMessage(CC.Red + "Modified Damage: " + modifier + " (" + starterDamage + " old: " + event.getDamage(EntityDamageEvent.DamageModifier.BASE) + ")");
-                }
-            }
-            return true;
-        }
-        return false;
+        return starterDamage != event.getDamage();
     }
 
     protected void removeResistance(Player player) {
