@@ -83,7 +83,9 @@ public class Rogue extends CustomEnchantment {
             } else if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.SUMMER_2021_SWORD)) {
                 e.setDamage(damage + (multi * 0.19));
                 ((Player) player).sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&l** ROGUE &7[" + new DecimalFormat("##.##").format(multi) + "x] &c&l-" + soulCost + " SOULS ** (&c&lSoul Maui's Hook&c&l)"));
-
+            } else if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.DOOMSDAY_SWORD)) {
+                    e.setDamage(damage + (multi * 0.19));
+                    ((Player) player).sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&l** ROGUE &7[" + new DecimalFormat("##.##").format(multi) + "x] &c&l-" + soulCost + " SOULS ** (&2&lDoomsday Machete&c&l)"));
             } else {
                 ((Player) playerHit).sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&l** " + ((Player) player).getName() + "'s ROGUE &7[" + new DecimalFormat("##.##").format(multi) + "x] **"));
                 e.setDamage(damage + (multi * 0.18));
