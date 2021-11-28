@@ -20,9 +20,12 @@ public class DamageFixes implements Listener {
     public void onHit(EntityDamageByEntityEvent e) {
         if(e.getEntity() instanceof Player) {
             e.setDamage(e.getDamage() * (1 + (DamageUtils.getIncreasedDamageOn((Player) e.getEntity())) / 100));
+            Bukkit.broadcastMessage(e.getEntity().getName() + " is taking " + (1 + (DamageUtils.getIncreasedDamageOn((Player) e.getEntity())) / 100) + "x more damage");
         }
         if(e.getDamager() instanceof Player) {
             e.setDamage(e.getDamage() * (1 - ((DamageUtils.getDecreasedDamageOn((Player) e.getDamager())) / 100)));
+            Bukkit.broadcastMessage(e.getEntity().getName() + " is taking " + (1 - (DamageUtils.getDecreasedDamageOn((Player) e.getDamager())) / 100) + "x less damage");
+
         }
     }
 
