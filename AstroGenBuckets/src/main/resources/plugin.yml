@@ -8,3 +8,5 @@ commands:
     aliases: [gen, genshop]
   gentask:
     description: Gentask command
+  togglegen:
+    aliases: [togglegenbuckets]

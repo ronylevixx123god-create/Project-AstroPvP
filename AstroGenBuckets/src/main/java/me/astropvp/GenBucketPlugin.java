@@ -4,8 +4,11 @@ import com.avaje.ebean.EbeanServer;
 import java.io.InputStream;
 import java.util.List;
 
+import lombok.Getter;
+import lombok.Setter;
 import me.astropvp.command.GenBucketCommand;
 import me.astropvp.command.GenTaskCommand;
+import me.astropvp.command.GenbucketToggleCommand;
 import me.astropvp.handler.GenBucketHandler;
 import me.astropvp.listener.GenBucketListener;
 import net.milkbowl.vault.economy.Economy;
@@ -20,6 +23,8 @@ public class GenBucketPlugin extends JavaPlugin {
     private GenBucketHandler bucketHandler;
     private Economy economy;
 
+    private static boolean genEnabled = true;
+
     public void onEnable() {
         this.getConfig().options().copyDefaults(true);
         this.saveDefaultConfig();
@@ -30,6 +35,7 @@ public class GenBucketPlugin extends JavaPlugin {
         this.getCommand("genbucket").setExecutor(genBucketCommand = new GenBucketCommand(this));
         GenTaskCommand genTaskCommand;
         this.getCommand("gentask").setExecutor(genTaskCommand = new GenTaskCommand(this));
+        this.getCommand("togglegen").setExecutor(new GenbucketToggleCommand());
         this.getServer().getPluginManager().registerEvents(new GenBucketListener(this, genBucketCommand, genTaskCommand), this);
     }
 
@@ -45,6 +51,14 @@ public class GenBucketPlugin extends JavaPlugin {
                 return this.economy != null;
             }
         }
+    }
+
+    public static boolean isGenEnabled() {
+        return genEnabled;
+    }
+
+    public static void setGenEnabled(boolean genEnabled) {
+        GenBucketPlugin.genEnabled = genEnabled;
     }
 
     public static GenBucketPlugin getInstance() {

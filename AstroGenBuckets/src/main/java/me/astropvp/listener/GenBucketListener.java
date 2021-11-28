@@ -1,5 +1,6 @@
 package me.astropvp.listener;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.massivecraft.factions.Board;
@@ -7,6 +8,7 @@ import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.struct.Relation;
+
 import java.util.Iterator;
 import java.util.UUID;
 
@@ -68,7 +70,7 @@ public class GenBucketListener implements Listener {
                     }
 
                     if (!hasChunkAccess && (!locFaction.isNormal() || !locFaction.getRelationTo(me).isAtLeast(Relation.MEMBER))) {
-                        KrizzUtil.sendMessage((LivingEntity)player, (String)"&c&l(!)&c You cannot place a genbucket in this territory.");
+                        KrizzUtil.sendMessage((LivingEntity) player, (String) "&c&l(!)&c You cannot place a genbucket in this territory.");
                         return;
                     }
                 } catch (NullPointerException var10) {
@@ -76,38 +78,44 @@ public class GenBucketListener implements Listener {
 
 
                 do {
-                        if (this.isNearbyEnemy(me, 30)) {
-                            KrizzUtil.sendMessage((LivingEntity)player, (String)"&c&l(!)&c You are within 30 blocks of a enemy/neutral player.");
-                            return;
-                        }
+                    if (this.isNearbyEnemy(me, 30)) {
+                        KrizzUtil.sendMessage((LivingEntity) player, (String) "&c&l(!)&c You are within 30 blocks of a enemy/neutral player.");
+                        return;
+                    }
 
-                        if (!bucket.getDirection().isApplicable(event.getBlockFace())) {
-                            if (bucket.getDirection() == GenBucketDirection.HORIZONTAL) {
-                                KrizzUtil.sendMessage((LivingEntity)player, (String)"&c&l(!)&c You must place this on the side of a block.");
-                                event.setCancelled(true);
-                                player.updateInventory();
-                                return;
-                            }
-
-                            blockFace = bucket.getDirection().getDefaultBlockFace();
-                        }
-
-                        double price = bucket.getPrice();
-                        if (!this.plugin.getEconomy().has(player, price)) {
-                            KrizzUtil.sendMessage((LivingEntity)player, (String)"&c&l(!)&c You do not have enough money to use this bucket.");
+                    if (!bucket.getDirection().isApplicable(event.getBlockFace())) {
+                        if (bucket.getDirection() == GenBucketDirection.HORIZONTAL) {
+                            KrizzUtil.sendMessage((LivingEntity) player, (String) "&c&l(!)&c You must place this on the side of a block.");
                             event.setCancelled(true);
                             player.updateInventory();
                             return;
                         }
 
-                        this.plugin.getEconomy().withdrawPlayer(player, price);
-                        KrizzUtil.sendMessage((LivingEntity)player, (String)("&c&l- " + this.plugin.getEconomy().format(price)));
-                        bucket.getBucket().startTask(player, event.getBlockClicked(), blockFace, event.getBlockFace(), bucket);
-                        KrizzUtil.playSound(player, Sound.ORB_PICKUP);
+                        blockFace = bucket.getDirection().getDefaultBlockFace();
+                    }
+
+                    double price = bucket.getPrice();
+                    if (!this.plugin.getEconomy().has(player, price)) {
+                        KrizzUtil.sendMessage((LivingEntity) player, (String) "&c&l(!)&c You do not have enough money to use this bucket.");
+                        event.setCancelled(true);
+                        player.updateInventory();
                         return;
+                    }
+
+                    if (!GenBucketPlugin.isGenEnabled()) {
+                        player.sendMessage(CC.translate("&c&l(!)&c Genbuckets are currently disabled! Wait until an administrator enables them again."));
+                        event.setCancelled(true);
+                        return;
+                    }
+
+                    this.plugin.getEconomy().withdrawPlayer(player, price);
+                    KrizzUtil.sendMessage((LivingEntity) player, (String) ("&c&l- " + this.plugin.getEconomy().format(price)));
+                    bucket.getBucket().startTask(player, event.getBlockClicked(), blockFace, event.getBlockFace(), bucket);
+                    KrizzUtil.playSound(player, Sound.ORB_PICKUP);
+                    return;
 
 
-                } while(true);
+                } while (true);
 
             }
         }
@@ -126,9 +134,9 @@ public class GenBucketListener implements Listener {
 
                 try {
                     UUID uuid = UUID.fromString(nbtItem.getString("uuid"));
-                    GenBucketTask.getTask((Player)event.getWhoClicked(), uuid).ifPresent((task) -> {
+                    GenBucketTask.getTask((Player) event.getWhoClicked(), uuid).ifPresent((task) -> {
                         task.endTask();
-                        this.genTaskCommand.openGenTaskInventory((Player)event.getWhoClicked());
+                        this.genTaskCommand.openGenTaskInventory((Player) event.getWhoClicked());
                     });
                 } catch (NullPointerException var5) {
                     return;
@@ -139,7 +147,7 @@ public class GenBucketListener implements Listener {
     }
 
     public boolean isNearbyEnemy(FPlayer fPlayer, int radius) {
-        Iterator var3 = fPlayer.getPlayer().getNearbyEntities((double)radius, (double)radius, (double)radius).iterator();
+        Iterator var3 = fPlayer.getPlayer().getNearbyEntities((double) radius, (double) radius, (double) radius).iterator();
 
         Player player;
         FPlayer fOther;
@@ -150,12 +158,12 @@ public class GenBucketListener implements Listener {
                     return false;
                 }
 
-                entity = (Entity)var3.next();
-            } while(!(entity instanceof Player));
+                entity = (Entity) var3.next();
+            } while (!(entity instanceof Player));
 
-            player = (Player)entity;
+            player = (Player) entity;
             fOther = FactionUtils.getFPlayer(player);
-        } while(fPlayer.getRelationTo(fOther) != Relation.ENEMY && (fPlayer.getRelationTo(fOther) != Relation.NEUTRAL || !CombatLog.inCombat(player)));
+        } while (fPlayer.getRelationTo(fOther) != Relation.ENEMY && (fPlayer.getRelationTo(fOther) != Relation.NEUTRAL || !CombatLog.inCombat(player)));
 
         return true;
     }
@@ -167,18 +175,18 @@ public class GenBucketListener implements Listener {
         if (event.getMessage().equalsIgnoreCase("/gentask")) {
             event.setCancelled(true);
             event.getPlayer().closeInventory();
-            this.genTaskCommand.onCommand(event.getPlayer(), (Command)null, "gentask", new String[0]);
+            this.genTaskCommand.onCommand(event.getPlayer(), (Command) null, "gentask", new String[0]);
         } else if (event.getMessage().equalsIgnoreCase("/genbucket")) {
             event.setCancelled(true);
             String[] args = event.getMessage().split(" ");
             String[] newArgs = new String[args.length - 1];
 
-            for(int i = 1; i < args.length && args.length >= 2; ++i) {
+            for (int i = 1; i < args.length && args.length >= 2; ++i) {
                 newArgs[i - 1] = args[i];
             }
 
             event.getPlayer().closeInventory();
-            this.genBucketCommand.onCommand(event.getPlayer(), (Command)null, "genbucket", newArgs);
+            this.genBucketCommand.onCommand(event.getPlayer(), (Command) null, "genbucket", newArgs);
         }
 
     }
