@@ -14,6 +14,7 @@ public class WarpCommand implements Listener {
     public void warpCMD(PlayerCommandPreprocessEvent e) {
         String cmd = e.getMessage().toLowerCase();
         if (cmd.equals("/warp") || cmd.equals("/ewarp") || cmd.equals("/warps") || cmd.equals("/ewarps")) {
+            e.setMessage("/null");
             Player p = e.getPlayer();
             WarpGUI warpGUI = new WarpGUI(p);
             warpGUI.getLootGUI().open(p);
