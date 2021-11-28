@@ -366,6 +366,7 @@ public class AstroCore extends JavaPlugin {
         this.getCommand("jackpot").setExecutor(new CommandJackpot());
         getCommand("chatcolor").setExecutor(new ChatColorCommand());
         this.getServer().getPluginManager().registerEvents(new InventoryListener(), this);
+        this.getServer().getPluginManager().registerEvents(new WarpCommand(), this);
         this.getServer().getPluginManager().registerEvents(new me.ifamasssxd.cosmiccoinflip.listeners.PlayerListener(), this);
 
         this.getServer().getPluginManager().registerEvents(new WorldBorderPearlFix(), this);
