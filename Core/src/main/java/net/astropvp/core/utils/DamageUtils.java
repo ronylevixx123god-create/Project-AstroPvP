@@ -1,9 +1,13 @@
 package net.astropvp.core.utils;
 
+import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
+import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+
+import java.util.Map;
 
 public class DamageUtils {
     public static void setDamageIncrease(double amountInPercentage, EntityDamageByEntityEvent event) {
@@ -51,5 +55,29 @@ public class DamageUtils {
         value = 0.01D * value;
         value = 1.0D - value;
         return value;
+    }
+
+    public static Double getIncreasedDamageOn(Player player) {
+        Map<ArmorSet, Integer> crystals = CosmicArmorSetsAPI.getBonusCrystalsEquipped(player);
+        double increase = 0;
+        if(!crystals.containsKey(ArmorSet.APOLLO))
+            increase = increase + 25;
+        if(!crystals.containsKey(ArmorSet.ULTRA) || !crystals.containsKey(ArmorSet.CHAMPION) && !crystals.containsKey(ArmorSet.APOLLO))
+            increase = increase + 25;
+        if(!crystals.containsKey(ArmorSet.ANCIENT) && (!crystals.containsKey(ArmorSet.ULTRA) || !crystals.containsKey(ArmorSet.CHAMPION) && !crystals.containsKey(ArmorSet.APOLLO)))
+            increase = increase + 10;
+        return increase;
+    }
+
+    public static Double getDecreasedDamageOn(Player player) {
+        Map<ArmorSet, Integer> crystals = CosmicArmorSetsAPI.getBonusCrystalsEquipped(player);
+        double decrease = 0;
+        if(!crystals.containsKey(ArmorSet.APOLLO))
+            decrease = decrease + 25;
+        if(!crystals.containsKey(ArmorSet.ULTRA) || !crystals.containsKey(ArmorSet.CHAMPION) && !crystals.containsKey(ArmorSet.APOLLO))
+            decrease = decrease + 25;
+        if(!crystals.containsKey(ArmorSet.ANCIENT) && (!crystals.containsKey(ArmorSet.ULTRA) || !crystals.containsKey(ArmorSet.CHAMPION) && !crystals.containsKey(ArmorSet.APOLLO)))
+            decrease = decrease + 10;
+        return decrease;
     }
 }
