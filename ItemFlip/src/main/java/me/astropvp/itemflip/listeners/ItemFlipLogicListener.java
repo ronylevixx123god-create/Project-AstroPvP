@@ -176,8 +176,9 @@ public class ItemFlipLogicListener implements Listener {
 
     @EventHandler
     public void onTeleport(PlayerTeleportEvent e) {
-        if (e.getTo().getWorld().getName().equals("world"))
-            return;
+        if (e.getTo().getWorld().getName().equals("world") || e.getTo().getWorld().getName().equals("flat"))
+
+        return;
         Player player = e.getPlayer();
         ItemFlipRequest request = ItemFlipRequest.findInstance(player);
         if (request == null) return;

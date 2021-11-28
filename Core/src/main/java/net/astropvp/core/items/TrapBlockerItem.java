@@ -77,7 +77,7 @@ public class TrapBlockerItem extends CosmicItem
         }
 
 
-        if (!player.getLocation().getWorld().getName().equals("world") || !WorldGuardUtils.isPvPEnabled(player.getLocation())) {
+        if (!player.getLocation().getWorld().getName().equals("world") && !(player.getWorld().getName().equals("flat")) || !WorldGuardUtils.isPvPEnabled(player.getLocation())) {
             throw new PrefixedException("You cannot activate that ability here!");
         }
 

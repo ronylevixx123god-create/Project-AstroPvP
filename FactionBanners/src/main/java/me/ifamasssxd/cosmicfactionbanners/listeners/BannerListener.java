@@ -33,7 +33,7 @@ public class BannerListener implements Listener
     
     public BannerListener() {
         this.waitingForMonitorCall = null;
-        this.bannerAllowedWorlds = (List<String>)Lists.newArrayList(new String[] { "world", "world_nether", "world_end", "world_arena", "world_event" });
+        this.bannerAllowedWorlds = (List<String>)Lists.newArrayList(new String[] { "world", "world_nether", "world_end", "world_arena", "flat" });
         this.BANNER_SOUL_COST = CosmicFactionBanners.get().getConfig().getInt("soulCost");
     }
     

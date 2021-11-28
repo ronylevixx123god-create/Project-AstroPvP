@@ -73,8 +73,8 @@ public class SlotbotScratchCard extends CosmicItem
             return;
         }
 
-        if (!(player.getWorld().getName().equals("world"))) {
-            throw new PrefixedException("You cannot claim this rank in this world!");
+        if (!(player.getWorld().getName().equals("world")) && !(player.getWorld().getName().equals("flat"))) {
+            throw new PrefixedException("You cannot use that in this world!");
         }
 
 

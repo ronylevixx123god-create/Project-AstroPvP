@@ -52,6 +52,8 @@ public class WarzoneClaimListener implements Listener {
         this.regions.put("desertwarzone", "desertwarzoneclaimlimiter");
         this.regions.put("infernalwarzone", "infernalstrongholdclaimlimiter");
         this.regions.put("frozenwarzone", "frozenstrongholdclaimlimiter");
+        this.regions.put("flatwarzone", "flatwarzoneclaimlimiter");
+
     }
 
     @EventHandler
@@ -60,7 +62,7 @@ public class WarzoneClaimListener implements Listener {
         FLocation fl = event.getLocation();
         if (isCloseToWarzone(w.getChunkAt((int)fl.getX(), (int)fl.getZ()))) {
             String rn = getFixedRegionName();
-            if (!canClaim(event.getFaction(), getClaimLimiterRegionName(), Bukkit.getWorld("world"))) {
+            if (!canClaim(event.getFaction(), getClaimLimiterRegionName(), Bukkit.getWorld(w.getName()))) {
                 event.getPlayer().sendMessage(CC.translate("&c&l(!) &cYou can only claim maximum of &n" + this.maxClaims + "&c claims touching the " + rn + " WarZone!"));
                 event.setCancelled(true);
                 return;
