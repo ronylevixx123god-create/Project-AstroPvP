@@ -3,6 +3,7 @@ package net.astropvp.util;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
@@ -46,6 +47,8 @@ public class ConfigUtils {
     }
 
     public static ItemStack getItem(String line) {
+        if(line.equals(""))
+            return new ItemStack(Material.EMERALD);
         return fromBase64(line.split(":")[0]).getContents()[0];
     }
 }

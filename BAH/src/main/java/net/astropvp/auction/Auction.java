@@ -58,7 +58,7 @@ public class Auction
     }
     
     public void doBid(final Player player, final double bidAmount) {
-        if (EconomyUtils.hasBalance(player, bidAmount)) {
+        if (!EconomyUtils.hasBalance(player, bidAmount)) {
             player.sendMessage(CC.translate("&c&l[/bah] &cYou do not have enough money to bid on this item."));
             return;
         }

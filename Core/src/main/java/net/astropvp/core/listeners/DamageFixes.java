@@ -3,6 +3,7 @@ package net.astropvp.core.listeners;
 import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
 import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import net.astropvp.core.utils.DamageUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -14,6 +15,16 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 public class DamageFixes implements Listener {
+
+    @EventHandler
+    public void onHit(EntityDamageByEntityEvent e) {
+        if(e.getEntity() instanceof Player) {
+            e.setDamage(e.getDamage() * (1 + (DamageUtils.getIncreasedDamageOn((Player) e.getEntity())) / 100));
+        }
+        if(e.getDamager() instanceof Player) {
+            e.setDamage(e.getDamage() * (1 - ((DamageUtils.getIncreasedDamageOn((Player) e.getDamager())) / 100)));
+        }
+    }
 
     /*@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void dmgDebuf(final EntityDamageByEntityEvent event) {

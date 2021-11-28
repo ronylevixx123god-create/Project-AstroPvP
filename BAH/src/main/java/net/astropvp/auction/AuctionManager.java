@@ -1,15 +1,13 @@
 package net.astropvp.auction;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import net.astropvp.BlackMarketAuction;
 import net.astropvp.util.ConfigUtils;
 import net.astropvp.util.Utils;
-import org.bukkit.Material;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitRunnable;
-import com.cosmicpvp.cosmicutils.utils.CC;
 import org.apache.commons.lang.WordUtils;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +24,9 @@ public class AuctionManager
     public AuctionManager() {
         AuctionManager.instance = this;
         this.pastAuctions = new ArrayList<>();
-        List<String> pastAuctions = BlackMarketAuction.get().getConfig().contains("past-auctions") ? BlackMarketAuction.get().getConfig().getStringList("past-auctions") : new ArrayList<>();
+        List<String> pastAuctions = BlackMarketAuction.get().getConfig().getStringList("past-auctions");
         pastAuctions.forEach(auction -> this.pastAuctions.add(PastAuction.fromString(auction)));
+        this.possibleItems = new ArrayList<>();
         List<String> possibleItems = BlackMarketAuction.get().getConfig().getStringList("possible-items");
         possibleItems.forEach(item -> this.possibleItems.add(ConfigUtils.getItem(item)));
         this.lastAuction = BlackMarketAuction.get().getConfig().getLong("last-auction");

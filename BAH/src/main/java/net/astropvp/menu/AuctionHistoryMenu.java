@@ -6,9 +6,7 @@ package net.astropvp.menu;
 
 import org.bukkit.inventory.Inventory;
 
-@Deprecated
-public class AuctionHistoryMenu implements Menu
-{
+public class AuctionHistoryMenu implements Menu {
     private Inventory inventory;
     
     public Inventory getInventory() {

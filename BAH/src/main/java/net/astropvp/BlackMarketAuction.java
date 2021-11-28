@@ -8,6 +8,7 @@ import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
 import net.astropvp.auction.Auction;
 import net.astropvp.auction.AuctionManager;
 import net.astropvp.command.CommandBAH;
+import net.astropvp.listener.MenuListener;
 import net.astropvp.menu.AuctionMenu;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
@@ -25,6 +26,7 @@ public class BlackMarketAuction extends JavaPlugin
     private ItemStack nextAuctionItem;
     
     public void onEnable() {
+        instance = this;
         File file = new File(this.getDataFolder() + File.separator + "config.yml");
         if (!file.exists()) {
             saveDefaultConfig();
@@ -32,6 +34,7 @@ public class BlackMarketAuction extends JavaPlugin
         this.auctionManager = new AuctionManager();
         this.auctionMenu = new AuctionMenu();
         this.getCommand("bah").setExecutor((CommandExecutor)new CommandBAH());
+        Bukkit.getPluginManager().registerEvents(new MenuListener(), this);
     }
     
     public void onDisable() {
