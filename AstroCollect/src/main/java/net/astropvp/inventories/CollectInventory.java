@@ -65,7 +65,9 @@ public class CollectInventory {
                 if (event.getClick() == ClickType.SHIFT_RIGHT) {
                     CollectPlugin.getInstance().getCollectManager().getPlayerCollect(player).remove(cat);
                     player.playSound(player.getLocation(), Sound.ANVIL_BREAK, 1f, 1f);
-                    player.closeInventory();
+                    CollectInventory collectInventory = new CollectInventory(player);
+                    collectInventory.getCollectUI().open(player);
+                    player.sendMessage(CC.translate("&cRemoved the collect inventory."));
                 } else {
                     new CategoryInventory(player, cat).getCollectUI().open(player);
                 }

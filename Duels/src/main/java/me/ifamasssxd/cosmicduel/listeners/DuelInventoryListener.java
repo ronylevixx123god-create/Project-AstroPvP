@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
@@ -230,6 +230,8 @@ public class DuelInventoryListener implements Listener {
 
             NewDuel duel;
             if (data != null) {
+                if (e.getInventory().getName() == null) return;
+                if (Bukkit.getPlayer(data.getLeaderUUID()) == null) return;
                 if (e.getInventory().getName().contains(Bukkit.getPlayer(data.getLeaderUUID()).getName()) && e.getInventory().getName().length() >= 32 && !e.getInventory().getName().contains("/")) {
                     if (DuelAPI.hasDuel(p)) {
                         duel = DuelAPI.getDuel(p);
@@ -379,7 +381,7 @@ public class DuelInventoryListener implements Listener {
                         DuelAPI.cancelDuel(d, CancelReason.CLOSED_INVENTORY);
                     }
                 }
-            } else if (data != null && e.getInventory().getName().contains(Bukkit.getPlayer(data.getLeaderUUID()).getName()) && e.getInventory().getName().length() >= 32) {
+            } else if (Bukkit.getPlayer(data.getLeaderUUID()) != null && data != null && e.getInventory().getName().contains(Bukkit.getPlayer(data.getLeaderUUID()).getName()) && e.getInventory().getName().length() >= 32) {
                 String teamLeaderName = Bukkit.getPlayer(data.getLeaderUUID()).getName();
                 d = DuelAPI.getDuel(p);
                 if (d instanceof TeamDuel && d.getCreateState() == DuelCreateState.STAKES) {

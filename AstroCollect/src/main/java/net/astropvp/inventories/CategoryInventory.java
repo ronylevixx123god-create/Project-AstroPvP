@@ -87,6 +87,8 @@ public class CategoryInventory {
             new CollectInventory(player).getCollectUI().open(player);
             event.setCancelled(true);
             player.playSound(player.getLocation(), Sound.ANVIL_BREAK, 1f, 1f);
+            player.sendMessage(CC.translate("&cRemoved the collect inventory."));
+
         }));
 
         categoryInventory.setItem(6, 5, new GuiItem(new ItemBuilder(Material.BOOK, CC.translate("&a&lPage: &f&n#" + categoryInventory.getCurrentPageNum())).build())

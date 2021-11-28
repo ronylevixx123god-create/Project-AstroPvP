@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import net.astropvp.core.AstroCore;
 import net.astropvp.core.cooldown.RealtimeUUIDCooldown;
 import org.apache.commons.io.IOUtils;
@@ -114,6 +115,7 @@ public class TrailerCommand implements CommandExecutor {
                 AstroCore.getInstance().getConfig().set("players-trailers", claimedVideoIds);
                 AstroCore.getInstance().saveConfig();
                 AstroCore.getInstance().reloadConfig();
+                player.getInventory().addItem(CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("TrailerLootbox").createClaimableItem(false));
                 TrailerCommand.this.fetcherTaskMap.remove(player.getUniqueId());
             }
         }).runTaskLater((Plugin)AstroCore.getInstance(), 100L);
