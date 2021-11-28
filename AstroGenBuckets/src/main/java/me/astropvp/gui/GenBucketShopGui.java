@@ -26,6 +26,9 @@ public class GenBucketShopGui {
         GenBucket sandGenBucket = GenBucketPlugin.getInstance().getBucketHandler().getGenBucket("sand");
         GenBucket obsidianGenBucket = GenBucketPlugin.getInstance().getBucketHandler().getGenBucket("obsidian");
         GenBucket netherrackGenBucket = GenBucketPlugin.getInstance().getBucketHandler().getGenBucket("netherrack");
+        GenBucket waterkGenBucket = GenBucketPlugin.getInstance().getBucketHandler().getGenBucket("water");
+        GenBucket lavaGenBucket = GenBucketPlugin.getInstance().getBucketHandler().getGenBucket("lava");
+
 
         this.expShopUI = new PaginatedGui(3, 18, "AstroPvP Genbuckets");
         expShopUI.setDefaultClickAction(event -> {
@@ -39,16 +42,20 @@ public class GenBucketShopGui {
             player.getInventory().addItem(cobblestoneGenBucket.getItem(GenBucketDirection.HORIZONTAL, 100.0D));
             event.setCancelled(true);
         }));
-        expShopUI.setItem(1, 2, new GuiItem(sandGenBucket.getItem(GenBucketDirection.HORIZONTAL, 100), event -> {
-            player.getInventory().addItem(sandGenBucket.getItem(GenBucketDirection.HORIZONTAL, 100.0D));
+        expShopUI.setItem(1, 2, new GuiItem(sandGenBucket.getItem(GenBucketDirection.HORIZONTAL, 500), event -> {
+            player.getInventory().addItem(sandGenBucket.getItem(GenBucketDirection.HORIZONTAL, 500.0D));
             event.setCancelled(true);
         }));
-        expShopUI.setItem(1, 3, new GuiItem(obsidianGenBucket.getItem(GenBucketDirection.HORIZONTAL, 100), event -> {
-            player.getInventory().addItem(obsidianGenBucket.getItem(GenBucketDirection.HORIZONTAL, 100.0D));
+        expShopUI.setItem(1, 3, new GuiItem(obsidianGenBucket.getItem(GenBucketDirection.HORIZONTAL, 1000), event -> {
+            player.getInventory().addItem(obsidianGenBucket.getItem(GenBucketDirection.HORIZONTAL, 1000.0D));
             event.setCancelled(true);
         }));
         expShopUI.setItem(1, 4, new GuiItem(netherrackGenBucket.getItem(GenBucketDirection.HORIZONTAL, 100), event -> {
             player.getInventory().addItem(netherrackGenBucket.getItem(GenBucketDirection.HORIZONTAL, 100.0D));
+            event.setCancelled(true);
+        }));
+        expShopUI.setItem(1, 5, new GuiItem(waterkGenBucket.getItem(GenBucketDirection.HORIZONTAL, 250000), event -> {
+            player.getInventory().addItem(waterkGenBucket.getItem(GenBucketDirection.HORIZONTAL, 250000.0D));
             event.setCancelled(true);
         }));
 
@@ -57,16 +64,20 @@ public class GenBucketShopGui {
             player.getInventory().addItem(cobblestoneGenBucket.getItem(GenBucketDirection.VERTICAL, 100.0D));
             event.setCancelled(true);
         }));
-        expShopUI.setItem(2, 2, new GuiItem(cobblestoneGenBucket.getItem(GenBucketDirection.VERTICAL, 100), event -> {
-            player.getInventory().addItem(sandGenBucket.getItem(GenBucketDirection.VERTICAL, 100.0D));
+        expShopUI.setItem(2, 2, new GuiItem(sandGenBucket.getItem(GenBucketDirection.VERTICAL, 500), event -> {
+            player.getInventory().addItem(sandGenBucket.getItem(GenBucketDirection.VERTICAL, 500.0D));
             event.setCancelled(true);
         }));
-        expShopUI.setItem(2, 3, new GuiItem(cobblestoneGenBucket.getItem(GenBucketDirection.VERTICAL, 100), event -> {
-            player.getInventory().addItem(obsidianGenBucket.getItem(GenBucketDirection.VERTICAL, 100.0D));
+        expShopUI.setItem(2, 3, new GuiItem(obsidianGenBucket.getItem(GenBucketDirection.VERTICAL, 1000), event -> {
+            player.getInventory().addItem(obsidianGenBucket.getItem(GenBucketDirection.VERTICAL, 1000.0D));
             event.setCancelled(true);
         }));
-        expShopUI.setItem(2, 4, new GuiItem(cobblestoneGenBucket.getItem(GenBucketDirection.VERTICAL, 100), event -> {
+        expShopUI.setItem(2, 4, new GuiItem(netherrackGenBucket.getItem(GenBucketDirection.VERTICAL, 100), event -> {
             player.getInventory().addItem(netherrackGenBucket.getItem(GenBucketDirection.VERTICAL, 100.0D));
+            event.setCancelled(true);
+        }));
+        expShopUI.setItem(2, 5, new GuiItem(lavaGenBucket.getItem(GenBucketDirection.VERTICAL, 100000), event -> {
+            player.getInventory().addItem(lavaGenBucket.getItem(GenBucketDirection.VERTICAL, 100000.0D));
             event.setCancelled(true);
         }));
 

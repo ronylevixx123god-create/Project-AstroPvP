@@ -30,15 +30,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 public class DamageListener implements Listener {
-    @EventHandler
-    public void onAttack(EntityDamageByEntityEvent e) {
-        if (e.getDamager() instanceof Player) {
-            if (((Player) e.getDamager()).getItemInHand() != null) {
-                if (((Player) e.getDamager()).getItemInHand().getType().name().endsWith("_AXE"))
-                    e.setDamage(e.getDamage() * 0.83);
-            }
-        }
-    }
+
 
     @EventHandler
     public void diaPvP(EntityDamageByEntityEvent e) {

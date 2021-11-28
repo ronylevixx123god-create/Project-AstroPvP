@@ -31,6 +31,8 @@ public class TeamDataManager {
         initialize();
     }
 
+
+
     private void initialize() {
         if (this.config.getYamlConf().getConfigurationSection("teams") != null) {
             List<String> leaders = Lists.newArrayList();

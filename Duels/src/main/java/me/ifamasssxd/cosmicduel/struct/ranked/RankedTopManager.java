@@ -141,7 +141,7 @@ public class RankedTopManager {
                                     TopPlayer previousTop = (TopPlayer)RankedTopManager.this.top3Duels.get(pos);
                                     RankedTopManager.this.top3Duels.put(pos, tp);
                                     if (!(previousTop == null || tp.getUuid().equals(previousTop.getUuid()) || hashMap.containsKey(tp.getUuid()) && (Integer)hashMap.get(tp.getUuid()) <= pos)) {
-                                        Bukkit.broadcastMessage((String)((Object)ChatColor.GREEN + ChatColor.BOLD.toString() + "** " + (Object)ChatColor.GREEN + tp.getName() + " is now /duel top rank #" + pos + " " + (Object)ChatColor.GRAY + "(" + (int)tp.getElo() + " ELO, " + RankedTopManager.this.format.format(tp.getKDR()) + " KDR)"));
+                                        //Bukkit.broadcastMessage((String)((Object)ChatColor.GREEN + ChatColor.BOLD.toString() + "** " + (Object)ChatColor.GREEN + tp.getName() + " is now /duel top rank #" + pos + " " + (Object)ChatColor.GRAY + "(" + (int)tp.getElo() + " ELO, " + RankedTopManager.this.format.format(tp.getKDR()) + " KDR)"));
                                     }
                                 } else {
                                     RankedTopManager.this.top3Duels.put(pos, tp);

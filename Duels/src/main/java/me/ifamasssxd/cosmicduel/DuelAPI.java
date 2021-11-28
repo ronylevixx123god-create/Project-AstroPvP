@@ -68,8 +68,6 @@ public class DuelAPI {
     }
 
     public static boolean isRebooting() {
-        if (networkManager == null)
-            networkManager = Boolean.valueOf(Bukkit.getPluginManager().isPluginEnabled("NetworkManager"));
         if (arkkit == null)
             arkkit = Boolean.valueOf(Bukkit.getPluginManager().isPluginEnabled("Arkkit"));
         return ((arkkit.booleanValue() && CommandArkReboot.restart_task_exists));

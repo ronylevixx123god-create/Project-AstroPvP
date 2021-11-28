@@ -71,7 +71,7 @@ public enum ArkPlugins {
     ANTI_BLOCK_GLITCH(new AntiBlockGlitch(Arkkit.get()), "Fixes block glitching and jumping."),
     VAULT_DISABLE(new VaultDisable(Arkkit.get()), "Disable adding items into PlayerVaults, (Only withdrawls allowed)"),
     GAMBLE(new Gamble(Arkkit.get()), "Enables players gambling commands such as /roll."),
-    HIDE_LORE(new HideLore(Arkkit.get()), "Hides specific lore and item attributes via ProtocolLib."),
+    //HIDE_LORE(new HideLore(Arkkit.get()), "Hides specific lore and item attributes via ProtocolLib."),
     SHOWCASE_EXPANDER(new ShowcaseExpander(Arkkit.get()), "Enables showcase expander items."),
     ANTI_EXPLOIT(new AntiExploit(Arkkit.get()), "Prevents a number of general server exploits."),
     SUICIDE(new Suicide(Arkkit.get()), "Enables /suicide command for players to use."),

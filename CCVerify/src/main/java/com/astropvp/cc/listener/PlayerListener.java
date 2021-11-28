@@ -17,9 +17,10 @@ import java.util.concurrent.ThreadLocalRandom;
 public class PlayerListener implements Listener {
     private static final DecimalFormat FORMAT = new DecimalFormat("##.#");
 
-    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onEntityDamage(EntityDamageByEntityEvent event){
         if(!(event.getDamager() instanceof Player) || !(event.getEntity() instanceof Player))return;
+        if (event.isCancelled())return;
 
         double finalDamage = event.getFinalDamage();
 

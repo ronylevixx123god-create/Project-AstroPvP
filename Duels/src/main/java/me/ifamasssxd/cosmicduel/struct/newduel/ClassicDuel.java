@@ -251,7 +251,6 @@ public class ClassicDuel extends NewDuel {
                     loser.updateInventory();
                     CollectionBin.addItems(winner, items);
                     winner.sendMessage(CC.translate("&a&l(!) &aUse &n/duel collect&a to collect your winnings!"));
-                    winner.sendMessage(CC.translate("&7You can use &f/duel collect removepotions &7to remove all potions from your winnings."));
                 }
                 if (isRanked()) {
                     winner.sendMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + ChatColor.GREEN + "You defeated " + loser.getName() + " in a Ranked Duel!");

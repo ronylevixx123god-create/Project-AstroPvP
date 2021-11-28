@@ -115,7 +115,6 @@ public class TrailerCommand implements CommandExecutor {
                 player.sendMessage( "&7You have successfully claimed your SOTW rewards.");
                 TrailerCommand.claimedVideoIds.put(player.getName(), videoId);
                 TrailerCommand.this.fetcherTaskMap.remove(player.getUniqueId());
-                //give item here
             }
         }).runTaskLater((Plugin)AstroCore.getInstance(), 100L);
         return false;
