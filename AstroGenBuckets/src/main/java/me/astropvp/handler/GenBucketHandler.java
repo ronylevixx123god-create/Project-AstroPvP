@@ -49,8 +49,8 @@ public class GenBucketHandler {
             ConfigurationSection thisBucket = allBuckets.getConfigurationSection(bucket);
             String displayName = thisBucket.getString("name");
             long speed = thisBucket.getLong("speed");
-            Material generate = KrizzUtil.findEssItem(thisBucket.getString("generate")).getType();
-            Material itemType = KrizzUtil.findEssItem(thisBucket.getString("item")).getType();
+            Material generate = KrizzUtil.findEssItem(thisBucket.getString("generate"));
+            Material itemType = KrizzUtil.findEssItem(thisBucket.getString("item"));
             GenBucket genBucket = new GenBucket(bucket, displayName, generate, itemType);
             genBucket.setSpeed(speed);
             genBucket.setPlacedMaterial(generate);

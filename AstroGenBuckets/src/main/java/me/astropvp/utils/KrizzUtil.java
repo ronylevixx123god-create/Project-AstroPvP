@@ -70,15 +70,8 @@ public class KrizzUtil {
         return createPlayerSkull("MHF_" + entityType.name(), name, lore);
     }
 
-    public static ItemStack findEssItem(String itemName) {
-        try {
-            Essentials ess = (Essentials)Bukkit.getPluginManager().getPlugin("Essentials");
-            return ess.getItemDb().get(itemName);
-        } catch (Exception var2) {
-            System.out.println("could not find item: " + itemName);
-            var2.printStackTrace();
-            return null;
-        }
+    public static Material findEssItem(String itemName) {
+        return Material.valueOf(itemName);
     }
 
     public static List<ItemStack> removeNulls(List<ItemStack> itemStacks) {
