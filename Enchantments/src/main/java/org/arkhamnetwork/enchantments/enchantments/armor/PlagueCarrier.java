@@ -35,8 +35,7 @@ public class PlagueCarrier extends CustomEnchantment {
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         if (player instanceof Player) {
             final Player p = (Player) player;
-            double dmg = e.getDamage(EntityDamageEvent.DamageModifier.BASE);
-            dmg *= ArmorUtil.getArmorDamageNullificationPercent((float) ArmorUtil.getArmorValue(p));
+            double dmg = e.getFinalDamage();
             if (player.getHealth() - dmg <= 0.0) {
                 if (p.hasMetadata("PlagueCarrier")) {
                     return;

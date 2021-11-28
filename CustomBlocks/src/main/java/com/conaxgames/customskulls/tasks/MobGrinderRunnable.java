@@ -32,20 +32,21 @@ public class MobGrinderRunnable extends BukkitRunnable {
             if (data.getAbilityType() == null) continue;
             if (CoreSkulls.customBlocks.get(data.getAbilityType().getName()) == null) continue;
             if (data.getAbilityType() != AbilityType.TRIALS_FAME_AND_FORTUNE) continue;
+            boolean playerFound = false;
+
+            for (Entity entity : data.getLocation().getWorld().getNearbyEntities(data.getLocation(), 16, 16, 16)) {
+                if (entity instanceof Player) {
+                    playerFound = true;
+                    break;
+                }
+            }
+            if (!playerFound) continue;
 
             if (CustomBlockUtil.getClosestChestLocation(data.getLocation()) != null) {
-
                 Location chestLocation = CustomBlockUtil.getClosestChestLocation(data.getLocation());
-                boolean playerFound = false;
                 assert chestLocation != null;
                 if (chestLocation.getChunk().getEntities().length == 0) continue;
-                for (Entity entity : chestLocation.getWorld().getNearbyEntities(chestLocation, 16, 16, 16)) {
-                    if (entity instanceof Player) {
-                        playerFound = true;
-                        break;
-                    }
-                }
-                if (!playerFound) continue;
+
                 Chest chest = (Chest) chestLocation.getBlock().getState();
 
                 //KILL NEARBY STACKED MOB
