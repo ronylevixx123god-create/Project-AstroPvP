@@ -287,7 +287,7 @@ public class NewStakeInventory {
     }
 
     public ItemStack getSelectedIcon(ItemStack icon) {
-        Player player = Bukkit.getPlayer(ChatColor.stripColor(icon.getItemMeta().getDisplaTyName()));
+        Player player = Bukkit.getPlayer(ChatColor.stripColor(icon.getItemMeta().getDisplayName()));
         ItemStack item = ItemBuilder.createSkull(player.getName(), CC.translate("&c&l" + player.getName()));
         SkullMeta meta = (SkullMeta)Bukkit.getItemFactory().getItemMeta(Material.SKULL_ITEM);
         meta.setDisplayName(CC.translate("&c&l" + player.getName()));
