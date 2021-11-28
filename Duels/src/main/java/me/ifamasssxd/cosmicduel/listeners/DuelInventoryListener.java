@@ -381,15 +381,17 @@ public class DuelInventoryListener implements Listener {
                         DuelAPI.cancelDuel(d, CancelReason.CLOSED_INVENTORY);
                     }
                 }
-            } else if (Bukkit.getPlayer(data.getLeaderUUID()) != null && data != null && e.getInventory().getName().contains(Bukkit.getPlayer(data.getLeaderUUID()).getName()) && e.getInventory().getName().length() >= 32) {
-                String teamLeaderName = Bukkit.getPlayer(data.getLeaderUUID()).getName();
-                d = DuelAPI.getDuel(p);
-                if (d instanceof TeamDuel && d.getCreateState() == DuelCreateState.STAKES) {
-                    d.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + p.getName() + " closed the " + ChatColor.YELLOW + ChatColor.UNDERLINE.toString() + "STAKES" + ChatColor.YELLOW + " selection.", false);
-                    d.sendMessage(ChatColor.GRAY + "The duel has been cancelled.", false);
-                    d.setCreateState(DuelCreateState.DONE);
-                    d.getStakeInventory().closeInventory(d);
-                    DuelAPI.cancelDuel(d, CancelReason.CLOSED_INVENTORY);
+            } else if (Bukkit.getPlayer(data.getLeaderUUID()) != null) {
+                if (data.getLeaderUUID() != null && data != null && e.getInventory().getName().contains(Bukkit.getPlayer(data.getLeaderUUID()).getName()) && e.getInventory().getName().length() >= 32) {
+                    String teamLeaderName = Bukkit.getPlayer(data.getLeaderUUID()).getName();
+                    d = DuelAPI.getDuel(p);
+                    if (d instanceof TeamDuel && d.getCreateState() == DuelCreateState.STAKES) {
+                        d.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + p.getName() + " closed the " + ChatColor.YELLOW + ChatColor.UNDERLINE.toString() + "STAKES" + ChatColor.YELLOW + " selection.", false);
+                        d.sendMessage(ChatColor.GRAY + "The duel has been cancelled.", false);
+                        d.setCreateState(DuelCreateState.DONE);
+                        d.getStakeInventory().closeInventory(d);
+                        DuelAPI.cancelDuel(d, CancelReason.CLOSED_INVENTORY);
+                    }
                 }
             } else if (!e.getInventory().getName().equalsIgnoreCase("Select a Kit") && !e.getInventory().getName().equals("Select a Duel GKit")) {
                 if (e.getInventory().getName().endsWith("Duel Settings")) {
